@@ -34,15 +34,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="multimedia_editor_languages_russian">Rusarazda</string>
-  <string name="multimedia_editor_languages_german">þiudiskarazda</string>
-  <string name="multimedia_editor_languages_nepali">Nepalirazda</string>
-  <string name="multimedia_editor_languages_slovak">Slowakarazda</string>
-  <string name="multimedia_editor_languages_french">Fragkarazda</string>
-  <string name="multimedia_editor_languages_spanish">Heispaniskarazda</string>
-  <string name="multimedia_editor_languages_mandarin">Mandarinarazda</string>
-  <string name="multimedia_editor_languages_portuguese">Paurtugiskarazda</string>
-  <string name="multimedia_editor_languages_english">Aggilarazda</string>
   <string name="multimedia_editor_popup_image">Biauk frisaht</string>
   <string name="multimedia_editor_popup_audio">Record audio</string>
   <string name="multimedia_editor_popup_text">Advanced editor</string>
@@ -83,13 +74,6 @@
   <string name="multimedia_editor_text_field_editing_no_text">Input some text first</string>
   <string name="multimedia_editor_text_field_editing_many_words">Dictionary usually expects one word</string>
   <string name="multimedia_editor_text_field_editing_clone_source">Nim us</string>
-  <string name="multimedia_editor_activity_note_type">Note type</string>
-  <string name="multimedia_editor_activity_deck">Wiko</string>
-  <string name="multimedia_editor_activity_edit_button">Inmaidei</string>
-  <string name="multimedia_editor_activity_swap_button">Swap</string>
-  <string name="multimedia_editor_activity_delete_question">Usnim alla gamelein?</string>
-  <string name="multimedia_editor_activity_delete_confirm">Usnim</string>
-  <string name="multimedia_editor_activity_delete_reject">Gafast</string>
   <string name="multimedia_editor_image_field_editing_galery">Frisahtiwiko</string>
   <string name="multimedia_editor_image_field_editing_photo">Camera</string>
   <string name="multimedia_editor_general_downloading">Dalahlaþands</string>
@@ -105,7 +89,6 @@
   <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
   <string name="title_activity_edit_text">Editing field</string>
   <string name="title_activity_translation">Gaskeireins</string>
-  <string name="title_activity_audio_recorder">Audio recorder</string>
   <string name="title_activity_load_pronounciation">Pronunciation</string>
   <string name="title_activity_search_image">Google Frisahtigasokeins</string>
 </resources>

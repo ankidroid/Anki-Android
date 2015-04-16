@@ -36,6 +36,7 @@ import android.widget.FrameLayout;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
@@ -58,12 +59,12 @@ public class Reviewer extends AbstractFlashcardViewer {
             } else {
                 Timber.e("Could not set title in reviewer because collection closed");
             }
-            CompatHelper.getCompat().setTitle(this, title[title.length - 1], mNightMode);
+            UIUtils.setTitle(this, title[title.length - 1]);
             super.setTitle(title[title.length - 1]);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        CompatHelper.getCompat().setSubtitle(this, "", mNightMode);
+        UIUtils.setSubtitle(this, "", mNightMode);
     }
 
 
@@ -197,30 +198,15 @@ public class Reviewer extends AbstractFlashcardViewer {
         getMenuInflater().inflate(R.menu.reviewer, menu);
         Resources res = getResources();
         if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
-            if (mNightMode) {
-                menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_card).setIcon(R.drawable.ic_menu_marked_dark);
-            } else {
-                menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_card).setIcon(R.drawable.ic_menu_marked);
-            }
+            menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_card).setIcon(R.drawable.ic_star_white_24dp);
         } else {
-            if (mNightMode) {
-                menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_card).setIcon(R.drawable.ic_menu_mark_dark);
-            }else {
-                menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_card).setIcon(R.drawable.ic_menu_mark);
-            }
+            menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_card).setIcon(R.drawable.ic_star_outline_white_24dp);
         }
         if (colIsOpen() && getCol().undoAvailable()) {
-            if (mNightMode) {
-                menu.findItem(R.id.action_undo).setEnabled(true).setIcon(R.drawable.ic_menu_revert_dark);
-            } else {
-                menu.findItem(R.id.action_undo).setEnabled(true).setIcon(R.drawable.ic_menu_revert);
-            }
+            menu.findItem(R.id.action_undo).setEnabled(true).getIcon().setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
         } else {
-            if (mNightMode) {
-                menu.findItem(R.id.action_undo).setEnabled(false).setIcon(R.drawable.ic_menu_revert_disabled_dark);
-            } else {
-                menu.findItem(R.id.action_undo).setEnabled(false).setIcon(R.drawable.ic_menu_revert_disabled);
-            }
+            menu.findItem(R.id.action_undo).setEnabled(false).getIcon().setAlpha(
+                    Themes.ALPHA_ICON_DISABLED_LIGHT);
         }
         if (mPrefWhiteboard) {
             // Check if we can forceably squeeze in 3 items into the action bar, if not hide "show whiteboard"
@@ -310,7 +296,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         char keyPressed = (char) event.getUnicodeChar();
-        if (!mAnswerField.isFocused()) {
+        if (mAnswerField != null && !mAnswerField.isFocused()) {
 	        if (sDisplayAnswer) {
 	            if (keyPressed == '1') {
 	                answerCard(EASE_FAILED);
@@ -478,10 +464,12 @@ public class Reviewer extends AbstractFlashcardViewer {
             }
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_STATISTICS) {
-            // select original deck if the statistics was opened, which can change the selected deck
+        if (requestCode == REQUEST_STATISTICS || requestCode == REQUEST_BROWSE_CARDS) {
+            // select original deck if the statistics or card browser were opened,
+            // which can change the selected deck
             if (data.hasExtra("originalDeck")) {
                 getCol().getDecks().select(data.getLongExtra("originalDeck", 0L));
             }

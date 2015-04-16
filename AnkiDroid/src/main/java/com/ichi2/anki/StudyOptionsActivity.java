@@ -16,23 +16,15 @@
 
 package com.ichi2.anki;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
-import com.ichi2.anki.receiver.SdCardReceiver;
-import com.ichi2.compat.CompatHelper;
-import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
@@ -41,9 +33,6 @@ import org.json.JSONArray;
 import timber.log.Timber;
 
 public class StudyOptionsActivity extends NavigationDrawerActivity implements StudyOptionsListener {
-
-    private BroadcastReceiver mUnmountReceiver = null;
-    private StyledOpenCollectionDialog mNotMountedDialog;
 
 
     @Override
@@ -60,7 +49,6 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         if (savedInstanceState == null) {
             loadStudyOptionsFragment();
         }
-        registerExternalStorageListener();
     }
 
 
@@ -91,13 +79,6 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        deselectAllNavigationItems();
-    }    
-
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
         // ActionBarDrawerToggle will take care of this.
@@ -125,7 +106,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
         String newLanguage = AnkiDroidApp.getSharedPrefs(this).getString(Preferences.LANGUAGE, "");
         if (AnkiDroidApp.setLanguage(newLanguage)) {
-            CompatHelper.getCompat().invalidateOptionsMenu(this);
+            supportInvalidateOptionsMenu();
         }
         getCurrentFragment().restorePreferences();
     }
@@ -160,48 +141,6 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         if (colIsOpen()) {
             WidgetStatus.update(this);
             UIUtils.saveCollectionInBackground(this);
-        }
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mUnmountReceiver != null) {
-            unregisterReceiver(mUnmountReceiver);
-        }
-    }
-
-
-    /**
-     * Show/dismiss dialog when sd card is ejected/remounted (collection is saved by SdCardReceiver)
-     */
-    private void registerExternalStorageListener() {
-        if (mUnmountReceiver == null) {
-            mUnmountReceiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    if (intent.getAction().equals(SdCardReceiver.MEDIA_EJECT)) {
-                        mNotMountedDialog = StyledOpenCollectionDialog.show(StudyOptionsActivity.this, getResources()
-                                .getString(R.string.sd_card_not_mounted), new OnCancelListener() {
-
-                            @Override
-                            public void onCancel(DialogInterface arg0) {
-                                finishWithoutAnimation();
-                            }
-                        });
-                    } else if (intent.getAction().equals(SdCardReceiver.MEDIA_MOUNT)) {
-                        if (mNotMountedDialog != null && mNotMountedDialog.isShowing()) {
-                            mNotMountedDialog.dismiss();
-                        }
-                        startLoadingCollection();
-                    }
-                }
-            };
-            IntentFilter iFilter = new IntentFilter();
-            iFilter.addAction(SdCardReceiver.MEDIA_EJECT);
-            iFilter.addAction(SdCardReceiver.MEDIA_MOUNT);
-            registerReceiver(mUnmountReceiver, iFilter);
         }
     }
 

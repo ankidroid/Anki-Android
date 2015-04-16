@@ -338,17 +338,13 @@
 
     <!-- Advanced Preferences -->
     <PreferenceScreen android:title="@string/pref_cat_advanced"
-        android:summary="@string/pref_cat_advanced_summ" >
-	    <Preference 
-	        android:key="force_full_sync"
-	        android:title="@string/force_full_sync_title"
-	        android:summary="@string/force_full_sync_summary" />
+        android:summary="@string/pref_cat_advanced_summ"
+        android:key="pref_screen_advanced">
+        <Preference 
+            android:key="force_full_sync"
+            android:title="@string/force_full_sync_title"
+            android:summary="@string/force_full_sync_summary" />
         <PreferenceCategory android:title="@string/pref_cat_performance" >
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="safeDisplay"
-                android:summary="@string/safe_display_summ"
-                android:title="@string/safe_display" />
             <CheckBoxPreference
                 android:defaultValue="true"
                 android:disableDependentsState="false"
@@ -369,6 +365,11 @@
         <PreferenceCategory
             android:key="category_workarounds"
             android:title="@string/pref_cat_workarounds" >
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="safeDisplay"
+                android:summary="@string/safe_display_summ"
+                android:title="@string/safe_display" />
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="inputWorkaround"

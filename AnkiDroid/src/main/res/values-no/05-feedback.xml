@@ -39,27 +39,11 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="error_ok">Meld inn feil</string>
-  <string name="error_cancel">Ikke rapporter feil</string>
   <string name="error_reporting_choice">Feilrapporteringsmodus</string>
   <string name="error_reporting_choice_summary">Feil kan rapporteres automatisk, aldri rapportertes, eller du kan bli spurt</string>
-  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occuring.</string>
+  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
   <string name="feedback_title">Tilbakemelding</string>
-  <string name="feedback_send_feedback">Send oss din tilbakemelding</string>
-  <string name="feedback_send_feedback_and_errors">Send feil og din tilbakemelding</string>
-  <string name="feedback_message_sent_success">Tilbakemelding mottatt, takk!</string>
-  <string name="feedback_message_sent_failure">Kan ikke sende tilbakemeldinger, kode %1$s</string>
-  <string name="feedback_keep_latest">Behold siste feil</string>
-  <string name="feedback_clear_all">Tøm alle feil</string>
   <string name="feedback_default_text">Vennligst skriv inn din tilbakemelding, eller informasjon om eventuelle feil du melder inn.</string>
-  <string name="feedback_error_reply_new">Ukjent problem, la inn ny feilrapport</string>
-  <string name="feedback_error_reply_known">Issue previously detected. Details welcome on AnkiDroid issue tracker.</string>
-  <string name="feedback_error_reply_issue_unknown">Problem %1$d, ukjent status</string>
-  <string name="feedback_error_reply_issue_status">Problem %1$d, status: %2$s</string>
-  <string name="feedback_error_reply_issue_fixed_dev">Problem %1$d, løst, men ennå ikke sendt ut</string>
-  <string name="feedback_error_reply_issue_fixed_prod">Problem %1$d, fikset i den nyeste versjonen</string>
-  <string name="feedback_error_reply_malformed">Sendte feilrapport, ingen respons</string>
-  <string name="feedback_error_reply_failed">Klarte ikke å sende</string>
   <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
   <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
   <string name="feedback_copy_debug">Copy debug info</string>

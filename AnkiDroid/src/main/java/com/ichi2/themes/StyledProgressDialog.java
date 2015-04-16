@@ -21,15 +21,12 @@ package com.ichi2.themes;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager.BadTokenException;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
 import timber.log.Timber;
@@ -56,26 +53,27 @@ public class StyledProgressDialog extends Dialog {
     }
 
 
-    public static StyledProgressDialog show(Context context, CharSequence title, CharSequence message) {
-        return show(context, title, message, true, false, null);
+    public static MaterialDialog show(Context context, CharSequence title, CharSequence message) {
+        return show(context, title, message, false, null);
     }
 
 
-    public static StyledProgressDialog show(Context context, CharSequence title, CharSequence message,
-            boolean indeterminable) {
-        return show(context, title, message, indeterminable, false, null);
+    public static MaterialDialog show(Context context, CharSequence title, CharSequence message,
+            boolean cancelable) {
+        return show(context, title, message, cancelable, null);
     }
 
 
-    public static StyledProgressDialog show(Context context, CharSequence title, CharSequence message,
-            boolean indeterminable, boolean cancelable) {
-        return show(context, title, message, indeterminable, cancelable, null);
-    }
-
-
-    public static StyledProgressDialog show(Context context, CharSequence title, CharSequence message,
-            boolean indeterminable, boolean cancelable, DialogInterface.OnCancelListener cancelListener) {
-        final StyledProgressDialog dialog = new StyledProgressDialog(context);
+    public static MaterialDialog show(Context context, CharSequence title, CharSequence message,
+            boolean cancelable, DialogInterface.OnCancelListener cancelListener) {
+        return new MaterialDialog.Builder(context)
+                .title(title)
+                .content(message)
+                .progress(true, 0)
+                .cancelable(cancelable)
+                .cancelListener(cancelListener)
+                .show();
+        /*final StyledProgressDialog dialog = new StyledProgressDialog(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View layout = inflater.inflate(R.layout.styled_progress_dialog, null);
@@ -118,7 +116,7 @@ public class StyledProgressDialog extends Dialog {
         if (animationEnabled(context)) {
             dialog.show();
         }
-        return dialog;
+        return dialog;*/
 
     }
 

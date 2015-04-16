@@ -39,11 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Decks</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="statistics">Statistics</string>
+  <string name="settings">Settings</string>
+  <string name="help">Help</string>
+  <string name="send_feedback">Send Feedback</string>
   <string name="studyoptions_title">Opţiuni de studiu</string>
-  <string name="studyoptions_deck_name">Nume Pachet</string>
   <string name="studyoptions_due_today">Pentru astăzi:</string>
   <string name="studyoptions_new_total">Totalul cardurilor noi:</string>
   <string name="studyoptions_total_cards">Total carduri:</string>
@@ -51,19 +53,18 @@
   <string name="studyoptions_start">Studiază Acum</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="few">%1$d cards due (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
+    <item quantity="few">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
-    <item quantity="other">%1$d din %2$d scadente</item>
-  </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">au mai ramas %d minute</item>
-    <item quantity="other">au mai ramas %d minute</item>
+    <item quantity="one">%d minute left</item>
+    <item quantity="few">%d minutes left</item>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Arată răspuns</string>
@@ -72,9 +73,6 @@
   <string name="ease3_successive">Bine</string>
   <string name="ease3_learning">Ușor</string>
   <string name="studyoptions_congrats_undo">Anulare %s</string>
-  <string name="card_unsuspended">Suspendarea cardului anulată</string>
-  <string name="card_suspended">Card resuspendat</string>
-  <string name="menu_rotate">Rotește</string>
   <string name="menu_import">Import</string>
   <string name="undo">Anulare</string>
   <string name="undo_action_review">last review</string>
@@ -86,30 +84,19 @@
   <string name="undo_action_mark">marcheaza nota</string>
   <string name="unbury">Dezgroapă</string>
   <string name="finish_operation">Terminare operațiune precedentă (cel mai probabil, creare de backup). \nVă rugăm să aşteptaţi...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Descărcare media absentă</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Resetare asocieri de limba</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Resetare limba</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Optimizarea bazei de date</string>
   <string name="contextmenu_deckpicker_rename_deck">Renumeste pachet</string>
   <string name="contextmenu_deckpicker_collapse_deck">Ascunde Subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Arată Subdecks</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Stabileste dictionar personalizat</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>
-  <string name="menu_download_deck">Descarca pachet</string>
-  <string name="menu_download_shared_deck">Pachet partajat</string>
   <string name="menu_my_account">Sincronizare cont</string>
-  <string name="menu_preferences">Preferinţe</string>
-  <string name="menu_about">Despre</string>
   <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Îngroapă Card</string>
   <string name="menu_bury_note">Ingroapa notă</string>
   <string name="menu_suspend_card">Suspendă Card</string>
   <string name="menu_suspend_note">Suspenda Notă</string>
-  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">Ștergere notă</string>
   <string name="delete_note_message">Chiar doriţi să ştergeţi această notă şi toate cardurile ei?\n%s sale</string>
-  <string name="menu_edit_card">Editare card</string>
   <string name="menu_select">Selectaţi text</string>
   <string name="menu_search">Căutare în %1$s</string>
   <string name="menu_mark_card">Marcare card</string>
@@ -117,7 +104,6 @@
   <string name="new_deck">Create deck</string>
   <string name="create">Creare</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
-  <string name="studyoptions_feedback">Feedback</string>
   <string name="night_mode">Mod de noapte</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
@@ -136,10 +122,7 @@
     <item>%s luni</item>
     <item>%s ani</item>
   </string-array>
-  <string name="visit">Vizitaţi</string>
   <string name="later">Mai târziu</string>
-  <string name="download">Descarcare</string>
-  <string name="open_collection">Deschidere colecţie. \n Va rugam aşteptaţi...</string>
   <string name="rebuild_cram_deck">Reconstruire pachet plin. \n Va rugam aşteptaţi...</string>
   <string name="rebuild_cram_label">Reconstruieste</string>
   <string name="empty_cram_label">Goleste</string>
@@ -151,37 +134,10 @@
   <string name="studyoptions_congrats_more_new">Sunt disponibile mai multe carduri noi, dar s-a atins limita zilnică. Puteţi mări limita în opţiuni, dar vă rugăm să ţineţi cont de faptul că aceasta va creşte volumul dumneavoastră de muncă de revizuire pe termen scurt.</string>
   <string name="studyoptions_congrats_custom">Pentru a studia în afara programului normal, faceţi clic pe butonul Studiu Personalizat de mai jos.</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">Mâine vor fi: %1$d carduri de recapitulat şi %2$s.\n timp estimat: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d new card</item>
-    <item quantity="other">%1$d carduri noi</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
-    <item quantity="other">Timp estimat: %1$d min.</item>
-  </plurals>
-  <string name="sd_card_not_mounted">SD card-ul nu este montat.\n\n Puteţi stoca colecția în memoria internă, deşi nu este recomandat deoarece nu prea puteti accesa fișierul cu uşurinţă. Aveţi posibilitatea să o activaţi în Preferinţe (deschideţi-le făcând clic pe acest text).</string>
-  <string name="studyoptions_options">Opţiuni</string>
-  <string name="empty_cloze_warning">Vă rugăm să editaţi această notă şi adăugaţi unele spatii goale. (%1$s)</string>
-  <string name="help_cloze">ajutor</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Sincronizare</string>
-  <string name="restart">Restart</string>
-  <string name="do_nothing">Nu fac nimic</string>
-  <string name="more_options">Mai multe opțiuni</string>
-  <string name="now">Acum</string>
-  <string name="back">Inapoi</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importeaza</string>
   <string name="export">Export</string>
-  <string name="confirm">Confirma</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>
@@ -191,6 +147,7 @@
   <string name="card_template_editor_cant_delete">At least one card type is required.</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
+    <item quantity="few">Delete the \'%2$s\' card type, and its %1$d cards?</item>
     <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>

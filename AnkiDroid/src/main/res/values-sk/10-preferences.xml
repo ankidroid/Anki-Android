@@ -138,7 +138,6 @@
   <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink and older devices using custom fonts may require this.</string>
   <string name="vertical_centering">Zarovnanie na stred</string>
   <string name="vertical_centering_summ">Center the content of cards vertically</string>
-  <string name="pref_cat_backup">Zálohy</string>
   <string name="pref_backup">Použi zálohu</string>
   <string name="pref_backup_summ">Automatically create backups before opening a deck (once a day)</string>
   <string name="pref_backup_max">Maximálny počet záloh</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
   <string name="pref_keep_screen_on">Keep screen on</string>
   <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
-  <string name="pref_simple_interface">Simple interface</string>
-  <string name="pref_simple_interface_summ">Zrýchli zobrazovanie kariet, ale nepodporuje všetky funkcie html</string>
-  <string name="pref_simple_interface_exclude_tags">Tags to exclude</string>
-  <string name="pref_simple_interface_exclude_tags_summ">Nepoužívať jednoduché rozhranie pre tieto štítky: XXX</string>
-  <string name="write_answers_message">You should define for every deck a field to compare the written answer with. You can do this via Anki Desktop (deck properties -&gt; edit model -&gt; card layout).\n\nIf no compare field is set, your written answer will always be compared with the whole card answer</string>
   <string name="fix_arabic_text">Zlepšiť arabské zobrazenie</string>
   <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
   <string name="convert_fen_text">Podpora šachového zápisu</string>
@@ -175,22 +169,12 @@
   <string name="filter_google_translate_summ">Uložiť iba kľúčové slovo a preklad</string>
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
   <string name="studyoptions_limit_select_tags">Zvoliť štítky</string>
-  <string name="studyoptions_limit_tags_active">S: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">Bez: %1$s</string>
-  <string name="studyoptions_limit_button_text">Limit</string>
-  <string name="studyoptions_limit_dialog_title">Limit učenia</string>
-  <string name="studyoptions_session">Relácia</string>
-  <string name="studyoptions_tag">Podľa štítku</string>
-  <string name="studyoptions_tag_new">Zobraziť nové karty podľa štítku:</string>
-  <string name="studyoptions_tag_rev">Zobraziť karty na opakovanie podľa štítku:</string>
-  <string name="studyoptions_new_cards_per_day">Nové karty za deň</string>
-  <string name="studyoptions_max_fail_card">Maximum neúspešných kariet</string>
-  <string name="deck_conf_deck_name">Názov balíčka</string>
   <string name="deck_conf_deck_description">Popis balíčka</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d deck uses this group</item>
-    <item quantity="other">%1$s\n%2$d balíčkov používa túto skupinu</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">Nové karty</string>
   <string name="deck_conf_rev_cards">Opakovania</string>
@@ -235,8 +219,9 @@
   <string name="deck_conf_remove_message">Odstrániť aktuálnu skupinu nastavení?</string>
   <string name="deck_conf_set_subdecks">Nastaviť pre všetky podbalíčky</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s subdeck will use this group</item>
-    <item quantity="other">%s podbalíčkov bude používať túto skupinu</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Nastaviť pre všetky podbalíčky</string>
   <string name="deck_conf_set_subdecks_message">Nastaviť aktuálnu skupinu nastavení pre všetky podbalíčky tohto balíčka?</string>
@@ -244,7 +229,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filter</string>
   <string name="deck_conf_cram_options">Možnosti</string>
-  <string name="deck_conf_cram_preset">Prednastavené</string>
   <string name="deck_conf_cram_search">Hľadať</string>
   <string name="deck_conf_cram_limit">Obmedziť na</string>
   <string name="deck_conf_cram_order">kariet vybraných podľa</string>

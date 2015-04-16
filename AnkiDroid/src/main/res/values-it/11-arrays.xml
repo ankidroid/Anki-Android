@@ -35,51 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Mazzi</item>
-    <item>Browser delle carte</item>
-    <item>Statistiche</item>
-    <item>Impostazioni</item>
-    <item>Guida</item>
-    <item>Invia commenti</item>
-  </string-array>
-  <string-array name="newCardSchedulingLabels">
-    <item>Distribuisci sulla sequenza di ripetizione</item>
-    <item>Dopo le ripetizioni</item>
-    <item>Prima delle ripetizioni</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Notifica sempre</item>
     <item>Non segnalare mai</item>
     <item>Chiedimi</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>Mostra per prime carte modificate da più tempo</item>
-    <item>Mostra in ordine di aggiunta</item>
-    <item>Mostra in ordine casuale</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Mostra le carte nuove in ordine casuale</item>
-    <item>Mostra le carte nuove in ordine di aggiunta</item>
-    <item>Mostra le carte nuove in ordine di aggiunta inverso</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Distribuisci le carte nuove sulla sequenza di ripetizioni</item>
-    <item>Carte nuove dopo tutte le altre</item>
-    <item>Carte nuove prima delle ripetizioni</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Ripeti a partire dalle carte con l\'intervallo più lungo</item>
-    <item>Ripeti a partire dalle carte con l\'intervallo più corto</item>
-    <item>Ripeti le carte in ordine di scadenza</item>
-    <item>Ripeti le carte in ordine casuale</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Mostra presto le carte fallite</item>
-    <item>Mostra le carte fallite alla fine</item>
-    <item>Mostra le carte sbagliate tra 10 minuti</item>
-    <item>Mostra le carte sbagliate tra 8 ore</item>
-    <item>Mostra le carte sbagliate tra 3 giorni</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Nessuna azione</item>
@@ -99,12 +58,6 @@
     <item>Cancella carta</item>
     <item>Riproduci Media</item>
     <item>Interrompi l\'apprendimento</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Android scuro</item>
-    <item>Android chiaro</item>
-    <item>Blu</item>
-    <item>Bianco</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Sospendi carta</item>

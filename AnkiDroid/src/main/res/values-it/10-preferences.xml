@@ -138,7 +138,6 @@
   <string name="safe_display_summ">Disattiva tutte le animazioni e utilizza il metodo più sicuro per disegnare le carte. E-ink e vecchi dispositivi che utilizzano font personalizzati possono richiedere questo.</string>
   <string name="vertical_centering">Allinea al centro</string>
   <string name="vertical_centering_summ">Centra verticalmente il contenuto delle carte</string>
-  <string name="pref_cat_backup">Backups</string>
   <string name="pref_backup">Usa backup</string>
   <string name="pref_backup_summ">Crea automaticamente copie di backup prima di aprire un mazzo (una volta al giorno)</string>
   <string name="pref_backup_max">Numero massimo di backup</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">Soluzione per problemi di messa a fuoco su caselle di input HTML. Causa problemi su diversi dispositivi.</string>
   <string name="pref_keep_screen_on">Mantieni schermo acceso</string>
   <string name="pref_keep_screen_on_summ">Disabilita il timeout dello schermo</string>
-  <string name="pref_simple_interface">Interfaccia semplice</string>
-  <string name="pref_simple_interface_summ">Velocizza la visualizzazione delle carte ma non supporta tutte le funzionalità di html</string>
-  <string name="pref_simple_interface_exclude_tags">Etichette da escludere</string>
-  <string name="pref_simple_interface_exclude_tags_summ">Non utilizzare l\'interfaccia semplice per queste etichette: XXX</string>
-  <string name="write_answers_message">È necessario definire per ogni mazzo un campo da confrontare con la risposta scritta. È possibile farlo tramite Anki Desktop (proprietà mazzo -&gt; Modifica modello -&gt; layout carte).\n\nSe non è impostato nessun campo da confrontare, la risposta scritta verrà sempre confrontata con la risposta della carta intera</string>
   <string name="fix_arabic_text">Migliora schermo Arabo</string>
   <string name="fix_arabic_text_summ">Soluzione parziale per il supporto limitato dell\'arabo della piattaforma Android. Quando attivata non è possibile modificare le carte.</string>
   <string name="convert_fen_text">Supporto per la notazione scacchistica</string>
@@ -175,22 +169,11 @@
   <string name="filter_google_translate_summ">Salva unicamente la parola di origine e la traduzione</string>
   <string name="convert_fen_text_summ">Disegna la scacchiera dalla notazione Forsyth-Edwards. La notazione deve essere racchiusa nelle etichette [fen] [/fen].</string>
   <string name="studyoptions_limit_select_tags">Seleziona etichette</string>
-  <string name="studyoptions_limit_tags_active">Con: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">Senza: %1$s</string>
-  <string name="studyoptions_limit_button_text">Limite</string>
-  <string name="studyoptions_limit_dialog_title">Limite di apprendimento</string>
-  <string name="studyoptions_session">Sessione</string>
-  <string name="studyoptions_tag">Per etichetta</string>
-  <string name="studyoptions_tag_new">Visualizza le carte nuove per etichetta:</string>
-  <string name="studyoptions_tag_rev">Mostra le carte da ripetere per etichetta:</string>
-  <string name="studyoptions_new_cards_per_day">Carte nuove al giorno</string>
-  <string name="studyoptions_max_fail_card">Numero massimo carte fallite</string>
-  <string name="deck_conf_deck_name">Nome del mazzo</string>
   <string name="deck_conf_deck_description">Descrizione del mazzo</string>
   <string name="deck_conf_group">Gruppo di opzioni</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d mazzi utilizzano questo gruppo</item>
-    <item quantity="other">%1$s\n%2$d mazzi utilizzano questo gruppo</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">Carte nuove</string>
   <string name="deck_conf_rev_cards">Ripetizioni</string>
@@ -235,8 +218,8 @@
   <string name="deck_conf_remove_message">Rimuovere il gruppo di opzioni attuale?</string>
   <string name="deck_conf_set_subdecks">Imposta per tutti i sottomazzi</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s sottomazzi utilizzeranno questo gruppo</item>
-    <item quantity="other">%s sottomazzi utilizzeranno questo gruppo</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Imposta per tutti i sottomazzi</string>
   <string name="deck_conf_set_subdecks_message">Impostare il gruppo di opzioni attuale per tutti i sottomazzi di questo mazzo?</string>
@@ -244,7 +227,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filtro</string>
   <string name="deck_conf_cram_options">Opzioni</string>
-  <string name="deck_conf_cram_preset">Preimpostazione</string>
   <string name="deck_conf_cram_search">Cerca</string>
   <string name="deck_conf_cram_limit">Limita a</string>
   <string name="deck_conf_cram_order">carte selezionate per</string>

@@ -40,12 +40,12 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d картица приказана</item>
-    <item quantity="other">%d картице приказане</item>
+    <item quantity="one">%d card shown</item>
+    <item quantity="few">%d cards shown</item>
+    <item quantity="many">%d cards shown</item>
+    <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">Сви шпилови</string>
-  <string name="card_browser_load">Учитавање картица.\nМолим сачекајте...</string>
-  <string name="card_browser_cardloading_error">Грешка при учитавању картица. Вероватно је то повезано са ограничењем меморије вашег уређаја. Покушајте поново са мањим шпилом</string>
   <string name="card_browser_delete_card">Избриши белешку</string>
   <string name="card_browser_suspend_card">Откажи картицу</string>
   <string name="card_browser_unsuspend_card">Врати из отказаних</string>
@@ -54,36 +54,27 @@
   <string name="delete_card_title">Избриши белешку?</string>
   <string name="delete_card_message">Да ли заиста желите брисање свих картица ове белешке?\nПретрага поља: %s</string>
   <string name="card_browser_show_marked">Филтер је означен</string>
-  <string name="card_browser_field">Промени поље прегледачa картица.</string>
-  <string name="card_browser_field_title">Промени поље прегледачa картица.</string>
   <string name="card_browser_show_suspended">Филтер је заустављен</string>
   <string name="card_browser_search_by_tag">Филтрирај по ознаци</string>
   <string name="card_browser_tags_shown">Ознаке: %1$s</string>
+  <string name="card_browser_list_my_searches">My searches</string>
+  <string name="card_browser_list_my_searches_save">Save search</string>
+  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
+  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
+  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Промени сортирање</string>
   <string name="card_browser_change_display_order_title">Промени сортирање</string>
   <string name="card_browser_change_display_order_reverse">Изабери поље два пута за окретање.</string>
-  <string name="card_browser_order_reverse">(обрнуто)</string>
   <string name="card_details_question">Питање</string>
   <string name="card_details_answer">Одговор</string>
   <string name="card_details_due">Понављање</string>
-  <string name="card_details_last_due">Обављен преглед</string>
-  <string name="card_details_now">Сада</string>
-  <string name="card_details_interval">Интервал</string>
-  <string name="card_details_ease">Лакоћа</string>
-  <string name="card_details_average_time">Просечно време</string>
-  <string name="card_details_total_time">Укупно времена</string>
-  <string name="card_details_yes_count">Број Да</string>
-  <string name="card_details_no_count">Број Не</string>
-  <string name="card_details_added">Додато</string>
-  <string name="card_details_changed">Измењено</string>
   <string name="card_details_tags">Ознаке</string>
-  <string name="card_details_model">Врста белешке</string>
-  <string name="card_browser_sorting_cards">Сортирање карата.\nМолим сачекајте...</string>
   <string name="card_browser_filtering_cards">Филтрирање картица&#8230;\nИдите назад да прекинуте.</string>
-  <string name="card_details_card_model">Модел картице</string>
   <string-array name="card_browser_order_labels">
     <item>Без сортирања (брже)</item>
-    <item>Претрага по пољу</item>
+    <item>By sort field</item>
     <item>по времену креирања</item>
     <item>по времену уређивања</item>
     <item>по времену мењања</item>

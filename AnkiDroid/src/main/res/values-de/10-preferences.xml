@@ -138,7 +138,6 @@
   <string name="safe_display_summ">Animationen deaktivieren und Karten mit sichererer Methode darstellen. E-Ink-Geräte und ältere Geräte, die benutzerdefinierte Schriftarten verwenden, können dies benötigen.</string>
   <string name="vertical_centering">Zentriert</string>
   <string name="vertical_centering_summ">Den Inhalt der Karten vertikal zentrieren</string>
-  <string name="pref_cat_backup">Sicherungssystem</string>
   <string name="pref_backup">Benutze Sicherungen</string>
   <string name="pref_backup_summ">Sicherung automatisch vor dem  vor dem Öffnen eines Stapels erstellen (einmal täglich)</string>
   <string name="pref_backup_max">Maximale Anzahl an Sicherungen</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">Abhilfe für die Fokussierungsprobleme auf HTML Eingabefeldern. Verursacht Probleme auf verschiedenen Geräten</string>
   <string name="pref_keep_screen_on">Bildschirm nicht ausschalten</string>
   <string name="pref_keep_screen_on_summ">Bildschirm-Timeout deaktivieren</string>
-  <string name="pref_simple_interface">Einfache Oberfläche</string>
-  <string name="pref_simple_interface_summ">Beschleunigt die Kartenanzeige, unterstützt aber nicht alle Html-Features</string>
-  <string name="pref_simple_interface_exclude_tags">Nicht mit Schlagworten</string>
-  <string name="pref_simple_interface_exclude_tags_summ">Für folgende Schlagworte die einfache Oberfläche nicht benutzen: XXX</string>
-  <string name="write_answers_message">Für jedes Deck definieren Sie ein Feld, um damit die geschriebene Antwort zu vergleichen. Sie erreichen dies über Anki Desktop (Deck-Eigenschaften -&gt; Modell bearbeiten- -&gt; Kartenlayout).\n\n wenn kein Vergleichsfeld festgelegt ist, wird Ihre geschriebene Antwort immer mit der ganzen Karten- antwort verglichen werden</string>
   <string name="fix_arabic_text">Anzeige von Arabisch verbessern</string>
   <string name="fix_arabic_text_summ">Partielle Lösung für begrenztet Unterstützung arabischer Schrift auf Android. Wenn dies aktiviert ist können keine Karten bearbeitet werden.</string>
   <string name="convert_fen_text">Unterstützung für Schach-Notation</string>
@@ -175,22 +169,11 @@
   <string name="filter_google_translate_summ">Nur das Ausgangswort und Übersetzung speichern</string>
   <string name="convert_fen_text_summ">Schachbrett aus Forsyth–Edwards-Notation erstellen. Die Position muss in  [fen][/fen]-Tags eingefasst sein.</string>
   <string name="studyoptions_limit_select_tags">Schlagworte wählen</string>
-  <string name="studyoptions_limit_tags_active">mit: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">ohne: %1$s</string>
-  <string name="studyoptions_limit_button_text">Limit</string>
-  <string name="studyoptions_limit_dialog_title">Lernen einschränken</string>
-  <string name="studyoptions_session">Sitzung</string>
-  <string name="studyoptions_tag">Nach Schlagwort</string>
-  <string name="studyoptions_tag_new">Neue Karten nach Schlagworten:</string>
-  <string name="studyoptions_tag_rev">Wiederholungen nach Schlagworten:</string>
-  <string name="studyoptions_new_cards_per_day">Neue Karten pro Tag</string>
-  <string name="studyoptions_max_fail_card">Maximum falscher Karten</string>
-  <string name="deck_conf_deck_name">Stapelname</string>
   <string name="deck_conf_deck_description">Stapelbeschreibung</string>
   <string name="deck_conf_group">Optionengruppe</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d Stapel verwendet diese Gruppe</item>
-    <item quantity="other">%1$s\n%2$d Stapel verwenden diese Gruppe</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">Neue Karten</string>
   <string name="deck_conf_rev_cards">Wiederholungen</string>
@@ -235,8 +218,8 @@
   <string name="deck_conf_remove_message">Aktuelle Optionsgruppe löschen?</string>
   <string name="deck_conf_set_subdecks">Auf alle Unterstapel anwenden</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s Unterstapel wird diese Gruppe verwenden</item>
-    <item quantity="other">%s Unterstapel werden diese Gruppe verwenden</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Auf alle Unterstapel anwenden</string>
   <string name="deck_conf_set_subdecks_message">Aktuelle Optionsgruppe für alle Unterstapel dieses Stapels festlegen?</string>
@@ -244,7 +227,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filter</string>
   <string name="deck_conf_cram_options">Optionen</string>
-  <string name="deck_conf_cram_preset">Voreinstellung</string>
   <string name="deck_conf_cram_search">Suchen</string>
   <string name="deck_conf_cram_limit">Beschränken auf</string>
   <string name="deck_conf_cram_order">Karten ausgewählt nach</string>

@@ -138,7 +138,6 @@
   <string name="safe_display_summ">غیرفعال کردن همه انیمیشن‌ها و استفاده از حالت محتاطانه‌تر برای نمایش کارت‌ها. این گزینه برای دستگاههای با جوهر الکترونیکی و قدیمی که فونت سفارشی استفاده می‌کنند ممکن است لازم باشد.</string>
   <string name="vertical_centering">تراز در وسط</string>
   <string name="vertical_centering_summ">تراز کردن محتوای کارت‌ها بصورت عمودی در وسط</string>
-  <string name="pref_cat_backup">نسخه های پشتیبان</string>
   <string name="pref_backup">از نسخه های پشتبان استفاده کنید</string>
   <string name="pref_backup_summ">ایجاد پشتیبان بطور خودکار پیش از باز کردن یک دسته (یکبار در روز)</string>
   <string name="pref_backup_max">حداکثر تعداد پشتیبان‌ها</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">راه‌حلی برای برطرف کردن مشکلات در ورودی‌های HTML. باعث ایجاد مشکلاتی در برخی دستگاه‌ها می‌شود</string>
   <string name="pref_keep_screen_on">روشن نگه‌داشتن صفحه</string>
   <string name="pref_keep_screen_on_summ">غیرفعال کردن زمان خاموش شدن صفحه نمایش</string>
-  <string name="pref_simple_interface">رابط کاربری ساده</string>
-  <string name="pref_simple_interface_summ">با سرعت بالا کارت نمایش داده می شود ولی تمام ویژگیهای اچ تی ام ال پشتیبانی نمی شود</string>
-  <string name="pref_simple_interface_exclude_tags">برچسب‌های استثنا</string>
-  <string name="pref_simple_interface_exclude_tags_summ">از رابط کاربری ساده برای این برچسب استفاده نکن: XXX</string>
-  <string name="write_answers_message">شما باید برای هر دسته یک فیلد جهت مقایسه پاسخ نوشتاری تعریف کنید. برای انجام این کار می توایند از نرم افزار رایانه استفاده نمایید (خواص دسته -&gt; ویرایش الگو -&gt; لایه کارت).\n\nاگر نتوانستید فیلد مقایسه را تنظیم کنید, پاسخ نوشتاری شما همیشه با مرورگر کارت مقایسه خواهد شد</string>
   <string name="fix_arabic_text">اصلاح نمایش عربی</string>
   <string name="fix_arabic_text_summ">راه‌حل ناقص برای پشتیبانی محدود از نوشتار عربی در سیستم اندروید. وقتی فعال باشد امکان ویرایش و تغییر کارت‌ها وجود ندارد</string>
   <string name="convert_fen_text">پشتیبانی از ثبت حرکات شطرنج</string>
@@ -175,22 +169,10 @@
   <string name="filter_google_translate_summ">اکنون کلمه اصلی و ترجمه را ذخیره کنید</string>
   <string name="convert_fen_text_summ">رسم صفحه شطرنجی از Forsyth Edwards Notation. یادداشت باید داخل تگ [fen][/fen] محصور باشد</string>
   <string name="studyoptions_limit_select_tags">انتخاب برچسبها</string>
-  <string name="studyoptions_limit_tags_active">با: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">بدون: %1$s</string>
-  <string name="studyoptions_limit_button_text">محدود</string>
-  <string name="studyoptions_limit_dialog_title">محدود کردن یادگیری</string>
-  <string name="studyoptions_session">جلسه</string>
-  <string name="studyoptions_tag">توسط برچسب</string>
-  <string name="studyoptions_tag_new">کارت های جدید بر اساس برچسب نشان می دهد:</string>
-  <string name="studyoptions_tag_rev">کارتهای مرور را توسط برچسب نشان می دهد:</string>
-  <string name="studyoptions_new_cards_per_day">کارت های جدید در هر روز</string>
-  <string name="studyoptions_max_fail_card">حداکثر کارتهای خراب</string>
-  <string name="deck_conf_deck_name">نام دسته</string>
   <string name="deck_conf_deck_description">توصیف دسته</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d deck uses this group</item>
-    <item quantity="other">%1$s\n%2$d دسته ها از این گروه استفاده می کنند</item>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">کارت های جدید</string>
   <string name="deck_conf_rev_cards">مرورها</string>
@@ -235,8 +217,7 @@
   <string name="deck_conf_remove_message">تنظیمات فعلی گروه حذف شود؟</string>
   <string name="deck_conf_set_subdecks">برای تمام دسته ها تنظیم شود</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s subdeck will use this group</item>
-    <item quantity="other">%s دسته های کل از این گروه استفاده خواهند کرد</item>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">برای تمام دسته ها تنظیم شود</string>
   <string name="deck_conf_set_subdecks_message">تنظیمات گروه فعلی برای کل این دسته از دسته ها تنظیم شود؟</string>
@@ -244,7 +225,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">فیلتر</string>
   <string name="deck_conf_cram_options">گزینه ها</string>
-  <string name="deck_conf_cram_preset">از پیش تعیین شده</string>
   <string name="deck_conf_cram_search">جستجو</string>
   <string name="deck_conf_cram_limit">محدود به</string>
   <string name="deck_conf_cram_order">کارتهای انتخاب شده بوسیله</string>

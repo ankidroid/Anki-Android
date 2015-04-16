@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">Статистика</string>
   <string name="statistics_young">Молодые</string>
   <string name="statistics_mature">Развитые</string>
   <string name="statistics_young_and_learn">Недавние+Изучаемые</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">Переучивание</string>
   <string name="statistics_learn">Обучение</string>
   <string name="statistics_cram">Зубрёжка</string>
-  <string name="statistics_type_title">Статистика</string>
   <string name="stats_cards">Карт</string>
   <string name="stats_cards_intervals">Карты с заданным интервалом</string>
   <string name="stats_cumulative_cards">Общее количество карт</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1 месяц</string>
   <string name="stats_period_year">1 год</string>
   <string name="stats_period_lifetime">жизнь карты</string>
-  <string name="stats_deck_current">колода</string>
   <string name="stats_deck_collection">коллекция</string>
   <string name="stats_time_of_day">время суток</string>
   <string name="stats_day_of_week">день недели</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">Изучено: &lt;b&gt;%1$s&lt;/b&gt;, Просмотрено: &lt;b&gt;%2$s&lt;/b&gt;, Переучено: &lt;b&gt;%3$s&lt;/b&gt;, Фильтровано: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Правильных ответов в развитых картах: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Сегодня не было изучено ни одной развитой карты.</string>
-  <string name="statistics_period_x_axis_minutes">минут</string>
-  <string name="statistics_new_cards">Новые карты</string>
-  <string name="statistics_failed_cards">Трудные карты</string>
-  <string name="statistics_fullscreen">Полноэкранный режим</string>
-  <string name="calculating_statistics">Расчет статистики.\nПожалуйста, подождите...</string>
-  <string name="deck_summary_cards">Количество карт:</string>
-  <string name="deck_summary_notes">Количество заметок:</string>
-  <string name="deck_summary_cards_mature">Развитые карты:</string>
-  <string name="deck_summary_cards_young">Молодые карты:</string>
-  <string name="deck_summary_cards_unseen">Ни разу не просмотренные:</string>
-  <string name="deck_summary_card_age">Возраст карт</string>
-  <string name="deck_summary_average_interval">Средний интервал: &lt;b&gt;%.1f&lt;/b&gt; дней</string>
-  <string name="deck_summary_answers_correct">Правильные ответы</string>
-  <string name="deck_summary_answers_mature">Развитые карты: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d из %4$d)</string>
-  <string name="deck_summary_answers_young">Молодые карты: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d из %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Просмотренные первый раз: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d из %4$d)</string>
-  <string name="deck_summary_reviews">Повторов:</string>
-  <string name="deck_summary_news">Новые карты:</string>
-  <string name="deck_summary_average_week">В среднем за последнюю неделю</string>
-  <string name="deck_summary_average_month">В среднем за последний месяц</string>
-  <string name="deck_summary_average_year">В среднем за последний год</string>
-  <string name="deck_summary_average_total">В среднем за всё время</string>
-  <string name="deck_summary_forecast">Прогноз</string>
-  <string name="deck_summary_tomorrow_due">Завтра повторов: &lt;b&gt;%d&lt;/b&gt; карт</string>
-  <string name="deck_summary_tomorrow_new">Завтра новых: &lt;b&gt;%d&lt;/b&gt; карт</string>
-  <string name="deck_summary_tomorrow_time">Вероятно займёт завтра: &lt;b&gt;%d&lt;/b&gt; мин.</string>
-  <string name="deck_summary_finished_in">Новые карты будут просмотрены за: &lt;b&gt;%d&lt;/b&gt; дней</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; карт/день</string>
-  <string name="deck_summary_deck_age">Возраст колоды: &lt;b&gt;%d&lt;/b&gt; дней</string>
   <string name="deck_summary_all_decks">Все колоды</string>
-  <string name="stats_select_decks">выберите колоду</string>
   <string name="stats_select_time_scale">выберите временной интервал</string>
   <string-array name="next_review_in_s">
     <item>через 1 секунду</item>
@@ -155,15 +122,6 @@
   <string name="stats_weekly_breakdown">Еженедельный перерыв</string>
   <string name="stats_answer_buttons">Кнопки Ответ</string>
   <string name="stats_cards_types">Типы карт</string>
-  <string-array name="stats_period">
-    <item>1 месяц</item>
-    <item>1 год</item>
-    <item>все</item>
-  </string-array>
-  <string-array name="stats_range">
-    <item>коллекция</item>
-    <item>текущая колода</item>
-  </string-array>
   <string-array name="stats_day_time_strings">
     <item>4:00</item>
     <item>10:00</item>
@@ -194,11 +152,13 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">Изучено &lt;b&gt;%1$d карт&lt;/b&gt; сегодня за &lt;b&gt;%2$s&lt;/b&gt; .</item>
-    <item quantity="other">Изучено &lt;b&gt;%1$d карт&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; сегодня.</item>
+    <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
+    <item quantity="few">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
+    <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
   </plurals>
   <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Изучено %1$d карт за %2$s сегодня.</item>
-    <item quantity="other">Сегодня изучено %1$d карт в %2$s.</item>
+    <item quantity="one">Studied %1$d card in %2$s today.</item>
+    <item quantity="few">Studied %1$d cards in %2$s today.</item>
+    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

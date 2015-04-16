@@ -40,12 +40,10 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d kart gösteriliyor</item>
-    <item quantity="other">%d kart gösteriliyor</item>
+    <item quantity="one">%d card shown</item>
+    <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">Bütün desteler</string>
-  <string name="card_browser_load">Kartlar yükleniyor.\nLütfen bekleyin...</string>
-  <string name="card_browser_cardloading_error">Kartlar yüklenirken hata. Bu muhtemelen cihazınızın bellek kısıtlamalarıyla ilgili. Daha küçük bir desteyle tekrar deneyin.</string>
   <string name="card_browser_delete_card">Notu sil</string>
   <string name="card_browser_suspend_card">Kartı askıya al</string>
   <string name="card_browser_unsuspend_card">Kartı devreye sok</string>
@@ -54,36 +52,27 @@
   <string name="delete_card_title">Notu sil</string>
   <string name="delete_card_message">Bu nottaki bütün kartlar gerçekten silinsin mi?\nArama alanı: %s</string>
   <string name="card_browser_show_marked">İşâretlileri göster</string>
-  <string name="card_browser_field">Kart Tarayıcısı Alanını Değiştir</string>
-  <string name="card_browser_field_title">Kart Tarayıcısı Alanını Değiştir</string>
   <string name="card_browser_show_suspended">Askıdakileri göster</string>
   <string name="card_browser_search_by_tag">Etikete göre filtrele</string>
   <string name="card_browser_tags_shown">Etiketler: %1$s</string>
+  <string name="card_browser_list_my_searches">My searches</string>
+  <string name="card_browser_list_my_searches_save">Save search</string>
+  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
+  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
+  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Gösterme sırasını seç</string>
   <string name="card_browser_change_display_order_title">Gösterme sırasını seç</string>
   <string name="card_browser_change_display_order_reverse">İki kez tersine çevirmek için bir alan seçin.</string>
-  <string name="card_browser_order_reverse">(ters)</string>
   <string name="card_details_question">Soru</string>
   <string name="card_details_answer">Yanıt</string>
   <string name="card_details_due">Vade</string>
-  <string name="card_details_last_due">Son çıkma</string>
-  <string name="card_details_now">Şu anda</string>
-  <string name="card_details_interval">Aralık</string>
-  <string name="card_details_ease">Kolaylık</string>
-  <string name="card_details_average_time">Ortalama süre</string>
-  <string name="card_details_total_time">Toplam süre</string>
-  <string name="card_details_yes_count">Evet sayısı</string>
-  <string name="card_details_no_count">Hayır sayısı</string>
-  <string name="card_details_added">Eklenme tarihi</string>
-  <string name="card_details_changed">Değiştirilme tarihi</string>
   <string name="card_details_tags">Etiketler</string>
-  <string name="card_details_model">Not türü</string>
-  <string name="card_browser_sorting_cards">Kartlar sıralanıyor.\nLütfen bekleyin...</string>
   <string name="card_browser_filtering_cards">Kartlar filtreleniyor&#8230; \nİptâl etmek için geri düğmesine basın</string>
-  <string name="card_details_card_model">Kart modeli</string>
   <string-array name="card_browser_order_labels">
     <item>Sıralamadan (daha hızlı)</item>
-    <item>Arama alanına göre</item>
+    <item>By sort field</item>
     <item>Oluşturulma zamanına göre</item>
     <item>Düzenleme zamanına göre</item>
     <item>Değiştirilme zamanına göre</item>

@@ -34,15 +34,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="multimedia_editor_languages_russian">俄文</string>
-  <string name="multimedia_editor_languages_german">德文</string>
-  <string name="multimedia_editor_languages_nepali">尼泊尔文</string>
-  <string name="multimedia_editor_languages_slovak">斯洛伐克文</string>
-  <string name="multimedia_editor_languages_french">法文</string>
-  <string name="multimedia_editor_languages_spanish">西班牙文</string>
-  <string name="multimedia_editor_languages_mandarin">简体中文</string>
-  <string name="multimedia_editor_languages_portuguese">葡萄牙文</string>
-  <string name="multimedia_editor_languages_english">英文</string>
   <string name="multimedia_editor_popup_image">添加图像</string>
   <string name="multimedia_editor_popup_audio">录制音频</string>
   <string name="multimedia_editor_popup_text">高级编辑器</string>
@@ -83,13 +74,6 @@
   <string name="multimedia_editor_text_field_editing_no_text">Input some text first</string>
   <string name="multimedia_editor_text_field_editing_many_words">Dictionary usually expects one word</string>
   <string name="multimedia_editor_text_field_editing_clone_source">Take from</string>
-  <string name="multimedia_editor_activity_note_type">Note type</string>
-  <string name="multimedia_editor_activity_deck">Deck</string>
-  <string name="multimedia_editor_activity_edit_button">Edit</string>
-  <string name="multimedia_editor_activity_swap_button">Swap</string>
-  <string name="multimedia_editor_activity_delete_question">Delete the whole note?</string>
-  <string name="multimedia_editor_activity_delete_confirm">Delete</string>
-  <string name="multimedia_editor_activity_delete_reject">Keep</string>
   <string name="multimedia_editor_image_field_editing_galery">Gallery</string>
   <string name="multimedia_editor_image_field_editing_photo">Camera</string>
   <string name="multimedia_editor_general_downloading">Downloading</string>
@@ -105,7 +89,6 @@
   <string name="multimedia_editor_audio_view_playing_failed">播放失败</string>
   <string name="title_activity_edit_text">Editing field</string>
   <string name="title_activity_translation">Translation</string>
-  <string name="title_activity_audio_recorder">Audio recorder</string>
   <string name="title_activity_load_pronounciation">发音</string>
   <string name="title_activity_search_image">Google Image Search</string>
 </resources>

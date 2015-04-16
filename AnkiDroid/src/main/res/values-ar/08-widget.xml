@@ -44,21 +44,20 @@
   <string name="widget_no_cards_due">لا شيء للمراجعة</string>
   <string name="widget_loading">تحميل الودجة...</string>
   <plurals name="widget_cards_in_decks_due">
+    <item quantity="zero">%1$d cards due in %2$s</item>
     <item quantity="one">%1$d card due in %2$s</item>
-    <item quantity="other">%1$d بطاقة تنتظر المراجعة في %2$s</item>
+    <item quantity="two">%1$d cards due in %2$s</item>
+    <item quantity="few">%1$d cards due in %2$s</item>
+    <item quantity="many">%1$d cards due in %2$s</item>
+    <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
+    <item quantity="zero">%1$d decks</item>
     <item quantity="one">%1$d deck</item>
-    <item quantity="other">%1$d رزم</item>
+    <item quantity="two">%1$d decks</item>
+    <item quantity="few">%1$d decks</item>
+    <item quantity="many">%1$d decks</item>
+    <item quantity="other">%1$d decks</item>
   </plurals>
-  <string name="widget_medium">آنكيدرويد متوسط</string>
   <string name="widget_small">آنكيدرويد صغير</string>
-  <string name="widget_big">آنكيدرويد كبير</string>
-  <string name="widget_big_restrictions_dialog">نظرا لبعض القيود في إطار ودجات أندرويد فإن هذه الودجة يمكنها عرض النص فقط وليس الصور/الأصوات إلخ.</string>
-  <string name="open_in_reviewer">افتح الرزمة في آنكيدرويد</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Estimated time: %d min.</item>
-    <item quantity="other">الوقت المقدر:%d دقيقة.</item>
-  </plurals>
-  <string name="widget_big_tomorrow_due">ينتظر المراجعة غدا:</string>
 </resources>

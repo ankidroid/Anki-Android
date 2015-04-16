@@ -33,6 +33,7 @@ import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.libanki.template.Template;
+import com.ichi2.utils.VersionUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -139,7 +140,7 @@ public class Collection {
         mDb = db;
         mPath = path;
         _openLog();
-        log(path, AnkiDroidApp.getPkgVersionName());
+        log(path, VersionUtils.getPkgVersionName());
         mServer = server;
         mLastSave = Utils.now();
         clearUndo();
@@ -815,7 +816,7 @@ public class Collection {
      */
 
     public boolean isEmpty() {
-        return mDb.queryScalar("SELECT 1 FROM cards LIMIT 1", false) == 0;
+        return mDb.queryScalar("SELECT 1 FROM cards LIMIT 1") == 0;
     }
 
 
@@ -1312,12 +1313,12 @@ public class Collection {
      */
     public boolean basicCheck() {
         // cards without notes
-        if (mDb.queryScalar("select 1 from cards where nid not in (select id from notes) limit 1", false) > 0) {
+        if (mDb.queryScalar("select 1 from cards where nid not in (select id from notes) limit 1") > 0) {
             return false;
         }
         boolean badNotes = mDb.queryScalar(String.format(Locale.US,
                 "select 1 from notes where id not in (select distinct nid from cards) " +
-                "or mid not in %s limit 1", Utils.ids2str(mModels.ids())), false) > 0;
+                "or mid not in %s limit 1", Utils.ids2str(mModels.ids()))) > 0;
         // notes without cards or models
         if (badNotes) {
             return false;
@@ -1339,7 +1340,7 @@ public class Collection {
                 boolean badOrd = mDb.queryScalar(String.format(Locale.US,
                         "select 1 from cards where ord not in %s and nid in ( " +
                         "select id from notes where mid = %d) limit 1",
-                        Utils.ids2str(ords), m.getLong("id")), false) > 0;
+                        Utils.ids2str(ords), m.getLong("id"))) > 0;
                 if (badOrd) {
                     return false;
                 }
@@ -1459,7 +1460,7 @@ public class Collection {
                 mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intNow() + ", usn = " + usn()
                         + " WHERE due > 1000000 AND queue = 0");
                 // new card position
-                mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0", false));
+                mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
                 // reviews should have a reasonable due
                 ids = mDb.queryColumn(Long.class, "SELECT id FROM cards WHERE queue = 2 AND due > 10000", 0);
                 if (ids.size() > 0) {

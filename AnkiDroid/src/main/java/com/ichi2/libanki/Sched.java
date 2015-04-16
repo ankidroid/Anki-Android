@@ -737,7 +737,7 @@ public class Sched {
     		return 0;
     	}
     	lim = Math.min(lim, mReportLimit);
-    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = 0 LIMIT " + lim + ")", false);
+    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = 0 LIMIT " + lim + ")");
     }
 
 
@@ -755,7 +755,7 @@ public class Sched {
     }
 
     public int totalNewForCurrentDeck() {
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = 0 LIMIT " + mReportLimit + ")", false);
+        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + " AND queue = 0 LIMIT " + mReportLimit + ")");
     }
 
     /**
@@ -764,14 +764,14 @@ public class Sched {
 
     private void _resetLrnCount() {
         // sub-day
-        mLrnCount = (int) mCol.getDb().queryScalar(
+        mLrnCount = mCol.getDb().queryScalar(
                 "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did IN " + _deckLimit()
-                + " AND queue = 1 AND due < " + mDayCutoff + " LIMIT " + mReportLimit + ")", false);
+                + " AND queue = 1 AND due < " + mDayCutoff + " LIMIT " + mReportLimit + ")");
 
         // day
-        mLrnCount += (int) mCol.getDb().queryScalar(
+        mLrnCount += mCol.getDb().queryScalar(
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = 3 AND due <= " + mToday
-                        + " LIMIT " + mReportLimit, false);
+                        + " LIMIT " + mReportLimit);
     }
 
 
@@ -1191,11 +1191,11 @@ public class Sched {
             int cnt = mCol.getDb().queryScalar(
                     "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did = " + did
                             + " AND queue = 1 AND due < " + (Utils.intNow() + mCol.getConf().getInt("collapseTime"))
-                            + " LIMIT " + mReportLimit + ")", false);
+                            + " LIMIT " + mReportLimit + ")");
             return cnt + mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did
                             + " AND queue = 3 AND due <= " + mToday
-                            + " LIMIT " + mReportLimit + ")", false);
+                            + " LIMIT " + mReportLimit + ")");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (JSONException e) {
@@ -1232,7 +1232,7 @@ public class Sched {
 
     public int _revForDeck(long did, int lim) {
     	lim = Math.min(lim, mReportLimit);
-    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = 2 AND due <= " + mToday + " LIMIT " + lim + ")", false);
+    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did + " AND queue = 2 AND due <= " + mToday + " LIMIT " + lim + ")");
     }
 
 
@@ -1341,7 +1341,7 @@ public class Sched {
     public int totalRevForCurrentDeck() {
         return mCol.getDb().queryScalar(String.format(Locale.US,
         		"SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN %s AND queue = 2 AND due <= %d LIMIT %s)",
-        		Utils.ids2str(mCol.getDecks().active()), mToday, mReportLimit), false);
+        		Utils.ids2str(mCol.getDecks().active()), mToday, mReportLimit));
     }
 
 
@@ -1608,10 +1608,10 @@ public class Sched {
         mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where " + lim, 0));
         // move out of cram queue
         mCol.getDb().execute(
-                "UPDATE cards SET did = odid, queue = (CASE WHEN type = 1 THEN 0 "
-                        + "ELSE type END), type = (CASE WHEN type = 1 THEN 0 ELSE type END), "
-                        + "due = odue, odue = 0, odid = 0, usn = ?, mod = ? where " + lim,
-                new Object[]{mCol.usn(), Utils.intNow()});
+                "update cards set did = odid, queue = (case when type = 1 then 0 " +
+                "else type end), type = (case when type = 1 then 0 else type end), " +
+                "due = odue, odue = 0, odid = 0, usn = ? where " + lim,
+                new Object[] { mCol.usn() });
     }
 
 
@@ -1673,7 +1673,7 @@ public class Sched {
         int u = mCol.usn();
         for (long c = 0; c < ids.size(); c++) {
             // start at -100000 so that reviews are all due
-            data.add(new Object[] { did, -100000 + c, t, u, ids.get((int) c) });
+            data.add(new Object[] { did, -100000 + c, u, ids.get((int) c) });
         }
         // due reviews stay in the review queue. careful: can't use "odid or did", as sqlite converts to boolean
         String queue = "(CASE WHEN type = 2 AND (CASE WHEN odue THEN odue <= " + mToday +
@@ -1681,7 +1681,7 @@ public class Sched {
         mCol.getDb().executeMany(
                 "UPDATE cards SET odid = (CASE WHEN odid THEN odid ELSE did END), " +
                         "odue = (CASE WHEN odue THEN odue ELSE due END), did = ?, queue = " +
-                        queue + ", due = ?, mod = ?, usn = ? WHERE id = ?", data);
+                        queue + ", due = ?, usn = ? WHERE id = ?", data);
     }
 
 
@@ -1954,21 +1954,20 @@ public class Sched {
         return mCol.getDb()
                 .queryScalar(
                         "SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = 2 AND due <= " + mToday
-                                + " LIMIT 1", false) != 0;
+                                + " LIMIT 1") != 0;
     }
 
 
     /** true if there are any new cards due. */
     public boolean newDue() {
-        return mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = 0 LIMIT 1",
-                false) != 0;
+        return mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = 0 LIMIT 1") != 0;
     }
 
 
     public boolean haveBuried() {
         String sdids = Utils.ids2str(mCol.getDecks().active());
         int cnt = mCol.getDb().queryScalar(String.format(Locale.US,
-                "select 1 from cards where queue = -2 and did in %s limit 1", sdids), false);
+                "select 1 from cards where queue = -2 and did in %s limit 1", sdids));
         return cnt != 0;
     }
 
@@ -2165,7 +2164,7 @@ public class Sched {
         remFromDyn(ids);
         mCol.getDb().execute("update cards set type=0,queue=0,ivl=0,due=0,odue=0,factor=2500" +
                 " where id in " + Utils.ids2str(ids));
-        int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=0", false);
+        int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=0");
         // takes care of mod + usn
         sortCards(ids, pmax + 1);
         mCol.log(ids);
@@ -2244,7 +2243,7 @@ public class Sched {
         // shift?
         if (shift) {
             int low = mCol.getDb().queryScalar(
-                    "SELECT min(due) FROM cards WHERE due >= " + start + " AND type = 0 AND id NOT IN " + scids, false);
+                    "SELECT min(due) FROM cards WHERE due >= " + start + " AND type = 0 AND id NOT IN " + scids);
             if (low != 0) {
                 int shiftby = high - low + 1;
                 mCol.getDb().execute(
@@ -2365,14 +2364,13 @@ public class Sched {
 
     public int cardCount() {
         String dids = _deckLimit();
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE did IN " + dids, false);
+        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE did IN " + dids);
     }
 
 
     public int matureCount() {
         String dids = _deckLimit();
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE type = 2 AND ivl >= 21 AND did IN " + dids,
-                false);
+        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE type = 2 AND ivl >= 21 AND did IN " + dids);
     }
 
 
@@ -2603,6 +2601,7 @@ public class Sched {
     public class DeckDueTreeNode implements Comparable {
         public String[] names;
         public long did;
+        public int depth;
         public int revCount;
         public int lrnCount;
         public int newCount;
@@ -2636,8 +2635,8 @@ public class Sched {
 
         @Override
         public String toString() {
-            return String.format("%s, %d, %d, %d, %d, %s",
-                    Arrays.toString(names), did, revCount, lrnCount, newCount, children);
+            return String.format("%s, %d, %d, %d, %d, %d, %s",
+                    Arrays.toString(names), did, depth, revCount, lrnCount, newCount, children);
         }
     }
 }

@@ -28,6 +28,7 @@ import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.VersionUtils;
 
 import org.apache.http.HttpResponse;
 
@@ -52,7 +53,7 @@ public class FullSyncer extends HttpSyncer {
         mPostVars = new HashMap<String, Object>();
         mPostVars.put("k", hkey);
         mPostVars.put("v",
-                String.format(Locale.US, "ankidroid,%s,%s", AnkiDroidApp.getPkgVersionName(), Utils.platDesc()));
+                String.format(Locale.US, "ankidroid,%s,%s", VersionUtils.getPkgVersionName(), Utils.platDesc()));
         mCol = col;
         mCon = con;
     }

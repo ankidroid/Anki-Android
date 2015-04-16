@@ -48,8 +48,6 @@
   <string name="CardEditorTags">Мітки: %1$s</string>
   <string name="CardEditorCards">Cards: %1$s</string>
   <string name="add_new_filter_tags">Додати/фільтрувати теґи</string>
-  <string name="note_type">Тип Запису</string>
-  <string name="card_type">Тип картки</string>
   <string name="filter_tags">Фільтрувати теґи</string>
   <string name="sdcard_missing_message">SD картка недоступна бо використовується як USB накопичувач. Для доступу до ваших колекцій від’єднайте USB.</string>
   <string name="enable_whiteboard">Enable whiteboard</string>
@@ -58,8 +56,6 @@
   <string name="hide_whiteboard">Заховати Дошку</string>
   <string name="clear_whiteboard">Очистити Дошку</string>
   <string name="replay_audio">Повторити аудіо</string>
-  <string name="cram_edit_warning">Не можна змінювати картки під-час зубріння</string>
-  <string name="suspend_leeches">Відкласти липкі картки</string>
   <string name="leech_suspend_notification">Картку позначено як липка, і відкладено</string>
   <string name="leech_notification">Картка позначена як липка</string>
   <string name="corrupt_font">Пошкоджений файл шрифтів %s</string>
@@ -80,10 +76,8 @@
   <string name="cardeditor_title_edit_card">Змінити запис</string>
   <string name="discard_unsaved_changes">Close and lose current input?</string>
   <string name="factadder_saving_error">Помилка збереження запису</string>
-  <string name="pref_lang_support">Мова</string>
   <string name="saving_facts">Зберегти запис</string>
   <string name="saving_model">Saving model</string>
-  <string name="deck">Колода</string>
   <string name="add">Додати</string>
   <string name="close">Закрити</string>
   <string name="select">Вибрати</string>
@@ -93,20 +87,17 @@
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d card studied in %2$s</item>
-    <item quantity="other">%1$d карт вивчено за %2$s</item>
+    <item quantity="few">%1$d cards studied in %2$s</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
     <item quantity="one">%1$d minute</item>
-    <item quantity="other">%1$d хвилин</item>
+    <item quantity="few">%1$d minutes</item>
+    <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">Ласкаво просимо в AnkiDroid</string>
-  <string name="studyoptions_no_external_storage_title">Немає доступної зовнішньої пам’яті</string>
-  <string name="studyoptions_no_external_storage_message">Немає доступної зовнішньої пам’яті. AnkiDroid необхідний доступ до SD карти для завантаження та читання ваших колод Anki. Перевірте, що ваша SD картка встановлена і спробуйте знову.</string>
   <string name="fact_adder_intent_title">Картка AnkiDroid</string>
-  <string name="deckpicker_select_dictionary_title">Вибрати Словник</string>
-  <string name="deckpicker_select_dictionary_default">Стандартні налаштування</string>
   <string name="card_editor_add_card">Додати примітку</string>
-  <string name="card_editor_reset">Скинути</string>
   <string name="card_editor_copy_card">Копіювати картку</string>
   <string name="card_editor_reset_card">Скинути поступ</string>
   <string name="card_editor_reschedule_card">Reschedule card</string>
@@ -117,38 +108,22 @@
   <string name="default_conf_delete_error">Неможливо видалити групу з типовими параметрами</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d card added</item>
-    <item quantity="other">додано %d карток</item>
+    <item quantity="few">%d cards added</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">Допомога</string>
-  <string name="help_online">Допомога онлайн</string>
-  <string name="help_faq">FAQ</string>
   <string name="check_db">Перевірити базу даних</string>
   <string name="check_media">Check media</string>
   <string name="check_db_message">Перевірка бази даних.\n Будь ласка, зачекайте...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Порожня картка. Запустіть \"Інструменти &gt; порожні карти...\" на стільничному клієнті.</string>
   <string name="unknown_type_field_warning">Введіть відповідь: невідоме поле %s</string>
-  <string name="simple_interface_hint">Спорожнюється %s. Пам’ятайте, що простий інтерфейс не підтримує картинок/звуків та ін.</string>
   <string name="delete_deck">Видалення колоди...\n Будь ласка, зачекайте.</string>
-  <string-array name="dynOrderLabels">
-    <item>Найстарші спочатку</item>
-    <item>Випадковий порядок</item>
-    <item>Зростаючий інтервал</item>
-    <item>Спадний інтервал</item>
-    <item>Найбільші недоліки</item>
-    <item>Порядок доданий</item>
-    <item>Порядок черги</item>
-  </string-array>
-  <string name="menu_cardbrowser">Оглядач карток</string>
   <string name="show_hint">Show %s</string>
-  <string name="pref_lang_other">Мовні параметри</string>
-  <string name="pref_font_UI">Користувацький шрифт інтерфейсу</string>
   <string name="info_rate">Оцініть AnkiDroid</string>
   <string name="col_load_failed">Не вдалося завантажити колекцію.\nНатисніть назад для закриття AnkiDroid.</string>
   <string name="import_title">Імпортувати карти</string>
   <string name="import_select_title">Choose a file to import</string>
-  <string name="import_message">Бажаєте додати вміст файлу %s до вашої колекції чи замінити ним вашу колекцію?</string>
   <string name="import_message_add">Додати</string>
-  <string name="import_message_replace">Замінити</string>
   <string name="import_message_replace_confirm">Дана операція видалить вміст колеції і замінить її даними з файлу %s. Продовжити?</string>
   <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">Успішно імпортовано %d карт</string>
@@ -170,13 +145,8 @@
   <string name="study_options">Параметри колоди</string>
   <string name="custom_study">Додатковий трейнінг</string>
   <string name="dyn_deck_desc">Це спеціальна колекція для навчання поза межами нормального розкладу. Картки будуть автоматично повернуті до їх початкових колекцій після повторення. Видалення цієї колекції з списку поврне всі карточки до початкових колекцій.</string>
-  <string name="exit_wizard">Покинути помічника</string>
   <string name="steps_error">Дії повинні бути числами, більшими за 0</string>
   <string name="steps_min_error">Принаймні один крок потрібний</string>
-  <string name="custom_study_invalid_number">Неприпустимий номер</string>
-  <string name="template_error">Помилка шаблону:</string>
-  <string name="template_error_detail">Існує помилка в шаблоні цієї картки.</string>
-  <string name="template_error_fix">Будь ласка, використовуйте редактор карт на стільничному клієнті, щоб виправити помилку.</string>
   <string name="sched_end">(кінець)</string>
   <string name="sched_unbury_button">Щоб переглянути їх зараз, натисніть кнопку Unbury.</string>
   <string name="sched_has_buried">Деякі пов\'язані або приховані карти відкладені до наступної сесії.</string>

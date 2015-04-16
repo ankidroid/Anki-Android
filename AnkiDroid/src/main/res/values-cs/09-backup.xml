@@ -39,13 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_collection">Vytváření zálohy.\nPočkejte prosím...</string>
   <string name="backup_deck_no_space_left">Poslední zálohování nelze provést vzhledem k nedostatku místa na vaší SD kartě.\n\nUvolněte nějaké místo na kartě nebo snižte hloubku zálohování - počet záloh AnkiDroid.</string>
   <string name="sd_space_warning">Na vaší SD kartě je méně místa než %d mb.\nUvolněte trochu místa, aby se zabránilo ztrátě dat.</string>
-  <string name="backup_deck_success">Záloha byla úspěšně vytvořena</string>
-  <string name="backup_manager_title">Manažer zálohování</string>
   <string name="backup_delete">Výmaz záloh.\nProsím čekejte...</string>
-  <string name="contextmenu_deckpicker_remove_backups">Odstranit zálohy</string>
   <string name="backup_restore">Obnovit ze zálohy</string>
   <string name="backup_new_collection">Nová kolekce</string>
   <string name="backup_del_collection">Odstranit kolekci a vytvořit novou</string>
@@ -59,10 +55,7 @@
   <string name="backup_repair_deck">Opravit</string>
   <string name="backup_repair_deck_progress">Opravuji databázi.\nPočkejte prosím...</string>
   <string name="backup_error">Chyba</string>
-  <string name="backup_restore_error">Kolekci nelze obnovit</string>
   <string name="backup_invalid_file_error">Vybraný záložní soubor je neplatný</string>
-  <string name="backup_restore_if_missing">Obnovení kolekce, pokud chybí&#8230;</string>
-  <string name="backup_restore_deck">Oprava kolekce. \nProsím čekejte...</string>
   <string name="backup_restore_select_title">Vyberte zálohu pro obnovení</string>
   <string name="backup_restore_no_backups">Žádné zálohy pro tento balíček nejsou k dispozici. Máte-li zálohu na stolním počítači, zkopírujte jí ručně do složky AnkiDroid</string>
   <string name="open_collection_failed_title">Kolekce není otevřena</string>

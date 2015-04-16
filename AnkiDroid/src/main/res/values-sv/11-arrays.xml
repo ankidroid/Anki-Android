@@ -35,51 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Kortlekar</item>
-    <item>Kortbläddrare</item>
-    <item>Statistik</item>
-    <item>Inställningar</item>
-    <item>Hjälp</item>
-    <item>Skicka feedback</item>
-  </string-array>
-  <string-array name="newCardSchedulingLabels">
-    <item>Fördela bland repetitioner</item>
-    <item>Efter repetition</item>
-    <item>Innan repetition</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Rapportera alltid</item>
     <item>Rapportera aldrig</item>
     <item>Fråga mig</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>Visa äldsta modifierade först</item>
-    <item>Visa i tillagd ordning</item>
-    <item>Visa i slumpmässig ordning</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Nya kort i slumpmässig ordning</item>
-    <item>Nya kort i ordningen de lades till</item>
-    <item>Nya kort i omvänd ordning från hur de lades till</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Fördela nya kort bland repetitioner</item>
-    <item>Nya kort efter repetitioner</item>
-    <item>Nya kort före repetitioner</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Repetera kort från största intervall</item>
-    <item>Repetera kort från minsta intervall</item>
-    <item>Repetera kort ordnade efter den tid de förfaller</item>
-    <item>Repetera kort i slumpmässig ordning</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Visa misslyckade kort tidigt</item>
-    <item>Visa misslyckade kort i slutet</item>
-    <item>Visa misslyckade kort om 10 minuter</item>
-    <item>Visa misslyckade kort om 8 timmar</item>
-    <item>Visa misslyckade kort om 3 dagar</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Ingen åtgärd</item>
@@ -99,12 +58,6 @@
     <item>Radera kort</item>
     <item>Spela upp media</item>
     <item>Avbryt inlärning</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Android Mörk</item>
-    <item>Android Ljus</item>
-    <item>Blå</item>
-    <item>Vit</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Åsidosätt kort</item>

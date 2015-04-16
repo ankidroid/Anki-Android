@@ -39,31 +39,29 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Kortlekar</string>
+  <string name="card_browser">Kortbläddrare</string>
+  <string name="statistics">Statistik</string>
+  <string name="settings">Inställningar</string>
+  <string name="help">Hjälp</string>
+  <string name="send_feedback">Skicka feedback</string>
   <string name="studyoptions_title">Studiealternativ</string>
-  <string name="studyoptions_deck_name">Kortleksnamn</string>
   <string name="studyoptions_due_today">Aktuella idag:</string>
   <string name="studyoptions_new_total">Nya kort totalt:</string>
   <string name="studyoptions_total_cards">Totalt antal kort:</string>
   <string name="studyoptions_eta">Uppskattad tid (min):</string>
   <string name="studyoptions_start">Plugga nu</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d kort i kö (%2$s)</item>
-    <item quantity="other">%1$d kort i kö (%2$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d av %2$d i kö</item>
-    <item quantity="other">%1$d av %2$d i kö</item>
-  </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minuter kvar</item>
-    <item quantity="other">%d minuter kvar</item>
+    <item quantity="one">%d minute left</item>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Skriv svar</string>
   <string name="show_answer">Visa svar</string>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">Bra</string>
   <string name="ease3_learning">Lätt</string>
   <string name="studyoptions_congrats_undo">Ångra %s</string>
-  <string name="card_unsuspended">Kort upplåst</string>
-  <string name="card_suspended">Kort åsidosatt igen</string>
-  <string name="menu_rotate">Rotera</string>
   <string name="menu_import">Importera</string>
   <string name="undo">Ångra</string>
   <string name="undo_action_review">senaste repetition</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">markera not</string>
   <string name="unbury">Sluta dölja</string>
   <string name="finish_operation">Slutför föregående operation (troligen en säkerhetskopiering).\nVar god vänta...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Hämta saknade media</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Återställ språktilldelningar</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Språkåterställning</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Optimera databas</string>
   <string name="contextmenu_deckpicker_rename_deck">Byt namn på kortlek</string>
   <string name="contextmenu_deckpicker_collapse_deck">Dölj underkortlekar</string>
   <string name="contextmenu_deckpicker_inflate_deck">Visa underkortlekar</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Ange egen ordlista</string>
   <string name="menu_add">Lägg till</string>
   <string name="menu_add_note">Lägg till not</string>
-  <string name="menu_download_deck">Hämta kortlek</string>
-  <string name="menu_download_shared_deck">Delad kortlek</string>
   <string name="menu_my_account">Synkronisera konto</string>
-  <string name="menu_preferences">Inställningar</string>
-  <string name="menu_about">Om</string>
   <string name="menu_dismiss_note">Dölj / ta bort</string>
   <string name="menu_bury_card">Dölj kort</string>
   <string name="menu_bury_note">Dölj not</string>
   <string name="menu_suspend_card">Lås kort</string>
   <string name="menu_suspend_note">Lås not</string>
-  <string name="menu_save_note">Spara not</string>
   <string name="menu_delete_note">Ta bort not</string>
   <string name="delete_note_message">Vill du verkligen ta bort den här noten och alla dess kort?\n%s</string>
-  <string name="menu_edit_card">Redigera kort</string>
   <string name="menu_select">Markera text</string>
   <string name="menu_search">Sökning i %1$s</string>
   <string name="menu_mark_card">Markera kort</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">Skapa kortlek</string>
   <string name="create">Skapa</string>
   <string name="new_dynamic_deck">Skapa filtrerad kortlek</string>
-  <string name="studyoptions_feedback">Feedback</string>
   <string name="night_mode">Nattläge</string>
   <string name="directory_inaccessible">AnkiDroid-mappen är inte tillgänglig</string>
   <string-array name="next_review_s">
@@ -136,10 +119,7 @@
     <item>%s månader</item>
     <item>%s år</item>
   </string-array>
-  <string name="visit">Besök</string>
   <string name="later">Senare</string>
-  <string name="download">Hämta</string>
-  <string name="open_collection">Öppnar samling.\nVar god vänta...</string>
   <string name="rebuild_cram_deck">Återskapar kortlek för råplugg.\nVänligen vänta...</string>
   <string name="rebuild_cram_label">Återskapa</string>
   <string name="empty_cram_label">Töm</string>
@@ -151,37 +131,10 @@
   <string name="studyoptions_congrats_more_new">Det finns fler nya kort, men den dagliga gränsen har uppnåtts. Du kan höja gränsen i inställningarna, men kom ihåg att detta också ökar antalet repetitioner på kort sikt.</string>
   <string name="studyoptions_congrats_custom">Välj knappen Anpassade studier nedan för att studera utanför det normala schemat.</string>
   <string name="studyoptions_no_cards_due">Inga kort i kö.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">I morgon finns det: %1$d kort att repetera och %2$s.\n Beräknad tid: %3$s</item>
-    <item quantity="other">I morgon kommer det finnas: %1$d kort att repetera och %2$s.\n Beräknad tid: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d nya kort</item>
-    <item quantity="other">%1$d nya kort</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Beräknad tid: %1$d min.</item>
-    <item quantity="other">Beräknad tid: %1$d min.</item>
-  </plurals>
-  <string name="sd_card_not_mounted">SD-kort ej monterat.\n\nDu kan lagra din samling på det interna minnet också, men det är inte rekommenderat eftersom du inte kan komma åt filen så enkelt. Du kan aktivera detta i inställningarna (klicka på denna text för att öppna dem).</string>
-  <string name="studyoptions_options">Alternativ</string>
-  <string name="empty_cloze_warning">Vänligen redigera denna not och lägg till några textluckor. (%1$s)</string>
-  <string name="help_cloze">hjälp</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Synkronisera</string>
-  <string name="restart">Starta om</string>
-  <string name="do_nothing">Gör ingenting</string>
-  <string name="more_options">Fler alternativ</string>
-  <string name="now">Nu</string>
-  <string name="back">Tillbaka</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importera</string>
   <string name="export">Exportera</string>
-  <string name="confirm">Bekräfta</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string name="nothing">Inget</string>
-  <string name="title_activity_graphical_activity">Statistikdiagram</string>
   <string name="title_activity_template_editor">Korttyper för %s</string>
   <string name="card_template_editor_front">Kortmall för framsida</string>
   <string name="card_template_editor_back">Kortmall för baksida</string>
@@ -190,8 +143,8 @@
   <string name="card_template_editor_menu_delete">Ta bort</string>
   <string name="card_template_editor_cant_delete">Minst en korttyp krävs.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Ta bort korttypen \'%2$s\' och dess %1$d kort?</item>
-    <item quantity="other">Ta bort korttypen \'%2$s\' och dess %1$d kort?</item>
+    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
+    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Att ta bort det här kortet skulle göra att en eller flera anteckningar tas bort. Vänligen skapa en ny korttyp först.</string>
 </resources>

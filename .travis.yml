@@ -1,18 +1,25 @@
-language: java
+language: android
+sudo: false
+android:
+  components:
+    - platform-tools
+    - build-tools-22.0.1
+    - android-22
+    - extra-android-support
+    - extra-android-m2repository
+    - sys-img-armeabi-v7a-android-22
 branches:
-  only:
-    - /^release-[0-9.]*$/
-    - /^develop$/
+  except:
+    - master
 
-before_install:
-  # Needed to run Android SDK tools, which are 32-bit binaries.
-  - sudo apt-get update -qq
-  - if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch > /dev/null; fi
-install: /bin/true
+# Emulator Management: Create, Start and Wait
 before_script:
-  # Configure Android SDK tools and platforms required to build.
-  - ./tools/travis/continuous-setup.sh ..
-script: "./tools/travis/continuous-build-and-test.sh"
+  - echo no | android create avd --force -n test -t android-22 --sdcard 10M --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+  
+script: ./gradlew :AnkiDroid:connectedCheck
 
 notifications:
   email:

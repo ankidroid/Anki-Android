@@ -35,51 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Talie</item>
-    <item>Przeglądanie kart</item>
-    <item>Statystyki</item>
-    <item>Ustawienia</item>
-    <item>Pomoc</item>
-    <item>Prześlij opinię</item>
-  </string-array>
-  <string-array name="newCardSchedulingLabels">
-    <item>Rozprosz pomiędzy powtórkami</item>
-    <item>Po powtórkach</item>
-    <item>Przed powtórkami</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Zawsze</item>
     <item>Nigdy</item>
     <item>Zapytaj mnie</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>Najpierw pokaż najstarsze zmodyfikowane</item>
-    <item>Pokaż w kolejności dodania</item>
-    <item>Pokaż w losowej kolejności</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Nowe karty w kolejności losowej</item>
-    <item>Nowe karty w kolejności dodania</item>
-    <item>Nowe karty w odwrotności kolejności dodania</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Rozrzuć nowe karty między powtórki</item>
-    <item>Nowe karty po powtórkach</item>
-    <item>Nowe karty przed powtórkami</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Powtórki od najdłuższych przerw</item>
-    <item>Powtórki od najkrótszych przerw</item>
-    <item>Powtórki według planu</item>
-    <item>Powtórki w losowej kolejności</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Pokaż źle rozwiązane karty wkrótce</item>
-    <item>Pokaż źle rozwiązane karty na końcu</item>
-    <item>Pokaż źle rozwiązane karty za 10 minut</item>
-    <item>Pokaż źle rozwiązane karty za 8 godzin</item>
-    <item>Pokaż źle rozwiązane karty za 3 dni</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Nic nie rób</item>
@@ -99,12 +58,6 @@
     <item>Usuń kartę</item>
     <item>Odtwórz plik multimedialny</item>
     <item>Przerwij naukę</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Android Ciemny</item>
-    <item>Android Jasny</item>
-    <item>Niebieski</item>
-    <item>Biały</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Zawieś kartę</item>

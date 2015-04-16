@@ -68,28 +68,19 @@
     <color name="widget_big_font_color_blue">#1a1ac3</color>
     <color name="widget_big_font_color_green">#217721</color>
 
-    <!-- colors for blue theme -->
-    <color name="textbar_blue_color_inv">#4AA02C</color>
-    <color name="textbar_blue_color">#0000ff</color>
-    <color name="background_blue">#c6cfd6</color>
-    <color name="background_dark_blue">#10171d</color>
-    <color name="background_dialog_blue">#10171d</color>
-    <color name="studyoptions_progressbar_background_blue">#cecfd6</color>
-    <color name="studyoptions_progressbar_young_blue">#8a8a8a</color>
-    <color name="reviewer_progressbar_session_blue">#a9a9a9</color>
-
-    <!-- colors for flat theme -->
-    <color name="flat_title_color">#ffa300</color>
-
     <!-- colors for white theme -->
-    <color name="white_background">#f5f5f5</color>
+    <color name="white_background">#ffffff</color>
     <color name="white_background_night">#3d3d3d</color>
     <color name="white_buttontext">#10171d</color>
+    <color name="studyoptions_progressbar_background_blue">#cecfd6</color>
+    <color name="studyoptions_progressbar_young_blue">#8a8a8a</color>
+    <color name="background_dark_blue">#10171d</color>
+    <color name="reviewer_progressbar_session_blue">#a9a9a9</color>
 
     <!-- Colors for the card counts, in the top bar, deck picker etc. -->
-    <color name="new_count">#000099</color>
-    <color name="learn_count">#990000</color>
-    <color name="review_count">#007700</color>
+    <color name="new_count">@color/material_indigo_700</color>
+    <color name="learn_count">@color/material_red_700</color>
+    <color name="review_count">@color/material_green_700</color>
     <color name="zero_count">#1f000000</color>
     <color name="new_count_night">#b1b1ff</color>
     <color name="learn_count_night">#f50000</color>
@@ -98,5 +89,62 @@
     <color name="actionbar_background">#f5f5f5</color>
     <color name="dyn_deck">#2222bb</color>
     <color name="non_dyn_deck">#000000</color>
+
+    <!-- Material Design: http://www.google.com/design/spec/style/color.html#color-color-palette -->
+    <!-- Can eventually be shortened once settled on a color scheme -->
+    <color name="material_blue_grey_050">#ffeceff1</color>
+    <color name="material_blue_grey_100">#ffcfd8dc</color>
+    <color name="material_blue_grey_200">#ffb0bec5</color>
+    <color name="material_blue_grey_500">#ff607d8b</color>
+    <color name="material_blue_grey_600">#ff546e7a</color>
+    <color name="material_blue_grey_700">#ff455a64</color>
+    <color name="material_blue_grey_800">#ff37474f</color>
+    <color name="material_blue_grey_900">#ff263238</color>
+
+    <color name="material_brown_500">#ff795548</color>
+    <color name="material_brown_700">#ff5d4037</color>
+
+    <color name="material_grey_500">#ff9e9e9e</color>
+    <color name="material_grey_600">#ff757575</color>
+    <color name="material_grey_700">#ff616161</color>
+    <color name="material_grey_800">#ff424242</color>
+
+    <color name="material_red_500">#fff44336</color>
+    <color name="material_red_600">#ffe53935</color>
+    <color name="material_red_700">#ffd32f2f</color>
+    <color name="material_red_A700">#ffd50000</color>
+    <color name="material_orange_A700">#ffff6d00</color>
+
+    <color name="material_indigo_700">#ff303f9f</color>
+    <color name="material_indigo_A700">#ff304ffe</color>
+    <color name="material_blue_A700">#ff2962ff</color>
+    <color name="material_light_blue_100">#ffb3e5fc</color>
+    <color name="material_light_blue_500">#ff03a9f4</color>
+    <color name="material_light_blue_600">#ff039be5</color>
+    <color name="material_light_blue_700">#ff0288d1</color>
+    <color name="material_light_blue_A700">#ff0091ea</color>
+    <color name="material_cyan_A700">#ff00b8d4</color>
+
+    <color name="material_green_500">#ff4caf50</color>
+    <color name="material_green_600">#ff43a047</color>
+    <color name="material_green_700">#ff388e3c</color>
+    <color name="material_light_green_A700">#ff64dd17</color>
+    <color name="material_lime_green_A700">#ffaeea00</color>
+
+
+    <color name="theme_primary">@color/material_light_blue_500</color>
+    <color name="theme_primary_dark">@color/material_light_blue_700</color>
+    <color name="theme_primary_light">@color/material_light_blue_100</color>
+    <color name="theme_accent">@color/material_blue_grey_700</color>
+
+    <color name="text_color">#de000000</color> <!-- 87% black -->
+
+    <!-- navdrawer colors -->
+    <color name="navdrawer_text_color">@color/text_color</color>
+    <color name="navdrawer_text_color_selected">@color/theme_primary</color>
+    <color name="navdrawer_icon_tint">#8a000000</color> <!-- 54% black -->
+    <color name="navdrawer_icon_tint_selected">@color/theme_primary</color>
+    <color name="navdrawer_background_selected">#33999999</color> <!-- 20% grey (#999999) -->
+    <color name="navdrawer_divider">#e5e5e5</color>
 
 </resources>

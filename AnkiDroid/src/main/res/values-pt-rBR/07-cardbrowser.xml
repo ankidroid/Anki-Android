@@ -40,12 +40,10 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d cartão exibido</item>
-    <item quantity="other">%d cartões exibidos</item>
+    <item quantity="one">%d card shown</item>
+    <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">Todos os decks</string>
-  <string name="card_browser_load">Carregando cartões&#8230;</string>
-  <string name="card_browser_cardloading_error">Erro ao carregar cartões. Isso provavelmente está relacionado a restrições de memória do seu dispositivo. Tente novamente com um deck menor.</string>
   <string name="card_browser_delete_card">Excluir nota</string>
   <string name="card_browser_suspend_card">Suspender cartão</string>
   <string name="card_browser_unsuspend_card">Cancelar suspensão</string>
@@ -54,36 +52,27 @@
   <string name="delete_card_title">Excluir nota?</string>
   <string name="delete_card_message">Realmente excluir todos os cartões desta nota?\nCampo de busca: %s</string>
   <string name="card_browser_show_marked">Filtrar marcadas</string>
-  <string name="card_browser_field">Alterar campo de Pesquisador de Cartão</string>
-  <string name="card_browser_field_title">Alterar campo de Pesquisador de Cartão</string>
   <string name="card_browser_show_suspended">Filtro suspenso</string>
   <string name="card_browser_search_by_tag">Filtrar por Tag</string>
   <string name="card_browser_tags_shown">Tags: %1$s</string>
+  <string name="card_browser_list_my_searches">My searches</string>
+  <string name="card_browser_list_my_searches_save">Save search</string>
+  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
+  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
+  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Alterar a ordem de exibição</string>
   <string name="card_browser_change_display_order_title">Escolha a ordem de exibição</string>
   <string name="card_browser_change_display_order_reverse">Selecione um campo duas vezes para inverter a ordem.</string>
-  <string name="card_browser_order_reverse">(inverso)</string>
   <string name="card_details_question">Pergunta</string>
   <string name="card_details_answer">Resposta</string>
   <string name="card_details_due">Devido</string>
-  <string name="card_details_last_due">Último devido</string>
-  <string name="card_details_now">Agora</string>
-  <string name="card_details_interval">Intervalo</string>
-  <string name="card_details_ease">Dificuldade</string>
-  <string name="card_details_average_time">Tempo médio</string>
-  <string name="card_details_total_time">Tempo total</string>
-  <string name="card_details_yes_count">Contagem de Sim</string>
-  <string name="card_details_no_count">Contagem de Não</string>
-  <string name="card_details_added">Criado</string>
-  <string name="card_details_changed">Alterado</string>
   <string name="card_details_tags">Tags</string>
-  <string name="card_details_model">Tipo de nota</string>
-  <string name="card_browser_sorting_cards">Selecionando cartões. \nPor favor espere...</string>
   <string name="card_browser_filtering_cards">Filtrando cartões&#8230;\nPressione o botão voltar para cancelar</string>
-  <string name="card_details_card_model">Modelo do cartão</string>
   <string-array name="card_browser_order_labels">
     <item>Nenhuma distribuição(mais rápido)</item>
-    <item>Por campo busca</item>
+    <item>Pelo campo de ordenação</item>
     <item>Por ordem de criação</item>
     <item>Por última edição</item>
     <item>Por mudança no tempo do card</item>

@@ -41,30 +41,14 @@
 -->
 <resources>
   <string name="youre_offline">You are offline</string>
-  <string name="currently_downloading">Λήψεις σε εξέλιξη</string>
-  <string name="starting_download">Έναρξη λήψης...</string>
-  <string name="downloading">Γίνεται λήψη...</string>
-  <string name="paused">Σταματημένο</string>
-  <string name="downloaded">Ολοκλήρωση λήψης</string>
   <string name="sync_error">Sync Error</string>
   <string name="vague_error">Error</string>
-  <string name="cancelling">Γίνεται ακύρωση...</string>
-  <string name="connection_error_return_message">Παρουσιάστηκε ένα σφάλμα δικτύου. Επανάληψη, ή ακύρωση και επιστροφή στην προηγούμενη οθόνη.</string>
   <string name="retry">Ξαναδοκίμασε</string>
   <string name="cancel">Ακύρωση</string>
-  <string name="download_overwrite">Αντικατάσταση</string>
-  <string name="download_cancel">Ακύρωση λήψης</string>
-  <string name="shared_decks">Κοινόχρηστες τράπουλες</string>
   <string name="loading_shared_decks">Φόρτωση διαθέσιμων κοινόχρηστων τραπουλών...</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
-  <string name="cancel_download">Ακύρωση λήψης</string>
-  <string name="resume_download">Επανεκκίνηση λήψης</string>
-  <string name="pause_download">Παύση Λήψης</string>
-  <string name="duplicate_download">Αυτή η τράπουλα κατεβαίνει ήδη</string>
   <string name="menu_get_shared_decks">Λήψη κοινόχρηστων τραπουλών</string>
-  <string name="download_button_return">Επιστροφή</string>
   <string name="connection_error_message">Παρουσιάστηκε σφάλμα δικτύου.</string>
-  <string name="sync_log_db_error">Παρουσιάστηκε σφάλμα στη βάση δεδομένων.</string>
   <string name="not_logged_in_title">Log in to AnkiWeb</string>
   <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
   <string name="no_email_client">No email client available</string>
@@ -80,11 +64,7 @@
   <string name="log_out">Αποσύνδεση</string>
   <string name="alert_logging_message">Σύνδεση, παρακαλώ περιμένετε...</string>
   <string name="invalid_username_password">Μη έγκυρη διεύθυνση email ή κωδικός πρόσβασης.</string>
-  <string name="login_generic_error">Αποτυχία κατά την είσοδο.</string>
   <string name="reset_password">Reset password</string>
-  <string name="download_finished">Η λήψη ολοκληρώθηκε</string>
-  <string name="personaldeckpicker_title">Ανοίξτε τράπουλα από το δίκτυο</string>
-  <string name="shareddeckpicker_title">Επιλέξτε την τράπουλα που θέλετε να κατεβάσετε</string>
   <string name="downloaddeck_search">Αναζήτηση</string>
   <string name="preferences_title">Προτιμήσεις</string>
   <string name="deckpreferences_title">Options for XXX</string>
@@ -97,7 +77,6 @@
   <string name="sync_preparing_full_sync_message">Προετοιμασία πλήρους συγχρονισμού...</string>
   <string name="sync_uploading_message">Αποστολή...</string>
   <string name="sync_downloading_message">Λήψη...</string>
-  <string name="sync_reload_message">Επαναφόρτωση συλλογής...</string>
   <string name="sync_title">Συγχρονισμός</string>
   <string name="sync_downloading_media">Λήψη πολυμέσων %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Πλήρης συγχρονισμός από το τοπικό</string>
@@ -105,11 +84,9 @@
   <string name="sync_log_clocks_unsynchronized">Your clock\'s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, η χρονική ζώνη της συσκευής είναι πιθανόν λανθασμένη</string>
   <string name="sync_log_clocks_unsynchronized_date">, η ημερομηνία της συσκευής είναι πιθανώς λάθος</string>
-  <string name="sync_log_old_version">Το πρωτόκολλο συγχρονισμού έχει αλλάξει, παρακαλούμε αναβαθμίστε στην τελευταία έκδοση AnkiDroid. Δείτε http://code.google.com/p/ankidroid</string>
   <string name="sync_conflict_title">Αντίφαση κατά το συγχρονισμό</string>
   <string name="sync_no_changes_message">Δε βρέθηκαν αλλαγές.</string>
   <string name="sync_database_acknowledge">Collection synchronized</string>
-  <string name="sync_log_error_fix">Συνέβει σφάλμα συγχρονισμού%s.\n\nΑν αυτό συμβαίνει συνεχώς, μπορείτε να κάνετε έναν πλήρη συγχρονισμό που πιθανότατα θα διορθώσει το πρόβλημα. Έχετε υπόψη σας ότι θα αντικαταστήσει είτε την τοπική σας συλλογή, ή αυτή στο AnkiWeb.\nΑν πραγματικά θέλετε να κάνετε πλήρη συγχρονισμό, παρακαλούμε επιλέξτε αν θέλετε να στείλετε την τοπική σας συλλογή, ή να λάβετε αυτή απο το διακομιστή.</string>
   <string name="sync_log_error_specific">Σφάλμα συγχρονισμού, τύπος: %1$s, μύνημα: %2$s</string>
   <string name="sync_corrupt_database">Η βάση δεδομένων είναι κατεστραμμένη. Παρακαλούμε να τη διορθώσετε πριν ξαναδοκιμάσετε να την συγχρονίσετε.\n\nΔείτε  %s για πληροφορίες σχετικές με τη διόρθωση της βάσης δεδομένων σας.</string>
   <string name="sync_too_busy">Ο διακομιστής είναι απασχολημένος. Προσπαθήστε ξανά αργότερα.</string>
@@ -130,10 +107,6 @@
   <string name="sync_check_upload_file">Έλεγχος αρχείου πριν την αποστολή...</string>
   <string name="sync_check_download_file">Έλεγχος ληφθέντος αρχείου...</string>
   <string name="sync_media_find">Εύρεση αλλαγμένων πολυμέσων...</string>
-  <string name="sync_media_remove">Χειρισμός διαγραφέντων πολυμέσων...</string>
-  <string name="sync_media_from_server">Λήψη πολυμέσων από διακομιστή...</string>
-  <string name="sync_media_to_server">Αποστολή πολυμέσων στο διακομιστή...</string>
-  <string name="sync_media_sanity_check">Έλεγχος αριθμού πολυμέσων...</string>
   <string name="sync_media_no_changes">Καμία αλλαγή στα αρχεία πολυμέσων.</string>
   <string name="sync_media_success">Τα πολυμέσα συγχρονίστηκαν με επιτυχία.</string>
   <string name="sync_media_changes_count">%d media changes to upload</string>
@@ -146,22 +119,6 @@
   <string name="register_title">Δημιουργία λογαριασμού</string>
   <string name="register_mismatch">Η επανάληψη του ονόματος χρήστη/κωδικού δεν ταιριάζει ή είναι κενή. Παρακαλούμε πληκτρολογήστε τους ξανά.</string>
   <string name="registering_message">Δημιουργία λογαριασμού.\nΠαρακαλούμε περιμένετε...</string>
-  <string name="upgrade_decks_zipping">Συμπίεση τραπουλών για αποστολή.\nΠαρακαλούμε περιμένετε...</string>
-  <string name="upgrade_decks_upload">Uploading zipped decks&#8230;\nYou can cancel by pressing back.</string>
-  <string name="upgrade_decks_waiting">Σε αναμονή, σειρά προτεραιότητας: %s\nΠαρακαλούμε περιμένετε...</string>
-  <string name="upgrade_decks_upgrade_started">Upgrade started&#8230;</string>
-  <string name="upgrade_decks_downloading">Downloading upgraded collection&#8230;\nYou can cancel by pressing back.</string>
-  <string name="upgrade_decks_media">Αντιγραφή παλαιών αρχείων πολυμέσων στο νέο κατάλογο πολυμέσων.\nΠαρακαλούμε περιμένετε...</string>
-  <string name="upgrade_decks_message">Δε βρέθηκε διαθέσιμη συλλογή Anki 2.0 αλλά βρέθηκαν μία ή περισσότερες τράπουλές παλαιού τύπου Anki 1.2:%sΓια να χρησιμοποιήσετε τις τράπουλές σας με τη νέα έκδοση του AnkiDroid, πρέπει πρώτα να μετατραπούν σε μία συλλογή νέου τύπου Anki 2.0. Υπάρχουν τρεις επιλογές για να γίνει αυτό:</string>
-  <string name="upgrade_decks_message_pos1">Χρησιμοποιώντας το Anki Desktop 2.0, οι τράπουλές σας θα μετατραπούν στην πρώτη εκκίνηση. Μπορείτε να συγχρονίσετε στο AnkiWeb, ή απλά να αντιγράψετε μετά την καινούργια συλλογή στο κινητό σας. Αντιγράψτε τις τράπουλές σας από τον κατάλογο του AnkiDroid (%s) στον κατάλογο του Anki Desktop 1.2 στον υπολογιστή σας (αν δεν τις έχετε συγχρονίσει ήδη εκεί) και ξεκινήστε το Anki Desktop 2.0.</string>
-  <string name="upgrade_decks_message_pos2">Αν συγχρονίζετε ήδη τις τράπουλές σας στο ankiweb, χρειάζεται απλά να συνδεθείτε μία φορά στο %s και οι τράπουλές σας θα μετατραπούν εκεί. Έπειτα μπορείτε απλά ωα συγχρονίσετε τη νέα συλλογή στο κινητό σας.</string>
-  <string name="upgrade_decks_message_pos3">Ως τρίτη επιλογή, μπορείτε να μετατρέψετε τις τράπουλές σας μέσω του AnkiDroid και του AnkiWeb. Αν πατήσετε το κουμπί αναβάθμιση παρακάτω, οι τράπουλές σας θα πακεταριστούν και αποσταλούν στο AnkiWeb. Έπειτα η δημιουργηθήσα συλλογή θα ληφθεί αυτόματα και θα ανοιχτεί. Δε χρειάζεται να εγγραφείτε για αυτό, αλλά έχετε υπόψη σας ότι ίσως είναι προτιμότερο να χρησιμοποιήσετε σύνδεση wifi για να αποφύγετε υπερβολική χρήση δεδομένων στη σύνδεσή σας. Αν οι συμπιεσμένες τράπουλές σας ξεπερνούν τα 50 mb, δε μπορείτε να ακολουθήσετε αυτό τον τρόπο. Σε αυτή την περίπτωση παρακαλούμε χρησιμοποιήστε τις άλλες επιλογές. Αν τα πολυμέσα των τραπουλών σας είναι αποθηκευμένα σε μη-στάνταρντ κατάλογο ή σε δικό σας κατάλογο Dropbox, μπορεί να χρειαστεί να τα αντιγράψετε χειροκίνητα στη νέα τοποθεσία.</string>
-  <string name="upgrade_decks_message_finish">Αν απλά συνεχίσετε, θα δημιουργηθεί μια νέα συλλογή χωρίς να συμπεριλάβει καμία από τις παλιές σας τράπουλες.</string>
-  <string name="upgrade_required">Οι τράπουλές σας στο AnkiWeb είναι ακόμη παλαιάς έκδοσης τύπου Anki 1.2. Παρακαλούμε επισκευτείτε το %s και συνδεθείτε εκεί. Οι τράπουλές σας θα αναβαθμιστούν αυτόματα στο νέο τύπο.</string>
-  <string name="upgrade_decks_button">Αναβάθμιση</string>
-  <string name="upgrade_decks_failed">Αυτές οι τράπουλες δεν μπόρεσαν να αναβαθμιστούν:\n%sΠαρακαλούμε ανοίξτε τις στο Anki για να κάνετε έλεγχο στη βάση δεδομένων. Έπειτα μπορείτε να τις εισάγετε μέσω του Anki.</string>
-  <string name="upgrade_decks_media_failed">Η αντιγραφή των αρχείων πολυμέσων στον νέο φάκελο πολυμέσων (%1$s) απέτυχε για αυτές τις τράπουλες:\n%2$sΠαρακαλούμε να μετακινήσετε τα αρχεία πολυμέσων χειροκίνητα.</string>
-  <string name="download_deck">Λήψη τράπουλας(%d kb).\nΠαρακαλούμε περιμένετε...</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Remote</string>
   <string name="force_full_sync_title">Force full sync</string>

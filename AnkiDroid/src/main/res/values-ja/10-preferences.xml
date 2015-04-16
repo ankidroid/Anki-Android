@@ -124,7 +124,7 @@
   <string name="notification_pref_title">通知のタイミング</string>
   <string name="never_notify">通知なし</string>
   <string name="notify_when_pending">バックグラウンドで保留（応答待ち）状態になった時</string>
-  <string name="notification_minimum_cards_due">学習目標のカードが%d枚を超えている時</string>
+  <string name="notification_minimum_cards_due">課題のカードが%d枚を超えている時</string>
   <string name="notification_minimum_cards_due_vibrate">振動で通知</string>
   <string name="notification_minimum_cards_due_blink">ライト点滅で通知</string>
   <string name="timeout_answer_text">答えを自動的に表示</string>
@@ -138,7 +138,6 @@
   <string name="safe_display_summ">アニメーションを無効化し、より安全な方法で描画します。電子ペーパーや古い機器でカスタムフォントを使用する際にお試しください</string>
   <string name="vertical_centering">中央揃え</string>
   <string name="vertical_centering_summ">コンテンツを垂直方向に中段揃え</string>
-  <string name="pref_cat_backup">バックアップ</string>
   <string name="pref_backup">自動バックアップ</string>
   <string name="pref_backup_summ">単語帳を開く前に自動的にバックアップを作成します（1 日あたり 1 回）</string>
   <string name="pref_backup_max">保管するバックアップの世代数</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">HTMLの入力ボックスへ、フォーカスが移動した時の問題を回避します。いくつかのデバイスで問題が発生しています。</string>
   <string name="pref_keep_screen_on">スクリーンをオンのままにする</string>
   <string name="pref_keep_screen_on_summ">画面タイムアウトの無効化</string>
-  <string name="pref_simple_interface">簡易なインターフェイス</string>
-  <string name="pref_simple_interface_summ">高速表示をするために、htmlフォーマットを画面に反映しません</string>
-  <string name="pref_simple_interface_exclude_tags">除外するタグ</string>
-  <string name="pref_simple_interface_exclude_tags_summ">シンプルなインターフェイスを使いたくないカードには、タグを付けてください。切換えに使用するタグ: XXX</string>
-  <string name="write_answers_message">書かれた答えを比較すために、Anki Desktopを使い単語帳のフィールドを定義してください。 (単語帳のプロパティ -&gt; 編集モデル　 -&gt; カードレイアウト）　\n\n 比較フィールドが設定されていない場合は、書かれた答えはカードのすべての答えと比較されます。</string>
   <string name="fix_arabic_text">アラビア語の表示を改善</string>
   <string name="fix_arabic_text_summ">アラビア語の限定的なサポートのための部分的な回避策です。表示中ののカードの内容を変更することはできません</string>
   <string name="convert_fen_text">チェス表記のサポート</string>
@@ -175,22 +169,10 @@
   <string name="filter_google_translate_summ">翻訳元と結果の保存</string>
   <string name="convert_fen_text_summ">Forsyth Edwards Notation 表記法を使いチェス盤を描画します。この表記は[fen][/fen] で囲む必要があります</string>
   <string name="studyoptions_limit_select_tags">タグを選択</string>
-  <string name="studyoptions_limit_tags_active">あり: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">なし: %1$s</string>
-  <string name="studyoptions_limit_button_text">制限</string>
-  <string name="studyoptions_limit_dialog_title">学習の制限</string>
-  <string name="studyoptions_session">セッション</string>
-  <string name="studyoptions_tag">タグで</string>
-  <string name="studyoptions_tag_new">新規カードをタグで表示します:</string>
-  <string name="studyoptions_tag_rev">単語カードをタグ順で表示</string>
-  <string name="studyoptions_new_cards_per_day">一日あたりの新規カード：</string>
-  <string name="studyoptions_max_fail_card">間違いカードの最大数</string>
-  <string name="deck_conf_deck_name">単語帳の名前</string>
   <string name="deck_conf_deck_description">単語帳の説明</string>
   <string name="deck_conf_group">オプショングループ</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d の単語帳がこのグループを使用しています</item>
-    <item quantity="other">%1$s\n%2$d 個の単語帳がこのグループを使用しています</item>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">新規カード</string>
   <string name="deck_conf_rev_cards">復習カード</string>
@@ -235,8 +217,7 @@
   <string name="deck_conf_remove_message">現在のオプショングループを削除しますか？</string>
   <string name="deck_conf_set_subdecks">全てのサブ単語帳に適用</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s 個のサブ単語帳がこのグループを使用します。</item>
-    <item quantity="other">この設定を行うと %s 個のサブ単語帳もこのグループを使用することになります</item>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">全てのサブ単語帳に適用</string>
   <string name="deck_conf_set_subdecks_message">現在のオプショングループをすべてのサブ単語帳に適用しますか？</string>
@@ -244,7 +225,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">フィルター</string>
   <string name="deck_conf_cram_options">オプション</string>
-  <string name="deck_conf_cram_preset">プリセット</string>
   <string name="deck_conf_cram_search">フィルターの抽出条件</string>
   <string name="deck_conf_cram_limit">抽出件数の上限</string>
   <string name="deck_conf_cram_order">抽出されたカードの並べ方</string>

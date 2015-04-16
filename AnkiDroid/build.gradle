@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 def homePath = System.properties['user.home']
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1"
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         applicationId "com.ichi2.anki"
-        minSdkVersion 7
-        targetSdkVersion 19
+        minSdkVersion 8
+        targetSdkVersion 22
         testApplicationId "com.ichi2.anki.tests"
     }
     signingConfigs {
@@ -27,14 +27,17 @@ android {
     }   
     lintOptions {
         abortOnError false
+        disable 'TypographyEllipsis'
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:19.1.0'
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:recyclerview-v7:22.0.0'
     compile 'com.google.code.gson:gson:2.3'
-    compile 'ch.acra:acra:4.6.0RC2'
+    compile 'com.afollestad:material-dialogs:0.7.1.3'
+    compile 'ch.acra:acra:4.6.1'
     compile 'com.jakewharton.timber:timber:2.5.1'
     compile project(":ShowcaseView:library")
 }

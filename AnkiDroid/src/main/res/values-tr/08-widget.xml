@@ -44,21 +44,12 @@
   <string name="widget_no_cards_due">Çalışılacak kart yok</string>
   <string name="widget_loading">Widget yükleniyor...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%2$s karttan %1$d\'i çalışılacak</item>
-    <item quantity="other">%2$s karttan %1$d çalışılacak</item>
+    <item quantity="one">%1$d card due in %2$s</item>
+    <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deste</item>
-    <item quantity="other">%1$d deste</item>
+    <item quantity="one">%1$d deck</item>
+    <item quantity="other">%1$d decks</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid Orta</string>
   <string name="widget_small">AnkiDroid Küçük</string>
-  <string name="widget_big">AnkiDroid Büyük</string>
-  <string name="widget_big_restrictions_dialog">Android\'in widget çerçevesinin bazı kısıtlamalarından dolayı bu bileşen yalnızca metin gösterebilir, resim/ses vb. gösterilmez.</string>
-  <string name="open_in_reviewer">Desteyi AnkiDroid\'de aç</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Tahminî süre: %d dk.</item>
-    <item quantity="other">Tahminî süre: %d dk.</item>
-  </plurals>
-  <string name="widget_big_tomorrow_due">Yarın çalışılacak:</string>
 </resources>

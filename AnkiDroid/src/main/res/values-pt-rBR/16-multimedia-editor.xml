@@ -34,15 +34,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="multimedia_editor_languages_russian">Russo</string>
-  <string name="multimedia_editor_languages_german">Alemão</string>
-  <string name="multimedia_editor_languages_nepali">Nepali</string>
-  <string name="multimedia_editor_languages_slovak">Eslovaco</string>
-  <string name="multimedia_editor_languages_french">Francês</string>
-  <string name="multimedia_editor_languages_spanish">Espanhol</string>
-  <string name="multimedia_editor_languages_mandarin">Mandarim</string>
-  <string name="multimedia_editor_languages_portuguese">Português</string>
-  <string name="multimedia_editor_languages_english">Inglês</string>
   <string name="multimedia_editor_popup_image">Adicionar imagem</string>
   <string name="multimedia_editor_popup_audio">Gravar áudio</string>
   <string name="multimedia_editor_popup_text">Editor avançado</string>
@@ -83,13 +74,6 @@
   <string name="multimedia_editor_text_field_editing_no_text">Entrar algum texto primeiro</string>
   <string name="multimedia_editor_text_field_editing_many_words">Normalmente, o dicionário espera uma palavra</string>
   <string name="multimedia_editor_text_field_editing_clone_source">Pegar de</string>
-  <string name="multimedia_editor_activity_note_type">Tipo de nota</string>
-  <string name="multimedia_editor_activity_deck">Deck</string>
-  <string name="multimedia_editor_activity_edit_button">Editar</string>
-  <string name="multimedia_editor_activity_swap_button">Inverter</string>
-  <string name="multimedia_editor_activity_delete_question">Excluir a nota toda?</string>
-  <string name="multimedia_editor_activity_delete_confirm">Remover</string>
-  <string name="multimedia_editor_activity_delete_reject">Manter</string>
   <string name="multimedia_editor_image_field_editing_galery">Galeria</string>
   <string name="multimedia_editor_image_field_editing_photo">Câmera</string>
   <string name="multimedia_editor_general_downloading">Transferindo</string>
@@ -105,7 +89,6 @@
   <string name="multimedia_editor_audio_view_playing_failed">Falha na reprodução</string>
   <string name="title_activity_edit_text">Campo de edição</string>
   <string name="title_activity_translation">Tradução</string>
-  <string name="title_activity_audio_recorder">Gravador de áudio</string>
   <string name="title_activity_load_pronounciation">Pronúncia</string>
   <string name="title_activity_search_image">Pesquisa de imagens Google</string>
 </resources>

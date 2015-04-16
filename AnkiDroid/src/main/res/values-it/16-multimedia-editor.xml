@@ -34,15 +34,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="multimedia_editor_languages_russian">Russo</string>
-  <string name="multimedia_editor_languages_german">Tedesco</string>
-  <string name="multimedia_editor_languages_nepali">Nepalese</string>
-  <string name="multimedia_editor_languages_slovak">Slovacco</string>
-  <string name="multimedia_editor_languages_french">Francese</string>
-  <string name="multimedia_editor_languages_spanish">Spagnolo</string>
-  <string name="multimedia_editor_languages_mandarin">Mandarino</string>
-  <string name="multimedia_editor_languages_portuguese">Portoghese</string>
-  <string name="multimedia_editor_languages_english">Inglese</string>
   <string name="multimedia_editor_popup_image">Aggiungi immagine</string>
   <string name="multimedia_editor_popup_audio">Registra audio</string>
   <string name="multimedia_editor_popup_text">Editor avanzato</string>
@@ -83,13 +74,6 @@
   <string name="multimedia_editor_text_field_editing_no_text">Inserisci dapprima del testo</string>
   <string name="multimedia_editor_text_field_editing_many_words">Il dizionario di solito si aspetta una sola parola</string>
   <string name="multimedia_editor_text_field_editing_clone_source">Prendi da</string>
-  <string name="multimedia_editor_activity_note_type">Tipo di nota</string>
-  <string name="multimedia_editor_activity_deck">Mazzo</string>
-  <string name="multimedia_editor_activity_edit_button">Modifica</string>
-  <string name="multimedia_editor_activity_swap_button">Inverti</string>
-  <string name="multimedia_editor_activity_delete_question">Eliminare la nota intera?</string>
-  <string name="multimedia_editor_activity_delete_confirm">Elimina</string>
-  <string name="multimedia_editor_activity_delete_reject">Mantieni</string>
   <string name="multimedia_editor_image_field_editing_galery">Galleria</string>
   <string name="multimedia_editor_image_field_editing_photo">Fotocamera</string>
   <string name="multimedia_editor_general_downloading">Download in corso</string>
@@ -105,7 +89,6 @@
   <string name="multimedia_editor_audio_view_playing_failed">Riproduzione non riuscita</string>
   <string name="title_activity_edit_text">Modifico campo</string>
   <string name="title_activity_translation">Traduzione</string>
-  <string name="title_activity_audio_recorder">Registratore audio</string>
   <string name="title_activity_load_pronounciation">Pronuncia</string>
   <string name="title_activity_search_image">Ricerca immagini Google</string>
 </resources>

@@ -192,7 +192,6 @@ public final class WidgetStatus {
                 if (sSmallWidgetStatus == null) {
                     Collection col = CollectionHelper.getInstance().getCol(context);
                     mSmallWidgetStatus = col.getSched().progressToday(sDeckCounts, null, true);
-                    CollectionHelper.getInstance().closeCollection(false);
                 } else {
                     mSmallWidgetStatus = sSmallWidgetStatus;
                 }

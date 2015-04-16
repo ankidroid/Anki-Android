@@ -39,27 +39,11 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="error_ok">报告错误</string>
-  <string name="error_cancel">不要报告错误</string>
   <string name="error_reporting_choice">错误报告模式</string>
   <string name="error_reporting_choice_summary">可以自动报告错误或从不报告，或当出现错误时再提醒你</string>
   <string name="feedback_disclaimer">声明：我们不会收集任何用户的个人信息，诸如电子邮件地址，电话号码和你的手机IMEI串。我们会收集一些像手机架构、制式以及安卓版本等关于机器的简单信息，当然还有错误信息以及导致错误发生的步骤。</string>
   <string name="feedback_title">反馈</string>
-  <string name="feedback_send_feedback">发送反馈信息</string>
-  <string name="feedback_send_feedback_and_errors">发送错误报告和反馈信息</string>
-  <string name="feedback_message_sent_success">收到反馈，非常感谢！</string>
-  <string name="feedback_message_sent_failure">无法发送反馈，编号%1$s</string>
-  <string name="feedback_keep_latest">只保留最后的错误</string>
-  <string name="feedback_clear_all">清除所有的错误</string>
   <string name="feedback_default_text">请填写你的反馈信息，或者有关你需要报告的错误的信息。</string>
-  <string name="feedback_error_reply_new">未知问题，新bug已记录</string>
-  <string name="feedback_error_reply_known">已知问题，详情请关注AnkiDroid的问题跟踪器。</string>
-  <string name="feedback_error_reply_issue_unknown">问题%1$d，未知状态</string>
-  <string name="feedback_error_reply_issue_status">问题%1$d，状态: %2$s</string>
-  <string name="feedback_error_reply_issue_fixed_dev">问题%1$d，已修正但尚未发布</string>
-  <string name="feedback_error_reply_issue_fixed_prod">问题%1$d，已修正在最新版本中</string>
-  <string name="feedback_error_reply_malformed">记录bug，无回应</string>
-  <string name="feedback_error_reply_failed">发送失败</string>
   <string name="feedback_auto_toast_text">AnkiDroid遇到一个问题，已经向开发者发送</string>
   <string name="feedback_manual_toast_text">AnkiDroid遇到了一个问题，报告正在生成中</string>
   <string name="feedback_copy_debug">拷贝调试信息</string>

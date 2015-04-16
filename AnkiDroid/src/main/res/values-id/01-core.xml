@@ -39,31 +39,26 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Decks</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="statistics">Statistics</string>
+  <string name="settings">Settings</string>
+  <string name="help">Help</string>
+  <string name="send_feedback">Send Feedback</string>
   <string name="studyoptions_title">Pilihan Pembelajaran</string>
-  <string name="studyoptions_deck_name">Nama dek</string>
   <string name="studyoptions_due_today">Jatuh tempo hari ini:</string>
   <string name="studyoptions_new_total">Total kartu baru:</string>
   <string name="studyoptions_total_cards">Total kartu:</string>
   <string name="studyoptions_eta">Perkiraan waktu (menit):</string>
   <string name="studyoptions_start">Belajar</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d kartu review (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
-    <item quantity="other">%1$d dari %2$d menunggu</item>
-  </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d menit tersisa</item>
-    <item quantity="other">Tersisa %d menit</item>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Ketik jawaban</string>
   <string name="show_answer">Tampilkan jawaban</string>
@@ -72,9 +67,6 @@
   <string name="ease3_successive">Baik</string>
   <string name="ease3_learning">Mudah</string>
   <string name="studyoptions_congrats_undo">Batalkan %s</string>
-  <string name="card_unsuspended">Kad tergantung dibatal</string>
-  <string name="card_suspended">Kad digantung</string>
-  <string name="menu_rotate">Pusing</string>
   <string name="menu_import">Masukkan</string>
   <string name="undo">Membatalkan</string>
   <string name="undo_action_review">review terakhir</string>
@@ -86,30 +78,19 @@
   <string name="undo_action_mark">tandai catatan</string>
   <string name="unbury">angkat</string>
   <string name="finish_operation">Penyelesaian operasi sebelumnya (kebanyakan seperti pembuatan cadangan)...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Muat turun media kurang</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Set Tugasan Bahasa</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Set bahasa</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Optimumkan data</string>
   <string name="contextmenu_deckpicker_rename_deck">Ubah nama deck</string>
   <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Tetapkan kamus sendiri</string>
   <string name="menu_add">Tambahkan</string>
   <string name="menu_add_note">Tambah catatan</string>
-  <string name="menu_download_deck">Unduh dek</string>
-  <string name="menu_download_shared_deck">Bagi dek</string>
   <string name="menu_my_account">Sinkronisasi akun</string>
-  <string name="menu_preferences">Preferensi</string>
-  <string name="menu_about">Tentang</string>
   <string name="menu_dismiss_note">Sembunyikan / Hapus</string>
   <string name="menu_bury_card">Kubur kartu</string>
   <string name="menu_bury_note">Kubur catatan</string>
   <string name="menu_suspend_card">Tangguhkan kartu</string>
   <string name="menu_suspend_note">Tangguhkan catatan</string>
-  <string name="menu_save_note">Simpan catatan</string>
   <string name="menu_delete_note">Hapus catatan</string>
   <string name="delete_note_message">Benar-benar hapus catatan ini dan semua kartu-kartunya?\n%s</string>
-  <string name="menu_edit_card">Edit kartu</string>
   <string name="menu_select">Pilih teks</string>
   <string name="menu_search">Pencarian di %1$s</string>
   <string name="menu_mark_card">Tandai kartu</string>
@@ -117,7 +98,6 @@
   <string name="new_deck">Buat dek</string>
   <string name="create">Buat</string>
   <string name="new_dynamic_deck">Buat penyaringan dek</string>
-  <string name="studyoptions_feedback">Respon</string>
   <string name="night_mode">Mode malam</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
@@ -136,10 +116,7 @@
     <item>%s bulan-bulan</item>
     <item>%s tahun-tahun</item>
   </string-array>
-  <string name="visit">Kunjungi</string>
   <string name="later">Nanti</string>
-  <string name="download">Unduh</string>
-  <string name="open_collection">Buka koleksi...</string>
   <string name="rebuild_cram_deck">Bangun kembali dek persiapan</string>
   <string name="rebuild_cram_label">Bangun kembali</string>
   <string name="empty_cram_label">Kosong</string>
@@ -151,37 +128,10 @@
   <string name="studyoptions_congrats_more_new">Hari ini batas telah dicapai. Ada lebih banyak kartu-kartu baru yang tersedia; kamu dapat menambahkan batas di pilihan-pilihan, tetapi ini dapat meningkatkan jangka pendek review beban kerja.</string>
   <string name="studyoptions_congrats_custom">Untuk belajar di luar dari jadwal normal, sentuh tombol \"Belajar pilihan\" di bawah</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Besok akan ada: %1$d kartu unuk diriview dan %2$s.\n Perkiraan waktu: %3$s</item>
-    <item quantity="other">Besok akan ada: %1$d kartu-kartu untuk diriview dan %2$s.\n Perkiraan waktu: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d kartu baru</item>
-    <item quantity="other">%1$d kartu-kartu baru</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Perkiraan waktu: %1$d min.</item>
-    <item quantity="other">Perkiraan waktu: %1$d min.</item>
-  </plurals>
-  <string name="sd_card_not_mounted">Kartu SD tidak ditunggangi.\n\nKamu dapat menyimpan koleksimu di memori internal juga, meskipun itu tidak direkomendasikan seperti kamu tidak dapat mengakses file semudah itu. Kamu dapat mengaktifkan di preferensi (buka mereka dengan menyentuh teks ini).</string>
-  <string name="studyoptions_options">Pilihan-pilihan</string>
-  <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
-  <string name="help_cloze">bantuan</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Siknronisasi</string>
-  <string name="restart">Mulai kembali</string>
-  <string name="do_nothing">Jangan lakukan apa-apa</string>
-  <string name="more_options">Lebih banyak pilihan-pilihan</string>
-  <string name="now">Sekarang</string>
-  <string name="back">Kembali</string>
-  <string name="ankiweb">WebAnki</string>
-  <string name="usb">USB</string>
-  <string name="_import">Masukkan</string>
   <string name="export">Keluarkan</string>
-  <string name="confirm">Konfirmasi</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">Grafik statistik</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>
@@ -190,7 +140,6 @@
   <string name="card_template_editor_menu_delete">Delete</string>
   <string name="card_template_editor_cant_delete">At least one card type is required.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
     <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>

@@ -39,13 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_collection">Criando cópia de segurança.\nPor favor aguarde&#8230;</string>
   <string name="backup_deck_no_space_left">Cópia de segurança não pôde ser gravada por falta de espaço no cartão SD. Por favor, diminua a profundidade da cópia de segurança ou liberte espaço no cartão.</string>
   <string name="sd_space_warning">Menos de %d MB de espaço livre no seu cartão SD.\nLiberte algum espaço para evitar perda de dados.</string>
-  <string name="backup_deck_success">Cópia de segurança criada com sucesso</string>
-  <string name="backup_manager_title">Gestor de cópias de segurança</string>
   <string name="backup_delete">Apagando cópias de segurança.\nPor favor aguarde&#8230;</string>
-  <string name="contextmenu_deckpicker_remove_backups">Remover cópias de segurança</string>
   <string name="backup_restore">Restaurar a partir de cópia de segurança</string>
   <string name="backup_new_collection">Nova coleção</string>
   <string name="backup_del_collection">Apagar coleção e cria uma nova</string>
@@ -59,10 +55,7 @@
   <string name="backup_repair_deck">Reparar</string>
   <string name="backup_repair_deck_progress">A reparar a base de dados.\nPor favor aguarde&#8230;</string>
   <string name="backup_error">Erro</string>
-  <string name="backup_restore_error">A coleção não pôde ser restaurada</string>
   <string name="backup_invalid_file_error">O ficheiro de cópia de segurança selecionado é inválido</string>
-  <string name="backup_restore_if_missing">Restaurando coleção caso esteja em falta&#8230;</string>
-  <string name="backup_restore_deck">Restaurando coleção.\n Por favor aguarde&#8230;</string>
   <string name="backup_restore_select_title">Selecione a cópia de segurança para restaurar</string>
   <string name="backup_restore_no_backups">Sem cópias de segurança disponíveis neste aparelho para esta coleção. Se você tiver cópias de segurança no seu PC, por favor copie-os manualmente para a pasta do AnkiDroid.</string>
   <string name="open_collection_failed_title">Coleção não aberta</string>

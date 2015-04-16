@@ -40,12 +40,9 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
     <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">所有牌組</string>
-  <string name="card_browser_load">載入卡片中.\n 請稍候...</string>
-  <string name="card_browser_cardloading_error">載入卡片時發生錯誤。這可能與你的裝置的記憶體限制有關。選擇一個更小的牌組再重試。</string>
   <string name="card_browser_delete_card">刪除筆記</string>
   <string name="card_browser_suspend_card">長久擱置卡片</string>
   <string name="card_browser_unsuspend_card">取消長久擱置卡片</string>
@@ -54,36 +51,27 @@
   <string name="delete_card_title">刪除筆記</string>
   <string name="delete_card_message">您確定要刪除本筆記的所有卡片嗎？\n搜尋欄位：%s</string>
   <string name="card_browser_show_marked">篩選有標記的卡片</string>
-  <string name="card_browser_field">改變卡片瀏覽器欄位</string>
-  <string name="card_browser_field_title">改變卡片瀏覽器欄位</string>
   <string name="card_browser_show_suspended">篩選出擱置的卡片</string>
   <string name="card_browser_search_by_tag">按標籤篩選</string>
   <string name="card_browser_tags_shown">標籤：%1$s</string>
+  <string name="card_browser_list_my_searches">My searches</string>
+  <string name="card_browser_list_my_searches_save">Save search</string>
+  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
+  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
+  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
   <string name="card_browser_change_display_order">更改顯示順序</string>
   <string name="card_browser_change_display_order_title">選擇顯示順序</string>
   <string name="card_browser_change_display_order_reverse">點兩下欄位來反向順序排列</string>
-  <string name="card_browser_order_reverse">(反向)</string>
   <string name="card_details_question">問題</string>
   <string name="card_details_answer">答案</string>
   <string name="card_details_due">到期</string>
-  <string name="card_details_last_due">最後到期</string>
-  <string name="card_details_now">現在</string>
-  <string name="card_details_interval">間隔</string>
-  <string name="card_details_ease">難易度</string>
-  <string name="card_details_average_time">平均時間</string>
-  <string name="card_details_total_time">總時間</string>
-  <string name="card_details_yes_count">答對總數</string>
-  <string name="card_details_no_count">答錯總數</string>
-  <string name="card_details_added">新增</string>
-  <string name="card_details_changed">更改</string>
   <string name="card_details_tags">標籤</string>
-  <string name="card_details_model">筆記類型</string>
-  <string name="card_browser_sorting_cards">排序卡片中.\n 請稍候...</string>
   <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
-  <string name="card_details_card_model">卡片模版</string>
   <string-array name="card_browser_order_labels">
     <item>不要排序(較快)</item>
-    <item>根據搜尋欄位</item>
+    <item>By sort field</item>
     <item>依建立時間</item>
     <item>依編輯時間</item>
     <item>依變更時間</item>

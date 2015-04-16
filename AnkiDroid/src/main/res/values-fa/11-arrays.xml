@@ -35,51 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>دسته ها</item>
-    <item>مرورگر کارت</item>
-    <item>آمار</item>
-    <item>تنظیمات</item>
-    <item>کمک</item>
-    <item>ارسال بازخورد</item>
-  </string-array>
-  <string-array name="newCardSchedulingLabels">
-    <item>توسعه از طریق بررسی</item>
-    <item>پس از مرور</item>
-    <item>قبل از مرور</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>هميشه گزارش بده</item>
     <item>هرگز گزارش نده</item>
     <item>بپرس</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>اول آخرين تغييرات نشان داده شود</item>
-    <item>به ترتيب اضافه شدن نمايش داده شود</item>
-    <item>به صورت تصادفي نمايش داده شود</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>كارتهاي جديد با ترتيب تصادفي</item>
-    <item>كارتهاي جديد به ترتيب اضافه شدن</item>
-    <item>كارتهاي جديد خلاف جهت اضافه شدن</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>گسترش جدید کارت از طریق بررسی</item>
-    <item>کارت های جدید پس از بررسی</item>
-    <item>کارت های جدید قبل از بررسی</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>بررسی کارت از بزرگترین فاصله</item>
-    <item>مرور كارت از كوچكترين فاصله</item>
-    <item>مرور كارت به ترتيب موعد</item>
-    <item>بررسی کارت در صورت تصادفی</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>نشان دادن کارت شکست خورده به زودی</item>
-    <item>نشان دادن کارتهای ناموفق در پایان</item>
-    <item>نشان دادن کارت ناموفق در 10 دقیقه</item>
-    <item>نشان دادن کارت ناموفق در 8 ساعت</item>
-    <item>نشان دادن کارت ناموفق در 3 روز</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>هیچ عملیاتی</item>
@@ -99,12 +58,6 @@
     <item>حذف کارت</item>
     <item>Play media</item>
     <item>Abort learning</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>اندرويد تيره</item>
-    <item>اندرويد روشن</item>
-    <item>آبي</item>
-    <item>سفید</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>تعلیق کارت</item>

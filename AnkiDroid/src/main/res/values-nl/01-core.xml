@@ -39,31 +39,29 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Decks</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="statistics">Statistics</string>
+  <string name="settings">Settings</string>
+  <string name="help">Help</string>
+  <string name="send_feedback">Send Feedback</string>
   <string name="studyoptions_title">Studieopties</string>
-  <string name="studyoptions_deck_name">Setnaam</string>
   <string name="studyoptions_due_today">Vandaag te overhoren:</string>
   <string name="studyoptions_new_total">Aantal nieuwe kaarten:</string>
   <string name="studyoptions_total_cards">Totaal aantal kaarten:</string>
   <string name="studyoptions_eta">Geschatte tijd (min):</string>
   <string name="studyoptions_start">Studeer nu</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d kaart te doen (%2$s)</item>
-    <item quantity="other">%1$d kaarten te doen (%2$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d van %2$d te doen</item>
-    <item quantity="other">%1$d van %2$d te doen</item>
-  </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minuut over</item>
-    <item quantity="other">%d minuten over</item>
+    <item quantity="one">%d minute left</item>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Antwoord schrijven</string>
   <string name="show_answer">Toon antwoord</string>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">Goed</string>
   <string name="ease3_learning">Makkelijk</string>
   <string name="studyoptions_congrats_undo">Maak %s ongedaan</string>
-  <string name="card_unsuspended">Uitstellen kaart ongedaan gemaakt</string>
-  <string name="card_suspended">Kaart opnieuw uitstellen</string>
-  <string name="menu_rotate">Omkeren</string>
   <string name="menu_import">Importeer</string>
   <string name="undo">Ongedaan maken</string>
   <string name="undo_action_review">laatste overhoring</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">markeer memo</string>
   <string name="unbury">Niet langer verbergen</string>
   <string name="finish_operation">Vorige operatie afmaken (meestal backup).\nGeduld aub...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Download ontbrekende media</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Taaltoewijzingen opnieuw instellen</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Taal opnieuw instellen</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Optimaliseer database</string>
   <string name="contextmenu_deckpicker_rename_deck">Setnaam wijzigen</string>
   <string name="contextmenu_deckpicker_collapse_deck">Subsets verbergen</string>
   <string name="contextmenu_deckpicker_inflate_deck">Subsets tonen</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Instellen van de aangepaste woordenlijst</string>
   <string name="menu_add">Toevoegen</string>
   <string name="menu_add_note">Memo toevoegen</string>
-  <string name="menu_download_deck">Set downloaden</string>
-  <string name="menu_download_shared_deck">Gedeelde set</string>
   <string name="menu_my_account">Account synchroniseren</string>
-  <string name="menu_preferences">Voorkeuren</string>
-  <string name="menu_about">Over</string>
   <string name="menu_dismiss_note">Verberg / Verwijder</string>
   <string name="menu_bury_card">Kaart verbergen</string>
   <string name="menu_bury_note">Memo verbergen</string>
   <string name="menu_suspend_card">Blokkeer kaart</string>
   <string name="menu_suspend_note">Memo opschorten</string>
-  <string name="menu_save_note">Memo opslaan</string>
   <string name="menu_delete_note">Memo verwijderen</string>
   <string name="delete_note_message">Deze memo en al zijn kaarten verwijderen?\n%s</string>
-  <string name="menu_edit_card">Kaart bewerken</string>
   <string name="menu_select">Tekst selecteren</string>
   <string name="menu_search">Opzoeken in %1$s</string>
   <string name="menu_mark_card">Markeer kaart</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">Maak set</string>
   <string name="create">Maak</string>
   <string name="new_dynamic_deck">Gefilterde set maken</string>
-  <string name="studyoptions_feedback">Feedback</string>
   <string name="night_mode">Nachtmodus</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
@@ -136,10 +119,7 @@
     <item>%s maanden</item>
     <item>%s jaren</item>
   </string-array>
-  <string name="visit">Bezoeken</string>
   <string name="later">Later</string>
-  <string name="download">Downloaden</string>
-  <string name="open_collection">Collectie openen.\nEven wachten...</string>
   <string name="rebuild_cram_deck">Stampset wordt opnieuw opgebouwd.\nEven geduld...</string>
   <string name="rebuild_cram_label">Opnieuw opbouwen</string>
   <string name="empty_cram_label">Leeg</string>
@@ -151,37 +131,10 @@
   <string name="studyoptions_congrats_more_new">Er zijn meer nieuwe kaarten beschikbaar, maar de dagelijkse limiet is bereikt. Je kunt de limiet verhogen in de instellingen, maar houd er rekening mee dat dit de werklast voor de korte termijn zal verhogen.</string>
   <string name="studyoptions_congrats_custom">Om buiten het normale schema te studeren, klik op onderstaande knop Aangepast Studeren.</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Morgen zijn er: %1$d kaarten te overhoren en %2$s.\n Geschatte tijd: %3$s</item>
-    <item quantity="other">Morgen zijn er: %1$d kaarten te overhoren en %2$s.\n Geschatte tijd: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d nieuwe kaarten</item>
-    <item quantity="other">%1$d nieuwe kaarten</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Geschatte tijd: %1$d minuten</item>
-    <item quantity="other">Geschatte tijd: %1$d minuten.</item>
-  </plurals>
-  <string name="sd_card_not_mounted">SD-kaart is niet aanwezig.\n\nU kan uw collectie ook in het interne geheugen opslaan, maar dit is niet aangeraden omdat het dan lastiger wordt voor u om het bestand te vinden. U kan dit activeren in de voorkeuren (klik op deze tekst om die te openen).</string>
-  <string name="studyoptions_options">Instellingen</string>
-  <string name="empty_cloze_warning">Bewerk deze memo en selecteer woorden die verborgen moeten blijven voor de invuloefening.(%1$s)</string>
-  <string name="help_cloze">help</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Synchroniseer</string>
-  <string name="restart">Herstarten</string>
-  <string name="do_nothing">Niets doen</string>
-  <string name="more_options">Meer instellingen</string>
-  <string name="now">Nu</string>
-  <string name="back">Terug</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importeren</string>
   <string name="export">Exporteren</string>
-  <string name="confirm">Bevestigen</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">Statistische grafiek</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>

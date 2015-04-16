@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">Statistikk</string>
   <string name="statistics_young">Unge</string>
   <string name="statistics_mature">Modne</string>
   <string name="statistics_young_and_learn">Young+Learn</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">Lær på nytt</string>
   <string name="statistics_learn">Lær</string>
   <string name="statistics_cram">Pugg</string>
-  <string name="statistics_type_title">Statistikk</string>
   <string name="stats_cards">Kort</string>
   <string name="stats_cards_intervals">Cards with given Interval</string>
   <string name="stats_cumulative_cards">Cumulative Cards</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1 month</string>
   <string name="stats_period_year">1 year</string>
   <string name="stats_period_lifetime">deck life</string>
-  <string name="stats_deck_current">deck</string>
   <string name="stats_deck_collection">collection</string>
   <string name="stats_time_of_day">Time of Day</string>
   <string name="stats_day_of_week">Day of Week</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, Review: &lt;b&gt;%2$s&lt;/b&gt;, Relearn: &lt;b&gt;%3$s&lt;/b&gt;, Filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Correct answers on mature cards: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
-  <string name="statistics_period_x_axis_minutes">Minutter</string>
-  <string name="statistics_new_cards">Nye kort</string>
-  <string name="statistics_failed_cards">Mislykkede kort</string>
-  <string name="statistics_fullscreen">Fullskjermvisning av/på</string>
-  <string name="calculating_statistics">Beregner statistikk.\nVennligst vent...</string>
-  <string name="deck_summary_cards">Antall kort:</string>
-  <string name="deck_summary_notes">Antall notater:</string>
-  <string name="deck_summary_cards_mature">Modne kort:</string>
-  <string name="deck_summary_cards_young">Unge kort:</string>
-  <string name="deck_summary_cards_unseen">Usette kort:</string>
-  <string name="deck_summary_card_age">Kortalder</string>
-  <string name="deck_summary_average_interval">Gjennomsnittlig intervall: &lt;b&gt;%.1f&lt;/b&gt; dager</string>
-  <string name="deck_summary_answers_correct">Riktige svar</string>
-  <string name="deck_summary_answers_mature">Modne kort: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_young">Unge kort: &lt;b&gt; %1$.1f %2$s &lt;/b&gt; (%3$d av %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Sett første gangen: &lt;b&gt; %1$.1f %2$s &lt;/b&gt; (%3$d av %4$d)</string>
-  <string name="deck_summary_reviews">Gjennomganger:</string>
-  <string name="deck_summary_news">Nye kort:</string>
-  <string name="deck_summary_average_week">Gjennomsnittlig sett siste uke</string>
-  <string name="deck_summary_average_month">Gjennomsnittlig sett siste måned</string>
-  <string name="deck_summary_average_year">Gjennomsnittlig sett i fjor</string>
-  <string name="deck_summary_average_total">Gjennomsnittlig sett totalt</string>
-  <string name="deck_summary_forecast">Prognose</string>
-  <string name="deck_summary_tomorrow_due">Forfaller i morgen: &lt;b&gt;%d&lt;/b&gt;kort</string>
-  <string name="deck_summary_tomorrow_new">Nye i morgen: &lt;b&gt;%d&lt;/b&gt; kort</string>
-  <string name="deck_summary_tomorrow_time">Estimert tid i morgen: &lt;b&gt;%d&lt;/b&gt; min.</string>
-  <string name="deck_summary_finished_in">Nye kort ferdig på: &lt;b&gt;%d&lt;/b&gt; dager</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt; %.1f &lt;/b&gt; kort/dag</string>
-  <string name="deck_summary_deck_age">Alder på kortstokk: &lt;b&gt;%d&lt;/b&gt; dager</string>
   <string name="deck_summary_all_decks">Alle kortstokker</string>
-  <string name="stats_select_decks">Select deck</string>
   <string name="stats_select_time_scale">Select timescale</string>
   <string-array name="next_review_in_s">
     <item>om ett sekund</item>
@@ -155,15 +122,6 @@
   <string name="stats_weekly_breakdown">Weekly Breakdown</string>
   <string name="stats_answer_buttons">Answer Buttons</string>
   <string name="stats_cards_types">Cards Types</string>
-  <string-array name="stats_period">
-    <item>1 måned</item>
-    <item>1 år</item>
-    <item>alt</item>
-  </string-array>
-  <string-array name="stats_range">
-    <item>samling</item>
-    <item>aktuell kortstokk</item>
-  </string-array>
   <string-array name="stats_day_time_strings">
     <item>4AM</item>
     <item>10AM</item>

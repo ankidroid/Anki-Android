@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">Στατιστικά</string>
   <string name="statistics_young">Νέες</string>
   <string name="statistics_mature">\'Ωριμες</string>
   <string name="statistics_young_and_learn">Young+Learn</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">Επανεκμάθηση</string>
   <string name="statistics_learn">Εκμάθηση</string>
   <string name="statistics_cram">Εντατικά</string>
-  <string name="statistics_type_title">Στατιστικά</string>
   <string name="stats_cards">Κάρτες</string>
   <string name="stats_cards_intervals">Cards with given Interval</string>
   <string name="stats_cumulative_cards">Cumulative Cards</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1 month</string>
   <string name="stats_period_year">1 year</string>
   <string name="stats_period_lifetime">deck life</string>
-  <string name="stats_deck_current">deck</string>
   <string name="stats_deck_collection">collection</string>
   <string name="stats_time_of_day">Time of Day</string>
   <string name="stats_day_of_week">Day of Week</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, Review: &lt;b&gt;%2$s&lt;/b&gt;, Relearn: &lt;b&gt;%3$s&lt;/b&gt;, Filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Correct answers on mature cards: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
-  <string name="statistics_period_x_axis_minutes">λεπτά</string>
-  <string name="statistics_new_cards">Νέες κάρτες</string>
-  <string name="statistics_failed_cards">Αποτυχημένες κάρτες</string>
-  <string name="statistics_fullscreen">Πλήρης Οθόνη</string>
-  <string name="calculating_statistics">Υπολογισμός στατιστικών.\nΠαρακαλούμε περιμένετε...</string>
-  <string name="deck_summary_cards">Αριθμός καρτών:</string>
-  <string name="deck_summary_notes">Αριθμός σημειώσεων:</string>
-  <string name="deck_summary_cards_mature">Ώριμες κάρτες:</string>
-  <string name="deck_summary_cards_young">Νεαρές κάρτες:</string>
-  <string name="deck_summary_cards_unseen">Μη ανοιγμένες κάρτες:</string>
-  <string name="deck_summary_card_age">Ηλικία κάρτας</string>
-  <string name="deck_summary_average_interval">Μέσο διάστημα: &lt;b&gt;%.1f&lt;/b&gt; μέρες</string>
-  <string name="deck_summary_answers_correct">Σωστές απαντήσεις</string>
-  <string name="deck_summary_answers_mature">Ώριμες κάρτες: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d από %4$d)</string>
-  <string name="deck_summary_answers_young">Νεαρές κάρτες: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d από %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Ειδομένες πρώτη φορά: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d από %4$d)</string>
-  <string name="deck_summary_reviews">Αναθεωρήσεις:</string>
-  <string name="deck_summary_news">Νέες κάρτες:</string>
-  <string name="deck_summary_average_week">Μέσος όρος περασμένης εβδομάδας</string>
-  <string name="deck_summary_average_month">Μέσος όρος περασμένου μήνα</string>
-  <string name="deck_summary_average_year">Μέσος όρος που παρατηρήθηκε πέρυσι</string>
-  <string name="deck_summary_average_total">Μέσος όρος από αρχής</string>
-  <string name="deck_summary_forecast">Πρόγνωση</string>
-  <string name="deck_summary_tomorrow_due">Αύριο δέοντες: &lt;b&gt;%d&lt;/b&gt; κάρτες</string>
-  <string name="deck_summary_tomorrow_new">Νέες αύριο: &lt;b&gt;%d&lt;/b&gt; κάρτες</string>
-  <string name="deck_summary_tomorrow_time">Εκτιμώμενος χρόνος αύριο: &lt;b&gt;%d&lt;/b&gt; λεπ.</string>
-  <string name="deck_summary_finished_in">Νέες κάρτες τέλειωσαν σε: &lt;b&gt;%d&lt;/b&gt; μέρες</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; κάρτες/μέρα</string>
-  <string name="deck_summary_deck_age">Ηλικία τράπουλας: &lt;b&gt;%d&lt;/b&gt; μέρες</string>
   <string name="deck_summary_all_decks">Όλες οι τράπουλες</string>
-  <string name="stats_select_decks">Select deck</string>
   <string name="stats_select_time_scale">Select timescale</string>
   <string-array name="next_review_in_s">
     <item>σε 1 δευτερόλεπτο</item>
@@ -155,15 +122,6 @@
   <string name="stats_weekly_breakdown">Weekly Breakdown</string>
   <string name="stats_answer_buttons">Answer Buttons</string>
   <string name="stats_cards_types">Cards Types</string>
-  <string-array name="stats_period">
-    <item>1 μήνας</item>
-    <item>1 έτος</item>
-    <item>όλες</item>
-  </string-array>
-  <string-array name="stats_range">
-    <item>συλλογή</item>
-    <item>τρέχουσα τράπουλα</item>
-  </string-array>
   <string-array name="stats_day_time_strings">
     <item>4AM</item>
     <item>10AM</item>

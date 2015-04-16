@@ -39,11 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Mazzi</string>
+  <string name="card_browser">Browser delle carte</string>
+  <string name="statistics">Statistiche</string>
+  <string name="settings">Impostazioni</string>
+  <string name="help">Guida</string>
+  <string name="send_feedback">Invia commenti</string>
   <string name="studyoptions_title">Opzioni di studio</string>
-  <string name="studyoptions_deck_name">Nome mazzo</string>
   <string name="studyoptions_due_today">Scadono oggi:</string>
   <string name="studyoptions_new_total">Totale carte nuove:</string>
   <string name="studyoptions_total_cards">Totale carte:</string>
@@ -57,13 +59,9 @@
     <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d di %2$d dovute</item>
-    <item quantity="other">%1$d di %2$d da ripetere</item>
-  </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">restano %d min.</item>
-    <item quantity="other">ancora %d minuti</item>
+    <item quantity="one">resta %d minuto</item>
+    <item quantity="other">restano %d minuti</item>
   </plurals>
   <string name="type_answer_hint">Digita la risposta</string>
   <string name="show_answer">Mostra la risposta</string>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">Buono</string>
   <string name="ease3_learning">Facile</string>
   <string name="studyoptions_congrats_undo">Annulla %s</string>
-  <string name="card_unsuspended">Annulla la sospensione della carta</string>
-  <string name="card_suspended">Carta risospesa</string>
-  <string name="menu_rotate">Ruota</string>
   <string name="menu_import">Importa</string>
   <string name="undo">Annulla</string>
   <string name="undo_action_review">ultima ripetizione</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">contrassegna nota</string>
   <string name="unbury">Disseppellisci</string>
   <string name="finish_operation">Completamento operazione precedente in corso (probabilmente creazione backup).\nAttendi...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Download media mancante</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Reset assegnazioni lingua</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Reset lingua</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Ottimizzare database</string>
   <string name="contextmenu_deckpicker_rename_deck">Rinomina il mazzo</string>
   <string name="contextmenu_deckpicker_collapse_deck">Nascondi sottomazzi</string>
   <string name="contextmenu_deckpicker_inflate_deck">Mostra sottomazzi</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Imposta dizionario personalizzato</string>
   <string name="menu_add">Aggiungi</string>
   <string name="menu_add_note">Aggiungi nota</string>
-  <string name="menu_download_deck">Scarica il mazzo</string>
-  <string name="menu_download_shared_deck">Mazzo condiviso</string>
   <string name="menu_my_account">Sincronizza account</string>
-  <string name="menu_preferences">Preferenze</string>
-  <string name="menu_about">Informazioni</string>
   <string name="menu_dismiss_note">Nascondi / Cancella</string>
   <string name="menu_bury_card">Seppellisci carta</string>
   <string name="menu_bury_note">Seppellisci nota</string>
   <string name="menu_suspend_card">Sospendi carta</string>
   <string name="menu_suspend_note">Sospendi nota</string>
-  <string name="menu_save_note">Salva nota</string>
   <string name="menu_delete_note">Elimina nota</string>
   <string name="delete_note_message">Vuoi veramente eliminare questa nota e tutte le sue carte?\n%s</string>
-  <string name="menu_edit_card">Modifica la carta</string>
   <string name="menu_select">Seleziona testo</string>
   <string name="menu_search">Ricerca in %1$s</string>
   <string name="menu_mark_card">Etichetta la carta</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">Crea mazzo</string>
   <string name="create">Crea</string>
   <string name="new_dynamic_deck">Crea mazzo filtrato</string>
-  <string name="studyoptions_feedback">Commenti e suggerimenti</string>
   <string name="night_mode">Modalità notturna</string>
   <string name="directory_inaccessible">La directory AnkiDroid è inaccessibile</string>
   <string-array name="next_review_s">
@@ -136,10 +119,7 @@
     <item>%s mesi</item>
     <item>%s anni</item>
   </string-array>
-  <string name="visit">Visita</string>
   <string name="later">Più tardi</string>
-  <string name="download">Download</string>
-  <string name="open_collection">Apertura collezione.\nAttendi...</string>
   <string name="rebuild_cram_deck">Ricreo mazzo per lo studio focalizzato.\nAttendi...</string>
   <string name="rebuild_cram_label">Ricrea</string>
   <string name="empty_cram_label">Svuota</string>
@@ -151,37 +131,10 @@
   <string name="studyoptions_congrats_more_new">Ci sono ulteriori carte nuove disponibili, ma il limite giornaliero è stato raggiunto. Puoi aumentare il limite nelle opzioni, ma ricordati che ciò aumenterà il tuo carico di lavoro per le ripetizioni a breve termine.</string>
   <string name="studyoptions_congrats_custom">Per studiare al di fuori della programmazione normale, clicca sul pulsante \'Studio Personalizzato\' qui sotto.</string>
   <string name="studyoptions_no_cards_due">Nessuna carta da ripetere ora.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Domani ci saranno: %1$d carte da rivedere e %2$s.\n Tempo stimato: %3$s</item>
-    <item quantity="other">Domani ci saranno: %1$d carte da ripetere e %2$s.\n Durata stimata: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d nuove carte</item>
-    <item quantity="other">%1$d carte nuove</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Tempo stimato: %1$d min.</item>
-    <item quantity="other">Durata stimata: %1$d min.</item>
-  </plurals>
-  <string name="sd_card_not_mounted">La scheda SD non è montata.\n\nPuoi salvare la tua collezione anche nella memoria interna, ma non è consigliabile poiché non puoi accedere al file così facilmente. È possibile attivare questo nelle preferenze (aprile cliccando su questo testo).</string>
-  <string name="studyoptions_options">Opzioni</string>
-  <string name="empty_cloze_warning">Modifica questa nota e aggiungi testo da completare. (%1$s)</string>
-  <string name="help_cloze">aiuto</string>
+  <string name="sd_card_not_mounted">Dispositivo archiviazione non montato</string>
   <string name="button_sync">Sincronizza</string>
-  <string name="restart">Riavvia</string>
-  <string name="do_nothing">Non fare nulla</string>
-  <string name="more_options">Più opzioni</string>
-  <string name="now">Adesso</string>
-  <string name="back">Retro</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importazione</string>
   <string name="export">Esportare</string>
-  <string name="confirm">Conferma</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string name="nothing">Niente</string>
-  <string name="title_activity_graphical_activity">Statistiche</string>
   <string name="title_activity_template_editor">Tipi di carta per %s</string>
   <string name="card_template_editor_front">Modello del fronte</string>
   <string name="card_template_editor_back">Modello del retro</string>
@@ -190,8 +143,8 @@
   <string name="card_template_editor_menu_delete">Elimina</string>
   <string name="card_template_editor_cant_delete">È necessario almeno un tipo di carta.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Eliminare il tipo di carta \'%2$s\' e la sua carta %1$d?</item>
-    <item quantity="other">Eliminare il tipo di carta \'%2$s\' e le sue carte %1$d?</item>
+    <item quantity="one">Eliminare il tipo di carta \'%2$s\', e la sua carta %1$d?</item>
+    <item quantity="other">Eliminare il tipo di carta \'%2$s\', e le sue carte %1$d?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Rimuovendo questo tipo di carta, verrebbero eliminate una o più note. Crea dapprima un nuovo tipo di carta.</string>
 </resources>

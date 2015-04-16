@@ -48,8 +48,6 @@
   <string name="CardEditorTags">Etiketter: %1$s</string>
   <string name="CardEditorCards">Kort: %1$s</string>
   <string name="add_new_filter_tags">Lägg till/Filtrera etiketter</string>
-  <string name="note_type">Nottyp</string>
-  <string name="card_type">Korttyp</string>
   <string name="filter_tags">Filtrera etiketter</string>
   <string name="sdcard_missing_message">SD-kortet är inte tillgängligt eftersom det används som USB-minne. Koppla ur USB:n för att komma åt din kortlek.</string>
   <string name="enable_whiteboard">Aktivera whiteboard</string>
@@ -58,8 +56,6 @@
   <string name="hide_whiteboard">Stäng av whiteboard</string>
   <string name="clear_whiteboard">Rensa whiteboard</string>
   <string name="replay_audio">Spela om ljud</string>
-  <string name="cram_edit_warning">Kortredigering ej tillåten under råplugg</string>
-  <string name="suspend_leeches">Åsidosätt utsugarkort</string>
   <string name="leech_suspend_notification">Markerat som utsugarkort och åsidosatt</string>
   <string name="leech_notification">Markerat som utsugarkort</string>
   <string name="corrupt_font">Felaktig teckensnittsfil %s</string>
@@ -80,10 +76,8 @@
   <string name="cardeditor_title_edit_card">Redigera not</string>
   <string name="discard_unsaved_changes">Vill du stänga och förlora nuvarande inmatning?</string>
   <string name="factadder_saving_error">Fel vid sparande av not</string>
-  <string name="pref_lang_support">Språk</string>
   <string name="saving_facts">Sparar not</string>
   <string name="saving_model">Sparar modell</string>
-  <string name="deck">Kortlek</string>
   <string name="add">Lägg till</string>
   <string name="close">Stäng</string>
   <string name="select">Välj</string>
@@ -92,21 +86,16 @@
   <string name="field_remapping">%1$s (från \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Alla kort som inte mappar till något kommer att tas bort. Om en anteckning inte har några kvarvarande kort, kommer den att tas bort. Är du säker på att du vill fortsätta?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d kort studerade under %2$s</item>
-    <item quantity="other">%1$d kort studerade i %2$s</item>
+    <item quantity="one">%1$d card studied in %2$s</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minut</item>
-    <item quantity="other">%1$d minuter</item>
+    <item quantity="one">%1$d minute</item>
+    <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">Välkommen till AnkiDroid</string>
-  <string name="studyoptions_no_external_storage_title">Inget externt lagringsutrymme tillgängligt</string>
-  <string name="studyoptions_no_external_storage_message">Inget externt lagringsutrymme är tillgängligt för tillfället. AnkiDroid måste ha tillgång till SD-kortet för att läsa och ladda dina Anki-kortlekar. Kontrollera att SD-kortet är monterat och försök igen.</string>
   <string name="fact_adder_intent_title">AnkiDroid-kort</string>
-  <string name="deckpicker_select_dictionary_title">Välj ordlista</string>
-  <string name="deckpicker_select_dictionary_default">Standard</string>
   <string name="card_editor_add_card">Lägg till not</string>
-  <string name="card_editor_reset">Återställ</string>
   <string name="card_editor_copy_card">Kopiera kort</string>
   <string name="card_editor_reset_card">Återställ framsteg</string>
   <string name="card_editor_reschedule_card">Schemalägg kort på nytt</string>
@@ -116,39 +105,22 @@
   <string name="rename_error">Det gick inte att byta namn på kortleken %s</string>
   <string name="default_conf_delete_error">Standardkonfigurationsgruppen kan ej tas bort</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d kort tillagt</item>
-    <item quantity="other">%d kort har lagts till</item>
+    <item quantity="one">%d card added</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">Hjälp</string>
-  <string name="help_online">Onlinehjälp</string>
-  <string name="help_faq">FAQ</string>
   <string name="check_db">Kontrollera databas</string>
   <string name="check_media">Kontrollera media</string>
   <string name="check_db_message">Kontrollerar databasen. \nVänligen vänta...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tomt kort. Kör \"Verktyg&gt;Tomma kort...\" i PC-versionen av Anki.</string>
   <string name="unknown_type_field_warning">Skriv svar: okänt fält %s</string>
-  <string name="simple_interface_hint">Tom %s. Tänk på att det enkla gränssnittet inte kan visa bilder/ljud m.m.</string>
   <string name="delete_deck">Tar bort kortlek...\nVänligen vänta.</string>
-  <string-array name="dynOrderLabels">
-    <item>Äldst först</item>
-    <item>Slumpmässigt</item>
-    <item>Ökande intervall</item>
-    <item>Minskande intervall</item>
-    <item>Flest felsvar</item>
-    <item>Ordningen de lades till</item>
-    <item>Efter förfallotid</item>
-  </string-array>
-  <string name="menu_cardbrowser">Kortutforskare</string>
   <string name="show_hint">Visa %s</string>
-  <string name="pref_lang_other">Språkinställningar</string>
-  <string name="pref_font_UI">Anpassat UI typsnitt</string>
   <string name="info_rate">Betygsätt AnkiDroid</string>
   <string name="col_load_failed">Fel vid inläsning av samling.\nTryck bakåt för att stänga AnkiDroid.</string>
   <string name="import_title">Importera kort</string>
   <string name="import_select_title">Välj fil att importera</string>
-  <string name="import_message">Vill du lägga till innehållet i filen %s till din samling, eller ersätta din samling med den?</string>
   <string name="import_message_add">Lägg till</string>
-  <string name="import_message_replace">Ersätt</string>
   <string name="import_message_replace_confirm">Detta kommer att ta bort din befintliga samling och ersätta den med datat i filen %s. Är du säker?</string>
   <string name="import_message_add_confirm">Vill du lägga till \"%s\" till samling? Det här kan ta lång tid</string>
   <string name="import_log_success">Importerade %d kort</string>
@@ -170,13 +142,8 @@
   <string name="study_options">Kortleksalternativ</string>
   <string name="custom_study">Anpassade studier</string>
   <string name="dyn_deck_desc">Det här är en specialkortlek för studier utanför det normala schemat. Kort återförs automatiskt till sina ursprungliga kortlekar efter att du repeterat dem. Om du tar bort denna kortlek återförs alla återstående kort till sina ursprungliga kortlekar.</string>
-  <string name="exit_wizard">Avsluta guide</string>
   <string name="steps_error">Steg måste definieras som siffror högre än 0</string>
   <string name="steps_min_error">Du måste ha minst ett steg</string>
-  <string name="custom_study_invalid_number">Ogiltigt antal</string>
-  <string name="template_error">Kortmallsfel:</string>
-  <string name="template_error_detail">Ett fel uppstod i mallen för detta kort.</string>
-  <string name="template_error_fix">Vänligen använd kortredigeraren i skrivbordsklienten för att åtgärda detta fel.</string>
   <string name="sched_end">(slut)</string>
   <string name="sched_unbury_button">För att se dem nu, klicka på knappen \'\'Visa dolda kort\'\'.</string>
   <string name="sched_has_buried">En del relaterade eller dolda kort undanhålls till en senare session.</string>

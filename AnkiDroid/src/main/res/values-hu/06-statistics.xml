@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">Statisztikák</string>
   <string name="statistics_young">Fiatal</string>
   <string name="statistics_mature">Érett</string>
   <string name="statistics_young_and_learn">Young+Learn</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">Újratanulás</string>
   <string name="statistics_learn">Tanulás</string>
   <string name="statistics_cram">Magolás</string>
-  <string name="statistics_type_title">Statisztikák</string>
   <string name="stats_cards">Kártyák</string>
   <string name="stats_cards_intervals">Kártyák megadott intervallummal</string>
   <string name="stats_cumulative_cards">Cumulative Cards</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1 month</string>
   <string name="stats_period_year">1 year</string>
   <string name="stats_period_lifetime">deck life</string>
-  <string name="stats_deck_current">deck</string>
   <string name="stats_deck_collection">collection</string>
   <string name="stats_time_of_day">Time of Day</string>
   <string name="stats_day_of_week">Day of Week</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, Review: &lt;b&gt;%2$s&lt;/b&gt;, Relearn: &lt;b&gt;%3$s&lt;/b&gt;, Filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Correct answers on mature cards: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
-  <string name="statistics_period_x_axis_minutes">Perc</string>
-  <string name="statistics_new_cards">Új kártyák</string>
-  <string name="statistics_failed_cards">Rontott kártyák</string>
-  <string name="statistics_fullscreen">Teljse képernyő</string>
-  <string name="calculating_statistics">Statisztikák számítása.\nKérlek, várj...</string>
-  <string name="deck_summary_cards">Kártyák száma:</string>
-  <string name="deck_summary_notes">Jegyzetek száma:</string>
-  <string name="deck_summary_cards_mature">Régi kártyák:</string>
-  <string name="deck_summary_cards_young">Fiatal kártyák:</string>
-  <string name="deck_summary_cards_unseen">Nem látott kártyák:</string>
-  <string name="deck_summary_card_age">Kártya kora</string>
-  <string name="deck_summary_average_interval">Átlagos intervallum: &lt;b&gt;%.1f&lt;/b&gt; nap</string>
-  <string name="deck_summary_answers_correct">Helyes válaszok</string>
-  <string name="deck_summary_answers_mature">Régi kártyák: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_young">Fiatal kártyák: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Először feltűnt: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_reviews">\'>Átnézendő:</string>
-  <string name="deck_summary_news">Új kártyák:</string>
-  <string name="deck_summary_average_week">Átalg múlt héten látott</string>
-  <string name="deck_summary_average_month">Átalg múlt hónapban látott</string>
-  <string name="deck_summary_average_year">Átalg tavaly látott</string>
-  <string name="deck_summary_average_total">Átlag valaha is látott</string>
-  <string name="deck_summary_forecast">Előrejelzés</string>
-  <string name="deck_summary_tomorrow_due">Soronkövetkezők holnap: &lt;b&gt;%d&lt;/b&gt; kártya</string>
-  <string name="deck_summary_tomorrow_new">Újak holnap: &lt;b&gt;%d&lt;/b&gt; kártya</string>
-  <string name="deck_summary_tomorrow_time">Becsült idő holnap: &lt;b&gt;%d&lt;/b&gt; perc</string>
-  <string name="deck_summary_finished_in">Új kártyák befejezése: &lt;b&gt;%d&lt;/b&gt; nap</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; kártya/nap</string>
-  <string name="deck_summary_deck_age">Pakli kora: &lt;b&gt;%d&lt;/b&gt; nap</string>
   <string name="deck_summary_all_decks">Összes pakli</string>
-  <string name="stats_select_decks">Select deck</string>
   <string name="stats_select_time_scale">Select timescale</string>
   <string-array name="next_review_in_s">
     <item>1 másodperc múlva</item>
@@ -155,15 +122,6 @@
   <string name="stats_weekly_breakdown">Weekly Breakdown</string>
   <string name="stats_answer_buttons">Answer Buttons</string>
   <string name="stats_cards_types">Cards Types</string>
-  <string-array name="stats_period">
-    <item>1 hónap</item>
-    <item>1 év</item>
-    <item>minden</item>
-  </string-array>
-  <string-array name="stats_range">
-    <item>gyűjtemény</item>
-    <item>aktuális pakli</item>
-  </string-array>
   <string-array name="stats_day_time_strings">
     <item>4AM</item>
     <item>10AM</item>

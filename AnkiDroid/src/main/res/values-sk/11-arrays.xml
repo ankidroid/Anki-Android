@@ -35,51 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Balíčky</item>
-    <item>Prehliadač kariet</item>
-    <item>Štatistiky</item>
-    <item>Nastavenia</item>
-    <item>Pomocník</item>
-    <item>Odoslať hodnotenie</item>
-  </string-array>
-  <string-array name="newCardSchedulingLabels">
-    <item>Rozložiť medzi opakovania</item>
-    <item>Po opakovaniach</item>
-    <item>Pred opakovaniami</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Vždy oznámiť</item>
     <item>Nikdy neodosielať</item>
     <item>Spýtať sa</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>Od najdávnejšie upravených</item>
-    <item>Zobraziť v poradí, v akom boli pridané</item>
-    <item>Zobraziť v náhodnom poradí</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Nové karty v náhodnom poradí</item>
-    <item>Nové karty v poradí, v akom boli pridané</item>
-    <item>Nové karty v opačnom poradí ako boli pridané</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Rozložiť nové karty pomedzi opakovania</item>
-    <item>Nové karty po opakovaniach</item>
-    <item>Nové karty pred opakovaniami</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Opakovať karty od najväčšieho intervalu</item>
-    <item>Opakovať karty od najmenšieho intervalu</item>
-    <item>Opakovať karty podľa času na opakovanie</item>
-    <item>Opakovať karty v náhodnom poradí</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Zobraziť neúspešné karty skoro</item>
-    <item>Zobraziť neúspešné karty na konci</item>
-    <item>Zobraziť neúspešné karty za 10 minút</item>
-    <item>Zobraziť neúspešné karty za 8 hodín</item>
-    <item>Zobraziť neúspešné karty za 3 dni</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Žiadna akcia</item>
@@ -99,12 +58,6 @@
     <item>Odstrániť kartu</item>
     <item>Play media</item>
     <item>Abort learning</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Android Tmavý</item>
-    <item>Android Svetlý</item>
-    <item>Modrá</item>
-    <item>Biela</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Dať kartu bokom</item>

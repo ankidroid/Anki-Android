@@ -35,51 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Колоди</item>
-    <item>Переглядач карт</item>
-    <item>Статистика</item>
-    <item>Параметри</item>
-    <item>Допомога</item>
-    <item>Надіслати відгук</item>
-  </string-array>
-  <string-array name="newCardSchedulingLabels">
-    <item>Розподілити по переглядах</item>
-    <item>Після переглядів</item>
-    <item>Перед переглядами</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Завжди доповідати</item>
     <item>Ніколи на доповідати</item>
     <item>Запитати</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>Показати останні змінені першими</item>
-    <item>Показати в порядку додавання</item>
-    <item>Показати у випадковому порядку</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Нові картки у випадковому порядку</item>
-    <item>Нові картки в порядку додавання</item>
-    <item>Нові картки в зворотньому порядку додані</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Розподілити нові картки по переглядах</item>
-    <item>Нові картки після перегляду</item>
-    <item>Нові картки перед переглядом</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Переглядати картки з найбільших інтервалів</item>
-    <item>Переглядати картки за найменших інтервалів</item>
-    <item>Переглядати кртки в порядку черги</item>
-    <item>Переглядати картки в випадковому порядку</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Показати невдалі картки невдовзі</item>
-    <item>Показати невдалі картки вкінці</item>
-    <item>Показати невдалі картки через 10 хвилин</item>
-    <item>Показати невдалі картки через 8 годин</item>
-    <item>Показати невдалі картки через 3 дні</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Жодних дій</item>
@@ -99,12 +58,6 @@
     <item>Видалити картку</item>
     <item>Play media</item>
     <item>Abort learning</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Android Dark</item>
-    <item>Android Light</item>
-    <item>Blue</item>
-    <item>Білий</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Відкласти картку</item>

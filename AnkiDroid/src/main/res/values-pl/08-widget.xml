@@ -44,21 +44,14 @@
   <string name="widget_no_cards_due">Brak kart do przejrzenia</string>
   <string name="widget_loading">Ładowanie widżetu...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d karta do przejrzenia %2$s</item>
-    <item quantity="other">%1$d kart do przejrzenia %2$s</item>
+    <item quantity="one">%1$d card due in %2$s</item>
+    <item quantity="few">%1$d cards due in %2$s</item>
+    <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d talia</item>
-    <item quantity="other">%1$d talie</item>
+    <item quantity="one">%1$d deck</item>
+    <item quantity="few">%1$d decks</item>
+    <item quantity="other">%1$d decks</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid Średni</string>
   <string name="widget_small">AnkiDroid Mały</string>
-  <string name="widget_big">AnkiDroid Duży</string>
-  <string name="widget_big_restrictions_dialog">Z powodu ograniczeń obsługi widżetów przez Androida, widżet ten może wyświetlać tekst lecz nie obsługuje obrazów/dźwięków itd.</string>
-  <string name="open_in_reviewer">Otwórz talię w AnkiDroidzie</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Szacowany czas: %d min.</item>
-    <item quantity="other">Szacowany czas: %d min.</item>
-  </plurals>
-  <string name="widget_big_tomorrow_due">Do przejrzenia jutro:</string>
 </resources>

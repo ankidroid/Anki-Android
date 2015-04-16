@@ -39,27 +39,11 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="error_ok">Rapportera fel</string>
-  <string name="error_cancel">Rapportera inte fel</string>
   <string name="error_reporting_choice">Läge för felrapportering</string>
   <string name="error_reporting_choice_summary">Fel kan rapporteras automatiskt, aldrig rapporteras, eller så kan du tillfrågas</string>
   <string name="feedback_disclaimer">Disclaimer: Vi samlar inte in någon personlig information såsom din epostadress, ditt telefonnummer eller IMEI-nummer för din telefon. Vi samlar in viss information om din enhet såsom tillverkare, modell och version av AnkiDroid, så väl som de rapporterade felen och stegen som ledde fram till dem.</string>
   <string name="feedback_title">Feedback</string>
-  <string name="feedback_send_feedback">Skicka oss din feedback</string>
-  <string name="feedback_send_feedback_and_errors">Skicka felrapporter och din feedback</string>
-  <string name="feedback_message_sent_success">Feedback mottagen, tack!</string>
-  <string name="feedback_message_sent_failure">Kunde inte skicka feedback, kod %1$s</string>
-  <string name="feedback_keep_latest">Behåll senaste fel</string>
-  <string name="feedback_clear_all">Rensa alla fel</string>
   <string name="feedback_default_text">Var god skriv in din feedback eller information om eventuella fel du rapporterar.</string>
-  <string name="feedback_error_reply_new">Okänt problem, ny bugg rapporterad</string>
-  <string name="feedback_error_reply_known">Tidigare problem har upptäckts. Detaljer är välkomna på AnkiDroid issue tracker.</string>
-  <string name="feedback_error_reply_issue_unknown">Problem %1$d, okänd status</string>
-  <string name="feedback_error_reply_issue_status">Problem %1$d, status: %2$s</string>
-  <string name="feedback_error_reply_issue_fixed_dev">Problem %1$d, fixat men inte släppt ännu</string>
-  <string name="feedback_error_reply_issue_fixed_prod">Problem %1$d, fixat i senaste versionen</string>
-  <string name="feedback_error_reply_malformed">Bugg rapporterad, inget svar</string>
-  <string name="feedback_error_reply_failed">Kunde inte skicka</string>
   <string name="feedback_auto_toast_text">AnkiDroid har stött på ett problem; en rapport skickas till utvecklarna&#8230;</string>
   <string name="feedback_manual_toast_text">AnkiDroid har stött på ett problem; en rapport genereras&#8230;</string>
   <string name="feedback_copy_debug">Kopiera debuginformation</string>

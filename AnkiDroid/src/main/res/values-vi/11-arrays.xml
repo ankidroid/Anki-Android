@@ -35,51 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Decks</item>
-    <item>Card Browser</item>
-    <item>Statistics</item>
-    <item>Settings</item>
-    <item>Help</item>
-    <item>Send Feedback</item>
-  </string-array>
-  <string-array name="newCardSchedulingLabels">
-    <item>Xuất hiện ngẫu nhiên trong lúc review</item>
-    <item>Sau khi ôn tập</item>
-    <item>Trước khi ôn tập</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Luôn thông báo lỗi</item>
     <item>Không bao giờ thông báo lỗi</item>
     <item>Hỏi tôi</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>Hiển thị theo thứ tự thời gian sửa đổi</item>
-    <item>Hiển thị theo thứ tự nhập vào</item>
-    <item>Hiển thị theo thứ tự ngẫu nhiên</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Thẻ mới theo thứ tự ngẫu nhiên</item>
-    <item>Thẻ mới theo thứ tự đã nhập vào</item>
-    <item>Thẻ mới ngược thứ tự đã nhập vào</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Rải đều các thẻ mới trong quá trình ôn tập</item>
-    <item>Học thẻ mới sau khi ôn tập thẻ cũ</item>
-    <item>Học thẻ mới trước khi ôn tập thẻ cũ</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Ôn tập từ thẻ có khoảng thời gian lớn nhất</item>
-    <item>Ôn tập từ thẻ có khoảng thời gian nhỏ nhất</item>
-    <item>Ôn tập thẻ theo thứ tự tới hạn</item>
-    <item>Ôn tập thẻ theo thứ tự ngẫu nhiên</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Hiển thị sớm các thẻ hỏng</item>
-    <item>Hiển thị các thẻ hỏng vào cuối bài</item>
-    <item>Hiển thị các thẻ hỏng trong 10 phút</item>
-    <item>Hiển thị các thẻ hỏng trong 8 giờ</item>
-    <item>Hiển thị các thẻ hỏng trong 3 ngày</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Không làm gì</item>
@@ -99,12 +58,6 @@
     <item>Xóa thẻ</item>
     <item>Play media</item>
     <item>Abort learning</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Android Dark</item>
-    <item>Android Light</item>
-    <item>Xanh dương</item>
-    <item>Trắng</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Suspend card</item>

@@ -138,7 +138,6 @@
   <string name="safe_display_summ">Desativar todas animações e utilizar método seguro para desenhar cartões. Dispositivos antigos e e-ink utilizando fontes personalizadas podem exigir isso.</string>
   <string name="vertical_centering">Alinhar no centro</string>
   <string name="vertical_centering_summ">Centralizar o conteúdo das cartas verticalmente</string>
-  <string name="pref_cat_backup">Backups</string>
   <string name="pref_backup">Usar backups</string>
   <string name="pref_backup_summ">Criar backups automaticamente antes de abrir um deck (uma vez por dia)</string>
   <string name="pref_backup_max">Número máximo de backups</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">Solução alternativa para focar em problemas em caixas de entradas HTML. Causa problemas em diversos dispositivos.</string>
   <string name="pref_keep_screen_on">Manter tela ligada</string>
   <string name="pref_keep_screen_on_summ">Desativar tempo limite da tela</string>
-  <string name="pref_simple_interface">Interface simples</string>
-  <string name="pref_simple_interface_summ">Mostra os cartões mais rápido, mas não suporta todos os recursos html</string>
-  <string name="pref_simple_interface_exclude_tags">Tags a remover</string>
-  <string name="pref_simple_interface_exclude_tags_summ">Não use interface simplificada para essas tags: XXX</string>
-  <string name="write_answers_message">Você deve definir para cada deck um campo para comparar à sua resposta escrita. Você pode fazer isto via Anki Desktop (propriedades do deck -&gt; editar modelo -&gt; layout do cartão).\n\nSe nenhum campo de comparação é definido, sua resposta escrita sempre irá ser comparada com toda a resposta do cartão</string>
   <string name="fix_arabic_text">Melhora a exibição Arábica</string>
   <string name="fix_arabic_text_summ">Solução alternativa parcial para suporte limitado de árabe pela plataforma Android. Quando ativado, não é possível modificar cartões.</string>
   <string name="convert_fen_text">Suporte para notação de xadrez</string>
@@ -175,22 +169,11 @@
   <string name="filter_google_translate_summ">Salvar somente a palavra original e a tradução</string>
   <string name="convert_fen_text_summ">Desenhar tabuleiro de xadrez a partir da Notação Forsyth-Edwards. A notação deve estar delimitada pelas tags [fen][/fen].</string>
   <string name="studyoptions_limit_select_tags">Selecione Tags</string>
-  <string name="studyoptions_limit_tags_active">Com: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">Sem: %1$s</string>
-  <string name="studyoptions_limit_button_text">Limitar</string>
-  <string name="studyoptions_limit_dialog_title">Aprendendo no Limite</string>
-  <string name="studyoptions_session">Sessão</string>
-  <string name="studyoptions_tag">Por Tag</string>
-  <string name="studyoptions_tag_new">Mostra novos cartões por tag:</string>
-  <string name="studyoptions_tag_rev">Mostrar cartões de revisão por tag:</string>
-  <string name="studyoptions_new_cards_per_day">Novos cartões por dia</string>
-  <string name="studyoptions_max_fail_card">Máximo de falhas</string>
-  <string name="deck_conf_deck_name">Nome do deck</string>
   <string name="deck_conf_deck_description">Descrição do deck</string>
   <string name="deck_conf_group">Grupo de opções</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d decks usam este grupo</item>
-    <item quantity="other">%1$s\n%2$d decks usam este grupo</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">Novos cartões</string>
   <string name="deck_conf_rev_cards">Revisões</string>
@@ -235,8 +218,8 @@
   <string name="deck_conf_remove_message">Remover o grupo de opções atual?</string>
   <string name="deck_conf_set_subdecks">Definir para todos os subdecks</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s subdecks usarão este grupo</item>
-    <item quantity="other">%s subdecks usarão este grupo</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Definir para todos os subdecks</string>
   <string name="deck_conf_set_subdecks_message">Definir o atual grupo de opções para todos os subdecks deste deck?</string>
@@ -244,7 +227,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filtro</string>
   <string name="deck_conf_cram_options">Opções</string>
-  <string name="deck_conf_cram_preset">Predefinição</string>
   <string name="deck_conf_cram_search">Pesquisa</string>
   <string name="deck_conf_cram_limit">Limitar para</string>
   <string name="deck_conf_cram_order">Cartões selecionados por</string>

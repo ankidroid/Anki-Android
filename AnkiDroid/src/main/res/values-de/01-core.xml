@@ -39,31 +39,29 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Stapel</string>
+  <string name="card_browser">Kartenübersicht</string>
+  <string name="statistics">Statistik</string>
+  <string name="settings">Einstellungen</string>
+  <string name="help">Hilfe</string>
+  <string name="send_feedback">Rückmeldung senden</string>
   <string name="studyoptions_title">Lernoptionen</string>
-  <string name="studyoptions_deck_name">Stapelname</string>
   <string name="studyoptions_due_today">Heute fällig:</string>
   <string name="studyoptions_new_total">Neue Karten gesamt:</string>
   <string name="studyoptions_total_cards">Karten gesamt:</string>
   <string name="studyoptions_eta">Geschätzte Zeit (Min.):</string>
   <string name="studyoptions_start">Jetzt lernen</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d Karte fällig (%2$s)</item>
-    <item quantity="other">%1$d Karten fällig (%2$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d Min.</item>
-    <item quantity="other">%d Min.</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d von %2$d fällig</item>
-    <item quantity="other">%1$d von %2$d fällig</item>
+    <item quantity="one">%d min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">noch %d Minute</item>
-    <item quantity="other">noch %d Minuten</item>
+    <item quantity="one">%d minute left</item>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Antwort eingeben</string>
   <string name="show_answer">Antwort anzeigen</string>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">Gut</string>
   <string name="ease3_learning">Einfach</string>
   <string name="studyoptions_congrats_undo">%s rückgängig machen</string>
-  <string name="card_unsuspended">Aussetzen rückgängig gemacht</string>
-  <string name="card_suspended">Karte wieder ausgesetzt</string>
-  <string name="menu_rotate">Drehen</string>
   <string name="menu_import">Importieren</string>
   <string name="undo">Rückgängig</string>
   <string name="undo_action_review">Letzte Wiederholung</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">Notiz markieren</string>
   <string name="unbury">Vorläufiges Aussetzen aufheben</string>
   <string name="finish_operation">Letzte Operation wird beendet (vermutlich eine Sicherung der Sammlung)&#8230;</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Fehlende Media-Daten herunterladen</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Sprachzuordnungen zurücksetzen</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Sprache zurücksetzen</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Datenbank optimieren</string>
   <string name="contextmenu_deckpicker_rename_deck">Stapel umbenennen</string>
   <string name="contextmenu_deckpicker_collapse_deck">Unterstapel einklappen</string>
   <string name="contextmenu_deckpicker_inflate_deck">Unterstapel ausklappen</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Eigenes Wörterbuch festlegen</string>
   <string name="menu_add">Hinzufügen</string>
   <string name="menu_add_note">Notiz hinzufügen</string>
-  <string name="menu_download_deck">Stapel herunterladen</string>
-  <string name="menu_download_shared_deck">Öffentlicher Stapel</string>
   <string name="menu_my_account">Synchronisierungskonto</string>
-  <string name="menu_preferences">Einstellungen</string>
-  <string name="menu_about">Über</string>
   <string name="menu_dismiss_note">Aussetzen / Löschen</string>
   <string name="menu_bury_card">Karte vorläufig aussetzen</string>
   <string name="menu_bury_note">Notiz vorläufig aussetzen</string>
   <string name="menu_suspend_card">Karte dauerhaft aussetzen</string>
   <string name="menu_suspend_note">Notiz dauerhaft aussetzen</string>
-  <string name="menu_save_note">Notiz speichern</string>
   <string name="menu_delete_note">Notiz löschen</string>
   <string name="delete_note_message">Diese Notiz und alle ihre Karten tatsächlich löschen?\n%s</string>
-  <string name="menu_edit_card">Karte bearbeiten</string>
   <string name="menu_select">Text auswählen</string>
   <string name="menu_search">In %1$s nachschlagen</string>
   <string name="menu_mark_card">Karte markieren</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">Stapel erstellen</string>
   <string name="create">Erstellen</string>
   <string name="new_dynamic_deck">Gefilterten Stapel erstellen</string>
-  <string name="studyoptions_feedback">Feedback</string>
   <string name="night_mode">Nachtmodus</string>
   <string name="directory_inaccessible">Auf AnkiDroid-Verzeichnis kann nicht zugegriffen werden</string>
   <string-array name="next_review_s">
@@ -136,10 +119,7 @@
     <item>%s Monate</item>
     <item>%s Jahre</item>
   </string-array>
-  <string name="visit">Besuchen</string>
   <string name="later">Später</string>
-  <string name="download">Download</string>
-  <string name="open_collection">Öffne Sammlung&#8230;</string>
   <string name="rebuild_cram_deck">Dynamischer Stapel wird neu aufgebaut&#8230;</string>
   <string name="rebuild_cram_label">Neu aufbauen</string>
   <string name="empty_cram_label">Leeren</string>
@@ -151,37 +131,10 @@
   <string name="studyoptions_congrats_more_new">Es sind noch neue Karten verfügbar, aber das tägliche Lernlimit wurde erreicht. Sie können das Limit in den Optionen erhöhen, bedenken Sie aber, dass dies Ihr kurzfristiges Arbeitspensum erhöht.</string>
   <string name="studyoptions_congrats_custom">Tippen Sie unten auf \"Benutzerdefiniertes Lernen\", um außerhalb des regulären Lehrplans zu lernen</string>
   <string name="studyoptions_no_cards_due">Es sind noch keine Karten fällig</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Morgen ist %1$d Karte fällig und %2$s.\n Geschätzte Zeit: %3$s</item>
-    <item quantity="other">Morgen sind %1$d Karten fällig und %2$s.\n Geschätzte Zeit: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d neue Karte</item>
-    <item quantity="other">%1$d neue Karten</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Geschätzte Zeit: %1$d Min.</item>
-    <item quantity="other">Geschätzte Zeit: %1$d Min.</item>
-  </plurals>
-  <string name="sd_card_not_mounted">Die SD-Karte ist nicht eingehängt.\n\nDie Sammlung kann auch im internen Speicher abgelegt werden. Dies ist allerdings nicht zu empfehlen, da Sie in diesem Fall nicht so einfach auf die Datei zugreifen können. Sie können dies in den Einstellungen aktivieren (auf diesen Text tippen um die Einstellungen zu öffnen).</string>
-  <string name="studyoptions_options">Optionen</string>
-  <string name="empty_cloze_warning">Bitte bearbeiten Sie diese Notiz und fügen Sie einige Lückentext-Streichungen ein (%1$s)</string>
-  <string name="help_cloze">Hilfe</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Synchronisieren</string>
-  <string name="restart">Neustart</string>
-  <string name="do_nothing">Nichts tun</string>
-  <string name="more_options">Mehr Optionen</string>
-  <string name="now">Jetzt</string>
-  <string name="back">Zurück</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importieren</string>
   <string name="export">Exportieren</string>
-  <string name="confirm">Bestätigen</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string name="nothing">Nichts</string>
-  <string name="title_activity_graphical_activity">Statistisches Diagramm</string>
   <string name="title_activity_template_editor">Kartentypen für %s</string>
   <string name="card_template_editor_front">Vorlage für Vorderseite</string>
   <string name="card_template_editor_back">Vorlage für Rückseite</string>
@@ -190,8 +143,8 @@
   <string name="card_template_editor_menu_delete">Löschen</string>
   <string name="card_template_editor_cant_delete">Mindestens ein Kartentyp wird benötigt</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Kartentyp \"%2$s\" und seine %1$d Karte löschen?</item>
-    <item quantity="other">Kartentyp \"%2$s\" und seine %1$d Karten löschen?</item>
+    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
+    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Kartentyp kann nicht gelöscht werden, da dadurch mindestens eine Notiz gelöscht würde</string>
 </resources>

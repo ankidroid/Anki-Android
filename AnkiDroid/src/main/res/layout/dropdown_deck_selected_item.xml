@@ -8,12 +8,16 @@
         android:id="@+id/dropdown_deck_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="?attr/actionBarTextColor"
         android:singleLine="true"
+        android:drawablePadding="16dp"
+        android:drawableRight="@drawable/spinner_triangle"
         style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
     <TextView
         android:id="@+id/dropdown_deck_counts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="?attr/actionBarTextColor"
         android:layout_marginTop="@dimen/action_bar_subtitle_top_margin"
         android:singleLine="true"
         style="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle" />

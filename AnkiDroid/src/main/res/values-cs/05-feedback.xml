@@ -39,27 +39,11 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="error_ok">Hlásit chyby</string>
-  <string name="error_cancel">Nehlásit chyby</string>
   <string name="error_reporting_choice">Režim hlášení chyb</string>
   <string name="error_reporting_choice_summary">Chyby mohou být oznámeny automaticky, nikdy nebo okamžitě</string>
-  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occuring.</string>
+  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
   <string name="feedback_title">Napište nám</string>
-  <string name="feedback_send_feedback">Zašlete nám váš názor</string>
-  <string name="feedback_send_feedback_and_errors">Pošlete chyby a váš názor</string>
-  <string name="feedback_message_sent_success">Zpětná vazba obdržena, děkujeme!</string>
-  <string name="feedback_message_sent_failure">Nepodařilo se odeslat zpětnou vazbu, kód %1$s</string>
-  <string name="feedback_keep_latest">Ponechat poslední chybu</string>
-  <string name="feedback_clear_all">Vymazat všechny chyby</string>
   <string name="feedback_default_text">Prosím, zadejte svůj názor nebo informaci o povaze jakékoliv chyby, kterou chcete nahlásit.</string>
-  <string name="feedback_error_reply_new">Neznámý problém, zadána nová chyba</string>
-  <string name="feedback_error_reply_known">Dříve zjištěný problém. Podrobnosti uvítáme na AnkiDroid issue tracker.</string>
-  <string name="feedback_error_reply_issue_unknown">Problém %1$d, neznámý stav</string>
-  <string name="feedback_error_reply_issue_status">Problém %1$d, stav: %2$s</string>
-  <string name="feedback_error_reply_issue_fixed_dev">Problém %1$d, dosud neopraveno</string>
-  <string name="feedback_error_reply_issue_fixed_prod">Problém %1$d, opraveno v nejnovější verzi</string>
-  <string name="feedback_error_reply_malformed">Hlášená chyba, žádná odpověď</string>
-  <string name="feedback_error_reply_failed">Odeslání se nezdařilo</string>
   <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
   <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
   <string name="feedback_copy_debug">Copy debug info</string>

@@ -39,13 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_collection">백업 생성중. \n 잠시만 기다리세요...</string>
   <string name="backup_deck_no_space_left">SD카드 용량 부족으로 백업 명령을 실행할 수 없습니다.\n\n 저장 공간을 확보하거나 백업파일 개수 지정을 줄이세요.</string>
   <string name="sd_space_warning">%d mb 저장공간이 SD카드에 남았습니다. \n 데이터 손실 방지를 위해 저장공간을 확보하세요.</string>
-  <string name="backup_deck_success">성공적으로 백업 됨</string>
-  <string name="backup_manager_title">백업 관리자</string>
   <string name="backup_delete">백업 삭제중.\n 잠시 기다리세요...</string>
-  <string name="contextmenu_deckpicker_remove_backups">백업파일 삭제</string>
   <string name="backup_restore">백업에서 복원</string>
   <string name="backup_new_collection">새 컬렉션</string>
   <string name="backup_del_collection">컬렉션 삭제 후 새 컬렉션 만들기</string>
@@ -59,10 +55,7 @@
   <string name="backup_repair_deck">복구</string>
   <string name="backup_repair_deck_progress">데이터베이스 복구중. \ n 잠시 기다려 주세요...</string>
   <string name="backup_error">Error</string>
-  <string name="backup_restore_error">컬렉션 복구될 수 없음</string>
   <string name="backup_invalid_file_error">The selected backup file was invalid</string>
-  <string name="backup_restore_if_missing">누락된 컬렉션 복원 중...</string>
-  <string name="backup_restore_deck">컬렉션 복구 중입니다.\n잠시만 기다려 주세요...</string>
   <string name="backup_restore_select_title">복원할 백업 파일 선택</string>
   <string name="backup_restore_no_backups">이 컬렉션을 위한 백업이 장치에 존재하지 않습니다. 데스크탑 컴퓨터에 백업이 있다면, 직접 AnkiDroid 폴더로 옮겨주시기 바랍니다.</string>
   <string name="open_collection_failed_title">컬렉션 열리지 않음</string>

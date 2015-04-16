@@ -17,7 +17,10 @@
 package com.ichi2.compat;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 
 public class CompatHelper {
     private static CompatHelper sInstance;
@@ -35,12 +38,8 @@ public class CompatHelper {
             mCompat = new CompatV12();
         } else if (getSdkVersion() >= 9) {
             mCompat = new CompatV9();
-        } else if (getSdkVersion() >= 8) {
-            mCompat = new CompatV8();
-        } else if (isNook() && getSdkVersion() == 7) {
-            mCompat = new CompatV7Nook();
         } else {
-            mCompat = new CompatV7();
+            mCompat = new CompatV8();
         }
     }
 
@@ -49,10 +48,6 @@ public class CompatHelper {
         return Build.VERSION.SDK_INT;
     }
 
-    /** Determine if the device is running API level 8 or higher. */
-    public static boolean isFroyo() {
-        return getSdkVersion() >= Build.VERSION_CODES.FROYO;
-    }
 
     /** Determine if the device is running API level 11 or higher. */
     public static boolean isHoneycomb() {
@@ -98,5 +93,24 @@ public class CompatHelper {
 
     public static boolean isKindle() {
         return Build.BRAND.equalsIgnoreCase("amazon") || Build.MANUFACTURER.equalsIgnoreCase("amazon");
+    }
+
+    public static void removeHiddenPreferences(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (getSdkVersion() >= 9){
+            preferences.edit().remove("fixArabicText").commit();
+        }
+        if (isHoneycomb()){
+            preferences.edit().remove("longclickWorkaround").commit();
+        }
+        if (getSdkVersion() >= 13) {
+            preferences.edit().remove("safeDisplay").commit();
+        }
+        if (getSdkVersion() >= 15) {
+            preferences.edit().remove("inputWorkaround").commit();
+        }
+        if (getSdkVersion() >= 16) {
+            preferences.edit().remove("fixHebrewText").commit();
+        }
     }
 }

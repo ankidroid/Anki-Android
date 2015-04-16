@@ -40,57 +40,45 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
     <item quantity="other">%d cards shown</item>
   </plurals>
-  <string name="card_browser_all_decks">All decks</string>
-  <string name="card_browser_load">Loading cards&#8230;</string>
-  <string name="card_browser_cardloading_error">Error on loading cards. This is probably related to your device\'s memory restrictions. Try again with a smaller deck.</string>
-  <string name="card_browser_delete_card">Delete note</string>
+  <string name="card_browser_all_decks">Tất cả chủ đề (Tập thẻ)</string>
+  <string name="card_browser_delete_card">xóa ghi chú</string>
   <string name="card_browser_suspend_card">Tạm ngừng thẻ</string>
   <string name="card_browser_unsuspend_card">Khôi phục lại thẻ</string>
-  <string name="card_browser_mark_card">Mark note</string>
-  <string name="card_browser_unmark_card">Unmark note</string>
-  <string name="delete_card_title">Delete note?</string>
-  <string name="delete_card_message">Delete all cards of this note?\nSearch field: %s</string>
-  <string name="card_browser_show_marked">Filter marked</string>
-  <string name="card_browser_field">Change card browser field</string>
-  <string name="card_browser_field_title">Change card browser field</string>
-  <string name="card_browser_show_suspended">Filter suspended</string>
-  <string name="card_browser_search_by_tag">Filter by tag</string>
+  <string name="card_browser_mark_card">Đánh dấu ghi chú</string>
+  <string name="card_browser_unmark_card">Bỏ dấu khỏi mỗi lưu ý</string>
+  <string name="delete_card_title">Xoá ghi chú?</string>
+  <string name="delete_card_message">Xóa tất cả các thẻ lưu ý này? \n Tìm theo lĩnh vực: %s</string>
+  <string name="card_browser_show_marked">Bộ lọc được đánh dấu</string>
+  <string name="card_browser_show_suspended">Bộ lọc bị tạm dừng</string>
+  <string name="card_browser_search_by_tag">Lọc bởi từ khóa</string>
   <string name="card_browser_tags_shown">Tags: %1$s</string>
+  <string name="card_browser_list_my_searches">My searches</string>
+  <string name="card_browser_list_my_searches_save">Save search</string>
+  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
+  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
+  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Thay đổi thứ tự hiển thị</string>
   <string name="card_browser_change_display_order_title">Chọn thứ tự hiển thị</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
-  <string name="card_browser_order_reverse">(reverse)</string>
-  <string name="card_details_question">Question</string>
-  <string name="card_details_answer">Answer</string>
-  <string name="card_details_due">Due</string>
-  <string name="card_details_last_due">Last due</string>
-  <string name="card_details_now">Now</string>
-  <string name="card_details_interval">Interval</string>
-  <string name="card_details_ease">Ease</string>
-  <string name="card_details_average_time">Average time</string>
-  <string name="card_details_total_time">Total time</string>
-  <string name="card_details_yes_count">Yes count</string>
-  <string name="card_details_no_count">No count</string>
-  <string name="card_details_added">Added</string>
-  <string name="card_details_changed">Changed</string>
+  <string name="card_browser_change_display_order_reverse">Chọn một loại hai lần để  xem mặt ngược lại</string>
+  <string name="card_details_question">Câu hỏi</string>
+  <string name="card_details_answer">Câu Trả lời</string>
+  <string name="card_details_due">Theo như/đúng như</string>
   <string name="card_details_tags">Các từ khóa</string>
-  <string name="card_details_model">Note type</string>
-  <string name="card_browser_sorting_cards">Sorting cards&#8230;</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
-  <string name="card_details_card_model">Card model</string>
+  <string name="card_browser_filtering_cards">Lọc thẻ... \n bấm nút trở lại nút để hủy bỏ</string>
   <string-array name="card_browser_order_labels">
-    <item>No sorting (faster)</item>
-    <item>By search field</item>
-    <item>By created time</item>
-    <item>By edited time</item>
-    <item>By changed time</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
-    <item>By reviews</item>
-    <item>By lapses</item>
+    <item>Không phân loại  (nhanh hơn)</item>
+    <item>By sort field</item>
+    <item>Bằng thời gian tạo ra</item>
+    <item>Bởi thời gian chỉnh sửa</item>
+    <item>Thay đổi thời gian</item>
+    <item>Bởi thời gian</item>
+    <item>Bởi khoảng thời gian</item>
+    <item>Bởi dễ dàng</item>
+    <item>Bởi ôn tập</item>
+    <item>Bởi nhầm lẫn/sai sót</item>
   </string-array>
 </resources>

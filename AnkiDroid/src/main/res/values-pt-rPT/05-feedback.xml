@@ -39,27 +39,11 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="error_ok">Enviar relatórios de erro</string>
-  <string name="error_cancel">Não enviar relatórios de erro</string>
   <string name="error_reporting_choice">Modo de denúncia de erro</string>
   <string name="error_reporting_choice_summary">Relatórios de erro podem ser enviados automaticamente, nunca enviados ou decidido caso a caso</string>
-  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occuring.</string>
+  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
   <string name="feedback_title">Comentários</string>
-  <string name="feedback_send_feedback">Envie-nos a sua opinião</string>
-  <string name="feedback_send_feedback_and_errors">Enviar erros e os seus comentários</string>
-  <string name="feedback_message_sent_success">Comentário recebido, obrigado!</string>
-  <string name="feedback_message_sent_failure">Não foi possível enviar os seus comentários, código de erro %1$s</string>
-  <string name="feedback_keep_latest">Manter erro mais recente</string>
-  <string name="feedback_clear_all">Limpar todos os erros</string>
   <string name="feedback_default_text">Por favor, envie o seu comentário ou informações sobre os erros que está denunciando.</string>
-  <string name="feedback_error_reply_new">Problema desconhecido, novo bug registado</string>
-  <string name="feedback_error_reply_known">Problema detetado anteriormente. Detalhes são bem-vindos no gestor de problemas do AnkiDroid.</string>
-  <string name="feedback_error_reply_issue_unknown">Problema %1$d, estado desconhecido</string>
-  <string name="feedback_error_reply_issue_status">Problema %1$d, estado: %2$s</string>
-  <string name="feedback_error_reply_issue_fixed_dev">Problema %1$d, corrigido mas solução ainda não publicada</string>
-  <string name="feedback_error_reply_issue_fixed_prod">Problema %1$d, corrigido na versão mais recente</string>
-  <string name="feedback_error_reply_malformed">Bug registado, sem resposta</string>
-  <string name="feedback_error_reply_failed">Falhou ao enviar</string>
   <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
   <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
   <string name="feedback_copy_debug">Copy debug info</string>

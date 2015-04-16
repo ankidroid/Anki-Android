@@ -92,6 +92,13 @@ public class Sound {
      */
     private static HashMap<Integer, ArrayList<String>> sSoundPaths = new HashMap<Integer, ArrayList<String>>();
 
+    /**
+     * Listener to handle audio focus. Currently blank because we're not respecting losing focus from other apps.
+     */
+    private static AudioManager.OnAudioFocusChangeListener afChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+        public void onAudioFocusChange(int focusChange) {
+        }
+    };
 
     /* Prevent class from being instantiated */
     private Sound() {
@@ -264,12 +271,7 @@ public class Sound {
         } else {
             // Check if file is video
             final boolean isVideo;
-            if (CompatHelper.isFroyo()){
-                isVideo = ThumbnailUtils.createVideoThumbnail(soundUri.getPath(), MediaStore.Images.Thumbnails.MINI_KIND) != null;
-            } else {
-                // Don't bother supporting video on Android 2.1
-                isVideo = false;
-            }
+            isVideo = ThumbnailUtils.createVideoThumbnail(soundUri.getPath(), MediaStore.Images.Thumbnails.MINI_KIND) != null;
             // If video file but no SurfaceHolder provided then ask 
             // AbstractFlashcardViewer to provide a VideoView holder
             if (isVideo && videoView == null && sCallingActivity != null && sCallingActivity.get() != null) {
@@ -312,7 +314,8 @@ public class Sound {
                     sMediaPlayer.setOnCompletionListener(playAllListener);
                 }
                 sMediaPlayer.prepareAsync();
-                CompatHelper.getCompat().requestAudioFocus(sAudioManager);
+                sAudioManager.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC,
+                        AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
             } catch (Exception e) {
                 Timber.e(e, "playSounds - Error reproducing sound %s", soundPath);
                 releaseSound();
@@ -389,7 +392,7 @@ public class Sound {
             sMediaPlayer = null;
         }
         if (sAudioManager != null) {
-            CompatHelper.getCompat().abandonAudioFocus(sAudioManager);
+            sAudioManager.abandonAudioFocus(afChangeListener);
             sAudioManager = null;
         }
     }

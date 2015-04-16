@@ -34,15 +34,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="multimedia_editor_languages_russian">Vene</string>
-  <string name="multimedia_editor_languages_german">Saksa</string>
-  <string name="multimedia_editor_languages_nepali">Nepaali</string>
-  <string name="multimedia_editor_languages_slovak">Slovakkia</string>
-  <string name="multimedia_editor_languages_french">Prantsuse</string>
-  <string name="multimedia_editor_languages_spanish">Hispaania</string>
-  <string name="multimedia_editor_languages_mandarin">Mandariini</string>
-  <string name="multimedia_editor_languages_portuguese">Portugali</string>
-  <string name="multimedia_editor_languages_english">Inglise</string>
   <string name="multimedia_editor_popup_image">Lisa pilt</string>
   <string name="multimedia_editor_popup_audio">Salvesta heli</string>
   <string name="multimedia_editor_popup_text">Advanced editor</string>
@@ -83,13 +74,6 @@
   <string name="multimedia_editor_text_field_editing_no_text">Sisesta kõigepealt tekst</string>
   <string name="multimedia_editor_text_field_editing_many_words">Sõnastik eeldab tavaliselt ühte sõna</string>
   <string name="multimedia_editor_text_field_editing_clone_source">Take from</string>
-  <string name="multimedia_editor_activity_note_type">Note type</string>
-  <string name="multimedia_editor_activity_deck">Deck</string>
-  <string name="multimedia_editor_activity_edit_button">Edit</string>
-  <string name="multimedia_editor_activity_swap_button">Swap</string>
-  <string name="multimedia_editor_activity_delete_question">Delete the whole note?</string>
-  <string name="multimedia_editor_activity_delete_confirm">Delete</string>
-  <string name="multimedia_editor_activity_delete_reject">Keep</string>
   <string name="multimedia_editor_image_field_editing_galery">Gallery</string>
   <string name="multimedia_editor_image_field_editing_photo">Camera</string>
   <string name="multimedia_editor_general_downloading">Downloading</string>
@@ -105,7 +89,6 @@
   <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
   <string name="title_activity_edit_text">Editing field</string>
   <string name="title_activity_translation">Translation</string>
-  <string name="title_activity_audio_recorder">Audio recorder</string>
   <string name="title_activity_load_pronounciation">Pronunciation</string>
   <string name="title_activity_search_image">Google Image Search</string>
 </resources>

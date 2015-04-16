@@ -40,12 +40,10 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d Karte angezeigt</item>
-    <item quantity="other">%d Karten angezeigt</item>
+    <item quantity="one">%d card shown</item>
+    <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">Alle Stapel</string>
-  <string name="card_browser_load">Lade Karten&#8230;</string>
-  <string name="card_browser_cardloading_error">Fehler beim Laden der Karten. Vermutlich hängt dies mit einem zu geringen Gerätespeicher zusammen. Versuchen Sie es mit einem kleineren Stapel</string>
   <string name="card_browser_delete_card">Notiz löschen</string>
   <string name="card_browser_suspend_card">Karte aussetzen</string>
   <string name="card_browser_unsuspend_card">Aussetzen aufheben</string>
@@ -54,36 +52,27 @@
   <string name="delete_card_title">Notiz löschen</string>
   <string name="delete_card_message">Alle Karten dieser Notiz löschen?\nSuchfeld: %s</string>
   <string name="card_browser_show_marked">Markierte herausfiltern</string>
-  <string name="card_browser_field">Kartenübersichts-Feld ändern</string>
-  <string name="card_browser_field_title">Kartenübersichts-Feld</string>
   <string name="card_browser_show_suspended">Ausgesetzte herausfiltern</string>
   <string name="card_browser_search_by_tag">Nach Schlagwort filtern</string>
   <string name="card_browser_tags_shown">Schlagworte: %1$s</string>
+  <string name="card_browser_list_my_searches">My searches</string>
+  <string name="card_browser_list_my_searches_save">Save search</string>
+  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
+  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
+  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Anzeigereihenfolge</string>
   <string name="card_browser_change_display_order_title">Anzeigereihenfolge</string>
   <string name="card_browser_change_display_order_reverse">Zum Umkehren ein Feld zweimal wählen.</string>
-  <string name="card_browser_order_reverse">(umkehren)</string>
   <string name="card_details_question">Frage</string>
   <string name="card_details_answer">Antwort</string>
   <string name="card_details_due">Fällig</string>
-  <string name="card_details_last_due">Letztes Mal fällig</string>
-  <string name="card_details_now">Jetzt</string>
-  <string name="card_details_interval">Intervall</string>
-  <string name="card_details_ease">Schwierigkeit</string>
-  <string name="card_details_average_time">Durchschnittszeit</string>
-  <string name="card_details_total_time">Gesamte Zeit</string>
-  <string name="card_details_yes_count">Ja-Antworten</string>
-  <string name="card_details_no_count">Nein-Antworten</string>
-  <string name="card_details_added">Hinzugefügt</string>
-  <string name="card_details_changed">Geändert</string>
   <string name="card_details_tags">Schlagworte</string>
-  <string name="card_details_model">Notiz-Typ</string>
-  <string name="card_browser_sorting_cards">Karten werden sortiert&#8230;</string>
   <string name="card_browser_filtering_cards">Filtere Karten&#8230; \nAbbrechen mit \"Zurück\"</string>
-  <string name="card_details_card_model">Kartenvorlage</string>
   <string-array name="card_browser_order_labels">
     <item>Keine Sortierung (schneller)</item>
-    <item>Nach Suchfeld</item>
+    <item>Nach Sortierfeld</item>
     <item>Nach Erstellungsdatum</item>
     <item>Nach Änderungsdatum</item>
     <item>Nach letzter Veränderung</item>

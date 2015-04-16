@@ -35,51 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Pakat</item>
-    <item>Selaa kortteja</item>
-    <item>Tilastot</item>
-    <item>Asetukset</item>
-    <item>Ohje</item>
-    <item>Anna palautetta</item>
-  </string-array>
-  <string-array name="newCardSchedulingLabels">
-    <item>Jaa kertauksien kesken</item>
-    <item>Tarkastelun jälkeen</item>
-    <item>Ennen tarkastelua</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Raportoi aina</item>
     <item>Älä raportoi koskaan</item>
     <item>Kysy</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>Näytä vanhin muutettu ensimmäisenä</item>
-    <item>Näytä lisätyt järjestyksessä</item>
-    <item>Näytä satunnaisessa järjestyksessä</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Uudet kortit satunnaisessa järjestyksessä</item>
-    <item>Uudet kortin lisätyt järjestyksessä</item>
-    <item>Uudet kortit päinvastaisessa järjestyksessä lisättyä</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Jaa uudet kortit tarkastelujen kesken</item>
-    <item>Uudet kortit tarkastelun jälkeen</item>
-    <item>Uudet kortit tarkastelua ennen</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Tarkastele kortteja suurimman aikavälin mukaan</item>
-    <item>Tarkastele kortteja pienimmän aikavälin mukaan</item>
-    <item>Tarkista kortit järjestyksessä</item>
-    <item>Tarkastele kortteja satunnaisessa järjestyksessä</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Näytä äskettäin väärin vastatut kortit</item>
-    <item>Näytä väärin vastatut kortit lopussa</item>
-    <item>Näytä väärin vastatut kortit 10 minuutin ajalta</item>
-    <item>Näytä väärin vastatut kortit 8 tunnin ajalta</item>
-    <item>Näytä väärin vastatut kortit 3 päivän ajalta</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Ei toimintoa</item>
@@ -99,12 +58,6 @@
     <item>Poista kortti</item>
     <item>Toista media</item>
     <item>Keskeytä oppiminen</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Android tumma</item>
-    <item>Android vaalea</item>
-    <item>Sininen</item>
-    <item>Valkoinen</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Jäädytä kortti</item>

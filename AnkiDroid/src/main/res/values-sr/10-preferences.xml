@@ -138,7 +138,6 @@
   <string name="safe_display_summ">Онемогући свe анимацијe и користи безбедну методу за приказивања картица. E-ink и старије уређаје које користе посебне фонтове можда захтевају ово.</string>
   <string name="vertical_centering">Центрирај вертикално</string>
   <string name="vertical_centering_summ">Центрирај садржај картица вертикално</string>
-  <string name="pref_cat_backup">Резервне копије</string>
   <string name="pref_backup">Прави резервне копије</string>
   <string name="pref_backup_summ">Аутоматски направи резервне датотеке при отварању жпила (једном сваки дан)</string>
   <string name="pref_backup_max">Максималан број резервне датотеке</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">Решење проблема са HTML пољима уноса. Решење је проблематично на више уређаја.</string>
   <string name="pref_keep_screen_on">Држи екран укљученим</string>
   <string name="pref_keep_screen_on_summ">Онемогући спавање екрана</string>
-  <string name="pref_simple_interface">Једноставно сучеље</string>
-  <string name="pref_simple_interface_summ">Убрзава приказ карата, али не подржава све могућности html</string>
-  <string name="pref_simple_interface_exclude_tags">Ознаке одстранити</string>
-  <string name="pref_simple_interface_exclude_tags_summ">Не користи једноставно сучеље за ове ознаке: XXX</string>
-  <string name="write_answers_message">За сваки шпил треба да одредите поље са којим ће се упоређивати написани одговор. Можете то да урадите у Anki Desktop (опције шпила -&gt; уреди модел -&gt; шаблон картице).\n\nАко поље за поређење није задато, ваш написани одговор ће се упоређивати са целим одговором карте.</string>
   <string name="fix_arabic_text">Побољшај приказ арапског</string>
   <string name="fix_arabic_text_summ">Делимични трик за подржавање Арапски језик на Android-у. Када је укључен, није могуће уредите картице.</string>
   <string name="convert_fen_text">Подршка шаховских бележака</string>
@@ -175,22 +169,13 @@
   <string name="filter_google_translate_summ">Једноставно чување изворне речи и превода</string>
   <string name="convert_fen_text_summ">Цртај шаховску таблу са Форсит-Едвардс нотацијом. Нотација мора да буде ограђена [fen][/fen] таговима.</string>
   <string name="studyoptions_limit_select_tags">Изаберите ознаке</string>
-  <string name="studyoptions_limit_tags_active">Са: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">Без: %1$s</string>
-  <string name="studyoptions_limit_button_text">Лимит</string>
-  <string name="studyoptions_limit_dialog_title">Ограничења</string>
-  <string name="studyoptions_session">Сесија</string>
-  <string name="studyoptions_tag">По ознакама</string>
-  <string name="studyoptions_tag_new">Прикажи нове картице по ознакама:</string>
-  <string name="studyoptions_tag_rev">Избор картица по ознакама:</string>
-  <string name="studyoptions_new_cards_per_day">Нових картица по дану</string>
-  <string name="studyoptions_max_fail_card">Максимум тешких картица</string>
-  <string name="deck_conf_deck_name">Назив шпила</string>
   <string name="deck_conf_deck_description">Опис шпила</string>
   <string name="deck_conf_group">Група опције</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d шпил користи ову групу</item>
-    <item quantity="other">%1$s\n%2$d шпилова користи ову групу</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="many"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">Нове картице</string>
   <string name="deck_conf_rev_cards">Понављања</string>
@@ -235,8 +220,10 @@
   <string name="deck_conf_remove_message">Да уклоним текућу групу опција?</string>
   <string name="deck_conf_set_subdecks">Задај за све групе подшпилова</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s подшпил ће да користи ову групу</item>
-    <item quantity="other">%s подшпил ће користити ову групу</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="many"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Задај за све групе шпилова</string>
   <string name="deck_conf_set_subdecks_message">Да задам текућу групу опција за све подшпилове ових шпилова?</string>
@@ -244,7 +231,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Филтер</string>
   <string name="deck_conf_cram_options">Опције</string>
-  <string name="deck_conf_cram_preset">Прединсталирање</string>
   <string name="deck_conf_cram_search">Претрага</string>
   <string name="deck_conf_cram_limit">Ограничи</string>
   <string name="deck_conf_cram_order">картице изабране по</string>

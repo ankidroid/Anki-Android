@@ -1,12 +1,11 @@
 
 package com.ichi2.anki.dialogs;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Message;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
-import com.ichi2.themes.StyledDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,31 +53,33 @@ public class MediaCheckDialog extends AsyncDialogFragment {
 
 
     @Override
-    public StyledDialog onCreateDialog(Bundle savedInstanceState) {
+    public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
+        builder.title(getNotificationTitle());
 
         switch (getArguments().getInt("dialogType")) {
             case DIALOG_CONFIRM_MEDIA_CHECK:
-                builder.setTitle(getNotificationTitle());
-                builder.setMessage(getNotificationMessage());
-                builder.setPositiveButton(res().getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ((MediaCheckDialogListener) getActivity()).mediaCheck();
-                        ((MediaCheckDialogListener) getActivity()).dismissAllDialogFragments();
-                    }
-                });
-                builder.setNegativeButton(res().getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ((MediaCheckDialogListener) getActivity()).dismissAllDialogFragments();
-                    }
-                });
-                setCancelable(true);
-                return builder.create();
+                return builder.content(getNotificationMessage())
+                        .positiveText(res().getString(R.string.dialog_ok))
+                        .negativeText(res().getString(R.string.dialog_cancel))
+                        .cancelable(true)
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                ((MediaCheckDialogListener) getActivity()).mediaCheck();
+                                ((MediaCheckDialogListener) getActivity())
+                                        .dismissAllDialogFragments();
+                            }
+
+                            @Override
+                            public void onNegative(MaterialDialog dialog) {
+                                ((MediaCheckDialogListener) getActivity())
+                                        .dismissAllDialogFragments();
+                            }
+                        })
+                        .show();
             case DIALOG_MEDIA_CHECK_RESULTS:
-                builder.setTitle(getNotificationMessage());
                 final ArrayList<String> nohave = getArguments().getStringArrayList("nohave");
                 final ArrayList<String> unused = getArguments().getStringArrayList("unused");
                 final ArrayList<String> invalid = getArguments().getStringArrayList("invalid");
@@ -107,36 +108,37 @@ public class MediaCheckDialog extends AsyncDialogFragment {
                 // We also prefix the report with a message about the media db being rebuilt, since
                 // we do a full media scan and update the db on each media check on AnkiDroid.
                 report = res().getString(R.string.check_media_db_updated) + "\n\n" + report;
+                builder.content(report)
+                        .cancelable(true);
 
                 // If we have unused files, show a dialog with a "delete" button. Otherwise, the user only
                 // needs to acknowledge the results, so show only an OK dialog.
                 if (unused.size() > 0) {
-                    builder.setMessage(report);
-                    builder.setPositiveButton(res().getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ((MediaCheckDialogListener) getActivity()).dismissAllDialogFragments();
-                        }
-                    });
-                    builder.setNegativeButton(res().getString(R.string.check_media_delete_unused),
-                            new DialogInterface.OnClickListener() {
+                    builder.positiveText(res().getString(R.string.dialog_ok))
+                            .negativeText(res().getString(R.string.check_media_delete_unused))
+                            .callback(new MaterialDialog.ButtonCallback() {
                                 @Override
-                                public void onClick(DialogInterface dialog, int which) {
+                                public void onPositive(MaterialDialog dialog) {
+                                    ((MediaCheckDialogListener) getActivity())
+                                            .dismissAllDialogFragments();
+                                }
+
+                                @Override
+                                public void onNegative(MaterialDialog dialog) {
                                     ((MediaCheckDialogListener) getActivity()).deleteUnused(unused);
                                     dismissAllDialogFragments();
                                 }
                             });
                 } else {
-                    builder.setMessage(report);
-                    builder.setPositiveButton(res().getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ((MediaCheckDialogListener) getActivity()).dismissAllDialogFragments();
-                        }
-                    });
+                    builder.positiveText(res().getString(R.string.dialog_ok))
+                            .callback(new MaterialDialog.ButtonCallback() {
+                                @Override
+                                public void onPositive(MaterialDialog dialog) {
+                                    ((MediaCheckDialogListener) getActivity()).dismissAllDialogFragments();
+                                }
+                            });
                 }
-                setCancelable(true);
-                return builder.create();
+                return builder.show();
             default:
                 return null;
         }
@@ -153,8 +155,6 @@ public class MediaCheckDialog extends AsyncDialogFragment {
         switch (getArguments().getInt("dialogType")) {
             case DIALOG_CONFIRM_MEDIA_CHECK:
                 return res().getString(R.string.check_media_warning);
-            case DIALOG_MEDIA_CHECK_RESULTS:
-                return res().getString(R.string.check_media_acknowledge);
             default:
                 return res().getString(R.string.app_name);
         }
@@ -166,6 +166,8 @@ public class MediaCheckDialog extends AsyncDialogFragment {
         switch (getArguments().getInt("dialogType")) {
             case DIALOG_CONFIRM_MEDIA_CHECK:
                 return res().getString(R.string.check_media_title);
+            case DIALOG_MEDIA_CHECK_RESULTS:
+                return res().getString(R.string.check_media_acknowledge);
             default:
                 return res().getString(R.string.app_name);
         }

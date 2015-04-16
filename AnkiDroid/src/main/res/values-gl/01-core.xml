@@ -39,11 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Decks</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="statistics">Statistics</string>
+  <string name="settings">Settings</string>
+  <string name="help">Help</string>
+  <string name="send_feedback">Send Feedback</string>
   <string name="studyoptions_title">Opcións de estudo</string>
-  <string name="studyoptions_deck_name">Nome da baralla</string>
   <string name="studyoptions_due_today">Pendentes hoxe:</string>
   <string name="studyoptions_new_total">Total de cartas novas:</string>
   <string name="studyoptions_total_cards">Total de cartóns:</string>
@@ -57,13 +59,9 @@
     <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
-    <item quantity="other">%1$d de %2$d pendentes</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minute left</item>
-    <item quantity="other">%d minutos restantes</item>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Amosar resposta</string>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">Ben</string>
   <string name="ease3_learning">Doado</string>
   <string name="studyoptions_congrats_undo">Desfacer %s</string>
-  <string name="card_unsuspended">Suspensión do cartón desfeita</string>
-  <string name="card_suspended">Cartón suspendido de novo</string>
-  <string name="menu_rotate">Virar</string>
   <string name="menu_import">Importar</string>
   <string name="undo">Desfacer</string>
   <string name="undo_action_review">última revisión</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">marcar notación</string>
   <string name="unbury">Unbury</string>
   <string name="finish_operation">Rematando operación anterior (probabelmente a creación dunha copia de seguranza).\nAgarda por favor...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Baixar arquivos multimedia ausentes</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Restituír asignacións de idioma</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Restituír idioma</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Optimizar banco de datos</string>
   <string name="contextmenu_deckpicker_rename_deck">Renomear baralla</string>
   <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Fixar dicionario personalizado</string>
   <string name="menu_add">Engadir</string>
   <string name="menu_add_note">Engadir nota</string>
-  <string name="menu_download_deck">Baixar baralla</string>
-  <string name="menu_download_shared_deck">Baralla compartida</string>
   <string name="menu_my_account">Sincronizar conta</string>
-  <string name="menu_preferences">Preferencias</string>
-  <string name="menu_about">Sobre</string>
   <string name="menu_dismiss_note">Agochar/eliminar</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">Agochar nota</string>
   <string name="menu_suspend_card">Suspender cartón</string>
   <string name="menu_suspend_note">Suspender notación</string>
-  <string name="menu_save_note">Gardar nota</string>
   <string name="menu_delete_note">Eliminar notación</string>
   <string name="delete_note_message">¿Desexas realmente eliminar esta notacióne todos os seus cartóns?\n%s</string>
-  <string name="menu_edit_card">Editar cartón</string>
   <string name="menu_select">Seleccionar texto</string>
   <string name="menu_search">Procurar en %1$s</string>
   <string name="menu_mark_card">Marcar cartón</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">Create deck</string>
   <string name="create">Crear</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
-  <string name="studyoptions_feedback">Suxestións</string>
   <string name="night_mode">Modo nocturno</string>
   <string name="directory_inaccessible">O directorio AnkiDroid non está accesible</string>
   <string-array name="next_review_s">
@@ -136,10 +119,7 @@
     <item>%s meses</item>
     <item>%s anos</item>
   </string-array>
-  <string name="visit">Visitar</string>
   <string name="later">Máis adiante</string>
-  <string name="download">Baixar</string>
-  <string name="open_collection">Abrindo colección.\nAgarde por favor...</string>
   <string name="rebuild_cram_deck">Reconstruíndo baralla de chapar.\nAgarde por favor...</string>
   <string name="rebuild_cram_label">Reconstruír</string>
   <string name="empty_cram_label">Baleiro</string>
@@ -151,37 +131,10 @@
   <string name="studyoptions_congrats_more_new">Hai máis cartóns dispoñibles, pero o límite diario foi acadado. Podes ampliar o límite nas opcións, pero ten en conta que isto incrementará a carga de traballo do repaso a curto plazo.</string>
   <string name="studyoptions_congrats_custom">Para estudar fóra da planificación normal, faga click no botón Estudo Personalizado abaixo.</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Mañá haberá: %1$d cartóns para revisar e %2$s.\nTempo estimado: %3$s</item>
-    <item quantity="other">Mañá haberá: %1$d cartóns para revisar e %2$s.\nTempo estimado: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d cartón novo</item>
-    <item quantity="other">%1$d cartóns novos</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Tempo estimado: %1$d min.</item>
-    <item quantity="other">Tiempo estimado: %1$d min.</item>
-  </plurals>
-  <string name="sd_card_not_mounted">A tarxeta SD non está montada.\n\nTamén podes almacenar a túa colección na memoria interna mais non é recomendable, xa que non poderías acceder ao archivo tan doadamente. Podes activar isto nas preferencias (ábreas facendo click neste texto).</string>
-  <string name="studyoptions_options">Opcións</string>
-  <string name="empty_cloze_warning">Por favor, edite esta notación e engada algúns ocos. (%1$s)</string>
-  <string name="help_cloze">axuda</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Sincronizar</string>
-  <string name="restart">Reiniciar</string>
-  <string name="do_nothing">Non facer nada</string>
-  <string name="more_options">Máis opcións</string>
-  <string name="now">Agora</string>
-  <string name="back">Atrás</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importar</string>
   <string name="export">Exportar</string>
-  <string name="confirm">Confirmar</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string name="nothing">Nada</string>
-  <string name="title_activity_graphical_activity">Estatísticas</string>
   <string name="title_activity_template_editor">Tipos de cartón de %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>

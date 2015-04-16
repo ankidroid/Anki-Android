@@ -21,8 +21,8 @@ package com.ichi2.anki.multimediacard.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +30,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.R;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.fields.AudioField;
@@ -46,7 +46,7 @@ import java.io.File;
 
 import timber.log.Timber;
 
-public class EditFieldActivity extends FragmentActivity {
+public class EditFieldActivity extends AnkiActivity {
 
     public static final String EXTRA_RESULT_FIELD = "edit.field.result.field";
     public static final String EXTRA_RESULT_FIELD_INDEX = "edit.field.result.field.index";
@@ -77,6 +77,11 @@ public class EditFieldActivity extends FragmentActivity {
         }
 
         setContentView(R.layout.activity_edit_text);
+        View mainView = findViewById(android.R.id.content);
+        Toolbar toolbar = (Toolbar) mainView.findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
 
         mField = (IField) this.getIntent().getExtras().getSerializable(EXTRA_FIELD);
 
@@ -159,11 +164,9 @@ public class EditFieldActivity extends FragmentActivity {
                 done();
                 return true;
 
-            case android.R.id.home:
-                Timber.i("Home button pressed");
-                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
 

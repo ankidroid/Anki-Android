@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">Estadístiques</string>
   <string name="statistics_young">Joves</string>
   <string name="statistics_mature">Madures</string>
   <string name="statistics_young_and_learn">Young+Learn</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">Torneu a aprendre</string>
   <string name="statistics_learn">Aprendre</string>
   <string name="statistics_cram">Repàs</string>
-  <string name="statistics_type_title">Estadístiques</string>
   <string name="stats_cards">Fitxes</string>
   <string name="stats_cards_intervals">Cards with given Interval</string>
   <string name="stats_cumulative_cards">Cumulative Cards</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1 month</string>
   <string name="stats_period_year">1 year</string>
   <string name="stats_period_lifetime">deck life</string>
-  <string name="stats_deck_current">deck</string>
   <string name="stats_deck_collection">collection</string>
   <string name="stats_time_of_day">Time of Day</string>
   <string name="stats_day_of_week">Day of Week</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, Review: &lt;b&gt;%2$s&lt;/b&gt;, Relearn: &lt;b&gt;%3$s&lt;/b&gt;, Filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Correct answers on mature cards: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
-  <string name="statistics_period_x_axis_minutes">Minuts</string>
-  <string name="statistics_new_cards">Noves fitxes</string>
-  <string name="statistics_failed_cards">Fitxes fallades</string>
-  <string name="statistics_fullscreen">Conmuta la pantalla completa</string>
-  <string name="calculating_statistics">S\'estan calculant les estadístiques.\nUn moment si us plau...</string>
-  <string name="deck_summary_cards">Número de fitxes:</string>
-  <string name="deck_summary_notes">Número de notes:</string>
-  <string name="deck_summary_cards_mature">Fitxes madures:</string>
-  <string name="deck_summary_cards_young">Fitxes joves:</string>
-  <string name="deck_summary_cards_unseen">Fitxes no vistes:</string>
-  <string name="deck_summary_card_age">Edat de la fitxa</string>
-  <string name="deck_summary_average_interval">Interval mitjà:  &lt;b&gt;%.1f&lt;/b&gt; dies</string>
-  <string name="deck_summary_answers_correct">Respostes correctes</string>
-  <string name="deck_summary_answers_mature">Fitxes madures: &lt;b&gt;%1$.1f%2$s&lt;/b&gt;%2$s (%3$d de %4$d)</string>
-  <string name="deck_summary_answers_young">Fitxes joves: &lt;b&gt;%1$.1f%2$s&lt;/b&gt; (%3$d de %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Vist per primer cop: &lt;b&gt;%1$.1f%2$s&lt;/b&gt; (%3$d de %4$d)</string>
-  <string name="deck_summary_reviews">Comentaris:</string>
-  <string name="deck_summary_news">Noves fitxes:</string>
-  <string name="deck_summary_average_week">Mitjana vist la darrera setmana</string>
-  <string name="deck_summary_average_month">Mitjana vist el darrer mes</string>
-  <string name="deck_summary_average_year">Mitjana vist l\'any passat</string>
-  <string name="deck_summary_average_total">Mitjana vist sempre</string>
-  <string name="deck_summary_forecast">Pronòstic</string>
-  <string name="deck_summary_tomorrow_due">Fitxes que vençen demà: &lt;b&gt;%d&lt;/b&gt;</string>
-  <string name="deck_summary_tomorrow_new">Fitxes noves per demà: &lt;b&gt;%d&lt;/b&gt;</string>
-  <string name="deck_summary_tomorrow_time">Demà temps aproximat: &lt;b&gt; %d &lt;/b&gt; min.</string>
-  <string name="deck_summary_finished_in">Noves fitxes per acabar en: &lt;b&gt;%d&lt;/b&gt; dies</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; fitxes/dia</string>
-  <string name="deck_summary_deck_age">Edat del paquet: &lt;b&gt;%d&lt;/b&gt; dies</string>
   <string name="deck_summary_all_decks">Tots els paquets</string>
-  <string name="stats_select_decks">Select deck</string>
   <string name="stats_select_time_scale">Select timescale</string>
   <string-array name="next_review_in_s">
     <item>en 1 segon</item>
@@ -155,15 +122,6 @@
   <string name="stats_weekly_breakdown">Weekly Breakdown</string>
   <string name="stats_answer_buttons">Answer Buttons</string>
   <string name="stats_cards_types">Cards Types</string>
-  <string-array name="stats_period">
-    <item>1 mes</item>
-    <item>1 any</item>
-    <item>Tot</item>
-  </string-array>
-  <string-array name="stats_range">
-    <item>col·lecció</item>
-    <item>paquet actual</item>
-  </string-array>
   <string-array name="stats_day_time_strings">
     <item>4AM</item>
     <item>10AM</item>

@@ -47,9 +47,6 @@
   <string name="delete_deck_title">Skasuj talię</string>
   <string name="delete_deck_message">Czy na pewno usunąć wszystkie karty w %s?</string>
   <string name="delete_cram_deck_message">Czy na pewno chcesz wysłać wszystkie karty w %s z powrotem do ich pierwotnych talii?</string>
-  <string name="delete_deck_confirm">Usuń ją</string>
-  <string name="new_version_message">Nowe funkcje:</string>
-  <string name="no_tts_available_title">Tekst do mowy</string>
   <string name="no_tts_available_message">Brak dostępnego języka zamiany tekstu na mowę</string>
   <string name="initializing_tts">Inicjowanie TTS&#8230;</string>
   <string name="tts_no_tts">Nie mów</string>
@@ -60,14 +57,7 @@
     <item><![CDATA[Nie-programiści też mogą pomóc, na przykład <a href="%1$s">tłumacząc</a> AnkiDroida, aktualizując wiki oraz zrzuty ekranu, poprzez <a href="%2$s">datki</a> dla desktopowej wersji Anki lub blogując o AnkiDroidzie!]]></item>
     <item><![CDATA[AnkiDroid udostępniany jest na <a href="%1$s">licencji GNU-GPL v3</a> a kod źródłowy znaleźć można <a href="%2$s">tutaj</a>.]]></item>
   </string-array>
-  <string name="dont_show_again">Nie pokazuj więcej</string>
-  <string name="notify_ticker">Aktualizacja aplikacji</string>
-  <string name="notify_title">AnkiDroid został zaktualizowany</string>
-  <string name="notify_message">Pobierz nową wersję</string>
-  <string name="notification_title">Potwierdź aktualizację Ankidroid</string>
   <string name="preview_title">Podgląd</string>
-  <string name="notification_message">Nowa wersja AnkiDroida jest dostępna w Android Market.\n\n Czy chcesz ją zainstalować?</string>
-  <string name="notification_stop">Nie informuj mnie ponownie o tej aktualizacji</string>
   <string name="reset_card_dialog_title">Reset postępu karty</string>
   <string name="reset_card_dialog_message">Ta karta zostanie umieszczona na końcu kolejki nowych kart.</string>
   <string name="reset_card_dialog_acknowledge">Reset karty</string>
@@ -90,36 +80,7 @@
   <string name="custom_study_ahead">Przejrzyj z wyprzedzeniem x dni:</string>
   <string name="custom_study_random">Wybierz losowo x kart z talii:</string>
   <string name="custom_study_preview">Podgląd nowych kart dodanych w ostatnich x dniach:</string>
-  <string name="custom_study_tags">Wpisz Tagi:</string>
   <string name="rebuild_custom_study_deck">Przebudowa talii nauki niestandardowej.\nProszę czekać...</string>
-  <string name="deck_upgrade_title">Aktualizuj talię</string>
-  <string name="deck_upgrade_rename_warning">Nastąpi eksport Twojej bieżącej kolekcji to pliku „%1$s” i utworzy nową z Twoich plików starej wersji anki 1.x. Jeśli potrzebujesz, możesz później zaimportować powyższy plik apkg po zakończeniu pracy kreatora. Kontynuować?</string>
-  <string name="deck_upgrade_major_warning"><![CDATA[To jest obszerna aktualizacja programu AnkiDroid ten proces będzie trwał 10-20 minut.<br><br>Kontynuować teraz czy później?<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en">Więcej informacji</a>]]></string>
-  <string name="deck_upgrade_start_again_to_upgrade_toast">Uruchom AnkiDroid ponownie kiedy będziesz miał czas na aktualizację!</string>
-  <string name="deck_upgrade_recommended_method"><![CDATA[Zalecaną metodą aktualizacji jest synchronizacja z komputerem i aktualizacja desktopową wersją Anki.<br><br>Alternatywną metodą jest aktualizacja przez internet jeśli nie masz dostępu do komputera PC, a Twoja kolekcja nie jest zbyt duża.]]></string>
-  <string name="deck_upgrade_more_options_exit">Możesz wyjść z kreatora aktualizacji bez importowania starych kart klikając przycisk poniżej.</string>
-  <string name="deck_upgrade_more_options_new_collection">Możesz utworzyć nową kolekcję klikając poniżej.</string>
-  <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Jeśli chcesz zdegradować AnkiDroid do wersji 1 przeczytaj <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">tę instrukcję</a>.]]></string>
-  <string name="deck_upgrade_create_new_collection">Utwórz nową kolekcję</string>
-  <string name="deck_upgrade_create_new_collection_title">Utwórz nową kolekcję</string>
-  <string name="deck_upgrade_create_new_collection_button">Nowa kolekcja</string>
-  <string name="deck_upgrade_not_import_warning">Naprawdę chcesz to zrobić? Twoje stare dane nie zostaną zaimportowane.</string>
-  <string name="deck_upgrade_via_web"><![CDATA[<b>Ta metoda aktualizacji nie jest zalecana jeśli masz jakiekolwiek pliki mediów albo masz obszerną kolekcję!</b><br><br>Twoje talie Anki 1 zostaną skompresowane i przesłane do AnkiWeb a przekonwertowana kolekcja ponownie pobrana.<br><br>Wymagane jest stabilne połączenie z internetem a limit rozmiaru pliku wynosi 50 MB.<br><br>Użytkownicy Anki Desktop powinni w tym celu użyć metody z komputerem.<br><br>Nadal chcesz kontynuować?]]></string>
-  <string name="deck_upgrade_via_anki_desktop"><![CDATA[Jeśli już masz aktualną wersję kolekcji AnkiDroid w programie Anki Desktop możesz dokonać aktualizacji z wersji desktopowej Anki i wtedy pobrać swoją kolekcję poprzez synchronizację z AnkiWeb.<br><br>Możesz również przekopiować swoją kolekcję na komputer, zaktualizować i skopiować z powrotem do AnkiDroid.]]></string>
-  <string name="deck_upgrade_auto_upgrade"><![CDATA[Zainstaluj i uruchom Anki Desktop w wersji 2.0.4 lub nowszej aby zaktualizować kolekcję, wtedy zsynchronizuj z AnkiWeb i kliknij przycisk „Pobierz”.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">Więcej informacji o aktualizacji przy użyciu Anki Web</a>]]></string>
-  <string name="deck_upgrade_manual"><![CDATA[Aby zaktualizować swoją kolekcję skopiuj wszystkie swoje pliki *.anki (i foldery *.media, jeśli są) z folderu AnkiDroid do folderu Anki Desktop, zainstaluj i uruchom Anki Desktop w wersji 2.0.4 lub nowszej.<br><br>Po zakończeniu aktualizacji, wyeksportuj swoją kolekcję z Anki 2 i skopiuj plik collection.apkg do folderu AnkiDroid i naciśnij przycisk „Importuj” poniżej.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">Więcej informacji o aktualizacji przy użyciu USB.</a>]]></string>
-  <string name="upgrade_deck_cancelled_title">Aktualizacja anulowana</string>
-  <string name="upgrade_deck_cancelled_description">Próba aktualizacja anulowana, spróbuj ponownie jedną z dostępnych metod aktualizacji.</string>
-  <string name="upgrade_deck_web_upgrade_failed">Proces aktualizacji zakończył się niepowodzeniem. Spróbuj ponownie albo wybierz inną metodę aktualizacji</string>
-  <string name="upgrade_deck_web_upgrade_exceeds">Całkowity rozmiar skompresowanych Twoich talii Anki 1 przekracza limit serwera (50 MB), spróbuj aktualizować inną metodą.</string>
-  <string name="upgrade_deck_web_upgrade_sdcard">Aktualizacja zakończona ale wystąpił błąd podczas rozpakowywania kolekcji, upewnij się, że masz odpowiednią ilość miejsca (potrzeba %1$d MB) i spróbuj ponownie, albo aktualizuj inną metodą.</string>
-  <string name="export_progress_title">Eksport kolekcji</string>
-  <string name="export_progress_exporting">Eksportowanie kolekcji, proszę czekaj&#8230;</string>
-  <string name="upgrade_deck_export_successful">Wyeksportowano Twoją starą kolekcję, kontynuowanie aktualizacji.</string>
-  <string name="upgrade_deck_export_error">Błąd podczas eksportowania Twojej starej kolekcji. Czy mimo to kontynuować aktualizację (utracisz swoją starą kolekcję)?</string>
-  <string name="upgrade_deck_sync_from_ankiweb">Synchronizuj z AnkiWeb</string>
-  <string name="upgrade_deck_have_you_synced">Czy na pewno zaktualizowałeś swoją kolekcję za pomocą Anki Desktop i zsynchronizowałeś z AnkiWeb?</string>
-  <string name="upgrade_deck_dont_upgrade">Nie aktualizuj</string>
   <string name="import_unpacking">Rozpakowywanie archiwum.\nProszę czekaj&#8230;</string>
   <string name="importing_collection">Importowanie kolekcji.\nProszę czekaj&#8230;</string>
   <string name="import_media_count">Importowanie mediów %1$d%%\nProszę czekaj&#8230;</string>
@@ -132,7 +93,6 @@
   <string name="dialog_cancel">Anuluj</string>
   <string name="dialog_ok">OK</string>
   <string name="dialog_continue">Kontynuuj</string>
-  <string name="dialog_neutral_later">Później</string>
   <string name="dialog_positive_create">Utwórz</string>
   <string name="dialog_positive_delete">Usuń</string>
   <string name="dialog_positive_disable">Wyłacz</string>
@@ -142,14 +102,8 @@
   <string name="dialog_positive_replace">Zastąp</string>
   <string name="dialog_positive_reset">Zresetuj</string>
   <string name="dialog_positive_restore">Przywróć</string>
-  <string name="dialog_positive_save">Zapisz</string>
   <string name="dialog_positive_set">Ustaw</string>
-  <string name="add_button_content">Dodaj&#8230;</string>
-  <string name="card_browser_button_content">Przeglądanie kart</string>
   <string name="lookup_button_content">Wyszukaj</string>
-  <string name="statistics_button_content">Statystyki</string>
-  <string name="dialog_collection_path_title">Folder nie istnieje</string>
-  <string name="dialog_collection_path_text">Podany folder nie istnieje, czy chcesz go utworzyć?</string>
   <string name="dialog_collection_path_not_dir">Wybrana ścieżka nie wskazuje prawidłowo katalogu</string>
   <string name="check_media_title">Sprawdzić media?</string>
   <string name="check_media_warning">To może trwać bardzo długo przy dużych kolekcjach</string>

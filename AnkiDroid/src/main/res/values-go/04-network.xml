@@ -41,30 +41,14 @@
 -->
 <resources>
   <string name="youre_offline">Ni is ana intairnatja</string>
-  <string name="currently_downloading">Nu dalahlaþand</string>
-  <string name="starting_download">Dalahlaþa duginnand&#8230;</string>
-  <string name="downloading">Dalahlaþand&#8230;</string>
-  <string name="paused">Paused</string>
-  <string name="downloaded">Dalahlaþaiþs</string>
   <string name="sync_error">Sync Error</string>
   <string name="vague_error">Airzei</string>
-  <string name="cancelling">Cancelling&#8230;</string>
-  <string name="connection_error_return_message">A network error has occurred. Retry, or cancel and return to the previous screen.</string>
   <string name="retry">Aftra gakiusei</string>
   <string name="cancel">Fraqiþ</string>
-  <string name="download_overwrite">Ufarmelei</string>
-  <string name="download_cancel">Fraqiþ dalahlaþa</string>
-  <string name="shared_decks">Gadailidos wikons</string>
   <string name="loading_shared_decks">Laþand wisandos gadailidos wikons&#8230;</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Witoda jah þaurbos</a></string>
-  <string name="cancel_download">Fraqiþ dalahlaþa</string>
-  <string name="resume_download">Resume download</string>
-  <string name="pause_download">Pause download</string>
-  <string name="duplicate_download">This deck\'s already downloading</string>
   <string name="menu_get_shared_decks">Get shared decks</string>
-  <string name="download_button_return">Gawandei</string>
   <string name="connection_error_message">Natjawaurk airzei warþ.</string>
-  <string name="sync_log_db_error">Databes airzei warþ.</string>
   <string name="not_logged_in_title">Atgagg du AnkiNati</string>
   <string name="login_create_account_message">Skalt atgaggan du AnkiNatja kawtsjon. Magt suma in iftumon griþa skapjan.</string>
   <string name="no_email_client">No email client available</string>
@@ -80,11 +64,7 @@
   <string name="log_out">Galeiþ</string>
   <string name="alert_logging_message">Atgaggand&#8230;</string>
   <string name="invalid_username_password">Unraiht e-mel aiþþau gamotawaurd</string>
-  <string name="login_generic_error">Atgaggan ni mahts was.</string>
   <string name="reset_password">Aftrasatei gamotawaurd</string>
-  <string name="download_finished">Dalahlaþa manwida</string>
-  <string name="personaldeckpicker_title">Usluk wikon intairnatis</string>
-  <string name="shareddeckpicker_title">Walei wikon þoei wileis dalahlaþan</string>
   <string name="downloaddeck_search">Gasokei</string>
   <string name="preferences_title">Waleinos</string>
   <string name="deckpreferences_title">Mahteis faur XXX</string>
@@ -97,7 +77,6 @@
   <string name="sync_preparing_full_sync_message">Preparing full sync&#8230;</string>
   <string name="sync_uploading_message">Iupalaþand&#8230;</string>
   <string name="sync_downloading_message">Dalahlaþand&#8230;</string>
-  <string name="sync_reload_message">Reloading collection&#8230;</string>
   <string name="sync_title">Synchronization</string>
   <string name="sync_downloading_media">Downloading media %1$d/%2$d&#8230;</string>
   <string name="sync_log_uploading_message">Full sync from local</string>
@@ -105,11 +84,9 @@
   <string name="sync_log_clocks_unsynchronized">Your clock\'s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, the time zone\'s possibly wrong</string>
   <string name="sync_log_clocks_unsynchronized_date">, the date\'s possibly wrong</string>
-  <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See %s</string>
   <string name="sync_conflict_title">Syncing conflict</string>
   <string name="sync_no_changes_message">Ni inmaideinos bigitanos.</string>
   <string name="sync_database_acknowledge">Galisa galeikona</string>
-  <string name="sync_log_error_fix">A syncing error occurred%s.\n\nIf this happens consistently, you can do a full sync, which will probably fix the problem. Be aware that it will overwrite either your local collection or the one on AnkiWeb.\nIf you really want to do full sync, please choose if you want to upload your local collection or to download from the server.</string>
   <string name="sync_log_error_specific">Syncing error, type: %1$s, message: %2$s</string>
   <string name="sync_corrupt_database">Your database is corrupt. Please fix it before trying again to sync.\n\nSee %s for information about repairing your database.</string>
   <string name="sync_too_busy">Skalks usdauþs. Gasokei spediza aftra.</string>
@@ -130,10 +107,6 @@
   <string name="sync_check_upload_file">Checking file before upload&#8230;</string>
   <string name="sync_check_download_file">Checking downloaded file&#8230;</string>
   <string name="sync_media_find">Finding changed media&#8230;</string>
-  <string name="sync_media_remove">Handling deleted media&#8230;</string>
-  <string name="sync_media_from_server">Ganimand medja skalkis&#8230;</string>
-  <string name="sync_media_to_server">Sandjand medja du skalka&#8230;</string>
-  <string name="sync_media_sanity_check">Checking media counts&#8230;</string>
   <string name="sync_media_no_changes">No changes to media files</string>
   <string name="sync_media_success">Media synced</string>
   <string name="sync_media_changes_count">%d medja inmaidida du iupalaþan</string>
@@ -146,22 +119,6 @@
   <string name="register_title">Anamelei kawtsjon</string>
   <string name="register_mismatch">Aftra meliþ tgagganamo/gamotawaurd galeik nist þau laus ist.</string>
   <string name="registering_message">Skapjand kawtsjon&#8230;</string>
-  <string name="upgrade_decks_zipping">Zipping decks for upload&#8230;</string>
-  <string name="upgrade_decks_upload">Uploading zipped decks&#8230;\nYou can cancel by pressing back.</string>
-  <string name="upgrade_decks_waiting">Beidand&#8230; wiko staþs: %s</string>
-  <string name="upgrade_decks_upgrade_started">Ananiueins duginniþ&#8230;</string>
-  <string name="upgrade_decks_downloading">Downloading upgraded collection&#8230;\nYou can cancel by pressing back.</string>
-  <string name="upgrade_decks_media">Copying old media files to new media location&#8230;</string>
-  <string name="upgrade_decks_message">There is no Anki 2.0 collection available but one or more decks in the old Anki 1.2 format have been found:%sIn order to use your decks with the new version of AnkiDroid they need to be converted first into a single collection of the new Anki-2.0 format. There are three possibilities for this:</string>
-  <string name="upgrade_decks_message_pos1">By using Anki Desktop 2.0, your decks will be converted at the first start. You can sync over AnkiWeb or just copy the new collection afterwards to your mobile device. Copy your decks from your AnkiDroid directory (%s) to your Anki Desktop 1.2 directory on your computer (if you haven\'t synced them anyway) and start Anki Desktop 2.0.</string>
-  <string name="upgrade_decks_message_pos2">If you already sync your decks over ankiweb, you\'ll just need to log in once to %s and your decks will be converted there. After that you can simply sync the new collection to your mobile device.</string>
-  <string name="upgrade_decks_message_pos3">As a third possibility, you can have your decks converted via AnkiDroid itself and AnkiWeb. If you touch the upgrade button below, your decks will be bundled and uploaded to AnkiWeb. The converted collection will then be automatically downloaded and opened. You don\'t need any registration for that but be aware that it might be better to use a wifi connection in order to prevent too much traffic over your mobile connection. If the compressed decks amount to more than 50 mb, you cannot use this way. Please resort to the other options in this case. If your deck media files are hosted in custom folders or Dropbox custom folder, they might have to be copied manually to the new location.</string>
-  <string name="upgrade_decks_message_finish">If you just proceed a new collection will be created without taking your old decks into account.</string>
-  <string name="upgrade_required">Wikons þeinos ana AnkiNatja nauh sind in alþon Anki 1.2 digai. Gaweis %s jah atgagg þar. Wikons þeinos in niujon digai inmaidjanda wairþand.</string>
-  <string name="upgrade_decks_button">Ananiuei</string>
-  <string name="upgrade_decks_failed">Þos wikons ananiujan maht ni warþ: Usluk þos in Anki Daisktaup jah gakius databes. Afar þata, magt þos innatbairan þairh Anki Daisktaup.</string>
-  <string name="upgrade_decks_media_failed">Medja feilos galeikon du niujin medja stada (%1$s) ni maht was faur þos wikons:\n%2$sGawig þos medja feilos silban.</string>
-  <string name="download_deck">Dalahlaþand wikon&#8230; (%d kB)</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Fairra</string>
   <string name="force_full_sync_title">Force full sync</string>

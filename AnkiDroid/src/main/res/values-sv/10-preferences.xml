@@ -138,7 +138,6 @@
   <string name="safe_display_summ">Stäng av alla animationer och använd en säkrare metod för att rita kort. E-ink och äldre enheter med egna typsnitt kan kräva detta.</string>
   <string name="vertical_centering">Centrera</string>
   <string name="vertical_centering_summ">Vertikal centrering av kortinnehåll</string>
-  <string name="pref_cat_backup">Säkerhetskopior</string>
   <string name="pref_backup">Använd säkerhetskopior</string>
   <string name="pref_backup_summ">Säkerhetskopiera automatiskt innan du öppnar en kortlek (dagligen)</string>
   <string name="pref_backup_max">Max antal säkerhetskopior</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">Specialfunktion för fokuseringsproblem på HTML-inmatningsfält. Orsakar problem på många enheter.</string>
   <string name="pref_keep_screen_on">Håll skärm på</string>
   <string name="pref_keep_screen_on_summ">Inaktivera skärmtimeout</string>
-  <string name="pref_simple_interface">Enkelt gränssnitt</string>
-  <string name="pref_simple_interface_summ">Snabbar upp kortvisning men stöder inte alla html-funktioner</string>
-  <string name="pref_simple_interface_exclude_tags">Etiketter att utesluta</string>
-  <string name="pref_simple_interface_exclude_tags_summ">Använd inte enkelt gränssnitt för dessa etiketter: XXX</string>
-  <string name="write_answers_message">Du bör för varje kortlek definiera ett fält att jämföra dina inskrivna svar med. Detta kan du göra via skrivbordsversionen av Anki (kortleksegenskaper -&gt; redigera model -&gt; kortlayout).\n\nOm inget jämförelsefält är inställt, kommer ditt inskrivna svar alltid att jämföras med svaret för hela kortet</string>
   <string name="fix_arabic_text">Förbättra visning av arabiska</string>
   <string name="fix_arabic_text_summ">Delfix för begränsat stöd för arabiska på Android-plattformen. När den aktiveras går det inte att modifiera kort.</string>
   <string name="convert_fen_text">Stöd för schack-notation</string>
@@ -175,22 +169,11 @@
   <string name="filter_google_translate_summ">Spara endast källord och översättning</string>
   <string name="convert_fen_text_summ">Rita ett schackbräde med Forsyth–Edwards Notation. Notationen måste använda [fen][/fen]-märkning</string>
   <string name="studyoptions_limit_select_tags">Välj etiketter</string>
-  <string name="studyoptions_limit_tags_active">Med: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">Utan: %1$s</string>
-  <string name="studyoptions_limit_button_text">Gräns</string>
-  <string name="studyoptions_limit_dialog_title">Begränsa inlärning</string>
-  <string name="studyoptions_session">Studiepass</string>
-  <string name="studyoptions_tag">Efter etikett</string>
-  <string name="studyoptions_tag_new">Visa nya kort efter etikett:</string>
-  <string name="studyoptions_tag_rev">Visa repetitionskort efter etikett:</string>
-  <string name="studyoptions_new_cards_per_day">Nya kort per dag</string>
-  <string name="studyoptions_max_fail_card">Max misslyckade kort</string>
-  <string name="deck_conf_deck_name">Kortleksnamn</string>
   <string name="deck_conf_deck_description">Kortleksbeskrivning</string>
   <string name="deck_conf_group">Konfigurationsgrupp</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d kortlek använder denna grupp</item>
-    <item quantity="other">%1$s\n%2$d kortlekar använder denna grupp</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">Nya kort</string>
   <string name="deck_conf_rev_cards">Repetitioner</string>
@@ -235,8 +218,8 @@
   <string name="deck_conf_remove_message">Radera aktuell konfigurationsgrupp?</string>
   <string name="deck_conf_set_subdecks">Ställ in för alla underkortlekar</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s underkortlek kommer att använda denna grupp</item>
-    <item quantity="other">%s underkortlekar kommer att använda denna grupp</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Ställ in för alla underkortlekar</string>
   <string name="deck_conf_set_subdecks_message">Vill du ställa in den nuvarande konfigurationsgruppen för alla denna kortleks underkortlekar?</string>
@@ -244,7 +227,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filter</string>
   <string name="deck_conf_cram_options">Alternativ</string>
-  <string name="deck_conf_cram_preset">Förinställning</string>
   <string name="deck_conf_cram_search">Sök</string>
   <string name="deck_conf_cram_limit">Begränsa till</string>
   <string name="deck_conf_cram_order">kort valda efter</string>

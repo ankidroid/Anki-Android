@@ -17,11 +17,11 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -36,10 +36,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.dialogs.CustomStudyDialog;
@@ -49,12 +51,9 @@ import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.stats.ChartView;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.async.DeckTask;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
-import com.ichi2.themes.StyledDialog;
-import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 
@@ -97,7 +96,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     boolean mInvertedColors = false;
 
     /** Alerts to inform the user about different situations */
-    private StyledProgressDialog mProgressDialog;
+    private MaterialDialog mProgressDialog;
 
     /**
      * UI elements for "Study Options" view
@@ -107,6 +106,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     private Button mButtonStart;
     private Button mButtonCustomStudy;
     private Button mButtonUnbury;
+    private ImageButton mFloatingActionButton;
     private TextView mTextDeckName;
     private TextView mTextDeckDescription;
     private TextView mTextTodayNew;
@@ -130,7 +130,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
     private boolean mFragmented;
     private Collection mCollection;
-    private StyledOpenCollectionDialog mOpenCollectionDialog;
 
     private Thread mFullNewCountThread = null;
 
@@ -195,12 +194,11 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 case R.id.studyoptions_empty_cram:
                     Timber.i("StudyOptionsFragment:: empty cram deck button pressed");
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
-                            getResources().getString(R.string.empty_cram_deck), true);
+                            getResources().getString(R.string.empty_cram_deck), false);
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EMPTY_CRAM, getDeckTaskListener(true),
                             new DeckTask.TaskData(col, col.getDecks().selected(), mFragmented));
                     return;
                 default:
-                    return;
             }
         }
     };
@@ -248,6 +246,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         restorePreferences();
         mStudyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false);
         mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
+        NavigationDrawerActivity.setIsWholeCollection(false);
         startLoadingCollection();
         return mStudyOptionsView;
     }
@@ -262,7 +261,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         }
         refreshInterface(true);
         setHasOptionsMenu(true);
-        dismissCollectionLoadingDialog();
+        ((AnkiActivity) getActivity()).hideProgressBar();
         // rebuild action bar so that Showcase works correctly
         if (mFragmented) {
             ((DeckPicker) getActivity()).reloadShowcaseView();
@@ -339,6 +338,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         mCramOptions = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_options_cram);
         mCongratsLayout = mStudyOptionsView.findViewById(R.id.studyoptions_congrats_layout);
         mTextCongratsMessage = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_congrats_message);
+        mFloatingActionButton = (ImageButton) mStudyOptionsView.findViewById(R.id.fab);
 
 
         if (getCol().getDecks().isDyn(getCol().getDecks().selected())) {
@@ -371,6 +371,13 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         mButtonCustomStudy.setOnClickListener(mButtonClickListener);
         mDeckOptions.setOnClickListener(mButtonClickListener);
         mCramOptions.setOnClickListener(mButtonClickListener);
+
+        /*mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNote();
+            }
+        });*/
     }
 
 
@@ -379,27 +386,30 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
      * TODO: Turn this into a DialogFragment
      */
     private void showCustomStudyContextMenu() {
-        StyledDialog dialog = null;
         Resources res = getResources();
-        StyledDialog.Builder builder1 = new StyledDialog.Builder(this.getActivity());
-        builder1.setTitle(res.getString(R.string.custom_study));
-        builder1.setIcon(android.R.drawable.ic_menu_sort_by_size);
-        builder1.setItems(res.getStringArray(R.array.custom_study_options_labels),
-                new DialogInterface.OnClickListener() {
+        Drawable icon = res.getDrawable(R.drawable.ic_sort_black_36dp);
+        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
+        MaterialDialog dialog = new MaterialDialog.Builder(this.getActivity())
+                .title(res.getString(R.string.custom_study))
+                .icon(icon)
+                .cancelable(true)
+                .items(res.getStringArray(R.array.custom_study_options_labels))
+                .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onSelection(MaterialDialog materialDialog, View view, int which,
+                                            CharSequence charSequence) {
                         DialogFragment dialogFragment;
                         if (which == CustomStudyDialog.CUSTOM_STUDY_TAGS) {
                             /*
                              * This is a special Dialog for CUSTOM STUDY, where instead of only collecting a
                              * number, it is necessary to collect a list of tags. This case handles the creation
-                             * of that Dialog. 
+                             * of that Dialog.
                              */
                             dialogFragment = com.ichi2.anki.dialogs.TagsDialog.newInstance(
                                     TagsDialog.TYPE_CUSTOM_STUDY_TAGS, new ArrayList<String>(),
                                     new ArrayList<String>(getCol().getTags().all()));
 
-                            ((TagsDialog)dialogFragment).setTagsDialogListener(new TagsDialogListener() {
+                            ((TagsDialog) dialogFragment).setTagsDialogListener(new TagsDialogListener() {
                                 @Override
                                 public void onPositive(List<String> selectedTags, int option) {
                                     /*
@@ -432,20 +442,30 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                                         sb.append(")"); // Only if we added anything to the tag list
                                     }
                                     mSearchTerms = sb.toString();
-                                    createFilteredDeck(new JSONArray(), new Object[] { mSearchTerms, Consts.DYN_MAX_SIZE,
-                                            Consts.DYN_RANDOM }, false);
+                                    createFilteredDeck(new JSONArray(), new Object[]{mSearchTerms, Consts.DYN_MAX_SIZE,
+                                            Consts.DYN_RANDOM}, false);
                                 }
                             });
                         } else {
                             // Show CustomStudyDialog for all options other than the tags dialog
                             dialogFragment = CustomStudyDialog.newInstance(which);
+                            // If we increase limits, refresh the interface to reflect the new counts
+                            ((CustomStudyDialog) dialogFragment).setCustomStudyDialogListener(
+                                    new CustomStudyDialog.CustomStudyDialogListener() {
+                                        @Override
+                                        public void onPositive(int option) {
+                                            if (option == CustomStudyDialog.CUSTOM_STUDY_NEW ||
+                                                    option == CustomStudyDialog.CUSTOM_STUDY_REV) {
+                                                refreshInterfaceAndDecklist(true);
+                                            }
+                                        }
+                                    });
                         }
                         // Show the DialogFragment via Activity
                         ((AnkiActivity) getActivity()).showDialogFragment(dialogFragment);
                     }
-                });
-        builder1.setCancelable(true);
-        dialog = builder1.create();
+                })
+                .build();
         dialog.setOwnerActivity(getActivity());
         dialog.show();
     }
@@ -460,16 +480,10 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 JSONObject cur = col.getDecks().byName(customStudyDeck);
                 if (cur != null) {
                     if (cur.getInt("dyn") != 1) {
-                        StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
-                        builder.setMessage(R.string.custom_study_deck_exists);
-                        builder.setNegativeButton(getResources().getString(R.string.dialog_cancel),
-                                new OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        //
-                                    }
-                                });
-                        builder.create().show();
+                        new MaterialDialog.Builder(getActivity())
+                                .content(R.string.custom_study_deck_exists)
+                                .negativeText(R.string.dialog_cancel)
+                                .build().show();
                         return;
                     } else {
                         // safe to empty
@@ -498,7 +512,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
                 // Initial rebuild
                 mProgressDialog = StyledProgressDialog.show(getActivity(), "",
-                        getResources().getString(R.string.rebuild_custom_study_deck), true);
+                        getResources().getString(R.string.rebuild_custom_study_deck), false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, getDeckTaskListener(true),
                         new DeckTask.TaskData(getCol(), getCol().getDecks().selected(),
                                 mFragmented));
@@ -537,9 +551,9 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         getActivity().getMenuInflater().inflate(R.menu.study_options_fragment, menu);
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity());
         if (preferences.getBoolean("invertedColors", false)) {
-            menu.findItem(R.id.action_night_mode).setIcon(R.drawable.ic_menu_night_checked);
+            menu.findItem(R.id.action_night_mode).setIcon(R.drawable.ic_brightness_3_white_24dp);
         } else {
-            menu.findItem(R.id.action_night_mode).setIcon(R.drawable.ic_menu_night);
+            menu.findItem(R.id.action_night_mode).setIcon(R.drawable.ic_brightness_5_white_24dp);
         }
 
         if (!getCol().undoAvailable()) {
@@ -569,11 +583,11 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 if (preferences.getBoolean("invertedColors", false)) {
                     Timber.i("StudyOptionsFragment:: Night mode was disabled");
                     preferences.edit().putBoolean("invertedColors", false).commit();
-                    item.setIcon(R.drawable.ic_menu_night);
+                    item.setIcon(R.drawable.ic_brightness_5_white_24dp);
                 } else {
                     Timber.i("StudyOptionsFragment:: Night mode was enabled");
                     preferences.edit().putBoolean("invertedColors", true).commit();
-                    item.setIcon(R.drawable.ic_menu_night_checked);
+                    item.setIcon(R.drawable.ic_brightness_3_white_24dp);
                 }
                 return true;
 
@@ -610,6 +624,13 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         }
 
         // perform some special actions depending on which activity we're returning from
+        if (requestCode == STATISTICS || requestCode == BROWSE_CARDS) {
+            // select original deck if the statistics or card browser were opened,
+            // which can change the selected deck
+            if (intent.hasExtra("originalDeck")) {
+                getCol().getDecks().select(intent.getLongExtra("originalDeck", 0L));
+            }
+        }
         if (requestCode == DECK_OPTIONS) {
             if (mLoadWithDeckOptions == true) {
                 mLoadWithDeckOptions = false;
@@ -754,7 +775,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                         if (!mFragmented) {
                             getActivity().setTitle(getResources().getString(R.string.studyoptions_title));
                             List<String> parts = Arrays.asList(fullName.split("::"));
-                            CompatHelper.getCompat().setSubtitle(getActivity(), parts.get(parts.size() - 1));
+                            UIUtils.setSubtitle(getActivity(), parts.get(parts.size() - 1));
                         }
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
@@ -827,7 +848,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                                 sbQuery.append("SELECT count(*) FROM cards WHERE did IN ");
                                 sbQuery.append(Utils.ids2str(collection.getDecks().active()));
                                 sbQuery.append(" AND queue = 0");
-                                final int fullNewCount = collection.getDb().queryScalar(sbQuery.toString(), false);
+                                final int fullNewCount = collection.getDb().queryScalar(sbQuery.toString());
                                 if (fullNewCount > 0) {
                                     Runnable setNewTotalText = new Runnable() {
                                         @Override
@@ -894,9 +915,8 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     protected void startLoadingCollection() {
         // Initialize the open collection loader
         Timber.d("startLoadingCollection()");
-        if (CollectionHelper.getInstance().getCol(getActivity()) == null) {
-            showCollectionLoadingDialog();
-        }
+        AnkiActivity activity = (AnkiActivity) getActivity();
+        activity.showProgressBar();
         getLoaderManager().initLoader(0, null, this);  
     }
 
@@ -922,22 +942,5 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onLoaderReset(Loader<Collection> arg0) {
         // We don't currently retain any references, so no need to free any data here
-    }
-
-    // Open collection dialog
-    public void showCollectionLoadingDialog() {
-        if (mOpenCollectionDialog == null || !mOpenCollectionDialog.isShowing()) {
-            mOpenCollectionDialog = StyledOpenCollectionDialog.show(getActivity(), getResources().getString(R.string.open_collection), 
-                    new OnCancelListener() {@Override public void onCancel(DialogInterface arg0) {}}
-            );
-        }
-    }
-
-
-    // Dismiss progress dialog
-    public void dismissCollectionLoadingDialog() {
-        if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
-            mOpenCollectionDialog.dismiss();
-        }
     }
 }

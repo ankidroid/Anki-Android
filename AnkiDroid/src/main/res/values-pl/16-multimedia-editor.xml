@@ -34,15 +34,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="multimedia_editor_languages_russian">Rosyjski</string>
-  <string name="multimedia_editor_languages_german">Niemiecki</string>
-  <string name="multimedia_editor_languages_nepali">Nepalski</string>
-  <string name="multimedia_editor_languages_slovak">Słowacki</string>
-  <string name="multimedia_editor_languages_french">Francuski</string>
-  <string name="multimedia_editor_languages_spanish">Hiszpański</string>
-  <string name="multimedia_editor_languages_mandarin">Chiński mandaryński</string>
-  <string name="multimedia_editor_languages_portuguese">Portugalski</string>
-  <string name="multimedia_editor_languages_english">Angielski</string>
   <string name="multimedia_editor_popup_image">Dodaj obraz</string>
   <string name="multimedia_editor_popup_audio">Nagraj dźwięk</string>
   <string name="multimedia_editor_popup_text">Zaawansowany edytor</string>
@@ -83,13 +74,6 @@
   <string name="multimedia_editor_text_field_editing_no_text">Wprowadź najpierw jakiś tekst</string>
   <string name="multimedia_editor_text_field_editing_many_words">Słownik zazwyczaj oczekuje jednego wyrazu</string>
   <string name="multimedia_editor_text_field_editing_clone_source">Weź z</string>
-  <string name="multimedia_editor_activity_note_type">Typ notatki</string>
-  <string name="multimedia_editor_activity_deck">Talia</string>
-  <string name="multimedia_editor_activity_edit_button">Edytuj</string>
-  <string name="multimedia_editor_activity_swap_button">Zamień</string>
-  <string name="multimedia_editor_activity_delete_question">Usuń całą notatkę?</string>
-  <string name="multimedia_editor_activity_delete_confirm">Usuń</string>
-  <string name="multimedia_editor_activity_delete_reject">Zostaw</string>
   <string name="multimedia_editor_image_field_editing_galery">Galeria</string>
   <string name="multimedia_editor_image_field_editing_photo">Aparat</string>
   <string name="multimedia_editor_general_downloading">Pobieranie</string>
@@ -105,7 +89,6 @@
   <string name="multimedia_editor_audio_view_playing_failed">Odtwarzanie dźwięku nie powiodło się</string>
   <string name="title_activity_edit_text">Pole edycji</string>
   <string name="title_activity_translation">Tłumaczenie</string>
-  <string name="title_activity_audio_recorder">Rejestrator audio</string>
   <string name="title_activity_load_pronounciation">Wymowa</string>
   <string name="title_activity_search_image">Wyszukiwarka grafiki Google</string>
 </resources>

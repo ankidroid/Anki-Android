@@ -39,11 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Анки</string>
-  <string name="app_name_droid">Дроид</string>
+  <string name="decks">Decks</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="statistics">Statistics</string>
+  <string name="settings">Settings</string>
+  <string name="help">Help</string>
+  <string name="send_feedback">Send Feedback</string>
   <string name="studyoptions_title">Study Options</string>
-  <string name="studyoptions_deck_name">Име на колода</string>
   <string name="studyoptions_due_today">Due today:</string>
   <string name="studyoptions_new_total">Total new cards:</string>
   <string name="studyoptions_total_cards">Total cards:</string>
@@ -55,11 +57,7 @@
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
-    <item quantity="other">%d минута.</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
-    <item quantity="other">%1$d на %2$d поради</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minute left</item>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">Добре</string>
   <string name="ease3_learning">Лесно</string>
   <string name="studyoptions_congrats_undo">Undo %s</string>
-  <string name="card_unsuspended">Скриване на картата отменено</string>
-  <string name="card_suspended">Открий картата</string>
-  <string name="menu_rotate">Завъртане</string>
   <string name="menu_import">Импортиране</string>
   <string name="undo">Отмени</string>
   <string name="undo_action_review">последен преглед</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">маркирай бележка</string>
   <string name="unbury">Unbury</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation)&#8230;</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Изтегли липсващата медия</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Начално състояние на назначен език</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Начално състояние на език</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Оптимизиране на база данни</string>
   <string name="contextmenu_deckpicker_rename_deck">Преименуване на колода</string>
   <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Задаване на потребителски речник</string>
   <string name="menu_add">добави</string>
   <string name="menu_add_note">Add note</string>
-  <string name="menu_download_deck">Изтегляне на колода</string>
-  <string name="menu_download_shared_deck">Споделена колода</string>
   <string name="menu_my_account">Sync account</string>
-  <string name="menu_preferences">Предпочитания</string>
-  <string name="menu_about">Относно</string>
   <string name="menu_dismiss_note">Скрий / Изтрий</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">Bury note</string>
   <string name="menu_suspend_card">Прекрати картата</string>
   <string name="menu_suspend_note">Suspend note</string>
-  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">Delete note</string>
   <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
-  <string name="menu_edit_card">Редактиране на карта</string>
   <string name="menu_select">Избор на текст</string>
   <string name="menu_search">Търсене в %1$s</string>
   <string name="menu_mark_card">Маркиране на карта</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">Create deck</string>
   <string name="create">Създай</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
-  <string name="studyoptions_feedback">Обратна връзка</string>
   <string name="night_mode">Night mode</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
@@ -136,10 +119,7 @@
     <item>%s месеца</item>
     <item>%s години</item>
   </string-array>
-  <string name="visit">Посетете</string>
   <string name="later">По-късно</string>
-  <string name="download">Изтегляне</string>
-  <string name="open_collection">Opening collection&#8230;</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck&#8230;</string>
   <string name="rebuild_cram_label">Rebuild</string>
   <string name="empty_cram_label">Празно</string>
@@ -151,37 +131,10 @@
   <string name="studyoptions_congrats_more_new">Today\'s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
   <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the \"Custom study\" button below</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">Tomorrow there will be: %1$d cards to review and %2$s.\n Estimated time: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d new card</item>
-    <item quantity="other">%1$d нови карти</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
-    <item quantity="other">Estimated time: %1$d min.</item>
-  </plurals>
-  <string name="sd_card_not_mounted">SD card not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by touching this text).</string>
-  <string name="studyoptions_options">Options</string>
-  <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
-  <string name="help_cloze">help</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Sync</string>
-  <string name="restart">Restart</string>
-  <string name="do_nothing">Do nothing</string>
-  <string name="more_options">More options</string>
-  <string name="now">Now</string>
-  <string name="back">Back</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Import</string>
   <string name="export">Export</string>
-  <string name="confirm">Confirm</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>

@@ -138,7 +138,6 @@
   <string name="safe_display_summ">禁用所有动画并使用安全模式绘制卡牌。E-ink和使用自定义字体的旧设备可能需要这样。</string>
   <string name="vertical_centering">居中对齐</string>
   <string name="vertical_centering_summ">垂直居中卡牌内容</string>
-  <string name="pref_cat_backup">备份</string>
   <string name="pref_backup">使用备份</string>
   <string name="pref_backup_summ">打开牌组之前自动创建备份（每天一次）</string>
   <string name="pref_backup_max">最大备份数</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">解决HTML输入框焦点问题的变通办法，这个问题存在于若干设备上。</string>
   <string name="pref_keep_screen_on">保持屏幕常亮</string>
   <string name="pref_keep_screen_on_summ">禁用屏幕超时</string>
-  <string name="pref_simple_interface">简单的界面</string>
-  <string name="pref_simple_interface_summ">加速卡牌显示，但不支持全部html特性</string>
-  <string name="pref_simple_interface_exclude_tags">要排除的标签</string>
-  <string name="pref_simple_interface_exclude_tags_summ">这些tag标记不使用简单界面： XXX</string>
-  <string name="write_answers_message">你应该为每一个牌组定义一个字段，用于与你输入的回答做比较。你可以用Anki桌面程序(deck properties -&gt; edit model -&gt; card layout)来定义这个字段。如果没有设定比较字段，你输入的回答就会和整个卡牌答案做比较。</string>
   <string name="fix_arabic_text">改善阿拉伯文显示</string>
   <string name="fix_arabic_text_summ">由于Android系统对于阿拉伯语支持不足，这是一个不完全的变通解决方法。当启用后，无法更改卡牌。</string>
   <string name="convert_fen_text">国际象棋标注支持</string>
@@ -175,22 +169,10 @@
   <string name="filter_google_translate_summ">保存源词与翻译</string>
   <string name="convert_fen_text_summ">使用福斯夫－爱德华兹记号法来画棋盘。记号必须用[fen][/fen]标签括起来。</string>
   <string name="studyoptions_limit_select_tags">选择标签</string>
-  <string name="studyoptions_limit_tags_active">包括: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">排除: %1$s</string>
-  <string name="studyoptions_limit_button_text">学习范围</string>
-  <string name="studyoptions_limit_dialog_title">限定学习范围</string>
-  <string name="studyoptions_session">回合</string>
-  <string name="studyoptions_tag">标签</string>
-  <string name="studyoptions_tag_new">按标签学习新卡牌:</string>
-  <string name="studyoptions_tag_rev">按标签复习卡牌:</string>
-  <string name="studyoptions_new_cards_per_day">每天的新卡牌数</string>
-  <string name="studyoptions_max_fail_card">最多失败的卡牌</string>
-  <string name="deck_conf_deck_name">牌组名称</string>
   <string name="deck_conf_deck_description">牌组说明</string>
   <string name="deck_conf_group">选项组</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d 牌组使用此选项组</item>
-    <item quantity="other">%1$s\n%2$d 牌组使用此选项组</item>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">新卡牌</string>
   <string name="deck_conf_rev_cards">复习</string>
@@ -235,8 +217,7 @@
   <string name="deck_conf_remove_message">删除当前选项组吗？</string>
   <string name="deck_conf_set_subdecks">设置为所有子牌组的选项</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s 子牌组将使用此选项组</item>
-    <item quantity="other">%s 子牌组将使用此选项组</item>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">设置为所有子牌组的选项</string>
   <string name="deck_conf_set_subdecks_message">将当前牌组的所有子牌组，设置为此选项组?</string>
@@ -244,7 +225,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">筛选器</string>
   <string name="deck_conf_cram_options">选项</string>
-  <string name="deck_conf_cram_preset">预置</string>
   <string name="deck_conf_cram_search">搜索</string>
   <string name="deck_conf_cram_limit">限制至</string>
   <string name="deck_conf_cram_order">卡牌选择标准</string>

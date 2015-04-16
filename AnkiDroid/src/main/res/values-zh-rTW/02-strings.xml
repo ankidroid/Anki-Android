@@ -48,8 +48,6 @@
   <string name="CardEditorTags">標籤: %1$s</string>
   <string name="CardEditorCards">Cards: %1$s</string>
   <string name="add_new_filter_tags">Add/filter tags</string>
-  <string name="note_type">筆記類型</string>
-  <string name="card_type">卡片種類</string>
   <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">SD記憶卡目前正在當隨身碟存取中，因此無法使用。拔除USB之後即可使用。</string>
   <string name="enable_whiteboard">Enable whiteboard</string>
@@ -58,8 +56,6 @@
   <string name="hide_whiteboard">隱藏白板</string>
   <string name="clear_whiteboard">清除白板</string>
   <string name="replay_audio">Replay audio</string>
-  <string name="cram_edit_warning">惡補時無法編輯卡片</string>
-  <string name="suspend_leeches">長久擱置榨時卡</string>
   <string name="leech_suspend_notification">卡片已擱置，同時標為榨時卡</string>
   <string name="leech_notification">卡片標為榨時卡</string>
   <string name="corrupt_font">損壞的字型檔案 %s</string>
@@ -80,10 +76,8 @@
   <string name="cardeditor_title_edit_card">編輯筆記</string>
   <string name="discard_unsaved_changes">Close and lose current input?</string>
   <string name="factadder_saving_error">儲存筆記時發生錯誤</string>
-  <string name="pref_lang_support">語言</string>
   <string name="saving_facts">儲存筆記中</string>
   <string name="saving_model">Saving model</string>
-  <string name="deck">牌組</string>
   <string name="add">新增</string>
   <string name="close">關閉</string>
   <string name="select">選擇</string>
@@ -92,21 +86,14 @@
   <string name="field_remapping">%1$s (from \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
     <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minute</item>
     <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">歡迎使用 AnkiDroid</string>
-  <string name="studyoptions_no_external_storage_title">沒有可用的外部記憶卡</string>
-  <string name="studyoptions_no_external_storage_message">目前沒有可用的外部記憶卡。Ankidroid需要權限來讀取記憶卡上的 Anki 牌組。請確認您的記憶卡裝載無誤，然後再試一次。</string>
   <string name="fact_adder_intent_title">AnkiDroid 卡片</string>
-  <string name="deckpicker_select_dictionary_title">選擇字典</string>
-  <string name="deckpicker_select_dictionary_default">預設</string>
   <string name="card_editor_add_card">增加筆記</string>
-  <string name="card_editor_reset">重設</string>
   <string name="card_editor_copy_card">複製卡片</string>
   <string name="card_editor_reset_card">重設卡片進度</string>
   <string name="card_editor_reschedule_card">Reschedule card</string>
@@ -116,39 +103,21 @@
   <string name="rename_error">無法重新命名牌組 %s </string>
   <string name="default_conf_delete_error">The default options group can\'t be removed</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
-    <item quantity="other">新增了 %d 張卡片</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">說明</string>
-  <string name="help_online">線上說明</string>
-  <string name="help_faq">常見問題</string>
   <string name="check_db">檢查資料庫</string>
   <string name="check_media">Check media</string>
   <string name="check_db_message">檢查資料庫。\n請稍後...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-  <string name="simple_interface_hint">空的 %s。請注意，簡易介面無法顯示圖片或音效等等。</string>
   <string name="delete_deck">刪除牌組中...\n請稍候</string>
-  <string-array name="dynOrderLabels">
-    <item>舊卡先出現</item>
-    <item>隨機</item>
-    <item>間隔由小至大排列</item>
-    <item>間隔由大至小排列</item>
-    <item>最常忘記</item>
-    <item>依新增順序</item>
-    <item>依到期順序</item>
-  </string-array>
-  <string name="menu_cardbrowser">卡片瀏覽器</string>
   <string name="show_hint">Show %s</string>
-  <string name="pref_lang_other">語言偏好設定</string>
-  <string name="pref_font_UI">自訂介面字體</string>
   <string name="info_rate">評價AnkiDroid</string>
   <string name="col_load_failed">載入收藏時發生錯誤。\n按返回鍵來關閉 AnkiDroid</string>
   <string name="import_title">匯入卡片</string>
   <string name="import_select_title">Choose a file to import</string>
-  <string name="import_message">將 %s 的內容加入你的收藏，還是完全取代你的收藏？</string>
   <string name="import_message_add">新增</string>
-  <string name="import_message_replace">取代</string>
   <string name="import_message_replace_confirm">這將會刪除你現有的收藏並以%s的內容取代，你確定嗎？</string>
   <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">成功匯入%d張卡片</string>
@@ -170,13 +139,8 @@
   <string name="study_options">Deck options</string>
   <string name="custom_study">自訂學習</string>
   <string name="dyn_deck_desc">這是專門用來進行額外學習進度的牌組。卡片在您複習完以後會自動回歸原本的牌組。如果在牌組列表中刪除這個牌組，其他剩下的卡片也會回歸它們原本的牌組。</string>
-  <string name="exit_wizard">退出精靈</string>
   <string name="steps_error">Steps must be numbers greater than 0</string>
   <string name="steps_min_error">At least one step is required</string>
-  <string name="custom_study_invalid_number">數字無效</string>
-  <string name="template_error">範本錯誤:</string>
-  <string name="template_error_detail">這張卡片的範本有誤。</string>
-  <string name="template_error_fix">Use the card editor on the desktop client to fix it.</string>
   <string name="sched_end">(結束)</string>
   <string name="sched_unbury_button">To see them now, touch the \"Unbury\" button.</string>
   <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>

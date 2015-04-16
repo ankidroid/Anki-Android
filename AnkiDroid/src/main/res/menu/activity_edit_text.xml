@@ -3,25 +3,25 @@
 
     <item
         android:id="@+id/multimedia_edit_field_to_text"
-        android:icon="@drawable/text"
+        android:icon="@drawable/ic_format_color_text_white_24dp"
         android:orderInCategory="100"
         android:title="@string/multimedia_editor_field_editing_text"
         ankidroid:showAsAction="ifRoom|withText"/>
     <item
         android:id="@+id/multimedia_edit_field_to_image"
-        android:icon="@drawable/content_picture"
+        android:icon="@drawable/ic_image_white_24dp"
         android:orderInCategory="100"
         android:title="@string/multimedia_editor_field_editing_image"
         ankidroid:showAsAction="ifRoom|withText" />
     <item
         android:id="@+id/multimedia_edit_field_to_audio"
-        android:icon="@drawable/device_access_mic"
+        android:icon="@drawable/ic_mic_white_24dp"
         android:orderInCategory="100"
         android:title="@string/multimedia_editor_field_editing_audio"
         ankidroid:showAsAction="ifRoom|withText" />
     <item
         android:id="@+id/multimedia_edit_field_done"
-        android:icon="@drawable/ic_action_accept"
+        android:icon="@drawable/ic_done_white_24dp"
         android:orderInCategory="100"
         android:title="@string/multimedia_editor_field_editing_done"
         ankidroid:showAsAction="always" />

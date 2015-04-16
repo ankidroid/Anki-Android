@@ -17,6 +17,11 @@
 
 <resources>
 
+    <!-- Android provides a straightforward way to control action bar styles; an additional color attribute
+     specifically for action bar text color isn't necessary, but it simplifies the color setting
+     while making it accessible everywhere and eases the use of themes -->
+    <attr name="actionBarTextColor" format="color"/> <!-- For title and subtitle, and any other text that may appear in action bar-->
+
     <attr name="min" format="integer" />
     <attr name="max" format="integer" />
     <attr name="allowEmpty" format="boolean" />

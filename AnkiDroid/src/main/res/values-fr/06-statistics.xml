@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">Statistiques</string>
   <string name="statistics_young">Récentes</string>
   <string name="statistics_mature">Anciennes</string>
   <string name="statistics_young_and_learn">Récentes + apprentissage</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">Réapprentissage</string>
   <string name="statistics_learn">Apprentissage</string>
   <string name="statistics_cram">Bachotage</string>
-  <string name="statistics_type_title">Statistiques</string>
   <string name="stats_cards">Cartes</string>
   <string name="stats_cards_intervals">Cartes ayant un intervalle donné</string>
   <string name="stats_cumulative_cards">Cartes cumulées</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1 mois</string>
   <string name="stats_period_year">1 an</string>
   <string name="stats_period_lifetime">durée de vie du paquet</string>
-  <string name="stats_deck_current">paquet</string>
   <string name="stats_deck_collection">collection</string>
   <string name="stats_time_of_day">Heure</string>
   <string name="stats_day_of_week">Jour</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">Apprentissage : &lt;b&gt;%1$s&lt;/b&gt;, Révision : &lt;b&gt;%2$s&lt;/b&gt;, Réapprentissage : &lt;b&gt;%3$s&lt;/b&gt;, Filtrées : &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Réponses exactes sur les anciennes cartes : %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Aucune ancienne carte n\'a été étudiée aujourd\'hui.</string>
-  <string name="statistics_period_x_axis_minutes">Minutes</string>
-  <string name="statistics_new_cards">Cartes inédites</string>
-  <string name="statistics_failed_cards">Cartes échouées</string>
-  <string name="statistics_fullscreen">Plein écran</string>
-  <string name="calculating_statistics">Calcul des statistiques.\nPatience&#8230;</string>
-  <string name="deck_summary_cards">Nombre de cartes :</string>
-  <string name="deck_summary_notes">Quantité de notes :</string>
-  <string name="deck_summary_cards_mature">Anciennes cartes :</string>
-  <string name="deck_summary_cards_young">Cartes récentes :</string>
-  <string name="deck_summary_cards_unseen">Cartes pas encore rencontrées :</string>
-  <string name="deck_summary_card_age">Vieillese des cartes</string>
-  <string name="deck_summary_average_interval">Fréquence moyenne : &lt;b&gt;%.1f &lt;/ b&gt; jours</string>
-  <string name="deck_summary_answers_correct">Bonnes réponses</string>
-  <string name="deck_summary_answers_mature">Cartes anciennes : &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d sur %4$d)</string>
-  <string name="deck_summary_answers_young">Cartes récentes : &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d sur %4$d)</string>
-  <string name="deck_summary_answers_firstseen">À la première rencontre : &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d sur %4$d)</string>
-  <string name="deck_summary_reviews">Révisées :</string>
-  <string name="deck_summary_news">Cartes inédites :</string>
-  <string name="deck_summary_average_week">Moyenne de cartes quotidiennes sur la semaine</string>
-  <string name="deck_summary_average_month">Moyenne de cartes quotidiennes sur le mois</string>
-  <string name="deck_summary_average_year">Moyenne des cartes vues l\'année dernière</string>
-  <string name="deck_summary_average_total">Moyenne de cartes quotidiennes en tout</string>
-  <string name="deck_summary_forecast">Prévisions</string>
-  <string name="deck_summary_tomorrow_due">&lt;b&gt;%d&lt;/b&gt; cartes prévues demain</string>
-  <string name="deck_summary_tomorrow_new">&lt;b&gt;%d&lt;/b&gt; cartes inédites demain</string>
-  <string name="deck_summary_tomorrow_time">Temps de révision estimé pour demain :  &lt;b&gt;%d&lt;/b&gt; minutes</string>
-  <string name="deck_summary_finished_in">Cartes inédites écoulées dans : &lt;b&gt;%d&lt;/b&gt; jours</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cartes p. jour</string>
-  <string name="deck_summary_deck_age">Âge du paquet :  &lt;b&gt;%d&lt;/b&gt; jours</string>
   <string name="deck_summary_all_decks">Tous les paquets</string>
-  <string name="stats_select_decks">Choisir le paquet</string>
   <string name="stats_select_time_scale">Choisir l\'échelle de temps</string>
   <string-array name="next_review_in_s">
     <item>dans 1 seconde</item>
@@ -155,15 +122,6 @@
   <string name="stats_weekly_breakdown">Division hebdomadaire</string>
   <string name="stats_answer_buttons">Boutons réponse</string>
   <string name="stats_cards_types">Types de cartes</string>
-  <string-array name="stats_period">
-    <item>1 mois</item>
-    <item>1 année</item>
-    <item>en tout</item>
-  </string-array>
-  <string-array name="stats_range">
-    <item>collection</item>
-    <item>paquet actuel</item>
-  </string-array>
   <string-array name="stats_day_time_strings">
     <item>4 H</item>
     <item>10 H</item>
@@ -194,11 +152,11 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">Aujourd\'hui, &lt;b&gt;%1$d carte&lt;/b&gt; a été étudiée en &lt;b&gt;%2$s&lt;/b&gt;.</item>
-    <item quantity="other">Aujourd\'hui, &lt;b&gt;%1$d cartes&lt;/b&gt; ont été étudiées en &lt;b&gt;%2$s&lt;/b&gt;.</item>
+    <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
+    <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
   </plurals>
   <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Aujourd\'hui, %1$d carte a été étudiée en %2$s.</item>
-    <item quantity="other">Aujourd\'hui, %1$d cartes ont été étudiées en %2$s.</item>
+    <item quantity="one">Studied %1$d card in %2$s today.</item>
+    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

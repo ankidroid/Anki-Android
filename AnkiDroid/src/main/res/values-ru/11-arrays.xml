@@ -35,51 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Колоды</item>
-    <item>Обозреватель карт</item>
-    <item>Статистика</item>
-    <item>Установки</item>
-    <item>Помощь</item>
-    <item>Отправить отзыв</item>
-  </string-array>
-  <string-array name="newCardSchedulingLabels">
-    <item>Перемешать с другими</item>
-    <item>После просмотра</item>
-    <item>Перед просмотром</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Всегда сообщать</item>
     <item>Никогда не сообщать</item>
     <item>Спросите меня</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>Показывать сначала последние изменённые</item>
-    <item>Показывать в порядке добавления</item>
-    <item>Показывать в случайном порядке</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Новые в случайном порядке</item>
-    <item>Новые в порядке их добавления</item>
-    <item>Новые в обрат.порядке их добавления</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Новые и повторяемые вперемешку</item>
-    <item>Новые после повторяемых</item>
-    <item>Новые до повторяемых</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Карты с наибольшим интервалом</item>
-    <item>Карты с наименьшим интервалом</item>
-    <item>Просмотр карт в порядке как есть</item>
-    <item>Просмотр карт в случ. порядке</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Показывать неотвеченные карты скорее</item>
-    <item>Показывать неотвеченные карты в конце</item>
-    <item>Показывать неотвеченные карты через 10 минут</item>
-    <item>Показывать неотвеченные карты через 8 часов</item>
-    <item>Показывать неотвеченные карты через 3 дня</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Нет действия</item>
@@ -99,12 +58,6 @@
     <item>Удалить карту</item>
     <item>Воспроизвести медиа</item>
     <item>Прервать обучение</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Андроид Темный </item>
-    <item>Андроид Светлый</item>
-    <item>Синяя</item>
-    <item>Белая</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Отложить карту</item>

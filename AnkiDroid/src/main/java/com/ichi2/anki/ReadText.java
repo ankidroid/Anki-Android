@@ -17,15 +17,17 @@
 package com.ichi2.anki;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
+import android.view.View;
 
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.themes.Themes;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.themes.StyledDialog;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -98,17 +100,18 @@ public class ReadText {
 
         // Otherwise ask the user what language they want to use
         Resources res = mReviewer.get().getResources();
-        final StyledDialog.Builder builder = new StyledDialog.Builder(mReviewer.get());
+        final MaterialDialog.Builder builder = new MaterialDialog.Builder(mReviewer.get());
         if (availableTtsLocales.size() == 0) {
-            // builder.setTitle(res.getString(R.string.no_tts_available_title));
             Timber.w("ReadText.textToSpeech() no TTS languages available");
-            builder.setMessage(res.getString(R.string.no_tts_available_message));
-            builder.setIcon(R.drawable.ic_dialog_alert);
-            builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
+            Drawable icon = res.getDrawable(R.drawable.ic_warning_black_36dp);
+            icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
+            // .title(res.getString(R.string.no_tts_available_title));
+            builder.content(res.getString(R.string.no_tts_available_message))
+                    .icon(icon)
+                    .positiveText(res.getString(R.string.dialog_ok));
         } else {
             ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();
             final ArrayList<String> dialogIds = new ArrayList<String>();
-            builder.setTitle(R.string.select_locale_title);
             // Add option: "no tts"
             dialogItems.add(res.getString(R.string.tts_no_tts));
             dialogIds.add(NO_TTS);
@@ -119,17 +122,20 @@ public class ReadText {
             String[] items = new String[dialogItems.size()];
             dialogItems.toArray(items);
 
-            builder.setItems(items, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    String locale = dialogIds.get(which);
-                    Timber.d("ReadText.textToSpeech() user chose locale '%s'", locale);
-                    if (!locale.equals(NO_TTS)) {
-                        speak(mTextToSpeak, locale);
-                    }
-                    MetaDB.storeLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, locale);
-                }
-            });
+            builder.title(res.getString(R.string.select_locale_title))
+                    .items(items)
+                    .itemsCallback(new MaterialDialog.ListCallback() {
+                        @Override
+                        public void onSelection(MaterialDialog materialDialog, View view, int which,
+                                CharSequence charSequence) {
+                            String locale = dialogIds.get(which);
+                            Timber.d("ReadText.textToSpeech() user chose locale '%s'", locale);
+                            if (!locale.equals(NO_TTS)) {
+                                speak(mTextToSpeak, locale);
+                            }
+                            MetaDB.storeLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, locale);
+                        }
+                    });
         }
         // Show the dialog after short delay so that user gets a chance to preview the card
         final Handler handler = new Handler();
@@ -137,7 +143,7 @@ public class ReadText {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                builder.create().show();
+                builder.build().show();
             }
         }, delay);
     }

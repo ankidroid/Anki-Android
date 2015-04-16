@@ -39,13 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_collection">Creando copia de seguridad.\nPor favor, espera...</string>
   <string name="backup_deck_no_space_left">No se pudo ejecutar la última acción de copia de seguridad debido al insuficiente espacio en tu tarjeta sd.\n\nLibera algo de espacio o bien disminuye la profundidad de copia de seguridad.</string>
   <string name="sd_space_warning">Quedan menos de %d mb de espacio en tu tarjeta sd.\nLibera algo de espacio para evitar la pérdida de datos.</string>
-  <string name="backup_deck_success">Copia de seguridad creada con éxito</string>
-  <string name="backup_manager_title">Administrador de copias de seguridad</string>
   <string name="backup_delete">Eliminando copias de seguridad.\nPor favor, espera...</string>
-  <string name="contextmenu_deckpicker_remove_backups">Eliminar copias de seguridad</string>
   <string name="backup_restore">Restaurar desde copia de seguridad</string>
   <string name="backup_new_collection">Nueva colección</string>
   <string name="backup_del_collection">Eliminar colección y crear una nueva</string>
@@ -59,15 +55,13 @@
   <string name="backup_repair_deck">Reparar</string>
   <string name="backup_repair_deck_progress">Reparando la base de datos.\nPor favor, esperar...</string>
   <string name="backup_error">Error</string>
-  <string name="backup_restore_error">No se pudo restaurar la colección</string>
   <string name="backup_invalid_file_error">El archivo de copia de seguridad seleccionado no es válido</string>
-  <string name="backup_restore_if_missing">Restaurando la colección si falta...</string>
-  <string name="backup_restore_deck">Restaurando la colección.\nPor favor, espera...</string>
   <string name="backup_restore_select_title">Selecciona copia de seguridad para restaurar</string>
   <string name="backup_restore_no_backups">No hay copias de seguridad de este mazo disponibles en este dispositivo. Si tienes copias de seguridad en tu ordenador de sobremesa, por favor, cópialas manualmente en tu carpeta de AnkiDroid</string>
   <string name="open_collection_failed_title">La colección no se abrió</string>
-  <string name="open_collection_failed_message">Database could not be opened. It\'s either not a real Anki database or has been corrupted.\n\nTouch \'options\' for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
-  <string name="corrupt_db_message">Unfortunately your collection has become corrupted.\n\nTouch \'options\' to restore from a backup, or if that does not work, see the following instructions for manually repairing the database:\n%1$s</string>
-  <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the \'options\' button. If you continue to see this message, please file a bug report:\n%1$s</string>
+  <string name="open_collection_failed_message">No se pudo abrir la base de datos. No se trata de una verdadera base de datos de Anki o bien el archivo está corrupto. \n\nSelecciona \'opciones\' para encontrar opciones para restaurar la base de datos, o para obtener más información sobre reparar colecciones corruptas ver:\n%1$s
+Hide context | Request context</string>
+  <string name="corrupt_db_message">Desafortunadamente tu colección está corrupta. \n\nSelecciona \'opciones\' para restaurarla desde una copia de seguridad, o si eso no funciona, lee las siguientes instrucciones sobre cómo reparar la base de datos manualmente:\n%1$s</string>
+  <string name="access_collection_failed_message">Un error ha ocurrido mientras accedías a tu colección. Puede haber sido causado por un error inofensivo, o puede que haya un problema en ella.  \n\nIntenta usar el revisor de bases de datos, o restaura desde una copia de seguridad presionando el botón \"opciones\".  Si continúa saliendo este mensaje, por favor reporta el error:\n%1$s</string>
   <string name="deck_repair_error">No se pudo reparar la colección</string>
 </resources>

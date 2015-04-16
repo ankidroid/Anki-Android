@@ -39,31 +39,32 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Decks</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="statistics">Statistics</string>
+  <string name="settings">Settings</string>
+  <string name="help">Help</string>
+  <string name="send_feedback">Send Feedback</string>
   <string name="studyoptions_title">Study Options</string>
-  <string name="studyoptions_deck_name">Názov balíčka</string>
   <string name="studyoptions_due_today">Dnes na opakovanie:</string>
   <string name="studyoptions_new_total">Celkový počet nových kariet:</string>
   <string name="studyoptions_total_cards">Celkový počet kariet:</string>
   <string name="studyoptions_eta">Odhadovaný čas (min):</string>
   <string name="studyoptions_start">Študovať teraz</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d karta na skúšanie (%2$s)</item>
-    <item quantity="other">%1$d karát na skúšanie (%2$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="few">%1$d cards due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
+    <item quantity="few">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">ostáva %1$d z %2$d</item>
-    <item quantity="other">%1$d z %2$d na opakovanie</item>
-  </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">Ostáva %d min.</item>
-    <item quantity="other">Zostáva %d minút</item>
+    <item quantity="one">%d minute left</item>
+    <item quantity="few">%d minutes left</item>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Napísať odpoveď</string>
   <string name="show_answer">Zobraziť odpoveď</string>
@@ -72,9 +73,6 @@
   <string name="ease3_successive">Dobre</string>
   <string name="ease3_learning">Ľahké</string>
   <string name="studyoptions_congrats_undo">Späť %s</string>
-  <string name="card_unsuspended">Odloženie karty bokom zrušené</string>
-  <string name="card_suspended">Karta je znovu odložená bokom</string>
-  <string name="menu_rotate">Otočiť</string>
   <string name="menu_import">Import</string>
   <string name="undo">Späť</string>
   <string name="undo_action_review">posledné opakovanie</string>
@@ -86,30 +84,19 @@
   <string name="undo_action_mark">označiť poznámku</string>
   <string name="unbury">Vyhrabať</string>
   <string name="finish_operation">Dokončujem predchádzajúcu operáciu (pravdepodobne vytváram zálohu).\nProsím počkajte...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Stiahnuť chýbajúce médiá</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Obnoviť priradenie jazyka</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Obnovenie jazyka</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Optimalizácia databázy</string>
   <string name="contextmenu_deckpicker_rename_deck">Premenovať balíček</string>
   <string name="contextmenu_deckpicker_collapse_deck">Skryť podbalíčky</string>
   <string name="contextmenu_deckpicker_inflate_deck">Zobraziť podbalíčky</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Nastaviť vlastný slovník</string>
   <string name="menu_add">Pridať</string>
   <string name="menu_add_note">Pridať poznámku</string>
-  <string name="menu_download_deck">Stiahnuť balíček</string>
-  <string name="menu_download_shared_deck">Zdieľaný balíček</string>
   <string name="menu_my_account">Synchronizácia účtu</string>
-  <string name="menu_preferences">Nastavenia</string>
-  <string name="menu_about">O aplikácii</string>
   <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Zahrabať kartu</string>
   <string name="menu_bury_note">Zahrabať poznámku</string>
   <string name="menu_suspend_card">Dať kartu bokom</string>
   <string name="menu_suspend_note">Dať poznámku bokom</string>
-  <string name="menu_save_note">Uložiť poznámku</string>
   <string name="menu_delete_note">Odstrániť poznámku</string>
   <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej karty?\n%s</string>
-  <string name="menu_edit_card">Upraviť kartu</string>
   <string name="menu_select">Zvoliť text</string>
   <string name="menu_search">Vyhľadať v %1$s</string>
   <string name="menu_mark_card">Označiť kartu</string>
@@ -117,7 +104,6 @@
   <string name="new_deck">Vytvoriť balíček</string>
   <string name="create">Vytvoriť</string>
   <string name="new_dynamic_deck">Vytvoriť filtrovaný balíček</string>
-  <string name="studyoptions_feedback">Spätná väzba</string>
   <string name="night_mode">Nočný režim</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
@@ -136,10 +122,7 @@
     <item>%s mesiacov</item>
     <item>%s rokov</item>
   </string-array>
-  <string name="visit">Navštíviť</string>
   <string name="later">Neskôr</string>
-  <string name="download">Stiahnuť</string>
-  <string name="open_collection">Otvára sa zbierka.\nProsím počkajte...</string>
   <string name="rebuild_cram_deck">Obnovujem balíček na drvenie sa.\nProsím počkajte...</string>
   <string name="rebuild_cram_label">Znovu zostaviť</string>
   <string name="empty_cram_label">Prázdne</string>
@@ -151,37 +134,10 @@
   <string name="studyoptions_congrats_more_new">Dostupné sú aj ďalšie nové karty, ale bol dosiahnutý denný limit.  Môžete ho zvýšiť v nastaveniach, ale prosím majte na pamäti, že tým sa v najbližšej dobe zvýši aj počet kariet na opakovanie.</string>
   <string name="studyoptions_congrats_custom">Ak chcete študovať mimo bežný plán, kliknite na tlačidlo Vlastné štúdium nižšie.</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Zajtra: %1$d kariet na opakovanie a %2$s.\n Odhadovaný čas: %3$s</item>
-    <item quantity="other">Zajtra: %1$d kariet na opakovanie a %2$s.\n Odhadovaný čas: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d nová karta</item>
-    <item quantity="other">%1$d nových kariet</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Odhadovaný čas: %1$d min.</item>
-    <item quantity="other">Odhadovaný čas: %1$d min.</item>
-  </plurals>
-  <string name="sd_card_not_mounted">SD karta nie je pripojená.\n\nVašu zbierku môžete uložiť aj na internú pamäť, aj keď to sa neodporúča, pretože k súboru potom nemáte taký jednoduchý prístup. Túto možnosť môžete aktivovať v nastaveniach (otvoríte ich kliknutím na tento text).</string>
-  <string name="studyoptions_options">Nastavenia</string>
-  <string name="empty_cloze_warning">Prosím upravte túto poznámku a pridajte nejaké doplňovačky. (%1$s)</string>
-  <string name="help_cloze">pomoc</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Synchronizácia</string>
-  <string name="restart">Reštartovať</string>
-  <string name="do_nothing">Nerobiť nič</string>
-  <string name="more_options">Ďalšie možnosti</string>
-  <string name="now">Teraz</string>
-  <string name="back">Späť</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importovať</string>
   <string name="export">Export</string>
-  <string name="confirm">Potvrdiť</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">Graf štatistík</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>
@@ -191,6 +147,7 @@
   <string name="card_template_editor_cant_delete">At least one card type is required.</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
+    <item quantity="few">Delete the \'%2$s\' card type, and its %1$d cards?</item>
     <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>

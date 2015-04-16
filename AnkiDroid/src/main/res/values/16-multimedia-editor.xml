@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
 ~ 	Zaur Molotnikov & Bibek Shrestha
 ~ This program is free software; you can redistribute it and/or modify it under
@@ -12,8 +12,7 @@
 ~
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
-<resources>
+--><resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Add image</string>
     <string name="multimedia_editor_popup_audio">Record audio</string>
@@ -85,15 +84,7 @@
 
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
-    <string name="multimedia_editor_activity_note_type">Note type</string>
-    <string name="multimedia_editor_activity_deck">Deck</string>
-    <string name="multimedia_editor_activity_edit_button">Edit</string>
-    <string name="multimedia_editor_activity_swap_button">Swap</string>
     <!-- delete confirmation -->
-    <string name="multimedia_editor_activity_delete_question">Delete the whole note?</string>
-    <string name="multimedia_editor_activity_delete_confirm">Delete</string>
-    <string name="multimedia_editor_activity_delete_reject">Keep</string>
-
     <!-- Image editing -->
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Gallery</string>
@@ -128,7 +119,6 @@
 
     <string name="title_activity_edit_text">Editing field</string>
     <string name="title_activity_translation">Translation</string>
-    <string name="title_activity_audio_recorder">Audio recorder</string>
     <string name="title_activity_load_pronounciation">Pronunciation</string>
     <string name="title_activity_search_image">Google Image Search</string>
 

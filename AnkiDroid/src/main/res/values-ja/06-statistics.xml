@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">統計情報</string>
   <string name="statistics_young">未熟カード</string>
   <string name="statistics_mature">熟知カード</string>
   <string name="statistics_young_and_learn">学習中カード＋未熟カード</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">再学習カード</string>
   <string name="statistics_learn">学習中カード</string>
   <string name="statistics_cram">詰め込み学習カード</string>
-  <string name="statistics_type_title">統計情報</string>
   <string name="stats_cards">枚数</string>
   <string name="stats_cards_intervals">次の復習予定日が ～後のカード</string>
   <string name="stats_cumulative_cards">累積枚数 〔折れ線グラフ〕</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1か月</string>
   <string name="stats_period_year">1年</string>
   <string name="stats_period_lifetime">すべての期間</string>
-  <string name="stats_deck_current">選択中の単語帳</string>
   <string name="stats_deck_collection">すべての単語帳</string>
   <string name="stats_time_of_day">時刻</string>
   <string name="stats_day_of_week">曜日</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">学習: &lt;b&gt;%1$s&lt;/b&gt;枚、復習: &lt;b&gt;%2$s&lt;/b&gt;枚、再学習: &lt;b&gt;%3$s&lt;/b&gt;枚、\nフィルター(詰め込み学習): &lt;b&gt;%4$s&lt;/b&gt;枚</string>
   <string name="stats_today_mature_cards">熟知カードの正解: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">熟知カードは学習していません。</string>
-  <string name="statistics_period_x_axis_minutes">分</string>
-  <string name="statistics_new_cards">新規カード</string>
-  <string name="statistics_failed_cards">正解できなかったカード</string>
-  <string name="statistics_fullscreen">フルスクリーンの切り替え</string>
-  <string name="calculating_statistics">集計中です\nしばらくお待ちください</string>
-  <string name="deck_summary_cards">カードの数:</string>
-  <string name="deck_summary_notes">ノートの数:</string>
-  <string name="deck_summary_cards_mature">熟知カード:</string>
-  <string name="deck_summary_cards_young">未熟カード:</string>
-  <string name="deck_summary_cards_unseen">未学習カード</string>
-  <string name="deck_summary_card_age">カードの熟知度</string>
-  <string name="deck_summary_average_interval">平均間隔: &lt;b&gt;%.1f&lt;/b&gt; 日</string>
-  <string name="deck_summary_answers_correct">正しい答え</string>
-  <string name="deck_summary_answers_mature">熟知カード: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%4$dの内%3$d)</string>
-  <string name="deck_summary_answers_young">未熟カード: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%4$dの内%3$d)</string>
-  <string name="deck_summary_answers_firstseen">初めて表示されたカード: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%4$dの内%3$d)</string>
-  <string name="deck_summary_reviews">カードの学習と評価：</string>
-  <string name="deck_summary_news">新規カード:</string>
-  <string name="deck_summary_average_week">先週の平均</string>
-  <string name="deck_summary_average_month">先月の平均</string>
-  <string name="deck_summary_average_year">昨年の平均</string>
-  <string name="deck_summary_average_total">今までの平均</string>
-  <string name="deck_summary_forecast">予測</string>
-  <string name="deck_summary_tomorrow_due">明日に学習予定日時に達するカード: &lt;b&gt;%d&lt;/b&gt;枚</string>
-  <string name="deck_summary_tomorrow_new">明日の新規カード: &lt;b&gt;%d&lt;/b&gt;枚</string>
-  <string name="deck_summary_tomorrow_time">明日の推定学習時間: &lt;b&gt;%d&lt;/b&gt; 分.</string>
-  <string name="deck_summary_finished_in">新規カードの終了: &lt;b&gt;%d&lt;/b&gt; 日</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; 枚/日</string>
-  <string name="deck_summary_deck_age">単語帳作成日: &lt;b&gt;%d&lt;/b&gt; 日前</string>
   <string name="deck_summary_all_decks">すべての単語帳</string>
-  <string name="stats_select_decks">単語帳の範囲を選択</string>
   <string name="stats_select_time_scale">期間を選択</string>
   <string-array name="next_review_in_s">
     <item>1秒で内</item>
@@ -155,15 +122,6 @@
   <string name="stats_weekly_breakdown">曜日ごとの分析</string>
   <string name="stats_answer_buttons">回答ボタン</string>
   <string name="stats_cards_types">カードの種類</string>
-  <string-array name="stats_period">
-    <item>1か月</item>
-    <item>1 年</item>
-    <item>すべて</item>
-  </string-array>
-  <string-array name="stats_range">
-    <item>コレクション</item>
-    <item>現在の単語帳</item>
-  </string-array>
   <string-array name="stats_day_time_strings">
     <item>AM4:00</item>
     <item>AM10:00</item>
@@ -194,11 +152,9 @@
     <item>簡</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">今日は &lt;b&gt;%1$d枚&lt;/b&gt; のカードを &lt;b&gt;%2$s&lt;/b&gt; で学習しています。</item>
-    <item quantity="other">今日は &lt;b&gt;%1$d枚&lt;/b&gt; のカードを &lt;b&gt;%2$s&lt;/b&gt; で学習しています。</item>
+    <item quantity="other">今日は &lt;b&gt;%1$d枚&lt;/b&gt; のカードを &lt;b&gt;%2$s&lt;/b&gt; で学習しています</item>
   </plurals>
   <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">今日は%1$d枚のカードを%2$sで学習しています</item>
     <item quantity="other">今日は%1$d枚のカードを%2$sで学習しています</item>
   </plurals>
 </resources>

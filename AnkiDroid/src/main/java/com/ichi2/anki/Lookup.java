@@ -3,14 +3,14 @@ package com.ichi2.anki;
 
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import com.ichi2.libanki.Utils;
-import com.ichi2.themes.StyledDialog;
 
 import timber.log.Timber;
 
@@ -107,18 +107,20 @@ public class Lookup {
                     }
                 }
                 final String[] items = { "Englisch", "Französisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch" };
-                StyledDialog.Builder builder = new StyledDialog.Builder(mContext);
-                builder.setTitle("\"" + mLookupText + "\" nachschlagen");
-                builder.setItems(items, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int item) {
-                        String language = itemValues[item].toString();
-                        storeLanguage(language, MetaDB.LANGUAGES_QA_UNDEFINED);
-                        lookupLeo(language, mLookupText);
-                        mLookupText = "";
-                    }
-                });
-                StyledDialog alert = builder.create();
-                alert.show();
+                new MaterialDialog.Builder(mContext)
+                        .title("\"" + mLookupText + "\" nachschlagen")
+                        .items(items)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog materialDialog, View view,
+                                    int item, CharSequence charSequence) {
+                                String language = itemValues[item].toString();
+                                storeLanguage(language, MetaDB.LANGUAGES_QA_UNDEFINED);
+                                lookupLeo(language, mLookupText);
+                                mLookupText = "";
+                            }
+                        })
+                        .build().show();
                 return true;
             case DICTIONARY_COLORDICT:
                 Intent colordictSearchIntent = new Intent(mDictionaryAction);

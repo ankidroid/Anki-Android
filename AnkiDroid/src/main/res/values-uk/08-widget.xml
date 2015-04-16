@@ -45,20 +45,13 @@
   <string name="widget_loading">Завантаження віджета...</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">%1$d card due in %2$s</item>
-    <item quantity="other">%1$d карток до перегляду в %2$s</item>
+    <item quantity="few">%1$d cards due in %2$s</item>
+    <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">%1$d deck</item>
-    <item quantity="other">%1$d колод</item>
+    <item quantity="few">%1$d decks</item>
+    <item quantity="other">%1$d decks</item>
   </plurals>
-  <string name="widget_medium">Середній AnkiDroid</string>
   <string name="widget_small">Малий AnkiDroid</string>
-  <string name="widget_big">Великий AnkiDroid</string>
-  <string name="widget_big_restrictions_dialog">Через певні обмеження інструментів для створення віджетів Android цей віджет може показувати лише текст, але не рисунки/звуки і т. ін.</string>
-  <string name="open_in_reviewer">Відкрити колоду в AnkiDroid</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Estimated time: %d min.</item>
-    <item quantity="other">Приблизний час: %d хв.</item>
-  </plurals>
-  <string name="widget_big_tomorrow_due">Завтра до перегляду:</string>
 </resources>

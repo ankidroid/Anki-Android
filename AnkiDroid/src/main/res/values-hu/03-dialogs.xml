@@ -47,9 +47,6 @@
   <string name="delete_deck_title">Pakli törlése</string>
   <string name="delete_deck_message">Biztos, hogy törlöd a %s pakli összes kártyáját?</string>
   <string name="delete_cram_deck_message">Biztosan szeretnéd, hogy a %s kártyái visszakerüljenek az eredeti paklijukba?</string>
-  <string name="delete_deck_confirm">Törlés</string>
-  <string name="new_version_message">Új funkciók:</string>
-  <string name="no_tts_available_title">Szövegfelolvasás</string>
   <string name="no_tts_available_message">Nincs rendelkezésre álló szövegfelolvasási nyelv</string>
   <string name="initializing_tts">TTS indítása&#8230;</string>
   <string name="tts_no_tts">Ne beszélj</string>
@@ -60,14 +57,7 @@
     <item><![CDATA[Akkor is segíthetsz, ha nem vagy fejlesztő, pl. az AnkiDroid <a href="%1$s">fordításával</a> a wiki frissítésével, képernyőképekkel, az Anki Desktop-nak juttatott <a href="%2$s">adománnyal</a>, vagy ha blogolsz egyet az AnkiDroidról!]]></item>
     <item><![CDATA[Az AnkiDroid a <a href="%1$s">GNU-GPL v3 licensz</a> alatt van kiadva, a forráskód <a href="%2$s">itt </a> érhető el.]]></item>
   </string-array>
-  <string name="dont_show_again">Ne jelenjen meg többé</string>
-  <string name="notify_ticker">Alkalmazás frissítés</string>
-  <string name="notify_title">AnkiDroid frissítve</string>
-  <string name="notify_message">Új verzió letöltése</string>
-  <string name="notification_title">Az AnkiDroid frissítésének ellenőrzése</string>
   <string name="preview_title">Előnézet</string>
-  <string name="notification_message">AnkiDroid új változata érhető el az Android Marketen.\n\nSzeretnéd telepíteni?</string>
-  <string name="notification_stop">Nem kérek többször értesítést a frissítésről</string>
   <string name="reset_card_dialog_title">Kártya folyamatát alaphelyzetbe</string>
   <string name="reset_card_dialog_message">Ez a kártya az új kártya várólista végére kerül.</string>
   <string name="reset_card_dialog_acknowledge">Kártya alaphelyzetbe állítása</string>
@@ -90,36 +80,7 @@
   <string name="custom_study_ahead">Idő előtti, x nappal előre ismétlés:</string>
   <string name="custom_study_random">A pakliból x kártya véletlen kiválasztása:</string>
   <string name="custom_study_preview">Az elmúlt x nap új kártyáinak előre átnézése:</string>
-  <string name="custom_study_tags">Címkék beírása:</string>
   <string name="rebuild_custom_study_deck">Egyéni gyakorlópakli újraépítése.\nKérlek, várj...</string>
-  <string name="deck_upgrade_title">Pakli frissítése</string>
-  <string name="deck_upgrade_rename_warning">Vedd figyelembe, hogy ezzel \'%1$s\' néven exportálod a jelenlegi gyűjteményedet, és a régi anki 1.x fájljaidból új gyűjteményt hozol létre. Ha szükséges, a varázsló befejezése után az exportált apkg fájlt kézzel importálhatod. Valóban folytatod?</string>
-  <string name="deck_upgrade_major_warning"><![CDATA[Ez az AnkiDroid verzió jelentős változásokat hoz, a frissítés legalább 10-20 percig fog tartani.<br><br>Most folytatod, vagy később?<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=hu">Bővebben</a>]]></string>
-  <string name="deck_upgrade_start_again_to_upgrade_toast">Kérlek, indítsd el az AnkiDroidot, ha lesz időd frissíteni!</string>
-  <string name="deck_upgrade_recommended_method"><![CDATA[A frissítés ajánlott módja, hogy szinkronizálj egy PC-vel, és az Anki asztali verziójával végezd el a frissítést.<br><br>Van egy másik módszer is, amivel az interneten keresztül frissíthetsz, ha nem férsz hozzá PC-hez és a gyűjteményed nem túl nagy.]]></string>
-  <string name="deck_upgrade_more_options_exit">A régi kártyáid importálása nélkül megszakíthatod a frissítés varázslót a lenti kilépés gombbal.</string>
-  <string name="deck_upgrade_more_options_new_collection">Új gyűjteményt hozhatsz létre alább kattintva.</string>
-  <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Ha vissza szeretnél térni az AnkiDroid 1 verzióhoz, olvasd el <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=hu#Continuing_to_use_AnkiDroid_1.1.3">az itteni útmutatót</a>.]]></string>
-  <string name="deck_upgrade_create_new_collection">Új gyűjtemény létrehozása</string>
-  <string name="deck_upgrade_create_new_collection_title">Új gyűjtemény létrehozása</string>
-  <string name="deck_upgrade_create_new_collection_button">Új gyűjtemény</string>
-  <string name="deck_upgrade_not_import_warning">Biztosan ezt akarod? A régi adataid nem lesznek importálva.</string>
-  <string name="deck_upgrade_via_web"><![CDATA[<b>Nem ajánlott ez a frissítési mód, ha vannak média fájljaid vagy nagy a gyűjteményed!</b><br><br>Az Anki1 paklijaidat tömörítve feltöltjük az AnkiWebre, majd az átkonvertált gyűjteményt letöltjük.<br><br>Vedd figyelembe, hogy ehhez gyors internetre van szükséged, és a gyűjteményed nem lehet 50 mb-nál nagyobb.<br><br>Ha Anki Desktop-ot is használsz, akkor nagyon ajánlott, hogy a PC-n keresztüli frissítést válaszd inkább.<br><br>Folytassuk?]]></string>
-  <string name="deck_upgrade_via_anki_desktop"><![CDATA[Ha az AnkiDroid gyűjteményed szinkronizálva van az Anki Desktop programmal, frissítsd előbb ott. Ezután az AnkiDriodba letöltheted a frissített gyűjteményt az AnkiWebről.<br><br>Esetleg USB-n is átmásolhatod a gyűjteményt a számítógépre, majd miután ott konvertáltad azt, visszamásolhatod az AnkiDroidba.]]></string>
-  <string name="deck_upgrade_auto_upgrade"><![CDATA[Installáld és futtasd az Anki Desktop 2.0.4 vagy későbbi verzióját a gyűjteményed frissítéséhez. Ezután szinkronizáld a frissített gyűjteményt az AnkiWebre, majd nyomd meg a "Letöltés" gombot.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=hu#Option_2:_Using_AnkiWeb_sync">Bővebb információ az AnkiWebes frissítéshez</a>]]></string>
-  <string name="deck_upgrade_manual"><![CDATA[Másold az összes *.anki fájlt (és a *.media mappákat, ha vannak) az AnkiDroid mappádból az Anki Desktop mappádba. Telepítsd és indítsd el az Anki Desktop 2.0.4 vagy későbbi verzióját a gyűjteményed frissítéséhez.<br><br>Miután a frissítés befejeződött, exportáld a gyűjteményedet az Anki2-ből, másold a collection.apkg nevű fájlt az AnkiDroid mappádba és nyomd meg az import gombot alább.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=hu#Option_1:_Using_USB_(recommended)">Bővebb információ az USB-s frissítésről.</a>]]></string>
-  <string name="upgrade_deck_cancelled_title">Frissítés megszakítva</string>
-  <string name="upgrade_deck_cancelled_description">A frissítés meg lett szakítva, próbáld meg újra valamelyik frissítési lehetőséget.</string>
-  <string name="upgrade_deck_web_upgrade_failed">A frissítési folyamat nem sikerült. Próbáld újra, vagy válassz egy másik frissítési lehetőséget</string>
-  <string name="upgrade_deck_web_upgrade_exceeds">Az Anki1 paklijaid tömörített mérete összesen több mint amennyit a szerver fel tud dolgozni (50 mb), próbálj egy másik frissítési módot választani.</string>
-  <string name="upgrade_deck_web_upgrade_sdcard">A frissítés sikerült, de a gyűjtemény kicsomagolása közben hiba történt. Győződj meg róla, hogy van legalább %1$d mb szabad helyed, és próbáld újra, vagy válassz másik frissítési lehetőséget.</string>
-  <string name="export_progress_title">Gyűjtemény exportálás</string>
-  <string name="export_progress_exporting">Gyűjtemény exportálása, Kérlek, várj&#8230;</string>
-  <string name="upgrade_deck_export_successful">Sikerült a régi gyűjteményedet exportálni, folytatódik a frissítés.</string>
-  <string name="upgrade_deck_export_error">Hiba történt a régi gyűjteményed exportálása közben. Ennek ellenére szeretnéd folytatni a frissítést? A régi gyűjteményed így elveszik!</string>
-  <string name="upgrade_deck_sync_from_ankiweb">Szinkronizálás az AnkiWebről</string>
-  <string name="upgrade_deck_have_you_synced">Biztos vagy benne, hogy a gyűjteményedet frissítetted az Anki Desktop 2 verziójával, és szinkronizáltad az AnkiWebre?</string>
-  <string name="upgrade_deck_dont_upgrade">Ne frissítsen</string>
   <string name="import_unpacking">Csomag kitömörítése.\nKérlek, várj&#8230;</string>
   <string name="importing_collection">Gyűjtemény importálása.\nKérlek, várj&#8230;</string>
   <string name="import_media_count">Média fájlok importálása %1$d%%\nKérlek, várj&#8230;</string>
@@ -132,7 +93,6 @@
   <string name="dialog_cancel">Mégsem</string>
   <string name="dialog_ok">OK</string>
   <string name="dialog_continue">Folytatás</string>
-  <string name="dialog_neutral_later">Később</string>
   <string name="dialog_positive_create">Létrehoz</string>
   <string name="dialog_positive_delete">Töröl</string>
   <string name="dialog_positive_disable">Letilt</string>
@@ -142,14 +102,8 @@
   <string name="dialog_positive_replace">Kicserél</string>
   <string name="dialog_positive_reset">Visszaállít</string>
   <string name="dialog_positive_restore">Visszaállít</string>
-  <string name="dialog_positive_save">Ment</string>
   <string name="dialog_positive_set">Beállít</string>
-  <string name="add_button_content">Hozzáad&#8230;</string>
-  <string name="card_browser_button_content">Kártya böngésző</string>
   <string name="lookup_button_content">Keresés</string>
-  <string name="statistics_button_content">Statisztika</string>
-  <string name="dialog_collection_path_title">Mappa nem létezik</string>
-  <string name="dialog_collection_path_text">A megadott mappa nem létezik, szeretnéd létrehozni?</string>
   <string name="dialog_collection_path_not_dir">A megadott elérési út nem érvényes mappa</string>
   <string name="check_media_title">Média ellenőrzése?</string>
   <string name="check_media_warning">Ez sokáig tarthat nagy média gyűjtemények esetén</string>

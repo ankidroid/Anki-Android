@@ -41,30 +41,14 @@
 -->
 <resources>
   <string name="youre_offline">Вы не подключены к сети</string>
-  <string name="currently_downloading">Загружается</string>
-  <string name="starting_download">Начинаю скачивать...</string>
-  <string name="downloading">Скачивание...</string>
-  <string name="paused">Приостановлено</string>
-  <string name="downloaded">Загружено</string>
   <string name="sync_error">Ошибки синхронизации</string>
   <string name="vague_error">Ошибка</string>
-  <string name="cancelling">Отмена...</string>
-  <string name="connection_error_return_message">Ошибка сети. Повторите, отмените действие или возвратитесь на предыдущий экран.</string>
   <string name="retry">Повторить</string>
   <string name="cancel">Отмена</string>
-  <string name="download_overwrite">Заменить</string>
-  <string name="download_cancel">Отменить скачивание</string>
-  <string name="shared_decks">Общедоступные колоды</string>
   <string name="loading_shared_decks">Загрузка списка общедоступных колод.</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Условия</a></string>
-  <string name="cancel_download">Отменить загрузку</string>
-  <string name="resume_download">Продолжить загрузку</string>
-  <string name="pause_download">Приостановить закачку</string>
-  <string name="duplicate_download">Колода уже загружается</string>
   <string name="menu_get_shared_decks">Получить общедоступные колоды</string>
-  <string name="download_button_return">Возврат</string>
   <string name="connection_error_message">Ошибка сети.</string>
-  <string name="sync_log_db_error">Произошла ошибка базы данных.</string>
   <string name="not_logged_in_title">Залогиниться в AnkiWeb</string>
   <string name="login_create_account_message">Нужно залогиниться в AnkiWeb аккаунт. Далее можно создать аккаунт.</string>
   <string name="no_email_client">Не клиент электронной почты</string>
@@ -80,11 +64,7 @@
   <string name="log_out">Завершить сеанс</string>
   <string name="alert_logging_message">Вход в систему, пожалуйста, подождите...</string>
   <string name="invalid_username_password">Недопустимый адрес электронной почты или пароль.</string>
-  <string name="login_generic_error">Не удалось войти на сервер.</string>
   <string name="reset_password">Сбросить пароль</string>
-  <string name="download_finished">Загрузка завершена</string>
-  <string name="personaldeckpicker_title">Открыть онлайн-колоду</string>
-  <string name="shareddeckpicker_title">Выберите колоду, которую хотите загрузить</string>
   <string name="downloaddeck_search">Поиск</string>
   <string name="preferences_title">Настройки</string>
   <string name="deckpreferences_title">Опции для XXX</string>
@@ -97,7 +77,6 @@
   <string name="sync_preparing_full_sync_message">Подготовка полной синхронизации...</string>
   <string name="sync_uploading_message">Выгрузка данных...</string>
   <string name="sync_downloading_message">Скачивание с сервера...</string>
-  <string name="sync_reload_message">Перезагрузка коллекции...</string>
   <string name="sync_title">Синхронизация</string>
   <string name="sync_downloading_media">Скачивание медиа-файлов %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Полностью синхронизировано с локальными данными</string>
@@ -105,11 +84,9 @@
   <string name="sync_log_clocks_unsynchronized">Часы на вашем устройстве неверны на %1$d секунд%2$s; Для синхронизации необходимо, чтобы и часы и временная зона были корректными для избежания ошибок. Пожалуйста, установите корректную дату, время и временную зону вашего телефона и запустите синхронизацию снова.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, установленная временная зона устройства возможно ошибочна</string>
   <string name="sync_log_clocks_unsynchronized_date">, дата, установленная в устройстве возможно неверная</string>
-  <string name="sync_log_old_version">Протокол синхронизации был изменён, пожалуйста, установите последнюю версию AnkiDroid. (См. http://code.google.com/p/ankidroid)</string>
   <string name="sync_conflict_title">Конфликт синхронизации</string>
   <string name="sync_no_changes_message">Не найдено изменений.</string>
   <string name="sync_database_acknowledge">Коллекция синхронизирована</string>
-  <string name="sync_log_error_fix">Ошибка синхронизации%s.\n\nПопробуйте сделать полную синхронизацию для исправления этой ошибки. Однако это перепишет или локальную коллекцию или коллекцию, хранящуюся на сервере AnkiWeb.\nДля полной  синхронизации, пожалуйста выберите: выгрузку Вашей локальной коллекция на сервер или загрузку коллекции с сервера.</string>
   <string name="sync_log_error_specific">Ошибка синхронизации, тип: %1$s, сообщение: %2$s</string>
   <string name="sync_corrupt_database">Ваша база данных повреждена. Пожалуйста исправьте её прежде чем повторить попытку синхронизации.\n\nСмотрите %s о восстановлении базы данных.</string>
   <string name="sync_too_busy">Сервер перегружен. Попробуйте еще раз позже.</string>
@@ -130,10 +107,6 @@
   <string name="sync_check_upload_file">Проверка файла перед загрузкой...</string>
   <string name="sync_check_download_file">Проверка загруженного файла...</string>
   <string name="sync_media_find">Поиск изменённых медиа-файлов...</string>
-  <string name="sync_media_remove">Обработка удаленных медиа-файлов...</string>
-  <string name="sync_media_from_server">Получение медиа-файлов с сервера...</string>
-  <string name="sync_media_to_server">Отправка медиа-файлов на сервер...</string>
-  <string name="sync_media_sanity_check">Проверка количества медиа-файлов...</string>
   <string name="sync_media_no_changes">Медиа-файлы не изменены.</string>
   <string name="sync_media_success">Медиа-файлы успешно синхронизированы.</string>
   <string name="sync_media_changes_count">%d изменений медиа для обновления</string>
@@ -146,22 +119,6 @@
   <string name="register_title">Зарегистрироваться</string>
   <string name="register_mismatch">Логин и/или пароль не соответствуют или пусты. Пожалуйста, введите снова.</string>
   <string name="registering_message">Создание учетной записи.\nПожалуйста, подождите...</string>
-  <string name="upgrade_decks_zipping">Архивирование колод для выгрузки.\nПожалуйста, подождите...</string>
-  <string name="upgrade_decks_upload">Выгрузка zip-архивированных колод\nВы можете прервать нажав кнопку назад.\nПожалуйста подождите...</string>
-  <string name="upgrade_decks_waiting">Ожидание, позиция в очереди: %s\n Пожалуйста подождите...</string>
-  <string name="upgrade_decks_upgrade_started">Обновление начато\nПожалуйста подождите...</string>
-  <string name="upgrade_decks_downloading">Скачивание обновлённой коллекции\nВы можете прервать, нажав кнопку назад.\nПожалуйста подождите...</string>
-  <string name="upgrade_decks_media">Копирование старых медиа-файлов в новую папку.\nПожалуйста, подождите...</string>
-  <string name="upgrade_decks_message">Не найдена ни одна коллекция формата Anki 2.0, но найдены одна и более колод в старом формате Anki 1.2:%s Чтобы использовать ваши колоды в новой верии AnkiDroid, Вам нужно сначала их конвертировать в единую коллекцию нового Anki-2.0 формата. Существуют 3 возможности для этого:</string>
-  <string name="upgrade_decks_message_pos1">Используя Anki Desktop 2.0 (настольная версия). При первом запуске программы Ваши колоды будут конвертированы. Затем Вы можете синхронизировать используя AnkiWeb или скопировав с настольного компьютера новую коллекцию на Ваше мобильное устройство. Скопируйте ваши колоды с мобильного устройства из AnkiDroid-каталога (%s) на настольный компьютер в каталог Anki Desktop 1.2 (если вы ещё не синхронизировали) и запустите Anki Desktop 2.0.</string>
-  <string name="upgrade_decks_message_pos2">Если Вы уже синхронизировали Ваши колоды через AnkiWeb, Вам нужно просто зайти один раз %s (под своим логином и паролем) и Ваши колоды будут конвертированы. После этого Вам нужно просто синхронизироваться Ваше мобильное устройстве.</string>
-  <string name="upgrade_decks_message_pos3">В качестве третьей возможности, вы можете конвертировать ваши колоды с помощью самого AnkiDroid и AnkiWeb. Если Вы нажмете расположенную ниже кнопку &quot;Обновить&quot;, ваши колоды будут собраны и отправлены на сервер AnkiWeb. После конвертации набор колод будет автоматически скачан и открыт. Нет необходимости в какой-либо регистрации для выполнения этого действия. Предупреждаем, что лучше использовать Wi-fi соединение, чтобы избежать большой трафик через мобильное соединение. Если размер упакованных колод будет больше 50 Мб, вы не сможете использовать этот способ конверсии, в таком случае используйте другие возможности. Если ваша колода медиа-файлов расположена в особой папке или в папке Dropbox, необходимо переместить их вручную в новую папку.</string>
-  <string name="upgrade_decks_message_finish">Если Вы выберите &quot;Продолжить&quot;, то будет создана новая коллекция без добавления ваших старых колод в аккаунт.</string>
-  <string name="upgrade_required">Ваши колоды в AnkiWeb всё ещё в старом Anki 1.2 формате. Пожалуйста посетите %s и войдите в аккаунт. Тогда Ваши колоды будут автоматически конвертированы в новый формат.</string>
-  <string name="upgrade_decks_button">Обновить</string>
-  <string name="upgrade_decks_failed">Следующие колоды не были обновлены:\n%sПожалуйста, откройте их в Anki Desktop и выполните проверку базы данных. Затем Вы сможете их импортировать используя Anki Desktop.</string>
-  <string name="upgrade_decks_media_failed">Копирование медиа-файлов в новую папку (%1$s) не удалось для колод:\n%2$sПожалуйста, переместите медиа-файлы вручную.</string>
-  <string name="download_deck">Загрузка колоды (%d кбайт).\nПожалуйста, подождите...</string>
   <string name="sync_sanity_local">Локальную</string>
   <string name="sync_sanity_remote">Удалённую</string>
   <string name="force_full_sync_title">Выполнить полную синхронизацию</string>

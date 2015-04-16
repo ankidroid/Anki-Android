@@ -41,30 +41,14 @@
 -->
 <resources>
   <string name="youre_offline">Du är offline</string>
-  <string name="currently_downloading">Hämtar just nu</string>
-  <string name="starting_download">Startar hämtning...</string>
-  <string name="downloading">Hämtar...</string>
-  <string name="paused">Pausad</string>
-  <string name="downloaded">Nedladdade</string>
   <string name="sync_error">Synkroniseringsfel</string>
   <string name="vague_error">Fel</string>
-  <string name="cancelling">Avbryter...</string>
-  <string name="connection_error_return_message">Ett nätverksfel har uppstått. Försök igen eller avbryt och återgå till föregående skärm.</string>
   <string name="retry">Försök igen</string>
   <string name="cancel">Avbryt</string>
-  <string name="download_overwrite">Skriv över</string>
-  <string name="download_cancel">Avbryt hämtning</string>
-  <string name="shared_decks">Delade kortlekar</string>
   <string name="loading_shared_decks">Laddar tillgängliga delade kortlekar...</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Användarvillkor</a></string>
-  <string name="cancel_download">Avbryt hämtning</string>
-  <string name="resume_download">Återuppta hämtningen</string>
-  <string name="pause_download">Pausa hämtning</string>
-  <string name="duplicate_download">Denna kortlek hämtas redan</string>
   <string name="menu_get_shared_decks">Hämta delade kortlekar</string>
-  <string name="download_button_return">Återgå</string>
   <string name="connection_error_message">Ett nätverksfel har uppstått.</string>
-  <string name="sync_log_db_error">Ett databasfel har inträffat.</string>
   <string name="not_logged_in_title">Logga in på AnkiWeb</string>
   <string name="login_create_account_message">Du måste logga in på ett AnkiWeb-konto. Du kan skapa ett i nästa steg.</string>
   <string name="no_email_client">Ingen epostklient tillgänglig</string>
@@ -80,11 +64,7 @@
   <string name="log_out">Logga ut</string>
   <string name="alert_logging_message">Loggar in, var god vänta...</string>
   <string name="invalid_username_password">Ogiltig e-postadress eller lösenord.</string>
-  <string name="login_generic_error">Kunde inte logga in.</string>
   <string name="reset_password">Återställ lösenord</string>
-  <string name="download_finished">Hämtningen är färdig</string>
-  <string name="personaldeckpicker_title">Öppna online-kortlek</string>
-  <string name="shareddeckpicker_title">Välj den kortlek du vill ladda ner</string>
   <string name="downloaddeck_search">Sök</string>
   <string name="preferences_title">Inställningar</string>
   <string name="deckpreferences_title">Alternativ för XXX</string>
@@ -97,7 +77,6 @@
   <string name="sync_preparing_full_sync_message">Förbereder fullständig synkronisering...</string>
   <string name="sync_uploading_message">Laddar upp...</string>
   <string name="sync_downloading_message">Hämtar...</string>
-  <string name="sync_reload_message">Laddar samlingen igen...</string>
   <string name="sync_title">Synkronisering</string>
   <string name="sync_downloading_media">Hämtar media %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Fullständig synkronisering från lokal sida</string>
@@ -105,11 +84,9 @@
   <string name="sync_log_clocks_unsynchronized">Klockan på din enhet gick fel med %1$d sekunder%2$s; Synkronisering kräver att både din klocka och tidszon är korrekt inställda för att undvika fel. Vänligen kontrollera att datum, tid och tidszon på din telefon är korrekt inställda och synkronisera igen.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, enhetens tidszon kan vara felaktig</string>
   <string name="sync_log_clocks_unsynchronized_date">, enhetens datum kan vara felaktigt</string>
-  <string name="sync_log_old_version">Synkroniseringsprotokollet har ändrats. Var god uppgradera till senaste version av AnkiDroid. Se %s</string>
   <string name="sync_conflict_title">Synkroniseringskonflikt</string>
   <string name="sync_no_changes_message">Inga ändringar hittades.</string>
   <string name="sync_database_acknowledge">Samling synkroniserad</string>
-  <string name="sync_log_error_fix">Ett synkroniseringsfel har uppstått%s.\n\nOm detta händer ofta kan du göra en full synkronisering för att fixa problemet. Var medveten om att full synkronisering innebär att din lokala samling eller serversamlingen kommer att skrivas över.\nOm du vill göra en full sync, välj om du vill behålla din lokala samling eller den på servern.</string>
   <string name="sync_log_error_specific">Synkroniseringsfel, typ: %1$s, meddelande: %2$s</string>
   <string name="sync_corrupt_database">Din databas är korrupt. Var vänlig och åtgärda detta innan du försöker synkronisera igen.\n\nSe %s för mer information om att reparera din databas.</string>
   <string name="sync_too_busy">Servern upptagen. Försök igen senare.</string>
@@ -130,10 +107,6 @@
   <string name="sync_check_upload_file">Kontrollerar filen innan överföring...</string>
   <string name="sync_check_download_file">Kontrollerar hämtad fil...</string>
   <string name="sync_media_find">Söker efter ändrade media...</string>
-  <string name="sync_media_remove">Hanterar borttagna media...</string>
-  <string name="sync_media_from_server">Tar emot media från servern...</string>
-  <string name="sync_media_to_server">Sänder media till servern...</string>
-  <string name="sync_media_sanity_check">Kontrollerar antalet mediafiler...</string>
   <string name="sync_media_no_changes">Inga ändringar i mediafiler</string>
   <string name="sync_media_success">Media har synkroniserats</string>
   <string name="sync_media_changes_count">%d mediaförändringar att ladda upp</string>
@@ -146,22 +119,6 @@
   <string name="register_title">Registrera konto</string>
   <string name="register_mismatch">Repetitionen av användarnamn/lösenord matchar inte eller är tom. Försök igen.</string>
   <string name="registering_message">Skapar konto.\nVar god vänta...</string>
-  <string name="upgrade_decks_zipping">Paketerar kortlekar för sändning.\nVar god vänta...</string>
-  <string name="upgrade_decks_upload">Laddar upp ziparkiverade kortlekar\nDu kan avbryta genom att trycka tillbaka.\nVänligen vänta...</string>
-  <string name="upgrade_decks_waiting">Väntar, position i kö: %s\nVar god vänta...</string>
-  <string name="upgrade_decks_upgrade_started">Uppgradering startad\nVar god vänta...</string>
-  <string name="upgrade_decks_downloading">Laddar ner uppdaterad samling\nDu kan avbryta genom att trycka bakåt.\nVänligen vänta...</string>
-  <string name="upgrade_decks_media">Kopierar gamla mediafiler till ny plats för media.\nVar god vänta...</string>
-  <string name="upgrade_decks_message">Det finns ingen Anki 2.0-samling tillgänglig, men en eller flera kortlekar i det gamla Anki 1.2-formatet har hittats:%sFör att använda dina kortlekar med den nya versionen av AnkiDroid måste de först konverteras till en enda samling i det nya Anki-2.0-formatet. Det finns tre möjligheter för detta:</string>
-  <string name="upgrade_decks_message_pos1">Genom att använda skrivbordsversionen av Anki 2.0 kommer dina kortlekar att konverteras den första gången som du startar programmet. Du kan sedan synkronisera till AnkiWeb eller helt enkelt kopiera över din nya samling till din mobila enhet. Kopiera dina kortlekar från din AnkiDroid-mapp (%s) till mappen för dina Anki 1.2 kortlekar i skrivbordsversionen (om du inte har synkroniserat dem) och starta skrivbordsversionen av Anki 2.0.</string>
-  <string name="upgrade_decks_message_pos2">Om du redan har synkroniserat dina kortlekar med AnkiWeb behöver du bara logga in en gång till %s så kommer dina kortlekar att konverteras där. Sedan kan du helt enkelt synkronisera din samling till din mobila enhet.</string>
-  <string name="upgrade_decks_message_pos3">Som en tredje möjlighet kan du konvertera dina kortlekar via AnkiDroid och AnkiWeb. Om du klickar uppgraderingsknappen nedan kommer dina kortlekar att arkiveras och laddas upp till AnkiWeb. Den konverterade samlingen kommer sedan automatiskt att laddas ner och öppnas. Du behöver inte registrera dig för detta, men det kan vara bra att använda en wifi-uppkopling för att undvika hög trafikering av din mobila uppkoppling. Om de komprimerade kortlekarna är över 50 MB kan du inte använda denna metod. Vänligen använd något av de andra alternativen om så är fallet. Om dina mediafiler finns i en egen mapp eller på Dropbox, kan de behöva kopieras manuellt till den nya platsen.</string>
-  <string name="upgrade_decks_message_finish">Om du bara fortsätter kommer en ny samling att skapas utan hänsyn till dina gamla kortlekar.</string>
-  <string name="upgrade_required">Dina kortlekar på AnkiWeb är fortfarande i det gamla Anki 1.2-formatet. Besök %s och logga in där. Dina kortlekar konverteras då automatiskt till det nya formatet.</string>
-  <string name="upgrade_decks_button">Uppgradera</string>
-  <string name="upgrade_decks_failed">Dessa kortlekar kunde inte uppgraderas:\n%sVar god öppna dem i Anki Desktop och gör en databas-kontroll. Därefter kan du importera dem via Anki Desktop.</string>
-  <string name="upgrade_decks_media_failed">Kopiering av gamla mediafiler till den nya mediamappen (%1$s) misslyckades för dessa kortlekar:\n%2$sFlytta mediafilerna manuellt.</string>
-  <string name="download_deck">Hämtar kortlek (%d kb).\nVar god vänta...</string>
   <string name="sync_sanity_local">Lokal</string>
   <string name="sync_sanity_remote">Server</string>
   <string name="force_full_sync_title">Framtvinga fullständig synkronisering</string>

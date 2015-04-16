@@ -793,7 +793,7 @@ public class Models {
             // all notes with this template must have at least two cards, or we could end up creating orphaned notes
             sql = "select nid, count() from cards where nid in (select nid from cards where id in " +
                     Utils.ids2str(cids) + ") group by nid having count() < 2 limit 1";
-            if (mCol.getDb().queryScalar(sql, false) != 0) {
+            if (mCol.getDb().queryScalar(sql) != 0) {
                 return false;
             }
             // ok to proceed; remove cards

@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">Statistics</string>
   <string name="statistics_young">Young</string>
   <string name="statistics_mature">Mature</string>
   <string name="statistics_young_and_learn">Young+Learn</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">Relearn</string>
   <string name="statistics_learn">Learn</string>
   <string name="statistics_cram">Cram</string>
-  <string name="statistics_type_title">Statistics</string>
   <string name="stats_cards">Cards</string>
   <string name="stats_cards_intervals">Cards with given Interval</string>
   <string name="stats_cumulative_cards">Cumulative Cards</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1 month</string>
   <string name="stats_period_year">1 year</string>
   <string name="stats_period_lifetime">deck life</string>
-  <string name="stats_deck_current">deck</string>
   <string name="stats_deck_collection">collection</string>
   <string name="stats_time_of_day">Time of Day</string>
   <string name="stats_day_of_week">Day of Week</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, Review: &lt;b&gt;%2$s&lt;/b&gt;, Relearn: &lt;b&gt;%3$s&lt;/b&gt;, Filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Correct answers on mature cards: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
-  <string name="statistics_period_x_axis_minutes">Minit</string>
-  <string name="statistics_new_cards">Kad baru</string>
-  <string name="statistics_failed_cards">Kad gagal</string>
-  <string name="statistics_fullscreen">Beralih Fullscreen</string>
-  <string name="calculating_statistics">Calculating statistics&#8230;</string>
-  <string name="deck_summary_cards">Bilangan kad:</string>
-  <string name="deck_summary_notes">Number of notes:</string>
-  <string name="deck_summary_cards_mature">Kad matang:</string>
-  <string name="deck_summary_cards_young">Kad muda:</string>
-  <string name="deck_summary_cards_unseen">Kad belum dilihat:</string>
-  <string name="deck_summary_card_age">Umur kad</string>
-  <string name="deck_summary_average_interval">Purata jarak: &lt;b&gt;%.1f&lt;/b&gt; hari</string>
-  <string name="deck_summary_answers_correct">Jawapan yang betul</string>
-  <string name="deck_summary_answers_mature">Kad matang: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d dari %4$d)</string>
-  <string name="deck_summary_answers_young">Kad muda: &lt;b&gt;%1$.1f %2$s &lt;/ b&gt; (%3$d dari %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Dilihat pertama kali: &lt;b&gt;%1$.1f %2$s &lt;/ b&gt; (%3$d dari %4$d)</string>
-  <string name="deck_summary_reviews">Ulasan:</string>
-  <string name="deck_summary_news">Kad baru:</string>
-  <string name="deck_summary_average_week">Purata dilihat minggu lepas</string>
-  <string name="deck_summary_average_month">Purata dilihat bulan lepas</string>
-  <string name="deck_summary_average_year">Purata dilihat tahun lepas</string>
-  <string name="deck_summary_average_total">Purata pernah dilihat</string>
-  <string name="deck_summary_forecast">Ramalan</string>
-  <string name="deck_summary_tomorrow_due">Esok : &lt;b&gt;%d&lt;/b&gt; kad</string>
-  <string name="deck_summary_tomorrow_new">Esok: &lt;b&gt;%d&lt;/b&gt; kad baru</string>
-  <string name="deck_summary_tomorrow_time">Anggaran masa esok: &lt;b&gt;%d&lt;/b&gt; min.</string>
-  <string name="deck_summary_finished_in">Kad baru selesai dalam: &lt;b&gt;%d&lt;/b&gt; hari</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; kad/hari</string>
-  <string name="deck_summary_deck_age">Umur dek: &lt;b&gt;%d&lt;/b&gt; hari</string>
   <string name="deck_summary_all_decks">Semua dek</string>
-  <string name="stats_select_decks">Select deck</string>
   <string name="stats_select_time_scale">Select timescale</string>
   <string-array name="next_review_in_s">
     <item>dalam 1 saat</item>
@@ -155,15 +122,6 @@
   <string name="stats_weekly_breakdown">Weekly Breakdown</string>
   <string name="stats_answer_buttons">Answer Buttons</string>
   <string name="stats_cards_types">Cards Types</string>
-  <string-array name="stats_period">
-    <item>1 month</item>
-    <item>1 year</item>
-    <item>all</item>
-  </string-array>
-  <string-array name="stats_range">
-    <item>collection</item>
-    <item>current deck</item>
-  </string-array>
   <string-array name="stats_day_time_strings">
     <item>4AM</item>
     <item>10AM</item>
@@ -194,11 +152,9 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
   </plurals>
   <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Studied %1$d card in %2$s today.</item>
     <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

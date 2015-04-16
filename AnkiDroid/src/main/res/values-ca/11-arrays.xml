@@ -35,51 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Decks</item>
-    <item>Card Browser</item>
-    <item>Statistics</item>
-    <item>Settings</item>
-    <item>Help</item>
-    <item>Send Feedback</item>
-  </string-array>
-  <string-array name="newCardSchedulingLabels">
-    <item>Distribueix-les entre les repassades</item>
-    <item>Després de les revisions</item>
-    <item>Abans de repassar</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Envia-ho sempre</item>
     <item>No ho enviïs mai</item>
     <item>Pregunta-ho</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>Mostra primer les més antigues i que han estat modificades</item>
-    <item>Mostra pel ordre en que s\'han afegit</item>
-    <item>Mostra-les desordenades</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Mostra les fitxes noves desendreçades</item>
-    <item>Mostra les fitxes noves pel ordre en que s\'han afegit</item>
-    <item>Mostra les fitxes noves en ordre invers al que s\'han afegit</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Posa les noves fitxes entre les revisades</item>
-    <item>Les noves després de dels revisades</item>
-    <item>Les noves abans de dels revisades</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Mostra les fitxes mostrades fa més temps</item>
-    <item>Mostra les fitxes mostrades fa menys temps</item>
-    <item>Mostra les fitxes en l\'ordre en que estan pendents</item>
-    <item>Mostra les fitxes desendreçades</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Mostra les fallades aviat</item>
-    <item>Mostra les fallades al final</item>
-    <item>Mostra les fallades en 10 minuts</item>
-    <item>Mostra les fallades en 8 hores</item>
-    <item>Mostra les fallades en 3 dies</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Cap acció</item>
@@ -99,12 +58,6 @@
     <item>Suprimeix la fitxa</item>
     <item>Play media</item>
     <item>Abort learning</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Android Fosc</item>
-    <item>Android Clar</item>
-    <item>Blau</item>
-    <item>Blanc</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Suspèn la fitxa</item>

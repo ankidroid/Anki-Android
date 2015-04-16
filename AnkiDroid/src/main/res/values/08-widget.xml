@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
 ~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
 ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
@@ -17,8 +17,7 @@
 ~
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
-<resources>
+--><resources>
 
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
@@ -35,17 +34,5 @@
         <item quantity="other">%1$d decks</item>
     </plurals>
 
-    <string name="widget_medium">AnkiDroid medium</string>
     <string name="widget_small">AnkiDroid small</string>
-    <string name="widget_big">AnkiDroid big</string>
-    <string name="widget_big_restrictions_dialog">Due to some restrictions of Android\'s widget framework this widget can only show text but no images/sounds etc.</string>
-    <string name="open_in_reviewer">Open deck in AnkiDroid</string>
-
-    <plurals name="widget_big_eta">
-        <item quantity="one">Estimated time: %d min.</item>
-        <item quantity="other">Estimated time: %d min.</item>
-    </plurals>
-
-    <string name="widget_big_tomorrow_due">Tomorrow due:</string>
-
-</resources>
+    </resources>

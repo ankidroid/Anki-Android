@@ -48,8 +48,6 @@
   <string name="CardEditorTags">Ознаке: %1$s</string>
   <string name="CardEditorCards">Карте: %1$s</string>
   <string name="add_new_filter_tags">Додај/филтрирај ознаке</string>
-  <string name="note_type">Тип белешке</string>
-  <string name="card_type">Тип картице</string>
   <string name="filter_tags">Филтрирај ознаке</string>
   <string name="sdcard_missing_message">SD картица је недоступна јер се употребљава као USB. Искључите USB да бисте добили приступ шпиловима.</string>
   <string name="enable_whiteboard">Омогући белу таблу</string>
@@ -58,8 +56,6 @@
   <string name="hide_whiteboard">Сакриј белу таблу</string>
   <string name="clear_whiteboard">Избриши белу таблу</string>
   <string name="replay_audio">Поново пусти аудио</string>
-  <string name="cram_edit_warning">Ажурирање картица није дозвољено током штребања</string>
-  <string name="suspend_leeches">Откажи пијавице</string>
   <string name="leech_suspend_notification">Картица је означена као пијавица и отказана</string>
   <string name="leech_notification">Картица је означена као пијавица</string>
   <string name="corrupt_font">Оштећена датотека фонта %s</string>
@@ -80,10 +76,8 @@
   <string name="cardeditor_title_edit_card">Уреди белешку</string>
   <string name="discard_unsaved_changes">Да затворим и искористим текући унос?</string>
   <string name="factadder_saving_error">Грешка при чувању белешке</string>
-  <string name="pref_lang_support">Језик</string>
   <string name="saving_facts">Сачуване белешке</string>
   <string name="saving_model">Сачувај модел</string>
-  <string name="deck">Шпил</string>
   <string name="add">Додаj</string>
   <string name="close">Затвори</string>
   <string name="select">Изабери</string>
@@ -92,21 +86,20 @@
   <string name="field_remapping">%1$s (од \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Немапиране карте ће бити избрисане. Напомене, које немају своје карте, биће изгубљене. Да продужим?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d картица проучена у %2$s</item>
-    <item quantity="other">%1$d картице проучене у %2$s</item>
+    <item quantity="one">%1$d card studied in %2$s</item>
+    <item quantity="few">%1$d cards studied in %2$s</item>
+    <item quantity="many">%1$d cards studied in %2$s</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d минут</item>
-    <item quantity="other">%1$d минута</item>
+    <item quantity="one">%1$d minute</item>
+    <item quantity="few">%1$d minutes</item>
+    <item quantity="many">%1$d minutes</item>
+    <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">Добро дошли у AnkiDroid</string>
-  <string name="studyoptions_no_external_storage_title">Спољашње складиште је недоступно</string>
-  <string name="studyoptions_no_external_storage_message">Недоступно је спољашње складиште. AnkiDroid мора да има приступ SD карти, да би могао да чита и учитава шпилове. Уверите се да је ваша SD карта монтирана и покушајте поново.</string>
   <string name="fact_adder_intent_title">AnkiDroid картица</string>
-  <string name="deckpicker_select_dictionary_title">Изабери речник</string>
-  <string name="deckpicker_select_dictionary_default">Уобичајено</string>
   <string name="card_editor_add_card">Додај белешку</string>
-  <string name="card_editor_reset">Ресетуј</string>
   <string name="card_editor_copy_card">Копирај картицу</string>
   <string name="card_editor_reset_card">Ресетуј напредак</string>
   <string name="card_editor_reschedule_card">Одложи картицу</string>
@@ -116,39 +109,24 @@
   <string name="rename_error">Шпил %s не може бити преименован</string>
   <string name="default_conf_delete_error">Подразумеване опције се не могу уклонити</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d картица додата</item>
-    <item quantity="other">%d картица је додато</item>
+    <item quantity="one">%d card added</item>
+    <item quantity="few">%d cards added</item>
+    <item quantity="many">%d cards added</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">Помоћ</string>
-  <string name="help_online">Онлајн помоћ</string>
-  <string name="help_faq">ЧПП</string>
   <string name="check_db">Провера базе података</string>
   <string name="check_media">Провери медијске датотеке</string>
   <string name="check_db_message">Провера базе података.\nМолим сачекајте...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Празна картица. Покрените \"Алати&gt;Празне картице...\" на радној површини.</string>
   <string name="unknown_type_field_warning">Врста одговора: непознато поље %s</string>
-  <string name="simple_interface_hint">Празан %s. Имајте у виду да просто сучеље не може да приказује фотографије/звуке итд.</string>
   <string name="delete_deck">Брисање шпила...\nМолим сачекајте.</string>
-  <string-array name="dynOrderLabels">
-    <item>Најстарије виђене прво</item>
-    <item>Насумице</item>
-    <item>По увећању размака</item>
-    <item>По умањењу размака</item>
-    <item>Највеће истеклих</item>
-    <item>Додат редослед прегледа</item>
-    <item>У редоследу додавања</item>
-  </string-array>
-  <string name="menu_cardbrowser">Прегледач картица</string>
   <string name="show_hint">Прикажи %s</string>
-  <string name="pref_lang_other">Поставке језика</string>
-  <string name="pref_font_UI">Фонт корисничког сучеља</string>
   <string name="info_rate">Оцени AnkiDroid</string>
   <string name="col_load_failed">Прекид учитавања колекције.\nПритисните дугме назад, да бисте затворили AnkiDroid.</string>
   <string name="import_title">Увези картице</string>
   <string name="import_select_title">Изаберите датотеку за увоз</string>
-  <string name="import_message">Желите ли да додате податке датотеке %s у вашу колекцију или да замените вашу колекцију тим подацима?</string>
   <string name="import_message_add">Додај</string>
-  <string name="import_message_replace">Замени</string>
   <string name="import_message_replace_confirm">Избрисати вашу постојећу колекцију и заменити је подацима из датотеке %s. Да ли сте сигурни?</string>
   <string name="import_message_add_confirm">Додај „%s“ у колекцију. Ово може да протраје неко време.</string>
   <string name="import_log_success">Успешно увезено %d картица</string>
@@ -170,13 +148,8 @@
   <string name="study_options">Опције шпила</string>
   <string name="custom_study">Прилагођено учење</string>
   <string name="dyn_deck_desc">Ово су специјални шпилови за учење ван нормалног распореда. После прегледа, картице ће аутоматски бити враћене у њихов изворни шпил. Брисање овог шпила из списка шпилова, вратиће све остале карте у њихове изворне шпилове.</string>
-  <string name="exit_wizard">Излаз из чаробњака</string>
   <string name="steps_error">Кораци треба да буду бројеви већи од 0</string>
   <string name="steps_min_error">Неопходан је бар један корак</string>
-  <string name="custom_study_invalid_number">Недозвољени број</string>
-  <string name="template_error">Грешка шаблона:</string>
-  <string name="template_error_detail">Постоји грешка у шаблону картице</string>
-  <string name="template_error_fix">Користите уређивач картица на радној површини да поправите грешку.</string>
   <string name="sched_end">(крај)</string>
   <string name="sched_unbury_button">Да бисте их видели, притисните дугме Одустани.</string>
   <string name="sched_has_buried">Неке повезане или закопане картице су одложене до следеће сесије.</string>

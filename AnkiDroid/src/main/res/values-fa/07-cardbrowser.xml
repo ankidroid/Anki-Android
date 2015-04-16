@@ -40,12 +40,9 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
     <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">همه دسته ها</string>
-  <string name="card_browser_load">بارگذاری کارتها. \nلطفا صبر کنید...</string>
-  <string name="card_browser_cardloading_error">خطا در بارگذاری کارتها. این احتمالا مربوط به محدودیت های حافظه دستگاه شما است. دوباره با دسته کوچکتر سعی کنید</string>
   <string name="card_browser_delete_card">حذف یادداشت</string>
   <string name="card_browser_suspend_card">کارت معلق</string>
   <string name="card_browser_unsuspend_card">کارت غیر معلق</string>
@@ -54,36 +51,27 @@
   <string name="delete_card_title">حذف یادداشت</string>
   <string name="delete_card_message">آیا مایلید همه کارتهای این یادداشت را حذف کنید؟\nعدم موفقیت جستجو: %s</string>
   <string name="card_browser_show_marked">فیلتر علامتگذاری شد</string>
-  <string name="card_browser_field">تغییر مرروگر کارت ناموفق</string>
-  <string name="card_browser_field_title">تغییر مرروگر کارت ناموفق</string>
   <string name="card_browser_show_suspended">فیلتر معلق شد</string>
   <string name="card_browser_search_by_tag">بوسیله برچسب فیلتر شد</string>
   <string name="card_browser_tags_shown">برچسب ها: %1$s</string>
+  <string name="card_browser_list_my_searches">My searches</string>
+  <string name="card_browser_list_my_searches_save">Save search</string>
+  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
+  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
+  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
   <string name="card_browser_change_display_order">تغییر تنظیم صفحه نمایش</string>
   <string name="card_browser_change_display_order_title">تغییر تنظیم صفحه نمایش</string>
   <string name="card_browser_change_display_order_reverse">انتخاب مجدد یک فیلد به صورت وارونه.</string>
-  <string name="card_browser_order_reverse">(وارونه)</string>
   <string name="card_details_question">سوال</string>
   <string name="card_details_answer">پاسخ</string>
   <string name="card_details_due">موعد</string>
-  <string name="card_details_last_due">آخرین موعد</string>
-  <string name="card_details_now">حالا</string>
-  <string name="card_details_interval">مدت</string>
-  <string name="card_details_ease">سهولت</string>
-  <string name="card_details_average_time">میانگین زمان</string>
-  <string name="card_details_total_time">کل زمان</string>
-  <string name="card_details_yes_count">شمارش بله</string>
-  <string name="card_details_no_count">شمارش نه</string>
-  <string name="card_details_added">اضافه شده</string>
-  <string name="card_details_changed">تغییر کرده</string>
   <string name="card_details_tags">برچسب ها</string>
-  <string name="card_details_model">نوع یادداشت</string>
-  <string name="card_browser_sorting_cards">مرتب سازی کارتها. \nلطفا صبر کنید...</string>
   <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
-  <string name="card_details_card_model">الگوی کارت</string>
   <string-array name="card_browser_order_labels">
     <item>مرتب سازی نکن (سریعتر)</item>
-    <item>به وسیله فیلد جستجو</item>
+    <item>By sort field</item>
     <item>به وسیله زمان ایجاد</item>
     <item>به وسیله زمان ویرایش</item>
     <item>به وسیله زمان تغییر</item>

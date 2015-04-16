@@ -44,8 +44,6 @@
     <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">Kõik kaardipakid</string>
-  <string name="card_browser_load">Laeb kaarte&#8230;</string>
-  <string name="card_browser_cardloading_error">Viga kaartide laadimisel. See on tõenäoliselt seotud sinu seadme mälupiirangutega. Proovi uuesti väiksema kaardipakiga.</string>
   <string name="card_browser_delete_card">Delete note</string>
   <string name="card_browser_suspend_card">Peata kaart</string>
   <string name="card_browser_unsuspend_card">Jätka kaarti</string>
@@ -54,36 +52,27 @@
   <string name="delete_card_title">Delete note?</string>
   <string name="delete_card_message">Delete all cards of this note?\nSearch field: %s</string>
   <string name="card_browser_show_marked">Filter marked</string>
-  <string name="card_browser_field">Change card browser field</string>
-  <string name="card_browser_field_title">Change card browser field</string>
   <string name="card_browser_show_suspended">Filter suspended</string>
   <string name="card_browser_search_by_tag">Filtreeri sildi järgi</string>
   <string name="card_browser_tags_shown">Sildid: %1$s</string>
+  <string name="card_browser_list_my_searches">My searches</string>
+  <string name="card_browser_list_my_searches_save">Save search</string>
+  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
+  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
+  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Kuvamise järjestuse muutmine</string>
   <string name="card_browser_change_display_order_title">Valige kuvamisjärjestus</string>
   <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
-  <string name="card_browser_order_reverse">(reverse)</string>
   <string name="card_details_question">Küsimus</string>
   <string name="card_details_answer">Vastus</string>
   <string name="card_details_due">Tähtaeg</string>
-  <string name="card_details_last_due">Viimane tähtaeg</string>
-  <string name="card_details_now">Nüüd</string>
-  <string name="card_details_interval">Intervall</string>
-  <string name="card_details_ease">Lihtsus</string>
-  <string name="card_details_average_time">Keskmine aeg</string>
-  <string name="card_details_total_time">Aeg kokku</string>
-  <string name="card_details_yes_count">Jah arv</string>
-  <string name="card_details_no_count">Ei arv</string>
-  <string name="card_details_added">Lisatud</string>
-  <string name="card_details_changed">Muudetud</string>
   <string name="card_details_tags">Sildid</string>
-  <string name="card_details_model">Note type</string>
-  <string name="card_browser_sorting_cards">Sordin kaarte.\nPalun oota...</string>
   <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
-  <string name="card_details_card_model">Kaardi mudel</string>
   <string-array name="card_browser_order_labels">
     <item>Ilma sorteerimiseta (kiirem)</item>
-    <item>Otsinguvälja järgi</item>
+    <item>By sort field</item>
     <item>Loomisaja järgi</item>
     <item>Muutmisaja järgi</item>
     <item>By changed time</item>

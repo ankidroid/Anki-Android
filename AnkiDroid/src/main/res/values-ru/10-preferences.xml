@@ -138,7 +138,6 @@
   <string name="safe_display_summ">Отключить всю анимацию и использовать другие методы отрисовки карт. Может потребоваться для старых устройств и устройств на E-ink.</string>
   <string name="vertical_centering">Выравнивание по центру</string>
   <string name="vertical_centering_summ">Центрировать содержимое карт вертикально</string>
-  <string name="pref_cat_backup">Резервные копии</string>
   <string name="pref_backup">Делать резервные копии</string>
   <string name="pref_backup_summ">Автоматически создавать резервную копию перед открытием колоды (раз в день)</string>
   <string name="pref_backup_max">Максимальное число резервных копий</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">Заплатка для проблем, касающихся блоков для ввода в HTML . Приводит к проблемам на некоторых устройствах.</string>
   <string name="pref_keep_screen_on">Не выключать экран</string>
   <string name="pref_keep_screen_on_summ">Отключить таймаут экрана</string>
-  <string name="pref_simple_interface">Простой интерфейс</string>
-  <string name="pref_simple_interface_summ">Ускоряет показ карты, но не поддерживает все возможности html</string>
-  <string name="pref_simple_interface_exclude_tags">Исключить теги</string>
-  <string name="pref_simple_interface_exclude_tags_summ">Не использовать простой интерфейс для этих тегов: XXX</string>
-  <string name="write_answers_message">Вы должны определить для каждой колоды поле, с которым будет сравниваться введенный вами ответ. Вы можете сделать это используя Anki Desktop (deck properties -&gt; edit model -&gt; card layout).\n\n если не установлены поля для сравнения, ваш ответ будет всегда сравниваться с ответом всей карты</string>
   <string name="fix_arabic_text">Улучшить вывод арабского</string>
   <string name="fix_arabic_text_summ">Частичная заплатка для неполной поддержки Арабского для платформы Андроид. Когда активирована, невозможно изменять карты.</string>
   <string name="convert_fen_text">Поддержка шахматной нотации</string>
@@ -175,22 +169,12 @@
   <string name="filter_google_translate_summ">Сохранить только исходное слово и перевод</string>
   <string name="convert_fen_text_summ">Нарисовать шахматную доску из Нотации Форсайта — Эдвардса. Нотация должна быть заключена в [fen][/fen] теги.</string>
   <string name="studyoptions_limit_select_tags">Выберите теги</string>
-  <string name="studyoptions_limit_tags_active">С: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">Без: %1$s</string>
-  <string name="studyoptions_limit_button_text">Лимит</string>
-  <string name="studyoptions_limit_dialog_title">Ограничения</string>
-  <string name="studyoptions_session">Урок</string>
-  <string name="studyoptions_tag">По тегам</string>
-  <string name="studyoptions_tag_new">Показать новые карты по тегам:</string>
-  <string name="studyoptions_tag_rev">Выборка карт с учётом тегов:</string>
-  <string name="studyoptions_new_cards_per_day">Новых карт в день</string>
-  <string name="studyoptions_max_fail_card">Максимум трудных карт</string>
-  <string name="deck_conf_deck_name">Название колоды</string>
   <string name="deck_conf_deck_description">Описание колоды</string>
   <string name="deck_conf_group">Группа опций</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d колоды используют эту группу</item>
-    <item quantity="other">%1$s\n%2$d колод используют данную группу</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">Новые карты</string>
   <string name="deck_conf_rev_cards">Повторов</string>
@@ -215,7 +199,7 @@
   <string name="deck_conf_min_ivl">Минимальный интервал</string>
   <string name="deck_conf_leech_thres">Порог когда карта считается \"приставучей\"</string>
   <string name="deck_conf_fails">XXX неудач</string>
-  <string name="deck_conf_leech_action">"Приставучая"</string>
+  <string name="deck_conf_leech_action">\"Приставучая\"</string>
   <string name="deck_conf_max_time">Максимальное время ответа</string>
   <string name="deck_conf_seconds">XXX секунд</string>
   <string name="deck_conf_timer">Показать таймер для ответа</string>
@@ -235,8 +219,9 @@
   <string name="deck_conf_remove_message">Удалить текущую группу опций?</string>
   <string name="deck_conf_set_subdecks">Установить для всех подколод</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s подколода будет использовать эту группу</item>
-    <item quantity="other">%s подколод будут использовать данную группу</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Установить для всех подколод</string>
   <string name="deck_conf_set_subdecks_message">Установить текущую группу параметров для всех подколод данной колоды?</string>
@@ -244,7 +229,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Фильтр</string>
   <string name="deck_conf_cram_options">Параметры</string>
-  <string name="deck_conf_cram_preset">Предустановка</string>
   <string name="deck_conf_cram_search">Поиск</string>
   <string name="deck_conf_cram_limit">Ограничить</string>
   <string name="deck_conf_cram_order">карты выбраны по</string>

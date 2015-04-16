@@ -25,6 +25,7 @@ import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.VersionUtils;
 
 import org.apache.commons.httpclient.contrib.ssl.EasySSLSocketFactory;
 import org.apache.http.HttpEntity;
@@ -214,7 +215,7 @@ public class HttpSyncer {
             params.setParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 30);
             params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new ConnPerRouteBean(30));
             params.setParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, false);
-            params.setParameter(CoreProtocolPNames.USER_AGENT, "AnkiDroid-" + AnkiDroidApp.getPkgVersionName());
+            params.setParameter(CoreProtocolPNames.USER_AGENT, "AnkiDroid-" + VersionUtils.getPkgVersionName());
             HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
             HttpConnectionParams.setSoTimeout(params, Connection.CONN_TIMEOUT);
 

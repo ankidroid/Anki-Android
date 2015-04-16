@@ -136,7 +136,7 @@ public class AnkiDroidApp extends Application {
      * The latest package version number that included changes to the preferences that requires handling. All
      * collections being upgraded to (or after) this version must update preferences.
      */
-    public static final int CHECK_PREFERENCES_AT_VERSION = 20400203;
+    public static final int CHECK_PREFERENCES_AT_VERSION = 20500113;
 
 
     /**
@@ -178,7 +178,7 @@ public class AnkiDroidApp extends Application {
 
         // Set good default values for swipe detection
         final ViewConfiguration vc = ViewConfiguration.get(this);
-        DEFAULT_SWIPE_MIN_DISTANCE = CompatHelper.getCompat().getScaledPagingTouchSlop(vc);
+        DEFAULT_SWIPE_MIN_DISTANCE = vc.getScaledPagingTouchSlop();
         DEFAULT_SWIPE_THRESHOLD_VELOCITY = vc.getScaledMinimumFlingVelocity();
 
         // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
@@ -231,59 +231,6 @@ public class AnkiDroidApp extends Application {
 
     public static boolean isSdCardMounted() {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
-    }
-
-
-    /**
-     * Get package name as defined in the manifest.
-     */
-    public static String getAppName() {
-        String pkgName = TAG;
-        Context context = sInstance.getApplicationContext();
-
-        try {
-            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            pkgName = context.getString(pInfo.applicationInfo.labelRes);
-        } catch (PackageManager.NameNotFoundException e) {
-            Timber.e(e, "Couldn't find package named %s", context.getPackageName());
-        }
-
-        return pkgName;
-    }
-
-
-    /**
-     * Get the package versionName as defined in the manifest.
-     */
-    public static String getPkgVersionName() {
-        String pkgVersion = "?";
-        if (sInstance != null) {
-            Context context = sInstance.getApplicationContext();
-
-            try {
-                PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-                pkgVersion = pInfo.versionName;
-            } catch (PackageManager.NameNotFoundException e) {
-                Timber.e(e, "Couldn't find package named %s", context.getPackageName());
-            }
-        }
-
-        return pkgVersion;
-    }
-
-
-    /**
-     * Get the package versionCode as defined in the manifest.
-     */
-    public static int getPkgVersionCode() {
-        Context context = sInstance.getApplicationContext();
-        try {
-            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            return pInfo.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            Timber.e(e, "Couldn't find package named %s", context.getPackageName());
-        }
-        return 0;
     }
 
 

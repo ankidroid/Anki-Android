@@ -34,15 +34,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="multimedia_editor_languages_russian">Ruština</string>
-  <string name="multimedia_editor_languages_german">Němčina</string>
-  <string name="multimedia_editor_languages_nepali">Nepálština</string>
-  <string name="multimedia_editor_languages_slovak">Slovenština</string>
-  <string name="multimedia_editor_languages_french">Francouzština</string>
-  <string name="multimedia_editor_languages_spanish">Španělština</string>
-  <string name="multimedia_editor_languages_mandarin">Mandarínština</string>
-  <string name="multimedia_editor_languages_portuguese">Portugalština</string>
-  <string name="multimedia_editor_languages_english">Angličtina</string>
   <string name="multimedia_editor_popup_image">Přidat obrázek</string>
   <string name="multimedia_editor_popup_audio">Pořídit zvukový záznam</string>
   <string name="multimedia_editor_popup_text">Pokročilý editor</string>
@@ -83,13 +74,6 @@
   <string name="multimedia_editor_text_field_editing_no_text">Nejprve zadejte nějaký text</string>
   <string name="multimedia_editor_text_field_editing_many_words">Slovník obvykle očekává jedno slovo</string>
   <string name="multimedia_editor_text_field_editing_clone_source">Od</string>
-  <string name="multimedia_editor_activity_note_type">Typ poznámky</string>
-  <string name="multimedia_editor_activity_deck">Balíček</string>
-  <string name="multimedia_editor_activity_edit_button">Upravit</string>
-  <string name="multimedia_editor_activity_swap_button">Swap</string>
-  <string name="multimedia_editor_activity_delete_question">Odstranit celou poznámku?</string>
-  <string name="multimedia_editor_activity_delete_confirm">Odstranit</string>
-  <string name="multimedia_editor_activity_delete_reject">Ponechat</string>
   <string name="multimedia_editor_image_field_editing_galery">Galerie</string>
   <string name="multimedia_editor_image_field_editing_photo">Fotoaparát</string>
   <string name="multimedia_editor_general_downloading">Stahování</string>
@@ -105,7 +89,6 @@
   <string name="multimedia_editor_audio_view_playing_failed">Přehrávání selhalo</string>
   <string name="title_activity_edit_text">Editační pole</string>
   <string name="title_activity_translation">Překlad</string>
-  <string name="title_activity_audio_recorder">Záznamník zvuku</string>
   <string name="title_activity_load_pronounciation">Výslovnost</string>
   <string name="title_activity_search_image">Google Image Search</string>
 </resources>

@@ -5,8 +5,6 @@ import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -21,9 +19,11 @@ import android.support.v4.content.IntentCompat;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
+import android.widget.ProgressBar;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
@@ -31,7 +31,6 @@ import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.libanki.Collection;
-import com.ichi2.themes.StyledOpenCollectionDialog;
 
 import timber.log.Timber;
 
@@ -40,7 +39,6 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
 
     public final int SIMPLE_NOTIFICATION_ID = 0;
 
-    private StyledOpenCollectionDialog mOpenCollectionDialog;
     private DialogHandler mHandler = new DialogHandler(this);
 
 
@@ -50,6 +48,19 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
         ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).cancel(SIMPLE_NOTIFICATION_ID);
         // Show any pending dialogs which were stored persistently
         mHandler.readMessage();
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Timber.i("Home button pressed");
+                finishWithoutAnimation();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
@@ -213,7 +224,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
         // Initialize the open collection loader
         Timber.d("AnkiActivity.startLoadingCollection()");
         if (!colIsOpen()) {
-            showOpeningCollectionDialog();
+            showProgressBar();
         }
         getSupportLoaderManager().restartLoader(0, null, this);
     }
@@ -252,31 +263,15 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
     }
 
 
-    public void showOpeningCollectionDialog() {
-        if (mOpenCollectionDialog == null || !mOpenCollectionDialog.isShowing()) {
-            mOpenCollectionDialog = StyledOpenCollectionDialog.show(AnkiActivity.this,
-                    getResources().getString(R.string.open_collection), new OnCancelListener() {
-                        @Override
-                        public void onCancel(DialogInterface arg0) {
-                            finishWithoutAnimation();
-                        }
-                    });
-        }
+    public void showProgressBar() {
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_spinner);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
 
-    public void dismissOpeningCollectionDialog() {
-        if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
-            mOpenCollectionDialog.dismiss();
-        }
-    }
-
-
-    // Change string on collection loading progress dialog
-    public void setOpeningCollectionDialogMessage(String message) {
-        if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
-            mOpenCollectionDialog.setMessage(message);
-        }
+    public void hideProgressBar() {
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_spinner);
+        progressBar.setVisibility(View.GONE);
     }
 
 
@@ -298,6 +293,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
         // save transaction to the back stack
         ft.addToBackStack("dialog");
         newFragment.show(ft, "dialog");
+        getSupportFragmentManager().executePendingTransactions();
     }
 
 

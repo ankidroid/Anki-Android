@@ -23,9 +23,10 @@ import android.content.res.Resources;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.method.LinkMovementMethod;
-
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -33,16 +34,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
-import com.ichi2.themes.Themes;
 
 import timber.log.Timber;
 
 public class MyAccount extends AnkiActivity {
+    private final static int STATE_ACCOUNT_SIGN_UP = 0;
+    private final static int STATE_LOG_IN  = 1;
+    private final static int STATE_LOGGED_IN = 2;
 
     private View mLoginToMyAccountView;
     private View mLoggedIntoMyAccountView;
@@ -57,32 +61,68 @@ public class MyAccount extends AnkiActivity {
     private EditText mPassword2;
 
     private TextView mUsernameLoggedIn;
+    private int mCurrentState;
 
-    private StyledProgressDialog mProgressDialog;
+    private MaterialDialog mProgressDialog;
     private StyledDialog mNoConnectionAlert;
     private StyledDialog mConnectionErrorAlert;
     private StyledDialog mInvalidUserPassAlert;
     private StyledDialog mRegisterAlert;
     private StyledDialog mErrorAlert;
+    Toolbar mToolbar = null;
 
+
+    private void switchToState(int newState) {
+        mCurrentState = newState;
+        switch (newState) {
+            case STATE_LOGGED_IN:
+                String username = AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("username", "");
+                mUsernameLoggedIn.setText(username);
+                mToolbar = (Toolbar) mLoggedIntoMyAccountView.findViewById(R.id.toolbar);
+                if (mToolbar!= null) {
+                    mToolbar.setTitle(getString(R.string.sync_account));  // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
+                    setSupportActionBar(mToolbar);
+                }
+                setContentView(mLoggedIntoMyAccountView);
+                break;
+
+            case STATE_LOG_IN:
+                mToolbar = (Toolbar) mLoginToMyAccountView.findViewById(R.id.toolbar);
+                if (mToolbar!= null) {
+                    mToolbar.setTitle(getString(R.string.sync_account));  // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
+                    setSupportActionBar(mToolbar);
+                }
+                setContentView(mLoginToMyAccountView);
+                break;
+
+            case STATE_ACCOUNT_SIGN_UP:
+                mToolbar = (Toolbar) mRegisterView.findViewById(R.id.toolbar);
+                if (mToolbar!= null) {
+                    mToolbar.setTitle(getString(R.string.sync_account));  // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
+                    setSupportActionBar(mToolbar);
+                }
+                setContentView(mRegisterView);
+                break;
+        }
+
+
+        supportInvalidateOptionsMenu();  // Needed?
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
+
 
         initAllContentViews();
         initAllAlertDialogs();
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         if (preferences.getString("hkey", "").length() > 0) {
-            String username = preferences.getString("username", "");
-            mUsernameLoggedIn.setText(username);
-            setContentView(mLoggedIntoMyAccountView);
+            switchToState(STATE_LOGGED_IN);
         } else {
-            setContentView(mLoginToMyAccountView);
+            switchToState(STATE_LOG_IN);
         }
-
     }
 
 
@@ -162,7 +202,7 @@ public class MyAccount extends AnkiActivity {
             Timber.e("MyAccount.logout()  reinitializing media db due to sqlite error");
             getCol().getMedia()._initDB();
         }
-        setContentView(mLoginToMyAccountView);
+        switchToState(STATE_LOG_IN);
     }
 
 
@@ -175,9 +215,6 @@ public class MyAccount extends AnkiActivity {
 
     private void initAllContentViews() {
         mLoginToMyAccountView = getLayoutInflater().inflate(R.layout.my_account, null);
-        Themes.setWallpaper(mLoginToMyAccountView);
-        Themes.setTextViewStyle(mLoginToMyAccountView.findViewById(R.id.MyAccountLayout));
-        Themes.setTextViewStyle(mLoginToMyAccountView.findViewById(R.id.no_account_text));
         mUsername = (EditText) mLoginToMyAccountView.findViewById(R.id.username);
         mPassword = (EditText) mLoginToMyAccountView.findViewById(R.id.password);
 
@@ -202,17 +239,14 @@ public class MyAccount extends AnkiActivity {
 
         Button signUpButton = (Button) mLoginToMyAccountView.findViewById(R.id.sign_up_button);
         signUpButton.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                setContentView(mRegisterView);
+                switchToState(STATE_ACCOUNT_SIGN_UP);
             }
 
         });
 
         mLoggedIntoMyAccountView = getLayoutInflater().inflate(R.layout.my_account_logged_in, null);
-        Themes.setWallpaper(mLoggedIntoMyAccountView);
-        Themes.setTitleStyle(mLoggedIntoMyAccountView.findViewById(R.id.logged_text));
         mUsernameLoggedIn = (TextView) mLoggedIntoMyAccountView.findViewById(R.id.username_logged_in);
         Button logoutButton = (Button) mLoggedIntoMyAccountView.findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(new OnClickListener() {
@@ -225,7 +259,6 @@ public class MyAccount extends AnkiActivity {
         });
 
         mRegisterView = getLayoutInflater().inflate(R.layout.my_account_register, null);
-        Themes.setWallpaper(mRegisterView);
         mUsername1 = (EditText) mRegisterView.findViewById(R.id.username1);
         mPassword1 = (EditText) mRegisterView.findViewById(R.id.password1);
         mUsername2 = (EditText) mRegisterView.findViewById(R.id.username2);
@@ -253,10 +286,9 @@ public class MyAccount extends AnkiActivity {
 
         Button cancelButton = (Button) mRegisterView.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                finishWithAnimation(ActivityTransitionAnimation.FADE);
+                switchToState(STATE_LOG_IN);
             }
 
         });
@@ -336,7 +368,7 @@ public class MyAccount extends AnkiActivity {
             Timber.d("loginListener.onPreExcecute()");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(MyAccount.this, "",
-                        getResources().getString(R.string.alert_logging_message), true);
+                        getResources().getString(R.string.alert_logging_message), false);
             }
         }
 
@@ -358,7 +390,7 @@ public class MyAccount extends AnkiActivity {
                 } else {
                     // Show logged view
                     mUsernameLoggedIn.setText((String) data.data[0]);
-                    setContentView(mLoggedIntoMyAccountView);
+                    switchToState(STATE_LOGGED_IN);
                 }
             } else {
                 Timber.e("Login failed, error code %d",data.returnType);
@@ -396,7 +428,7 @@ public class MyAccount extends AnkiActivity {
             Timber.d("registerListener.onPreExcecute()");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(MyAccount.this, "",
-                        getResources().getString(R.string.registering_message), true);
+                        getResources().getString(R.string.registering_message), false);
             }
         }
 
@@ -432,7 +464,6 @@ public class MyAccount extends AnkiActivity {
             }
         }
 
-
         @Override
         public void onDisconnected() {
             if (mNoConnectionAlert != null) {
@@ -446,9 +477,14 @@ public class MyAccount extends AnkiActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Timber.i("MyAccount - onBackPressed()");
-            finish();
-            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
-            return true;
+            if (mCurrentState == STATE_ACCOUNT_SIGN_UP) {
+                switchToState(STATE_LOG_IN);
+                return true;
+            } else {
+                finish();
+                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
+                return true;
+            }
         }
         return super.onKeyDown(keyCode, event);
     }

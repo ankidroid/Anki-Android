@@ -39,30 +39,25 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Decks</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="statistics">Statistics</string>
+  <string name="settings">Settings</string>
+  <string name="help">Help</string>
+  <string name="send_feedback">Send Feedback</string>
   <string name="studyoptions_title">Study Options</string>
-  <string name="studyoptions_deck_name">ชื่อสำรับ</string>
   <string name="studyoptions_due_today">Due today:</string>
   <string name="studyoptions_new_total">Total new cards:</string>
   <string name="studyoptions_total_cards">Total cards:</string>
   <string name="studyoptions_eta">เวลาโดยประมาณ (นาที) :</string>
   <string name="studyoptions_start">Study</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d min.</item>
-    <item quantity="other">%d นาที</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
-    <item quantity="other">เหลือ %1$d จาก %2$d </item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
     <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
@@ -72,9 +67,6 @@
   <string name="ease3_successive">ดี</string>
   <string name="ease3_learning">ง่าย</string>
   <string name="studyoptions_congrats_undo">Undo %s</string>
-  <string name="card_unsuspended">ระงับการยกเลิกบัตร</string>
-  <string name="card_suspended">ระงับการใช้บัตรซ้ำ</string>
-  <string name="menu_rotate">หมุน</string>
   <string name="menu_import">Import</string>
   <string name="undo">เรียกคืน</string>
   <string name="undo_action_review">last review</string>
@@ -86,30 +78,19 @@
   <string name="undo_action_mark">mark note</string>
   <string name="unbury">Unbury</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation)&#8230;</string>
-  <string name="contextmenu_deckpicker_download_missing_media">ดาวน์โหลดสื่อที่หายไป</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">ตั้งค่าการกำหนดภาษาใหม่</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">ตั้งค่าภาษาใหม่</string>
-  <string name="contextmenu_deckpicker_optimize_deck">การปรับฐานข้อมูลให้มีประสิทธิภาพ</string>
   <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
   <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">ตั้งค่าพจนากรุมแบบกำหนดเอง</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>
-  <string name="menu_download_deck">ดาวน์โหลดสำรับ</string>
-  <string name="menu_download_shared_deck">สำรับที่ใช้ร่วมกัน</string>
   <string name="menu_my_account">Sync account</string>
-  <string name="menu_preferences">กำหนดลักษณะ</string>
-  <string name="menu_about">เกี่ยวกับ</string>
   <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">Bury note</string>
   <string name="menu_suspend_card">ระงับบัตร</string>
   <string name="menu_suspend_note">Suspend note</string>
-  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">Delete note</string>
   <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
-  <string name="menu_edit_card">แก้ไขบัตร</string>
   <string name="menu_select">เลือกข้อความ</string>
   <string name="menu_search">ค้นหาใน %1$s</string>
   <string name="menu_mark_card">ทำเครื่องหมายบัตร</string>
@@ -117,7 +98,6 @@
   <string name="new_deck">Create deck</string>
   <string name="create">Create</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
-  <string name="studyoptions_feedback">ความคิดเห็น</string>
   <string name="night_mode">Night mode</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
@@ -136,10 +116,7 @@
     <item>%s เดือน</item>
     <item>%s ปี</item>
   </string-array>
-  <string name="visit">เยี่ยมชม</string>
   <string name="later">ภายหลัง</string>
-  <string name="download">ดาวน์โหลด</string>
-  <string name="open_collection">Opening collection&#8230;</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck&#8230;</string>
   <string name="rebuild_cram_label">Rebuild</string>
   <string name="empty_cram_label">Empty</string>
@@ -151,37 +128,10 @@
   <string name="studyoptions_congrats_more_new">Today\'s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
   <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the \"Custom study\" button below</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">Tomorrow there will be: %1$d cards to review and %2$s.\n Estimated time: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d new card</item>
-    <item quantity="other">%1$d การ์ดใหม่</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
-    <item quantity="other">Estimated time: %1$d min.</item>
-  </plurals>
-  <string name="sd_card_not_mounted">SD card not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by touching this text).</string>
-  <string name="studyoptions_options">Options</string>
-  <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
-  <string name="help_cloze">help</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Sync</string>
-  <string name="restart">Restart</string>
-  <string name="do_nothing">Do nothing</string>
-  <string name="more_options">More options</string>
-  <string name="now">Now</string>
-  <string name="back">Back</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Import</string>
   <string name="export">Export</string>
-  <string name="confirm">Confirm</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>
@@ -190,7 +140,6 @@
   <string name="card_template_editor_menu_delete">Delete</string>
   <string name="card_template_editor_cant_delete">At least one card type is required.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
     <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>

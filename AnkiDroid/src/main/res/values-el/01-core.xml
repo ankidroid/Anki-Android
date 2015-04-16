@@ -39,11 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Decks</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="statistics">Statistics</string>
+  <string name="settings">Settings</string>
+  <string name="help">Help</string>
+  <string name="send_feedback">Send Feedback</string>
   <string name="studyoptions_title">Study Options</string>
-  <string name="studyoptions_deck_name">Όνομα τράπουλας</string>
   <string name="studyoptions_due_today">Για σήμερα:</string>
   <string name="studyoptions_new_total">Σύνολο νέων καρτών:</string>
   <string name="studyoptions_total_cards">Σύνολο καρτών:</string>
@@ -55,15 +57,11 @@
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
-    <item quantity="other">%d λεπτά.</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
-    <item quantity="other">%1$d από %2$d σε αναμονή</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minute left</item>
-    <item quantity="other">%d λεπτά ακόμη</item>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Εμφάνιση Απάντησης</string>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">Καλή</string>
   <string name="ease3_learning">Εύκολη</string>
   <string name="studyoptions_congrats_undo">Αναίρεση %s</string>
-  <string name="card_unsuspended">Αναστολή κάρτας αναιρέθηκε</string>
-  <string name="card_suspended">Κάρτα επαναστάλει</string>
-  <string name="menu_rotate">Περιστροφή</string>
   <string name="menu_import">Import</string>
   <string name="undo">Αναίρεση</string>
   <string name="undo_action_review">last review</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">μαρκαρίσματος σημείωσης</string>
   <string name="unbury">Unbury</string>
   <string name="finish_operation">Ολοκλήρωση προηγούμενης διαδικασίας (πιθανότατα δημιουργία αντιγράφων).\nΠαρακαλούμε περιμένετε...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Λήψη απόντων μέσων</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Επαναφορά καταχωρήσεων Γλωσσών</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Επαναφορά γλώσσας</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Βελτιστοποίηση βάσης δεδομένων</string>
   <string name="contextmenu_deckpicker_rename_deck">Μετονομασία τράπουλας</string>
   <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Ορισμός προσαρμοσμένου λεξικού</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>
-  <string name="menu_download_deck">Λήψη τράπουλας</string>
-  <string name="menu_download_shared_deck">Κοινόχρηστη τράπουλα</string>
   <string name="menu_my_account">Συγχρονισμός λογαριασμού</string>
-  <string name="menu_preferences">Προτιμήσεις</string>
-  <string name="menu_about">Σχετικά</string>
   <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">Απόκρυψη Σημείωσης</string>
   <string name="menu_suspend_card">Αναστολή κάρτας</string>
   <string name="menu_suspend_note">Αναστολή Σημείωσης</string>
-  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">Διαγραφή Σημείωσης</string>
   <string name="delete_note_message">Πραγματικά να διαγραφεί αυτή η σημείωση και όλες οι κάρτες της;\n%s</string>
-  <string name="menu_edit_card">Επεξεργασία κάρτας</string>
   <string name="menu_select">Επιλογή κειμένου</string>
   <string name="menu_search">Αναζήτηση στο %1$s</string>
   <string name="menu_mark_card">Σημάδεμα κάρτας</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">Create deck</string>
   <string name="create">Δημιουργία</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
-  <string name="studyoptions_feedback">Σχόλια</string>
   <string name="night_mode">Νυκτερινή λειτουργία</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
@@ -136,10 +119,7 @@
     <item>%s μήνες</item>
     <item>%s χρόνια</item>
   </string-array>
-  <string name="visit">Επίσκεψη</string>
   <string name="later">Αργότερα</string>
-  <string name="download">Λήψη</string>
-  <string name="open_collection">Άνοιγμα συλλογής.\nΠαρακαλούμε περιμένετε...</string>
   <string name="rebuild_cram_deck">Αναδόμηση εντατικής τράπουλας.\nΠαρακαλούμε περιμένετε...</string>
   <string name="rebuild_cram_label">Αναδόμηση</string>
   <string name="empty_cram_label">Κενή</string>
@@ -151,37 +131,10 @@
   <string name="studyoptions_congrats_more_new">Υπάρχουν διαθέσιμες νέες κάρτες, αλλά το ημερήσιο όριο έχει επιτευχθεί. Μπορείτε να αυξήσετε το όριο στις επιλογές, αλλά έχετε υπόψη ότι αυτό θα αυξήσει το βραχυπρόθεσμο φόρτο επανάληψης.</string>
   <string name="studyoptions_congrats_custom">Για μελέτη εκτός του κανονικού χρονοδιαγράμματος, κάντε κλικ στο κουμπί Προσαρμοσμένη Μελέτη παρακάτω.</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">Αύριο θα υπάρχουν: %1$d κάρτες για επανάληψη και %2$s.\n Εκτιμώμενος χρόνος: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d new card</item>
-    <item quantity="other">%1$d νέες κάρτες</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
-    <item quantity="other">Εκτιμώμενη διάρκεια: %1$d λεπτά.</item>
-  </plurals>
-  <string name="sd_card_not_mounted">Η κάρτα SD δεν έχει φορτώσει.\n\nΜπορείτε να αποθηκεύσετε τη συλλογή σας στην εσωτερική μνήμη επίσης, αν και δεν συνιστάται καθώς δε θα έχετε εύκολη πρόσβαση στο αρχείο αυτό. Αυτό μπορείτε να το ενεργοποιήσετε στις προτιμήσεις (Ανοίξτε τις, κάνοντας κλικ σε αυτό το κείμενο).</string>
-  <string name="studyoptions_options">Επιλογές</string>
-  <string name="empty_cloze_warning">Παρακαλούμε συντάξτε αυτή τη σημείωση και προσθέστε μερικές κενές φράσεις. (%1$s)</string>
-  <string name="help_cloze">βοήθεια</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Συγχρονισμός</string>
-  <string name="restart">Επανεκκίνηση</string>
-  <string name="do_nothing">Να μη γίνει τίποτα</string>
-  <string name="more_options">Περισσότερες επιλογές</string>
-  <string name="now">Τώρα</string>
-  <string name="back">Πίσω</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Εισαγωγή</string>
   <string name="export">Export</string>
-  <string name="confirm">Επιβεβαίωση</string>
-  <string name="internet">Διαδίκτυο</string>
-  <string name="pc">Υπολογιστής</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>

@@ -11,16 +11,20 @@
         android:layout_height="fill_parent"
         android:orientation="vertical" >
 
-        <ListView
+        <include layout="@layout/toolbar" />
+
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/files"
-            android:layout_width="fill_parent"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:background="?android:attr/colorBackground"
             android:drawSelectorOnTop="true"
             android:fastScrollEnabled="true"
+            android:layout_below="@+id/toolbar"
             android:layout_above="@+id/today_stats_text_view"
-            android:focusable="true" />
+            android:focusable="true"
+            android:paddingBottom="72dp"
+            android:clipToPadding="false"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +32,9 @@
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
             android:gravity="center"/>
-    </RelativeLayout>    
+
+        <include layout="@layout/floating_action_button"/>
+    </RelativeLayout>
 
     <include layout="@layout/navigation_drawer" />
 </android.support.v4.widget.DrawerLayout>

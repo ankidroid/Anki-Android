@@ -570,7 +570,7 @@ public class Media {
 
 
     public boolean haveDirty() {
-        return mDb.queryScalar("select 1 from media where dirty=1 limit 1", false) > 0;
+        return mDb.queryScalar("select 1 from media where dirty=1 limit 1") > 0;
     }
 
 
@@ -715,7 +715,7 @@ public class Media {
      */
 
     public int lastUsn() {
-        return mDb.queryScalar("select lastUsn from meta", false);
+        return mDb.queryScalar("select lastUsn from meta");
     }
 
 
@@ -761,12 +761,12 @@ public class Media {
 
 
     public int mediacount() {
-        return mDb.queryScalar("select count() from media where csum is not null", false);
+        return mDb.queryScalar("select count() from media where csum is not null");
     }
 
 
     public int dirtyCount() {
-        return mDb.queryScalar("select count() from media where dirty=1", false);
+        return mDb.queryScalar("select count() from media where dirty=1");
     }
 
 

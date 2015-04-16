@@ -39,11 +39,7 @@ Thumbs.db
 *~
 
 # Intellij IDEA (see https://intellij-support.jetbrains.com/entries/23393067)
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/datasources.xml
-.idea/dataSources.ids
-.idea/libraries
+.idea/*
 
 # Additionally ignore project files themselves so developers can choose their root directory name freely
 .idea/modules.xml
@@ -52,3 +48,7 @@ Thumbs.db
 # Crowdin files
 ankidroid.zip
 tools/crowdin_key.txt
+
+.idea/misc.xml
+
+.idea/vcs.xml

@@ -47,9 +47,6 @@
   <string name="delete_deck_title">Eliminar mazo</string>
   <string name="delete_deck_message">¿Estás seguro que deseas eliminar todas las tarjetas en %s?</string>
   <string name="delete_cram_deck_message">¿Estás seguro de que deseas mandar todas las tarjetas de %s de vuelta a sus mazos originales?</string>
-  <string name="delete_deck_confirm">Eliminarlo</string>
-  <string name="new_version_message">Nuevas funciones:</string>
-  <string name="no_tts_available_title">Texto-a-Voz</string>
   <string name="no_tts_available_message">No hay idiomas de texto-a-voz disponibles</string>
   <string name="initializing_tts">Inicializando TTS...</string>
   <string name="tts_no_tts">No hablar</string>
@@ -60,14 +57,7 @@
     <item><![CDATA[Los que no sean desarrolladores también pueden ayudar, por ejemplo, <a href="%1$s">traduciendo</a> AnkiDroid, actualizando la wiki y las capturas de pantalla, <a href="%2$s">haciendo una donación</a> a Anki Escritorio, ¡o blogueando sobre AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid es distribuido bajo la <a href="%1$s">licencia GNU-GPL v3</a> y el código fuente está disponible <a href="%2$s">aquí</a>.]]></item>
   </string-array>
-  <string name="dont_show_again">No mostrar de nuevo</string>
-  <string name="notify_ticker">Actualización de la aplicación</string>
-  <string name="notify_title">Ankidroid actualizado</string>
-  <string name="notify_message">Descargar una nueva versión</string>
-  <string name="notification_title">Confirmar la actualización de Ankidroid</string>
   <string name="preview_title">Vista Previa</string>
-  <string name="notification_message">Una nueva versión de Ankidroid se encuentra disponible en el Android Market.\n\n¿Quieres instalarla?</string>
-  <string name="notification_stop">No volver a notificarme acerca de esta actualización</string>
   <string name="reset_card_dialog_title">Resetear el progreso de la tarjeta</string>
   <string name="reset_card_dialog_message">Esta tarjeta se colocará al final de la nueva cola de tarjetas.</string>
   <string name="reset_card_dialog_acknowledge">Tarjeta restablecida</string>
@@ -90,36 +80,7 @@
   <string name="custom_study_ahead">Revisar con x días de adelanto:</string>
   <string name="custom_study_random">Selecciona x tarjetas al azar del mazo:</string>
   <string name="custom_study_preview">Previsualizar nuevas tarjetas añadidas en los últimos x días:</string>
-  <string name="custom_study_tags">Introducir etiquetas:</string>
   <string name="rebuild_custom_study_deck">Se está reconstruyendo el mazo de estudio personalizado.\nEspera, por favor...</string>
-  <string name="deck_upgrade_title">Actualización de Mazos</string>
-  <string name="deck_upgrade_rename_warning">Ten en cuenta que esto exportará tu colección actual a un archivo llamado \'%1$s\' y creará una nueva a partir de tus antiguos archivos anki 1.x. Si lo deseas, puedes re-importar manualmente el archivo apkg mencionado tras completar el asistente. ¿Deseas continuar?</string>
-  <string name="deck_upgrade_major_warning"><![CDATA[Esta es una actualización importante para AnkiDroid y el proceso de actualización tomará como mínimo 10-20 minutos.<br><br>¿Deseas llevarlo a cabo ahora, o más tarde?<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en">Más información</a>]]></string>
-  <string name="deck_upgrade_start_again_to_upgrade_toast">Por favor, inicia AnkiDroid de nuevo cuando tengas tiempo para actualizar!</string>
-  <string name="deck_upgrade_recommended_method"><![CDATA[El método de actualización recomendado es sincronizar con un PC y actualizar junto con la versión escritorio de Anki.<br><br>También hay un método alternativo donde puedes actualizar a través de Internet si no tienes acceso a un PC, y tu colección no es demasiado grande.]]></string>
-  <string name="deck_upgrade_more_options_exit">Puedes salir del asistente de actualización sin importar tus tarjetas antiguas, haciendo clic en el botón salir aquí debajo.</string>
-  <string name="deck_upgrade_more_options_new_collection">Puedes crear una nueva colección vacía haciendo clic aquí debajo.</string>
-  <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Si deseas desactualizar y volver a AnkiDroid 1, por favor, lee <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">estas instrucciones</a>.]]></string>
-  <string name="deck_upgrade_create_new_collection">Crear nueva colección</string>
-  <string name="deck_upgrade_create_new_collection_title">Crear Nueva Colección</string>
-  <string name="deck_upgrade_create_new_collection_button">Nueva colección</string>
-  <string name="deck_upgrade_not_import_warning">¿Estás seguro de que deseas hacer esto? Tu antigua información no será importada.</string>
-  <string name="deck_upgrade_via_web"><![CDATA[<b>¡Este método de actualización no se recomienda si usabas archivos multimedia, o una gran colección!</b><br><br>Tus mazos de anki1 serán comprimidos y subidos a AnkiWeb, y luego la colección convertida será descargada.<br><br>Por favor, ten en cuenta que se requiere una conexión a Internet estable, y que hay un límite de 50MB de tamaño de archivos.<br><br>Se recomienda encarecidamente a los usuarios de Anki versión escritorio usar el método de actualización basado en el PC.<br><br>¿Deseas continuar con el proceso?]]></string>
-  <string name="deck_upgrade_via_anki_desktop"><![CDATA[Si dispones de una versión actualizada de tu colección de AnkiDroid en el software de escritorio Anki, puedes actualizar desde ahí y luego descargar la colección actualizada sincronizando con AnkiWeb.<br><br>Como alternativa, puedes copiar tu colección de AnkiDroid a tu PC usando una conexión USB, luego actualizar la colección, y copiarla de vuelta a AnkiDroid.]]></string>
-  <string name="deck_upgrade_auto_upgrade"><![CDATA[Por favor, instala e inicia Anki Escritorio versión 2.0.4 o posterior para actualizar tu colección, y luego sincroniza tu colección actualizada con AnkiWeb y presiona el botón "Descargar".<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">Más información detallada sobre la actualización usando AnkiWeb</a>]]></string>
-  <string name="deck_upgrade_manual"><![CDATA[Por favor, copia todos tus archivos *.anki (y cualquier carpeta *.media) desde tus carpeta AnkiDroid a tu carpeta de Anki Escritorio, y luego instala e inicia Anki Escritorio versión 2.0.4 o posterior para actualizar tu colección.<br><br>Cuando la actualización se haya completado, por favor, exporta tu colección desde Anki2, luego copia el archivo collection.apkg a tu carpeta AnkiDroid y presiona el botón Importar aquí debajo.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">Más información sobre la actualización usando USB.</a>]]></string>
-  <string name="upgrade_deck_cancelled_title">Actualización Cancelada</string>
-  <string name="upgrade_deck_cancelled_description">El intento de actualización fue cancelado, intenta de de nuevo uno de los métodos de actualización disponibles.</string>
-  <string name="upgrade_deck_web_upgrade_failed">El proceso de actualización no tuvo éxito. Por favor, inténtalo de nuevo, o elige un método de actualización distinto</string>
-  <string name="upgrade_deck_web_upgrade_exceeds">El tamaño comprimido total de tus mazos de Anki 1 excede el límite que el servidor puede procesar (50 mb). Por favor, intenta actualizar con un método diferente.</string>
-  <string name="upgrade_deck_web_upgrade_sdcard">La actualización se completó, pero ocurrió un error al descomprimir la colección resultante. Por favor, asegúrate de que tienes suficiente espacio en disco (se necesitan %1$d mb) y vuelve a intentarlo, o intenta actualizar con un método diferente.</string>
-  <string name="export_progress_title">Exportar Colección</string>
-  <string name="export_progress_exporting">Exportando colección. Por favor, espera&#8230;</string>
-  <string name="upgrade_deck_export_successful">Tu antigua colección ha sido exportada con éxito, procediendo con el proceso de actualización.</string>
-  <string name="upgrade_deck_export_error">Error al exportar tu antigua colección. ¿Deseas continuar con el proceso de actualización de todos modos? (Tu antigua colección se perderá)?</string>
-  <string name="upgrade_deck_sync_from_ankiweb">Sincronizar desde AnkiWeb</string>
-  <string name="upgrade_deck_have_you_synced">¿Estás seguro de que has actualizado tu colección con Anki Escritorio 2 y sincronizado con AnkiWeb?</string>
-  <string name="upgrade_deck_dont_upgrade">No Actualizar</string>
   <string name="import_unpacking">Descomprimiendo archivo.\nPor favor, espera&#8230;</string>
   <string name="importing_collection">Importando colección.\nPor favor, espera&#8230;</string>
   <string name="import_media_count">Importando archivos multimedia %1$d%%\nPor favor, espera&#8230;</string>
@@ -132,7 +93,6 @@
   <string name="dialog_cancel">Cancelar</string>
   <string name="dialog_ok">Aceptar</string>
   <string name="dialog_continue">Continuar</string>
-  <string name="dialog_neutral_later">Más tarde</string>
   <string name="dialog_positive_create">Crear</string>
   <string name="dialog_positive_delete">Eliminar</string>
   <string name="dialog_positive_disable">Deshabilitar</string>
@@ -142,14 +102,8 @@
   <string name="dialog_positive_replace">Reemplazar</string>
   <string name="dialog_positive_reset">Restablecer</string>
   <string name="dialog_positive_restore">Restaurar</string>
-  <string name="dialog_positive_save">Guardar</string>
   <string name="dialog_positive_set">Conjunto</string>
-  <string name="add_button_content">Añadir...</string>
-  <string name="card_browser_button_content">Explorador de tarjetas</string>
   <string name="lookup_button_content">Buscar</string>
-  <string name="statistics_button_content">Estadísticas</string>
-  <string name="dialog_collection_path_title">La carpeta no existe</string>
-  <string name="dialog_collection_path_text">La carpeta que ha especificado no existe, ¿desea crearla?</string>
   <string name="dialog_collection_path_not_dir">La ruta especificada no era un directorio válido</string>
   <string name="check_media_title">¿Comprobar medio?</string>
   <string name="check_media_warning">Esto puede durar mucho tiempo con las colecciones de grandes archivos multimedia</string>

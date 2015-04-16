@@ -28,10 +28,12 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
 import android.text.InputType;
@@ -57,6 +59,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
@@ -108,17 +111,17 @@ import timber.log.Timber;
  */
 public class NoteEditor extends AnkiActivity {
 
-    public static final String SOURCE_LANGUAGE = "SOURCE_LANGUAGE";
-    public static final String TARGET_LANGUAGE = "TARGET_LANGUAGE";
+//    public static final String SOURCE_LANGUAGE = "SOURCE_LANGUAGE";
+//    public static final String TARGET_LANGUAGE = "TARGET_LANGUAGE";
     public static final String SOURCE_TEXT = "SOURCE_TEXT";
     public static final String TARGET_TEXT = "TARGET_TEXT";
     public static final String EXTRA_CALLER = "CALLER";
     public static final String EXTRA_CARD_ID = "CARD_ID";
     public static final String EXTRA_CONTENTS = "CONTENTS";
     public static final String EXTRA_ID = "ID";
-    public static final String EXTRA_FIELD_INDEX = "multim.card.ed.extra.field.index";
-    public static final String EXTRA_FIELD = "multim.card.ed.extra.field";
-    public static final String EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note";
+//    public static final String EXTRA_FIELD_INDEX = "multim.card.ed.extra.field.index";
+//    public static final String EXTRA_FIELD = "multim.card.ed.extra.field";
+//    public static final String EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note";
 
     //private static final int DIALOG_DECK_SELECT = 0;
     //private static final int DIALOG_MODEL_SELECT = 1;
@@ -197,7 +200,7 @@ public class NoteEditor extends AnkiActivity {
     private SimpleAdapter mIntentInformationAdapter;
     private StyledDialog mIntentInformationDialog;
 
-    private StyledProgressDialog mProgressDialog;
+    private MaterialDialog mProgressDialog;
 
     private String[] mSourceText;
 
@@ -213,7 +216,7 @@ public class NoteEditor extends AnkiActivity {
         public void onPreExecute() {
             Resources res = getResources();
             mProgressDialog = StyledProgressDialog
-                    .show(NoteEditor.this, "", res.getString(R.string.saving_facts), true);
+                    .show(NoteEditor.this, "", res.getString(R.string.saving_facts), false);
         }
 
 
@@ -332,7 +335,6 @@ public class NoteEditor extends AnkiActivity {
         }
 
         startLoadingCollection();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -360,8 +362,12 @@ public class NoteEditor extends AnkiActivity {
         registerExternalStorageListener();
         View mainView = getLayoutInflater().inflate(R.layout.note_editor, null);
         setContentView(mainView);
-        Themes.setWallpaper(mainView);
         Themes.setContentStyle(mainView, Themes.CALLER_CARD_EDITOR);
+
+        Toolbar toolbar = (Toolbar) mainView.findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
 
         mFieldsLayoutContainer = (LinearLayout) findViewById(R.id.CardEditorEditFieldsLayout);
 
@@ -568,8 +574,8 @@ public class NoteEditor extends AnkiActivity {
             Timber.i("NoteEditor:: Edit note activity successfully started with card id %d", mCurrentEditedCard.getId());
         }
        
-        // Close collection opening dialog if needed
-        dismissOpeningCollectionDialog();
+        // Hide opening collection progress indicator
+        hideProgressBar();
     }
 
 
@@ -980,21 +986,18 @@ public class NoteEditor extends AnkiActivity {
 
 
     private void showDiscardChangesDialog() {
-        Dialog dialog;
-        Resources res = getResources();
-        StyledDialog.Builder builder = new StyledDialog.Builder(this);
-        builder.setMessage(R.string.discard_unsaved_changes);
-        builder.setPositiveButton(res.getString(R.string.dialog_ok),
-                new DialogInterface.OnClickListener() {
+        new MaterialDialog.Builder(this)
+                .content(R.string.discard_unsaved_changes)
+                .positiveText(R.string.dialog_ok)
+                .negativeText(R.string.dialog_cancel)
+                .callback(new MaterialDialog.ButtonCallback() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onPositive(MaterialDialog dialog) {
                         Timber.i("NoteEditor:: OK button pressed to confirm discard changes");
                         closeNoteEditor();
                     }
-                });
-        builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-        dialog = builder.create();
-        dialog.show();
+                })
+                .build().show();
     }
 
 
@@ -1467,11 +1470,14 @@ public class NoteEditor extends AnkiActivity {
         updateField(field);
         // 1 is empty, 2 is dupe, null is neither.
         Integer dupeCode = mEditorNote.dupeOrEmpty();
+        // Change bottom line color of text field
         if (dupeCode != null && dupeCode == 2) {
-            field.setBackgroundResource(R.drawable.white_edit_text_dupe);
+            field.getBackground().setColorFilter(getResources().getColor(R.color.material_red_500),
+                    PorterDuff.Mode.SRC_ATOP);
             isDupe = true;
         } else {
-            field.setBackgroundResource(R.drawable.white_edit_text);
+            field.getBackground().setColorFilter(getResources().getColor(R.color.text_color),
+                    PorterDuff.Mode.SRC_ATOP);
             isDupe = false;
         }
         // Put back the old value so we don't interfere with modification detection

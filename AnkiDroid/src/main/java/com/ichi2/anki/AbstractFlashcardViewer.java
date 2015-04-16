@@ -21,16 +21,16 @@ package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,6 +38,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
+import android.support.v7.app.ActionBar;
 import android.text.ClipboardManager;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -66,6 +67,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.util.TypefaceHelper;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.exception.APIVersionException;
@@ -80,7 +83,6 @@ import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.HtmlColors;
-import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
@@ -241,10 +243,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private TextView mNext4;
     private Button mFlipCard;
     protected EditText mAnswerField;
-    private Button mEase1;
-    private Button mEase2;
-    private Button mEase3;
-    private Button mEase4;
+    private TextView mEase1;
+    private TextView mEase2;
+    private TextView mEase3;
+    private TextView mEase4;
     protected LinearLayout mFlipCardLayout;
     protected LinearLayout mEase1Layout;
     protected LinearLayout mEase2Layout;
@@ -254,7 +256,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private Chronometer mCardTimer;
     protected Whiteboard mWhiteboard;
     private ClipboardManager mClipboard;
-    private StyledProgressDialog mProgressDialog;
+    private MaterialDialog mProgressDialog;
     private ProgressBar mProgressBar;
 
     protected Card mCurrentCard;
@@ -264,7 +266,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private int mNextTimeTextRecomColor;
 
     private int mForegroundColor;
-    private boolean mChangeBorderStyle;
 
     private int mButtonHeight = 0;
 
@@ -418,7 +419,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     break;
                 default:
                     mCurrentEase = 0;
-                    return;
             }
         }
     };
@@ -483,7 +483,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         public void onPreExecute() {
             Resources res = getResources();
             mProgressDialog = StyledProgressDialog.show(AbstractFlashcardViewer.this, "",
-                    res.getString(R.string.saving_changes), true);
+                    res.getString(R.string.saving_changes), false);
         }
 
 
@@ -546,7 +546,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             Resources res = getResources();
             try {
                 mProgressDialog = StyledProgressDialog.show(AbstractFlashcardViewer.this, "",
-                        res.getString(R.string.saving_changes), true);
+                        res.getString(R.string.saving_changes), false);
             } catch (IllegalArgumentException e) {
                 Timber.e(e, "AbstractReviewer: Error on showing progress dialog");
             }
@@ -569,7 +569,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 // If the card is null means that there are no more cards scheduled for review.
                 mNoMoreCards = true;
                 mProgressDialog = StyledProgressDialog.show(AbstractFlashcardViewer.this, "",
-                        getResources().getString(R.string.saving_changes), true);
+                        getResources().getString(R.string.saving_changes), false);
                 return;
             }
             if (mPrefWhiteboard && mWhiteboard != null) {
@@ -644,7 +644,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 // If the card is null means that there are no more cards scheduled for review.
                 mNoMoreCards = true;
                 mProgressDialog = StyledProgressDialog.show(AbstractFlashcardViewer.this, "",
-                        getResources().getString(R.string.saving_changes), true);
+                        getResources().getString(R.string.saving_changes), false);
             } else {
                 // Start reviewing next card
                 updateTypeAnswerInfo();
@@ -886,9 +886,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         super.onCreate(savedInstanceState);
         Timber.d("onCreate()");
 
-        mChangeBorderStyle = Themes.getTheme() == Themes.THEME_ANDROID_LIGHT
-                || Themes.getTheme() == Themes.THEME_ANDROID_DARK;
-
         // create inherited navigation drawer layout here so that it can be used by parent class
         View mainView = getLayoutInflater().inflate(R.layout.flashcard, null);
         setContentView(mainView);
@@ -957,17 +954,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // Initialize dictionary lookup feature
         Lookup.initialize(this);
 
-        deselectAllNavigationItems();
-        supportInvalidateOptionsMenu();
-        dismissOpeningCollectionDialog();
-    }
-
-
-    @Override
-    protected void deselectAllNavigationItems() {
-        super.deselectAllNavigationItems();
-        setTitle();
         updateScreenCounts();
+        supportInvalidateOptionsMenu();
+        hideProgressBar();
     }
 
 
@@ -994,7 +983,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // Set the context for the Sound manager
         Sound.setContext(new WeakReference<Activity>(this));
         // Reset the activity title
-        deselectAllNavigationItems();
+        setTitle();
+        updateScreenCounts();
     }
 
 
@@ -1054,7 +1044,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (!mAnswerField.isFocused()) {
+        if (mAnswerField != null && !mAnswerField.isFocused()) {
 	        if (!sDisplayAnswer) {
 	            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
 	                displayCardAnswer();
@@ -1208,10 +1198,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void undo() {
         if (getCol().undoAvailable()) {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                mProgressDialog.setMessage(getResources().getString(R.string.saving_changes));
+                mProgressDialog.setContent(getResources().getString(R.string.saving_changes));
             } else {
                 mProgressDialog = StyledProgressDialog.show(AbstractFlashcardViewer.this, "",
-                        getResources().getString(R.string.saving_changes), true);
+                        getResources().getString(R.string.saving_changes), false);
             }
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mAnswerCardHandler, new DeckTask.TaskData(getCol(), mSched));
         }
@@ -1281,25 +1271,25 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     protected void showDeleteNoteDialog() {
-        Dialog dialog;
         Resources res = getResources();
-        StyledDialog.Builder builder = new StyledDialog.Builder(this);
-        builder.setTitle(res.getString(R.string.delete_card_title));
-        builder.setIcon(R.drawable.ic_dialog_alert);
-        builder.setMessage(String.format(res.getString(R.string.delete_note_message),
-                Utils.stripHTML(mCurrentCard.q(true))));
-        builder.setPositiveButton(res.getString(R.string.dialog_positive_delete),
-                new DialogInterface.OnClickListener() {
+        Drawable icon = res.getDrawable(R.drawable.ic_warning_black_36dp);
+        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
+        new MaterialDialog.Builder(this)
+                .title(res.getString(R.string.delete_card_title))
+                .icon(icon)
+                .content(String.format(res.getString(R.string.delete_note_message),
+                        Utils.stripHTML(mCurrentCard.q(true))))
+                .positiveText(res.getString(R.string.dialog_positive_delete))
+                .negativeText(res.getString(R.string.dialog_cancel))
+                .callback(new MaterialDialog.ButtonCallback() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onPositive(MaterialDialog dialog) {
                         Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler,
                                 new DeckTask.TaskData(getCol(), mSched, mCurrentCard, 3));
                     }
-                });
-        builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-        dialog = builder.create();
-        dialog.show();
+                })
+                .build().show();
     }
 
 
@@ -1329,29 +1319,35 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
         mIsSelecting = false;
         hideLookupButton();
+        int buttonNumber = getCol().getSched().answerButtons(mCurrentCard);
         // Detect invalid ease for current card (e.g. by using keyboard shortcut or gesture).
-        if (getCol().getSched().answerButtons(mCurrentCard) < ease) {
+        if (buttonNumber < ease) {
             return;
         }
+        // Set the dots appearing below the toolbar
         switch (ease) {
             case EASE_FAILED:
                 mChosenAnswer.setText("\u2022");
-                mChosenAnswer.setTextColor(mNext1.getTextColors());
+                mChosenAnswer.setTextColor(getResources().getColor(R.color.material_red_500));
                 // if ((deck.getDueCount() + deck.getNewCountToday()) == 1) {
                 // mIsLastCard = true;
                 // }
                 break;
             case EASE_HARD:
                 mChosenAnswer.setText("\u2022\u2022");
-                mChosenAnswer.setTextColor(mNext2.getTextColors());
+                mChosenAnswer.setTextColor(getResources().getColor(buttonNumber == 4 ?
+                        R.color.material_blue_grey_700:
+                        R.color.material_green_500));
                 break;
             case EASE_MID:
                 mChosenAnswer.setText("\u2022\u2022\u2022");
-                mChosenAnswer.setTextColor(mNext3.getTextColors());
+                mChosenAnswer.setTextColor(getResources().getColor(buttonNumber == 4 ?
+                        R.color.material_green_500 :
+                        R.color.material_blue_grey_700));
                 break;
             case EASE_EASY:
                 mChosenAnswer.setText("\u2022\u2022\u2022\u2022");
-                mChosenAnswer.setTextColor(mNext4.getTextColors());
+                mChosenAnswer.setTextColor(getResources().getColor(R.color.material_blue_grey_700));
                 break;
         }
 
@@ -1386,9 +1382,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         }
         mCardFrame.removeAllViews();
-        if (!mChangeBorderStyle) {
-            findViewById(R.id.flashcard_border).setVisibility(View.VISIBLE);
-        }
         // hunt for input issue 720, like android issue 3341
         if (CompatHelper.getSdkVersion() == 7 && (mCard != null)) {
             mCard.setFocusableInTouchMode(true);
@@ -1401,21 +1394,23 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         Resources res = getResources();
 
-        mEase1 = (Button) findViewById(R.id.ease1);
-        mEase1.setTextColor(res.getColor(R.color.next_time_failed_color));
+        mEase1 = (TextView) findViewById(R.id.ease1);
+        mEase1.setTypeface(TypefaceHelper.get(this, "Roboto-Medium"));
         mEase1Layout = (LinearLayout) findViewById(R.id.flashcard_layout_ease1);
         mEase1Layout.setOnClickListener(mSelectEaseHandler);
 
-        mEase2 = (Button) findViewById(R.id.ease2);
-        mEase2.setTextColor(res.getColor(R.color.next_time_usual_color));
+        mEase2 = (TextView) findViewById(R.id.ease2);
+        mEase2.setTypeface(TypefaceHelper.get(this, "Roboto-Medium"));
         mEase2Layout = (LinearLayout) findViewById(R.id.flashcard_layout_ease2);
         mEase2Layout.setOnClickListener(mSelectEaseHandler);
 
-        mEase3 = (Button) findViewById(R.id.ease3);
+        mEase3 = (TextView) findViewById(R.id.ease3);
+        mEase3.setTypeface(TypefaceHelper.get(this, "Roboto-Medium"));
         mEase3Layout = (LinearLayout) findViewById(R.id.flashcard_layout_ease3);
         mEase3Layout.setOnClickListener(mSelectEaseHandler);
 
-        mEase4 = (Button) findViewById(R.id.ease4);
+        mEase4 = (TextView) findViewById(R.id.ease4);
+        mEase4.setTypeface(TypefaceHelper.get(this, "Roboto-Medium"));
         mEase4Layout = (LinearLayout) findViewById(R.id.flashcard_layout_ease4);
         mEase4Layout.setOnClickListener(mSelectEaseHandler);
 
@@ -1423,12 +1418,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mNext2 = (TextView) findViewById(R.id.nextTime2);
         mNext3 = (TextView) findViewById(R.id.nextTime3);
         mNext4 = (TextView) findViewById(R.id.nextTime4);
-
-        mNext1.setTextColor(res.getColor(R.color.next_time_failed_color));
-        mNext2.setTextColor(res.getColor(R.color.next_time_usual_color));
+        mNext1.setTypeface(TypefaceHelper.get(this, "Roboto-Regular"));
+        mNext2.setTypeface(TypefaceHelper.get(this, "Roboto-Regular"));
+        mNext3.setTypeface(TypefaceHelper.get(this, "Roboto-Regular"));
+        mNext4.setTypeface(TypefaceHelper.get(this, "Roboto-Regular"));
 
         if (!mShowNextReviewTime) {
-            ((TextView) findViewById(R.id.nextTimeflip)).setVisibility(View.GONE);
             mNext1.setVisibility(View.GONE);
             mNext2.setVisibility(View.GONE);
             mNext3.setVisibility(View.GONE);
@@ -1436,6 +1431,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
 
         mFlipCard = (Button) findViewById(R.id.flip_card);
+        mFlipCard.setTypeface(TypefaceHelper.get(this, "Roboto-Medium"));
         mFlipCardLayout = (LinearLayout) findViewById(R.id.flashcard_layout_flip);
         mFlipCardLayout.setOnClickListener(mFlipCardListener);
 
@@ -1495,12 +1491,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
-        if (CompatHelper.isFroyo()) {
-            webView.setFocusableInTouchMode(false);
-        }
-        if (mPrefSafeDisplay) {
-            CompatHelper.getCompat().setScrollbarFadingEnabled(webView, false);
-        }
+        webView.setFocusableInTouchMode(false);
+        webView.setScrollbarFadingEnabled(false);
         Timber.d("Focusable = %s, Focusable in touch mode = %s",webView.isFocusable(),webView.isFocusableInTouchMode());
 
         webView.setWebViewClient(new WebViewClient() {
@@ -1554,7 +1546,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mNextTimeTextRecomColor = colors[1];
 
         mFlipCard.setTextColor(mForegroundColor);
-        mNext4.setTextColor(mNextTimeTextColor);
         mEase4.setTextColor(mNextTimeTextColor);
         mCardTimer.setTextColor(mForegroundColor);
         mTextBarNew.setTextColor(invert ? res.getColor(R.color.new_count_night) : res.getColor(R.color.new_count));
@@ -1567,8 +1558,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mCard != null) {
             mCard.setBackgroundColor(mCurrentBackgroundColor);
         }
-        CompatHelper.getCompat().setActionBarBackground(this,
-                invert ? R.color.white_background_night : R.color.actionbar_background);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(res.getColor(
+                    invert ? R.color.white_background_night : R.color.theme_primary)));
+        }
     }
 
 
@@ -1587,20 +1582,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             return;
         }
 
-        // Set correct label for each button
+        // Set correct label and background resource for each button
         switch (buttonCount) {
             case 2:
                 mEase1.setText(res.getString(R.string.ease1_successive));
+                mEase2Layout.setBackgroundResource(R.drawable.material_button_ease_right_green);
                 mEase2.setText(res.getString(R.string.ease3_successive));
                 mEase1Layout.setVisibility(View.VISIBLE);
                 mEase2Layout.setVisibility(View.VISIBLE);
                 mEase2Layout.requestFocus();
-                mNext2.setTextColor(mNextTimeTextRecomColor);
-                mEase2.setTextColor(mNextTimeTextRecomColor);
-                mNext3.setTextColor(mNextTimeTextColor);
-                mEase3.setTextColor(mNextTimeTextColor);
                 break;
             case 3:
+                mEase2Layout.setBackgroundResource(R.drawable.material_button_ease_middle_green);
+                mEase3Layout.setBackgroundResource(R.drawable.material_button_ease_right);
                 mEase1.setText(res.getString(R.string.ease1_successive));
                 mEase2.setText(res.getString(R.string.ease3_successive));
                 mEase3.setText(res.getString(R.string.ease3_learning));
@@ -1608,12 +1602,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mEase2Layout.setVisibility(View.VISIBLE);
                 mEase3Layout.setVisibility(View.VISIBLE);
                 mEase2Layout.requestFocus();
-                mNext2.setTextColor(mNextTimeTextRecomColor);
-                mEase2.setTextColor(mNextTimeTextRecomColor);
-                mNext3.setTextColor(mNextTimeTextColor);
-                mEase3.setTextColor(mNextTimeTextColor);
                 break;
             default:
+                mEase2Layout.setBackgroundResource(R.drawable.material_button_ease_middle);
+                mEase3Layout.setBackgroundResource(R.drawable.material_button_ease_middle_green);
                 mEase1.setText(res.getString(R.string.ease1_successive));
                 mEase2.setText(res.getString(R.string.ease2_successive));
                 mEase3.setText(res.getString(R.string.ease3_successive));
@@ -1623,10 +1615,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mEase3Layout.setVisibility(View.VISIBLE);
                 mEase4Layout.setVisibility(View.VISIBLE);
                 mEase3Layout.requestFocus();
-                mNext2.setTextColor(mNextTimeTextColor);
-                mEase2.setTextColor(mNextTimeTextColor);
-                mNext3.setTextColor(mNextTimeTextRecomColor);
-                mEase3.setTextColor(mNextTimeTextRecomColor);
         }
 
         // Show next review time
@@ -1812,7 +1800,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         try {
             String[] title = getCol().getDecks().get(mCurrentCard.getDid()).getString("name").split("::");
-            CompatHelper.getCompat().setTitle(this, title[title.length - 1], mInvertedColors);
+            UIUtils.setTitle(this, title[title.length - 1]);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -1820,7 +1808,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         int[] counts = mSched.counts(mCurrentCard);
 
         int eta = mSched.eta(counts, false);
-        CompatHelper.getCompat().setSubtitle(this,
+        UIUtils.setSubtitle(this,
                 getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta), mInvertedColors);
 
         SpannableString newCount = new SpannableString(String.valueOf(counts[0]));
@@ -2260,30 +2248,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
             mCard.setBackgroundColor(mCurrentBackgroundColor);
         }
-        if (mChangeBorderStyle) {
-            switch (mCurrentBackgroundColor) {
-                case Color.WHITE:
-                    if (mInvertedColors) {
-                        mInvertedColors = false;
-                        invertColors(false);
-                    }
-                    break;
-                case Color.BLACK:
-                    if (!mInvertedColors) {
-                        mInvertedColors = true;
-                        invertColors(true);
-                    }
-                    break;
-                default:
-                    if (Themes.getTheme() != Themes.THEME_BLUE) {
-                        mMainLayout.setBackgroundColor(mCurrentBackgroundColor);
-                    }
-                    if (mInvertedColors != mNightMode) {
-                        mInvertedColors = mNightMode;
-                        invertColors(mNightMode);
-                    }
-            }
-        }
         if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
             switchTopBarVisibility(View.VISIBLE);
         }
@@ -2672,7 +2636,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     protected void refreshActionBar() {
-        CompatHelper.getCompat().invalidateOptionsMenu(AbstractFlashcardViewer.this);
+        supportInvalidateOptionsMenu();
     }
 
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189 */

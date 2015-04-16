@@ -44,21 +44,16 @@
   <string name="widget_no_cards_due">Нема картица за учење</string>
   <string name="widget_loading">Виџет се учитава...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d картица следи за %2$s</item>
-    <item quantity="other">данас %1$d од %2$s</item>
+    <item quantity="one">%1$d card due in %2$s</item>
+    <item quantity="few">%1$d cards due in %2$s</item>
+    <item quantity="many">%1$d cards due in %2$s</item>
+    <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d шпил</item>
-    <item quantity="other">%1$d шпилова</item>
+    <item quantity="one">%1$d deck</item>
+    <item quantity="few">%1$d decks</item>
+    <item quantity="many">%1$d decks</item>
+    <item quantity="other">%1$d decks</item>
   </plurals>
-  <string name="widget_medium">АнкиДројд средње</string>
   <string name="widget_small">АнкиДројд мало</string>
-  <string name="widget_big">АнкиДројд велико</string>
-  <string name="widget_big_restrictions_dialog">Због неких ограничења система Андројд, виџет може да приказује само текст, али не и слике/звуке итд.</string>
-  <string name="open_in_reviewer">Отвори шпил у АнкиДројд</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Процењено време: %d мин.</item>
-    <item quantity="other">Процењено време: %d мин.</item>
-  </plurals>
-  <string name="widget_big_tomorrow_due">Сутра ће бити:</string>
 </resources>

@@ -35,51 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Decks</item>
-    <item>Card Browser</item>
-    <item>Statistics</item>
-    <item>Settings</item>
-    <item>Help</item>
-    <item>Send Feedback</item>
-  </string-array>
-  <string-array name="newCardSchedulingLabels">
-    <item>穿插在複習中</item>
-    <item>複習之後</item>
-    <item>複習之前</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>總是發送報告</item>
     <item>從不發送報告</item>
     <item>詢問我</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>按最早修改順序顯示</item>
-    <item>依新加入順序顯示</item>
-    <item>按隨機順序顯示</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>隨機順序顯示新卡片</item>
-    <item>以加入的順序顯示新卡片</item>
-    <item>以加入的反向顯示新卡片</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>新卡片散在複習卡片中</item>
-    <item>新卡片散在複習卡片之後</item>
-    <item>新卡片散在複習卡片之前</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>從最大間隔的卡片複習起</item>
-    <item>從最小間隔的卡片複習起</item>
-    <item>從卡片到期的順序複習起</item>
-    <item>隨機選取複習的卡片</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>馬上就顯示失敗的卡片</item>
-    <item>結束時顯示失敗的卡片</item>
-    <item>10分鐘內顯示失敗的卡片</item>
-    <item>8小時內顯示失敗的卡片</item>
-    <item>3天內顯示失敗的卡片</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>沒有動作</item>
@@ -99,12 +58,6 @@
     <item>刪除卡片</item>
     <item>Play media</item>
     <item>Abort learning</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Android 暗色</item>
-    <item>Android 亮色</item>
-    <item>藍色</item>
-    <item>白色</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>長久擱置卡片</item>

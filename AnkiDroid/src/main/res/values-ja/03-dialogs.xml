@@ -47,9 +47,6 @@
   <string name="delete_deck_title">単語帳を削除</string>
   <string name="delete_deck_message">%s の中のすべてのカードを削除してもよろしいですか。</string>
   <string name="delete_cram_deck_message"> %s のすべてのカードを元の単語帳に戻してもよろしいですか？</string>
-  <string name="delete_deck_confirm">削除</string>
-  <string name="new_version_message">新機能:</string>
-  <string name="no_tts_available_title">テキスト読み上げ</string>
   <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
   <string name="initializing_tts">テキスト読み上げ機能を初期化しています.</string>
   <string name="tts_no_tts">音声なし</string>
@@ -60,14 +57,7 @@
     <item><![CDATA[開発者でなくても、例えば AnkiDroid を<a href="%1$s">翻訳</a>したり、Wiki やスクリーンショットを更新したり、Ankiプロジェクトに<a href="%2$s">寄付</a>をしたり、AnkiDroid についてのブログを書いたりして貢献できます！]]></item>
     <item><![CDATA[AnkiDroid は、<a href="%1$s">GNU GPL v3 ライセンス</a>の下でリリースされており、ソースコードは<a href="%2$s">こちら</a>です。]]></item>
   </string-array>
-  <string name="dont_show_again">今後は表示しない</string>
-  <string name="notify_ticker">アプリケーションの更新</string>
-  <string name="notify_title">AnkiDroidは更新しました</string>
-  <string name="notify_message">新しいバージョンをダウンロード</string>
-  <string name="notification_title">AnkiDroidのアップデートの確認</string>
   <string name="preview_title">プレビュー</string>
-  <string name="notification_message">AnkiDroid の新しいバージョンが Google Play で入手可能です.\n\nインストールしますか？</string>
-  <string name="notification_stop">更新の通知をしない</string>
   <string name="reset_card_dialog_title">カードの進行状況をリセット</string>
   <string name="reset_card_dialog_message">このカードは新規カードの最後に配置されます。</string>
   <string name="reset_card_dialog_acknowledge">カードがリセットされました</string>
@@ -90,37 +80,7 @@
   <string name="custom_study_ahead">先取りする日数</string>
   <string name="custom_study_random">単語帳からランダムに抽出するカードの枚数</string>
   <string name="custom_study_preview">過去 x 日間に追加された新規カードをプレビュー</string>
-  <string name="custom_study_tags">タグの入力</string>
   <string name="rebuild_custom_study_deck">カスタム単語帳を再構築します\nしばらくお待ちください</string>
-  <string name="deck_upgrade_title">単語帳の更新</string>
-  <string name="deck_upgrade_rename_warning">Anki ver 1.xのコレクション（単語帳、メディア他）は新しい形式に変換され、\'%1$s\' のファイル名で保存されます。保存後、この *.apkg ファイルを直接読み込み使用することも可能です。この操作を継続しますか？ </string>
-  <string name="deck_upgrade_major_warning"><![CDATA[<![CDATA[AnkiDroidのアップグレードを開始します。アップグレードには5〜10分程度の時間が必要です。<br><br>開始しますか、それとも後で実施しますか？<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en">詳細</a>]]]]><![CDATA[> ]]></string>
-  <string name="deck_upgrade_start_again_to_upgrade_toast">あとで時間があるときに、Ankidroidを更新してください。</string>
-  <string name="deck_upgrade_recommended_method"><![CDATA[<![CDATA[推奨する単語帳のアップグレード方法は、パソコン上のソフト、Ankidesktopを使って実施する方法です。<br><br>パソコンが使用できない時、別の方法として、コレクションがの容量が小さい場合は、インターネット経由でアップグレードする方法もあります。]]]]><![CDATA[> ]]></string>
-  <string name="deck_upgrade_more_options_exit">下の「終了」ボタンをタップすると、アップグレードを中断することができます。古い単語帳は読み込まれません。</string>
-  <string name="deck_upgrade_more_options_new_collection">下のボタンをタップすると、新しい空のコレクション（単語張の保管先）が作成されます。</string>
-  <string name="deck_upgrade_more_options_downgrade"><![CDATA[<![CDATA[<br><br>ダウングレードして古い AnkiDroid ver1を使う場合は、こちらを参照してください。 <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">詳細説明</a>.]]]]><![CDATA[> 
-]]></string>
-  <string name="deck_upgrade_create_new_collection">新しいコレクションを作成します。</string>
-  <string name="deck_upgrade_create_new_collection_title">新しいコレクションの作成</string>
-  <string name="deck_upgrade_create_new_collection_button">新しいコレクション</string>
-  <string name="deck_upgrade_not_import_warning">実行しますか？古い単語帳のデータは読み込まれません</string>
-  <string name="deck_upgrade_via_web"><![CDATA[<![CDATA[<b>コレクション（単語帳、音声、画像他のメディアファイル）全体の容量サイズが大きい場合は、この方法は推奨できません。</b><br><br>古いAnki 1の 単語帳は圧縮された後 AnkiWebへアップロードされ、変換されてからアンドロイド端末にダウンロードされます。<br><br>安定したインターネット接続が必要であり、容量も50Mb以下に制限されます。<br><br>既にAnki Desktopを使っている場合は、パソコンを使ったアップグレード方法を推奨します。<br><br>操作を続行しますか？]]]]><![CDATA[> ]]></string>
-  <string name="deck_upgrade_via_anki_desktop"><![CDATA[<![CDATA[パソコン上の AnkiDesktopに、既に新しいバージョンへ更新されたコレクションがある場合には、更新されたコレクションをAnkiWeb経由でダウンロードできます。<br><br>あるいは、USBケーブルを使って、コレクションをパソコンへコピーした後、更新してから、AnkiDroid側へ書き戻すこともできます。]]]]><![CDATA[> ]]></string>
-  <string name="deck_upgrade_auto_upgrade"><![CDATA[<![CDATA[Anki Desktop（ver 2.0.4 以降）をインストールして起動させ、コレクションをAnkiWebと同期させるため、「ダウンロード」をタップしてください。<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync"> AnkiWebを使ったアップグレード方法の詳細</a>]]]]><![CDATA[> ]]></string>
-  <string name="deck_upgrade_manual"><![CDATA[<![CDATA[ 全ての*.anki ファイルと *.media フォルダーを、端末の AnkiDroidフォルダーからパソコン側の Anki Desktopフォルダーへコピーしてください。Anki Desktop （ver 2.0.4以降）をインストール後、起動させコレクションをアップグレードしてください。<br><br>アップグレードが完了した後、Anki Desktop側から「書き出し」を実行して、コレクションファイル（*.apkg）を作成し、そのコレクションファイルを端末の AnkiDroidフォルダーへコピーしてから、下の「読み込み」をタップしてください。<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">USB を使用してアップグレードする方法の詳細</a>]]]]><![CDATA[> ]]></string>
-  <string name="upgrade_deck_cancelled_title">アップグレードのキャンセル</string>
-  <string name="upgrade_deck_cancelled_description">アップグレードは途中でキャンセルされました。利用可能な方法でアップグレードを再開してください。</string>
-  <string name="upgrade_deck_web_upgrade_failed">アップグレードは失敗しました。別の方法でアップグレードを再開してください。</string>
-  <string name="upgrade_deck_web_upgrade_exceeds">Anki ver1の単語帳の圧縮サイズが制限(50 MB) を超えています。 別の方法でアップグレードを再開してください。</string>
-  <string name="upgrade_deck_web_upgrade_sdcard">アップグレード完了しましたが、圧縮ファイルの解凍時にエラーが発生しました。十分な空きスペース （必要なサイズ %1$d MB) があることを確認してください。別の方法でアップグレードを再開してください。</string>
-  <string name="export_progress_title">コレクションのエクスポート（書き出し）</string>
-  <string name="export_progress_exporting">コレクションをエクスポート中、しばらくお待ちください。</string>
-  <string name="upgrade_deck_export_successful">古いコレクションはアップグレードされ、エクスポートは完了しました。</string>
-  <string name="upgrade_deck_export_error">コレクションのエクスポート中にエラーが発生しました。構わずアップグレードを続けますか？（あなたが使っていた古いバージョンのコレクションは失われてしまいます。）</string>
-  <string name="upgrade_deck_sync_from_ankiweb">AnkiWebとの同期</string>
-  <string name="upgrade_deck_have_you_synced">Anki Desktop 2を使ってあなたのコレクションをアップグレードし、AnkiWebと同期させてもよろしいですか？</string>
-  <string name="upgrade_deck_dont_upgrade">アップグレードしない</string>
   <string name="import_unpacking">アーカイブを解凍しています。\nお待ちください&#8230;</string>
   <string name="importing_collection">コレクションをインポートしています。\nお待ちください&#8230;</string>
   <string name="import_media_count">メディアファイルをインポートしています。 %1$d%%\nお待ちください&#8230;</string>
@@ -133,7 +93,6 @@
   <string name="dialog_cancel">キャンセル</string>
   <string name="dialog_ok">OK</string>
   <string name="dialog_continue">続行</string>
-  <string name="dialog_neutral_later">後で</string>
   <string name="dialog_positive_create">作成</string>
   <string name="dialog_positive_delete">削除</string>
   <string name="dialog_positive_disable">無効化</string>
@@ -143,14 +102,8 @@
   <string name="dialog_positive_replace">置換</string>
   <string name="dialog_positive_reset">リセット</string>
   <string name="dialog_positive_restore">復元</string>
-  <string name="dialog_positive_save">保存</string>
   <string name="dialog_positive_set">適用</string>
-  <string name="add_button_content">追加.</string>
-  <string name="card_browser_button_content">ブラウザー</string>
   <string name="lookup_button_content">調べる</string>
-  <string name="statistics_button_content">統計情報</string>
-  <string name="dialog_collection_path_title">フォルダーが存在しません</string>
-  <string name="dialog_collection_path_text">指定したフォルダーは存在しません。作成しますか？</string>
   <string name="dialog_collection_path_not_dir">指定されたパスは有効なディレクトリではありませんでした</string>
   <string name="check_media_title">メディアをチェックしますか？</string>
   <string name="check_media_warning">大きなコレクションの場合は、長い時間がかかる場合があります。</string>

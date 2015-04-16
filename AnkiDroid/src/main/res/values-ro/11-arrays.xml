@@ -35,51 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Decks</item>
-    <item>Card Browser</item>
-    <item>Statistics</item>
-    <item>Settings</item>
-    <item>Help</item>
-    <item>Send Feedback</item>
-  </string-array>
-  <string-array name="newCardSchedulingLabels">
-    <item>Răspândite prin recapitulări</item>
-    <item>După recapitulări</item>
-    <item>Înainte de recapitulări</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Always report</item>
     <item>Never report</item>
     <item>Ask me</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>Show oldest modified first</item>
-    <item>Show in order added</item>
-    <item>Show in random order</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
-    <item>New cards in reverse order added</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Spread new cards through reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Review cards from largest interval</item>
-    <item>Review cards from smallest interval</item>
-    <item>Review cards in order due</item>
-    <item>Review cards in random order</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Show failed cards soon</item>
-    <item>Show failed cards at end</item>
-    <item>Show failed cards in 10 minutes</item>
-    <item>Show failed cards in 8 hours</item>
-    <item>Show failed cards in 3 days</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>No action</item>
@@ -99,12 +58,6 @@
     <item>Delete card</item>
     <item>Play media</item>
     <item>Abort learning</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Android dark</item>
-    <item>Android light</item>
-    <item>Blue</item>
-    <item>White</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Suspend card</item>

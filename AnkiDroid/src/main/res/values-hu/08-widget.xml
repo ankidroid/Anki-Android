@@ -45,20 +45,11 @@
   <string name="widget_loading">Widget betöltése...</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">%1$d card due in %2$s</item>
-    <item quantity="other">%1$d kártya esedékes %2$s pakliban</item>
+    <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">%1$d deck</item>
-    <item quantity="other">%1$d pakli</item>
+    <item quantity="other">%1$d decks</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid közepes</string>
   <string name="widget_small">AnkiDroid kicsi</string>
-  <string name="widget_big">AnkiDroid nagy</string>
-  <string name="widget_big_restrictions_dialog">Az Android widget framework-je miatt ez a widget csak szöveget tud megjeleníteni, képet vagy hangot nem.</string>
-  <string name="open_in_reviewer">Pakli megnyitása AnkiDroidban</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Becsült idő: %d perc.</item>
-    <item quantity="other">Becsült idő: %d perc</item>
-  </plurals>
-  <string name="widget_big_tomorrow_due">Holnap esedékes:</string>
 </resources>

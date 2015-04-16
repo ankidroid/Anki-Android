@@ -34,15 +34,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="multimedia_editor_languages_russian">Руски</string>
-  <string name="multimedia_editor_languages_german">Немачки</string>
-  <string name="multimedia_editor_languages_nepali">Непалски</string>
-  <string name="multimedia_editor_languages_slovak">Словачки</string>
-  <string name="multimedia_editor_languages_french">Француски</string>
-  <string name="multimedia_editor_languages_spanish">Шпански</string>
-  <string name="multimedia_editor_languages_mandarin">Мандарински</string>
-  <string name="multimedia_editor_languages_portuguese">Португалски</string>
-  <string name="multimedia_editor_languages_english">Енглески</string>
   <string name="multimedia_editor_popup_image">Додај слику</string>
   <string name="multimedia_editor_popup_audio">Сними звук</string>
   <string name="multimedia_editor_popup_text">Комплетан уредник</string>
@@ -83,13 +74,6 @@
   <string name="multimedia_editor_text_field_editing_no_text">Прво унесите текст</string>
   <string name="multimedia_editor_text_field_editing_many_words">Речник обично очекује само један реч</string>
   <string name="multimedia_editor_text_field_editing_clone_source">Узмите од</string>
-  <string name="multimedia_editor_activity_note_type">Врста белешке</string>
-  <string name="multimedia_editor_activity_deck">Шпил</string>
-  <string name="multimedia_editor_activity_edit_button">Уреди</string>
-  <string name="multimedia_editor_activity_swap_button">Размени</string>
-  <string name="multimedia_editor_activity_delete_question">Избришите целу белешку?</string>
-  <string name="multimedia_editor_activity_delete_confirm">Избриши</string>
-  <string name="multimedia_editor_activity_delete_reject">Сачувај</string>
   <string name="multimedia_editor_image_field_editing_galery">Галерија</string>
   <string name="multimedia_editor_image_field_editing_photo">Камера</string>
   <string name="multimedia_editor_general_downloading">Преузимање</string>
@@ -105,7 +89,6 @@
   <string name="multimedia_editor_audio_view_playing_failed">Пуштање медије неуспешно</string>
   <string name="title_activity_edit_text">Поље за уређивање</string>
   <string name="title_activity_translation">Превод</string>
-  <string name="title_activity_audio_recorder">Аудио снимач</string>
   <string name="title_activity_load_pronounciation">Изговор</string>
   <string name="title_activity_search_image">Гугл претрага слика</string>
 </resources>

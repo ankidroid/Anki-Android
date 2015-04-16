@@ -40,12 +40,10 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d kortti näytetään</item>
-    <item quantity="other">%d korttia näytetään</item>
+    <item quantity="one">%d card shown</item>
+    <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">Kaikki pakat</string>
-  <string name="card_browser_load">Ladataan kortteja.\nOdota...</string>
-  <string name="card_browser_cardloading_error">Virhe ladattaessa kortteja. Ongelma luultavasti liittyy laitteesi muistin rajoitukseen. Yritä uudelleen pienemmällä korttipakalla</string>
   <string name="card_browser_delete_card">Poista merkintä</string>
   <string name="card_browser_suspend_card">Keskeytä kortti</string>
   <string name="card_browser_unsuspend_card">Jatka korttia</string>
@@ -54,36 +52,27 @@
   <string name="delete_card_title">Poista merkintä</string>
   <string name="delete_card_message">Poistetaanko tämän merkinnän kaikki kortit? \nhakukenttä: %s</string>
   <string name="card_browser_show_marked">Suodata merkityt</string>
-  <string name="card_browser_field">Muuta CardBrowser kenttä</string>
-  <string name="card_browser_field_title">Muuta CardBrowser kenttä</string>
   <string name="card_browser_show_suspended">Suodata jäädytetyt</string>
   <string name="card_browser_search_by_tag">Suodata kentän mukaan</string>
   <string name="card_browser_tags_shown">Tunnisteet: %1$s</string>
+  <string name="card_browser_list_my_searches">My searches</string>
+  <string name="card_browser_list_my_searches_save">Save search</string>
+  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
+  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
+  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Muuta näytön järjestys</string>
   <string name="card_browser_change_display_order_title">Valitse näytön järjestys</string>
   <string name="card_browser_change_display_order_reverse">Valitse kenttä kahdesti kääntääksesi päinvastoin.</string>
-  <string name="card_browser_order_reverse">(käänteinen)</string>
   <string name="card_details_question">Kysymys</string>
   <string name="card_details_answer">Vastaus</string>
   <string name="card_details_due">Määrä</string>
-  <string name="card_details_last_due">Viimeinen eräpäivä</string>
-  <string name="card_details_now">Nyt</string>
-  <string name="card_details_interval">Aikaväli</string>
-  <string name="card_details_ease">Helppous</string>
-  <string name="card_details_average_time">Keskimääräinen aika</string>
-  <string name="card_details_total_time">Kokonaisaika</string>
-  <string name="card_details_yes_count">Kyllä vastaus</string>
-  <string name="card_details_no_count">Ei vastaus</string>
-  <string name="card_details_added">Lisätty</string>
-  <string name="card_details_changed">Muutettu</string>
   <string name="card_details_tags">Tunnisteet</string>
-  <string name="card_details_model">Merkinnän tyyppi</string>
-  <string name="card_browser_sorting_cards">Lajitellaan kortteja.\nOdota...</string>
   <string name="card_browser_filtering_cards">Suodatetaan kortteja&#8230;\nPeruuta painamalla Takaisin-painiketta</string>
-  <string name="card_details_card_model">Korttimalli</string>
   <string-array name="card_browser_order_labels">
     <item>Ei lajittelua (nopeampi)</item>
-    <item>Hakukentän mukaan</item>
+    <item>By sort field</item>
     <item>Luomisajan mukaan</item>
     <item>Muokkausajan mukaan</item>
     <item>Muutosajan mukaan</item>

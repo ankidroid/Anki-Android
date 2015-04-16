@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">Raþjons</string>
   <string name="statistics_young">Juggs</string>
   <string name="statistics_mature">Uswahsans</string>
   <string name="statistics_young_and_learn">Jugg+Laisjan</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">Relearn</string>
   <string name="statistics_learn">Laisjan</string>
   <string name="statistics_cram">Cram</string>
-  <string name="statistics_type_title">Raþjons</string>
   <string name="stats_cards">Kartos</string>
   <string name="stats_cards_intervals">Cards with given Interval</string>
   <string name="stats_cumulative_cards">Cumulative Cards</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1 menoþs</string>
   <string name="stats_period_year">1 jer</string>
   <string name="stats_period_lifetime">wikolibains</string>
-  <string name="stats_deck_current">wiko</string>
   <string name="stats_deck_collection">galisos</string>
   <string name="stats_time_of_day">ƕeila Dagis</string>
   <string name="stats_day_of_week">Dags Wikons</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">Laisei: &lt;b&gt;%1$s&lt;/b&gt;, Domeins: &lt;b&gt;%2$s&lt;/b&gt;, Aftralaisei: &lt;b&gt;%3$s&lt;/b&gt;, Skaidida: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Raihtos andahafteis ana uswahsjandom kartom: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Ni uswahsjanda karta laisida himma daga.</string>
-  <string name="statistics_period_x_axis_minutes">Minutjus</string>
-  <string name="statistics_new_cards">Niujos kartos</string>
-  <string name="statistics_failed_cards">Failed cards</string>
-  <string name="statistics_fullscreen">Toggle fullscreen</string>
-  <string name="calculating_statistics">Calculating statistics&#8230;</string>
-  <string name="deck_summary_cards">Raþjo karto:</string>
-  <string name="deck_summary_notes">Raþjo meleine:</string>
-  <string name="deck_summary_cards_mature">Uswahsandos kartos:</string>
-  <string name="deck_summary_cards_young">Juggos kartos:</string>
-  <string name="deck_summary_cards_unseen">Unsaiƕanos kartos:</string>
-  <string name="deck_summary_card_age">Karta aldrs</string>
-  <string name="deck_summary_average_interval">Average interval: &lt;b&gt;%.1f&lt;/b&gt; days</string>
-  <string name="deck_summary_answers_correct">Raihtos andahafteis</string>
-  <string name="deck_summary_answers_mature">Mature cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_young">Young cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Seen the first time: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_reviews">Domeinos:</string>
-  <string name="deck_summary_news">Niujos kartos:</string>
-  <string name="deck_summary_average_week">Average seen last week</string>
-  <string name="deck_summary_average_month">Average seen last month</string>
-  <string name="deck_summary_average_year">Average seen last year</string>
-  <string name="deck_summary_average_total">Average seen ever</string>
-  <string name="deck_summary_forecast">Forecast</string>
-  <string name="deck_summary_tomorrow_due">Nauh du maurgina: &lt;b&gt;%d&lt;/b&gt; kartos</string>
-  <string name="deck_summary_tomorrow_new">Niujos du maurgina: &lt;b&gt;%d&lt;/b&gt; kartos</string>
-  <string name="deck_summary_tomorrow_time">Estimated time tomorrow: &lt;b&gt;%d&lt;/b&gt; min.</string>
-  <string name="deck_summary_finished_in">Niujos kartos andidos in: &lt;b&gt;%d&lt;/b&gt; dagam</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; kartos/dagos</string>
-  <string name="deck_summary_deck_age">Wiko aldrs: &lt;b&gt;%d&lt;/b&gt; dagos</string>
   <string name="deck_summary_all_decks">Allos wikons</string>
-  <string name="stats_select_decks">Walei wikon</string>
   <string name="stats_select_time_scale">Walei ƕeilamikilduþ</string>
   <string-array name="next_review_in_s">
     <item>in 1 saikundau</item>
@@ -155,15 +122,6 @@
   <string name="stats_weekly_breakdown">Weekly Breakdown</string>
   <string name="stats_answer_buttons">Answer Buttons</string>
   <string name="stats_cards_types">Cards Types</string>
-  <string-array name="stats_period">
-    <item>1 menoþs</item>
-    <item>1 jer</item>
-    <item>alls</item>
-  </string-array>
-  <string-array name="stats_range">
-    <item>collection</item>
-    <item>andwairþo wiko</item>
-  </string-array>
   <string-array name="stats_day_time_strings">
     <item>4AM</item>
     <item>10AM</item>
@@ -194,11 +152,11 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">Laisidos &lt;b&gt;%1$d kartos&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; himma daga.</item>
-    <item quantity="other">Laisidos &lt;b&gt;%1$d kartos&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; himma daga.</item>
+    <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
+    <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
   </plurals>
   <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Laisidos %1$d kartos in %2$s himma daga.</item>
-    <item quantity="other">Laisidos %1$d kartos in %2$s himma daga.</item>
+    <item quantity="one">Studied %1$d card in %2$s today.</item>
+    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

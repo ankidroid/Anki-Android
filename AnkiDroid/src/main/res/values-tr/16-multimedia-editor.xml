@@ -34,15 +34,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="multimedia_editor_languages_russian">Rusça</string>
-  <string name="multimedia_editor_languages_german">Almanca</string>
-  <string name="multimedia_editor_languages_nepali">Nepalce</string>
-  <string name="multimedia_editor_languages_slovak">Slovakça</string>
-  <string name="multimedia_editor_languages_french">Fransızca</string>
-  <string name="multimedia_editor_languages_spanish">İspanyolca</string>
-  <string name="multimedia_editor_languages_mandarin">Mandarin</string>
-  <string name="multimedia_editor_languages_portuguese">Portekizce</string>
-  <string name="multimedia_editor_languages_english">İngilizce</string>
   <string name="multimedia_editor_popup_image">Resim Ekle</string>
   <string name="multimedia_editor_popup_audio">Ses Kaydet</string>
   <string name="multimedia_editor_popup_text">Gelişmiş Düzenleyici</string>
@@ -83,13 +74,6 @@
   <string name="multimedia_editor_text_field_editing_no_text">Önce biraz yazı girin</string>
   <string name="multimedia_editor_text_field_editing_many_words">Sözlük genellikle bir kelime bekler</string>
   <string name="multimedia_editor_text_field_editing_clone_source">Kaynak</string>
-  <string name="multimedia_editor_activity_note_type">Not türü</string>
-  <string name="multimedia_editor_activity_deck">Deste</string>
-  <string name="multimedia_editor_activity_edit_button">Düzenle</string>
-  <string name="multimedia_editor_activity_swap_button">Karşılıklı değiştir</string>
-  <string name="multimedia_editor_activity_delete_question">Bütün not silinsin mi?</string>
-  <string name="multimedia_editor_activity_delete_confirm">Sil</string>
-  <string name="multimedia_editor_activity_delete_reject">Kalsın</string>
   <string name="multimedia_editor_image_field_editing_galery">Galeri</string>
   <string name="multimedia_editor_image_field_editing_photo">Kamera</string>
   <string name="multimedia_editor_general_downloading">İndiriliyor</string>
@@ -105,7 +89,6 @@
   <string name="multimedia_editor_audio_view_playing_failed">Çalma başarısız</string>
   <string name="title_activity_edit_text">Düzenleme Kutusu</string>
   <string name="title_activity_translation">Çeviri</string>
-  <string name="title_activity_audio_recorder">Ses Kaydedici</string>
   <string name="title_activity_load_pronounciation">Telaffuz</string>
   <string name="title_activity_search_image">Google Resim Arama</string>
 </resources>
