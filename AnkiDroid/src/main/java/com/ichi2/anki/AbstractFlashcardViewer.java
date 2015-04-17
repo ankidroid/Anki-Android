@@ -28,6 +28,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.ActivityNotFoundException;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -1508,18 +1509,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     sHandler.sendMessage(msg);
                     return true;
                 }
-                try {
-                    new URL(url); // dummy variable to check if the string looks like an url
-                } catch (MalformedURLException mue) {
-                    // Ignore malformed urls by handling them and then doing nothing.
-                    return true;
-                }
-                if (url.startsWith("file")) {
+                if (url.startsWith("file") || url.startsWith("data:")) {
                     return false; // Let the webview load files, i.e. local images.
                 }
                 Timber.d("Opening external link \"%s\" with an Intent", url);
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivityWithoutAnimation(intent);
+                try {
+                    startActivityWithoutAnimation(intent);
+                } catch(ActivityNotFoundException e) {
+                    e.printStackTrace(); // Don't crash if the intent is not handled
+                }
                 return true;
             }
 
