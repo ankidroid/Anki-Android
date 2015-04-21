@@ -271,14 +271,16 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
 
     public void hideProgressBar() {
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_spinner);
-        progressBar.setVisibility(View.GONE);
+        if (progressBar != null) {
+          progressBar.setVisibility(View.GONE);
+        }
     }
 
 
     /**
      * Global method to show dialog fragment including adding it to back stack Note: DO NOT call this from an async
      * task! If you need to show a dialog from an async task, use showAsyncDialogFragment()
-     * 
+     *
      * @param newFragment  the DialogFragment you want to show
      */
     public void showDialogFragment(DialogFragment newFragment) {
@@ -301,7 +303,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
      * Global method to show a dialog fragment including adding it to back stack and handling the case where the dialog
      * is shown from an async task, by showing the message in the notification bar if the activity was stopped before the
      * AsyncTask completed
-     * 
+     *
      * @param newFragment  the AsyncDialogFragment you want to show
      */
     public void showAsyncDialogFragment(AsyncDialogFragment newFragment) {
@@ -322,7 +324,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
      * Show a simple message dialog, dismissing the message without taking any further action when OK button is pressed.
      * If a DialogFragment cannot be shown due to the Activity being stopped then the message is shown in the
      * notification bar instead.
-     * 
+     *
      * @param message
      */
     protected void showSimpleMessageDialog(String message) {
@@ -338,7 +340,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
      * Show a simple message dialog, dismissing the message without taking any further action when OK button is pressed.
      * If a DialogFragment cannot be shown due to the Activity being stopped then the message is shown in the
      * notification bar instead.
-     * 
+     *
      * @param message
      * @param reload flag which forces app to be restarted when true
      */
