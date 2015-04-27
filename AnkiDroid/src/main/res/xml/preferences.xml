@@ -139,6 +139,24 @@
                 android:title="@string/show_estimates" />
             <com.ichi2.ui.SeekBarPreference
                 android:defaultValue="100"
+                android:key="cardZoom"
+                android:max="150"
+                android:summary="@string/card_zoom_summ"
+                android:text=" %"
+                android:title="@string/card_zoom"
+                app:interval="10"
+                app:min="10" />
+            <com.ichi2.ui.SeekBarPreference
+                android:defaultValue="100"
+                android:key="imageZoom"
+                android:max="300"
+                android:summary="@string/image_zoom_summ"
+                android:text=" %"
+                android:title="@string/image_zoom"
+                app:interval="10"
+                app:min="50" />
+            <com.ichi2.ui.SeekBarPreference
+                android:defaultValue="100"
                 android:key="answerButtonSize"
                 android:max="170"
                 android:summary="@string/button_size_summ"
@@ -211,24 +229,6 @@
             android:key="browserEditorFont"
             android:summary="@string/pref_browser_editor_font_summ"
             android:title="@string/pref_browser_editor_font" />
-        <com.ichi2.ui.SeekBarPreference
-            android:defaultValue="100"
-            android:key="relativeDisplayFontSize"
-            android:max="150"
-            android:summary="@string/display_font_size_summ"
-            android:text=" %"
-            android:title="@string/display_font_size"
-            app:interval="10"
-            app:min="10" />
-        <com.ichi2.ui.SeekBarPreference
-            android:defaultValue="100"
-            android:key="relativeImageSize"
-            android:max="300"
-            android:summary="@string/image_size_summ"
-            android:text=" %"
-            android:title="@string/image_size"
-            app:interval="10"
-            app:min="50" />
         <com.ichi2.ui.SeekBarPreference
             android:defaultValue="100"
             android:key="relativeCardBrowserFontSize"

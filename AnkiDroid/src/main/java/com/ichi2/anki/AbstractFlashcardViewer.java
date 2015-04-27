@@ -21,6 +21,7 @@ package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -28,7 +29,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.content.ActivityNotFoundException;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -97,10 +97,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -162,16 +159,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mTtsInitialized = false;
     private boolean mReplayOnTtsInit = false;
 
-    /** The percentage of the absolute font size specified in the deck. */
-    private int mDisplayFontSize = 100;
-
-    /** Pattern for font-size style declarations */
-    private static final Pattern fFontSizePattern = Pattern.compile(
-            "font-size\\s*:\\s*([0-9.]+)\\s*((?:px|pt|in|cm|mm|pc|%|em))\\s*;?", Pattern.CASE_INSENSITIVE);
-    /** Pattern for opening/closing span/div tags */
-    private static final Pattern fSpanDivPattern = Pattern.compile("<(/?)(span|div)", Pattern.CASE_INSENSITIVE);
-    /** The relative CSS measurement units for pattern search */
-    private static final Set<String> fRelativeCssUnits = new HashSet<String>(Arrays.asList(new String[] { "%", "em" }));
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -188,7 +175,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mInputWorkaround;
     private boolean mLongClickWorkaround;
     private boolean mPrefFullscreenReview;
-    private int mRelativeImageSize;
+    private int mCardZoom;
+    private int mImageZoom;
     private int mRelativeButtonSize;
     private boolean mDoubleScrolling;
     private boolean mScrollingButtons;
@@ -1699,8 +1687,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mNightMode = preferences.getBoolean("invertedColors", false);
         mInvertedColors = mNightMode;
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", false);
-        mDisplayFontSize = preferences.getInt("relativeDisplayFontSize", 100);// Card.DEFAULT_FONT_SIZE_RATIO);
-        mRelativeImageSize = preferences.getInt("relativeImageSize", 100);
+        mCardZoom = preferences.getInt("cardZoom", 100);
+        mImageZoom = preferences.getInt("imageZoom", 100);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mInputWorkaround = preferences.getBoolean("inputWorkaround", false);
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
@@ -2041,9 +2029,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private void updateCard(String content) {
         Timber.d("updateCard()");
 
-        // Check whether there is a hard coded font-size in the content and apply the relative font size
-        // Check needs to be done before CSS is applied to content;
-        content = recalculateHardCodedFontSize(content, mDisplayFontSize);
 
         // Add CSS for font color and font size
         if (mCurrentCard == null) {
@@ -2083,10 +2068,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         StringBuilder style = new StringBuilder();
         mExtensions.updateCssStyle(style);
 
-        // Scale images.
-        if (mRelativeImageSize != 100) {
-            style.append(String.format("img { zoom: %s }\n", mRelativeImageSize / 100.0));
+        // Zoom cards
+        if (mCardZoom != 100) {
+            style.append(String.format("body { zoom: %s }\n", mCardZoom / 100.0));
         }
+
+        // Zoom images
+        if (mImageZoom != 100) {
+            style.append(String.format("img { zoom: %s }\n", mImageZoom / 100.0));
+        }
+
         Timber.d("::style::", style);
 
         if (mNightMode) {
@@ -2277,71 +2268,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         sb.append("\">");
         sb.append(content);
         sb.append("</div>");
-        return sb.toString();
-    }
-
-
-    /**
-     * Parses content in question and answer to see, whether someone has hard coded the font size in a card layout. If
-     * this is so, then the font size must be replaced with one corrected by the relative font size. If a relative CSS
-     * unit measure is used (e.g. 'em'), then only the outer tag 'span' or 'div' tag in a hierarchy of such tags is
-     * adjusted. This is not bullet-proof, a combination of font-size in span and in css classes will break this logic,
-     * but let's just avoid building an HTML parser for this feature. Anything that threatens common sense will break
-     * this logic, eg nested span/divs with CSS classes having font-size declarations with relative units (40% dif
-     * inside 120% div inside 60% div). Broken HTML also breaks this. Feel free to improve, but please keep it short and
-     * fast.
-     *
-     * @param content The HTML content that will be font-size-adjusted.
-     * @param percentage The relative font size percentage defined in preferences
-     * @return
-     */
-    private String recalculateHardCodedFontSize(String content, int percentage) {
-        if (percentage == 100 || null == content || 0 == content.trim().length()) {
-            return content.trim();
-        }
-        StringBuffer sb = new StringBuffer();
-        int tagDepth = 0; // to find out whether a relative CSS unit measure is within another one
-        int lastRelUnitnTagDepth = 100; // the hierarchy depth of the current outer relative span
-        double doubleSize; // for relative css measurement values
-
-        int lastMatch = 0;
-        String contentPart;
-        Matcher m2;
-        Matcher m = fFontSizePattern.matcher(content);
-        while (m.find()) {
-            contentPart = content.substring(lastMatch, m.start());
-            m2 = fSpanDivPattern.matcher(contentPart);
-            while (m2.find()) {
-                if (m2.group(1).equals("/")) {
-                    --tagDepth;
-                } else {
-                    ++tagDepth;
-                }
-                if (tagDepth < lastRelUnitnTagDepth) {
-                    // went outside of previous scope
-                    lastRelUnitnTagDepth = 100;
-                }
-            }
-            lastMatch = m.end();
-
-            try {
-                doubleSize = Double.parseDouble(m.group(1));
-                doubleSize = doubleSize * percentage / 100;
-            } catch (NumberFormatException e) {
-                continue; // ignore this one
-            }
-
-            if (fRelativeCssUnits.contains(m.group(2))) {
-                // handle relative units
-                if (lastRelUnitnTagDepth < tagDepth) {
-                    m.appendReplacement(sb, m.group());
-                    continue;
-                }
-                lastRelUnitnTagDepth = tagDepth;
-            }
-            m.appendReplacement(sb, String.format(Locale.US, "font-size:%.2f%s;", doubleSize, m.group(2)));
-        }
-        m.appendTail(sb);
         return sb.toString();
     }
 
