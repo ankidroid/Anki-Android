@@ -122,6 +122,14 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private ListPreference newSpread;
     private SeekBarPreference dayOffset;
 
+    // load balancer options
+    private CheckBoxPreference loadBalancerEnable;
+    private NumberRangePreference loadBalancerPercentBefore;
+    private NumberRangePreference loadBalancerPercentAfter;
+    private NumberRangePreference loadBalancerBeforeMax;
+    private NumberRangePreference loadBalancerBeforeMin;
+    private NumberRangePreference loadBalancerAfterMax;
+    private NumberRangePreference loadBalancerAfterMin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,6 +177,14 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             workarounds.removePreference(fixArabicText);
             preferences.edit().putBoolean("fixArabicText", false);
         }
+
+        loadBalancerEnable = (CheckBoxPreference) getPreferenceScreen().findPreference("loadBalancerEnable");
+        loadBalancerPercentBefore = (NumberRangePreference) getPreferenceScreen().findPreference("loadBalancerPercentBefore");
+        loadBalancerPercentAfter = (NumberRangePreference) getPreferenceScreen().findPreference("loadBalancerPercentAfter");
+        loadBalancerBeforeMax = (NumberRangePreference) getPreferenceScreen().findPreference("loadBalancerBeforeMax");
+        loadBalancerBeforeMin = (NumberRangePreference) getPreferenceScreen().findPreference("loadBalancerBeforeMin");
+        loadBalancerAfterMax = (NumberRangePreference) getPreferenceScreen().findPreference("loadBalancerAfterMax");
+        loadBalancerAfterMin = (NumberRangePreference) getPreferenceScreen().findPreference("loadBalancerAfterMin");
 
         initializeLanguageDialog();
         
@@ -258,6 +274,13 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 showProgress.setChecked(conf.getBoolean("dueCounts"));
                 newSpread.setValueIndex(conf.getInt("newSpread"));
                 useCurrent.setValueIndex(conf.optBoolean("addToCur", true) ? 0 : 1);
+
+                loadBalancerPercentBefore.setValue((int) (conf.getDouble("LBPercentBefore") * 100));
+                loadBalancerPercentAfter.setValue((int) (conf.getDouble("LBPercentAfter") * 100));
+                loadBalancerBeforeMax.setValue(conf.getInt("LBMaxBefore"));
+                loadBalancerBeforeMin.setValue(conf.getInt("LBMinBefore"));
+                loadBalancerAfterMax.setValue(conf.getInt("LBMaxAfter"));
+                loadBalancerAfterMin.setValue(conf.getInt("LBMinAfter"));
             } catch (JSONException e) {
                 throw new RuntimeException();
             } catch (NumberFormatException e) {
@@ -548,7 +571,29 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 mCol.setMod();
             } else if (key.equals("minimumCardsDueForNotification")) {
                 updateNotificationPreference();
+            } else if (key.equals("loadBalancerEnable")) {
+                mCol.getSched().setLoadBalancer(loadBalancerEnable.isChecked());
+                mCol.setMod();
+            } else if (key.equals("loadBalancerPercentBefore")) {
+                mCol.getConf().put("LBPercentBefore", loadBalancerPercentBefore.getValue() / 100.0);
+                mCol.setMod();
+            } else if (key.equals("loadBalancerPercentAfter")) {
+                mCol.getConf().put("LBPercentAfter", loadBalancerPercentAfter.getValue() / 100.0);
+                mCol.setMod();
+            } else if (key.equals("loadBalancerBeforeMax")) {
+                mCol.getConf().put("LBMaxBefore", loadBalancerBeforeMax.getValue());
+                mCol.setMod();
+            } else if (key.equals("loadBalancerBeforeMin")) {
+                mCol.getConf().put("LBMinBefore", loadBalancerBeforeMin.getValue());
+                mCol.setMod();
+            } else if (key.equals("loadBalancerAfterMax")) {
+                mCol.getConf().put("LBMaxAfter", loadBalancerAfterMax.getValue());
+                mCol.setMod();
+            } else if (key.equals("loadBalancerAfterMin")) {
+                mCol.getConf().put("LBMinAfter", loadBalancerAfterMin.getValue());
+                mCol.setMod();
             }
+
             
             if (Arrays.asList(sShowValueInSummList).contains(key)) {
                 if (Arrays.asList(sListNumericCheck).contains(key)) {

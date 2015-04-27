@@ -159,6 +159,16 @@
     <string name="filter_google_translate">From Google Translate</string>
     <string name="filter_google_translate_summ">Just save source word and translation</string>
     <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
+    <string name="loadbalancer_enable">Enable Load Balancer</string>
+    <string name="loadbalancer_enable_summ">A modification to the scheduling algorithm to try and keep a consistent amount of cards due each day.</string>
+    <string name="loadbalancer_percent_days_before">Days Before (Percent)</string>
+    <string name="loadbalancer_percent_days_before_summ">Number of days before the scheduled day to check when scheduling the card.</string>
+    <string name="loadbalancer_percent_days_after">Days After (Percent)</string>
+    <string name="loadbalancer_percent_days_after_summ">Number of days after the scheduled day to check when scheduling the card.</string>
+    <string name="loadbalancer_max_days_before">Maximum Days Before</string>
+    <string name="loadbalancer_max_days_after">Maximum Days After</string>
+    <string name="loadbalancer_min_days_before">Minimum Days Before</string>
+    <string name="loadbalancer_min_days_after">Minimum Days After</string>
 
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Select tags</string>

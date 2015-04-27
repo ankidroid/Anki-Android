@@ -458,6 +458,55 @@
                 android:key="double_scrolling"
                 android:summary="@string/double_scrolling_gap_summ"
                 android:title="@string/double_scrolling_gap" />
+            <PreferenceScreen android:title="Load Balancer">
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="loadBalancerEnable"
+                    android:summary="@string/loadbalancer_enable_summ"
+                    android:title="@string/loadbalancer_enable" />
+                <com.ichi2.preferences.NumberRangePreference
+                    android:defaultValue="10"
+                    android:key="loadBalancerPercentBefore"
+                    android:summary="@string/loadbalancer_percent_days_before_summ"
+                    android:title="@string/loadbalancer_percent_days_before"
+                    app:max="100"
+                    app:min="0" />
+                <com.ichi2.preferences.NumberRangePreference
+                    android:defaultValue="10"
+                    android:key="loadBalancerPercentAfter"
+                    android:summary="@string/loadbalancer_percent_days_after_summ"
+                    android:title="@string/loadbalancer_percent_days_after"
+                    app:max="100"
+                    app:min="0" />
+                <com.ichi2.preferences.NumberRangePreference
+                    android:defaultValue="6"
+                    android:key="loadBalancerBeforeMax"
+                    android:summary=""
+                    android:title="@string/loadbalancer_max_days_before"
+                    app:max="100"
+                    app:min="0" />
+                <com.ichi2.preferences.NumberRangePreference
+                    android:defaultValue="1"
+                    android:key="loadBalancerBeforeMin"
+                    android:summary=""
+                    android:title="@string/loadbalancer_min_days_before"
+                    app:max="100"
+                    app:min="0" />
+                <com.ichi2.preferences.NumberRangePreference
+                    android:defaultValue="3"
+                    android:key="loadBalancerAfterMax"
+                    android:summary=""
+                    android:title="@string/loadbalancer_max_days_after"
+                    app:max="100"
+                    app:min="0" />
+                <com.ichi2.preferences.NumberRangePreference
+                    android:defaultValue="1"
+                    android:key="loadBalancerAfterMin"
+                    android:summary=""
+                    android:title="@string/loadbalancer_min_days_after"
+                    app:max="100"
+                    app:min="0" />
+            </PreferenceScreen>
         </PreferenceCategory>
     </PreferenceScreen>
     <Preference 
