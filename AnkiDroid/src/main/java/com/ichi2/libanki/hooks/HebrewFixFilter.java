@@ -1,6 +1,12 @@
 
 package com.ichi2.libanki.hooks;
 
+import android.util.Pair;
+
+import com.ichi2.libanki.Media;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,11 +39,23 @@ public class HebrewFixFilter extends Hook {
 
 
     private String applyFixForHebrew(String text) {
+        // Track the regions of text that belong to a media reference so we can skip them.
+        // Modifying these regions would break the proper display/playback of the media.
+        List<Pair<Integer, Integer>> mediaRegions = new ArrayList<>();
+        for (Pattern p : Media.mRegexps) {
+            Matcher m = p.matcher(text);
+            while (m.find()) {
+                mediaRegions.add(new Pair<>(m.start(), m.end()));
+            }
+        }
+
         Matcher m = sHebrewPattern.matcher(text);
         StringBuffer sb = new StringBuffer();
-
         while (m.find()) {
             String hebrewText = m.group();
+            if (regionOverlapsMedia(mediaRegions, m.start(), m.end())) {
+                continue;
+            }
             String reversed = new StringBuffer(hebrewText).reverse().toString();
             String translated = translate(reversed);
             m.appendReplacement(sb, "<span style=\"font-family:Tohu;\">" + translated + "</span>");
@@ -60,7 +78,7 @@ public class HebrewFixFilter extends Hook {
      */
     String translate(String text) {
         StringBuilder sb = new StringBuilder(text.length());
-        int codePoint = 0;
+        int codePoint;
 
         for (int i = 0; i < text.length(); i++) {
             codePoint = text.codePointAt(i);
@@ -85,5 +103,15 @@ public class HebrewFixFilter extends Hook {
             }
         }
         return sb.toString();
+    }
+
+    private boolean regionOverlapsMedia(List<Pair<Integer, Integer>> mediaRegions, int start, int end) {
+        for (Pair<Integer, Integer> region : mediaRegions) {
+            if (start > region.first && start < region.second
+                    || end > region.first && end < region.second) {
+                return true;
+            }
+        }
+        return false;
     }
 }
