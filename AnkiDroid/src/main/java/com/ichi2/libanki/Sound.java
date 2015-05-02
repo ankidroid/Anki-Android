@@ -212,7 +212,7 @@ public class Sound {
             String soundMarker = matcher.group();
             int markerStart = contentLeft.indexOf(soundMarker);
             stringBuilder.append(contentLeft.substring(0, markerStart));
-            stringBuilder.append("<a class='replaybutton' href='playsound:" + soundPath + "'>"
+            stringBuilder.append("<a class='replaybutton' href=\"playsound:" + soundPath + "\">"
                         + "<span style='padding:5px;'>"+ button
                         + "</span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
