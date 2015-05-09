@@ -76,6 +76,7 @@ import com.ichi2.anki.dialogs.SyncErrorDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
+import com.ichi2.anki.widgets.DeckAdapter;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask;
@@ -144,7 +145,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mRecyclerViewLayoutManager;
-    private RecyclerView.Adapter mDeckListAdapter;
+    private DeckAdapter mDeckListAdapter;
     private List<Sched.DeckDueTreeNode> mDeckList;
 
     private TextView mTodayTextView;
@@ -171,6 +172,13 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
+
+    private final OnClickListener mDeckExpanderClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            collapseContextMenuDeck((Long) view.getTag());
+        }
+    };
 
     private final OnClickListener mDeckClickListener = new OnClickListener() {
         @Override
@@ -391,7 +399,10 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         mRecyclerView.setLayoutManager(mRecyclerViewLayoutManager);
 
         // create and set an adapter for the RecyclerView
-        mDeckListAdapter = new DeckAdapter(mDeckList);
+        mDeckListAdapter = new DeckAdapter(mDeckList, getResources(), getLayoutInflater(), getCol());
+        mDeckListAdapter.setDeckClickListener(mDeckClickListener);
+        mDeckListAdapter.setDeckExpanderClickListener(mDeckExpanderClickListener);
+        mDeckListAdapter.setDeckLongClickListener(mDeckLongClickListener);
         mRecyclerView.setAdapter(mDeckListAdapter);
 
         mTodayTextView = (TextView) findViewById(R.id.today_stats_text_view);
@@ -1791,35 +1802,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         }, new TaskData(getCol()));
     }
 
-
-    /**
-     * Returns the name of the deck to be displayed in the deck list.
-     * <p/>
-     * Various properties of a deck are indicated to the user by the deck name in the deck list
-     * (as opposed to additional native UI elements). This includes the amount of indenting
-     * for nested decks based on depth and an indicator of collapsed state.
-     */
-    private String deckExpander(int depth, boolean collapsed, int children) {
-        String s = new String();
-        if (collapsed) {
-            // add arrow pointing right if collapsed
-            s = "\u25B7 ";
-        } else if (children > 0) {
-            // add arrow pointing down if deck has children
-            s = "\u25BD ";
-        } else {
-            // add empty spaces
-            s = "\u2009\u2009\u2009 ";
-        }
-        if (depth == 0) {
-            return s;
-        } else {
-            // Add 4 spaces for every level of nesting
-            return new String(new char[depth]).replace("\0", "\u2009\u2009\u2009 ") + s;
-        }
-    }
-
-
     // Callback to collapse currently selected deck
     public void collapseContextMenuDeck() {
         collapseContextMenuDeck(mContextMenuDid);
@@ -2056,114 +2038,4 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     public void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched) {
         getFragment().createFilteredDeck(delays, terms, resched);
     }
-
-
-    public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
-        private LayoutInflater mLayoutInflater;
-        private List<Sched.DeckDueTreeNode> mDeckList;
-
-        private boolean mHideDefaultDeck;
-
-        // ViewHolder class to save inflated views for recycling
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            public RelativeLayout mDeckLayout;
-            public TextView mDeckExpander;
-            public TextView mDeckName;
-            public TextView mDeckNew, mDeckLearn, mDeckRev;
-
-            public ViewHolder(View v) {
-                super(v);
-
-                mDeckLayout = (RelativeLayout) v.findViewById(R.id.DeckPickerHoriz);
-                mDeckExpander = (TextView) v.findViewById(R.id.DeckPickerExpander);
-                mDeckName = (TextView) v.findViewById(R.id.DeckPickerName);
-                mDeckNew = (TextView) v.findViewById(R.id.deckpicker_new);
-                mDeckLearn = (TextView) v.findViewById(R.id.deckpicker_lrn);
-                mDeckRev = (TextView) v.findViewById(R.id.deckpicker_rev);
-            }
-        }
-
-        public DeckAdapter(List<Sched.DeckDueTreeNode> deckList) {
-            mLayoutInflater = getLayoutInflater();
-            mDeckList = deckList;
-        }
-
-        @Override
-        public DeckAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            // create a new view
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.deck_item, parent, false);
-
-            // return ViewHolder with new view
-            return new ViewHolder(v);
-        }
-
-        // Replace the contents of a view (invoked by the layout manager)
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            // update views for this node
-            Sched.DeckDueTreeNode node = mDeckList.get(position);
-
-            boolean collapsed = getCol().getDecks().get(node.did).optBoolean("collapsed", false);
-
-            // set expander and make expander clickable if needed
-            holder.mDeckExpander.setText(deckExpander(node.depth, collapsed, node.children.size()));
-            if (node.children.size() > 0) {
-                holder.mDeckExpander.setClickable(false);
-                holder.mDeckExpander.setTag(node.did);
-                holder.mDeckExpander.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        collapseContextMenuDeck((Long) view.getTag());
-                    }
-                });
-            } else {
-                holder.mDeckExpander.setClickable(false);
-            }
-
-            // set deck name
-            holder.mDeckName.setText(node.names[0]);
-
-            // set deck new card count and color
-            holder.mDeckNew.setText(String.valueOf(node.newCount));
-            holder.mDeckNew.setTextColor((node.newCount == 0) ?
-                    getResources().getColor(R.color.zero_count) : getResources().getColor(R.color.new_count));
-
-            // set deck learn card count and color
-            holder.mDeckLearn.setText(String.valueOf(node.lrnCount));
-            holder.mDeckLearn.setTextColor((node.lrnCount == 0) ?
-                    getResources().getColor(R.color.zero_count) : getResources().getColor(R.color.learn_count));
-
-            // set deck review card count and color
-            holder.mDeckRev.setText(String.valueOf(node.revCount));
-            holder.mDeckRev.setTextColor((node.revCount == 0) ?
-                    getResources().getColor(R.color.zero_count) : getResources().getColor(R.color.review_count));
-
-            // store deck ID in layout's tag, for easy retrieval in our click listeners
-            holder.mDeckLayout.setTag(node.did);
-
-            // set click listeners
-            holder.mDeckLayout.setOnClickListener(mDeckClickListener);
-            holder.mDeckLayout.setOnLongClickListener(mDeckLongClickListener);
-
-            // if this deck is the current deck, highlight it
-            if (node.did == getCol().getDecks().current().optLong("id")) {
-//                mDeckListView.setItemChecked(mOldDeckList.size(), true); // TODO
-            }
-        }
-
-        @Override
-        public int getItemCount() {
-            // TODO
-            // If the default deck is empty, hide it
-            // We don't hide it if it's the only deck or if it has sub-decks
-//            if (node.did == 1 && cnt > 1 && node.children.size() == 0) {
-//                if (getCol().getDb().queryScalar("select 1 from cards where did = 1", false) == 0) {
-//                    mHideDefaultDeck = true;
-//                }
-//            }
-
-            return mDeckList.size();
-        }
-    }
 }
-
