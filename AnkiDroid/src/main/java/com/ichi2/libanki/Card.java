@@ -400,16 +400,18 @@ public class Card implements Cloneable {
     }
 
 
-    public String getPureAnswerForReading() {
+    /*
+     * Returns the answer with anything before the <hr id=answer> tag removed
+     */
+    public String getPureAnswer() {
         String s = _getQA(false).get("a");
-        String target = "<hr id=answer>\n\n";
+        String target = "<hr id=answer>";
         int pos = s.indexOf(target);
         if (pos == -1) {
             return s;
         }
-        return s.substring(pos + target.length());
+        return s.substring(pos + target.length()).trim();
     }
-
 
     public void stopTimer() {
         mTimerStopped = Utils.now();

@@ -97,8 +97,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -2197,7 +2195,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             ReadText.textToSpeech(Utils.stripHTML(card.q(true)), getDeckIdForCard(card), card.getOrd(),
                     Sound.SOUNDS_QUESTION);
         } else if (Sound.SOUNDS_ANSWER == cardSide) {
-            ReadText.textToSpeech(Utils.stripHTML(card.getPureAnswerForReading()), getDeckIdForCard(card),
+            ReadText.textToSpeech(Utils.stripHTML(card.getPureAnswer()), getDeckIdForCard(card),
                     card.getOrd(), Sound.SOUNDS_ANSWER);
         }
     }
