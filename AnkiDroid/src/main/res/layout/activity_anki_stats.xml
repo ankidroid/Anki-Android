@@ -13,7 +13,7 @@
 
         <include layout="@layout/toolbar" />
 
-		<com.example.android.common.view.SlidingTabLayout
+		<com.ichi2.ui.SlidingTabLayout
 			android:id="@+id/sliding_tabs"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"/>

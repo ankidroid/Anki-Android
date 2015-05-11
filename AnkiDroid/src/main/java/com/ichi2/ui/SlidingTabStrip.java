@@ -14,7 +14,7 @@
  * limitations under the License.
  */
  
-package com.example.android.common.view;
+package com.ichi2.ui;
  
 import android.content.Context;
 import android.graphics.Canvas;

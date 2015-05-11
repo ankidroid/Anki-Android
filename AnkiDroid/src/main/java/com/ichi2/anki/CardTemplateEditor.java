@@ -34,7 +34,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.example.android.common.view.SlidingTabLayout;
+import com.ichi2.ui.SlidingTabLayout;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.DeckTask;

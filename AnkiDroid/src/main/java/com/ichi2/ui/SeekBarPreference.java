@@ -6,7 +6,7 @@
  * adjusted by Norbert Nagold 2011 <norbert.nagold@gmail.com>
  */
 
-package com.hlidskialf.android.preference;
+package com.ichi2.ui;
 
 import android.app.AlertDialog;
 import android.content.Context;
