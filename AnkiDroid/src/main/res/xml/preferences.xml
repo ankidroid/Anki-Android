@@ -92,7 +92,7 @@
                 android:key="newSpread"
                 android:summary=""
                 android:title="@string/new_spread" />
-            <com.hlidskialf.android.preference.SeekBarPreference
+            <com.ichi2.ui.SeekBarPreference
                 android:key="dayOffset"
                 android:max="23"
                 android:summary="@string/day_offset_summ"
@@ -137,7 +137,7 @@
                 android:key="showEstimates"
                 android:summary="@string/show_estimates_summ"
                 android:title="@string/show_estimates" />
-            <com.hlidskialf.android.preference.SeekBarPreference
+            <com.ichi2.ui.SeekBarPreference
                 android:defaultValue="100"
                 android:key="answerButtonSize"
                 android:max="170"
@@ -152,7 +152,7 @@
                 android:title="@string/show_progress" />
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_whiteboard" >
-            <com.hlidskialf.android.preference.SeekBarPreference
+            <com.ichi2.ui.SeekBarPreference
                 android:defaultValue="6"
                 android:key="whiteBoardStrokeWidth"
                 android:max="30"
@@ -172,14 +172,14 @@
                 android:key="timeoutAnswer"
                 android:summary="@string/timeout_answer_summ"
                 android:title="@string/timeout_answer_text" />
-            <com.hlidskialf.android.preference.SeekBarPreference
+            <com.ichi2.ui.SeekBarPreference
                 android:defaultValue="6"
                 android:dependency="timeoutAnswer"
                 android:key="timeoutAnswerSeconds"
                 android:max="30"
                 android:summary="@string/timeout_answer_seconds_summ"
                 android:title="@string/timeout_answer_seconds" />
-            <com.hlidskialf.android.preference.SeekBarPreference
+            <com.ichi2.ui.SeekBarPreference
                 android:defaultValue="60"
                 android:dependency="timeoutAnswer"
                 android:key="timeoutQuestionSeconds"
@@ -211,7 +211,7 @@
             android:key="browserEditorFont"
             android:summary="@string/pref_browser_editor_font_summ"
             android:title="@string/pref_browser_editor_font" />
-        <com.hlidskialf.android.preference.SeekBarPreference
+        <com.ichi2.ui.SeekBarPreference
             android:defaultValue="100"
             android:key="relativeDisplayFontSize"
             android:max="150"
@@ -220,7 +220,7 @@
             android:title="@string/display_font_size"
             app:interval="10"
             app:min="10" />
-        <com.hlidskialf.android.preference.SeekBarPreference
+        <com.ichi2.ui.SeekBarPreference
             android:defaultValue="100"
             android:key="relativeImageSize"
             android:max="300"
@@ -229,7 +229,7 @@
             android:title="@string/image_size"
             app:interval="10"
             app:min="50" />
-        <com.hlidskialf.android.preference.SeekBarPreference
+        <com.ichi2.ui.SeekBarPreference
             android:defaultValue="100"
             android:key="relativeCardBrowserFontSize"
             android:max="200"
@@ -249,7 +249,7 @@
             android:key="gestures"
             android:summary="@string/gestures_summ"
             android:title="@string/gestures" />
-        <com.hlidskialf.android.preference.SeekBarPreference
+        <com.ichi2.ui.SeekBarPreference
             android:defaultValue="100"
             android:dependency="gestures"
             android:dialogMessage="@string/swipe_sensitivity_summ"
@@ -351,7 +351,7 @@
                 android:key="useBackup"
                 android:summary="@string/pref_backup_summ"
                 android:title="@string/pref_backup" />
-            <com.hlidskialf.android.preference.SeekBarPreference
+            <com.ichi2.ui.SeekBarPreference
                 android:defaultValue="8"
                 android:dependency="useBackup"
                 android:key="backupMax"
