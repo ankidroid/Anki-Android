@@ -41,11 +41,11 @@ public class HebrewFixFilter extends Hook {
     private String applyFixForHebrew(String text) {
         // Track the regions of text that belong to a media reference so we can skip them.
         // Modifying these regions would break the proper display/playback of the media.
-        List<Pair<Integer, Integer>> mediaRegions = new ArrayList<>();
+        List<Pair<Integer, Integer>> mediaRegions = new ArrayList<Pair<Integer, Integer>>();
         for (Pattern p : Media.mRegexps) {
             Matcher m = p.matcher(text);
             while (m.find()) {
-                mediaRegions.add(new Pair<>(m.start(), m.end()));
+                mediaRegions.add(new Pair<Integer, Integer>(m.start(), m.end()));
             }
         }
 
