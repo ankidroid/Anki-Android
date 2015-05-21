@@ -844,7 +844,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
 
             publishProgress(new TaskData(res.getString(R.string.import_update_counts)));
-            return new TaskData(true);
+            return new TaskData(addedCount, null, true);
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundImportAdd - RuntimeException on importing cards");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportAdd");
