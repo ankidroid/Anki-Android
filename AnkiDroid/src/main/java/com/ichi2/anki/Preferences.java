@@ -105,8 +105,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight",
             "gestureTapLeft", "newSpread", "useCurrent", "defaultFont", "overrideFontBehavior", "browserEditorFont" };
     private static String[] sListNumericCheck = {"minimumCardsDueForNotification"};
-    private static String[] sShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
-            "relativeImageSize", "answerButtonSize", "whiteBoardStrokeWidth", "swipeSensitivity",
+    private static String[] sShowValueInSummSeek = { "cardZoom", "imageZoom", "relativeCardBrowserFontSize",
+            "answerButtonSize", "whiteBoardStrokeWidth", "swipeSensitivity",
             "timeoutAnswerSeconds", "timeoutQuestionSeconds", "backupMax", "dayOffset" };
     private static String[] sShowValueInSummEditText = { "deckPath" };
     private static String[] sShowValueInSummNumRange = { "timeLimit", "learnCutoff" };

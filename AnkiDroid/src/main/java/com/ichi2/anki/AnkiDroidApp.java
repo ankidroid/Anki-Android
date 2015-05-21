@@ -136,7 +136,7 @@ public class AnkiDroidApp extends Application {
      * The latest package version number that included changes to the preferences that requires handling. All
      * collections being upgraded to (or after) this version must update preferences.
      */
-    public static final int CHECK_PREFERENCES_AT_VERSION = 20500113;
+    public static final int CHECK_PREFERENCES_AT_VERSION = 20500133;
 
 
     /**

@@ -950,6 +950,15 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         if (previousVersionCode < 20400203) {
             preferences.edit().putInt("swipeSensitivity", 100).commit();
         }
+
+        // when upgrading from before 2.5alpha33
+        if (previousVersionCode < 20500133) {
+            // Card zooming behaviour was changed the preferences renamed
+            int oldCardZoom = preferences.getInt("relativeDisplayFontSize", 100);
+            int oldImageZoom = preferences.getInt("relativeImageSize", 100);
+            preferences.edit().putInt("cardZoom", oldCardZoom).commit();
+            preferences.edit().putInt("imageZoom", oldImageZoom).commit();
+        }
     }
 
 
