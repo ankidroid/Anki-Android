@@ -85,8 +85,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(getCol(), mSched, null,
                 0));
 
-        // Since we aren't actually answering a card, decrement the rep count
-        mSched.setReps(mSched.getReps() - 1);
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
         mSched.setContext(new WeakReference<Activity>(this));
