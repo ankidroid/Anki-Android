@@ -2128,8 +2128,8 @@ public class Sched {
                     // if bury is disabled, we still discard to give same-day spacing
                     if (buryNew) {
                         toBury.add(cid);
-                        mNewQueue.remove(cid);
                     }
+                    mNewQueue.remove(cid);
                 }
             }
         } finally {
