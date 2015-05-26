@@ -55,6 +55,25 @@ var resizeImages = function() {
     resizeDone = true;
 };
 
+function taFocus() {
+    var dcb = document.getElementById("doflip_checkbox");
+    if (dcb)
+    {
+        dcb.checked = true;
+    }
+    window.location.href = "signal:typefocus";
+}
+
+function taBlur() {
+    var dcb = document.getElementById("doflip_checkbox");
+    if (dcb)
+    {
+        dcb.checked = false;
+        document.taform.submit();
+    }
+    window.location.href = "signal:typeblur";
+}
+
 window.onload = function() {
     /* If the WebView loads too early on Android <= 4.3 (which happens on the first card or
        regularly with WebView switching enabled), the window dimensions returned to us
