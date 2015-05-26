@@ -97,6 +97,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.net.URLDecoder;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -757,9 +758,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
         // The invisible checkbox is used to transmit the focus state, so that we can flip the card if the input had
         // focus.
-        // TODO: get the size and font. Add something like “style="font-family: '%s'; font-size: %spx;""” to the text
-        // input tag.
-        return m.replaceAll(
+        // TODO: get the size and font.
+        // TODO: Find a way to make the blur work with more than one input tag with the same id/more than one form.
+        return m.replaceFirst(
             "<form name=taform id=typeform method=get action=\"typeanswer:\" style=\"display: inline;\">\n" +
             "<input type=text name=typed id=typeans onfocus=\"taFocus();\" onblur=\"taBlur();\" " +
             // "style=\"font-family: '" + mTypeFont + "'; font-size: " + mTypeSize + "px;\">\n" +
@@ -1502,7 +1503,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                         mTypeInput = URLDecoder.decode(typedMatcher.group(1));
                     }
                     if (url.contains("doflip=on")) {
-                        Timber.d(AnkiDroidApp.TAG, "flip via link");
+                        Timber.d("flip via link");
                         mFlipCardLayout.performClick();
                     }
                     return true;
@@ -1510,10 +1511,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 if (url.equals("signal:typefocus")) {
                     // Hiding the view button when the text input has focus avoids hiding too much of the card, but it
                     // is also a way no …
+                    Timber.d("signal:typefocus");
                     mFlipCardLayout.setVisibility(View.GONE);
                     return true;
                 }
                 if (url.equals("signal:typeblur")) {
+                    Timber.d("signal:typeblur");
                     mFlipCardLayout.setVisibility(View.VISIBLE);
                     return true;
                 }
