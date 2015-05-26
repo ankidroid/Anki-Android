@@ -171,7 +171,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mPrefHideDueCount;
     private boolean mShowTimer;
     protected boolean mPrefWhiteboard;
-    private boolean mPrefWriteAnswers;
     private boolean mInputWorkaround;
     private boolean mLongClickWorkaround;
     private boolean mPrefFullscreenReview;
@@ -201,6 +200,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * The correct answer in the compare to field if answer should be given by learner. Null if no answer is expected.
      */
     private String mTypeCorrect;
+    private String mTypeFont;
+    private String mTypeSize;  // locigally this is an (integer) number. Treating it as a string simplifies some things.
     private String mTypeWarning;
 
     private boolean mIsSelecting = false;
@@ -718,6 +719,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                         // narrow to cloze
                         mTypeCorrect = contentForCloze(mTypeCorrect, clozeIdx);
                     }
+                    // mTypeFont = (String) (ja.getJSONObject(i).get("font"));
+                    // mTypeSize = (String) (ja.getJSONObject(i).get("size"));
                     break;
                 }
             }
@@ -750,11 +753,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mTypeWarning != null) {
             return m.replaceFirst(mTypeWarning);
         }
-        if (mPrefWriteAnswers) {
-            return m.replaceFirst("<span id=typeans class=\"typePrompt\">........</span>");
-        } else {
-            return m.replaceFirst("<span id=typeans class=\"typePrompt typeOff\">........</span>");
-        }
+        // The invisible checkbox is used to transmit the focus state, so that we can flip the card if the input had
+        // focus.
+        // TODO: get the size and font. Add something like “style="font-family: '%s'; font-size: %spx;""” to the text
+        // input tag.
+        return m.replaceAll(
+            "<form name=taform id=typeform method=get action=\"typeanswer:\" style=\"display: inline;\">\n" +
+            "<input type=text name=typed id=typeans onfocus=\"taFocus();\" onblur=\"taBlur();\" " +
+            // "style=\"font-family: '" + mTypeFont + "'; font-size: " + mTypeSize + "px;\">\n" +
+            ">\n" +
+            "<input type=checkbox name=doflip style=\"display: none;\" id=doflip_checkbox unchecked></form>");
     }
 
 
@@ -770,33 +778,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Matcher m = sTypeAnsPat.matcher(buf);
         DiffEngine diffEngine = new DiffEngine();
         StringBuilder sb = new StringBuilder();
-        sb.append("<div");
-        if (!mPrefWriteAnswers) {
-            sb.append(" class=\"typeOff\"");
-        }
-        sb.append("><code id=typeans>");
-        if (!TextUtils.isEmpty(userAnswer)) {
-            // The user did type something.
-            if (userAnswer.equals(correctAnswer)) {
-                // and it was right.
-                sb.append(DiffEngine.wrapGood(correctAnswer));
-                sb.append("\u2714"); // Heavy check mark
-            } else {
-                // Answer not correct.
-                // Only use the complex diff code when needed, that is when we have some typed text that is not
-                // exactly the same as the correct text.
-                String[] diffedStrings = diffEngine.diffedHtmlStrings(correctAnswer, userAnswer);
-                // We know we get back two strings.
-                sb.append(diffedStrings[0]);
-                sb.append("<br>&darr;<br>");
-                sb.append(diffedStrings[1]);
-            }
+        sb.append("<div><code id=typeans>");
+        if (!TextUtils.isEmpty(userAnswer) && userAnswer.equals(correctAnswer)) {
+            // and it was right.
+            sb.append(DiffEngine.wrapGood(correctAnswer));
+            sb.append("\u2714"); // Heavy check mark
         } else {
-            if (mPrefWriteAnswers) {
-                sb.append(DiffEngine.wrapMissing(correctAnswer));
-            } else {
-                sb.append(correctAnswer);
-            }
+            // Answer not correct.
+            // Only use the complex diff code when needed, that is when we have some typed text that is not exactly the
+            // same as the correct text.
+            String[] diffedStrings = diffEngine.diffedHtmlStrings(correctAnswer, userAnswer);
+            // We know we get back two strings.
+            sb.append(diffedStrings[0]);
+            sb.append("<br>&darr;<br>");
+            sb.append(diffedStrings[1]);
         }
         sb.append("</code></div>");
         return m.replaceFirst(sb.toString());
@@ -1621,13 +1616,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mEase3Layout.setVisibility(View.GONE);
         mEase4Layout.setVisibility(View.GONE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
-        if (typeAnswer()) {
-            // TODO: Maybe put focus in the first of our own input tags? Probably not. No keyboard initially is better
-            // than obscuring half the screen.
-            // mAnswerField.requestFocus();
-        } else {
-            mFlipCardLayout.requestFocus();
-        }
+        // N.B.: We do *not* put the focus into the (first) input field when we have a {type:NN} field. The difference
+        // between AnkiDroid and Anki desktop is that, unlike the soft keyboard on an Android device, a computer
+        // keyboard does not leap up to obscure half the screen in this case.
+        mFlipCardLayout.requestFocus();
     }
 
 
@@ -1683,7 +1675,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
-        mPrefWriteAnswers = !preferences.getBoolean("writeAnswersDisable", false);
+        // TODO: get rid of writeAnswersDisable pref.
+        // mPrefWriteAnswers = !preferences.getBoolean("writeAnswersDisable", false);
         mDisableClipboard = preferences.getString("dictionary", "0").equals("0");
         mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
         // mDeckFilename = preferences.getString("deckFilename", "");
@@ -2267,15 +2260,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         sb.append(content);
         sb.append("</div>");
         return sb.toString();
-    }
-
-
-    /**
-     * @return true if the AnkiDroid preference for writing answer is true and if the Anki Deck CardLayout specifies a
-     *         field to query
-     */
-    private final boolean typeAnswer() {
-        return mPrefWriteAnswers && null != mTypeCorrect;
     }
 
 
