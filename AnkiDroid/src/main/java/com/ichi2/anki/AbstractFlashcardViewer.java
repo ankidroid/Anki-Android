@@ -1,7 +1,7 @@
 /****************************************************************************************
  * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  * Copyright (c) 2014 Bruno Romero de Azevedo <brunodea@inf.ufsm.br>                    *
- * Copyright (c) 2014 Roland Sieker <ospalh@gmail.com>                                  *
+ * Copyright (c) 2014–15 Roland Sieker <ospalh@gmail.com>                               *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -229,7 +229,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private TextView mNext3;
     private TextView mNext4;
     private Button mFlipCard;
-    protected EditText mAnswerField;
     private TextView mEase1;
     private TextView mEase2;
     private TextView mEase3;
@@ -1033,14 +1032,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (mAnswerField != null && !mAnswerField.isFocused()) {
-	        if (!sDisplayAnswer) {
-	            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
-	                displayCardAnswer();
-	                return true;
-	            }
-	        }
-        }
+        // TODO: Maybe check if our own input tags get a return?
+        // if (mAnswerField != null && !mAnswerField.isFocused()) {
+	    //     if (!sDisplayAnswer) {
+	    //         if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
+	    //             displayCardAnswer();
+	    //             return true;
+	    //         }
+	    //     }
+        // }
         return super.onKeyUp(keyCode, event);
     }
 
@@ -1438,8 +1438,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         mChosenAnswer = (TextView) findViewById(R.id.choosen_answer);
 
-        mAnswerField = (EditText) findViewById(R.id.answer_field);
-
         mNextTimeTextColor = getResources().getColor(R.color.next_time_usual_color);
         mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color);
         mForegroundColor = getResources().getColor(R.color.next_time_usual_color);
@@ -1540,7 +1538,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 .setTextColor(invert ? res.getColor(R.color.learn_count_night) : res.getColor(R.color.learn_count));
         mTextBarReview.setTextColor(invert ? res.getColor(R.color.review_count_night) : res
                 .getColor(R.color.review_count));
-        mAnswerField.setTextColor(mForegroundColor);
 
         if (mCard != null) {
             mCard.setBackgroundColor(mCurrentBackgroundColor);
@@ -1625,7 +1622,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mEase4Layout.setVisibility(View.GONE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
         if (typeAnswer()) {
-            mAnswerField.requestFocus();
+            // TODO: Maybe put focus in the first of our own input tags? Probably not. No keyboard initially is better
+            // than obscuring half the screen.
+            // mAnswerField.requestFocus();
         } else {
             mFlipCardLayout.requestFocus();
         }
@@ -1655,27 +1654,29 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mChosenAnswer.setVisibility(View.VISIBLE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
 
-        mAnswerField.setVisibility(typeAnswer() ? View.VISIBLE : View.GONE);
-        mAnswerField.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    displayCardAnswer();
-                    return true;
-                }
-                return false;
-            }
-        });
-        mAnswerField.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER)) {
-                    displayCardAnswer();
-                    return true;
-                }
-                return false;
-            }
-        });
+        // TODO: get rid of typeAnswer, including the setting, and the CSS class for the prompt.
+        // TODO: Maybe add onkeylistener for input tags. Or do that via EcmasScript
+        // mAnswerField.setVisibility(typeAnswer() ? View.VISIBLE : View.GONE);
+        // mAnswerField.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+        //     @Override
+        //     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        //         if (actionId == EditorInfo.IME_ACTION_DONE) {
+        //             displayCardAnswer();
+        //             return true;
+        //         }
+        //         return false;
+        //     }
+        // });
+        // mAnswerField.setOnKeyListener(new View.OnKeyListener() {
+        //     @Override
+        //     public boolean onKey(View v, int keyCode, KeyEvent event) {
+        //         if (event.getAction() == KeyEvent.ACTION_UP && (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER)) {
+        //             displayCardAnswer();
+        //             return true;
+        //         }
+        //         return false;
+        //     }
+        // });
     }
 
 
@@ -1769,11 +1770,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private void updateForNewCard() {
         updateScreenCounts();
 
-        // Clean answer field
-        if (typeAnswer()) {
-            mAnswerField.setText("");
-        }
-
+        // No need any more to clean the type answer field. We may get a fresh input tag, or not.
         if (mPrefWhiteboard && mWhiteboard != null) {
             mWhiteboard.clear();
         }
@@ -1889,10 +1886,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
 
             Timber.d("question: '%s'", question);
-            // If the user wants to write the answer
-            if (typeAnswer()) {
-                mAnswerField.setVisibility(View.VISIBLE);
-            }
+            // The input tags are added elsewhere. No need to toggle the answer field here
 
             displayString = enrichWithQADiv(question, false);
 
@@ -1966,12 +1960,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             return;
         }
 
-        // Explicitly hide the soft keyboard. It *should* be hiding itself automatically,
-        // but sometimes failed to do so (e.g. if an OnKeyListener is attached).
-        if (typeAnswer()) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
-        }
+        // TODO: Check that the keyboard showing and hiding works with the input tags.
+        // // Explicitly hide the soft keyboard. It *should* be hiding itself automatically,
+        // // but sometimes failed to do so (e.g. if an OnKeyListener is attached).
+        // if (typeAnswer()) {
+        //     InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        //     inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
+        // }
 
         sDisplayAnswer = true;
 
@@ -1984,13 +1979,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             answer = ArabicUtilities.reshapeSentence(answer, true);
         }
 
-        mAnswerField.setVisibility(View.GONE);
         if (mPrefFixArabic) {
             // reshape
             mTypeCorrect = ArabicUtilities.reshapeSentence(mTypeCorrect, true);
         }
         // Clean up the user answer and the correct answer
-        String userAnswer = cleanTypedAnswer(mAnswerField.getText().toString());
+        // FIXME:  Piece de resistance. Get text from the first input field.
+        String userAnswer = cleanTypedAnswer("FIXME: get text from input tag");
+        // String userAnswer = cleanTypedAnswer(mAnswerField.getText().toString());
         String correctAnswer = cleanCorrectAnswer(mTypeCorrect);
         Timber.d("correct answer = %s", correctAnswer);
         Timber.d("user answer = %s", userAnswer);
@@ -2346,9 +2342,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mWhiteboard.setEnabled(true);
         }
 
-        if (typeAnswer()) {
-            mAnswerField.setEnabled(true);
-        }
         mTouchLayer.setVisibility(View.VISIBLE);
         mInAnswer = false;
     }
@@ -2399,10 +2392,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         if (mPrefWhiteboard && mWhiteboard != null) {
             mWhiteboard.setEnabled(false);
-        }
-
-        if (typeAnswer()) {
-            mAnswerField.setEnabled(false);
         }
     }
 
