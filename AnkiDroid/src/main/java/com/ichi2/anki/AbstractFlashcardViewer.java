@@ -150,6 +150,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     // Type answer pattern
     private static final Pattern sTypeAnsPat = Pattern.compile("\\[\\[type:(.+?)\\]\\]");
+    private static final Pattern sTypeAnsTyped = Pattern.compile("typed=([^&]*)");
 
     /** to be sento to and from the card editor */
     private static Card sEditorCard;
@@ -200,6 +201,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * The correct answer in the compare to field if answer should be given by learner. Null if no answer is expected.
      */
     private String mTypeCorrect;
+    private String mTypeInput;
     private String mTypeFont;
     private String mTypeSize;  // locigally this is an (integer) number. Treating it as a string simplifies some things.
     private String mTypeWarning;
@@ -1493,6 +1495,29 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 if (url.startsWith("file") || url.startsWith("data:")) {
                     return false; // Let the webview load files, i.e. local images.
                 }
+                if (url.startsWith("typeanswer:")) {
+                    Timber.d("raw typeanswer url: " + url);
+                    Matcher typedMatcher = sTypeAnsTyped.matcher(url);
+                    if (typedMatcher.find()) {
+                        mTypeInput = URLDecoder.decode(typedMatcher.group(1));
+                    }
+                    if (url.contains("doflip=on")) {
+                        Timber.d(AnkiDroidApp.TAG, "flip via link");
+                        mFlipCardLayout.performClick();
+                    }
+                    return true;
+                }
+                if (url.equals("signal:typefocus")) {
+                    // Hiding the view button when the text input has focus avoids hiding too much of the card, but it
+                    // is also a way no …
+                    mFlipCardLayout.setVisibility(View.GONE);
+                    return true;
+                }
+                if (url.equals("signal:typeblur")) {
+                    mFlipCardLayout.setVisibility(View.VISIBLE);
+                    return true;
+                }
+
                 Timber.d("Opening external link \"%s\" with an Intent", url);
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 try {
