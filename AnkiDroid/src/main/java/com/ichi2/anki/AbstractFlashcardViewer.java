@@ -1369,8 +1369,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         }
         mCardFrame.removeAllViews();
-        // hunt for input issue 720, like android issue 3341
-        if (CompatHelper.getSdkVersion() == 7 && (mCard != null)) {
+        if (mCard != null) {
             mCard.setFocusableInTouchMode(true);
         }
 
@@ -1476,7 +1475,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
-        webView.setFocusableInTouchMode(false);
+        webView.setFocusableInTouchMode(false);  // See below.
         webView.setScrollbarFadingEnabled(false);
         Timber.d("Focusable = %s, Focusable in touch mode = %s",webView.isFocusable(),webView.isFocusableInTouchMode());
 
@@ -1513,11 +1512,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     // is also a way no …
                     Timber.d("signal:typefocus");
                     mFlipCardLayout.setVisibility(View.GONE);
+                    setSoftInputStateTo(true);
                     return true;
                 }
                 if (url.equals("signal:typeblur")) {
                     Timber.d("signal:typeblur");
                     mFlipCardLayout.setVisibility(View.VISIBLE);
+                    setSoftInputStateTo(false);
                     return true;
                 }
 
@@ -1982,12 +1983,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
 
         // TODO: Check that the keyboard showing and hiding works with the input tags.
-        // // Explicitly hide the soft keyboard. It *should* be hiding itself automatically,
-        // // but sometimes failed to do so (e.g. if an OnKeyListener is attached).
-        // if (typeAnswer()) {
-        //     InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        //     inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
-        // }
+        // Explicitly hide the soft keyboard. It *should* be hiding itself automatically,
+        // but sometimes failed to do so (e.g. if an OnKeyListener is attached).
+        if (null != mTypeCorrect) {
+            setSoftInputStateTo(false);
+        }
 
         sDisplayAnswer = true;
 
@@ -2044,6 +2044,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
     }
 
+    /*
+      Explicitly show or hide the soft keyboard
+     */
+
+    private void setSoftInputStateTo(boolean on) {
+        // InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        // if (on) {
+        //     inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        // } else {
+        //     inputMethodManager.hideSoftInputFromWindow(mCard.getWindowToken(), 0);
+        // }
+    }
 
     private void updateCard(String content) {
         Timber.d("updateCard()");
@@ -2247,10 +2259,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mNextCard = createWebView();
             mNextCard.setVisibility(View.GONE);
             mCardFrame.addView(mNextCard, 0);
-            // hunt for input issue 720, like android issue 3341
-            if (CompatHelper.getSdkVersion() == 7) {
-                mCard.setFocusableInTouchMode(true);
-            }
+            mCard.setFocusableInTouchMode(true);
         } else if (mCard != null) {
             mCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
             mCard.setBackgroundColor(mCurrentBackgroundColor);
