@@ -1805,7 +1805,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             revCount = new SpannableString("???");
         }
 
-        switch (mCurrentCard.getQueue()) {
+        switch (mSched.countIdx(mCurrentCard)) {
             case Card.TYPE_NEW:
                 newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
                 break;
