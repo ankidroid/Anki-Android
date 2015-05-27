@@ -55,6 +55,7 @@
         <item>Order added</item>
         <item>Order due</item>
         <item>Latest added first</item>
+        <item>Relative overdueness</item>
     </string-array>
     <string-array name="custom_study_options_labels">
         <item>Increase today\'s new card limit</item>
