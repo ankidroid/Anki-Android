@@ -99,7 +99,7 @@
             android:id="@+id/flashcard_frame"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_above="@+id/bottom_area_layout"
+            android:layout_above="@+id/answer_options_layout"
             android:layout_below="@+id/top_bar"
             android:layout_margin="0dip" >
 
@@ -152,144 +152,123 @@
         </FrameLayout>
 
         <LinearLayout
-            android:id="@+id/bottom_area_layout"
+            android:id="@+id/answer_options_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:orientation="vertical" >
-
-            <!-- Answer bar -->
-
-            <EditText
-                android:id="@+id/answer_field"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/type_answer_hint"
-                android:imeOptions="actionDone"
-                android:inputType="text|textNoSuggestions" />
-            <!--
-                 Looks like setting android:imeActionLabel confuses the
-                 original ASOP soft keyboard, so don't.
-            -->
+            android:orientation="horizontal"
+            android:background="@color/white" >
 
             <LinearLayout
-                android:id="@+id/answer_options_layout"
-                android:background="@color/white"
+                android:id="@+id/flashcard_layout_flip"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
+                android:layout_height="fill_parent"
+                android:background="@color/white"
+                android:layout_weight="1"
+                android:orientation="vertical" >
 
-                <LinearLayout
-                    android:id="@+id/flashcard_layout_flip"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:background="@color/white"
-                    android:layout_weight="1"
-                    android:orientation="vertical" >
-
-                    <Button
-                            style="@style/MaterialButton"
-                        android:id="@+id/flip_card"
-                        android:layout_width="fill_parent"
-                        android:layout_height="56dp"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:layout_marginTop="8dp"
-                        android:clickable="false"
-                        android:text="@string/show_answer" />
-                </LinearLayout>
-
-                <LinearLayout
+                <Button
                     style="@style/MaterialButton"
-                    android:background="@drawable/material_button_ease_left"
-                    android:id="@+id/flashcard_layout_ease1"
-                    android:layout_width="0dip"
+                    android:id="@+id/flip_card"
+                    android:layout_width="fill_parent"
                     android:layout_height="56dp"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="4dp"
+                    android:layout_marginBottom="2dp"
                     android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:layout_marginTop="8dp"
-                    android:orientation="vertical"
-                    android:visibility="gone" >
+                    android:clickable="false"
+                    android:text="@string/show_answer" />
+            </LinearLayout>
 
-                    <include
-                            android:id="@+id/nextTime1"
-                            layout="@layout/flashcard_next_time_textview" />
+            <LinearLayout
+                style="@style/MaterialButton"
+                android:background="@drawable/material_button_ease_left"
+                android:id="@+id/flashcard_layout_ease1"
+                android:layout_width="0dip"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
 
-                    <include
-                            android:id="@+id/ease1"
-                            layout="@layout/flashcard_ease_textview" />
-                </LinearLayout>
+                <include
+                    android:id="@+id/nextTime1"
+                    layout="@layout/flashcard_next_time_textview" />
 
-                <LinearLayout
-                        style="@style/MaterialButton"
-                        android:background="@drawable/material_button_ease_middle"
-                        android:id="@+id/flashcard_layout_ease2"
-                        android:layout_width="0dip"
-                        android:layout_height="56dp"
-                        android:layout_weight="1"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginTop="8dp"
-                        android:orientation="vertical"
-                        android:visibility="gone" >
+                <include
+                    android:id="@+id/ease1"
+                    layout="@layout/flashcard_ease_textview" />
+            </LinearLayout>
 
-                    <include
-                            android:id="@+id/nextTime2"
-                            layout="@layout/flashcard_next_time_textview"
-                            android:textColor="@color/next_time_usual_color" />
+            <LinearLayout
+                style="@style/MaterialButton"
+                android:background="@drawable/material_button_ease_middle"
+                android:id="@+id/flashcard_layout_ease2"
+                android:layout_width="0dip"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
 
-                    <include
-                            android:id="@+id/ease2"
-                            layout="@layout/flashcard_ease_textview" />
-                </LinearLayout>
+                <include
+                    android:id="@+id/nextTime2"
+                    layout="@layout/flashcard_next_time_textview"
+                    android:textColor="@color/next_time_usual_color" />
 
-                <LinearLayout
-                        style="@style/MaterialButton"
-                        android:background="@drawable/material_button_ease_middle_green"
-                        android:id="@+id/flashcard_layout_ease3"
-                        android:layout_width="0dip"
-                        android:layout_height="56dp"
-                        android:layout_weight="1"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginTop="8dp"
-                        android:orientation="vertical"
-                        android:visibility="gone" >
+                <include
+                    android:id="@+id/ease2"
+                    layout="@layout/flashcard_ease_textview" />
+            </LinearLayout>
 
-                    <include
-                            android:id="@+id/nextTime3"
-                            layout="@layout/flashcard_next_time_textview" />
+            <LinearLayout
+                style="@style/MaterialButton"
+                android:background="@drawable/material_button_ease_middle_green"
+                android:id="@+id/flashcard_layout_ease3"
+                android:layout_width="0dip"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
 
-                    <include
-                            android:id="@+id/ease3"
-                            layout="@layout/flashcard_ease_textview" />
-                </LinearLayout>
+                <include
+                    android:id="@+id/nextTime3"
+                    layout="@layout/flashcard_next_time_textview" />
 
-                <LinearLayout
-                        style="@style/MaterialButton"
-                        android:background="@drawable/material_button_ease_right"
-                        android:id="@+id/flashcard_layout_ease4"
-                        android:layout_width="0dip"
-                        android:layout_height="56dp"
-                        android:layout_weight="1"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginRight="4dp"
-                        android:layout_marginTop="8dp"
-                        android:orientation="vertical"
-                        android:visibility="gone" >
+                <include
+                    android:id="@+id/ease3"
+                    layout="@layout/flashcard_ease_textview" />
+            </LinearLayout>
 
-                    <include
-                            android:id="@+id/nextTime4"
-                            layout="@layout/flashcard_next_time_textview" />
+            <LinearLayout
+                style="@style/MaterialButton"
+                android:background="@drawable/material_button_ease_right"
+                android:id="@+id/flashcard_layout_ease4"
+                android:layout_width="0dip"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
 
-                    <include
-                            android:id="@+id/ease4"
-                            layout="@layout/flashcard_ease_textview" />
-                </LinearLayout>
+                <include
+                    android:id="@+id/nextTime4"
+                    layout="@layout/flashcard_next_time_textview" />
+
+                <include
+                    android:id="@+id/ease4"
+                    layout="@layout/flashcard_ease_textview" />
             </LinearLayout>
         </LinearLayout>
 
     </RelativeLayout>
-    
+
     <include layout="@layout/navigation_drawer" />
 </android.support.v4.widget.DrawerLayout>
-

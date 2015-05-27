@@ -13,10 +13,7 @@ body.night_mode {
 }
 
 /*
-  For the typed/correct answer comparison. The typePrompt and typeOff
-  classes are AnkiDroid specific. typePrompt is a placeholder where
-  Anki desktop shows the input box. typeOff is added when the user
-  switched off entering the answer.
+  For the typed/correct answer comparison.
 */
 .typeGood {
   background-color: #0f0;
@@ -32,14 +29,6 @@ body.night_mode {
 
 #typeans {
   width: 100%;
-}
-
-.typePrompt {
-  color: magenta;
-}
-
-.typePrompt.typeOff {
-  display: none;
 }
 
 .night_mode .typeGood {

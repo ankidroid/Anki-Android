@@ -1,7 +1,7 @@
 /****************************************************************************************
  * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  * Copyright (c) 2014 Bruno Romero de Azevedo <brunodea@inf.ufsm.br>                    *
- * Copyright (c) 2014 Roland Sieker <ospalh@gmail.com>                                  *
+ * Copyright (c) 2014–15 Roland Sieker <ospalh@gmail.com>                               *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -97,6 +97,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.net.URLDecoder;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -150,6 +151,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     // Type answer pattern
     private static final Pattern sTypeAnsPat = Pattern.compile("\\[\\[type:(.+?)\\]\\]");
+    private static final Pattern sTypeAnsTyped = Pattern.compile("typed=([^&]*)");
 
     /** to be sento to and from the card editor */
     private static Card sEditorCard;
@@ -171,7 +173,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mPrefHideDueCount;
     private boolean mShowTimer;
     protected boolean mPrefWhiteboard;
-    private boolean mPrefWriteAnswers;
     private boolean mInputWorkaround;
     private boolean mLongClickWorkaround;
     private boolean mPrefFullscreenReview;
@@ -200,7 +201,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /**
      * The correct answer in the compare to field if answer should be given by learner. Null if no answer is expected.
      */
-    private String mTypeCorrect;
+    private String mTypeCorrect = null;
+    private String mTypeInput = "";  // What the user typed
+    private String mTypeFont = "";  // Font face of the field with the type comparison data.
+    private String mTypeSize = "0";  // Dto. the fot size
     private String mTypeWarning;
 
     private boolean mIsSelecting = false;
@@ -229,7 +233,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private TextView mNext3;
     private TextView mNext4;
     private Button mFlipCard;
-    protected EditText mAnswerField;
     private TextView mEase1;
     private TextView mEase2;
     private TextView mEase3;
@@ -719,6 +722,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                         // narrow to cloze
                         mTypeCorrect = contentForCloze(mTypeCorrect, clozeIdx);
                     }
+                    // mTypeFont = (String) (ja.getJSONObject(i).get("font"));
+                    // mTypeSize = (String) (ja.getJSONObject(i).get("size"));
                     break;
                 }
             }
@@ -751,11 +756,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mTypeWarning != null) {
             return m.replaceFirst(mTypeWarning);
         }
-        if (mPrefWriteAnswers) {
-            return m.replaceFirst("<span id=typeans class=\"typePrompt\">........</span>");
-        } else {
-            return m.replaceFirst("<span id=typeans class=\"typePrompt typeOff\">........</span>");
-        }
+        // The invisible checkbox is used to transmit the focus state, so that we can flip the card if the input had
+        // focus.
+        // TODO: get the size and font.
+        // TODO: Find a way to make the blur work with more than one input tag with the same id/more than one form.
+        return m.replaceFirst(
+            "<form name=taform id=typeform method=get action=\"typeanswer:\" style=\"display: inline;\">\n" +
+            "<input type=text name=typed id=typeans onfocus=\"taFocus();\" onblur=\"taBlur();\" " +
+            // "style=\"font-family: '" + mTypeFont + "'; font-size: " + mTypeSize + "px;\">\n" +
+            ">\n" +
+            "<input type=checkbox name=doflip style=\"display: none;\" id=doflip_checkbox unchecked></form>");
     }
 
 
@@ -771,33 +781,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Matcher m = sTypeAnsPat.matcher(buf);
         DiffEngine diffEngine = new DiffEngine();
         StringBuilder sb = new StringBuilder();
-        sb.append("<div");
-        if (!mPrefWriteAnswers) {
-            sb.append(" class=\"typeOff\"");
-        }
-        sb.append("><code id=typeans>");
-        if (!TextUtils.isEmpty(userAnswer)) {
-            // The user did type something.
-            if (userAnswer.equals(correctAnswer)) {
-                // and it was right.
-                sb.append(DiffEngine.wrapGood(correctAnswer));
-                sb.append("\u2714"); // Heavy check mark
-            } else {
-                // Answer not correct.
-                // Only use the complex diff code when needed, that is when we have some typed text that is not
-                // exactly the same as the correct text.
-                String[] diffedStrings = diffEngine.diffedHtmlStrings(correctAnswer, userAnswer);
-                // We know we get back two strings.
-                sb.append(diffedStrings[0]);
-                sb.append("<br>&darr;<br>");
-                sb.append(diffedStrings[1]);
-            }
+        sb.append("<div><code id=typeans>");
+        if (!TextUtils.isEmpty(userAnswer) && userAnswer.equals(correctAnswer)) {
+            // and it was right.
+            sb.append(DiffEngine.wrapGood(correctAnswer));
+            sb.append("\u2714"); // Heavy check mark
         } else {
-            if (mPrefWriteAnswers) {
-                sb.append(DiffEngine.wrapMissing(correctAnswer));
-            } else {
-                sb.append(correctAnswer);
-            }
+            // Answer not correct.
+            // Only use the complex diff code when needed, that is when we have some typed text that is not exactly the
+            // same as the correct text.
+            String[] diffedStrings = diffEngine.diffedHtmlStrings(correctAnswer, userAnswer);
+            // We know we get back two strings.
+            sb.append(diffedStrings[0]);
+            sb.append("<br>&darr;<br>");
+            sb.append(diffedStrings[1]);
         }
         sb.append("</code></div>");
         return m.replaceFirst(sb.toString());
@@ -1033,14 +1030,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (mAnswerField != null && !mAnswerField.isFocused()) {
-	        if (!sDisplayAnswer) {
-	            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
-	                displayCardAnswer();
-	                return true;
-	            }
-	        }
-        }
+        // TODO: Maybe check if our own input tags get a return?
+        // if (mAnswerField != null && !mAnswerField.isFocused()) {
+	    //     if (!sDisplayAnswer) {
+	    //         if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
+	    //             displayCardAnswer();
+	    //             return true;
+	    //         }
+	    //     }
+        // }
         return super.onKeyUp(keyCode, event);
     }
 
@@ -1371,11 +1369,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         }
         mCardFrame.removeAllViews();
-        // hunt for input issue 720, like android issue 3341
-        if (CompatHelper.getSdkVersion() == 7 && (mCard != null)) {
-            mCard.setFocusableInTouchMode(true);
-        }
-
         // Initialize swipe
         gestureDetector = new GestureDetector(new MyGestureDetector());
 
@@ -1438,8 +1431,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         mChosenAnswer = (TextView) findViewById(R.id.choosen_answer);
 
-        mAnswerField = (EditText) findViewById(R.id.answer_field);
-
         mNextTimeTextColor = getResources().getColor(R.color.next_time_usual_color);
         mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color);
         mForegroundColor = getResources().getColor(R.color.next_time_usual_color);
@@ -1480,10 +1471,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
-        webView.setFocusableInTouchMode(false);
+        webView.setFocusableInTouchMode(true);
         webView.setScrollbarFadingEnabled(false);
-        Timber.d("Focusable = %s, Focusable in touch mode = %s",webView.isFocusable(),webView.isFocusableInTouchMode());
-
         webView.setWebViewClient(new WebViewClient() {
             // Filter any links using the custom "playsound" protocol defined in Sound.java.
             // We play sounds through these links when a user taps the sound icon.
@@ -1500,6 +1489,33 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 if (url.startsWith("file") || url.startsWith("data:")) {
                     return false; // Let the webview load files, i.e. local images.
                 }
+                if (url.startsWith("typeanswer:")) {
+                    Timber.d("raw typeanswer url: " + url);
+                    Matcher typedMatcher = sTypeAnsTyped.matcher(url);
+                    if (typedMatcher.find()) {
+                        mTypeInput = URLDecoder.decode(typedMatcher.group(1));
+                    }
+                    if (url.contains("doflip=on")) {
+                        Timber.d("flip via link");
+                        mFlipCardLayout.performClick();
+                    }
+                    return true;
+                }
+                if (url.equals("signal:typefocus")) {
+                    // Hiding the view button when the text input has focus avoids hiding too much of the card, but it
+                    // is also a way no …
+                    Timber.d("signal:typefocus");
+                    mFlipCardLayout.setVisibility(View.GONE);
+                    setSoftInputStateTo(true);
+                    return true;
+                }
+                if (url.equals("signal:typeblur")) {
+                    Timber.d("signal:typeblur");
+                    mFlipCardLayout.setVisibility(View.VISIBLE);
+                    setSoftInputStateTo(false);
+                    return true;
+                }
+
                 Timber.d("Opening external link \"%s\" with an Intent", url);
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 try {
@@ -1540,7 +1556,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 .setTextColor(invert ? res.getColor(R.color.learn_count_night) : res.getColor(R.color.learn_count));
         mTextBarReview.setTextColor(invert ? res.getColor(R.color.review_count_night) : res
                 .getColor(R.color.review_count));
-        mAnswerField.setTextColor(mForegroundColor);
 
         if (mCard != null) {
             mCard.setBackgroundColor(mCurrentBackgroundColor);
@@ -1624,11 +1639,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mEase3Layout.setVisibility(View.GONE);
         mEase4Layout.setVisibility(View.GONE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
-        if (typeAnswer()) {
-            mAnswerField.requestFocus();
-        } else {
-            mFlipCardLayout.requestFocus();
-        }
+        // N.B.: We do *not* put the focus into the (first) input field when we have a {type:NN} field. The difference
+        // between AnkiDroid and Anki desktop is that, unlike the soft keyboard on an Android device, a computer
+        // keyboard does not leap up to obscure half the screen in this case.
+        mFlipCardLayout.requestFocus();
     }
 
 
@@ -1655,34 +1669,37 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mChosenAnswer.setVisibility(View.VISIBLE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
 
-        mAnswerField.setVisibility(typeAnswer() ? View.VISIBLE : View.GONE);
-        mAnswerField.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    displayCardAnswer();
-                    return true;
-                }
-                return false;
-            }
-        });
-        mAnswerField.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER)) {
-                    displayCardAnswer();
-                    return true;
-                }
-                return false;
-            }
-        });
+        // TODO: get rid of typeAnswer, including the setting, and the CSS class for the prompt.
+        // TODO: Maybe add onkeylistener for input tags. Or do that via EcmasScript
+        // mAnswerField.setVisibility(typeAnswer() ? View.VISIBLE : View.GONE);
+        // mAnswerField.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+        //     @Override
+        //     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        //         if (actionId == EditorInfo.IME_ACTION_DONE) {
+        //             displayCardAnswer();
+        //             return true;
+        //         }
+        //         return false;
+        //     }
+        // });
+        // mAnswerField.setOnKeyListener(new View.OnKeyListener() {
+        //     @Override
+        //     public boolean onKey(View v, int keyCode, KeyEvent event) {
+        //         if (event.getAction() == KeyEvent.ACTION_UP && (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER)) {
+        //             displayCardAnswer();
+        //             return true;
+        //         }
+        //         return false;
+        //     }
+        // });
     }
 
 
     protected SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
-        mPrefWriteAnswers = !preferences.getBoolean("writeAnswersDisable", false);
+        // TODO: get rid of writeAnswersDisable pref.
+        // mPrefWriteAnswers = !preferences.getBoolean("writeAnswersDisable", false);
         mDisableClipboard = preferences.getString("dictionary", "0").equals("0");
         mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
         // mDeckFilename = preferences.getString("deckFilename", "");
@@ -1769,11 +1786,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private void updateForNewCard() {
         updateScreenCounts();
 
-        // Clean answer field
-        if (typeAnswer()) {
-            mAnswerField.setText("");
-        }
-
+        // No need any more to clean the type answer field. We may get a fresh input tag, or not.
         if (mPrefWhiteboard && mWhiteboard != null) {
             mWhiteboard.clear();
         }
@@ -1863,6 +1876,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void displayCardQuestion() {
         Timber.d("displayCardQuestion()");
         sDisplayAnswer = false;
+        mTypeInput = "";
 
         if (mButtonHeight == 0 && mRelativeButtonSize != 100) {
             mButtonHeight = mFlipCard.getHeight() * mRelativeButtonSize / 100;
@@ -1889,10 +1903,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
 
             Timber.d("question: '%s'", question);
-            // If the user wants to write the answer
-            if (typeAnswer()) {
-                mAnswerField.setVisibility(View.VISIBLE);
-            }
+            // The input tags are added elsewhere. No need to toggle the answer field here
 
             displayString = enrichWithQADiv(question, false);
 
@@ -1966,11 +1977,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             return;
         }
 
+        // TODO: Check that the keyboard showing and hiding works with the input tags.
         // Explicitly hide the soft keyboard. It *should* be hiding itself automatically,
         // but sometimes failed to do so (e.g. if an OnKeyListener is attached).
-        if (typeAnswer()) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
+        if (null != mTypeCorrect) {
+            setSoftInputStateTo(false);
         }
 
         sDisplayAnswer = true;
@@ -1984,13 +1995,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             answer = ArabicUtilities.reshapeSentence(answer, true);
         }
 
-        mAnswerField.setVisibility(View.GONE);
         if (mPrefFixArabic) {
             // reshape
             mTypeCorrect = ArabicUtilities.reshapeSentence(mTypeCorrect, true);
         }
         // Clean up the user answer and the correct answer
-        String userAnswer = cleanTypedAnswer(mAnswerField.getText().toString());
+        String userAnswer = cleanTypedAnswer(mTypeInput);
         String correctAnswer = cleanCorrectAnswer(mTypeCorrect);
         Timber.d("correct answer = %s", correctAnswer);
         Timber.d("user answer = %s", userAnswer);
@@ -2027,6 +2037,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
     }
 
+    /*
+      Explicitly show or hide the soft keyboard
+     */
+
+    private void setSoftInputStateTo(boolean on) {
+        // InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        // if (on) {
+        //     inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        // } else {
+        //     inputMethodManager.hideSoftInputFromWindow(mCard.getWindowToken(), 0);
+        // }
+    }
 
     private void updateCard(String content) {
         Timber.d("updateCard()");
@@ -2230,10 +2252,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mNextCard = createWebView();
             mNextCard.setVisibility(View.GONE);
             mCardFrame.addView(mNextCard, 0);
-            // hunt for input issue 720, like android issue 3341
-            if (CompatHelper.getSdkVersion() == 7) {
-                mCard.setFocusableInTouchMode(true);
-            }
         } else if (mCard != null) {
             mCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
             mCard.setBackgroundColor(mCurrentBackgroundColor);
@@ -2271,15 +2289,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         sb.append(content);
         sb.append("</div>");
         return sb.toString();
-    }
-
-
-    /**
-     * @return true if the AnkiDroid preference for writing answer is true and if the Anki Deck CardLayout specifies a
-     *         field to query
-     */
-    private final boolean typeAnswer() {
-        return mPrefWriteAnswers && null != mTypeCorrect;
     }
 
 
@@ -2346,9 +2355,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mWhiteboard.setEnabled(true);
         }
 
-        if (typeAnswer()) {
-            mAnswerField.setEnabled(true);
-        }
         mTouchLayer.setVisibility(View.VISIBLE);
         mInAnswer = false;
     }
@@ -2399,10 +2405,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         if (mPrefWhiteboard && mWhiteboard != null) {
             mWhiteboard.setEnabled(false);
-        }
-
-        if (typeAnswer()) {
-            mAnswerField.setEnabled(false);
         }
     }
 

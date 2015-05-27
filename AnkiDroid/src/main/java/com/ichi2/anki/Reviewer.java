@@ -294,62 +294,64 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         char keyPressed = (char) event.getUnicodeChar();
-        if (mAnswerField != null && !mAnswerField.isFocused()) {
-	        if (sDisplayAnswer) {
-	            if (keyPressed == '1') {
-	                answerCard(EASE_FAILED);
-	                return true;
-	            }
-	            if (keyPressed == '2') {
-	                answerCard(EASE_HARD);
-	                return true;
-	            }
-	            if (keyPressed == '3') {
-	                answerCard(EASE_MID);
-	                return true;
-	            }
-	            if (keyPressed == '4') {
-	                answerCard(EASE_EASY);
-	                return true;
-	            }
-	            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
-	                answerCard(getDefaultEase());
-	                return true;
-	            }
-	        }
-	        if (keyPressed == 'e') {
-	            editCard();
-	            return true;
-	        }
-	        if (keyPressed == '*') {
-	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 0));
-	            return true;
-	        }
-	        if (keyPressed == '-') {
-	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 4));
-	            return true;
-	        }
-	        if (keyPressed == '=') {
-	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 0));
-	            return true;
-	        }
-	        if (keyPressed == '@') {
-	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 1));
-	            return true;
-	        }
-	        if (keyPressed == '!') {
-	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 2));
-	            return true;
-	        }
-	        if (keyPressed == 'r' || keyCode == KeyEvent.KEYCODE_F5) {
-	            playSounds(true);
-	            return true;
-	        }
+        // TODO: Check that we don’t eat characters intendet to go into an input tag.
+        // if (focusInInputTag()) {
+        //     return super.onKeyUp(keyCode, event);
+        // }
+        if (sDisplayAnswer) {
+            if (keyPressed == '1') {
+                answerCard(EASE_FAILED);
+                return true;
+            }
+            if (keyPressed == '2') {
+                answerCard(EASE_HARD);
+                return true;
+            }
+            if (keyPressed == '3') {
+                answerCard(EASE_MID);
+                return true;
+            }
+            if (keyPressed == '4') {
+                answerCard(EASE_EASY);
+                return true;
+            }
+            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
+                answerCard(getDefaultEase());
+                return true;
+            }
+        }
+        if (keyPressed == 'e') {
+            editCard();
+            return true;
+        }
+        if (keyPressed == '*') {
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(
+                    getCol(), mSched, mCurrentCard, 0));
+            return true;
+        }
+        if (keyPressed == '-') {
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
+                    getCol(), mSched, mCurrentCard, 4));
+            return true;
+        }
+        if (keyPressed == '=') {
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
+                    getCol(), mSched, mCurrentCard, 0));
+            return true;
+        }
+        if (keyPressed == '@') {
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
+                    getCol(), mSched, mCurrentCard, 1));
+            return true;
+        }
+        if (keyPressed == '!') {
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
+                    getCol(), mSched, mCurrentCard, 2));
+            return true;
+        }
+        if (keyPressed == 'r' || keyCode == KeyEvent.KEYCODE_F5) {
+            playSounds(true);
+            return true;
         }
         return super.onKeyUp(keyCode, event);
     }
