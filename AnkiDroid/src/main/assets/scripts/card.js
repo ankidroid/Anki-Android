@@ -69,7 +69,12 @@ function taBlur() {
     if (dcb)
     {
         dcb.checked = false;
-        document.taform.submit();
+        var taform = document.getElementById("typeform");
+        if (taform)
+        {
+            taform.submit();
+        }
+        // document.taform.submit();
     }
     window.location.href = "signal:typeblur";
 }
