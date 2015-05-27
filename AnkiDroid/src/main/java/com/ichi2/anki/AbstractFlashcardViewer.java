@@ -201,10 +201,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /**
      * The correct answer in the compare to field if answer should be given by learner. Null if no answer is expected.
      */
-    private String mTypeCorrect;
-    private String mTypeInput;
-    private String mTypeFont;
-    private String mTypeSize;  // locigally this is an (integer) number. Treating it as a string simplifies some things.
+    private String mTypeCorrect = null;
+    private String mTypeInput = "";  // What the user typed
+    private String mTypeFont = "";  // Font face of the field with the type comparison data.
+    private String mTypeSize = "0";  // Dto. the fot size
     private String mTypeWarning;
 
     private boolean mIsSelecting = false;
@@ -1369,10 +1369,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         }
         mCardFrame.removeAllViews();
-        if (mCard != null) {
-            mCard.setFocusableInTouchMode(true);
-        }
-
         // Initialize swipe
         gestureDetector = new GestureDetector(new MyGestureDetector());
 
@@ -1475,10 +1471,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
-        webView.setFocusableInTouchMode(false);  // See below.
+        webView.setFocusableInTouchMode(true);
         webView.setScrollbarFadingEnabled(false);
-        Timber.d("Focusable = %s, Focusable in touch mode = %s",webView.isFocusable(),webView.isFocusableInTouchMode());
-
         webView.setWebViewClient(new WebViewClient() {
             // Filter any links using the custom "playsound" protocol defined in Sound.java.
             // We play sounds through these links when a user taps the sound icon.
@@ -1882,6 +1876,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void displayCardQuestion() {
         Timber.d("displayCardQuestion()");
         sDisplayAnswer = false;
+        mTypeInput = "";
 
         if (mButtonHeight == 0 && mRelativeButtonSize != 100) {
             mButtonHeight = mFlipCard.getHeight() * mRelativeButtonSize / 100;
@@ -2005,9 +2000,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mTypeCorrect = ArabicUtilities.reshapeSentence(mTypeCorrect, true);
         }
         // Clean up the user answer and the correct answer
-        // FIXME:  Piece de resistance. Get text from the first input field.
-        String userAnswer = cleanTypedAnswer("FIXME: get text from input tag");
-        // String userAnswer = cleanTypedAnswer(mAnswerField.getText().toString());
+        String userAnswer = cleanTypedAnswer(mTypeInput);
         String correctAnswer = cleanCorrectAnswer(mTypeCorrect);
         Timber.d("correct answer = %s", correctAnswer);
         Timber.d("user answer = %s", userAnswer);
@@ -2259,7 +2252,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mNextCard = createWebView();
             mNextCard.setVisibility(View.GONE);
             mCardFrame.addView(mNextCard, 0);
-            mCard.setFocusableInTouchMode(true);
         } else if (mCard != null) {
             mCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
             mCard.setBackgroundColor(mCurrentBackgroundColor);
