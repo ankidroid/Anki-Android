@@ -265,7 +265,9 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
 
     public void showProgressBar() {
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_spinner);
-        progressBar.setVisibility(View.VISIBLE);
+        if (progressBar != null) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
     }
 
 
