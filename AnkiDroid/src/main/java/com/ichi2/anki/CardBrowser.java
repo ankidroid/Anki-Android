@@ -981,8 +981,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (!result.getBoolean()) {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
-            mProgressDialog.dismiss();
-
+            dismissProgressDialog();
         }
 
 
@@ -1016,8 +1015,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             } else {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
-            mProgressDialog.dismiss();
-
+            dismissProgressDialog();
         }
 
 
@@ -1042,8 +1040,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            mProgressDialog.dismiss();
-
+            dismissProgressDialog();
         }
 
 
@@ -1091,9 +1088,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (result != null && mCards != null) {
                 Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfuly");
                 updateList();
-                if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                    mProgressDialog.dismiss();
-                }
+                dismissProgressDialog();
                 // After the initial searchCards query, start rendering the question and answer in the background
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler, new DeckTask.TaskData(
                         new Object[] { getCol(), mCards, 0, 100 }));
@@ -1299,6 +1294,18 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
+
+    private void dismissProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            try {
+                mProgressDialog.dismiss();
+            } catch (IllegalArgumentException e) {
+                // This shouldn't be neccessary, but crashes still occurring (see 4f949b11-9cdc-41fd-80b8-7c4d02b25151)
+                // TODO: Check if multithreading issue
+                Timber.w(e, "Could not dismiss mProgressDialog");
+            }
+        }
+    }
 
 
     private ArrayList<HashMap<String, String>> getCards() {
