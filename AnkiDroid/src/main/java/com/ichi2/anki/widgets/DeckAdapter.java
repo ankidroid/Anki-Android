@@ -1,14 +1,18 @@
 package com.ichi2.anki.widgets;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.*;
 import android.widget.*;
 
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.*;
 
 import java.util.List;
+
+import timber.log.Timber;
 
 public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
@@ -21,7 +25,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     private View.OnClickListener mDeckClickListener;
     private View.OnClickListener mDeckExpanderClickListener;
     private View.OnLongClickListener mDeckLongClickListener;
-    private Collection mCollection;
+    private Context mContext;
 
     // ViewHolder class to save inflated views for recycling
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -42,14 +46,14 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     }
 
     public DeckAdapter(List<Sched.DeckDueTreeNode> deckList, Resources resources,
-                       LayoutInflater layoutInflater, Collection collection) {
+                       LayoutInflater layoutInflater, Context context) {
         mLayoutInflater = layoutInflater;
         mDeckList = deckList;
-        mCollection = collection;
         zeroCountColor = resources.getColor(R.color.zero_count);
         newCountColor = resources.getColor(R.color.new_count);
         learnCountColor = resources.getColor(R.color.learn_count);
         reviewCountColor = resources.getColor(R.color.review_count);
+        mContext = context.getApplicationContext(); // don't hold ref to Activity
     }
 
     public void setDeckClickListener(View.OnClickListener mDeckClickListener) {
@@ -75,8 +79,9 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         // update views for this node
         Sched.DeckDueTreeNode node = mDeckList.get(position);
-
-        boolean collapsed = mCollection.getDecks().get(node.did).optBoolean("collapsed", false);
+        Timber.d("DeckAdapter accessing collection...");
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        boolean collapsed = col.getDecks().get(node.did).optBoolean("collapsed", false);
 
         // set expander and make expander clickable if needed
         holder.mDeckExpander.setText(deckExpander(node.depth, collapsed, node.children.size()));

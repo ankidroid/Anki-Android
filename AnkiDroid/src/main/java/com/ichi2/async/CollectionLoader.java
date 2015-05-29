@@ -20,6 +20,7 @@ public class CollectionLoader extends AsyncTaskLoader<Collection> {
     public Collection loadInBackground() {
         // load collection
         try {
+            Timber.d("CollectionLoader accessing collection");
             return CollectionHelper.getInstance().getCol(getContext());
         } catch (RuntimeException e) {
             Timber.e(e, "loadInBackground - RuntimeException on opening collection");

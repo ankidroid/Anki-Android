@@ -399,7 +399,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         mRecyclerView.setLayoutManager(mRecyclerViewLayoutManager);
 
         // create and set an adapter for the RecyclerView
-        mDeckListAdapter = new DeckAdapter(mDeckList, getResources(), getLayoutInflater(), getCol());
+        mDeckListAdapter = new DeckAdapter(mDeckList, getResources(), getLayoutInflater(), this);
         mDeckListAdapter.setDeckClickListener(mDeckClickListener);
         mDeckListAdapter.setDeckExpanderClickListener(mDeckExpanderClickListener);
         mDeckListAdapter.setDeckLongClickListener(mDeckLongClickListener);
