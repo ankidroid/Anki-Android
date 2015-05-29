@@ -684,7 +684,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
             Long[] elapsed = getCol().timeboxReached();
             if (elapsed != null) {
-                int nCards = elapsed[1].intValue();
+                // AnkiDroid is always counting one rep ahead, so we decrement it before displaying
+                // it to the user.
+                int nCards = elapsed[1].intValue() - 1;
                 int nMins = elapsed[0].intValue() / 60;
                 String mins = res.getQuantityString(R.plurals.timebox_reached_minutes, nMins, nMins);
                 String timeboxMessage = res.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins);
@@ -1916,7 +1918,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             revCount = new SpannableString("???");
         }
 
-        switch (mCurrentCard.getQueue()) {
+        switch (mSched.countIdx(mCurrentCard)) {
             case Card.TYPE_NEW:
                 newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
                 break;
