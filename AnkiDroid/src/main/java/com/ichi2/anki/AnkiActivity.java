@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -41,6 +42,13 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
 
     private DialogHandler mHandler = new DialogHandler(this);
 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        // The hardware buttons should control the music volume
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     protected void onResume() {
