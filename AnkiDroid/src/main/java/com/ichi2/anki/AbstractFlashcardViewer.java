@@ -1478,7 +1478,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
         webView.setFocusableInTouchMode(false);
-        webView.setScrollbarFadingEnabled(false);
+        webView.setScrollbarFadingEnabled(true);
         Timber.d("Focusable = %s, Focusable in touch mode = %s",webView.isFocusable(),webView.isFocusableInTouchMode());
 
         webView.setWebViewClient(new WebViewClient() {
