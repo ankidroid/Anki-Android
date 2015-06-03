@@ -32,7 +32,6 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -879,8 +878,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         View mainView = getLayoutInflater().inflate(R.layout.flashcard, null);
         setContentView(mainView);
         initNavigationDrawer(mainView);
-        // The hardware buttons should control the music volume while reviewing.
-        setVolumeControlStream(AudioManager.STREAM_MUSIC);
         // Load the collection
         startLoadingCollection();
     }
