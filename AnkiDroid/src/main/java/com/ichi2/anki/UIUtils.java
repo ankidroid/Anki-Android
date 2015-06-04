@@ -5,7 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
@@ -75,7 +75,7 @@ public class UIUtils {
 
 
     public static void setTitle(Activity activity, String title) {
-        ActionBarActivity actionBarActivity = (ActionBarActivity) activity;
+        AppCompatActivity actionBarActivity = (AppCompatActivity) activity;
         ActionBar actionBar = actionBarActivity.getSupportActionBar();
         if (actionBar != null) {
             CharacterStyle span = new ForegroundColorSpan(activity.getResources().getColor(
@@ -93,7 +93,7 @@ public class UIUtils {
 
 
     public static void setSubtitle(Activity activity, String title, boolean inverted) {
-        ActionBarActivity actionBarActivity = (ActionBarActivity) activity;
+        AppCompatActivity actionBarActivity = (AppCompatActivity) activity;
         ActionBar actionBar = actionBarActivity.getSupportActionBar();
         if (actionBar != null) {
             if (inverted) {
