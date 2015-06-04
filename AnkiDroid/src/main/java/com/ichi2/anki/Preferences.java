@@ -34,20 +34,18 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.Toolbar;
 import android.preference.PreferenceScreen;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.view.MenuItem;
 import android.view.WindowManager.BadTokenException;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.ui.AppCompatPreferenceActivity;
 import com.ichi2.ui.SeekBarPreference;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.exception.StorageAccessException;
@@ -61,7 +59,6 @@ import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.preferences.NumberRangePreference;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
-import com.ichi2.themes.Themes;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.VersionUtils;
 
@@ -84,7 +81,7 @@ import timber.log.Timber;
  */
 // TODO: change to PreferenceFragment to get rid of the deprecation warnings
 @SuppressWarnings("deprecation")
-public class Preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+public class Preferences extends AppCompatPreferenceActivity implements OnSharedPreferenceChangeListener {
 
     private static final int DIALOG_BACKUP = 2;
     private static final int DIALOG_HEBREW_FONT = 3;
@@ -130,15 +127,11 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
-        if (!CompatHelper.isHoneycomb()) {
-            Themes.applyTheme(this, Themes.THEME_ANDROID_DARK);
-        }
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.preferences);
+        addPreferencesFromResource(R.xml.preferences);
 
         mCol = CollectionHelper.getInstance().getCol(this);
-
-        addPreferencesFromResource(R.xml.preferences);
 
         EditTextPreference collectionPathPreference = (EditTextPreference) getPreferenceScreen().findPreference("deckPath");
         keepScreenOnCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("keepScreenOn");
@@ -181,7 +174,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
 
         initializeLanguageDialog();
-        
+
         // Make custom fonts generated when fonts dialog opened
         Preference fontsPreference = getPreferenceScreen().findPreference("font_preference_group");
         fontsPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -189,8 +182,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     initializeCustomFontsDialog();
                     return false;
                 }
-            });         
-        
+            });
+
         // Check that input is valid when changing the collection path
         collectionPathPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             public boolean onPreferenceChange(Preference preference, final Object newValue) {
@@ -205,7 +198,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 }
             }
         });
-        
+
         // About dialog
         Preference dialogPreference = getPreferenceScreen().findPreference("about_dialog_preference");
         dialogPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -280,23 +273,39 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         // Handle notification preference separately
         updateNotificationPreference();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        LinearLayout root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent();
-        Toolbar bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.toolbar, root, false);
-        bar.setTitle(R.string.settings);
-        root.addView(bar, 0); // insert at top
-        bar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
                 finish();
-            }
-        });
+                return true;
+        }
+        return false;
     }
+
+
+    // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference)
+    {
+        super.onPreferenceTreeClick(preferenceScreen, preference);
+        if (preference!=null)
+            if (preference instanceof PreferenceScreen) {
+                if (((PreferenceScreen) preference).getDialog() != null) {
+                    ((PreferenceScreen) preference).getDialog().getWindow().getDecorView().setBackgroundDrawable(
+                            this.getWindow().getDecorView().getBackground().getConstantState().newDrawable());
+                }
+            }
+        return false;
+    }
+
 
     private void updateNotificationPreference() {
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("minimumCardsDueForNotification");

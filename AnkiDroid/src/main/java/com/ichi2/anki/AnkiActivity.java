@@ -18,8 +18,8 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.IntentCompat;
 import android.support.v4.content.Loader;
-import android.support.v7.app.ActionBarActivity;
 
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -35,7 +35,7 @@ import com.ichi2.libanki.Collection;
 
 import timber.log.Timber;
 
-public class AnkiActivity extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Collection>,
+public class AnkiActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Collection>,
         SimpleMessageDialog.SimpleMessageDialogListener {
 
     public final int SIMPLE_NOTIFICATION_ID = 0;
