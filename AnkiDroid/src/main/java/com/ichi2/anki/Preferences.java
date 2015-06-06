@@ -35,6 +35,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
+import android.preference.PreferenceGroup;
 import android.support.annotation.NonNull;
 import android.preference.PreferenceScreen;
 import android.support.v7.widget.Toolbar;
@@ -69,6 +70,7 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -89,40 +91,15 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
 
     /** Key of the language preference */
     public static final String LANGUAGE = "language";
-
     private Collection mCol;
-    private CheckBoxPreference keepScreenOnCheckBoxPreference;
-    private CheckBoxPreference showAnswerCheckBoxPreference;
-    private CheckBoxPreference useBackupPreference;
-    private CheckBoxPreference convertFenText;
-    private CheckBoxPreference fixHebrewText;
-    private Preference syncAccount;
-    private static String[] sShowValueInSummList = { LANGUAGE, "dictionary", "reportErrorMode",
-            "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft",
-            "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight",
-            "gestureTapLeft", "newSpread", "useCurrent", "defaultFont", "overrideFontBehavior", "browserEditorFont" };
-    private static String[] sListNumericCheck = {"minimumCardsDueForNotification"};
-    private static String[] sShowValueInSummSeek = { "cardZoom", "imageZoom", "relativeCardBrowserFontSize",
-            "answerButtonSize", "whiteBoardStrokeWidth", "swipeSensitivity",
-            "timeoutAnswerSeconds", "timeoutQuestionSeconds", "backupMax", "dayOffset" };
-    private static String[] sShowValueInSummEditText = { "deckPath" };
-    private static String[] sShowValueInSummNumRange = { "timeLimit", "learnCutoff" };
-    private TreeMap<String, String> mListsToUpdate = new TreeMap<>();
+
+    // Other variables
     private MaterialDialog mProgressDialog;
     private boolean lockCheckAction = false;
     private String dialogMessage;
-
-    // Used for calculating dayOffset
-    private Calendar mStartDate;
-
-    // The ones below are persisted in the collection
-    private CheckBoxPreference showEstimates;
-    private CheckBoxPreference showProgress;
-    private NumberRangePreference learnCutoff;
-    private NumberRangePreference timeLimit;
-    private ListPreference useCurrent;
-    private ListPreference newSpread;
-    private SeekBarPreference dayOffset;
+    private final HashMap<String, String> mOriginalSumarries = new HashMap<>();
+    private static final String [] sCollectionPreferences = {"showEstimates", "showProgress",
+            "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset"};
 
 
     @Override
@@ -133,47 +110,11 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
 
         mCol = CollectionHelper.getInstance().getCol(this);
 
-        EditTextPreference collectionPathPreference = (EditTextPreference) getPreferenceScreen().findPreference("deckPath");
-        keepScreenOnCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("keepScreenOn");
-        showAnswerCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("timeoutAnswer");
-        useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
-        convertFenText = (CheckBoxPreference) getPreferenceScreen().findPreference("convertFenText");
-        syncAccount = getPreferenceScreen().findPreference("syncAccount");
-        showEstimates = (CheckBoxPreference) getPreferenceScreen().findPreference("showEstimates");
-        showProgress = (CheckBoxPreference) getPreferenceScreen().findPreference("showProgress");
-        learnCutoff = (NumberRangePreference) getPreferenceScreen().findPreference("learnCutoff");
-        timeLimit = (NumberRangePreference) getPreferenceScreen().findPreference("timeLimit");
-        useCurrent = (ListPreference) getPreferenceScreen().findPreference("useCurrent");
-        newSpread = (ListPreference) getPreferenceScreen().findPreference("newSpread");
-        dayOffset = (SeekBarPreference) getPreferenceScreen().findPreference("dayOffset");
         // Workaround preferences
-        PreferenceScreen advanced = (PreferenceScreen) getPreferenceScreen().findPreference("pref_screen_advanced");
-        PreferenceCategory workarounds = (PreferenceCategory) getPreferenceScreen().findPreference("category_workarounds");
-        CheckBoxPreference inputWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("inputWorkaround");
-        CheckBoxPreference longclickWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("textSelectionLongclickWorkaround");
-        fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");
-        CheckBoxPreference fixArabicText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixArabicText");
-        CheckBoxPreference safeDisplayMode = (CheckBoxPreference) getPreferenceScreen().findPreference("safeDisplay");
-        CompatHelper.removeHiddenPreferences(this.getApplicationContext());
-        if (CompatHelper.getSdkVersion() >= 9){
-            workarounds.removePreference(fixArabicText);
-        }
-        if (CompatHelper.isHoneycomb()){
-            workarounds.removePreference(longclickWorkaround);
-        }
-        if (CompatHelper.getSdkVersion() >= 13) {
-            workarounds.removePreference(safeDisplayMode);
-        }
-        if (CompatHelper.getSdkVersion() >= 15){
-            workarounds.removePreference(inputWorkaround);
-        }
-        if (CompatHelper.getSdkVersion() >= 16) {
-            workarounds.removePreference(fixHebrewText);
-            advanced.removePreference(workarounds);     // group itself can be hidden for API 16
-        }
-
-
+        removeUnnecessaryWorkarounds();
+        // Build languages
         initializeLanguageDialog();
+
 
         // Make custom fonts generated when fonts dialog opened
         Preference fontsPreference = getPreferenceScreen().findPreference("font_preference_group");
@@ -185,6 +126,7 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
             });
 
         // Check that input is valid when changing the collection path
+        EditTextPreference collectionPathPreference = (EditTextPreference) getPreferenceScreen().findPreference("deckPath");
         collectionPathPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             public boolean onPreferenceChange(Preference preference, final Object newValue) {
                 final String newPath = (String) newValue;
@@ -225,54 +167,11 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
                 }
             });
 
-        if (mCol != null) {
-            // For collection preferences, we need to fetch the correct values from the collection
-            mStartDate = GregorianCalendar.getInstance();
-            Timestamp timestamp = new Timestamp(mCol.getCrt() * 1000);
-            mStartDate.setTimeInMillis(timestamp.getTime());
-            dayOffset.setValue(mStartDate.get(Calendar.HOUR_OF_DAY));
-            try {
-                JSONObject conf = mCol.getConf();
-                learnCutoff.setValue(conf.getInt("collapseTime") / 60);
-                timeLimit.setValue(conf.getInt("timeLim") / 60);
-                showEstimates.setChecked(conf.getBoolean("estTimes"));
-                showProgress.setChecked(conf.getBoolean("dueCounts"));
-                newSpread.setValueIndex(conf.getInt("newSpread"));
-                useCurrent.setValueIndex(conf.optBoolean("addToCur", true) ? 0 : 1);
-            } catch (JSONException | NumberFormatException e) {
-                throw new RuntimeException();
-            }
-        } else {
-            // It's possible to open the preferences from the loading screen if no SD card is found.
-            // In that case, there will be no collection loaded, so we need to disable the settings
-            // that read from and write to the collection.
-            dayOffset.setEnabled(false);
-            learnCutoff.setEnabled(false);
-            timeLimit.setEnabled(false);
-            showEstimates.setEnabled(false);
-            showProgress.setEnabled(false);
-            newSpread.setEnabled(false);
-            useCurrent.setEnabled(false);
-        }
 
-        for (String key : sShowValueInSummList) {
-            if (Arrays.asList(sListNumericCheck).contains(key)) {
-                updateListPreference(key, true);
-            } else {
-                updateListPreference(key, false);
-            }
-        }
-        for (String key : sShowValueInSummSeek) {
-            updateSeekBarPreference(key);
-        }
-        for (String key : sShowValueInSummEditText) {
-            updateEditTextPreference(key);
-        }
-        for (String key : sShowValueInSummNumRange) {
-            updateNumberRangePreference(key);
-        }
-        // Handle notification preference separately
-        updateNotificationPreference();
+        // Set the text for the summary of each of the preferences
+        initAllPreferences();
+
+        // Add an Actionbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -290,133 +189,142 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
     }
 
 
-    // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
+    // Workaround for Android bug 4611: http://code.google.com/p/android/issues/detail?id=4611
     @SuppressWarnings("deprecation")
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference)
     {
         super.onPreferenceTreeClick(preferenceScreen, preference);
-        if (preference!=null)
+        if (preference!=null && !CompatHelper.isHoneycomb()) {
             if (preference instanceof PreferenceScreen) {
                 if (((PreferenceScreen) preference).getDialog() != null) {
                     ((PreferenceScreen) preference).getDialog().getWindow().getDecorView().setBackgroundDrawable(
                             this.getWindow().getDecorView().getBackground().getConstantState().newDrawable());
                 }
             }
+        }
         return false;
     }
 
+    /**
+     * Loop over every preference in the list and set the summary text
+     */
+    private void initAllPreferences() {
+        for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); ++i) {
+            Preference preference = getPreferenceScreen().getPreference(i);
+            if (preference instanceof PreferenceGroup) {
+                PreferenceGroup preferenceGroup = (PreferenceGroup) preference;
+                for (int j = 0; j < preferenceGroup.getPreferenceCount(); ++j) {
+                    Preference nestedPreference = preferenceGroup.getPreference(j);
+                    if (nestedPreference instanceof PreferenceGroup) {
+                        PreferenceGroup nestedPreferenceGroup = (PreferenceGroup) nestedPreference;
+                        for (int k = 0; k < nestedPreferenceGroup.getPreferenceCount(); ++k) {
+                            initPreference(nestedPreferenceGroup.getPreference(k));
+                        }
+                    } else {
+                        initPreference(preferenceGroup.getPreference(j));
+                    }
+                }
+            } else {
+                initPreference(preference);
+            }
+        }
+    }
+
+
+
+    private void initPreference(Preference pref) {
+        // Load stored values from Preferences which are stored in the Collection
+        if (Arrays.asList(sCollectionPreferences).contains(pref.getKey())) {
+            if (mCol != null) {
+                try {
+                    JSONObject conf = mCol.getConf();
+                    switch (pref.getKey()) {
+                        case "showEstimates":
+                            ((CheckBoxPreference)pref).setChecked(conf.getBoolean("estTimes"));
+                            break;
+                        case "showProgress":
+                            ((CheckBoxPreference)pref).setChecked(conf.getBoolean("dueCounts"));
+                            break;
+                        case "learnCutoff":
+                            ((NumberRangePreference)pref).setValue(conf.getInt("collapseTime") / 60);
+                            break;
+                        case "timeLimit":
+                            ((NumberRangePreference)pref).setValue(conf.getInt("timeLim") / 60);
+                            break;
+                        case "useCurrent":
+                            ((ListPreference)pref).setValueIndex(conf.optBoolean("addToCur", true) ? 0 : 1);
+                            break;
+                        case "newSpread":
+                            ((ListPreference)pref).setValueIndex(conf.getInt("newSpread"));
+                            break;
+                        case "dayOffset":
+                            Calendar calendar = new GregorianCalendar();
+                            Timestamp timestamp = new Timestamp(mCol.getCrt() * 1000);
+                            calendar.setTimeInMillis(timestamp.getTime());
+                            ((SeekBarPreference)pref).setValue(calendar.get(Calendar.HOUR_OF_DAY));
+                            break;
+                    }
+                } catch (JSONException | NumberFormatException e) {
+                    throw new RuntimeException();
+                }
+            } else {
+                // Disable Col preferences if Collection closed
+                pref.setEnabled(false);
+            }
+        }
+        // Set the value from the summary cache
+        CharSequence s = pref.getSummary();
+        mOriginalSumarries.put(pref.getKey(), (s != null) ? s.toString() : "");
+        // Update summary
+        updateSummary(pref);
+    }
+
+    private void updateSummary(Preference pref) {
+         // Get value text
+        String value;
+        try {
+            if (pref instanceof ListPreference) {
+                value = ((ListPreference) pref).getEntry().toString();
+            } else if (pref instanceof EditTextPreference) {
+                value = ((EditTextPreference) pref).getText();
+            } else if (pref instanceof  NumberRangePreference) {
+                value = Integer.toString(((NumberRangePreference) pref).getValue());
+            } else if (pref instanceof SeekBarPreference) {
+                value = Integer.toString(((SeekBarPreference) pref).getValue());
+            } else {
+                return;
+            }
+        } catch (NullPointerException e) {
+            value = "";
+        }
+        // Get summary text
+        String oldSummary = mOriginalSumarries.get(pref.getKey());
+        // Replace summary text with value according to some rules
+        if (oldSummary.equals("")) {
+            pref.setSummary(value);
+        } else if (value.equals("")) {
+            pref.setSummary(oldSummary);
+        } else if (pref.getKey().equals("minimumCardsDueForNotification")) {
+            pref.setSummary(replaceStringIfNumeric(oldSummary, value));
+        } else {
+            pref.setSummary(replaceString(oldSummary, value));
+        }
+    }
 
     private void updateNotificationPreference() {
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("minimumCardsDueForNotification");
-        CharSequence [] entries = listpref.getEntries();
-        CharSequence [] values = listpref.getEntryValues();
-        for (int i=0; i < entries.length; i++) {
-            int value = Integer.parseInt(values[i].toString());
-            if (entries[i].toString().contains("%d")) {
-                entries[i]=String.format(entries[i].toString(), value);
-            }
-        }
-        listpref.setEntries(entries);
-        listpref.setSummary(listpref.getEntry().toString());
-    }
-    
-    private void updateListPreference(String key, final boolean numericCheck) {
-        ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference(key);
-        String entry;
-        try {
-            entry = listpref.getEntry().toString();
-        } catch (NullPointerException e) {
-            Timber.e("Error getting set preference value of " + key + ": " + e);
-            entry = "?";
-        }
-        if (mListsToUpdate.containsKey(key)) {
-            if (numericCheck){
-                // replace any XXX with the value if value numeric, otherwise return value
-                listpref.setSummary(replaceStringIfNumeric(mListsToUpdate.get(key), entry));
-            } else {
-                // replace any XXX with the value
-                listpref.setSummary(replaceString(mListsToUpdate.get(key), entry));
-            }
-        } else {
-            String oldsum = (String) listpref.getSummary();
-            if (oldsum.contains("XXX")) {
-                mListsToUpdate.put(key, oldsum);
-                if (numericCheck) {
-                    // replace any XXX with the value if value numeric, otherwise return value
-                    listpref.setSummary(replaceStringIfNumeric(oldsum, entry));
-                } else {
-                    // replace any XXX with the value
-                    listpref.setSummary(replaceString(oldsum, entry));
-                }
-
-            } else {
-                listpref.setSummary(entry);
-            }
-        }
-    }
-
-
-    private void updateEditTextPreference(String key) {
-        EditTextPreference pref = (EditTextPreference) getPreferenceScreen().findPreference(key);
-        String entry;
-        try {
-            entry = pref.getText();
-        } catch (NullPointerException e) {
-            Timber.e(e, "Error getting set preference value of %s", key);
-            entry = "?";
-        }
-        if (mListsToUpdate.containsKey(key)) {
-            pref.setSummary(replaceString(mListsToUpdate.get(key), entry));
-        } else {
-            String oldsum = (String) pref.getSummary();
-            if (oldsum.contains("XXX")) {
-                mListsToUpdate.put(key, oldsum);
-                pref.setSummary(replaceString(oldsum, entry));
-            } else {
-                pref.setSummary(entry);
-            }
-        }
-    }
-
-
-    private void updateSeekBarPreference(String key) {
-        SeekBarPreference seekpref = (SeekBarPreference) getPreferenceScreen().findPreference(key);
-        try {
-            if (mListsToUpdate.containsKey(key)) {
-                seekpref.setSummary(replaceString(mListsToUpdate.get(key), Integer.toString(seekpref.getValue())));
-            } else {
-                String oldsum = (String) seekpref.getSummary();
-                if (oldsum.contains("XXX")) {
-                    mListsToUpdate.put(key, oldsum);
-                    seekpref.setSummary(replaceString(oldsum, Integer.toString(seekpref.getValue())));
-                } else {
-                    seekpref.setSummary(Integer.toString(seekpref.getValue()));
+        if (listpref != null) {
+            CharSequence[] entries = listpref.getEntries();
+            CharSequence[] values = listpref.getEntryValues();
+            for (int i = 0; i < entries.length; i++) {
+                int value = Integer.parseInt(values[i].toString());
+                if (entries[i].toString().contains("%d")) {
+                    entries[i] = String.format(entries[i].toString(), value);
                 }
             }
-        } catch (NullPointerException e) {
-            Timber.e(e, "Exception when updating seekbar preference");
-        }
-    }
-
-
-    private void updateNumberRangePreference(String key) {
-        NumberRangePreference numPref = (NumberRangePreference) getPreferenceScreen().findPreference(key);
-        try {
-            String value = Integer.toString(numPref.getValue());
-            if (mListsToUpdate.containsKey(key)) {
-                numPref.setSummary(replaceString(mListsToUpdate.get(key), value));
-            } else {
-                String oldSum = (String) numPref.getSummary();
-                if (oldSum.contains("XXX")) {
-                    mListsToUpdate.put(key, oldSum);
-                    numPref.setSummary(replaceString(oldSum, value));
-                } else {
-                    numPref.setSummary(value);
-                }
-            }
-        } catch (NullPointerException e) {
-            Timber.e(e, "Exception when updating NumberRangePreference");
+            listpref.setEntries(entries);
+            listpref.setSummary(listpref.getEntry().toString());
         }
     }
 
@@ -440,24 +348,56 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
     }
 
     private void initializeLanguageDialog() {
-        Map<String, String> items = new TreeMap<>();
-        for (String localeCode : LanguageUtil.APP_LANGUAGES) {
-            Locale loc = LanguageUtil.getLocale(localeCode);
-            items.put(loc.getDisplayName(), loc.toString());
-        }
-        CharSequence[] languageDialogLabels = new CharSequence[items.size() + 1];
-        CharSequence[] languageDialogValues = new CharSequence[items.size() + 1];
-        languageDialogLabels[0] = getResources().getString(R.string.language_system);
-        languageDialogValues[0] = "";
-        int i = 1;
-        for (Map.Entry<String, String> e : items.entrySet()) {
-            languageDialogLabels[i] = e.getKey();
-            languageDialogValues[i] = e.getValue();
-            i++;
-        }
         ListPreference languageSelection = (ListPreference) getPreferenceScreen().findPreference(LANGUAGE);
-        languageSelection.setEntries(languageDialogLabels);
-        languageSelection.setEntryValues(languageDialogValues);
+        if (languageSelection != null) {
+            Map<String, String> items = new TreeMap<>();
+            for (String localeCode : LanguageUtil.APP_LANGUAGES) {
+                Locale loc = LanguageUtil.getLocale(localeCode);
+                items.put(loc.getDisplayName(), loc.toString());
+            }
+            CharSequence[] languageDialogLabels = new CharSequence[items.size() + 1];
+            CharSequence[] languageDialogValues = new CharSequence[items.size() + 1];
+            languageDialogLabels[0] = getResources().getString(R.string.language_system);
+            languageDialogValues[0] = "";
+            int i = 1;
+            for (Map.Entry<String, String> e : items.entrySet()) {
+                languageDialogLabels[i] = e.getKey();
+                languageDialogValues[i] = e.getValue();
+                i++;
+            }
+
+            languageSelection.setEntries(languageDialogLabels);
+            languageSelection.setEntryValues(languageDialogValues);
+        }
+    }
+
+    private void removeUnnecessaryWorkarounds() {
+        PreferenceScreen advanced = (PreferenceScreen) getPreferenceScreen().findPreference("pref_screen_advanced");
+        PreferenceCategory workarounds = (PreferenceCategory) getPreferenceScreen().findPreference("category_workarounds");
+        if (workarounds != null) {
+            CheckBoxPreference inputWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("inputWorkaround");
+            CheckBoxPreference longclickWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("textSelectionLongclickWorkaround");
+            CheckBoxPreference fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");
+            CheckBoxPreference fixArabicText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixArabicText");
+            CheckBoxPreference safeDisplayMode = (CheckBoxPreference) getPreferenceScreen().findPreference("safeDisplay");
+            CompatHelper.removeHiddenPreferences(this.getApplicationContext());
+            if (CompatHelper.getSdkVersion() >= 9) {
+                workarounds.removePreference(fixArabicText);
+            }
+            if (CompatHelper.isHoneycomb()) {
+                workarounds.removePreference(longclickWorkaround);
+            }
+            if (CompatHelper.getSdkVersion() >= 13) {
+                workarounds.removePreference(safeDisplayMode);
+            }
+            if (CompatHelper.getSdkVersion() >= 15) {
+                workarounds.removePreference(inputWorkaround);
+            }
+            if (CompatHelper.getSdkVersion() >= 16) {
+                workarounds.removePreference(fixHebrewText);
+                advanced.removePreference(workarounds);     // group itself can be hidden for API 16
+            }
+        }
     }
 
 
@@ -468,13 +408,13 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
             defaultFontPreference.setEntries(getCustomFonts("System default"));
             defaultFontPreference.setEntryValues(getCustomFonts(""));
         }
+        updateSummary(defaultFontPreference);
 
         ListPreference browserEditorCustomFontsPreference = (ListPreference) getPreferenceScreen().findPreference(
                 "browserEditorFont");
         browserEditorCustomFontsPreference.setEntries(getCustomFonts("System default"));
         browserEditorCustomFontsPreference.setEntryValues(getCustomFonts("", true));
-        updateListPreference("defaultFont", false);
-        updateListPreference("browserEditorFont", false);
+        updateSummary(browserEditorCustomFontsPreference);
     }
 
     @Override
@@ -488,24 +428,31 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
     protected void onResume() {
         super.onResume();
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+        // Loop over all preferences
+
 
         // syncAccount's summary can change while preferences are still open (user logs
         // in from preferences screen), so we need to update it here.
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         String username = preferences.getString("username", "");
+        Preference syncAccount = getPreferenceScreen().findPreference("syncAccount");
         if (TextUtils.isEmpty(username)) {
             syncAccount.setSummary(R.string.sync_account_summ_logged_out);
         } else {
             syncAccount.setSummary(getString(R.string.sync_account_summ_logged_in, username));
         }
+        updateNotificationPreference();
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         try {
+            Preference pref = getPreferenceScreen().findPreference(key);
+
             switch (key) {
                 case "timeoutAnswer":
-                    keepScreenOnCheckBoxPreference.setChecked(showAnswerCheckBoxPreference.isChecked());
+                    CheckBoxPreference keepScreenOn = (CheckBoxPreference) getPreferenceScreen().findPreference("keepScreenOn");
+                    keepScreenOn.setChecked(((CheckBoxPreference) pref).isChecked());
                     break;
                 case LANGUAGE:
                     closePreferences();
@@ -513,21 +460,21 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
                 case "useBackup":
                     if (lockCheckAction) {
                         lockCheckAction = false;
-                    } else if (!useBackupPreference.isChecked()) {
+                    } else if (!((CheckBoxPreference) pref).isChecked()) {
                         lockCheckAction = true;
-                        useBackupPreference.setChecked(true);
+                        ((CheckBoxPreference) pref).setChecked(true);
                         showDialog(DIALOG_BACKUP);
                     }
                     break;
                 case "convertFenText":
-                    if (convertFenText.isChecked()) {
+                    if (((CheckBoxPreference) pref).isChecked()) {
                         ChessFilter.install(Hooks.getInstance(getApplicationContext()));
                     } else {
                         ChessFilter.uninstall(Hooks.getInstance(getApplicationContext()));
                     }
                     break;
                 case "fixHebrewText":
-                    if (fixHebrewText.isChecked()) {
+                    if (((CheckBoxPreference) pref).isChecked()) {
                         HebrewFixFilter.install(Hooks.getInstance(getApplicationContext()));
                         showDialog(DIALOG_HEBREW_FONT);
                     } else {
@@ -535,32 +482,32 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
                     }
                     break;
                 case "showProgress":
-                    mCol.getConf().put("dueCounts", showProgress.isChecked());
+                    mCol.getConf().put("dueCounts", ((CheckBoxPreference) pref).isChecked());
                     mCol.setMod();
                     break;
                 case "showEstimates":
-                    mCol.getConf().put("estTimes", showEstimates.isChecked());
+                    mCol.getConf().put("estTimes", ((CheckBoxPreference) pref).isChecked());
                     mCol.setMod();
                     break;
                 case "newSpread":
-                    mCol.getConf().put("newSpread", Integer.parseInt(newSpread.getValue()));
+                    mCol.getConf().put("newSpread", Integer.parseInt(((ListPreference) pref).getValue()));
                     mCol.setMod();
                     break;
                 case "timeLimit":
-                    mCol.getConf().put("timeLim", timeLimit.getValue() * 60);
+                    mCol.getConf().put("timeLim", ((NumberRangePreference) pref).getValue() * 60);
                     mCol.setMod();
                     break;
                 case "learnCutoff":
-                    mCol.getConf().put("collapseTime", learnCutoff.getValue() * 60);
+                    mCol.getConf().put("collapseTime", ((NumberRangePreference) pref).getValue() * 60);
                     mCol.setMod();
                     break;
                 case "useCurrent":
-                    mCol.getConf().put("addToCur", useCurrent.getValue().equals("0"));
+                    mCol.getConf().put("addToCur", ((ListPreference) pref).getValue().equals("0"));
                     mCol.setMod();
                     break;
                 case "dayOffset":
-                    int hours = dayOffset.getValue();
-                    Calendar date = (Calendar) mStartDate.clone();
+                    int hours = ((SeekBarPreference) pref).getValue();
+                    Calendar date = new GregorianCalendar();
                     date.set(Calendar.HOUR_OF_DAY, hours);
                     mCol.setCrt(date.getTimeInMillis() / 1000);
                     mCol.setMod();
@@ -573,20 +520,8 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
                     AnkiDroidApp.getInstance().setAcraReportingMode(value);
                     break;
             }
-            
-            if (Arrays.asList(sShowValueInSummList).contains(key)) {
-                if (Arrays.asList(sListNumericCheck).contains(key)) {
-                    updateListPreference(key, true);
-                } else {
-                    updateListPreference(key, false);
-                }
-            } else if (Arrays.asList(sShowValueInSummSeek).contains(key)) {
-                updateSeekBarPreference(key);
-            } else if (Arrays.asList(sShowValueInSummEditText).contains(key)) {
-                updateEditTextPreference(key);
-            } else if (Arrays.asList(sShowValueInSummNumRange).contains(key)) {
-                updateNumberRangePreference(key);
-            }
+            // Update the summary text to reflect new value
+            updateSummary(findPreference(key));
         } catch (BadTokenException e) {
             Timber.e(e, "Preferences: BadTokenException on showDialog");
         } catch (NumberFormatException | JSONException e) {
@@ -656,7 +591,8 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         lockCheckAction = true;
-                        useBackupPreference.setChecked(false);
+                        CheckBoxPreference useBackup = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
+                        useBackup.setChecked(false);
                         dialogMessage = getResources().getString(R.string.backup_delete);
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_BACKUPS, mDeckOperationHandler,
                                 (DeckTask.TaskData[]) null);

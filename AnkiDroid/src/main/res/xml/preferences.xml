@@ -61,7 +61,7 @@
             android:entries="@array/error_reporting_choice_labels"
             android:entryValues="@array/error_reporting_choice_values"
             android:key="reportErrorMode"
-            android:summary="@string/error_reporting_choice_summary"
+            android:summary=""
             android:title="@string/error_reporting_choice" />
         <PreferenceCategory android:title="@string/notification_pref" >
             <ListPreference
