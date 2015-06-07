@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com>
+~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+~ Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>
+~ Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- Advanced Preferences -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
+    android:title="@string/pref_cat_advanced"
+    android:summary="@string/pref_cat_advanced_summ"
+    android:key="pref_screen_advanced">
+        <Preference 
+            android:key="force_full_sync"
+            android:title="@string/force_full_sync_title"
+            android:summary="@string/force_full_sync_summary" />
+        <PreferenceCategory android:title="@string/pref_cat_performance" >
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:disableDependentsState="false"
+                android:key="useBackup"
+                android:summary="@string/pref_backup_summ"
+                android:title="@string/pref_backup" />
+            <com.ichi2.ui.SeekBarPreference
+                android:defaultValue="8"
+                android:dependency="useBackup"
+                android:key="backupMax"
+                android:max="10"
+                android:summary="@string/pref_backup_max_summ"
+                android:text=""
+                android:title="@string/pref_backup_max"
+                app:interval="1"
+                app:min="1" />
+        </PreferenceCategory>
+        <PreferenceCategory
+            android:key="category_workarounds"
+            android:title="@string/pref_cat_workarounds" >
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="safeDisplay"
+                android:summary="@string/safe_display_summ"
+                android:title="@string/safe_display" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="inputWorkaround"
+                android:summary="@string/input_workaround_summ"
+                android:title="@string/input_workaround" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="textSelectionLongclickWorkaround"
+                android:summary="@string/text_selection_click_summ"
+                android:title="@string/text_selection_click" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="fixHebrewText"
+                android:summary="@string/fix_hebrew_text_summ"
+                android:title="@string/fix_hebrew_text" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="fixArabicText"
+                android:summary="@string/fix_arabic_text_summ"
+                android:title="@string/fix_arabic_text" />
+        </PreferenceCategory>
+        <PreferenceCategory android:title="@string/pref_cat_plugins" >
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="tts"
+                android:summary="@string/tts_summ"
+                android:title="@string/tts" />
+            <ListPreference
+                android:defaultValue="0"
+                android:entries="@array/dictionary_labels"
+                android:entryValues="@array/dictionary_values"
+                android:key="dictionary"
+                android:summary="@string/dictionary_summ"
+                android:title="@string/dictionary" />
+            <com.ichi2.preferences.CustomDialogPreference
+                android:dialogIcon="@android:drawable/ic_dialog_alert"
+                android:dialogMessage="@string/reset_languages_question"
+                android:dialogTitle="@string/reset_languages"
+                android:negativeButtonText="@string/dialog_cancel"
+                android:positiveButtonText="@string/dialog_positive_reset"
+                android:summary="@string/reset_languages_summ"
+                android:title="@string/reset_languages" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="intentAdditionInstantAdd"
+                android:summary="@string/pref_intent_add_instant_summ"
+                android:title="@string/pref_intent_add_instant" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="com.ichi2.filters.GoogleTranslaterFilter"
+                android:summary="@string/filter_google_translate_summ"
+                android:title="@string/filter_google_translate" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="convertFenText"
+                android:summary="@string/convert_fen_text_summ"
+                android:title="@string/convert_fen_text" />
+            <CheckBoxPreference
+                android:id="@+id/scrolling_buttons_checkbox"
+                android:defaultValue="false"
+                android:key="scrolling_buttons"
+                android:summary="@string/more_scrolling_buttons_summ"
+                android:title="@string/more_scrolling_buttons" />
+            <CheckBoxPreference
+                android:id="@+id/double_scrolling_checkbox"
+                android:defaultValue="false"
+                android:key="double_scrolling"
+                android:summary="@string/double_scrolling_gap_summ"
+                android:title="@string/double_scrolling_gap" />
+        </PreferenceCategory>
+
+    <Preference 
+        android:key="about_dialog_preference"
+        android:title="@string/about_title" />
+</PreferenceScreen>

@@ -106,67 +106,68 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preferences);
-        addPreferencesFromResource(R.xml.preferences);
-
         mCol = CollectionHelper.getInstance().getCol(this);
 
-        // Workaround preferences
-        removeUnnecessaryWorkarounds();
-        // Build languages
-        initializeLanguageDialog();
-
-
-        // Make custom fonts generated when fonts dialog opened
-        Preference fontsPreference = getPreferenceScreen().findPreference("font_preference_group");
-        fontsPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-                public boolean onPreferenceClick(Preference preference) {
+        // TODO: Only use intent approach on pre-honeycomb, using PreferenceFragment on newer devices
+        String action = getIntent().getAction();
+        if (action == null) {
+            // Headers screen
+            addPreferencesFromResource(R.xml.preference_headers_legacy);
+        } else {
+            // Subscreen
+            switch (action) {
+                case "com.ichi2.anki.prefs.general":
+                    addPreferencesFromResource(R.xml.preferences_general);
+                    // Build languages
+                    initializeLanguageDialog();
+                    // Check that input is valid before committing change in the collection path
+                    EditTextPreference collectionPathPreference = (EditTextPreference) getPreferenceScreen().findPreference("deckPath");
+                    collectionPathPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+                        public boolean onPreferenceChange(Preference preference, final Object newValue) {
+                            final String newPath = (String) newValue;
+                            try {
+                                CollectionHelper.initializeAnkiDroidDirectory(newPath);
+                                return true;
+                            } catch (StorageAccessException e) {
+                                Timber.e(e, "Could not initialize directory: %s", newPath);
+                                Toast.makeText(getApplicationContext(), R.string.dialog_collection_path_not_dir, Toast.LENGTH_LONG).show();
+                                return false;
+                            }
+                        }
+                    });
+                    break;
+                case "com.ichi2.anki.prefs.reviewing":
+                    addPreferencesFromResource(R.xml.preferences_reviewing);
+                    break;
+                case "com.ichi2.anki.prefs.fonts":
+                    addPreferencesFromResource(R.xml.preferences_fonts);
                     initializeCustomFontsDialog();
-                    return false;
-                }
-            });
-
-        // Check that input is valid when changing the collection path
-        EditTextPreference collectionPathPreference = (EditTextPreference) getPreferenceScreen().findPreference("deckPath");
-        collectionPathPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-            public boolean onPreferenceChange(Preference preference, final Object newValue) {
-                final String newPath = (String) newValue;
-                try {
-                    CollectionHelper.initializeAnkiDroidDirectory(newPath);
-                    return true;
-                } catch (StorageAccessException e) {
-                    Timber.e(e, "Could not initialize directory: %s", newPath);
-                    Toast.makeText(getApplicationContext(), R.string.dialog_collection_path_not_dir, Toast.LENGTH_LONG).show();
-                    return false;
-                }
+                    break;
+                case "com.ichi2.anki.prefs.gestures":
+                    addPreferencesFromResource(R.xml.preferences_gestures);
+                    break;
+                case "com.ichi2.anki.prefs.advanced":
+                    addPreferencesFromResource(R.xml.preferences_advanced);
+                    // Force full sync option
+                    Preference fullSyncPreference = getPreferenceScreen().findPreference("force_full_sync");
+                    fullSyncPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                        public boolean onPreferenceClick(Preference preference) {
+                            if (mCol != null && mCol.getDb() != null) {
+                                // TODO: Could be useful to show the full confirmation dialog
+                                mCol.modSchemaNoCheck();
+                                mCol.setMod();
+                                Toast.makeText(getApplicationContext(), R.string.ok, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), R.string.vague_error, Toast.LENGTH_SHORT).show();
+                            }
+                            return true;
+                        }
+                    });
+                    // Workaround preferences
+                    removeUnnecessaryWorkarounds();
+                    break;
             }
-        });
-
-        // About dialog
-        Preference dialogPreference = getPreferenceScreen().findPreference("about_dialog_preference");
-        dialogPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-                public boolean onPreferenceClick(Preference preference) {
-                    startActivity(new Intent(Preferences.this, Info.class));
-                    return true;
-                }
-            });
-        dialogPreference.setSummary(getResources().getString(R.string.about_version) + " " + VersionUtils.getPkgVersionName());
-
-        // Force full sync option
-        Preference fullSyncPreference = getPreferenceScreen().findPreference("force_full_sync");
-        fullSyncPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-                public boolean onPreferenceClick(Preference preference) {
-                    if (mCol != null && mCol.getDb()!= null) {
-                        // TODO: Could be useful to show the full confirmation dialog
-                        mCol.modSchemaNoCheck();
-                        mCol.setMod();
-                        Toast.makeText(getApplicationContext(), R.string.ok , Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), R.string.vague_error , Toast.LENGTH_SHORT).show();
-                    }
-                    return true;
-                }
-            });
-
+        }
 
         // Set the text for the summary of each of the preferences
         initAllPreferences();
@@ -281,6 +282,14 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
     }
 
     private void updateSummary(Preference pref) {
+         if (pref.getKey() == null) {
+             return;
+         }
+         // Handle about dialog separately
+        if (pref.getKey().equals("about_dialog_preference")) {
+            pref.setSummary(getResources().getString(R.string.about_version) + " " + VersionUtils.getPkgVersionName());
+            return;
+        }
          // Get value text
         String value;
         try {
@@ -372,7 +381,6 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
     }
 
     private void removeUnnecessaryWorkarounds() {
-        PreferenceScreen advanced = (PreferenceScreen) getPreferenceScreen().findPreference("pref_screen_advanced");
         PreferenceCategory workarounds = (PreferenceCategory) getPreferenceScreen().findPreference("category_workarounds");
         if (workarounds != null) {
             CheckBoxPreference inputWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("inputWorkaround");
@@ -395,7 +403,7 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
             }
             if (CompatHelper.getSdkVersion() >= 16) {
                 workarounds.removePreference(fixHebrewText);
-                advanced.removePreference(workarounds);     // group itself can be hidden for API 16
+                getPreferenceScreen().removePreference(workarounds);     // group itself can be hidden for API 16
             }
         }
     }
@@ -408,13 +416,10 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
             defaultFontPreference.setEntries(getCustomFonts("System default"));
             defaultFontPreference.setEntryValues(getCustomFonts(""));
         }
-        updateSummary(defaultFontPreference);
-
         ListPreference browserEditorCustomFontsPreference = (ListPreference) getPreferenceScreen().findPreference(
                 "browserEditorFont");
         browserEditorCustomFontsPreference.setEntries(getCustomFonts("System default"));
         browserEditorCustomFontsPreference.setEntryValues(getCustomFonts("", true));
-        updateSummary(browserEditorCustomFontsPreference);
     }
 
     @Override
@@ -436,10 +441,12 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         String username = preferences.getString("username", "");
         Preference syncAccount = getPreferenceScreen().findPreference("syncAccount");
-        if (TextUtils.isEmpty(username)) {
-            syncAccount.setSummary(R.string.sync_account_summ_logged_out);
-        } else {
-            syncAccount.setSummary(getString(R.string.sync_account_summ_logged_in, username));
+        if (syncAccount != null) {
+            if (TextUtils.isEmpty(username)) {
+                syncAccount.setSummary(R.string.sync_account_summ_logged_out);
+            } else {
+                syncAccount.setSummary(getString(R.string.sync_account_summ_logged_in, username));
+            }
         }
         updateNotificationPreference();
     }

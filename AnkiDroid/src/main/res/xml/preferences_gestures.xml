@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com>
+~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+~ Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>
+~ Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- Navigation Prefrences -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
+    android:title="@string/pref_cat_gestures"
+    android:summary="@string/pref_cat_gestures_summ" >
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:disableDependentsState="false"
+        android:key="gestures"
+        android:summary="@string/gestures_summ"
+        android:title="@string/gestures" />
+    <com.ichi2.ui.SeekBarPreference
+        android:defaultValue="100"
+        android:dependency="gestures"
+        android:dialogMessage="@string/swipe_sensitivity_summ"
+        android:key="swipeSensitivity"
+        android:max="180"
+        android:summary="@string/swipe_sensitivity_summ"
+        android:text=""
+        android:title="@string/swipe_sensitivity"
+        app:interval="1"
+        app:min="20" />
+    <PreferenceCategory android:title="@string/pref_cat_actions" >
+        <ListPreference
+            android:defaultValue="0"
+            android:dependency="gestures"
+            android:entries="@array/gestures_labels"
+            android:entryValues="@array/gestures_values"
+            android:key="gestureSwipeUp"
+            android:summary=""
+            android:title="@string/gestures_swipe_up" />
+        <ListPreference
+            android:defaultValue="0"
+            android:dependency="gestures"
+            android:entries="@array/gestures_labels"
+            android:entryValues="@array/gestures_values"
+            android:key="gestureSwipeDown"
+            android:summary=""
+            android:title="@string/gestures_swipe_down" />
+        <ListPreference
+            android:defaultValue="6"
+            android:dependency="gestures"
+            android:entries="@array/gestures_labels"
+            android:entryValues="@array/gestures_values"
+            android:key="gestureSwipeLeft"
+            android:summary=""
+            android:title="@string/gestures_swipe_left" />
+        <ListPreference
+            android:defaultValue="2"
+            android:dependency="gestures"
+            android:entries="@array/gestures_labels"
+            android:entryValues="@array/gestures_values"
+            android:key="gestureSwipeRight"
+            android:summary=""
+            android:title="@string/gestures_swipe_right" />
+        <ListPreference
+            android:defaultValue="0"
+            android:dependency="gestures"
+            android:entries="@array/gestures_labels"
+            android:entryValues="@array/gestures_values"
+            android:key="gestureDoubleTap"
+            android:summary=""
+            android:title="@string/gestures_double_tap" />
+        <ListPreference
+            android:defaultValue="1"
+            android:dependency="gestures"
+            android:entries="@array/gestures_labels"
+            android:entryValues="@array/gestures_values"
+            android:key="gestureTapTop"
+            android:summary=""
+            android:title="@string/gestures_tap_top" />
+        <ListPreference
+            android:defaultValue="1"
+            android:dependency="gestures"
+            android:entries="@array/gestures_labels"
+            android:entryValues="@array/gestures_values"
+            android:key="gestureTapBottom"
+            android:summary=""
+            android:title="@string/gestures_tap_bottom" />
+        <ListPreference
+            android:defaultValue="1"
+            android:dependency="gestures"
+            android:entries="@array/gestures_labels"
+            android:entryValues="@array/gestures_values"
+            android:key="gestureTapLeft"
+            android:summary=""
+            android:title="@string/gestures_tap_left" />
+        <ListPreference
+            android:defaultValue="1"
+            android:dependency="gestures"
+            android:entries="@array/gestures_labels"
+            android:entryValues="@array/gestures_values"
+            android:key="gestureTapRight"
+            android:summary=""
+            android:title="@string/gestures_tap_right" />
+    </PreferenceCategory>
+</PreferenceScreen>

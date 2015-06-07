@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com>
+~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+~ Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>
+~ Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!--  General Preferences -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
+    android:title="@string/pref_cat_general"
+    android:summary="@string/pref_cat_general_summ" >
+    <EditTextPreference
+        android:defaultValue="/sdcard/AnkiDroid"
+        android:key="deckPath"
+        android:summary="@string/col_path_summ"
+        android:title="@string/col_path" />
+    <Preference
+        android:dialogTitle="@string/sync_account"
+        android:key="syncAccount"
+        android:summary="@string/sync_account_summ_logged_out"
+        android:title="@string/sync_account" >
+        <intent
+            android:targetClass="com.ichi2.anki.MyAccount"
+            android:targetPackage="com.ichi2.anki" />
+    </Preference>
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="syncFetchesMedia"
+        android:summary="@string/sync_fetch_missing_media_summ"
+        android:title="@string/sync_fetch_missing_media" />
+    <ListPreference
+        android:defaultValue=""
+        android:entries="@array/add_to_cur_labels"
+        android:entryValues="@array/add_to_cur_values"
+        android:key="useCurrent"
+        android:summary=""
+        android:title="@string/use_current" />
+    <ListPreference
+        android:defaultValue=""
+        android:key="language"
+        android:summary="@string/language_summ"
+        android:title="@string/language" />
+    <ListPreference
+        android:defaultValue="2"
+        android:entries="@array/error_reporting_choice_labels"
+        android:entryValues="@array/error_reporting_choice_values"
+        android:key="reportErrorMode"
+        android:title="@string/error_reporting_choice" />
+    <PreferenceCategory android:title="@string/notification_pref" >
+        <ListPreference
+            android:defaultValue="1000000"
+            android:entries="@array/notification_minimum_cards_due_labels"
+            android:entryValues="@array/notification_minimum_cards_due_values"
+            android:key="minimumCardsDueForNotification"
+            android:title="@string/notification_pref_title" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="widgetVibrate"
+            android:title="@string/notification_minimum_cards_due_vibrate" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="widgetBlink"
+            android:title="@string/notification_minimum_cards_due_blink" />
+    </PreferenceCategory>
+</PreferenceScreen>
