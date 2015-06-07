@@ -24,17 +24,24 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.SQLException;
 import android.net.Uri;
+
+import com.ichi2.anki.AnkiDb;
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.provider.FlashCardsContract.Data.Field;
 import com.ichi2.anki.provider.FlashCardsContract.DataColumns;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Utils;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import timber.log.Timber;
 
+import timber.log.Timber;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +77,10 @@ public class CardContentProvider extends ContentProvider {
     private static final int NOTES_ID_CARDS_ORD = 1004;
     private static final int MODELS = 2000;
     private static final int MODELS_ID = 2001;
+    private static final int SCHEDULE = 3000;
+    private static final int DECKS = 4000;
+    private static final int DECK_SELECTED = 4001;
+    private static final int DECKS_ID = 4002;
 
     private static final UriMatcher sUriMatcher =
             new UriMatcher(UriMatcher.NO_MATCH);
@@ -85,6 +96,11 @@ public class CardContentProvider extends ContentProvider {
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "notes/#/cards/#", NOTES_ID_CARDS_ORD);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models", MODELS);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models/#", MODELS_ID);
+        sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "schedule/", SCHEDULE);
+        sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "decks/", DECKS);
+        sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "decks/#", DECKS_ID);
+        sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "select_deck/", DECK_SELECTED);
+
     }
 
     /**
@@ -104,6 +120,7 @@ public class CardContentProvider extends ContentProvider {
             }
         }
     }
+
 
     @Override
     public boolean onCreate() {
@@ -133,6 +150,10 @@ public class CardContentProvider extends ContentProvider {
                 return FlashCardsContract.Model.CONTENT_TYPE;
             case MODELS_ID:
                 return FlashCardsContract.Model.CONTENT_ITEM_TYPE;
+            case SCHEDULE:
+                return FlashCardsContract.ReviewInfo.CONTENT_TYPE;
+            case DECKS:
+                return FlashCardsContract.Deck.CONTENT_TYPE;
             default:
                 // Unknown URI type
                 throw new IllegalArgumentException("uri " + uri + " is not supported");
@@ -210,7 +231,7 @@ public class CardContentProvider extends ContentProvider {
                         } else if (column.equals(DataColumns.NOTE_ID)) {
                             rb.add(currentNote.getId());
                         } else if (column.equals(DataColumns.MIMETYPE)) {
-                            rb.add(FlashCardsContract.Data.Field.CONTENT_ITEM_TYPE);
+                            rb.add(Field.CONTENT_ITEM_TYPE);
                         } else if (column.equals(Field.FIELD_NAME)) {
                             rb.add(field[0]);
                         } else if (column.equals(Field.FIELD_CONTENT)) {
@@ -291,10 +312,117 @@ public class CardContentProvider extends ContentProvider {
                 }
                 return rv;
             }
+            case SCHEDULE: {
+                MatrixCursor rv;
+                String[] columns = ((projection != null) ? projection : FlashCardsContract.ReviewInfo.DEFAULT_PROJECTION);
+                rv = new MatrixCursor(columns, 1);
+                long selectedDeckBeforeQuery = col.getDecks().selected();
+                long deckIdOfTemporarilySelectedDeck = -1;
+                int limit = 1; //the number of scheduled cards to return
+                int selectionArgIndex = 0;
+
+                //parsing the selection arguments
+                if (selection != null) {
+                    String[] args = selection.split(","); //split selection to get arguments like "limit=?"
+                    for (String arg : args) {
+                        String[] keyAndValue = arg.split("="); //split arguments into key ("limit") and value ("?")
+                        try {
+                            String value = keyAndValue[1].trim().equals("?") ? selectionArgs[selectionArgIndex++] : keyAndValue[1]; //check if the value is a placeholder ("?"), if it is, replace it with the next value of selectionArgs
+                            if (keyAndValue[0].trim().equals("limit")) {
+                                limit = Integer.valueOf(value);
+                            } else if (keyAndValue[0].trim().equals("deckID")) {
+                                deckIdOfTemporarilySelectedDeck = Long.valueOf(value);
+                                if(!selectDeckWithCheck(col, deckIdOfTemporarilySelectedDeck)){
+                                    return rv; //if the provided deckID is wrong, return empty cursor.
+                                }
+                            }
+                        } catch (NumberFormatException nfe) {
+                            nfe.printStackTrace();
+                        }
+                    }
+                }
+
+                //retrieve the number of cards provided by the selection parameter "limit"
+                col.getSched().reset();
+                for (int k = 0; k< limit; k++){
+                    Card currentCard = col.getSched().getCard();
+
+                    if (currentCard != null) {
+                        int buttonCount = col.getSched().answerButtons(currentCard);
+                        JSONArray buttonTexts = new JSONArray();
+                        for (int i = 0; i < buttonCount; i++) {
+                            buttonTexts.put(col.getSched().nextIvlStr(currentCard, i + 1, true));
+                        }
+                        addReviewInfoToCursor(currentCard, buttonTexts, buttonCount, rv, col, columns);
+                    }else{
+                        break;
+                    }
+                }
+
+                if (deckIdOfTemporarilySelectedDeck != -1) {//if the selected deck was changed
+                    col.getDecks().select(selectedDeckBeforeQuery); //change the selected deck back to the one it was before the query
+                }
+                return rv;
+            }
+            case DECKS: {
+                List<Sched.DeckDueTreeNode> allDecks = col.getSched().deckDueList();
+                MatrixCursor rv;
+                String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
+                rv = new MatrixCursor(columns, allDecks.size());
+
+                for (Sched.DeckDueTreeNode deck : allDecks) {
+                    long id = deck.did;
+                    String name = deck.names[0];
+
+                    addDeckToCursor(id, name, getDeckCountsFromDueTreeNode(deck), rv, col, columns);
+                }
+                return rv;
+            }
+            case DECKS_ID: {
+                /* Direct access deck
+                 */
+                MatrixCursor rv;
+                String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
+                rv = new MatrixCursor(columns, 1);
+
+                List<Sched.DeckDueTreeNode> allDecks = col.getSched().deckDueList();
+                long deckId;
+                deckId = Long.parseLong(uri.getPathSegments().get(1));
+                for (Sched.DeckDueTreeNode deck : allDecks) {
+                    if(deck.did == deckId){
+                        addDeckToCursor(deckId, deck.names[0], getDeckCountsFromDueTreeNode(deck), rv, col, columns);
+                        return rv;
+                    }
+                }
+
+                return rv;
+            }
+            case DECK_SELECTED: {
+
+                long id = col.getDecks().selected();
+                String name = col.getDecks().name(id);
+
+                MatrixCursor rv;
+                String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
+                rv = new MatrixCursor(columns, 1);
+
+                JSONArray counts = new JSONArray(Arrays.asList(col.getSched().counts()));
+                addDeckToCursor(id, name, counts,rv, col, columns);
+
+                return rv;
+            }
             default:
                 // Unknown URI type
                 throw new IllegalArgumentException("uri " + uri + " is not supported");
         }
+    }
+
+    private JSONArray getDeckCountsFromDueTreeNode(Sched.DeckDueTreeNode deck){
+        JSONArray deckCounts = new JSONArray();
+        deckCounts.put(deck.lrnCount);
+        deckCounts.put(deck.revCount);
+        deckCounts.put(deck.newCount);
+        return deckCounts;
     }
 
     @Override
@@ -389,6 +517,42 @@ public class CardContentProvider extends ContentProvider {
                 } else {
                     // User tries an operation that is not (yet?) supported.
                     throw new IllegalArgumentException("Currently only updates of decks are supported");
+                }
+                break;
+            }
+            case SCHEDULE: {
+                Set<Map.Entry<String, Object>> valueSet = values.valueSet();
+                int cardOrd = -1;
+                long noteID = -1;
+                int ease = -1;
+                for (Map.Entry<String, Object> entry : valueSet) {
+                    String key = entry.getKey();
+
+                    if (key.equals(FlashCardsContract.ReviewInfo.NOTE_ID)) {
+                        noteID = values.getAsLong(key);
+                    } else if (key.equals(FlashCardsContract.ReviewInfo.CARD_ORD)) {
+                        cardOrd = values.getAsInteger(key);
+                    } else if (key.equals(FlashCardsContract.ReviewInfo.EASE)) {
+                        ease = values.getAsInteger(key);
+                    }
+                }
+                if (cardOrd != -1 && noteID != -1) {
+                    Card cardToAnswer = getCard(noteID, cardOrd, col);
+                    answerCard(col, col.getSched(), cardToAnswer, ease);
+                    updated++;
+                }
+                break;
+            }
+            case DECK_SELECTED: {
+                Set<Map.Entry<String, Object>> valueSet = values.valueSet();
+                for (Map.Entry<String, Object> entry : valueSet) {
+                    String key = entry.getKey();
+                    if(key.equals(FlashCardsContract.Deck.DECK_ID)) {
+                        long deckId = values.getAsLong(key);
+                        if(selectDeckWithCheck(col, deckId)){
+                            updated ++;
+                        }
+                    }
                 }
                 break;
             }
@@ -516,6 +680,7 @@ public class CardContentProvider extends ContentProvider {
         }
         String question = currentCard.q();
         String answer = currentCard.a();
+
         MatrixCursor.RowBuilder rb = rv.newRow();
         for (String column : columns) {
             if (column.equals(FlashCardsContract.Card.NOTE_ID)) {
@@ -530,9 +695,81 @@ public class CardContentProvider extends ContentProvider {
                 rb.add(question);
             } else if (column.equals(FlashCardsContract.Card.ANSWER)) {
                 rb.add(answer);
+            } else if (column.equals(FlashCardsContract.Card.QUESTION_SIMPLE)) {
+                rb.add(currentCard.qSimple());
+            } else if (column.equals(FlashCardsContract.Card.ANSWER_SIMPLE)) {
+                rb.add(currentCard._getQA(false).get("a"));
+            }else if (column.equals(FlashCardsContract.Card.ANSWER_PURE)) {
+                rb.add(currentCard.getPureAnswer());
             } else {
                 throw new UnsupportedOperationException("Column \"" + column + "\" is unknown");
             }
+        }
+    }
+
+    private void addReviewInfoToCursor(Card currentCard, JSONArray nextReviewTimesJson, int buttonCount,MatrixCursor rv, Collection col, String[] columns) {
+        MatrixCursor.RowBuilder rb = rv.newRow();
+        for (String column : columns) {
+            if (column.equals(FlashCardsContract.Card.NOTE_ID)) {
+                rb.add(currentCard.note().getId());
+            } else if (column.equals(FlashCardsContract.ReviewInfo.CARD_ORD)) {
+                rb.add(currentCard.getOrd());
+            } else if (column.equals(FlashCardsContract.ReviewInfo.BUTTON_COUNT)) {
+                rb.add(buttonCount);
+            } else if (column.equals(FlashCardsContract.ReviewInfo.NEXT_REVIEW_TIMES)) {
+                rb.add(nextReviewTimesJson.toString());
+            } else if (column.equals(FlashCardsContract.ReviewInfo.MEDIA_FILES)) {
+                rb.add(new JSONArray(col.getMedia().filesInStr(currentCard.note().getMid(), currentCard.q()+currentCard.a())));
+            } else {
+                throw new UnsupportedOperationException("Column \"" + column + "\" is unknown");
+            }
+        }
+    }
+
+    private void answerCard(Collection col, Sched sched, Card cardToAnswer, int ease) {
+        try {
+            AnkiDb ankiDB = col.getDb();
+            ankiDB.getDatabase().beginTransaction();
+            try {
+                if (cardToAnswer != null) {
+                    sched.answerCard(cardToAnswer, ease);
+                }
+                ankiDB.getDatabase().setTransactionSuccessful();
+            } finally {
+                ankiDB.getDatabase().endTransaction();
+            }
+        } catch (RuntimeException e) {
+            Timber.e(e, "answerCard - RuntimeException on answering card");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAnswerCard");
+            return;
+        }
+    }
+
+    private void addDeckToCursor(long id, String name, JSONArray deckCounts, MatrixCursor rv, Collection col, String[] columns) {
+        MatrixCursor.RowBuilder rb = rv.newRow();
+        for (String column : columns) {
+            if (column.equals(FlashCardsContract.Deck.DECK_NAME)) {
+                rb.add(name);
+            }else if (column.equals(FlashCardsContract.Deck.DECK_ID)) {
+                rb.add(id);
+            }else if (column.equals(FlashCardsContract.Deck.DECK_COUNTS)) {
+                rb.add(deckCounts);
+            }else if (column.equals(FlashCardsContract.Deck.OPTIONS)) {
+                String config = col.getDecks().confForDid(id).toString();
+                rb.add(config);
+            }
+        }
+    }
+
+    private boolean selectDeckWithCheck(Collection col, long did){
+        if (col.getDecks().get(did, false) != null) {
+            col.getDecks().select(did);
+            return true;
+        } else {
+            Timber.e("Requested deck with id %d was not found in deck list. Either the deckID provided was wrong" +
+                    "or the deck has been deleted in the meantime."
+                    , did);
+            return false;
         }
     }
 
@@ -541,6 +778,10 @@ public class CardContentProvider extends ContentProvider {
         int ord;
         noteId = Long.parseLong(uri.getPathSegments().get(1));
         ord = Integer.parseInt(uri.getPathSegments().get(3));
+        return getCard(noteId, ord, col);
+    }
+
+    private Card getCard(long noteId, int ord, Collection col){
         Note currentNote = col.getNote(noteId);
         if (currentNote.cards().size() <= ord) {
             throw new IllegalArgumentException("Card with ord " + ord + " does not exist for note " + noteId);

@@ -23,10 +23,19 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.test.AndroidTestCase;
 import android.util.Log;
+
+import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.provider.FlashCardsContract;
+import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Sched;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -39,9 +48,22 @@ public class ContentProviderTest extends AndroidTestCase {
 
     private static final String TEST_FIELD_VALUE = "test field value";
     private static final String TEST_TAG = "aldskfhewjklhfczmxkjshf";
+    private static final String TEST_TAG_2 = "hlawiejfglaksjdfliwueu";
     private static final String TEST_DECK = "glekrjterglknsdfflkgj";
-    private int mCreatedNotes;
+    private static final String[] TEST_DECKS = {"cmxieunwoogyxsctnjmv"
+                                                ,"sstuljxgmfdyugiujyhq"
+                                                ,"pdsqoelhmemmmbwjunnu"
+                                                ,"scxipjiyozczaaczoawo"
+                                                ,"srwcdmseymjeliacsaas"
+                                                ,"iuzqjlqejtyanluroajl"
+                                                ,"qbcmsoghvbklgrfyinqh"
+                                                ,"safinsysttgwkhclgwks"
+                                                ,"lcgmprhkkdrgydscoseo"
+                                                ,"ejrzzvpwtremcgmbnnjh" };
 
+    private int mCreatedNotes;
+    private int numDecksBeforeTest;
+    private long[] testDeckIds = new long[TEST_DECKS.length];
     /**
      * Initially create one note for each model.
      */
@@ -49,6 +71,8 @@ public class ContentProviderTest extends AndroidTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         Log.i(AnkiDroidApp.TAG, "setUp()");
+        long modelId = 0;
+
         final ContentResolver cr = getContext().getContentResolver();
         // Query all available models
         final Cursor allModelsCursor = cr.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null);
@@ -58,7 +82,7 @@ public class ContentProviderTest extends AndroidTestCase {
         ContentValues values = new ContentValues();
         try {
             while (allModelsCursor.moveToNext()) {
-                long modelId = allModelsCursor.getLong(idColumnIndex);
+                modelId = allModelsCursor.getLong(idColumnIndex);
                 values.clear();
                 values.put(FlashCardsContract.Note.MID, modelId);
                 Uri newNoteUri = cr.insert(FlashCardsContract.Note.CONTENT_URI, values);
@@ -75,6 +99,51 @@ public class ContentProviderTest extends AndroidTestCase {
             allModelsCursor.close();
         }
         assertTrue("Check that at least one model exists, i.e. one note was created", mCreatedNotes != 0);
+
+
+        // create test decks
+        Collection col;
+        col = CollectionHelper.getInstance().getCol(getContext());
+        numDecksBeforeTest = col.getDecks().count();
+
+
+        // create one note for every test deck
+        int i = 0;
+        for(String newDeckName : TEST_DECKS) {
+            testDeckIds[i] = col.getDecks().id(newDeckName, true);
+
+            values.clear();
+            values.put(FlashCardsContract.Note.MID, modelId);
+            Uri newNoteUri = cr.insert(FlashCardsContract.Note.CONTENT_URI, values);
+
+            // Now set a special tag, so that the note can easily be deleted after test
+            Uri newNoteDataUri = Uri.withAppendedPath(newNoteUri, "data");
+            values.clear();
+            values.put(FlashCardsContract.DataColumns.MIMETYPE, FlashCardsContract.Data.Tags.CONTENT_ITEM_TYPE);
+            values.put(FlashCardsContract.Data.Tags.TAG_CONTENT, TEST_TAG_2);
+            assertEquals("Tag set", 1, cr.update(newNoteDataUri, values, null, null));
+
+            final Cursor cardsCursor = cr.query(newNoteDataUri, null, null, null, null);
+            assertNotNull("Check that there is a valid cursor after query for cards", cardsCursor);
+            try {
+                assertTrue("Check that there is at least one result for cards", cardsCursor.getCount() > 0);
+                while (cardsCursor.moveToNext()) {
+                    // Move to deck
+                    ContentValues cardValues = new ContentValues();
+                    cardValues.put(FlashCardsContract.Card.DECK_NAME, newDeckName);
+                    Uri cardUri = Uri.withAppendedPath(
+                            Uri.withAppendedPath(newNoteUri,"cards"),
+                            ""+0);
+                    cr.update(cardUri, cardValues, null, null);
+                }
+            } finally {
+                cardsCursor.close();
+            }
+
+
+            i++;
+        }
+
     }
 
     /**
@@ -101,6 +170,25 @@ public class ContentProviderTest extends AndroidTestCase {
             deletedNotes = 0;
         }
         assertEquals("Check that all created notes have been deleted", mCreatedNotes, deletedNotes);
+
+
+        // delete test decks
+        for(long did : testDeckIds) {
+            col.getDecks().rem(did, true);
+        }
+        // delete notes of test decks
+        noteIds = col.findNotes("tag:" + TEST_TAG_2);
+        if ((noteIds != null) && (noteIds.size() > 0)) {
+            long[] delNotes = new long[noteIds.size()];
+            for (int i = 0; i < noteIds.size(); i++) {
+                delNotes[i] = noteIds.get(i);
+            }
+            col.remNotes(delNotes);
+        }
+        col.getDecks().rem(col.getDecks().id(TEST_DECK));
+        col.getDecks().flush();
+        assertEquals("Check that all created decks have been deleted", numDecksBeforeTest, col.getDecks().count());
+
         super.tearDown();
     }
 
@@ -409,4 +497,168 @@ public class ContentProviderTest extends AndroidTestCase {
             }
         }
     }
+
+    public void testQueryAllDecks(){
+        Collection col;
+        col = CollectionHelper.getInstance().getCol(getContext());
+        Decks decks = col.getDecks();
+
+        Cursor decksCursor = getContext().getContentResolver()
+                .query(FlashCardsContract.Deck.CONTENT_ALL_URI, FlashCardsContract.Deck.DEFAULT_PROJECTION, null, null, null);
+
+        assertNotNull(decksCursor);
+        try {
+            assertEquals("Check number of results", decks.count(), decksCursor.getCount());
+            while (decksCursor.moveToNext()) {
+                long deckID = decksCursor.getLong(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID));
+                String deckName = decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME));
+
+                JSONObject deck = decks.get(deckID);
+                assertNotNull("Check that the deck we received actually exists", deck);
+                assertEquals("Check that the received deck has the correct name", deck.getString("name"), deckName);
+            }
+        } catch (JSONException e) {
+            //this should never be the case, since deck always contains the string "name"
+            e.printStackTrace();
+        } finally {
+            decksCursor.close();
+        }
+    }
+
+    public void testQueryCertainDeck(){
+        Collection col;
+        col = CollectionHelper.getInstance().getCol(getContext());
+
+        long deckId = testDeckIds[0]; //<-- insert real deck ID here
+        Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(deckId));
+        Cursor decksCursor = getContext().getContentResolver().query(deckUri, null, null, null, null);
+        try {
+            if (decksCursor == null || !decksCursor.moveToFirst()) {
+                fail("No deck received. Should have delivered deck with id " + deckId);
+            } else {
+                long returnedDeckID = decksCursor.getLong(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID));
+                String returnedDeckName = decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME));
+
+                JSONObject realDeck = col.getDecks().get(deckId);
+                assertEquals("Check that received deck ID equals real deck ID", deckId, returnedDeckID);
+                assertEquals("Check that received deck name equals real deck name", realDeck.getString("name"), returnedDeckName);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } finally {
+            decksCursor.close();
+        }
+    }
+
+    public void testQueryNextCard(){
+        Collection col;
+        col = CollectionHelper.getInstance().getCol(getContext());
+        Sched sched = col.getSched();
+
+        Cursor reviewInfoCursor = getContext().getContentResolver().query(
+                FlashCardsContract.ReviewInfo.CONTENT_URI, null, null, null, null);
+        assertNotNull(reviewInfoCursor);
+        assertEquals("Check that we actually received one card", 1, reviewInfoCursor.getCount());
+
+        reviewInfoCursor.moveToFirst();
+        int cardOrd = reviewInfoCursor.getInt(reviewInfoCursor.getColumnIndex(FlashCardsContract.ReviewInfo.CARD_ORD));
+        long noteID = reviewInfoCursor.getLong(reviewInfoCursor.getColumnIndex(FlashCardsContract.ReviewInfo.NOTE_ID));
+
+
+        Card nextCard = null;
+        for(int i = 0; i < 10; i++) {//minimizing fails, when sched.reset() randomly chooses between multiple cards
+            sched.reset();
+            nextCard = sched.getCard();
+            if(nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
+        }
+        assertNotNull("Check that there actually is a next scheduled card", nextCard);
+        assertEquals("Check that received card and actual card have same note id", nextCard.note().getId(), noteID);
+        assertEquals("Check that received card and actual card have same card ord", nextCard.getOrd(), cardOrd);
+
+    }
+
+    public void testQueryCardFromCertainDeck(){
+        long deckToTest = testDeckIds[0];
+        String deckSelector = "deckID=?";
+        String deckArguments[] = {Long.toString(deckToTest)};
+        Collection col;
+        col = CollectionHelper.getInstance().getCol(getContext());
+        Sched sched = col.getSched();
+        long selectedDeckBeforeTest = col.getDecks().selected();
+        col.getDecks().select(1); //select Default deck
+
+        Cursor reviewInfoCursor = getContext().getContentResolver().query(
+                FlashCardsContract.ReviewInfo.CONTENT_URI, null, deckSelector, deckArguments, null);
+        assertNotNull(reviewInfoCursor);
+        assertEquals("Check that we actually received one card", 1, reviewInfoCursor.getCount());
+        try {
+            reviewInfoCursor.moveToFirst();
+            int cardOrd = reviewInfoCursor.getInt(reviewInfoCursor.getColumnIndex(FlashCardsContract.ReviewInfo.CARD_ORD));
+            long noteID = reviewInfoCursor.getLong(reviewInfoCursor.getColumnIndex(FlashCardsContract.ReviewInfo.NOTE_ID));
+            assertEquals("Check that the selected deck has not changed", 1, col.getDecks().selected());
+
+            col.getDecks().select(deckToTest);
+            Card nextCard = null;
+            for(int i = 0; i < 10; i++) {//minimizing fails, when sched.reset() randomly chooses between multiple cards
+                sched.reset();
+                nextCard = sched.getCard();
+                if(nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
+            }
+            assertNotNull("Check that there actually is a next scheduled card", nextCard);
+            assertEquals("Check that received card and actual card have same note id", nextCard.note().getId(), noteID);
+            assertEquals("Check that received card and actual card have same card ord", nextCard.getOrd(), cardOrd);
+        }finally {
+            reviewInfoCursor.close();
+        }
+
+        col.getDecks().select(selectedDeckBeforeTest);
+    }
+
+
+    public void testSetSelectedDeck(){
+        long deckId = testDeckIds[0];
+        ContentResolver cr = getContext().getContentResolver();
+        Uri selectDeckUri = FlashCardsContract.Deck.CONTENT_SELECTED_URI;
+        ContentValues values = new ContentValues();
+        values.put(FlashCardsContract.Deck.DECK_ID, deckId);
+        cr.update(selectDeckUri, values, null, null);
+
+        Collection col;
+        col = CollectionHelper.getInstance().getCol(getContext());
+        assertEquals("Check that the selected deck has not changed", deckId, col.getDecks().selected());
+    }
+
+    public void testAnswerCard(){
+        Collection col;
+        col = CollectionHelper.getInstance().getCol(getContext());
+        Sched sched = col.getSched();
+        long deckId = testDeckIds[0];
+        col.getDecks().select(deckId);
+        Card card = sched.getCard();
+
+        ContentResolver cr = getContext().getContentResolver();
+        Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
+        ContentValues values = new ContentValues();
+        long noteId = card.note().getId();
+        int cardOrd = card.getOrd();
+        int ease = AbstractFlashcardViewer.EASE_MID; //<- insert real ease here
+
+        values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);
+        values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd);
+        values.put(FlashCardsContract.ReviewInfo.EASE, ease);
+        int updateCount = cr.update(reviewInfoUri, values, null, null);
+
+        assertEquals("Check if update returns 1", 1, updateCount);
+
+        sched.reset();
+        Card newCard = sched.getCard();
+        if(newCard != null){
+            if(newCard.note().getId() == card.note().getId() && newCard.getOrd() == card.getOrd()){
+                fail("Next scheduled card has not changed");
+            }
+        }else{
+            //We expected this
+        }
+    }
+
 }
