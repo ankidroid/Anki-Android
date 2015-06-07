@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com>
+~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+~ Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>
+~ Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- Fonts & Style Prefrences -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
+            android:title="@string/pref_cat_fonts"
+        android:key="font_preference_group"
+        android:summary="@string/pref_cat_fonts_summ">
+        <ListPreference
+            android:defaultValue=""
+            android:key="defaultFont"
+            android:shouldDisableView="true"
+            android:summary="@string/default_font_summ"
+            android:title="@string/default_font" />
+        <ListPreference
+            android:defaultValue="0"
+            android:key="overrideFontBehavior"
+            android:entries="@array/override_font_labels"
+            android:entryValues="@array/override_font_values"
+            android:summary="@string/override_font_summ"
+            android:title="@string/override_font" />
+        <ListPreference
+            android:defaultValue=""
+            android:key="browserEditorFont"
+            android:summary="@string/pref_browser_editor_font_summ"
+            android:title="@string/pref_browser_editor_font" />
+        <com.ichi2.ui.SeekBarPreference
+            android:defaultValue="100"
+            android:key="relativeCardBrowserFontSize"
+            android:max="200"
+            android:summary="@string/card_browser_font_size_summ"
+            android:text=" %"
+            android:title="@string/card_browser_font_size"
+            app:interval="10"
+            app:min="10" />
+</PreferenceScreen>

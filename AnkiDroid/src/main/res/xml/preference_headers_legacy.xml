@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!--  General Preferences -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki" >
+    <PreferenceScreen android:title="@string/pref_cat_general"
+        android:summary="@string/pref_cat_general_summ">
+          <intent 
+            android:targetPackage="com.ichi2.anki"
+            android:targetClass="com.ichi2.anki.Preferences"
+            android:action="com.ichi2.anki.prefs.general" />
+    </PreferenceScreen>
+
+    <!-- Reviewing Preferences -->
+    <PreferenceScreen android:title="@string/pref_cat_reviewing"
+        android:summary="@string/pref_cat_reviewing_summ" >
+          <intent 
+            android:targetPackage="com.ichi2.anki"
+            android:targetClass="com.ichi2.anki.Preferences"
+            android:action="com.ichi2.anki.prefs.reviewing" />        
+    </PreferenceScreen>
+
+    <!-- Fonts & Style Prefrences -->
+    <PreferenceScreen android:title="@string/pref_cat_fonts"
+        android:key="font_preference_group"
+        android:summary="@string/pref_cat_fonts_summ">
+          <intent 
+            android:targetPackage="com.ichi2.anki"
+            android:targetClass="com.ichi2.anki.Preferences"
+            android:action="com.ichi2.anki.prefs.fonts" />        
+    </PreferenceScreen>
+
+    <!-- Navigation Prefrences -->
+    <PreferenceScreen android:title="@string/pref_cat_gestures"
+        android:summary="@string/pref_cat_gestures_summ" >
+          <intent 
+            android:targetPackage="com.ichi2.anki"
+            android:targetClass="com.ichi2.anki.Preferences"
+            android:action="com.ichi2.anki.prefs.gestures" />        
+    </PreferenceScreen>
+
+    <!-- Advanced Preferences -->
+    <PreferenceScreen android:title="@string/pref_cat_advanced"
+        android:summary="@string/pref_cat_advanced_summ"
+        android:key="pref_screen_advanced">
+          <intent 
+            android:targetPackage="com.ichi2.anki"
+            android:targetClass="com.ichi2.anki.Preferences"
+            android:action="com.ichi2.anki.prefs.advanced" />        
+    </PreferenceScreen>
+    <Preference 
+        android:key="about_dialog_preference"
+        android:title="@string/about_title" />
+          <intent 
+            android:targetPackage="com.ichi2.anki"
+            android:targetClass="com.ichi2.anki.Info"/>        
+</PreferenceScreen>
