@@ -1714,6 +1714,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             @Override
             public void onPostExecute(TaskData result) {
                 if (result == null) {
+                    Timber.e("null result loading deck counts");
+                    onCollectionLoadError();
                     return;
                 }
                 List<Sched.DeckDueTreeNode> nodes = (List<Sched.DeckDueTreeNode>) result.getObjArray()[0];
@@ -1722,22 +1724,28 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 mDeckListAdapter.notifyDataSetChanged();
 
                 // Set the "x due in y minutes" subtitle
-                int eta = getCol().getSched().eta(new int[]{nNew, nLrn, nRev});
-                int due = nNew + nLrn + nRev;
-                Resources res = getResources();
-                if (getCol().cardCount() != -1) {
-                    String time = "-";
-                    if (eta != -1) {
-                        time = res.getQuantityString(R.plurals.deckpicker_title_minutes, eta, eta);
+                try {
+                    int eta = getCol().getSched().eta(new int[]{nNew, nLrn, nRev});
+                    int due = nNew + nLrn + nRev;
+                    Resources res = getResources();
+                    if (getCol().cardCount() != -1) {
+                        String time = "-";
+                        if (eta != -1) {
+                            time = res.getQuantityString(R.plurals.deckpicker_title_minutes, eta, eta);
+                        }
+                        UIUtils.setSubtitle(DeckPicker.this,
+                                res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
                     }
-                    UIUtils.setSubtitle(DeckPicker.this,
-                            res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
+                } catch (RuntimeException e) {
+                    Timber.e(e, "RuntimeException setting time remaining");
+                    onCollectionLoadError();
+                    return;
                 }
 
                 Long current = getCol().getDecks().current().optLong("id");
                 if (!deckIsShown(nodes, current)) {
                     // clear selection if deck is hidden
-//                    mDeckListView.clearChoices(); // TODO AVP
+                    //                    mDeckListView.clearChoices(); // TODO AVP
                 } else if (mFocusedDeck == null || !mFocusedDeck.equals(current)) {
                     scrollDecklistToDeck(current);
                     mFocusedDeck = current;
