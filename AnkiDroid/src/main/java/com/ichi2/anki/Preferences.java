@@ -3,6 +3,7 @@
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
  * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
  * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
+ * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -19,14 +20,13 @@
 
 package com.ichi2.anki;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -35,10 +35,10 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
+import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.support.annotation.NonNull;
 import android.preference.PreferenceScreen;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -50,7 +50,6 @@ import com.ichi2.ui.AppCompatPreferenceActivity;
 import com.ichi2.ui.SeekBarPreference;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.exception.StorageAccessException;
-import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
@@ -58,8 +57,6 @@ import com.ichi2.libanki.hooks.ChessFilter;
 import com.ichi2.libanki.hooks.HebrewFixFilter;
 import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.preferences.NumberRangePreference;
-import com.ichi2.themes.StyledDialog;
-import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.VersionUtils;
 
@@ -78,14 +75,16 @@ import java.util.TreeMap;
 
 import timber.log.Timber;
 
+interface PreferenceContext {
+    void addPreferencesFromResource(int preferencesResId);
+    PreferenceScreen getPreferenceScreen();
+}
+
 /**
  * Preferences dialog.
  */
-// TODO: change to PreferenceFragment to get rid of the deprecation warnings
-@SuppressWarnings("deprecation")
-public class Preferences extends AppCompatPreferenceActivity implements OnSharedPreferenceChangeListener {
+public class Preferences extends AppCompatPreferenceActivity implements PreferenceContext, OnSharedPreferenceChangeListener {
 
-    private static final int DIALOG_BACKUP = 2;
     private static final int DIALOG_HEBREW_FONT = 3;
     public static boolean COMING_FROM_ADD = false;
 
@@ -94,90 +93,53 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
     private Collection mCol;
 
     // Other variables
-    private MaterialDialog mProgressDialog;
-    private boolean lockCheckAction = false;
-    private String dialogMessage;
     private final HashMap<String, String> mOriginalSumarries = new HashMap<>();
     private static final String [] sCollectionPreferences = {"showEstimates", "showProgress",
             "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset"};
 
 
+    // ----------------------------------------------------------------------------
+    // Overridden methods
+    // ----------------------------------------------------------------------------
+
+    @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.preferences);
         mCol = CollectionHelper.getInstance().getCol(this);
 
-        // TODO: Only use intent approach on pre-honeycomb, using PreferenceFragment on newer devices
+        // Legacy code using intents instead of PreferenceFragments
         String action = getIntent().getAction();
-        if (action == null) {
-            // Headers screen
-            addPreferencesFromResource(R.xml.preference_headers_legacy);
-        } else {
-            // Subscreen
-            switch (action) {
-                case "com.ichi2.anki.prefs.general":
-                    addPreferencesFromResource(R.xml.preferences_general);
-                    // Build languages
-                    initializeLanguageDialog();
-                    // Check that input is valid before committing change in the collection path
-                    EditTextPreference collectionPathPreference = (EditTextPreference) getPreferenceScreen().findPreference("deckPath");
-                    collectionPathPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-                        public boolean onPreferenceChange(Preference preference, final Object newValue) {
-                            final String newPath = (String) newValue;
-                            try {
-                                CollectionHelper.initializeAnkiDroidDirectory(newPath);
-                                return true;
-                            } catch (StorageAccessException e) {
-                                Timber.e(e, "Could not initialize directory: %s", newPath);
-                                Toast.makeText(getApplicationContext(), R.string.dialog_collection_path_not_dir, Toast.LENGTH_LONG).show();
-                                return false;
-                            }
-                        }
-                    });
-                    break;
-                case "com.ichi2.anki.prefs.reviewing":
-                    addPreferencesFromResource(R.xml.preferences_reviewing);
-                    break;
-                case "com.ichi2.anki.prefs.fonts":
-                    addPreferencesFromResource(R.xml.preferences_fonts);
-                    initializeCustomFontsDialog();
-                    break;
-                case "com.ichi2.anki.prefs.gestures":
-                    addPreferencesFromResource(R.xml.preferences_gestures);
-                    break;
-                case "com.ichi2.anki.prefs.advanced":
-                    addPreferencesFromResource(R.xml.preferences_advanced);
-                    // Force full sync option
-                    Preference fullSyncPreference = getPreferenceScreen().findPreference("force_full_sync");
-                    fullSyncPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-                        public boolean onPreferenceClick(Preference preference) {
-                            if (mCol != null && mCol.getDb() != null) {
-                                // TODO: Could be useful to show the full confirmation dialog
-                                mCol.modSchemaNoCheck();
-                                mCol.setMod();
-                                Toast.makeText(getApplicationContext(), R.string.ok, Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getApplicationContext(), R.string.vague_error, Toast.LENGTH_SHORT).show();
-                            }
-                            return true;
-                        }
-                    });
-                    // Workaround preferences
-                    removeUnnecessaryWorkarounds();
-                    break;
+        if (!CompatHelper.isHoneycomb()) {
+            if (action == null) {
+                // Headers screen
+                addPreferencesFromResource(R.xml.preference_headers_legacy);
+            } else {
+                initSubscreen(action, this);
             }
+            // Set the text for the summary of each of the preferences
+            initAllPreferences(getPreferenceScreen());
         }
 
-        // Set the text for the summary of each of the preferences
-        initAllPreferences();
-
-        // Add an Actionbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        // Add a home button to the actionbar
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
+
+    // Called only on Honeycomb and later
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    @Override
+    public void onBuildHeaders(List<Header> target) {
+        loadHeadersFromResource(R.xml.preference_headers, target);
+    }
+
+
+    @Override
+    protected boolean isValidFragment(String fragmentName) {
+        return SettingsFragment.class.getName().equals(fragmentName);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -190,29 +152,141 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
     }
 
 
-    // Workaround for Android bug 4611: http://code.google.com/p/android/issues/detail?id=4611
     @SuppressWarnings("deprecation")
     @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference)
-    {
-        super.onPreferenceTreeClick(preferenceScreen, preference);
-        if (preference!=null && !CompatHelper.isHoneycomb()) {
-            if (preference instanceof PreferenceScreen) {
-                if (((PreferenceScreen) preference).getDialog() != null) {
-                    ((PreferenceScreen) preference).getDialog().getWindow().getDecorView().setBackgroundDrawable(
-                            this.getWindow().getDecorView().getBackground().getConstantState().newDrawable());
-                }
-            }
+    protected void onPause() {
+        super.onPause();
+        // Legacy code to register listener when not using PreferenceFragment
+        if (!CompatHelper.isHoneycomb() && getPreferenceScreen() != null) {
+            getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
         }
-        return false;
     }
+
+
+    @SuppressWarnings("deprecation")
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Legacy code to register listener when not using PreferenceFragment
+        if (!CompatHelper.isHoneycomb() && getPreferenceScreen() != null) {
+            SharedPreferences prefs = getPreferenceScreen().getSharedPreferences();
+            prefs.registerOnSharedPreferenceChangeListener(this);
+            // syncAccount's summary can change while preferences are still open (user logs
+            // in from preferences screen), so we need to update it here.
+            updatePreference(prefs, "syncAccount", this);
+        }
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, @NonNull KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            Timber.i("Preferences:: onBackPressed()");
+            closePreferences();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected MaterialDialog onCreateDialog(int id) {
+        Resources res = getResources();
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(this);
+        switch (id) {
+            case DIALOG_HEBREW_FONT:
+                builder.title(res.getString(R.string.fix_hebrew_text));
+                builder.content(res.getString(R.string.fix_hebrew_instructions,
+                        CollectionHelper.getCurrentAnkiDroidDirectory(this)));
+                builder.callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(
+                                R.string.link_hebrew_font)));
+                        startActivity(intent);
+                    }
+                });
+                builder.positiveText(res.getString(R.string.fix_hebrew_download_font));
+                builder.negativeText(R.string.dialog_cancel);
+        }
+        return builder.show();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        updatePreference(sharedPreferences, key, this);
+    }
+
+
+    // ----------------------------------------------------------------------------
+    // Class methods
+    // ----------------------------------------------------------------------------
+
+    private void initSubscreen(String action, PreferenceContext listener) {
+        PreferenceScreen screen;
+        switch (action) {
+            case "com.ichi2.anki.prefs.general":
+                listener.addPreferencesFromResource(R.xml.preferences_general);
+                screen = listener.getPreferenceScreen();
+                // Build languages
+                initializeLanguageDialog(screen);
+                // Check that input is valid before committing change in the collection path
+                EditTextPreference collectionPathPreference = (EditTextPreference) screen.findPreference("deckPath");
+                collectionPathPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+                    public boolean onPreferenceChange(Preference preference, final Object newValue) {
+                        final String newPath = (String) newValue;
+                        try {
+                            CollectionHelper.initializeAnkiDroidDirectory(newPath);
+                            return true;
+                        } catch (StorageAccessException e) {
+                            Timber.e(e, "Could not initialize directory: %s", newPath);
+                            Toast.makeText(getApplicationContext(), R.string.dialog_collection_path_not_dir, Toast.LENGTH_LONG).show();
+                            return false;
+                        }
+                    }
+                });
+                break;
+            case "com.ichi2.anki.prefs.reviewing":
+                listener.addPreferencesFromResource(R.xml.preferences_reviewing);
+                break;
+            case "com.ichi2.anki.prefs.fonts":
+                listener.addPreferencesFromResource(R.xml.preferences_fonts);
+                screen = listener.getPreferenceScreen();
+                initializeCustomFontsDialog(screen);
+                break;
+            case "com.ichi2.anki.prefs.gestures":
+                listener.addPreferencesFromResource(R.xml.preferences_gestures);
+                break;
+            case "com.ichi2.anki.prefs.advanced":
+                listener.addPreferencesFromResource(R.xml.preferences_advanced);
+                screen = listener.getPreferenceScreen();
+                // Force full sync option
+                Preference fullSyncPreference = screen.findPreference("force_full_sync");
+                fullSyncPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                    public boolean onPreferenceClick(Preference preference) {
+                        if (mCol != null && mCol.getDb() != null) {
+                            // TODO: Could be useful to show the full confirmation dialog
+                            mCol.modSchemaNoCheck();
+                            mCol.setMod();
+                            Toast.makeText(getApplicationContext(), R.string.ok, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), R.string.vague_error, Toast.LENGTH_SHORT).show();
+                        }
+                        return true;
+                    }
+                });
+                // Workaround preferences
+                removeUnnecessaryWorkarounds(screen);
+                break;
+        }
+    }
+
 
     /**
      * Loop over every preference in the list and set the summary text
      */
-    private void initAllPreferences() {
-        for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); ++i) {
-            Preference preference = getPreferenceScreen().getPreference(i);
+    private void initAllPreferences(PreferenceScreen screen) {
+        for (int i = 0; i < screen.getPreferenceCount(); ++i) {
+            Preference preference = screen.getPreference(i);
             if (preference instanceof PreferenceGroup) {
                 PreferenceGroup preferenceGroup = (PreferenceGroup) preference;
                 for (int j = 0; j < preferenceGroup.getPreferenceCount(); ++j) {
@@ -281,197 +355,25 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
         updateSummary(pref);
     }
 
-    private void updateSummary(Preference pref) {
-         if (pref.getKey() == null) {
-             return;
-         }
-         // Handle about dialog separately
-        if (pref.getKey().equals("about_dialog_preference")) {
-            pref.setSummary(getResources().getString(R.string.about_version) + " " + VersionUtils.getPkgVersionName());
-            return;
-        }
-         // Get value text
-        String value;
+
+    /**
+     * Code which is run when a SharedPreference change has been detected
+     * @param prefs instance of SharedPreferences
+     * @param key key in prefs which is being updated
+     * @param listener PreferenceActivity of PreferenceFragment which is hosting the preference
+     */
+    private void updatePreference(SharedPreferences prefs, String key, PreferenceContext listener) {
         try {
-            if (pref instanceof ListPreference) {
-                value = ((ListPreference) pref).getEntry().toString();
-            } else if (pref instanceof EditTextPreference) {
-                value = ((EditTextPreference) pref).getText();
-            } else if (pref instanceof  NumberRangePreference) {
-                value = Integer.toString(((NumberRangePreference) pref).getValue());
-            } else if (pref instanceof SeekBarPreference) {
-                value = Integer.toString(((SeekBarPreference) pref).getValue());
-            } else {
-                return;
-            }
-        } catch (NullPointerException e) {
-            value = "";
-        }
-        // Get summary text
-        String oldSummary = mOriginalSumarries.get(pref.getKey());
-        // Replace summary text with value according to some rules
-        if (oldSummary.equals("")) {
-            pref.setSummary(value);
-        } else if (value.equals("")) {
-            pref.setSummary(oldSummary);
-        } else if (pref.getKey().equals("minimumCardsDueForNotification")) {
-            pref.setSummary(replaceStringIfNumeric(oldSummary, value));
-        } else {
-            pref.setSummary(replaceString(oldSummary, value));
-        }
-    }
-
-    private void updateNotificationPreference() {
-        ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("minimumCardsDueForNotification");
-        if (listpref != null) {
-            CharSequence[] entries = listpref.getEntries();
-            CharSequence[] values = listpref.getEntryValues();
-            for (int i = 0; i < entries.length; i++) {
-                int value = Integer.parseInt(values[i].toString());
-                if (entries[i].toString().contains("%d")) {
-                    entries[i] = String.format(entries[i].toString(), value);
-                }
-            }
-            listpref.setEntries(entries);
-            listpref.setSummary(listpref.getEntry().toString());
-        }
-    }
-
-
-    private String replaceString(String str, String value) {
-        if (str.contains("XXX")) {
-            return str.replace("XXX", value);
-        } else {
-            return str;
-        }
-    }
-
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    private String replaceStringIfNumeric(String str, String value) {
-        try {
-            Double.parseDouble(value);
-            return replaceString(str, value);
-        } catch (NumberFormatException e){
-            return value;
-        }
-    }
-
-    private void initializeLanguageDialog() {
-        ListPreference languageSelection = (ListPreference) getPreferenceScreen().findPreference(LANGUAGE);
-        if (languageSelection != null) {
-            Map<String, String> items = new TreeMap<>();
-            for (String localeCode : LanguageUtil.APP_LANGUAGES) {
-                Locale loc = LanguageUtil.getLocale(localeCode);
-                items.put(loc.getDisplayName(), loc.toString());
-            }
-            CharSequence[] languageDialogLabels = new CharSequence[items.size() + 1];
-            CharSequence[] languageDialogValues = new CharSequence[items.size() + 1];
-            languageDialogLabels[0] = getResources().getString(R.string.language_system);
-            languageDialogValues[0] = "";
-            int i = 1;
-            for (Map.Entry<String, String> e : items.entrySet()) {
-                languageDialogLabels[i] = e.getKey();
-                languageDialogValues[i] = e.getValue();
-                i++;
-            }
-
-            languageSelection.setEntries(languageDialogLabels);
-            languageSelection.setEntryValues(languageDialogValues);
-        }
-    }
-
-    private void removeUnnecessaryWorkarounds() {
-        PreferenceCategory workarounds = (PreferenceCategory) getPreferenceScreen().findPreference("category_workarounds");
-        if (workarounds != null) {
-            CheckBoxPreference inputWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("inputWorkaround");
-            CheckBoxPreference longclickWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("textSelectionLongclickWorkaround");
-            CheckBoxPreference fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");
-            CheckBoxPreference fixArabicText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixArabicText");
-            CheckBoxPreference safeDisplayMode = (CheckBoxPreference) getPreferenceScreen().findPreference("safeDisplay");
-            CompatHelper.removeHiddenPreferences(this.getApplicationContext());
-            if (CompatHelper.getSdkVersion() >= 9) {
-                workarounds.removePreference(fixArabicText);
-            }
-            if (CompatHelper.isHoneycomb()) {
-                workarounds.removePreference(longclickWorkaround);
-            }
-            if (CompatHelper.getSdkVersion() >= 13) {
-                workarounds.removePreference(safeDisplayMode);
-            }
-            if (CompatHelper.getSdkVersion() >= 15) {
-                workarounds.removePreference(inputWorkaround);
-            }
-            if (CompatHelper.getSdkVersion() >= 16) {
-                workarounds.removePreference(fixHebrewText);
-                getPreferenceScreen().removePreference(workarounds);     // group itself can be hidden for API 16
-            }
-        }
-    }
-
-
-    /** Initializes the list of custom fonts shown in the preferences. */
-    private void initializeCustomFontsDialog() {
-        ListPreference defaultFontPreference = (ListPreference) getPreferenceScreen().findPreference("defaultFont");
-        if (defaultFontPreference != null) {
-            defaultFontPreference.setEntries(getCustomFonts("System default"));
-            defaultFontPreference.setEntryValues(getCustomFonts(""));
-        }
-        ListPreference browserEditorCustomFontsPreference = (ListPreference) getPreferenceScreen().findPreference(
-                "browserEditorFont");
-        browserEditorCustomFontsPreference.setEntries(getCustomFonts("System default"));
-        browserEditorCustomFontsPreference.setEntryValues(getCustomFonts("", true));
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-        // Loop over all preferences
-
-
-        // syncAccount's summary can change while preferences are still open (user logs
-        // in from preferences screen), so we need to update it here.
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        String username = preferences.getString("username", "");
-        Preference syncAccount = getPreferenceScreen().findPreference("syncAccount");
-        if (syncAccount != null) {
-            if (TextUtils.isEmpty(username)) {
-                syncAccount.setSummary(R.string.sync_account_summ_logged_out);
-            } else {
-                syncAccount.setSummary(getString(R.string.sync_account_summ_logged_in, username));
-            }
-        }
-        updateNotificationPreference();
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        try {
-            Preference pref = getPreferenceScreen().findPreference(key);
-
+            PreferenceScreen screen = listener.getPreferenceScreen();
+            Preference pref = screen.findPreference(key);
+            // Handle special cases
             switch (key) {
                 case "timeoutAnswer":
-                    CheckBoxPreference keepScreenOn = (CheckBoxPreference) getPreferenceScreen().findPreference("keepScreenOn");
+                    CheckBoxPreference keepScreenOn = (CheckBoxPreference) screen.findPreference("keepScreenOn");
                     keepScreenOn.setChecked(((CheckBoxPreference) pref).isChecked());
                     break;
                 case LANGUAGE:
                     closePreferences();
-                    break;
-                case "useBackup":
-                    if (lockCheckAction) {
-                        lockCheckAction = false;
-                    } else if (!((CheckBoxPreference) pref).isChecked()) {
-                        lockCheckAction = true;
-                        ((CheckBoxPreference) pref).setChecked(true);
-                        showDialog(DIALOG_BACKUP);
-                    }
                     break;
                 case "convertFenText":
                     if (((CheckBoxPreference) pref).isChecked()) {
@@ -520,20 +422,166 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
                     mCol.setMod();
                     break;
                 case "minimumCardsDueForNotification":
-                    updateNotificationPreference();
+                    ListPreference listpref = (ListPreference) screen.findPreference("minimumCardsDueForNotification");
+                    if (listpref != null) {
+                        CharSequence[] entries = listpref.getEntries();
+                        CharSequence[] values = listpref.getEntryValues();
+                        for (int i = 0; i < entries.length; i++) {
+                            int value = Integer.parseInt(values[i].toString());
+                            if (entries[i].toString().contains("%d")) {
+                                entries[i] = String.format(entries[i].toString(), value);
+                            }
+                        }
+                        listpref.setEntries(entries);
+                        listpref.setSummary(listpref.getEntry().toString());
+                    }
                     break;
                 case "reportErrorMode":
-                    String value = sharedPreferences.getString("reportErrorMode", "");
+                    String value = prefs.getString("reportErrorMode", "");
                     AnkiDroidApp.getInstance().setAcraReportingMode(value);
+                    break;
+                case "syncAccount":
+                    SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+                    String username = preferences.getString("username", "");
+                    Preference syncAccount = screen.findPreference("syncAccount");
+                    if (syncAccount != null) {
+                        if (TextUtils.isEmpty(username)) {
+                            syncAccount.setSummary(R.string.sync_account_summ_logged_out);
+                        } else {
+                            syncAccount.setSummary(getString(R.string.sync_account_summ_logged_in, username));
+                        }
+                    }
                     break;
             }
             // Update the summary text to reflect new value
-            updateSummary(findPreference(key));
+            updateSummary(pref);
         } catch (BadTokenException e) {
             Timber.e(e, "Preferences: BadTokenException on showDialog");
         } catch (NumberFormatException | JSONException e) {
             throw new RuntimeException();
         }
+    }
+
+    private void updateSummary(Preference pref) {
+        if (pref == null || pref.getKey() == null) {
+            return;
+        }
+        if (pref.getKey().equals("about_dialog_preference")) {
+            pref.setSummary(getResources().getString(R.string.about_version) + " " + VersionUtils.getPkgVersionName());
+        }
+        // Get value text
+        String value;
+        try {
+            if (pref instanceof  NumberRangePreference) {
+                value = Integer.toString(((NumberRangePreference) pref).getValue());
+            } else if (pref instanceof SeekBarPreference) {
+                value = Integer.toString(((SeekBarPreference) pref).getValue());
+            } else if (pref instanceof ListPreference) {
+                value = ((ListPreference) pref).getEntry().toString();
+            } else if (pref instanceof EditTextPreference) {
+                value = ((EditTextPreference) pref).getText();
+            } else {
+                return;
+            }
+        } catch (NullPointerException e) {
+            value = "";
+        }
+        // Get summary text
+        String oldSummary = mOriginalSumarries.get(pref.getKey());
+        // Replace summary text with value according to some rules
+        if (oldSummary.equals("")) {
+            pref.setSummary(value);
+        } else if (value.equals("")) {
+            pref.setSummary(oldSummary);
+        } else if (pref.getKey().equals("minimumCardsDueForNotification")) {
+            pref.setSummary(replaceStringIfNumeric(oldSummary, value));
+        } else {
+            pref.setSummary(replaceString(oldSummary, value));
+        }
+    }
+
+
+    private String replaceString(String str, String value) {
+        if (str.contains("XXX")) {
+            return str.replace("XXX", value);
+        } else {
+            return str;
+        }
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private String replaceStringIfNumeric(String str, String value) {
+        try {
+            Double.parseDouble(value);
+            return replaceString(str, value);
+        } catch (NumberFormatException e){
+            return value;
+        }
+    }
+
+    private void initializeLanguageDialog(PreferenceScreen screen) {
+        ListPreference languageSelection = (ListPreference) screen.findPreference(LANGUAGE);
+        if (languageSelection != null) {
+            Map<String, String> items = new TreeMap<>();
+            for (String localeCode : LanguageUtil.APP_LANGUAGES) {
+                Locale loc = LanguageUtil.getLocale(localeCode);
+                items.put(loc.getDisplayName(), loc.toString());
+            }
+            CharSequence[] languageDialogLabels = new CharSequence[items.size() + 1];
+            CharSequence[] languageDialogValues = new CharSequence[items.size() + 1];
+            languageDialogLabels[0] = getResources().getString(R.string.language_system);
+            languageDialogValues[0] = "";
+            int i = 1;
+            for (Map.Entry<String, String> e : items.entrySet()) {
+                languageDialogLabels[i] = e.getKey();
+                languageDialogValues[i] = e.getValue();
+                i++;
+            }
+
+            languageSelection.setEntries(languageDialogLabels);
+            languageSelection.setEntryValues(languageDialogValues);
+        }
+    }
+
+    private void removeUnnecessaryWorkarounds(PreferenceScreen screen) {
+        PreferenceCategory workarounds = (PreferenceCategory) screen.findPreference("category_workarounds");
+        if (workarounds != null) {
+            CheckBoxPreference inputWorkaround = (CheckBoxPreference) screen.findPreference("inputWorkaround");
+            CheckBoxPreference longclickWorkaround = (CheckBoxPreference) screen.findPreference("textSelectionLongclickWorkaround");
+            CheckBoxPreference fixHebrewText = (CheckBoxPreference) screen.findPreference("fixHebrewText");
+            CheckBoxPreference fixArabicText = (CheckBoxPreference) screen.findPreference("fixArabicText");
+            CheckBoxPreference safeDisplayMode = (CheckBoxPreference) screen.findPreference("safeDisplay");
+            CompatHelper.removeHiddenPreferences(this.getApplicationContext());
+            if (CompatHelper.getSdkVersion() >= 9) {
+                workarounds.removePreference(fixArabicText);
+            }
+            if (CompatHelper.isHoneycomb()) {
+                workarounds.removePreference(longclickWorkaround);
+            }
+            if (CompatHelper.getSdkVersion() >= 13) {
+                workarounds.removePreference(safeDisplayMode);
+            }
+            if (CompatHelper.getSdkVersion() >= 15) {
+                workarounds.removePreference(inputWorkaround);
+            }
+            if (CompatHelper.getSdkVersion() >= 16) {
+                workarounds.removePreference(fixHebrewText);
+                screen.removePreference(workarounds);     // group itself can be hidden for API 16
+            }
+        }
+    }
+
+
+    /** Initializes the list of custom fonts shown in the preferences. */
+    private void initializeCustomFontsDialog(PreferenceScreen screen) {
+        ListPreference defaultFontPreference = (ListPreference) screen.findPreference("defaultFont");
+        if (defaultFontPreference != null) {
+            defaultFontPreference.setEntries(getCustomFonts("System default"));
+            defaultFontPreference.setEntryValues(getCustomFonts(""));
+        }
+        ListPreference browserEditorCustomFontsPreference = (ListPreference) screen.findPreference("browserEditorFont");
+        browserEditorCustomFontsPreference.setEntries(getCustomFonts("System default"));
+        browserEditorCustomFontsPreference.setEntryValues(getCustomFonts("", true));
     }
 
 
@@ -564,17 +612,6 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
     }
 
 
-    @Override
-    public boolean onKeyDown(int keyCode, @NonNull KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Timber.i("Preferences:: onBackPressed()");
-            closePreferences();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-
     private void closePreferences() {
         finish();
         ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
@@ -583,75 +620,39 @@ public class Preferences extends AppCompatPreferenceActivity implements OnShared
         }
     }
 
+    // ----------------------------------------------------------------------------
+    // Inner classes
+    // ----------------------------------------------------------------------------
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        Resources res = getResources();
-        StyledDialog.Builder builder = new StyledDialog.Builder(this);
-        switch (id) {
-            case DIALOG_BACKUP:
-                builder.setTitle(res.getString(R.string.pref_disable_backup_title));
-                builder.setCancelable(false);
-                builder.setMessage(res.getString(R.string.pref_disable_backup_warning));
-                builder.setPositiveButton(res.getString(R.string.dialog_positive_disable), new OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        lockCheckAction = true;
-                        CheckBoxPreference useBackup = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
-                        useBackup.setChecked(false);
-                        dialogMessage = getResources().getString(R.string.backup_delete);
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_BACKUPS, mDeckOperationHandler,
-                                (DeckTask.TaskData[]) null);
-                    }
-                });
-                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-                break;
-            case DIALOG_HEBREW_FONT:
-                builder.setTitle(res.getString(R.string.fix_hebrew_text));
-                builder.setCancelable(false);
-                builder.setMessage(res.getString(R.string.fix_hebrew_instructions,
-                        CollectionHelper.getCurrentAnkiDroidDirectory(this)));
-                builder.setNegativeButton(R.string.dialog_cancel, null);
-                builder.setPositiveButton(res.getString(R.string.fix_hebrew_download_font), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(
-                                R.string.link_hebrew_font)));
-                        startActivity(intent);
-                    }
-                });
-                break;
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class SettingsFragment extends PreferenceFragment implements PreferenceContext, OnSharedPreferenceChangeListener {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            String subscreen = getArguments().getString("subscreen");
+            ((Preferences) getActivity()).initSubscreen(subscreen, this);
+            ((Preferences) getActivity()).initAllPreferences(getPreferenceScreen());
         }
-        return builder.create();
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
+            prefs.registerOnSharedPreferenceChangeListener(this);
+            // syncAccount's summary can change while preferences are still open (user logs
+            // in from preferences screen), so we need to update it here.
+            ((Preferences) getActivity()).updatePreference(prefs, "syncAccount", this);
+        }
+
+        @Override
+        public void onPause() {
+            getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+            super.onPause();
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            ((Preferences) getActivity()).updatePreference(sharedPreferences, key, this);
+        }
     }
-
-
-    private DeckTask.TaskListener mDeckOperationHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            mProgressDialog = StyledProgressDialog.show(Preferences.this, "", dialogMessage, false);
-        }
-
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();
-            }
-            lockCheckAction = false;
-        }
-
-
-        @Override
-        public void onCancelled() {
-            // TODO Auto-generated method stub
-            
-        }
-    };
 }

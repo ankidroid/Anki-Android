@@ -31,22 +31,15 @@
             android:title="@string/force_full_sync_title"
             android:summary="@string/force_full_sync_summary" />
         <PreferenceCategory android:title="@string/pref_cat_performance" >
-            <CheckBoxPreference
-                android:defaultValue="true"
-                android:disableDependentsState="false"
-                android:key="useBackup"
-                android:summary="@string/pref_backup_summ"
-                android:title="@string/pref_backup" />
             <com.ichi2.ui.SeekBarPreference
                 android:defaultValue="8"
-                android:dependency="useBackup"
                 android:key="backupMax"
                 android:max="10"
                 android:summary="@string/pref_backup_max_summ"
                 android:text=""
                 android:title="@string/pref_backup_max"
                 app:interval="1"
-                app:min="1" />
+                app:min="0" />
         </PreferenceCategory>
         <PreferenceCategory
             android:key="category_workarounds"
@@ -129,5 +122,9 @@
 
     <Preference 
         android:key="about_dialog_preference"
-        android:title="@string/about_title" />
+        android:title="@string/about_title">
+        <intent
+            android:targetPackage="com.ichi2.anki"
+            android:targetClass="com.ichi2.anki.Info"/>
+    </Preference>
 </PreferenceScreen>

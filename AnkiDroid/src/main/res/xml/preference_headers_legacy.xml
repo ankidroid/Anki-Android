@@ -63,10 +63,4 @@
             android:targetClass="com.ichi2.anki.Preferences"
             android:action="com.ichi2.anki.prefs.advanced" />        
     </PreferenceScreen>
-    <Preference 
-        android:key="about_dialog_preference"
-        android:title="@string/about_title" />
-          <intent 
-            android:targetPackage="com.ichi2.anki"
-            android:targetClass="com.ichi2.anki.Info"/>        
 </PreferenceScreen>
