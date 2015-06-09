@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="UnusedAttribute">
+
+    <!--  General Preferences -->
+    <header
+        android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
+        android:summary="@string/pref_cat_general_summ"
+        android:title="@string/pref_cat_general">
+        <extra
+            android:name="subscreen"
+            android:value="com.ichi2.anki.prefs.general" />
+    </header>
+
+    <!-- Reviewing Preferences -->
+    <header
+        android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
+        android:summary="@string/pref_cat_reviewing_summ"
+        android:title="@string/pref_cat_reviewing">
+        <extra
+            android:name="subscreen"
+            android:value="com.ichi2.anki.prefs.reviewing" />
+    </header>
+
+    <!-- Fonts & Style Prefrences -->
+    <header
+        android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
+        android:key="font_preference_group"
+        android:summary="@string/pref_cat_fonts_summ"
+        android:title="@string/pref_cat_fonts">
+        <extra
+            android:name="subscreen"
+            android:value="com.ichi2.anki.prefs.fonts" />
+    </header>
+
+    <!-- Navigation Prefrences -->
+    <header
+        android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
+        android:summary="@string/pref_cat_gestures_summ"
+        android:title="@string/pref_cat_gestures">
+        <extra
+            android:name="subscreen"
+            android:value="com.ichi2.anki.prefs.gestures" />
+    </header>
+
+    <!-- Advanced Preferences -->
+    <header
+        android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
+        android:key="pref_screen_advanced"
+        android:summary="@string/pref_cat_advanced_summ"
+        android:title="@string/pref_cat_advanced">
+        <extra
+            android:name="subscreen"
+            android:value="com.ichi2.anki.prefs.advanced" />
+    </header>
+</preference-headers>

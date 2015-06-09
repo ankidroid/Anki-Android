@@ -167,7 +167,8 @@
         <activity
             android:name="com.ichi2.anki.Preferences"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            android:label="@string/preferences_title" />
+            android:label="@string/preferences_title"
+            android:theme="@style/LegacyActionBar"/>
         <activity
             android:name="com.ichi2.anki.DeckOptions"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"

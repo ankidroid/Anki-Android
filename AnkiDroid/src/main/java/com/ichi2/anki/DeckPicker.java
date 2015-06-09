@@ -874,15 +874,19 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 mRecommendFullSync = true;
             }
             // Check if preference upgrade or database check required, otherwise go to new feature screen
-            if (previous < AnkiDroidApp.CHECK_DB_AT_VERSION || previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
-                if (previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
+            int upgradePrefsVersion = AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION;
+            int upgradeDbVersion = AnkiDroidApp.CHECK_DB_AT_VERSION;
+
+            if (previous < upgradeDbVersion || previous < upgradePrefsVersion) {
+                if (previous < upgradePrefsVersion && current >= upgradePrefsVersion) {
+                    Timber.d("Upgrading preferences");
                     CompatHelper.removeHiddenPreferences(this.getApplicationContext());
                     upgradePreferences(previous);
                 }
                 // Integrity check loads asynchronously and then restart deckpicker when finished
-                if (previous < AnkiDroidApp.CHECK_DB_AT_VERSION) {
+                if (previous < upgradeDbVersion && current >= upgradeDbVersion) {
                     integrityCheck();
-                } else if (previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
+                } else if (previous < upgradePrefsVersion && current >= upgradePrefsVersion) {
                     // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
                     // proceed
                     restartActivity();
@@ -951,13 +955,17 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             preferences.edit().putInt("swipeSensitivity", 100).commit();
         }
 
-        // when upgrading from before 2.5alpha33
-        if (previousVersionCode < 20500133) {
+        // when upgrading from before 2.5alpha35
+        if (previousVersionCode < 20500135) {
             // Card zooming behaviour was changed the preferences renamed
             int oldCardZoom = preferences.getInt("relativeDisplayFontSize", 100);
             int oldImageZoom = preferences.getInt("relativeImageSize", 100);
             preferences.edit().putInt("cardZoom", oldCardZoom).commit();
             preferences.edit().putInt("imageZoom", oldImageZoom).commit();
+            if (!preferences.getBoolean("useBackup", true)) {
+                preferences.edit().putInt("backupMax", 0).commit();
+            }
+            preferences.edit().remove("useBackup").commit();
         }
     }
 

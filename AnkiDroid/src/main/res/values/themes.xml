@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme_Base_Custom_Light" parent="@style/Theme.AppCompat.Light.NoActionBar" />
+    <style name="Theme_Base_Custom_Light" parent="@style/Theme.AppCompat.Light.DarkActionBar" />
 
     <!-- White Theme -->
     <style name="Theme_White" parent="@style/Theme_Base_Custom_Light">
-
         <item name="actionBarTextColor">@color/white</item>
         <item name="colorPrimary">@color/theme_primary</item>
         <item name="colorPrimaryDark">@color/theme_primary_dark</item>
@@ -21,6 +20,8 @@
         <item name="android:colorBackground">@color/white_background</item>
 
         <!-- Action bar styles -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="actionModeBackground">@color/theme_accent</item>
 
@@ -45,6 +46,12 @@
     <style name="Theme_Start" parent="@style/Theme_White">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <!-- Theme for showing legacy ActionBar without explicitly including a toolbar -->
+    <style name="LegacyActionBar" parent="Theme_White">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
     </style>
 
     <!-- ActionBar -->
