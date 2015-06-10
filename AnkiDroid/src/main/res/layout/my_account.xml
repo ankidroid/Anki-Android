@@ -1,124 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_layout"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:layout_height="fill_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include layout="@layout/toolbar"/>
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:layout_weight="1">
 
-    <include layout="@layout/toolbar"/>
+            <LinearLayout
+                android:id="@+id/MyAccountLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:gravity="center"
+                >
+                <!-- TODO JS choose a standardized padding to use here -->
 
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        android:layout_weight="1">
+                <!--<TextView-->
+                <!--android:id="@+id/sign_in"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Sign in"-->
+                <!--android:gravity="center"-->
+                <!--android:textSize="@dimen/md_title_textsize"-->
+                <!--android:textColor="?android:textColorPrimary"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_margin="@dimen/content_vertical_padding"/>-->
+                <!--&lt;!&ndash; TODO JS - move into strings.xml &ndash;&gt;-->
+
+                <EditText
+                    android:id="@+id/username"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/username"
+                    android:inputType="textNoSuggestions|textEmailAddress"
+                    android:layout_margin="@dimen/content_vertical_padding"/>
+
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:layout_margin="@dimen/content_vertical_padding"/>
+
+                <Button
+                    android:id="@+id/login_button"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorPrimary"
+                    android:textColor="?attr/actionBarTextColor"
+                    android:singleLine="true"
+                    android:textSize="@dimen/md_title_textsize"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/log_in"
+                    android:paddingTop="30dp"
+                    android:layout_margin="@dimen/content_vertical_padding"/>
+                <!-- TODO better text size ^^ -->
+
+
+                <Button
+                    android:id="@+id/reset_password_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:textSize="@dimen/abc_text_size_button_material"
+                    android:textColor="?attr/colorPrimary"
+                    android:singleLine="true"
+                    android:padding="10dp"
+                    android:layout_gravity="center"
+                    android:text="@string/reset_password"
+                    android:layout_margin="@dimen/content_vertical_padding"
+                    />
+
+            </LinearLayout>
+
+        </ScrollView>
 
         <LinearLayout
-            android:id="@+id/MyAccountLayout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:padding="3dp"
             android:orientation="vertical"
-            android:padding="15dp"
-            android:gravity="center"
             >
-            <!-- TODO JS choose a standardized padding to use here -->
+            <!-- TODO move padding to dimen, when finalized -->
 
-
-            <!--<TextView-->
-            <!--android:id="@+id/sign_in"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Sign in"-->
-            <!--android:gravity="center"-->
-            <!--android:textSize="@dimen/md_title_textsize"-->
-            <!--android:textColor="?android:textColorPrimary"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_margin="@dimen/content_vertical_padding"/>-->
-            <!--&lt;!&ndash; TODO JS - move into strings.xml &ndash;&gt;-->
-
-            <EditText
-                android:id="@+id/username"
-                android:layout_width="fill_parent"
+            <TextView
+                android:id="@+id/no_account_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/username"
-                android:inputType="textNoSuggestions|textEmailAddress"
-                android:layout_margin="@dimen/content_vertical_padding"/>
-
-
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:layout_margin="@dimen/content_vertical_padding"/>
-
-            <Button
-                android:id="@+id/login_button"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                android:textColor="?attr/actionBarTextColor"
-                android:singleLine="true"
-                android:textSize="@dimen/md_title_textsize"
+                android:text="@string/sign_up_description"
                 android:layout_gravity="center"
-                android:padding="10dp"
-                android:text="@string/log_in"
-                android:paddingTop="30dp"
-                android:layout_margin="@dimen/content_vertical_padding"/>
-            <!-- TODO better text size ^^ -->
-
+                android:textSize="@dimen/abc_text_size_button_material"
+                android:textStyle="bold"
+                />
 
             <Button
-                android:id="@+id/reset_password_button"
+                android:id="@+id/sign_up_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:textSize="@dimen/abc_text_size_button_material"
                 android:textColor="?attr/colorPrimary"
-                android:singleLine="true"
-                android:padding="10dp"
+                android:padding="3dp"
                 android:layout_gravity="center"
-                android:text="@string/reset_password"
-                android:layout_margin="@dimen/content_vertical_padding"
-                />
-
+                android:singleLine="true"
+                android:text="@string/sign_up" />
         </LinearLayout>
-
-    </ScrollView>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:padding="3dp"
-        android:orientation="vertical"
-        >
-        <!-- TODO move padding to dimen, when finalized -->
-
-        <TextView
-            android:id="@+id/no_account_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sign_up_description"
-            android:layout_gravity="center"
-            android:textSize="@dimen/abc_text_size_button_material"
-            android:textStyle="bold"
-            />
-
-        <Button
-            android:id="@+id/sign_up_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:textSize="@dimen/abc_text_size_button_material"
-            android:textColor="?attr/colorPrimary"
-            android:padding="3dp"
-            android:layout_gravity="center"
-            android:singleLine="true"
-            android:text="@string/sign_up" />
     </LinearLayout>
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
 
