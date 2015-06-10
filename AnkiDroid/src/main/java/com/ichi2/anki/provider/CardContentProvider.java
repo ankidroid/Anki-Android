@@ -525,6 +525,7 @@ public class CardContentProvider extends ContentProvider {
                 int cardOrd = -1;
                 long noteID = -1;
                 int ease = -1;
+                long timeTaken = -1;
                 for (Map.Entry<String, Object> entry : valueSet) {
                     String key = entry.getKey();
 
@@ -534,12 +535,20 @@ public class CardContentProvider extends ContentProvider {
                         cardOrd = values.getAsInteger(key);
                     } else if (key.equals(FlashCardsContract.ReviewInfo.EASE)) {
                         ease = values.getAsInteger(key);
+                    }else if (key.equals(FlashCardsContract.ReviewInfo.TIME_TAKEN)) {
+                        timeTaken = values.getAsLong(key);
                     }
                 }
                 if (cardOrd != -1 && noteID != -1) {
                     Card cardToAnswer = getCard(noteID, cardOrd, col);
-                    answerCard(col, col.getSched(), cardToAnswer, ease);
-                    updated++;
+                    if(cardToAnswer != null) {
+                        answerCard(col, col.getSched(), cardToAnswer, ease, timeTaken);
+                        updated++;
+                    }else{
+                        Timber.e("Requested card with noteId %d and cardOrd %d was not found. Either the provided noteId/cardOrd were wrong" +
+                                "or the card has been deleted in the meantime."
+                                , noteID, cardOrd);
+                    }
                 }
                 break;
             }
@@ -726,12 +735,15 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private void answerCard(Collection col, Sched sched, Card cardToAnswer, int ease) {
+    private void answerCard(Collection col, Sched sched, Card cardToAnswer, int ease, long timeTaken) {
         try {
             AnkiDb ankiDB = col.getDb();
             ankiDB.getDatabase().beginTransaction();
             try {
                 if (cardToAnswer != null) {
+                    if(timeTaken != -1){
+                        cardToAnswer.setTimerStarted(Utils.now()-timeTaken/1000);
+                    }
                     sched.answerCard(cardToAnswer, ease);
                 }
                 ankiDB.getDatabase().setTransactionSuccessful();

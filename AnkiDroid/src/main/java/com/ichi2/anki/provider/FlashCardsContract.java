@@ -975,11 +975,18 @@ public class FlashCardsContract {
      * <td>String</td>
      * <td>{@link #EASE}</td>
      * <td>write-only</td>
-     * <td>The ease of the card (used when answering the card).
+     * <td>The ease of the card. Used when answering the card.
      * One of {@link com.ichi2.anki.AbstractFlashcardViewer#EASE_EASY},
      * {@link com.ichi2.anki.AbstractFlashcardViewer#EASE_MID},
      * {@link com.ichi2.anki.AbstractFlashcardViewer#EASE_HARD},
      * {@link com.ichi2.anki.AbstractFlashcardViewer#EASE_FAILED}
+     * </td>
+     * </tr>
+     * <tr>
+     * <td>String</td>
+     * <td>{@link #TIME_TAKEN}</td>
+     * <td>write-only</td>
+     * <td>The it took to answer the card (in milliseconds). Used when answering the card.
      * </td>
      * </tr>
      * </table>
@@ -994,10 +1001,12 @@ public class FlashCardsContract {
      *            long noteId = 123456789; //<- insert real note id here
      *            int cardOrd = 0;   //<- insert real card ord here
      *            int ease = AbstractFlashcardViewer.EASE_MID; //<- insert real ease here
+     *            long timeTaken = System.currentTimeMillis() - cardStartTime; //<- insert real time taken here
      *
      *            values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);
      *            values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd);
      *            values.put(FlashCardsContract.ReviewInfo.EASE, ease);
+     *            values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken);
      *            cr.update(reviewInfoUri, values, null, null);
      *     </code>
      * </pre>
@@ -1041,6 +1050,12 @@ public class FlashCardsContract {
          */
 
         public static final String EASE = "answer_ease";
+
+        /*
+         * Time it took to answer the card (in ms)
+         */
+
+        public static final String TIME_TAKEN = "time_taken";
 
         public static final String[] DEFAULT_PROJECTION = {
                 NOTE_ID,
