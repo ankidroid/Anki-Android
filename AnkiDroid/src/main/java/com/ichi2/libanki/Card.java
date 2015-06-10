@@ -427,6 +427,7 @@ public class Card implements Cloneable {
         }
     }
 
+    public void setTimerStarted(double timeStarted){ mTimerStarted = timeStarted; }
 
     public long getId() {
         return mId;
