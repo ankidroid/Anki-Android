@@ -157,7 +157,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         "edited",
         "interval"};
 
-    private int[] mBackground;
+    private int[] mBackground = new int[] { R.color.card_browser_background, R.color.card_browser_marked,
+            R.color.card_browser_suspended, R.color.card_browser_marked };
 
     private ActionBar mActionBar;
     private DeckDropDownAdapter mDropDownAdapter;
@@ -351,7 +352,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
         Timber.d("onCreate()");
         View mainView = getLayoutInflater().inflate(R.layout.card_browser, null);
@@ -374,8 +374,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mDeckNames.put(String.valueOf(did), getCol().getDecks().name(did));
         }
         registerExternalStorageListener();
-
-        mBackground = Themes.getCardBrowserBackground();
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 

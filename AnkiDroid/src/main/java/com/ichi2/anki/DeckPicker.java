@@ -363,7 +363,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
         Timber.d("onCreate()");
         Intent intent = getIntent();
-        Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
@@ -1741,8 +1740,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                         if (eta != -1) {
                             time = res.getQuantityString(R.plurals.deckpicker_title_minutes, eta, eta);
                         }
-                        UIUtils.setSubtitle(DeckPicker.this,
-                                res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
+                        getSupportActionBar().setSubtitle(res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
                     }
                 } catch (RuntimeException e) {
                     Timber.e(e, "RuntimeException setting time remaining");

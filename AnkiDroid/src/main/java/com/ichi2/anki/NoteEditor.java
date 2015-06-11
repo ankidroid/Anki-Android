@@ -194,8 +194,7 @@ public class NoteEditor extends AnkiActivity {
     private int mCaller;
 
     private LinkedList<FieldEditText> mEditFields;
-
-    private int mCardItemBackground;
+    
     private final List<Map<String, String>> mIntentInformation = new ArrayList<Map<String, String>>();
     private SimpleAdapter mIntentInformationAdapter;
     private StyledDialog mIntentInformationDialog;
@@ -316,7 +315,6 @@ public class NoteEditor extends AnkiActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
-        Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
@@ -1160,17 +1158,7 @@ public class NoteEditor extends AnkiActivity {
                 mIntentInformationDialog.dismiss();
             }
         });
-        mCardItemBackground = Themes.getCardBrowserBackground()[0];
-        mIntentInformationAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Object arg1, String text) {
-                if (view.getId() == R.id.add_intent_item) {
-                    view.setBackgroundResource(mCardItemBackground);
-                    return true;
-                }
-                return false;
-            }
-        });
+
         listView.setBackgroundColor(android.R.attr.colorBackground);
         listView.setDrawSelectorOnTop(true);
         listView.setFastScrollEnabled(true);

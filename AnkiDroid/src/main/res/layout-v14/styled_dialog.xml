@@ -142,7 +142,6 @@
             android:dividerHeight="1dip"
             android:drawSelectorOnTop="true"
             android:focusableInTouchMode="true"
-            android:listSelector="@drawable/white_list_selector_background"
             android:paddingBottom="0dip"
             android:paddingTop="0dip" />
     </FrameLayout>

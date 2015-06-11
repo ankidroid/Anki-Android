@@ -23,6 +23,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -487,7 +488,7 @@ public class Statistics extends NavigationDrawerActivity implements
                     Collection col = CollectionHelper.getInstance().getCol(getActivity());
                     List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::"));
                     if(sIsSubtitle)
-                        UIUtils.setSubtitle(getActivity(), parts.get(parts.size() - 1));
+                        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(parts.get(parts.size() - 1));
                     else
                         getActivity().setTitle(parts.get(parts.size() - 1));
                 } catch (JSONException e) {
@@ -495,7 +496,7 @@ public class Statistics extends NavigationDrawerActivity implements
                 }
             } else {
                 if(sIsSubtitle)
-                    UIUtils.setSubtitle(getActivity(), getResources().getString(R.string.stats_deck_collection));
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(R.string.stats_deck_collection);
                 else
                     getActivity().setTitle(getResources().getString(R.string.stats_deck_collection));
             }
@@ -645,7 +646,7 @@ public class Statistics extends NavigationDrawerActivity implements
                 try {
                     List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::"));
                     if(sIsSubtitle)
-                        UIUtils.setSubtitle(getActivity(), parts.get(parts.size() - 1));
+                        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(parts.get(parts.size() - 1));
                     else
                         getActivity().setTitle(parts.get(parts.size() - 1));
                 } catch (JSONException e) {
@@ -653,7 +654,7 @@ public class Statistics extends NavigationDrawerActivity implements
                 }
             } else {
                 if(sIsSubtitle)
-                    UIUtils.setSubtitle(getActivity(), getResources().getString(R.string.stats_deck_collection));
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(R.string.stats_deck_collection);
                 else
                     getActivity().setTitle(getResources().getString(R.string.stats_deck_collection));
             }

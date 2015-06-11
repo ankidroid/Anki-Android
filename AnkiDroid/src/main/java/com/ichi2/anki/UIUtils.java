@@ -72,39 +72,4 @@ public class UIUtils {
         activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
-
-
-    public static void setTitle(Activity activity, String title) {
-        AppCompatActivity actionBarActivity = (AppCompatActivity) activity;
-        ActionBar actionBar = actionBarActivity.getSupportActionBar();
-        if (actionBar != null) {
-            CharacterStyle span = new ForegroundColorSpan(activity.getResources().getColor(
-                    Themes.getResourceIdFromAttributeId(R.attr.actionBarTextColor)));
-            SpannableStringBuilder ssb = new SpannableStringBuilder(title);// Is it even necessary to use spannables anymore?
-            ssb.setSpan(span, 0, ssb.length(), 0);
-            actionBar.setTitle(ssb);
-        }
-    }
-
-
-    public static void setSubtitle(Activity activity, String title) {
-        setSubtitle(activity, title, false);
-    }
-
-
-    public static void setSubtitle(Activity activity, String title, boolean inverted) {
-        AppCompatActivity actionBarActivity = (AppCompatActivity) activity;
-        ActionBar actionBar = actionBarActivity.getSupportActionBar();
-        if (actionBar != null) {
-            if (inverted) {
-                CharacterStyle span = new ForegroundColorSpan(activity.getResources().getColor(
-                        Themes.getResourceIdFromAttributeId(R.attr.actionBarTextColor)));
-                SpannableStringBuilder ssb = new SpannableStringBuilder(title);
-                ssb.setSpan(span, 0, ssb.length(), 0);
-                actionBar.setSubtitle(ssb);
-            } else {
-                actionBar.setSubtitle(title);
-            }
-        }
-    }
 }

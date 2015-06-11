@@ -44,15 +44,10 @@ import timber.log.Timber;
 
 public class Themes {
 
-    public final static int THEME_ANDROID_DARK = 0;
-    public final static int THEME_ANDROID_LIGHT = 1;
     public final static int THEME_WHITE = 3;
 
     public final static int CALLER_STUDYOPTIONS = 1;
-    public final static int CALLER_DECKPICKER_DECK = 3;
     public final static int CALLER_REVIEWER = 4;
-    public final static int CALLER_FEEDBACK = 5;
-    public final static int CALLER_DOWNLOAD_DECK = 6;
     public final static int CALLER_DECKPICKER = 7;
     public final static int CALLER_CARDBROWSER = 8;
     public final static int CALLER_CARDEDITOR_INTENTDIALOG = 9;
@@ -61,395 +56,29 @@ public class Themes {
     public final static int ALPHA_ICON_ENABLED_LIGHT = 255; // 100%
     public final static int ALPHA_ICON_DISABLED_LIGHT = 76; // 31%
     public final static int ALPHA_ICON_ENABLED_DARK = 138; // 54%
-    public final static int ALPHA_ICON_DISABLED_DARK = 66; // 26%
-    public final static int ALPHA_DIVIDER = 31; // 12%
+
 
     private static int mCurrentTheme = -1;
-    private static int mProgressbarsBackgroundColor;
-    private static int mProgressbarsFrameColor;
-    private static int mProgressbarsMatureColor;
-    private static int mProgressbarsYoungColor;
-    private static int mProgressbarsDeckpickerYoungColor;
     private static int mReviewerBackground = 0;
-    private static int mReviewerProgressbar = 0;
-    private static int mDeckpickerItemBorder = 0;
-    private static int mTitleStyle = 0;
-    private static int mTitleTextColor;
-    private static int mTextViewStyle = 0;
-    private static int mWallpaper = 0;
-    private static int mBackgroundColor;
-    private static int mBackgroundDarkColor = 0;
     private static int mDialogBackgroundColor = 0;
-    private static int mToastBackground = 0;
-    private static int[] mCardbrowserItemBorder;
-    private static int[] mChartColors;
-    private static int mPopupTopDark;
-    private static int mPopupTopMedium;
-    private static int mPopupTopBright;
-    private static int mPopupCenterDark;
-    private static int mPopupCenterBright;
-    private static int mPopupCenterMedium;
-    private static int mPopupBottomDark;
-    private static int mPopupBottomBright;
-    private static int mPopupBottomMedium;
-    private static int mPopupFullDark;
-    private static int mPopupFullMedium;
-    private static int mPopupFullBright;
-    private static int mDividerHorizontalBright;
-    private static Typeface mLightFont;
-    private static Typeface mRegularFont;
-    private static Typeface mBoldFont;
-    private static int mProgressDialogFontColor;
-    private static int mNightModeButton;
 
-    private static Context mContext;
-
-
-    public static void applyTheme(Context context) {
-        applyTheme(context, -1);
-    }
-
-
-    public static void applyTheme(Context context, int theme) {
-        mContext = context;
-        if (mCurrentTheme == -1) {
-            loadTheme();
-        }
-        switch (theme == -1 ? mCurrentTheme : theme) {
-            case THEME_ANDROID_DARK:
-                context.setTheme(android.R.style.Theme_Black);
-                Timber.d("Set theme: dark");
-                break;
-            case THEME_ANDROID_LIGHT:
-                context.setTheme(android.R.style.Theme_Light);
-                Timber.d("Set theme: light");
-                break;
-            case THEME_WHITE:
-                context.setTheme(R.style.Theme_White);
-                Timber.d("Set theme: white");
-                break;
-            case -1:
-                break;
-        }
-    }
 
 
     public static void setContentStyle(View view, int caller) {
-        setFont(view);
         switch (caller) {
-            case CALLER_STUDYOPTIONS:
-                // ((View)
-                // view.findViewById(R.id.studyoptions_progressbar1_border)).setBackgroundResource(mProgressbarsFrameColor);
-                // ((View)
-                // view.findViewById(R.id.studyoptions_progressbar2_border)).setBackgroundResource(mProgressbarsFrameColor);
-                // ((View)
-                // view.findViewById(R.id.studyoptions_global_limit_bars)).setBackgroundResource(mProgressbarsFrameColor);
-                // ((View)
-                // view.findViewById(R.id.studyoptions_progressbar4_border)).setBackgroundResource(mProgressbarsFrameColor);
-                //
-                // ((View)
-                // view.findViewById(R.id.studyoptions_bars_max)).setBackgroundResource(mProgressbarsBackgroundColor);
-                // ((View)
-                // view.findViewById(R.id.studyoptions_progressbar2_content)).setBackgroundResource(mProgressbarsBackgroundColor);
-                // ((View)
-                // view.findViewById(R.id.studyoptions_global_limit_bars_content)).setBackgroundResource(mProgressbarsBackgroundColor);
-                // ((View)
-                // view.findViewById(R.id.studyoptions_progressbar4_content)).setBackgroundResource(mProgressbarsBackgroundColor);
-                //
-                // ((View)
-                // view.findViewById(R.id.studyoptions_global_mat_limit_bar)).setBackgroundResource(mProgressbarsMatureColor);
-                // ((View)
-                // view.findViewById(R.id.studyoptions_global_mat_bar)).setBackgroundResource(mProgressbarsMatureColor);
-                //
-                // ((View)
-                // view.findViewById(R.id.studyoptions_global_limit_bar)).setBackgroundResource(mProgressbarsYoungColor);
-                // ((View)
-                // view.findViewById(R.id.studyoptions_global_bar)).setBackgroundResource(mProgressbarsYoungColor);
-
-                if (mCurrentTheme == THEME_WHITE) {
-                    setMargins(view.findViewById(R.id.studyoptions_deck_name), LayoutParams.WRAP_CONTENT,
-                            LayoutParams.WRAP_CONTENT, 0, 6f, 0, 2f);
-                    // setMargins(view.findViewById(R.id.studyoptions_statistic_field), LayoutParams.WRAP_CONTENT,
-                    // LayoutParams.WRAP_CONTENT, 0, 2f, 0, 12f);
-                    ((View) view.findViewById(R.id.studyoptions_scrollcontainer))
-                            .setBackgroundResource(R.drawable.white_textview);
-                    // ((View)
-                    // view.findViewById(R.id.studyoptions_statistic_field)).setBackgroundResource(R.color.transparent);
-                    ((View) view.findViewById(R.id.studyoptions_deck_name)).setVisibility(View.VISIBLE);
-                    // ((View)
-                    // view.findViewById(R.id.studyoptions_deckinformation)).setBackgroundResource(mTextViewStyle);
-                    ((View) view.findViewById(R.id.studyoptions_main))
-                            .setBackgroundResource(R.drawable.white_wallpaper);
-                    
-                } else {
-                    // ((View)
-                    // view.findViewById(R.id.studyoptions_statistic_field)).setBackgroundResource(mTextViewStyle);
-                    ((View) view.findViewById(R.id.studyoptions_main)).setBackgroundResource(mWallpaper);
-                }
-                break;
-
-            case CALLER_DECKPICKER:
-                // TODO
-//                ListView lv = (ListView) view.findViewById(R.id.files);
-//                switch (mCurrentTheme) {
-//                    case THEME_WHITE:
-//                        lv.setSelector(R.drawable.white_deckpicker_list_selector);
-//                        CompatHelper.getCompat().setOverScrollModeNever(lv);
-//                        lv.setFadingEdgeLength(60);
-//                        lv.getDivider().setAlpha(ALPHA_DIVIDER);
-//                        //lv.setVerticalFadingEdgeEnabled(true);
-//                        break;
-//                    default:
-//                        break;
-//                }
-                break;
-
-            case CALLER_CARDBROWSER:
-                ListView lv2 = (ListView) view.findViewById(R.id.card_browser_list);
-                switch (mCurrentTheme) {
-                    case THEME_WHITE:
-                        //lv2.setBackgroundResource(R.drawable.white_textview);
-                        lv2.setSelector(R.drawable.white_deckpicker_list_selector);
-                        CompatHelper.getCompat().setOverScrollModeNever(lv2);
-                        lv2.setFadingEdgeLength(15);
-                        lv2.getDivider().setAlpha(ALPHA_DIVIDER);
-                        //lv2.setDividerHeight(0);
-                        //lv2.setSelector(R.drawable.white_deckpicker_list_selector);
-                        //lv2.setDivider(mContext.getResources().getDrawable(R.drawable.white_listdivider));
-                        //setFont(view);
-                        //setWallpaper(view);
-                        break;
-                    default:
-                        break;
-                }
-                break;
-
-            case CALLER_CARDEDITOR_INTENTDIALOG:
-                ListView lv3 = (ListView) view;
-                switch (mCurrentTheme) {
-                    case THEME_WHITE:
-                        lv3.setSelector(R.drawable.blue_cardbrowser_list_selector);
-                        lv3.setDividerHeight(0);
-                        break;
-                    default:
-                        break;
-                }
-                break;
-
-            case CALLER_DECKPICKER_DECK:
-                // if (view.getId() == R.id.deckpicker_bar_mat) {
-                // // view.setBackgroundResource(mProgressbarsFrameColor);
-                // } else if (view.getId() == R.id.deckpicker_bar_all) {
-                // // view.setBackgroundResource(mProgressbarsDeckpickerYoungColor);
-                // } else
-//                if (view.getId() == R.id.deckpicker_deck) {
-//                    view.setBackgroundResource(mDeckpickerItemBorder);
-//                } // TODO AVP
-                break;
-
             case CALLER_REVIEWER:
                 ((View) view.findViewById(R.id.main_layout)).setBackgroundResource(mReviewerBackground);
                 switch (mCurrentTheme) {
-                    case THEME_ANDROID_DARK:
-                    case THEME_ANDROID_LIGHT:
-                        ((View) view.findViewById(R.id.flashcard_frame)).setBackgroundResource(AnkiDroidApp
-                                .getSharedPrefs(mContext).getBoolean("invertedColors", false) ? R.color.black
-                                : R.color.white);
-                        break;
                     case THEME_WHITE:
                         ((View) view.findViewById(R.id.flashcard_frame)).setBackgroundResource(AnkiDroidApp
-                                .getSharedPrefs(mContext).getBoolean("invertedColors", false) ? R.color.black
+                                .getSharedPrefs(view.getContext()).getBoolean("invertedColors", false) ? R.color.black
                                 : R.color.white);
 
                         setMargins(view.findViewById(R.id.main_layout), LayoutParams.FILL_PARENT,
                                 LayoutParams.FILL_PARENT, 4f, 0, 4f, 4f);
-
-                        // ((View)view.findViewById(R.id.nextTime1)).setBackgroundResource(R.drawable.white_next_time_separator);
-                        // ((View)view.findViewById(R.id.nextTime2)).setBackgroundResource(R.drawable.white_next_time_separator);
-                        // ((View)view.findViewById(R.id.nextTime3)).setBackgroundResource(R.drawable.white_next_time_separator);
-                        // ((View)view.findViewById(R.id.nextTime4)).setBackgroundResource(R.drawable.white_next_time_separator);
                         break;
                 }
                 break;
-
-            case CALLER_FEEDBACK:
-                ((TextView) view).setTextColor(mProgressbarsFrameColor);
-                break;
-
-            case CALLER_CARD_EDITOR:
-                //view.findViewById(R.id.CardEditorEditFieldsLayout).setBackgroundResource(mTextViewStyle);
-                // int padding = (int) (4 * mContext.getResources().getDisplayMetrics().density);
-                // view.findViewById(R.id.CardEditorScroll).setPadding(padding, padding, padding, padding);
-                break;
-
-            case CALLER_DOWNLOAD_DECK:
-                view.setBackgroundResource(mDeckpickerItemBorder);
-                break;
-        }
-    }
-
-
-    public static void loadTheme() {
-        // SharedPreferences preferences = PrefSettings.getSharedPrefs(mContext);
-        // mCurrentTheme = Integer.parseInt(preferences.getString("theme", "3"));
-
-        // set theme always to "white" until theming is properly reimplemented
-        mCurrentTheme = 3;
-
-        switch (mCurrentTheme) {
-            case THEME_ANDROID_DARK:
-                mDialogBackgroundColor = R.color.card_browser_background;
-                mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_default;
-                mProgressbarsFrameColor = R.color.studyoptions_progressbar_frame_default;
-                mProgressbarsMatureColor = R.color.studyoptions_progressbar_mature_default;
-                mProgressbarsYoungColor = R.color.studyoptions_progressbar_young_default;
-                mProgressbarsDeckpickerYoungColor = R.color.deckpicker_progressbar_young_dark;
-                mReviewerBackground = 0;
-                mDeckpickerItemBorder = 0;
-                mTitleStyle = 0;
-                mTitleTextColor = mContext.getResources().getColor(R.color.white);
-                mTextViewStyle = 0;
-                mWallpaper = 0;
-                mToastBackground = 0;
-                mBackgroundDarkColor = 0;
-                mReviewerProgressbar = 0;
-                mCardbrowserItemBorder = new int[] { 0, R.color.card_browser_marked, R.color.card_browser_suspended,
-                        R.color.card_browser_marked };
-                mChartColors = new int[] { Color.WHITE, Color.BLACK };
-                mPopupTopBright = R.drawable.popup_top_bright;
-                mPopupTopMedium = R.drawable.popup_top_bright;
-                mPopupTopDark = R.drawable.popup_top_dark;
-                mPopupCenterDark = R.drawable.popup_center_dark;
-                mPopupCenterBright = R.drawable.popup_center_bright;
-                mPopupCenterMedium = R.drawable.popup_center_medium;
-                mPopupBottomDark = R.drawable.popup_bottom_dark;
-                mPopupBottomBright = R.drawable.popup_bottom_bright;
-                mPopupBottomMedium = R.drawable.popup_bottom_medium;
-                mPopupFullBright = R.drawable.popup_full_bright;
-                mPopupFullDark = R.drawable.popup_full_dark;
-                mPopupFullMedium = R.drawable.popup_full_bright;
-                mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
-                mBackgroundColor = R.color.white;
-                mProgressDialogFontColor = mContext.getResources().getColor(R.color.white);
-                mNightModeButton = R.drawable.btn_keyboard_key_fulltrans_normal;
-                break;
-
-            case THEME_ANDROID_LIGHT:
-                mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_light;
-                mProgressbarsFrameColor = R.color.studyoptions_progressbar_frame_light;
-                mProgressbarsMatureColor = R.color.studyoptions_progressbar_mature_light;
-                mProgressbarsYoungColor = R.color.studyoptions_progressbar_young_light;
-                mProgressbarsDeckpickerYoungColor = R.color.deckpicker_progressbar_young_light;
-                mReviewerBackground = 0;
-                mDeckpickerItemBorder = 0;
-                mTitleStyle = 0;
-                mTitleTextColor = mContext.getResources().getColor(R.color.black);
-                mTextViewStyle = 0;
-                mWallpaper = 0;
-                mToastBackground = 0;
-                mBackgroundDarkColor = 0;
-                mDialogBackgroundColor = R.color.card_browser_background;
-                mCardbrowserItemBorder = new int[] { 0, R.color.card_browser_marked, R.color.card_browser_suspended,
-                        R.color.card_browser_marked };
-                mReviewerProgressbar = mProgressbarsYoungColor;
-                mChartColors = new int[] { Color.BLACK, Color.WHITE };
-                mPopupTopDark = R.drawable.popup_top_dark;
-                mPopupTopBright = R.drawable.popup_top_bright;
-                mPopupTopMedium = R.drawable.popup_top_bright;
-                mPopupCenterDark = R.drawable.popup_center_dark;
-                mPopupCenterBright = R.drawable.popup_center_bright;
-                mPopupCenterMedium = R.drawable.popup_center_medium;
-                mPopupBottomDark = R.drawable.popup_bottom_dark;
-                mPopupBottomBright = R.drawable.popup_bottom_bright;
-                mPopupBottomMedium = R.drawable.popup_bottom_medium;
-                mPopupFullBright = R.drawable.popup_full_bright;
-                mPopupFullMedium = R.drawable.popup_full_bright;
-                mPopupFullDark = R.drawable.popup_full_dark;
-                mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
-                mBackgroundColor = R.color.white;
-                mProgressDialogFontColor = mContext.getResources().getColor(R.color.white);
-                mNightModeButton = R.drawable.btn_keyboard_key_fulltrans_normal;
-                break;
-
-            case THEME_WHITE:
-                mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_blue;
-                mProgressbarsFrameColor = R.color.studyoptions_progressbar_frame_light;
-                mProgressbarsMatureColor = R.color.studyoptions_progressbar_mature_light;
-                mProgressbarsYoungColor = R.color.studyoptions_progressbar_young_blue;
-                mProgressbarsDeckpickerYoungColor = R.color.deckpicker_progressbar_young_light;
-                mReviewerBackground = R.color.white_background;
-                mTitleStyle = R.drawable.white_btn_default_normal;
-                mTitleTextColor = mContext.getResources().getColor(R.color.black);
-                mTextViewStyle = R.drawable.white_textview_padding;
-                mWallpaper = R.drawable.white_wallpaper;
-                mBackgroundColor = R.color.white_background;
-                mToastBackground = R.drawable.white_toast_frame;
-                mDialogBackgroundColor = R.color.white;
-                mBackgroundDarkColor = R.color.background_dark_blue;
-                mReviewerProgressbar = R.color.reviewer_progressbar_session_blue;
-                mCardbrowserItemBorder = new int[] { R.drawable.white_bg_cardbrowser,
-                        R.drawable.white_bg_cardbrowser_marked, R.drawable.white_bg_cardbrowser_suspended,
-                        R.drawable.white_bg_cardbrowser_marked_suspended };
-                mChartColors = new int[] { Color.BLACK, Color.WHITE };
-                mPopupTopBright = R.drawable.white_popup_top_bright;
-                mPopupTopMedium = R.drawable.white_popup_top_medium;
-                mPopupTopDark = mPopupTopMedium;
-                mPopupCenterDark = R.drawable.white_popup_center_bright;
-                mPopupCenterBright = R.drawable.white_popup_center_bright;
-                mPopupCenterMedium = R.drawable.white_popup_center_medium;
-                mPopupBottomBright = R.drawable.white_popup_bottom_bright;
-                mPopupBottomDark = mPopupBottomBright;
-                mPopupBottomMedium = R.drawable.white_popup_bottom_medium;
-                mPopupFullBright = R.drawable.white_popup_full_bright;
-                mPopupFullMedium = R.drawable.white_popup_full_medium;
-                mPopupFullDark = mPopupFullBright;
-                mDividerHorizontalBright = R.drawable.white_dialog_divider;
-                mLightFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Light.ttf");
-                mRegularFont = Typeface.DEFAULT;
-                mBoldFont = Typeface.DEFAULT_BOLD;
-                mProgressDialogFontColor = mContext.getResources().getColor(R.color.black);
-                mNightModeButton = R.drawable.white_btn_night;
-                break;
-        }
-    }
-
-
-    public static void setLightFont(TextView view) {
-        if (mLightFont != null) {
-            view.setTypeface(mLightFont);
-        }
-    }
-
-
-    public static void setRegularFont(TextView view) {
-        if (mRegularFont != null) {
-            //view.setTypeface(mRegularFont);
-        }
-    }
-
-
-    public static void setBoldFont(TextView view) {
-        if (mBoldFont != null) {
-            //view.setTypeface(mBoldFont);
-        }
-    }
-
-
-    public static void setFont(View view) {
-        if (view instanceof ViewGroup) {
-            ViewGroup vg = (ViewGroup) view;
-            for (int i = 0; i < vg.getChildCount(); i++) {
-                View child = vg.getChildAt(i);
-                if (child instanceof TextView) {
-                    TextView tv = (TextView) child;
-                    if (tv.getTypeface() != null && tv.getTypeface().getStyle() == Typeface.BOLD) {
-                        setBoldFont((TextView) child);
-                    } else {
-                        setRegularFont((TextView) child);
-                    }
-                }
-                setFont(child);
-            }
         }
     }
 
@@ -464,61 +93,11 @@ public class Themes {
     }
 
 
-    public static void setTextColor(View view, int color) {
-        if (view instanceof ViewGroup) {
-            ViewGroup vg = (ViewGroup) view;
-            for (int i = 0; i < vg.getChildCount(); i++) {
-                View child = vg.getChildAt(i);
-                if (child instanceof TextView) {
-                    TextView tv = (TextView) child;
-                    tv.setTextColor(color);
-                }
-                setTextColor(child, color);
-            }
-        }
-    }
-
-
-    public static void setWallpaper(View view) {
-        setWallpaper(view, false);
-    }
-
-
-    public static void setWallpaper(View view, boolean solid) {
-        if (solid) {
-            view.setBackgroundResource(mBackgroundDarkColor);
-        } else {
-            try {
-                view.setBackgroundResource(mWallpaper);
-            } catch (OutOfMemoryError e) {
-                mWallpaper = mBackgroundColor;
-                view.setBackgroundResource(mWallpaper);
-                Timber.e(e, "Themes: setWallpaper: OutOfMemoryError");
-            }
-        }
-    }
-
-
-    public static void setTextViewStyle(View view) {
-        view.setBackgroundResource(mTextViewStyle);
-    }
-
-
-    public static void setTitleStyle(View view) {
-        view.setBackgroundResource(mTitleStyle);
-        if (view instanceof TextView) {
-            TextView tv = (TextView) view;
-            tv.setTextColor(mTitleTextColor);
-        }
-    }
-
-
     public static void setMargins(View view, int width, int height, float dipLeft, float dipTop, float dipRight,
             float dipBottom) {
         View parent = (View) view.getParent();
-        parent.setBackgroundResource(mBackgroundColor);
         Class<?> c = view.getParent().getClass();
-        float factor = mContext.getResources().getDisplayMetrics().density;
+        float factor = view.getContext().getResources().getDisplayMetrics().density;
         if (c == LinearLayout.class) {
             LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(width, height);
             llp.setMargins((int) (dipLeft * factor), (int) (dipTop * factor), (int) (dipRight * factor),
@@ -539,33 +118,8 @@ public class Themes {
     }
 
 
-    public static int getForegroundColor() {
-        return mProgressbarsFrameColor;
-    }
-
-
-    public static int getBackgroundColor() {
-        return mBackgroundColor;
-    }
-
-
-    public static int getDialogBackgroundColor() {
-        return mDialogBackgroundColor;
-    }
-
-
     public static int getTheme() {
         return mCurrentTheme;
-    }
-
-
-    public static int[] getCardBrowserBackground() {
-        return mCardbrowserItemBorder;
-    }
-
-
-    public static void setTextViewBackground(View view) {
-        view.setBackgroundResource(mTextViewStyle);
     }
 
 
@@ -605,177 +159,6 @@ public class Themes {
     }
 
 
-    public static void setStyledProgressDialogDialogBackgrounds(View main) {
-        View topPanel = ((View) main.findViewById(R.id.topPanel));
-        View contentPanel = ((View) main.findViewById(R.id.contentPanel));
-        if (topPanel.getVisibility() == View.VISIBLE) {
-            try {
-                topPanel.setBackgroundResource(mPopupTopDark);
-                ((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(mDividerHorizontalBright);
-                contentPanel.setBackgroundResource(mPopupBottomBright);
-            } catch (OutOfMemoryError e) {
-                Timber.e(e, "setStyledDialogBackgrounds - OutOfMemoryError occured");
-                topPanel.setBackgroundResource(R.color.black);
-                contentPanel.setBackgroundResource(R.color.white);
-            }
-        } else {
-            try {
-                contentPanel.setBackgroundResource(mPopupFullMedium);
-            } catch (OutOfMemoryError e) {
-                Timber.e(e, "setStyledDialogBackgrounds - OutOfMemoryError occured");
-                contentPanel.setBackgroundResource(R.color.white);
-            }
-        }
-        ((TextView) main.findViewById(R.id.alertTitle)).setTextColor(mProgressDialogFontColor);
-        ((TextView) main.findViewById(R.id.message)).setTextColor(mProgressDialogFontColor);
-    }
-
-
-    public static void setStyledDialogBackgrounds(View main) {
-        int buttonCount = 0;
-        for (int id : new int[] { R.id.positive_button, R.id.negative_button, R.id.neutral_button }) {
-            if (main.findViewById(id).getVisibility() == View.VISIBLE) {
-                buttonCount++;
-            }
-        }
-        setStyledDialogBackgrounds(main, buttonCount);
-    }
-
-
-    public static void setStyledDialogBackgrounds(View main, int buttonNumbers) {
-        setStyledDialogBackgrounds(main, buttonNumbers, false);
-    }
-
-
-    public static void setStyledDialogBackgrounds(View main, int buttonNumbers, boolean brightCustomPanelBackground) {
-        setFont(main);
-        if (mCurrentTheme == THEME_WHITE) {
-            setTextColor(main, mContext.getResources().getColor(R.color.text_color));
-        }
-        // order of styled dialog elements:
-        // 1. top panel (title)
-        // 2. content panel
-        // 3. listview panel
-        // 4. custom view panel
-        // 5. button panel
-        View topPanel = ((View) main.findViewById(R.id.topPanel));
-        boolean[] visibility = new boolean[5];
-
-        if (topPanel.getVisibility() == View.VISIBLE) {
-            try {
-                topPanel.setBackgroundResource(mPopupTopDark);
-                ((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(mDividerHorizontalBright);
-            } catch (OutOfMemoryError e) {
-                Timber.e(e, "setStyledDialogBackgrounds - OutOfMemoryError occured");
-                topPanel.setBackgroundResource(R.color.black);
-            }
-            visibility[0] = true;
-        }
-        View contentPanel = ((View) main.findViewById(R.id.contentPanel));
-        if (contentPanel.getVisibility() == View.VISIBLE) {
-            visibility[1] = true;
-        }
-        View listViewPanel = ((View) main.findViewById(R.id.listViewPanel));
-        if (listViewPanel.getVisibility() == View.VISIBLE) {
-            visibility[2] = true;
-        }
-        View customPanel = ((View) main.findViewById(R.id.customPanel));
-        if (customPanel.getVisibility() == View.VISIBLE) {
-            visibility[3] = true;
-        }
-        if (buttonNumbers > 0) {
-            LinearLayout buttonPanel = (LinearLayout) main.findViewById(R.id.buttonPanel);
-            try {
-                buttonPanel.setBackgroundResource(mPopupBottomMedium);
-            } catch (OutOfMemoryError e) {
-                Timber.e(e, "setStyledDialogBackgrounds - OutOfMemoryError occured");
-                buttonPanel.setBackgroundResource(R.color.white);
-            }
-            if (buttonNumbers > 1 || CompatHelper.getSdkVersion() > 13) {
-                // Starting at API 14, the dialog looks quite different, and these spacers are in the way.
-                main.findViewById(R.id.rightSpacer).setVisibility(View.GONE);
-                main.findViewById(R.id.leftSpacer).setVisibility(View.GONE);
-            }
-            visibility[4] = true;
-        }
-
-        int first = -1;
-        int last = -1;
-        for (int i = 0; i < 5; i++) {
-            if (first == -1 && visibility[i]) {
-                first = i;
-            }
-            if (visibility[i]) {
-                last = i;
-            }
-        }
-
-        int res = mPopupCenterDark;
-        if (first == 1) {
-            res = mPopupTopDark;
-        }
-        if (last == 1) {
-            res = mPopupBottomDark;
-            if (first == 1) {
-                res = mPopupFullDark;
-            }
-        }
-        try {
-            contentPanel.setBackgroundResource(res);
-        } catch (OutOfMemoryError e) {
-            Timber.e(e, "setStyledDialogBackgrounds - OutOfMemoryError occured");
-            contentPanel.setBackgroundResource(R.color.black);
-        }
-
-        res = mPopupCenterBright;
-        if (first == 2) {
-            res = mPopupTopBright;
-        }
-        if (last == 2) {
-            res = mPopupBottomBright;
-            if (first == 2) {
-                res = mPopupFullBright;
-            }
-        }
-        try {
-            listViewPanel.setBackgroundResource(res);
-        } catch (OutOfMemoryError e) {
-            Timber.e(e, "setStyledDialogBackgrounds - OutOfMemoryError occured");
-            listViewPanel.setBackgroundResource(R.color.white);
-        }
-
-        res = brightCustomPanelBackground ? mPopupCenterMedium : mPopupCenterDark;
-        if (first == 3) {
-            res = brightCustomPanelBackground ? mPopupTopMedium : mPopupTopDark;
-        }
-        if (last == 3) {
-            res = brightCustomPanelBackground ? mPopupBottomMedium : mPopupBottomDark;
-            if (first == 3) {
-                res = brightCustomPanelBackground ? mPopupFullMedium : mPopupFullDark;
-            }
-        }
-        try {
-            customPanel.setBackgroundResource(res);
-        } catch (OutOfMemoryError e) {
-            Timber.e(e, "setStyledDialogBackgrounds - OutOfMemoryError occured");
-            customPanel.setBackgroundResource(brightCustomPanelBackground ? R.color.white : R.color.black);
-        }
-
-        // set divider
-        if (visibility[3] && brightCustomPanelBackground) {
-            ((View) main.findViewById(R.id.bottomDivider)).setBackgroundResource(mDividerHorizontalBright);
-            ((View) main.findViewById(R.id.bottomDivider)).setVisibility(View.VISIBLE);
-        } else if (visibility[4]) {
-            ((View) main.findViewById(R.id.bottomButtonDivider)).setBackgroundResource(mDividerHorizontalBright);
-            ((View) main.findViewById(R.id.bottomButtonDivider)).setVisibility(View.VISIBLE);
-        }
-    }
-
-
-    public static int[] getChartColors() {
-        return mChartColors;
-    }
-
 
     public static int getNightModeCardBackground(Context context) {
         switch (mCurrentTheme) {
@@ -802,12 +185,12 @@ public class Themes {
         int nextTimeRecommendedColor;
 
         if (nightMode) {
-            flipCard.setBackgroundResource(mNightModeButton);
+            /*flipCard.setBackgroundResource(mNightModeButton);
             ease1.setBackgroundResource(mNightModeButton);
             ease2.setBackgroundResource(mNightModeButton);
             ease3.setBackgroundResource(mNightModeButton);
             ease4.setBackgroundResource(mNightModeButton);
-            mAnswerField.setBackgroundResource(mNightModeButton);
+            mAnswerField.setBackgroundResource(mNightModeButton);*/
 
             foregroundColor = Color.WHITE;
             nextTimeRecommendedColor = res.getColor(R.color.next_time_recommended_color_inv);
@@ -833,13 +216,6 @@ public class Themes {
         }
 
         return new int[] { foregroundColor, nextTimeRecommendedColor };
-    }
-
-    public static int getResourceIdFromAttributeId(int attributeID) {
-                TypedValue typedValue = new TypedValue();
-                Resources.Theme theme = mContext.getTheme();
-                theme.resolveAttribute(attributeID, typedValue, true);
-                return typedValue.resourceId;
     }
 
 }

@@ -88,23 +88,20 @@ public class StyledDialog extends Dialog {
     public void setMessage(CharSequence message) {
         View main = super.getWindow().getDecorView();
         ((TextView) main.findViewById(R.id.message)).setText(message);
-        ((View) main.findViewById(R.id.contentPanel)).setVisibility(View.VISIBLE);
-        Themes.setStyledDialogBackgrounds(main);
+        main.findViewById(R.id.contentPanel).setVisibility(View.VISIBLE);
     }
 
 
     public void setTitle(String message) {
         View main = super.getWindow().getDecorView();
         ((TextView) main.findViewById(R.id.alertTitle)).setText(message);
-        Themes.setStyledDialogBackgrounds(main);
     }
 
 
     public void setMessage(String message) {
         View main = super.getWindow().getDecorView();
         ((TextView) main.findViewById(R.id.message)).setText(message);
-        ((View) main.findViewById(R.id.contentPanel)).setVisibility(View.VISIBLE);
-        Themes.setStyledDialogBackgrounds(main);
+        main.findViewById(R.id.contentPanel).setVisibility(View.VISIBLE);
     }
 
 
@@ -674,15 +671,6 @@ public class StyledDialog extends Dialog {
                 ((View) layout.findViewById(R.id.customPanel)).setVisibility(View.GONE);
             }
 
-            // set background
-            try {
-                Themes.setStyledDialogBackgrounds(layout, numberOfButtons, brightViewBackground);
-            } catch (OutOfMemoryError e) {
-                Timber.e(e, "StyledDialog - Dialog could not be created");
-                Themes.showThemedToast(context, context.getResources().getString(R.string.error_insufficient_memory),
-                        false);
-                return null;
-            }
             if (this.listStyle == 3 && selectAllListener != null) {
                 CheckBox selectAll = (CheckBox) layout.findViewById(R.id.SelectAllCheckbox);
                 selectAll.setVisibility(View.VISIBLE);

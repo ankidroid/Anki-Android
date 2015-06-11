@@ -345,13 +345,6 @@ public class FilteredDeckOptions extends PreferenceActivity implements OnSharedP
 
     @Override
     protected void onCreate(Bundle icicle) {
-        // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
-        // This screen doesn't suffer from this bug really as it doesn't have nested
-        // PreferenceScreens, but we have change the background for consistency with
-        // DeckOptions background.
-        if (!CompatHelper.isHoneycomb()) {
-            Themes.applyTheme(this, Themes.THEME_ANDROID_DARK);
-        }
         super.onCreate(icicle);
 
         mCol = CollectionHelper.getInstance().getCol(this);

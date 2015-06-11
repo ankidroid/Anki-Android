@@ -59,12 +59,12 @@ public class Reviewer extends AbstractFlashcardViewer {
             } else {
                 Timber.e("Could not set title in reviewer because collection closed");
             }
-            UIUtils.setTitle(this, title[title.length - 1]);
+            getSupportActionBar().setTitle(title[title.length - 1]);
             super.setTitle(title[title.length - 1]);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        UIUtils.setSubtitle(this, "", mNightMode);
+        getSupportActionBar().setSubtitle("");
     }
 
 
