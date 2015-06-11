@@ -965,6 +965,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 preferences.edit().putInt("backupMax", 0).commit();
             }
             preferences.edit().remove("useBackup").commit();
+            preferences.edit().remove("intentAdditionInstantAdd").commit();
         }
     }
 

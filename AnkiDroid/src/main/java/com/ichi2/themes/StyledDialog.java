@@ -1,21 +1,3 @@
-/****************************************************************************************
- * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
- *                                                                                      *
- * based on custom Dialog windows by antoine vianey                                     *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
-
 package com.ichi2.themes;
 
 import android.app.Dialog;
@@ -23,19 +5,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.TextWatcher;
-
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.view.WindowManager.BadTokenException;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Filter.FilterListener;
+import android.widget.Filter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -71,7 +51,7 @@ public class StyledDialog extends Dialog {
         try {
             setCanceledOnTouchOutside(false);
             super.show();
-        } catch (BadTokenException e) {
+        } catch (WindowManager.BadTokenException e) {
             Timber.e(e, "Could not show dialog");
         }
     }
@@ -111,13 +91,13 @@ public class StyledDialog extends Dialog {
 
 
     private void setItems(int type, ListView listview, String[] values, int checkedItem, boolean[] checked,
-            DialogInterface.OnClickListener listener) {
+                          DialogInterface.OnClickListener listener) {
         mListView = listview;
         mItemList = new ArrayList<String>();
         Collections.addAll(mItemList, values);
         mListener = listener;
         if (type == 3) {
-            mListView.setOnItemClickListener(new OnItemClickListener() {
+            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     mListener.onClick(StyledDialog.this, position);
@@ -125,7 +105,7 @@ public class StyledDialog extends Dialog {
                 }
             });
         } else {
-            mListView.setOnItemClickListener(new OnItemClickListener() {
+            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     mListener.onClick(StyledDialog.this, position);
@@ -157,42 +137,8 @@ public class StyledDialog extends Dialog {
     }
 
 
-    public Button getButton(int which) {
-        switch (which) {
-            case Dialog.BUTTON_POSITIVE:
-                return (Button) super.getWindow().getDecorView().findViewById(R.id.positive_button);
-            case Dialog.BUTTON_NEGATIVE:
-                return (Button) super.getWindow().getDecorView().findViewById(R.id.negative_button);
-            case Dialog.BUTTON_NEUTRAL:
-                return (Button) super.getWindow().getDecorView().findViewById(R.id.neutral_button);
-            default:
-                return null;
-        }
-    }
-
-
-    public void setButtonOnClickListener(int which, OnClickListener listener) {
-        getButton(which).setOnClickListener(new OnClickForwarder(StyledDialog.this, which, listener));
-    }
-
-
-    public void addMultiChoiceItems(String value, boolean checked) {
-        mItemList.add(0, value);
-        mListView.setItemChecked(0, checked);
-        boolean[] newChecked = new boolean[mItemList.size()];
-        newChecked[0] = checked;
-        for (int i = 1; i < mItemList.size(); i++) {
-            boolean c = mCheckedItems[i - 1];
-            mListView.setItemChecked(i, c);
-            newChecked[i] = c;
-        }
-        mCheckedItems = newChecked;
-        mListAdapter.notifyDataSetChanged();
-    }
-
-
     public void setMultiChoiceItems(String[] values, boolean[] checked, DialogInterface.OnClickListener listener,
-            OnCheckedChangeListener selectAllListener) {
+                                    CompoundButton.OnCheckedChangeListener selectAllListener) {
         View main = super.getWindow().getDecorView();
         mCheckedItems = checked;
         ((View) main.findViewById(R.id.listViewPanel)).setVisibility(View.VISIBLE);
@@ -208,30 +154,6 @@ public class StyledDialog extends Dialog {
     }
 
 
-    public void setSingleChoiceItems(String[] values, int checked, DialogInterface.OnClickListener listener) {
-        View main = super.getWindow().getDecorView();
-        ((View) main.findViewById(R.id.listViewPanel)).setVisibility(View.VISIBLE);
-        setItems(2, (ListView) super.getWindow().getDecorView().findViewById(R.id.listview), values, 0, null, listener);
-    }
-
-
-    public void setItems(String[] values, DialogInterface.OnClickListener listener) {
-        View main = super.getWindow().getDecorView();
-        ((View) main.findViewById(R.id.listViewPanel)).setVisibility(View.VISIBLE);
-        setItems(1, (ListView) super.getWindow().getDecorView().findViewById(R.id.listview), values, 0, null, listener);
-    }
-
-
-    public void changeListItem(int position, String text) {
-        mItemList.remove(position);
-        mItemList.add(position, text);
-        mListAdapter.notifyDataSetChanged();
-    }
-
-    public List<String> getItemList() {
-        return mItemList;
-    }
-    
     public void setItemListChecked(boolean checked) {
         for (int i = 0; i < mListView.getCount(); i++) {
             mListView.setItemChecked(i, checked);
@@ -281,9 +203,9 @@ public class StyledDialog extends Dialog {
     }
 
 
-    public void filterList(String str, final FilterListener listener) {
+    public void filterList(String str, final Filter.FilterListener listener) {
         updateCheckedItems();
-        mListAdapter.getFilter().filter(str, new FilterListener() {
+        mListAdapter.getFilter().filter(str, new Filter.FilterListener() {
             @Override
             public void onFilterComplete(int count) {
                 for (int i = 0; i < mListView.getCount(); i++) {
@@ -307,7 +229,7 @@ public class StyledDialog extends Dialog {
         CheckBox selectAll = (CheckBox) findViewById(R.id.SelectAllCheckbox);
         selectAll.setOnCheckedChangeListener(null);
         selectAll.setChecked(check);
-        selectAll.setOnCheckedChangeListener((OnCheckedChangeListener) selectAll.getTag());
+        selectAll.setOnCheckedChangeListener((CompoundButton.OnCheckedChangeListener) selectAll.getTag());
     }
 
     public static class Builder {
@@ -318,25 +240,18 @@ public class StyledDialog extends Dialog {
         private int messageSize = 0;
         private String positiveButtonText;
         private String negativeButtonText;
-        private String neutralButtonText;
         private View contentView;
         private int bottomMargin = 0;
-        private boolean brightViewBackground = false;
         private int icon = 0;
 
         private DialogInterface.OnClickListener positiveButtonClickListener;
         private DialogInterface.OnClickListener negativeButtonClickListener;
-        private DialogInterface.OnClickListener neutralButtonClickListener;
         private DialogInterface.OnCancelListener cancelListener;
         private DialogInterface.OnDismissListener dismissListener;
-        private OnCheckedChangeListener selectAllListener;
+        private CompoundButton.OnCheckedChangeListener selectAllListener;
         private boolean cancelable = true;
 
-        private String[] itemTitels;
-        private int checkedItem;
-        private boolean[] multipleCheckedItems;
         private int listStyle = 0;
-        private DialogInterface.OnClickListener itemClickListener;
         private boolean mShowFilterEditText = false;
 
 
@@ -355,14 +270,6 @@ public class StyledDialog extends Dialog {
             this.message = message;
             return this;
         }
-
-
-        public Builder setMessage(String message, int size) {
-            this.message = message;
-            this.messageSize = size;
-            return this;
-        }
-
 
         /**
          * Set the Dialog message from resource
@@ -424,28 +331,8 @@ public class StyledDialog extends Dialog {
 
 
         public Builder setView(View v, boolean isSingleView) {
-            return setView(v, isSingleView, false);
-        }
-
-
-        public Builder setView(View v, boolean isSingleView, boolean bright) {
             this.contentView = v;
             this.bottomMargin = isSingleView ? 5 : 0;
-            this.brightViewBackground = bright;
-            return this;
-        }
-
-
-        /**
-         * Set the positive button resource and its listener
-         *
-         * @param positiveButtonText
-         * @param listener
-         * @return
-         */
-        public Builder setPositiveButton(int positiveButtonText, DialogInterface.OnClickListener listener) {
-            this.positiveButtonText = (String) context.getText(positiveButtonText);
-            this.positiveButtonClickListener = listener;
             return this;
         }
 
@@ -464,19 +351,6 @@ public class StyledDialog extends Dialog {
         }
 
 
-        /**
-         * Set the negative button resource and its listener
-         *
-         * @param negativeButtonText
-         * @param listener
-         * @return
-         */
-        public Builder setNegativeButton(int negativeButtonText, DialogInterface.OnClickListener listener) {
-            this.negativeButtonText = (String) context.getText(negativeButtonText);
-            this.negativeButtonClickListener = listener;
-            return this;
-        }
-
 
         /**
          * Set the negative button text and its listener
@@ -488,34 +362,6 @@ public class StyledDialog extends Dialog {
         public Builder setNegativeButton(String negativeButtonText, DialogInterface.OnClickListener listener) {
             this.negativeButtonText = negativeButtonText;
             this.negativeButtonClickListener = listener;
-            return this;
-        }
-
-
-        /**
-         * Set the neutral button resource and its listener
-         *
-         * @param neutralButtonText
-         * @param listener
-         * @return
-         */
-        public Builder setNeutralButton(int neutralButtonText, DialogInterface.OnClickListener listener) {
-            this.neutralButtonText = (String) context.getText(neutralButtonText);
-            this.neutralButtonClickListener = listener;
-            return this;
-        }
-
-
-        /**
-         * Set the neutral button text and its listener
-         *
-         * @param neutralButtonText
-         * @param listener
-         * @return
-         */
-        public Builder setNeutralButton(String neutralButtonText, DialogInterface.OnClickListener listener) {
-            this.neutralButtonText = neutralButtonText;
-            this.neutralButtonClickListener = listener;
             return this;
         }
 
@@ -532,7 +378,7 @@ public class StyledDialog extends Dialog {
         }
 
 
-        public Builder setSelectAllListener(OnCheckedChangeListener listener) {
+        public Builder setSelectAllListener(CompoundButton.OnCheckedChangeListener listener) {
             this.selectAllListener = listener;
             return this;
         }
@@ -540,34 +386,6 @@ public class StyledDialog extends Dialog {
 
         public Builder setCancelable(boolean cancelable) {
             this.cancelable = cancelable;
-            return this;
-        }
-
-
-        public Builder setItems(String[] values, DialogInterface.OnClickListener listener) {
-            this.itemTitels = values;
-            this.itemClickListener = listener;
-            this.listStyle = 1;
-            return this;
-        }
-
-
-        public Builder setSingleChoiceItems(String[] values, int checked, DialogInterface.OnClickListener listener) {
-            this.itemTitels = values;
-            this.checkedItem = checked;
-            this.itemClickListener = listener;
-            this.listStyle = 2;
-            return this;
-        }
-
-
-        public Builder setMultiChoiceItems(String[] values, boolean[] checked,
-                DialogInterface.OnClickListener listener, OnCheckedChangeListener selectAllListener) {
-            this.itemTitels = values;
-            this.multipleCheckedItems = checked;
-            this.itemClickListener = listener;
-            this.listStyle = 3;
-            this.selectAllListener = selectAllListener;
             return this;
         }
 
@@ -586,7 +404,7 @@ public class StyledDialog extends Dialog {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View layout = inflater.inflate(R.layout.styled_dialog, null);
-            dialog.addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+            dialog.addContentView(layout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
             // set title
             if (title != null && title.length() > 0) {
@@ -621,15 +439,7 @@ public class StyledDialog extends Dialog {
             } else {
                 layout.findViewById(R.id.negative_button).setVisibility(View.GONE);
             }
-            if (neutralButtonText != null) {
-                Button neutralButton = (Button) layout.findViewById(R.id.neutral_button);
-                neutralButton.setText(neutralButtonText);
-                neutralButton.setOnClickListener(new OnClickForwarder(dialog, DialogInterface.BUTTON_NEUTRAL,
-                        neutralButtonClickListener));
-                numberOfButtons++;
-            } else {
-                layout.findViewById(R.id.neutral_button).setVisibility(View.GONE);
-            }
+            layout.findViewById(R.id.neutral_button).setVisibility(View.GONE);
             if (numberOfButtons == 0) {
                 layout.findViewById(R.id.buttonPanel).setVisibility(View.GONE);
             }
@@ -651,13 +461,7 @@ public class StyledDialog extends Dialog {
             }
 
             // set single and multiple choice listview
-            if (itemTitels != null) {
-                dialog.setItems(listStyle, (ListView) layout.findViewById(R.id.listview), itemTitels, checkedItem,
-                        multipleCheckedItems, itemClickListener);
-                // ((View) layout.findViewById(R.id.titleDivider)).setVisibility(View.GONE);
-            } else {
-                ((View) layout.findViewById(R.id.listViewPanel)).setVisibility(View.GONE);
-            }
+            ((View) layout.findViewById(R.id.listViewPanel)).setVisibility(View.GONE);
 
             // set a custom view
             if (contentView != null) {
@@ -684,7 +488,7 @@ public class StyledDialog extends Dialog {
                 filterTags.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        dialog.filterList(s.toString(), new FilterListener() {
+                        dialog.filterList(s.toString(), new Filter.FilterListener() {
                             @Override
                             public void onFilterComplete(int count) {
                                 dialog.adjustSelectAllCheckBox();
@@ -747,3 +551,4 @@ public class StyledDialog extends Dialog {
         }
     }
 }
+

@@ -13,11 +13,6 @@
         android:title="@string/add"
         ankidroid:showAsAction="always"/>
     <item
-        android:id="@+id/action_later"
-        android:title="@string/later"
-        android:visible="false"
-        ankidroid:showAsAction="never"/>
-    <item
         android:id="@+id/action_add_card_from_card_editor"
         android:title="@string/card_editor_add_card"
         android:visible="false"/>
@@ -33,9 +28,5 @@
         android:id="@+id/action_reschedule_card"
         android:title="@string/card_editor_reschedule_card"
         android:visible="false"/>
-    <item
-        android:id="@+id/action_saved_notes"
-        android:enabled="false"
-        android:title="@string/intent_add_saved_information"/>
 
 </menu>

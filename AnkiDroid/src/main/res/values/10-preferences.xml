@@ -123,8 +123,6 @@
     <string name="vertical_centering_summ">Center the content of cards vertically</string>
     <string name="pref_backup_max">Max number of backups</string>
     <string name="pref_backup_max_summ">XXX</string>
-    <string name="pref_intent_add_instant">Instant add</string>
-    <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
     <string name="show_estimates">Show button time</string>
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
     <string name="show_progress">Show remaining</string>

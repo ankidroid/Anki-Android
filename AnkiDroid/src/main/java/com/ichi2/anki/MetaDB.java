@@ -90,8 +90,6 @@ public class MetaDB {
                 + "did INTEGER NOT NULL, " + "state INTEGER)");
         mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS customDictionary (" + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "did INTEGER NOT NULL, " + "dictionary INTEGER)");
-        mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS intentInformation (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + "fields TEXT NOT NULL)");
         mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS smallWidgetStatus (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "progress INTEGER NOT NULL, left INTEGER NOT NULL, eta INTEGER NOT NULL)");
         // Use pragma to get info about widgetStatus.
@@ -106,13 +104,6 @@ public class MetaDB {
             mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS widgetStatus (" + "deckId INTEGER NOT NULL PRIMARY KEY, "
                     + "deckName TEXT NOT NULL, " + "newCards INTEGER NOT NULL, " + "lrnCards INTEGER NOT NULL, "
                     + "dueCards INTEGER NOT NULL, " + "progress INTEGER NOT NULL, " + "eta INTEGER NOT NULL)");
-        }
-        c = mMetaDb.rawQuery("PRAGMA table_info(intentInformation)", null);
-        columnNumber = c.getCount();
-        if (columnNumber > 2) {
-            mMetaDb.execSQL("ALTER TABLE intentInformation " + "ADD COLUMN fields INTEGER NOT NULL DEFAULT '0'");
-            mMetaDb.execSQL("ALTER TABLE intentInformation " + "DROP COLUMN source INTEGER NOT NULL DEFAULT '0'");
-            mMetaDb.execSQL("ALTER TABLE intentInformation " + "DROP COLUMN target INTEGER NOT NULL DEFAULT '0'");
         }
         mMetaDb.setVersion(databaseVersion);
         Timber.i("MetaDB:: Upgrading Internal Database finished. New version: %d", databaseVersion);
@@ -193,23 +184,6 @@ public class MetaDB {
             return true;
         } catch (Exception e) {
             Timber.e(e, "Error resetting widgetStatus and smallWidgetStatus");
-        }
-        return false;
-    }
-
-
-    /** Reset the intent information. */
-    public static boolean resetIntentInformation(Context context) {
-        if (mMetaDb == null || !mMetaDb.isOpen()) {
-            openDB(context);
-        }
-        try {
-            Timber.i("MetaDB:: Resetting intent information");
-            mMetaDb.execSQL("DROP TABLE IF EXISTS intentInformation;");
-            upgradeDB(mMetaDb, DATABASE_VERSION);
-            return true;
-        } catch (Exception e) {
-            Timber.e(e, "Error resetting intentInformation ");
         }
         return false;
     }
@@ -310,8 +284,9 @@ public class MetaDB {
 
     /**
      * Stores the state of the whiteboard for a given deck.
-     * 
-     * @param state 1 if the whiteboard should be shown, 0 otherwise
+     *
+     * @param did deck id to store whiteboard state for
+     * @param whiteboardState 1 if the whiteboard should be shown, 0 otherwise
      */
     public static void storeWhiteboardState(Context context, long did, boolean whiteboardState) {
         int state = (whiteboardState) ? 1 : 0;
@@ -530,71 +505,5 @@ public class MetaDB {
             closeDB();
             Timber.i("MetaDB:: Trying to reset Widget: " + resetWidget(context));
         }
-    }
-
-
-    public static ArrayList<HashMap<String, String>> getIntentInformation(Context context) {
-        openDBIfClosed(context);
-        Cursor cursor = null;
-        ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
-        try {
-            cursor = mMetaDb.query("intentInformation", new String[] { "id", "fields" }, null, null, null, null, "id");
-            while (cursor.moveToNext()) {
-                HashMap<String, String> item = new HashMap<String, String>();
-                item.put("id", Integer.toString(cursor.getInt(0)));
-                String fields = cursor.getString(1);
-                String[] split = Utils.splitFields(fields);
-                String source = null;
-                String target = null;
-                for (int i = 0; i < split.length; i++) {
-                    if (source == null || source.length() == 0) {
-                        source = split[i];
-                    } else if (target == null || target.length() == 0) {
-                        target = split[i];
-                    } else {
-                        break;
-                    }
-                }
-                item.put("source", source);
-                item.put("target", target);
-                item.put("fields", fields);
-                list.add(item);
-            }
-        } catch (SQLiteException e) {
-            upgradeDB(mMetaDb, DATABASE_VERSION);
-
-            Timber.e(e, "Error while querying intentInformation");
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
-        return list;
-    }
-
-
-    public static void saveIntentInformation(Context context, String fields) {
-        openDBIfClosed(context);
-        try {
-            mMetaDb.execSQL("INSERT INTO intentInformation (fields) " + " VALUES (?);", new Object[] { fields });
-            Timber.i("MetaDB:: Store intentInformation: " + fields);
-        } catch (Exception e) {
-            Timber.e(e, "Error storing intentInformation in MetaDB ");
-        }
-    }
-
-
-    public static boolean removeIntentInformation(Context context, String id) {
-        if (mMetaDb == null || !mMetaDb.isOpen()) {
-            openDB(context);
-        }
-        try {
-            Timber.i("MetaDB:: Deleting intent information " + id);
-            mMetaDb.execSQL("DELETE FROM intentInformation WHERE id = " + id + ";");
-            return true;
-        } catch (Exception e) {
-            Timber.e(e, "Error deleting intentInformation " + id + ": ");
-        }
-        return false;
     }
 }
