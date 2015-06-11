@@ -36,7 +36,6 @@ import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 
@@ -50,8 +49,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -61,6 +58,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.dialogs.NoteEditorRescheduleCard;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
@@ -889,8 +887,8 @@ public class NoteEditor extends AnkiActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Resources res = getResources();
         switch (item.getItemId()) {
-
             case android.R.id.home:
                 Timber.i("NoteEditor:: Home button pressed");
                 closeCardEditorWithCheck();
@@ -930,7 +928,22 @@ public class NoteEditor extends AnkiActivity {
 
             case R.id.action_reset_card_progress:
                 Timber.i("NoteEditor:: Reset progress button pressed");
-                showDialog(DIALOG_RESET_CARD);
+                // Show confirmation dialog before resetting card progress
+                ConfirmationDialog dialog = new ConfirmationDialog () {
+                    @Override
+                    public void confirm() {
+                        Timber.i("NoteEditor:: OK button pressed");
+                        getCol().getSched().forgetCards(new long[] { mCurrentEditedCard.getId() });
+                        getCol().reset();
+                        mReloadRequired = true;
+                        Themes.showThemedToast(NoteEditor.this,
+                                getResources().getString(R.string.reset_card_dialog_acknowledge), true);
+                    }
+                };
+                String title = res.getString(R.string.reset_card_dialog_title);
+                String message = res.getString(R.string.reset_card_dialog_message);
+                dialog.setArgs(title, message);
+                showDialogFragment(dialog);
                 return true;
 
             case R.id.action_saved_notes:
@@ -940,7 +953,7 @@ public class NoteEditor extends AnkiActivity {
 
             case R.id.action_reschedule_card:
                 Timber.i("NoteEditor:: Reschedule button pressed");
-                showDialog(DIALOG_RESCHEDULE_CARD);
+                showDialogFragment(NoteEditorRescheduleCard.newInstance());
                 return true;
 
             default:
@@ -1044,6 +1057,15 @@ public class NoteEditor extends AnkiActivity {
         }
     }
 
+    public void onRescheduleCard(int days) {
+        Timber.i("Reschedule card");
+        getCol().getSched().reschedCards(new long[] { mCurrentEditedCard.getId() }, days, days);
+        getCol().reset();
+        mReloadRequired = true;
+        Themes.showThemedToast(NoteEditor.this,
+                getResources().getString(R.string.reschedule_card_dialog_acknowledge), true);
+    }
+
 
     private void showTagsDialog() {
         if (mSelectedTags == null) {
@@ -1086,51 +1108,6 @@ public class NoteEditor extends AnkiActivity {
         StyledDialog.Builder builder = new StyledDialog.Builder(this);
 
         switch (id) {
-            case DIALOG_RESET_CARD:
-                builder.setTitle(res.getString(R.string.reset_card_dialog_title));
-                builder.setMessage(res.getString(R.string.reset_card_dialog_message));
-                builder.setPositiveButton(res.getString(R.string.dialog_positive_reset), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Timber.i("NoteEditor:: OK button pressed");
-                        getCol().getSched().forgetCards(new long[] { mCurrentEditedCard.getId() });
-                        getCol().reset();
-                        mReloadRequired = true;
-                        Themes.showThemedToast(NoteEditor.this,
-                                getResources().getString(R.string.reset_card_dialog_acknowledge), true);
-                    }
-                });
-                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-                builder.setCancelable(true);
-                dialog = builder.create();
-                break;
-            case DIALOG_RESCHEDULE_CARD:
-                final EditText rescheduleEditText;
-                rescheduleEditText = (EditText) new EditText(this);
-                rescheduleEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                rescheduleEditText.setText("0");
-                rescheduleEditText.selectAll();
-                builder.setTitle(res.getString(R.string.reschedule_card_dialog_title));
-                builder.setMessage(res.getString(R.string.reschedule_card_dialog_message));
-                builder.setPositiveButton(res.getString(R.string.dialog_ok), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Timber.i("NoteEditor:: OK button pressed");
-                        int days = Integer.parseInt(((EditText) rescheduleEditText).getText().toString());
-                        getCol().getSched().reschedCards(new long[] { mCurrentEditedCard.getId() }, days, days);
-                        getCol().reset();
-                        mReloadRequired = true;
-                        Themes.showThemedToast(NoteEditor.this,
-                                getResources().getString(R.string.reschedule_card_dialog_acknowledge), true);
-                    }
-                });
-                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-                builder.setCancelable(true);
-                FrameLayout frame = new FrameLayout(this);
-                frame.addView(rescheduleEditText);
-                builder.setView(frame, false, true);
-                dialog = builder.create();
-                break;
             case DIALOG_INTENT_INFORMATION:
                 dialog = createDialogIntentInformation(builder, res);
                 break;
