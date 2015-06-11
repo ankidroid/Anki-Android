@@ -869,8 +869,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // Create the extensions as early as possible, so that they can be offered events.
         mExtensions = new ReviewerExtRegistry(getBaseContext());
-
-        Themes.applyTheme(this);
+        setTheme(R.style.Theme_White);
         super.onCreate(savedInstanceState);
         Timber.d("onCreate()");
 
@@ -1784,7 +1783,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         try {
             String[] title = getCol().getDecks().get(mCurrentCard.getDid()).getString("name").split("::");
-            UIUtils.setTitle(this, title[title.length - 1]);
+            getSupportActionBar().setTitle(title[title.length - 1]);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -1792,8 +1791,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         int[] counts = mSched.counts(mCurrentCard);
 
         int eta = mSched.eta(counts, false);
-        UIUtils.setSubtitle(this,
-                getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta), mInvertedColors);
+        getSupportActionBar().setSubtitle(getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
 
         SpannableString newCount = new SpannableString(String.valueOf(counts[0]));
         SpannableString lrnCount = new SpannableString(String.valueOf(counts[1]));

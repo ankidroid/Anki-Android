@@ -27,6 +27,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -775,7 +776,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                         if (!mFragmented) {
                             getActivity().setTitle(getResources().getString(R.string.studyoptions_title));
                             List<String> parts = Arrays.asList(fullName.split("::"));
-                            UIUtils.setSubtitle(getActivity(), parts.get(parts.size() - 1));
+                            ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(parts.get(parts.size() - 1));
                         }
                     } catch (JSONException e) {
                         throw new RuntimeException(e);

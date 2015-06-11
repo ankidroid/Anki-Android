@@ -31,6 +31,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceScreen;
 import android.text.TextUtils;
 
 import android.view.KeyEvent;
@@ -497,10 +498,6 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
     @Override
     protected void onCreate(Bundle icicle) {
-        // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
-        if (!CompatHelper.isHoneycomb()) {
-            Themes.applyTheme(this, Themes.THEME_ANDROID_DARK);
-        }
         super.onCreate(icicle);
 
         mCol = CollectionHelper.getInstance().getCol(this);
@@ -544,6 +541,22 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         // update values on changed preference
         this.updateSummaries();
+    }
+
+    // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference)
+    {
+        super.onPreferenceTreeClick(preferenceScreen, preference);
+        if (preference!=null)
+            if (preference instanceof PreferenceScreen) {
+                if (((PreferenceScreen) preference).getDialog() != null) {
+                    ((PreferenceScreen) preference).getDialog().getWindow().getDecorView().setBackgroundDrawable(
+                            this.getWindow().getDecorView().getBackground().getConstantState().newDrawable());
+                }
+            }
+        return false;
     }
 
 

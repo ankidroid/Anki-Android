@@ -18,11 +18,8 @@
 
 package com.ichi2.anki;
 
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -36,7 +33,6 @@ import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 
@@ -47,20 +43,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.dialogs.NoteEditorRescheduleCard;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
@@ -79,8 +71,6 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
-import com.ichi2.themes.StyledDialog;
-import com.ichi2.themes.StyledDialog.Builder;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.PopupMenuWithIcons;
@@ -119,16 +109,6 @@ public class NoteEditor extends AnkiActivity {
     public static final String EXTRA_CARD_ID = "CARD_ID";
     public static final String EXTRA_CONTENTS = "CONTENTS";
     public static final String EXTRA_ID = "ID";
-//    public static final String EXTRA_FIELD_INDEX = "multim.card.ed.extra.field.index";
-//    public static final String EXTRA_FIELD = "multim.card.ed.extra.field";
-//    public static final String EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note";
-
-    //private static final int DIALOG_DECK_SELECT = 0;
-    //private static final int DIALOG_MODEL_SELECT = 1;
-    //private static final int DIALOG_TAGS_SELECT = 2;
-    private static final int DIALOG_RESET_CARD = 3;
-    private static final int DIALOG_INTENT_INFORMATION = 4;
-    private static final int DIALOG_RESCHEDULE_CARD = 5;
 
     private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
     private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
@@ -151,7 +131,6 @@ public class NoteEditor extends AnkiActivity {
     public static final int CALLER_INDICLASH = 10;
 
     public static final int REQUEST_ADD = 0;
-    public static final int REQUEST_INTENT_ADD = 1;
     public static final int REQUEST_MULTIMEDIA_EDIT = 2;
     public static final int REQUEST_TEMPLATE_EDIT = 3;
 
@@ -194,11 +173,6 @@ public class NoteEditor extends AnkiActivity {
     private int mCaller;
 
     private LinkedList<FieldEditText> mEditFields;
-
-    private int mCardItemBackground;
-    private final List<Map<String, String>> mIntentInformation = new ArrayList<Map<String, String>>();
-    private SimpleAdapter mIntentInformationAdapter;
-    private StyledDialog mIntentInformationDialog;
 
     private MaterialDialog mProgressDialog;
 
@@ -316,7 +290,6 @@ public class NoteEditor extends AnkiActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
-        Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
@@ -348,16 +321,6 @@ public class NoteEditor extends AnkiActivity {
         Timber.d("onCollectionLoaded: caller: %d", mCaller);
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-
-        if (mCaller == CALLER_INDICLASH && preferences.getBoolean("intentAdditionInstantAdd", false)) {
-            // save information without showing Note Editor
-            fetchIntentInformation(intent);
-            MetaDB.saveIntentInformation(NoteEditor.this, Utils.joinFields(mSourceText));
-            Themes.showThemedToast(NoteEditor.this, getResources().getString(R.string.app_name) + ": "
-                    + getResources().getString(R.string.CardEditorLaterMessage), false);
-            finishWithoutAnimation();
-            return;
-        }
 
         registerExternalStorageListener();
         View mainView = getLayoutInflater().inflate(R.layout.note_editor, null);
@@ -857,10 +820,8 @@ public class NoteEditor extends AnkiActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.note_editor, menu);
         if (mAddNote) {
-            menu.findItem(R.id.action_later).setVisible(true);
             menu.findItem(R.id.action_copy_card).setVisible(false);
         } else {
-            menu.findItem(R.id.action_saved_notes).setVisible(false);
             menu.findItem(R.id.action_add_card_from_card_editor).setVisible(true);
             menu.findItem(R.id.action_reset_card_progress).setVisible(true);
             menu.findItem(R.id.action_reschedule_card).setVisible(true);
@@ -881,18 +842,14 @@ public class NoteEditor extends AnkiActivity {
                 }
             }
         }
-        if (mCaller != CALLER_CARDEDITOR_INTENT_ADD) {
-            updateIntentInformation();
-            menu.findItem(R.id.action_saved_notes).setEnabled(!mIntentInformation.isEmpty());
-        }
         return super.onCreateOptionsMenu(menu);
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Resources res = getResources();
         switch (item.getItemId()) {
-
             case android.R.id.home:
                 Timber.i("NoteEditor:: Home button pressed");
                 closeCardEditorWithCheck();
@@ -901,21 +858,6 @@ public class NoteEditor extends AnkiActivity {
             case R.id.action_save:
                 Timber.i("NoteEditor:: Save note button pressed");
                 saveNote();
-                return true;
-
-            case R.id.action_later:
-                Timber.i("NoteEditor:: Later button pressed");
-                String content = getFieldsText();
-                if (content.length() > mEditFields.size() - 1) {
-                    MetaDB.saveIntentInformation(NoteEditor.this, content);
-                    populateEditFields();
-                    mSourceText = null;
-                    Themes.showThemedToast(NoteEditor.this,
-                            getResources().getString(R.string.CardEditorLaterMessage), false);
-                }
-                if (mCaller == CALLER_INDICLASH || mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
-                    closeNoteEditor();
-                }
                 return true;
 
             case R.id.action_add_card_from_card_editor:
@@ -932,17 +874,27 @@ public class NoteEditor extends AnkiActivity {
 
             case R.id.action_reset_card_progress:
                 Timber.i("NoteEditor:: Reset progress button pressed");
-                showDialog(DIALOG_RESET_CARD);
-                return true;
-
-            case R.id.action_saved_notes:
-                Timber.i("NoteEditor:: Saved data button pressed");
-                showDialog(DIALOG_INTENT_INFORMATION);
+                // Show confirmation dialog before resetting card progress
+                ConfirmationDialog dialog = new ConfirmationDialog () {
+                    @Override
+                    public void confirm() {
+                        Timber.i("NoteEditor:: OK button pressed");
+                        getCol().getSched().forgetCards(new long[] { mCurrentEditedCard.getId() });
+                        getCol().reset();
+                        mReloadRequired = true;
+                        Themes.showThemedToast(NoteEditor.this,
+                                getResources().getString(R.string.reset_card_dialog_acknowledge), true);
+                    }
+                };
+                String title = res.getString(R.string.reset_card_dialog_title);
+                String message = res.getString(R.string.reset_card_dialog_message);
+                dialog.setArgs(title, message);
+                showDialogFragment(dialog);
                 return true;
 
             case R.id.action_reschedule_card:
                 Timber.i("NoteEditor:: Reschedule button pressed");
-                showDialog(DIALOG_RESCHEDULE_CARD);
+                showDialogFragment(NoteEditorRescheduleCard.newInstance());
                 return true;
 
             default:
@@ -1046,6 +998,15 @@ public class NoteEditor extends AnkiActivity {
         }
     }
 
+    public void onRescheduleCard(int days) {
+        Timber.i("Reschedule card");
+        getCol().getSched().reschedCards(new long[] { mCurrentEditedCard.getId() }, days, days);
+        getCol().reset();
+        mReloadRequired = true;
+        Themes.showThemedToast(NoteEditor.this,
+                getResources().getString(R.string.reschedule_card_dialog_acknowledge), true);
+    }
+
 
     private void showTagsDialog() {
         if (mSelectedTags == null) {
@@ -1082,115 +1043,6 @@ public class NoteEditor extends AnkiActivity {
 
 
     @Override
-    protected Dialog onCreateDialog(int id) {
-        StyledDialog dialog = null;
-        Resources res = getResources();
-        StyledDialog.Builder builder = new StyledDialog.Builder(this);
-
-        switch (id) {
-            case DIALOG_RESET_CARD:
-                builder.setTitle(res.getString(R.string.reset_card_dialog_title));
-                builder.setMessage(res.getString(R.string.reset_card_dialog_message));
-                builder.setPositiveButton(res.getString(R.string.dialog_positive_reset), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Timber.i("NoteEditor:: OK button pressed");
-                        getCol().getSched().forgetCards(new long[] { mCurrentEditedCard.getId() });
-                        getCol().reset();
-                        mReloadRequired = true;
-                        Themes.showThemedToast(NoteEditor.this,
-                                getResources().getString(R.string.reset_card_dialog_acknowledge), true);
-                    }
-                });
-                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-                builder.setCancelable(true);
-                dialog = builder.create();
-                break;
-            case DIALOG_RESCHEDULE_CARD:
-                final EditText rescheduleEditText;
-                rescheduleEditText = (EditText) new EditText(this);
-                rescheduleEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                rescheduleEditText.setText("0");
-                rescheduleEditText.selectAll();
-                builder.setTitle(res.getString(R.string.reschedule_card_dialog_title));
-                builder.setMessage(res.getString(R.string.reschedule_card_dialog_message));
-                builder.setPositiveButton(res.getString(R.string.dialog_ok), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Timber.i("NoteEditor:: OK button pressed");
-                        int days = Integer.parseInt(((EditText) rescheduleEditText).getText().toString());
-                        getCol().getSched().reschedCards(new long[] { mCurrentEditedCard.getId() }, days, days);
-                        getCol().reset();
-                        mReloadRequired = true;
-                        Themes.showThemedToast(NoteEditor.this,
-                                getResources().getString(R.string.reschedule_card_dialog_acknowledge), true);
-                    }
-                });
-                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-                builder.setCancelable(true);
-                FrameLayout frame = new FrameLayout(this);
-                frame.addView(rescheduleEditText);
-                builder.setView(frame, false, true);
-                dialog = builder.create();
-                break;
-            case DIALOG_INTENT_INFORMATION:
-                dialog = createDialogIntentInformation(builder, res);
-                break;
-        }
-        return dialog;
-    }
-
-
-    private StyledDialog createDialogIntentInformation(Builder builder, Resources res) {
-        builder.setTitle(res.getString(R.string.intent_add_saved_information));
-        ListView listView = new ListView(this);
-
-        mIntentInformationAdapter = new SimpleAdapter(this, mIntentInformation, R.layout.add_intent_item, new String[] {
-                "source", "target", "id" }, new int[] { R.id.source_app, R.id.card_content, R.id.id });
-        listView.setAdapter(mIntentInformationAdapter);
-        listView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(NoteEditor.this, NoteEditor.class);
-                intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR_INTENT_ADD);
-                Map<String, String> map = mIntentInformation.get(position);
-                intent.putExtra(EXTRA_CONTENTS, map.get("fields"));
-                intent.putExtra(EXTRA_ID, map.get("id"));
-                startActivityForResultWithAnimation(intent, REQUEST_INTENT_ADD, ActivityTransitionAnimation.FADE);
-                mIntentInformationDialog.dismiss();
-            }
-        });
-        mCardItemBackground = Themes.getCardBrowserBackground()[0];
-        mIntentInformationAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Object arg1, String text) {
-                if (view.getId() == R.id.add_intent_item) {
-                    view.setBackgroundResource(mCardItemBackground);
-                    return true;
-                }
-                return false;
-            }
-        });
-        listView.setBackgroundColor(android.R.attr.colorBackground);
-        listView.setDrawSelectorOnTop(true);
-        listView.setFastScrollEnabled(true);
-        Themes.setContentStyle(listView, Themes.CALLER_CARDEDITOR_INTENTDIALOG);
-        builder.setView(listView, false, true);
-        builder.setCancelable(true);
-        builder.setPositiveButton(res.getString(R.string.intent_add_clear_all), new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int arg1) {
-                MetaDB.resetIntentInformation(NoteEditor.this);
-                updateIntentInformation();
-                dialog.dismiss();
-            }
-        });
-        mIntentInformationDialog = builder.create();
-        return mIntentInformationDialog;
-    }
-
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -1199,18 +1051,6 @@ public class NoteEditor extends AnkiActivity {
         }
 
         switch (requestCode) {
-            case REQUEST_INTENT_ADD:
-                if (resultCode != RESULT_CANCELED) {
-                    mChanged = true;
-                    String id = data.getStringExtra(EXTRA_ID);
-                    if (id != null && MetaDB.removeIntentInformation(NoteEditor.this, id)) {
-                        updateIntentInformation();
-                    }
-                }
-                if (!mIntentInformation.isEmpty()) {
-                    showDialog(DIALOG_INTENT_INFORMATION);
-                }
-                break;
             case REQUEST_ADD:
                 if (resultCode != RESULT_CANCELED) {
                     mChanged = true;
@@ -1232,19 +1072,6 @@ public class NoteEditor extends AnkiActivity {
                 break;
             case REQUEST_TEMPLATE_EDIT:
                 updateCards(mEditorNote.model());
-        }
-    }
-
-
-    /**
-     * Reads the saved data from the {@link MetaDB} and updates the data of the according {@link ListView}.
-     */
-    private void updateIntentInformation() {
-        mIntentInformation.clear();
-        mIntentInformation.addAll(MetaDB.getIntentInformation(this));
-        Timber.d("Saved data list size: %d", mIntentInformation.size());
-        if (mIntentInformationAdapter != null) {
-            mIntentInformationAdapter.notifyDataSetChanged();
         }
     }
 

@@ -6,41 +6,8 @@
         <item name="android:background">@color/white_background</item>
     </style>
 
-    <style name="White.Button" parent="@android:style/Widget.Button">
-        <item name="android:background">@drawable/white_btn_default</item>
-        <item name="android:textColor">@color/white_buttontext</item>
-    </style>
-
-    <style name="White.Button.Small" parent="@android:style/Widget.Button.Small">
-        <item name="android:background">@drawable/white_btn_small</item>
-    </style>
-
-    <style name="White.Button.Toggle" parent="@android:style/Widget.Button">
-        <item name="android:background">@drawable/white_btn_toggle_bg</item>
-    </style>
-
-    <style name="White.AlertDialog">
-        <item name="android:fullDark">@drawable/white_popup_full_bright</item>
-        <item name="android:topDark">@drawable/white_popup_top_bright</item>
-        <item name="android:centerDark">@drawable/white_popup_center_bright</item>
-        <item name="android:bottomDark">@drawable/white_popup_bottom_bright</item>
-        <item name="android:fullBright">@drawable/white_popup_full_bright</item>
-        <item name="android:topBright">@drawable/white_popup_top_bright</item>
-        <item name="android:centerBright">@drawable/white_popup_center_bright</item>
-        <item name="android:bottomBright">@drawable/white_popup_bottom_bright</item>
-        <item name="android:bottomMedium">@drawable/white_popup_bottom_medium</item>
-        <item name="android:centerMedium">@drawable/white_popup_center_medium</item>
-        <item name="android:buttonStyle">@style/White.Button</item>
-        <item name="android:textColor">#00FF00</item>
-        <item name="android:typeface">monospace</item>
-        <item name="android:textSize">30sp</item>
-    </style>
     
     <style name="Theme.CrashReportDialog" parent="@android:style/Theme.Dialog" />
-
-    <style name="White.Widget.ListView" parent="@android:style/Widget.ListView">
-        <item name="android:listSelector">@drawable/white_list_selector_background</item>
-    </style>
 
     <!-- Widget Elements -->
     <style name="Widget.ProgressBar.Horizontal" parent="@android:style/Widget.ProgressBar.Horizontal">

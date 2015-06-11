@@ -61,7 +61,6 @@ public class Info extends AnkiActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
-        Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
         Resources res = getResources();

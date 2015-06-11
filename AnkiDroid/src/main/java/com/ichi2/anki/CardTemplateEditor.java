@@ -126,7 +126,6 @@ public class CardTemplateEditor extends AnkiActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
-        Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.card_template_editor_activity);
         // get id for currently edited card (optional)

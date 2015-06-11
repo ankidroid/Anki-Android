@@ -48,7 +48,7 @@ public class Previewer extends AbstractFlashcardViewer {
 
     @Override
     protected void setTitle() {
-        UIUtils.setTitle(this, getResources().getString(R.string.preview_title));
+        getSupportActionBar().setTitle(R.string.preview_title);
     }
 
 

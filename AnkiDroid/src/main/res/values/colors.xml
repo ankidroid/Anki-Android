@@ -22,9 +22,9 @@
     <color name="next_time_usual_color_inv">#FFFFFF</color>
     <color name="next_time_recommended_color_inv">#4AA02C</color>
     <color name="foreground_color_inv">#FFFFFF</color>
-    <color name="card_browser_background">#000000</color>
-    <color name="card_browser_marked">#5E5A80</color>
-    <color name="card_browser_suspended">#646D7E</color>
+    <color name="card_browser_background">#FFFFFF</color>
+    <color name="card_browser_marked">#D9B2E9</color>
+    <color name="card_browser_suspended">#FFFFB2</color>
     <color name="statistics_due_young_cards">#7c7</color>
     <color name="statistics_due_mature_cards">#070</color>
     <color name="stats_young">#7c7</color>

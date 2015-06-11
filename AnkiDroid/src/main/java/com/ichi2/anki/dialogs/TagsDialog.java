@@ -40,6 +40,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
 
+
 public class TagsDialog extends DialogFragment implements OnDismissListener, OnCancelListener {
 
     public interface TagsDialogListener {
@@ -186,7 +187,7 @@ public class TagsDialog extends DialogFragment implements OnDismissListener, OnC
         });
         if (customView != null) {
             builder.customView(customView, true);
-            builder2.setView(customView, false, true);
+            builder2.setView(customView, false);
         }
         builder2.setShowFilterTags(showFilterTags);
 
