@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -343,6 +344,42 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
 
     protected void showSimpleMessageDialog(String title, String message){
         showSimpleMessageDialog(title, message, false);
+    }
+
+    /**
+     * Show a simple Toast-like Snackbar with no actions. 
+     * To enable swipe-to-dismiss, the Activity layout should include a CoordinatorLayout with id "root_layout"
+     * @param mainTextResource
+     * @param shortLength
+     */
+    protected void showSimpleSnackbar(int mainTextResource, boolean shortLength) {
+        View root = findViewById(R.id.root_layout);
+        showSnackbar(mainTextResource, shortLength, -1, null, root);
+    }
+
+    /**
+     * Show a snackbar with an action
+     * @param mainTextResource resource for the main text string
+     * @param shortLength whether or not to use long length
+     * @param actionTextResource resource for the text string shown as the action
+     * @param listener listener for the action (if null no action shown)
+     * @oaram root View Snackbar will attach to. Should be CoordinatorLayout for swipe-to-dismiss to work.
+     */
+    protected void showSnackbar(int mainTextResource, boolean shortLength,
+                                int actionTextResource, View.OnClickListener listener, View root) {
+        if (root == null) {
+            root = findViewById(android.R.id.content);
+            if (root == null) {
+                Timber.e("Could not show Snackbar due to null View");
+                return;
+            }
+        }
+        int length = shortLength ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG;
+        Snackbar sb = Snackbar.make(root, mainTextResource, length);
+        if (listener != null) {
+            sb.setAction(actionTextResource, listener);
+        }
+        sb.show();
     }
 
 

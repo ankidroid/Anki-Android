@@ -73,51 +73,6 @@ public class StyledProgressDialog extends Dialog {
                 .cancelable(cancelable)
                 .cancelListener(cancelListener)
                 .show();
-        /*final StyledProgressDialog dialog = new StyledProgressDialog(context);
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View layout = inflater.inflate(R.layout.styled_progress_dialog, null);
-        dialog.addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-
-        // set title
-        if (title != null && title.length() > 0) {
-            ((TextView) layout.findViewById(R.id.alertTitle)).setText(title);
-            // if (icon != 0) {
-            // ((ImageView) layout.findViewById(R.id.icon)).setImageResource(icon);
-            // } else {
-            // layout.findViewById(R.id.icon).setVisibility(View.GONE);
-            // }
-        } else {
-            layout.findViewById(R.id.topPanel).setVisibility(View.GONE);
-            layout.findViewById(R.id.titleDivider).setVisibility(View.GONE);
-        }
-
-        // set the message
-        if (message != null) {
-            TextView tv = (TextView) layout.findViewById(R.id.message);
-            tv.setText(message);
-            // if (messageSize != 0) {
-            // tv.setTextSize(messageSize * context.getResources().getDisplayMetrics().scaledDensity);
-            // }
-        }
-
-        // set background
-        try {
-            Themes.setStyledProgressDialogDialogBackgrounds(layout);
-        } catch (OutOfMemoryError e) {
-            Timber.e(e, "StyledDialog - Dialog could not be created");
-            Themes.showThemedToast(context, context.getResources().getString(R.string.error_insufficient_memory), false);
-            return null;
-        }
-
-        dialog.setContentView(layout);
-        dialog.setCancelable(cancelable);
-        dialog.setOnCancelListener(cancelListener);
-        if (animationEnabled(context)) {
-            dialog.show();
-        }
-        return dialog;*/
-
     }
 
 
