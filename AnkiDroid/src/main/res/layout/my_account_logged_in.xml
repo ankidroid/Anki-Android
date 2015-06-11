@@ -1,54 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<RelativeLayout   xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_layout"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:foregroundGravity="center">
-
-    <include layout="@layout/toolbar" />
-
-    <LinearLayout
-        android:id="@+id/logged_text"
+    android:layout_height="fill_parent">
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="20dp"
-        android:layout_centerInParent="true"
-        >
+        android:layout_height="fill_parent"
+        android:foregroundGravity="center">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/logged_as"
-            android:textSize="@dimen/md_title_textsize"
-            android:layout_margin="@dimen/content_vertical_padding"/>
+        <include layout="@layout/toolbar" />
 
-        <TextView
-            android:id="@+id/username_logged_in"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/md_title_textsize"
-            android:textStyle="bold"
-            android:layout_margin="@dimen/content_vertical_padding"/>
-
-        <Button
-            android:id="@+id/logout_button"
+        <LinearLayout
+            android:id="@+id/logged_text"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:textColor="?attr/actionBarTextColor"
-            android:singleLine="true"
-            android:textSize="@dimen/md_title_textsize"
-            android:layout_gravity="center"
-            android:padding="10dp"
-            android:text="@string/log_out"
-            android:layout_margin="@dimen/content_vertical_padding"
-            />
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:layout_centerInParent="true"
+            >
 
-    </LinearLayout>
-</RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/logged_as"
+                android:textSize="@dimen/md_title_textsize"
+                android:layout_margin="@dimen/content_vertical_padding"/>
 
+            <TextView
+                android:id="@+id/username_logged_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/md_title_textsize"
+                android:textStyle="bold"
+                android:layout_margin="@dimen/content_vertical_padding"/>
+
+            <Button
+                android:id="@+id/logout_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:textColor="?attr/actionBarTextColor"
+                android:singleLine="true"
+                android:textSize="@dimen/md_title_textsize"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:text="@string/log_out"
+                android:layout_margin="@dimen/content_vertical_padding"
+                />
+
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
 

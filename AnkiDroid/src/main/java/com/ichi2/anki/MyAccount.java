@@ -15,18 +15,15 @@
 package com.ichi2.anki;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.res.Resources;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -38,7 +35,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
-import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 
 import timber.log.Timber;
@@ -64,11 +60,6 @@ public class MyAccount extends AnkiActivity {
     private int mCurrentState;
 
     private MaterialDialog mProgressDialog;
-    private StyledDialog mNoConnectionAlert;
-    private StyledDialog mConnectionErrorAlert;
-    private StyledDialog mInvalidUserPassAlert;
-    private StyledDialog mRegisterAlert;
-    private StyledDialog mErrorAlert;
     Toolbar mToolbar = null;
 
 
@@ -115,7 +106,6 @@ public class MyAccount extends AnkiActivity {
 
 
         initAllContentViews();
-        initAllAlertDialogs();
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         if (preferences.getString("hkey", "").length() > 0) {
@@ -166,9 +156,9 @@ public class MyAccount extends AnkiActivity {
          */
 
         if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
-            Connection.login(loginListener, new Connection.Payload(new Object[] { username, password }));
+            Connection.login(loginListener, new Connection.Payload(new Object[]{username, password}));
         } else {
-            mInvalidUserPassAlert.show();
+            showSimpleSnackbar(R.string.invalid_username_password, true);
         }
     }
 
@@ -184,7 +174,7 @@ public class MyAccount extends AnkiActivity {
         if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
             Connection.register(registerListener, new Connection.Payload(new Object[] { username, password }));
         } else {
-            mInvalidUserPassAlert.show();
+            showSimpleSnackbar(R.string.invalid_username_password, true);
         }
     }
 
@@ -278,7 +268,9 @@ public class MyAccount extends AnkiActivity {
                         && mPassword1.getText().toString().equals(mPassword2.getText().toString())) {
                     register();
                 } else {
-                    mRegisterAlert.show();
+                    showSimpleSnackbar(R.string.register_mismatch, true);
+                    mPassword1.setText("");
+                    mPassword2.setText("");
                 }
             }
 
@@ -294,63 +286,6 @@ public class MyAccount extends AnkiActivity {
         });
     }
 
-
-    /**
-     * Create AlertDialogs used on all the activity
-     */
-    private void initAllAlertDialogs() {
-        Resources res = getResources();
-
-        StyledDialog.Builder builder = new StyledDialog.Builder(this);
-
-        // builder.setTitle(res.getString(R.string.connection_error_title));
-        builder.setIcon(R.drawable.ic_dialog_alert);
-        builder.setMessage(res.getString(R.string.youre_offline));
-        builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
-        mNoConnectionAlert = builder.create();
-
-        builder.setTitle(res.getString(R.string.register_title));
-        builder.setIcon(R.drawable.ic_dialog_alert);
-        builder.setMessage(res.getString(R.string.register_error));
-        builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
-        mErrorAlert = builder.create();
-
-        builder.setTitle(res.getString(R.string.register_title));
-        builder.setIcon(R.drawable.ic_dialog_alert);
-        builder.setMessage(res.getString(R.string.register_mismatch));
-        builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mUsername1.setText("");
-                mUsername2.setText("");
-                mPassword1.setText("");
-                mPassword2.setText("");
-            }
-        });
-        mRegisterAlert = builder.create();
-
-        builder = new StyledDialog.Builder(this);
-        builder.setTitle(res.getString(R.string.log_in));
-        builder.setIcon(R.drawable.ic_dialog_alert);
-        builder.setMessage(res.getString(R.string.invalid_username_password));
-        builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
-        mInvalidUserPassAlert = builder.create();
-
-        builder = new StyledDialog.Builder(this);
-        // builder.setTitle(res.getString(R.string.connection_error_title));
-        builder.setIcon(R.drawable.ic_dialog_alert);
-        builder.setMessage(res.getString(R.string.connection_error_message));
-        builder.setPositiveButton(res.getString(R.string.retry), new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                login();
-            }
-        });
-        builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-        mConnectionErrorAlert = builder.create();
-    }
 
     /**
      * Listeners
@@ -395,13 +330,9 @@ public class MyAccount extends AnkiActivity {
             } else {
                 Timber.e("Login failed, error code %d",data.returnType);
                 if (data.returnType == 403) {
-                    if (mInvalidUserPassAlert != null) {
-                        mInvalidUserPassAlert.show();
-                    }
+                    showSimpleSnackbar(R.string.invalid_username_password, true);
                 } else {
-                    if (mConnectionErrorAlert != null) {
-                        mConnectionErrorAlert.show();
-                    }
+                    showSimpleSnackbar(R.string.connection_error_message, true);
                 }
             }
         }
@@ -409,9 +340,7 @@ public class MyAccount extends AnkiActivity {
 
         @Override
         public void onDisconnected() {
-            if (mNoConnectionAlert != null) {
-                mNoConnectionAlert.show();
-            }
+            showSimpleSnackbar(R.string.youre_offline, true);
         }
     };
 
@@ -453,22 +382,19 @@ public class MyAccount extends AnkiActivity {
                     setContentView(mLoggedIntoMyAccountView);
                 }
             } else {
-                mErrorAlert.show();
+                String title = getResources().getString(R.string.register_title);
+                String msg = getResources().getString(R.string.register_error);
                 if (data.data != null) {
-                    String msg = ((String[]) data.data)[0];
-                    Timber.e("User registration failed: %s", msg);
-                    mErrorAlert.setMessage(msg);
-                } else {
-                    Timber.e("User registration failed");
+                    msg = ((String[]) data.data)[0];
                 }
+                showSimpleMessageDialog(title, msg);
+                Timber.e("User registration failed: %s", msg);
             }
         }
 
         @Override
         public void onDisconnected() {
-            if (mNoConnectionAlert != null) {
-                mNoConnectionAlert.show();
-            }
+            showSimpleSnackbar(R.string.youre_offline, true);
         }
     };
 
@@ -481,8 +407,7 @@ public class MyAccount extends AnkiActivity {
                 switchToState(STATE_LOG_IN);
                 return true;
             } else {
-                finish();
-                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
+                finishWithAnimation(ActivityTransitionAnimation.FADE);
                 return true;
             }
         }
