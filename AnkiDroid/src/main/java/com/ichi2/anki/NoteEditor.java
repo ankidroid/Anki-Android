@@ -82,6 +82,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -180,6 +181,10 @@ public class NoteEditor extends AnkiActivity {
 
 
     private boolean mPrefFixArabic;
+
+    // A bundle that maps field ords to the text content of that field for use in
+    // restoring the Activity.
+    private Bundle mSavedFields;
 
     private DeckTask.TaskListener mSaveFactHandler = new DeckTask.TaskListener() {
         private boolean mCloseAfter = false;
@@ -296,6 +301,9 @@ public class NoteEditor extends AnkiActivity {
         if (savedInstanceState != null) {
             mCaller = savedInstanceState.getInt("caller");
             mAddNote = savedInstanceState.getBoolean("addFact");
+            mCurrentDid = savedInstanceState.getLong("did");
+            mSelectedTags = new ArrayList<>(Arrays.asList(savedInstanceState.getStringArray("tags")));
+            mSavedFields = savedInstanceState.getBundle("editFields");
         } else {
             mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NOCALLER);
             if (mCaller == CALLER_NOCALLER) {
@@ -310,6 +318,22 @@ public class NoteEditor extends AnkiActivity {
         startLoadingCollection();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        Timber.i("Saving instance");
+        savedInstanceState.putInt("caller", mCaller);
+        savedInstanceState.putBoolean("addFact", mAddNote);
+        savedInstanceState.putLong("did", mCurrentDid);
+        savedInstanceState.putStringArray("tags", mSelectedTags.toArray(new String[mSelectedTags.size()]));
+        Bundle fields = new Bundle();
+        // Save the content of all the note fields. We use the field's ord as the key to
+        // easily map the fields correctly later.
+        for (FieldEditText e : mEditFields) {
+            fields.putString(Integer.toString(e.getOrd()), e.getText().toString());
+        }
+        savedInstanceState.putBundle("editFields", fields);
+        super.onSaveInstanceState(savedInstanceState);
+    }
 
     // Finish initializing the activity after the collection has been correctly loaded
     @Override
@@ -808,17 +832,6 @@ public class NoteEditor extends AnkiActivity {
 
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        // TODO
-        // Timber.i("NoteEditor:: onSaveInstanceState: " + path);
-        // outState.putString("deckFilename", path);
-        outState.putBoolean("addFact", mAddNote);
-        outState.putInt("caller", mCaller);
-        Timber.d("onSaveInstanceState - Ending");
-    }
-
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.note_editor, menu);
         if (mAddNote) {
@@ -1078,7 +1091,21 @@ public class NoteEditor extends AnkiActivity {
     }
 
     private void populateEditFields() {
-        String[][] fields = mEditorNote.items();
+        String[][] fields;
+        // If we have a bundle of pre-populated field values, we overwrite the existing values
+        // with those ones since we are resuming the activity after it was terminated early.
+        if (mSavedFields != null) {
+            fields = mEditorNote.items();
+            for (String key : mSavedFields.keySet()) {
+                int ord = Integer.parseInt(key);
+                String text = mSavedFields.getString(key);
+                fields[ord][1] = text;
+            }
+            // Clear the saved values since we've consumed them.
+            mSavedFields = null;
+        } else {
+            fields = mEditorNote.items();
+        }
         populateEditFields(fields, false);
     }
 
@@ -1184,7 +1211,7 @@ public class NoteEditor extends AnkiActivity {
                 Timber.i("NoteEditor:: Remap button pressed for new field %d", newFieldIndex);
                 // Show list of fields from the original note which we can map to
                 PopupMenu popup = new PopupMenu(NoteEditor.this, v);
-                final String [][] items = mEditorNote.items();
+                final String[][] items = mEditorNote.items();
                 for (int i = 0; i < items.length; i++) {
                     popup.getMenu().add(Menu.NONE, i, Menu.NONE, items[i][0]);
                 }
@@ -1325,6 +1352,12 @@ public class NoteEditor extends AnkiActivity {
 
 
     private void setDid(Note note) {
+        // If the target deck ID has already been set, we use that value and avoid trying to
+        // determine what it should be again. An existing value means we are resuming the activity
+        // where the target deck was already decided by the user.
+        if (mCurrentDid != 0) {
+            return;
+        }
         if (note == null || mAddNote) {
             try {
                 JSONObject conf = getCol().getConf();
