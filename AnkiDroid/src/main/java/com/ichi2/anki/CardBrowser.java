@@ -334,12 +334,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    /** Returns the navdrawer item that corresponds to this Activity. */
-    @Override
-    protected int getSelfNavDrawerItem() {
-        return DRAWER_BROWSER;
-    }
-
 
     private void onSearch() {
         mSearchTerms = mSearchView.getQuery().toString();
@@ -580,7 +574,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     protected void onResume() {
         Timber.d("onResume()");
         super.onResume();
-        selectNavigationItem(DRAWER_BROWSER);
+        selectNavigationItem(R.id.nav_browser);
     }
 
 

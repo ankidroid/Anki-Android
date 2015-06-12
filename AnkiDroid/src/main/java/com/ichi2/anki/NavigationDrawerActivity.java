@@ -18,27 +18,23 @@ package com.ichi2.anki;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.TypedArray;
-import android.graphics.PorterDuff;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 
-import java.util.ArrayList;
 import timber.log.Timber;
 
 
-public class NavigationDrawerActivity extends AnkiActivity {
+public class NavigationDrawerActivity extends AnkiActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     /** Navigation Drawer */
     protected CharSequence mTitle;
@@ -46,49 +42,24 @@ public class NavigationDrawerActivity extends AnkiActivity {
     // Preselection for DeckDropDownAdapter
     protected static boolean sIsWholeCollection = true;
     private DrawerLayout mDrawerLayout;
-    private ViewGroup mDrawerList;
+    private NavigationView mNavigationView;
     private ActionBarDrawerToggle mDrawerToggle;
-    private String[] mNavigationTitles;
-    private TypedArray mNavigationImages;
-    // list of navdrawer items that were added to the navdrawer, in order
-    private ArrayList<Integer> mNavDrawerItems = new ArrayList<>();
     // Other members
     private String mOldColPath;
-    // Navigation drawer list item entries (titles and icons must be in the same order)
-    protected static final int DRAWER_DECK_PICKER = 0;
-    protected static final int DRAWER_BROWSER = 1;
-    protected static final int DRAWER_STATISTICS = 2;
-    protected static final int DRAWER_SETTINGS = 3;
-    protected static final int DRAWER_HELP = 4;
-    protected static final int DRAWER_FEEDBACK = 5;
-    protected static final int DRAWER_INVALID = -1;
-    protected static final int DRAWER_SEPARATOR = -2;
     // Intent request codes
     public static final int REQUEST_PREFERENCES_UPDATE = 100;
     public static final int REQUEST_BROWSE_CARDS = 101;
     public static final int REQUEST_STATISTICS = 102;
 
-    /**
-     * Returns the navdrawer item that corresponds to this Activity. Subclasses override this to
-     * indicate what navdrawer item corresponds to them.
-     * Return DRAWER_INVALID to mean that this Activity should not have a navdrawer.
-     */
-    protected int getSelfNavDrawerItem() {
-        return DRAWER_INVALID;
-    }
 
     // Navigation drawer initialisation
     protected void initNavigationDrawer(View mainView){
         // Create inherited navigation drawer layout here so that it can be used by parent class
         mDrawerLayout = (DrawerLayout) mainView.findViewById(R.id.drawer_layout);
-        mTitle = getTitle();
-        mNavigationTitles = getResources().getStringArray(R.array.navigation_titles);
-        mNavigationImages = getResources().obtainTypedArray(R.array.drawer_images);
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-
-        populateNavDrawerItems();
-        createNavDrawerItems(mainView);
+        mNavigationView = (NavigationView) mDrawerLayout.findViewById(R.id.navdrawer_items_container);
+        mNavigationView.setNavigationItemSelectedListener(this);
 
         Toolbar toolbar = (Toolbar) mainView.findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -120,137 +91,59 @@ public class NavigationDrawerActivity extends AnkiActivity {
     }
 
 
-    /** Set the items to be included in the navigation drawer */
-    private void populateNavDrawerItems() {
-        mNavDrawerItems.add(DRAWER_DECK_PICKER);
-        mNavDrawerItems.add(DRAWER_BROWSER);
-        mNavDrawerItems.add(DRAWER_STATISTICS);
 
-        mNavDrawerItems.add(DRAWER_SEPARATOR);
-
-        mNavDrawerItems.add(DRAWER_SETTINGS);
-        mNavDrawerItems.add(DRAWER_HELP);
-        mNavDrawerItems.add(DRAWER_FEEDBACK);
-    }
-
-
-    /** Collect the views for all navigation drawer items */
-    private void createNavDrawerItems(View mainview) {
-        mDrawerList = (ViewGroup) mainview.findViewById(R.id.navdrawer_items_container);
-        if (mDrawerList == null) {
-            return;
-        }
-
-        mDrawerList.removeAllViews();
-        for (int itemId : mNavDrawerItems) {
-            mDrawerList.addView(makeNavDrawerItem(itemId, mDrawerList));
-        }
-    }
-
-
-    /** Returns the view for the specified navigation drawer item */
-    private View makeNavDrawerItem(final int itemId, ViewGroup container) {
-        boolean selected = getSelfNavDrawerItem() == itemId;
-        View view = getLayoutInflater().inflate(isSeparator(itemId) ?
-                R.layout.navdrawer_divider :
-                R.layout.navdrawer_item, container, false);
-        if (isSeparator(itemId)) {
-            // nothing else necessary for separators
-            return view;
-        }
-        // set the text and image according to lists specified in resources
-        TextView txtTitle = (TextView) view.findViewById(R.id.drawer_list_item_text);
-        ImageView imgIcon = (ImageView) view.findViewById(R.id.drawer_list_item_icon);
-
-        txtTitle.setText(mNavigationTitles[itemId]);
-        imgIcon.setImageResource(mNavigationImages.getResourceId(itemId, -1));
-
-        formatNavDrawerItem(view, selected);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Timber.i("Item %d selected in navigation drawer", itemId);
-                selectNavigationItem(itemId);
-            }
-        });
-        return view;
-    }
-
-
-    /** configure item appearance according to whether or not it's selected */
-    private void formatNavDrawerItem(View view, boolean selected) {
-        TextView txtTitle = (TextView) view.findViewById(R.id.drawer_list_item_text);
-        ImageView imgIcon = (ImageView) view.findViewById(R.id.drawer_list_item_icon);
-
-        if (selected) view.setBackgroundColor(
-                getResources().getColor(R.color.navdrawer_background_selected));
-        txtTitle.setTypeface(null, selected ?
-                Typeface.BOLD :
-                Typeface.NORMAL);
-        txtTitle.setTextColor(selected ?
-                getResources().getColor(R.color.navdrawer_text_color_selected) :
-                getResources().getColor(R.color.navdrawer_text_color));
-        imgIcon.setColorFilter(selected ?
-                getResources().getColor(R.color.navdrawer_icon_tint_selected) :
-                getResources().getColor(R.color.navdrawer_icon_tint), PorterDuff.Mode.SRC_IN);
-    }
-
-
-    /** Launches target activity for selected navigation drawer item */
+    /** Sets selected navigation drawer item */
     protected void selectNavigationItem(int itemId) {
-        mDrawerLayout.closeDrawer(mDrawerList);
-        // Return if trying to start own activity
-        if (itemId == getSelfNavDrawerItem()) {
-            return;
+        Menu menu = mNavigationView.getMenu();
+        MenuItem item = menu.findItem(itemId);
+        if (item != null) {
+            item.setChecked(true);
+        } else {
+            Timber.e("Could not find item %d", itemId);
         }
+    }
 
-        // Set title and launch target activity
-        setTitle(mNavigationTitles[itemId]);
-        switch (itemId){
-            case DRAWER_DECK_PICKER:
+
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Don't do anything if user selects already selected position
+        mDrawerLayout.closeDrawers();
+        if (item.isChecked()) {
+            return true;
+        }
+        // Take action if a different item selected
+        switch (item.getItemId()) {
+            case R.id.nav_decks:
                 Intent deckPicker = new Intent(this, DeckPicker.class);
                 deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
                 startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.RIGHT);
-                break;
-
-            case DRAWER_BROWSER:
+                return true;
+            case R.id.nav_browser:
                 Intent cardBrowser = new Intent(this, CardBrowser.class);
                 cardBrowser.putExtra("selectedDeck", getCol().getDecks().selected());
                 startActivityForResultWithAnimation(cardBrowser, REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
-                break;
-
-            case DRAWER_STATISTICS:
+                return true;
+            case R.id.nav_stats:
                 Intent intent = new Intent(this, Statistics.class);
                 intent.putExtra("selectedDeck", getCol().getDecks().selected());
                 startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, ActivityTransitionAnimation.LEFT);
-                break;
-
-            case DRAWER_SETTINGS:
+                return true;
+            case R.id.nav_settings:
                 mOldColPath = CollectionHelper.getCurrentAnkiDroidDirectory(this);
                 startActivityForResultWithAnimation(new Intent(this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.FADE);
-                break;
-
-            case DRAWER_HELP:
+                return true;
+            case R.id.nav_help:
                 Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(AnkiDroidApp.getManualUrl()));
                 startActivityWithoutAnimation(helpIntent);
-                break;
-
-            case DRAWER_FEEDBACK:
+                return true;
+            case R.id.nav_feedback:
                 Intent feedbackIntent = new Intent("android.intent.action.VIEW", Uri.parse(AnkiDroidApp.getFeedbackUrl()));
                 startActivityWithoutAnimation(feedbackIntent);
-                break;
-
+                return true;
             default:
-                break;
+                return false;
         }
     }
 
-    /**
-     * @return the name of the currently checked item in the navigation drawer
-     */
-    protected String getSelectedNavDrawerTitle() {
-        return mNavigationTitles[getSelfNavDrawerItem()];
-    }
 
     @Override
     public void setTitle(CharSequence title) {
@@ -277,18 +170,6 @@ public class NavigationDrawerActivity extends AnkiActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-
-    private boolean isSeparator(int itemId) {
-        return itemId == DRAWER_SEPARATOR;
-    }
-    
-    /* Members not related directly to navigation drawer */
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mNavigationImages.recycle();
-    }
 
     public ActionBarDrawerToggle getDrawerToggle() {
         return mDrawerToggle;

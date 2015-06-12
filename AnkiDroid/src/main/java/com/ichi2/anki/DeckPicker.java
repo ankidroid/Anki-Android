@@ -351,13 +351,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     // ANDROID ACTIVITY METHODS
     // ----------------------------------------------------------------------------
 
-    /** Returns the navdrawer item that corresponds to this Activity. */
-    @Override
-    protected int getSelfNavDrawerItem() {
-        return DRAWER_DECK_PICKER;
-    }
-
-
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
@@ -383,10 +376,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
         // create inherited navigation drawer layout here so that it can be used by parent class
         initNavigationDrawer(mainView);
-        if (savedInstanceState == null) {
-            selectNavigationItem(DRAWER_DECK_PICKER);
-        }
-
         setTitle(getResources().getString(R.string.app_name));
 
         mDeckList = new ArrayList<>();
@@ -671,6 +660,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     protected void onResume() {
         Timber.d("onResume()");
         super.onResume();
+        selectNavigationItem(R.id.nav_decks);
         if (colIsOpen()) {
             updateDeckList();
             hideProgressBar();

@@ -80,11 +80,6 @@ public class Statistics extends NavigationDrawerActivity implements
     private Spinner mActionBarSpinner;
     private static boolean sIsSubtitle;
 
-    /** Returns the navdrawer item that corresponds to this Activity. */
-    @Override
-    protected int getSelfNavDrawerItem() {
-        return DRAWER_STATISTICS;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,12 +168,8 @@ public class Statistics extends NavigationDrawerActivity implements
     @Override
     protected void onResume() {
         Timber.d("onResume()");
+        selectNavigationItem(R.id.nav_stats);
         super.onResume();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 
 
@@ -277,7 +268,7 @@ public class Statistics extends NavigationDrawerActivity implements
      * @return text to be used in the subtitle of the drop-down deck selector
      */
     public String getSubtitleText() {
-        return getSelectedNavDrawerTitle();
+        return getResources().getString(R.string.statistics);
     }
 
 
