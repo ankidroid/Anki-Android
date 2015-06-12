@@ -485,6 +485,8 @@ public class NoteEditor extends AnkiActivity {
             }
         });
 
+        setDid(mEditorNote);
+
         setNote(mEditorNote);
         
         // Set current note type and deck positions in spinners
@@ -1322,15 +1324,9 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    /** Make NOTE the current note. */
-    private void setNote() {
-        setNote(null);
-    }
-
-
-    private void setNote(Note note) {
-        try {
-            if (note == null || mAddNote) {
+    private void setDid(Note note) {
+        if (note == null || mAddNote) {
+            try {
                 JSONObject conf = getCol().getConf();
                 JSONObject model = getCol().getModels().current();
                 if (conf.optBoolean("addToCur", true)) {
@@ -1346,17 +1342,30 @@ public class NoteEditor extends AnkiActivity {
                 } else {
                     mCurrentDid = model.getLong("did");
                 }
-                mEditorNote = new Note(getCol(), model);
-                mEditorNote.model().put("did", mCurrentDid);
-            } else {
-                mEditorNote = note;
-                mCurrentDid = mCurrentEditedCard.getDid();
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
-            if (mSelectedTags == null) {
-                mSelectedTags = mEditorNote.getTags();
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        } else {
+            mCurrentDid = mCurrentEditedCard.getDid();
+        }
+    }
+
+
+    /** Make NOTE the current note. */
+    private void setNote() {
+        setNote(null);
+    }
+
+
+    private void setNote(Note note) {
+        if (note == null || mAddNote) {
+            JSONObject model = getCol().getModels().current();
+            mEditorNote = new Note(getCol(), model);
+        } else {
+            mEditorNote = note;
+        }
+        if (mSelectedTags == null) {
+            mSelectedTags = mEditorNote.getTags();
         }
         updateDeckPosition();
         updateTags();
