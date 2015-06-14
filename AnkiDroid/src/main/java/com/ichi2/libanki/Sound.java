@@ -39,6 +39,7 @@ import com.ichi2.compat.CompatHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -91,6 +92,11 @@ public class Sound {
      * sSoundPaths: Stores sounds for the current card, key is one of the subset flags. It is intended that it not contain empty lists, and code assumes this will be true.
      */
     private static HashMap<Integer, ArrayList<String>> sSoundPaths = new HashMap<Integer, ArrayList<String>>();
+
+    /**
+     * List of video extensions
+     */
+    private static final String[] VIDEO_EXTENSIONS = {".3gp", ".mp4", ".webm", ".mkv"};
 
     /**
      * Listener to handle audio focus. Currently blank because we're not respecting losing focus from other apps.
@@ -271,7 +277,10 @@ public class Sound {
         } else {
             // Check if file is video
             final boolean isVideo;
-            isVideo = ThumbnailUtils.createVideoThumbnail(soundUri.getPath(), MediaStore.Images.Thumbnails.MINI_KIND) != null;
+            final String extension = soundPath.substring(soundPath.lastIndexOf(".")).toLowerCase();
+            final boolean supportedVideoExtension = Arrays.asList(VIDEO_EXTENSIONS).contains(extension);
+            isVideo = supportedVideoExtension &&
+                    ThumbnailUtils.createVideoThumbnail(soundUri.getPath(), MediaStore.Images.Thumbnails.MINI_KIND) != null;
             // If video file but no SurfaceHolder provided then ask 
             // AbstractFlashcardViewer to provide a VideoView holder
             if (isVideo && videoView == null && sCallingActivity != null && sCallingActivity.get() != null) {
