@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout android:id="@+id/tags_dialog_add_filter_frame"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        <EditText android:id="@+id/tags_dialog_filter_edittext"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+        <ImageView android:id="@+id/tags_dialog_add_tag_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_gravity="end|center_vertical"
+            android:clickable="true"
+            android:src="@drawable/ic_addtag"/>
+    </FrameLayout>
+
+    <RadioGroup android:id="@+id/tags_dialog_options_radiogroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/tags_dialog_add_filter_frame"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tags_dialog_option_all_cards"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tags_dialog_option_new_cards"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tags_dialog_option_due_cards"/>
+    </RadioGroup>
+
+    <android.support.v7.widget.RecyclerView android:id="@+id/tags_dialog_tags_list"
+        android:scrollbars="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tags_dialog_options_radiogroup"
+        android:background="@color/white_background"/>
+</RelativeLayout>

@@ -75,11 +75,6 @@
         <item>New cards after reviews</item>
         <item>New cards before reviews</item>
     </string-array>
-    <string-array name="cards_for_tag_filtered_deck_labels">
-        <item>All cards</item>
-        <item>New</item>
-        <item>Due</item>
-    </string-array>
     <string-array name="override_font_labels">
         <item>When no font specified on flashcards</item>
         <item>Always</item>
