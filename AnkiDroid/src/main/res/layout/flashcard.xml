@@ -106,8 +106,7 @@
             <FrameLayout
                 android:id="@+id/flashcard"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:padding="4.6667dip" />
+                android:layout_height="fill_parent" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -191,10 +190,6 @@
                         android:id="@+id/flip_card"
                         android:layout_width="fill_parent"
                         android:layout_height="56dp"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:layout_marginTop="8dp"
                         android:clickable="false"
                         android:text="@string/show_answer" />
                 </LinearLayout>
@@ -206,9 +201,6 @@
                     android:layout_width="0dip"
                     android:layout_height="56dp"
                     android:layout_weight="1"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginTop="8dp"
                     android:orientation="vertical"
                     android:visibility="gone" >
 
@@ -228,8 +220,6 @@
                         android:layout_width="0dip"
                         android:layout_height="56dp"
                         android:layout_weight="1"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginTop="8dp"
                         android:orientation="vertical"
                         android:visibility="gone" >
 
@@ -250,8 +240,6 @@
                         android:layout_width="0dip"
                         android:layout_height="56dp"
                         android:layout_weight="1"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginTop="8dp"
                         android:orientation="vertical"
                         android:visibility="gone" >
 
@@ -271,9 +259,6 @@
                         android:layout_width="0dip"
                         android:layout_height="56dp"
                         android:layout_weight="1"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginRight="4dp"
-                        android:layout_marginTop="8dp"
                         android:orientation="vertical"
                         android:visibility="gone" >
 
@@ -289,7 +274,6 @@
         </LinearLayout>
 
     </RelativeLayout>
-    
+
     <include layout="@layout/navigation_drawer" />
 </android.support.v4.widget.DrawerLayout>
-
