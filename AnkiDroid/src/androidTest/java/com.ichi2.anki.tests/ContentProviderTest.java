@@ -182,10 +182,14 @@ public class ContentProviderTest extends AndroidTestCase {
                 assertNotNull("Check that there is a valid cursor for detail data", noteDataCursor);
                 try {
                     assertTrue("Check that there is at least one result for detail data", noteDataCursor.getCount() > 0);
+                    boolean firstFieldChecked = false;
                     while (noteDataCursor.moveToNext()) {
                         String mimeType = noteDataCursor.getString(noteDataCursor.getColumnIndex(FlashCardsContract.DataColumns.MIMETYPE));
-                        if (mimeType.equals(FlashCardsContract.Data.Field.CONTENT_ITEM_TYPE)) {
+                        if (!firstFieldChecked && mimeType.equals(FlashCardsContract.Data.Field.CONTENT_ITEM_TYPE)) {
                             assertEquals("Check field content", "temp", noteDataCursor.getString(noteDataCursor.getColumnIndex(FlashCardsContract.Data.Field.FIELD_CONTENT)));
+                            firstFieldChecked = true;
+                        } else if (mimeType.equals(FlashCardsContract.Data.Field.CONTENT_ITEM_TYPE)) {
+                            assertEquals("Check field content", "", noteDataCursor.getString(noteDataCursor.getColumnIndex(FlashCardsContract.Data.Field.FIELD_CONTENT)));
                         } else if (mimeType.equals(FlashCardsContract.Data.Tags.CONTENT_ITEM_TYPE)) {
                             assertEquals("Unknown tag", TEST_TAG, noteDataCursor.getString(noteDataCursor.getColumnIndex(FlashCardsContract.Data.Tags.TAG_CONTENT)));
                         } else {
