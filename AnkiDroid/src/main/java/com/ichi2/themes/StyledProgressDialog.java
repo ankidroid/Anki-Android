@@ -84,27 +84,6 @@ public class StyledProgressDialog extends Dialog {
         }
     }
 
-
-    public void setMessage(CharSequence message) {
-        View main = super.getWindow().getDecorView();
-        ((TextView) main.findViewById(R.id.message)).setText(message);
-        ((View) main.findViewById(R.id.contentPanel)).setVisibility(View.VISIBLE);
-    }
-
-
-    public void setTitle(String message) {
-        View main = super.getWindow().getDecorView();
-        ((TextView) main.findViewById(R.id.alertTitle)).setText(message);
-    }
-
-
-    public void setMessage(String message) {
-        View main = super.getWindow().getDecorView();
-        ((TextView) main.findViewById(R.id.message)).setText(message);
-        ((View) main.findViewById(R.id.contentPanel)).setVisibility(View.VISIBLE);
-    }
-
-
     public void setMax(int max) {
         // TODO
     }
