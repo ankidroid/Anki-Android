@@ -601,9 +601,8 @@ public class CardContentProvider extends ContentProvider {
                 Long modelId = values.getAsLong(FlashCardsContract.Note.MID);
                 com.ichi2.libanki.Note newNote = new com.ichi2.libanki.Note(col, col.getModels().get(modelId));
                 String[] fields = newNote.getFields();
-                for (int i = 0; i < fields.length; i++) {
-                    newNote.setField(i, "temp");
-                }
+                //Setting the first field is a mandatory action. Users should overwrite this with a meaningful value.
+                newNote.setField(0, "temp");
                 col.addNote(newNote);
                 return Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(newNote.getId()));
             }
