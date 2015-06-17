@@ -37,7 +37,7 @@
                 android:layout_centerInParent="true"
                 android:gravity="center"/>
 
-            <include layout="@layout/floating_action_button"/>
+            <include layout="@layout/floating_add_button"/>
         </RelativeLayout>
     </android.support.design.widget.CoordinatorLayout>
 

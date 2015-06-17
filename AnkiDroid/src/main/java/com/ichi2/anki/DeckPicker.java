@@ -36,6 +36,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -43,7 +44,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,7 +51,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -149,7 +148,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     private List<Sched.DeckDueTreeNode> mDeckList;
 
     private TextView mTodayTextView;
-    private ImageButton mAddButton;
+    private FloatingActionButton mAddButton;
 
     private BroadcastReceiver mUnmountReceiver = null;
 
@@ -393,7 +392,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
         mTodayTextView = (TextView) findViewById(R.id.today_stats_text_view);
         final Resources res = getResources();
-        mAddButton = (ImageButton) findViewById(R.id.fab);
+        mAddButton = (FloatingActionButton) findViewById(R.id.fab);
         mAddButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

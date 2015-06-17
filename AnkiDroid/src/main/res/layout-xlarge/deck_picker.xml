@@ -58,7 +58,7 @@
 
         </LinearLayout>
 
-        <include layout="@layout/floating_action_button"/>
+        <include layout="@layout/floating_add_button"/>
     </RelativeLayout>
     <include layout="@layout/navigation_drawer" />
 </android.support.v4.widget.DrawerLayout>   
