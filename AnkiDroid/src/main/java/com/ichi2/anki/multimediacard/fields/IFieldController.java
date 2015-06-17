@@ -24,7 +24,7 @@ import android.content.Intent;
 import android.widget.LinearLayout;
 
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
-import com.ichi2.anki.multimediacard.activity.EditFieldActivity;
+import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 
 /**
  * A not in anki has fields. Each of the fields can be edited.
@@ -32,7 +32,7 @@ import com.ichi2.anki.multimediacard.activity.EditFieldActivity;
  * A controller is about to decide, which UI elements have to be on the activity and what has to be done there to edit a
  * field.
  * <p>
- * EditFieldActivity calls controller's set methods by protocol before it works on UI creation.
+ * MultimediaEditFieldActivity calls controller's set methods by protocol before it works on UI creation.
  */
 public interface IFieldController {
     // This is guaranteed to be called before create UI, so that the controller
@@ -51,7 +51,7 @@ public interface IFieldController {
 
 
     // Called before other
-    void setEditingActivity(EditFieldActivity activity);
+    void setEditingActivity(MultimediaEditFieldActivity activity);
 
 
     // Layout is vertical inside a scroll view already

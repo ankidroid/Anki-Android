@@ -20,11 +20,11 @@
 package com.ichi2.anki.multimediacard.fields;
 
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
-import com.ichi2.anki.multimediacard.activity.EditFieldActivity;
+import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 
 public abstract class FieldControllerBase implements IFieldController {
 
-    protected EditFieldActivity mActivity;
+    protected MultimediaEditFieldActivity mActivity;
     protected IField mField;
     protected IMultimediaEditableNote mNote;
     protected int mIndex;
@@ -49,7 +49,7 @@ public abstract class FieldControllerBase implements IFieldController {
 
 
     @Override
-    public void setEditingActivity(EditFieldActivity activity) {
+    public void setEditingActivity(MultimediaEditFieldActivity activity) {
         mActivity = activity;
     };
 

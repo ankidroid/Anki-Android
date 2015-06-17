@@ -278,7 +278,7 @@
         </receiver>
 
         <activity
-            android:name="com.ichi2.anki.multimediacard.activity.EditFieldActivity"
+            android:name=".multimediacard.activity.MultimediaEditFieldActivity"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_edit_text" >
         </activity>

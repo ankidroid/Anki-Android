@@ -2,7 +2,6 @@
 <resources>
     <style name="App_Theme" parent="Theme_White">
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:fitsSystemWindows">true</item>
     </style>
     <style name="LegacyActionBar" parent="App_Theme">
         <item name="windowActionBar">true</item>

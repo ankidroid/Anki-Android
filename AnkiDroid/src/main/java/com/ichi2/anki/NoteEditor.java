@@ -58,7 +58,7 @@ import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
-import com.ichi2.anki.multimediacard.activity.EditFieldActivity;
+import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.fields.AudioField;
 import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.ImageField;
@@ -1074,8 +1074,8 @@ public class NoteEditor extends AnkiActivity {
                 if (resultCode != RESULT_CANCELED) {
                     Collection col = getCol();
                     Bundle extras = data.getExtras();
-                    int index = extras.getInt(EditFieldActivity.EXTRA_RESULT_FIELD_INDEX);
-                    IField field = (IField) extras.get(EditFieldActivity.EXTRA_RESULT_FIELD);
+                    int index = extras.getInt(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX);
+                    IField field = (IField) extras.get(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD);
                     IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
                     NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
                     mNote.setField(index, field);
@@ -1253,10 +1253,10 @@ public class NoteEditor extends AnkiActivity {
 
 
     private void startMultimediaFieldEditor(final int index, IMultimediaEditableNote mNote, IField field) {
-        Intent editCard = new Intent(NoteEditor.this, EditFieldActivity.class);
-        editCard.putExtra(EditFieldActivity.EXTRA_FIELD_INDEX, index);
-        editCard.putExtra(EditFieldActivity.EXTRA_FIELD, field);
-        editCard.putExtra(EditFieldActivity.EXTRA_WHOLE_NOTE, mNote);
+        Intent editCard = new Intent(NoteEditor.this, MultimediaEditFieldActivity.class);
+        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD_INDEX, index);
+        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD, field);
+        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_WHOLE_NOTE, mNote);
         startActivityForResultWithoutAnimation(editCard, REQUEST_MULTIMEDIA_EDIT);
     }
 
