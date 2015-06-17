@@ -869,7 +869,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // Create the extensions as early as possible, so that they can be offered events.
         mExtensions = new ReviewerExtRegistry(getBaseContext());
-        setTheme(R.style.Theme_White);
         super.onCreate(savedInstanceState);
         Timber.d("onCreate()");
 
@@ -1350,7 +1349,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     // Set the content view to the one provided and initialize accessors.
     protected void initLayout() {
         mMainLayout = findViewById(R.id.main_layout);
-        Themes.setContentStyle(mMainLayout, Themes.CALLER_REVIEWER);
+        (mMainLayout.findViewById(R.id.flashcard_frame)).setBackgroundResource(AnkiDroidApp
+                .getSharedPrefs(mMainLayout.getContext()).getBoolean("invertedColors", false) ? R.color.black
+                : R.color.white);
 
         mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
 

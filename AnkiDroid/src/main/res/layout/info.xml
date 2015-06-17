@@ -15,85 +15,91 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_layout"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_centerHorizontal="true"
-    android:layout_centerVertical="true"
-    android:orientation="vertical" >
-
-    <include layout="@layout/toolbar" />
-
-
-    <RelativeLayout
+    android:layout_height="fill_parent">
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="4dip"
-        android:layout_weight="1"
-        android:fadingEdge="vertical"
-        android:gravity="center">
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical" >
 
-        <FrameLayout
+        <include layout="@layout/toolbar" />
+
+
+        <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:fadingEdge="vertical" >
-            <WebView
-                android:id="@+id/info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical" />
-            <RelativeLayout
-                android:id="@+id/info_loading_layer"
+            android:layout_height="0dp"
+            android:layout_marginBottom="4dip"
+            android:layout_weight="1"
+            android:fadingEdge="vertical"
+            android:gravity="center">
+
+            <FrameLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:background="@color/white"
-                android:gravity="center"
-                android:visibility="invisible" >
-
-                <TextView
+                android:fadingEdge="vertical" >
+                <WebView
+                    android:id="@+id/info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/loading_shared_decks" />
-            </RelativeLayout>
-            <include layout="@layout/progress_bar" />
-        </FrameLayout>
-    </RelativeLayout>
+                    android:gravity="center_vertical" />
+                <RelativeLayout
+                    android:id="@+id/info_loading_layer"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:visibility="invisible" >
 
-    <TextView
-        android:id="@+id/info_terms_and_conditions"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/terms_and_conditions"
-        android:visibility="gone" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/loading_shared_decks" />
+                </RelativeLayout>
+                <include layout="@layout/progress_bar" />
+            </FrameLayout>
+        </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/info_buttons"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/info_later"
-            android:layout_width="0dip"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:text="@string/later"
+        <TextView
+            android:id="@+id/info_terms_and_conditions"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/terms_and_conditions"
             android:visibility="gone" />
 
-        <Button
-            android:id="@+id/info_sync"
-            android:layout_width="0dip"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:text="@string/button_sync"
-            android:visibility="gone" />
+        <LinearLayout
+            android:id="@+id/info_buttons"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
 
-        <Button
-            android:id="@+id/info_continue"
-            android:layout_width="0dip"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:text="@string/dialog_continue" />
+            <Button
+                android:id="@+id/info_later"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="@string/later"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/info_sync"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="@string/button_sync"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/info_continue"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="@string/dialog_continue" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

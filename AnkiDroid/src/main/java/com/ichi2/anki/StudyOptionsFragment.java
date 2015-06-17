@@ -327,7 +327,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
 
     private void initAllContentViews() {
-        Themes.setContentStyle(mStudyOptionsView, Themes.CALLER_STUDYOPTIONS);
         mDeckInfoLayout = mStudyOptionsView.findViewById(R.id.studyoptions_deckinformation);
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
         mTextDeckDescription = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_description);

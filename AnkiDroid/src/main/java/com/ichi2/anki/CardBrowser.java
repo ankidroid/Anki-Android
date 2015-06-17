@@ -350,7 +350,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         Timber.d("onCreate()");
         View mainView = getLayoutInflater().inflate(R.layout.card_browser, null);
         setContentView(mainView);
-        Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
         
         initNavigationDrawer(mainView);
         

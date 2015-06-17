@@ -64,25 +64,6 @@ public class Themes {
 
 
 
-    public static void setContentStyle(View view, int caller) {
-        switch (caller) {
-            case CALLER_REVIEWER:
-                ((View) view.findViewById(R.id.main_layout)).setBackgroundResource(mReviewerBackground);
-                switch (mCurrentTheme) {
-                    case THEME_WHITE:
-                        ((View) view.findViewById(R.id.flashcard_frame)).setBackgroundResource(AnkiDroidApp
-                                .getSharedPrefs(view.getContext()).getBoolean("invertedColors", false) ? R.color.black
-                                : R.color.white);
-
-                        setMargins(view.findViewById(R.id.main_layout), LayoutParams.FILL_PARENT,
-                                LayoutParams.FILL_PARENT, 4f, 0, 4f, 4f);
-                        break;
-                }
-                break;
-        }
-    }
-
-
     public static String getReviewerFontName() {
         switch (mCurrentTheme) {
             case THEME_WHITE:
