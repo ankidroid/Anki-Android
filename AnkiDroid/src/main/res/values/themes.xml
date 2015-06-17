@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme_Base_Custom_Light" parent="@style/Theme.AppCompat.Light.DarkActionBar" />
-
+    <style name="App_Theme" parent="Theme_White"/>
     <!-- White Theme -->
     <style name="Theme_White" parent="@style/Theme_Base_Custom_Light">
         <item name="actionBarTextColor">@color/white</item>
@@ -10,7 +10,6 @@
         <item name="colorPrimaryDark">@color/theme_primary_dark</item>
         <item name="colorAccent">@color/theme_accent</item>
         <item name="android:colorBackground">@android:color/white</item>
-
         <item name="android:dropDownListViewStyle">@style/White.Dropdown</item>
         <item name="android:spinnerDropDownItemStyle">@style/SpinnerItem.DropDownItem</item>
 
@@ -20,11 +19,12 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="actionModeBackground">@color/theme_accent</item>
 
+
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
     </style>
 
-    <style name="Theme_White_Statistics" parent="@style/Theme_White">
+    <style name="Theme_White_Statistics" parent="@style/App_Theme">
         <item name="android:radioButtonStyle">@android:style/Widget.CompoundButton.RadioButton</item>
     </style>
 
@@ -37,7 +37,7 @@
 
 
     <!-- Theme for showing legacy ActionBar without explicitly including a toolbar -->
-    <style name="LegacyActionBar" parent="Theme_White">
+    <style name="LegacyActionBar" parent="App_Theme">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
     </style>

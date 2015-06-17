@@ -296,7 +296,7 @@ public class NoteEditor extends AnkiActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.note_editor);
         Intent intent = getIntent();
         if (savedInstanceState != null) {
             mCaller = savedInstanceState.getInt("caller");
@@ -347,9 +347,8 @@ public class NoteEditor extends AnkiActivity {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
         registerExternalStorageListener();
-        View mainView = getLayoutInflater().inflate(R.layout.note_editor, null);
-        setContentView(mainView);
-        Themes.setContentStyle(mainView, Themes.CALLER_CARD_EDITOR);
+
+        View mainView = findViewById(android.R.id.content);
 
         Toolbar toolbar = (Toolbar) mainView.findViewById(R.id.toolbar);
         if (toolbar != null) {

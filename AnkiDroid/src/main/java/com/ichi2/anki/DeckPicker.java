@@ -368,8 +368,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         // set protected variable from NavigationDrawerActivity
         mFragmented = studyoptionsFrame != null && studyoptionsFrame.getVisibility() == View.VISIBLE;
 
-        Themes.setContentStyle(mFragmented ? mainView : mainView.findViewById(R.id.deckpicker_view),
-                Themes.CALLER_DECKPICKER);
         sIsWholeCollection = !mFragmented;
 
         registerExternalStorageListener();

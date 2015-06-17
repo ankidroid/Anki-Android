@@ -72,7 +72,7 @@
         android:allowBackup="true"
         android:icon="@drawable/anki"
         android:label="@string/app_name"
-        android:theme="@style/Theme_White"
+        android:theme="@style/App_Theme"
         android:windowSoftInputMode="adjustResize"
         android:largeHeap="true">
         <activity
@@ -171,11 +171,13 @@
         <activity
             android:name="com.ichi2.anki.DeckOptions"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            android:label="@string/deckpreferences_title" />
+            android:label="@string/deckpreferences_title"
+            android:theme="@style/LegacyActionBar"/>
         <activity
             android:name=".FilteredDeckOptions"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            android:label="@string/deckpreferences_title" />
+            android:label="@string/deckpreferences_title"
+            android:theme="@style/LegacyActionBar"/>
         <activity
             android:name="com.ichi2.anki.Info"
             android:configChanges="locale"
