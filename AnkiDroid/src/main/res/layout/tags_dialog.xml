@@ -4,28 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout android:id="@+id/tags_dialog_add_filter_frame"
-        android:layout_width="fill_parent"
+    <include layout="@layout/tags_dialog_title"
+        android:id="@+id/tags_dialog_toolbar"/>
+    <TextView android:id="@+id/tags_dialog_no_tags_textview"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-        <EditText android:id="@+id/tags_dialog_filter_edittext"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
-        <ImageView android:id="@+id/tags_dialog_add_tag_imageview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_gravity="end|center_vertical"
-            android:clickable="true"
-            android:src="@drawable/ic_addtag"/>
-    </FrameLayout>
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tags_dialog_toolbar"
+        android:text="@string/no_tags"
+        android:visibility="gone"/>
+
 
     <RadioGroup android:id="@+id/tags_dialog_options_radiogroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_above="@id/tags_dialog_add_filter_frame"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <RadioButton
@@ -47,5 +41,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/tags_dialog_options_radiogroup"
+        android:layout_below="@id/tags_dialog_toolbar"
         android:background="@color/white_background"/>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tags_dialog_snackbar"/>
 </RelativeLayout>

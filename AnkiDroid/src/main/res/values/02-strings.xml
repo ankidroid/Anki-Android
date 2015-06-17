@@ -28,8 +28,12 @@
     <string name="CardEditorModel">Type:</string>
     <string name="CardEditorTags">Tags: %1$s</string>
     <string name="CardEditorCards">Cards: %1$s</string>
+    <string name="tag_name">Tag name</string>
     <string name="add_new_filter_tags">Add/filter tags</string>
+    <string name="add_tag">Add tag</string>
+    <string name="check_all_tags">Check/uncheck all tags</string>
     <string name="filter_tags">Filter tags</string>
+    <string name="no_tags">You haven\'t added any tags yet.</string>
     <string name="sdcard_missing_message">Switch off USB storage to access your decks</string>
 
     <!-- Reviewer.java -->
@@ -148,8 +152,8 @@
     <string name="sched_end">(end)</string>
     <string name="sched_unbury_button">To see them now, touch the \"Unbury\" button.</string>
     <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>
-    <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
-    <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
+    <string name="tag_editor_add_feedback">Press \"%2$s\" to confirm adding \"%1$s\"</string>
+    <string name="tag_editor_add_feedback_existing">Existing tag \"%1$s\" selected</string>
     <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
     <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
 </resources>
