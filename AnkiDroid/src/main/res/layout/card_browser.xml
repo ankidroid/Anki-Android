@@ -3,44 +3,48 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground" >
-    
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="?android:attr/colorBackground"
+    android:fitsSystemWindows="true">
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/root_layout"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
-
-        <include layout="@layout/toolbar" />
-
+        android:layout_height="fill_parent">
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/colorBackground"
-            android:orientation="horizontal" >
-
-            <Spinner
-                android:id="@+id/browser_column1_spinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="?android:attr/colorBackground" />
-
-            <Spinner
-                android:id="@+id/browser_column2_spinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <ListView
-            android:id="@+id/card_browser_list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="?android:attr/colorBackground"
-            android:drawSelectorOnTop="true"
-            android:fastScrollEnabled="true" />
+            android:orientation="vertical" >
 
-    </LinearLayout>
-    
+            <include layout="@layout/toolbar" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/colorBackground"
+                android:orientation="horizontal" >
+
+                <Spinner
+                    android:id="@+id/browser_column1_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?android:attr/colorBackground" />
+
+                <Spinner
+                    android:id="@+id/browser_column2_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/card_browser_list"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="?android:attr/colorBackground"
+                android:drawSelectorOnTop="true"
+                android:fastScrollEnabled="true" />
+
+        </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
     <include layout="@layout/navigation_drawer" />
 </android.support.v4.widget.DrawerLayout>   

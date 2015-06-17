@@ -30,15 +30,14 @@ import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.preferences.StepsPreference;
-import com.ichi2.themes.Themes;
+import com.ichi2.ui.AppCompatPreferenceActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,7 +55,7 @@ import timber.log.Timber;
 /**
  * Preferences for the current deck.
  */
-public class FilteredDeckOptions extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+public class FilteredDeckOptions extends AppCompatPreferenceActivity implements OnSharedPreferenceChangeListener {
 
     private JSONObject mDeck;
     private Collection mCol;
@@ -388,6 +387,20 @@ public class FilteredDeckOptions extends PreferenceActivity implements OnSharedP
             }
         }
         this.setTitle(title);
+
+        // Add a home button to the actionbar
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return false;
     }
 
 

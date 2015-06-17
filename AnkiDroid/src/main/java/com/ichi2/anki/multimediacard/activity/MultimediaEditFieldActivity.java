@@ -46,7 +46,7 @@ import java.io.File;
 
 import timber.log.Timber;
 
-public class EditFieldActivity extends AnkiActivity {
+public class MultimediaEditFieldActivity extends AnkiActivity {
 
     public static final String EXTRA_RESULT_FIELD = "edit.field.result.field";
     public static final String EXTRA_RESULT_FIELD_INDEX = "edit.field.result.field.index";
@@ -76,7 +76,7 @@ public class EditFieldActivity extends AnkiActivity {
             }
         }
 
-        setContentView(R.layout.activity_edit_text);
+        setContentView(R.layout.multimedia_edit_field_activity);
         View mainView = findViewById(android.R.id.content);
         Toolbar toolbar = (Toolbar) mainView.findViewById(R.id.toolbar);
         if (toolbar != null) {
