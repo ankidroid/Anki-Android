@@ -187,7 +187,7 @@ public class TagsDialog extends DialogFragment {
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart,
                                        int dend) {
                 for (int i = start; i < end; i++) {
-                    if (source.charAt(i) == ' ' || source.charAt(i) == ',') {
+                    if (source.charAt(i) == ' ') {
                         return "";
                     }
                 }
@@ -201,6 +201,7 @@ public class TagsDialog extends DialogFragment {
                 String query = mToolbarSearchView.getQuery().toString();
                 if (MenuItemCompat.isActionViewExpanded(mToolbarSearchItem) && !TextUtils.isEmpty(query)) {
                     addTag(query);
+                    mToolbarSearchView.setQuery("", true);
                 } else {
                     MaterialDialog.Builder addTagBuilder = new MaterialDialog.Builder(getActivity())
                             .title(getString(R.string.add_tag))
