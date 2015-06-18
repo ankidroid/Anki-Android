@@ -1536,6 +1536,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mFlipCard.setTextColor(mForegroundColor);
         mEase4.setTextColor(mNextTimeTextColor);
         mCardTimer.setTextColor(mForegroundColor);
+        mTopBarLayout .setBackgroundColor(invert ?
+                res.getColor(R.color.theme_primary_light_inv) : res.getColor(R.color.theme_primary_light_inv));
         mTextBarNew.setTextColor(invert ? res.getColor(R.color.new_count_night) : res.getColor(R.color.new_count));
         mTextBarLearn
                 .setTextColor(invert ? res.getColor(R.color.learn_count_night) : res.getColor(R.color.learn_count));
@@ -1574,15 +1576,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         switch (buttonCount) {
             case 2:
                 mEase1.setText(res.getString(R.string.ease1_successive));
-                mEase2Layout.setBackgroundResource(R.drawable.material_button_ease_right_green);
+                mEase2Layout.setBackgroundResource(R.drawable.footer_button_green);
                 mEase2.setText(res.getString(R.string.ease3_successive));
                 mEase1Layout.setVisibility(View.VISIBLE);
                 mEase2Layout.setVisibility(View.VISIBLE);
                 mEase2Layout.requestFocus();
                 break;
             case 3:
-                mEase2Layout.setBackgroundResource(R.drawable.material_button_ease_middle_green);
-                mEase3Layout.setBackgroundResource(R.drawable.material_button_ease_right);
+                mEase2Layout.setBackgroundResource(R.drawable.footer_button_green);
+                mEase3Layout.setBackgroundResource(R.drawable.footer_button);  // Make sure it’s not green
                 mEase1.setText(res.getString(R.string.ease1_successive));
                 mEase2.setText(res.getString(R.string.ease3_successive));
                 mEase3.setText(res.getString(R.string.ease3_learning));
@@ -1592,8 +1594,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mEase2Layout.requestFocus();
                 break;
             default:
-                mEase2Layout.setBackgroundResource(R.drawable.material_button_ease_middle);
-                mEase3Layout.setBackgroundResource(R.drawable.material_button_ease_middle_green);
+                mEase2Layout.setBackgroundResource(R.drawable.footer_button);  // Make sure it’s not green
+                mEase3Layout.setBackgroundResource(R.drawable.footer_button_green);
                 mEase1.setText(res.getString(R.string.ease1_successive));
                 mEase2.setText(res.getString(R.string.ease2_successive));
                 mEase3.setText(res.getString(R.string.ease3_successive));

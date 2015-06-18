@@ -44,7 +44,8 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="9dp"
                 android:paddingRight="10dp"
-                android:paddingTop="4dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="3dp"
                 android:gravity="center_vertical"
                 android:background="@color/theme_primary_light"
                 android:layout_below="@+id/toolbar">
@@ -176,7 +177,6 @@
 
                 <LinearLayout
                     android:id="@+id/answer_options_layout"
-                    android:background="@color/white"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" >
 
@@ -184,25 +184,24 @@
                         android:id="@+id/flashcard_layout_flip"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:background="@color/white"
                         android:layout_weight="1"
                         android:orientation="vertical" >
 
                         <Button
-                                style="@style/MaterialButton"
+                                style="@style/FooterButton"
                             android:id="@+id/flip_card"
                             android:layout_width="fill_parent"
-                            android:layout_height="56dp"
+                            android:layout_height="48dp"
                             android:clickable="false"
                             android:text="@string/show_answer" />
                     </LinearLayout>
 
                     <LinearLayout
-                        style="@style/MaterialButton"
-                        android:background="@drawable/material_button_ease_left"
+                        style="@style/FooterButton"
+                        android:background="@drawable/footer_button_red"
                         android:id="@+id/flashcard_layout_ease1"
                         android:layout_width="0dip"
-                        android:layout_height="56dp"
+                        android:layout_height="48dp"
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:visibility="gone" >
@@ -217,11 +216,11 @@
                     </LinearLayout>
 
                     <LinearLayout
-                            style="@style/MaterialButton"
-                            android:background="@drawable/material_button_ease_middle"
+                            style="@style/FooterButton"
+                            android:background="@drawable/footer_button"
                             android:id="@+id/flashcard_layout_ease2"
                             android:layout_width="0dip"
-                            android:layout_height="56dp"
+                            android:layout_height="48dp"
                             android:layout_weight="1"
                             android:orientation="vertical"
                             android:visibility="gone" >
@@ -237,11 +236,11 @@
                     </LinearLayout>
 
                     <LinearLayout
-                            style="@style/MaterialButton"
-                            android:background="@drawable/material_button_ease_middle_green"
+                            style="@style/FooterButton"
+                            android:background="@drawable/footer_button_green"
                             android:id="@+id/flashcard_layout_ease3"
                             android:layout_width="0dip"
-                            android:layout_height="56dp"
+                            android:layout_height="48dp"
                             android:layout_weight="1"
                             android:orientation="vertical"
                             android:visibility="gone" >
@@ -256,11 +255,11 @@
                     </LinearLayout>
 
                     <LinearLayout
-                            style="@style/MaterialButton"
-                            android:background="@drawable/material_button_ease_right"
+                            style="@style/FooterButton"
+                            android:background="@drawable/footer_button"
                             android:id="@+id/flashcard_layout_ease4"
                             android:layout_width="0dip"
-                            android:layout_height="56dp"
+                            android:layout_height="48dp"
                             android:layout_weight="1"
                             android:orientation="vertical"
                             android:visibility="gone" >
