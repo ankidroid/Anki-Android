@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- White Theme -->
+    <!-- White theme -->
     <style name="White">
         <item name="android:background">@color/white_background</item>
     </style>
 
-    
+
     <style name="Theme.CrashReportDialog" parent="@android:style/Theme.Dialog" />
 
-    <!-- Widget Elements -->
+    <!-- Widget elements -->
     <style name="Widget.ProgressBar.Horizontal" parent="@android:style/Widget.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal</item>
         <item name="android:orientation">vertical</item>

@@ -47,7 +47,7 @@
     <string name="whiteboard_black">Black strokes</string>
     <string name="whiteboard_black_summ">Uses less memory, unless in night mode</string>
     <string name="write_answers_disable">Disable typing in answer</string>
-    <string name="write_answers_disable_summ">Prevents keyboard from appearing on cards containing \'type in the answer\' fields</string>
+    <string name="write_answers_disable_summ">Prevents keyboard from appearing on cards containing type-the-answer fields</string>
     <string name="text_selection_click">Long press workaround</string>
     <string name="text_selection_click_summ">Enable this if you are not able to select text with a long press</string>
     <string name="dictionary">Lookup dictionary</string>
@@ -88,13 +88,13 @@
     <string name="tts">Text to speech</string>
     <string name="tts_summ">Reads out question and answer if no sound file is included</string>
     <string name="sync_fetch_missing_media">Fetch media on sync</string>
-    <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
+    <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing</string>
     <string name="sync_account">AnkiWeb account</string>
     <string name="sync_account_summ_logged_out">Not logged in</string>
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="fix_hebrew_text">Fix for Hebrew vowels</string>
     <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
-    <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to:\n%s/fonts/\n\nYou won\'t have to modify your cards.</string>
+    <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to\n“%s/fonts/”\n\nYou won’t have to modify your cards.</string>
     <string name="fix_hebrew_download_font">Download font</string>
     <string name="default_font">Default font</string>
     <string name="default_font_summ">XXX</string>
@@ -202,7 +202,7 @@
         <item quantity="other">%s subdecks will use this group</item>
     </plurals>
     <string name="deck_conf_set_subdecks_title">Set for all subdecks</string>
-    <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck\'s subdecks?</string>
+    <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
     <string name="pref_browser_editor_font">Browser and editor font</string>
     <string name="pref_browser_editor_font_summ">XXX</string>
     <string name="deck_conf_cram_filter">Filter</string>
