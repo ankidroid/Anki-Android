@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.view.KeyCharacterMap;
 
 public class CompatHelper {
     private static CompatHelper sInstance;
@@ -93,6 +94,14 @@ public class CompatHelper {
 
     public static boolean isKindle() {
         return Build.BRAND.equalsIgnoreCase("amazon") || Build.MANUFACTURER.equalsIgnoreCase("amazon");
+    }
+
+    public static boolean hasKanaAndEmojiKeys() {
+        return KeyCharacterMap.deviceHasKey(94) && KeyCharacterMap.deviceHasKey(95);
+    }
+
+    public static boolean hasScrollKeys() {
+        return KeyCharacterMap.deviceHasKey(92) || KeyCharacterMap.deviceHasKey(93);
     }
 
     public static void removeHiddenPreferences(Context context) {

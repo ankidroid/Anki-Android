@@ -275,7 +275,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     }
                 });
                 // Workaround preferences
-                removeUnnecessaryWorkarounds(screen);
+                removeUnnecessaryAdvancedPrefs(screen);
                 break;
         }
     }
@@ -543,7 +543,23 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
     }
 
-    private void removeUnnecessaryWorkarounds(PreferenceScreen screen) {
+    private void removeUnnecessaryAdvancedPrefs(PreferenceScreen screen) {
+        PreferenceCategory plugins = (PreferenceCategory) screen.findPreference("category_plugins");
+        // Disable the emoji/kana buttons to scroll preference if those keys don't exist
+        if (!CompatHelper.hasKanaAndEmojiKeys()) {
+            CheckBoxPreference emojiScrolling = (CheckBoxPreference) screen.findPreference("scrolling_buttons");
+            if (emojiScrolling != null && plugins != null) {
+                plugins.removePreference(emojiScrolling);
+            }
+        }
+        // Disable the double scroll preference if no scrolling keys
+        if (!CompatHelper.hasScrollKeys() && !CompatHelper.hasKanaAndEmojiKeys()) {
+            CheckBoxPreference doubleScrolling = (CheckBoxPreference) screen.findPreference("double_scrolling");
+            if (doubleScrolling != null && plugins != null) {
+                plugins.removePreference(doubleScrolling);
+            }
+        }
+
         PreferenceCategory workarounds = (PreferenceCategory) screen.findPreference("category_workarounds");
         if (workarounds != null) {
             CheckBoxPreference inputWorkaround = (CheckBoxPreference) screen.findPreference("inputWorkaround");
