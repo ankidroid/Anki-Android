@@ -76,6 +76,7 @@
     <item>W kolejności dodania</item>
     <item>W kolejności do przejrzenia</item>
     <item>Ostatnio dodane na początku</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Zwiększ dzisiejszy limit nowych kart</item>
@@ -94,11 +95,6 @@
     <item>Mieszaj nowe karty i powtórki</item>
     <item>Nowe karty po powtórkach</item>
     <item>Nowe karty przed powtórkami</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>Wszystkie karty</item>
-    <item>Nowe</item>
-    <item>Do przejrzenia</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>Kiedy żaden font nie jest wybrany dla danych kart</item>

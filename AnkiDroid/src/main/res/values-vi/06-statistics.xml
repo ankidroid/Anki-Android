@@ -69,9 +69,9 @@
   <string formatted="false" name="stats_percentage_correct">% Chính xác</string>
   <string name="stats_reviews">Ôn tập</string>
   <string name="stats_answer_type">Dạng câu trả lời</string>
-  <string name="stats_today_again_count">Tính lại một lần nữa: &lt; b &gt;%d &lt;/b &gt;</string>
-  <string name="stats_today_correct_count">(&lt; b &gt;%.1f%% &lt;/b &gt; chính xác)</string>
-  <string name="stats_today_type_breakdown">Tìm hiểu: &lt; b &gt;%1$s &lt;/b &gt;, ôn tập: &lt; b &gt;%2$s &lt;/b &gt;, học lại: &lt; b &gt;%3$s &lt;/b &gt;, lọc: &lt; b &gt;%4$s &lt;/b &gt;</string>
+  <string name="stats_today_again_count">Tính lại một lần nữa: &lt;b&gt;%d&lt;/b&gt;</string>
+  <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; chính xác)</string>
+  <string name="stats_today_type_breakdown">Tìm hiểu: &lt;b&gt;%1$s&lt;/b&gt;, ôn tập: &lt;b&gt;%2$s&lt;/b&gt;, học lại: &lt;b&gt;%3$s&lt;/b&gt;, lọc: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Các câu trả lời chính xác về các thẻ trưởng thành: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Không có thẻ trưởng thành nào được học tập ngày hôm nay.</string>
   <string name="deck_summary_all_decks">Tất cả các bài</string>
@@ -118,8 +118,8 @@
   <string name="stats_review_count">Số lượng ôn tập</string>
   <string name="stats_review_time">Thời gian ôn tập</string>
   <string name="stats_review_intervals">Khoảng thời gian</string>
-  <string name="stats_breakdown">Hourly Breakdown</string>
-  <string name="stats_weekly_breakdown">Weekly Breakdown</string>
+  <string name="stats_breakdown">Hourly breakdown</string>
+  <string name="stats_weekly_breakdown">Weekly breakdown</string>
   <string name="stats_answer_buttons">Nút trả lời </string>
   <string name="stats_cards_types">Các loại thẻ</string>
   <string-array name="stats_day_time_strings">

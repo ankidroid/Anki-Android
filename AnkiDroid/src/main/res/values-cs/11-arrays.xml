@@ -76,6 +76,7 @@
     <item>V pořádí přidání</item>
     <item>Podle opakování</item>
     <item>Naposledy přidané první</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Zvýšit dnešní limit nových karet</item>
@@ -94,11 +95,6 @@
     <item>Promíchat nové karty a opakování</item>
     <item>Nové karty po opakování</item>
     <item>Nové karty před opakováním</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>Všechny karty</item>
-    <item>Nové</item>
-    <item>Opakování</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>Když není určeno žádné písmo pro kartičky</item>

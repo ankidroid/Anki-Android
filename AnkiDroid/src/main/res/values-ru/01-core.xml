@@ -42,7 +42,7 @@
   <string name="decks">Колоды</string>
   <string name="card_browser">Обозреватель карт</string>
   <string name="statistics">Статистика</string>
-  <string name="settings">Установки</string>
+  <string name="settings">Настройки</string>
   <string name="help">Помощь</string>
   <string name="send_feedback">Отправить отзыв</string>
   <string name="studyoptions_title">Варианты обучения</string>
@@ -57,14 +57,14 @@
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d min.</item>
-    <item quantity="few">%d min.</item>
-    <item quantity="other">%d min.</item>
+    <item quantity="one">%d мин.</item>
+    <item quantity="few">%d мин.</item>
+    <item quantity="other">%d мин.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
-    <item quantity="few">%d minutes left</item>
-    <item quantity="other">%d minutes left</item>
+    <item quantity="one">%d минута осталась</item>
+    <item quantity="few">%d минуты остались</item>
+    <item quantity="other">%d минут остались</item>
   </plurals>
   <string name="type_answer_hint">Напечатайте ответ</string>
   <string name="show_answer">Показать ответ</string>
@@ -83,7 +83,7 @@
   <string name="undo_action_delete">Удалить запись</string>
   <string name="undo_action_mark">Отметить заметку</string>
   <string name="unbury">Отменить сдвиг</string>
-  <string name="finish_operation">Завершение предыдущей операции (создание резервной копии). \nПожалуйста, подождите...</string>
+  <string name="finish_operation">Завершение предыдущей операции (создание резервной копии). \nПожалуйста, подождите&#8230;</string>
   <string name="contextmenu_deckpicker_rename_deck">Переименовать колоду</string>
   <string name="contextmenu_deckpicker_collapse_deck">Скрыть вложенные колоды</string>
   <string name="contextmenu_deckpicker_inflate_deck">Показать вложенные колоды</string>
@@ -134,21 +134,21 @@
   <string name="studyoptions_congrats_more_new">Есть ещё новые карты, но дневной лимит карт был уже выучен. Вы можете увеличить лимит, но учтите, что это увеличит и объёмы повторений в следующие дни.</string>
   <string name="studyoptions_congrats_custom">Чтобы изменить привычный график изучения колоды, нажмите \"Дополнительное обучение\" ниже.</string>
   <string name="studyoptions_no_cards_due">Нет карт в очереди.</string>
-  <string name="sd_card_not_mounted">Device storage not mounted</string>
+  <string name="sd_card_not_mounted">Карта памяти не примонтирована</string>
   <string name="button_sync">Синхронизация</string>
   <string name="export">Экспорт</string>
   <string name="nothing">Ничего</string>
   <string name="title_activity_template_editor">Типы карт для %s</string>
-  <string name="card_template_editor_front">Шаблон аверса</string>
-  <string name="card_template_editor_back">Шаблон реверса</string>
+  <string name="card_template_editor_front">Шаблон лицевой стороны</string>
+  <string name="card_template_editor_back">Шаблон обратной стороны</string>
   <string name="card_template_editor_styling">Дизайн</string>
   <string name="card_template_editor_menu_add_reverse">Добавить обратную сторону</string>
   <string name="card_template_editor_menu_delete">Удалить</string>
   <string name="card_template_editor_cant_delete">Требуется по крайней мере один тип.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="few">Delete the \'%2$s\' card type, and its %1$d cards?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="one">Удалить  тип карты \'%2$s\' и %1$d карту этого типа?</item>
+    <item quantity="few">Удалить  тип карты \'%2$s\' и %1$d карты этого типа?</item>
+    <item quantity="other">Удалить  тип карты \'%2$s\' и %1$d карт этого типа?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note"> Удаление этого типа карт приведет к удалению одного
         или нескольких примечаний, создайте сначала новый тип карт.</string>

@@ -42,13 +42,17 @@
   <string name="drawer_open">Отвори фиоку</string>
   <string name="drawer_close">Затвори фиоку</string>
   <string name="CardEditorLaterMessage">Сачувана информација за касније</string>
-  <string name="CardEditorCardDeck">Шпил картицe:</string>
+  <string name="CardEditorCardDeck">Шпил карата:</string>
   <string name="CardEditorNoteDeck">Шпил:</string>
   <string name="CardEditorModel">Врста:</string>
   <string name="CardEditorTags">Ознаке: %1$s</string>
   <string name="CardEditorCards">Карте: %1$s</string>
+  <string name="tag_name">Tag name</string>
   <string name="add_new_filter_tags">Додај/филтрирај ознаке</string>
+  <string name="add_tag">Add tag</string>
+  <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">Филтрирај ознаке</string>
+  <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">SD картица је недоступна јер се употребљава као USB. Искључите USB да бисте добили приступ шпиловима.</string>
   <string name="enable_whiteboard">Омогући белу таблу</string>
   <string name="disable_whiteboard">Онемогући белу таблу</string>
@@ -56,7 +60,7 @@
   <string name="hide_whiteboard">Сакриј белу таблу</string>
   <string name="clear_whiteboard">Избриши белу таблу</string>
   <string name="replay_audio">Поново пусти аудио</string>
-  <string name="leech_suspend_notification">Картица је означена као пијавица и отказана</string>
+  <string name="leech_suspend_notification">Карта је означена као пијавица и отказана</string>
   <string name="leech_notification">Картица је означена као пијавица</string>
   <string name="corrupt_font">Оштећена датотека фонта %s</string>
   <string-array name="browser_column1_headings">
@@ -86,21 +90,21 @@
   <string name="field_remapping">%1$s (од \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Немапиране карте ће бити избрисане. Напомене, које немају своје карте, биће изгубљене. Да продужим?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
-    <item quantity="few">%1$d cards studied in %2$s</item>
+    <item quantity="one">%1$d карта проучена у %2$s</item>
+    <item quantity="few">%1$d карата проучено у %2$s</item>
     <item quantity="many">%1$d cards studied in %2$s</item>
     <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minute</item>
-    <item quantity="few">%1$d minutes</item>
+    <item quantity="one">%1$d минут</item>
+    <item quantity="few">%1$d минута</item>
     <item quantity="many">%1$d minutes</item>
     <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">Добро дошли у AnkiDroid</string>
-  <string name="fact_adder_intent_title">AnkiDroid картица</string>
+  <string name="fact_adder_intent_title">AnkiDroid карта</string>
   <string name="card_editor_add_card">Додај белешку</string>
-  <string name="card_editor_copy_card">Копирај картицу</string>
+  <string name="card_editor_copy_card">Копирај карту</string>
   <string name="card_editor_reset_card">Ресетуј напредак</string>
   <string name="card_editor_reschedule_card">Одложи картицу</string>
   <string name="card_editor_preview_card">Преглед</string>
@@ -109,8 +113,8 @@
   <string name="rename_error">Шпил %s не може бити преименован</string>
   <string name="default_conf_delete_error">Подразумеване опције се не могу уклонити</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
-    <item quantity="few">%d cards added</item>
+    <item quantity="one">%d карта је додата</item>
+    <item quantity="few">%d карата је додато</item>
     <item quantity="many">%d cards added</item>
     <item quantity="other">%d cards added</item>
   </plurals>
@@ -153,8 +157,8 @@
   <string name="sched_end">(крај)</string>
   <string name="sched_unbury_button">Да бисте их видели, притисните дугме Одустани.</string>
   <string name="sched_has_buried">Неке повезане или закопане картице су одложене до следеће сесије.</string>
-  <string name="tag_editor_add_hint">Квачица са десне стране додаје нову ознаку.</string>
-  <string name="tag_editor_add_feedback">Притисните дугмић „%2$s“ да потврдите додавање „%1$s“.</string>
+  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">Након копирање текста, тапните било где на картице да прикажете иконицу за претраживање.</string>
   <string name="add_content_showcase_text">Да бисте почели, тапните дугмић „+“ да додате нове податке за проучавање.\n\nПритисните „Помоћ“ да прикажете упутсво.</string>
 </resources>

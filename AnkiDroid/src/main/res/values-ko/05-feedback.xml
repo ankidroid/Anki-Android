@@ -40,13 +40,12 @@
 -->
 <resources>
   <string name="error_reporting_choice">오류 보고 모드</string>
-  <string name="error_reporting_choice_summary">오류 보고는 자동 보고, 보고하지 않기, 보고 하기 전 묻기 등 세가지 방식이 있습니다</string>
-  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
+  <string name="feedback_disclaimer">면책 사항: 저희는 이메일 주소, 전화번호, IMEI 고유 번호 등의 어떠한 개인 정보도 수집하지 않습니다. 저희는 기기 제조사, 모델명, 안드로이드 버전 등의 기기 정보 일부와, 보고된 오류와 그 발생 경위를 수집합니다.</string>
   <string name="feedback_title">피드백</string>
   <string name="feedback_default_text">보고하실 오류에 대해 피드백이나 정보를 기입해주세요.</string>
-  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
-  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
-  <string name="feedback_copy_debug">Copy debug info</string>
-  <string name="feedback_report">Report</string>
-  <string name="feedback_report_automatically">Send error reports automatically</string>
+  <string name="feedback_auto_toast_text">AnkiDroid에 예기치 못한 오류가 발생했습니다. 개발자에게 오류 보고가 전송됩니다.</string>
+  <string name="feedback_manual_toast_text">AnkiDroid에 예기치 못한 오류가 발생했습니다. 오류 보고를 작성중입니다.</string>
+  <string name="feedback_copy_debug">디버그 정보 복사</string>
+  <string name="feedback_report">보고</string>
+  <string name="feedback_report_automatically">오류 보고를 자동으로 전송</string>
 </resources>

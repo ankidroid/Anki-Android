@@ -76,6 +76,7 @@
     <item>Ordem de adição</item>
     <item>Ordem de revisão</item>
     <item>Última adicionada em primeiro lugar</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Aumentar o limite de novas fichas para hoje</item>
@@ -94,11 +95,6 @@
     <item>Misturar fichas novas e revisões</item>
     <item>Fichas novas após revisões</item>
     <item>Fichas novas antes das revisões</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>Todas as fichas</item>
-    <item>Novas</item>
-    <item>Pendentes</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>Quando nenhum tipo de letra especificado nas fichas</item>

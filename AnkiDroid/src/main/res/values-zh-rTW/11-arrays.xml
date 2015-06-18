@@ -76,6 +76,7 @@
     <item>依新增順序</item>
     <item>依到期順序</item>
     <item>最後加入的先</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>增加今天的新卡片限制</item>
@@ -94,11 +95,6 @@
     <item>Mix new cards and reviews</item>
     <item>New cards after reviews</item>
     <item>New cards before reviews</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>All cards</item>
-    <item>New</item>
-    <item>Due</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>When no font specified on flashcards</item>

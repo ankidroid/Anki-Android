@@ -106,7 +106,7 @@
   <string name="sync_generic_error">Ein Fehler ist aufgetreten. Versuchen Sie es später wieder.</string>
   <string name="sync_check_upload_file">Prüfe Datei vor dem Hochladen&#8230;</string>
   <string name="sync_check_download_file">Prüfe heruntergeladene Datei&#8230;</string>
-  <string name="sync_media_find">Finde veränderte Multimedia-Dateien...</string>
+  <string name="sync_media_find">Suche veränderte Multimedia-Dateien&#8230;</string>
   <string name="sync_media_no_changes">Keine Multimedia-Dateien verändert.</string>
   <string name="sync_media_success">Multimedia-Dateien synchronisiert</string>
   <string name="sync_media_changes_count">%d veränderte Medien hochzuladen</string>

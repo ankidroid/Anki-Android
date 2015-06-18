@@ -73,14 +73,14 @@
   <string name="reset_languages_summ">Сброс языка (для преобразования текста в речь и словарей) для всех колод. Сброс для конкретных колод - в оглавлении колод.</string>
   <string name="reset_languages_question">Сбросить все языковые настройки?</string>
   <string name="reset_confirmation">Все настройки сброшены</string>
-  <string name="display_font_size">Изменение размера шрифта обозревателя</string>
-  <string name="display_font_size_summ">XXX %</string>
-  <string name="image_size">Изменение размета изображений в обозревателе</string>
-  <string name="image_size_summ">XXX %</string>
+  <string name="card_zoom">Card zoom</string>
+  <string name="card_zoom_summ">XXX%</string>
+  <string name="image_zoom">Image zoom</string>
+  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Размер кнопки ответа</string>
-  <string name="button_size_summ">XXX %</string>
+  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Масштабирование шрифта обозревателя карт</string>
-  <string name="card_browser_font_size_summ">XXX %</string>
+  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Папка с коллекцией</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Полноэкранный режим</string>
@@ -138,14 +138,8 @@
   <string name="safe_display_summ">Отключить всю анимацию и использовать другие методы отрисовки карт. Может потребоваться для старых устройств и устройств на E-ink.</string>
   <string name="vertical_centering">Выравнивание по центру</string>
   <string name="vertical_centering_summ">Центрировать содержимое карт вертикально</string>
-  <string name="pref_backup">Делать резервные копии</string>
-  <string name="pref_backup_summ">Автоматически создавать резервную копию перед открытием колоды (раз в день)</string>
   <string name="pref_backup_max">Максимальное число резервных копий</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">Отключить резервные копии?</string>
-  <string name="pref_disable_backup_warning">Это действие удалит все файлы резервных копий</string>
-  <string name="pref_intent_add_instant">Мгновенное добавление</string>
-  <string name="pref_intent_add_instant_summ">Добавлять новые карты из словарей не открывая AnkiDroid. Вы можете найти их под \"сохраненные данные\" при добавлении карт.</string>
   <string name="show_estimates">Показать кнопку времени</string>
   <string name="show_estimates_summ">Отображать время следующего повторения над кнопками ответа</string>
   <string name="show_progress">Показать оставшиеся</string>
@@ -172,9 +166,9 @@
   <string name="deck_conf_deck_description">Описание колоды</string>
   <string name="deck_conf_group">Группа опций</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
+    <item quantity="few">%1$s\n%2$d decks use this group</item>
+    <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">Новые карты</string>
   <string name="deck_conf_rev_cards">Повторов</string>
@@ -219,9 +213,9 @@
   <string name="deck_conf_remove_message">Удалить текущую группу опций?</string>
   <string name="deck_conf_set_subdecks">Установить для всех подколод</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%s subdeck will use this group</item>
+    <item quantity="few">%s subdecks will use this group</item>
+    <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Установить для всех подколод</string>
   <string name="deck_conf_set_subdecks_message">Установить текущую группу параметров для всех подколод данной колоды?</string>

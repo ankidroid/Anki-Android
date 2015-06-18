@@ -40,7 +40,6 @@
 -->
 <resources>
   <string name="error_reporting_choice">Modalità di segnalazione degli errori</string>
-  <string name="error_reporting_choice_summary">Gli errori possono essere segnalati automaticamente, mai segnalati, oppure è possibile che venga richiesto</string>
   <string name="feedback_disclaimer">Avvertenza: Non raccogliamo informazioni personali come indirizzo email, numero di telefono o codice IMEI del telefono. Raccogliamo alcune informazioni sul vostro dispositivo come nome del produttore, modello e versione di Android, così come la natura degli errori segnalati, e i passi che li hanno prodotti.</string>
   <string name="feedback_title">Commenti e suggerimenti</string>
   <string name="feedback_default_text">Per favore inserisci i tuoi commenti o informazioni sulla natura di eventuali errori che stai riportando.</string>

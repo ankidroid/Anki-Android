@@ -41,21 +41,21 @@
 <resources>
   <string name="statistics_young">Jauna</string>
   <string name="statistics_mature">Sena</string>
-  <string name="statistics_young_and_learn">Young+Learn</string>
+  <string name="statistics_young_and_learn">Young and learn</string>
   <string name="statistics_unlearned">Nematyti</string>
   <string name="statistics_suspended">Sulaikyti</string>
   <string name="statistics_relearn">Vėl išmokti</string>
   <string name="statistics_learn">Išmokti</string>
   <string name="statistics_cram">Cram</string>
   <string name="stats_cards">Kortelės</string>
-  <string name="stats_cards_intervals">Cards with given Interval</string>
-  <string name="stats_cumulative_cards">Cumulative Cards</string>
-  <string name="stats_cumulative_answers">Cumulative Answers</string>
-  <string name="stats_cumulative_time_minutes">Cumulative Minutes</string>
-  <string name="stats_cumulative_time_hours">Cumulative Hours</string>
+  <string name="stats_cards_intervals">Cards with given interval</string>
+  <string name="stats_cumulative_cards">Cumulative cards</string>
+  <string name="stats_cumulative_answers">Cumulative answers</string>
+  <string name="stats_cumulative_time_minutes">Cumulative minutes</string>
+  <string name="stats_cumulative_time_hours">Cumulative hours</string>
   <string name="stats_cumulative">Cumulative</string>
-  <string name="stats_cumulative_percentage">Cumulative Percentage</string>
-  <string formatted="false" name="stats_cumulative_correct_percentage">Cumulative Correct %</string>
+  <string name="stats_cumulative_percentage">Cumulative percentage</string>
+  <string formatted="false" name="stats_cumulative_correct_percentage">Cumulative correct %</string>
   <string name="stats_answers">Atsakymai</string>
   <string name="stats_minutes">Minutės</string>
   <string name="stats_hours">Valandos</string>
@@ -71,7 +71,7 @@
   <string name="stats_answer_type">Atsakymo tipas</string>
   <string name="stats_today_again_count">Again count: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correct)</string>
-  <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, Review: &lt;b&gt;%2$s&lt;/b&gt;, Relearn: &lt;b&gt;%3$s&lt;/b&gt;, Filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
+  <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, review: &lt;b&gt;%2$s&lt;/b&gt;, relearn: &lt;b&gt;%3$s&lt;/b&gt;, filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Correct answers on mature cards: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
   <string name="deck_summary_all_decks">Visos malkos</string>
@@ -118,10 +118,10 @@
   <string name="stats_review_count">Kartojimų skaičius</string>
   <string name="stats_review_time">Kartojimų laikas</string>
   <string name="stats_review_intervals">Intervals</string>
-  <string name="stats_breakdown">Hourly Breakdown</string>
-  <string name="stats_weekly_breakdown">Weekly Breakdown</string>
-  <string name="stats_answer_buttons">Answer Buttons</string>
-  <string name="stats_cards_types">Cards Types</string>
+  <string name="stats_breakdown">Hourly breakdown</string>
+  <string name="stats_weekly_breakdown">Weekly breakdown</string>
+  <string name="stats_answer_buttons">Answer buttons</string>
+  <string name="stats_cards_types">Cards types</string>
   <string-array name="stats_day_time_strings">
     <item>4AM</item>
     <item>10AM</item>

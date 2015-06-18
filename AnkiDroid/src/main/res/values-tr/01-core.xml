@@ -39,12 +39,12 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="decks">Decks</string>
-  <string name="card_browser">Card Browser</string>
-  <string name="statistics">Statistics</string>
-  <string name="settings">Settings</string>
-  <string name="help">Help</string>
-  <string name="send_feedback">Send Feedback</string>
+  <string name="decks">Desteler</string>
+  <string name="card_browser">Kart Tarayıcısı</string>
+  <string name="statistics">İstatistikler</string>
+  <string name="settings">Ayarlar</string>
+  <string name="help">Yardım</string>
+  <string name="send_feedback">Geribildirim Gönder</string>
   <string name="studyoptions_title">Çalışma Seçenekleri</string>
   <string name="studyoptions_due_today">Bugün çıkacak:</string>
   <string name="studyoptions_new_total">Toplam yeni kart:</string>
@@ -52,16 +52,16 @@
   <string name="studyoptions_eta">Tahminî süre (dk):</string>
   <string name="studyoptions_start">Çalışmaya Başla</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">%1$d kart çalışılacak (%2$s)</item>
+    <item quantity="other">%1$d kart çalışılacak (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d min.</item>
-    <item quantity="other">%d min.</item>
+    <item quantity="one">%d dk.</item>
+    <item quantity="other">%d dk.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
-    <item quantity="other">%d minutes left</item>
+    <item quantity="one">%d dakika kaldı</item>
+    <item quantity="other">%d dakika kaldı</item>
   </plurals>
   <string name="type_answer_hint">Yanıtı yazın</string>
   <string name="show_answer">Yanıtı Göster</string>
@@ -131,7 +131,7 @@
   <string name="studyoptions_congrats_more_new">Daha çalışılacak yeni kartlar var, ama günlük sınıra ulaşıldı. Sınırı seçeneklerden artırabilirsiniz, ama lütfen unutmayın ki bu kısa vâdede çalışma yükünüzü artıracak.</string>
   <string name="studyoptions_congrats_custom">Normal programın dışında çalışmak için, aşağıdaki Kişisel Çalışma düğmesine basın.</string>
   <string name="studyoptions_no_cards_due">Henüz çalışılacak kart yok.</string>
-  <string name="sd_card_not_mounted">Device storage not mounted</string>
+  <string name="sd_card_not_mounted">Cihaz hafızası takılı değil</string>
   <string name="button_sync">Eşitle</string>
   <string name="export">Dışarı aktar</string>
   <string name="nothing">Hiçbirşey</string>
@@ -143,8 +143,8 @@
   <string name="card_template_editor_menu_delete">Sil</string>
   <string name="card_template_editor_cant_delete">En az bir kart türü gerekiyor.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="one">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
+    <item quantity="other">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note"> Bu kart tipini kaldırmak bir veya daha fazla notun silinmesine neden olur. Lütfen önce yeni bir kart türü oluşturun.</string>
 </resources>

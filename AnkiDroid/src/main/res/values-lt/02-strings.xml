@@ -39,16 +39,20 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="drawer_open">Open Drawer</string>
-  <string name="drawer_close">Close Drawer</string>
+  <string name="drawer_open">Open drawer</string>
+  <string name="drawer_close">Close drawer</string>
   <string name="CardEditorLaterMessage">Saved information for later</string>
   <string name="CardEditorCardDeck">Kortelių malka:</string>
   <string name="CardEditorNoteDeck">Malka:</string>
   <string name="CardEditorModel">Tipas:</string>
   <string name="CardEditorTags">Žymos: %1$s</string>
   <string name="CardEditorCards">Cards: %1$s</string>
+  <string name="tag_name">Tag name</string>
   <string name="add_new_filter_tags">Pridėti/filtruoti žymas</string>
+  <string name="add_tag">Add tag</string>
+  <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">Filtruoti žymas</string>
+  <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">SD kortelė yra nepasiekiama, nes jis yra naudojama kaip USB laikmena. Atjunkite USB, jei norite naudoti savo rinkinius.</string>
   <string name="enable_whiteboard">Enable whiteboard</string>
   <string name="disable_whiteboard">Disable whiteboard</string>
@@ -83,7 +87,7 @@
   <string name="select">Pasirinkti</string>
   <string name="saving_changes">Išsaugomi pakeitimai&#8230;</string>
   <string name="reordering_cards">Reordering cards&#8230;</string>
-  <string name="field_remapping">%1$s (from \'%2$s\')</string>
+  <string name="field_remapping">%1$s (from “%2$s”)</string>
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d card studied in %2$s</item>
@@ -105,7 +109,7 @@
   <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
   <string name="rename">Pervadinti</string>
   <string name="rename_error">Nepavyko pervadinti malka %s</string>
-  <string name="default_conf_delete_error">The default options group can\'t be removed</string>
+  <string name="default_conf_delete_error">The default options group can’t be removed</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d card added</item>
     <item quantity="few">%d cards added</item>
@@ -115,7 +119,7 @@
   <string name="check_db">Patikrinti duomenų bazę</string>
   <string name="check_media">Check media</string>
   <string name="check_db_message">Tikrinama duomenų bazė&#8230;</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run “Tools&gt;Empty Cards...” on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="delete_deck">Ištrinama malka&#8230;</string>
   <string name="show_hint">Rodyti %s</string>
@@ -125,20 +129,20 @@
   <string name="import_select_title">Pasirinkite failą importavimui</string>
   <string name="import_message_add">Pridėti</string>
   <string name="import_message_replace_confirm">Tai ištrins dabartinę jūsų kolekciją ir pakeis %s failo duomenimis</string>
-  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
+  <string name="import_message_add_confirm">Add “%s” to collection? This may take a long time</string>
   <string name="import_log_success">Imported %d cards</string>
   <string name="import_log_error">Importuoti nepavyko</string>
   <string name="import_log_no_apkg">Tai nėra galiojančio apkg failo</string>
-  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
-  <string name="import_error_content_provider">The selected file could not be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n %s</string>
+  <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg extension</string>
+  <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
   <string name="import_importing">Importuojamos kortelės.\nPrašome palaukti...</string>
   <string name="export_include_schedule">Include scheduling</string>
   <string name="export_include_media">Include media</string>
   <string name="confirm_apkg_export">Export collection as apkg file?</string>
-  <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
+  <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
   <string name="export_in_progress">Exporting apkg file&#8230;</string>
   <string name="export_successful_title">Email apkg?</string>
-  <string name="export_successful">File \"%s\" was exported. Do you want to email it?</string>
+  <string name="export_successful">File “%s” was exported. Do you want to email it?</string>
   <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Norėdamas importuoti korteles, padėkite apkg failą į aplanką %s ir paspauskite Ok</string>
   <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
@@ -148,10 +152,10 @@
   <string name="steps_error">Steps must be numbers greater than 0</string>
   <string name="steps_min_error">At least one step is required</string>
   <string name="sched_end">(pabaiga)</string>
-  <string name="sched_unbury_button">To see them now, touch the \"Unbury\" button.</string>
+  <string name="sched_unbury_button">To see them now touch the “Unbury” button.</string>
   <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>
-  <string name="tag_editor_add_hint">Su varnele dešinėje galite pridėti naują žymą</string>
-  <string name="tag_editor_add_feedback">Paspauskite \"%2$s\" mygtuką \"%1$s\" pridėjimo patvirtinimui</string>
+  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
-  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
+  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\nPress “Help” to see the manual.</string>
 </resources>

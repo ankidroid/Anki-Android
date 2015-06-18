@@ -76,6 +76,7 @@
     <item>添加的顺序</item>
     <item>根据到期顺序</item>
     <item>最晚添加的优先</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>增加今天的新卡牌数量限制</item>
@@ -94,11 +95,6 @@
     <item>混合新卡牌和复习</item>
     <item>学习新卡牌后再复习</item>
     <item>复习后再学习新卡牌</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>所有卡牌</item>
-    <item>新卡牌</item>
-    <item>到期卡牌</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>当快闪卡没有指定字体时</item>

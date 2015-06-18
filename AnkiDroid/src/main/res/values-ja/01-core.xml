@@ -41,7 +41,7 @@
 <resources>
   <string name="decks">単語帳</string>
   <string name="card_browser">ブラウザー</string>
-  <string name="statistics">統計情報</string>
+  <string name="statistics">統計</string>
   <string name="settings">設定</string>
   <string name="help">ヘルプ</string>
   <string name="send_feedback">フィードバックを送信</string>
@@ -128,7 +128,7 @@
   <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、一日あたりの新規カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。（ただしそれに伴って短期的に学習の負担が増えますのでご注意ください。）</string>
   <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
   <string name="studyoptions_no_cards_due">学習予定時刻に達したカードがまだありません</string>
-  <string name="sd_card_not_mounted">Device storage not mounted</string>
+  <string name="sd_card_not_mounted">デバイスストレージがマウントされていません</string>
   <string name="button_sync">同期</string>
   <string name="export">エクスポート(書き出し)</string>
   <string name="nothing">Nothing</string>

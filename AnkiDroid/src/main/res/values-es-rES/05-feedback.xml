@@ -40,7 +40,6 @@
 -->
 <resources>
   <string name="error_reporting_choice">Informar de errores</string>
-  <string name="error_reporting_choice_summary">Los errores se pueden enviar automáticamente, nunca, o preguntándote primero</string>
   <string name="feedback_disclaimer">Aviso: No recopilamos información personal como su dirección de correo electrónico, número de teléfono o IMEI del teléfono. Recopilamos cierta información acerca de su dispositivo como fabricante, modelo y versión de Android, así como la naturaleza de los informes de errores y los pasos que llevaron a ellos.</string>
   <string name="feedback_title">Sugerencias</string>
   <string name="feedback_default_text">Por favor, introduce tus sugerencias, o información sobre la naturaleza de cualquier error que estés experimentando.</string>

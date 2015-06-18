@@ -52,16 +52,16 @@
   <string name="studyoptions_eta">Tiempo estimado (min):</string>
   <string name="studyoptions_start">Estudiar ahora</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">%1$d tarjeta programada (%2$s)</item>
+    <item quantity="other">%1$d tarjetas programadas (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
-    <item quantity="other">%d minutes left</item>
+    <item quantity="one">%d minuto restante</item>
+    <item quantity="other">%d minutos restantes</item>
   </plurals>
   <string name="type_answer_hint">Escribir respuesta</string>
   <string name="show_answer">Mostrar Respuesta</string>
@@ -131,7 +131,7 @@
   <string name="studyoptions_congrats_more_new">Hay más tarjetas nuevas disponibles pero el límite diario ha sido alcanzado. Puede incrementar el límite en las opciones, pero por favor tenga en cuenta que esto incrementará el trabajo de revisión a corto plazo.</string>
   <string name="studyoptions_congrats_custom">Para estudiar por fuera de la programación normal, haga click en el botón inferior Estudio Personalizado.</string>
   <string name="studyoptions_no_cards_due">Aún no hay tarjetas programadas.</string>
-  <string name="sd_card_not_mounted">Device storage not mounted</string>
+  <string name="sd_card_not_mounted">El almacenamiento del dispositivo no se encuentra montado</string>
   <string name="button_sync">Sincronización</string>
   <string name="export">Exportar</string>
   <string name="nothing">Nada</string>
@@ -143,8 +143,8 @@
   <string name="card_template_editor_menu_delete">Eliminar</string>
   <string name="card_template_editor_cant_delete">Se requiere al menos un tipo de nota.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="one">¿Eliminar el tipo de tarjeta \'%2$s\' y su %1$d tarjeta?</item>
+    <item quantity="other">¿Eliminar el tipo de tarjeta \'%2$s\' y sus %1$d tarjetas?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Eliminar este tipo de tarjeta podría causar la eliminación de una o más notas. Por favor, cree primero un nuevo tipo de tarjeta.</string>
 </resources>

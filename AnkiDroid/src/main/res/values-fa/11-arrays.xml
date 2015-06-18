@@ -76,6 +76,7 @@
     <item>به ترتيب اضافه شدن</item>
     <item>به ترتيب موعد</item>
     <item>اولين اضافه شده هاي اخير</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>محدوده افزایش کارتهای جدید امروز</item>
@@ -94,11 +95,6 @@
     <item>ادغام کارتهای جدید و مرور شده</item>
     <item>کارتهای جدید بعد از مرور شده ها</item>
     <item>کارتهای جدید قبل از مرور شده ها</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>همه کارتها</item>
-    <item>جدید</item>
-    <item>سر رسید</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>هنگامیکه هیچ فونتی برای فلش کارت تعیین نشده</item>

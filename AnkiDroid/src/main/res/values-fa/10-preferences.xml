@@ -64,7 +64,7 @@
   <string name="whiteboard_black">حاشیه‌های تک‌رنگ</string>
   <string name="whiteboard_black_summ">حافظه کمتری استفاده می‌کند، اما در حالت شب کار نمی‌کند</string>
   <string name="write_answers_disable">غیر فعال کردن تایپ پاسخ</string>
-  <string name="write_answers_disable_summ">Prevents keyboard from appearing on cards containing \'type in the answer\' fields</string>
+  <string name="write_answers_disable_summ">Prevents keyboard from appearing on cards containing type-the-answer fields</string>
   <string name="text_selection_click">راه‌حل کلیک طولانی</string>
   <string name="text_selection_click_summ">اگر از طریق کلیک طولانی نمی توانید متن را انتخاب کنید این را انجام دهید</string>
   <string name="dictionary">فرهنگ لغت برای مراجعه</string>
@@ -73,14 +73,14 @@
   <string name="reset_languages_summ">بازیابی زبان فعلی(برای تبدیل متن به گفتار و همه لغت نامه ها) برای همه دسته ها. بازیابی مخصوص دسته ویژه فعلی روی جمع کننده دسته</string>
   <string name="reset_languages_question">کل زبان فعلی را دوباره تنظیم می کنید؟</string>
   <string name="reset_confirmation">All states reset</string>
-  <string name="display_font_size">تغییر اندازه فونت بازبینی</string>
-  <string name="display_font_size_summ">XXX %</string>
-  <string name="image_size">تغییر اندازه تصویر بازبینی</string>
-  <string name="image_size_summ">XXX %</string>
+  <string name="card_zoom">Card zoom</string>
+  <string name="card_zoom_summ">XXX%</string>
+  <string name="image_zoom">Image zoom</string>
+  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Answer button size</string>
-  <string name="button_size_summ">XXX %</string>
+  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">تغییر اندازه فونت مرورگر کارت</string>
-  <string name="card_browser_font_size_summ">XXX %</string>
+  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">مسیر مجموعه</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">حالت تمام‌صفحه</string>
@@ -138,14 +138,8 @@
   <string name="safe_display_summ">غیرفعال کردن همه انیمیشن‌ها و استفاده از حالت محتاطانه‌تر برای نمایش کارت‌ها. این گزینه برای دستگاههای با جوهر الکترونیکی و قدیمی که فونت سفارشی استفاده می‌کنند ممکن است لازم باشد.</string>
   <string name="vertical_centering">تراز در وسط</string>
   <string name="vertical_centering_summ">تراز کردن محتوای کارت‌ها بصورت عمودی در وسط</string>
-  <string name="pref_backup">از نسخه های پشتبان استفاده کنید</string>
-  <string name="pref_backup_summ">ایجاد پشتیبان بطور خودکار پیش از باز کردن یک دسته (یکبار در روز)</string>
   <string name="pref_backup_max">حداکثر تعداد پشتیبان‌ها</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">Disable backups?</string>
-  <string name="pref_disable_backup_warning">This will delete all backup files</string>
-  <string name="pref_intent_add_instant">اضافه کردن فوری</string>
-  <string name="pref_intent_add_instant_summ">افزودن کارت‌های جدید از واژه‌نامه بدون بازکردن آنکی‌دروید. می‌توانید بعدا آنها را از قسمت \'اطلاعات ذخیره شده\' در اضافه کننده کارت پیدا کنید</string>
   <string name="show_estimates">نمایش  دکمه زمان</string>
   <string name="show_estimates_summ">نمایش زمان مرور بعدی در بالای دکمه پاسخ</string>
   <string name="show_progress">نمایش باقیمانده</string>
@@ -172,7 +166,7 @@
   <string name="deck_conf_deck_description">توصیف دسته</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="other"/>
+    <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">کارت های جدید</string>
   <string name="deck_conf_rev_cards">مرورها</string>
@@ -217,7 +211,7 @@
   <string name="deck_conf_remove_message">تنظیمات فعلی گروه حذف شود؟</string>
   <string name="deck_conf_set_subdecks">برای تمام دسته ها تنظیم شود</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="other"/>
+    <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">برای تمام دسته ها تنظیم شود</string>
   <string name="deck_conf_set_subdecks_message">تنظیمات گروه فعلی برای کل این دسته از دسته ها تنظیم شود؟</string>

@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="few">%d cards shown</item>
+    <item quantity="one">%d картица приказана</item>
+    <item quantity="few">%d картица приказанo</item>
     <item quantity="many">%d cards shown</item>
     <item quantity="other">%d cards shown</item>
   </plurals>
@@ -57,13 +57,13 @@
   <string name="card_browser_show_suspended">Филтер је заустављен</string>
   <string name="card_browser_search_by_tag">Филтрирај по ознаци</string>
   <string name="card_browser_tags_shown">Ознаке: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
+  <string name="card_browser_list_my_searches">Моје претраге</string>
+  <string name="card_browser_list_my_searches_save">Сачувај претрагу</string>
+  <string name="card_browser_list_my_searches_title">Изабери сачувану претрагу</string>
+  <string name="card_browser_list_my_searches_new_name">Назив за тренутну претрагу</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">Не можеш да сачуваш претрагу без назива.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Име већ постоји!</string>
+  <string name="card_browser_list_my_searches_remove_content">Да обришем \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Промени сортирање</string>
   <string name="card_browser_change_display_order_title">Промени сортирање</string>
   <string name="card_browser_change_display_order_reverse">Изабери поље два пута за окретање.</string>
@@ -74,7 +74,7 @@
   <string name="card_browser_filtering_cards">Филтрирање картица&#8230;\nИдите назад да прекинуте.</string>
   <string-array name="card_browser_order_labels">
     <item>Без сортирања (брже)</item>
-    <item>By sort field</item>
+    <item>Поље за сортирање</item>
     <item>по времену креирања</item>
     <item>по времену уређивања</item>
     <item>по времену мењања</item>

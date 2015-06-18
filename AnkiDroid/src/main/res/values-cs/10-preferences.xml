@@ -73,14 +73,14 @@
   <string name="reset_languages_summ">Obnoví přiřazení jazyka (pro převod textu na řeč a slovníky) ve všech balíčcích. Obnovení pouze konkrétního balíčku lze přímo na balíčku.</string>
   <string name="reset_languages_question">Obnovit všechny přiřazení jazyka?</string>
   <string name="reset_confirmation">Obnovit všechny stavy</string>
-  <string name="display_font_size">Velikost písma při opakování</string>
-  <string name="display_font_size_summ">XXX %</string>
-  <string name="image_size">Velikost obrázku při opakování</string>
-  <string name="image_size_summ">XXX %</string>
+  <string name="card_zoom">Card zoom</string>
+  <string name="card_zoom_summ">XXX%</string>
+  <string name="image_zoom">Image zoom</string>
+  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Velikost tlačítka pro odpověď</string>
-  <string name="button_size_summ">XXX %</string>
+  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Velikost písma v prohlížení</string>
-  <string name="card_browser_font_size_summ">XXX %</string>
+  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Cesta ke kolekci</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Celoobrazovkový režim</string>
@@ -138,14 +138,8 @@
   <string name="safe_display_summ">Zakázat všechny animace a použít bezpečnější metodu pro vykreslení karty. E-ink a starší zařízení pro použití vlastních písem toto může vyžadovat.</string>
   <string name="vertical_centering">Zarovnání na střed</string>
   <string name="vertical_centering_summ">Obsah karet vycentrovat svisle na střed</string>
-  <string name="pref_backup">Použit zálohování</string>
-  <string name="pref_backup_summ">Automaticky vytvořit zálohu před otevřením balíčku (jednou denně)</string>
   <string name="pref_backup_max">Maximální počet záloh</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">Zakázat zálohy?</string>
-  <string name="pref_disable_backup_warning">Tímto odstraníte všechny záložní soubory</string>
-  <string name="pref_intent_add_instant">Rychlé přidání</string>
-  <string name="pref_intent_add_instant_summ">Přidání nových karet ze slovníků bez otevření AnkiDroid. Najdete je později pod \"Uložená data\" na kartě přidaných.</string>
   <string name="show_estimates">Zobrazit tlačítko času</string>
   <string name="show_estimates_summ">Zobrazit čas příštího opakování nad tlačítkem odpovědí</string>
   <string name="show_progress">Zobraz zbývající</string>
@@ -172,9 +166,9 @@
   <string name="deck_conf_deck_description">Popis balíčku</string>
   <string name="deck_conf_group">Skupina nastavení</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
+    <item quantity="few">%1$s\n%2$d decks use this group</item>
+    <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">Nové karty</string>
   <string name="deck_conf_rev_cards">Opakování</string>
@@ -219,9 +213,9 @@
   <string name="deck_conf_remove_message">Odstranit možnosti aktuální skupiny?</string>
   <string name="deck_conf_set_subdecks">Nastavit pro všechny podřízené balíčky</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%s subdeck will use this group</item>
+    <item quantity="few">%s subdecks will use this group</item>
+    <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Nastavit pro všechny podřízené balíčky</string>
   <string name="deck_conf_set_subdecks_message">Použít aktuální nastavení pro všechny podbalíčky tohoto balíčku?</string>

@@ -73,14 +73,14 @@
   <string name="reset_languages_summ">Reset tugas bahasa (untuk teks ke bahasa dan kamus) untuk semua dek. Reset tugas spesifik pada pemilih dek</string>
   <string name="reset_languages_question">Reset semua tugas bahasa?</string>
   <string name="reset_confirmation">Reset semua negara</string>
-  <string name="display_font_size">Resensi skala huruf</string>
-  <string name="display_font_size_summ">XXX %</string>
-  <string name="image_size">Resensi penskalaan gambar</string>
-  <string name="image_size_summ">XXX %</string>
+  <string name="card_zoom">Card zoom</string>
+  <string name="card_zoom_summ">XXX%</string>
+  <string name="image_zoom">Image zoom</string>
+  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Ukuran tombol jawaban</string>
-  <string name="button_size_summ">XXX %</string>
+  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Kartu browser penskalaan huruf</string>
-  <string name="card_browser_font_size_summ">XXX %</string>
+  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Koleksi jalur</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Mode layar penuh</string>
@@ -111,7 +111,7 @@
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="fix_hebrew_text">Perbaiki untuk vokal Ibrani</string>
   <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
-  <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to:\n%s/fonts/\n\nYou won\'t have to modify your cards.</string>
+  <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to\n“%s/fonts/”\n\nYou won’t have to modify your cards.</string>
   <string name="fix_hebrew_download_font">Unduh huruf</string>
   <string name="default_font">Font standar</string>
   <string name="default_font_summ">XXX</string>
@@ -138,14 +138,8 @@
   <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink and older devices using custom fonts may require this.</string>
   <string name="vertical_centering">Center align</string>
   <string name="vertical_centering_summ">Center the content of cards vertically</string>
-  <string name="pref_backup">Gunakan salinan</string>
-  <string name="pref_backup_summ">Automatically create backups before opening a deck (once a day)</string>
   <string name="pref_backup_max">Max number of backups</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">Disable backups?</string>
-  <string name="pref_disable_backup_warning">This will delete all backup files</string>
-  <string name="pref_intent_add_instant">Instant add</string>
-  <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
   <string name="show_estimates">Show button time</string>
   <string name="show_estimates_summ">Show next review time on answer buttons</string>
   <string name="show_progress">Show remaining</string>
@@ -172,7 +166,7 @@
   <string name="deck_conf_deck_description">Deskripsi dek</string>
   <string name="deck_conf_group">Pilihan-pilihan grup</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="other"/>
+    <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">Kartu-kartu baru</string>
   <string name="deck_conf_rev_cards">Ulasan-ulasan</string>
@@ -217,10 +211,10 @@
   <string name="deck_conf_remove_message">Remove current options group?</string>
   <string name="deck_conf_set_subdecks">Set for all subdecks</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="other"/>
+    <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Set for all subdecks</string>
-  <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck\'s subdecks?</string>
+  <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
   <string name="pref_browser_editor_font">Browser and editor font</string>
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filter</string>

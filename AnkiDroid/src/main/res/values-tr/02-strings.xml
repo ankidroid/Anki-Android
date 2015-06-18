@@ -47,8 +47,12 @@
   <string name="CardEditorModel">Tür:</string>
   <string name="CardEditorTags">Etiketler: %1$s</string>
   <string name="CardEditorCards">Kartlar: %1$s</string>
+  <string name="tag_name">Tag name</string>
   <string name="add_new_filter_tags">Etiket ekle/filtrele</string>
+  <string name="add_tag">Add tag</string>
+  <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">Etiket filtrele</string>
+  <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">SD kart USB depolama olarak kullanıldığı için kullanılamıyor. Destelerinize erişmek için USB bağlantısını kesin.</string>
   <string name="enable_whiteboard">Yazı tahtasını etkinleştir</string>
   <string name="disable_whiteboard">Yazı tahtasını devredışı bırak</string>
@@ -86,12 +90,12 @@
   <string name="field_remapping">%1$s (\'%2$s\')\'dan/den</string>
   <string name="confirm_map_cards_to_nothing">Hiçbiriyle eşlemeyen herhangi bir kart silinecek. Geriye kalan kartları olmayan not varsa, kaybolur. Devam etmek istediğinizden emin misiniz?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="one">%2$s %1$d kart çalışıldı</item>
+    <item quantity="other">%2$s %1$d kart çalışıldı</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minute</item>
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="one">%1$d dakikada</item>
+    <item quantity="other">%1$d dakikada</item>
   </plurals>
   <string name="studyoptions_welcome_title">AnkiDroid\'e Hoşgeldiniz</string>
   <string name="fact_adder_intent_title">AnkiDroid Kartı</string>
@@ -105,8 +109,8 @@
   <string name="rename_error">%s destesinin adı değiştirilemedi</string>
   <string name="default_conf_delete_error">Varsayılan seçenekler grubu kaldırılamaz</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="one">%d kart eklendi</item>
+    <item quantity="other">%d kart eklendi</item>
   </plurals>
   <string name="help_title">Yardım</string>
   <string name="check_db">Veritabanını denetle</string>
@@ -147,8 +151,8 @@
   <string name="sched_end">(bitiş)</string>
   <string name="sched_unbury_button">Onları şu an görmek için, Görünür Yap düğmesine basın.</string>
   <string name="sched_has_buried">Bazı ilgili veya gizli kartlar sonraki bir seansa kadar geciktirildi.</string>
-  <string name="tag_editor_add_hint">Yeni etiket eklemek için için sağdaki tik işâretini kullanın</string>
-  <string name="tag_editor_add_feedback">\"%1$s\" eklemeyi onaylamak için \"%2$s\" düğmesine basın</string>
+  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">Metni kopyaladıktan sonra, arama simgesini göstermek için bilgi kartının üzerine dokunun</string>
   <string name="add_content_showcase_text">Başlamak için, çalışacak yeni birşeyler eklemeye + düğmesine dokunun.\n\nKılavuzu görmek için \"Yardım\"a basın.</string>
 </resources>

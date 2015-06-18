@@ -76,6 +76,7 @@
     <item>V poradí, v akom boli pridané</item>
     <item>Podľa času opakovania</item>
     <item>Od poslednej pridanej</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Zvýšiť dnešný limit nových kariet</item>
@@ -94,11 +95,6 @@
     <item>Zmiešať nové karty a opakovania</item>
     <item>Nové karty po opakovaní</item>
     <item>Nové karty pred opakovaním</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>Všetky karty</item>
-    <item>Nové</item>
-    <item>Na skúšanie</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>Keď pre kartičky nie je určené žiadne písmo</item>

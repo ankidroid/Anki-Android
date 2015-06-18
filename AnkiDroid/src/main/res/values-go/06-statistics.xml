@@ -48,14 +48,14 @@
   <string name="statistics_learn">Laisjan</string>
   <string name="statistics_cram">Cram</string>
   <string name="stats_cards">Kartos</string>
-  <string name="stats_cards_intervals">Cards with given Interval</string>
-  <string name="stats_cumulative_cards">Cumulative Cards</string>
-  <string name="stats_cumulative_answers">Cumulative Answers</string>
-  <string name="stats_cumulative_time_minutes">Cumulative Minutes</string>
-  <string name="stats_cumulative_time_hours">Cumulative Hours</string>
+  <string name="stats_cards_intervals">Cards with given interval</string>
+  <string name="stats_cumulative_cards">Cumulative cards</string>
+  <string name="stats_cumulative_answers">Cumulative answers</string>
+  <string name="stats_cumulative_time_minutes">Cumulative minutes</string>
+  <string name="stats_cumulative_time_hours">Cumulative hours</string>
   <string name="stats_cumulative">Cumulative</string>
-  <string name="stats_cumulative_percentage">Cumulative Percentage</string>
-  <string formatted="false" name="stats_cumulative_correct_percentage">Cumulative Correct %</string>
+  <string name="stats_cumulative_percentage">Cumulative percentage</string>
+  <string formatted="false" name="stats_cumulative_correct_percentage">Cumulative correct %</string>
   <string name="stats_answers">Andahafteis</string>
   <string name="stats_minutes">Minutjus</string>
   <string name="stats_hours">Ƕeilos</string>
@@ -118,10 +118,10 @@
   <string name="stats_review_count">Domeinaraþjo</string>
   <string name="stats_review_time">Domeinaƕeila</string>
   <string name="stats_review_intervals">Intervals</string>
-  <string name="stats_breakdown">Hourly Breakdown</string>
-  <string name="stats_weekly_breakdown">Weekly Breakdown</string>
-  <string name="stats_answer_buttons">Answer Buttons</string>
-  <string name="stats_cards_types">Cards Types</string>
+  <string name="stats_breakdown">Hourly breakdown</string>
+  <string name="stats_weekly_breakdown">Weekly breakdown</string>
+  <string name="stats_answer_buttons">Answer buttons</string>
+  <string name="stats_cards_types">Cards types</string>
   <string-array name="stats_day_time_strings">
     <item>4AM</item>
     <item>10AM</item>

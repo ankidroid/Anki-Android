@@ -76,6 +76,7 @@
     <item>Ordine di aggiunta</item>
     <item>Ordine di scadenza</item>
     <item>Dapprima aggiunte più recentemente</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Aumenta il limite odierno di carte nuove</item>
@@ -94,11 +95,6 @@
     <item>Mescola le carte nuove e le ripetizioni</item>
     <item>Carte nuove dopo le ripetizioni</item>
     <item>Carte nuove prima delle ripetizioni</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>Tutte le carte</item>
-    <item>Nuove</item>
-    <item>Scadute</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>Quando nessun tipo di carattere specificato nelle carte</item>

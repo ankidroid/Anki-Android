@@ -47,8 +47,12 @@
   <string name="CardEditorModel">Type :</string>
   <string name="CardEditorTags">Marqueurs : %1$s</string>
   <string name="CardEditorCards">Cartes : %1$s</string>
+  <string name="tag_name">Tag name</string>
   <string name="add_new_filter_tags">Ajouter/filtrer étiquettes</string>
+  <string name="add_tag">Add tag</string>
+  <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">Filtrer les étiquettes</string>
+  <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">La carte SD est indisponible car elle sert de mémoire USB. Déconnectez l’USB pour accéder à vos paquets.</string>
   <string name="enable_whiteboard">Activer le tableau blanc</string>
   <string name="disable_whiteboard">Désactiver le tableau blanc</string>
@@ -147,8 +151,8 @@
   <string name="sched_end">(fin)</string>
   <string name="sched_unbury_button">Pour les voir maintenant, appuyer sur le bouton Déterrer.</string>
   <string name="sched_has_buried">Certaines cartes enterrées ou différées ont été reportées à une prochaine séance.</string>
-  <string name="tag_editor_add_hint">Utiliser la coche sur la droite pour ajouter une nouvelle étiquette</string>
-  <string name="tag_editor_add_feedback">Appuyer sur « %2$s » pour confirmer l\'ajout de « %1$s »</string>
+  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">Après avoir copié le texte, touchez la carte n\'importe où pour afficher l\'icône de recherche</string>
   <string name="add_content_showcase_text">Pour commencer, appuyer sur le bouton + pour ajouter des nouvelles cartes.\n\n Appuyer sur \"Aide\" pour voir le manuel.</string>
 </resources>

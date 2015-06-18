@@ -73,14 +73,14 @@
   <string name="reset_languages_summ">Zresetuj przypisanie języków (dla tekstu do mowy) dla wszystkich talii. Zresetuj ustawienia dla konkretnej talii na ekranie wyboru talii</string>
   <string name="reset_languages_question">Reset wszystkich ustawień języków?</string>
   <string name="reset_confirmation">Zresetuj wszystkie ustawienia</string>
-  <string name="display_font_size">Wielkość czcionki podczas nauki</string>
-  <string name="display_font_size_summ">XXX %</string>
-  <string name="image_size">Skalowanie obrazów podczas nauki</string>
-  <string name="image_size_summ">XXX %</string>
+  <string name="card_zoom">Card zoom</string>
+  <string name="card_zoom_summ">XXX%</string>
+  <string name="image_zoom">Image zoom</string>
+  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Rozmiar przycisku odpowiedzi</string>
-  <string name="button_size_summ">XXX %</string>
+  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Skalowanie fontu przeglądania kart</string>
-  <string name="card_browser_font_size_summ">XXX %</string>
+  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Ścieżka kolekcji</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Tryb pełnoekranowy</string>
@@ -138,14 +138,8 @@
   <string name="safe_display_summ">Wyłącz wszystkie animacje i użyj bezpieczniejszej metody rysowania kart. E-ink i starsze urządzenia używając standardowych fontów mogą tego wymagać.</string>
   <string name="vertical_centering">Wycentruj</string>
   <string name="vertical_centering_summ">Wycentruj w pionie zawartość kart</string>
-  <string name="pref_backup">Twórz kopie</string>
-  <string name="pref_backup_summ">Automatycznie twórz kopię zapasową przed otwarciem talii (raz dziennie)</string>
   <string name="pref_backup_max">Maksymalna liczba kopii zapasowych</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">Wyłączyć kopie zapasowe?</string>
-  <string name="pref_disable_backup_warning">To usunie wszystkie kopie zapasowe</string>
-  <string name="pref_intent_add_instant">Dodaj natychmiast</string>
-  <string name="pref_intent_add_instant_summ">Dodawaj nowe karty ze słowników bez otwierania AnkiDroid. Znajdziesz je później jako \"zapisane dane\" w edytorze kart.</string>
   <string name="show_estimates">Pokaż czas przy przyciskach</string>
   <string name="show_estimates_summ">Pokazuj czas kolejnej powtórki nad przyciskami odpowiedzi</string>
   <string name="show_progress">Pokaż pozostałe</string>
@@ -172,9 +166,9 @@
   <string name="deck_conf_deck_description">Opis talii</string>
   <string name="deck_conf_group">Grupa opcji</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
+    <item quantity="few">%1$s\n%2$d decks use this group</item>
+    <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">Nowe karty</string>
   <string name="deck_conf_rev_cards">Powtórki</string>
@@ -219,9 +213,9 @@
   <string name="deck_conf_remove_message">Usunąć bieżące ustawienia grupy?</string>
   <string name="deck_conf_set_subdecks">Ustaw dla wszystkich sub-talii</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%s subdeck will use this group</item>
+    <item quantity="few">%s subdecks will use this group</item>
+    <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Ustaw dla wszystkich sub-talii</string>
   <string name="deck_conf_set_subdecks_message">Zastosować bieżące ustawienia grupy dla wszystkich sub-talii tej talii?</string>

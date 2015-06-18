@@ -76,6 +76,7 @@
     <item>Lisäysjärjestyksessä</item>
     <item>Näyttöjärjestyksessä</item>
     <item>Viimeisimmät lisätyt ensin</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Lisää tämän päivän uusien korttien rajoitusta</item>
@@ -94,11 +95,6 @@
     <item>Sekoita uusiakortteja ja kertauksia</item>
     <item>Uudet kortit kertauksien jälkeen</item>
     <item>Uudet kortit ennen kertauksia</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>Kaikki kortit</item>
-    <item>Uusi</item>
-    <item>Erääntynyt</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>Kun korteille ei ole määritelty kirjasintyyppiä</item>

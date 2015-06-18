@@ -39,22 +39,26 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="drawer_open">Открыть ящик</string>
-  <string name="drawer_close">Закрыть ящик</string>
+  <string name="drawer_open">Открыть панель</string>
+  <string name="drawer_close">Закрыть панель</string>
   <string name="CardEditorLaterMessage">Сохранённая информация</string>
   <string name="CardEditorCardDeck">Колода карт:</string>
   <string name="CardEditorNoteDeck">Колода:</string>
   <string name="CardEditorModel">Тип:</string>
   <string name="CardEditorTags">Теги: %1$s</string>
   <string name="CardEditorCards">Карты: %1$s</string>
-  <string name="add_new_filter_tags">Добавить / Отфильтровать метки</string>
+  <string name="tag_name">Tag name</string>
+  <string name="add_new_filter_tags">Добавить/отфильтровать метки</string>
+  <string name="add_tag">Add tag</string>
+  <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">Отфильтровать метки</string>
+  <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">SD-карта недоступна, т.к. она (и ваш аппарат) используется как USB-хранилище. Отключите режим USB-хранилище вашего аппарата для доступа к колоде.</string>
   <string name="enable_whiteboard">Включить доску</string>
   <string name="disable_whiteboard">Отключить доску</string>
   <string name="show_whiteboard">Показать доску</string>
   <string name="hide_whiteboard">Скрыть доску</string>
-  <string name="clear_whiteboard">Очистка доски</string>
+  <string name="clear_whiteboard">Очистить доску</string>
   <string name="replay_audio">Воспроизведение аудио</string>
   <string name="leech_suspend_notification">Карта помечена как \"приставучая\" и отложена</string>
   <string name="leech_notification">Карта помечена как \"приставучая\"</string>
@@ -70,11 +74,11 @@
     <item>Вопрос</item>
     <item>Метки</item>
     <item>Неудачные попытки</item>
-    <item>Отзывы</item>
+    <item>Пересмотры</item>
   </string-array>
   <string name="cardeditor_title_add_note">Добавить заметку</string>
   <string name="cardeditor_title_edit_card">Изменить заметку</string>
-  <string name="discard_unsaved_changes">Закрыть и использовать текущий вход?</string>
+  <string name="discard_unsaved_changes">Закрыть и отказаться от изменений?</string>
   <string name="factadder_saving_error">Ошибка при сохранении заметки</string>
   <string name="saving_facts">Сохранение заметки</string>
   <string name="saving_model">Сохранение модели</string>
@@ -84,16 +88,16 @@
   <string name="saving_changes">Сохранение изменений...</string>
   <string name="reordering_cards">Изменение очерёдности карт...</string>
   <string name="field_remapping">%1$s (из \'%2$s\')</string>
-  <string name="confirm_map_cards_to_nothing">Не сопоставленные карты будут удалены. Заметки, оставшиеся без карт, будут утеряны. Продолжить?</string>
+  <string name="confirm_map_cards_to_nothing">Несопоставленные карты будут удалены. Заметки, оставшиеся без карт, будут утеряны. Продолжить?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
-    <item quantity="few">%1$d cards studied in %2$s</item>
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="one">%1$d карта изучена за %2$s</item>
+    <item quantity="few">%1$d карты изучены за %2$s</item>
+    <item quantity="other">%1$d карт изучены за %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minute</item>
-    <item quantity="few">%1$d minutes</item>
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="one">%1$d минута</item>
+    <item quantity="few">%1$d минуты</item>
+    <item quantity="other">%1$d минут</item>
   </plurals>
   <string name="studyoptions_welcome_title">Добро пожаловать в AnkiDroid</string>
   <string name="fact_adder_intent_title">AnkiDroid Карта</string>
@@ -105,43 +109,43 @@
   <string name="error_insufficient_memory">Операция не возможна из-за недостатка памяти на Вашем устройстве</string>
   <string name="rename">Переименовать</string>
   <string name="rename_error">Колода %s не может быть переименована</string>
-  <string name="default_conf_delete_error">Невозможно удалить параметры по умолчанию</string>
+  <string name="default_conf_delete_error">Невозможно удалить группу опций по умолчанию</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
-    <item quantity="few">%d cards added</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="one">%d карта добавлена</item>
+    <item quantity="few">%d карты добавлены</item>
+    <item quantity="other">%d карт добавлены</item>
   </plurals>
   <string name="help_title">Справка</string>
-  <string name="check_db">Проверка базы данных</string>
+  <string name="check_db">Проверить базу данных</string>
   <string name="check_media">Проверить медиа</string>
-  <string name="check_db_message">Проверка базы данных. \nПожалуйста подождите...</string>
+  <string name="check_db_message">Идет проверка базы данных&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Пустая карта. Запустите «Инструменты&gt;Пустые карты...» на настольном клиенте.</string>
   <string name="unknown_type_field_warning">Тип ответа: неизвестное поле %s</string>
-  <string name="delete_deck">Удаление колоды...\nПожалуйста подождите...</string>
+  <string name="delete_deck">Удаление колоды&#8230;</string>
   <string name="show_hint">Показать %s</string>
-  <string name="info_rate">Оценка AnkiDroid</string>
+  <string name="info_rate">Оценить AnkiDroid</string>
   <string name="col_load_failed">Сбой загрузки коллекции.\nНажмите кнопку назад, чтобы закрыть AnkiDroid.</string>
-  <string name="import_title">Импорт карт</string>
+  <string name="import_title">Импортировать карты</string>
   <string name="import_select_title">Выбрать файл для импорта</string>
   <string name="import_message_add">Добавить</string>
   <string name="import_message_replace_confirm">Удалить Вашу существующую коллекцию и заменить её данными файла %s. Вы уверены?</string>
   <string name="import_message_add_confirm">Добавить \"%s\" в коллекцию? Это может занять много времени</string>
   <string name="import_log_success">Успешно импортированы %d карты</string>
-  <string name="import_log_error">Импорт не удался</string>
+  <string name="import_log_error">Импортирование не удалось</string>
   <string name="import_log_no_apkg">Это негодный apkg-файл</string>
   <string name="import_error_not_apkg_extension">У файла %s должно быть расширение .apkg</string>
   <string name="import_error_content_provider">Это файл невозможно импортировать автоматически. Пожалуйста, посмотрите в руководстве пользователя, как импортировать anki-файлы вручную: \n %s</string>
-  <string name="import_importing">Импортирование карт.\nПожалуйста, подождите...</string>
+  <string name="import_importing">Импортирование карт&#8230;</string>
   <string name="export_include_schedule">Включить планирование</string>
   <string name="export_include_media">Включить медиа</string>
   <string name="confirm_apkg_export">Экспортировать коллекцию в apkg файл?</string>
   <string name="confirm_apkg_export_deck">Экспортировать \"%s\" в apkg файл?</string>
   <string name="export_in_progress">Экспортирую apkg файл&#8230;</string>
-  <string name="export_successful_title">Отправить apkg по e-mail?</string>
-  <string name="export_successful">Файл \"%s\" был экспортирован. Вы хотите отправить его по e-mail?</string>
+  <string name="export_successful_title">Отправить apkg по электронной почте?</string>
+  <string name="export_successful">Файл \"%s\" был экспортирован. Вы хотите отправить его по электронной почте?</string>
   <string name="export_unsuccessful">При экспорте вашей коллекции возникла ошибка</string>
-  <string name="import_hint">Чтобы импортировать карты, поместите файл apkg в каталог %s и нажмите ОК</string>
-  <string name="upgrade_import_no_file_found">Найден не импортируемый файл %1$s</string>
+  <string name="import_hint">Чтобы импортировать карты, поместите файл apkg в каталог %s и нажмите «ОК»</string>
+  <string name="upgrade_import_no_file_found">Найден неимпортируемый файл %1$s</string>
   <string name="study_options">Опции колоды</string>
   <string name="custom_study">Дополнительное обучение</string>
   <string name="dyn_deck_desc">Это специальная колода для изучения вне нормального расписания. Карты будут автоматически возвращены в их изначальную колоду после их просмотра. Удаление этой колоды из списка колод возвратит все оставшиеся карты в их изначальную колоду.</string>
@@ -150,8 +154,8 @@
   <string name="sched_end">(конец)</string>
   <string name="sched_unbury_button">Чтобы увидеть их снова, нажмите кнопку \"Отменить сдвиг\".</string>
   <string name="sched_has_buried">Некоторые связанные или скрытые карты были отложены до следующей сессии.</string>
-  <string name="tag_editor_add_hint">Поставьте галочку справа, чтобы добавить новую метку</string>
-  <string name="tag_editor_add_feedback">Нажмите кнопку «%2$s» для подтверждения добавления «%1$s»</string>
-  <string name="lookup_hint">Скопировав текст, тапните где-либо по карте чтобы показать иконку ответа</string>
-  <string name="add_content_showcase_text">Чтобы начать работу, нажмите на клавишу \"+\", чтобы добавить новые материалы для изучения.\n\n Нажмите на \"Помощь\", чтобы увидеть руководство.</string>
+  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+  <string name="lookup_hint">Скопировав текст, нажмите где-нибудь на карте, чтобы показать иконку поиска</string>
+  <string name="add_content_showcase_text">Чтобы начать работу, нажмите на клавишу «+», чтобы добавить новые материалы для изучения.\n\n Нажмите на «Помощь», чтобы увидеть руководство.</string>
 </resources>

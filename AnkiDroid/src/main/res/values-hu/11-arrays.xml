@@ -76,6 +76,7 @@
     <item>Rendezés hozzáadva</item>
     <item>Rendezés</item>
     <item>Utoljára hozzáadott előbb</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>A mai új kártyák számának növelése</item>
@@ -94,11 +95,6 @@
     <item>Keverjük össze az új kártyákat, és vélemények</item>
     <item>Új kártyák után vélemények</item>
     <item>Új kártyák előtt vélemények</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>Minden kártya</item>
-    <item>Új</item>
-    <item>Esedékes</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>When no font specified on flashcards</item>

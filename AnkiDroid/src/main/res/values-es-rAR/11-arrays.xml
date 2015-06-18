@@ -76,6 +76,7 @@
     <item>Orden añadido</item>
     <item>Orden de tarjetas programadas</item>
     <item>Primero las añadidas más recientemente</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Incrementar el límite de nuevas tarjetas para hoy</item>
@@ -94,11 +95,6 @@
     <item>Mezclar tarjetas nuevas y repasos</item>
     <item>Tarjetas nuevas después de los repasos</item>
     <item>Tarjetas nuevas antes de los repasos</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>Todas las tarjetas</item>
-    <item>Nuevo</item>
-    <item>Programadas</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>Cuando no haya una fuente especificada en las tarjetas flash</item>

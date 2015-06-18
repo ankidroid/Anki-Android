@@ -74,8 +74,8 @@
   <string name="intent_aedict_category">لإضافة بطاقات إلى آنكيدرويد أزل كل تصنيفات المفكرة أو أضف واحد باسم \'default\'</string>
   <string name="custom_study_new_total_new">بطاقات جديدة في القاعدة: %s</string>
   <string name="custom_study_rev_total_rev">Reviews due in deck: %s</string>
-  <string name="custom_study_new_extend">Increase today\'s new card limit by</string>
-  <string name="custom_study_rev_extend">Increase today\'s review limit by</string>
+  <string name="custom_study_new_extend">Increase today’s new card limit by</string>
+  <string name="custom_study_rev_extend">Increase today’s review limit by</string>
   <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
   <string name="custom_study_ahead">Review ahead by x days:</string>
   <string name="custom_study_random">Select x cards randomly from the deck:</string>
@@ -100,11 +100,10 @@
   <string name="dialog_positive_remove">Remove</string>
   <string name="dialog_positive_repair">Repair</string>
   <string name="dialog_positive_replace">Replace</string>
-  <string name="dialog_positive_reset">Reset</string>
   <string name="dialog_positive_restore">Restore</string>
   <string name="dialog_positive_set">Set</string>
   <string name="lookup_button_content">Look up</string>
-  <string name="dialog_collection_path_not_dir">The path specified was not a valid directory</string>
+  <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
   <string name="check_media_title">Check media?</string>
   <string name="check_media_warning">This may take a long time with large media collections</string>
   <string name="check_media_message">Checking media&#8230;</string>
@@ -113,8 +112,11 @@
   <string name="check_media_invalid">Files with invalid encoding: %d</string>
   <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
   <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
-  <string name="check_media_no_unused_missing">No unused or missing files found.</string>
-  <string name="check_media_db_updated">Media database rebuilt.</string>
+  <string name="check_media_no_unused_missing">No unused or missing files found</string>
+  <string name="check_media_db_updated">Media database rebuilt</string>
   <string name="check_media_delete_unused">Delete unused</string>
   <string name="check_media_deleted">Files deleted: %d</string>
+  <string name="tags_dialog_option_all_cards">All cards</string>
+  <string name="tags_dialog_option_new_cards">New</string>
+  <string name="tags_dialog_option_due_cards">Due</string>
 </resources>

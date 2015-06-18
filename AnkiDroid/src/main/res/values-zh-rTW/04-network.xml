@@ -41,7 +41,7 @@
 -->
 <resources>
   <string name="youre_offline">You are offline</string>
-  <string name="sync_error">Sync Error</string>
+  <string name="sync_error">Sync error</string>
   <string name="vague_error">Error</string>
   <string name="retry">重試</string>
   <string name="cancel">取消</string>
@@ -114,7 +114,7 @@
   <string name="sync_sanity_failed">您的收藏狀態在同步以後不一致，AnkiDroid 會強制進行完整同步來修復這問題。請選擇你想要保留哪一邊的檔案。如果您想要稍後進行同步，請選擇取消。</string>
   <string name="sync_media_sanity_failed">媒體檔案同步完成，不過媒體檔數量與伺服器上的不相等。下次將進行完整同步來更正這問題。</string>
   <string name="sync_media_error">同步媒體資料時出錯。</string>
-  <string name="sync_media_unsupported">Complex media file names are not supported on Android 2.2 and below. Media syncing has been disabled.</string>
+  <string name="sync_media_unsupported">Complex media file names aren’t supported on Android 2.2 and below. Media syncing has been disabled.</string>
   <string name="register_error">出現了一個錯誤。請稍後再試一次。</string>
   <string name="register_title">註冊帳號</string>
   <string name="register_mismatch">再次輸入的用戶名稱或密碼不符，或者是欄位空的。請重新輸入。</string>
@@ -124,6 +124,6 @@
   <string name="force_full_sync_title">Force full sync</string>
   <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
   <string name="full_sync_confirmation">此變動會使您下一次同步您的收藏時，需要完整上傳您的資料庫。如果同步的話，您其他的裝置上尚未同步的複習卡片或其他變動的部分將會遺失，您是否要繼續？</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
+  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
   <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
 </resources>

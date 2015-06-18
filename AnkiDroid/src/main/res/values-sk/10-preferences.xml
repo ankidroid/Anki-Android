@@ -64,7 +64,7 @@
   <string name="whiteboard_black">Čierne ťahy</string>
   <string name="whiteboard_black_summ">Uses less memory, unless in night mode</string>
   <string name="write_answers_disable">Disable typing in answer</string>
-  <string name="write_answers_disable_summ">Prevents keyboard from appearing on cards containing \'type in the answer\' fields</string>
+  <string name="write_answers_disable_summ">Prevents keyboard from appearing on cards containing type-the-answer fields</string>
   <string name="text_selection_click">Long press workaround</string>
   <string name="text_selection_click_summ">Zapnite, ak nemôžete začať s voľbou textu cez dlhé kliknutie</string>
   <string name="dictionary">Slovník</string>
@@ -73,14 +73,14 @@
   <string name="reset_languages_summ">Obnoviť pôvodné nastavenie jazyka  (použitý pri prevode textu na reč a slovníkoch) vo všetkých balíčkoch. Obnovenie je možné aj priamo na kontréntom balíčku</string>
   <string name="reset_languages_question">Obnoviť všetky priradenia jazykov?</string>
   <string name="reset_confirmation">All states reset</string>
-  <string name="display_font_size">Veľkosť písma pri opakovaní</string>
-  <string name="display_font_size_summ">XXX %</string>
-  <string name="image_size">Veľkosť obrázku pri opakovaní</string>
-  <string name="image_size_summ">XXX %</string>
+  <string name="card_zoom">Card zoom</string>
+  <string name="card_zoom_summ">XXX%</string>
+  <string name="image_zoom">Image zoom</string>
+  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Veľkosť tlačidla pre odpoveď</string>
-  <string name="button_size_summ">XXX %</string>
+  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Veľkosť písma v prehliadači kariet</string>
-  <string name="card_browser_font_size_summ">XXX %</string>
+  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Umiestnenie zbierky</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Celoobrazovkový režim</string>
@@ -138,14 +138,8 @@
   <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink and older devices using custom fonts may require this.</string>
   <string name="vertical_centering">Zarovnanie na stred</string>
   <string name="vertical_centering_summ">Center the content of cards vertically</string>
-  <string name="pref_backup">Použi zálohu</string>
-  <string name="pref_backup_summ">Automatically create backups before opening a deck (once a day)</string>
   <string name="pref_backup_max">Maximálny počet záloh</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">Disable backups?</string>
-  <string name="pref_disable_backup_warning">This will delete all backup files</string>
-  <string name="pref_intent_add_instant">Okamžité pridanie</string>
-  <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
   <string name="show_estimates">Zobraziť tlačidlo čas</string>
   <string name="show_estimates_summ">Zobraziť čas ďalšieho opakovania nad tlačidlami odpovedí</string>
   <string name="show_progress">Zobraziť zostávajúce</string>
@@ -172,9 +166,9 @@
   <string name="deck_conf_deck_description">Popis balíčka</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
+    <item quantity="few">%1$s\n%2$d decks use this group</item>
+    <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">Nové karty</string>
   <string name="deck_conf_rev_cards">Opakovania</string>
@@ -219,9 +213,9 @@
   <string name="deck_conf_remove_message">Odstrániť aktuálnu skupinu nastavení?</string>
   <string name="deck_conf_set_subdecks">Nastaviť pre všetky podbalíčky</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%s subdeck will use this group</item>
+    <item quantity="few">%s subdecks will use this group</item>
+    <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Nastaviť pre všetky podbalíčky</string>
   <string name="deck_conf_set_subdecks_message">Nastaviť aktuálnu skupinu nastavení pre všetky podbalíčky tohto balíčka?</string>

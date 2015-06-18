@@ -52,16 +52,16 @@
   <string name="studyoptions_eta">Tempo estimado (min):</string>
   <string name="studyoptions_start">Estudar agora</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">%1$d cartão programado (%2$s)</item>
+    <item quantity="other">%1$d cartões programados (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
-    <item quantity="other">%d minutes left</item>
+    <item quantity="one">%d minuto restante</item>
+    <item quantity="other">%d minutos restantes</item>
   </plurals>
   <string name="type_answer_hint">Digitar resposta</string>
   <string name="show_answer">Mostrar Resposta</string>
@@ -131,7 +131,7 @@
   <string name="studyoptions_congrats_more_new">Existem mais cartões novos disponíveis, mas o limite diário foi alcançado. Você pode aumentar o limite nas opções, mas por favor, tenha em mente que isso vai aumentar sua carga de trabalho de revisão a curto prazo.</string>
   <string name="studyoptions_congrats_custom">Para estudar fora do agendamento normal, clique no botão Estudo Personalizado abaixo.</string>
   <string name="studyoptions_no_cards_due">Nenhum cartão a fazer por enquanto.</string>
-  <string name="sd_card_not_mounted">Device storage not mounted</string>
+  <string name="sd_card_not_mounted">Armazenamento de dispositivo não montado</string>
   <string name="button_sync">Sincronizar</string>
   <string name="export">Exportar</string>
   <string name="nothing">Nada</string>
@@ -143,8 +143,8 @@
   <string name="card_template_editor_menu_delete">Remover</string>
   <string name="card_template_editor_cant_delete">Ao menos um tipo de cartão é necessário.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="one">Remover o tipo de cartão %2$s e seu %1$d cartão?</item>
+    <item quantity="other">Remover o tipo de cartão %2$s e seus %1$d cartões?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Remover este tipo de cartão resultaria na remoção de uma ou mais notas. Por favor, crie primeiro um novo tipo de cartão.</string>
 </resources>

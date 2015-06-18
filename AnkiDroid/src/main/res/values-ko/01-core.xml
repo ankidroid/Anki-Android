@@ -39,53 +39,53 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="decks">Decks</string>
-  <string name="card_browser">Card Browser</string>
-  <string name="statistics">Statistics</string>
-  <string name="settings">Settings</string>
-  <string name="help">Help</string>
-  <string name="send_feedback">Send Feedback</string>
-  <string name="studyoptions_title">Study Options</string>
+  <string name="decks">카드 묶음</string>
+  <string name="card_browser">카드 탐색기</string>
+  <string name="statistics">통계</string>
+  <string name="settings">설정</string>
+  <string name="help">도움말</string>
+  <string name="send_feedback">의견 보내기</string>
+  <string name="studyoptions_title">학습 옵션</string>
   <string name="studyoptions_due_today">오늘 학습할 카드:</string>
   <string name="studyoptions_new_total">전체 새 카드:</string>
   <string name="studyoptions_total_cards">전체 카드:</string>
   <string name="studyoptions_eta">예상 소요 시간 (분):</string>
-  <string name="studyoptions_start">Study</string>
+  <string name="studyoptions_start">학습</string>
   <plurals name="deckpicker_title">
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="other">%1$d개의 카드 예정 (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="other">%d min.</item>
+    <item quantity="other">%d분</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="other">%d minutes left</item>
+    <item quantity="other">%d분 남음</item>
   </plurals>
-  <string name="type_answer_hint">Type answer</string>
+  <string name="type_answer_hint">정답 입력</string>
   <string name="show_answer">정답 보기</string>
   <string name="ease1_successive">다시</string>
   <string name="ease2_successive">어려움</string>
   <string name="ease3_successive">괜찮음</string>
   <string name="ease3_learning">쉬움</string>
-  <string name="studyoptions_congrats_undo">%s 취소</string>
-  <string name="menu_import">Import</string>
+  <string name="studyoptions_congrats_undo">%s 실행 취소</string>
+  <string name="menu_import">가져오기</string>
   <string name="undo">실행 취소</string>
-  <string name="undo_action_review">last review</string>
+  <string name="undo_action_review">마지막 복습</string>
   <string name="undo_action_edit">노트 편집</string>
   <string name="undo_action_bury">노트 나중에 보기</string>
   <string name="undo_action_suspend_card">카드 미루기</string>
   <string name="undo_action_suspend_note">노트 비활성화하기</string>
   <string name="undo_action_delete">노트 삭제</string>
   <string name="undo_action_mark">노트 표시</string>
-  <string name="unbury">Unbury</string>
+  <string name="unbury">넣었던 카드 꺼내기</string>
   <string name="finish_operation">이전 작업을 완료 중입니다. (백업 생성 중일 가능성이 큽니다).\n잠시만 기다려주세요...</string>
   <string name="contextmenu_deckpicker_rename_deck">덱 이름 바꾸기</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
-  <string name="menu_add">Add</string>
-  <string name="menu_add_note">Add note</string>
+  <string name="contextmenu_deckpicker_collapse_deck">하위 묶음 숨김</string>
+  <string name="contextmenu_deckpicker_inflate_deck">하위 묶음 표시</string>
+  <string name="menu_add">추가</string>
+  <string name="menu_add_note">노트 추가</string>
   <string name="menu_my_account">계정 동기화</string>
-  <string name="menu_dismiss_note">Hide / Delete</string>
-  <string name="menu_bury_card">Bury card</string>
+  <string name="menu_dismiss_note">숨김 / 삭제</string>
+  <string name="menu_bury_card">카드 집어넣기</string>
   <string name="menu_bury_note">노트 나중에 보기</string>
   <string name="menu_suspend_card">카드 비활성화하기</string>
   <string name="menu_suspend_note">노트 미뤄두기</string>
@@ -95,11 +95,11 @@
   <string name="menu_search">%1$s에서 찾아보기</string>
   <string name="menu_mark_card">카드 표시해두기</string>
   <string name="menu_unmark_card">카드 마크 해제</string>
-  <string name="new_deck">Create deck</string>
+  <string name="new_deck">카드 묶음 만들기</string>
   <string name="create">만들기</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="new_dynamic_deck">필터링된 카드 묶음 만들기</string>
   <string name="night_mode">야간 모드</string>
-  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <string name="directory_inaccessible">AnkiDroid 폴더에 접근할 수 없습니다</string>
   <string-array name="next_review_s">
     <item>1초</item>
     <item>1분</item>
@@ -125,25 +125,22 @@
   <string name="custom_study_deck_exists">기존의 맞춤 학습 덱의 이름을 먼저 변경하세요.</string>
   <string name="studyoptions_congrats_finished">축하합니다! 오늘의 학습을 모두 끝냈습니다.</string>
   <string name="studyoptions_congrats_more_rev">오늘의 복습량은 채웠지만 복습할 카드가 더 남아있습니다. 최적의 암기를 위해서, 학습 옵션에서 하루 복습량을 늘리는 것을 고려해보세요.</string>
-  <string name="studyoptions_congrats_more_new">오늘의 학습량을 달성했어요. 하지만 새 카드가 아직 남아 있어요.
-학습할 새 카드의 수를 옵션에서 늘릴 수 있지만
-그러면 단기적으로 공부할 양이 증가한다는 것을 명심하세요.
-</string>
+  <string name="studyoptions_congrats_more_new">오늘의 학습량을 달성했어요. 하지만 새 카드가 아직 남아 있어요. 학습할 새 카드의 수를 옵션에서 늘릴 수 있지만 그러면 단기적으로 공부할 양이 증가한다는 것을 명심하세요.</string>
   <string name="studyoptions_congrats_custom">평상시 일정을 넘어 더 공부하려면, 맞춤 학습 버튼을 누르십시오.</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <string name="sd_card_not_mounted">Device storage not mounted</string>
+  <string name="studyoptions_no_cards_due">남은 카드가 없습니다.</string>
+  <string name="sd_card_not_mounted">기기 저장소가 장착되지 않았습니다</string>
   <string name="button_sync">동기화</string>
-  <string name="export">Export</string>
-  <string name="nothing">Nothing</string>
-  <string name="title_activity_template_editor">Card Types for %s</string>
-  <string name="card_template_editor_front">Front Template</string>
-  <string name="card_template_editor_back">Back Template</string>
-  <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <string name="export">내보내기</string>
+  <string name="nothing">없음</string>
+  <string name="title_activity_template_editor">%s의 카드 형식</string>
+  <string name="card_template_editor_front">전면 템플릿</string>
+  <string name="card_template_editor_back">후면 템플릿</string>
+  <string name="card_template_editor_styling">꾸미기</string>
+  <string name="card_template_editor_menu_add_reverse">역순으로 추가</string>
+  <string name="card_template_editor_menu_delete">삭제</string>
+  <string name="card_template_editor_cant_delete">적어도 하나의 카드 형식이 필요합니다.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="other">\'%2$s\' 카드 형식과 %1$d 카드를 삭제할까요?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">이 카드 형식을 제거하면 하나 또는 여러개의 노트가 삭제됩니다. 먼저 새 카드 형식을 만드세요.</string>
 </resources>

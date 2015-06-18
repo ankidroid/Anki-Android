@@ -40,8 +40,7 @@
 -->
 <resources>
   <string name="error_reporting_choice">錯誤報告模式</string>
-  <string name="error_reporting_choice_summary">你可以選擇自動報告錯誤、或者不報告，或是在有錯誤時提醒您報告</string>
-  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
+  <string name="feedback_disclaimer">Disclaimer: We don’t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
   <string name="feedback_title">回饋意見</string>
   <string name="feedback_default_text">請輸入您的意見，或關於此錯誤的任何資訊。</string>
   <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>

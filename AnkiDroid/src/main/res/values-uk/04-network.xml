@@ -41,7 +41,7 @@
 -->
 <resources>
   <string name="youre_offline">Ви поза мережею</string>
-  <string name="sync_error">Sync Error</string>
+  <string name="sync_error">Sync error</string>
   <string name="vague_error">Помилка</string>
   <string name="retry">Повторити спробу</string>
   <string name="cancel">Відміна</string>
@@ -114,7 +114,7 @@
   <string name="sync_sanity_failed">Після синхронізації, деякі дані вашої колекції виявилися в суперечливому стані. Щоб усунути цю проблему, AnkiDroid виконає повну синхронізацію. Будь ласка, виберіть яку версію Ви хочете залишити, або скасуйте, якщо ви хочете синхронізувати пізніше.</string>
   <string name="sync_media_sanity_failed">Синхронізацію медіа завершено, але кількість медіа файлів не співпала з кількістю файлів на сервері. Наступна синхронізація буде повною, щоб виправити будь-які помилки.</string>
   <string name="sync_media_error">Помилка синхронізації даних медіа.</string>
-  <string name="sync_media_unsupported">Complex media file names are not supported on Android 2.2 and below. Media syncing has been disabled.</string>
+  <string name="sync_media_unsupported">Complex media file names aren’t supported on Android 2.2 and below. Media syncing has been disabled.</string>
   <string name="register_error">Виникла помилка. Будь ласка, спробуйте пізніше.</string>
   <string name="register_title">Реєстрація облікового запису</string>
   <string name="register_mismatch">Пара ім’я користувача/пароль не співпадає або порожня. Будь ласка, введіть ще раз.</string>
@@ -123,7 +123,7 @@
   <string name="sync_sanity_remote">Віддалено</string>
   <string name="force_full_sync_title">Force full sync</string>
   <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
-  <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven\'t been synchronized here yet, they will be lost. Continue?</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
+  <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
+  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
   <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
 </resources>

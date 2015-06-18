@@ -83,8 +83,8 @@
   <string name="multimedia_editor_searching_word">搜索詞</string>
   <string name="multimedia_editor_progress_wait_title">等待</string>
   <string name="multimedia_editor_something_wrong">發生狀況</string>
-  <string name="multimedia_editor_attach_mm_content">\"Attach multimedia content to the note</string>
-  <string name="multimedia_editor_attach_media">\"附加媒體</string>
+  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the note</string>
+  <string name="multimedia_editor_attach_media">Attach media</string>
   <string name="multimedia_editor_audio_view_recording_failed">錄製失敗</string>
   <string name="multimedia_editor_audio_view_playing_failed">播放失敗</string>
   <string name="title_activity_edit_text">編輯欄位</string>

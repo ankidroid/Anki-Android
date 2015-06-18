@@ -73,14 +73,14 @@
   <string name="reset_languages_summ">Redefina as atribuições de idioma (de conversão de texto em fala e dicionários) para todos os decks. Redefinir as atribuições específicas de deck no selecionador de decks</string>
   <string name="reset_languages_question">Redefinir todas as atribuições de idioma?</string>
   <string name="reset_confirmation">Redefinir todos os estados</string>
-  <string name="display_font_size">Dimensionamento da fonte no revisor</string>
-  <string name="display_font_size_summ">XXX %</string>
-  <string name="image_size">Dimensionamento de imagens no revisor</string>
-  <string name="image_size_summ">XXX %</string>
+  <string name="card_zoom">Card zoom</string>
+  <string name="card_zoom_summ">XXX%</string>
+  <string name="image_zoom">Image zoom</string>
+  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Tamanho do botão de resposta</string>
-  <string name="button_size_summ">XXX %</string>
+  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Dimensionamento de fonte do navegador de cartões</string>
-  <string name="card_browser_font_size_summ">XXX %</string>
+  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Caminho da coleção</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Modo tela cheia</string>
@@ -138,14 +138,8 @@
   <string name="safe_display_summ">Desativar todas animações e utilizar método seguro para desenhar cartões. Dispositivos antigos e e-ink utilizando fontes personalizadas podem exigir isso.</string>
   <string name="vertical_centering">Alinhar no centro</string>
   <string name="vertical_centering_summ">Centralizar o conteúdo das cartas verticalmente</string>
-  <string name="pref_backup">Usar backups</string>
-  <string name="pref_backup_summ">Criar backups automaticamente antes de abrir um deck (uma vez por dia)</string>
   <string name="pref_backup_max">Número máximo de backups</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">Desabilitar backups?</string>
-  <string name="pref_disable_backup_warning">Isto irá apagar todos os arquivos de backup</string>
-  <string name="pref_intent_add_instant">Adicionar instantanemente</string>
-  <string name="pref_intent_add_instant_summ">Adicionar novos cartões a partir de dicionários sem abrir o AnkiDroid. Você os encontrará mais tarde em \'dados salvos\' no adicionador de cartões.</string>
   <string name="show_estimates">Mostrar o tempo no botão</string>
   <string name="show_estimates_summ">Mostrar a próxima revisão acima dos botões de resposta</string>
   <string name="show_progress">Mostar restantes</string>
@@ -172,8 +166,8 @@
   <string name="deck_conf_deck_description">Descrição do deck</string>
   <string name="deck_conf_group">Grupo de opções</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
+    <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">Novos cartões</string>
   <string name="deck_conf_rev_cards">Revisões</string>
@@ -218,8 +212,8 @@
   <string name="deck_conf_remove_message">Remover o grupo de opções atual?</string>
   <string name="deck_conf_set_subdecks">Definir para todos os subdecks</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%s subdeck will use this group</item>
+    <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Definir para todos os subdecks</string>
   <string name="deck_conf_set_subdecks_message">Definir o atual grupo de opções para todos os subdecks deste deck?</string>

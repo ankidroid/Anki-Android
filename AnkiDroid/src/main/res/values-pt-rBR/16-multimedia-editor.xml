@@ -83,8 +83,8 @@
   <string name="multimedia_editor_searching_word">Pesquisando a palavra</string>
   <string name="multimedia_editor_progress_wait_title">Aguarde</string>
   <string name="multimedia_editor_something_wrong">Algo deu errado</string>
-  <string name="multimedia_editor_attach_mm_content">\"Anexar conteúdo multimídia à nota</string>
-  <string name="multimedia_editor_attach_media">\"Anexar mídia</string>
+  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the note</string>
+  <string name="multimedia_editor_attach_media">Attach media</string>
   <string name="multimedia_editor_audio_view_recording_failed">Falha na gravação</string>
   <string name="multimedia_editor_audio_view_playing_failed">Falha na reprodução</string>
   <string name="title_activity_edit_text">Campo de edição</string>

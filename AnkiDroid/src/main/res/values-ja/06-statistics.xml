@@ -67,7 +67,7 @@
   <string name="stats_time_of_day">時刻</string>
   <string name="stats_day_of_week">曜日</string>
   <string formatted="false" name="stats_percentage_correct">正解率(%)</string>
-  <string name="stats_reviews">学習枚数</string>
+  <string name="stats_reviews">回答数</string>
   <string name="stats_answer_type">回答の種類</string>
   <string name="stats_today_again_count">忘却回数: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(正解率: &lt;b&gt;%.1f%%&lt;/b&gt;)</string>

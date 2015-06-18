@@ -73,14 +73,14 @@
   <string name="reset_languages_summ">すべての単語帳の言語の設定（音声合成、辞書）をリセットします。単語帳選択で選択した単語帳の設定をリセットします</string>
   <string name="reset_languages_question">言語の割り当てをリセットしますか?</string>
   <string name="reset_confirmation">すべての状態をリセット</string>
-  <string name="display_font_size">復習時フォントスケール</string>
-  <string name="display_font_size_summ">XXX ％</string>
-  <string name="image_size">復習時画像表示スケール</string>
-  <string name="image_size_summ">XXX ％</string>
+  <string name="card_zoom">Card zoom</string>
+  <string name="card_zoom_summ">XXX%</string>
+  <string name="image_zoom">Image zoom</string>
+  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">解答ボタン・回答ボタンのサイズ</string>
-  <string name="button_size_summ">XXX ％</string>
+  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">ブラウザー用フォントサイズ調整</string>
-  <string name="card_browser_font_size_summ">XXX ％</string>
+  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">コレクションの保存先</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">フルスクリーンモード</string>
@@ -138,14 +138,8 @@
   <string name="safe_display_summ">アニメーションを無効化し、より安全な方法で描画します。電子ペーパーや古い機器でカスタムフォントを使用する際にお試しください</string>
   <string name="vertical_centering">中央揃え</string>
   <string name="vertical_centering_summ">コンテンツを垂直方向に中段揃え</string>
-  <string name="pref_backup">自動バックアップ</string>
-  <string name="pref_backup_summ">単語帳を開く前に自動的にバックアップを作成します（1 日あたり 1 回）</string>
   <string name="pref_backup_max">保管するバックアップの世代数</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">バックアップを無効にしますか？</string>
-  <string name="pref_disable_backup_warning">この操作は、すべてのバックアップ ファイルを削除します。</string>
-  <string name="pref_intent_add_instant">簡易追加</string>
-  <string name="pref_intent_add_instant_summ">AnkiDroidを開かず、辞書から新規カードを追加します。追加されたカードはカード追加画面で確認できます</string>
   <string name="show_estimates">ボタン上に時間を表示</string>
   <string name="show_estimates_summ">回答ボタンの上に、次の復習間隔を表示します</string>
   <string name="show_progress">残りのカード枚数を表示</string>
@@ -172,7 +166,7 @@
   <string name="deck_conf_deck_description">単語帳の説明</string>
   <string name="deck_conf_group">オプショングループ</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="other"/>
+    <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">新規カード</string>
   <string name="deck_conf_rev_cards">復習カード</string>
@@ -217,7 +211,7 @@
   <string name="deck_conf_remove_message">現在のオプショングループを削除しますか？</string>
   <string name="deck_conf_set_subdecks">全てのサブ単語帳に適用</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="other"/>
+    <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">全てのサブ単語帳に適用</string>
   <string name="deck_conf_set_subdecks_message">現在のオプショングループをすべてのサブ単語帳に適用しますか？</string>

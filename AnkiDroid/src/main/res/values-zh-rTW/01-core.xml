@@ -40,12 +40,12 @@
 -->
 <resources>
   <string name="decks">Decks</string>
-  <string name="card_browser">Card Browser</string>
+  <string name="card_browser">Card browser</string>
   <string name="statistics">Statistics</string>
   <string name="settings">Settings</string>
   <string name="help">Help</string>
-  <string name="send_feedback">Send Feedback</string>
-  <string name="studyoptions_title">Study Options</string>
+  <string name="send_feedback">Send feedback</string>
+  <string name="studyoptions_title">Study options</string>
   <string name="studyoptions_due_today">今天到期:</string>
   <string name="studyoptions_new_total">新卡片數量:</string>
   <string name="studyoptions_total_cards">卡片總數:</string>
@@ -84,7 +84,7 @@
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>
   <string name="menu_my_account">同步帳號</string>
-  <string name="menu_dismiss_note">Hide / Delete</string>
+  <string name="menu_dismiss_note">Hide / delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">暫時隱藏筆記</string>
   <string name="menu_suspend_card">長久擱置卡片</string>
@@ -133,15 +133,15 @@
   <string name="button_sync">同步</string>
   <string name="export">Export</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_template_editor">Card Types for %s</string>
-  <string name="card_template_editor_front">Front Template</string>
-  <string name="card_template_editor_back">Back Template</string>
+  <string name="title_activity_template_editor">Card types for %s</string>
+  <string name="card_template_editor_front">Front template</string>
+  <string name="card_template_editor_back">Back template</string>
   <string name="card_template_editor_styling">Styling</string>
   <string name="card_template_editor_menu_add_reverse">Add reverse</string>
   <string name="card_template_editor_menu_delete">Delete</string>
   <string name="card_template_editor_cant_delete">At least one card type is required.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
 </resources>

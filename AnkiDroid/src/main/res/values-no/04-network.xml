@@ -41,7 +41,7 @@
 -->
 <resources>
   <string name="youre_offline">You are offline</string>
-  <string name="sync_error">Sync Error</string>
+  <string name="sync_error">Sync error</string>
   <string name="vague_error">Error</string>
   <string name="retry">Prøv på nytt</string>
   <string name="cancel">Avbryt</string>
@@ -81,7 +81,7 @@
   <string name="sync_downloading_media">Laster ned media %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Full synkronisering fra lokal</string>
   <string name="sync_log_downloading_message">Full synkronisering fra serveren</string>
-  <string name="sync_log_clocks_unsynchronized">Your clock\'s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
+  <string name="sync_log_clocks_unsynchronized">Your clock’s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, enhetens tidssone er muligens feil</string>
   <string name="sync_log_clocks_unsynchronized_date">, enhetens dato er muligens feil</string>
   <string name="sync_conflict_title">Synkroniseringskonflikt</string>
@@ -114,7 +114,7 @@
   <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Choose which side you would like to keep.</string>
   <string name="sync_media_sanity_failed">Mediesynkronisering fullført, men antallet media er enig det samme som på serveren. Neste mediesynkronisering blir en fullstendig synkronisering, for å rette eventuelle feil.</string>
   <string name="sync_media_error">Feil ved synkronisering av medie-data.</string>
-  <string name="sync_media_unsupported">Complex media file names are not supported on Android 2.2 and below. Media syncing has been disabled.</string>
+  <string name="sync_media_unsupported">Complex media file names aren’t supported on Android 2.2 and below. Media syncing has been disabled.</string>
   <string name="register_error">Det oppstod en feil. Vennligst prøv igjen senere.</string>
   <string name="register_title">Registrer konto</string>
   <string name="register_mismatch">Brukernavnet eller passord-gjentakelsen samsvarer ikke, eller er tom. Vennligst skriv inn på nytt.</string>
@@ -123,7 +123,7 @@
   <string name="sync_sanity_remote">Remote</string>
   <string name="force_full_sync_title">Force full sync</string>
   <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
-  <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven\'t been synchronized here yet, they will be lost. Continue?</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
+  <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
+  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
   <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
 </resources>

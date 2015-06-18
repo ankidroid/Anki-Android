@@ -40,7 +40,6 @@
 -->
 <resources>
   <string name="error_reporting_choice">错误报告模式</string>
-  <string name="error_reporting_choice_summary">可以自动报告错误或从不报告，或当出现错误时再提醒你</string>
   <string name="feedback_disclaimer">声明：我们不会收集任何用户的个人信息，诸如电子邮件地址，电话号码和你的手机IMEI串。我们会收集一些像手机架构、制式以及安卓版本等关于机器的简单信息，当然还有错误信息以及导致错误发生的步骤。</string>
   <string name="feedback_title">反馈</string>
   <string name="feedback_default_text">请填写你的反馈信息，或者有关你需要报告的错误的信息。</string>

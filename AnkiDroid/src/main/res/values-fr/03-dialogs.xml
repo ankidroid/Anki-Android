@@ -100,7 +100,6 @@
   <string name="dialog_positive_remove">Supprimer</string>
   <string name="dialog_positive_repair">Réparer</string>
   <string name="dialog_positive_replace">Remplacer</string>
-  <string name="dialog_positive_reset">Réinitialiser</string>
   <string name="dialog_positive_restore">Rétablir</string>
   <string name="dialog_positive_set">Définir</string>
   <string name="lookup_button_content">Rechercher</string>
@@ -117,4 +116,7 @@
   <string name="check_media_db_updated">Base de données de médias reconstruite.</string>
   <string name="check_media_delete_unused">Supprimer les médias inutiles</string>
   <string name="check_media_deleted">Fichiers supprimés : %d</string>
+  <string name="tags_dialog_option_all_cards">All cards</string>
+  <string name="tags_dialog_option_new_cards">New</string>
+  <string name="tags_dialog_option_due_cards">Due</string>
 </resources>

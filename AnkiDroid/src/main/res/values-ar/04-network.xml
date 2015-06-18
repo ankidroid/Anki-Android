@@ -41,7 +41,7 @@
 -->
 <resources>
   <string name="youre_offline">You are offline</string>
-  <string name="sync_error">Sync Error</string>
+  <string name="sync_error">Sync error</string>
   <string name="vague_error">Error</string>
   <string name="retry">إعادة المحاولة</string>
   <string name="cancel">إلغاء</string>
@@ -81,7 +81,7 @@
   <string name="sync_downloading_media">تحميل الوسائط %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">مزامنة كاملة من القرص المحلي</string>
   <string name="sync_log_downloading_message">مزامنة كاملة من الخادم</string>
-  <string name="sync_log_clocks_unsynchronized">Your clock\'s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
+  <string name="sync_log_clocks_unsynchronized">Your clock’s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
   <string name="sync_log_clocks_unsynchronized_tz">، من المحتمل أن المنطقة الزمنية للجهاز غير صحيحة</string>
   <string name="sync_log_clocks_unsynchronized_date">، من المحتمل أن تاريخ الجهاز غير صحيح</string>
   <string name="sync_conflict_title">تضارب في المزامنة</string>
@@ -114,7 +114,7 @@
   <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Choose which side you would like to keep.</string>
   <string name="sync_media_sanity_failed">اكتملت مزامنة الوسائط، ولكن  عدد الوسائط لا يتوافق مع الخادم. مزامنة الوسائط القادمة ستكون شاملة لتصحيح أي خطأ.</string>
   <string name="sync_media_error">الخطأ في مزامنة معلومات الوسائط.</string>
-  <string name="sync_media_unsupported">Complex media file names are not supported on Android 2.2 and below. Media syncing has been disabled.</string>
+  <string name="sync_media_unsupported">Complex media file names aren’t supported on Android 2.2 and below. Media syncing has been disabled.</string>
   <string name="register_error">حدث خطأ. الرجاء المحاولة مرة أخرى لاحقاً.</string>
   <string name="register_title">تسجيل حساب</string>
   <string name="register_mismatch">تكرار اسم المستخدم/كلمة المرور غير متطابق أو فارغة. الرجاء إعادة إدخال.</string>
@@ -123,7 +123,7 @@
   <string name="sync_sanity_remote">Remote</string>
   <string name="force_full_sync_title">Force full sync</string>
   <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
-  <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven\'t been synchronized here yet, they will be lost. Continue?</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
+  <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
+  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
   <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
 </resources>

@@ -76,6 +76,7 @@
     <item>Κατά σειρά προσθήκης</item>
     <item>Κατά σειρά αναμονής</item>
     <item>Κατά σειρά πρόσφατης προσθήκης</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Αύξηση σημερινού ορίου νέων καρτών</item>
@@ -94,11 +95,6 @@
     <item>Mix new cards and reviews</item>
     <item>New cards after reviews</item>
     <item>New cards before reviews</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>All cards</item>
-    <item>New</item>
-    <item>Due</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>When no font specified on flashcards</item>

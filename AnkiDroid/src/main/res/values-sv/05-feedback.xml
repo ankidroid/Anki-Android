@@ -40,7 +40,6 @@
 -->
 <resources>
   <string name="error_reporting_choice">Läge för felrapportering</string>
-  <string name="error_reporting_choice_summary">Fel kan rapporteras automatiskt, aldrig rapporteras, eller så kan du tillfrågas</string>
   <string name="feedback_disclaimer">Disclaimer: Vi samlar inte in någon personlig information såsom din epostadress, ditt telefonnummer eller IMEI-nummer för din telefon. Vi samlar in viss information om din enhet såsom tillverkare, modell och version av AnkiDroid, så väl som de rapporterade felen och stegen som ledde fram till dem.</string>
   <string name="feedback_title">Feedback</string>
   <string name="feedback_default_text">Var god skriv in din feedback eller information om eventuella fel du rapporterar.</string>

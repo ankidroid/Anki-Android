@@ -71,7 +71,7 @@
   <string name="stats_answer_type">סוג תשובה</string>
   <string name="stats_today_again_count">Again count: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correct)</string>
-  <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, Review: &lt;b&gt;%2$s&lt;/b&gt;, Relearn: &lt;b&gt;%3$s&lt;/b&gt;, Filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
+  <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, review: &lt;b&gt;%2$s&lt;/b&gt;, relearn: &lt;b&gt;%3$s&lt;/b&gt;, filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Correct answers on mature cards: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">אף קלף בוגר נלמד היום.‏</string>
   <string name="deck_summary_all_decks">כל החפיסות</string>
@@ -118,10 +118,10 @@
   <string name="stats_review_count">Review count</string>
   <string name="stats_review_time">Review time</string>
   <string name="stats_review_intervals">Intervals</string>
-  <string name="stats_breakdown">Hourly Breakdown</string>
-  <string name="stats_weekly_breakdown">Weekly Breakdown</string>
-  <string name="stats_answer_buttons">Answer Buttons</string>
-  <string name="stats_cards_types">Cards Types</string>
+  <string name="stats_breakdown">Hourly breakdown</string>
+  <string name="stats_weekly_breakdown">Weekly breakdown</string>
+  <string name="stats_answer_buttons">Answer buttons</string>
+  <string name="stats_cards_types">Cards types</string>
   <string-array name="stats_day_time_strings">
     <item>4AM</item>
     <item>10AM</item>

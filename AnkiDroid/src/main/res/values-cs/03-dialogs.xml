@@ -100,7 +100,6 @@
   <string name="dialog_positive_remove">Odstranit</string>
   <string name="dialog_positive_repair">Opravit</string>
   <string name="dialog_positive_replace">Nahradit</string>
-  <string name="dialog_positive_reset">Obnovit</string>
   <string name="dialog_positive_restore">Obnovit</string>
   <string name="dialog_positive_set">Nastavit</string>
   <string name="lookup_button_content">Vyhledat</string>
@@ -117,4 +116,7 @@
   <string name="check_media_db_updated">Multimediální databáze opravena.</string>
   <string name="check_media_delete_unused">Odstranit nepoužité</string>
   <string name="check_media_deleted">Odstraněny soubory: %d</string>
+  <string name="tags_dialog_option_all_cards">All cards</string>
+  <string name="tags_dialog_option_new_cards">New</string>
+  <string name="tags_dialog_option_due_cards">Due</string>
 </resources>

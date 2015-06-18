@@ -76,6 +76,7 @@
     <item>Ordningen de lades till</item>
     <item>Efter förfallotid</item>
     <item>Senast tillagda först</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Öka dagens gräns för nya kort</item>
@@ -94,11 +95,6 @@
     <item>Blanda nya kort och repetitionskort</item>
     <item>Nya kort efter repetitioner</item>
     <item>Nya kort före repetitioner</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>Alla kort</item>
-    <item>Ny</item>
-    <item>Aktuella</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>När inget typsnitt angetts på flashkort</item>

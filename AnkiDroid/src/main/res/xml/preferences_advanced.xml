@@ -90,7 +90,7 @@
                 android:dialogMessage="@string/reset_languages_question"
                 android:dialogTitle="@string/reset_languages"
                 android:negativeButtonText="@string/dialog_cancel"
-                android:positiveButtonText="@string/dialog_positive_reset"
+                android:positiveButtonText="@string/dialog_ok"
                 android:summary="@string/reset_languages_summ"
                 android:title="@string/reset_languages" />
             <CheckBoxPreference

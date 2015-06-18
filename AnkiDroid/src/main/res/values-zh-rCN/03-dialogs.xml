@@ -100,7 +100,6 @@
   <string name="dialog_positive_remove">移除</string>
   <string name="dialog_positive_repair">修复</string>
   <string name="dialog_positive_replace">替换</string>
-  <string name="dialog_positive_reset">重置</string>
   <string name="dialog_positive_restore">恢复</string>
   <string name="dialog_positive_set">设置</string>
   <string name="lookup_button_content">查找</string>
@@ -117,4 +116,7 @@
   <string name="check_media_db_updated">媒体数据库已重建</string>
   <string name="check_media_delete_unused">删除未使用的</string>
   <string name="check_media_deleted">已删除文件： %d</string>
+  <string name="tags_dialog_option_all_cards">All cards</string>
+  <string name="tags_dialog_option_new_cards">New</string>
+  <string name="tags_dialog_option_due_cards">Due</string>
 </resources>

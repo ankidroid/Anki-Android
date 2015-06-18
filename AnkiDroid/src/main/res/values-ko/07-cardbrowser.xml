@@ -40,38 +40,38 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="other">%d cards shown</item>
+    <item quantity="other">%d 카드 표시됨</item>
   </plurals>
-  <string name="card_browser_all_decks">모든 덱</string>
+  <string name="card_browser_all_decks">모든 카드 묶음</string>
   <string name="card_browser_delete_card">노트 삭제</string>
-  <string name="card_browser_suspend_card">카드 비활성화</string>
-  <string name="card_browser_unsuspend_card">카드 활성화</string>
+  <string name="card_browser_suspend_card">카드 보류</string>
+  <string name="card_browser_unsuspend_card">카드 보류 해제</string>
   <string name="card_browser_mark_card">노트 표시</string>
   <string name="card_browser_unmark_card">노트 표시 해제</string>
-  <string name="delete_card_title">노트 삭제</string>
-  <string name="delete_card_message">정말로 이 노트에 포함된 모든 카드를 삭제하시겠니까?\n검색창: %s</string>
+  <string name="delete_card_title">노트를 삭제할까요?</string>
+  <string name="delete_card_message">정말로 이 노트에 포함된 모든 카드를 삭제할까요?\n검색창: %s</string>
   <string name="card_browser_show_marked">표시된 카드 필터링</string>
-  <string name="card_browser_show_suspended">비활성화된 카드 필터링</string>
+  <string name="card_browser_show_suspended">보류된 카드 필터링</string>
   <string name="card_browser_search_by_tag">태그별 필터링</string>
   <string name="card_browser_tags_shown">태그: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
+  <string name="card_browser_list_my_searches">내가 검색한 항목</string>
+  <string name="card_browser_list_my_searches_save">검색 항목 저장</string>
+  <string name="card_browser_list_my_searches_title">저장된 검색 항목 선택</string>
+  <string name="card_browser_list_my_searches_new_name">현재 검색 항목의 이름</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">이름 없이 검색 항목을 저장할 수 없습니다.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">이름이 이미 존재합니다!</string>
+  <string name="card_browser_list_my_searches_remove_content">\"%1$s\"을 삭제할까요?</string>
   <string name="card_browser_change_display_order">표시 순서 변경</string>
   <string name="card_browser_change_display_order_title">표시 순서를 선택하세요</string>
-  <string name="card_browser_change_display_order_reverse">순서를 바꾸기 위해서 필드를 두번 선택하세요.</string>
-  <string name="card_details_question">질문</string>
+  <string name="card_browser_change_display_order_reverse">역순으로 정렬하려면 필드를 두번 선택하세요</string>
+  <string name="card_details_question">문제</string>
   <string name="card_details_answer">정답</string>
   <string name="card_details_due">예정</string>
   <string name="card_details_tags">태그</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
+  <string name="card_browser_filtering_cards">카드 필터링 중&#8230; \n취소하려면 뒤로가기 버튼을 누르세요</string>
   <string-array name="card_browser_order_labels">
     <item>정렬 안함(빠름)</item>
-    <item>By sort field</item>
+    <item>정렬 필드에 따라</item>
     <item>생성된 시간에 따라</item>
     <item>편집된 시간에 따라</item>
     <item>수정된 시간에 따라</item>
@@ -79,6 +79,6 @@
     <item>학습 간격에 따라</item>
     <item>난이도에 따라</item>
     <item>복습에 따라</item>
-    <item>틀린 횟수에 의해</item>
+    <item>오답 횟수에 따라</item>
   </string-array>
 </resources>

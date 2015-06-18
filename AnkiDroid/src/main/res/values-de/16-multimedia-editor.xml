@@ -35,11 +35,11 @@
 -->
 <resources>
   <string name="multimedia_editor_popup_image">Bild hinzufügen</string>
-  <string name="multimedia_editor_popup_audio">Audio aufnehmen</string>
+  <string name="multimedia_editor_popup_audio">Ton aufnehmen</string>
   <string name="multimedia_editor_popup_text">Erweiterter Editor</string>
   <string name="multimedia_editor_trans_poweredglosbe">Powered by glosbe.com</string>
   <string name="multimedia_editor_trans_from">Von</string>
-  <string name="multimedia_editor_trans_to">An</string>
+  <string name="multimedia_editor_trans_to">Nach</string>
   <string name="multimedia_editor_trans_translate">Übersetzen</string>
   <string name="multimedia_editor_trans_translating_online">Online übersetzen</string>
   <string name="multimedia_editor_trans_pick_translation">Übersetzung auswählen</string>
@@ -49,7 +49,7 @@
   <string name="multimedia_editor_pron_load">Laden</string>
   <string name="multimedia_editor_pron_looking_up">Schlage Aussprache nach</string>
   <string name="multimedia_editor_pron_pronunciation_failed">Aussprache fehlgeschlagen</string>
-  <string name="multimedia_editor_word_search_try_lower_case">Versuche, nur Kleinbuchstaben zu verwenden</string>
+  <string name="multimedia_editor_word_search_try_lower_case">Versuchen Sie es mit Kleinbuchstaben</string>
   <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
   <string name="multimedia_editor_imgs_saving_image">Speichere Bild</string>
   <string name="multimedia_editor_imgs_loading_image">Lade Bild</string>
@@ -71,20 +71,20 @@
   <string name="multimedia_editor_text_field_editing_clear">Zurücksetzen</string>
   <string name="multimedia_editor_text_field_editing_clone">Kopieren von</string>
   <string name="multimedia_editor_text_field_editing_translate">Übersetzung</string>
-  <string name="multimedia_editor_text_field_editing_no_text">Zuerst etwas Text eingeben</string>
+  <string name="multimedia_editor_text_field_editing_no_text">Geben Sie zuerst Text ein</string>
   <string name="multimedia_editor_text_field_editing_many_words">Wörterbücher erwarten normalerweise ein einzelnes Wort</string>
   <string name="multimedia_editor_text_field_editing_clone_source">Übernehme von</string>
-  <string name="multimedia_editor_image_field_editing_galery">Gallerie</string>
+  <string name="multimedia_editor_image_field_editing_galery">Galerie</string>
   <string name="multimedia_editor_image_field_editing_photo">Kamera</string>
   <string name="multimedia_editor_general_downloading">Lade herunter</string>
   <string name="multimedia_editor_general_done">Fertig</string>
   <string name="multimedia_editor_error_word_not_found">Das Wort wurde nicht gefunden</string>
   <string name="multimedia_editor_trans_getting_failure">Übersetzung konnte nicht geholt werden</string>
   <string name="multimedia_editor_searching_word">Suche nach dem Wort</string>
-  <string name="multimedia_editor_progress_wait_title">Warte</string>
-  <string name="multimedia_editor_something_wrong">Etwas ist schief gelaufen</string>
-  <string name="multimedia_editor_attach_mm_content">\"Multimedia-Inhalt der Notiz hinzufügen</string>
-  <string name="multimedia_editor_attach_media">\"Medien anhängen</string>
+  <string name="multimedia_editor_progress_wait_title">Warten</string>
+  <string name="multimedia_editor_something_wrong">Etwas ist schiefgelaufen</string>
+  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the note</string>
+  <string name="multimedia_editor_attach_media">Attach media</string>
   <string name="multimedia_editor_audio_view_recording_failed">Aufnahme fehlgeschlagen</string>
   <string name="multimedia_editor_audio_view_playing_failed">Abspielen fehlgeschlagen</string>
   <string name="title_activity_edit_text">Bearbeite Feld</string>

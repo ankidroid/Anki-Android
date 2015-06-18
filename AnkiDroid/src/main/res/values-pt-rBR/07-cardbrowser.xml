@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">%d cartão exibido</item>
+    <item quantity="other">%d cartões exibidos</item>
   </plurals>
   <string name="card_browser_all_decks">Todos os decks</string>
   <string name="card_browser_delete_card">Excluir nota</string>
@@ -55,13 +55,13 @@
   <string name="card_browser_show_suspended">Filtro suspenso</string>
   <string name="card_browser_search_by_tag">Filtrar por Tag</string>
   <string name="card_browser_tags_shown">Tags: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
+  <string name="card_browser_list_my_searches">Minhas buscas</string>
+  <string name="card_browser_list_my_searches_save">Salvar busca</string>
+  <string name="card_browser_list_my_searches_title">Escolha uma busca salva</string>
+  <string name="card_browser_list_my_searches_new_name">Nome para a busca atual</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">Você não pode salvar uma busca sem um nome.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Nome já existente!</string>
+  <string name="card_browser_list_my_searches_remove_content">Excluir \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Alterar a ordem de exibição</string>
   <string name="card_browser_change_display_order_title">Escolha a ordem de exibição</string>
   <string name="card_browser_change_display_order_reverse">Selecione um campo duas vezes para inverter a ordem.</string>

@@ -39,113 +39,117 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="drawer_open">Open Drawer</string>
-  <string name="drawer_close">Close Drawer</string>
+  <string name="drawer_open">서랍 열기</string>
+  <string name="drawer_close">서랍 닫기</string>
   <string name="CardEditorLaterMessage">나중을 위해 저장된 정보</string>
-  <string name="CardEditorCardDeck">Card deck:</string>
-  <string name="CardEditorNoteDeck">Deck:</string>
-  <string name="CardEditorModel">Type:</string>
+  <string name="CardEditorCardDeck">카드 묶음:</string>
+  <string name="CardEditorNoteDeck">카드 묶음:</string>
+  <string name="CardEditorModel">형식:</string>
   <string name="CardEditorTags">태그: %1$s</string>
-  <string name="CardEditorCards">Cards: %1$s</string>
-  <string name="add_new_filter_tags">Add/filter tags</string>
-  <string name="filter_tags">Filter tags</string>
+  <string name="CardEditorCards">카드: %1$s</string>
+  <string name="tag_name">Tag name</string>
+  <string name="add_new_filter_tags">태그 추가/필터링</string>
+  <string name="add_tag">Add tag</string>
+  <string name="check_all_tags">Check/uncheck all tags</string>
+  <string name="filter_tags">태그 필터링</string>
+  <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">현재 SD카드가 USB 저장소로 사용되고 있어 사용이 불가능합니다. 덱에 접근하려면 USB 연결을 해제하세요.</string>
-  <string name="enable_whiteboard">Enable whiteboard</string>
-  <string name="disable_whiteboard">Disable whiteboard</string>
+  <string name="enable_whiteboard">칠판 사용</string>
+  <string name="disable_whiteboard">칠판 해제</string>
   <string name="show_whiteboard">화이트 보드 보이기</string>
   <string name="hide_whiteboard">화이트 보드 숨기기</string>
   <string name="clear_whiteboard">화이트 보드 지우기</string>
-  <string name="replay_audio">Replay audio</string>
+  <string name="replay_audio">오디오 다시 재생</string>
   <string name="leech_suspend_notification">카드가 거머리로 표시 및 비활성화됨</string>
   <string name="leech_notification">카드가 거머리로 표시됨</string>
   <string name="corrupt_font">손상된 글꼴 파일 %s</string>
   <string-array name="browser_column1_headings">
-    <item>Sort field</item>
+    <item>필드 정렬</item>
   </string-array>
   <string-array name="browser_column2_headings">
-    <item>Answer</item>
-    <item>Card</item>
-    <item>Deck</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
+    <item>정답</item>
+    <item>카드</item>
+    <item>카드 묶음</item>
+    <item>노트</item>
+    <item>문제</item>
+    <item>태그</item>
+    <item>오답 횟수</item>
+    <item>복습</item>
   </string-array>
   <string name="cardeditor_title_add_note">노트 추가하기</string>
   <string name="cardeditor_title_edit_card">노트 편집하기</string>
-  <string name="discard_unsaved_changes">Close and lose current input?</string>
+  <string name="discard_unsaved_changes">현재 입력된 내용을 버리고 닫을까요?</string>
   <string name="factadder_saving_error">노트 저장 중 오류</string>
   <string name="saving_facts">노트 저장 중</string>
-  <string name="saving_model">Saving model</string>
+  <string name="saving_model">저장 모델</string>
   <string name="add">추가하기</string>
   <string name="close">닫기</string>
   <string name="select">선택하기</string>
   <string name="saving_changes">변경 내용 저장 중...</string>
-  <string name="reordering_cards">Reordering cards&#8230;</string>
-  <string name="field_remapping">%1$s (from \'%2$s\')</string>
-  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+  <string name="reordering_cards">카드 순서 다시 정리중...</string>
+  <string name="field_remapping">%1$s (\'%2$s\'에서)</string>
+  <string name="confirm_map_cards_to_nothing">연결되지 않은 모든 카드는 삭제됩니다. 만약 노트에 남아있는 카드가 없다면 버려질 것입니다. 계속 진행할까요?</string>
   <plurals name="timebox_reached">
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="other">%1$d 카드가 %2$s에 학습됨</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="other">%1$d분</item>
   </plurals>
   <string name="studyoptions_welcome_title">AnkiDroid에 오신 것을 환영합니다</string>
   <string name="fact_adder_intent_title">AnkiDroid 카드</string>
   <string name="card_editor_add_card">노트 추가</string>
   <string name="card_editor_copy_card">카드 복사</string>
   <string name="card_editor_reset_card">학습 진도 재설정</string>
-  <string name="card_editor_reschedule_card">Reschedule card</string>
+  <string name="card_editor_reschedule_card">카드 일정 다시 조정하기</string>
   <string name="card_editor_preview_card">미리보기</string>
   <string name="error_insufficient_memory">장치 메모리가 부족하여 작업을 더 이상 진행할 수 없습니다</string>
   <string name="rename">이름 바꾸기</string>
-  <string name="rename_error">카드묶음 %s 이름을 바꿀 수 없습니다</string>
-  <string name="default_conf_delete_error">The default options group can\'t be removed</string>
+  <string name="rename_error">카드 묶음 %s 이름을 바꿀 수 없습니다</string>
+  <string name="default_conf_delete_error">기본 옵션 그룹은 제거할 수 없습니다.</string>
   <plurals name="factadder_cards_added">
-    <item quantity="other">%d cards added</item>
+    <item quantity="other">%d 카드 추가됨</item>
   </plurals>
   <string name="help_title">도움말</string>
   <string name="check_db">데이터베이스 점검하기</string>
-  <string name="check_media">Check media</string>
+  <string name="check_media">미디어 확인</string>
   <string name="check_db_message">데이터베이스 점검 중.\n잠시만 기다려 주세요...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
-  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-  <string name="delete_deck">덱 삭제 중...\n잠시만 기다려 주세요.</string>
-  <string name="show_hint">Show %s</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">빈 카드입니다. 데스크탑 버전에서 \"도구&gt;빈 카드\"를 실행하세요.</string>
+  <string name="unknown_type_field_warning">정답 입력: 알 수 없는 필드 %s</string>
+  <string name="delete_deck">카드 묶음 삭제 중...\n 잠시만 기다리세요.</string>
+  <string name="show_hint">%s 표시</string>
   <string name="info_rate">AnkiDroid 평가하기</string>
-  <string name="col_load_failed">덱 목록을 불러오지 못했습니다.\nAnkiDroid을 종료하려면 뒤로가기 버튼을 누르세요.</string>
+  <string name="col_load_failed">컬렉션을 불러오지 못했습니다.\nAnkiDroid을 종료하려면 뒤로가기 버튼을 누르세요.</string>
   <string name="import_title">카드 가져오기</string>
-  <string name="import_select_title">Choose a file to import</string>
+  <string name="import_select_title">가져올 파일 선택</string>
   <string name="import_message_add">추가하기</string>
   <string name="import_message_replace_confirm">기존의 컬렉션을 삭제하고 파일 %s의 데이터로 덮어씁니다. 확실합니까?</string>
-  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
+  <string name="import_message_add_confirm">\"%s\"를 컬렉션에 추가하시겠습니까? 시간이 오래 걸릴 수 있습니다.</string>
   <string name="import_log_success">%d개의 카드를 성공적으로 가져옴</string>
   <string name="import_log_error">가져오기 실패</string>
   <string name="import_log_no_apkg">유효하지 않은 apkg 파일입니다</string>
-  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
-  <string name="import_error_content_provider">The selected file could not be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n %s</string>
+  <string name="import_error_not_apkg_extension">파일명 %s는 .apkg 확장자를 가지고 있지 않습니다.</string>
+  <string name="import_error_content_provider">선택된 파일은 AnkiDroid가 자동적으로 가져올 수 없습니다. anki 파일을 수동으로 가져오는 방법은 사용자 설명서를 참조하세요. \n %s</string>
   <string name="import_importing">카드를 가져오는중.\n잠시만 기다려 주세요...</string>
-  <string name="export_include_schedule">Include scheduling</string>
-  <string name="export_include_media">Include media</string>
-  <string name="confirm_apkg_export">Export collection as apkg file?</string>
-  <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
-  <string name="export_in_progress">Exporting apkg file&#8230;</string>
-  <string name="export_successful_title">Email apkg?</string>
-  <string name="export_successful">File \"%s\" was exported. Do you want to email it?</string>
-  <string name="export_unsuccessful">Error exporting collection</string>
+  <string name="export_include_schedule">일정 포함</string>
+  <string name="export_include_media">미디어 포함</string>
+  <string name="confirm_apkg_export">컬렉션을 apkg 파일로 내보낼까요?</string>
+  <string name="confirm_apkg_export_deck">\"%s\"를 apkg 파일로 내보낼까요?</string>
+  <string name="export_in_progress">apkg 파일 내보내는 중...</string>
+  <string name="export_successful_title">apkg 파일을 이메일로 전송할까요?</string>
+  <string name="export_successful">\"%s\" 파일을 내보냈습니다. 이메일로 전송할까요?</string>
+  <string name="export_unsuccessful">컬렉션 내보내기 오류</string>
   <string name="import_hint">카드를 가져오려면, %s 폴더로 apkg 파일을 옮긴 후 확인을 눌러주세요</string>
   <string name="upgrade_import_no_file_found">가져올 수 있는 %1$s 파일이 발견되지 않음</string>
-  <string name="study_options">Deck options</string>
+  <string name="study_options">카드 묶음 옵션</string>
   <string name="custom_study">맞춤 학습</string>
-  <string name="dyn_deck_desc">이것은 평상시 일정 이상으로 학습하기 위한 특별한 덱입니다. 카드들은 복습 후 자동으로 원래의 덱으로 돌아가게 됩니다. 덱 목록에서 이 덱을 지운다면 남아 있는 모든 카드는 원래의 덱으로 돌아가게 됩니다.</string>
-  <string name="steps_error">Steps must be numbers greater than 0</string>
-  <string name="steps_min_error">At least one step is required</string>
-  <string name="sched_end">(end)</string>
-  <string name="sched_unbury_button">To see them now, touch the \"Unbury\" button.</string>
-  <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>
-  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
-  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
-  <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
-  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
+  <string name="dyn_deck_desc">이것은 평상시 일정 이상으로 학습하기 위한 특별한 카드 묶음입니다. 카드들은 복습 후 자동으로 원래의 카드 묶음으로 돌아가게 됩니다. 카드 묶음 목록에서 이 카드 묶음을 지운다면 남아 있는 모든 카드는 원래의 카드 묶음으로 돌아가게 됩니다.</string>
+  <string name="steps_error">단계는 0보다 큰 숫자여야 합니다.</string>
+  <string name="steps_min_error">적어도 하나 이상의 단계가 필요합니다.</string>
+  <string name="sched_end">(끝)</string>
+  <string name="sched_unbury_button">지금 보려면 \"카드 다시 꺼내기\" 버튼을 누르세요</string>
+  <string name="sched_has_buried">관련되거나 집어넣은 일부 카드가 내일까지 연기되었습니다.</string>
+  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+  <string name="lookup_hint">텍스트 복사 후, 플래시카드의 아무 곳이나 두드려 검색 아이콘 표시</string>
+  <string name="add_content_showcase_text">시작하려면 + 버튼을 두드려 새로운 학습물을 추가합니다.\n\n \'도움말\'을 눌러 설명서를 보세요.</string>
 </resources>

@@ -100,7 +100,6 @@
   <string name="dialog_positive_remove">Gỡ bỏ</string>
   <string name="dialog_positive_repair">Sửa chữa</string>
   <string name="dialog_positive_replace">Thay thế</string>
-  <string name="dialog_positive_reset">Thiết lập lại</string>
   <string name="dialog_positive_restore">Phục hồi</string>
   <string name="dialog_positive_set">Thiết lập</string>
   <string name="lookup_button_content">Tìm kiếm</string>
@@ -117,4 +116,7 @@
   <string name="check_media_db_updated">Phương tiện truyền thông cơ sở dữ liệu được xây dựng lại.</string>
   <string name="check_media_delete_unused">Xoá cái không sử dụng</string>
   <string name="check_media_deleted">Các tập tin đã xóa: %d</string>
+  <string name="tags_dialog_option_all_cards">All cards</string>
+  <string name="tags_dialog_option_new_cards">New</string>
+  <string name="tags_dialog_option_due_cards">Due</string>
 </resources>

@@ -36,8 +36,8 @@
 -->
 <resources>
   <string-array name="error_reporting_choice_labels">
-    <item>Завжди доповідати</item>
-    <item>Ніколи на доповідати</item>
+    <item>Завжди сповіщати</item>
+    <item>Ніколи не сповіщати</item>
     <item>Запитати</item>
   </string-array>
   <string-array name="gestures_labels">
@@ -56,8 +56,8 @@
     <item>Приховати картку</item>
     <item>Відкласти картку</item>
     <item>Видалити картку</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Відтворити медіа</item>
+    <item>Перервати навчання</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Відкласти картку</item>
@@ -76,6 +76,7 @@
     <item>В порядку додавання</item>
     <item>В порядку черги</item>
     <item>Остання додана іде першою</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Збільшити сьогоднішній ліміт нових карт</item>
@@ -94,11 +95,6 @@
     <item>Змішати нові карти і повторювані</item>
     <item>Нові карти після повторюваних</item>
     <item>Нові карт перед повторюваними</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>Усі карти</item>
-    <item>Нові</item>
-    <item>На черзі</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>Коли немає шрифту, вказаного на навчальних картках</item>

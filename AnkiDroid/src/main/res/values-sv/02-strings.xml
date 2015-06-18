@@ -47,8 +47,12 @@
   <string name="CardEditorModel">Typ:</string>
   <string name="CardEditorTags">Etiketter: %1$s</string>
   <string name="CardEditorCards">Kort: %1$s</string>
+  <string name="tag_name">Tag name</string>
   <string name="add_new_filter_tags">Lägg till/Filtrera etiketter</string>
+  <string name="add_tag">Add tag</string>
+  <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">Filtrera etiketter</string>
+  <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">SD-kortet är inte tillgängligt eftersom det används som USB-minne. Koppla ur USB:n för att komma åt din kortlek.</string>
   <string name="enable_whiteboard">Aktivera whiteboard</string>
   <string name="disable_whiteboard">Avaktivera whiteboard</string>
@@ -147,8 +151,8 @@
   <string name="sched_end">(slut)</string>
   <string name="sched_unbury_button">För att se dem nu, klicka på knappen \'\'Visa dolda kort\'\'.</string>
   <string name="sched_has_buried">En del relaterade eller dolda kort undanhålls till en senare session.</string>
-  <string name="tag_editor_add_hint">Använd bocken till höger för att lägga till ny etikett</string>
-  <string name="tag_editor_add_feedback">Tryck på \"%2$s\"-knappen för att bekräfta att lägga till \"%1$s\"</string>
+  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">Efter att ha kopierat texten, klicka var som helst på flashkortet för att visa sökikonen</string>
   <string name="add_content_showcase_text">För att börja, klicka på +-knappen för att lägga till nytt studiematerial.\n\n Tryck \"Hjälp\" för att se manualen.</string>
 </resources>

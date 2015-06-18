@@ -39,16 +39,20 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="drawer_open">Open Drawer</string>
-  <string name="drawer_close">Close Drawer</string>
+  <string name="drawer_open">Open drawer</string>
+  <string name="drawer_close">Close drawer</string>
   <string name="CardEditorLaterMessage">Saved information for later</string>
   <string name="CardEditorCardDeck">Card deck:</string>
   <string name="CardEditorNoteDeck">Deck:</string>
   <string name="CardEditorModel">Type:</string>
   <string name="CardEditorTags">Tags: %1$s</string>
   <string name="CardEditorCards">Cards: %1$s</string>
+  <string name="tag_name">Tag name</string>
   <string name="add_new_filter_tags">Add/filter tags</string>
+  <string name="add_tag">Add tag</string>
+  <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">Filter tags</string>
+  <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">Switch off USB storage to access your decks</string>
   <string name="enable_whiteboard">Enable whiteboard</string>
   <string name="disable_whiteboard">Disable whiteboard</string>
@@ -83,7 +87,7 @@
   <string name="select">Select</string>
   <string name="saving_changes">Saving changes&#8230;</string>
   <string name="reordering_cards">Reordering cards&#8230;</string>
-  <string name="field_remapping">%1$s (from \'%2$s\')</string>
+  <string name="field_remapping">%1$s (from “%2$s”)</string>
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
     <item quantity="other">%1$d cards studied in %2$s</item>
@@ -100,8 +104,8 @@
   <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
   <string name="rename">Rename</string>
-  <string name="rename_error">Deck %s could not be renamed</string>
-  <string name="default_conf_delete_error">The default options group can\'t be removed</string>
+  <string name="rename_error">Deck “%s” couldn’t be renamed</string>
+  <string name="default_conf_delete_error">The default options group can’t be removed</string>
   <plurals name="factadder_cards_added">
     <item quantity="other">%d cards added</item>
   </plurals>
@@ -109,7 +113,7 @@
   <string name="check_db">Check database</string>
   <string name="check_media">Check media</string>
   <string name="check_db_message">Checking database&#8230;</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run “Tools&gt;Empty Cards...” on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="delete_deck">Deleting deck&#8230;</string>
   <string name="show_hint">Show %s</string>
@@ -119,22 +123,22 @@
   <string name="import_select_title">Choose a file to import</string>
   <string name="import_message_add">Add</string>
   <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
-  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
+  <string name="import_message_add_confirm">Add “%s” to collection? This may take a long time</string>
   <string name="import_log_success">Imported %d cards</string>
   <string name="import_log_error">Import failed</string>
-  <string name="import_log_no_apkg">This is not a valid apkg file</string>
-  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
-  <string name="import_error_content_provider">The selected file could not be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n %s</string>
+  <string name="import_log_no_apkg">This isn’t a valid apkg file</string>
+  <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg extension</string>
+  <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
   <string name="import_importing">Importing cards&#8230;</string>
   <string name="export_include_schedule">Include scheduling</string>
   <string name="export_include_media">Include media</string>
   <string name="confirm_apkg_export">Export collection as apkg file?</string>
-  <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
+  <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
   <string name="export_in_progress">Exporting apkg file&#8230;</string>
   <string name="export_successful_title">Email apkg?</string>
-  <string name="export_successful">File \"%s\" was exported. Do you want to email it?</string>
+  <string name="export_successful">File “%s” was exported. Do you want to email it?</string>
   <string name="export_unsuccessful">Error exporting collection</string>
-  <string name="import_hint">Place the apkg file in directory %s and press \"OK\" to import cards</string>
+  <string name="import_hint">Place the apkg file in directory “%s” and touch “OK” to import cards</string>
   <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
   <string name="study_options">Deck options</string>
   <string name="custom_study">Custom study</string>
@@ -142,10 +146,10 @@
   <string name="steps_error">Steps must be numbers greater than 0</string>
   <string name="steps_min_error">At least one step is required</string>
   <string name="sched_end">(end)</string>
-  <string name="sched_unbury_button">To see them now, touch the \"Unbury\" button.</string>
+  <string name="sched_unbury_button">To see them now touch the “Unbury” button.</string>
   <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>
-  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
-  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
+  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
-  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
+  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\nPress “Help” to see the manual.</string>
 </resources>

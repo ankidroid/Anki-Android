@@ -100,7 +100,6 @@
   <string name="dialog_positive_remove">Уклони</string>
   <string name="dialog_positive_repair">Обнављање</string>
   <string name="dialog_positive_replace">Замени</string>
-  <string name="dialog_positive_reset">Ресетуј</string>
   <string name="dialog_positive_restore">Поврати</string>
   <string name="dialog_positive_set">Постави</string>
   <string name="lookup_button_content">Претрага</string>
@@ -117,4 +116,7 @@
   <string name="check_media_db_updated">База за медије обновљена.</string>
   <string name="check_media_delete_unused">Избриши некоришћених</string>
   <string name="check_media_deleted">Датотеке избрисане: %d</string>
+  <string name="tags_dialog_option_all_cards">All cards</string>
+  <string name="tags_dialog_option_new_cards">New</string>
+  <string name="tags_dialog_option_due_cards">Due</string>
 </resources>

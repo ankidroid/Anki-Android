@@ -76,10 +76,11 @@
     <item>I rekkefølgen lagt til</item>
     <item>Rekkefølge etter forfallsdato</item>
     <item>Latest added first</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>Increase today\'s new card limit</item>
-    <item>Increase today\'s review card limit</item>
+    <item>Increase today’s new card limit</item>
+    <item>Increase today’s review card limit</item>
     <item>Review forgotten cards</item>
     <item>Review ahead</item>
     <item>Study a random selection of cards</item>
@@ -94,11 +95,6 @@
     <item>Mix new cards and reviews</item>
     <item>New cards after reviews</item>
     <item>New cards before reviews</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>All cards</item>
-    <item>New</item>
-    <item>Due</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>When no font specified on flashcards</item>

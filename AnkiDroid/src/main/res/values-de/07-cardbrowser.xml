@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">%d Karte angezeigt</item>
+    <item quantity="other">%d Karten angezeigt</item>
   </plurals>
   <string name="card_browser_all_decks">Alle Stapel</string>
   <string name="card_browser_delete_card">Notiz löschen</string>
@@ -55,13 +55,13 @@
   <string name="card_browser_show_suspended">Ausgesetzte herausfiltern</string>
   <string name="card_browser_search_by_tag">Nach Schlagwort filtern</string>
   <string name="card_browser_tags_shown">Schlagworte: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
+  <string name="card_browser_list_my_searches">Meine Suchen</string>
+  <string name="card_browser_list_my_searches_save">Suche speichern</string>
+  <string name="card_browser_list_my_searches_title">Wählen Sie eine gespeicherte Suche</string>
+  <string name="card_browser_list_my_searches_new_name">Name für die aktuelle Suche</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">Sie können keine unbenannte Suche speichern.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Name bereits vorhanden!</string>
+  <string name="card_browser_list_my_searches_remove_content">\"%1$s\" löschen?</string>
   <string name="card_browser_change_display_order">Anzeigereihenfolge</string>
   <string name="card_browser_change_display_order_title">Anzeigereihenfolge</string>
   <string name="card_browser_change_display_order_reverse">Zum Umkehren ein Feld zweimal wählen.</string>

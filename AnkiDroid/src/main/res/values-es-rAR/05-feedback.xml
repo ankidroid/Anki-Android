@@ -40,7 +40,6 @@
 -->
 <resources>
   <string name="error_reporting_choice">Modo de reporte de errores</string>
-  <string name="error_reporting_choice_summary">Los errores pueden ser reportados automáticamente, nunca reportados, o pueden serle solicitados</string>
   <string name="feedback_disclaimer">Advertencia: No recolectamos información personal tal como su dirección de email, número de teléfono o su IMEI telefónico. Sí recolectamos alguna información sobre su dispositivo tal como el fabricante, el modelo y la versión de Android, así como la naturaleza de los errores reportados y los pasos que llevaron a ellos.</string>
   <string name="feedback_title">Comentarios</string>
   <string name="feedback_default_text">Ingrese por favor sus comentarios o información acerca de la naturaleza de los errores que está reportando.</string>

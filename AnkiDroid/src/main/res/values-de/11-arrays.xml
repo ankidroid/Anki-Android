@@ -76,6 +76,7 @@
     <item>Hinzufügungsreihenfolge</item>
     <item>Fälligkeitsreihenfolge</item>
     <item>Zuletzt hinzugefügte zuerst</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Erhöhe das heutige Tageslimit an neuen Karten</item>
@@ -94,11 +95,6 @@
     <item>Neue Karten und Wiederholungen mischen</item>
     <item>Neue Karten nach Wiederholungen</item>
     <item>Neue Karten vor Wiederholungen</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>Alle Karten</item>
-    <item>Neu</item>
-    <item>Fällig</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>Wenn keine Schriftart auf Karte angegeben</item>

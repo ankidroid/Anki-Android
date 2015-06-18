@@ -47,8 +47,12 @@
   <string name="CardEditorModel">ノート:</string>
   <string name="CardEditorTags">タグ: %1$s</string>
   <string name="CardEditorCards">カード:%1$s</string>
+  <string name="tag_name">Tag name</string>
   <string name="add_new_filter_tags">タグフィルター / 新規タグ追加</string>
+  <string name="add_tag">Add tag</string>
+  <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">タグフィルター (前方一致検索)</string>
+  <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">USBストレージとして使用されているので、SDカードは使用できません。単語帳にアクセスするには、USBを切断してください。</string>
   <string name="enable_whiteboard">ホワイトボードを有効にする</string>
   <string name="disable_whiteboard">ホワイトボードを無効にする</string>
@@ -103,7 +107,7 @@
   <string name="rename_error">単語帳 %s の名前を変更できません。</string>
   <string name="default_conf_delete_error">標準オプショングループを削除することはできません。</string>
   <plurals name="factadder_cards_added">
-    <item quantity="other">%d　枚のカードの追加</item>
+    <item quantity="other">%d枚のカードを追加しました</item>
   </plurals>
   <string name="help_title">ヘルプ</string>
   <string name="check_db">データベースをチェック</string>
@@ -144,8 +148,8 @@
   <string name="sched_end">（終了）</string>
   <string name="sched_unbury_button">それらのカードを今すぐ表示するには、「延期を解除」ボタンをタップしてください。</string>
   <string name="sched_has_buried">関連カード、延期カードの学習は明日まで延期されます。</string>
-  <string name="tag_editor_add_hint">右側のチェックマークを使って、新しいタグを追加する</string>
-  <string name="tag_editor_add_feedback">新しいタグ「%1$s」が仮選択状態です。確定する場合は「%2$s」ボタンをタップしてください。</string>
+  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">文字列をコピーした後、カード内でタップすると、検索辞書アイコンが表示されます</string>
   <string name="add_content_showcase_text">開始する場合は、「＋」ボタンをタップして新しい学習データを追加してください。\n\n マニュアルを見る場合は、「ヘルプ」を押してください。</string>
 </resources>

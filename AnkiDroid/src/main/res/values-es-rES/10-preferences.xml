@@ -73,14 +73,14 @@
   <string name="reset_languages_summ">Restablece las asignaciones de idioma (para texto a voz y diccionarios) para todos los mazos. Para restablecer asignaciones individualmente, hazlo desde el selector de mazos</string>
   <string name="reset_languages_question">¿Restablecer todas las asignaciones de idiomas?</string>
   <string name="reset_confirmation">Restablecer todos los estados</string>
-  <string name="display_font_size">Escalado de fuentes</string>
-  <string name="display_font_size_summ">XXX %</string>
-  <string name="image_size">Escalado de imágenes</string>
-  <string name="image_size_summ">XXX %</string>
+  <string name="card_zoom">Card zoom</string>
+  <string name="card_zoom_summ">XXX%</string>
+  <string name="image_zoom">Image zoom</string>
+  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Tamaño del botón de respuesta</string>
-  <string name="button_size_summ">XXX %</string>
+  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Escalado de fuentes del explorador</string>
-  <string name="card_browser_font_size_summ">XXX %</string>
+  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Ruta de la colección</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Pantalla completa</string>
@@ -138,14 +138,8 @@
   <string name="safe_display_summ">Deshabilitar todas las animaciones y usar un método más seguro para dibujar las tarjetas. Los dispositivos de tinta electrónica y dispositivos más viejos que utilizan fuentes personalizadas pueden requerir esta opción.</string>
   <string name="vertical_centering">Alinear al centro</string>
   <string name="vertical_centering_summ">Centra verticalmente el contenido de las tarjetas</string>
-  <string name="pref_backup">Utilizar copias de seguridad</string>
-  <string name="pref_backup_summ">Crear copias de seguridad automáticamente antes de abrir un mazo (una vez al día)</string>
   <string name="pref_backup_max">Número máximo de copias de seguridad</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">¿Deshabilitar las copias de seguridad?</string>
-  <string name="pref_disable_backup_warning">Esto borrará todos los archivos de copia de seguridad</string>
-  <string name="pref_intent_add_instant">Adición instantánea</string>
-  <string name="pref_intent_add_instant_summ">Añadir nuevas tarjetas de diccionarios sin abrir AnkiDroid. Los podrá encontrar más tarde en \'datos guardados\' en el gestor de tarjetas.</string>
   <string name="show_estimates">Mostrar botón tiempo</string>
   <string name="show_estimates_summ">Mostrar el próximo repaso en los botones de respuesta</string>
   <string name="show_progress">Mostrar restante</string>
@@ -172,8 +166,8 @@
   <string name="deck_conf_deck_description">Descripción del mazo</string>
   <string name="deck_conf_group">Grupo de opciones</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
+    <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">Tarjetas nuevas</string>
   <string name="deck_conf_rev_cards">Repasos</string>
@@ -218,8 +212,8 @@
   <string name="deck_conf_remove_message">¿Eliminar el grupo de opciones actual?</string>
   <string name="deck_conf_set_subdecks">Establecer para todos los submazos</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%s subdeck will use this group</item>
+    <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Establecer para todos los submazos</string>
   <string name="deck_conf_set_subdecks_message">¿Establecer el grupo de opciones actual para todos los submazos de este mazo?</string>

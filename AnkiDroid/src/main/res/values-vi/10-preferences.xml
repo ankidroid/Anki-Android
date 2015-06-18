@@ -73,14 +73,14 @@
   <string name="reset_languages_summ">Đặt lại bài tập ngôn ngữ (cho văn bản sang tiếng nói và từ điển) cho tất cả chủ đề. Đặt lại các bài tập theo chủ đề cụ thể trên bộ chọn/giữ chủ đề.</string>
   <string name="reset_languages_question">Đặt lại tất cả các thiết lập ngôn ngữ ?</string>
   <string name="reset_confirmation">Thiết lập lại tất cả các trạng thái</string>
-  <string name="display_font_size">Xem phông rộng</string>
-  <string name="display_font_size_summ">XXX %</string>
-  <string name="image_size">Xem hình ảnh rộng</string>
-  <string name="image_size_summ">XXX %</string>
+  <string name="card_zoom">Card zoom</string>
+  <string name="card_zoom_summ">XXX%</string>
+  <string name="image_zoom">Image zoom</string>
+  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Kích thước nút trả lời </string>
-  <string name="button_size_summ">XXX %</string>
+  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Thẻ trình duyệt font rộng</string>
-  <string name="card_browser_font_size_summ">XXX %</string>
+  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Đường dẫn cho bộ sưu tập</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Chế độ toàn màn hình</string>
@@ -138,14 +138,8 @@
   <string name="safe_display_summ">Tắt tất cả các hình ảnh động và sử dụng phương pháp an toàn hơn cho việc vẽ thẻ. E-ink và thiết bị cũ bằng cách sử dụng tùy chỉnh phông chữ có thể yêu cầu điều này.</string>
   <string name="vertical_centering">Chọn Center align</string>
   <string name="vertical_centering_summ">Thiết lập nội dung chính của thẻ theo chiều dọc</string>
-  <string name="pref_backup">Sử dụng bản sao lưu</string>
-  <string name="pref_backup_summ">Tự động tạo bản sao lưu trước khi mở một chủ đề (mỗi ngày)</string>
   <string name="pref_backup_max">Tối đa số lượng bản sao lưu</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">Vô hiệu hóa sao lưu?</string>
-  <string name="pref_disable_backup_warning">Việc này sẽ xóa tất cả các tập tin sao lưu</string>
-  <string name="pref_intent_add_instant">Ngay lập tức them vào</string>
-  <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
   <string name="show_estimates">Show button time</string>
   <string name="show_estimates_summ">Show next review time on answer buttons</string>
   <string name="show_progress">Show remaining</string>
@@ -172,7 +166,7 @@
   <string name="deck_conf_deck_description">Deck description</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="other"/>
+    <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">New cards</string>
   <string name="deck_conf_rev_cards">Reviews</string>
@@ -217,7 +211,7 @@
   <string name="deck_conf_remove_message">Loại bỏ hiện tại tùy chọn nhóm?</string>
   <string name="deck_conf_set_subdecks">Thiết lập cho tất cả chủ đề phụ</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="other"/>
+    <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Thiết lập cho tất cả chủ đề phụ</string>
   <string name="deck_conf_set_subdecks_message">Thiết lập hiện tại tùy chọn nhóm cho tất cả chủ đề phụ này?</string>

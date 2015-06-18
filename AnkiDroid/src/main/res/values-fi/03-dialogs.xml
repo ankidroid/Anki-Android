@@ -100,7 +100,6 @@
   <string name="dialog_positive_remove">Poista</string>
   <string name="dialog_positive_repair">Korjaa</string>
   <string name="dialog_positive_replace">Korvaa</string>
-  <string name="dialog_positive_reset">Tyhjennä</string>
   <string name="dialog_positive_restore">Palauta</string>
   <string name="dialog_positive_set">Aseta</string>
   <string name="lookup_button_content">Etsi</string>
@@ -117,4 +116,7 @@
   <string name="check_media_db_updated">Mediatietokanta rakennettiin uudelleen.</string>
   <string name="check_media_delete_unused">Poista käyttämättömät</string>
   <string name="check_media_deleted">%d tiedostoa poistettiin</string>
+  <string name="tags_dialog_option_all_cards">All cards</string>
+  <string name="tags_dialog_option_new_cards">New</string>
+  <string name="tags_dialog_option_due_cards">Due</string>
 </resources>

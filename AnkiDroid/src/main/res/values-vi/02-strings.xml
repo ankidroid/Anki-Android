@@ -47,8 +47,12 @@
   <string name="CardEditorModel">Loại:</string>
   <string name="CardEditorTags">Từ khóa: %1$s</string>
   <string name="CardEditorCards">Thẻ: %1$s</string>
+  <string name="tag_name">Tag name</string>
   <string name="add_new_filter_tags">Thêm/ Loại bỏ các Tag đánh dấu</string>
+  <string name="add_tag">Add tag</string>
+  <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">các bộ lọc đánh dấu</string>
+  <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">Thẻ SD hiện đang được sử dụng như một ổ lưu trữ USB. Hãy ngắt kết nối USB để có thể truy cập được vào các tập thẻ của bạn.</string>
   <string name="enable_whiteboard">Bật  bảng whiteboard</string>
   <string name="disable_whiteboard">Tắt bảng whiteboard</string>
@@ -144,8 +148,8 @@
   <string name="sched_end">(kết thúc)</string>
   <string name="sched_unbury_button">Để nhìn thấy chúng bây giờ, hãy nhấp vào nút Hồi phục.</string>
   <string name="sched_has_buried">Một số Thẻ liên quan hoặc bị chôn vùi bị trì hoãn cho đến ngày mai.</string>
-  <string name="tag_editor_add_hint">Sử dụng dấu hiệu đánh dấu ở bên phải để thêm từ khóa mới</string>
-  <string name="tag_editor_add_feedback">Bấm nút \"%2$s\" nút để xác nhận thêm \"%1$s\"</string>
+  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">Sau khi sao chép văn bản, bấm vào bất cứ nơi nào trên flashcard để hiển thị biểu tượng tìm kiếm</string>
   <string name="add_content_showcase_text">Để bắt đầu, hãy nhấp vào các nút (+) để thêm mới một số thứ cần học tập.\n\n Bấm vào \'Trợ giúp\' để xem hướng dẫn sử dụng.</string>
 </resources>

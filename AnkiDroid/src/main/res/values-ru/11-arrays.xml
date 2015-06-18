@@ -76,6 +76,7 @@
     <item>Порядок просмотра добавлен</item>
     <item>В порядке добавления</item>
     <item>Последние добавленные первыми</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Увеличить сегодняшний лимит новых карт</item>
@@ -94,11 +95,6 @@
     <item>Перемешать новые карты и повторяемые</item>
     <item>Новые после повторяемых</item>
     <item>Новые до повторяемых</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>Все карты</item>
-    <item>Новые</item>
-    <item>Повтор</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>Когда не определён шрифт карточек</item>

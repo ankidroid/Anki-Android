@@ -47,8 +47,12 @@
   <string name="CardEditorModel">Tipo:</string>
   <string name="CardEditorTags">Etichette: %1$s</string>
   <string name="CardEditorCards">Carte : %1$s</string>
+  <string name="tag_name">Tag name</string>
   <string name="add_new_filter_tags">Aggiungi/filtra etichette</string>
+  <string name="add_tag">Add tag</string>
+  <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">Filtra etichette</string>
+  <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">La scheda SD non è disponibile, perché è usata come unità USB. Scollegare l\'USB per accedere ai mazzi.</string>
   <string name="enable_whiteboard">Abilita la lavagna</string>
   <string name="disable_whiteboard">Disabilita la lavagna</string>
@@ -147,8 +151,8 @@
   <string name="sched_end">(fine)</string>
   <string name="sched_unbury_button">Per vederle ora, tocca il pulsante Disseppellisci.</string>
   <string name="sched_has_buried">Alcune carte correlate o seppellite sono state rinviate ad una prossima sessione.</string>
-  <string name="tag_editor_add_hint">Utilizza la casella sulla destra per aggiungere una nuova etichetta</string>
-  <string name="tag_editor_add_feedback">Premi il pulsante \"%2$s\" per confermare l\'aggiunta di \"%1$s\"</string>
+  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">Dopo aver copiato il testo, tocca la carta in un punto qualsiasi per mostrare l\'icona di ricerca</string>
   <string name="add_content_showcase_text">Per cominciare, pigia il bottone + per aggiungere nuovi contenuti da studiare.\n\n Pigia \'Aiuto\' per vedere il manuale.</string>
 </resources>

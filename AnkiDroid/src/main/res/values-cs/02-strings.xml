@@ -47,8 +47,12 @@
   <string name="CardEditorModel">Typ poznámky:</string>
   <string name="CardEditorTags">Štítky: %1$s</string>
   <string name="CardEditorCards">Karty: %1$s</string>
+  <string name="tag_name">Tag name</string>
   <string name="add_new_filter_tags">Přidat/Filtrovat štítky</string>
+  <string name="add_tag">Add tag</string>
+  <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">Filtrovat tagy</string>
+  <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">SD karta je nedostupná, protože se používá jako úložiště USB. Odpojte USB pro přístup ke svým balíkům.</string>
   <string name="enable_whiteboard">Povolit Tabuly</string>
   <string name="disable_whiteboard">Zakázat Tabuly</string>
@@ -107,9 +111,9 @@
   <string name="rename_error">Balíček %s nelze přejmenovat</string>
   <string name="default_conf_delete_error">Nelze odstranit výchozí skupinu</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
+    <item quantity="one">přidána %d karta</item>
     <item quantity="few">%d cards added</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="other">přidáno %d karet</item>
   </plurals>
   <string name="help_title">Nápověda</string>
   <string name="check_db">Zkontrolovat databázi</string>
@@ -130,7 +134,7 @@
   <string name="import_log_error">Import se nezdařil</string>
   <string name="import_log_no_apkg">Toto není platný apkg soubor</string>
   <string name="import_error_not_apkg_extension">Souboru %s nemá příponu .apkg</string>
-  <string name="import_error_content_provider">The selected file could not be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n %s</string>
+  <string name="import_error_content_provider">Vybraný soubor nelze automaticky importovat pomocí AnkiDroid. V uživatelské příručce naleznete, jak provést ruční import souborů anki: \n %s</string>
   <string name="import_importing">Import karet.\nProsím čekejte...</string>
   <string name="export_include_schedule">Zahrnout plánování</string>
   <string name="export_include_media">Zahrnout multimédia</string>
@@ -150,8 +154,8 @@
   <string name="sched_end">(konec)</string>
   <string name="sched_unbury_button">Pro jejich zobrazení klikněte na tlačítko \'Zruš odložení\'.</string>
   <string name="sched_has_buried">Některé související nebo pozastavené karty byly odloženy do pozdější relace.</string>
-  <string name="tag_editor_add_hint">Pro přidání nového tagu oužijte fajfku vpravo</string>
-  <string name="tag_editor_add_feedback">Stiskněte tlačítko \"%2$s\" pro potvrzení přidání \"%1$s\"</string>
+  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">Po zkopírování textu, klepněte kdekoli na kartičku pro zobrazení ikony hledání</string>
   <string name="add_content_showcase_text">Chcete-li začít, klepněte na tlačítko + pro přidání nového studijního materiálu.\n\n Klepněte na \'Nápověda\' pro zobrazení manuálu.</string>
 </resources>

@@ -56,13 +56,13 @@
   <string name="card_browser_show_suspended">Filtrovat vyřazené</string>
   <string name="card_browser_search_by_tag">Filtrovat podle štítků</string>
   <string name="card_browser_tags_shown">Štítky: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
+  <string name="card_browser_list_my_searches">Moje hledání</string>
+  <string name="card_browser_list_my_searches_save">Uložení hledání</string>
+  <string name="card_browser_list_my_searches_title">Zvolte uložené hledání</string>
+  <string name="card_browser_list_my_searches_new_name">Název aktuálního hledání</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">Nelze uložit hledání bez názvu.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Název již existuje!</string>
+  <string name="card_browser_list_my_searches_remove_content">Odstranit \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Změnit řazení</string>
   <string name="card_browser_change_display_order_title">Zvolte řazení</string>
   <string name="card_browser_change_display_order_reverse">Pro obrácené řazení vyberte dvakrát.</string>
@@ -73,7 +73,7 @@
   <string name="card_browser_filtering_cards">Filtrování karet... \nPro zrušení stiskněte tlačítko Zpět</string>
   <string-array name="card_browser_order_labels">
     <item>Žádné třídění (rychlejší)</item>
-    <item>By sort field</item>
+    <item>Podle pole řazení</item>
     <item>Podle času vytvoření</item>
     <item>Podle času úpravy</item>
     <item>Podle času změny</item>

@@ -76,6 +76,7 @@
     <item>追加順</item>
     <item>学習予定日時が古い順</item>
     <item>追加時期が新しい順</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>今日の新規カードの上限を上げる</item>
@@ -94,11 +95,6 @@
     <item>新規カードと復習カードを混ぜる</item>
     <item>復習カードの後に新規カードを学習する</item>
     <item>復習カードの前に新規カードを学習する</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>全カード</item>
-    <item>新規</item>
-    <item>予定日以降</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>フォントが指定されていない場合</item>

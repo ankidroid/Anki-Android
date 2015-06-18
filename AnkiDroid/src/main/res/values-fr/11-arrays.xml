@@ -76,6 +76,7 @@
     <item>L\'ordre d\'ajout</item>
     <item>Les plus urgentes d\'abord</item>
     <item>Les dernières ajoutées d’abord</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Augmenter pour ce jour le quota de nouveautés</item>
@@ -94,11 +95,6 @@
     <item>Mélangez nouvelles cartes et révisions</item>
     <item>Nouvelles cartes après les révisions</item>
     <item>Nouvelles cartes avant les révisions</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>Toutes les cartes</item>
-    <item>Nouvelle</item>
-    <item>À faire</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>Lorsque aucune police n\'est spécifié sur la carte</item>

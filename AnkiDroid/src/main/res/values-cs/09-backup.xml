@@ -59,8 +59,8 @@
   <string name="backup_restore_select_title">Vyberte zálohu pro obnovení</string>
   <string name="backup_restore_no_backups">Žádné zálohy pro tento balíček nejsou k dispozici. Máte-li zálohu na stolním počítači, zkopírujte jí ručně do složky AnkiDroid</string>
   <string name="open_collection_failed_title">Kolekce není otevřena</string>
-  <string name="open_collection_failed_message">Database could not be opened. It\'s either not a real Anki database or has been corrupted.\n\nTouch \'options\' for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
-  <string name="corrupt_db_message">Unfortunately your collection has become corrupted.\n\nTouch \'options\' to restore from a backup, or if that does not work, see the following instructions for manually repairing the database:\n%1$s</string>
-  <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the \'options\' button. If you continue to see this message, please file a bug report:\n%1$s</string>
+  <string name="open_collection_failed_message">Databázi nelze otevřít. Buď to není reálná databáze Anki nebo je porušena.\n\nKlikněte na \'Možnosti\' pro způsob obnovení databáze, nebo na další informace o opravě poškozených balíčcích viz: \n%1$s</string>
+  <string name="corrupt_db_message">Bohužel váš balíček se porušil.\n\nKlokněte na \'Možnosti\' pro obnovení ze zálohy. Pokud se obnova nepovede, viz následující pokyny k ruční opravě databáze: \n%1$s</string>
+  <string name="access_collection_failed_message">Došlo k chybě při přístupu k vašemu balíčku. To může být způsobeno chybou v aplikaci, nebo může být problém s balíčkem. \n\nZkuste spustit kontrolu databáze nebo obnovení ze zálohy stisknutím tlačítka \'Možnosti\'. Objeví-li se znovu tato zpráva, zašlete nám zprávu: \n%1$s</string>
   <string name="deck_repair_error">Kolekci nelze opravit</string>
 </resources>

@@ -73,14 +73,14 @@
   <string name="reset_languages_summ">Ресетуј језике (за претварање текста у звук и речнике) за све шпилове. Ресетуј за конкретне шпилове - у садржају шпилова</string>
   <string name="reset_languages_question">Да ресетујем све језичке поставке?</string>
   <string name="reset_confirmation">Ресетована сва подешавања</string>
-  <string name="display_font_size">Прегледач за величину фонта</string>
-  <string name="display_font_size_summ">XXX %</string>
-  <string name="image_size">Промена величине слика у прегледачу</string>
-  <string name="image_size_summ">XXX %</string>
+  <string name="card_zoom">Card zoom</string>
+  <string name="card_zoom_summ">XXX%</string>
+  <string name="image_zoom">Image zoom</string>
+  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Величина дугмета за одговор</string>
-  <string name="button_size_summ">XXX %</string>
+  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Величина фонта прегледача картица</string>
-  <string name="card_browser_font_size_summ">XXX %</string>
+  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Фасцикла са колекцијом</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Пуноекрански режим</string>
@@ -138,14 +138,8 @@
   <string name="safe_display_summ">Онемогући свe анимацијe и користи безбедну методу за приказивања картица. E-ink и старије уређаје које користе посебне фонтове можда захтевају ово.</string>
   <string name="vertical_centering">Центрирај вертикално</string>
   <string name="vertical_centering_summ">Центрирај садржај картица вертикално</string>
-  <string name="pref_backup">Прави резервне копије</string>
-  <string name="pref_backup_summ">Аутоматски направи резервне датотеке при отварању жпила (једном сваки дан)</string>
   <string name="pref_backup_max">Максималан број резервне датотеке</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">Онемогући резервне датотеке?</string>
-  <string name="pref_disable_backup_warning">Ово ће да избрише све резервне датотеке</string>
-  <string name="pref_intent_add_instant">Вишеструко додавање</string>
-  <string name="pref_intent_add_instant_summ">Додај нове картице од речника без отварање AnkiDroid-а. Можете да нађете додате картице под \"сачуване датотеке\" на екрану за нове картице.</string>
   <string name="show_estimates">Прикажи дугме времена</string>
   <string name="show_estimates_summ">Следећи пут прикажи разматрање изнад дугмета за одговоре</string>
   <string name="show_progress">Прикажи преостале</string>
@@ -172,10 +166,10 @@
   <string name="deck_conf_deck_description">Опис шпила</string>
   <string name="deck_conf_group">Група опције</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="many"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
+    <item quantity="few">%1$s\n%2$d decks use this group</item>
+    <item quantity="many">%1$s\n%2$d decks use this group</item>
+    <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">Нове картице</string>
   <string name="deck_conf_rev_cards">Понављања</string>
@@ -220,10 +214,10 @@
   <string name="deck_conf_remove_message">Да уклоним текућу групу опција?</string>
   <string name="deck_conf_set_subdecks">Задај за све групе подшпилова</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="many"/>
-    <item quantity="other"/>
+    <item quantity="one">%s subdeck will use this group</item>
+    <item quantity="few">%s subdecks will use this group</item>
+    <item quantity="many">%s subdecks will use this group</item>
+    <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Задај за све групе шпилова</string>
   <string name="deck_conf_set_subdecks_message">Да задам текућу групу опција за све подшпилове ових шпилова?</string>

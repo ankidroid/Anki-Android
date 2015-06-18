@@ -42,40 +42,41 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>동작 없음</item>
-    <item>답 보기</item>
-    <item>대답 버튼 1</item>
-    <item>대답 버튼 2</item>
-    <item>대답 버튼 3</item>
-    <item>대답 버튼 4</item>
+    <item>정답 보기</item>
+    <item>답변 버튼 1</item>
+    <item>답변 버튼 2</item>
+    <item>답변 버튼 3</item>
+    <item>답변 버튼 4</item>
     <item>답변 추천 (녹색)</item>
-    <item>권장하는 보다 더 나은 대답</item>
+    <item>권장된 것 보다 더 나은 답변</item>
     <item>실행 취소</item>
     <item>카드 편집</item>
-    <item>카드 마크하기</item>
-    <item>조회 식</item>
-    <item>카드 묻어두기</item>
-    <item>카드 미루기</item>
+    <item>카드에 표시하기</item>
+    <item>색인 형식</item>
+    <item>카드 집어넣기</item>
+    <item>카드 보류</item>
     <item>카드 삭제</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>미디어 재생</item>
+    <item>학습 중단</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>카드 미루기</item>
-    <item>태그 적용</item>
+    <item>카드 보류</item>
+    <item>태그 전용</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>무작위 순서로 새카드 학습</item>
-    <item>추가한 순서대로 새카드 학습</item>
+    <item>무작위 순서대로 새 카드</item>
+    <item>추가한 순서대로 새 카드</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>오래된 카드 먼저 학습하기</item>
-    <item>무작위로 학습하기</item>
+    <item>오래된 카드 먼저</item>
+    <item>무작위</item>
     <item>학습 간격 늘이기</item>
     <item>학습 간격 줄이기</item>
-    <item>최고 착오</item>
+    <item>오답 빈도가 가장 높은</item>
     <item>추가된 순서대로</item>
     <item>기간 순서대로</item>
     <item>최근 추가된 것이 처음으로</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>오늘의 새로운 카드 학습량 늘리기</item>
@@ -83,25 +84,20 @@
     <item>잊어버린 카드 복습하기</item>
     <item>미리 복습하기</item>
     <item>무작위 카드 학습하기</item>
-    <item>새로운 카드 미리 학습하기</item>
+    <item>새로운 카드 예습하기</item>
     <item>특정 태그로만 제한하기</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
-    <item>Decide by note type</item>
+    <item>현재 카드 묶음을 사용</item>
+    <item>노트 형식에 따라 결정</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>All cards</item>
-    <item>New</item>
-    <item>Due</item>
+    <item>새 카드와 복습 섞기</item>
+    <item>새 카드 다음에 복습</item>
+    <item>새 카드에 앞서 복습</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>플래시카드에 특정 글꼴이 지정되지 않은 경우</item>
+    <item>항상</item>
   </string-array>
 </resources>

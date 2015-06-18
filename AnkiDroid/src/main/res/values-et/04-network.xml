@@ -41,7 +41,7 @@
 -->
 <resources>
   <string name="youre_offline">Võrguühenduseta</string>
-  <string name="sync_error">Sync Error</string>
+  <string name="sync_error">Sync error</string>
   <string name="vague_error">Viga</string>
   <string name="retry">Proovi uuesti</string>
   <string name="cancel">Loobu</string>
@@ -57,7 +57,7 @@
   <string name="password">Parool</string>
   <string name="password_repeat">Korrake parooli</string>
   <string name="log_in">Logi sisse</string>
-  <string name="sign_up_description">Don\'t have an AnkiWeb account? It\'s free!</string>
+  <string name="sign_up_description">Don’t have an AnkiWeb account? It’s free!</string>
   <string name="sign_up">Sign up</string>
   <string name="sign_up_terms">By touching <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
   <string name="logged_as">Logged in as</string>
@@ -68,7 +68,7 @@
   <string name="downloaddeck_search">Otsi</string>
   <string name="preferences_title">Seaded</string>
   <string name="deckpreferences_title">Options for XXX</string>
-  <string name="sync_conflict_message">You must either upload this collection or download it from Ankiweb, as they can\'t be merged. The collection on one side will be overwritten.</string>
+  <string name="sync_conflict_message">You must either upload this collection or download it from Ankiweb, as they can’t be merged. The collection on one side will be overwritten.</string>
   <string name="sync_conflict_local">Laeüles</string>
   <string name="sync_conflict_remote">Lae alla</string>
   <string name="sync_conflict_remote_confirm">Overwrite your local collection?</string>
@@ -81,9 +81,9 @@
   <string name="sync_downloading_media">Downloading media %1$d/%2$d&#8230;</string>
   <string name="sync_log_uploading_message">Full sync from local</string>
   <string name="sync_log_downloading_message">Full sync from server</string>
-  <string name="sync_log_clocks_unsynchronized">Your clock\'s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
-  <string name="sync_log_clocks_unsynchronized_tz">, the time zone\'s possibly wrong</string>
-  <string name="sync_log_clocks_unsynchronized_date">, the date\'s possibly wrong</string>
+  <string name="sync_log_clocks_unsynchronized">Your clock’s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
+  <string name="sync_log_clocks_unsynchronized_tz">, the time zone’s possibly wrong</string>
+  <string name="sync_log_clocks_unsynchronized_date">, the date’s possibly wrong</string>
   <string name="sync_conflict_title">Sünkroonimise konflikt</string>
   <string name="sync_no_changes_message">No changes found.</string>
   <string name="sync_database_acknowledge">Collection synchronized</string>
@@ -91,10 +91,10 @@
   <string name="sync_corrupt_database">Your database is corrupt. Please fix it before trying again to sync.\n\nSee %s for information about repairing your database.</string>
   <string name="sync_too_busy">Server busy. Try again later.</string>
   <string name="sync_remote_db_error">The downloaded database was corrupt. Please try again.</string>
-  <string name="sync_overwrite_error">Your current collection couldn\'t be overwritten by the downloaded file</string>
+  <string name="sync_overwrite_error">Your current collection couldn’t be overwritten by the downloaded file</string>
   <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
   <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
-  <string name="sync_write_access_error">The downloaded file couldn\'t be saved to the SD card. Either the card is mounted read-only or there isn\'t enough space.</string>
+  <string name="sync_write_access_error">The downloaded file couldn’t be saved to the SD card. Either the card is mounted read-only or there isn’t enough space.</string>
   <string name="sync_deletions_message">Syncing deletions&#8230;</string>
   <string name="sync_small_objects_message">Syncing small objects&#8230;</string>
   <string name="sync_finish_message">Finishing syncing&#8230;</string>
@@ -112,18 +112,18 @@
   <string name="sync_media_changes_count">%d media changes to upload</string>
   <string name="sync_media_downloaded_count">%d media files downloaded</string>
   <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Choose which side you would like to keep.</string>
-  <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn\'t agree with the server. The next media sync will be full to correct any error.</string>
+  <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn’t agree with the server. The next media sync will be full to correct any error.</string>
   <string name="sync_media_error">Error syncing media data</string>
-  <string name="sync_media_unsupported">Complex media file names are not supported on Android 2.2 and below. Media syncing has been disabled.</string>
+  <string name="sync_media_unsupported">Complex media file names aren’t supported on Android 2.2 and below. Media syncing has been disabled.</string>
   <string name="register_error">An error occurred. Try again later.</string>
   <string name="register_title">Registeeri konto</string>
-  <string name="register_mismatch">The username/password repetition doesn\'t match or is empty.</string>
+  <string name="register_mismatch">The username/password repetition doesn’t match or is empty.</string>
   <string name="registering_message">Creating account&#8230;</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Remote</string>
   <string name="force_full_sync_title">Force full sync</string>
   <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
-  <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven\'t been synchronized here yet, they will be lost. Continue?</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
+  <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
+  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
   <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
 </resources>

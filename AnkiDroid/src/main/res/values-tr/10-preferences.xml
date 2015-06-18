@@ -73,14 +73,14 @@
   <string name="reset_languages_summ">Tüm destelerdeki dil atamalarını sıfırla (metin okuma ve sözlükler için). Belirli deste atamalarını sıfırlamak için deste seçiciyi kullanın.</string>
   <string name="reset_languages_question">Tüm dil atamaları sıfırlansın mı?</string>
   <string name="reset_confirmation">Bütün durumlar sıfırlandı</string>
-  <string name="display_font_size">Çalışma font ölçeği</string>
-  <string name="display_font_size_summ">XXX %</string>
-  <string name="image_size">Çalışma Resim Ölçeği</string>
-  <string name="image_size_summ">XXX %</string>
+  <string name="card_zoom">Card zoom</string>
+  <string name="card_zoom_summ">XXX%</string>
+  <string name="image_zoom">Image zoom</string>
+  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Yanıt düğmesi boyutu</string>
-  <string name="button_size_summ">XXX %</string>
+  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Kart tarayıcısı font ölçeği</string>
-  <string name="card_browser_font_size_summ">XXX %</string>
+  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Koleksiyon yolu</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Tamekran modu</string>
@@ -138,14 +138,8 @@
   <string name="safe_display_summ">Bütün animasyonları devredışı bırak ve kartları çizmek için daha güvenli yöntem kullan. E-ink ve farklı fontlar kullanan eski cihazlar için gerekli olabilir.</string>
   <string name="vertical_centering">Ortaya hizala</string>
   <string name="vertical_centering_summ">Kartların içeriğini dikey olarak ortala</string>
-  <string name="pref_backup">Yedekleri kullan</string>
-  <string name="pref_backup_summ">Desteyi açmadan önce otomatik olarak yedek oluştur (günde bir kere)</string>
   <string name="pref_backup_max">En fazla yedek sayısı</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">Yedekler devredışı bırakılsın mı?</string>
-  <string name="pref_disable_backup_warning">Bu bütün yedek dosyalarını silecek</string>
-  <string name="pref_intent_add_instant">Hızlı ekle</string>
-  <string name="pref_intent_add_instant_summ">AnkiDroid\'i açmadan sözlüklerden yeni kartlar ekle. Bunları sonra kart ekleyicide \"kayıtlı veri\" altında bulabilirsiniz.</string>
   <string name="show_estimates">Düğmede zaman göster</string>
   <string name="show_estimates_summ">Yanıt düğmelerinin üzerinde sonraki çıkma zamanını göster</string>
   <string name="show_progress">Kalanı göster</string>
@@ -172,8 +166,8 @@
   <string name="deck_conf_deck_description">Deste tanımı</string>
   <string name="deck_conf_group">Seçenek grubu</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
+    <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">Yeni kartlar</string>
   <string name="deck_conf_rev_cards">Çalışma</string>
@@ -218,8 +212,8 @@
   <string name="deck_conf_remove_message">Şu anki seçenek grubu kaldırılsın mı?</string>
   <string name="deck_conf_set_subdecks">Bütün altdesteler için ayarla</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%s subdeck will use this group</item>
+    <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Bütün altdesteler için ayarla</string>
   <string name="deck_conf_set_subdecks_message">Şu anki seçenek grubu bu destenin bütün altdesteleri için ayarlansın mı?</string>

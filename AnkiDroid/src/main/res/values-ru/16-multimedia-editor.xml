@@ -83,8 +83,8 @@
   <string name="multimedia_editor_searching_word">Поиск слова</string>
   <string name="multimedia_editor_progress_wait_title">Подождите</string>
   <string name="multimedia_editor_something_wrong">Что-то пошло не так</string>
-  <string name="multimedia_editor_attach_mm_content">\"Прикрепите мультимедийный контента к заметке</string>
-  <string name="multimedia_editor_attach_media">Добавить медиа</string>
+  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the note</string>
+  <string name="multimedia_editor_attach_media">Attach media</string>
   <string name="multimedia_editor_audio_view_recording_failed">Запись не удалась</string>
   <string name="multimedia_editor_audio_view_playing_failed">Проигрывание не удалось</string>
   <string name="title_activity_edit_text">Поле редактирования</string>

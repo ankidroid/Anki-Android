@@ -76,6 +76,7 @@
     <item>Volgorde van toevoegen</item>
     <item>Volgorde van \'te doen\' kaarten</item>
     <item>Laatste eerst toevoegen</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Limiet nieuwe kaarten voor vandaag verhogen</item>
@@ -94,11 +95,6 @@
     <item>Mix nieuwe en herhaalde kaarten</item>
     <item>Nieuwe kaarten na herhaalde kaarten</item>
     <item>Nieuwe kaarten voor herhaalde kaarten</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>Alle kaarten</item>
-    <item>Nieuw</item>
-    <item>Te doen</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>When no font specified on flashcards</item>

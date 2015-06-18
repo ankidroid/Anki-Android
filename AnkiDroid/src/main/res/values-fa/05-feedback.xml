@@ -40,8 +40,7 @@
 -->
 <resources>
   <string name="error_reporting_choice">حالت گزارش خطا</string>
-  <string name="error_reporting_choice_summary">خطاها مي توانند به طور خودكار گزارش داده شوند، هرگز گزارش داده نشوند يا گزارش آنها به شما سپرده شود</string>
-  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
+  <string name="feedback_disclaimer">Disclaimer: We don’t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
   <string name="feedback_title">پیشنهادات و انتقادات</string>
   <string name="feedback_default_text">لطفا پيشنهاد و انتقاد خود را بفرستید و يا اطلاعاتی درباره ماهيت هر خطا گزارش کنید.</string>
   <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>

@@ -39,15 +39,15 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_minimum_cards_due_notification_ticker_title">복습예정카드</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid 카드 복습 예정</string>
-  <string name="widget_no_cards_due">복습할 카드 없음</string>
-  <string name="widget_loading">위젯 로드중...</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">카드 남음</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid 카드 남음</string>
+  <string name="widget_no_cards_due">남은 카드 없음</string>
+  <string name="widget_loading">위젯 불러오는 중...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="other">%2$s에 %1$d 카드 예정</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="other">%1$d decks</item>
+    <item quantity="other">%1$d 카드 묶음</item>
   </plurals>
   <string name="widget_small">작은 화면 AnkiDroid</string>
 </resources>

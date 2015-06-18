@@ -73,14 +73,14 @@
   <string name="reset_languages_summ">Återställ språktilldelningar (för text till tal och ordböcker) för alla kortlekar. Återställ specifika kortlekstilldelningar i kortleksväljaren</string>
   <string name="reset_languages_question">Återställ alla språktilldelningar?</string>
   <string name="reset_confirmation">Alla lägen nollställda</string>
-  <string name="display_font_size">Typsnittsstorlek under repetition</string>
-  <string name="display_font_size_summ">XXX %</string>
-  <string name="image_size">Bildstorlek under repetition</string>
-  <string name="image_size_summ">XXX %</string>
+  <string name="card_zoom">Card zoom</string>
+  <string name="card_zoom_summ">XXX%</string>
+  <string name="image_zoom">Image zoom</string>
+  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Storlek på svarsknapp</string>
-  <string name="button_size_summ">XXX %</string>
+  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Typsnittsstorlek i kortbläddrare</string>
-  <string name="card_browser_font_size_summ">XXX %</string>
+  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Sökväg för samling</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Fullskärmsläge</string>
@@ -138,14 +138,8 @@
   <string name="safe_display_summ">Stäng av alla animationer och använd en säkrare metod för att rita kort. E-ink och äldre enheter med egna typsnitt kan kräva detta.</string>
   <string name="vertical_centering">Centrera</string>
   <string name="vertical_centering_summ">Vertikal centrering av kortinnehåll</string>
-  <string name="pref_backup">Använd säkerhetskopior</string>
-  <string name="pref_backup_summ">Säkerhetskopiera automatiskt innan du öppnar en kortlek (dagligen)</string>
   <string name="pref_backup_max">Max antal säkerhetskopior</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">Inaktivera säkerhetskopiering?</string>
-  <string name="pref_disable_backup_warning">Detta kommer radera alla säkerhetskopior</string>
-  <string name="pref_intent_add_instant">Lägg till omedelbart</string>
-  <string name="pref_intent_add_instant_summ">Lägg till nya kort från ordböcker utan att öppna AnkiDroid. Du hittar dem senare under \"sparad data\" i kortskaparen</string>
   <string name="show_estimates">Visa tid på knappar</string>
   <string name="show_estimates_summ">Visa nästa repetitionstid ovan svarsknapparna</string>
   <string name="show_progress">Visa återstående</string>
@@ -172,8 +166,8 @@
   <string name="deck_conf_deck_description">Kortleksbeskrivning</string>
   <string name="deck_conf_group">Konfigurationsgrupp</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
+    <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">Nya kort</string>
   <string name="deck_conf_rev_cards">Repetitioner</string>
@@ -218,8 +212,8 @@
   <string name="deck_conf_remove_message">Radera aktuell konfigurationsgrupp?</string>
   <string name="deck_conf_set_subdecks">Ställ in för alla underkortlekar</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%s subdeck will use this group</item>
+    <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Ställ in för alla underkortlekar</string>
   <string name="deck_conf_set_subdecks_message">Vill du ställa in den nuvarande konfigurationsgruppen för alla denna kortleks underkortlekar?</string>

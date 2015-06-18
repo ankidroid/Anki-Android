@@ -52,9 +52,9 @@
   <string name="tts_no_tts">Nekalbėkite</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>
-    <item><![CDATA[To help us make AnkiDroid better, please report any bug <a href=\"%1$s\">here</a>; new feature ideas are very welcome too! Use the <a href=\"%2$s\">wiki</a> and say Hi on the <a href=\"%3$s\">forum</a>.]]></item>
+    <item><![CDATA[To help us make AnkiDroid better, please report any bug <a href=\"%1$s\">here</a>; new feature ideas are very welcome too. Use the <a href=\"%2$s\">wiki</a> and say Hi on the <a href=\"%3$s\">forum</a>.]]></item>
     <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
-    <item><![CDATA[Non-developers can also help, for instance by <a href=\"%1$s\">translating</a> AnkiDroid, updating the wiki and screenshots, <a href=\"%2$s\">donating</a> to Anki Desktop, or blogging about AnkiDroid!]]></item>
+    <item><![CDATA[Non-developers can also help, for instance by <a href=\"%1$s\">translating</a> AnkiDroid, updating the wiki and screenshots, <a href=\"%2$s\">donating</a> to Anki Desktop, or blogging about AnkiDroid.]]></item>
     <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">here</a>.]]></item>
   </string-array>
   <string name="preview_title">Preview</string>
@@ -65,17 +65,17 @@
   <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
   <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">Duomenų bazės klaida</string>
-  <string name="answering_error_message">Writing to the collection failed. The databese could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch \'options\' for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+  <string name="answering_error_message">Writing to the collection failed. The databese could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
   <string name="answering_error_report">Pranešti apie klaidą</string>
-  <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder \'%s\'.</string>
+  <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
   <string name="intent_add_saved_information">Išsaugoti duomenys</string>
   <string name="intent_add_clear_all">Išvalyti viską</string>
-  <string name="intent_aedict_empty">Category \'default\' is empty</string>
-  <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named \'default\'</string>
+  <string name="intent_aedict_empty">Category “default” is empty</string>
+  <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
   <string name="custom_study_new_total_new">Naujos kortelės malkoje: %s</string>
   <string name="custom_study_rev_total_rev">Laukia kortelės malkoje: %s</string>
-  <string name="custom_study_new_extend">Increase today\'s new card limit by</string>
-  <string name="custom_study_rev_extend">Increase today\'s review limit by</string>
+  <string name="custom_study_new_extend">Increase today’s new card limit by</string>
+  <string name="custom_study_rev_extend">Increase today’s review limit by</string>
   <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
   <string name="custom_study_ahead">Review ahead by x days:</string>
   <string name="custom_study_random">Select x cards randomly from the deck:</string>
@@ -100,11 +100,10 @@
   <string name="dialog_positive_remove">Panaikinti</string>
   <string name="dialog_positive_repair">Taisyti</string>
   <string name="dialog_positive_replace">Replace</string>
-  <string name="dialog_positive_reset">Reset</string>
   <string name="dialog_positive_restore">Atkurti</string>
   <string name="dialog_positive_set">Nustatyti</string>
   <string name="lookup_button_content">Look up</string>
-  <string name="dialog_collection_path_not_dir">The path specified was not a valid directory</string>
+  <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
   <string name="check_media_title">Check media?</string>
   <string name="check_media_warning">This may take a long time with large media collections</string>
   <string name="check_media_message">Checking media&#8230;</string>
@@ -114,7 +113,10 @@
   <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
   <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
   <string name="check_media_no_unused_missing">Nerasta nenaudojamų ar trūkstamų failų.</string>
-  <string name="check_media_db_updated">Media database rebuilt.</string>
+  <string name="check_media_db_updated">Media database rebuilt</string>
   <string name="check_media_delete_unused">Ištrinti nenaudojamus</string>
   <string name="check_media_deleted">Ištrinta failų: %d</string>
+  <string name="tags_dialog_option_all_cards">All cards</string>
+  <string name="tags_dialog_option_new_cards">New</string>
+  <string name="tags_dialog_option_due_cards">Due</string>
 </resources>

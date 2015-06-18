@@ -76,6 +76,7 @@
     <item>Додат редослед прегледа</item>
     <item>У редоследу додавања</item>
     <item>Прво последње додате</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Увећај данашњи лимит нових карата</item>
@@ -94,11 +95,6 @@
     <item>Помешај нове и поновљене картице</item>
     <item>Нове картице после поновљених</item>
     <item>Нове картице пре поновљених</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>Све картице</item>
-    <item>Нове</item>
-    <item>Рок</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>Када нема фонт одређен за картице</item>

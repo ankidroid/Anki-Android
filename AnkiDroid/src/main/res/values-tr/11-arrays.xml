@@ -76,6 +76,7 @@
     <item>Ekleniş sırası</item>
     <item>Çıkma sırası</item>
     <item>En son eklenenler ilk</item>
+    <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Bugünün yeni kart sınırını artırın</item>
@@ -94,11 +95,6 @@
     <item>Yeni kartları ve çalışmaları karıştır</item>
     <item>Yeni kartlar çalışmalardan sonra</item>
     <item>Yeni kartlar çalışmalardan önce</item>
-  </string-array>
-  <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>Bütün kartlar</item>
-    <item>Yeni</item>
-    <item>Çıkacak</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>Bilgi kartlarında font belirtilmediği zaman</item>

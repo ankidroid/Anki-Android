@@ -143,8 +143,8 @@
   <string name="card_template_editor_menu_delete">Ta bort</string>
   <string name="card_template_editor_cant_delete">Minst en korttyp krävs.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
+    <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Att ta bort det här kortet skulle göra att en eller flera anteckningar tas bort. Vänligen skapa en ny korttyp först.</string>
 </resources>

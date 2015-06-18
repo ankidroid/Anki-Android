@@ -64,7 +64,7 @@
   <string name="whiteboard_black">Black strokes</string>
   <string name="whiteboard_black_summ">Uses less memory, unless in night mode</string>
   <string name="write_answers_disable">Disable typing in answer</string>
-  <string name="write_answers_disable_summ">Prevents keyboard from appearing on cards containing \'type in the answer\' fields</string>
+  <string name="write_answers_disable_summ">Prevents keyboard from appearing on cards containing type-the-answer fields</string>
   <string name="text_selection_click">Long press workaround</string>
   <string name="text_selection_click_summ">Aktiver dette hvis du ikke kan starte velging av tekst med langt klikk</string>
   <string name="dictionary">Lookup dictionary</string>
@@ -73,14 +73,14 @@
   <string name="reset_languages_summ">Tilbakestill språktilpasninger (for tekst-til-tale og ordbøker) for alle kortstokker. Tilbakestill spesifikke kortstokktilpasninger i kortstokkvelgeren</string>
   <string name="reset_languages_question">Tilbakestill alle språkinnstillinger?</string>
   <string name="reset_confirmation">All states reset</string>
-  <string name="display_font_size">Reviewer font scaling</string>
-  <string name="display_font_size_summ">XXX %</string>
-  <string name="image_size">Reviewer image scaling</string>
-  <string name="image_size_summ">XXX %</string>
+  <string name="card_zoom">Card zoom</string>
+  <string name="card_zoom_summ">XXX%</string>
+  <string name="image_zoom">Image zoom</string>
+  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Answer button size</string>
-  <string name="button_size_summ">XXX %</string>
+  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Card browser font scaling</string>
-  <string name="card_browser_font_size_summ">XXX %</string>
+  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Sti til samling</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Fullscreen mode</string>
@@ -138,14 +138,8 @@
   <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink and older devices using custom fonts may require this.</string>
   <string name="vertical_centering">Center align</string>
   <string name="vertical_centering_summ">Center the content of cards vertically</string>
-  <string name="pref_backup">Bruk sikkerhetskopiering</string>
-  <string name="pref_backup_summ">Automatically create backups before opening a deck (once a day)</string>
   <string name="pref_backup_max">Max number of backups</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">Disable backups?</string>
-  <string name="pref_disable_backup_warning">This will delete all backup files</string>
-  <string name="pref_intent_add_instant">Legg til umiddelbart</string>
-  <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
   <string name="show_estimates">Show button time</string>
   <string name="show_estimates_summ">Show next review time on answer buttons</string>
   <string name="show_progress">Show remaining</string>
@@ -172,8 +166,8 @@
   <string name="deck_conf_deck_description">Kortstokkbeskrivelse</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
+    <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">Nye kort</string>
   <string name="deck_conf_rev_cards">Gjennomganger</string>
@@ -218,11 +212,11 @@
   <string name="deck_conf_remove_message">Remove current options group?</string>
   <string name="deck_conf_set_subdecks">Set for all subdecks</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%s subdeck will use this group</item>
+    <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Set for all subdecks</string>
-  <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck\'s subdecks?</string>
+  <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
   <string name="pref_browser_editor_font">Browser and editor font</string>
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filter</string>

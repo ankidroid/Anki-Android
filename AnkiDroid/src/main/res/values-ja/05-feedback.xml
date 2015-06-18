@@ -40,7 +40,6 @@
 -->
 <resources>
   <string name="error_reporting_choice">エラーの報告</string>
-  <string name="error_reporting_choice_summary">エラーを自動で報告、報告しない、または毎回選択する</string>
   <string name="feedback_disclaimer">免責事項: このアプリが電子メールアドレス、電話番号、端末のIMEI（端末識別番号）などの個人情報を収集することはありません。エラー情報、エラーに至ったプロセスの情報とともに、製造元、型番、Androidのバージョンなど端末に関するいくつかの情報を収集します。</string>
   <string name="feedback_title">フィードバック</string>
   <string name="feedback_default_text">フィードバックか, 報告するエラーについての情報を入力してください.</string>

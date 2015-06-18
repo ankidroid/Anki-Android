@@ -69,7 +69,7 @@
   <string formatted="false" name="stats_percentage_correct">% correcto</string>
   <string name="stats_reviews">Revisiones</string>
   <string name="stats_answer_type">Tipo de respuesta</string>
-  <string name="stats_today_again_count">Contar de nuevo: &lt; b &gt; %d &lt; /b &gt;</string>
+  <string name="stats_today_again_count">Contar de nuevo: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correcta)</string>
   <string name="stats_today_type_breakdown">Aprender: &lt;b&gt;%1$s&lt;/b&gt;, Revisar: &lt;b&gt;%2$s&lt;/b&gt;, Reaprender: &lt;b&gt;%3$s&lt;/b&gt;, Filtradas: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Respuestas correctas en tarjetas maduras: %1$d/%2$d (%3$.1f%%)</string>

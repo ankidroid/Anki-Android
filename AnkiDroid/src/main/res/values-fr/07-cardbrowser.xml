@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">%d carte affichée</item>
+    <item quantity="other">%d cartes affichées</item>
   </plurals>
   <string name="card_browser_all_decks">Tous les jeux de cartes</string>
   <string name="card_browser_delete_card">Supprimer la note</string>
@@ -49,19 +49,19 @@
   <string name="card_browser_unsuspend_card">Dé-suspendre la carte</string>
   <string name="card_browser_mark_card">Marquer la note</string>
   <string name="card_browser_unmark_card">Retirer le marquage de la note</string>
-  <string name="delete_card_title">Supprimer la note</string>
+  <string name="delete_card_title">Supprimer la note ?</string>
   <string name="delete_card_message">Voulez vous vraiment supprimer toutes les cartes de cette note ?\nChamp de recherche : %s</string>
   <string name="card_browser_show_marked">Filtrer les notes marquées</string>
   <string name="card_browser_show_suspended">Filtrer les cartes suspendues</string>
   <string name="card_browser_search_by_tag">Filtrer par tag</string>
   <string name="card_browser_tags_shown">Labels: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
+  <string name="card_browser_list_my_searches">Mes recherches</string>
+  <string name="card_browser_list_my_searches_save">Enregistrer la recherche</string>
+  <string name="card_browser_list_my_searches_title">Choisissez une recherche enregistrée</string>
+  <string name="card_browser_list_my_searches_new_name">Nom de la recherche en cours</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">Vous ne pouvez pas enregistrer une recherche sans nom.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Ce nom existe déjà!</string>
+  <string name="card_browser_list_my_searches_remove_content">Supprimer \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Changer l\'ordre d\'affichage</string>
   <string name="card_browser_change_display_order_title">Choisir l\'ordre d\'affichage</string>
   <string name="card_browser_change_display_order_reverse">Inversez l’ordre par double-sélection du champ.</string>
@@ -72,7 +72,7 @@
   <string name="card_browser_filtering_cards">Filtrage des cartes en cours... \nAppuyez sur le bouton retour pour annuler</string>
   <string-array name="card_browser_order_labels">
     <item>Pas de tri (plus rapide)</item>
-    <item>By sort field</item>
+    <item>Par champ de tri</item>
     <item>Par ancienneté</item>
     <item>Par date de correction</item>
     <item>Par date de changement</item>

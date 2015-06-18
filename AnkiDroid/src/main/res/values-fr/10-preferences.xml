@@ -73,14 +73,14 @@
   <string name="reset_languages_summ">Réinitialiser les affectations de langue (synthèse vocale et dictionnaires) pour tous les paquets. Réinitialiser les affectations spécifiques dans la liste des paquets</string>
   <string name="reset_languages_question">Réinitialiser toutes les affectations de langues ?</string>
   <string name="reset_confirmation">Réinitialisation des états</string>
-  <string name="display_font_size">Échelle de la police de révision</string>
-  <string name="display_font_size_summ">XXX %</string>
-  <string name="image_size">Échelle des images pendant les révisions</string>
-  <string name="image_size_summ">XXX %</string>
+  <string name="card_zoom">Card zoom</string>
+  <string name="card_zoom_summ">XXX%</string>
+  <string name="image_zoom">Image zoom</string>
+  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Taille des boutons de réponse</string>
-  <string name="button_size_summ">XXX %</string>
+  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Échelle de la police de l\'explorateur</string>
-  <string name="card_browser_font_size_summ">XXX %</string>
+  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Chemin d\'accès à la Collection</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Mode plein écran</string>
@@ -138,14 +138,8 @@
   <string name="safe_display_summ">Désactiver toutes les animations et utiliser le mode sécurisé pour afficher les cartes. L\'encre électronique et les anciens appareils qui utilisent des polices personnalisées peuvent nécessiter ceci.</string>
   <string name="vertical_centering">Aligner au centre</string>
   <string name="vertical_centering_summ">Centrer verticalement le contenu des cartes</string>
-  <string name="pref_backup">Utiliser les sauvegardes</string>
-  <string name="pref_backup_summ">Créer une sauvegarde automatiquement avant d\'ouvrir un paquet (une fois par jour)</string>
   <string name="pref_backup_max">Nombre de sauvegarde max</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">Désactiver les sauvegardes ?</string>
-  <string name="pref_disable_backup_warning">Ceci va supprimer toutes les sauvegardes</string>
-  <string name="pref_intent_add_instant">Ajout instantané</string>
-  <string name="pref_intent_add_instant_summ">Ajouter des nouvelles cartes à AnkiDroid depuis les dictionnaires sans ouvrir AnkiDroid. Vous les trouverez dans \"données sauvegardées\" dans l\'outil d\'ajout des cartes.</string>
   <string name="show_estimates">Afficher le temps</string>
   <string name="show_estimates_summ">Afficher le temps avant la prochaine révision sur les boutons de réponse</string>
   <string name="show_progress">Afficher le nombre restant de révision</string>
@@ -172,8 +166,8 @@
   <string name="deck_conf_deck_description">Description du paquet</string>
   <string name="deck_conf_group">Groupe d\'option</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
+    <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">Nouvelles cartes</string>
   <string name="deck_conf_rev_cards">Révisions</string>
@@ -218,8 +212,8 @@
   <string name="deck_conf_remove_message">Supprimer le groupe d\'option actuel ?</string>
   <string name="deck_conf_set_subdecks">Définir pour tous les sous-paquets</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%s subdeck will use this group</item>
+    <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Définir pour tous les sous-paquets</string>
   <string name="deck_conf_set_subdecks_message">Définir ce groupe d\'option pour tous les sous-paquets de ce paquet ?</string>

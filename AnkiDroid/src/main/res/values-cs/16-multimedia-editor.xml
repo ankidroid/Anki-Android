@@ -83,8 +83,8 @@
   <string name="multimedia_editor_searching_word">Hledání slova</string>
   <string name="multimedia_editor_progress_wait_title">Počkejte</string>
   <string name="multimedia_editor_something_wrong">Něco se pokazilo</string>
-  <string name="multimedia_editor_attach_mm_content">\"Připojit multimediální obsah k poznámce</string>
-  <string name="multimedia_editor_attach_media">\"Připojit multimédia</string>
+  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the note</string>
+  <string name="multimedia_editor_attach_media">Attach media</string>
   <string name="multimedia_editor_audio_view_recording_failed">Nahrávání selhalo</string>
   <string name="multimedia_editor_audio_view_playing_failed">Přehrávání selhalo</string>
   <string name="title_activity_edit_text">Editační pole</string>

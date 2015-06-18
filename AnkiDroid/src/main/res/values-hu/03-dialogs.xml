@@ -100,7 +100,6 @@
   <string name="dialog_positive_remove">Eltávolít</string>
   <string name="dialog_positive_repair">Javít</string>
   <string name="dialog_positive_replace">Kicserél</string>
-  <string name="dialog_positive_reset">Visszaállít</string>
   <string name="dialog_positive_restore">Visszaállít</string>
   <string name="dialog_positive_set">Beállít</string>
   <string name="lookup_button_content">Keresés</string>
@@ -117,4 +116,7 @@
   <string name="check_media_db_updated">Média adatbázis újraépült.</string>
   <string name="check_media_delete_unused">Használaton kívüliek törlése</string>
   <string name="check_media_deleted">Törölt fájlok: %d</string>
+  <string name="tags_dialog_option_all_cards">All cards</string>
+  <string name="tags_dialog_option_new_cards">New</string>
+  <string name="tags_dialog_option_due_cards">Due</string>
 </resources>

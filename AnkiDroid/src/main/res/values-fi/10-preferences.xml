@@ -73,14 +73,14 @@
   <string name="reset_languages_summ">Palauta kaikkien pakkojen kieliasetukset (puhesyntetisaattorille ja sanakirjalle). Palauta yksittäisten pakkojen asetukset pakkavalikosta.</string>
   <string name="reset_languages_question">Palauta kaikki kielivalinnat?</string>
   <string name="reset_confirmation">Kaikki tilat palautettu</string>
-  <string name="display_font_size">Kirjasimien skaalaus kerratessa</string>
-  <string name="display_font_size_summ">XXX %</string>
-  <string name="image_size">Kuvien skaalaus kerratessa</string>
-  <string name="image_size_summ">XXX %</string>
+  <string name="card_zoom">Card zoom</string>
+  <string name="card_zoom_summ">XXX%</string>
+  <string name="image_zoom">Image zoom</string>
+  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Vastauspainikkeen koko</string>
-  <string name="button_size_summ">XXX %</string>
+  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Korttiselaimen kirjasimien skaalaus</string>
-  <string name="card_browser_font_size_summ">XXX %</string>
+  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Kokoelman polku</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Koko näytön tila</string>
@@ -138,14 +138,8 @@
   <string name="safe_display_summ">Ota kaikki animaatiot pois käytöstä ja käytä turvallisempaa menetelmää korttien piirtämiseen. E-ink laitteet ja vanhat laitteet joissa käytetään erikoisempia kirjasintyyppejä voivat vaatia tämän.</string>
   <string name="vertical_centering">Tasaa keskelle</string>
   <string name="vertical_centering_summ">Keskitä korttien sisältö pystysuunnassa</string>
-  <string name="pref_backup">Käytä varmuuskopioita</string>
-  <string name="pref_backup_summ">Luo varmuuskopio automaattisesti ennen pakan avaamista (kerran päivässä)</string>
   <string name="pref_backup_max">Varmuuskopioiden enimmäismäärä</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">Ota varmuuskopiot pois käytöstä?</string>
-  <string name="pref_disable_backup_warning">Tämä poistaa kaikki varmuuskopiotiedostot</string>
-  <string name="pref_intent_add_instant">Lisää välittömästi</string>
-  <string name="pref_intent_add_instant_summ">Lisää uusia kortteja sanakirjoista avaamatta AnkiDroidia. Löydät ne myöhemmin korttieditorista, kohdasta \'Tallennetut tiedot\'.</string>
   <string name="show_estimates">Näytä aika painikkeissa</string>
   <string name="show_estimates_summ">Näytä seuraava kertausaika vastauspainikkeissa</string>
   <string name="show_progress">Näytä jäljelläoleva</string>
@@ -172,8 +166,8 @@
   <string name="deck_conf_deck_description">Pakan kuvaus</string>
   <string name="deck_conf_group">Asetusryhmä</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
+    <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">Uusia kortteja</string>
   <string name="deck_conf_rev_cards">Kertauksia</string>
@@ -218,8 +212,8 @@
   <string name="deck_conf_remove_message">Poista nykyinen asetusryhmä?</string>
   <string name="deck_conf_set_subdecks">Aseta kaikille alipakoille</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%s subdeck will use this group</item>
+    <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Aseta kaikille alipakoille</string>
   <string name="deck_conf_set_subdecks_message">Aseta nykyinen asetusryhmä kaikille tämän pakan alipakoille?</string>

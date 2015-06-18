@@ -47,8 +47,12 @@
   <string name="CardEditorModel">Tipo:</string>
   <string name="CardEditorTags">Etiquetas: %1$s</string>
   <string name="CardEditorCards">Tarjetas: %1$s</string>
+  <string name="tag_name">Tag name</string>
   <string name="add_new_filter_tags">Añadir/filtrar etiquetas</string>
+  <string name="add_tag">Add tag</string>
+  <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">Filtrar etiquetas</string>
+  <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">La tarjeta SD no se encuentra disponible porque está siendo usada como almacenamiento via USB. Desconecta el USB para acceder a tus mazos.</string>
   <string name="enable_whiteboard">Habilitar pizarra</string>
   <string name="disable_whiteboard">Desactivar la pizarra</string>
@@ -147,8 +151,8 @@
   <string name="sched_end">(fin)</string>
   <string name="sched_unbury_button">Para verlos ahora, pulse el botón Desenterrar.</string>
   <string name="sched_has_buried">Algunas tarjetas relacionadas o enterradas fueron postergadas para una sesión posterior.</string>
-  <string name="tag_editor_add_hint">Use la marca de tick a la derecha para añadir una nueva etiqueta</string>
-  <string name="tag_editor_add_feedback">Presione el botón \"%2$s\" para confirmar la adición de \"%1$s\"</string>
+  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">Después de copiar el texto, pulsa en cualquier lugar sobre la tarjeta para mostrar el icono de búsqueda.</string>
   <string name="add_content_showcase_text">Para comenzar, presiona el botón +  y añade material de estudio nuevo.\n\n Presiona \'Ayuda\' para consultar el manual.</string>
 </resources>
