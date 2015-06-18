@@ -995,6 +995,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         /** Enhancement 722: Hardware buttons for scrolling, I.Z. */
         if (keyCode == 92) {
+            // KeyEvent.KEYCODE_PAGE_UP (available from API 9)
             mCard.pageUp(false);
             if (mDoubleScrolling) {
                 mCard.pageUp(false);
@@ -1002,6 +1003,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             return true;
         }
         if (keyCode == 93) {
+            // KeyEvent.KEYCODE_PAGE_DOWN (available from API 9)
             mCard.pageDown(false);
             if (mDoubleScrolling) {
                 mCard.pageDown(false);
@@ -1009,6 +1011,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             return true;
         }
         if (mScrollingButtons && keyCode == 94) {
+            // KeyEvent.KEYCODE_PICTSYMBOLS (available from API 9)
             mCard.pageUp(false);
             if (mDoubleScrolling) {
                 mCard.pageUp(false);
@@ -1016,6 +1019,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             return true;
         }
         if (mScrollingButtons && keyCode == 95) {
+            // KeyEvent.KEYCODE_SWITCH_CHARSET (available from API 9)
             mCard.pageDown(false);
             if (mDoubleScrolling) {
                 mCard.pageDown(false);

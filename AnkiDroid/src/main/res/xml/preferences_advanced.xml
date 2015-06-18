@@ -70,7 +70,9 @@
                 android:summary="@string/fix_arabic_text_summ"
                 android:title="@string/fix_arabic_text" />
         </PreferenceCategory>
-        <PreferenceCategory android:title="@string/pref_cat_plugins" >
+        <PreferenceCategory
+            android:key="category_plugins"
+            android:title="@string/pref_cat_plugins" >
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="tts"
