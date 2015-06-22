@@ -36,9 +36,9 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <!--  Material Design button -->
-    <style name="MaterialButton">
-        <item name="android:background">@drawable/material_button</item>
+    <!--  Material Design-style persistant footer button -->
+    <style name="FooterButton">
+        <item name="android:background">@drawable/footer_button</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textAllCaps">true</item>

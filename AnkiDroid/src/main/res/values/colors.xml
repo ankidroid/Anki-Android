@@ -82,9 +82,9 @@
     <color name="learn_count">@color/material_red_700</color>
     <color name="review_count">@color/material_green_700</color>
     <color name="zero_count">#1f000000</color>
-    <color name="new_count_night">#b1b1ff</color>
-    <color name="learn_count_night">#f50000</color>
-    <color name="review_count_night">#00cf00</color>
+    <color name="new_count_night">@color/material_indigo_200</color>
+    <color name="learn_count_night">@color/material_red_200</color>
+    <color name="review_count_night">@color/material_green_200</color>
     <color name="zero_count_night">#202020</color>
     <color name="actionbar_background">#f5f5f5</color>
     <color name="dyn_deck">#2222bb</color>
@@ -109,12 +109,14 @@
     <color name="material_grey_700">#ff616161</color>
     <color name="material_grey_800">#ff424242</color>
 
+    <color name="material_red_200">#ef9a9a</color>
     <color name="material_red_500">#fff44336</color>
     <color name="material_red_600">#ffe53935</color>
     <color name="material_red_700">#ffd32f2f</color>
     <color name="material_red_A700">#ffd50000</color>
     <color name="material_orange_A700">#ffff6d00</color>
 
+    <color name="material_indigo_200">#9fa8da</color>
     <color name="material_indigo_700">#ff303f9f</color>
     <color name="material_indigo_A700">#ff304ffe</color>
     <color name="material_blue_A700">#ff2962ff</color>
@@ -125,6 +127,7 @@
     <color name="material_light_blue_A700">#ff0091ea</color>
     <color name="material_cyan_A700">#ff00b8d4</color>
 
+    <color name="material_green_200">#a5d6a7</color>
     <color name="material_green_500">#ff4caf50</color>
     <color name="material_green_600">#ff43a047</color>
     <color name="material_green_700">#ff388e3c</color>
@@ -135,6 +138,7 @@
     <color name="theme_primary">@color/material_light_blue_500</color>
     <color name="theme_primary_dark">@color/material_light_blue_700</color>
     <color name="theme_primary_light">@color/material_light_blue_100</color>
+    <color name="theme_primary_light_inv">@color/material_grey_700</color>
     <color name="theme_accent">@color/material_blue_grey_700</color>
 
     <color name="text_color">#de000000</color> <!-- 87% black -->
