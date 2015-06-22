@@ -386,7 +386,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         super.onStop();
 
         if (!isFinishing()) {
-            if (colIsOpen()) {
+            if (colIsOpen() && mSched != null) {
                 WidgetStatus.update(this, mSched.progressToday(null, mCurrentCard, true));
             }
         }
