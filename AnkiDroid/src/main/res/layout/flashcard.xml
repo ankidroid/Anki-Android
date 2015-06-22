@@ -191,7 +191,7 @@
                                 style="@style/FooterButton"
                             android:id="@+id/flip_card"
                             android:layout_width="fill_parent"
-                            android:layout_height="48dp"
+                            android:layout_height="@dimen/touch_target"
                             android:clickable="false"
                             android:text="@string/show_answer" />
                     </LinearLayout>
@@ -201,7 +201,7 @@
                         android:background="@drawable/footer_button_red"
                         android:id="@+id/flashcard_layout_ease1"
                         android:layout_width="0dip"
-                        android:layout_height="48dp"
+                        android:layout_height="@dimen/touch_target"
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:visibility="gone" >
@@ -220,7 +220,7 @@
                             android:background="@drawable/footer_button"
                             android:id="@+id/flashcard_layout_ease2"
                             android:layout_width="0dip"
-                            android:layout_height="48dp"
+                            android:layout_height="@dimen/touch_target"
                             android:layout_weight="1"
                             android:orientation="vertical"
                             android:visibility="gone" >
@@ -240,7 +240,7 @@
                             android:background="@drawable/footer_button_green"
                             android:id="@+id/flashcard_layout_ease3"
                             android:layout_width="0dip"
-                            android:layout_height="48dp"
+                            android:layout_height="@dimen/touch_target"
                             android:layout_weight="1"
                             android:orientation="vertical"
                             android:visibility="gone" >
@@ -259,7 +259,7 @@
                             android:background="@drawable/footer_button"
                             android:id="@+id/flashcard_layout_ease4"
                             android:layout_width="0dip"
-                            android:layout_height="48dp"
+                            android:layout_height="@dimen/touch_target"
                             android:layout_weight="1"
                             android:orientation="vertical"
                             android:visibility="gone" >
