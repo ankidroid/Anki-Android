@@ -148,7 +148,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                                     mDeck.put("delays", steps);
                                 }
                             } else {
-                                mDeck.put("delays", null);
+                                mDeck.put("delays", JSONObject.NULL);
                             }
                         } else if (entry.getKey().equals("steps")) {
                             mDeck.put("delays", StepsPreference.convertToJSON((String) entry.getValue()));
