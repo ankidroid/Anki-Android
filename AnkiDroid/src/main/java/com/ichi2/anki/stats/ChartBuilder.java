@@ -75,7 +75,7 @@ public class ChartBuilder {
                 stats.calculateDone(mType, false);
                 break;
             case INTERVALS:
-                stats.calculateIntervals(mType);
+                stats.calculateIntervals(mChartView.getContext(), mType);
                 break;
             case HOURLY_BREAKDOWN:
                 stats.calculateBreakdown(mType);

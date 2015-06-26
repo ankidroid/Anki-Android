@@ -17,8 +17,8 @@
 
 package com.ichi2.libanki;
 
+import android.content.Context;
 import android.database.Cursor;
-
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
@@ -534,7 +534,7 @@ public class Stats {
      * Intervals ***********************************************************************************************
      */
 
-    public boolean calculateIntervals(int type) {
+    public boolean calculateIntervals(Context context, int type) {
         mDynamicAxis = true;
         mType = type;
         double all = 0, avg = 0, max_ = 0;
@@ -643,8 +643,8 @@ public class Stats {
         mFirstElement = 0;
 
         mMaxElements = list.size()-1;
-        mAverage = Utils.fmtTimeSpan((int)Math.round(avg*86400));
-        mLongest = Utils.fmtTimeSpan((int)Math.round(max_*86400));
+        mAverage = Utils.timeSpan(context, (int)Math.round(avg*86400));
+        mLongest = Utils.timeSpan(context, (int)Math.round(max_*86400));
 
         //some adjustments to not crash the chartbuilding with emtpy data
         if(mMaxElements == 0){

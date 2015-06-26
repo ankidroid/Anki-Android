@@ -351,7 +351,7 @@ public class CardContentProvider extends ContentProvider {
                         int buttonCount = col.getSched().answerButtons(currentCard);
                         JSONArray buttonTexts = new JSONArray();
                         for (int i = 0; i < buttonCount; i++) {
-                            buttonTexts.put(col.getSched().nextIvlStr(currentCard, i + 1, true));
+                            buttonTexts.put(col.getSched().nextIvlStr(getContext(), currentCard, i + 1));
                         }
                         addReviewInfoToCursor(currentCard, buttonTexts, buttonCount, rv, col, columns);
                     }else{

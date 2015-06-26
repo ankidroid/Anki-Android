@@ -1978,22 +1978,26 @@ public class Sched {
      */
 
     /**
-     * Return the next interval for CARD as a string.
+     * Return the next interval for a card and ease as a string.
+     *
+     * For a given card and ease, this returns a string that shows when the card will be shown again when the
+     * specific ease button (AGAIN, GOOD etc.) is touched. This uses unit symbols like “s” rather than names
+     * (“second”), like Anki desktop.
+     *
+     * @param context The app context, used for localization
+     * @param card The card being reviewed
+     * @param ease The button number (easy, good etc.)
+     * @return A string like “1 min” or “1.7 mo”
      */
-    public String nextIvlStr(Card card, int ease) {
-        return nextIvlStr(card, ease, false);
-    }
-
-
-    public String nextIvlStr(Card card, int ease, boolean _short) {
+    public String nextIvlStr(Context context, Card card, int ease) {
         int ivl = nextIvl(card, ease);
         if (ivl == 0) {
-            return AnkiDroidApp.getAppResources().getString(R.string.sched_end);
+            return context.getString(R.string.sched_end);
         }
-        String s = Utils.fmtTimeSpan(ivl, _short);
+        String s = Utils.timeQuantity(context, ivl);
         try {
             if (ivl < mCol.getConf().getInt("collapseTime")) {
-                s = "<" + s;
+                s = context.getString(R.string.less_than_time, s);
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -2495,11 +2499,11 @@ public class Sched {
                 }
                 revYesRate = cur.getDouble(0);
                 revTime = cur.getDouble(1);
-                
+
                 if (!cur.isClosed()) {
                     cur.close();
                 }
-                
+
                 cur = mCol
                         .getDb()
                         .getDatabase()

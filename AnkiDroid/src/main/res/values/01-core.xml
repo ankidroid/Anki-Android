@@ -38,14 +38,17 @@
         <item quantity="one">%1$d card due (%2$s)</item>
         <item quantity="other">%1$d cards due (%2$s)</item>
     </plurals>
-    <plurals name="deckpicker_title_minutes">
-        <item quantity="one">%d min.</item>
-        <item quantity="other">%d min.</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="other">%d minutes left</item>
     </plurals>
+
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="one">Studied %1$d card in %2$s today</item>
+        <item quantity="other">Studied %1$d cards in %2$s today</item>
+    </plurals>
+
 
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Type answer</string>
@@ -86,24 +89,19 @@
     <string name="new_dynamic_deck">Create filtered deck</string>
     <string name="night_mode">Night mode</string>
     <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
-
-    <string-array name="next_review_s">
-        <item>1 second</item>
-        <item>1 minute</item>
-        <item>1 hour</item>
-        <item>1 day</item>
-        <item>1 month</item>
-        <item>1 year</item>
-    </string-array>
-    <string-array name="next_review_p">
-        <item>%s seconds</item>
-        <item>%s minutes</item>
-        <item>%s hours</item>
-        <item>%s days</item>
-        <item>%s months</item>
-        <item>%s years</item>
-    </string-array>
-
+    <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be tranlated, at least not for languages using the Latin
+        alphabet.
+    -->
+    <string name="time_quantity_seconds">%d s</string>
+    <string name="time_quantity_minutes">%d min</string>
+    <string name="time_quantity_hours">%d h</string>
+    <string name="time_quantity_days">%d d</string>
+    <string name="time_quantity_months">%.1f mo</string>
+    <string name="time_quantity_years">%.1f yr</string><!-- or "%.1f a" -->
     <string name="later">Later</string>
     <string name="rebuild_cram_deck">Rebuilding cram deck…</string>
     <string name="rebuild_cram_label">Rebuild</string>
