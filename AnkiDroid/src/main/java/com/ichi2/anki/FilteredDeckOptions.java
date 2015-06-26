@@ -92,10 +92,11 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                 mValues.put("search", ar.getString(0));
                 mValues.put("limit", ar.getString(1));
                 mValues.put("order", ar.getString(2));
-                try {
-                    mValues.put("steps", StepsPreference.convertFromJSON(mDeck.getJSONArray("delays")));
+                JSONArray delays = mDeck.optJSONArray("delays");
+                if (delays != null) {
+                    mValues.put("steps", StepsPreference.convertFromJSON(delays));
                     mValues.put("stepsOn", Boolean.toString(true));
-                } catch (JSONException e) {
+                } else {
                     mValues.put("steps", "1 10");
                     mValues.put("stepsOn", Boolean.toString(false));
                 }
@@ -142,10 +143,12 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                         } else if (entry.getKey().equals("stepsOn")) {
                             boolean on = (Boolean) entry.getValue();
                             if (on) {
-                                mDeck.put("delays", StepsPreference.convertToJSON((String) mValues.get("steps")));
+                                JSONArray steps =  StepsPreference.convertToJSON((String) mValues.get("steps"));
+                                if (steps.length() > 0) {
+                                    mDeck.put("delays", steps);
+                                }
                             } else {
-                                mValues.put("steps", "1 10");
-                                mDeck.put("delays", new JSONArray());
+                                mDeck.put("delays", null);
                             }
                         } else if (entry.getKey().equals("steps")) {
                             mDeck.put("delays", StepsPreference.convertToJSON((String) entry.getValue()));
