@@ -369,6 +369,14 @@
                         android:layout_weight="1"
                         android:text="@string/empty_cram_label"
                         android:textSize="12sp" />
+                    <Button
+                        android:id="@+id/studyoptions_unbury_cram"
+                        android:layout_width="0px"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:text="@string/unbury"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
