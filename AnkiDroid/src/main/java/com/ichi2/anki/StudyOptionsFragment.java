@@ -15,8 +15,6 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -29,6 +27,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -428,18 +427,12 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                                             // Logging here might be appropriate : )
                                             break;
                                     }
-                                    int i = 0;
-                                    for (String tag : selectedTags) {
-                                        if (i != 0) {
-                                            sb.append("or ");
-                                        } else {
-                                            sb.append("("); // Only if we really have selected tags
+                                    List<String> arr = new ArrayList<>();
+                                    if (selectedTags.size() > 0) {
+                                        for (String tag : selectedTags) {
+                                            arr.add(String.format("tag:'%s'", tag));
                                         }
-                                        sb.append("tag:").append(tag).append(" ");
-                                        i++;
-                                    }
-                                    if (i > 0) {
-                                        sb.append(")"); // Only if we added anything to the tag list
+                                        sb.append("(" + TextUtils.join(" or ", arr) + ")");
                                     }
                                     mSearchTerms = sb.toString();
                                     createFilteredDeck(new JSONArray(), new Object[]{mSearchTerms, Consts.DYN_MAX_SIZE,
