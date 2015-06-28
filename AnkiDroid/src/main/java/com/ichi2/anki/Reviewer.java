@@ -196,9 +196,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         getMenuInflater().inflate(R.menu.reviewer, menu);
         Resources res = getResources();
         if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
-            menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_card).setIcon(R.drawable.ic_star_white_24dp);
+            menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white_24dp);
         } else {
-            menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_card).setIcon(R.drawable.ic_star_outline_white_24dp);
+            menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_outline_white_24dp);
         }
         if (colIsOpen() && getCol().undoAvailable()) {
             menu.findItem(R.id.action_undo).setEnabled(true).getIcon().setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);

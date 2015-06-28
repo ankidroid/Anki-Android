@@ -29,12 +29,12 @@
         <item>Answer recommended (green)</item>
         <item>Answer better than recommended</item>
         <item>Undo</item>
-        <item>Edit card</item>
-        <item>Mark card</item>
+        <item>Edit note</item>
+        <item>Mark note</item>
         <item>Lookup expression</item>
         <item>Bury card</item>
         <item>Suspend card</item>
-        <item>Delete card</item>
+        <item>Delete note</item>
         <item>Play media</item>
         <item>Abort learning</item>
     </string-array>

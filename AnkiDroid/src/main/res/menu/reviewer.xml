@@ -22,7 +22,7 @@
     <item
         android:id="@+id/action_mark_card"
         android:icon="@drawable/ic_star_outline_white_24dp"
-        android:title="@string/menu_mark_card"
+        android:title="@string/menu_mark_note"
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_edit"
