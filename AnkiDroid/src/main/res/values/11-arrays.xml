@@ -37,6 +37,8 @@
         <item>Delete note</item>
         <item>Play media</item>
         <item>Abort learning</item>
+        <item>Bury note</item>
+        <item>Suspend note</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Suspend card</item>

@@ -300,11 +300,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public static final int GESTURE_EDIT = 9;
     protected static final int GESTURE_MARK = 10;
     protected static final int GESTURE_LOOKUP = 11;
-    private static final int GESTURE_BURY = 12;
-    private static final int GESTURE_SUSPEND = 13;
+    private static final int GESTURE_BURY_CARD = 12;
+    private static final int GESTURE_SUSPEND_CARD = 13;
     protected static final int GESTURE_DELETE = 14;
     protected static final int GESTURE_PLAY_MEDIA = 16;
     protected static final int GESTURE_EXIT = 17;
+    private static final int GESTURE_BURY_NOTE = 18;
+    private static final int GESTURE_SUSPEND_NOTE = 19;
+
 
     private Spanned mCardContent;
     private String mBaseUrl;
@@ -2510,13 +2513,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             case GESTURE_LOOKUP:
                 lookUpOrSelectText();
                 break;
-            case GESTURE_BURY:
+            case GESTURE_BURY_CARD:
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
+                        getCol(), mSched, mCurrentCard, 4));
+                break;
+            case GESTURE_BURY_NOTE:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         getCol(), mSched, mCurrentCard, 0));
                 break;
-            case GESTURE_SUSPEND:
+            case GESTURE_SUSPEND_CARD:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         getCol(), mSched, mCurrentCard, 1));
+                break;
+            case GESTURE_SUSPEND_NOTE:
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
+                        getCol(), mSched, mCurrentCard, 2));
                 break;
             case GESTURE_DELETE:
                 showDeleteNoteDialog();
