@@ -98,6 +98,8 @@
         <!--15 reserved for clear whiteboard action-->
         <item>16</item>
         <item>17</item>
+        <item>18</item>
+        <item>19</item>
     </string-array>
     <string name="link_anki">http://ankisrs.net</string>
     <string name="link_forum">http://groups.google.com/group/anki-android</string>
