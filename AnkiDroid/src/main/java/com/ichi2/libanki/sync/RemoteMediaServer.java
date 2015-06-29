@@ -98,7 +98,12 @@ public class RemoteMediaServer extends HttpSyncer {
     }
 
 
-    // args: files
+    /**
+     * args: files
+     * <br>
+     * This method returns a ZipFile with the OPEN_DELETE flag, ensuring that the file on disk will
+     * be automatically deleted when the stream is closed.
+     */
     public ZipFile downloadFiles(List<String> top) throws UnknownHttpResponseException {
         try {
             HttpResponse resp;
@@ -107,11 +112,11 @@ public class RemoteMediaServer extends HttpSyncer {
             String zipPath = mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncFromServer.zip");
             // retrieve contents and save to file on disk:
             super.writeToFile(resp.getEntity().getContent(), zipPath);
-            return new ZipFile(new File(zipPath), ZipFile.OPEN_READ);
+            return new ZipFile(new File(zipPath), ZipFile.OPEN_READ | ZipFile.OPEN_DELETE);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
-            Timber.e(e, "Failed to create temp media sync zip file");
+            Timber.e(e, "Failed to download requested media files");
             throw new RuntimeException(e);
         }
     }

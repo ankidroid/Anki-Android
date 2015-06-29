@@ -784,8 +784,8 @@ public class Media {
      */
 
     /**
-     * Unlike python, our temp zip file will be on disk instead of in memory. This might be slower (not tested) but
-     * avoids storing potentially large files in memory, which may not be desirable on a mobile device.
+     * Unlike python, our temp zip file will be on disk instead of in memory. This avoids storing
+     * potentially large files in memory which is not feasible with Android's limited heap space.
      * <p>
      * Notes:
      * <p>
@@ -799,7 +799,6 @@ public class Media {
      * new addition but actually have been deleted (e.g., with a file manager). In this case we skip over the file
      * and mark it as removed in the database. (This behaviour differs from the desktop client).
      * <p>
-     * TODO: Investigate performance impact of in-memory zip file.
      */
     public Pair<File, List<String>> mediaChangesZip() throws APIVersionException {
         File f = new File(mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncToServer.zip"));
@@ -857,6 +856,8 @@ public class Media {
             z.write(Utils.jsonToString(meta).getBytes());
             z.closeEntry();
             z.close();
+            // Don't leave lingering temp files if the VM terminates.
+            f.deleteOnExit();
             return new Pair<File, List<String>>(f, fnames);
         } catch (IOException e) {
             Timber.e("Failed to create media changes zip", e);
@@ -870,19 +871,19 @@ public class Media {
 
 
     /**
-     * Extract zip data; return the number of files extracted. Consume a file stored on disk instead of a String buffer
-     * like in python. This allows us to use ZipFile utilities to interact with the file efficiently but requires the
-     * caller to save the zip to disk first. This also spares us from holding the entire downloaded data in memory,
-     * which is not practical on a mobile device.
+     * Extract zip data; return the number of files extracted. Unlike the python version, this method consumes a
+     * ZipFile stored on disk instead of a String buffer. Holding the entire downloaded data in memory is not feasible
+     * since some devices can have very limited heap space.
+     *
+     * This method closes the file before it returns.
      */
-    public int addFilesFromZip(ZipFile z) throws APIVersionException {
+    public int addFilesFromZip(ZipFile z) throws APIVersionException, IOException {
         try {
             List<Object[]> media = new ArrayList<Object[]>();
             // get meta info first
             JSONObject meta = new JSONObject(Utils.convertStreamToString(z.getInputStream(z.getEntry("_meta"))));
             // then loop through all files
             int cnt = 0;
-
             for (ZipEntry i : Collections.list(z.entries())) {
                 if (i.getName().equals("_meta")) {
                     // ignore previously-retrieved meta
@@ -900,15 +901,14 @@ public class Media {
                     cnt += 1;
                 }
             }
-            z.close();
             if (media.size() > 0) {
                 mDb.executeMany("insert or replace into media values (?,?,?,?)", media);
             }
             return cnt;
         } catch (JSONException e) {
             throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } finally {
+            z.close();
         }
     }
 

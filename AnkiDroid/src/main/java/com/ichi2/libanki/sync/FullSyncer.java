@@ -87,7 +87,10 @@ public class FullSyncer extends HttpSyncer {
         mCol.close(false);
         mCol = null;
         String tpath = path + ".tmp";
-        if (!super.writeToFile(cont, tpath)) {
+        try {
+            super.writeToFile(cont, tpath);
+        } catch (IOException e) {
+            Timber.e(e, "Full sync failed to download collection.");
             return new Object[] { "sdAccessError" };
         }
         // first check, if account needs upgrade (from 1.2)
