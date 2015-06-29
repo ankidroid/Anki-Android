@@ -38,6 +38,7 @@ import com.ichi2.anki.ReadText;
 import com.ichi2.compat.CompatHelper;
 
 import java.lang.ref.WeakReference;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -94,9 +95,10 @@ public class Sound {
     private static HashMap<Integer, ArrayList<String>> sSoundPaths = new HashMap<Integer, ArrayList<String>>();
 
     /**
-     * List of video extensions
+     * List of extensions for video files where guessing the file type does not work.
+     * (It seems to work for ".3gp" and ".mp4", keep them to be safe.)
      */
-    private static final String[] VIDEO_EXTENSIONS = {".3gp", ".mp4", ".webm", ".mkv"};
+    private static final String[] MORE_VIDEO_EXTENSIONS = {".3gp", ".mp4", ".webm", ".mkv"};
 
     /**
      * Listener to handle audio focus. Currently blank because we're not respecting losing focus from other apps.
@@ -276,13 +278,16 @@ public class Sound {
 //                    Integer.parseInt(soundPath.substring(3, 4)));
         } else {
             // Check if file is video
-            final boolean isVideo;
+            final String guessedType = URLConnection.guessContentTypeFromName(soundPath);
+            boolean isVideo = guessedType != null && guessedType.startsWith("video/");
+            // guessContentTypeFromName doesn’t work for mkv or webm. For those use a list.
             final String extension = soundPath.substring(soundPath.lastIndexOf(".")).toLowerCase();
-            final boolean supportedVideoExtension = Arrays.asList(VIDEO_EXTENSIONS).contains(extension);
-            isVideo = supportedVideoExtension &&
-                    ThumbnailUtils.createVideoThumbnail(soundUri.getPath(), MediaStore.Images.Thumbnails.MINI_KIND) != null;
-            // If video file but no SurfaceHolder provided then ask 
-            // AbstractFlashcardViewer to provide a VideoView holder
+            isVideo = isVideo || Arrays.asList(MORE_VIDEO_EXTENSIONS).contains(extension);
+            isVideo = isVideo &&
+                ThumbnailUtils.createVideoThumbnail(soundUri.getPath(), MediaStore.Images.Thumbnails.MINI_KIND) != null;
+            // No thumbnail: no videa after all. (Or maybe not a video we can handle on the specific device.)
+            // If video file but no SurfaceHolder provided then ask AbstractFlashcardViewer to provide a VideoView
+            // holder
             if (isVideo && videoView == null && sCallingActivity != null && sCallingActivity.get() != null) {
                 sPlayAllListener = playAllListener;
                 ((AbstractFlashcardViewer) sCallingActivity.get()).playVideo(soundPath);
