@@ -170,6 +170,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                     showCustomStudyContextMenu();
                     return;
                 case R.id.studyoptions_unbury:
+                case R.id.studyoptions_unbury_cram:
                     Timber.i("StudyOptionsFragment:: unbury button pressed");
                     col.getSched().unburyCardsForDeck();
                     refreshInterfaceAndDecklist(true);
@@ -339,21 +340,20 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         mTextCongratsMessage = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_congrats_message);
         mFloatingActionButton = (ImageButton) mStudyOptionsView.findViewById(R.id.fab);
 
-
         if (getCol().getDecks().isDyn(getCol().getDecks().selected())) {
             Button rebBut = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_rebuild_cram);
             rebBut.setOnClickListener(mButtonClickListener);
             Button emptyBut = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_empty_cram);
             emptyBut.setOnClickListener(mButtonClickListener);
-            // If dynamic deck then enable the cram buttons group, and disable the new filtered deck / ordinary study
-            // options buttons group
+            // Enable the dynamic deck buttons and disable the normal ones
             ((LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_cram_buttons)).setVisibility(View.VISIBLE);
             ((LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_regular_buttons)).setVisibility(View.GONE);
+            // Dynamic decks have their own unbury button to keep a reference to
+            mButtonUnbury = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_unbury_cram);
+        } else {
+            mButtonUnbury = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_unbury);
         }
-        // Show the unbury button if there are cards to unbury
-        mButtonUnbury = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_unbury);
         mButtonUnbury.setOnClickListener(mButtonClickListener);
-
         // Code common to both fragmented and non-fragmented view
         mTextTodayNew = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new);
         mTextTodayLrn = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_lrn);
