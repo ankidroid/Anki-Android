@@ -182,7 +182,7 @@
                     <LinearLayout
                         android:id="@+id/flashcard_layout_flip"
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
+                        android:layout_height="@dimen/touch_target"
                         android:layout_weight="1"
                         android:orientation="vertical" >
 
@@ -190,7 +190,7 @@
                                 style="@style/FooterButton"
                             android:id="@+id/flip_card"
                             android:layout_width="fill_parent"
-                            android:layout_height="@dimen/touch_target"
+                            android:layout_height="fill_parent"
                             android:clickable="false"
                             android:text="@string/show_answer" />
                     </LinearLayout>

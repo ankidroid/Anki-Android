@@ -49,7 +49,8 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
+import android.view.ViewGroup;  // Looks like these …
+import android.view.WindowManager;  // … two have LayoutParams members that are not the same.
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.JsResult;
@@ -245,7 +246,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected Card mCurrentCard;
     private int mCurrentEase;
 
-    private int mButtonHeight = 0;
+    private boolean mButtonHeightSet = false;
 
     private boolean mConfigurationChanged = false;
     private int mShowChosenAnswerLength = 2000;
@@ -1780,13 +1781,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Timber.d("displayCardQuestion()");
         sDisplayAnswer = false;
 
-        if (mButtonHeight == 0 && mRelativeButtonSize != 100) {
-            mButtonHeight = mFlipCard.getHeight() * mRelativeButtonSize / 100;
-            mFlipCard.setHeight(mButtonHeight);
-            mEase1.setHeight(mButtonHeight);
-            mEase2.setHeight(mButtonHeight);
-            mEase3.setHeight(mButtonHeight);
-            mEase4.setHeight(mButtonHeight);
+        if (!mButtonHeightSet && mRelativeButtonSize != 100) {
+            ViewGroup.LayoutParams params = mFlipCardLayout.getLayoutParams();
+            params.height = params.height * mRelativeButtonSize / 100;
+            params = mEase1Layout.getLayoutParams();
+            params.height = params.height * mRelativeButtonSize / 100;
+            params = mEase2Layout.getLayoutParams();
+            params.height = params.height * mRelativeButtonSize / 100;
+            params = mEase3Layout.getLayoutParams();
+            params.height = params.height * mRelativeButtonSize / 100;
+            params = mEase4Layout.getLayoutParams();
+            params.height = params.height * mRelativeButtonSize / 100;
+            mButtonHeightSet = true;
         }
 
         setInterface();
