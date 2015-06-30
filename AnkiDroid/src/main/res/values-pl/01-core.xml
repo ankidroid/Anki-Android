@@ -99,8 +99,8 @@
   <string name="delete_note_message">Jesteś pewny, że chcesz usunąć tę notatkę i wszystkie jej karty?\n%s</string>
   <string name="menu_select">Zaznacz tekst</string>
   <string name="menu_search">Wyszukiwanie w %1$s</string>
-  <string name="menu_mark_card">Wyróżnij kartę</string>
-  <string name="menu_unmark_card">Usuń wyróżnienie karty</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Stwórz talię</string>
   <string name="create">Utwórz</string>
   <string name="new_dynamic_deck">Stwórz filtrowaną talię</string>

@@ -93,8 +93,8 @@
   <string name="delete_note_message">Benar-benar hapus catatan ini dan semua kartu-kartunya?\n%s</string>
   <string name="menu_select">Pilih teks</string>
   <string name="menu_search">Pencarian di %1$s</string>
-  <string name="menu_mark_card">Tandai kartu</string>
-  <string name="menu_unmark_card">Batal menandai kartu</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Buat dek</string>
   <string name="create">Buat</string>
   <string name="new_dynamic_deck">Buat penyaringan dek</string>

@@ -96,8 +96,8 @@
   <string name="delete_note_message">Wileizu bi sunjai þo melein jah allos kartos is usniman?\n%s</string>
   <string name="menu_select">Walei bokos</string>
   <string name="menu_search">Gasokei in %1$s</string>
-  <string name="menu_mark_card">Gatarhei karta</string>
-  <string name="menu_unmark_card">Ungatarhei karta</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Skapei wikon</string>
   <string name="create">Skapei</string>
   <string name="new_dynamic_deck">Skapei wikon mi</string>

@@ -42,7 +42,7 @@
         <ListPreference
             android:defaultValue=""
             android:key="browserEditorFont"
-            android:summary="@string/pref_browser_editor_font_summ"
+            android:summary="@string/preference_summary_literal"
             android:title="@string/pref_browser_editor_font" />
         <com.ichi2.ui.SeekBarPreference
             android:defaultValue="100"

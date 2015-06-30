@@ -96,8 +96,8 @@
   <string name="delete_note_message">Biztosan törölni akarod ezt a jegyzetet és az összes kártyáját?\n%s</string>
   <string name="menu_select">Szöveg kijelölése</string>
   <string name="menu_search">Keresés itt: %1$s</string>
-  <string name="menu_mark_card">Kártya megjelölése</string>
-  <string name="menu_unmark_card">Kártyajelölés törlése</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Pakli létrehozása</string>
   <string name="create">Létrehozás</string>
   <string name="new_dynamic_deck">Pakli szűrt elemekkel létrehozása</string>

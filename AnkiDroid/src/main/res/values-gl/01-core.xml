@@ -96,8 +96,8 @@
   <string name="delete_note_message">¿Desexas realmente eliminar esta notacióne todos os seus cartóns?\n%s</string>
   <string name="menu_select">Seleccionar texto</string>
   <string name="menu_search">Procurar en %1$s</string>
-  <string name="menu_mark_card">Marcar cartón</string>
-  <string name="menu_unmark_card">Desmarcar cartón</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Create deck</string>
   <string name="create">Crear</string>
   <string name="new_dynamic_deck">Create filtered deck</string>

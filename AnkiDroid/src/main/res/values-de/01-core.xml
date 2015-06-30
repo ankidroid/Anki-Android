@@ -74,12 +74,12 @@
   <string name="undo">Rückgängig</string>
   <string name="undo_action_review">Letzte Wiederholung</string>
   <string name="undo_action_edit">Notiz bearbeiten</string>
-  <string name="undo_action_bury">Notiz vorläufig aussetzen</string>
+  <string name="undo_action_bury">Notiz zurückstellen</string>
   <string name="undo_action_suspend_card">Karte dauerhaft aussetzen</string>
   <string name="undo_action_suspend_note">Notiz dauerhaft aussetzen</string>
   <string name="undo_action_delete">Notiz löschen</string>
   <string name="undo_action_mark">Notiz markieren</string>
-  <string name="unbury">Vorläufiges Aussetzen aufheben</string>
+  <string name="unbury">Zurückstellen aufheben</string>
   <string name="finish_operation">Letzte Operation wird beendet (vermutlich eine Sicherung der Sammlung)&#8230;</string>
   <string name="contextmenu_deckpicker_rename_deck">Stapel umbenennen</string>
   <string name="contextmenu_deckpicker_collapse_deck">Unterstapel einklappen</string>
@@ -88,7 +88,7 @@
   <string name="menu_add_note">Notiz hinzufügen</string>
   <string name="menu_my_account">Synchronisierungskonto</string>
   <string name="menu_dismiss_note">Aussetzen / Löschen</string>
-  <string name="menu_bury_card">Karte vorläufig aussetzen</string>
+  <string name="menu_bury_card">Karte zurückstellen</string>
   <string name="menu_bury_note">Notiz vorläufig aussetzen</string>
   <string name="menu_suspend_card">Karte dauerhaft aussetzen</string>
   <string name="menu_suspend_note">Notiz dauerhaft aussetzen</string>
@@ -96,8 +96,8 @@
   <string name="delete_note_message">Diese Notiz und alle ihre Karten tatsächlich löschen?\n%s</string>
   <string name="menu_select">Text auswählen</string>
   <string name="menu_search">In %1$s nachschlagen</string>
-  <string name="menu_mark_card">Karte markieren</string>
-  <string name="menu_unmark_card">Markierung entfernen</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Stapel erstellen</string>
   <string name="create">Erstellen</string>
   <string name="new_dynamic_deck">Gefilterten Stapel erstellen</string>
@@ -129,7 +129,7 @@
   <string name="studyoptions_congrats_finished">Herzlichen Glückwunsch! Sie sind für heute fertig.</string>
   <string name="studyoptions_congrats_more_rev">Ihr heutiges Limit ist erreicht, aber es sind noch Karten fällig. Sie können das Limit in den Stapeloptionen erhöhen.</string>
   <string name="studyoptions_congrats_more_new">Es sind noch neue Karten verfügbar, aber das tägliche Lernlimit wurde erreicht. Sie können das Limit in den Optionen erhöhen, bedenken Sie aber, dass dies Ihr kurzfristiges Arbeitspensum erhöht.</string>
-  <string name="studyoptions_congrats_custom">Tippen Sie unten auf \"Benutzerdefiniertes Lernen\", um außerhalb des regulären Lehrplans zu lernen</string>
+  <string name="studyoptions_congrats_custom">Tippen Sie unten auf »Benutzerdefiniertes Lernen«, um außerhalb des regulären Lehrplans zu lernen.</string>
   <string name="studyoptions_no_cards_due">Es sind noch keine Karten fällig</string>
   <string name="sd_card_not_mounted">Gerätespeicher nicht eingehängt</string>
   <string name="button_sync">Synchronisieren</string>
@@ -143,8 +143,8 @@
   <string name="card_template_editor_menu_delete">Löschen</string>
   <string name="card_template_editor_cant_delete">Mindestens ein Kartentyp wird benötigt</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Kartentyp \"%2$s\" und seine %1$d Karte löschen?</item>
-    <item quantity="other">Kartentyp \"%2$s\" und seine %1$d Karten löschen?</item>
+    <item quantity="one">Kartentyp »%2$s« und seine %1$d Karte löschen?</item>
+    <item quantity="other">Kartentyp »%2$s« und seine %1$d Karten löschen?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Kartentyp kann nicht gelöscht werden, da dadurch mindestens eine Notiz gelöscht würde</string>
 </resources>

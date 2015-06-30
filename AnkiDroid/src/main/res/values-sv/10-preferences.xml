@@ -60,7 +60,6 @@
   <string name="about_title">Om AnkiDroid</string>
   <string name="about_version">Version: </string>
   <string name="whiteboard_stroke_width">Streckbredd</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">Monokroma streck</string>
   <string name="whiteboard_black_summ">Använder mindre arbetsminne, men fungerar inte i nattläge</string>
   <string name="write_answers_disable">Stäng av att skriva in svar</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">Långklicksfix</string>
   <string name="text_selection_click_summ">Aktivera detta om du inte kan påbörja textmarkering via långt klick</string>
   <string name="dictionary">Ordbok</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Nollställ språk</string>
   <string name="reset_languages_summ">Återställ språktilldelningar (för text till tal och ordböcker) för alla kortlekar. Återställ specifika kortlekstilldelningar i kortleksväljaren</string>
   <string name="reset_languages_question">Återställ alla språktilldelningar?</string>
   <string name="reset_confirmation">Alla lägen nollställda</string>
   <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
   <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Storlek på svarsknapp</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Typsnittsstorlek i kortbläddrare</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Sökväg för samling</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Fullskärmsläge</string>
   <string name="fullscreen_review_summ">Dölj systemets statusrad</string>
   <string name="gestures">Aktivera gester</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">Dubbelrullning</string>
   <string name="double_scrolling_gap_summ">Aktivera detta om du vill dubbla scroll gap med eReader</string>
   <string name="swipe_sensitivity">Svepkänslighet</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Text till tal</string>
   <string name="tts_summ">Läser upp fråga och svar om ingen ljudfil ingår</string>
   <string name="sync_fetch_missing_media">Hämta media vid synkronisering</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">Denna inställning kringgår Androids RTL-algoritm för att visa vokaler i hebreisk text korrekt.\n\nFör att detta skall fungera måste du hämta teckensnittet Tohu.ttf och kopiera manuellt till:\n%s/fonts/\n\nDu behöver inte ändra dina kort.</string>
   <string name="fix_hebrew_download_font">Hämta teckensnitt</string>
   <string name="default_font">Standardteckensnitt</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">Tillämpning av standardtypsnitt</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">Språk</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">Systemspråk</string>
   <string name="notification_pref">Meddelanden</string>
   <string name="notification_pref_title">Meddela när</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">Centrera</string>
   <string name="vertical_centering_summ">Vertikal centrering av kortinnehåll</string>
   <string name="pref_backup_max">Max antal säkerhetskopior</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">Visa tid på knappar</string>
   <string name="show_estimates_summ">Visa nästa repetitionstid ovan svarsknapparna</string>
   <string name="show_progress">Visa återstående</string>
@@ -218,7 +206,6 @@
   <string name="deck_conf_set_subdecks_title">Ställ in för alla underkortlekar</string>
   <string name="deck_conf_set_subdecks_message">Vill du ställa in den nuvarande konfigurationsgruppen för alla denna kortleks underkortlekar?</string>
   <string name="pref_browser_editor_font">Typsnitt för bläddrare och kortredigering</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filter</string>
   <string name="deck_conf_cram_options">Alternativ</string>
   <string name="deck_conf_cram_search">Sök</string>

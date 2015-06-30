@@ -50,14 +50,16 @@
     <item>Answer recommended (green)</item>
     <item>Answer better than recommended</item>
     <item>Undo</item>
-    <item>Редактиране на карта</item>
-    <item>Маркиране на карта</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>Израз за търсене</item>
     <item>Скрий картата</item>
     <item>Прекрати картата</item>
-    <item>Изтриване на карта</item>
+    <item>Delete note</item>
     <item>Play media</item>
     <item>Abort learning</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Suspend card</item>

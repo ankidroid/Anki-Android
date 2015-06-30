@@ -50,14 +50,16 @@
     <item>پاسخ توصيه شده-سبز</item>
     <item>پاسخ بهتر از توصيه شده</item>
     <item>برگشت</item>
-    <item>ویرایش کارت</item>
-    <item>علامت گذاری کارت</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>جستجوي عبارت</item>
     <item>تعليق موقت</item>
     <item>تعلیق کارت</item>
-    <item>حذف کارت</item>
+    <item>Delete note</item>
     <item>Play media</item>
     <item>Abort learning</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>تعلیق کارت</item>

@@ -99,8 +99,8 @@
   <string name="delete_note_message">Действительно удалить эту заметку и все связанные карты?\n%s</string>
   <string name="menu_select">Выделить текст</string>
   <string name="menu_search">Поиск в %1$s</string>
-  <string name="menu_mark_card">Отметить карту</string>
-  <string name="menu_unmark_card">Снять пометку карты</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Создать колоду</string>
   <string name="create">Создать</string>
   <string name="new_dynamic_deck">Создать фильтрованную колоду</string>

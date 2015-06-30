@@ -62,9 +62,9 @@
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minut zbývá</item>
+    <item quantity="one">%d minuta zbývá</item>
     <item quantity="few">%d minutes left</item>
-    <item quantity="other">%d minutes left</item>
+    <item quantity="other">%d minut zbývá</item>
   </plurals>
   <string name="type_answer_hint">Zapište odpověď</string>
   <string name="show_answer">Zobrazit odpověď</string>
@@ -99,8 +99,8 @@
   <string name="delete_note_message">Opravdu smazat poznámku a všechny její karty?\n%s</string>
   <string name="menu_select">Vybrat text</string>
   <string name="menu_search">Vyhledat v %1$s</string>
-  <string name="menu_mark_card">Označit kartu</string>
-  <string name="menu_unmark_card">Zrušit označení karty</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Vytvořit balíček</string>
   <string name="create">Vytvořit</string>
   <string name="new_dynamic_deck">Vytvořit filtrovaný balíček</string>
@@ -137,11 +137,11 @@
   <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Synchronizovat</string>
   <string name="export">Export</string>
-  <string name="nothing">Nothing</string>
+  <string name="nothing">Nic</string>
   <string name="title_activity_template_editor">Typy karet pro %s</string>
   <string name="card_template_editor_front">Šablona lícu</string>
   <string name="card_template_editor_back">Šablona rubu</string>
-  <string name="card_template_editor_styling">Styling</string>
+  <string name="card_template_editor_styling">Styl</string>
   <string name="card_template_editor_menu_add_reverse">Add reverse</string>
   <string name="card_template_editor_menu_delete">Odstranit</string>
   <string name="card_template_editor_cant_delete">Je vyžadován alespoň jeden typ karty.</string>

@@ -96,8 +96,8 @@
   <string name="delete_note_message">¿Realmente deseas eliminar esta nota y todas sus tarjetas?\n%s</string>
   <string name="menu_select">Seleccionar texto</string>
   <string name="menu_search">Búsqueda en %1$s</string>
-  <string name="menu_mark_card">Marcar Tarjeta</string>
-  <string name="menu_unmark_card">Desmarcar Tarjeta</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Crear mazo</string>
   <string name="create">Crear</string>
   <string name="new_dynamic_deck">Crear mazo filtrado</string>

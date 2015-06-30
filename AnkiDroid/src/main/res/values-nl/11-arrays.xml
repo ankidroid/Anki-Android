@@ -50,14 +50,16 @@
     <item>Aanbevolen antwoord (groen)</item>
     <item>Antwoord beter dan aangeraden</item>
     <item>Ongedaan maken</item>
-    <item>Kaart bewerken</item>
-    <item>Markeer kaart</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>Uitdrukking opzoeken</item>
     <item>Kaart verbergen</item>
     <item>Kaart uitstellen</item>
-    <item>Kaart verwijderen</item>
+    <item>Delete note</item>
     <item>Media afspelen</item>
     <item>Leren afbreken</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Kaart uitstellen</item>

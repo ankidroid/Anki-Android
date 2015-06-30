@@ -99,8 +99,8 @@
   <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej karty?\n%s</string>
   <string name="menu_select">Zvoliť text</string>
   <string name="menu_search">Vyhľadať v %1$s</string>
-  <string name="menu_mark_card">Označiť kartu</string>
-  <string name="menu_unmark_card">Zrušiť označenie karty</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Vytvoriť balíček</string>
   <string name="create">Vytvoriť</string>
   <string name="new_dynamic_deck">Vytvoriť filtrovaný balíček</string>

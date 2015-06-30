@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="preference_summary_percentage">XXX%</string>
   <string name="drawer_open">Відкрити шухляду</string>
   <string name="drawer_close">Закрити шухляду</string>
   <string name="CardEditorLaterMessage">Інформація збережена на пізніше</string>

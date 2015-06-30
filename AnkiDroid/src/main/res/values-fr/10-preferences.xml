@@ -60,7 +60,6 @@
   <string name="about_title">À propos d’AnkiDroid</string>
   <string name="about_version">Version : </string>
   <string name="whiteboard_stroke_width">Largeur des traits</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">Traits noirs</string>
   <string name="whiteboard_black_summ">Utilise moins de mémoire, mais ne fonctionne pas en mode nuit</string>
   <string name="write_answers_disable">Désactiver la saisie de la réponse</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">Solution alternative pour les appuis longs</string>
   <string name="text_selection_click_summ">Sélectionnez ceci si vous ne pouvez pas commencer une sélection de texte avec une pression longue</string>
   <string name="dictionary">Dictionnaire de recherche</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Réinitialiser les langages</string>
   <string name="reset_languages_summ">Réinitialiser les affectations de langue (synthèse vocale et dictionnaires) pour tous les paquets. Réinitialiser les affectations spécifiques dans la liste des paquets</string>
   <string name="reset_languages_question">Réinitialiser toutes les affectations de langues ?</string>
   <string name="reset_confirmation">Réinitialisation des états</string>
   <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
   <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Taille des boutons de réponse</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Échelle de la police de l\'explorateur</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Chemin d\'accès à la Collection</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Mode plein écran</string>
   <string name="fullscreen_review_summ">Masquer la barre de statut système</string>
   <string name="gestures">Activer les mouvements</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">Défilement double</string>
   <string name="double_scrolling_gap_summ">Doubler la vitesse de défilement avec eReader</string>
   <string name="swipe_sensitivity">Sensibilité des gestes</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Synthèse vocale</string>
   <string name="tts_summ">Lire la question et la réponse si aucun fichier son n\'est inclus</string>
   <string name="sync_fetch_missing_media">Télécharger les médias lors de la synchronisation</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">Ce paramètre contourne l\'algorithme RTL d’Android, pour afficher correctement les voyelles.\n\nPour que ça fonctionne, vous devez téléchargez la police Tohu.ttf et la copier manuellement vers :\n%s/fonts/\n\nVous n\'aurez pas à modifier vos cartes.</string>
   <string name="fix_hebrew_download_font">Télécharger la police</string>
   <string name="default_font">Police par défaut</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">Application de la police par défaut</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">Langue</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">Langue du système</string>
   <string name="notification_pref">Notifications</string>
   <string name="notification_pref_title">Notifier lorsque</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">Aligner au centre</string>
   <string name="vertical_centering_summ">Centrer verticalement le contenu des cartes</string>
   <string name="pref_backup_max">Nombre de sauvegarde max</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">Afficher le temps</string>
   <string name="show_estimates_summ">Afficher le temps avant la prochaine révision sur les boutons de réponse</string>
   <string name="show_progress">Afficher le nombre restant de révision</string>
@@ -218,7 +206,6 @@
   <string name="deck_conf_set_subdecks_title">Définir pour tous les sous-paquets</string>
   <string name="deck_conf_set_subdecks_message">Définir ce groupe d\'option pour tous les sous-paquets de ce paquet ?</string>
   <string name="pref_browser_editor_font">Police du navigateur et de l\'éditeur</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Révision</string>
   <string name="deck_conf_cram_options">Options</string>
   <string name="deck_conf_cram_search">Recherche</string>

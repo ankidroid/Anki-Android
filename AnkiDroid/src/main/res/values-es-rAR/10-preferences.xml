@@ -60,7 +60,6 @@
   <string name="about_title">Acerca de AnkiDroid</string>
   <string name="about_version">Versión: </string>
   <string name="whiteboard_stroke_width">Ancho del trazo</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">Trazos negros</string>
   <string name="whiteboard_black_summ">Utiliza menos memoria, excepto en modo nocturno</string>
   <string name="write_answers_disable">Desactivar el tipeo de la respuesta</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">Solución para pulsación larga</string>
   <string name="text_selection_click_summ">Activar esta opción si no puede comenzar la selección de texto mediante un click prolongado</string>
   <string name="dictionary">Diccionario de búsqueda</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Restablecer idiomas</string>
   <string name="reset_languages_summ">Resetear tareas de idioma (para texto-a-voz y diccionarios) para todos los mazos. Resetear las tareas de un mazo específico en el selector de mazos</string>
   <string name="reset_languages_question">¿Restablecer todas las tareas de idioma?</string>
   <string name="reset_confirmation">Restablecer todos los estados</string>
   <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
   <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Tamaño del botón de respuesta</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Escalado de fuentes del explorador de tarjetas</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Directorio de la colección</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Pantalla completa</string>
   <string name="fullscreen_review_summ">Ocultar la barra de estado del sistema</string>
   <string name="gestures">Habilitar gestos</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">Doble desplazamiento</string>
   <string name="double_scrolling_gap_summ">Doblar la distancia de desplazamiento con e-Reader</string>
   <string name="swipe_sensitivity">Sensibilidad de deslizado</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Texto a voz</string>
   <string name="tts_summ">Lee pregunta y respuesta si no hay un archivo de sonido incluido</string>
   <string name="sync_fetch_missing_media">Buscar archivos media al sincronizar</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">Esta característica evita el algoritmo RTL de Android para mostrar texto en hebreo con las vocales correctas.\n\nPara que esto funcione debe descargar la fuente Tohu.ttf y copiarla manualmente a:\n%sfonts\n\nNo deberá modificar sus tarjetas.</string>
   <string name="fix_hebrew_download_font">Descargar fuente</string>
   <string name="default_font">Tipografía por defecto</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">Aplicabilidad de fuente por defecto</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">Idioma</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">Idioma del sistema</string>
   <string name="notification_pref">Notificaciones</string>
   <string name="notification_pref_title">Notificar al</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">Alinear al centro</string>
   <string name="vertical_centering_summ">Centra verticalmente el contenido de las tarjetas</string>
   <string name="pref_backup_max">Número máximo de copias de seguridad</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">Mostar el botón tiempo</string>
   <string name="show_estimates_summ">Mostrar el tiempo para el próximo repaso encima de los botones de respuesta</string>
   <string name="show_progress">Mostar restantes</string>
@@ -218,7 +206,6 @@
   <string name="deck_conf_set_subdecks_title">Aplicar a todos los submazos</string>
   <string name="deck_conf_set_subdecks_message">¿Aplicar el grupo de opciones actuales a todos los submazos de este mazo?</string>
   <string name="pref_browser_editor_font">Fuente del explorador y editor</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filtro</string>
   <string name="deck_conf_cram_options">Opciones</string>
   <string name="deck_conf_cram_search">Buscar</string>

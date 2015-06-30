@@ -60,7 +60,6 @@
   <string name="about_title">О AnkiDroid</string>
   <string name="about_version">Версия: </string>
   <string name="whiteboard_stroke_width">Толщина штриха</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">Чёрные штрихи</string>
   <string name="whiteboard_black_summ">Использует меньше памяти, если не в ночном режиме</string>
   <string name="write_answers_disable">Отключить ввод ответа</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">Исправление ошибки долгого зажатия</string>
   <string name="text_selection_click_summ">Включите, если не удаётся начать выделение текста через длинное нажатие</string>
   <string name="dictionary">Посмотреть в словаре</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Сбросить языки</string>
   <string name="reset_languages_summ">Сброс языка (для преобразования текста в речь и словарей) для всех колод. Сброс для конкретных колод - в оглавлении колод.</string>
   <string name="reset_languages_question">Сбросить все языковые настройки?</string>
   <string name="reset_confirmation">Все настройки сброшены</string>
   <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
   <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Размер кнопки ответа</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Масштабирование шрифта обозревателя карт</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Папка с коллекцией</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Полноэкранный режим</string>
   <string name="fullscreen_review_summ">Спрятать системную панель статуса</string>
   <string name="gestures">Разрешить жесты</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">Двойной скроллинг</string>
   <string name="double_scrolling_gap_summ">Удвоить разрыв прокрутки в eReader-е</string>
   <string name="swipe_sensitivity">Чувствительность свайпа</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Текст в речь</string>
   <string name="tts_summ">Читать вопрос/ответ, если нет прикреплённого звукового файла</string>
   <string name="sync_fetch_missing_media">Загружать медиа</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">Этот параметр обходит RTL алгоритм системы Android, чтобы показать правильно гласные в тексте на иврите.\n\nЧтобы это работало, вам нужно скачать шрифт Tohu.ttf и вручную скопировать в:\n%s/fonts/\n\nВам не нужно модифицировать ваши карты.</string>
   <string name="fix_hebrew_download_font">Скачать шрифт</string>
   <string name="default_font">Шрифт по умолчанию</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">Применение шрифта по умолчанию</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">Язык</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">Системный язык</string>
   <string name="notification_pref">Уведомления</string>
   <string name="notification_pref_title">Показывать при</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">Выравнивание по центру</string>
   <string name="vertical_centering_summ">Центрировать содержимое карт вертикально</string>
   <string name="pref_backup_max">Максимальное число резервных копий</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">Показать кнопку времени</string>
   <string name="show_estimates_summ">Отображать время следующего повторения над кнопками ответа</string>
   <string name="show_progress">Показать оставшиеся</string>
@@ -220,7 +208,6 @@
   <string name="deck_conf_set_subdecks_title">Установить для всех подколод</string>
   <string name="deck_conf_set_subdecks_message">Установить текущую группу параметров для всех подколод данной колоды?</string>
   <string name="pref_browser_editor_font">Шрифт обозревателя и редактора</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Фильтр</string>
   <string name="deck_conf_cram_options">Параметры</string>
   <string name="deck_conf_cram_search">Поиск</string>

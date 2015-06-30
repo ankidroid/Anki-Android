@@ -99,8 +99,8 @@
   <string name="delete_note_message">Tiešām dzēst šo piezīmi un visas pievienotās kārtis?\n%s</string>
   <string name="menu_select">Iezīmēt tekstu</string>
   <string name="menu_search">Meklēt iekš %1$s</string>
-  <string name="menu_mark_card">Atzīmēt kārti</string>
-  <string name="menu_unmark_card">Noņemt atzīmi kārtij</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Create deck</string>
   <string name="create">Izveidot</string>
   <string name="new_dynamic_deck">Create filtered deck</string>

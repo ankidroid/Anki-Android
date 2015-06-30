@@ -60,7 +60,6 @@
   <string name="about_title">Over AnkiDroid</string>
   <string name="about_version">Versie: </string>
   <string name="whiteboard_stroke_width">Lijnbreedte</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">Zwarte lijnen</string>
   <string name="whiteboard_black_summ">Uses less memory, unless in night mode</string>
   <string name="write_answers_disable">Disable typing in answer</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">Long press workaround</string>
   <string name="text_selection_click_summ">Zet dit aan als tekstselectie via met een lange klik niet werkt</string>
   <string name="dictionary">Opzoeken in woordenlijst</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Reset talen</string>
   <string name="reset_languages_summ">Reset taalopdrachten (voor tekst-naar-spraak en woordenboeken) voor alle leersets. Reset specifieke leerset-opdrachten op het leerset uitkiezer</string>
   <string name="reset_languages_question">Alle taalopdrachten terugzetten?</string>
   <string name="reset_confirmation">All states reset</string>
   <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
   <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Answer button size</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Card browser font scaling</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Pad van collecties</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Volledig schermmodus</string>
   <string name="fullscreen_review_summ">Hide the system status bar</string>
   <string name="gestures">Bewegingen inschakelen</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">Sneller scrollen</string>
   <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
   <string name="swipe_sensitivity">Veeggevoeligheid</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Tekst-naar-spraak</string>
   <string name="tts_summ">Vraag en antwoord oplezen als geen geluidsbestand is opgenomen</string>
   <string name="sync_fetch_missing_media">Media downloaden</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">Deze instelling omzeilt het RTL-algoritme van Android, voor een correcte weergave van Hebreeuwse klinkers.\n\nHiervoor moet je de font Tohu.ttf downloaden en handmatig kopiëren naar:\n%s/fonts/\n\nJe hoeft je kaarten hiervoor niet aan te passen.</string>
   <string name="fix_hebrew_download_font">Lettertype downloaden</string>
   <string name="default_font">Standaardlettertype</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">Default font applicability</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">Taal</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">Systeemtaal</string>
   <string name="notification_pref">Meldingen</string>
   <string name="notification_pref_title">Notify when</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">Center align</string>
   <string name="vertical_centering_summ">Center the content of cards vertically</string>
   <string name="pref_backup_max">Max number of backups</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">Herhaaltijd in knoppen</string>
   <string name="show_estimates_summ">In de antwoordknoppen weergeven wanneer de volgende overhoring is</string>
   <string name="show_progress">Resterende weergeven</string>
@@ -218,7 +206,6 @@
   <string name="deck_conf_set_subdecks_title">Instellen voor alle subsets</string>
   <string name="deck_conf_set_subdecks_message">Huidige set aan instellingen laten gelden voor alle subsets van deze set?</string>
   <string name="pref_browser_editor_font">Letter browser/bewerker</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filter</string>
   <string name="deck_conf_cram_options">Opties</string>
   <string name="deck_conf_cram_search">Zoeken</string>

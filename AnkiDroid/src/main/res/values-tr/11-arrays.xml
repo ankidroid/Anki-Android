@@ -50,14 +50,16 @@
     <item>Önerileni yanıtla (yeşil)</item>
     <item>Önerilenden daha iyisini yanıtla</item>
     <item>Geri al</item>
-    <item>Kartı düzenle</item>
-    <item>Kartı işaretle</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>İfadeyi ara</item>
     <item>Kartı göm</item>
     <item>Kartı askıya al</item>
-    <item>Kartı sil</item>
+    <item>Delete note</item>
     <item>Medyayı oynat</item>
     <item>Öğrenmeyi durdur</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Kartı askıya al</item>
@@ -76,7 +78,7 @@
     <item>Ekleniş sırası</item>
     <item>Çıkma sırası</item>
     <item>En son eklenenler ilk</item>
-    <item>Relative overdueness</item>
+    <item>Görece vadesi geçmişlik</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Bugünün yeni kart sınırını artırın</item>

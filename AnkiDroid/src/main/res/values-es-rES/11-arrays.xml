@@ -50,14 +50,16 @@
     <item>Respuesta recomendada (verde)</item>
     <item>Respuesta mejor que la recomendada</item>
     <item>Deshacer</item>
-    <item>Editar tarjeta</item>
-    <item>Marcar tarjeta</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>Consultar expresión</item>
     <item>Ocultar tarjeta</item>
     <item>Suspender tarjeta</item>
-    <item>Eliminar tarjeta</item>
+    <item>Delete note</item>
     <item>Reproducir archivos multimedia</item>
     <item>Abandonar aprendizaje</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Suspender tarjeta</item>

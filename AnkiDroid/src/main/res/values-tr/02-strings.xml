@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="preference_summary_percentage">XXX%</string>
   <string name="drawer_open">Çekmeceyi Aç</string>
   <string name="drawer_close">Çekmeceyi Kapat</string>
   <string name="CardEditorLaterMessage">Bilgi daha sonrası için kaydedildi</string>
@@ -47,12 +48,12 @@
   <string name="CardEditorModel">Tür:</string>
   <string name="CardEditorTags">Etiketler: %1$s</string>
   <string name="CardEditorCards">Kartlar: %1$s</string>
-  <string name="tag_name">Tag name</string>
+  <string name="tag_name">Etiket adı</string>
   <string name="add_new_filter_tags">Etiket ekle/filtrele</string>
-  <string name="add_tag">Add tag</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
+  <string name="add_tag">Etiket ekle</string>
+  <string name="check_all_tags">Tüm etiketleri işaretle/kaldır</string>
   <string name="filter_tags">Etiket filtrele</string>
-  <string name="no_tags">You haven’t added any tags yet.</string>
+  <string name="no_tags">Henüz herhangi bir etiket eklemediniz.</string>
   <string name="sdcard_missing_message">SD kart USB depolama olarak kullanıldığı için kullanılamıyor. Destelerinize erişmek için USB bağlantısını kesin.</string>
   <string name="enable_whiteboard">Yazı tahtasını etkinleştir</string>
   <string name="disable_whiteboard">Yazı tahtasını devredışı bırak</string>
@@ -151,8 +152,8 @@
   <string name="sched_end">(bitiş)</string>
   <string name="sched_unbury_button">Onları şu an görmek için, Görünür Yap düğmesine basın.</string>
   <string name="sched_has_buried">Bazı ilgili veya gizli kartlar sonraki bir seansa kadar geciktirildi.</string>
-  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+  <string name="tag_editor_add_feedback">\"%1$s\" eklemek için buna dokunun: \"%2$s\"</string>
+  <string name="tag_editor_add_feedback_existing">Varolan bir etiketi seçtiniz: \"%1$s\"</string>
   <string name="lookup_hint">Metni kopyaladıktan sonra, arama simgesini göstermek için bilgi kartının üzerine dokunun</string>
   <string name="add_content_showcase_text">Başlamak için, çalışacak yeni birşeyler eklemeye + düğmesine dokunun.\n\nKılavuzu görmek için \"Yardım\"a basın.</string>
 </resources>

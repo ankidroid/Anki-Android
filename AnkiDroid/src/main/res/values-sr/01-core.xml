@@ -102,8 +102,8 @@
   <string name="delete_note_message">Да ли заисте желите да избришете белешку и све повезане картице?\n%s</string>
   <string name="menu_select">Означи текст</string>
   <string name="menu_search">Потражи у %1$s</string>
-  <string name="menu_mark_card">Означи картицу</string>
-  <string name="menu_unmark_card">Уклони ознаку карте</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Направи шпил</string>
   <string name="create">Креирај</string>
   <string name="new_dynamic_deck">Направи филтриран шпил</string>

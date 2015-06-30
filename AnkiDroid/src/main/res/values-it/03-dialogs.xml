@@ -116,7 +116,7 @@
   <string name="check_media_db_updated">Database media ricostruito.</string>
   <string name="check_media_delete_unused">Elimina inutilizzati</string>
   <string name="check_media_deleted">File eliminati: %d</string>
-  <string name="tags_dialog_option_all_cards">All cards</string>
-  <string name="tags_dialog_option_new_cards">New</string>
-  <string name="tags_dialog_option_due_cards">Due</string>
+  <string name="tags_dialog_option_all_cards">Tutte le carte</string>
+  <string name="tags_dialog_option_new_cards">Nuove</string>
+  <string name="tags_dialog_option_due_cards">Scadute</string>
 </resources>

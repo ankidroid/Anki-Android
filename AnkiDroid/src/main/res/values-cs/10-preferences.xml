@@ -60,7 +60,6 @@
   <string name="about_title">O AnkiDroid</string>
   <string name="about_version">Verze: </string>
   <string name="whiteboard_stroke_width">Šířka tahu</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">Černé tahy</string>
   <string name="whiteboard_black_summ">Využívá méně paměti, pokud je v nočním režimu</string>
   <string name="write_answers_disable">Zakázat psát odpovědi</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">Řešení dlouhého stisku</string>
   <string name="text_selection_click_summ">Povolte, pokud nejste schopni spustit výběr textu přes dlouhý klik</string>
   <string name="dictionary">Slovník</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Obnovit jazyky</string>
   <string name="reset_languages_summ">Obnoví přiřazení jazyka (pro převod textu na řeč a slovníky) ve všech balíčcích. Obnovení pouze konkrétního balíčku lze přímo na balíčku.</string>
   <string name="reset_languages_question">Obnovit všechny přiřazení jazyka?</string>
   <string name="reset_confirmation">Obnovit všechny stavy</string>
   <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
   <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Velikost tlačítka pro odpověď</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Velikost písma v prohlížení</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Cesta ke kolekci</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Celoobrazovkový režim</string>
   <string name="fullscreen_review_summ">Skrýt stavový řádek systému</string>
   <string name="gestures">Povolit gesta</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">Dvojitý posun</string>
   <string name="double_scrolling_gap_summ">Dvojitý posuvník s eReader</string>
   <string name="swipe_sensitivity">Swipe citlivost</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Převod textu na řeč</string>
   <string name="tts_summ">Přečte otázku a odpověď, pokud není připojen žádný zvukový soubor</string>
   <string name="sync_fetch_missing_media">Stáhnout multimédia při synchronizaci</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">Toto nastavení obejde RTL algoritmus Androidu, aby ukázal správně hebrejský text s samohláskami.\n\nAby to fungovalo potřebujete stáhnout font Tohu.ttf a ručně ho zkopírovat do:\n%s/fonts/\n\nNemusíte upravovat vaše karty.</string>
   <string name="fix_hebrew_download_font">Stáhnout Font</string>
   <string name="default_font">Výchozí písmo</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">Použití výchozího písma</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">Jazyk</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">Jazyk systému</string>
   <string name="notification_pref">Oznámení</string>
   <string name="notification_pref_title">Upozornit když</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">Zarovnání na střed</string>
   <string name="vertical_centering_summ">Obsah karet vycentrovat svisle na střed</string>
   <string name="pref_backup_max">Maximální počet záloh</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">Zobrazit tlačítko času</string>
   <string name="show_estimates_summ">Zobrazit čas příštího opakování nad tlačítkem odpovědí</string>
   <string name="show_progress">Zobraz zbývající</string>
@@ -166,9 +154,9 @@
   <string name="deck_conf_deck_description">Popis balíčku</string>
   <string name="deck_conf_group">Skupina nastavení</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d deck uses this group</item>
+    <item quantity="one">%1$s\n%2$d balíček používá tuto skupinu</item>
     <item quantity="few">%1$s\n%2$d decks use this group</item>
-    <item quantity="other">%1$s\n%2$d decks use this group</item>
+    <item quantity="other">%1$s\n%2$d balíčky(ů) používá tuto skupinu</item>
   </plurals>
   <string name="deck_conf_new_cards">Nové karty</string>
   <string name="deck_conf_rev_cards">Opakování</string>
@@ -220,7 +208,6 @@
   <string name="deck_conf_set_subdecks_title">Nastavit pro všechny podřízené balíčky</string>
   <string name="deck_conf_set_subdecks_message">Použít aktuální nastavení pro všechny podbalíčky tohoto balíčku?</string>
   <string name="pref_browser_editor_font">Písmo editoru a prohlížeče</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filtr</string>
   <string name="deck_conf_cram_options">Možnosti</string>
   <string name="deck_conf_cram_search">Hledat</string>

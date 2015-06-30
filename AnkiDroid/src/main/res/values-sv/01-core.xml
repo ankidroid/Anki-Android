@@ -96,8 +96,8 @@
   <string name="delete_note_message">Vill du verkligen ta bort den här noten och alla dess kort?\n%s</string>
   <string name="menu_select">Markera text</string>
   <string name="menu_search">Sökning i %1$s</string>
-  <string name="menu_mark_card">Markera kort</string>
-  <string name="menu_unmark_card">Avmarkera kort</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Skapa kortlek</string>
   <string name="create">Skapa</string>
   <string name="new_dynamic_deck">Skapa filtrerad kortlek</string>

@@ -50,14 +50,16 @@
     <item>Jawaban direkomendasikan (hijau)</item>
     <item>Answer better than recommended</item>
     <item>Undo</item>
-    <item>Edit kad</item>
-    <item>Tanda kad</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>Ekspresi Carian</item>
     <item>Pendam kad</item>
     <item>Tangguh kad</item>
-    <item>Padam kad</item>
+    <item>Delete note</item>
     <item>Play media</item>
     <item>Abort learning</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Tangguhkan kartu</item>

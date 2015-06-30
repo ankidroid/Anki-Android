@@ -108,8 +108,8 @@
   <string name="delete_note_message">هل تريد حقا حذف هذه الملاحظة و جميع بطاقاتها؟\n%s</string>
   <string name="menu_select">حدد نصا</string>
   <string name="menu_search">البحث في %1$s</string>
-  <string name="menu_mark_card">علم البطاقة</string>
-  <string name="menu_unmark_card">إلغاء تحديد البطاقة</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Create deck</string>
   <string name="create">إنشاء</string>
   <string name="new_dynamic_deck">Create filtered deck</string>

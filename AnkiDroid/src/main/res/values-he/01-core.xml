@@ -96,8 +96,8 @@
   <string name="delete_note_message">אתה בטוח שברצונך למחוק את הערה זאת וכל קלפיה?‏\n%s</string>
   <string name="menu_select">בחירת טקסט</string>
   <string name="menu_search">Lookup in %1$s</string>
-  <string name="menu_mark_card">מארק כרטיס</string>
-  <string name="menu_unmark_card">בטל סימון כרטיס</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">צור חפיסה</string>
   <string name="create">צור</string>
   <string name="new_dynamic_deck">צור חפיסה מסוננת</string>

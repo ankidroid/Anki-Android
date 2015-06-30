@@ -93,8 +93,8 @@
   <string name="delete_note_message">Bạn thực sự muốn xóa bỏ ghi chú này cùng toàn bộ thẻ của nó?\n%s</string>
   <string name="menu_select">Chọn văn bản</string>
   <string name="menu_search">Tra cứu trong %1$s</string>
-  <string name="menu_mark_card">Đánh dấu thẻ</string>
-  <string name="menu_unmark_card">Bỏ Dấu Thẻ</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Tạo tập Bài</string>
   <string name="create">Tạo</string>
   <string name="new_dynamic_deck">Tạo Bài chọn lọc</string>

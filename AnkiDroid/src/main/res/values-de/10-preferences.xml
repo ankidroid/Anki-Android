@@ -60,7 +60,6 @@
   <string name="about_title">Über AnkiDroid</string>
   <string name="about_version">Version: </string>
   <string name="whiteboard_stroke_width">Pinselbreite</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">Schwarzer Pinsel</string>
   <string name="whiteboard_black_summ">Spart Hauptspeicher, jedoch nicht im Nachtmodus</string>
   <string name="write_answers_disable">Eingeben der Antwort ausschalten</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">Abhilfe für langes Drücken</string>
   <string name="text_selection_click_summ">Falls der Langklick zum Textauswählen nicht funktioniert</string>
   <string name="dictionary">Nachschlagen in Wörterbuch</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Sprachen zurücksetzen</string>
   <string name="reset_languages_summ">Setzt die Sprachzuordnungen (für Vorlesen und Wörterbücher) für alle Stapel zurück. Für einzelne Stapel: siehe Stapelauswahl</string>
   <string name="reset_languages_question">Sämtliche Sprachzuordnungen zurücksetzen?</string>
   <string name="reset_confirmation">Alles zurückgesetzt</string>
-  <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
-  <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
+  <string name="card_zoom">Karten-Zoom</string>
+  <string name="image_zoom">Bild-Zoom</string>
   <string name="button_size">Größe der Antwortschaltflächen</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Schriftskalierung in der Kartenübersicht</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Sammlungs-Pfad</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Vollbildmodus</string>
   <string name="fullscreen_review_summ">Ausblenden der Statusleiste</string>
   <string name="gestures">Gesten aktivieren</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">Doppeltes scrollen</string>
   <string name="double_scrolling_gap_summ">Auf eReadern mit doppelter Schrittgröße scrollen</string>
   <string name="swipe_sensitivity">Wischempfindlichkeit</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Sprachausgabe</string>
   <string name="tts_summ">Liest Frage und Antwort vor, wenn keine anderen Sounds enthalten sind</string>
   <string name="sync_fetch_missing_media">Mediadaten synchronisieren</string>
@@ -111,14 +103,11 @@
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="fix_hebrew_text">Übergangslösung für hebräische Vokale</string>
   <string name="fix_hebrew_text_summ">Übergangslösung um hebräische Vokale korrekt anzuzeigen.</string>
-  <string name="fix_hebrew_instructions">Diese Einstellung umgeht den RTL-Algorithmus von Android, um hebräischen Text mit Vokalen korrekt anzuzeigen.\n\nDamit dies funktioniert, müssen Sie die Schriftart Tohu.ttf herunterladen und manuell in dieses Verzeichnis kopieren:\n%s/font/\n\nIhre Karten müssen Sie dafür nicht ändern.</string>
+  <string name="fix_hebrew_instructions">Diese Einstellung umgeht den RTL-Algorithmus von Android, um hebräischen Text mit Vokalen korrekt anzuzeigen.\n\nDamit dies funktioniert, müssen Sie die Schriftart Tohu.ttf herunterladen und manuell in dieses Verzeichnis kopieren:\n»%s/font/«\n\nIhre Karten müssen Sie dafür nicht ändern.</string>
   <string name="fix_hebrew_download_font">Schrift herunterladen</string>
   <string name="default_font">Standardschrift</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">Anwendungsbereich der Standardschrift</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">Sprache</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">System-Sprache</string>
   <string name="notification_pref">Benachrichtigungen</string>
   <string name="notification_pref_title">Benachrichtigen wenn</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">Zentriert</string>
   <string name="vertical_centering_summ">Den Inhalt der Karten vertikal zentrieren</string>
   <string name="pref_backup_max">Maximale Anzahl an Sicherungen</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">Wiederholungszeiten anzeigen</string>
   <string name="show_estimates_summ">Zeigt Zeiten bis zur nächsten Wiederholung auf den Antwortschaltflächen</string>
   <string name="show_progress">Fällige anzeigen</string>
@@ -166,8 +154,8 @@
   <string name="deck_conf_deck_description">Stapelbeschreibung</string>
   <string name="deck_conf_group">Optionengruppe</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d deck uses this group</item>
-    <item quantity="other">%1$s\n%2$d decks use this group</item>
+    <item quantity="one">%1$s\n%2$d Stapel verwendet diese Gruppe</item>
+    <item quantity="other">%1$s\n%2$d Stapel verwenden diese Gruppe</item>
   </plurals>
   <string name="deck_conf_new_cards">Neue Karten</string>
   <string name="deck_conf_rev_cards">Wiederholungen</string>
@@ -181,9 +169,9 @@
   <string name="deck_conf_easy_ivl">Intervall für einfache Karten</string>
   <string name="deck_conf_start_ease">Anfänglicher Leichtigkeitsbonus</string>
   <string name="deck_conf_max_rev">Maximale Wiederholungen/Tag</string>
-  <string name="deck_conf_new_bury">Verwandte neue Karten vorläufig aussetzen</string>
+  <string name="deck_conf_new_bury">Verwandte neue Karten zurückstellen</string>
   <string name="deck_conf_new_bury_summ">Verwandte neue Karten werden bis zum nächsten Tag ausgesetzt</string>
-  <string name="deck_conf_rev_bury">Verwandte fällige Karten vorläufig aussetzen</string>
+  <string name="deck_conf_rev_bury">Verwandte fällige Karten zurückstellen</string>
   <string name="deck_conf_rev_bury_summ">Verwandte fällige Karten werden bis zum nächsten Tag ausgesetzt</string>
   <string name="deck_conf_easy_bonus">Bonus für \'einfach\'</string>
   <string name="deck_conf_ivl_fct">Interval-Faktor</string>
@@ -212,13 +200,12 @@
   <string name="deck_conf_remove_message">Aktuelle Optionsgruppe löschen?</string>
   <string name="deck_conf_set_subdecks">Auf alle Unterstapel anwenden</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s subdeck will use this group</item>
-    <item quantity="other">%s subdecks will use this group</item>
+    <item quantity="one">%s Unterstapel wird diese Gruppe verwenden</item>
+    <item quantity="other">%s Unterstapel werden diese Gruppe verwenden</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Auf alle Unterstapel anwenden</string>
   <string name="deck_conf_set_subdecks_message">Aktuelle Optionsgruppe für alle Unterstapel dieses Stapels festlegen?</string>
   <string name="pref_browser_editor_font">Browser- und Editor-Schriftart</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filter</string>
   <string name="deck_conf_cram_options">Optionen</string>
   <string name="deck_conf_cram_search">Suchen</string>

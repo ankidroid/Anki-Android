@@ -60,7 +60,6 @@
   <string name="about_title">Tentang AnkiDroid</string>
   <string name="about_version">Versi: </string>
   <string name="whiteboard_stroke_width">Lebar pukulan</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">Pukulan-pukulan hitam</string>
   <string name="whiteboard_black_summ">Gunakan lebih sedikit memori, kecuali dalam modus malam</string>
   <string name="write_answers_disable">Menonaktifkan pengetikkan dalam jawaban</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">Tekan lama solusi</string>
   <string name="text_selection_click_summ">Aktifkan ini jika anda tidak dapat memilih teks dengan klik panjang</string>
   <string name="dictionary">Kamus lookup</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Reset bahasa</string>
   <string name="reset_languages_summ">Reset tugas bahasa (untuk teks ke bahasa dan kamus) untuk semua dek. Reset tugas spesifik pada pemilih dek</string>
   <string name="reset_languages_question">Reset semua tugas bahasa?</string>
   <string name="reset_confirmation">Reset semua negara</string>
   <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
   <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Ukuran tombol jawaban</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Kartu browser penskalaan huruf</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Koleksi jalur</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Mode layar penuh</string>
   <string name="fullscreen_review_summ">Sembunyikan sistem status bar</string>
   <string name="gestures">Aktifkan gerakan</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">Skroling ganda</string>
   <string name="double_scrolling_gap_summ">Gandakan jarak skroling dengan eReader</string>
   <string name="swipe_sensitivity">Sensitivitas usapan</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Teks untuk pidato</string>
   <string name="tts_summ">Membaca pertanyaan dan jawaban jika file tidak ada file suara disertakan</string>
   <string name="sync_fetch_missing_media">Ambil media di sinkronisasi</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to\n“%s/fonts/”\n\nYou won’t have to modify your cards.</string>
   <string name="fix_hebrew_download_font">Unduh huruf</string>
   <string name="default_font">Font standar</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">Default font applicability</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">Bahasa</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">Bahasa sistem</string>
   <string name="notification_pref">Notifications</string>
   <string name="notification_pref_title">Notify when</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">Center align</string>
   <string name="vertical_centering_summ">Center the content of cards vertically</string>
   <string name="pref_backup_max">Max number of backups</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">Show button time</string>
   <string name="show_estimates_summ">Show next review time on answer buttons</string>
   <string name="show_progress">Show remaining</string>
@@ -216,7 +204,6 @@
   <string name="deck_conf_set_subdecks_title">Set for all subdecks</string>
   <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
   <string name="pref_browser_editor_font">Browser and editor font</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filter</string>
   <string name="deck_conf_cram_options">Options</string>
   <string name="deck_conf_cram_search">Search</string>

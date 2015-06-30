@@ -50,14 +50,16 @@
     <item>Resposta recomanada (verd)</item>
     <item>Resposta millor que la recomanada</item>
     <item>Desfés</item>
-    <item>Edita la fitxa</item>
-    <item>Marca la fitxa</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>Cerca l\'expressió</item>
     <item>Aparca la fitxa</item>
     <item>Suspèn la fitxa</item>
-    <item>Suprimeix la fitxa</item>
+    <item>Delete note</item>
     <item>Play media</item>
     <item>Abort learning</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Suspèn la fitxa</item>

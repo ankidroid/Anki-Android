@@ -60,7 +60,6 @@
   <string name="about_title">Tietoja AnkiDroidista</string>
   <string name="about_version">Versio: </string>
   <string name="whiteboard_stroke_width">Viivan leveys</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">Mustat viivat</string>
   <string name="whiteboard_black_summ">Käyttää vähemmän muistia, mutta ei silloin, kun yötila on päällä</string>
   <string name="write_answers_disable">Ota vastauksen kirjoittaminen pois käytöstä</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">Korjaa pitkät painallukset</string>
   <string name="text_selection_click_summ">Ota käyttöön, jos et pysty aloittamaan tekstivalintaa pitkällä painalluksella</string>
   <string name="dictionary">Sanakirja</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Palauta kielet</string>
   <string name="reset_languages_summ">Palauta kaikkien pakkojen kieliasetukset (puhesyntetisaattorille ja sanakirjalle). Palauta yksittäisten pakkojen asetukset pakkavalikosta.</string>
   <string name="reset_languages_question">Palauta kaikki kielivalinnat?</string>
   <string name="reset_confirmation">Kaikki tilat palautettu</string>
   <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
   <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Vastauspainikkeen koko</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Korttiselaimen kirjasimien skaalaus</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Kokoelman polku</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Koko näytön tila</string>
   <string name="fullscreen_review_summ">Piilota järjestelmän tilapalkki</string>
   <string name="gestures">Ota eleet käyttöön</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">Kaksoisvieritys</string>
   <string name="double_scrolling_gap_summ">Kaksinkertaista vieritysaskeleen koko eReaderin kanssa</string>
   <string name="swipe_sensitivity">Pyyhkäisyjen herkkyys</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Puhesyntetisaattori</string>
   <string name="tts_summ">Lue kysymys ja vausta, jos äänitiedosto ei tule mukana</string>
   <string name="sync_fetch_missing_media">Hae media synkronointi</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">Tämä asetus ohittaa Androidin RTL-algoritmin ja näyttää hepreankieliset vokaalit oikein.\n\nJotta tämä toimisi, sinun täytyy ladata kirjasintiedosto Tohu.ttf ja kopioida se käsin hakemistoon:\n%s/fonts/\n\nKorttien muokkaaminen ei ole tarpeen.</string>
   <string name="fix_hebrew_download_font">Lataa fontti</string>
   <string name="default_font">Oletusfontti</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">Oletuskirjasimen käyttöalue</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">Kieli</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">Järjestelmän kieli</string>
   <string name="notification_pref">Ilmoitukset</string>
   <string name="notification_pref_title">Notify when</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">Tasaa keskelle</string>
   <string name="vertical_centering_summ">Keskitä korttien sisältö pystysuunnassa</string>
   <string name="pref_backup_max">Varmuuskopioiden enimmäismäärä</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">Näytä aika painikkeissa</string>
   <string name="show_estimates_summ">Näytä seuraava kertausaika vastauspainikkeissa</string>
   <string name="show_progress">Näytä jäljelläoleva</string>
@@ -218,7 +206,6 @@
   <string name="deck_conf_set_subdecks_title">Aseta kaikille alipakoille</string>
   <string name="deck_conf_set_subdecks_message">Aseta nykyinen asetusryhmä kaikille tämän pakan alipakoille?</string>
   <string name="pref_browser_editor_font">Selaimen ja editorin kirjasintyyppi</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Suodatin</string>
   <string name="deck_conf_cram_options">Asetukset</string>
   <string name="deck_conf_cram_search">Haku</string>

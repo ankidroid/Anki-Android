@@ -50,14 +50,16 @@
     <item>Anbefalt svar (grønn)</item>
     <item>Svaret bedre enn antatt</item>
     <item>Angre</item>
-    <item>Rediger kort</item>
-    <item>Merk kort</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>Oppslagsuttrykk</item>
     <item>Begrav kort</item>
     <item>Suspender kort</item>
-    <item>Slett kort</item>
+    <item>Delete note</item>
     <item>Play media</item>
     <item>Abort learning</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Suspender kort</item>

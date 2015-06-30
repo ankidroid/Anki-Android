@@ -60,7 +60,6 @@
   <string name="about_title">Sobre o AnkiDroid</string>
   <string name="about_version">Versão: </string>
   <string name="whiteboard_stroke_width">Largura do traço</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">Traçados pretos</string>
   <string name="whiteboard_black_summ">Utilizar menos memória, exceto no modo noturno</string>
   <string name="write_answers_disable">Desativar digitação em resposta</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">Solução alternativa de pressão longa</string>
   <string name="text_selection_click_summ">Ative isso se você não é capaz de iniciar a seleção de texto por meio de clique longo</string>
   <string name="dictionary">Dicionário de busca</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Redefinir línguas</string>
   <string name="reset_languages_summ">Redefina as atribuições de idioma (de conversão de texto em fala e dicionários) para todos os decks. Redefinir as atribuições específicas de deck no selecionador de decks</string>
   <string name="reset_languages_question">Redefinir todas as atribuições de idioma?</string>
   <string name="reset_confirmation">Redefinir todos os estados</string>
   <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
   <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Tamanho do botão de resposta</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Dimensionamento de fonte do navegador de cartões</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Caminho da coleção</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Modo tela cheia</string>
   <string name="fullscreen_review_summ">Ocultar a barra de status do sistema</string>
   <string name="gestures">Habilitar gestos</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">Rolagem dupla</string>
   <string name="double_scrolling_gap_summ">Duplicar a lacuna de rolagem com eReader</string>
   <string name="swipe_sensitivity">Sensibilidade do gesto</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Texto para fala</string>
   <string name="tts_summ">Lê pergunta e resposta se nenhum arquivo de som estiver incluído</string>
   <string name="sync_fetch_missing_media">Busca mídia durante a sincronização</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">Esta definição ignora o algoritmo do Android para mostrar texto Hebraico com vogais corretamente.\n\nPara isso funcionar, você precisa baixar a fonte Tohu.ttf e copiá-la manualmente para:\n%s/fonts/\n\nVocê não terá que modificar seus cartões.</string>
   <string name="fix_hebrew_download_font">Baixar Fonte</string>
   <string name="default_font">Fonte padrão</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">Aplicabilidade da fonte padrão</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">Idioma</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">Idioma do Sistema</string>
   <string name="notification_pref">Notificações</string>
   <string name="notification_pref_title">Notificar quando</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">Alinhar no centro</string>
   <string name="vertical_centering_summ">Centralizar o conteúdo das cartas verticalmente</string>
   <string name="pref_backup_max">Número máximo de backups</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">Mostrar o tempo no botão</string>
   <string name="show_estimates_summ">Mostrar a próxima revisão acima dos botões de resposta</string>
   <string name="show_progress">Mostar restantes</string>
@@ -218,7 +206,6 @@
   <string name="deck_conf_set_subdecks_title">Definir para todos os subdecks</string>
   <string name="deck_conf_set_subdecks_message">Definir o atual grupo de opções para todos os subdecks deste deck?</string>
   <string name="pref_browser_editor_font">Navegador e editor de fonte</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filtro</string>
   <string name="deck_conf_cram_options">Opções</string>
   <string name="deck_conf_cram_search">Pesquisa</string>

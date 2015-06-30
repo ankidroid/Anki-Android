@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="preference_summary_percentage">XXX%</string>
   <string name="drawer_open">Otevřít zásuvku</string>
   <string name="drawer_close">Zavřít zásuvku</string>
   <string name="CardEditorLaterMessage">Uložené informace na později</string>

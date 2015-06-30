@@ -60,7 +60,6 @@
   <string name="about_title">AnkiDroid에 대해서</string>
   <string name="about_version">버전: </string>
   <string name="whiteboard_stroke_width">획 두께</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">검은 획</string>
   <string name="whiteboard_black_summ">야간 모드가 아니라면 메모리를 적게 사용</string>
   <string name="write_answers_disable">정답 타이핑 사용 안함</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">길게 누름과 관련된 차선책</string>
   <string name="text_selection_click_summ">긴 클릭을 통해서 텍스트를 선택할 수 없는 경우 이 항목을 활성화</string>
   <string name="dictionary">색인 사전</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">언어 재설정</string>
   <string name="reset_languages_summ">모든 카드 묶음의 언어 기능(문장 읽어주기와 사전 기능) 재설정하기. 카드 묶음 선택창에서 특정 카드 묶음 재설정.</string>
   <string name="reset_languages_question">모든 언어 설정을 재설정할까요?</string>
   <string name="reset_confirmation">모든 상태 재설정</string>
   <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
   <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">정답 버튼 크기</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">카드 탐색기 글꼴 크기 조정</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">컬렉션 저장 경로</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">전체 화면 모드</string>
   <string name="fullscreen_review_summ">시스템 상태 표시줄 숨기기</string>
   <string name="gestures">제스처 사용</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">이중 스크롤</string>
   <string name="double_scrolling_gap_summ">eReader 사용시 스크롤 간격 두배로 늘리기</string>
   <string name="swipe_sensitivity">밀기 동작 민감도</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Text to speech</string>
   <string name="tts_summ">질문과 정답에 사운드 파일이 없을 경우 자동으로 읽어주기</string>
   <string name="sync_fetch_missing_media">동기화할 때 미디어파일 가져오기</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">이 설정은 안드로이드의 RTL 알고리즘을 우회하여 히브리어 텍스트의 모음을 바르게 표시하게 합니다.\n\nTohu.ttf를 다운로드하여 직접 %s/fonts/ 폴더에 복사하세요.\n\n기존의 카드를 편집할 필요는 없습니다.</string>
   <string name="fix_hebrew_download_font">글꼴 다운로드</string>
   <string name="default_font">기본 글꼴</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">기본 글꼴 적용 가능성</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">언어</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">시스템 언어설정</string>
   <string name="notification_pref">알림</string>
   <string name="notification_pref_title">다음의 경우에 알림</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">가운데 정렬</string>
   <string name="vertical_centering_summ">카드의 내용을 세로로 중앙에 배치</string>
   <string name="pref_backup_max">최대 백업 개수</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">버튼에 시간 표시</string>
   <string name="show_estimates_summ">답변 버튼에 다음 복습 시간 표시</string>
   <string name="show_progress">남은 개수 표시</string>
@@ -216,7 +204,6 @@
   <string name="deck_conf_set_subdecks_title">모든 하위 묶음에 설정하기</string>
   <string name="deck_conf_set_subdecks_message">이 카드 묶음의 모든 하위 묶음에 현재의 옵션 그룹을 설정할까요?</string>
   <string name="pref_browser_editor_font">탐색기 및 편집기 글꼴</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">필터</string>
   <string name="deck_conf_cram_options">옵션</string>
   <string name="deck_conf_cram_search">검색</string>

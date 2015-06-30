@@ -50,14 +50,16 @@
     <item>Zalecana odpowiedź (zielony)</item>
     <item>Odpowiedź lepsza niż zalecana</item>
     <item>Cofnij</item>
-    <item>Edytuj kartę</item>
-    <item>Oznacz kartę</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>Wyszukaj wyrażenie</item>
     <item>Ukryj kartę</item>
     <item>Wstrzymaj kartę</item>
-    <item>Usuń kartę</item>
+    <item>Delete note</item>
     <item>Odtwórz plik multimedialny</item>
     <item>Przerwij naukę</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Zawieś kartę</item>

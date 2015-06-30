@@ -60,7 +60,6 @@
   <string name="about_title">AnkiDroid hakkında</string>
   <string name="about_version">Sürüm: </string>
   <string name="whiteboard_stroke_width">Kontur genişliği</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">Tek renkli konturlar</string>
   <string name="whiteboard_black_summ">Daha az hafıza kullanır, ama gece modunda çalışmaz</string>
   <string name="write_answers_disable">Yanıtı yazmayı devredışı bırak</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">Uzun basma çözümü</string>
   <string name="text_selection_click_summ">Metin seçimini basılı tutarak başlatamıyorsanız bunu etkinleştirin</string>
   <string name="dictionary">Sözlüğe bak</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Dilleri sıfırla</string>
   <string name="reset_languages_summ">Tüm destelerdeki dil atamalarını sıfırla (metin okuma ve sözlükler için). Belirli deste atamalarını sıfırlamak için deste seçiciyi kullanın.</string>
   <string name="reset_languages_question">Tüm dil atamaları sıfırlansın mı?</string>
   <string name="reset_confirmation">Bütün durumlar sıfırlandı</string>
-  <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
-  <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
+  <string name="card_zoom">Kart yakınlaştırma</string>
+  <string name="image_zoom">Görüntü yakınlaştırma</string>
   <string name="button_size">Yanıt düğmesi boyutu</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Kart tarayıcısı font ölçeği</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Koleksiyon yolu</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Tamekran modu</string>
   <string name="fullscreen_review_summ">Sistem durum çubuğunu gizle</string>
   <string name="gestures">Jestleri etkinleştir</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">Hızlı kaydırma</string>
   <string name="double_scrolling_gap_summ">eOkuyucu\'yla kaydırma mesafesini iki katına çıkarmak istiyorsanız bunu etkinleştirin</string>
   <string name="swipe_sensitivity">Kaydırma duyarlılığı</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Metin okuma</string>
   <string name="tts_summ">Ses dosyası bulunmuyorsa soruyu ve yanıtı sesli okur</string>
   <string name="sync_fetch_missing_media">Eşitlemede medyayı aktar</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">Bu ayar İbrânice yazılarda sesli harflerin düzgün gösterilmesi için Android\'in RTL algoritmasını atlar.\n\nBunun işe yaraması için, Tohu.tff fontunu indirip kendiniz şu klasöre kopyalamanız gerekiyor:\n%s/fonts/\n\nKartlarınızda bir değişiklik yapmanız gerekmez.</string>
   <string name="fix_hebrew_download_font">Font İndir</string>
   <string name="default_font">Varsayılan yazı tipi</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">Varsayılan font uygulanabilirliği</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">Dil</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">Sistem Dili</string>
   <string name="notification_pref">Bildirimler</string>
   <string name="notification_pref_title">Şu durumda bildir:</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">Ortaya hizala</string>
   <string name="vertical_centering_summ">Kartların içeriğini dikey olarak ortala</string>
   <string name="pref_backup_max">En fazla yedek sayısı</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">Düğmede zaman göster</string>
   <string name="show_estimates_summ">Yanıt düğmelerinin üzerinde sonraki çıkma zamanını göster</string>
   <string name="show_progress">Kalanı göster</string>
@@ -166,8 +154,8 @@
   <string name="deck_conf_deck_description">Deste tanımı</string>
   <string name="deck_conf_group">Seçenek grubu</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d deck uses this group</item>
-    <item quantity="other">%1$s\n%2$d decks use this group</item>
+    <item quantity="one">%1$s\n%2$d deste bu grubu kullanıyor</item>
+    <item quantity="other">%1$s\n%2$d deste bu grubu kullanıyor</item>
   </plurals>
   <string name="deck_conf_new_cards">Yeni kartlar</string>
   <string name="deck_conf_rev_cards">Çalışma</string>
@@ -212,13 +200,12 @@
   <string name="deck_conf_remove_message">Şu anki seçenek grubu kaldırılsın mı?</string>
   <string name="deck_conf_set_subdecks">Bütün altdesteler için ayarla</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s subdeck will use this group</item>
-    <item quantity="other">%s subdecks will use this group</item>
+    <item quantity="one">%s altdeste bu grubu kullanacak</item>
+    <item quantity="other">%s altdeste bu grubu kullanacak</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Bütün altdesteler için ayarla</string>
   <string name="deck_conf_set_subdecks_message">Şu anki seçenek grubu bu destenin bütün altdesteleri için ayarlansın mı?</string>
   <string name="pref_browser_editor_font">Tarayıcı ve düzenleyici fontu</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filtre</string>
   <string name="deck_conf_cram_options">Seçenekler</string>
   <string name="deck_conf_cram_search">Arama</string>

@@ -50,14 +50,16 @@
     <item>建議的答案 (綠色)</item>
     <item>優於建議的答案</item>
     <item>復原</item>
-    <item>編輯卡片</item>
-    <item>標記卡片</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>查找運算式</item>
     <item>暫時隱藏卡片</item>
     <item>長久擱置卡片</item>
-    <item>刪除卡片</item>
+    <item>Delete note</item>
     <item>Play media</item>
     <item>Abort learning</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>長久擱置卡片</item>

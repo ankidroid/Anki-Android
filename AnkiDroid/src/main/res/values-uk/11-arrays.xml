@@ -50,14 +50,16 @@
     <item>Відповісти як рекомендовано (зелений колір)</item>
     <item>Відповісти краще, ніж рекомендовано</item>
     <item>Скасувати</item>
-    <item>Редагувати картку</item>
-    <item>Помітити карту</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>Пошук виразу</item>
     <item>Приховати картку</item>
     <item>Відкласти картку</item>
-    <item>Видалити картку</item>
+    <item>Delete note</item>
     <item>Відтворити медіа</item>
     <item>Перервати навчання</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Відкласти картку</item>

@@ -99,8 +99,8 @@
   <string name="delete_note_message">Tikrai šalinti šią pastabą ir visas jos korteles?\n%s</string>
   <string name="menu_select">Žymėti tekstą</string>
   <string name="menu_search">Ieškoti čia: %1$s</string>
-  <string name="menu_mark_card">Pažymėti kortelę</string>
-  <string name="menu_unmark_card">Atžymėti kortelę</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Sukurti malką</string>
   <string name="create">Sukurti</string>
   <string name="new_dynamic_deck">Sukurti malką su filtrais</string>

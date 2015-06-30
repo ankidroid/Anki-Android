@@ -93,8 +93,8 @@
   <string name="delete_note_message">确定要删除此卡牌记录及所有从属卡牌?\n%s</string>
   <string name="menu_select">选择文本</string>
   <string name="menu_search">在%1$s中查找</string>
-  <string name="menu_mark_card">标记卡牌</string>
-  <string name="menu_unmark_card">取消已标记卡牌</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">创建牌组</string>
   <string name="create">创建</string>
   <string name="new_dynamic_deck">创建筛选过的牌组</string>

@@ -96,8 +96,8 @@
   <string name="delete_note_message">Slette dette notatet med alle kortene?\n%s</string>
   <string name="menu_select">Merk tekst</string>
   <string name="menu_search">Oppslag i %1$s</string>
-  <string name="menu_mark_card">Merk kort</string>
-  <string name="menu_unmark_card">Fjern merking på kort</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Create deck</string>
   <string name="create">Opprett</string>
   <string name="new_dynamic_deck">Create filtered deck</string>

@@ -50,14 +50,16 @@
     <item>推奨される答え（緑色）</item>
     <item>推奨される答えよりも良い答え</item>
     <item>戻す</item>
-    <item>カードを編集する</item>
-    <item>マークをつける</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>検索式</item>
     <item>カードを延期</item>
     <item>カードを保留</item>
-    <item>カードを削除</item>
+    <item>Delete note</item>
     <item>メディアを再生</item>
     <item>学習を中断</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>タグを付けて保留</item>
@@ -68,15 +70,15 @@
     <item>新規カードを追加順に表示する</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>初回表示が古い順</item>
+    <item>前回表示日時が古い順</item>
     <item>ランダム</item>
     <item>間隔が小さい順</item>
     <item>間隔が大きい順</item>
     <item>忘却回数が多い順</item>
-    <item>追加順</item>
+    <item>作成日時が古い順</item>
     <item>学習予定日時が古い順</item>
-    <item>追加時期が新しい順</item>
-    <item>Relative overdueness</item>
+    <item>作成日時が新しい順</item>
+    <item>期日超過が相対的に大きい順</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>今日の新規カードの上限を上げる</item>

@@ -60,7 +60,6 @@
   <string name="about_title">About AnkiDroid</string>
   <string name="about_version">Version: </string>
   <string name="whiteboard_stroke_width">عرض حاشیه</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">حاشیه‌های تک‌رنگ</string>
   <string name="whiteboard_black_summ">حافظه کمتری استفاده می‌کند، اما در حالت شب کار نمی‌کند</string>
   <string name="write_answers_disable">غیر فعال کردن تایپ پاسخ</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">راه‌حل کلیک طولانی</string>
   <string name="text_selection_click_summ">اگر از طریق کلیک طولانی نمی توانید متن را انتخاب کنید این را انجام دهید</string>
   <string name="dictionary">فرهنگ لغت برای مراجعه</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">بازنشانی زبان‌ها</string>
   <string name="reset_languages_summ">بازیابی زبان فعلی(برای تبدیل متن به گفتار و همه لغت نامه ها) برای همه دسته ها. بازیابی مخصوص دسته ویژه فعلی روی جمع کننده دسته</string>
   <string name="reset_languages_question">کل زبان فعلی را دوباره تنظیم می کنید؟</string>
   <string name="reset_confirmation">All states reset</string>
   <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
   <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Answer button size</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">تغییر اندازه فونت مرورگر کارت</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">مسیر مجموعه</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">حالت تمام‌صفحه</string>
   <string name="fullscreen_review_summ">Hide the system status bar</string>
   <string name="gestures">فعالسازی حرکات لمسی</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">پیمایش دو برابری</string>
   <string name="double_scrolling_gap_summ">فعال کنید اگر می‌خواهید فاصله پیمایش را در کتابخوان دیجیتالی دو برابر کنید</string>
   <string name="swipe_sensitivity">حساسیت حرکت لمسی</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">متن به گفتار</string>
   <string name="tts_summ">اگر هیچ فایل صدایی نبود پرسش و پاسخ را بخوان</string>
   <string name="sync_fetch_missing_media">آوردن رسانه ها در همگام سازی</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">این تنظیمات مسیر فرعی قالب چیدمان راست به چپ اندروید است که برای تصحیح نمایش متن با صوت عبری بکار می رود .\n\nبرای انجام این کارk, شما باید قلم Tohu.ttf  را  بارگیری کنید و آن را بصورت دستی به:\n%s/fonts/\n\n کپی کنید.شما مجبور به تغییر کارت نیستید.</string>
   <string name="fix_hebrew_download_font">بارگیری قلم</string>
   <string name="default_font">قلم پیش فرض</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">امکان بکارگیری فونت پیش‌فرض</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">زبان</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">زبان دستگاه</string>
   <string name="notification_pref">اعلان‌ها</string>
   <string name="notification_pref_title">Notify when</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">تراز در وسط</string>
   <string name="vertical_centering_summ">تراز کردن محتوای کارت‌ها بصورت عمودی در وسط</string>
   <string name="pref_backup_max">حداکثر تعداد پشتیبان‌ها</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">نمایش  دکمه زمان</string>
   <string name="show_estimates_summ">نمایش زمان مرور بعدی در بالای دکمه پاسخ</string>
   <string name="show_progress">نمایش باقیمانده</string>
@@ -216,7 +204,6 @@
   <string name="deck_conf_set_subdecks_title">برای تمام دسته ها تنظیم شود</string>
   <string name="deck_conf_set_subdecks_message">تنظیمات گروه فعلی برای کل این دسته از دسته ها تنظیم شود؟</string>
   <string name="pref_browser_editor_font">فونت مرورگر و ویرایشگر</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">فیلتر</string>
   <string name="deck_conf_cram_options">گزینه ها</string>
   <string name="deck_conf_cram_search">جستجو</string>

@@ -80,7 +80,7 @@
   <string name="custom_study_ahead">先取りする日数</string>
   <string name="custom_study_random">単語帳からランダムに抽出するカードの枚数</string>
   <string name="custom_study_preview">過去 x 日間に追加された新規カードをプレビュー</string>
-  <string name="rebuild_custom_study_deck">カスタム単語帳を再構築します\nしばらくお待ちください</string>
+  <string name="rebuild_custom_study_deck">カスタム単語帳を再構築します\nしばらくお待ちください...</string>
   <string name="import_unpacking">アーカイブを解凍しています。\nお待ちください&#8230;</string>
   <string name="importing_collection">コレクションをインポートしています。\nお待ちください&#8230;</string>
   <string name="import_media_count">メディアファイルをインポートしています。 %1$d%%\nお待ちください&#8230;</string>
@@ -116,7 +116,7 @@
   <string name="check_media_db_updated">メディアのデータベースが再構築されました。</string>
   <string name="check_media_delete_unused">(1) を削除</string>
   <string name="check_media_deleted">削除されたファイル: %d</string>
-  <string name="tags_dialog_option_all_cards">All cards</string>
-  <string name="tags_dialog_option_new_cards">New</string>
-  <string name="tags_dialog_option_due_cards">Due</string>
+  <string name="tags_dialog_option_all_cards">すべて</string>
+  <string name="tags_dialog_option_new_cards">新規</string>
+  <string name="tags_dialog_option_due_cards">予定日時</string>
 </resources>

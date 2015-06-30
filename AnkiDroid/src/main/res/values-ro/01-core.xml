@@ -99,8 +99,8 @@
   <string name="delete_note_message">Chiar doriţi să ştergeţi această notă şi toate cardurile ei?\n%s sale</string>
   <string name="menu_select">Selectaţi text</string>
   <string name="menu_search">Căutare în %1$s</string>
-  <string name="menu_mark_card">Marcare card</string>
-  <string name="menu_unmark_card">Demarcare Card</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Create deck</string>
   <string name="create">Creare</string>
   <string name="new_dynamic_deck">Create filtered deck</string>

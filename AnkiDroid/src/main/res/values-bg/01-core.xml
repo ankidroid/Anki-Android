@@ -96,8 +96,8 @@
   <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
   <string name="menu_select">Избор на текст</string>
   <string name="menu_search">Търсене в %1$s</string>
-  <string name="menu_mark_card">Маркиране на карта</string>
-  <string name="menu_unmark_card">Unmark card</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Create deck</string>
   <string name="create">Създай</string>
   <string name="new_dynamic_deck">Create filtered deck</string>

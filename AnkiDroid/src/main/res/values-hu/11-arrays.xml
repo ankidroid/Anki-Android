@@ -50,14 +50,16 @@
     <item>Javasolt válasz (zöld)</item>
     <item>Jobb válasz, mint a javasolt</item>
     <item>Visszavonás</item>
-    <item>Kártya szerkesztése</item>
-    <item>Kártya megjelölése</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>Kifejezés keresése</item>
     <item>Kártya temetése</item>
     <item>Kártya felfüggesztése</item>
-    <item>Kártya törlése</item>
+    <item>Delete note</item>
     <item>Play media</item>
     <item>Abort learning</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Kártya felfüggesztése</item>

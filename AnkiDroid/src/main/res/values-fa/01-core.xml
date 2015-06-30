@@ -93,8 +93,8 @@
   <string name="delete_note_message">مطمئنید می خواهید این یادداشت و همه کارتهایش را پاک کنید؟\n%s</string>
   <string name="menu_select">انتخاب متن</string>
   <string name="menu_search">جستجو در %1$s</string>
-  <string name="menu_mark_card">علامت گذاری کارت</string>
-  <string name="menu_unmark_card">برداشتن نشانه کارت</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">ایجاد دسته</string>
   <string name="create">ساختن</string>
   <string name="new_dynamic_deck">ایجاد دسته فیلتر شده</string>

@@ -33,5 +33,5 @@ Fügen Sie neues Material mit der Desktop-Applikation oder direkt mit AnkiDroid 
 • Anpassbar
 • Dynamische Stapel
 • Nacht-Modus
-• 27 Sprachen verfügbar
+• in 27 Sprachen übersetzt
 • Alle vorherigen AnkiDroid-Version können von der Website heruntergeladen werden

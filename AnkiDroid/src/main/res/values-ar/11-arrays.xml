@@ -50,14 +50,16 @@
     <item>الإجابة الموصى بها (أخضر)</item>
     <item>الإجابة أفضل مما أوصى بها</item>
     <item>تراجع</item>
-    <item>حرر البطاقة</item>
-    <item>علم البطاقة</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>تعبير البحث</item>
     <item>أخف البطاقة</item>
     <item>علق البطاقة</item>
-    <item>احذف البطاقة</item>
+    <item>Delete note</item>
     <item>Play media</item>
     <item>Abort learning</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>علق البطاقة</item>

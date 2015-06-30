@@ -64,7 +64,7 @@
   <string name="stats_period_year">1 Jahr</string>
   <string name="stats_period_lifetime">Lebensdauer des Stapels</string>
   <string name="stats_deck_collection">Sammlung</string>
-  <string name="stats_time_of_day">Tageszeit</string>
+  <string name="stats_time_of_day">Uhrzeit</string>
   <string name="stats_day_of_week">Wochentag</string>
   <string formatted="false" name="stats_percentage_correct">% Richtig</string>
   <string name="stats_reviews">Wiederholungen</string>

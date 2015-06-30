@@ -50,14 +50,16 @@
     <item>Navrhovaná odpoveď (zelená)</item>
     <item>Odpoveď lepšia ako navrhovaná</item>
     <item>Späť</item>
-    <item>Upraviť kartu</item>
-    <item>Označiť kartu</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>Vyhľadať výraz</item>
     <item>Zahrabať kartu</item>
     <item>Dať kartu bokom</item>
-    <item>Odstrániť kartu</item>
+    <item>Delete note</item>
     <item>Play media</item>
     <item>Abort learning</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Dať kartu bokom</item>

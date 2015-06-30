@@ -96,8 +96,8 @@
   <string name="delete_note_message">Deze memo en al zijn kaarten verwijderen?\n%s</string>
   <string name="menu_select">Tekst selecteren</string>
   <string name="menu_search">Opzoeken in %1$s</string>
-  <string name="menu_mark_card">Markeer kaart</string>
-  <string name="menu_unmark_card">Kaart demarkeren</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Maak set</string>
   <string name="create">Maak</string>
   <string name="new_dynamic_deck">Gefilterde set maken</string>

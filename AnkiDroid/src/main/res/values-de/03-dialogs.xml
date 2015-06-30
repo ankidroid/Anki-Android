@@ -61,17 +61,17 @@
   <string name="reset_card_dialog_title">Lernfortschritt zurücksetzen</string>
   <string name="reset_card_dialog_message">Diese Karte wird am Ende der Reihe neuer Karten platziert.</string>
   <string name="reset_card_dialog_acknowledge">Karte zurücksetzen</string>
-  <string name="reschedule_card_dialog_title">Karte verschieben</string>
-  <string name="reschedule_card_dialog_message">Verschoben zum Lernen in x Tagen:</string>
-  <string name="reschedule_card_dialog_acknowledge">Karte verschoben</string>
+  <string name="reschedule_card_dialog_title">Karte neu planen</string>
+  <string name="reschedule_card_dialog_message">Neues Intervall: In x Tagen Lernen:</string>
+  <string name="reschedule_card_dialog_acknowledge">Karte neu geplant</string>
   <string name="answering_error_title">Datenbankfehler</string>
-  <string name="answering_error_message">Beim Zugriff auf die Datenbank ist ein Fehler aufgetreten. Dies kann entweder mit einer defekten Datenbank zusammenhängen oder an unzureichendem Speicherplatz liegen.\n\nWenn dies öfter vorkommt, versuchen Sie bitte, die Sammlung zu reparieren oder von einem Backup wiederherzustellen. Klicken Sie dafür auf \'Optionen\'.\n\nNichtsdestoweniger kann aber auch ein AnkiDroid-Fehler der Grund sein; bitte melden Sie den Fehler deshalb, damit wir das überprüfen können.</string>
+  <string name="answering_error_message">Beim Zugriff auf die Datenbank ist ein Fehler aufgetreten. Dies kann entweder mit einer defekten Datenbank zusammenhängen oder an unzureichendem Speicherplatz liegen.\n\nWenn dies öfter vorkommt, versuchen Sie bitte, die Sammlung zu reparieren oder von einem Backup wiederherzustellen. Klicken Sie dafür auf »Optionen«.\n\nOder es könnte ein  AnkiDroid-Fehler sein; bitte melden Sie den Fehler deshalb, damit wir das überprüfen können.</string>
   <string name="answering_error_report">Fehler melden</string>
-  <string name="repair_deck_dialog">Möchten Sie wirklich versuchen, die Datenbank zu reparieren?\n\nBevor der Versuch startet, wird eine Kopie im Unterordner \'%s\' angelegt.</string>
+  <string name="repair_deck_dialog">Möchten Sie wirklich versuchen, die Datenbank zu reparieren?\n\nBevor der Versuch startet, wird eine Kopie im Unterordner »%s« angelegt.</string>
   <string name="intent_add_saved_information">Gespeicherte Daten</string>
   <string name="intent_add_clear_all">Alles löschen</string>
-  <string name="intent_aedict_empty">Kategorie \'Standard\' ist leer</string>
-  <string name="intent_aedict_category">Entfernen Sie alle Notepad-Kategorien um Karten zu AnkiDroid hinzuzufügen oder fügen Sie die Kategorie \'default\' hinzu</string>
+  <string name="intent_aedict_empty">Kategorie »Standard« ist leer</string>
+  <string name="intent_aedict_category">Entfernen Sie alle Notepad-Kategorien um Karten zu AnkiDroid hinzuzufügen oder fügen Sie die Kategorie »Standard« hinzu</string>
   <string name="custom_study_new_total_new">Neue Karten im Stapel: %s</string>
   <string name="custom_study_rev_total_rev">Fällige Wiederholungen des Stapels: %s</string>
   <string name="custom_study_new_extend">heutiges Tageslimit für neue Karten erhöhen um</string>
@@ -116,7 +116,7 @@
   <string name="check_media_db_updated">Mediendatenbank neu gebaut.</string>
   <string name="check_media_delete_unused">Unbenutzte löschen</string>
   <string name="check_media_deleted">Gelöschte Dateien: %d</string>
-  <string name="tags_dialog_option_all_cards">All cards</string>
-  <string name="tags_dialog_option_new_cards">New</string>
-  <string name="tags_dialog_option_due_cards">Due</string>
+  <string name="tags_dialog_option_all_cards">Alle Karten</string>
+  <string name="tags_dialog_option_new_cards">Neue</string>
+  <string name="tags_dialog_option_due_cards">Fällige</string>
 </resources>

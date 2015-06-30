@@ -83,8 +83,8 @@
   <string name="multimedia_editor_searching_word">Suche nach dem Wort</string>
   <string name="multimedia_editor_progress_wait_title">Warten</string>
   <string name="multimedia_editor_something_wrong">Etwas ist schiefgelaufen</string>
-  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the note</string>
-  <string name="multimedia_editor_attach_media">Attach media</string>
+  <string name="multimedia_editor_attach_mm_content">Multimediainhalt der Notiz hinzufügen</string>
+  <string name="multimedia_editor_attach_media">Medien anhängen</string>
   <string name="multimedia_editor_audio_view_recording_failed">Aufnahme fehlgeschlagen</string>
   <string name="multimedia_editor_audio_view_playing_failed">Abspielen fehlgeschlagen</string>
   <string name="title_activity_edit_text">Bearbeite Feld</string>

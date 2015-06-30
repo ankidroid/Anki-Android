@@ -50,14 +50,16 @@
     <item>Vastaa ehdotettu (vihreä)</item>
     <item>Vastaa paremmin kuin ehdotettu</item>
     <item>Kumoa</item>
-    <item>Muokkaa korttia</item>
-    <item>Merkitse kortti</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>Hakutermi</item>
     <item>Piilota kortti</item>
     <item>Keskeytä kortti</item>
-    <item>Poista kortti</item>
+    <item>Delete note</item>
     <item>Toista media</item>
     <item>Keskeytä oppiminen</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Jäädytä kortti</item>

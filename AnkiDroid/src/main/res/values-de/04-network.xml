@@ -81,9 +81,9 @@
   <string name="sync_downloading_media">Multimedia-Datei %1$d von %2$d wird heruntergeladen&#8230;</string>
   <string name="sync_log_uploading_message">Voll-Synchronisierung des lokalen Stapels</string>
   <string name="sync_log_downloading_message">Voll-Synchronisierung vom Server</string>
-  <string name="sync_log_clocks_unsynchronized">Die Uhr auf Ihrem Gerät geht falsch um %1$d Sekunden%2$s; Stellen Sie sicher, dass Datum, Zeit und Zeitzone auf Ihrem Handy korrekt sind und synchronisieren Sie nochmals.</string>
-  <string name="sync_log_clocks_unsynchronized_tz"> (die Zeitzone des Geräts ist vermutlich falsch eingestellt)</string>
-  <string name="sync_log_clocks_unsynchronized_date"> (vermutlich stimmt das Gerätedatum nicht)</string>
+  <string name="sync_log_clocks_unsynchronized">Die Uhr auf Ihrem Gerät geht um %1$d Sekunden falsch.%2$s Stellen Sie sicher, dass Datum, Zeit und Zeitzone auf Ihrem Handy korrekt sind und synchronisieren Sie nochmals.</string>
+  <string name="sync_log_clocks_unsynchronized_tz"> (Die Zeitzone ist vermutlich falsch eingestellt.)</string>
+  <string name="sync_log_clocks_unsynchronized_date"> (Vermutlich stimmt das Datum nicht.)</string>
   <string name="sync_conflict_title">Synchronisierungskonflikt</string>
   <string name="sync_no_changes_message">Keine Veränderungen gefunden.</string>
   <string name="sync_database_acknowledge">Sammlung synchronisiert</string>

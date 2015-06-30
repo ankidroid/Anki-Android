@@ -50,14 +50,16 @@
     <item>Απάντησε την προτεινόμενη (πράσινη)</item>
     <item>Απάντηση καλύτερη από την προτεινόμενη</item>
     <item>Αναίρεση</item>
-    <item>Σύνταξη κάρτας</item>
-    <item>Σημάδεμα κάρτας</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>Αναζήτηση έκφρασης</item>
     <item>Κρύψιμο κάρτας</item>
     <item>Αναστολή κάρτας</item>
-    <item>Διαγραφή κάρτας</item>
+    <item>Delete note</item>
     <item>Play media</item>
     <item>Abort learning</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Αναστολή κάρτας</item>

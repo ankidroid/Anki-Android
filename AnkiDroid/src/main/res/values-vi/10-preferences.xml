@@ -60,7 +60,6 @@
   <string name="about_title">Về AnkiDroid</string>
   <string name="about_version">Phiên bản: </string>
   <string name="whiteboard_stroke_width">Chiều rộng không cố định</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">Màu đen không cố định</string>
   <string name="whiteboard_black_summ">Sử dụng ít bộ nhớ, trừ khi ở chế độ ban đêm</string>
   <string name="write_answers_disable">Tắt đánh máy trong câu trả lời</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">Bấm giữ workaround </string>
   <string name="text_selection_click_summ">Sử điều này nếu bạn không thể chọn văn bản với một cái bấm giữ</string>
   <string name="dictionary">Tra cứu từ điển</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Đặt lại ngôn ngữ</string>
   <string name="reset_languages_summ">Đặt lại bài tập ngôn ngữ (cho văn bản sang tiếng nói và từ điển) cho tất cả chủ đề. Đặt lại các bài tập theo chủ đề cụ thể trên bộ chọn/giữ chủ đề.</string>
   <string name="reset_languages_question">Đặt lại tất cả các thiết lập ngôn ngữ ?</string>
   <string name="reset_confirmation">Thiết lập lại tất cả các trạng thái</string>
   <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
   <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Kích thước nút trả lời </string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Thẻ trình duyệt font rộng</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Đường dẫn cho bộ sưu tập</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Chế độ toàn màn hình</string>
   <string name="fullscreen_review_summ">Ẩn thanh trạng thái hệ thống</string>
   <string name="gestures">Kích hoạt Cử chỉ</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">Bấm phím scrolling (chuột giữa) hai lần</string>
   <string name="double_scrolling_gap_summ">bấm hai lần chuột giữa với eReader </string>
   <string name="swipe_sensitivity">Độ nhạy của chạm vuốt</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Văn bản sang tiếng nói</string>
   <string name="tts_summ">Đọc ra câu hỏi và câu trả lời nếu không có tập tin âm thanh nào được kèm theo</string>
   <string name="sync_fetch_missing_media">Tìm nạp phương tiện truyền thông trên đồng bộ</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">Cài đặt này đi qua các thuật toán RTL của Android để hiển thị các văn bản tiếng Do Thái với nguyên âm correctly.\n\nFor để làm việc này, bạn cần phải tải về phông chữ Tohu.ttf và sao chép nó bằng tay đến: \n%s/fonts/\n\nYou sẽ không phải sửa đổi thẻ của bạn.</string>
   <string name="fix_hebrew_download_font">Tải về phông chữ</string>
   <string name="default_font">Font mặc định</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">Tính ứng dụng phông chữ mặc định</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">Ngôn ngữ</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">Ngôn ngữ hệ thống</string>
   <string name="notification_pref">Các thông báo</string>
   <string name="notification_pref_title">Thông báo khi</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">Chọn Center align</string>
   <string name="vertical_centering_summ">Thiết lập nội dung chính của thẻ theo chiều dọc</string>
   <string name="pref_backup_max">Tối đa số lượng bản sao lưu</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">Show button time</string>
   <string name="show_estimates_summ">Show next review time on answer buttons</string>
   <string name="show_progress">Show remaining</string>
@@ -216,7 +204,6 @@
   <string name="deck_conf_set_subdecks_title">Thiết lập cho tất cả chủ đề phụ</string>
   <string name="deck_conf_set_subdecks_message">Thiết lập hiện tại tùy chọn nhóm cho tất cả chủ đề phụ này?</string>
   <string name="pref_browser_editor_font">Trình duyệt và trình soạn thảo font</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Bộ lọc</string>
   <string name="deck_conf_cram_options">Tùy chọn</string>
   <string name="deck_conf_cram_search">Tìm</string>

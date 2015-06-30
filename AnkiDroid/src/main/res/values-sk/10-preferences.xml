@@ -60,7 +60,6 @@
   <string name="about_title">O AnkiDroid</string>
   <string name="about_version">Verzia: </string>
   <string name="whiteboard_stroke_width">Hrúbka ťahu</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">Čierne ťahy</string>
   <string name="whiteboard_black_summ">Uses less memory, unless in night mode</string>
   <string name="write_answers_disable">Disable typing in answer</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">Long press workaround</string>
   <string name="text_selection_click_summ">Zapnite, ak nemôžete začať s voľbou textu cez dlhé kliknutie</string>
   <string name="dictionary">Slovník</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Obnoviť jazyky</string>
   <string name="reset_languages_summ">Obnoviť pôvodné nastavenie jazyka  (použitý pri prevode textu na reč a slovníkoch) vo všetkých balíčkoch. Obnovenie je možné aj priamo na kontréntom balíčku</string>
   <string name="reset_languages_question">Obnoviť všetky priradenia jazykov?</string>
   <string name="reset_confirmation">All states reset</string>
   <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
   <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Veľkosť tlačidla pre odpoveď</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Veľkosť písma v prehliadači kariet</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Umiestnenie zbierky</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Celoobrazovkový režim</string>
   <string name="fullscreen_review_summ">Skryť stavový riadok systému</string>
   <string name="gestures">Povoliť gestá</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">Dvojitý posun</string>
   <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
   <string name="swipe_sensitivity">Swipe citlivosť</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Text to speech</string>
   <string name="tts_summ">Prečíta otázku a odpoveď, ak nie je priložený žiaden zvukový súbor</string>
   <string name="sync_fetch_missing_media">Prevziať médiá počas synchronizácie</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">Toto nastavenie obchádza RTL algoritmus Android, aby sa správne zobrazil hebrejský text so samohláskami.\n\nAby to fungovalo musíte stiahnuť font Tohu.ttf a manuálne ho skopírovať do:\n%s/fonts/\n\nNebude potrebné meniť vaše karty.</string>
   <string name="fix_hebrew_download_font">Stiahni font</string>
   <string name="default_font">Predvolené písmo</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">Default font applicability</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">Jazyk</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">Systémový jazyk</string>
   <string name="notification_pref">Oznámenia</string>
   <string name="notification_pref_title">Notify when</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">Zarovnanie na stred</string>
   <string name="vertical_centering_summ">Center the content of cards vertically</string>
   <string name="pref_backup_max">Maximálny počet záloh</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">Zobraziť tlačidlo čas</string>
   <string name="show_estimates_summ">Zobraziť čas ďalšieho opakovania nad tlačidlami odpovedí</string>
   <string name="show_progress">Zobraziť zostávajúce</string>
@@ -220,7 +208,6 @@
   <string name="deck_conf_set_subdecks_title">Nastaviť pre všetky podbalíčky</string>
   <string name="deck_conf_set_subdecks_message">Nastaviť aktuálnu skupinu nastavení pre všetky podbalíčky tohto balíčka?</string>
   <string name="pref_browser_editor_font">Browser and editor font</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filter</string>
   <string name="deck_conf_cram_options">Možnosti</string>
   <string name="deck_conf_cram_search">Hľadať</string>

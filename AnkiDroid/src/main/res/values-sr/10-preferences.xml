@@ -60,7 +60,6 @@
   <string name="about_title">O AnkiDroid-у</string>
   <string name="about_version">Верзија: </string>
   <string name="whiteboard_stroke_width">Ширина капи</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">Црни капи</string>
   <string name="whiteboard_black_summ">Користи мање меморије, осим у ноћном режиму</string>
   <string name="write_answers_disable">Онемогући куцање одговора</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">Исправљање грешке дугог притискања</string>
   <string name="text_selection_click_summ">Укључите, ако не успевате да почнете означавање текста преко дугог притиска</string>
   <string name="dictionary">Кориснички речник</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Ресетуј језике</string>
   <string name="reset_languages_summ">Ресетуј језике (за претварање текста у звук и речнике) за све шпилове. Ресетуј за конкретне шпилове - у садржају шпилова</string>
   <string name="reset_languages_question">Да ресетујем све језичке поставке?</string>
   <string name="reset_confirmation">Ресетована сва подешавања</string>
   <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
   <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Величина дугмета за одговор</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Величина фонта прегледача картица</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Фасцикла са колекцијом</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Пуноекрански режим</string>
   <string name="fullscreen_review_summ">Сакриј системски део екрана</string>
   <string name="gestures">Омогући гестове</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">Дупло проклизавање</string>
   <string name="double_scrolling_gap_summ">Удвостручи међупросторе између клизаче на е-Читалацу</string>
   <string name="swipe_sensitivity">Осетљивост пребацивање</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Текст у говор</string>
   <string name="tts_summ">Читај питање/одговор, ако нема прикључене звучне датотеке</string>
   <string name="sync_fetch_missing_media">Додај медије</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">Овај параметар превазилази RTL алгоритам система Android, да би приказао правилно гласове у тексту на хебрејском,.\n\nДа би то радило, морате преузети фонт Tohu.ttf и ручно га копирати у:\n%s/fonts/\n\nНе морате да модификујете ваше карте.</string>
   <string name="fix_hebrew_download_font">Преузми фонт</string>
   <string name="default_font">Подразумевани фонт</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">Уобичајан фонт</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">Језик</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">Системски језик</string>
   <string name="notification_pref">Обавештења</string>
   <string name="notification_pref_title">Показуј при</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">Центрирај вертикално</string>
   <string name="vertical_centering_summ">Центрирај садржај картица вертикално</string>
   <string name="pref_backup_max">Максималан број резервне датотеке</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">Прикажи дугме времена</string>
   <string name="show_estimates_summ">Следећи пут прикажи разматрање изнад дугмета за одговоре</string>
   <string name="show_progress">Прикажи преостале</string>
@@ -222,7 +210,6 @@
   <string name="deck_conf_set_subdecks_title">Задај за све групе шпилова</string>
   <string name="deck_conf_set_subdecks_message">Да задам текућу групу опција за све подшпилове ових шпилова?</string>
   <string name="pref_browser_editor_font">Прегледач и фонт уредника</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Филтер</string>
   <string name="deck_conf_cram_options">Опције</string>
   <string name="deck_conf_cram_search">Претрага</string>

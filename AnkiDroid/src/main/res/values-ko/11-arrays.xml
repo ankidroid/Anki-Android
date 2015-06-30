@@ -50,14 +50,16 @@
     <item>답변 추천 (녹색)</item>
     <item>권장된 것 보다 더 나은 답변</item>
     <item>실행 취소</item>
-    <item>카드 편집</item>
-    <item>카드에 표시하기</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>색인 형식</item>
     <item>카드 집어넣기</item>
     <item>카드 보류</item>
-    <item>카드 삭제</item>
+    <item>Delete note</item>
     <item>미디어 재생</item>
     <item>학습 중단</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>카드 보류</item>

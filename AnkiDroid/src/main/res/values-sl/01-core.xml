@@ -102,8 +102,8 @@
   <string name="delete_note_message">Res želite izbrisati ta zapisek in vse vezane kartice?\n%s</string>
   <string name="menu_select">Označi besedilo</string>
   <string name="menu_search">Poišči v %1$s</string>
-  <string name="menu_mark_card">Označi kartico</string>
-  <string name="menu_unmark_card">Odznači kartico</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Create deck</string>
   <string name="create">Ustvari</string>
   <string name="new_dynamic_deck">Create filtered deck</string>

@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="preference_summary_percentage">XXX%</string>
   <string name="drawer_open">Apri barra di navigazione</string>
   <string name="drawer_close">Chiudi barra di navigazione</string>
   <string name="CardEditorLaterMessage">Informazione salvata per più tardi</string>
@@ -47,12 +48,12 @@
   <string name="CardEditorModel">Tipo:</string>
   <string name="CardEditorTags">Etichette: %1$s</string>
   <string name="CardEditorCards">Carte : %1$s</string>
-  <string name="tag_name">Tag name</string>
+  <string name="tag_name">Nome etichetta</string>
   <string name="add_new_filter_tags">Aggiungi/filtra etichette</string>
-  <string name="add_tag">Add tag</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
+  <string name="add_tag">Aggiungi etichetta</string>
+  <string name="check_all_tags">Seleziona/deseleziona tutte le etichette</string>
   <string name="filter_tags">Filtra etichette</string>
-  <string name="no_tags">You haven’t added any tags yet.</string>
+  <string name="no_tags">Non hai ancora aggiunto nessuna etichetta.</string>
   <string name="sdcard_missing_message">La scheda SD non è disponibile, perché è usata come unità USB. Scollegare l\'USB per accedere ai mazzi.</string>
   <string name="enable_whiteboard">Abilita la lavagna</string>
   <string name="disable_whiteboard">Disabilita la lavagna</string>
@@ -151,8 +152,8 @@
   <string name="sched_end">(fine)</string>
   <string name="sched_unbury_button">Per vederle ora, tocca il pulsante Disseppellisci.</string>
   <string name="sched_has_buried">Alcune carte correlate o seppellite sono state rinviate ad una prossima sessione.</string>
-  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+  <string name="tag_editor_add_feedback">Tocca \"%2$s\" per confermare l\'aggiunta di \"%1$s\"</string>
+  <string name="tag_editor_add_feedback_existing">Etichetta esistente \"%1$s\" selezionata</string>
   <string name="lookup_hint">Dopo aver copiato il testo, tocca la carta in un punto qualsiasi per mostrare l\'icona di ricerca</string>
   <string name="add_content_showcase_text">Per cominciare, pigia il bottone + per aggiungere nuovi contenuti da studiare.\n\n Pigia \'Aiuto\' per vedere il manuale.</string>
 </resources>

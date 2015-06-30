@@ -60,7 +60,6 @@
   <string name="about_title">About AnkiDroid</string>
   <string name="about_version">Version: </string>
   <string name="whiteboard_stroke_width">Stroke width</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">Black strokes</string>
   <string name="whiteboard_black_summ">Uses less memory, unless in night mode</string>
   <string name="write_answers_disable">Disable typing in answer</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">Long press workaround</string>
   <string name="text_selection_click_summ">Enable this if you are not able to select text with a long press</string>
   <string name="dictionary">Lookup dictionary</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Reset languages</string>
   <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker.</string>
   <string name="reset_languages_question">Reset all language assignments?</string>
   <string name="reset_confirmation">All states reset</string>
   <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
   <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Answer button size</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Card browser font scaling</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Collection path</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Fullscreen mode</string>
   <string name="fullscreen_review_summ">Hide the system status bar</string>
   <string name="gestures">Enable gestures</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">Double scrolling</string>
   <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
   <string name="swipe_sensitivity">Swipe sensitivity</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Text to speech</string>
   <string name="tts_summ">Reads out question and answer if no sound file is included</string>
   <string name="sync_fetch_missing_media">Fetch media on sync</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to\n“%s/fonts/”\n\nYou won’t have to modify your cards.</string>
   <string name="fix_hebrew_download_font">Download font</string>
   <string name="default_font">Default font</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">Default font applicability</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">Language</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">System language</string>
   <string name="notification_pref">Notifications</string>
   <string name="notification_pref_title">Notify when</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">Center align</string>
   <string name="vertical_centering_summ">Center the content of cards vertically</string>
   <string name="pref_backup_max">Max number of backups</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">Show button time</string>
   <string name="show_estimates_summ">Show next review time on answer buttons</string>
   <string name="show_progress">Show remaining</string>
@@ -218,7 +206,6 @@
   <string name="deck_conf_set_subdecks_title">Set for all subdecks</string>
   <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
   <string name="pref_browser_editor_font">Browser and editor font</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filter</string>
   <string name="deck_conf_cram_options">Options</string>
   <string name="deck_conf_cram_search">Search</string>

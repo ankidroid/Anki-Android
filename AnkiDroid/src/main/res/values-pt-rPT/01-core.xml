@@ -96,8 +96,8 @@
   <string name="delete_note_message">Deseja realmente eliminar esta nota e todas as suas fichas?\n%s</string>
   <string name="menu_select">Selecionar texto</string>
   <string name="menu_search">Pesquisar em %1$s</string>
-  <string name="menu_mark_card">Marcar Cartão</string>
-  <string name="menu_unmark_card">Desmarcar Cartão</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Criar baralho</string>
   <string name="create">Criar</string>
   <string name="new_dynamic_deck">Criar baralho filtrado</string>

@@ -50,14 +50,16 @@
     <item>Answer recommended (green)</item>
     <item>Answer better than recommended</item>
     <item>Atšaukti</item>
-    <item>Keisti kortelę</item>
-    <item>Pažymėti kortelę</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>Lookup expression</item>
     <item>Paslėpti kortelę</item>
     <item>Sustabdyti kortelę</item>
-    <item>Delete card</item>
+    <item>Delete note</item>
     <item>Play media</item>
     <item>Abort learning</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Sustabdyti kortelę</item>

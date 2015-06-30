@@ -60,7 +60,6 @@
   <string name="about_title">Sobre o AnkiDroid</string>
   <string name="about_version">Versão: </string>
   <string name="whiteboard_stroke_width">Espessura do traço</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">Traços pretos</string>
   <string name="whiteboard_black_summ">Usa menos memória, excepto em modo noturno</string>
   <string name="write_answers_disable">Desativar escrita de resposta</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">Solução alternativa para toque longo</string>
   <string name="text_selection_click_summ">Ative isso se você não é capaz de selecionar texto com toque longo</string>
   <string name="dictionary">Dicionário de procura</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Reinicializar línguas</string>
   <string name="reset_languages_summ">Reinicializa as atribuições de idioma (de conversão de texto em fala e dicionários) para todos os baralhos. Reinicializa as atribuições específicas de baralho no selecionador de baralhos.</string>
   <string name="reset_languages_question">Reinicializar todas as atribuições de idioma?</string>
   <string name="reset_confirmation">Reinicializar todos os estados</string>
   <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
   <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Tamanho do botão de resposta</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Dimensionamento do texto no navegador de fichas</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Localização da coleção</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Modo de ecrã completo</string>
   <string name="fullscreen_review_summ">Ocultar a barra de estado do sistema</string>
   <string name="gestures">Ativar gestos</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">Scroll duplo</string>
   <string name="double_scrolling_gap_summ">Duplicar a velocidade de scroll com o eReader</string>
   <string name="swipe_sensitivity">Sensibilidade dos gestos</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Sintetizador de voz</string>
   <string name="tts_summ">Lê pergunta e resposta se nenhum arquivo de som estiver incluído</string>
   <string name="sync_fetch_missing_media">Busca multimédia durante a sincronização</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">Esta definição ignora o algoritmo RTL do Android para mostrar corretamente o texto hebraico com as vogais.\n\nPara funcionar corretamente precisa de instalar o tipo de letra Tohu.ttf e copiá-lo manualmente para:\n%s/fonts/\n\nNão terá de modificar as suas fichas.</string>
   <string name="fix_hebrew_download_font">Fazer download do tipo de letra</string>
   <string name="default_font">Tipo de letra padrão</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">Aplicabilidade do tipo de letra padrão</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">Idioma</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">Idioma do Sistema</string>
   <string name="notification_pref">Notificações</string>
   <string name="notification_pref_title">Notificar quando</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">Alinhar ao centro</string>
   <string name="vertical_centering_summ">Centrar conteúdo das fichas verticalmente</string>
   <string name="pref_backup_max">Número máximo de cópias de segurança</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">Mostrar botão de tempo</string>
   <string name="show_estimates_summ">Mostrar o próximo agendamento nos botões de resposta</string>
   <string name="show_progress">Mostrar restantes</string>
@@ -218,7 +206,6 @@
   <string name="deck_conf_set_subdecks_title">Definir para todos os sub-baralhos</string>
   <string name="deck_conf_set_subdecks_message">Definir o atual grupo de opções para todos os sub-baralhos deste baralho?</string>
   <string name="pref_browser_editor_font">Tipo de letra do navegador e editor</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filtro</string>
   <string name="deck_conf_cram_options">Opções</string>
   <string name="deck_conf_cram_search">Pesquisa</string>

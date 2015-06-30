@@ -50,14 +50,16 @@
     <item>Empfohlene Antwort (grün)</item>
     <item>Antwort besser als empfohlen</item>
     <item>Rückgängig</item>
-    <item>Karte bearbeiten</item>
-    <item>Karte markieren</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>Nachschlagen</item>
-    <item>Vorläufig aussetzen</item>
+    <item>Karte zurückstellen</item>
     <item>Dauerhaft aussetzen</item>
-    <item>Karte löschen</item>
+    <item>Delete note</item>
     <item>Medien abspielen</item>
     <item>Lernen beenden</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Karte dauerhaft aussetzen</item>
@@ -76,7 +78,7 @@
     <item>Hinzufügungsreihenfolge</item>
     <item>Fälligkeitsreihenfolge</item>
     <item>Zuletzt hinzugefügte zuerst</item>
-    <item>Relative overdueness</item>
+    <item>Relative Überfälligkeit</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Erhöhe das heutige Tageslimit an neuen Karten</item>

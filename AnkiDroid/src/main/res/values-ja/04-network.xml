@@ -102,7 +102,7 @@
   <string name="sync_writing_db">データに変更内容を書き込んでいます</string>
   <string name="sync_download_chunk">変更内容をダウンロードしています</string>
   <string name="sync_upload_chunk">変更内容をアップロードしています</string>
-  <string name="sync_up_down_size">アップロード: %1$d kb、ダウンロード: %2$d kb</string>
+  <string name="sync_up_down_size">アップロード: %1$d kb、\nダウンロード: %2$d kb</string>
   <string name="sync_generic_error">エラーが発生しました。後でもう一度実行してください。</string>
   <string name="sync_check_upload_file">アップロード前にファイルを確認しています.</string>
   <string name="sync_check_download_file">ダウンロードしたファイルを確認しています</string>
@@ -118,7 +118,7 @@
   <string name="register_error">エラーが発生しました。後でもう一度実行してください。</string>
   <string name="register_title">アカウントの登録</string>
   <string name="register_mismatch">ユーザー名/パスワードが一致しません。再入力してください。</string>
-  <string name="registering_message">アカウントを作成しています\nしばらくお待ちください</string>
+  <string name="registering_message">アカウントを作成しています\nしばらくお待ちください...</string>
   <string name="sync_sanity_local">ローカル</string>
   <string name="sync_sanity_remote">リモート</string>
   <string name="force_full_sync_title">完全同期を強制する</string>

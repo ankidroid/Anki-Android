@@ -60,7 +60,6 @@
   <string name="about_title">O programie AnkiDroid</string>
   <string name="about_version">Wersja: </string>
   <string name="whiteboard_stroke_width">Szerokość kreski</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">Czarne kreski</string>
   <string name="whiteboard_black_summ">Oszczędzaj pamięć z wyjątkiem trybu nocnego</string>
   <string name="write_answers_disable">Zablokuj wpisywanie pełnej odpowiedzi</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">Obejście problemu długiego przyciśnięcia</string>
   <string name="text_selection_click_summ">Wybierz, jeśli masz problemy z zaznaczaniem tekstu poprzez przytrzymanie.</string>
   <string name="dictionary">Słownik</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Zresetuj język</string>
   <string name="reset_languages_summ">Zresetuj przypisanie języków (dla tekstu do mowy) dla wszystkich talii. Zresetuj ustawienia dla konkretnej talii na ekranie wyboru talii</string>
   <string name="reset_languages_question">Reset wszystkich ustawień języków?</string>
   <string name="reset_confirmation">Zresetuj wszystkie ustawienia</string>
   <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
   <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">Rozmiar przycisku odpowiedzi</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">Skalowanie fontu przeglądania kart</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">Ścieżka kolekcji</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Tryb pełnoekranowy</string>
   <string name="fullscreen_review_summ">Ukryj systemowy pasek statusu</string>
   <string name="gestures">Włącz obsługę gestów</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">Podwójne przewijanie</string>
   <string name="double_scrolling_gap_summ">Podwójny skok suwaka na eReaderze</string>
   <string name="swipe_sensitivity">Czułość przy przewijaniu</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Przetwarzanie tekstu na mowę</string>
   <string name="tts_summ">Odczytuje pytanie i odpowiedź jeżeli nie dołączono pliku dźwiękowego</string>
   <string name="sync_fetch_missing_media">Pobierz media przy synchronizacji</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">To ustawienie omija algorytm RTL Androida aby poprawnie wyświetlać hebrajskie samogłoski.\n\nMusisz jednak najpierw pobrać plik Tohu.ttf i skopiować go ręcznie do:\n%s/fonts/\n\nNie musisz modyfikować swoich kart.</string>
   <string name="fix_hebrew_download_font">Pobierz czcionkę</string>
   <string name="default_font">Domyślna czcionka</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">Zastosowanie standardowego fontu</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">Język</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">Język systemu</string>
   <string name="notification_pref">Powiadomienia</string>
   <string name="notification_pref_title">Powiadamiaj gdy</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">Wycentruj</string>
   <string name="vertical_centering_summ">Wycentruj w pionie zawartość kart</string>
   <string name="pref_backup_max">Maksymalna liczba kopii zapasowych</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">Pokaż czas przy przyciskach</string>
   <string name="show_estimates_summ">Pokazuj czas kolejnej powtórki nad przyciskami odpowiedzi</string>
   <string name="show_progress">Pokaż pozostałe</string>
@@ -220,7 +208,6 @@
   <string name="deck_conf_set_subdecks_title">Ustaw dla wszystkich sub-talii</string>
   <string name="deck_conf_set_subdecks_message">Zastosować bieżące ustawienia grupy dla wszystkich sub-talii tej talii?</string>
   <string name="pref_browser_editor_font">Czcionka przeglądarki i edytora</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filtrowanie</string>
   <string name="deck_conf_cram_options">Opcje</string>
   <string name="deck_conf_cram_search">Szukaj</string>

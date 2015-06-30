@@ -116,7 +116,7 @@
   <string name="check_media_db_updated">Medya veritabanı yeniden inşa edildi.</string>
   <string name="check_media_delete_unused">Kullanılmayanları sil</string>
   <string name="check_media_deleted">Silinen dosyalar: %d</string>
-  <string name="tags_dialog_option_all_cards">All cards</string>
-  <string name="tags_dialog_option_new_cards">New</string>
-  <string name="tags_dialog_option_due_cards">Due</string>
+  <string name="tags_dialog_option_all_cards">Tüm kartlar</string>
+  <string name="tags_dialog_option_new_cards">Yeni</string>
+  <string name="tags_dialog_option_due_cards">Çıkacak</string>
 </resources>

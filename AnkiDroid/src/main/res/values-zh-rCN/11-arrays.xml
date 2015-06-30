@@ -50,14 +50,16 @@
     <item>建议的答案（绿色）</item>
     <item>好于建议的答案</item>
     <item>撤销</item>
-    <item>编辑卡牌</item>
-    <item>标记卡牌</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>查找表达式</item>
     <item>留到下回合</item>
     <item>不要复习</item>
-    <item>删除卡牌</item>
+    <item>Delete note</item>
     <item>播放媒体</item>
     <item>终止学习</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>暂停卡牌</item>

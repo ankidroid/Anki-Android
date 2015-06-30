@@ -96,8 +96,8 @@
   <string name="delete_note_message">Πραγματικά να διαγραφεί αυτή η σημείωση και όλες οι κάρτες της;\n%s</string>
   <string name="menu_select">Επιλογή κειμένου</string>
   <string name="menu_search">Αναζήτηση στο %1$s</string>
-  <string name="menu_mark_card">Σημάδεμα κάρτας</string>
-  <string name="menu_unmark_card">Ξεμαρκάρισμα Κάρτας</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Create deck</string>
   <string name="create">Δημιουργία</string>
   <string name="new_dynamic_deck">Create filtered deck</string>

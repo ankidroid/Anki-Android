@@ -93,8 +93,8 @@
   <string name="delete_note_message">確定要刪掉這筆記跟卡片嗎?\n%s</string>
   <string name="menu_select">選擇文字</string>
   <string name="menu_search">在%1$s中查詢</string>
-  <string name="menu_mark_card">標記卡片</string>
-  <string name="menu_unmark_card">取消卡片標記</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Create deck</string>
   <string name="create">建立</string>
   <string name="new_dynamic_deck">Create filtered deck</string>

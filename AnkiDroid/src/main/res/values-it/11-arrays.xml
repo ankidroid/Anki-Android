@@ -50,14 +50,16 @@
     <item>Risposta raccomandata (verde)</item>
     <item>Risposta migliore di quanto raccomandato</item>
     <item>Annulla</item>
-    <item>Modifica carta</item>
-    <item>Segna carta</item>
+    <item>Edit note</item>
+    <item>Mark note</item>
     <item>Controlla espressione</item>
     <item>Seppellisci carta</item>
     <item>Sospendi carta</item>
-    <item>Cancella carta</item>
+    <item>Delete note</item>
     <item>Riproduci Media</item>
     <item>Interrompi l\'apprendimento</item>
+    <item>Bury note</item>
+    <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Sospendi carta</item>
@@ -76,7 +78,7 @@
     <item>Ordine di aggiunta</item>
     <item>Ordine di scadenza</item>
     <item>Dapprima aggiunte più recentemente</item>
-    <item>Relative overdueness</item>
+    <item>Ritardo relativo</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Aumenta il limite odierno di carte nuove</item>

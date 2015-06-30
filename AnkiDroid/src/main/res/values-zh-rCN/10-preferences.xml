@@ -60,7 +60,6 @@
   <string name="about_title">关于AnkiDroid</string>
   <string name="about_version">版本：</string>
   <string name="whiteboard_stroke_width">笔粗细</string>
-  <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">黑色笔画</string>
   <string name="whiteboard_black_summ">在非夜间模式中，使用少一些内存</string>
   <string name="write_answers_disable">禁用键入答案</string>
@@ -68,21 +67,15 @@
   <string name="text_selection_click">长按解决方案</string>
   <string name="text_selection_click_summ">如果您不能够通过长点击选择文本，启用此选项。</string>
   <string name="dictionary">查找字典</string>
-  <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">重设语言</string>
   <string name="reset_languages_summ">重置所有牌组的语言指定(用于文字转语音和词典)。请在牌组选择界面重置特定牌组的语言</string>
   <string name="reset_languages_question">要重置所有牌组的语言指定吗？</string>
   <string name="reset_confirmation">重置所有状态</string>
   <string name="card_zoom">Card zoom</string>
-  <string name="card_zoom_summ">XXX%</string>
   <string name="image_zoom">Image zoom</string>
-  <string name="image_zoom_summ">XXX%</string>
   <string name="button_size">显示答案按钮大小</string>
-  <string name="button_size_summ">XXX%</string>
   <string name="card_browser_font_size">卡牌浏览器字体缩放</string>
-  <string name="card_browser_font_size_summ">XXX%</string>
   <string name="col_path">集合的路径</string>
-  <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">使用全屏显示</string>
   <string name="fullscreen_review_summ">隐藏系统状态栏</string>
   <string name="gestures">启用手势</string>
@@ -101,7 +94,6 @@
   <string name="double_scrolling_gap">双滚动</string>
   <string name="double_scrolling_gap_summ">电子阅读器中使用双滚动</string>
   <string name="swipe_sensitivity">滑动敏感度</string>
-  <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">文本转语音</string>
   <string name="tts_summ">若没有附带声音文件则读出问题和答案</string>
   <string name="sync_fetch_missing_media">同步时获取媒体文件</string>
@@ -114,11 +106,8 @@
   <string name="fix_hebrew_instructions">此设置将绕过Android的 RTL 算法 ，以正确显示希伯来语的元音。\n\n使用此设置，需要下载Tohu.ttf字体，并手动拷贝到:\n%s/fonts/\n\n目录中。不需要修改卡牌。</string>
   <string name="fix_hebrew_download_font">下载字体</string>
   <string name="default_font">默认字体</string>
-  <string name="default_font_summ">XXX</string>
   <string name="override_font">默认字体适用性</string>
-  <string name="override_font_summ">XXX</string>
   <string name="language">语言</string>
-  <string name="language_summ">XXX</string>
   <string name="language_system">系统语言</string>
   <string name="notification_pref">通知</string>
   <string name="notification_pref_title">当..时通知</string>
@@ -139,7 +128,6 @@
   <string name="vertical_centering">居中对齐</string>
   <string name="vertical_centering_summ">垂直居中卡牌内容</string>
   <string name="pref_backup_max">最大备份数</string>
-  <string name="pref_backup_max_summ">XXX</string>
   <string name="show_estimates">显示按钮的时间</string>
   <string name="show_estimates_summ">在答案按钮上方显示下次复习的时间</string>
   <string name="show_progress">显示剩余</string>
@@ -216,7 +204,6 @@
   <string name="deck_conf_set_subdecks_title">设置为所有子牌组的选项</string>
   <string name="deck_conf_set_subdecks_message">将当前牌组的所有子牌组，设置为此选项组?</string>
   <string name="pref_browser_editor_font">浏览器和编辑器字体</string>
-  <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">筛选器</string>
   <string name="deck_conf_cram_options">选项</string>
   <string name="deck_conf_cram_search">搜索</string>

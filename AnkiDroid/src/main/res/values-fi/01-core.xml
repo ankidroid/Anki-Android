@@ -96,8 +96,8 @@
   <string name="delete_note_message">Haluatko varmasti poistaa tämän merkinnän ja kaikki sen kortit?\n%s</string>
   <string name="menu_select">Valitse teksti</string>
   <string name="menu_search">Haku %1$s</string>
-  <string name="menu_mark_card">Merkitse kortti</string>
-  <string name="menu_unmark_card">Poista kortin merkintä</string>
+  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Uusi pakka</string>
   <string name="create">Luo</string>
   <string name="new_dynamic_deck">Uusi suodatettu pakka</string>
