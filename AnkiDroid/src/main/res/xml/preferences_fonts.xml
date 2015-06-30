@@ -30,14 +30,14 @@
             android:defaultValue=""
             android:key="defaultFont"
             android:shouldDisableView="true"
-            android:summary="@string/default_font_summ"
+            android:summary="@string/preference_summary_literal"
             android:title="@string/default_font" />
         <ListPreference
             android:defaultValue="0"
             android:key="overrideFontBehavior"
             android:entries="@array/override_font_labels"
             android:entryValues="@array/override_font_values"
-            android:summary="@string/override_font_summ"
+            android:summary="@string/preference_summary_literal"
             android:title="@string/override_font" />
         <ListPreference
             android:defaultValue=""
@@ -48,7 +48,7 @@
             android:defaultValue="100"
             android:key="relativeCardBrowserFontSize"
             android:max="200"
-            android:summary="@string/card_browser_font_size_summ"
+            android:summary="@string/preference_summary_percentage"
             android:text=" %"
             android:title="@string/card_browser_font_size"
             app:interval="10"
