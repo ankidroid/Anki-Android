@@ -30,7 +30,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -185,7 +184,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected boolean mDisableClipboard = false;
     protected boolean mInvertedColors = false;
     protected boolean mNightMode = false;
-    private int mCurrentBackgroundColor;
     private boolean mPrefSafeDisplay;
     protected boolean mPrefUseTimer;
     private boolean mPrefCenterVertically;
@@ -246,11 +244,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     protected Card mCurrentCard;
     private int mCurrentEase;
-
-    private int mNextTimeTextColor;
-    private int mNextTimeTextRecomColor;
-
-    private int mForegroundColor;
 
     private int mButtonHeight = 0;
 
@@ -354,25 +347,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
     };
 
-    private View.OnClickListener mCardStatisticsListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Timber.i("AbstractFlashcardViewer:: Show card statistics");
-            stopTimer();
-            // Themes.htmlOkDialog(AbstractReviewer.this, getResources().getString(R.string.card_browser_card_details),
-            // mCurrentCard.getCardDetails(AbstractReviewer.this, false), new DialogInterface.OnClickListener() {
-            // @Override
-            // public void onClick(DialogInterface dialog, int which) {
-            // restartTimer();
-            // }
-            // }, new OnCancelListener() {
-            // @Override
-            // public void onCancel(DialogInterface arg0) {
-            // restartTimer();
-            // }
-            // }).show();
-        }
-    };
 
     // Handler for the "show answer" button
     private View.OnClickListener mFlipCardListener = new View.OnClickListener() {
@@ -847,7 +821,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void run() {
             mChosenAnswer.setText("");
-            setDueMessage();
         }
     };
 
@@ -910,12 +883,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
 
         registerExternalStorageListener();
-
-        if (mNightMode) {
-            mCurrentBackgroundColor = Color.BLACK;
-        } else {
-            mCurrentBackgroundColor = Color.WHITE;
-        }
 
         mUseQuickUpdate = shouldUseQuickUpdate();
 
@@ -1357,15 +1324,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     // Set the content view to the one provided and initialize accessors.
     protected void initLayout() {
         mMainLayout = findViewById(R.id.main_layout);
-        (mMainLayout.findViewById(R.id.flashcard_frame)).setBackgroundResource(AnkiDroidApp
-                .getSharedPrefs(mMainLayout.getContext()).getBoolean("invertedColors", false) ? R.color.black
-                : R.color.white);
-
         mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
 
         mTopBarLayout = (RelativeLayout) findViewById(R.id.top_bar);
-        mTopBarLayout.setOnClickListener(mCardStatisticsListener);
-
         mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
         mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
         mTouchLayer.setOnTouchListener(mGestureListener);
@@ -1445,13 +1406,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         mAnswerField = (EditText) findViewById(R.id.answer_field);
 
-        mNextTimeTextColor = getResources().getColor(R.color.next_time_usual_color);
-        mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color);
-        mForegroundColor = getResources().getColor(R.color.next_time_usual_color);
-        if (mInvertedColors) {
-            setNightModeColors();
-        }
-
         mLookUpIcon = findViewById(R.id.lookup_button);
         mLookUpIcon.setVisibility(View.GONE);
         mLookUpIcon.setOnClickListener(new OnClickListener() {
@@ -1525,31 +1479,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         });
 
         return webView;
-    }
-
-
-    private void setNightModeColors() {
-        Resources res = getResources();
-
-        mMainLayout.setBackgroundColor(res.getColor(R.color.black));
-        refreshActionBar();
-        mForegroundColor = Color.WHITE;
-        mNextTimeTextColor = mForegroundColor;
-        mNextTimeTextRecomColor = res.getColor(R.color.next_time_recommended_color_inv);
-
-        mFlipCard.setTextColor(mForegroundColor);
-        mEase4.setTextColor(mNextTimeTextColor);
-        mCardTimer.setTextColor(mForegroundColor);
-        mTopBarLayout .setBackgroundColor(res.getColor(R.color.theme_primary_light_inv));
-        mTextBarNew.setTextColor(res.getColor(R.color.new_count_night));
-        mTextBarLearn
-                .setTextColor(res.getColor(R.color.learn_count_night));
-        mTextBarReview.setTextColor(res.getColor(R.color.review_count_night));
-        mAnswerField.setTextColor(mForegroundColor);
-
-        if (mCard != null) {
-            mCard.setBackgroundColor(mCurrentBackgroundColor);
-        }
     }
 
 
@@ -1746,22 +1675,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mNextCard = createWebView();
                 mNextCard.setVisibility(View.GONE);
                 mCardFrame.addView(mNextCard, 0);
-                mCard.setBackgroundColor(mCurrentBackgroundColor);
             }
         }
         if (mCard.getVisibility() != View.VISIBLE) {
             mCard.setVisibility(View.VISIBLE);
         }
-    }
-
-
-    private void setDueMessage() {
-        // Decks deck = DeckManager.getMainDeck();
-        // if (mCurrentCard != null && deck != null && deck.getScheduler().equals("reviewEarly") &&
-        // mCurrentCard.getType() != Card.TYPE_FAILED) {
-        // mChosenAnswer.setTextColor(mForegroundColor);
-        // mChosenAnswer.setText(Utils.fmtTimeSpan(mCurrentCard.getCombinedDue() - Utils.now(), Utils.TIME_FORMAT_IN));
-        // }
     }
 
 
@@ -2219,7 +2137,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Timber.d("fillFlashcard()");
         Timber.d("base url = %s", mBaseUrl);
         if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
-            mNextCard.setBackgroundColor(mCurrentBackgroundColor);
             mNextCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
             mNextCard.setVisibility(View.VISIBLE);
             mCardFrame.removeView(mCard);
@@ -2234,7 +2151,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
         } else if (mCard != null) {
             mCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
-            mCard.setBackgroundColor(mCurrentBackgroundColor);
         }
         if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
             switchTopBarVisibility(View.VISIBLE);

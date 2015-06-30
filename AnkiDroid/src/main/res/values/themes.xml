@@ -7,6 +7,12 @@
     <style name="Theme_Dark" parent="Theme_White">
         <item name="colorPrimary">@color/white_background_night</item>
         <item name="colorPrimaryDark">@color/black</item>
+        <!-- Reviewer colors -->
+        <item name="topBarColor">@color/theme_primary_light_inv</item>
+        <item name="newCountColor">@color/new_count_night</item>
+        <item name="learnCountColor">@color/learn_count_night</item>
+        <item name="reviewCountColor">@color/review_count_night</item>
+        <item name="timerColor">@color/white</item>
     </style>
 
     <!-- White theme -->
@@ -25,9 +31,15 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="actionModeBackground">@color/theme_accent</item>
 
-
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
+
+        <!-- Reviewer colors -->
+        <item name="topBarColor">@color/theme_primary_light</item>
+        <item name="newCountColor">@color/new_count</item>
+        <item name="learnCountColor">@color/learn_count</item>
+        <item name="reviewCountColor">@color/review_count</item>
+        <item name="timerColor">@color/black</item>
     </style>
 
     <style name="Theme_White_Statistics" parent="@style/App_Theme">

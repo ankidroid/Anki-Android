@@ -30,4 +30,10 @@
         <attr name="interval" format="integer" />
     </declare-styleable>
 
+    <!-- Reviewer colors -->
+    <attr name="topBarColor" format="color"/>
+    <attr name="newCountColor" format="color"/>
+    <attr name="learnCountColor" format="color"/>
+    <attr name="reviewCountColor" format="color"/>
+    <attr name="timerColor" format="color"/>
 </resources>
