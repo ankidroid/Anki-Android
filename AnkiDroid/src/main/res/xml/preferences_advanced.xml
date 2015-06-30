@@ -35,7 +35,7 @@
                 android:defaultValue="8"
                 android:key="backupMax"
                 android:max="10"
-                android:summary="@string/pref_backup_max_summ"
+                android:summary="@string/preference_summary_literal"
                 android:text=""
                 android:title="@string/pref_backup_max"
                 app:interval="1"
@@ -83,7 +83,7 @@
                 android:entries="@array/dictionary_labels"
                 android:entryValues="@array/dictionary_values"
                 android:key="dictionary"
-                android:summary="@string/dictionary_summ"
+                android:summary="@string/preference_summary_literal"
                 android:title="@string/dictionary" />
             <com.ichi2.preferences.CustomDialogPreference
                 android:dialogIcon="@android:drawable/ic_dialog_alert"

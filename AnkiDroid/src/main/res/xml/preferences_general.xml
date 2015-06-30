@@ -28,7 +28,7 @@
     <EditTextPreference
         android:defaultValue="/sdcard/AnkiDroid"
         android:key="deckPath"
-        android:summary="@string/col_path_summ"
+        android:summary="@string/preference_summary_literal"
         android:title="@string/col_path" />
     <Preference
         android:dialogTitle="@string/sync_account"
@@ -54,7 +54,7 @@
     <ListPreference
         android:defaultValue=""
         android:key="language"
-        android:summary="@string/language_summ"
+        android:summary="@string/preference_summary_literal"
         android:title="@string/language" />
     <ListPreference
         android:defaultValue="2"
