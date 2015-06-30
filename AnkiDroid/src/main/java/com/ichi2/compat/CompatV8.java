@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.RemoteViews;
 
 import com.ichi2.anki.ReadText;
@@ -91,5 +92,12 @@ public class CompatV8 implements Compat {
     @Override
     public void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls) {
 
+    }
+
+    public void setAlpha(View view, float alpha) {
+        AlphaAnimation alphaAnimation = new AlphaAnimation(alpha, alpha);
+        alphaAnimation.setDuration(0); // Make animation instant
+        alphaAnimation.setFillAfter(true); // Tell it to persist after the animation ends
+        view.startAnimation(alphaAnimation);
     }
 }
