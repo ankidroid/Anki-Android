@@ -25,6 +25,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,6 +35,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.ui.SlidingTabLayout;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -139,8 +141,12 @@ public class CardTemplateEditor extends AnkiActivity {
         //mCardId = getIntent().getLongExtra("cardId", -1L);
 
         // Disable the home icon
-        //getSupportActionBar().setDisplayShowHomeEnabled(false);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled (false);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
 
         startLoadingCollection();
     }
@@ -352,6 +358,9 @@ public class CardTemplateEditor extends AnkiActivity {
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
+                case R.id.home:
+                    ((AnkiActivity) getActivity()).finishWithAnimation(ActivityTransitionAnimation.DIALOG_EXIT);
+                    return true;
                 case R.id.action_add:
                     Timber.i("CardTemplateEditor:: Add template button pressed");
                     addNewTemplateWithCheck(getModel());
