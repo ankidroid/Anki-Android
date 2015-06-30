@@ -82,7 +82,7 @@ public class CustomFontsReviewerExt implements ReviewerExt {
      */
     private String getThemeFontStyle() {
         if (mThemeFontStyle == null) {
-            String themeFontName = Themes.getReviewerFontName();
+            String themeFontName = "OpenSans";
             if (TextUtils.isEmpty(themeFontName)) {
                 mThemeFontStyle = "";
             } else {

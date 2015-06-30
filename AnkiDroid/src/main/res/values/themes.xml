@@ -3,6 +3,12 @@
 
     <style name="Theme_Base_Custom_Light" parent="@style/Theme.AppCompat.Light.DarkActionBar" />
     <style name="App_Theme" parent="Theme_White"/>
+    <!-- Dark theme -->
+    <style name="Theme_Dark" parent="Theme_White">
+        <item name="colorPrimary">@color/white_background_night</item>
+        <item name="colorPrimaryDark">@color/black</item>
+    </style>
+
     <!-- White theme -->
     <style name="Theme_White" parent="@style/Theme_Base_Custom_Light">
         <item name="actionBarTextColor">@color/white</item>
