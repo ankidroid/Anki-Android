@@ -2,6 +2,7 @@
  * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  * Copyright (c) 2014 Bruno Romero de Azevedo <brunodea@inf.ufsm.br>                    *
  * Copyright (c) 2014 Roland Sieker <ospalh@gmail.com>                                  *
+ * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -30,7 +31,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,7 +38,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
-import android.support.v7.app.ActionBar;
 import android.text.ClipboardManager;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -874,10 +873,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mExtensions = new ReviewerExtRegistry(getBaseContext());
         super.onCreate(savedInstanceState);
         Timber.d("onCreate()");
-
+        // Set theme
+        restorePreferences();
+        if (mNightMode) {
+            setTheme(R.style.Theme_Dark);
+        }
         // create inherited navigation drawer layout here so that it can be used by parent class
-        View mainView = getLayoutInflater().inflate(R.layout.flashcard, null);
-        setContentView(mainView);
+        setContentView(R.layout.flashcard);
+        View mainView = findViewById(android.R.id.content);
         initNavigationDrawer(mainView);
         // Load the collection
         startLoadingCollection();
@@ -902,8 +905,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mSched = col.getSched();
         mBaseUrl = Utils.getBaseUrl(col.getMedia().dir());
 
-        restorePreferences();
-
         if (mPrefFullscreenReview) {
             UIUtils.setFullScreen(this);
         }
@@ -911,7 +912,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         registerExternalStorageListener();
 
         if (mNightMode) {
-            mCurrentBackgroundColor = Themes.getNightModeCardBackground(this);
+            mCurrentBackgroundColor = Color.BLACK;
         } else {
             mCurrentBackgroundColor = Color.WHITE;
         }
@@ -1448,7 +1449,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color);
         mForegroundColor = getResources().getColor(R.color.next_time_usual_color);
         if (mInvertedColors) {
-            invertColors(true);
+            setNightModeColors();
         }
 
         mLookUpIcon = findViewById(R.id.lookup_button);
@@ -1527,35 +1528,27 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    private void invertColors(boolean invert) {
+    private void setNightModeColors() {
         Resources res = getResources();
 
-        int[] colors = Themes.setNightMode(this, mMainLayout, invert);
+        mMainLayout.setBackgroundColor(res.getColor(R.color.black));
         refreshActionBar();
-        mForegroundColor = colors[0];
+        mForegroundColor = Color.WHITE;
         mNextTimeTextColor = mForegroundColor;
-        mNextTimeTextRecomColor = colors[1];
+        mNextTimeTextRecomColor = res.getColor(R.color.next_time_recommended_color_inv);
 
         mFlipCard.setTextColor(mForegroundColor);
         mEase4.setTextColor(mNextTimeTextColor);
         mCardTimer.setTextColor(mForegroundColor);
-        mTopBarLayout .setBackgroundColor(invert ?
-                res.getColor(R.color.theme_primary_light_inv) : res.getColor(R.color.theme_primary_light_inv));
-        mTextBarNew.setTextColor(invert ? res.getColor(R.color.new_count_night) : res.getColor(R.color.new_count));
+        mTopBarLayout .setBackgroundColor(res.getColor(R.color.theme_primary_light_inv));
+        mTextBarNew.setTextColor(res.getColor(R.color.new_count_night));
         mTextBarLearn
-                .setTextColor(invert ? res.getColor(R.color.learn_count_night) : res.getColor(R.color.learn_count));
-        mTextBarReview.setTextColor(invert ? res.getColor(R.color.review_count_night) : res
-                .getColor(R.color.review_count));
+                .setTextColor(res.getColor(R.color.learn_count_night));
+        mTextBarReview.setTextColor(res.getColor(R.color.review_count_night));
         mAnswerField.setTextColor(mForegroundColor);
 
         if (mCard != null) {
             mCard.setBackgroundColor(mCurrentBackgroundColor);
-        }
-
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setBackgroundDrawable(new ColorDrawable(res.getColor(
-                    invert ? R.color.white_background_night : R.color.theme_primary)));
         }
     }
 
