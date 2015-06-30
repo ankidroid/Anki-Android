@@ -1,6 +1,7 @@
 package com.ichi2.compat;
 
 import android.annotation.TargetApi;
+import android.view.View;
 import android.webkit.CookieManager;
 
 import timber.log.Timber;
@@ -18,6 +19,11 @@ public class CompatV12 extends CompatV9 implements Compat {
         } catch (Throwable e) {
             Timber.e(e, "Runtime exception enabling cookies");
         }
+    }
+
+    @Override
+    public void setAlpha(View view, float alpha) {
+        view.setAlpha(alpha);
     }
 
 }

@@ -1997,15 +1997,12 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     }
 
 
-    @SuppressLint("NewApi")
     @Override
     public void onShowcaseViewHide(ShowcaseView showcaseView) {
         // Undim the deck list when ShowcaseView is hidden
-        if (CompatHelper.isHoneycomb()) {
-            final float alpha = 1f;
-            mTodayTextView.setAlpha(alpha);
-            mRecyclerView.setAlpha(alpha);
-        }
+        final float alpha = 1f;
+        CompatHelper.getCompat().setAlpha(mTodayTextView, alpha);
+        CompatHelper.getCompat().setAlpha(mRecyclerView, alpha);
     }
 
 
@@ -2014,15 +2011,12 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     }
 
 
-    @SuppressLint("NewApi")
     @Override
     public void onShowcaseViewShow(ShowcaseView showcaseView) {
         // Dim the deck list when ShowcaseView is shown
-        if (CompatHelper.isHoneycomb()) {
-            final float alpha = 0.1f;
-            mTodayTextView.setAlpha(alpha);
-            mRecyclerView.setAlpha(alpha);
-        }
+        final float alpha = 0.1f;
+        CompatHelper.getCompat().setAlpha(mTodayTextView, alpha);
+        CompatHelper.getCompat().setAlpha(mRecyclerView, alpha);
     }
 
 

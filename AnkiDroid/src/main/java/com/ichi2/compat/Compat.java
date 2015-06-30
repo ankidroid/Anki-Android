@@ -52,5 +52,6 @@ public interface Compat {
     public abstract void disableDatabaseWriteAheadLogging(SQLiteDatabase db);
     public abstract void enableCookiesForFileSchemePages();
     public abstract void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls);
+    public abstract void setAlpha(View view, float alpha);
 }
 
