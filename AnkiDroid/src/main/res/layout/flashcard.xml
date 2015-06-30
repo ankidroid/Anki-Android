@@ -23,7 +23,6 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
     android:fitsSystemWindows="true">
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/root_layout"
@@ -47,7 +46,7 @@
                 android:paddingTop="2dp"
                 android:paddingBottom="3dp"
                 android:gravity="center_vertical"
-                android:background="@color/theme_primary_light"
+                android:background="?attr/topBarColor"
                 android:layout_below="@+id/toolbar">
 
                 <TextView
@@ -55,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/new_count"
+                    android:textColor="?attr/newCountColor"
                     android:textSize="14sp" />
 
                 <TextView
@@ -65,7 +64,7 @@
                     android:layout_toRightOf="@+id/new_number"
                     android:paddingLeft="8dp"
                     android:text=""
-                    android:textColor="@color/learn_count"
+                    android:textColor="?attr/learnCountColor"
                     android:textSize="14sp" />
 
                 <TextView
@@ -75,7 +74,7 @@
                     android:layout_toRightOf="@+id/learn_number"
                     android:paddingLeft="8dp"
                     android:text=""
-                    android:textColor="@color/review_count"
+                    android:textColor="?attr/reviewCountColor"
                     android:textSize="14sp" />
 
                 <TextView
@@ -93,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:gravity="center"
-                    android:textColor="#000000"
+                    android:textColor="?attr/timerColor"
                     android:textSize="14sp"
                     android:visibility="invisible" />
             </RelativeLayout>
@@ -178,7 +177,7 @@
                 <LinearLayout
                     android:id="@+id/answer_options_layout"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" >
+                    android:layout_height="fill_parent">
 
                     <LinearLayout
                         android:id="@+id/flashcard_layout_flip"
