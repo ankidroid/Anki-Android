@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.libanki.Collection;
 
 import timber.log.Timber;
@@ -62,7 +63,7 @@ public class Previewer extends AbstractFlashcardViewer {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                closeReviewer(RESULT_OK, true);
+                finishWithAnimation(ActivityTransitionAnimation.DIALOG_EXIT);
                 break;
             default:
                 return super.onOptionsItemSelected(item);
