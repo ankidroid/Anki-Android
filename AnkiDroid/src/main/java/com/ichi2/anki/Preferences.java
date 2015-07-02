@@ -350,11 +350,14 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 // Disable Col preferences if Collection closed
                 pref.setEnabled(false);
             }
+        } else if ("minimumCardsDueForNotification".equals(pref.getKey())) {
+            updateNotificationPreference((ListPreference) pref);
         }
         // Set the value from the summary cache
         CharSequence s = pref.getSummary();
         mOriginalSumarries.put(pref.getKey(), (s != null) ? s.toString() : "");
         // Update summary
+
         updateSummary(pref);
     }
 
@@ -427,16 +430,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 case "minimumCardsDueForNotification":
                     ListPreference listpref = (ListPreference) screen.findPreference("minimumCardsDueForNotification");
                     if (listpref != null) {
-                        CharSequence[] entries = listpref.getEntries();
-                        CharSequence[] values = listpref.getEntryValues();
-                        for (int i = 0; i < entries.length; i++) {
-                            int value = Integer.parseInt(values[i].toString());
-                            if (entries[i].toString().contains("%d")) {
-                                entries[i] = String.format(entries[i].toString(), value);
-                            }
-                        }
-                        listpref.setEntries(entries);
-                        listpref.setSummary(listpref.getEntry().toString());
+                        updateNotificationPreference(listpref);
                     }
                     break;
                 case "reportErrorMode":
@@ -463,6 +457,19 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         } catch (NumberFormatException | JSONException e) {
             throw new RuntimeException();
         }
+    }
+
+    public void updateNotificationPreference(ListPreference listpref) {
+        CharSequence[] entries = listpref.getEntries();
+        CharSequence[] values = listpref.getEntryValues();
+        for (int i = 0; i < entries.length; i++) {
+            int value = Integer.parseInt(values[i].toString());
+            if (entries[i].toString().contains("%d")) {
+                entries[i] = String.format(entries[i].toString(), value);
+            }
+        }
+        listpref.setEntries(entries);
+        listpref.setSummary(listpref.getEntry().toString());
     }
 
     private void updateSummary(Preference pref) {

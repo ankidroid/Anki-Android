@@ -24,6 +24,10 @@
         <item name="learnCountColor">@color/learn_count_night</item>
         <item name="zeroCountColor">@color/zero_count_night</item>
         <item name="reviewCountColor">@color/review_count_night</item>
+        <!-- Browser colors -->
+        <item name="suspendedColor">@color/material_red_900</item>
+        <item name="markedColor">@color/material_indigo_700</item>
+
         <!-- Images -->
         <item name="navDrawerImage">@drawable/nav_drawer_logo_dark_theme</item>
         <item name="attachFileImage">@drawable/ic_attachment_white_24dp</item>
@@ -58,6 +62,10 @@
         <item name="reviewCountColor">@color/review_count</item>
         <item name="android:textColor">@color/black</item>
         <item name="backgroundColor">@color/white</item>
+
+        <!-- Browser colors -->
+        <item name="suspendedColor">@color/card_browser_suspended</item>
+        <item name="markedColor">@color/card_browser_marked</item>
 
         <!-- Images -->
         <item name="navDrawerImage">@drawable/nav_drawer_logo</item>

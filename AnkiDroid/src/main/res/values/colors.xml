@@ -22,7 +22,6 @@
     <color name="next_time_usual_color_inv">#FFFFFF</color>
     <color name="next_time_recommended_color_inv">#4AA02C</color>
     <color name="foreground_color_inv">#FFFFFF</color>
-    <color name="card_browser_background">#FFFFFF</color>
     <color name="card_browser_marked">#D9B2E9</color>
     <color name="card_browser_suspended">#FFFFB2</color>
     <color name="statistics_due_young_cards">#7c7</color>
@@ -113,6 +112,7 @@
     <color name="material_red_500">#fff44336</color>
     <color name="material_red_600">#ffe53935</color>
     <color name="material_red_700">#ffd32f2f</color>
+    <color name="material_red_900">#ffb71c1c</color>
     <color name="material_red_A700">#ffd50000</color>
     <color name="material_orange_A700">#ffff6d00</color>
 

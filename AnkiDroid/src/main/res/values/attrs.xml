@@ -40,6 +40,9 @@
     <attr name="reviewCountColor" format="color"/>
     <attr name="zeroCountColor" format="color"/>
     <attr name="backgroundColor" format="color"/>
+    <!-- Browser colors -->
+    <attr name="suspendedColor" format="color"/>
+    <attr name="markedColor" format="color"/>
     <!-- Images -->
     <attr name="navDrawerImage" format="integer"/>
     <attr name="attachFileImage" format="integer"/>

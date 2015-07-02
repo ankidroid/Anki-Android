@@ -10,7 +10,7 @@
     <item
         android:id="@+id/action_hide_whiteboard"
         android:title="@string/hide_whiteboard"
-        android:icon="@drawable/ic_action_whiteboard_enable_light"
+        android:icon="@drawable/ic_gesture_white_24dp"
         android:visible="false"
         ankidroid:showAsAction="always"/>
     <item
