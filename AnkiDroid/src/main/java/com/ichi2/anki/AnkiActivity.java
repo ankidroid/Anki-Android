@@ -33,6 +33,7 @@ import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.libanki.Collection;
+import com.ichi2.themes.Themes;
 
 import timber.log.Timber;
 
@@ -48,6 +49,8 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         // The hardware buttons should control the music volume
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        // Set the theme
+        Themes.setTheme(this);
         super.onCreate(savedInstanceState);
     }
 
@@ -475,6 +478,13 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
         intent.putExtras(new Bundle());
         this.startActivityWithoutAnimation(intent);
         this.finishWithoutAnimation();
+    }
+
+    protected void rebootApp() {
+        finishWithoutAnimation();
+        Intent deckPicker = new Intent(this, DeckPicker.class);
+        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivityWithoutAnimation(deckPicker);
     }
 }
 

@@ -20,6 +20,9 @@ package com.ichi2.themes;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.R;
+
 public class Themes {
     public final static int ALPHA_ICON_ENABLED_LIGHT = 255; // 100%
     public final static int ALPHA_ICON_DISABLED_LIGHT = 76; // 31%
@@ -27,5 +30,21 @@ public class Themes {
 
     public static void showThemedToast(Context context, String text, boolean shortLength) {
         Toast.makeText(context, text, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
+    }
+
+    public static void setTheme(Context context) {
+        if (AnkiDroidApp.getSharedPrefs(context.getApplicationContext()).getBoolean("invertedColors", false)) {
+            context.setTheme(R.style.App_Theme_Dark);
+        } else {
+            context.setTheme(R.style.App_Theme_White);
+        }
+    }
+
+    public static void setThemeLegacy(Context context) {
+        if (AnkiDroidApp.getSharedPrefs(context.getApplicationContext()).getBoolean("invertedColors", false)) {
+            context.setTheme(R.style.LegacyActionBarDark);
+        } else {
+            context.setTheme(R.style.LegacyActionBarWhite);
+        }
     }
 }

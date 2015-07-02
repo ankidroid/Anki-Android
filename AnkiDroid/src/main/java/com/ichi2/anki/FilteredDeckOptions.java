@@ -37,6 +37,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.libanki.Collection;
 import com.ichi2.preferences.StepsPreference;
+import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
 
 import org.json.JSONArray;
@@ -347,6 +348,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
     @Override
     protected void onCreate(Bundle icicle) {
+        Themes.setThemeLegacy(this);
         super.onCreate(icicle);
 
         mCol = CollectionHelper.getInstance().getCol(this);

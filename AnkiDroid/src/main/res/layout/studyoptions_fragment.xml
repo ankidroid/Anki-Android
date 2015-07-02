@@ -36,7 +36,6 @@
                     android:gravity="center"
                     android:maxLines="3"
                     android:text=""
-                    android:textColor="#000000"
                     android:textSize="28sp"
                     android:textStyle="bold" />
 	            <LinearLayout
@@ -68,8 +67,7 @@
 	                                android:layout_width="wrap_content"
 	                                android:layout_height="wrap_content"
 	                                android:paddingRight="5dip"
-	                                android:text="@string/studyoptions_due_today"
-	                                android:textColor="#000000" />
+	                                android:text="@string/studyoptions_due_today" />
 	
 	                            <LinearLayout
 	                                android:layout_width="wrap_content"
@@ -82,7 +80,7 @@
 	                                    android:layout_width="wrap_content"
 	                                    android:layout_height="wrap_content"
 	                                    android:paddingRight="5dip"
-	                                    android:textColor="@color/new_count" />
+	                                    android:textColor="?attr/newCountColor" />
 	
 	                                <TextView
 	                                    android:id="@+id/studyoptions_lrn"
@@ -90,13 +88,13 @@
 	                                    android:layout_height="wrap_content"
 	                                    android:layout_gravity="center"
 	                                    android:paddingRight="5dip"
-	                                    android:textColor="@color/learn_count" />
+	                                    android:textColor="?attr/learnCountColor" />
 	
 	                                <TextView
 	                                    android:id="@+id/studyoptions_rev"
 	                                    android:layout_width="wrap_content"
 	                                    android:layout_height="wrap_content"
-	                                    android:textColor="@color/review_count" />
+	                                    android:textColor="?attr/reviewCountColor" />
 	                            </LinearLayout>
 	                        </TableRow>
 	
@@ -106,15 +104,13 @@
 	                                android:layout_width="wrap_content"
 	                                android:layout_height="wrap_content"
 	                                android:paddingRight="5dip"
-	                                android:text="@string/studyoptions_new_total"
-	                                android:textColor="#000000" />
+	                                android:text="@string/studyoptions_new_total" />
 	
 	                            <TextView
 	                                android:id="@+id/studyoptions_total_new"
 	                                android:layout_width="wrap_content"
 	                                android:layout_height="wrap_content"
-	                                android:gravity="right"
-	                                android:textColor="#000000" />
+	                                android:gravity="right" />
 	                        </TableRow>
 	
 	                        <TableRow>
@@ -123,15 +119,13 @@
 	                                android:layout_width="wrap_content"
 	                                android:layout_height="wrap_content"
 	                                android:paddingRight="5dip"
-	                                android:text="@string/studyoptions_total_cards"
-	                                android:textColor="#000000" />
+	                                android:text="@string/studyoptions_total_cards" />
 	
 	                            <TextView
 	                                android:id="@+id/studyoptions_total"
 	                                android:layout_width="wrap_content"
 	                                android:layout_height="wrap_content"
-	                                android:gravity="right"
-	                                android:textColor="#000000" />
+	                                android:gravity="right" />
 	                        </TableRow>
 	
 	                        <TableRow>
@@ -140,15 +134,13 @@
 	                                android:layout_width="wrap_content"
 	                                android:layout_height="wrap_content"
 	                                android:paddingRight="5dip"
-	                                android:text="@string/studyoptions_eta"
-	                                android:textColor="#000000" />
+	                                android:text="@string/studyoptions_eta" />
 	
 	                            <TextView
 	                                android:id="@+id/studyoptions_eta"
 	                                android:layout_width="wrap_content"
 	                                android:layout_height="wrap_content"
-	                                android:gravity="right"
-	                                android:textColor="#000000" />
+	                                android:gravity="right" />
 	                        </TableRow>
 	                    </TableLayout>
 	                </LinearLayout>
@@ -166,8 +158,7 @@
 	                        android:layout_marginLeft="5dp"
 	                        android:layout_marginRight="5dp"
 	                        android:gravity="center"
-	                        android:text=""
-	                        android:textColor="#000000" />
+	                        android:text="" />
 	                </LinearLayout>
 	            </LinearLayout>
 	                <LinearLayout
@@ -184,8 +175,7 @@
 	                        android:layout_marginLeft="5dp"
 	                        android:layout_marginRight="5dp"
 	                        android:gravity="center"
-	                        android:text=""
-	                        android:textColor="#000000" />
+	                        android:text="" />
 	                </LinearLayout>
             </LinearLayout>            
         </ScrollView>
@@ -204,10 +194,9 @@
                 <Button
                     android:id="@+id/studyoptions_start"
                     android:layout_width="0dip"
-                    android:layout_height="fill_parent"
+					android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableLeft="@drawable/ic_start"
-                    android:lines="1"
+                    android:lines="3"
                     android:paddingLeft="16dip"
                     android:text="@string/studyoptions_start"
                     android:textSize="20sp"

@@ -2,6 +2,7 @@ package com.ichi2.anki.widgets;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.support.v7.widget.RecyclerView;
 import android.view.*;
 import android.widget.*;
@@ -49,11 +50,17 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
                        LayoutInflater layoutInflater, Context context) {
         mLayoutInflater = layoutInflater;
         mDeckList = deckList;
-        zeroCountColor = resources.getColor(R.color.zero_count);
-        newCountColor = resources.getColor(R.color.new_count);
-        learnCountColor = resources.getColor(R.color.learn_count);
-        reviewCountColor = resources.getColor(R.color.review_count);
+
+        // Get the count colors from the theme attributes
+        int[] attrs = new int[] { R.attr.zeroCountColor, R.attr.newCountColor,
+                R.attr.learnCountColor, R.attr.reviewCountColor};
+        TypedArray ta = context.obtainStyledAttributes(attrs);
+        zeroCountColor = ta.getColor(0, R.color.zero_count);
+        newCountColor = ta.getColor(1, R.color.new_count);
+        learnCountColor = ta.getColor(2, R.color.learn_count);
+        reviewCountColor = ta.getColor(3, R.color.review_count);
         mContext = context.getApplicationContext(); // don't hold ref to Activity
+        ta.recycle();
     }
 
     public void setDeckClickListener(View.OnClickListener mDeckClickListener) {

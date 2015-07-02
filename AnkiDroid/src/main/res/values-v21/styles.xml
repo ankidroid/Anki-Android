@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="App_Theme" parent="Theme_White">
+    <style name="App_Theme_White" parent="Theme_White">
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
-    <style name="LegacyActionBar" parent="App_Theme">
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">false</item>
-        <item name="android:statusBarColor">@color/theme_primary_dark</item>
+    <style name="App_Theme_Dark" parent="Theme_Dark">
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 </resources>

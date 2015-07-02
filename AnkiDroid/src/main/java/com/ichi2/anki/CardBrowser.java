@@ -157,7 +157,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         "edited",
         "interval"};
 
-    private int[] mBackground = new int[] { R.color.card_browser_background, R.color.card_browser_marked,
+    private final int[] mBackground = new int[] {R.color.card_browser_marked,
             R.color.card_browser_suspended, R.color.card_browser_marked };
 
     private ActionBar mActionBar;
@@ -1217,7 +1217,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 // set font for column
                 setFont(col);
                 // set background color for column
-                col.setBackgroundResource(mBackground[color]);
+                if (color > 0) {
+                    col.setBackgroundResource(mBackground[color]);
+                } else {
+                    col.setBackgroundResource(0);
+                }
                 // set text for column
                 col.setText(dataSet.get(mFromKeys[i]));
             }

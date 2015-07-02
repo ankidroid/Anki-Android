@@ -8,7 +8,7 @@
     android:background="?attr/colorPrimary"
     android:layout_alignParentTop="true"
     app:theme="@style/ActionBar"
-    app:popupTheme="@style/ActionBar.Popup">
+    app:popupTheme="?attr/actionBarPopupThemeRef">
 
 
 </android.support.v7.widget.Toolbar>

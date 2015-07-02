@@ -183,7 +183,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     // Android WebView
     private boolean mSpeakText;
     protected boolean mDisableClipboard = false;
-    protected boolean mInvertedColors = false;
     protected boolean mNightMode = false;
     private boolean mPrefSafeDisplay;
     protected boolean mPrefUseTimer;
@@ -843,15 +842,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Timber.d("onCreate()");
         // Create the extensions as early as possible, so that they can be offered events.
         mExtensions = new ReviewerExtRegistry(getBaseContext());
-        super.onCreate(savedInstanceState);
-        Timber.d("onCreate()");
-        // Set theme
         restorePreferences();
-        if (mNightMode) {
-            setTheme(R.style.Theme_Dark);
-        }
+        // Call parent activity
+        super.onCreate(savedInstanceState);
         // create inherited navigation drawer layout here so that it can be used by parent class
         setContentView(R.layout.flashcard);
         View mainView = findViewById(android.R.id.content);
@@ -1616,7 +1612,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
         // mDeckFilename = preferences.getString("deckFilename", "");
         mNightMode = preferences.getBoolean("invertedColors", false);
-        mInvertedColors = mNightMode;
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", false);
         mCardZoom = preferences.getInt("cardZoom", 100);
         mImageZoom = preferences.getInt("imageZoom", 100);

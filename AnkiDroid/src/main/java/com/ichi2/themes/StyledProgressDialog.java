@@ -21,9 +21,7 @@ package com.ichi2.themes;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.view.View;
 import android.view.WindowManager.BadTokenException;
-import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
@@ -37,7 +35,7 @@ public class StyledProgressDialog extends Dialog {
 
 
     public StyledProgressDialog(Context context) {
-        super(context, R.style.StyledDialog);
+        super(context);
         mContext = context;
     }
 

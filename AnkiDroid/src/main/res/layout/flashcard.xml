@@ -92,7 +92,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:gravity="center"
-                    android:textColor="?attr/timerColor"
                     android:textSize="14sp"
                     android:visibility="invisible" />
             </RelativeLayout>
@@ -171,7 +170,7 @@
                     android:inputType="text|textNoSuggestions" />
                 <!--
                      Looks like setting android:imeActionLabel confuses the
-                     original ASOP soft keyboard, so don't.
+                     original AOSP soft keyboard, so don't.
                 -->
 
                 <LinearLayout

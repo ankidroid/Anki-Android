@@ -141,10 +141,10 @@
     <color name="theme_primary_light_inv">@color/material_grey_700</color>
     <color name="theme_accent">@color/material_blue_grey_700</color>
 
-    <color name="text_color">#de000000</color> <!-- 87% black -->
+    <color name="text_color_black">#de000000</color> <!-- 87% black -->
 
     <!-- navdrawer colors -->
-    <color name="navdrawer_text_color">@color/text_color</color>
+    <color name="navdrawer_text_color">@color/text_color_black</color>
     <color name="navdrawer_text_color_selected">@color/theme_primary</color>
     <color name="navdrawer_icon_tint">#8a000000</color> <!-- 54% black -->
     <color name="navdrawer_icon_tint_selected">@color/theme_primary</color>
