@@ -30,6 +30,7 @@ import android.provider.MediaStore;
 
 import android.view.Display;
 import android.view.WindowManager;
+import android.webkit.MimeTypeMap;
 import android.widget.VideoView;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
@@ -38,7 +39,6 @@ import com.ichi2.anki.ReadText;
 import com.ichi2.compat.CompatHelper;
 
 import java.lang.ref.WeakReference;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -94,11 +94,11 @@ public class Sound {
      */
     private static HashMap<Integer, ArrayList<String>> sSoundPaths = new HashMap<Integer, ArrayList<String>>();
 
+
     /**
-     * List of extensions for video files where guessing the file type does not work.
-     * (It seems to work for ".3gp" and ".mp4", keep them to be safe.)
+     * Whitelist for video extensions
      */
-    private static final String[] MORE_VIDEO_EXTENSIONS = {".3gp", ".mp4", ".webm", ".mkv"};
+    private static final String[] VIDEO_WHITELIST = {"3gp", "mp4", "webm", "mkv", "flv"};
 
     /**
      * Listener to handle audio focus. Currently blank because we're not respecting losing focus from other apps.
@@ -221,8 +221,8 @@ public class Sound {
             int markerStart = contentLeft.indexOf(soundMarker);
             stringBuilder.append(contentLeft.substring(0, markerStart));
             stringBuilder.append("<a class='replaybutton' href=\"playsound:" + soundPath + "\">"
-                        + "<span style='padding:5px;'>"+ button
-                        + "</span></a>");
+                    + "<span style='padding:5px;'>"+ button
+                    + "</span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
             Timber.d("Content left = %s", contentLeft);
         }
@@ -277,15 +277,17 @@ public class Sound {
 //            ReadText.textToSpeech(soundPath.substring(4, soundPath.length()),
 //                    Integer.parseInt(soundPath.substring(3, 4)));
         } else {
-            // Check if file is video
-            final String guessedType = URLConnection.guessContentTypeFromName(soundPath);
-            boolean isVideo = guessedType != null && guessedType.startsWith("video/");
-            // guessContentTypeFromName doesn’t work for mkv or webm. For those use a list.
-            final String extension = soundPath.substring(soundPath.lastIndexOf(".")).toLowerCase();
-            isVideo = isVideo || Arrays.asList(MORE_VIDEO_EXTENSIONS).contains(extension);
+            // Check if the file extension is that of a known video format
+            final String extension = soundPath.substring(soundPath.lastIndexOf(".") + 1).toLowerCase();
+            boolean isVideo = Arrays.asList(VIDEO_WHITELIST).contains(extension);
+            if (!isVideo) {
+                final String guessedType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+                isVideo = isVideo || (guessedType != null && guessedType.startsWith("video/"));
+            }
+            // Also check that there is a video thumbnail, as some formats like mp4 can be audio only
             isVideo = isVideo &&
                 ThumbnailUtils.createVideoThumbnail(soundUri.getPath(), MediaStore.Images.Thumbnails.MINI_KIND) != null;
-            // No thumbnail: no videa after all. (Or maybe not a video we can handle on the specific device.)
+            // No thumbnail: no video after all. (Or maybe not a video we can handle on the specific device.)
             // If video file but no SurfaceHolder provided then ask AbstractFlashcardViewer to provide a VideoView
             // holder
             if (isVideo && videoView == null && sCallingActivity != null && sCallingActivity.get() != null) {
@@ -315,8 +317,7 @@ public class Sound {
                     });
                 }
                 // Setup the MediaPlayer
-                sMediaPlayer.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(),
-                                           soundUri);
+                sMediaPlayer.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(), soundUri);
                 sMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 sMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     @Override
