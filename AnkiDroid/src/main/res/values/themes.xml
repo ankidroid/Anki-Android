@@ -2,17 +2,32 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme_Base_Custom_Light" parent="@style/Theme.AppCompat.Light.DarkActionBar" />
-    <style name="App_Theme" parent="Theme_White"/>
+    <style name="Theme_Base_Custom_Dark" parent="@style/Theme.AppCompat"/>
+    <style name="App_Theme_White" parent="Theme_White"/>
+    <style name="App_Theme_Dark" parent="Theme_Dark"/>
     <!-- Dark theme -->
-    <style name="Theme_Dark" parent="Theme_White">
+    <style name="Theme_Dark" parent="Theme_Base_Custom_Dark">
         <item name="colorPrimary">@color/white_background_night</item>
         <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/material_light_blue_700</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="actionBarTextColor">@color/white</item>
+        <!-- Action bar styles -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionBarThemeRef">@style/ActionBarDark</item>
+        <item name="actionBarPopupThemeRef">@style/ActionBar.Popup.Dark</item>
         <!-- Reviewer colors -->
         <item name="topBarColor">@color/theme_primary_light_inv</item>
         <item name="newCountColor">@color/new_count_night</item>
         <item name="learnCountColor">@color/learn_count_night</item>
+        <item name="zeroCountColor">@color/zero_count_night</item>
         <item name="reviewCountColor">@color/review_count_night</item>
-        <item name="timerColor">@color/white</item>
+        <!-- Images -->
+        <item name="navDrawerImage">@drawable/nav_drawer_logo_dark_theme</item>
+        <item name="attachFileImage">@drawable/ic_attachment_white_24dp</item>
+        <item name="upDownImage">@drawable/ic_import_export_white_24dp</item>
     </style>
 
     <!-- White theme -->
@@ -24,12 +39,13 @@
         <item name="android:colorBackground">@android:color/white</item>
         <item name="android:dropDownListViewStyle">@style/White.Dropdown</item>
         <item name="android:spinnerDropDownItemStyle">@style/SpinnerItem.DropDownItem</item>
-
         <!-- Action bar styles -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="actionModeBackground">@color/theme_accent</item>
+        <item name="actionBarThemeRef">@style/ActionBar</item>
+        <item name="popupTheme">@style/ActionBar.Popup</item>
 
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
@@ -38,24 +54,27 @@
         <item name="topBarColor">@color/theme_primary_light</item>
         <item name="newCountColor">@color/new_count</item>
         <item name="learnCountColor">@color/learn_count</item>
+        <item name="zeroCountColor">@color/zero_count</item>
         <item name="reviewCountColor">@color/review_count</item>
-        <item name="timerColor">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="backgroundColor">@color/white</item>
+
+        <!-- Images -->
+        <item name="navDrawerImage">@drawable/nav_drawer_logo</item>
+        <item name="attachFileImage">@drawable/ic_attachment_black_24dp</item>
+        <item name="upDownImage">@drawable/ic_import_export_black_24dp</item>
     </style>
 
-    <style name="Theme_White_Statistics" parent="@style/App_Theme">
+    <style name="Theme_White_Statistics" parent="App_Theme_White">
         <item name="android:radioButtonStyle">@android:style/Widget.CompoundButton.RadioButton</item>
     </style>
 
-    <!-- Basic theme for dialogs -->
-    <style name="StyledDialog" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorPrimary">@color/theme_primary</item>
-        <item name="colorPrimaryDark">@color/theme_primary_dark</item>
-        <item name="colorAccent">@color/theme_primary</item>
-    </style>
-
-
     <!-- Theme for showing legacy ActionBar without explicitly including a toolbar -->
-    <style name="LegacyActionBar" parent="App_Theme">
+    <style name="LegacyActionBarWhite" parent="App_Theme_White">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+    </style>
+    <style name="LegacyActionBarDark" parent="App_Theme_Dark">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
     </style>
@@ -68,10 +87,21 @@
         <item name="android:textColorSecondary">@color/white</item>
     </style>
 
+    <style name="ActionBarDark" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!-- Determines color of text and system icons (overflow etc.) in the action bar -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
     <!-- For all other action bar popups (except spinner dropdown in Lollipop) -->
     <style name="ActionBar.Popup" parent="Base.ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:textColorPrimary">@color/text_color</item>
+        <item name="android:textColorPrimary">@color/text_color_black</item>
         <item name="android:background">@color/white_background</item>
+        <item name="android:drawSelectorOnTop">true</item>
+    </style>
+
+    <!-- For all other action bar popups (except spinner dropdown in Lollipop) -->
+    <style name="ActionBar.Popup.Dark" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:drawSelectorOnTop">true</item>
     </style>
 </resources>

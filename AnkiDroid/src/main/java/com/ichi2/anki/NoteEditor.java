@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
@@ -1127,21 +1128,23 @@ public class NoteEditor extends AnkiActivity {
             initFieldEditText(newTextbox, i, fields[i], mCustomTypeface, !editModelMode);
 
             TextView label = newTextbox.getLabel();
-            label.setTextColor(Color.BLACK);
             label.setPadding((int) UIUtils.getDensityAdjustedValue(this, 3.4f), 0, 0, 0);
             mEditFields.add(newTextbox);
 
             ImageButton mediaButton = (ImageButton) editline_view.findViewById(R.id.id_media_button);
+            // Load icons from attributes
+            int[] attrs = new int[] { R.attr.attachFileImage, R.attr.upDownImage};
+            TypedArray ta = obtainStyledAttributes(attrs);
             // Make the icon change between media icon and switch field icon depending on whether editing note type
             if (editModelMode && allowFieldRemapping()) {
                 // Allow remapping if originally more than two fields
-                mediaButton.setBackgroundResource(R.drawable.ic_action_import_export);
+                mediaButton.setBackgroundResource(ta.getResourceId(1, R.drawable.ic_import_export_black_24dp));
                 setRemapButtonListener(mediaButton, i);
             } else if (editModelMode && !allowFieldRemapping()) {
                 mediaButton.setBackgroundResource(0);
             } else {
                 // Use media editor button if not changing note type
-                mediaButton.setBackgroundResource(R.drawable.ic_media);
+                mediaButton.setBackgroundResource(ta.getResourceId(0, R.drawable.ic_attachment_black_24dp));
                 setMMButtonListener(mediaButton, i);
             }
             mFieldsLayoutContainer.addView(label);
@@ -1331,7 +1334,7 @@ public class NoteEditor extends AnkiActivity {
                     PorterDuff.Mode.SRC_ATOP);
             isDupe = true;
         } else {
-            field.getBackground().setColorFilter(getResources().getColor(R.color.text_color),
+            field.getBackground().setColorFilter(getResources().getColor(R.color.text_color_black),
                     PorterDuff.Mode.SRC_ATOP);
             isDupe = false;
         }

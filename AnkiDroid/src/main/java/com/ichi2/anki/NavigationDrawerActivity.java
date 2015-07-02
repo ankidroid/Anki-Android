@@ -26,6 +26,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -83,6 +84,7 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+                setNightModeIcon();
                 supportInvalidateOptionsMenu();
             }
         };
@@ -90,6 +92,15 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
+
+    private void setNightModeIcon() {
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(NavigationDrawerActivity.this);
+        if (preferences.getBoolean("invertedColors", false)) {
+            mNavigationView.getMenu().findItem(R.id.nav_night_mode).setIcon(R.drawable.ic_check_box_black_24dp);
+        } else {
+            mNavigationView.getMenu().findItem(R.id.nav_night_mode).setIcon(R.drawable.ic_check_box_outline_blank_black_24dp);
+        }
+    }
 
 
     /** Sets selected navigation drawer item */
@@ -106,7 +117,6 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
 
     public boolean onNavigationItemSelected(MenuItem item) {
         // Don't do anything if user selects already selected position
-        mDrawerLayout.closeDrawers();
         if (item.isChecked()) {
             return true;
         }
@@ -116,32 +126,46 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
                 Intent deckPicker = new Intent(this, DeckPicker.class);
                 deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
                 startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.RIGHT);
-                return true;
+                break;
             case R.id.nav_browser:
                 Intent cardBrowser = new Intent(this, CardBrowser.class);
                 cardBrowser.putExtra("selectedDeck", getCol().getDecks().selected());
                 startActivityForResultWithAnimation(cardBrowser, REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
-                return true;
+                break;
             case R.id.nav_stats:
                 Intent intent = new Intent(this, Statistics.class);
                 intent.putExtra("selectedDeck", getCol().getDecks().selected());
                 startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, ActivityTransitionAnimation.LEFT);
+                break;
+            case R.id.nav_night_mode:
+                SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
+                if (preferences.getBoolean("invertedColors", false)) {
+                    Timber.i("StudyOptionsFragment:: Night mode was disabled");
+                    preferences.edit().putBoolean("invertedColors", false).commit();
+                } else {
+                    Timber.i("StudyOptionsFragment:: Night mode was enabled");
+                    preferences.edit().putBoolean("invertedColors", true).commit();
+                }
+                setNightModeIcon();
+                rebootApp();
                 return true;
             case R.id.nav_settings:
                 mOldColPath = CollectionHelper.getCurrentAnkiDroidDirectory(this);
                 startActivityForResultWithAnimation(new Intent(this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.FADE);
-                return true;
+                break;
             case R.id.nav_help:
                 Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(AnkiDroidApp.getManualUrl()));
                 startActivityWithoutAnimation(helpIntent);
-                return true;
+                break;
             case R.id.nav_feedback:
                 Intent feedbackIntent = new Intent("android.intent.action.VIEW", Uri.parse(AnkiDroidApp.getFeedbackUrl()));
                 startActivityWithoutAnimation(feedbackIntent);
-                return true;
+                break;
             default:
                 return false;
         }
+        mDrawerLayout.closeDrawers();
+        return true;
     }
 
 
@@ -215,10 +239,7 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
             } else {
                 // collection path has changed so kick the user back to the DeckPicker
                 CollectionHelper.getInstance().closeCollection(true);
-                finishWithoutAnimation();
-                Intent deckPicker = new Intent(this, DeckPicker.class);
-                deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivityWithoutAnimation(deckPicker);
+                rebootApp();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

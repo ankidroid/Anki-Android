@@ -542,12 +542,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         getActivity().getMenuInflater().inflate(R.menu.study_options_fragment, menu);
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity());
-        if (preferences.getBoolean("invertedColors", false)) {
-            menu.findItem(R.id.action_night_mode).setIcon(R.drawable.ic_brightness_3_white_24dp);
-        } else {
-            menu.findItem(R.id.action_night_mode).setIcon(R.drawable.ic_brightness_5_white_24dp);
-        }
 
         if (!getCol().undoAvailable()) {
             menu.findItem(R.id.action_undo).setVisible(false);
@@ -571,19 +565,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                     getActivity().supportInvalidateOptionsMenu();
                 }
                 return true;
-            case R.id.action_night_mode:
-                SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity());
-                if (preferences.getBoolean("invertedColors", false)) {
-                    Timber.i("StudyOptionsFragment:: Night mode was disabled");
-                    preferences.edit().putBoolean("invertedColors", false).commit();
-                    item.setIcon(R.drawable.ic_brightness_5_white_24dp);
-                } else {
-                    Timber.i("StudyOptionsFragment:: Night mode was enabled");
-                    preferences.edit().putBoolean("invertedColors", true).commit();
-                    item.setIcon(R.drawable.ic_brightness_3_white_24dp);
-                }
-                return true;
-
             case R.id.action_add_note_from_study_options:
                 Timber.i("StudyOptionsFragment:: Add note button pressed");
                 addNote();

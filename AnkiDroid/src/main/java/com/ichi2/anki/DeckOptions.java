@@ -498,6 +498,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
     @Override
     protected void onCreate(Bundle icicle) {
+        Themes.setThemeLegacy(this);
         super.onCreate(icicle);
 
         mCol = CollectionHelper.getInstance().getCol(this);

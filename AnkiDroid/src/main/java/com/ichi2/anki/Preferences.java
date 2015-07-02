@@ -46,6 +46,7 @@ import android.view.WindowManager.BadTokenException;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
 import com.ichi2.ui.SeekBarPreference;
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -105,6 +106,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Themes.setThemeLegacy(this);
+
         super.onCreate(savedInstanceState);
         mCol = CollectionHelper.getInstance().getCol(this);
 

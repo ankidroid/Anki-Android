@@ -9,7 +9,6 @@
     android:paddingBottom="5dp"
     android:gravity="center_vertical"
     android:background="?attr/selectableItemBackground"
-    android:textColor="@color/material_grey_800"
     android:textSize="16sp"
     android:checkMark="@drawable/abc_btn_check_material"
     android:focusable="true"

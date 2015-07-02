@@ -13,11 +13,4 @@
         android:title="@string/menu_add"
         ankidroid:showAsAction="always"
         android:visible="false" />
-        
-    <item
-        android:id="@+id/action_night_mode"
-        android:icon="@drawable/ic_brightness_5_white_24dp"
-        android:title="@string/night_mode"
-        ankidroid:showAsAction="always"/>
-
 </menu>

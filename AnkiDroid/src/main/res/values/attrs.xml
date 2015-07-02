@@ -21,7 +21,10 @@
      specifically for action bar text color isn't necessary, but it simplifies the color setting
      while making it accessible everywhere and eases the use of themes -->
     <attr name="actionBarTextColor" format="color"/> <!-- For title and subtitle, and any other text that may appear in action bar-->
+    <attr name="actionBarThemeRef" format="reference"/>
+    <attr name="actionBarPopupThemeRef" format="reference"/>
 
+    <!-- Custom preferences -->
     <attr name="min" format="integer" />
     <attr name="max" format="integer" />
     <attr name="allowEmpty" format="boolean" />
@@ -35,5 +38,10 @@
     <attr name="newCountColor" format="color"/>
     <attr name="learnCountColor" format="color"/>
     <attr name="reviewCountColor" format="color"/>
-    <attr name="timerColor" format="color"/>
+    <attr name="zeroCountColor" format="color"/>
+    <attr name="backgroundColor" format="color"/>
+    <!-- Images -->
+    <attr name="navDrawerImage" format="integer"/>
+    <attr name="attachFileImage" format="integer"/>
+    <attr name="upDownImage" format="integer"/>
 </resources>

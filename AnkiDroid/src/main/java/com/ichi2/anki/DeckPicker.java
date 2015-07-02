@@ -21,7 +21,6 @@
 
 package com.ichi2.anki;
 
-import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;

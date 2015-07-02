@@ -41,8 +41,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/tags_dialog_options_radiogroup"
-        android:layout_below="@id/tags_dialog_toolbar"
-        android:background="@color/white_background"/>
+        android:layout_below="@id/tags_dialog_toolbar"/>
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="wrap_content"
