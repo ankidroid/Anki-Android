@@ -6,4 +6,11 @@
     <style name="App_Theme_Dark" parent="Theme_Dark">
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <!-- This is necessary because we set colorBackground to white in App_Theme_White -->
+    <style name="LegacyActionBarWhite" parent="App_Theme_White">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+        <item name="android:statusBarColor">@color/theme_primary_dark</item>
+    </style>
 </resources>
