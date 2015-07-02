@@ -23,6 +23,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -224,21 +225,15 @@ public class Reviewer extends AbstractFlashcardViewer {
             menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.disable_whiteboard);
             menu.findItem(R.id.action_hide_whiteboard).setVisible(true);
             menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
+
+            Drawable whiteboardIcon = getResources().getDrawable(R.drawable.ic_gesture_white_24dp, null);
             if (mShowWhiteboard) {
-                if (mNightMode) {
-                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_dark);
-                } else {
-                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_light);
-                }
-                //menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_whiteboard_clear_enabled);
+                whiteboardIcon.setAlpha(255);
+                menu.findItem(R.id.action_hide_whiteboard).setIcon(whiteboardIcon);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.hide_whiteboard);
             } else {
-                if (mNightMode) {
-                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_dark_disabled);
-                } else {
-                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_light_disabled);
-                }
-                    //menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_whiteboard_clear_disabled);
+                whiteboardIcon.setAlpha(77);
+                menu.findItem(R.id.action_hide_whiteboard).setIcon(whiteboardIcon);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.show_whiteboard);
             }
         } else {
@@ -249,45 +244,6 @@ public class Reviewer extends AbstractFlashcardViewer {
                     .setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
         }
         return super.onCreateOptionsMenu(menu);
-    }
-
-    /*
-     * Modify the options menu.
-     * Pick the right icons for the whiteboard actions.
-
-     *
-     * @param menu The menu as is.
-     * @return The result of
-     */
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // On old Androids this gets called each time the menu is opend, on newer ones (=> 3.0) only after it has been
-        // invalidated. We do *that* on purpose when toggeling the night mode.
-        if (mPrefWhiteboard) {
-            if (mShowWhiteboard){
-                if (mNightMode) {
-                    menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_action_cancel_dark);
-                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_dark);
-                } else {
-                    menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_action_cancel);
-                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_light);
-
-                }
-            } else {
-                if (mNightMode) {
-                    menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_action_cancel_dark);
-                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_dark_disabled);
-                } else {
-                    menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_action_cancel);
-                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_light_disabled);
-                }
-            }
-        }
-        if (mNightMode) {
-            menu.findItem(R.id.action_replay).setIcon(R.drawable.ic_action_replay_dark);
-        }
-
-        return super.onPrepareOptionsMenu(menu);
     }
 
 
