@@ -226,7 +226,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             menu.findItem(R.id.action_hide_whiteboard).setVisible(true);
             menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
 
-            Drawable whiteboardIcon = getResources().getDrawable(R.drawable.ic_gesture_white_24dp, null);
+            Drawable whiteboardIcon = getResources().getDrawable(R.drawable.ic_gesture_white_24dp);
             if (mShowWhiteboard) {
                 whiteboardIcon.setAlpha(255);
                 menu.findItem(R.id.action_hide_whiteboard).setIcon(whiteboardIcon);
