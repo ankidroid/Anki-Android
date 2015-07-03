@@ -14,29 +14,22 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="actionBarThemeRef">@style/ActionBarDark</item>
         <item name="actionBarPopupThemeRef">@style/ActionBar.Popup.Dark</item>
-        <!-- Reviewer button colors -->
-        <item name="againButtonColor">@color/material_red_800</item>
-        <item name="hardButtonColor">@color/material_blue_grey_800</item>
-        <item name="goodButtonColor">@color/material_green_800</item>
-        <item name="easyButtonColor">@color/material_light_blue_800</item>
-        <item name="againButtonColorPressed">@color/material_red_700</item>
-        <item name="hardButtonColorPressed">@color/material_blue_grey_700</item>
-        <item name="goodButtonColorPressed">@color/material_green_700</item>
-        <item name="easyButtonColorPressed">@color/material_light_blue_700</item>
-        <item name="againButtonColorFocussed">@color/material_red_600</item>
-        <item name="hardButtonColorFocussed">@color/material_blue_grey_600</item>
-        <item name="goodButtonColorFocussed">@color/material_green_600</item>
-        <item name="easyButtonColorFocussed">@color/material_light_blue_600</item>
         <!-- Reviewer colors -->
         <item name="topBarColor">@color/theme_primary_light_inv</item>
         <item name="newCountColor">@color/new_count_night</item>
         <item name="learnCountColor">@color/learn_count_night</item>
         <item name="zeroCountColor">@color/zero_count_night</item>
         <item name="reviewCountColor">@color/review_count_night</item>
+        <!-- Reviewer button drawables
+            Note: We can't use attributes inside a drawable, so necessary to have separate drawable for
+            each theme. See Android bug https://code.google.com/p/android/issues/detail?id=26251 -->
+        <item name="againButtonRef">@drawable/footer_button_again_dark</item>
+        <item name="hardButtonRef">@drawable/footer_button_hard_dark</item>
+        <item name="goodButtonRef">@drawable/footer_button_good_dark</item>
+        <item name="easyButtonRef">@drawable/footer_button_easy_dark</item>
         <!-- Browser colors -->
         <item name="suspendedColor">@color/material_grey_700</item>
         <item name="markedColor">@color/material_deep_purple_400</item>
-
         <!-- Images -->
         <item name="navDrawerImage">@drawable/nav_drawer_logo_dark_theme</item>
         <item name="attachFileImage">@drawable/ic_attachment_white_24dp</item>

@@ -29,19 +29,13 @@
         <item name="learnCountColor">@color/learn_count</item>
         <item name="zeroCountColor">@color/zero_count</item>
         <item name="reviewCountColor">@color/review_count</item>
-        <!-- Reviewer button colors -->
-        <item name="againButtonColor">@color/material_red_500</item>
-        <item name="hardButtonColor">@color/material_blue_grey_700</item>
-        <item name="goodButtonColor">@color/material_green_500</item>
-        <item name="easyButtonColor">@color/material_light_blue_500</item>
-        <item name="againButtonColorPressed">@color/material_red_600</item>
-        <item name="hardButtonColorPressed">@color/material_blue_grey_800</item>
-        <item name="goodButtonColorPressed">@color/material_green_600</item>
-        <item name="easyButtonColorPressed">@color/material_light_blue_600</item>
-        <item name="againButtonColorFocussed">@color/material_red_700</item>
-        <item name="hardButtonColorFocussed">@color/material_blue_grey_900</item>
-        <item name="goodButtonColorFocussed">@color/material_green_700</item>
-        <item name="easyButtonColorFocussed">@color/material_light_blue_700</item>
+        <!-- Reviewer button drawables
+            Note: We can't use attributes inside a drawable, so necessary to have separate drawable for
+            each theme. See Android bug https://code.google.com/p/android/issues/detail?id=26251 -->
+        <item name="againButtonRef">@drawable/footer_button_again</item>
+        <item name="hardButtonRef">@drawable/footer_button_hard</item>
+        <item name="goodButtonRef">@drawable/footer_button_good</item>
+        <item name="easyButtonRef">@drawable/footer_button_easy</item>
         <!-- Browser colors -->
         <item name="suspendedColor">@color/card_browser_suspended</item>
         <item name="markedColor">@color/card_browser_marked</item>
