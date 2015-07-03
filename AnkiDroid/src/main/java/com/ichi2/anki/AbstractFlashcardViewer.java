@@ -1494,17 +1494,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             return;
         }
 
-        // Set button colors
-        mEase1Layout.setBackgroundResource(R.drawable.footer_button_again);
-        mEase2Layout.setBackgroundResource(R.drawable.footer_button_hard);
-        mEase3Layout.setBackgroundResource(R.drawable.footer_button_good);
-        mEase4Layout.setBackgroundResource(R.drawable.footer_button_easy);
-        // Set button text
-        mEase1.setText(res.getString(R.string.ease1_successive));
-        mEase2.setText(res.getString(R.string.ease2_successive));
-        mEase3.setText(res.getString(R.string.ease3_successive));
-        mEase4.setText(res.getString(R.string.ease3_learning));
-
         // Set correct label and background resource for each button
         switch (buttonCount) {
             case 2:

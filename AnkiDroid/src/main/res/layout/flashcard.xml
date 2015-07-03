@@ -186,7 +186,8 @@
                         android:orientation="vertical" >
 
                         <Button
-                                style="@style/FooterButton"
+                            style="@style/FooterButtonLayout"
+                            android:background="?attr/hardButtonRef"
                             android:id="@+id/flip_card"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
@@ -195,8 +196,8 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        style="@style/FooterButton"
-                        android:background="@drawable/footer_button_again"
+                        style="@style/FooterButtonLayout"
+                        android:background="?attr/againButtonRef"
                         android:id="@+id/flashcard_layout_ease1"
                         android:layout_width="0dip"
                         android:layout_height="@dimen/touch_target"
@@ -204,18 +205,19 @@
                         android:orientation="vertical"
                         android:visibility="gone" >
 
-                        <include
+                        <TextView
                                 android:id="@+id/nextTime1"
-                                layout="@layout/flashcard_next_time_textview" />
+                                style="@style/FooterButtonNextTime" />
 
-                        <include
+                        <TextView
                                 android:id="@+id/ease1"
-                                layout="@layout/flashcard_ease_textview" />
+                                android:text="@string/ease1_successive"
+                                style="@style/FooterButtonEaseText"/>
                     </LinearLayout>
 
                     <LinearLayout
-                            style="@style/FooterButton"
-                            android:background="@drawable/footer_button_hard"
+                            style="@style/FooterButtonLayout"
+                            android:background="?attr/hardButtonRef"
                             android:id="@+id/flashcard_layout_ease2"
                             android:layout_width="0dip"
                             android:layout_height="@dimen/touch_target"
@@ -223,19 +225,19 @@
                             android:orientation="vertical"
                             android:visibility="gone" >
 
-                        <include
+                        <TextView
                                 android:id="@+id/nextTime2"
-                                layout="@layout/flashcard_next_time_textview"
-                                android:textColor="@color/next_time_usual_color" />
+                                style="@style/FooterButtonNextTime" />
 
-                        <include
+                        <TextView
                                 android:id="@+id/ease2"
-                                layout="@layout/flashcard_ease_textview" />
+                                android:text="@string/ease2_successive"
+                                style="@style/FooterButtonEaseText" />
                     </LinearLayout>
 
                     <LinearLayout
-                            style="@style/FooterButton"
-                            android:background="@drawable/footer_button_good"
+                            style="@style/FooterButtonLayout"
+                            android:background="?attr/goodButtonRef"
                             android:id="@+id/flashcard_layout_ease3"
                             android:layout_width="0dip"
                             android:layout_height="@dimen/touch_target"
@@ -243,18 +245,19 @@
                             android:orientation="vertical"
                             android:visibility="gone" >
 
-                        <include
+                        <TextView
                                 android:id="@+id/nextTime3"
-                                layout="@layout/flashcard_next_time_textview" />
+                                style="@style/FooterButtonNextTime" />
 
-                        <include
+                        <TextView
                                 android:id="@+id/ease3"
-                                layout="@layout/flashcard_ease_textview" />
+                                android:text="@string/ease3_successive"
+                                style="@style/FooterButtonEaseText"/>
                     </LinearLayout>
 
                     <LinearLayout
-                            style="@style/FooterButton"
-                            android:background="@drawable/footer_button_easy"
+                            style="@style/FooterButtonLayout"
+                            android:background="?attr/easyButtonRef"
                             android:id="@+id/flashcard_layout_ease4"
                             android:layout_width="0dip"
                             android:layout_height="@dimen/touch_target"
@@ -262,13 +265,14 @@
                             android:orientation="vertical"
                             android:visibility="gone" >
 
-                        <include
+                        <TextView
                                 android:id="@+id/nextTime4"
-                                layout="@layout/flashcard_next_time_textview" />
+                                style="@style/FooterButtonNextTime" />
 
-                        <include
+                        <TextView
                                 android:id="@+id/ease4"
-                                layout="@layout/flashcard_ease_textview" />
+                                android:text="@string/ease3_learning"
+                                style="@style/FooterButtonEaseText" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

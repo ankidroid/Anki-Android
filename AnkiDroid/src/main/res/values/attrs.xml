@@ -38,18 +38,10 @@
     <attr name="reviewCountColor" format="color"/>
     <attr name="zeroCountColor" format="color"/>
     <!-- Reviewer button colors -->
-    <attr name="againButtonColor" format="color"/>
-    <attr name="hardButtonColor" format="color"/>
-    <attr name="goodButtonColor" format="color"/>
-    <attr name="easyButtonColor" format="color"/>
-    <attr name="againButtonColorPressed" format="color"/>
-    <attr name="hardButtonColorPressed" format="color"/>
-    <attr name="goodButtonColorPressed" format="color"/>
-    <attr name="easyButtonColorPressed" format="color"/>
-    <attr name="againButtonColorFocussed" format="color"/>
-    <attr name="hardButtonColorFocussed" format="color"/>
-    <attr name="goodButtonColorFocussed" format="color"/>
-    <attr name="easyButtonColorFocussed" format="color"/>
+    <attr name="againButtonRef" format= "reference"/>
+    <attr name="hardButtonRef" format= "reference"/>
+    <attr name="goodButtonRef" format= "reference"/>
+    <attr name="easyButtonRef" format= "reference"/>
     <!-- Reviewer other colors -->
     <attr name="topBarColor" format="color"/>
     <!-- Browser colors -->
