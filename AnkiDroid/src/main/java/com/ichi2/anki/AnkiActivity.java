@@ -479,12 +479,5 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
         this.startActivityWithoutAnimation(intent);
         this.finishWithoutAnimation();
     }
-
-    protected void rebootApp() {
-        finishWithoutAnimation();
-        Intent deckPicker = new Intent(this, DeckPicker.class);
-        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivityWithoutAnimation(deckPicker);
-    }
 }
 

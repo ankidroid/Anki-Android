@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.compat.CompatHelper;
 
 import timber.log.Timber;
 
@@ -146,7 +147,7 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
                     preferences.edit().putBoolean("invertedColors", true).commit();
                 }
                 setNightModeIcon();
-                rebootApp();
+                CompatHelper.getCompat().restartActivityInvalidateBackstack(this);
                 return true;
             case R.id.nav_settings:
                 mOldColPath = CollectionHelper.getCurrentAnkiDroidDirectory(this);
@@ -238,7 +239,7 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
             } else {
                 // collection path has changed so kick the user back to the DeckPicker
                 CollectionHelper.getInstance().closeCollection(true);
-                rebootApp();
+                CompatHelper.getCompat().restartActivityInvalidateBackstack(this);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

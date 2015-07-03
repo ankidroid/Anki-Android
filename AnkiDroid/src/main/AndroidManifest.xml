@@ -146,15 +146,33 @@
         <activity
             android:name="com.ichi2.anki.StudyOptionsActivity"
             android:configChanges="keyboardHidden|locale|orientation|screenSize"
-            android:label="StudyOptions" />
+            android:label="StudyOptions"
+            android:parentActivityName=".DeckPicker">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ichi2.anki.DeckPicker" />
+        </activity>
         <activity
             android:name="com.ichi2.anki.CardBrowser"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            android:label="Card Browser" />
+            android:label="Card Browser"
+            android:parentActivityName=".DeckPicker">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ichi2.anki.DeckPicker" />
+        </activity>
         <activity
             android:name="com.ichi2.anki.Reviewer"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:parentActivityName=".StudyOptionsActivity">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ichi2.anki.StudyOptionsActivity" />
+        </activity>
         <activity
             android:name="com.ichi2.anki.VideoPlayer"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
@@ -207,7 +225,13 @@
         <activity
             android:name="com.ichi2.anki.Statistics"
             android:theme="@style/Theme_White_Statistics"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize" />
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            android:parentActivityName=".DeckPicker">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ichi2.anki.DeckPicker" />
+        </activity>
         <activity
             android:name="com.ichi2.anki.Previewer"
             android:configChanges="locale"
@@ -299,7 +323,6 @@
         </activity>
         <activity
             android:name="com.ichi2.anki.CardTemplateEditor"
-            android:parentActivityName="com.ichi2.anki.NoteEditor"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_template_editor"
             android:windowSoftInputMode="stateAlwaysHidden" >

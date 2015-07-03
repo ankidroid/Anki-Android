@@ -22,6 +22,7 @@ import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.exception.APIVersionException;
 
 /**
@@ -45,13 +46,14 @@ import com.ichi2.anki.exception.APIVersionException;
  * unless the behaviour is supposed to be different there.
  */
 public interface Compat {
-    public abstract String nfcNormalized(String txt) throws APIVersionException;
-    public abstract String detagged(String txt);
-    public abstract void setOverScrollModeNever(View v);
-    public abstract void setTtsOnUtteranceProgressListener(TextToSpeech tts);
-    public abstract void disableDatabaseWriteAheadLogging(SQLiteDatabase db);
-    public abstract void enableCookiesForFileSchemePages();
-    public abstract void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls);
-    public abstract void setAlpha(View view, float alpha);
+    String nfcNormalized(String txt) throws APIVersionException;
+    String detagged(String txt);
+    void setOverScrollModeNever(View v);
+    void setTtsOnUtteranceProgressListener(TextToSpeech tts);
+    void disableDatabaseWriteAheadLogging(SQLiteDatabase db);
+    void enableCookiesForFileSchemePages();
+    void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls);
+    void setAlpha(View view, float alpha);
+    void restartActivityInvalidateBackstack(AnkiActivity activity);
 }
 
