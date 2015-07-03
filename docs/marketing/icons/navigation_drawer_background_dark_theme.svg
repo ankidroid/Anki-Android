@@ -16,7 +16,7 @@
    id="svg2"
    sodipodi:version="0.32"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="navigation_drawer_background.svg"
+   sodipodi:docname="navigation_drawer_background_dark_theme.svg"
    version="1.0"
    inkscape:export-filename="/home/alex/Downloads/fcwx/FC.png"
    inkscape:export-xdpi="180"
@@ -736,6 +736,15 @@
          offset="1"
          style="stop-color:white;stop-opacity:1" />
     </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4825"
+       id="linearGradient3909"
+       gradientUnits="userSpaceOnUse"
+       x1="253.74718"
+       y1="412.82977"
+       x2="188.00023"
+       y2="542.33295" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -748,8 +757,8 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="5.6568542"
-     inkscape:cx="50.835322"
-     inkscape:cy="-108.74737"
+     inkscape:cx="78.412487"
+     inkscape:cy="-87.534166"
      inkscape:document-units="px"
      inkscape:current-layer="g5673"
      inkscape:window-width="1920"
@@ -1265,32 +1274,31 @@
          inkscape:export-xdpi="815.04272"
          inkscape:export-ydpi="815.04272"
          transform="matrix(0.66452639,0,0,1,40.944168,0)"
-         inkscape:export-filename="C:\Users\Timothy\Desktop\drawer concept\test4.png" />
-      <g
-         inkscape:export-ydpi="3913.04"
-         inkscape:export-xdpi="3913.04"
-         inkscape:export-filename="/Users/dae/g2843.png"
-         id="g2843"
-         transform="matrix(6.2123506,-0.34038252,0.34038252,6.2123506,-164.64224,-45.58586)"
-         clip-path="none"
-         style="opacity:1">
-        <path
-           transform="matrix(0.09989622,-0.07848917,0.07848917,0.09989622,-23.590489,6.1840683)"
-           d="m 294.46869,523.45259 c -9.08043,8.81335 -45.57491,-17.76993 -58.10148,-15.97712 -12.52658,1.79282 -40.09949,37.54547 -51.28749,31.63294 -11.18801,-5.91252 2.81678,-48.83551 -2.75921,-60.19499 -5.57599,-11.35947 -48.09928,-26.53469 -45.93342,-39.00218 2.16586,-12.46749 47.31577,-12.41208 56.39619,-21.22544 9.08043,-8.81335 10.3725,-53.9448 22.89908,-55.73762 12.52657,-1.79281 26.42597,41.16443 37.61397,47.07695 11.188,5.91252 54.50984,-6.80503 60.08583,4.55445 5.57599,11.35947 -30.98363,37.85309 -33.14948,50.32059 -2.16586,12.46749 23.31643,49.73906 14.23601,58.55242 z"
-           inkscape:randomized="0"
-           inkscape:rounded="0.21"
-           inkscape:flatsided="false"
-           sodipodi:arg2="1.428641"
-           sodipodi:arg1="0.80032243"
-           sodipodi:r2="52"
-           sodipodi:r1="94"
-           sodipodi:cy="456"
-           sodipodi:cx="229"
-           sodipodi:sides="5"
-           id="path1920"
-           style="fill:url(#linearGradient5634);fill-opacity:1;stroke:#303030;stroke-width:15.98397757999999900;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-           sodipodi:type="star" />
-      </g>
+         inkscape:export-filename="C:\Users\Timothy\Desktop\drawer concept\dark_alpha_40.png" />
+      <path
+         sodipodi:type="star"
+         style="fill:url(#linearGradient3909);fill-opacity:1;stroke:#303030;stroke-width:15.98397732;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         id="path1920"
+         sodipodi:sides="5"
+         sodipodi:cx="229"
+         sodipodi:cy="456"
+         sodipodi:r1="94"
+         sodipodi:r2="52"
+         sodipodi:arg1="0.80032243"
+         sodipodi:arg2="1.428641"
+         inkscape:flatsided="false"
+         inkscape:rounded="0.21"
+         inkscape:randomized="0"
+         d="m 294.46869,523.45259 c -9.08043,8.81335 -45.57491,-17.76993 -58.10148,-15.97712 -12.52658,1.79282 -40.09949,37.54547 -51.28749,31.63294 -11.18801,-5.91252 2.81678,-48.83551 -2.75921,-60.19499 -5.57599,-11.35947 -48.09928,-26.53469 -45.93342,-39.00218 2.16586,-12.46749 47.31577,-12.41208 56.39619,-21.22544 9.08043,-8.81335 10.3725,-53.9448 22.89908,-55.73762 12.52657,-1.79281 26.42597,41.16443 37.61397,47.07695 11.188,5.91252 54.50984,-6.80503 60.08583,4.55445 5.57599,11.35947 -30.98363,37.85309 -33.14948,50.32059 -2.16586,12.46749 23.31643,49.73906 14.23601,58.55242 z"
+         transform="matrix(0.593874,-0.52160517,0.52160517,0.593874,-309.08968,0.86153051)" />
+      <rect
+         rx="9.1788263"
+         y="81.320702"
+         x="24.748735"
+         height="90.332893"
+         width="123.92046"
+         id="rect3905"
+         style="fill:#303030;fill-opacity:0.15686275;stroke:#303030;stroke-width:0;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     </g>
   </g>
 </svg>

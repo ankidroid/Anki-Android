@@ -108,10 +108,13 @@
     <color name="material_grey_700">#ff616161</color>
     <color name="material_grey_800">#ff424242</color>
 
-    <color name="material_red_200">#ef9a9a</color>
+    <color name="material_red_200">#ffef9a9a</color>
+    <color name="material_red_300">#ffE57373</color>
+    <color name="material_red_400">#ffEF5350</color>
     <color name="material_red_500">#fff44336</color>
     <color name="material_red_600">#ffe53935</color>
     <color name="material_red_700">#ffd32f2f</color>
+    <color name="material_red_800">#ffC62828</color>
     <color name="material_red_900">#ffb71c1c</color>
     <color name="material_red_A700">#ffd50000</color>
     <color name="material_orange_A700">#ffff6d00</color>
@@ -120,19 +123,32 @@
     <color name="material_indigo_700">#ff303f9f</color>
     <color name="material_indigo_A700">#ff304ffe</color>
     <color name="material_blue_A700">#ff2962ff</color>
-    <color name="material_light_blue_100">#ffb3e5fc</color>
+    <color name="material_light_blue_100">#ffB3E5FC</color>
+    <color name="material_light_blue_200">#ff81D4FA</color>
+    <color name="material_light_blue_300">#ff4FC3F7</color>
+    <color name="material_light_blue_400">#ff29B6F6</color>
     <color name="material_light_blue_500">#ff03a9f4</color>
     <color name="material_light_blue_600">#ff039be5</color>
     <color name="material_light_blue_700">#ff0288d1</color>
+    <color name="material_light_blue_800">#ff0277BD</color>
+    <color name="material_light_blue_900">#ff01579B</color>
     <color name="material_light_blue_A700">#ff0091ea</color>
     <color name="material_cyan_A700">#ff00b8d4</color>
 
-    <color name="material_green_200">#a5d6a7</color>
+    <color name="material_green_200">#ffa5d6a7</color>
+    <color name="material_green_300">#ff81C784</color>
+    <color name="material_green_400">#ff66BB6A</color>
     <color name="material_green_500">#ff4caf50</color>
     <color name="material_green_600">#ff43a047</color>
     <color name="material_green_700">#ff388e3c</color>
+    <color name="material_green_800">#ff2E7D32</color>
+    <color name="material_green_900">#ff1B5E20</color>
     <color name="material_light_green_A700">#ff64dd17</color>
     <color name="material_lime_green_A700">#ffaeea00</color>
+
+    <color name="material_deep_purple_400">#ff7E57C2</color>
+
+
 
 
     <color name="theme_primary">@color/material_light_blue_500</color>

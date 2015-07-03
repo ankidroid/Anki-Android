@@ -196,7 +196,7 @@
 
                     <LinearLayout
                         style="@style/FooterButton"
-                        android:background="@drawable/footer_button_red"
+                        android:background="@drawable/footer_button_again"
                         android:id="@+id/flashcard_layout_ease1"
                         android:layout_width="0dip"
                         android:layout_height="@dimen/touch_target"
@@ -215,7 +215,7 @@
 
                     <LinearLayout
                             style="@style/FooterButton"
-                            android:background="@drawable/footer_button"
+                            android:background="@drawable/footer_button_hard"
                             android:id="@+id/flashcard_layout_ease2"
                             android:layout_width="0dip"
                             android:layout_height="@dimen/touch_target"
@@ -235,7 +235,7 @@
 
                     <LinearLayout
                             style="@style/FooterButton"
-                            android:background="@drawable/footer_button_green"
+                            android:background="@drawable/footer_button_good"
                             android:id="@+id/flashcard_layout_ease3"
                             android:layout_width="0dip"
                             android:layout_height="@dimen/touch_target"
@@ -254,7 +254,7 @@
 
                     <LinearLayout
                             style="@style/FooterButton"
-                            android:background="@drawable/footer_button"
+                            android:background="@drawable/footer_button_easy"
                             android:id="@+id/flashcard_layout_ease4"
                             android:layout_width="0dip"
                             android:layout_height="@dimen/touch_target"

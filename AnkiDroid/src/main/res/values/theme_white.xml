@@ -2,37 +2,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme_Base_Custom_Light" parent="@style/Theme.AppCompat.Light.DarkActionBar" />
-    <style name="Theme_Base_Custom_Dark" parent="@style/Theme.AppCompat"/>
-    <style name="App_Theme_White" parent="Theme_White"/>
-    <style name="App_Theme_Dark" parent="Theme_Dark"/>
-    <!-- Dark theme -->
-    <style name="Theme_Dark" parent="Theme_Base_Custom_Dark">
-        <item name="colorPrimary">@color/white_background_night</item>
-        <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@color/material_light_blue_700</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="actionBarTextColor">@color/white</item>
-        <!-- Action bar styles -->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionModeOverlay">true</item>
-        <item name="actionBarThemeRef">@style/ActionBarDark</item>
-        <item name="actionBarPopupThemeRef">@style/ActionBar.Popup.Dark</item>
-        <!-- Reviewer colors -->
-        <item name="topBarColor">@color/theme_primary_light_inv</item>
-        <item name="newCountColor">@color/new_count_night</item>
-        <item name="learnCountColor">@color/learn_count_night</item>
-        <item name="zeroCountColor">@color/zero_count_night</item>
-        <item name="reviewCountColor">@color/review_count_night</item>
-        <!-- Browser colors -->
-        <item name="suspendedColor">@color/material_red_900</item>
-        <item name="markedColor">@color/material_indigo_700</item>
-
-        <!-- Images -->
-        <item name="navDrawerImage">@drawable/nav_drawer_logo_dark_theme</item>
-        <item name="attachFileImage">@drawable/ic_attachment_white_24dp</item>
-        <item name="upDownImage">@drawable/ic_import_export_white_24dp</item>
-    </style>
 
     <!-- White theme -->
     <style name="Theme_White" parent="@style/Theme_Base_Custom_Light">
@@ -43,6 +12,8 @@
         <item name="android:colorBackground">@android:color/white</item>
         <item name="android:dropDownListViewStyle">@style/White.Dropdown</item>
         <item name="android:spinnerDropDownItemStyle">@style/SpinnerItem.DropDownItem</item>
+        <!-- Use black on white text for higher contrast than standard light theme -->
+        <item name="android:textColor">@color/black</item>
         <!-- Action bar styles -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -50,23 +21,30 @@
         <item name="actionModeBackground">@color/theme_accent</item>
         <item name="actionBarThemeRef">@style/ActionBar</item>
         <item name="popupTheme">@style/ActionBar.Popup</item>
-
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
-
         <!-- Reviewer colors -->
         <item name="topBarColor">@color/theme_primary_light</item>
         <item name="newCountColor">@color/new_count</item>
         <item name="learnCountColor">@color/learn_count</item>
         <item name="zeroCountColor">@color/zero_count</item>
         <item name="reviewCountColor">@color/review_count</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="backgroundColor">@color/white</item>
-
+        <!-- Reviewer button colors -->
+        <item name="againButtonColor">@color/material_red_500</item>
+        <item name="hardButtonColor">@color/material_blue_grey_700</item>
+        <item name="goodButtonColor">@color/material_green_500</item>
+        <item name="easyButtonColor">@color/material_light_blue_500</item>
+        <item name="againButtonColorPressed">@color/material_red_600</item>
+        <item name="hardButtonColorPressed">@color/material_blue_grey_800</item>
+        <item name="goodButtonColorPressed">@color/material_green_600</item>
+        <item name="easyButtonColorPressed">@color/material_light_blue_600</item>
+        <item name="againButtonColorFocussed">@color/material_red_700</item>
+        <item name="hardButtonColorFocussed">@color/material_blue_grey_900</item>
+        <item name="goodButtonColorFocussed">@color/material_green_700</item>
+        <item name="easyButtonColorFocussed">@color/material_light_blue_700</item>
         <!-- Browser colors -->
         <item name="suspendedColor">@color/card_browser_suspended</item>
         <item name="markedColor">@color/card_browser_marked</item>
-
         <!-- Images -->
         <item name="navDrawerImage">@drawable/nav_drawer_logo</item>
         <item name="attachFileImage">@drawable/ic_attachment_black_24dp</item>
@@ -82,10 +60,6 @@
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
     </style>
-    <style name="LegacyActionBarDark" parent="App_Theme_Dark">
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">false</item>
-    </style>
 
     <!-- ActionBar -->
     <!-- Inheriting from light theme necessary to get light spinner dropdown background in Lollipop -->
@@ -95,21 +69,10 @@
         <item name="android:textColorSecondary">@color/white</item>
     </style>
 
-    <style name="ActionBarDark" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar">
-        <!-- Determines color of text and system icons (overflow etc.) in the action bar -->
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/white</item>
-    </style>
-
     <!-- For all other action bar popups (except spinner dropdown in Lollipop) -->
     <style name="ActionBar.Popup" parent="Base.ThemeOverlay.AppCompat.ActionBar">
         <item name="android:textColorPrimary">@color/text_color_black</item>
         <item name="android:background">@color/white_background</item>
-        <item name="android:drawSelectorOnTop">true</item>
-    </style>
-
-    <!-- For all other action bar popups (except spinner dropdown in Lollipop) -->
-    <style name="ActionBar.Popup.Dark" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:drawSelectorOnTop">true</item>
     </style>
 </resources>

@@ -42,8 +42,8 @@ public class DeckPickerContextMenu extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Resources res = getResources();
-        Drawable icon = res.getDrawable(R.drawable.ic_settings_applications_black_36dp);
-        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
+        //Drawable icon = res.getDrawable(R.drawable.ic_settings_applications_black_36dp);
+        //icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
 
         boolean hasSubdecks = getArguments().getBoolean("hasSubdecks");
         String[] entries = new String[hasSubdecks ? 5 : 4];
@@ -59,7 +59,7 @@ public class DeckPickerContextMenu extends DialogFragment {
         }
         return new MaterialDialog.Builder(getActivity())
                 .title(getArguments().getString("dialogTitle"))
-                .icon(icon)
+                //.icon(icon)
                 .cancelable(true)
                 .autoDismiss(false)
                 .items(entries)
