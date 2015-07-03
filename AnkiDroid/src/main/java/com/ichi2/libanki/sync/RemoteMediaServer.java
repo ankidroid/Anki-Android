@@ -34,12 +34,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 import timber.log.Timber;
 
@@ -99,15 +100,16 @@ public class RemoteMediaServer extends HttpSyncer {
 
 
     // args: files
-    public ZipFile downloadFiles(List<String> top) throws UnknownHttpResponseException {
+    public ZipInputStream downloadFiles(List<String> top) throws UnknownHttpResponseException {
         try {
             HttpResponse resp;
             resp = super.req("downloadFiles",
                     super.getInputStream(Utils.jsonToString(new JSONObject().put("files", new JSONArray(top)))));
             String zipPath = mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncFromServer.zip");
             // retrieve contents and save to file on disk:
-            super.writeToFile(resp.getEntity().getContent(), zipPath);
-            return new ZipFile(new File(zipPath), ZipFile.OPEN_READ);
+            InputStream is = resp.getEntity().getContent();
+            ZipInputStream zis = new ZipInputStream(is);
+            return zis;
         } catch (JSONException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
