@@ -88,7 +88,7 @@
   <string name="menu_add_note">Not ekle</string>
   <string name="menu_my_account">Hesabı senkronize et</string>
   <string name="menu_dismiss_note">Gizle / Sil</string>
-  <string name="menu_bury_card">Kartı Gizle</string>
+  <string name="menu_bury_card">Kartı gizle</string>
   <string name="menu_bury_note">Notu Gizle</string>
   <string name="menu_suspend_card">Kartı Askıya Al</string>
   <string name="menu_suspend_note">Notu Askıya Al</string>
@@ -96,8 +96,8 @@
   <string name="delete_note_message">Bu not ve bütün kartları gerçekten silinsin mi?\n%s</string>
   <string name="menu_select">Metni seç</string>
   <string name="menu_search">%1$s\'de Ara</string>
-  <string name="menu_mark_note">Mark note</string>
-  <string name="menu_unmark_note">Unmark note</string>
+  <string name="menu_mark_note">Notu işâretle</string>
+  <string name="menu_unmark_note">İşâreti kaldır</string>
   <string name="new_deck">Deste oluştur</string>
   <string name="create">Oluştur</string>
   <string name="new_dynamic_deck">Filtreli deste oluştur</string>

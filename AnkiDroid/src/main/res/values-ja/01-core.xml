@@ -93,8 +93,8 @@
   <string name="delete_note_message">このカードのノートを削除してよろしいですか？　このノートから作られたカードが全て削除されます。\n%s</string>
   <string name="menu_select">テキスト選択</string>
   <string name="menu_search">%1$sで探す</string>
-  <string name="menu_mark_note">Mark note</string>
-  <string name="menu_unmark_note">Unmark note</string>
+  <string name="menu_mark_note">ノートをマーク</string>
+  <string name="menu_unmark_note">ノートのマークをはずす</string>
   <string name="new_deck">単語帳を作成</string>
   <string name="create">作成</string>
   <string name="new_dynamic_deck">フィルター単語帳を作成</string>
@@ -127,7 +127,7 @@
   <string name="studyoptions_congrats_more_rev">予定日に達した復習カードがまだ他にも残っていますが、一日あたりの復習カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。</string>
   <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、一日あたりの新規カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。（ただしそれに伴って短期的に学習の負担が増えますのでご注意ください。）</string>
   <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
-  <string name="studyoptions_no_cards_due">今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
+  <string name="studyoptions_no_cards_due">今日の課題はまだ残っていますが、どのカードもまだ学習予定時刻に達していません</string>
   <string name="sd_card_not_mounted">デバイスストレージがマウントされていません</string>
   <string name="button_sync">同期</string>
   <string name="export">エクスポート(書き出し)</string>

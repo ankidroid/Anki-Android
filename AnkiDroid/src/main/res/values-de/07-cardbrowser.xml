@@ -60,7 +60,7 @@
   <string name="card_browser_list_my_searches_title">Wählen Sie eine gespeicherte Suche</string>
   <string name="card_browser_list_my_searches_new_name">Name für die aktuelle Suche</string>
   <string name="card_browser_list_my_searches_new_search_error_empty_name">Sie können keine unbenannte Suche speichern.</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name bereits vorhanden!</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Name bereits vorhanden</string>
   <string name="card_browser_list_my_searches_remove_content">»%1$s« löschen?</string>
   <string name="card_browser_change_display_order">Anzeigereihenfolge</string>
   <string name="card_browser_change_display_order_title">Anzeigereihenfolge</string>

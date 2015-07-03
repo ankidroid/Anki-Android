@@ -116,7 +116,7 @@
   <string name="check_media_db_updated">미디어 데이터베이스를 다시 기록했습니다.</string>
   <string name="check_media_delete_unused">사용되지 않은 파일 삭제</string>
   <string name="check_media_deleted">삭제된 파일: %d</string>
-  <string name="tags_dialog_option_all_cards">All cards</string>
-  <string name="tags_dialog_option_new_cards">New</string>
-  <string name="tags_dialog_option_due_cards">Due</string>
+  <string name="tags_dialog_option_all_cards">모든 카드</string>
+  <string name="tags_dialog_option_new_cards">신규</string>
+  <string name="tags_dialog_option_due_cards">예정</string>
 </resources>

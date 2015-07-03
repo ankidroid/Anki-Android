@@ -50,16 +50,16 @@
     <item>Empfohlene Antwort (grün)</item>
     <item>Antwort besser als empfohlen</item>
     <item>Rückgängig</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Notiz bearbeiten</item>
+    <item>Notiz markieren</item>
     <item>Nachschlagen</item>
     <item>Karte zurückstellen</item>
     <item>Dauerhaft aussetzen</item>
-    <item>Delete note</item>
+    <item>Notiz löschen</item>
     <item>Medien abspielen</item>
     <item>Lernen beenden</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Notiz zurückstellen</item>
+    <item>Notiz aussetzen</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Karte dauerhaft aussetzen</item>

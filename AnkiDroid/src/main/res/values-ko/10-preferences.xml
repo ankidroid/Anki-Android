@@ -71,8 +71,8 @@
   <string name="reset_languages_summ">모든 카드 묶음의 언어 기능(문장 읽어주기와 사전 기능) 재설정하기. 카드 묶음 선택창에서 특정 카드 묶음 재설정.</string>
   <string name="reset_languages_question">모든 언어 설정을 재설정할까요?</string>
   <string name="reset_confirmation">모든 상태 재설정</string>
-  <string name="card_zoom">Card zoom</string>
-  <string name="image_zoom">Image zoom</string>
+  <string name="card_zoom">카드 확대</string>
+  <string name="image_zoom">이미지 확대</string>
   <string name="button_size">정답 버튼 크기</string>
   <string name="card_browser_font_size">카드 탐색기 글꼴 크기 조정</string>
   <string name="col_path">컬렉션 저장 경로</string>
@@ -154,7 +154,7 @@
   <string name="deck_conf_deck_description">꾸러미 설명</string>
   <string name="deck_conf_group">옵션 그룹</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="other">%1$s\n%2$d decks use this group</item>
+    <item quantity="other">%1$s\n%2$d 카드 묶음이 이 그룹을 사용합니다</item>
   </plurals>
   <string name="deck_conf_new_cards">새 카드</string>
   <string name="deck_conf_rev_cards">복습 횟수</string>
@@ -199,7 +199,7 @@
   <string name="deck_conf_remove_message">현재 옵션 그룹을 제거할까요?</string>
   <string name="deck_conf_set_subdecks">모든 하위 묶음에 설정하기</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="other">%s subdecks will use this group</item>
+    <item quantity="other">%s 하위 카드 묶음이 이 그룹을 사용 합니다</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">모든 하위 묶음에 설정하기</string>
   <string name="deck_conf_set_subdecks_message">이 카드 묶음의 모든 하위 묶음에 현재의 옵션 그룹을 설정할까요?</string>

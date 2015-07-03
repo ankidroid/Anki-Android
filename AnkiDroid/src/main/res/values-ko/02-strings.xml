@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="preference_summary_percentage">XXX%</string>
+  <string name="preference_summary_percentage">XXX %</string>
   <string name="drawer_open">서랍 열기</string>
   <string name="drawer_close">서랍 닫기</string>
   <string name="CardEditorLaterMessage">나중을 위해 저장된 정보</string>
@@ -48,12 +48,12 @@
   <string name="CardEditorModel">형식:</string>
   <string name="CardEditorTags">태그: %1$s</string>
   <string name="CardEditorCards">카드: %1$s</string>
-  <string name="tag_name">Tag name</string>
+  <string name="tag_name">태그 이름</string>
   <string name="add_new_filter_tags">태그 추가/필터링</string>
-  <string name="add_tag">Add tag</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
+  <string name="add_tag">태그 추가</string>
+  <string name="check_all_tags">모든 태그/선택 취소</string>
   <string name="filter_tags">태그 필터링</string>
-  <string name="no_tags">You haven’t added any tags yet.</string>
+  <string name="no_tags">아직 추가된 태그가 없습니다.</string>
   <string name="sdcard_missing_message">현재 SD카드가 USB 저장소로 사용되고 있어 사용이 불가능합니다. 덱에 접근하려면 USB 연결을 해제하세요.</string>
   <string name="enable_whiteboard">칠판 사용</string>
   <string name="disable_whiteboard">칠판 해제</string>
@@ -149,8 +149,8 @@
   <string name="sched_end">(끝)</string>
   <string name="sched_unbury_button">지금 보려면 \"카드 다시 꺼내기\" 버튼을 누르세요</string>
   <string name="sched_has_buried">관련되거나 집어넣은 일부 카드가 내일까지 연기되었습니다.</string>
-  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+  <string name="tag_editor_add_feedback">\"%1$s\" 추가를 확인하려면 \"%2$s\" 누르세요</string>
+  <string name="tag_editor_add_feedback_existing">기존 태그 \"%1$s\" 선택됨</string>
   <string name="lookup_hint">텍스트 복사 후, 플래시카드의 아무 곳이나 두드려 검색 아이콘 표시</string>
   <string name="add_content_showcase_text">시작하려면 + 버튼을 두드려 새로운 학습물을 추가합니다.\n\n \'도움말\'을 눌러 설명서를 보세요.</string>
 </resources>

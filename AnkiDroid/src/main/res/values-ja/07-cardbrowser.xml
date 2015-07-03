@@ -66,7 +66,7 @@
   <string name="card_browser_change_display_order_reverse">昇順、降順の切り替えは ▼(▲) をタップしてください</string>
   <string name="card_details_question">質問</string>
   <string name="card_details_answer">解答</string>
-  <string name="card_details_due">学習予定日時</string>
+  <string name="card_details_due">既に予定日時</string>
   <string name="card_details_tags">タグ</string>
   <string name="card_browser_filtering_cards">カードを抽出しています&#8230; \nキャンセルする場合はBackボタンをタップしてください</string>
   <string-array name="card_browser_order_labels">

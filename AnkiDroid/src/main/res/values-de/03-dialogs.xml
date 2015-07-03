@@ -54,7 +54,7 @@
     <item><![CDATA[<h2>%1$s:<br/>Karteikarten für Android</h2>AnkiDroid ist eine Karteikarten-Anwendung, die voll kompatibel ist mit der Desktop-Software  <a href=\"%2$s\">Anki</a>. Sie können mit beiden Programmen Inhalte erstellen, herunterladen und lernen. Die Synchronisierung dabei ist ganz leicht.]]></item>
     <item><![CDATA[Um uns zu helfen, AnkiDroid zu verbessern, melden Sie eventuelle Fehler <a href=\"%1$s\">hier</a>; Ideen für neue Funktionen sind ebenfalls willkommen! Benutzen Sie das <a href=\"%2$s\">Wiki</a> und schauen Sie im <a href=\"%3$s\">Forum</a> vorbei.]]></item>
     <item><![CDATA[AnkiDroid ist <a href=\"%1$s\">Open-Source Software<a/>, deshalb ist jeder ermutigt, sich den <a href=\"%3$s\">Mitwirkenden</a> <a href=\"%2$s\">anzuschließen</a>  :-)]]></item>
-    <item><![CDATA[Auch Nicht-Entwickler können helfen; zum Beispiel, indem sie AnkiDroid <a href=\"%1$s\">übersetzen</a>, das Wiki aktualisieren und Screenshots erstellen, für Anki Desktop <a href=\"%2$s\">spenden</a> oder über AnkiDroid bloggen!]]></item>
+    <item><![CDATA[Auch Nicht-Entwickler können helfen; zum Beispiel, indem sie AnkiDroid <a href=\"%1$s\">übersetzen</a>, das Wiki aktualisieren und Screenshots erstellen, für Anki Desktop <a href=\"%2$s\">spenden</a> oder über AnkiDroid bloggen.]]></item>
     <item><![CDATA[AnkiDroid ist unter der <a href="%1$s">GNU-GPL-v3-Lizenz</a> veröffentlicht; der Quellcode ist <a href="%2$s">hier</a> verfügbar.]]></item>
   </string-array>
   <string name="preview_title">Vorschau</string>

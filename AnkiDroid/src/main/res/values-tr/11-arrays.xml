@@ -50,16 +50,16 @@
     <item>Önerileni yanıtla (yeşil)</item>
     <item>Önerilenden daha iyisini yanıtla</item>
     <item>Geri al</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Notu düzenle</item>
+    <item>Notu işâretle</item>
     <item>İfadeyi ara</item>
-    <item>Kartı göm</item>
+    <item>Kartı gizle</item>
     <item>Kartı askıya al</item>
-    <item>Delete note</item>
+    <item>Notu sil</item>
     <item>Medyayı oynat</item>
     <item>Öğrenmeyi durdur</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Notu gizle</item>
+    <item>Notu askıya al</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Kartı askıya al</item>

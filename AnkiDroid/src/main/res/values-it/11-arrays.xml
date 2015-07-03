@@ -50,16 +50,16 @@
     <item>Risposta raccomandata (verde)</item>
     <item>Risposta migliore di quanto raccomandato</item>
     <item>Annulla</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Modifica nota</item>
+    <item>Contrassegna nota</item>
     <item>Controlla espressione</item>
     <item>Seppellisci carta</item>
     <item>Sospendi carta</item>
-    <item>Delete note</item>
+    <item>Elimina nota</item>
     <item>Riproduci Media</item>
     <item>Interrompi l\'apprendimento</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Seppellisci nota</item>
+    <item>Sospendi nota</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Sospendi carta</item>

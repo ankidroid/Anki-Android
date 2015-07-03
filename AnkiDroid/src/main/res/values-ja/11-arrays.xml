@@ -50,16 +50,16 @@
     <item>推奨される答え（緑色）</item>
     <item>推奨される答えよりも良い答え</item>
     <item>戻す</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>ノートを編集</item>
+    <item>ノートにマーク</item>
     <item>検索式</item>
     <item>カードを延期</item>
     <item>カードを保留</item>
-    <item>Delete note</item>
+    <item>ノートを削除</item>
     <item>メディアを再生</item>
     <item>学習を中断</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>ノートを延期</item>
+    <item>ノートを保留</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>タグを付けて保留</item>
