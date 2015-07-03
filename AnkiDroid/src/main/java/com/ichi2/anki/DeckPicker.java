@@ -455,9 +455,9 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         menu.findItem(R.id.action_new_filtered_deck).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_database).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
-
+        boolean isNightMode = AnkiDroidApp.getSharedPrefs(this).getBoolean("invertedColors", false);
         // Show the welcome screen here if col empty to be sure that the action bar exists
-        if (mShowShowcaseView && colIsOpen() && getCol().isEmpty() && mDeckList != null && mDeckList.size() <=1) {
+        if (mShowShowcaseView && colIsOpen() && getCol().isEmpty() && mDeckList != null && mDeckList.size() <=1 && !isNightMode) {
             mShowShowcaseView = false;
             final Resources res = getResources();
             try {

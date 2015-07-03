@@ -3,6 +3,7 @@ package com.ichi2.compat;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.RemoteViews;
 
+import com.ichi2.anki.AnkiActivity;
+import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.ReadText;
 import com.ichi2.anki.exception.APIVersionException;
 
@@ -99,5 +102,16 @@ public class CompatV8 implements Compat {
         alphaAnimation.setDuration(0); // Make animation instant
         alphaAnimation.setFillAfter(true); // Tell it to persist after the animation ends
         view.startAnimation(alphaAnimation);
+    }
+
+    /**
+     * Pre-honeycomb just completely boot back to the DeckPicker
+     */
+    public void restartActivityInvalidateBackstack(AnkiActivity activity) {
+        Timber.i("AnkiActivity -- restartActivityInvalidateBackstack()");
+        //TODO: Find a way to recreate the backstack even pre-Honeycomb
+        Intent intent = new Intent(activity, DeckPicker.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        activity.startActivityWithoutAnimation(intent);
     }
 }

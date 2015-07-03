@@ -35,6 +35,8 @@ public class CompatHelper {
             mCompat = new CompatV16();
         } else if (getSdkVersion() >= 15) {
             mCompat = new CompatV15();
+        } else if (getSdkVersion() >= 11) {
+            mCompat = new CompatV11();
         } else if (getSdkVersion() >= 12) {
             mCompat = new CompatV12();
         } else if (getSdkVersion() >= 9) {
