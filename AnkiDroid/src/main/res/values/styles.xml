@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- White theme -->
-    <style name="White">
-        <item name="android:background">@color/white_background</item>
-    </style>
-
-
+    <!-- App themes -->
+    <style name="App_Theme_White" parent="Theme_White"/>
+    <style name="App_Theme_Dark" parent="Theme_Dark"/>
+    <!-- Theme for crash report dialog -->
     <style name="Theme.CrashReportDialog" parent="@android:style/Theme.Dialog" />
 
     <!-- Widget elements -->
@@ -38,7 +36,7 @@
 
     <!--  Material Design-style persistant footer button -->
     <style name="FooterButton">
-        <item name="android:background">@drawable/footer_button</item>
+        <item name="android:background">@drawable/footer_button_hard</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textAllCaps">true</item>

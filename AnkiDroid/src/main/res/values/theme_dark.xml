@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme_Base_Custom_Dark" parent="@style/Theme.AppCompat"/>
+    <!-- Dark theme -->
+    <style name="Theme_Dark" parent="Theme_Base_Custom_Dark">
+        <item name="colorPrimary">@color/white_background_night</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/material_light_blue_700</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="actionBarTextColor">@color/white</item>
+        <!-- Action bar styles -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionBarThemeRef">@style/ActionBarDark</item>
+        <item name="actionBarPopupThemeRef">@style/ActionBar.Popup.Dark</item>
+        <!-- Reviewer button colors -->
+        <item name="againButtonColor">@color/material_red_800</item>
+        <item name="hardButtonColor">@color/material_blue_grey_800</item>
+        <item name="goodButtonColor">@color/material_green_800</item>
+        <item name="easyButtonColor">@color/material_light_blue_800</item>
+        <item name="againButtonColorPressed">@color/material_red_700</item>
+        <item name="hardButtonColorPressed">@color/material_blue_grey_700</item>
+        <item name="goodButtonColorPressed">@color/material_green_700</item>
+        <item name="easyButtonColorPressed">@color/material_light_blue_700</item>
+        <item name="againButtonColorFocussed">@color/material_red_600</item>
+        <item name="hardButtonColorFocussed">@color/material_blue_grey_600</item>
+        <item name="goodButtonColorFocussed">@color/material_green_600</item>
+        <item name="easyButtonColorFocussed">@color/material_light_blue_600</item>
+        <!-- Reviewer colors -->
+        <item name="topBarColor">@color/theme_primary_light_inv</item>
+        <item name="newCountColor">@color/new_count_night</item>
+        <item name="learnCountColor">@color/learn_count_night</item>
+        <item name="zeroCountColor">@color/zero_count_night</item>
+        <item name="reviewCountColor">@color/review_count_night</item>
+        <!-- Browser colors -->
+        <item name="suspendedColor">@color/material_grey_700</item>
+        <item name="markedColor">@color/material_deep_purple_400</item>
+
+        <!-- Images -->
+        <item name="navDrawerImage">@drawable/nav_drawer_logo_dark_theme</item>
+        <item name="attachFileImage">@drawable/ic_attachment_white_24dp</item>
+        <item name="upDownImage">@drawable/ic_import_export_white_24dp</item>
+    </style>
+
+
+    <!-- ActionBar -->
+    <style name="ActionBarDark" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!-- Determines color of text and system icons (overflow etc.) in the action bar -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
+    <!-- Legacy action bar  (used in Preferences with no explicit Toolbar) -->
+    <style name="LegacyActionBarDark" parent="App_Theme_Dark">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+    </style>
+
+    <!-- For all other action bar popups (except spinner dropdown in Lollipop) -->
+    <style name="ActionBar.Popup.Dark" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:drawSelectorOnTop">true</item>
+    </style>
+</resources>

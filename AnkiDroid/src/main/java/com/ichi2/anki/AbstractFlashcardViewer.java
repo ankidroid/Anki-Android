@@ -1494,34 +1494,31 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             return;
         }
 
+        // Set button colors
+        mEase1Layout.setBackgroundResource(R.drawable.footer_button_again);
+        mEase2Layout.setBackgroundResource(R.drawable.footer_button_hard);
+        mEase3Layout.setBackgroundResource(R.drawable.footer_button_good);
+        mEase4Layout.setBackgroundResource(R.drawable.footer_button_easy);
+        // Set button text
+        mEase1.setText(res.getString(R.string.ease1_successive));
+        mEase2.setText(res.getString(R.string.ease2_successive));
+        mEase3.setText(res.getString(R.string.ease3_successive));
+        mEase4.setText(res.getString(R.string.ease3_learning));
+
         // Set correct label and background resource for each button
         switch (buttonCount) {
             case 2:
-                mEase1.setText(res.getString(R.string.ease1_successive));
-                mEase2Layout.setBackgroundResource(R.drawable.footer_button_green);
-                mEase2.setText(res.getString(R.string.ease3_successive));
                 mEase1Layout.setVisibility(View.VISIBLE);
                 mEase2Layout.setVisibility(View.VISIBLE);
                 mEase2Layout.requestFocus();
                 break;
             case 3:
-                mEase2Layout.setBackgroundResource(R.drawable.footer_button_green);
-                mEase3Layout.setBackgroundResource(R.drawable.footer_button);  // Make sure it’s not green
-                mEase1.setText(res.getString(R.string.ease1_successive));
-                mEase2.setText(res.getString(R.string.ease3_successive));
-                mEase3.setText(res.getString(R.string.ease3_learning));
                 mEase1Layout.setVisibility(View.VISIBLE);
                 mEase2Layout.setVisibility(View.VISIBLE);
                 mEase3Layout.setVisibility(View.VISIBLE);
                 mEase2Layout.requestFocus();
                 break;
             default:
-                mEase2Layout.setBackgroundResource(R.drawable.footer_button);  // Make sure it’s not green
-                mEase3Layout.setBackgroundResource(R.drawable.footer_button_green);
-                mEase1.setText(res.getString(R.string.ease1_successive));
-                mEase2.setText(res.getString(R.string.ease2_successive));
-                mEase3.setText(res.getString(R.string.ease3_successive));
-                mEase4.setText(res.getString(R.string.ease3_learning));
                 mEase1Layout.setVisibility(View.VISIBLE);
                 mEase2Layout.setVisibility(View.VISIBLE);
                 mEase3Layout.setVisibility(View.VISIBLE);

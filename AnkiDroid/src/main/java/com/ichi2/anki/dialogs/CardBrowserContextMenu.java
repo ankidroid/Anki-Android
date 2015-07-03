@@ -40,8 +40,8 @@ public class CardBrowserContextMenu extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Resources res = getResources();
-        Drawable icon = res.getDrawable(R.drawable.ic_settings_applications_black_36dp);
-        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
+        //Drawable icon = res.getDrawable(R.drawable.ic_settings_applications_black_36dp);
+        //icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
 
         String[] entries = new String[4];
         entries[CONTEXT_MENU_DELETE] = res.getString(R.string.card_browser_delete_card);
@@ -57,7 +57,7 @@ public class CardBrowserContextMenu extends DialogFragment {
 
         return new MaterialDialog.Builder(getActivity())
                 .title(getArguments().getString("dialogTitle"))
-                .icon(icon)
+                //.icon(icon)
                 .items(entries)
                 .itemsCallback(mContextMenuListener)
                 .build();

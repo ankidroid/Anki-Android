@@ -32,14 +32,26 @@
     <declare-styleable name="SeekBarPreference">
         <attr name="interval" format="integer" />
     </declare-styleable>
-
-    <!-- Reviewer colors -->
-    <attr name="topBarColor" format="color"/>
+    <!-- Card count colors -->
     <attr name="newCountColor" format="color"/>
     <attr name="learnCountColor" format="color"/>
     <attr name="reviewCountColor" format="color"/>
     <attr name="zeroCountColor" format="color"/>
-    <attr name="backgroundColor" format="color"/>
+    <!-- Reviewer button colors -->
+    <attr name="againButtonColor" format="color"/>
+    <attr name="hardButtonColor" format="color"/>
+    <attr name="goodButtonColor" format="color"/>
+    <attr name="easyButtonColor" format="color"/>
+    <attr name="againButtonColorPressed" format="color"/>
+    <attr name="hardButtonColorPressed" format="color"/>
+    <attr name="goodButtonColorPressed" format="color"/>
+    <attr name="easyButtonColorPressed" format="color"/>
+    <attr name="againButtonColorFocussed" format="color"/>
+    <attr name="hardButtonColorFocussed" format="color"/>
+    <attr name="goodButtonColorFocussed" format="color"/>
+    <attr name="easyButtonColorFocussed" format="color"/>
+    <!-- Reviewer other colors -->
+    <attr name="topBarColor" format="color"/>
     <!-- Browser colors -->
     <attr name="suspendedColor" format="color"/>
     <attr name="markedColor" format="color"/>
