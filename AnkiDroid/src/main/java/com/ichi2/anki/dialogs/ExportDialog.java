@@ -61,7 +61,7 @@ public class ExportDialog extends DialogFragment {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
                 .title(res.getString(R.string.export))
                 .content(getArguments().getString("dialogMessage"))
-                .positiveText(res.getString(R.string.ok))
+                .positiveText(res.getString(android.R.string.ok))
                 .negativeText(res.getString(R.string.cancel))
                 .cancelable(true)
                 .items(items)

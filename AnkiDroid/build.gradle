@@ -35,8 +35,8 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:design:22.2.0'
     compile 'com.afollestad:material-dialogs:0.7.6.0'
+    compile 'net.i2p.android.ext:floatingactionbutton:1.9.0'
     compile 'ch.acra:acra:4.6.2'
     compile 'com.jakewharton.timber:timber:2.5.1'
     compile 'com.google.code.gson:gson:2.3'
-    compile project(":ShowcaseView:library")
 }

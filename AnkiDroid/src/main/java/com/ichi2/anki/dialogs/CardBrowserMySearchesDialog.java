@@ -74,7 +74,7 @@ public class CardBrowserMySearchesDialog extends DialogFragment {
         } else if (type == CARD_BROWSER_MY_SEARCHES_TYPE_SAVE) {
             mCurrentSearchTerms = getArguments().getString("currentSearchTerms");
             builder.title(getString(R.string.card_browser_list_my_searches_save))
-                   .positiveText(getString(R.string.ok))
+                   .positiveText(getString(android.R.string.ok))
                    .negativeText(getString(R.string.cancel))
                    .input(R.string.card_browser_list_my_searches_new_name, R.string.empty_string, new MaterialDialog.InputCallback() {
                        @Override
@@ -101,7 +101,7 @@ public class CardBrowserMySearchesDialog extends DialogFragment {
             Resources res = getResources();
             new MaterialDialog.Builder(getActivity())
                     .content(res.getString(R.string.card_browser_list_my_searches_remove_content, searchName))
-                    .positiveText(res.getString(R.string.ok))
+                    .positiveText(res.getString(android.R.string.ok))
                     .negativeText(res.getString(R.string.cancel))
                     .callback(new MaterialDialog.ButtonCallback() {
                         @Override

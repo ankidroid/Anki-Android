@@ -263,10 +263,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         refreshInterface(true);
         setHasOptionsMenu(true);
         ((AnkiActivity) getActivity()).hideProgressBar();
-        // rebuild action bar so that Showcase works correctly
-        if (mFragmented) {
-            ((DeckPicker) getActivity()).reloadShowcaseView();
-        }
     }
 
 
@@ -338,7 +334,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         mCramOptions = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_options_cram);
         mCongratsLayout = mStudyOptionsView.findViewById(R.id.studyoptions_congrats_layout);
         mTextCongratsMessage = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_congrats_message);
-        mFloatingActionButton = (ImageButton) mStudyOptionsView.findViewById(R.id.fab);
 
         if (getCol().getDecks().isDyn(getCol().getDecks().selected())) {
             Button rebBut = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_rebuild_cram);

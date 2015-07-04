@@ -167,4 +167,8 @@
     <color name="navdrawer_background_selected">#33999999</color> <!-- 20% grey (#999999) -->
     <color name="navdrawer_divider">#e5e5e5</color>
 
+    <color name="half_black">#808080</color>
+    <color name="white_pressed">#f1f1f1</color>
+    <color name="black_semi_transparent">#B2000000</color>
+
 </resources>

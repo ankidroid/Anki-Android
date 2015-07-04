@@ -21,7 +21,6 @@
         android:visibility="gone"/>
     <Spinner
         android:id="@+id/toolbar_spinner"
-        style="@style/White.Dropdown"
         android:background="?attr/selectableItemBackground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
