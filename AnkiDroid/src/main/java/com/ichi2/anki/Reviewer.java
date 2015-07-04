@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.support.v4.view.MenuItemCompat;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -208,6 +209,9 @@ public class Reviewer extends AbstractFlashcardViewer {
                     Themes.ALPHA_ICON_DISABLED_LIGHT);
         }
         if (mPrefWhiteboard) {
+            // Don't force showing mark icon when whiteboard enabled
+            // TODO: allow user to customize which icons are force-shown
+            MenuItemCompat.setShowAsAction(menu.findItem(R.id.action_mark_card), MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
             // Check if we can forceably squeeze in 3 items into the action bar, if not hide "show whiteboard"
             if (CompatHelper.getSdkVersion() >= 14 &&  !ViewConfiguration.get(this).hasPermanentMenuKey()) {
                 // Android 4.x device with overflow menu in the action bar and small screen can't

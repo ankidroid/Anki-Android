@@ -25,7 +25,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -98,7 +97,7 @@ import timber.log.Timber;
  * Allows the user to edit a fact, for instance if there is a typo. A card is a presentation of a fact, and has two
  * sides: a question and an answer. Any number of fields can appear on each side. When you add a fact to Anki, cards
  * which show that fact are generated. Some models generate one card, others generate more than one.
- * 
+ *
  * @see <a href="http://ankisrs.net/docs/manual.html#cards">the Anki Desktop manual</a>
  */
 public class NoteEditor extends AnkiActivity {
@@ -444,7 +443,7 @@ public class NoteEditor extends AnkiActivity {
         }
 
         // Note type Selector
-        mNoteTypeSpinner = (Spinner) findViewById(R.id.note_type_spinner);    
+        mNoteTypeSpinner = (Spinner) findViewById(R.id.note_type_spinner);
         mAllModelIds = new ArrayList<Long>();
         final ArrayList<String> modelNames = new ArrayList<String>();
         ArrayList<JSONObject> models = getCol().getModels().all();
@@ -473,7 +472,7 @@ public class NoteEditor extends AnkiActivity {
         } catch (JSONException e1) {
             throw new RuntimeException();
         }
-        mNoteDeckSpinner = (Spinner) findViewById(R.id.note_deck_spinner);    
+        mNoteDeckSpinner = (Spinner) findViewById(R.id.note_deck_spinner);
         mAllDeckIds = new ArrayList<Long>();
         final ArrayList<String> deckNames = new ArrayList<String>();
 
@@ -499,7 +498,7 @@ public class NoteEditor extends AnkiActivity {
         mNoteDeckSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                // Timber.i("NoteEditor:: onItemSelected() fired on mNoteDeckSpinner with pos = "+Integer.toString(pos)); 
+                // Timber.i("NoteEditor:: onItemSelected() fired on mNoteDeckSpinner with pos = "+Integer.toString(pos));
                 mCurrentDid = mAllDeckIds.get(pos);
             }
 
@@ -512,7 +511,7 @@ public class NoteEditor extends AnkiActivity {
         setDid(mEditorNote);
 
         setNote(mEditorNote);
-        
+
         // Set current note type and deck positions in spinners
         int position;
         try {
@@ -562,7 +561,7 @@ public class NoteEditor extends AnkiActivity {
         if (!mAddNote && mCurrentEditedCard != null) {
             Timber.i("NoteEditor:: Edit note activity successfully started with card id %d", mCurrentEditedCard.getId());
         }
-       
+
         // Hide opening collection progress indicator
         hideProgressBar();
     }
@@ -729,7 +728,7 @@ public class NoteEditor extends AnkiActivity {
                         }
                     };
                     dialog.setArgs(res.getString(R.string.confirm_map_cards_to_nothing));
-                    showDialogFragment(dialog);                    
+                    showDialogFragment(dialog);
                 } else {
                     // Otherwise go straight to changing note type
                     changeNoteTypeWithErrorHandling(oldModel, newModel);
@@ -1168,7 +1167,8 @@ public class NoteEditor extends AnkiActivity {
                     startMultimediaFieldEditor(index, mNote, field);
                 } else {
                     // Otherwise we make a popup menu allowing the user to choose between audio/image/text field
-                    PopupMenuWithIcons popup = new PopupMenuWithIcons(NoteEditor.this, v, true);
+                    // TODO: Update the icons for dark material theme, then can set 3rd argument to true
+                    PopupMenuWithIcons popup = new PopupMenuWithIcons(NoteEditor.this, v, false);
                     MenuInflater inflater = popup.getMenuInflater();
                     inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());
                     popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
@@ -1334,8 +1334,7 @@ public class NoteEditor extends AnkiActivity {
                     PorterDuff.Mode.SRC_ATOP);
             isDupe = true;
         } else {
-            field.getBackground().setColorFilter(getResources().getColor(R.color.text_color_black),
-                    PorterDuff.Mode.SRC_ATOP);
+            field.getBackground().clearColorFilter();
             isDupe = false;
         }
         // Put back the old value so we don't interfere with modification detection
