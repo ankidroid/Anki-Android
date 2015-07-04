@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Floating action button -->
-<android.support.design.widget.FloatingActionButton
+<net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fab"
-    android:contentDescription="@string/add"
-    android:src="@drawable/ic_add_white_24dp"
-    android:layout_gravity="bottom"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/add_content_menu"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignParentRight="true"
     android:layout_alignParentBottom="true"
-    android:layout_marginRight="24dp"
-    android:layout_marginBottom="24dp"/>
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true"
+    fab:fab_addButtonColorNormal="?attr/colorAccent"
+    fab:fab_addButtonColorPressed="?attr/colorAccent"
+    fab:fab_icon="@drawable/ic_add_white_24dp"
+    fab:fab_labelStyle="@style/menu_labels_style"
+    android:layout_marginBottom="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginEnd="16dp">
+    <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_deck_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:fab_colorNormal="?attr/colorAccent"
+        fab:fab_icon="@drawable/ic_folder_white_24dp"
+        fab:fab_title="@string/new_deck"
+        fab:fab_size="mini"
+        fab:fab_colorPressed="?attr/colorAccent"/>
+    <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_shared_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:fab_colorNormal="?attr/colorAccent"
+        fab:fab_icon="@drawable/ic_file_download_white_24dp"
+        fab:fab_title="@string/menu_get_shared_decks"
+        fab:fab_size="mini"
+        fab:fab_colorPressed="?attr/colorAccent"/>
+    <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_note_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:fab_colorNormal="?attr/colorAccent"
+        fab:fab_icon="@drawable/ic_add_white_24dp"
+        fab:fab_title="@string/menu_add_note"
+        fab:fab_size="mini"
+        fab:fab_colorPressed="?attr/colorAccent"/>
+</net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu>

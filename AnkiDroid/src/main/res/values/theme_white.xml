@@ -10,8 +10,6 @@
         <item name="colorPrimaryDark">@color/theme_primary_dark</item>
         <item name="colorAccent">@color/theme_accent</item>
         <item name="android:colorBackground">@android:color/white</item>
-        <item name="android:dropDownListViewStyle">@style/White.Dropdown</item>
-        <item name="android:spinnerDropDownItemStyle">@style/SpinnerItem.DropDownItem</item>
         <!-- Use black on white text for higher contrast than standard light theme -->
         <item name="android:textColor">@color/black</item>
         <!-- Action bar styles -->

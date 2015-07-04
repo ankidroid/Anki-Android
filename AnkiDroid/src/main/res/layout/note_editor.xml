@@ -42,7 +42,6 @@
                         android:text="@string/CardEditorModel" />
                     <Spinner
                         android:id="@+id/note_type_spinner"
-                        style="@style/White.Dropdown"
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/touch_target" />
                 </LinearLayout>
@@ -65,7 +64,6 @@
                         android:text="@string/CardEditorNoteDeck" />
                     <Spinner
                         android:id="@+id/note_deck_spinner"
-                        style="@style/White.Dropdown"
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/touch_target" />
                 </LinearLayout>

@@ -270,7 +270,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             // TODO: Could be useful to show the full confirmation dialog
                             mCol.modSchemaNoCheck();
                             mCol.setMod();
-                            Toast.makeText(getApplicationContext(), R.string.ok, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), android.R.string.ok, Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getApplicationContext(), R.string.vague_error, Toast.LENGTH_SHORT).show();
                         }

@@ -35,7 +35,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
+import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
+import net.i2p.android.ext.floatingactionbutton.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -47,16 +48,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
-import com.github.amlcurran.showcaseview.ShowcaseView;
-import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
@@ -98,7 +94,7 @@ import java.util.Locale;
 
 import timber.log.Timber;
 
-public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEventListener,
+public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, DatabaseErrorDialog.DatabaseErrorDialogListener,
         SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
         MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener {
@@ -139,7 +135,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     
     private MaterialDialog mProgressDialog;
-    private ShowcaseView mShowcaseDialog;
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mRecyclerViewLayoutManager;
@@ -147,7 +142,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     private List<Sched.DeckDueTreeNode> mDeckList;
 
     private TextView mTodayTextView;
-    private FloatingActionButton mAddButton;
 
     private BroadcastReceiver mUnmountReceiver = null;
 
@@ -155,8 +149,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     private EditText mDialogEditText;
 
-    // active cards
-    boolean mShowShowcaseView = false;
     // flag asking user to do a full sync which is used in upgrade path
     boolean mRecommendFullSync = false;
 
@@ -389,57 +381,54 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         mDeckListAdapter.setDeckLongClickListener(mDeckLongClickListener);
         mRecyclerView.setAdapter(mDeckListAdapter);
 
-        mTodayTextView = (TextView) findViewById(R.id.today_stats_text_view);
-        final Resources res = getResources();
-        mAddButton = (FloatingActionButton) findViewById(R.id.fab);
-        mAddButton.setOnClickListener(new OnClickListener() {
+        // Setup the FloatingActionButtons
+        final FloatingActionsMenu actionsMenu = (FloatingActionsMenu) findViewById(R.id.add_content_menu);
+        final FloatingActionButton addDeckButton = (FloatingActionButton) findViewById(R.id.add_deck_action);
+        final FloatingActionButton addSharedButton = (FloatingActionButton) findViewById(R.id.add_shared_action);
+        final FloatingActionButton addNoteButton = (FloatingActionButton) findViewById(R.id.add_note_action);
+        addDeckButton.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v) {
-                new MaterialDialog.Builder(DeckPicker.this)
-                        .items(new String[] {res.getString(R.string.menu_add_note),
-                                res.getString(R.string.menu_get_shared_decks),
-                                res.getString(R.string.new_deck)})
-                        .itemsCallback(new MaterialDialog.ListCallback() {
-                            @Override
-                            public void onSelection(MaterialDialog materialDialog, View view, int i,
-                                                    CharSequence charSequence) {
-                                switch(i) {
-                                    case 0:
-                                        hideShowcaseView();
-                                        addNote();
-                                        break;
-                                    case 1:
-                                        hideShowcaseView();
-                                        if (colIsOpen())
-                                            addSharedDeck();
-                                        break;
-                                    case 2:
-                                        hideShowcaseView();
-                                        mDialogEditText = new EditText(DeckPicker.this);
-                                        mDialogEditText.setSingleLine(true);
-                                        // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
-                                        new MaterialDialog.Builder(DeckPicker.this)
-                                                .title(R.string.new_deck)
-                                                .positiveText(R.string.dialog_ok)
-                                                .customView(mDialogEditText, true)
-                                                .callback(new MaterialDialog.ButtonCallback() {
-                                                    @Override
-                                                    public void onPositive(MaterialDialog dialog) {
-                                                        String deckName = mDialogEditText.getText().toString()
-                                                                .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
-                                                        Timber.i("DeckPicker:: Creating new deck...");
-                                                        getCol().getDecks().id(deckName, true);
-                                                        updateDeckList();
-                                                    }
-                                                })
-                                                .negativeText(R.string.dialog_cancel)
-                                                .show();
-                                }
-                            }
-                        })
-                        .build().show();
+            public void onClick(View view) {
+                actionsMenu.collapse();
+                mDialogEditText = new EditText(DeckPicker.this);
+                mDialogEditText.setSingleLine(true);
+                // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
+                        new MaterialDialog.Builder(DeckPicker.this)
+                                .title(R.string.new_deck)
+                                .positiveText(R.string.dialog_ok)
+                                .customView(mDialogEditText, true)
+                                .callback(new MaterialDialog.ButtonCallback() {
+                                    @Override
+                                    public void onPositive(MaterialDialog dialog) {
+                                        String deckName = mDialogEditText.getText().toString()
+                                                .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                                        Timber.i("DeckPicker:: Creating new deck...");
+                                        getCol().getDecks().id(deckName, true);
+                                        updateDeckList();
+                                    }
+                                })
+                                .negativeText(R.string.dialog_cancel)
+                                .show();
             }
         });
+        addSharedButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                actionsMenu.collapse();
+                addSharedDeck();
+            }
+        });
+        addNoteButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                actionsMenu.collapse();
+                addNote();
+            }
+        });
+
+        mTodayTextView = (TextView) findViewById(R.id.today_stats_text_view);
+        final Resources res = getResources();
+
         mTodayTextView = (TextView) findViewById(R.id.today_stats_text_view);
         // Show splash screen and load collection
         showStartupScreensAndDialogs(preferences, 0);
@@ -455,39 +444,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         menu.findItem(R.id.action_new_filtered_deck).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_database).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
-        boolean isNightMode = AnkiDroidApp.getSharedPrefs(this).getBoolean("invertedColors", false);
-        // Show the welcome screen here if col empty to be sure that the action bar exists
-        if (mShowShowcaseView && colIsOpen() && getCol().isEmpty() && mDeckList != null && mDeckList.size() <=1 && !isNightMode) {
-            mShowShowcaseView = false;
-            final Resources res = getResources();
-            try {
-                mShowcaseDialog = new ShowcaseView.Builder(this).setTarget(new ViewTarget(findViewById(R.id.fab)))
-                        .setContentTitle(res.getString(R.string.studyoptions_welcome_title))
-                        .setStyle(R.style.ShowcaseView_Light).setShowcaseEventListener(this)
-                        .setOnClickListener(new OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mShowcaseDialog.hide();
-                                Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(res
-                                        .getString(R.string.link_manual_getting_started)));
-                                startActivityWithoutAnimation(helpIntent);
-                            }
-                        }).setContentText(res.getString(R.string.add_content_showcase_text)).hideOnTouchOutside().build();
-                mShowcaseDialog.setButtonText(getResources().getString(R.string.help_title));
-                RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
-                lps.setMargins(margin, margin, margin, margin);
-                mShowcaseDialog.setButtonPosition(lps);
-            } catch (Exception e) {
-                Timber.e(e, "Error showing ShowcaseView");
-                Themes.showThemedToast(this, res.getString(R.string.add_content_showcase_text), false);
-            }
-        } else if (mShowcaseDialog != null && colIsOpen() && !getCol().isEmpty()) {
-            hideShowcaseView();
-        }
-
         // Hide import, export, and restore backup on ChromeOS as users
         // don't have access to the file system.
         if (CompatHelper.isChromebook()) {
@@ -518,13 +474,11 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
             case R.id.action_add_note_from_deck_picker:
                 Timber.i("DeckPicker:: Add note button pressed");
-                hideShowcaseView();
                 addNote();
                 return true;
 
             case R.id.action_shared_decks:
                 Timber.i("DeckPicker:: Get shared deck button pressed");
-                hideShowcaseView();
                 if (colIsOpen()) {
                     addSharedDeck();
                 }
@@ -532,7 +486,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
             case R.id.action_new_deck:
                 Timber.i("DeckPicker:: Add deck button pressed");
-                hideShowcaseView();
                 mDialogEditText = new EditText(DeckPicker.this);
                 mDialogEditText.setSingleLine(true);
                 // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
@@ -778,10 +731,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             });
         }
         hideProgressBar();
-        // Show the ShowcaseView tutorial unless in tablet mode (which shows it after loading StudyOptionsFragment)
-        if (!mFragmented) {
-            reloadShowcaseView();
-        }
     }
 
 
@@ -1993,43 +1942,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             Window window = getWindow();
             window.setFormat(PixelFormat.RGBA_8888);
         }
-    }
-
-
-    @Override
-    public void onShowcaseViewHide(ShowcaseView showcaseView) {
-        // Undim the deck list when ShowcaseView is hidden
-        final float alpha = 1f;
-        CompatHelper.getCompat().setAlpha(mTodayTextView, alpha);
-        CompatHelper.getCompat().setAlpha(mRecyclerView, alpha);
-    }
-
-
-    @Override
-    public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
-    }
-
-
-    @Override
-    public void onShowcaseViewShow(ShowcaseView showcaseView) {
-        // Dim the deck list when ShowcaseView is shown
-        final float alpha = 0.1f;
-        CompatHelper.getCompat().setAlpha(mTodayTextView, alpha);
-        CompatHelper.getCompat().setAlpha(mRecyclerView, alpha);
-    }
-
-
-    private void hideShowcaseView() {
-        if (mShowcaseDialog != null) {
-            mShowcaseDialog.hide();
-        }
-    }
-
-
-    public void reloadShowcaseView() {
-        hideShowcaseView();
-        mShowShowcaseView = true;
-        supportInvalidateOptionsMenu();
     }
 
 
