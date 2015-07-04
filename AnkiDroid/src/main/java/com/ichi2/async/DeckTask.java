@@ -23,7 +23,6 @@ import android.content.res.Resources;
 import android.os.AsyncTask;
 
 import com.google.gson.stream.JsonReader;
-import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CardBrowser;
@@ -33,11 +32,12 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.AnkiPackageExporter;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.importer.Anki2Importer;
+import com.ichi2.libanki.importer.AnkiPackageImporter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -374,13 +374,13 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Note note = params[0].getNote();
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         try {
-            AnkiDb ankiDB = col.getDb();
-            ankiDB.getDatabase().beginTransaction();
+            DB db = col.getDb();
+            db.getDatabase().beginTransaction();
             try {
                 publishProgress(new TaskData(col.addNote(note)));
-                ankiDB.getDatabase().setTransactionSuccessful();
+                db.getDatabase().setTransactionSuccessful();
             } finally {
-                ankiDB.getDatabase().endTransaction();
+                db.getDatabase().endTransaction();
             }
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding fact");
@@ -441,8 +441,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         int ease = params[0].getInt();
         Card newCard = null;
         try {
-            AnkiDb ankiDB = col.getDb();
-            ankiDB.getDatabase().beginTransaction();
+            DB db = col.getDb();
+            db.getDatabase().beginTransaction();
             try {
                 if (oldCard != null) {
                     sched.answerCard(oldCard, ease);
@@ -455,9 +455,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                     newCard._getQA(true);
                 }
                 publishProgress(new TaskData(newCard));
-                ankiDB.getDatabase().setTransactionSuccessful();
+                db.getDatabase().setTransactionSuccessful();
             } finally {
-                ankiDB.getDatabase().endTransaction();
+                db.getDatabase().endTransaction();
             }
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundAnswerCard - RuntimeException on answering card");
@@ -741,48 +741,10 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         String path = params[0].getString();
-        boolean sharedDeckImport = params[0].getBoolean();
-
-        ProgressCallback pc = null;
-        // don't report progress on shared deck import (or maybe should we?)
-        if (!sharedDeckImport) {
-            pc = new ProgressCallback(this, res);
-        }
-
-        int addedCount = -1;
-        try {
-            Anki2Importer imp = new Anki2Importer(col, path, pc);
-            AnkiDb ankiDB = col.getDb();
-            ankiDB.getDatabase().beginTransaction();
-            try {
-                addedCount = imp.run();
-                // Rollback db transaction if an error occured (TODO: doesn't appear to be working)
-                if (addedCount >= 0) {
-                    ankiDB.getDatabase().setTransactionSuccessful();
-                }
-            } finally {
-                ankiDB.getDatabase().endTransaction();
-                if (sharedDeckImport) {
-                    File tmpFile = new File(path);
-                    tmpFile.delete();
-                }
-            }
-            if (addedCount >= 0) {
-                ankiDB.execute("VACUUM");
-                ankiDB.execute("ANALYZE");
-            }
-
-            publishProgress(new TaskData(res.getString(R.string.import_update_counts)));
-            return new TaskData(addedCount, null, true);
-        } catch (RuntimeException e) {
-            Timber.e(e, "doInBackgroundImportAdd - RuntimeException on importing cards");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportAdd");
-            return new TaskData(false);
-        } catch (IOException e) {
-            Timber.e(e, "doInBackgroundImportAdd - IOException on importing cards: ");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportAdd");
-            return new TaskData(false);
-        }
+        AnkiPackageImporter imp = new AnkiPackageImporter(col, path);
+        imp.setProgressCallback(new ProgressCallback(this, res));
+        imp.run();
+        return new TaskData(new Object[] {imp});
     }
 
 
@@ -799,7 +761,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             BackupManager.removeDir(dir);
         }
 
-        publishProgress(new TaskData(res.getString(R.string.import_unpacking)));
         // from anki2.py
         String colFile = new File(dir, "collection.anki2").getAbsolutePath();
         ZipFile zip;
@@ -810,14 +771,18 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace0");
             return new TaskData(false);
         }
-        if (!Utils.unzipFiles(zip, dir.getAbsolutePath(), new String[] { "collection.anki2", "media" }, null)
-                || !(new File(colFile)).exists()) {
+        try {
+            Utils.unzipFiles(zip, dir.getAbsolutePath(), new String[] { "collection.anki2", "media" }, null);
+        } catch (IOException e) {
+            return new TaskData(-2, null, false);
+        }
+        if (!(new File(colFile)).exists()) {
             return new TaskData(-2, null, false);
         }
 
         Collection tmpCol = null;
         try {
-            tmpCol = Storage.Collection(colFile);
+            tmpCol = Storage.Collection(mContext, colFile);
             if (!tmpCol.validCollection()) {
                 tmpCol.close();
                 return new TaskData(-2, null, false);
@@ -851,7 +816,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
         int addedCount = -1;
         try {
-            col = CollectionHelper.getInstance().reopenCollection();
+            col.reopen();
             CollectionHelper.getInstance().unlockCollection();
 
             // because users don't have a backup of media, it's safer to import new
@@ -922,7 +887,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             exporter.setIncludeSched(includeSched);
             exporter.setIncludeMedia(includeMedia);
             exporter.setDid(did);
-            exporter.exportInto(apkgPath);
+            exporter.exportInto(apkgPath, mContext);
         } catch (FileNotFoundException e) {
             Timber.e(e, "FileNotFoundException in doInBackgroundExportApkg");
             return new TaskData(false);

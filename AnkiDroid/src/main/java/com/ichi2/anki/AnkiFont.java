@@ -50,7 +50,7 @@ public class AnkiFont {
      */
     public static AnkiFont createAnkiFont(Context ctx, String path, boolean fromAssets) {
         File fontfile = new File(path);
-        String name = Utils.removeExtension(fontfile.getName());
+        String name = Utils.removeFileExtension(fontfile.getName());
         String family = name;
         List<String> attributes = new ArrayList<String>();
 

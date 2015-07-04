@@ -17,7 +17,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.libanki;
 
 import android.annotation.TargetApi;
 import android.content.ContentValues;
@@ -29,6 +29,8 @@ import android.os.Build;
 
 import android.widget.Toast;
 
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.compat.CompatHelper;
 
@@ -42,7 +44,7 @@ import timber.log.Timber;
 /**
  * Database layer for AnkiDroid. Can read the native Anki format through Android's SQLite driver.
  */
-public class AnkiDb {
+public class DB {
 
     private static final String[] MOD_SQLS = new String[] { "insert", "update", "delete" };
 
@@ -57,7 +59,7 @@ public class AnkiDb {
      * Open a database connection to an ".anki" SQLite file.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public AnkiDb(String ankiFilename) {
+    public DB(String ankiFilename) {
         // Since API 11 we can provide a custom error handler which doesn't delete the database on corruption
         if (CompatHelper.isHoneycomb()) {
             mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null,
@@ -83,7 +85,7 @@ public class AnkiDb {
         @Override
         public void onCorruption(SQLiteDatabase db) {
             Timber.e("The database has been corrupted...");
-            AnkiDroidApp.sendExceptionReport(new RuntimeException("Database corrupted"), "AnkiDb.MyDbErrorHandler.onCorruption", "Db has been corrupted ");
+            AnkiDroidApp.sendExceptionReport(new RuntimeException("Database corrupted"), "DB.MyDbErrorHandler.onCorruption", "Db has been corrupted ");
             CollectionHelper.getInstance().closeCollection(false);
             DatabaseErrorDialog.databaseCorruptFlag = true;
         }
@@ -93,12 +95,9 @@ public class AnkiDb {
     /**
      * Closes a previously opened database connection.
      */
-    public void closeDatabase() {
-        if (mDatabase != null) {
-            mDatabase.close();
-            Timber.d("closeDatabase, database %s closed = %s", mDatabase.getPath(), !mDatabase.isOpen());
-            mDatabase = null;
-        }
+    public void close() {
+        mDatabase.close();
+        Timber.d("Database %s closed = %s", mDatabase.getPath(), !mDatabase.isOpen());
     }
 
 
@@ -238,14 +237,14 @@ public class AnkiDb {
             if (nullExceptionCount > 0) {
                 if (nullException != null) {
                     StringBuilder sb = new StringBuilder();
-                    sb.append("AnkiDb.queryColumn (column " + column + "): ");
+                    sb.append("DB.queryColumn (column " + column + "): ");
                     sb.append("Exception due to null. Query: " + query);
                     sb.append(" Null occurrences during this query: " + nullExceptionCount);
                     AnkiDroidApp.sendExceptionReport(nullException, "queryColumn_encounteredNull", sb.toString());
                     Timber.w(sb.toString());
                 } else { // nullException not properly initialized
                     StringBuilder sb = new StringBuilder();
-                    sb.append("AnkiDb.queryColumn(): Critical error -- ");
+                    sb.append("DB.queryColumn(): Critical error -- ");
                     sb.append("unable to pass in the actual exception to error reporting.");
                     AnkiDroidApp.sendExceptionReport(new RuntimeException("queryColumn null"), "queryColumn_encounteredNull", sb.toString());
                     Timber.e(sb.toString());
@@ -316,20 +315,20 @@ public class AnkiDb {
     }
 
 
-    /** update must always be called via AnkiDb in order to mark the db as changed */
+    /** update must always be called via DB in order to mark the db as changed */
     public int update(String table, ContentValues values) {
         return update(table, values, null, null);
     }
 
 
-    /** update must always be called via AnkiDb in order to mark the db as changed */
+    /** update must always be called via DB in order to mark the db as changed */
     public int update(String table, ContentValues values, String whereClause, String[] whereArgs) {
         mMod = true;
         return getDatabase().update(table, values, whereClause, whereArgs);
     }
 
 
-    /** insert must always be called via AnkiDb in order to mark the db as changed */
+    /** insert must always be called via DB in order to mark the db as changed */
     public long insert(String table, String nullColumnHack, ContentValues values) {
         mMod = true;
         return getDatabase().insert(table, nullColumnHack, values);

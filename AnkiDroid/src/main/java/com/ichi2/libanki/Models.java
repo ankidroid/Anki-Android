@@ -106,7 +106,7 @@ public class Models {
     // BEGIN SQL table entries
 
     // private Decks mDeck;
-    // private AnkiDb mDb;
+    // private DB mDb;
     //
     /** Map for compiled Mustache Templates */
     private Map<String, Template> mCmpldTemplateMap = new HashMap<String, Template>();
@@ -1025,8 +1025,6 @@ public class Models {
             for (int i = 0; i < tmpls.length(); ++i) {
             	JSONObject t = tmpls.getJSONObject(i);
                 s += t.getString("name");
-                s += t.getString("qfmt");
-                s += t.getString("afmt");
            }
         } catch (JSONException e) {
             throw new RuntimeException(e);
