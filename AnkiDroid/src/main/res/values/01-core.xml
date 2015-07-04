@@ -50,10 +50,10 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Type answer</string>
     <string name="show_answer">Show answer</string>
-    <string name="ease1_successive">Again</string>
-    <string name="ease2_successive">Hard</string>
-    <string name="ease3_successive">Good</string>
-    <string name="ease3_learning">Easy</string>
+    <string name="ease_button_again">Again</string>
+    <string name="ease_button_hard">Hard</string>
+    <string name="ease_button_good">Good</string>
+    <string name="ease_button_easy">Easy</string>
     <string name="studyoptions_congrats_undo">Undo %s</string>
     <string name="menu_import">Import</string>
     <string name="undo">Undo</string>

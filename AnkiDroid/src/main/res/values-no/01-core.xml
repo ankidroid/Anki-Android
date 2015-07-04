@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">Skriv svar</string>
   <string name="show_answer">Vis svaret</string>
-  <string name="ease1_successive">Igjen</string>
-  <string name="ease2_successive">Vanskelig</string>
-  <string name="ease3_successive">Bra</string>
-  <string name="ease3_learning">Lett</string>
+  <string name="ease_button_again">Igjen</string>
+  <string name="ease_button_hard">Vanskelig</string>
+  <string name="ease_button_good">Bra</string>
+  <string name="ease_button_easy">Lett</string>
   <string name="studyoptions_congrats_undo">Angre %s</string>
   <string name="menu_import">Importer</string>
   <string name="undo">Angre</string>

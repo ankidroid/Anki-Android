@@ -211,7 +211,7 @@
 
                         <TextView
                                 android:id="@+id/ease1"
-                                android:text="@string/ease1_successive"
+                                android:text="@string/ease_button_again"
                                 style="@style/FooterButtonEaseText"/>
                     </LinearLayout>
 
@@ -231,7 +231,7 @@
 
                         <TextView
                                 android:id="@+id/ease2"
-                                android:text="@string/ease2_successive"
+                                android:text="@string/ease_button_hard"
                                 style="@style/FooterButtonEaseText" />
                     </LinearLayout>
 
@@ -251,7 +251,7 @@
 
                         <TextView
                                 android:id="@+id/ease3"
-                                android:text="@string/ease3_successive"
+                                android:text="@string/ease_button_good"
                                 style="@style/FooterButtonEaseText"/>
                     </LinearLayout>
 
@@ -271,7 +271,7 @@
 
                         <TextView
                                 android:id="@+id/ease4"
-                                android:text="@string/ease3_learning"
+                                android:text="@string/ease_button_easy"
                                 style="@style/FooterButtonEaseText" />
                     </LinearLayout>
                 </LinearLayout>

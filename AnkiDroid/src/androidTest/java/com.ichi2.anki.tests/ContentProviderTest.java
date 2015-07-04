@@ -33,7 +33,6 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Sched;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -645,7 +644,7 @@ public class ContentProviderTest extends AndroidTestCase {
         ContentValues values = new ContentValues();
         long noteId = card.note().getId();
         int cardOrd = card.getOrd();
-        int ease = AbstractFlashcardViewer.EASE_MID; //<- insert real ease here
+        int ease = AbstractFlashcardViewer.EASE_3; //<- insert real ease here
 
         values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);
         values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd);

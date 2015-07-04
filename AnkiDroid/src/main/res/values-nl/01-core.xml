@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">Antwoord schrijven</string>
   <string name="show_answer">Toon antwoord</string>
-  <string name="ease1_successive">Opnieuw</string>
-  <string name="ease2_successive">Moeilijk</string>
-  <string name="ease3_successive">Goed</string>
-  <string name="ease3_learning">Makkelijk</string>
+  <string name="ease_button_again">Opnieuw</string>
+  <string name="ease_button_hard">Moeilijk</string>
+  <string name="ease_button_good">Goed</string>
+  <string name="ease_button_easy">Makkelijk</string>
   <string name="studyoptions_congrats_undo">Maak %s ongedaan</string>
   <string name="menu_import">Importeer</string>
   <string name="undo">Ongedaan maken</string>

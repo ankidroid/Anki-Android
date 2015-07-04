@@ -62,10 +62,10 @@
   </plurals>
   <string name="type_answer_hint">Ketik jawaban</string>
   <string name="show_answer">Tampilkan jawaban</string>
-  <string name="ease1_successive">Ulang</string>
-  <string name="ease2_successive">Susah</string>
-  <string name="ease3_successive">Baik</string>
-  <string name="ease3_learning">Mudah</string>
+  <string name="ease_button_again">Ulang</string>
+  <string name="ease_button_hard">Susah</string>
+  <string name="ease_button_good">Baik</string>
+  <string name="ease_button_easy">Mudah</string>
   <string name="studyoptions_congrats_undo">Batalkan %s</string>
   <string name="menu_import">Masukkan</string>
   <string name="undo">Membatalkan</string>

@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">Yanıtı yazın</string>
   <string name="show_answer">Yanıtı Göster</string>
-  <string name="ease1_successive">Yeniden</string>
-  <string name="ease2_successive">Zor</string>
-  <string name="ease3_successive">İyi</string>
-  <string name="ease3_learning">Kolay</string>
+  <string name="ease_button_again">Yeniden</string>
+  <string name="ease_button_hard">Zor</string>
+  <string name="ease_button_good">İyi</string>
+  <string name="ease_button_easy">Kolay</string>
   <string name="studyoptions_congrats_undo">%s geri al</string>
   <string name="menu_import">İçeri aktar</string>
   <string name="undo">Geri Al</string>

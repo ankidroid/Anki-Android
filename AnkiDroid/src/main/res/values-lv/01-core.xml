@@ -68,10 +68,10 @@
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Parādīt atbildi</string>
-  <string name="ease1_successive">Vēlreiz</string>
-  <string name="ease2_successive">Grūti</string>
-  <string name="ease3_successive">Labi</string>
-  <string name="ease3_learning">Viegli</string>
+  <string name="ease_button_again">Vēlreiz</string>
+  <string name="ease_button_hard">Grūti</string>
+  <string name="ease_button_good">Labi</string>
+  <string name="ease_button_easy">Viegli</string>
   <string name="studyoptions_congrats_undo">Anulēt %s</string>
   <string name="menu_import">Import</string>
   <string name="undo">Atsaukt</string>

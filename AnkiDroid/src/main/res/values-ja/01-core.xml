@@ -62,10 +62,10 @@
   </plurals>
   <string name="type_answer_hint">回答の入力</string>
   <string name="show_answer">答えの表示</string>
-  <string name="ease1_successive">もう一度</string>
-  <string name="ease2_successive">難</string>
-  <string name="ease3_successive">普通</string>
-  <string name="ease3_learning">簡単</string>
+  <string name="ease_button_again">もう一度</string>
+  <string name="ease_button_hard">難</string>
+  <string name="ease_button_good">普通</string>
+  <string name="ease_button_easy">簡単</string>
   <string name="studyoptions_congrats_undo">%s を元に戻す</string>
   <string name="menu_import">インポート</string>
   <string name="undo">元に戻す</string>

@@ -62,10 +62,10 @@
   </plurals>
   <string name="type_answer_hint">پاسخ را تایپ کنید</string>
   <string name="show_answer">نمایش پاسخ</string>
-  <string name="ease1_successive">دوباره</string>
-  <string name="ease2_successive">سخت</string>
-  <string name="ease3_successive">خوب</string>
-  <string name="ease3_learning">آسان</string>
+  <string name="ease_button_again">دوباره</string>
+  <string name="ease_button_hard">سخت</string>
+  <string name="ease_button_good">خوب</string>
+  <string name="ease_button_easy">آسان</string>
   <string name="studyoptions_congrats_undo">تصحصح عمل  %s</string>
   <string name="menu_import">اضافه کردن</string>
   <string name="undo">تصحیح عمل قبلی</string>

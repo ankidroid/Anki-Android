@@ -30,6 +30,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -137,10 +138,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private static final int DYNAMIC_FONT_MIN_SIZE = 3;
     private static final int DYNAMIC_FONT_FACTOR = 5;
 
-    public static final int EASE_FAILED = 1;
-    public static final int EASE_HARD = 2;
-    public static final int EASE_MID = 3;
-    public static final int EASE_EASY = 4;
+    public static final int EASE_1 = 1;
+    public static final int EASE_2 = 2;
+    public static final int EASE_3 = 3;
+    public static final int EASE_4 = 4;
 
     /** Regex pattern used in removing tags from text before diff */
     private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
@@ -364,20 +365,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mTimeoutHandler.removeCallbacks(mShowQuestionTask);
             switch (view.getId()) {
                 case R.id.flashcard_layout_ease1:
-                    Timber.i("AbstractFlashcardViewer:: EASE_FAILED pressed");
-                    answerCard(EASE_FAILED);
+                    Timber.i("AbstractFlashcardViewer:: EASE_1 pressed");
+                    answerCard(EASE_1);
                     break;
                 case R.id.flashcard_layout_ease2:
-                    Timber.i("AbstractFlashcardViewer:: EASE_HARD pressed");
-                    answerCard(EASE_HARD);
+                    Timber.i("AbstractFlashcardViewer:: EASE_2 pressed");
+                    answerCard(EASE_2);
                     break;
                 case R.id.flashcard_layout_ease3:
-                    Timber.i("AbstractFlashcardViewer:: EASE_MID pressed");
-                    answerCard(EASE_MID);
+                    Timber.i("AbstractFlashcardViewer:: EASE_3 pressed");
+                    answerCard(EASE_3);
                     break;
                 case R.id.flashcard_layout_ease4:
-                    Timber.i("AbstractFlashcardViewer:: EASE_EASY pressed");
-                    answerCard(EASE_EASY);
+                    Timber.i("AbstractFlashcardViewer:: EASE_4 pressed");
+                    answerCard(EASE_4);
                     break;
                 default:
                     mCurrentEase = 0;
@@ -829,9 +830,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     protected int getDefaultEase() {
         if (getCol().getSched().answerButtons(mCurrentCard) == 4) {
-            return EASE_MID;
+            return EASE_3;
         } else {
-            return EASE_HARD;
+            return EASE_2;
         }
     }
 
@@ -1253,11 +1254,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         try {
             switch (mSched.answerButtons(mCurrentCard)) {
                 case 2:
-                    return EASE_HARD;
+                    return EASE_2;
                 case 3:
-                    return easy ? EASE_MID : EASE_HARD;
+                    return easy ? EASE_3 : EASE_2;
                 case 4:
-                    return easy ? EASE_EASY : EASE_MID;
+                    return easy ? EASE_4 : EASE_3;
                 default:
                     return 0;
             }
@@ -1282,28 +1283,28 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
         // Set the dots appearing below the toolbar
         switch (ease) {
-            case EASE_FAILED:
+            case EASE_1:
                 mChosenAnswer.setText("\u2022");
                 mChosenAnswer.setTextColor(getResources().getColor(R.color.material_red_500));
                 // if ((deck.getDueCount() + deck.getNewCountToday()) == 1) {
                 // mIsLastCard = true;
                 // }
                 break;
-            case EASE_HARD:
+            case EASE_2:
                 mChosenAnswer.setText("\u2022\u2022");
                 mChosenAnswer.setTextColor(getResources().getColor(buttonNumber == 4 ?
-                        R.color.material_blue_grey_700:
+                        R.color.material_blue_grey_600:
                         R.color.material_green_500));
                 break;
-            case EASE_MID:
+            case EASE_3:
                 mChosenAnswer.setText("\u2022\u2022\u2022");
                 mChosenAnswer.setTextColor(getResources().getColor(buttonNumber == 4 ?
                         R.color.material_green_500 :
-                        R.color.material_blue_grey_700));
+                        R.color.material_light_blue_500));
                 break;
-            case EASE_EASY:
+            case EASE_4:
                 mChosenAnswer.setText("\u2022\u2022\u2022\u2022");
-                mChosenAnswer.setTextColor(getResources().getColor(R.color.material_blue_grey_700));
+                mChosenAnswer.setTextColor(getResources().getColor(R.color.material_light_blue_500));
                 break;
         }
 
@@ -1495,25 +1496,47 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
 
         // Set correct label and background resource for each button
+        // Note that it's necessary to set the resource dynamically as the ease2 / ease3 buttons
+        // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy -- depending on how many buttons are shown
+        final int[] ANSWER_BUTTON_DRAWABLES = {R.attr.againButtonRef, R.attr.hardButtonRef, R.attr.goodButtonRef, R.attr.easyButtonRef};
+        TypedArray ta = obtainStyledAttributes(ANSWER_BUTTON_DRAWABLES);
+        mEase1Layout.setVisibility(View.VISIBLE);
+        mEase1Layout.setBackgroundResource(ta.getResourceId(0, R.drawable.footer_button_again));
+        mEase4Layout.setBackgroundResource(ta.getResourceId(3, R.drawable.footer_button_easy));
         switch (buttonCount) {
             case 2:
-                mEase1Layout.setVisibility(View.VISIBLE);
+                // Ease 2 is "good"
                 mEase2Layout.setVisibility(View.VISIBLE);
+                mEase2Layout.setBackgroundResource(ta.getResourceId(2, R.drawable.footer_button_good));
+                mEase2.setText(R.string.ease_button_good);
                 mEase2Layout.requestFocus();
                 break;
             case 3:
-                mEase1Layout.setVisibility(View.VISIBLE);
+                // Ease 2 is good
                 mEase2Layout.setVisibility(View.VISIBLE);
+                mEase2Layout.setBackgroundResource(ta.getResourceId(2, R.drawable.footer_button_good));
+                mEase2.setText(R.string.ease_button_good);
+                // Ease 3 is easy
                 mEase3Layout.setVisibility(View.VISIBLE);
+                mEase3Layout.setBackgroundResource(ta.getResourceId(3, R.drawable.footer_button_easy));
+                mEase3.setText(R.string.ease_button_easy);
                 mEase2Layout.requestFocus();
                 break;
             default:
-                mEase1Layout.setVisibility(View.VISIBLE);
                 mEase2Layout.setVisibility(View.VISIBLE);
+                // Ease 2 is "hard"
+                mEase2Layout.setVisibility(View.VISIBLE);
+                mEase2Layout.setBackgroundResource(ta.getResourceId(1, R.drawable.footer_button_hard));
+                mEase2.setText(R.string.ease_button_hard);
+                mEase2Layout.requestFocus();
+                // Ease 3 is good
                 mEase3Layout.setVisibility(View.VISIBLE);
+                mEase3Layout.setBackgroundResource(ta.getResourceId(2, R.drawable.footer_button_good));
+                mEase3.setText(R.string.ease_button_good);
                 mEase4Layout.setVisibility(View.VISIBLE);
                 mEase3Layout.requestFocus();
         }
+        ta.recycle();
 
         // Show next review time
         if (mShowNextReviewTime) {
@@ -2207,28 +2230,28 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mFlipCardLayout.setEnabled(true);
 
         switch (mCurrentEase) {
-            case EASE_FAILED:
+            case EASE_1:
                 mEase1Layout.setClickable(true);
                 mEase2Layout.setEnabled(true);
                 mEase3Layout.setEnabled(true);
                 mEase4Layout.setEnabled(true);
                 break;
 
-            case EASE_HARD:
+            case EASE_2:
                 mEase1Layout.setEnabled(true);
                 mEase2Layout.setClickable(true);
                 mEase3Layout.setEnabled(true);
                 mEase4Layout.setEnabled(true);
                 break;
 
-            case EASE_MID:
+            case EASE_3:
                 mEase1Layout.setEnabled(true);
                 mEase2Layout.setEnabled(true);
                 mEase3Layout.setClickable(true);
                 mEase4Layout.setEnabled(true);
                 break;
 
-            case EASE_EASY:
+            case EASE_4:
                 mEase1Layout.setEnabled(true);
                 mEase2Layout.setEnabled(true);
                 mEase3Layout.setEnabled(true);
@@ -2262,28 +2285,28 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mInAnswer = true;
 
         switch (mCurrentEase) {
-            case EASE_FAILED:
+            case EASE_1:
                 mEase1Layout.setClickable(false);
                 mEase2Layout.setEnabled(false);
                 mEase3Layout.setEnabled(false);
                 mEase4Layout.setEnabled(false);
                 break;
 
-            case EASE_HARD:
+            case EASE_2:
                 mEase1Layout.setEnabled(false);
                 mEase2Layout.setClickable(false);
                 mEase3Layout.setEnabled(false);
                 mEase4Layout.setEnabled(false);
                 break;
 
-            case EASE_MID:
+            case EASE_3:
                 mEase1Layout.setEnabled(false);
                 mEase2Layout.setEnabled(false);
                 mEase3Layout.setClickable(false);
                 mEase4Layout.setEnabled(false);
                 break;
 
-            case EASE_EASY:
+            case EASE_4:
                 mEase1Layout.setEnabled(false);
                 mEase2Layout.setEnabled(false);
                 mEase3Layout.setEnabled(false);
@@ -2351,28 +2374,28 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 break;
             case GESTURE_ANSWER_EASE1:
                 if (sDisplayAnswer) {
-                    answerCard(EASE_FAILED);
+                    answerCard(EASE_1);
                 } else {
                     displayCardAnswer();
                 }
                 break;
             case GESTURE_ANSWER_EASE2:
                 if (sDisplayAnswer) {
-                    answerCard(EASE_HARD);
+                    answerCard(EASE_2);
                 } else {
                     displayCardAnswer();
                 }
                 break;
             case GESTURE_ANSWER_EASE3:
                 if (sDisplayAnswer) {
-                    answerCard(EASE_MID);
+                    answerCard(EASE_3);
                 } else {
                     displayCardAnswer();
                 }
                 break;
             case GESTURE_ANSWER_EASE4:
                 if (sDisplayAnswer) {
-                    answerCard(EASE_EASY);
+                    answerCard(EASE_4);
                 } else {
                     displayCardAnswer();
                 }

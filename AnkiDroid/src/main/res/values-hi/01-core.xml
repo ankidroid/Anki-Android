@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">जवाब दिखाना</string>
-  <string name="ease1_successive">फिर से</string>
-  <string name="ease2_successive">कठिन</string>
-  <string name="ease3_successive">अच्छा</string>
-  <string name="ease3_learning">आसान</string>
+  <string name="ease_button_again">फिर से</string>
+  <string name="ease_button_hard">कठिन</string>
+  <string name="ease_button_good">अच्छा</string>
+  <string name="ease_button_easy">आसान</string>
   <string name="studyoptions_congrats_undo">पूर्ववत् करें %s</string>
   <string name="menu_import">Import</string>
   <string name="undo">पूर्ववत् करें</string>
