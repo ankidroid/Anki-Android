@@ -257,19 +257,19 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (mAnswerField != null && !mAnswerField.isFocused()) {
 	        if (sDisplayAnswer) {
 	            if (keyPressed == '1') {
-	                answerCard(EASE_FAILED);
+	                answerCard(EASE_1);
 	                return true;
 	            }
 	            if (keyPressed == '2') {
-	                answerCard(EASE_HARD);
+	                answerCard(EASE_2);
 	                return true;
 	            }
 	            if (keyPressed == '3') {
-	                answerCard(EASE_MID);
+	                answerCard(EASE_3);
 	                return true;
 	            }
 	            if (keyPressed == '4') {
-	                answerCard(EASE_EASY);
+	                answerCard(EASE_4);
 	                return true;
 	            }
 	            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {

@@ -976,10 +976,10 @@ public class FlashCardsContract {
      * <td>{@link #EASE}</td>
      * <td>write-only</td>
      * <td>The ease of the card. Used when answering the card.
-     * One of {@link com.ichi2.anki.AbstractFlashcardViewer#EASE_EASY},
-     * {@link com.ichi2.anki.AbstractFlashcardViewer#EASE_MID},
-     * {@link com.ichi2.anki.AbstractFlashcardViewer#EASE_HARD},
-     * {@link com.ichi2.anki.AbstractFlashcardViewer#EASE_FAILED}
+     * One of {@link com.ichi2.anki.AbstractFlashcardViewer#EASE_4},
+     * {@link com.ichi2.anki.AbstractFlashcardViewer#EASE_3},
+     * {@link com.ichi2.anki.AbstractFlashcardViewer#EASE_2},
+     * {@link com.ichi2.anki.AbstractFlashcardViewer#EASE_1}
      * </td>
      * </tr>
      * <tr>
@@ -1000,7 +1000,7 @@ public class FlashCardsContract {
      *            ContentValues values = new ContentValues();
      *            long noteId = 123456789; //<- insert real note id here
      *            int cardOrd = 0;   //<- insert real card ord here
-     *            int ease = AbstractFlashcardViewer.EASE_MID; //<- insert real ease here
+     *            int ease = AbstractFlashcardViewer.EASE_3; //<- insert real ease here
      *            long timeTaken = System.currentTimeMillis() - cardStartTime; //<- insert real time taken here
      *
      *            values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);
@@ -1046,7 +1046,7 @@ public class FlashCardsContract {
 
         /*
          * Ease of an answer. Is not set when requesting the scheduled cards.
-         * Can take values of AbstractFlashcardViewer e.g. EASE_FAILED
+         * Can take values of AbstractFlashcardViewer e.g. EASE_1
          */
 
         public static final String EASE = "answer_ease";

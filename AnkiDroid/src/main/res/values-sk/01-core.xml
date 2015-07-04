@@ -68,10 +68,10 @@
   </plurals>
   <string name="type_answer_hint">Napísať odpoveď</string>
   <string name="show_answer">Zobraziť odpoveď</string>
-  <string name="ease1_successive">Znovu</string>
-  <string name="ease2_successive">Ťažké</string>
-  <string name="ease3_successive">Dobre</string>
-  <string name="ease3_learning">Ľahké</string>
+  <string name="ease_button_again">Znovu</string>
+  <string name="ease_button_hard">Ťažké</string>
+  <string name="ease_button_good">Dobre</string>
+  <string name="ease_button_easy">Ľahké</string>
   <string name="studyoptions_congrats_undo">Späť %s</string>
   <string name="menu_import">Import</string>
   <string name="undo">Späť</string>

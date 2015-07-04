@@ -77,10 +77,10 @@
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">أظهر الإجابة</string>
-  <string name="ease1_successive">مجددا</string>
-  <string name="ease2_successive">صعب</string>
-  <string name="ease3_successive">جيد</string>
-  <string name="ease3_learning">سهل</string>
+  <string name="ease_button_again">مجددا</string>
+  <string name="ease_button_hard">صعب</string>
+  <string name="ease_button_good">جيد</string>
+  <string name="ease_button_easy">سهل</string>
   <string name="studyoptions_congrats_undo">تراجع عن%s</string>
   <string name="menu_import">Import</string>
   <string name="undo">تراجع</string>

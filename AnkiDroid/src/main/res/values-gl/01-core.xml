@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Amosar resposta</string>
-  <string name="ease1_successive">De novo</string>
-  <string name="ease2_successive">Difícil</string>
-  <string name="ease3_successive">Ben</string>
-  <string name="ease3_learning">Doado</string>
+  <string name="ease_button_again">De novo</string>
+  <string name="ease_button_hard">Difícil</string>
+  <string name="ease_button_good">Ben</string>
+  <string name="ease_button_easy">Doado</string>
   <string name="studyoptions_congrats_undo">Desfacer %s</string>
   <string name="menu_import">Importar</string>
   <string name="undo">Desfacer</string>

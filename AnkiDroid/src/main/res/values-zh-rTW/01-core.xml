@@ -62,10 +62,10 @@
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">看答案</string>
-  <string name="ease1_successive">再一次</string>
-  <string name="ease2_successive">難</string>
-  <string name="ease3_successive">中等</string>
-  <string name="ease3_learning">簡單</string>
+  <string name="ease_button_again">再一次</string>
+  <string name="ease_button_hard">難</string>
+  <string name="ease_button_good">中等</string>
+  <string name="ease_button_easy">簡單</string>
   <string name="studyoptions_congrats_undo">復原 %s</string>
   <string name="menu_import">Import</string>
   <string name="undo">復原</string>
