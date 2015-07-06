@@ -18,12 +18,12 @@
 package com.ichi2.libanki.sync;
 
 import android.text.TextUtils;
-
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.APIVersionException;
+import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.anki.exception.UnsupportedSyncException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
@@ -34,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -98,11 +99,9 @@ public class MediaSyncer {
             // loop through and process changes from server
             mCol.log("last local usn is " + lastUsn);
             mDownloadCount = 0;
-            Timber.i("MediaSyncer: Last local usn is: %d", lastUsn);
             while (true) {
                 JSONArray data = mServer.mediaChanges(lastUsn);
-                mCol.log("mediaChanges resp count: %d", data.length());
-                Timber.i("MediaSyncer: mediaChanges resp count: %d", data.length());
+                mCol.log("mediaChanges resp count: ", data.length());
                 if (data.length() == 0) {
                     break;
                 }
@@ -162,31 +161,38 @@ public class MediaSyncer {
             while (true) {
                 Pair<File, List<String>> changesZip = mCol.getMedia().mediaChangesZip();
                 File zip = changesZip.first;
-                List<String> fnames = changesZip.second;
-                if (fnames.size() == 0) {
-                    break;
-                }
-                mCon.publishProgress(String.format(
-                        AnkiDroidApp.getAppResources().getString(R.string.sync_media_changes_count), toSend));
+                try {
+                    List<String> fnames = changesZip.second;
+                    if (fnames.size() == 0) {
+                        break;
+                    }
 
-                JSONArray changes = mServer.uploadChanges(zip);
-                int processedCnt = changes.getInt(0);
-                int serverLastUsn = changes.getInt(1);
-                mCol.getMedia().markClean(fnames.subList(0, processedCnt));
-                mCol.log(String.format("processed %d, serverUsn %d, clientUsn %d",
-                        processedCnt, serverLastUsn, lastUsn));
+                    mCon.publishProgress(String.format(
+                            AnkiDroidApp.getAppResources().getString(R.string.sync_media_changes_count), toSend));
 
-                if (serverLastUsn - processedCnt == lastUsn) {
-                    mCol.log("lastUsn in sync, updating local");
-                    lastUsn = serverLastUsn;
-                    mCol.getMedia().setLastUsn(serverLastUsn); // commits
-                } else {
-                    mCol.log("concurrent update, skipping usn update");
-                    // commit for markClean
-                    mCol.getMedia().getDb().commit();
-                    updateConflict = true;
+                    JSONArray changes = mServer.uploadChanges(zip);
+                    int processedCnt = changes.getInt(0);
+                    int serverLastUsn = changes.getInt(1);
+                    mCol.getMedia().markClean(fnames.subList(0, processedCnt));
+
+                    mCol.log(String.format("processed %d, serverUsn %d, clientUsn %d",
+                            processedCnt, serverLastUsn, lastUsn));
+
+                    if (serverLastUsn - processedCnt == lastUsn) {
+                        mCol.log("lastUsn in sync, updating local");
+                        lastUsn = serverLastUsn;
+                        mCol.getMedia().setLastUsn(serverLastUsn); // commits
+                    } else {
+                        mCol.log("concurrent update, skipping usn update");
+                        // commit for markClean
+                        mCol.getMedia().getDb().commit();
+                        updateConflict = true;
+                    }
+
+                    toSend -= processedCnt;
+                } finally {
+                    zip.delete();
                 }
-                toSend -= processedCnt;
             }
             if (updateConflict) {
                 mCol.log("restart sync due to concurrent update");
@@ -213,9 +219,7 @@ public class MediaSyncer {
         }
     }
 
-    // TODO: I think this method should be responsible for the life cycle of the zip file
-    // It can be safely deleted after this method has finished using it. Right now it is
-    // left in the AnkiDroid directory (harmless but takes up space).
+
     private void _downloadFiles(List<String> fnames) throws APIVersionException {
         mCol.log(fnames.size() + " files to fetch");
         while (fnames.size() > 0) {
@@ -236,7 +240,10 @@ public class MediaSyncer {
                 }
                 mCon.publishProgress(String.format(
                         AnkiDroidApp.getAppResources().getString(R.string.sync_media_downloaded_count), mDownloadCount));
-            } catch (Exception e) {
+            } catch (IOException e) {
+                Timber.e(e, "Error downloading media files");
+                throw new RuntimeException(e);
+            } catch (UnknownHttpResponseException e) {
                 Timber.e(e, "Error downloading media files");
                 throw new RuntimeException(e);
             }

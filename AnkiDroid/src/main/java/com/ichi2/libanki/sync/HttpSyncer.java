@@ -254,7 +254,7 @@ public class HttpSyncer {
     }
 
 
-    public boolean writeToFile(InputStream source, String destination) {
+    public void writeToFile(InputStream source, String destination) throws IOException {
         File file = new File(destination);
         OutputStream output = null;
         try {
@@ -267,19 +267,17 @@ public class HttpSyncer {
                 bytesReceived += len;
                 publishProgress();
             }
-            output.close();
-            return true;
         } catch (IOException e) {
-            try {
-                if (output != null) {
-                    output.close();
-                }
-            } catch (IOException e1) {
-                // do nothing
+            if (file.exists()) {
+                // Don't keep the file if something went wrong. It'll be corrupt.
+                file.delete();
             }
-            // no write access or sd card full
-            file.delete();
-            return false;
+            // Re-throw so we know what the error was.
+            throw e;
+        } finally {
+            if (output != null) {
+                output.close();
+            }
         }
     }
 
