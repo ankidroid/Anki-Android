@@ -2009,8 +2009,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Timber.d("::style::", style);
 
         if (mNightMode) {
-            content = HtmlColors.invertColors(content);
+            // Enable the night-mode class
             cardClass += " night_mode";
+            // If card styling doesn't contain any mention of the night_mode class then do color inversion as fallback
+            // TODO: find more robust solution that won't match unrelated classes like "night_mode_old"
+            if (!mCurrentCard.css().contains(".night_mode")) {
+                content = HtmlColors.invertColors(content);
+            }
         }
 
         content = SmpToHtmlEntity(content);
