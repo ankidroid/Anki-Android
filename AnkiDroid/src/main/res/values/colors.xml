@@ -75,6 +75,10 @@
     <color name="studyoptions_progressbar_young_blue">#8a8a8a</color>
     <color name="background_dark_blue">#10171d</color>
     <color name="reviewer_progressbar_session_blue">#a9a9a9</color>
+    <color name="deckadapter_row_current">#ececec</color>
+    <color name="deckadapter_row_current_night">#393939</color>
+    <color name="deckadapter_deck_name_dyn">#2222bb</color>
+    <color name="deckadapter_deck_name_dyn_night">#6699d6</color>
 
     <!-- Colors for the card counts, in the top bar, deck picker etc. -->
     <color name="new_count">@color/material_indigo_700</color>
@@ -86,8 +90,6 @@
     <color name="review_count_night">@color/material_green_200</color>
     <color name="zero_count_night">#202020</color>
     <color name="actionbar_background">#f5f5f5</color>
-    <color name="dyn_deck">#2222bb</color>
-    <color name="non_dyn_deck">#000000</color>
 
     <!-- Material Design: http://www.google.com/design/spec/style/color.html#color-color-palette -->
     <!-- Can eventually be shortened once settled on a color scheme -->
