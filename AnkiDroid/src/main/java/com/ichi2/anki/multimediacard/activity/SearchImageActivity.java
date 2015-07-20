@@ -43,6 +43,7 @@ import com.ichi2.anki.multimediacard.googleimagesearch.json.ResponseData;
 import com.ichi2.anki.multimediacard.googleimagesearch.json.Result;
 import com.ichi2.anki.web.HttpFetcher;
 import com.ichi2.anki.web.UrlTools;
+import com.ichi2.async.Connection;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -206,6 +207,11 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
 
 
     protected void pickImage() {
+        if(!Connection.isOnline()) {
+            returnFailure(gtxt(R.string.network_no_connection));
+            return;
+        }
+
         String imageUrl = mImages.get(mCurrentImage);
 
         // And here it is possible to download it... so on,
@@ -339,6 +345,11 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
 
         progressDialog.setCancelable(true);
         progressDialog.setOnCancelListener(this);
+
+        if(!Connection.isOnline()) {
+            returnFailure(gtxt(R.string.network_no_connection));
+            return;
+        }
 
         BackgroundPost p = new BackgroundPost();
         p.setQuery(mSource);

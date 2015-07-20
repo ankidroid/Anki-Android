@@ -40,6 +40,7 @@ import com.ichi2.anki.multimediacard.beolingus.parsing.BeolingusParser;
 import com.ichi2.anki.multimediacard.language.LanguageListerBeolingus;
 import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.web.HttpFetcher;
+import com.ichi2.async.Connection;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -151,6 +152,10 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
      * @param v Start of the story.
      */
     protected void onLoadPronunciation(View v) {
+        if(!Connection.isOnline()) {
+            showToast(gtxt(R.string.network_no_connection));
+            return;
+        }
 
         String message = gtxt(R.string.multimedia_editor_searching_word);
 
