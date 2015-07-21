@@ -292,6 +292,8 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
                         + "v=1.0&q=Q&userip=IP".replaceAll("Q", getQuery()).replaceAll("IP", UrlTools.encodeUrl(ip)));
                 URLConnection connection = url.openConnection();
                 connection.addRequestProperty("Referer", "anki.ichi2.com");
+				connection.setConnectTimeout(5000);
+				connection.setReadTimeout(10000);
 
                 String line;
                 StringBuilder builder = new StringBuilder();
