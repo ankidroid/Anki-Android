@@ -21,6 +21,10 @@
         <item name="popupTheme">@style/ActionBar.Popup</item>
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
+        <!-- Deck list colors and divider -->
+        <item name="currentDeckBackgroundColor">@color/deckadapter_row_current</item>
+        <item name="dynDeckColor">@color/deckadapter_deck_name_dyn</item>
+        <item name="deckDivider">@drawable/divider</item>
         <!-- Reviewer colors -->
         <item name="topBarColor">@color/theme_primary_light</item>
         <item name="newCountColor">@color/new_count</item>

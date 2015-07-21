@@ -29,6 +29,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.database.SQLException;
 import android.graphics.PixelFormat;
 import android.net.Uri;
@@ -71,6 +72,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.widgets.DeckAdapter;
+import com.ichi2.ui.DividerItemDecoration;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask;
@@ -139,7 +141,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mRecyclerViewLayoutManager;
     private DeckAdapter mDeckListAdapter;
-    private List<Sched.DeckDueTreeNode> mDeckList;
 
     private TextView mTodayTextView;
 
@@ -155,9 +156,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
     /**
      * Keep track of which deck was last given focus in the deck list. If we find that this value
      * has changed between deck list refreshes, we need to recenter the deck list to the new current
-     * deck (e.g., when a filtered deck was created in a study options fragment).
+     * deck.
      */
-    private Long mFocusedDeck;
+    private long mFocusedDeck;
+
+
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -184,9 +187,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         public boolean onLongClick(View v) {
             long deckId = (long) v.getTag();
             Timber.i("DeckPicker:: Long tapped on deck with id %d", deckId);
-            if (mDeckList == null || mDeckList.size() == 0) {
-                return true;
-            }
             mContextMenuDid = deckId;
             String deckName = getCol().getDecks().name(mContextMenuDid);
             boolean hasSubdecks = getCol().getDecks().children(mContextMenuDid).size() > 0;
@@ -366,16 +366,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
         initNavigationDrawer(mainView);
         setTitle(getResources().getString(R.string.app_name));
 
-        mDeckList = new ArrayList<>();
         mRecyclerView = (RecyclerView) findViewById(R.id.files);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, null, false, true));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this));
 
         // specify a LinearLayoutManager for the RecyclerView
         mRecyclerViewLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mRecyclerViewLayoutManager);
 
         // create and set an adapter for the RecyclerView
-        mDeckListAdapter = new DeckAdapter(mDeckList, getResources(), getLayoutInflater(), this);
+        mDeckListAdapter = new DeckAdapter(getLayoutInflater(), this);
         mDeckListAdapter.setDeckClickListener(mDeckClickListener);
         mDeckListAdapter.setDeckExpanderClickListener(mDeckExpanderClickListener);
         mDeckListAdapter.setDeckLongClickListener(mDeckLongClickListener);
@@ -1551,23 +1550,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
         getCol().getDecks().select(did);
         mFocusedDeck = did;
         openStudyOptions(false);
+        // Make sure the adapter knows about the new current deck so it will be correctly highlighted.
+        mDeckListAdapter.notifyDataSetChanged();
     }
 
-
-    /**
-     * Return true if deck is not a children of a collapsed deck
-     */
-    private boolean deckIsShown(List<Sched.DeckDueTreeNode> nodes, Long current) {
-        for (Sched.DeckDueTreeNode node : nodes) {
-            if (node.did == current) {
-                return true;
-            }
-            if (!getCol().getDecks().get(node.did).optBoolean("collapsed", false) && deckIsShown(node.children, current)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     /**
      * Scroll the deck list so that it is centered on the current deck.
@@ -1575,63 +1561,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * @param did The deck ID of the deck to select.
      */
     private void scrollDecklistToDeck(long did) {
-        int position = findDeckPositionWithId(mDeckList, did, 0);
-        if (position > -1) {
-            mRecyclerViewLayoutManager.scrollToPositionWithOffset(position, (mRecyclerView.getHeight() / 2));
-        }
-    }
-
-    /**
-     * Given a list of {@link Sched.DeckDueTreeNode} objects, find the list position matching the id.
-     *
-     * @param nodes The list of {@link Sched.DeckDueTreeNode} objects
-     * @param did The deck id to find
-     * @param position The current deck's position in the list
-     *
-     * @return The position, if found, and -1 otherwise.
-     */
-    private int findDeckPositionWithId(List<Sched.DeckDueTreeNode> nodes, long did, int position) {
-        for (int i=0; i<nodes.size(); i++) {
-            // return the position if the deck ids match
-            if (nodes.get(i).did == did) {
-                // if we're at depth zero, return this loop's value
-                // otherwise return the position (the cardview we want)
-                return (nodes.get(i).depth == 0) ? i : position;
-            }
-
-            // keep searching through this node's children
-            if (nodes.get(i).children.size() > 0) {
-                // if we find the deck id, return this child's parent position
-                int childPosition = findDeckPositionWithId(nodes.get(i).children, did, (nodes.get(i).depth == 0) ? i : position);
-                if (childPosition > -1) {
-                    return childPosition;
-                }
-            }
-        }
-
-        return -1;
-    }
-
-    /**
-     * Given a list of {@link Sched.DeckDueTreeNode} objects, find the node matching the deck id.
-     *
-     * @param nodes The list of {@link Sched.DeckDueTreeNode} objects
-     * @param did The deck id to find
-     *
-     * @return The {@link Sched.DeckDueTreeNode}, if found, and null otherwise.
-     */
-    private Sched.DeckDueTreeNode findDeckWithId(List<Sched.DeckDueTreeNode> nodes, long did) {
-        for (int i=0; i<nodes.size(); i++) {
-            if (nodes.get(i).did == did) {
-                return nodes.get(i);
-            }
-
-            if (nodes.get(i).children.size() > 0) {
-                return findDeckWithId(nodes.get(i).children, did);
-            }
-        }
-
-        return null;
+        int position = mDeckListAdapter.findDeckPosition(did);
+        mRecyclerViewLayoutManager.scrollToPositionWithOffset(position, (mRecyclerView.getHeight() / 2));
     }
 
 
@@ -1644,10 +1575,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
      */
     private void updateDeckList() {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, new DeckTask.TaskListener() {
-            // Totals accumulated as each deck is processed
-            private int nNew;
-            private int nLrn;
-            private int nRev;
 
             @Override
             public void onPreExecute() {
@@ -1662,14 +1589,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     return;
                 }
                 List<Sched.DeckDueTreeNode> nodes = (List<Sched.DeckDueTreeNode>) result.getObjArray()[0];
-                mDeckList.clear();
-                _renderDeckTree(nodes);
-                mDeckListAdapter.notifyDataSetChanged();
+                mDeckListAdapter.buildDeckList(nodes);
 
                 // Set the "x due in y minutes" subtitle
                 try {
-                    int eta = getCol().getSched().eta(new int[]{nNew, nLrn, nRev});
-                    int due = nNew + nLrn + nRev;
+                    int eta = mDeckListAdapter.getEta();
+                    int due = mDeckListAdapter.getDue();
                     Resources res = getResources();
                     if (getCol().cardCount() != -1) {
                         String time = "-";
@@ -1684,11 +1609,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     return;
                 }
 
-                Long current = getCol().getDecks().current().optLong("id");
-                if (!deckIsShown(nodes, current)) {
-                    // clear selection if deck is hidden
-                    //                    mDeckListView.clearChoices(); // TODO AVP
-                } else if (mFocusedDeck == null || !mFocusedDeck.equals(current)) {
+                long current = getCol().getDecks().current().optLong("id");
+                if (mFocusedDeck != current) {
                     scrollDecklistToDeck(current);
                     mFocusedDeck = current;
                 }
@@ -1709,55 +1631,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             public void onCancelled() {
             }
 
-
-            private void _renderDeckTree(List<Sched.DeckDueTreeNode> nodes) {
-                _renderDeckTree(nodes, 0);
-            }
-
-
-            private void _renderDeckTree(List<Sched.DeckDueTreeNode> nodes, int depth) {
-                for (Sched.DeckDueTreeNode node : nodes) {
-                    // if this node's parent is collapsed, don't add it to the deck list
-                    for (JSONObject parent : getCol().getDecks().parents(node.did)) {
-                        if (parent.optBoolean("collapsed")) {
-                            return;
-                        }
-                    }
-
-                    // add node to deck
-                    mDeckList.add(node);
-
-                    _deckRow(node, depth);
-                }
-            }
-
-
-            /**
-             * Create a row in the deck list using the given node.
-             *
-             * This method determines various visual elements of each row:
-             *  - Indenting level based on depth if it's a subdeck
-             *  - Addition of a unicode arrow to indicate subdeck status
-             *  - Addition of an indicator to notify collapsed state
-             *  - The type of padding given to each row
-             *
-             * NOTE: Each row in the list also contains the deck ID (did) which is later fetched
-             * to perform operations on the correct deck when the user interacts with the list.
-             *  @param node The row data.
-             * @param depth The subdeck level this node is at.
-             */
-            private void _deckRow(Sched.DeckDueTreeNode node, int depth) {
-                node.depth = depth;
-
-                // Add this node's counts to the totals if it's a parent deck
-                if (depth == 0) {
-                    nNew += node.newCount;
-                    nLrn += node.lrnCount;
-                    nRev += node.revCount;
-                }
-
-                _renderDeckTree(node.children, depth + 1);
-            }
         }, new TaskData(getCol()));
     }
 
@@ -1832,10 +1705,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         Collection col = getCol();
                         if (col != null) {
                             if (col.getDecks().rename(col.getDecks().get(mContextMenuDid), newName)) {
-                                Sched.DeckDueTreeNode node = findDeckWithId(mDeckList, mContextMenuDid);
-                                if (node != null) {
-                                    node.names = new String[]{newName};
-                                }
                                 updateDeckList();
                             } else {
                                 try {
@@ -1864,7 +1733,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // Callback to show confirm deck deletion dialog before deleting currently selected deck
     public void confirmDeckDeletion(DialogFragment parent) {
         Resources res = getResources();
-        if (!colIsOpen() || mDeckList == null || mDeckList.size() == 0) {
+        if (!colIsOpen()) {
             return;
         }
         String msg = "";
