@@ -122,4 +122,6 @@
     <string name="title_activity_load_pronounciation">Pronunciation</string>
     <string name="title_activity_search_image">Google Image Search</string>
 
+	<!-- Network failure -->
+	<string name="network_no_connection">No connection.</string>
 </resources>

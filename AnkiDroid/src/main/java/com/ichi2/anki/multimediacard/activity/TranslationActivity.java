@@ -47,6 +47,7 @@ import com.ichi2.anki.multimediacard.glosbe.json.Tuc;
 import com.ichi2.anki.multimediacard.language.LanguagesListerGlosbe;
 import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.web.HttpFetcher;
+import com.ichi2.async.Connection;
 import com.ichi2.utils.HtmlUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -193,6 +194,10 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
 
     protected void translate() {
+        if(!Connection.isOnline()) {
+            showToast(gtxt(R.string.network_no_connection));
+            return;
+        }
 
         progressDialog = ProgressDialog.show(this, getText(R.string.multimedia_editor_progress_wait_title),
                 getText(R.string.multimedia_editor_trans_translating_online), true, false);
