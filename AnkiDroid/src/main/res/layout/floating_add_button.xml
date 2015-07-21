@@ -9,8 +9,8 @@
     android:layout_alignParentBottom="true"
     android:layout_alignParentRight="true"
     android:layout_alignParentEnd="true"
-    fab:fab_addButtonColorNormal="?attr/colorAccent"
-    fab:fab_addButtonColorPressed="?attr/colorAccent"
+    fab:fab_addButtonColorNormal="@color/fab_normal"
+    fab:fab_addButtonColorPressed="@color/fab_pressed"
     fab:fab_icon="@drawable/ic_add_white_24dp"
     fab:fab_labelStyle="@style/menu_labels_style"
     android:layout_marginBottom="16dp"
@@ -20,27 +20,27 @@
         android:id="@+id/add_deck_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        fab:fab_colorNormal="?attr/colorAccent"
+        fab:fab_colorNormal="@color/fab_normal"
         fab:fab_icon="@drawable/ic_folder_white_24dp"
         fab:fab_title="@string/new_deck"
         fab:fab_size="mini"
-        fab:fab_colorPressed="?attr/colorAccent"/>
+        fab:fab_colorPressed="@color/fab_pressed"/>
     <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_shared_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        fab:fab_colorNormal="?attr/colorAccent"
+        fab:fab_colorNormal="@color/fab_normal"
         fab:fab_icon="@drawable/ic_file_download_white_24dp"
         fab:fab_title="@string/menu_get_shared_decks"
         fab:fab_size="mini"
-        fab:fab_colorPressed="?attr/colorAccent"/>
+        fab:fab_colorPressed="@color/fab_pressed"/>
     <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_note_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        fab:fab_colorNormal="?attr/colorAccent"
+        fab:fab_colorNormal="@color/fab_normal"
         fab:fab_icon="@drawable/ic_add_white_24dp"
         fab:fab_title="@string/menu_add_note"
         fab:fab_size="mini"
-        fab:fab_colorPressed="?attr/colorAccent"/>
+        fab:fab_colorPressed="@color/fab_pressed"/>
 </net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu>
