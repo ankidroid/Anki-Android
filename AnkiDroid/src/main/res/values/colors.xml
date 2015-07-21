@@ -157,6 +157,9 @@
     <color name="theme_primary_light_inv">@color/material_grey_700</color>
     <color name="theme_accent">@color/material_blue_grey_700</color>
 
+    <color name="fab_normal">@color/material_light_blue_500</color>
+    <color name="fab_pressed">@color/material_light_blue_700</color>
+
     <color name="text_color_black">#de000000</color> <!-- 87% black -->
 
     <!-- navdrawer colors -->
