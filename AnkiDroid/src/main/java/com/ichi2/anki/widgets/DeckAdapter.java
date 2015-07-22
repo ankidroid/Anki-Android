@@ -81,7 +81,6 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
     public DeckAdapter(LayoutInflater layoutInflater, Context context) {
         mLayoutInflater = layoutInflater;
-        mCol = CollectionHelper.getInstance().getCol(context);
         mDeckList = new ArrayList<>();
         // Get the colors from the theme attributes
         int[] attrs = new int[] {
@@ -122,7 +121,8 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     /**
      * Consume a list of {@link Sched.DeckDueTreeNode}s to render a new deck list.
      */
-    public void buildDeckList(List<Sched.DeckDueTreeNode> nodes) {
+    public void buildDeckList(List<Sched.DeckDueTreeNode> nodes, Collection col) {
+        mCol = col;
         mDeckList.clear();
         mNew = mLrn = mRev = 0;
         processNodes(nodes);

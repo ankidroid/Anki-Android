@@ -1589,7 +1589,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     return;
                 }
                 List<Sched.DeckDueTreeNode> nodes = (List<Sched.DeckDueTreeNode>) result.getObjArray()[0];
-                mDeckListAdapter.buildDeckList(nodes);
+                mDeckListAdapter.buildDeckList(nodes, getCol());
 
                 // Set the "x due in y minutes" subtitle
                 try {
