@@ -56,6 +56,11 @@
         android:key="language"
         android:summary="@string/preference_summary_literal"
         android:title="@string/language" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="automaticSyncMode"
+        android:summary="@string/automatic_sync_choice_summ"
+        android:title="@string/automatic_sync_choice" />
     <ListPreference
         android:defaultValue="2"
         android:entries="@array/error_reporting_choice_labels"
