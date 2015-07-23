@@ -56,8 +56,8 @@ public class HttpFetcher {
         try {
             HttpClient httpClient = new DefaultHttpClient();
 			HttpParams params = httpClient.getParams();
-			HttpConnectionParams.setConnectionTimeout(params, 5000);
-			HttpConnectionParams.setSoTimeout(params, 10000);
+			HttpConnectionParams.setConnectionTimeout(params, 10000);
+			HttpConnectionParams.setSoTimeout(params, 60000);
             HttpContext localContext = new BasicHttpContext();
             HttpGet httpGet = new HttpGet(address);
             HttpResponse response = httpClient.execute(httpGet, localContext);
@@ -142,8 +142,8 @@ public class HttpFetcher {
             urlConnection.setRequestProperty("Referer", "com.ichi2.anki");
             urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 ( compatible ) ");
             urlConnection.setRequestProperty("Accept", "*/*");
-			urlConnection.setConnectTimeout(5000);
-			urlConnection.setReadTimeout(10000);
+			urlConnection.setConnectTimeout(10000);
+			urlConnection.setReadTimeout(60000);
             urlConnection.connect();
 
             File file = File.createTempFile(prefix, extension, context.getCacheDir());
