@@ -26,21 +26,20 @@
     android:paddingRight="5dip"
     android:paddingTop="5dip">
 
-    <TextView
-        android:id="@+id/DeckPickerExpander"
+    <ImageButton
+        android:id="@+id/deckpicker_expander"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
         android:layout_alignParentLeft="true"
-        android:textSize="20sp"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:background="@android:color/transparent" />
 
     <TextView
-        android:id="@+id/DeckPickerName"
+        android:id="@+id/deckpicker_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/DeckPickerExpander"
+        android:layout_toRightOf="@+id/deckpicker_expander"
         android:layout_toLeftOf="@+id/deckpicker_new"
         android:background="@color/transparent"
         android:gravity="left"
@@ -83,4 +82,5 @@
         android:background="@color/transparent"
         android:gravity="center"
         android:textSize="14sp" />
+
 </RelativeLayout>

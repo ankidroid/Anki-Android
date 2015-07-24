@@ -29,7 +29,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.database.SQLException;
 import android.graphics.PixelFormat;
 import android.net.Uri;
@@ -169,7 +168,18 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private final OnClickListener mDeckExpanderClickListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
-            collapseContextMenuDeck((Long) view.getTag());
+            Long did = (Long) view.getTag();
+            try {
+                JSONObject deck = getCol().getDecks().get(did);
+                if (getCol().getDecks().children(did).size() > 0) {
+                    deck.put("collapsed", !deck.getBoolean("collapsed"));
+                    getCol().getDecks().save(deck);
+                    updateDeckList();
+                    dismissAllDialogFragments();
+                }
+            } catch (JSONException e1) {
+                // do nothing
+            }
         }
     };
 
@@ -189,11 +199,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             Timber.i("DeckPicker:: Long tapped on deck with id %d", deckId);
             mContextMenuDid = deckId;
             String deckName = getCol().getDecks().name(mContextMenuDid);
-            boolean hasSubdecks = getCol().getDecks().children(mContextMenuDid).size() > 0;
-            boolean isCollapsed = getCol().getDecks().get(mContextMenuDid).
-                    optBoolean("collapsed", false);
-            showDialogFragment(DeckPickerContextMenu.newInstance(deckName, hasSubdecks,
-                    isCollapsed));
+            showDialogFragment(DeckPickerContextMenu.newInstance(deckName));
             return true;
         }
     };
@@ -1632,25 +1638,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
 
         }, new TaskData(getCol()));
-    }
-
-    // Callback to collapse currently selected deck
-    public void collapseContextMenuDeck() {
-        collapseContextMenuDeck(mContextMenuDid);
-    }
-
-    public void collapseContextMenuDeck(long did) {
-            try {
-            JSONObject deck = getCol().getDecks().get(did);
-            if (getCol().getDecks().children(did).size() > 0) {
-                deck.put("collapsed", !deck.getBoolean("collapsed"));
-                getCol().getDecks().save(deck);
-                updateDeckList();
-                dismissAllDialogFragments();
-            }
-        } catch (JSONException e1) {
-            // do nothing
-        }
     }
 
 

@@ -32,15 +32,17 @@
     <declare-styleable name="SeekBarPreference">
         <attr name="interval" format="integer" />
     </declare-styleable>
-    <!-- Deck list colors -->
+    <!-- Deck list colors, divider, and expander -->
     <attr name="currentDeckBackgroundColor" format="color"/>
     <attr name="dynDeckColor" format="color"/>
-    <!-- Deck list colors and divider -->
+    <attr name="deckDivider" format="reference"/>
+    <attr name="expandRef" format="reference"/>
+    <attr name="collapseRef" format="reference"/>
+    <!-- Card count colors -->
     <attr name="newCountColor" format="color"/>
     <attr name="learnCountColor" format="color"/>
     <attr name="reviewCountColor" format="color"/>
     <attr name="zeroCountColor" format="color"/>
-    <attr name="deckDivider" format="reference"/>
     <!-- Reviewer button colors -->
     <attr name="againButtonRef" format= "reference"/>
     <attr name="hardButtonRef" format= "reference"/>

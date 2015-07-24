@@ -67,8 +67,6 @@
     <string name="unbury">Unbury</string>
     <string name="finish_operation">Finishing previous operation (most likely backup creation)…</string>
     <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
-    <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
-    <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
     <string name="menu_add">Add</string>
     <string name="menu_add_note">Add note</string>
     <string name="menu_my_account">Sync account</string>
