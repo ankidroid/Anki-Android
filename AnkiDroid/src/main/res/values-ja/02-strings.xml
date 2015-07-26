@@ -113,7 +113,7 @@
   <string name="help_title">ヘルプ</string>
   <string name="check_db">データベースをチェック</string>
   <string name="check_media">メディアをチェック</string>
-  <string name="check_db_message">データベースを確認しています...</string>
+  <string name="check_db_message">データベースをチェックしています...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">空のカード。\"ツール &gt; 空のカード...\"をデスクトップ クライアントで実行。</string>
   <string name="unknown_type_field_warning">タイピングして答えを入力: 不明なフィールド %s</string>
   <string name="delete_deck">単語帳を削除中です\nしばらくお待ちください</string>
@@ -139,7 +139,7 @@
   <string name="export_successful_title">Eメールで送信しますか？</string>
   <string name="export_successful">データが \"%s\" にエクスポートされました。メールで送信しますか？</string>
   <string name="export_unsuccessful">コレクションのエクスポート エラー</string>
-  <string name="import_hint">カードを取り込むために、apkgファイルをフォルダ \"%s\" 内に置き、「OK」ボタンをタップしてください。</string>
+  <string name="import_hint">あらかじめコレクションファイル（*.apkg）を \"%s\" に置いた後、この画面で「OK」ボタンをタップしてください。</string>
   <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>
   <string name="study_options">単語帳オプション</string>
   <string name="custom_study">カスタム学習</string>

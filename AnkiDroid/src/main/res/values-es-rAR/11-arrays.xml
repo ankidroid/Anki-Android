@@ -50,16 +50,16 @@
     <item>Respuesta recomendada (verde)</item>
     <item>Respuesta mejor que la recomendada</item>
     <item>Deshacer</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Editar nota</item>
+    <item>Marcar nota</item>
     <item>Buscar expresión</item>
     <item>Enterrar tarjeta</item>
     <item>Suspender tarjeta</item>
-    <item>Delete note</item>
+    <item>Eliminar nota</item>
     <item>Reproducir multimedia</item>
     <item>Detener el aprendizaje</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Enterrar nota</item>
+    <item>Suspender nota</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Suspender tarjeta</item>
@@ -78,7 +78,7 @@
     <item>Orden añadido</item>
     <item>Orden de tarjetas programadas</item>
     <item>Primero las añadidas más recientemente</item>
-    <item>Relative overdueness</item>
+    <item>Sobreprogramación relativa</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Incrementar el límite de nuevas tarjetas para hoy</item>

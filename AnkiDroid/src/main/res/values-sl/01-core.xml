@@ -71,10 +71,10 @@
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Prikaži odgovor</string>
-  <string name="ease_button_again">Ponovno</string>
-  <string name="ease_button_hard">Težko</string>
-  <string name="ease_button_good">Dobro</string>
-  <string name="ease_button_easy">Lahko</string>
+  <string name="ease1_successive">Ponovno</string>
+  <string name="ease2_successive">Težko</string>
+  <string name="ease3_successive">Dobro</string>
+  <string name="ease3_learning">Lahko</string>
   <string name="studyoptions_congrats_undo">Razveljavi %s</string>
   <string name="menu_import">Import</string>
   <string name="undo">Razveljavi</string>

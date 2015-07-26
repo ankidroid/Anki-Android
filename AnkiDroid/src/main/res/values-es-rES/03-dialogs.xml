@@ -75,7 +75,7 @@
   <string name="custom_study_new_total_new">Tarjetas nuevas en el mazo: %s</string>
   <string name="custom_study_rev_total_rev">Repasos pendientes en el mazo: %s</string>
   <string name="custom_study_new_extend">Aumentar el límite de tarjetas nuevas para hoy en</string>
-  <string name="custom_study_rev_extend">Aumentar el límite de repasos de hoy en</string>
+  <string name="custom_study_rev_extend">Aumentar el límite de repasos para hoy en</string>
   <string name="custom_study_forgotten">Revisar tarjetas olvidadas en los últimos x días:</string>
   <string name="custom_study_ahead">Revisar con x días de adelanto:</string>
   <string name="custom_study_random">Selecciona x tarjetas al azar del mazo:</string>
@@ -101,22 +101,22 @@
   <string name="dialog_positive_repair">Reparar</string>
   <string name="dialog_positive_replace">Reemplazar</string>
   <string name="dialog_positive_restore">Restaurar</string>
-  <string name="dialog_positive_set">Conjunto</string>
+  <string name="dialog_positive_set">Definir</string>
   <string name="lookup_button_content">Buscar</string>
   <string name="dialog_collection_path_not_dir">La ruta especificada no era un directorio válido</string>
   <string name="check_media_title">¿Comprobar medio?</string>
   <string name="check_media_warning">Esto puede durar mucho tiempo con las colecciones de grandes archivos multimedia</string>
-  <string name="check_media_message">Comprobación de los archivos multimedia...</string>
+  <string name="check_media_message">Comprobando archivos multimedia&#8230;</string>
   <string name="check_media_acknowledge">Archivos multimedia comprobados</string>
   <string name="check_media_failed">La comprobación de los archivos multimedia ha fallado</string>
   <string name="check_media_invalid">Archivos con codificación no válida: %d</string>
   <string name="check_media_unused">Archivos en la carpeta de medios pero no utilizados por ninguna tarjeta: %d</string>
   <string name="check_media_nohave">Archivos utilizados en las tarjetas pero no en la carpeta de medios: %d</string>
   <string name="check_media_no_unused_missing">No hay archivos no utilizados o perdidos.</string>
-  <string name="check_media_db_updated">Base de datos de archivos multimedia reconstruida.</string>
+  <string name="check_media_db_updated">Base de datos de archivos multimedia reconstruida</string>
   <string name="check_media_delete_unused">Eliminar no utilizados</string>
   <string name="check_media_deleted">Archivos eliminados: %d</string>
-  <string name="tags_dialog_option_all_cards">All cards</string>
-  <string name="tags_dialog_option_new_cards">New</string>
-  <string name="tags_dialog_option_due_cards">Due</string>
+  <string name="tags_dialog_option_all_cards">Todas las tarjetas</string>
+  <string name="tags_dialog_option_new_cards">Nuevas</string>
+  <string name="tags_dialog_option_due_cards">Pendientes</string>
 </resources>

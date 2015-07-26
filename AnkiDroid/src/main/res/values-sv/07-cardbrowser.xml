@@ -55,13 +55,13 @@
   <string name="card_browser_show_suspended">Filtrera åsidosatta</string>
   <string name="card_browser_search_by_tag">Filtrera efter etikett</string>
   <string name="card_browser_tags_shown">Etiketter: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
+  <string name="card_browser_list_my_searches">Mina sökningar</string>
+  <string name="card_browser_list_my_searches_save">Spara sökning</string>
+  <string name="card_browser_list_my_searches_title">Välj en sparad sökning</string>
+  <string name="card_browser_list_my_searches_new_name">Namn på aktuell sökning</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">Du kan inte spara en sökning utan ett namn</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Namnet finns</string>
+  <string name="card_browser_list_my_searches_remove_content">Ta bort \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Ändra visningsordning</string>
   <string name="card_browser_change_display_order_title">Välj visningsordning</string>
   <string name="card_browser_change_display_order_reverse">Välj ett fält två gånger för att vända.</string>
@@ -72,7 +72,7 @@
   <string name="card_browser_filtering_cards">Filtrerar kort&#8230; \nTryck på bakåtknappen för att avbryta</string>
   <string-array name="card_browser_order_labels">
     <item>Ingen sortering (snabbare)</item>
-    <item>By sort field</item>
+    <item>Efter sorteringsfält</item>
     <item>Efter tid skapad</item>
     <item>Efter senast redigerad</item>
     <item>Efter senast förändrad</item>

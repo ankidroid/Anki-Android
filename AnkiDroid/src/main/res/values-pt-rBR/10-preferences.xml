@@ -71,8 +71,8 @@
   <string name="reset_languages_summ">Redefina as atribuições de idioma (de conversão de texto em fala e dicionários) para todos os decks. Redefinir as atribuições específicas de deck no selecionador de decks</string>
   <string name="reset_languages_question">Redefinir todas as atribuições de idioma?</string>
   <string name="reset_confirmation">Redefinir todos os estados</string>
-  <string name="card_zoom">Card zoom</string>
-  <string name="image_zoom">Image zoom</string>
+  <string name="card_zoom">Zoom do cartão</string>
+  <string name="image_zoom">Zoom da imagem</string>
   <string name="button_size">Tamanho do botão de resposta</string>
   <string name="card_browser_font_size">Dimensionamento de fonte do navegador de cartões</string>
   <string name="col_path">Caminho da coleção</string>
@@ -154,8 +154,8 @@
   <string name="deck_conf_deck_description">Descrição do deck</string>
   <string name="deck_conf_group">Grupo de opções</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d deck uses this group</item>
-    <item quantity="other">%1$s\n%2$d decks use this group</item>
+    <item quantity="one">O cartão %1$s\n%2$d utiliza este grupo</item>
+    <item quantity="other">Os cartões %1$s\n%2$d utilizam este grupo</item>
   </plurals>
   <string name="deck_conf_new_cards">Novos cartões</string>
   <string name="deck_conf_rev_cards">Revisões</string>
@@ -169,10 +169,10 @@
   <string name="deck_conf_easy_ivl">Intervalo fácil</string>
   <string name="deck_conf_start_ease">Dificuldade de início</string>
   <string name="deck_conf_max_rev">Máximo de revisões/dia</string>
-  <string name="deck_conf_new_bury">Enterrar novos cartões relacionados</string>
-  <string name="deck_conf_new_bury_summ">Novos cartões relacionados estão enterrados até o dia seguinte</string>
-  <string name="deck_conf_rev_bury">Enterrar revisões relacionadas</string>
-  <string name="deck_conf_rev_bury_summ">Revisões relacionadas estão enterradas até o dia seguinte</string>
+  <string name="deck_conf_new_bury">Ocultar cartões novos relacionados</string>
+  <string name="deck_conf_new_bury_summ">Cartões novos relacionados são ocultados até o dia seguinte</string>
+  <string name="deck_conf_rev_bury">Ocultar revisões relacionadas</string>
+  <string name="deck_conf_rev_bury_summ">Revisões relacionadas são ocultadas até o dia seguinte</string>
   <string name="deck_conf_easy_bonus">Bônus fácil</string>
   <string name="deck_conf_ivl_fct">Modificador de intervalo</string>
   <string name="deck_conf_max_ivl">Intervalo máximo</string>
@@ -200,8 +200,8 @@
   <string name="deck_conf_remove_message">Remover o grupo de opções atual?</string>
   <string name="deck_conf_set_subdecks">Definir para todos os subdecks</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s subdeck will use this group</item>
-    <item quantity="other">%s subdecks will use this group</item>
+    <item quantity="one">Subdeck %s utilizará este subgrupo</item>
+    <item quantity="other">Subdecks %s utilizarão este subgrupo</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Definir para todos os subdecks</string>
   <string name="deck_conf_set_subdecks_message">Definir o atual grupo de opções para todos os subdecks deste deck?</string>

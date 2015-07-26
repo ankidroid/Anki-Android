@@ -68,10 +68,10 @@
   </plurals>
   <string name="type_answer_hint">Введіть відповідь</string>
   <string name="show_answer">Показати відповідь</string>
-  <string name="ease_button_again">Знову</string>
-  <string name="ease_button_hard">Важко</string>
-  <string name="ease_button_good">Добре</string>
-  <string name="ease_button_easy">Легко</string>
+  <string name="ease1_successive">Знову</string>
+  <string name="ease2_successive">Важко</string>
+  <string name="ease3_successive">Добре</string>
+  <string name="ease3_learning">Легко</string>
   <string name="studyoptions_congrats_undo">Відмінити %s</string>
   <string name="menu_import">Import</string>
   <string name="undo">Відмінити</string>

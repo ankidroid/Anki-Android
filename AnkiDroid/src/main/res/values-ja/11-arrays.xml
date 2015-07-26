@@ -95,8 +95,8 @@
   </string-array>
   <string-array name="new_spread_labels">
     <item>新規カードと復習カードを混ぜる</item>
-    <item>復習カードの後に新規カードを学習する</item>
-    <item>復習カードの前に新規カードを学習する</item>
+    <item>復習カードの後</item>
+    <item>復習カードの前</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>フォントが指定されていない場合</item>

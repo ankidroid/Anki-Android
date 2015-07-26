@@ -41,7 +41,7 @@
 <resources>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">一般設定</string>
-  <string name="pref_cat_reviewing">カードの学習と評価</string>
+  <string name="pref_cat_reviewing">カードの学習</string>
   <string name="pref_cat_reviewing_summ">特定の単語帳に限定されない設定</string>
   <string name="pref_cat_reviewer_behaviour">動作</string>
   <string name="pref_cat_flashcard">画面表示</string>
@@ -62,7 +62,7 @@
   <string name="whiteboard_stroke_width">描かれる線の太さ</string>
   <string name="whiteboard_black">黒色の線</string>
   <string name="whiteboard_black_summ">カラーの線ではなく黒色の線を描き、メモリを節約します（ナイトモードでは白色の線になります）</string>
-  <string name="write_answers_disable">タイピング無効化</string>
+  <string name="write_answers_disable">タイピング解答設定を無効にする</string>
   <string name="write_answers_disable_summ">解答入力フィールドがある場合にカード上にキーボードを表示させなくします</string>
   <string name="text_selection_click">長押しの 回避策</string>
   <string name="text_selection_click_summ">もし、長押しタップでテキストの選択が出来ない場合、これを有効にしてください。</string>
@@ -98,7 +98,7 @@
   <string name="tts_summ">音声ファイルが含まれていない場合に、質問と答えを読み上げます</string>
   <string name="sync_fetch_missing_media">メディアの同期</string>
   <string name="sync_fetch_missing_media_summ">同期時に、不足しているメディア（画像、音声、動画）を自動的に取得します</string>
-  <string name="sync_account">AnkiWeb アカウント</string>
+  <string name="sync_account">AnkiWebアカウント</string>
   <string name="sync_account_summ_logged_out">ログインしていません。</string>
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="fix_hebrew_text">ヘブライ語母音への対応</string>
@@ -131,7 +131,7 @@
   <string name="show_estimates">ボタン上に時間を表示</string>
   <string name="show_estimates_summ">回答ボタンの上に、次の復習間隔を表示します</string>
   <string name="show_progress">残りのカード枚数を表示</string>
-  <string name="show_progress_summ">画面左上に、残りのカード枚数（3種類）を表示します</string>
+  <string name="show_progress_summ">画面左上に、残りのカード枚数を表示します（青: 新規、赤: 基本学習および再学習、緑: 復習）</string>
   <string name="use_current">新規カードの追加先</string>
   <string name="new_spread">新規カードの追加場所</string>
   <string name="learn_cutoff">先取り学習の限度</string>
@@ -156,7 +156,7 @@
   <plurals name="deck_conf_group_summ">
     <item quantity="other">%1$s\n%2$d個の単語帳がこのグループを使用しています</item>
   </plurals>
-  <string name="deck_conf_new_cards">新規カード</string>
+  <string name="deck_conf_new_cards">新規カードと基本学習カード</string>
   <string name="deck_conf_rev_cards">復習カード</string>
   <string name="deck_conf_lps_cards">忘却（再学習）カード</string>
   <string name="deck_conf_general">一般</string>
@@ -166,17 +166,17 @@
   <string name="deck_conf_graduating_ivl">学習ステップ終了後の最初の表示(最初の復習)までの間隔</string>
   <string name="deck_conf_days">XXX 日</string>
   <string name="deck_conf_easy_ivl">「簡単」と答えた場合の、次回表示(最初の復習)までの間隔</string>
-  <string name="deck_conf_start_ease">易しさの初期値</string>
+  <string name="deck_conf_start_ease">易しさ(復習間隔増加率)の初期値</string>
   <string name="deck_conf_max_rev">一日あたりの復習カード枚数の上限</string>
   <string name="deck_conf_new_bury">新規の関連カードの学習を延期</string>
   <string name="deck_conf_new_bury_summ">新規の関連カード（同じノートから作られた別のカード）の学習を翌日まで延期します</string>
   <string name="deck_conf_rev_bury">復習の延期</string>
   <string name="deck_conf_rev_bury_summ">関連カード（同じノートから作られた別のカード）の復習を翌日まで延期します</string>
-  <string name="deck_conf_easy_bonus">簡単と答えた時のボーナス</string>
-  <string name="deck_conf_ivl_fct">間隔の調整</string>
-  <string name="deck_conf_max_ivl">間隔の上限</string>
-  <string name="deck_conf_new_lps_ivl">新しい間隔</string>
-  <string name="deck_conf_min_ivl">間隔の下限</string>
+  <string name="deck_conf_easy_bonus">「簡単」と答えた時のボーナス(間隔増加率の上乗せ)</string>
+  <string name="deck_conf_ivl_fct">復習頻度の調整</string>
+  <string name="deck_conf_max_ivl">復習間隔の上限</string>
+  <string name="deck_conf_new_lps_ivl">学習ステップ終了後に再開する復習の間隔の縮小率</string>
+  <string name="deck_conf_min_ivl">学習ステップ終了後に再開する復習の間隔の下限</string>
   <string name="deck_conf_leech_thres">無駄（習得困難）カードと判定する基準</string>
   <string name="deck_conf_fails">XXX 回 忘却（復習カードに「もう一度」と回答）した時</string>
   <string name="deck_conf_leech_action">無駄（習得困難）カードへの処置</string>

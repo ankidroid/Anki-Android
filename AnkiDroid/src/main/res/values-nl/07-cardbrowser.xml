@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">%d kaart getoont</item>
+    <item quantity="other">%d kaarten getoont</item>
   </plurals>
   <string name="card_browser_all_decks">Alle leersets</string>
   <string name="card_browser_delete_card">Memo verwijderen</string>
@@ -55,13 +55,13 @@
   <string name="card_browser_show_suspended">Filter verwijderd</string>
   <string name="card_browser_search_by_tag">Filteren op tag</string>
   <string name="card_browser_tags_shown">Tags: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
+  <string name="card_browser_list_my_searches">Mijn zoekopdrachten</string>
+  <string name="card_browser_list_my_searches_save">Bewaar zoekopdracht</string>
+  <string name="card_browser_list_my_searches_title">Kies een bewaarde zoekopdacht</string>
+  <string name="card_browser_list_my_searches_new_name">Naam voor de huidige zoekopdracht</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">U kunt geen onbenoemde zoekopdracht opslaan</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Naam bestaat</string>
+  <string name="card_browser_list_my_searches_remove_content">Verwijder “%1$s”?</string>
   <string name="card_browser_change_display_order">Weergavevolgorde wijzigen</string>
   <string name="card_browser_change_display_order_title">Kies weergavevolgorde</string>
   <string name="card_browser_change_display_order_reverse">Selecteer een veld tweemaal om de volgorde om te keren.</string>
@@ -72,7 +72,7 @@
   <string name="card_browser_filtering_cards">Kaarten filteren&#8230; \nDruk op de terugknop om te annuleren</string>
   <string-array name="card_browser_order_labels">
     <item>Niet sorteren (sneller)</item>
-    <item>By sort field</item>
+    <item>Naar sorteerveld</item>
     <item>Op tijd aanmaak</item>
     <item>Op tijd laatst bewerkt</item>
     <item>Op gewijzigde tijd</item>

@@ -50,16 +50,16 @@
     <item>Resposta recomendada (verde)</item>
     <item>Resposta melhor que recomendada</item>
     <item>Desfazer</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Editar nota</item>
+    <item>Marcar nota</item>
     <item>Verificar expressão</item>
-    <item>Enterrar cartão</item>
+    <item>Ocultar cartão</item>
     <item>Suspender cartão</item>
-    <item>Delete note</item>
+    <item>Deletar nota</item>
     <item>Reproduzir mídia</item>
     <item>Abortar a aprendizagem</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Ocultar nota</item>
+    <item>Suspender nota</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Suspender cartão</item>
@@ -78,7 +78,7 @@
     <item>Ordem de adição</item>
     <item>Ordem de revisão</item>
     <item>Cartões novos primeiro</item>
-    <item>Relative overdueness</item>
+    <item>Atrasos relativos</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Aumentar o limite de cartões novos de hoje</item>

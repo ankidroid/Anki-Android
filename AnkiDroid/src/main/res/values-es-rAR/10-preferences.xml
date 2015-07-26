@@ -71,8 +71,8 @@
   <string name="reset_languages_summ">Resetear tareas de idioma (para texto-a-voz y diccionarios) para todos los mazos. Resetear las tareas de un mazo específico en el selector de mazos</string>
   <string name="reset_languages_question">¿Restablecer todas las tareas de idioma?</string>
   <string name="reset_confirmation">Restablecer todos los estados</string>
-  <string name="card_zoom">Card zoom</string>
-  <string name="image_zoom">Image zoom</string>
+  <string name="card_zoom">Zoom de la tarjeta</string>
+  <string name="image_zoom">Zoom de la imagen</string>
   <string name="button_size">Tamaño del botón de respuesta</string>
   <string name="card_browser_font_size">Escalado de fuentes del explorador de tarjetas</string>
   <string name="col_path">Directorio de la colección</string>
@@ -154,8 +154,8 @@
   <string name="deck_conf_deck_description">Descripción del mazo</string>
   <string name="deck_conf_group">Grupo de opciones</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d deck uses this group</item>
-    <item quantity="other">%1$s\n%2$d decks use this group</item>
+    <item quantity="one">El mazo %1$s\n%2$d utiliza este grupo</item>
+    <item quantity="other">Los mazos %1$s\n%2$d utilizan este grupo</item>
   </plurals>
   <string name="deck_conf_new_cards">Nuevas tarjetas</string>
   <string name="deck_conf_rev_cards">Revisiones</string>
@@ -200,8 +200,8 @@
   <string name="deck_conf_remove_message">¿Remover el grupo de opciones actuales?</string>
   <string name="deck_conf_set_subdecks">Aplicar a todos los submazos</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s subdeck will use this group</item>
-    <item quantity="other">%s subdecks will use this group</item>
+    <item quantity="one">%s submazo utilizará este grupo</item>
+    <item quantity="other">%s submazos utilizarán este grupo</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Aplicar a todos los submazos</string>
   <string name="deck_conf_set_subdecks_message">¿Aplicar el grupo de opciones actuales a todos los submazos de este mazo?</string>

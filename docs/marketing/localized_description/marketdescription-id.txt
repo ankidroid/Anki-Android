@@ -1,4 +1,4 @@
-Hafalkan apa-apa dengan AnkiDroid!
+Hafalkan segalanya dengan AnkiDroid!
 
 AnkiDroid memungkinkan Anda mempelajari flashcards sangat efisien dengan menunjukkan mereka  sebelum Anda  lupa. Hal ini sepenuhnya kompatibel dengan perangkat lunak pengulangan spasi Anki (termasuk sinkronisasi), yang tersedia untuk Windows, Linux dan MacOS.
 
@@ -29,8 +29,8 @@ Pelayar kad
 • menambahkan kad dengan 'intent&gt; dari aplikasi lain seperti kamus
 • dukungan kustom font
 • sistem sokongan penuh
-• navigation by swipe, tap
-• customisable
+• navigasi dengan geser, tekan
+• dapat disesuaikan
 • penanganan tumpukan kartu dinamis
 • modus malam
 • 27 pelokalan

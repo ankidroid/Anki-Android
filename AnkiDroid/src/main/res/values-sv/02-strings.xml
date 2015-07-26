@@ -48,12 +48,12 @@
   <string name="CardEditorModel">Typ:</string>
   <string name="CardEditorTags">Etiketter: %1$s</string>
   <string name="CardEditorCards">Kort: %1$s</string>
-  <string name="tag_name">Tag name</string>
+  <string name="tag_name">Taggnamn</string>
   <string name="add_new_filter_tags">Lägg till/Filtrera etiketter</string>
-  <string name="add_tag">Add tag</string>
+  <string name="add_tag">Lägg till tagg</string>
   <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">Filtrera etiketter</string>
-  <string name="no_tags">You haven’t added any tags yet.</string>
+  <string name="no_tags">Du har inte lagt till några taggar än.</string>
   <string name="sdcard_missing_message">SD-kortet är inte tillgängligt eftersom det används som USB-minne. Koppla ur USB:n för att komma åt din kortlek.</string>
   <string name="enable_whiteboard">Aktivera whiteboard</string>
   <string name="disable_whiteboard">Avaktivera whiteboard</string>
@@ -95,8 +95,8 @@
     <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minute</item>
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="one">%1$d minut</item>
+    <item quantity="other">%1$d minuter</item>
   </plurals>
   <string name="studyoptions_welcome_title">Välkommen till AnkiDroid</string>
   <string name="fact_adder_intent_title">AnkiDroid-kort</string>
@@ -110,8 +110,8 @@
   <string name="rename_error">Det gick inte att byta namn på kortleken %s</string>
   <string name="default_conf_delete_error">Standardkonfigurationsgruppen kan ej tas bort</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="one">%d kort tillagt</item>
+    <item quantity="other">%d kort tillagda</item>
   </plurals>
   <string name="help_title">Hjälp</string>
   <string name="check_db">Kontrollera databas</string>

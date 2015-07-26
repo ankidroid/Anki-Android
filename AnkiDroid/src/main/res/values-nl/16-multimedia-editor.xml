@@ -83,8 +83,8 @@
   <string name="multimedia_editor_searching_word">Woord aan het zoeken</string>
   <string name="multimedia_editor_progress_wait_title">Wachten</string>
   <string name="multimedia_editor_something_wrong">Er is iets fout gegaan</string>
-  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the note</string>
-  <string name="multimedia_editor_attach_media">Attach media</string>
+  <string name="multimedia_editor_attach_mm_content">Voeg multi-media toe aan de notitie</string>
+  <string name="multimedia_editor_attach_media">Voeg media toe</string>
   <string name="multimedia_editor_audio_view_recording_failed">Opname mislukt</string>
   <string name="multimedia_editor_audio_view_playing_failed">Afspelen mislukt</string>
   <string name="title_activity_edit_text">Veld wijzigen</string>

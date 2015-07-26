@@ -55,17 +55,17 @@
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="other">%d min.</item>
+    <item quantity="other">%d分钟</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="other">%d minutes left</item>
+    <item quantity="other">%d分钟剩余</item>
   </plurals>
   <string name="type_answer_hint">输入答案</string>
   <string name="show_answer">显示答案</string>
-  <string name="ease_button_again">重来</string>
-  <string name="ease_button_hard">困难</string>
-  <string name="ease_button_good">一般</string>
-  <string name="ease_button_easy">简单</string>
+  <string name="ease1_successive">重来</string>
+  <string name="ease2_successive">困难</string>
+  <string name="ease3_successive">一般</string>
+  <string name="ease3_learning">简单</string>
   <string name="studyoptions_congrats_undo">撤消 %s</string>
   <string name="menu_import">导入</string>
   <string name="undo">撤销</string>
@@ -78,7 +78,7 @@
   <string name="undo_action_mark">标记卡牌记录</string>
   <string name="unbury">取消隐藏</string>
   <string name="finish_operation">完成遗留操作（如备份等）。\n请等待...</string>
-  <string name="contextmenu_deckpicker_rename_deck">重命令牌组</string>
+  <string name="contextmenu_deckpicker_rename_deck">重新命名牌组</string>
   <string name="contextmenu_deckpicker_collapse_deck">隐藏子牌组</string>
   <string name="contextmenu_deckpicker_inflate_deck">显示子牌组</string>
   <string name="menu_add">添加</string>
@@ -113,7 +113,7 @@
     <item>%s分钟</item>
     <item>%s小时</item>
     <item>%s天</item>
-    <item>%s月</item>
+    <item>%s个月</item>
     <item>%s年</item>
   </string-array>
   <string name="later">稍后</string>

@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">Antwort eingeben</string>
   <string name="show_answer">Antwort anzeigen</string>
-  <string name="ease_button_again">Nochmal</string>
-  <string name="ease_button_hard">Schwer</string>
-  <string name="ease_button_good">Gut</string>
-  <string name="ease_button_easy">Einfach</string>
+  <string name="ease1_successive">Nochmal</string>
+  <string name="ease2_successive">Schwer</string>
+  <string name="ease3_successive">Gut</string>
+  <string name="ease3_learning">Einfach</string>
   <string name="studyoptions_congrats_undo">%s rückgängig machen</string>
   <string name="menu_import">Importieren</string>
   <string name="undo">Rückgängig</string>

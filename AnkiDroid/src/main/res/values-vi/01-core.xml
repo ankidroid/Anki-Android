@@ -62,10 +62,10 @@
   </plurals>
   <string name="type_answer_hint">Trả lời</string>
   <string name="show_answer">Hiện đáp án</string>
-  <string name="ease_button_again">Làm lại</string>
-  <string name="ease_button_hard">Khó</string>
-  <string name="ease_button_good">Tốt</string>
-  <string name="ease_button_easy">Dễ</string>
+  <string name="ease1_successive">Làm lại</string>
+  <string name="ease2_successive">Khó</string>
+  <string name="ease3_successive">Tốt</string>
+  <string name="ease3_learning">Dễ</string>
   <string name="studyoptions_congrats_undo">Hoàn tác %s</string>
   <string name="menu_import">Quan trọng</string>
   <string name="undo">Hoàn tác</string>

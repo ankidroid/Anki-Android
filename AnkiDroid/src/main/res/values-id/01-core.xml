@@ -39,12 +39,12 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="decks">Decks</string>
-  <string name="card_browser">Card browser</string>
-  <string name="statistics">Statistics</string>
-  <string name="settings">Settings</string>
-  <string name="help">Help</string>
-  <string name="send_feedback">Send feedback</string>
+  <string name="decks">Geladak</string>
+  <string name="card_browser">Kartu browser</string>
+  <string name="statistics">Statistik</string>
+  <string name="settings">Setingan</string>
+  <string name="help">Bantuan</string>
+  <string name="send_feedback">Kirim Masukan</string>
   <string name="studyoptions_title">Pilihan Pembelajaran</string>
   <string name="studyoptions_due_today">Jatuh tempo hari ini:</string>
   <string name="studyoptions_new_total">Total kartu baru:</string>
@@ -52,20 +52,20 @@
   <string name="studyoptions_eta">Perkiraan waktu (menit):</string>
   <string name="studyoptions_start">Belajar</string>
   <plurals name="deckpicker_title">
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="other">%1$d kartu jatuh tempo (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="other">%d min.</item>
+    <item quantity="other">%d menit.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="other">%d minutes left</item>
+    <item quantity="other">%d menit tersisa</item>
   </plurals>
   <string name="type_answer_hint">Ketik jawaban</string>
   <string name="show_answer">Tampilkan jawaban</string>
-  <string name="ease_button_again">Ulang</string>
-  <string name="ease_button_hard">Susah</string>
-  <string name="ease_button_good">Baik</string>
-  <string name="ease_button_easy">Mudah</string>
+  <string name="ease1_successive">Ulang</string>
+  <string name="ease2_successive">Susah</string>
+  <string name="ease3_successive">Baik</string>
+  <string name="ease3_learning">Mudah</string>
   <string name="studyoptions_congrats_undo">Batalkan %s</string>
   <string name="menu_import">Masukkan</string>
   <string name="undo">Membatalkan</string>
@@ -79,8 +79,8 @@
   <string name="unbury">angkat</string>
   <string name="finish_operation">Penyelesaian operasi sebelumnya (kebanyakan seperti pembuatan cadangan)...</string>
   <string name="contextmenu_deckpicker_rename_deck">Ubah nama deck</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Sembunyikan subdeck</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Tampilkan subdeck</string>
   <string name="menu_add">Tambahkan</string>
   <string name="menu_add_note">Tambah catatan</string>
   <string name="menu_my_account">Sinkronisasi akun</string>
@@ -93,13 +93,13 @@
   <string name="delete_note_message">Benar-benar hapus catatan ini dan semua kartu-kartunya?\n%s</string>
   <string name="menu_select">Pilih teks</string>
   <string name="menu_search">Pencarian di %1$s</string>
-  <string name="menu_mark_note">Mark note</string>
-  <string name="menu_unmark_note">Unmark note</string>
+  <string name="menu_mark_note">Tandai catatan</string>
+  <string name="menu_unmark_note">Tidak tandai catatan</string>
   <string name="new_deck">Buat dek</string>
   <string name="create">Buat</string>
   <string name="new_dynamic_deck">Buat penyaringan dek</string>
   <string name="night_mode">Mode malam</string>
-  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <string name="directory_inaccessible">AnkiDroid direktori tidak dapat diakses</string>
   <string-array name="next_review_s">
     <item>1 detik</item>
     <item>1 menit</item>
@@ -122,25 +122,25 @@
   <string name="empty_cram_label">Kosong</string>
   <string name="empty_cram_deck">Mengosongkan dek persiapan...</string>
   <string name="custom_study_deck_name">Sesi belajar biasa</string>
-  <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
+  <string name="custom_study_deck_exists">Mengubah nama geladak pembelajaran kustom yang ada terlebih dahulu</string>
   <string name="studyoptions_congrats_finished">Selamat! Kamu telah selesai untuk sekarang.</string>
   <string name="studyoptions_congrats_more_rev">Hari ini batas telah dicapai, tetapi besok masih ada kartu-kartu untuk diriview. Kamu dapat meningkatkan batas di pilihan-pilihan.</string>
   <string name="studyoptions_congrats_more_new">Hari ini batas telah dicapai. Ada lebih banyak kartu-kartu baru yang tersedia; kamu dapat menambahkan batas di pilihan-pilihan, tetapi ini dapat meningkatkan jangka pendek review beban kerja.</string>
   <string name="studyoptions_congrats_custom">Untuk belajar di luar dari jadwal normal, sentuh tombol \"Belajar pilihan\" di bawah</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <string name="sd_card_not_mounted">Device storage not mounted</string>
+  <string name="studyoptions_no_cards_due">Belum ada kartu jatuh tempo.</string>
+  <string name="sd_card_not_mounted">Perangkat penyimpanan tidak terpasang</string>
   <string name="button_sync">Siknronisasi</string>
   <string name="export">Keluarkan</string>
-  <string name="nothing">Nothing</string>
-  <string name="title_activity_template_editor">Card types for %s</string>
-  <string name="card_template_editor_front">Front template</string>
-  <string name="card_template_editor_back">Back template</string>
+  <string name="nothing">Tidak ada</string>
+  <string name="title_activity_template_editor">Jenis kartu untuk %s</string>
+  <string name="card_template_editor_front">Template depan</string>
+  <string name="card_template_editor_back">Template Belakang</string>
   <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <string name="card_template_editor_menu_add_reverse">Tambah kebalikan</string>
+  <string name="card_template_editor_menu_delete">Hapus</string>
+  <string name="card_template_editor_cant_delete">Diperlukan setidaknya satu jenis kartu.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+    <item quantity="other">Menghapus jenis kartu \"%2$s\", dan kartu yang %1$d?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">Menghapus jenis kartu ini akan menyebabkan satu atau lebih catatan terhapus. Harap membuat dahulu jenis kartu yang baru.</string>
 </resources>

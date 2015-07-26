@@ -40,23 +40,23 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
   <string name="preference_summary_percentage">XXX%</string>
-  <string name="drawer_open">Abrir Painel</string>
-  <string name="drawer_close">Fechar Painel</string>
+  <string name="drawer_open">Abrir painel</string>
+  <string name="drawer_close">Fechar painel</string>
   <string name="CardEditorLaterMessage">Informação guardada para mais tarde</string>
-  <string name="CardEditorCardDeck">Baralho de fichas:</string>
+  <string name="CardEditorCardDeck">Baralho de cartões:</string>
   <string name="CardEditorNoteDeck">Baralho:</string>
   <string name="CardEditorModel">Tipo:</string>
   <string name="CardEditorTags">Etiquetas: %1$s</string>
-  <string name="CardEditorCards">Cards: %1$s</string>
-  <string name="tag_name">Tag name</string>
+  <string name="CardEditorCards">Fichas: %1$s</string>
+  <string name="tag_name">Nome da etiqueta</string>
   <string name="add_new_filter_tags">Adicionar/filtrar etiquetas</string>
-  <string name="add_tag">Add tag</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
+  <string name="add_tag">Adicionar etiqueta</string>
+  <string name="check_all_tags">Marcar/desmarcar todas as etiquetas</string>
   <string name="filter_tags">Filtrar etiquetas</string>
-  <string name="no_tags">You haven’t added any tags yet.</string>
-  <string name="sdcard_missing_message">O cartão SD está indisponível porque está sendo usado como armazenamento USB. Desconecte o USB para aceder aos seus baralhos</string>
-  <string name="enable_whiteboard">Ativar quadro</string>
-  <string name="disable_whiteboard">Desativar quadro</string>
+  <string name="no_tags">Ainda não adicionou nenhuma etiqueta.</string>
+  <string name="sdcard_missing_message">Desactivar o armazenamento USB para aceder aos seus baralhos</string>
+  <string name="enable_whiteboard">Activar quadro</string>
+  <string name="disable_whiteboard">Desactivar quadro</string>
   <string name="show_whiteboard">Mostrar quadro</string>
   <string name="hide_whiteboard">Esconder quadro</string>
   <string name="clear_whiteboard">Limpar quadro</string>
@@ -86,22 +86,22 @@
   <string name="add">Adicionar</string>
   <string name="close">Fechar</string>
   <string name="select">Selecionar</string>
-  <string name="saving_changes">A guardar as  alterações...</string>
+  <string name="saving_changes">A guardar as alterações&#8230;</string>
   <string name="reordering_cards">A reordenar fichas&#8230;</string>
-  <string name="field_remapping">%1$s (from “%2$s”)</string>
+  <string name="field_remapping">%1$s (de \"%2$s\")</string>
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="one">%1$d ficha estudada em %2$s</item>
+    <item quantity="other">%1$d fichas estudadas em %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minute</item>
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="one">%1$d minuto</item>
+    <item quantity="other">%1$d minutos</item>
   </plurals>
   <string name="studyoptions_welcome_title">Bem-vindo ao AnkiDroid</string>
-  <string name="fact_adder_intent_title">Cartão AnkiDroid</string>
+  <string name="fact_adder_intent_title">Ficha AnkiDroid</string>
   <string name="card_editor_add_card">Adicionar nota</string>
-  <string name="card_editor_copy_card">Copiar cartão</string>
+  <string name="card_editor_copy_card">Copiar ficha</string>
   <string name="card_editor_reset_card">Redefinir progresso</string>
   <string name="card_editor_reschedule_card">Reagendar ficha</string>
   <string name="card_editor_preview_card">Pré-visualizar</string>
@@ -110,8 +110,8 @@
   <string name="rename_error">Baralho %s não pôde ser renomeado</string>
   <string name="default_conf_delete_error">O grupo de opções padrão não pode ser removido</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="one">%d cartão adicionado</item>
+    <item quantity="other">%d cartões adicionados</item>
   </plurals>
   <string name="help_title">Ajuda</string>
   <string name="check_db">Verificar base de dados</string>
@@ -121,7 +121,7 @@
   <string name="unknown_type_field_warning">Escreva a resposta: campo desconhecido %s</string>
   <string name="delete_deck">A eliminar baralho.\nEspere um momento&#8230;</string>
   <string name="show_hint">Mostrar %s</string>
-  <string name="info_rate">Avaliar o Ankidroid</string>
+  <string name="info_rate">Avaliar o AnkiDroid</string>
   <string name="col_load_failed">Carregamento da coleção falhou. \nPrima Voltar para fechar o AnkiDroid.</string>
   <string name="import_title">Importar fichas</string>
   <string name="import_select_title">Escolha um ficheiro para importar</string>
@@ -131,7 +131,7 @@
   <string name="import_log_success">%d fichas importadas</string>
   <string name="import_log_error">Importação falhada</string>
   <string name="import_log_no_apkg">Este não é um ficheiro apkg válido</string>
-  <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg extension</string>
+  <string name="import_error_not_apkg_extension">O arquivo \"%s\" não tem a extensão .apkg</string>
   <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
   <string name="import_importing">A Importar fichas.\nPor favor aguarde&#8230;</string>
   <string name="export_include_schedule">Incluir agendamento</string>
@@ -152,7 +152,7 @@
   <string name="sched_end">(fim)</string>
   <string name="sched_unbury_button">Para vê-las agora, toque no botão \"Desenterrar\".</string>
   <string name="sched_has_buried">Algumas fichas relacionadas ou enterradas foram adiadas para amanhã.</string>
-  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
+  <string name="tag_editor_add_feedback">Toque \"%2$s\" para confirmar a adição de \"%1$s\"</string>
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">Depois de copiar o texto, toque em qualquer ponto da ficha para mostrar o ícone de procura</string>
   <string name="add_content_showcase_text">Para começar, carregue no botão + para adicionar material de estudo novo.\n\n Toque em \'Ajuda\' para aceder ao manual.</string>

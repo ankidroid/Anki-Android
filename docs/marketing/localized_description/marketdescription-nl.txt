@@ -1,6 +1,6 @@
-Onthou alles met AnkiDroid!
+Onthoud alles met AnkiDroid!
 
-Met AnkiDroid kunt u zeer efficiënt leren, doordat u de flitskaartjes te zien krijgt net voordat u ze zou vergeten. Werkt volledig samen met het gespreide-herhalingsprogramma Anki (met synchronisatie), welke beschikbaar is voor Windows, Linux en Mac OS X.
+AnkiDroid stelt u in staat om op een efficiënte manier woordjes te leren, door u flitskaarten te tonen vlak voordat u ze zou vergeten. Werkt volledig samen met het gespreide-herhalingsprogramma Anki (met synchronisatie), welke beschikbaar is voor Windows, Linux en Mac OS X.
 
 Leer van alles, waar en wanneer u maar wilt. Maak nuttig gebruik van wachttijden zoals tijdens een busreis of in de rij bij de kassa.
 

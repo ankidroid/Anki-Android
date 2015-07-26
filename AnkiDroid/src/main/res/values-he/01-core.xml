@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">הקלד תשובה</string>
   <string name="show_answer">הצג תשובה</string>
-  <string name="ease_button_again">שוב</string>
-  <string name="ease_button_hard">קשה</string>
-  <string name="ease_button_good">טוב</string>
-  <string name="ease_button_easy">קל</string>
+  <string name="ease1_successive">שוב</string>
+  <string name="ease2_successive">קשה</string>
+  <string name="ease3_successive">טוב</string>
+  <string name="ease3_learning">קל</string>
   <string name="studyoptions_congrats_undo">בטל את ה%s</string>
   <string name="menu_import">Import</string>
   <string name="undo">בטל</string>

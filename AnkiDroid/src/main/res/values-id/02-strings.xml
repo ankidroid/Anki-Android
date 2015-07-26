@@ -40,10 +40,10 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
   <string name="preference_summary_percentage">XXX%</string>
-  <string name="drawer_open">Open drawer</string>
-  <string name="drawer_close">Close drawer</string>
+  <string name="drawer_open">Buka laci</string>
+  <string name="drawer_close">Tutup laci</string>
   <string name="CardEditorLaterMessage">Simpan informasi untuk nanti</string>
-  <string name="CardEditorCardDeck">Card deck:</string>
+  <string name="CardEditorCardDeck">Deck kartu:</string>
   <string name="CardEditorNoteDeck">Deck:</string>
   <string name="CardEditorModel">Type:</string>
   <string name="CardEditorTags">Tag: %1$s</string>

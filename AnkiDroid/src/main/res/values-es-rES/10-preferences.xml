@@ -40,15 +40,15 @@
 -->
 <resources>
   <string name="pref_cat_general">AnkiDroid</string>
-  <string name="pref_cat_general_summ">Ajustes Generales</string>
+  <string name="pref_cat_general_summ">Ajustes generales</string>
   <string name="pref_cat_reviewing">Repasando</string>
   <string name="pref_cat_reviewing_summ">No hay configuración de revisor específica de mazo</string>
   <string name="pref_cat_reviewer_behaviour">Comportamiento</string>
   <string name="pref_cat_flashcard">Pantalla</string>
-  <string name="pref_cat_whiteboard">Pizarra</string>
+  <string name="pref_cat_whiteboard">Pizarra blanca</string>
   <string name="pref_cat_automatic_display">Mostrar respuesta automáticamente</string>
   <string name="pref_cat_fonts">Fuentes</string>
-  <string name="pref_cat_fonts_summ">Cambiar tamaño y fuente predeterminada</string>
+  <string name="pref_cat_fonts_summ">Cambiar tamaño y fuente predeterminados</string>
   <string name="pref_cat_gestures">Gestos</string>
   <string name="pref_cat_gestures_summ">Puede tocar y deslizar en la pantalla en lugar de usar botones</string>
   <string name="pref_cat_actions">Acciones</string>
@@ -71,8 +71,8 @@
   <string name="reset_languages_summ">Restablece las asignaciones de idioma (para texto a voz y diccionarios) para todos los mazos. Para restablecer asignaciones individualmente, hazlo desde el selector de mazos</string>
   <string name="reset_languages_question">¿Restablecer todas las asignaciones de idiomas?</string>
   <string name="reset_confirmation">Restablecer todos los estados</string>
-  <string name="card_zoom">Card zoom</string>
-  <string name="image_zoom">Image zoom</string>
+  <string name="card_zoom">Zoom de la tarjeta</string>
+  <string name="image_zoom">Zoom de la imagen</string>
   <string name="button_size">Tamaño del botón de respuesta</string>
   <string name="card_browser_font_size">Escalado de fuentes del explorador</string>
   <string name="col_path">Ruta de la colección</string>
@@ -154,8 +154,8 @@
   <string name="deck_conf_deck_description">Descripción del mazo</string>
   <string name="deck_conf_group">Grupo de opciones</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d deck uses this group</item>
-    <item quantity="other">%1$s\n%2$d decks use this group</item>
+    <item quantity="one">El mazo %1$s\n%2$d utiliza este grupo</item>
+    <item quantity="other">Los mazos %1$s\n%2$d utilizan este grupo</item>
   </plurals>
   <string name="deck_conf_new_cards">Tarjetas nuevas</string>
   <string name="deck_conf_rev_cards">Repasos</string>
@@ -200,8 +200,8 @@
   <string name="deck_conf_remove_message">¿Eliminar el grupo de opciones actual?</string>
   <string name="deck_conf_set_subdecks">Establecer para todos los submazos</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s subdeck will use this group</item>
-    <item quantity="other">%s subdecks will use this group</item>
+    <item quantity="one">%s submazo utilizará este grupo</item>
+    <item quantity="other">%s submazos utilizarán este grupo</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Establecer para todos los submazos</string>
   <string name="deck_conf_set_subdecks_message">¿Establecer el grupo de opciones actual para todos los submazos de este mazo?</string>

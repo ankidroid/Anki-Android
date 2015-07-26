@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">Kirjoita vastaus</string>
   <string name="show_answer">Näytä vastaus</string>
-  <string name="ease_button_again">Uudestaan</string>
-  <string name="ease_button_hard">Vaikea</string>
-  <string name="ease_button_good">Hyvä</string>
-  <string name="ease_button_easy">Helppo</string>
+  <string name="ease1_successive">Uudestaan</string>
+  <string name="ease2_successive">Vaikea</string>
+  <string name="ease3_successive">Hyvä</string>
+  <string name="ease3_learning">Helppo</string>
   <string name="studyoptions_congrats_undo">Peruuta %s</string>
   <string name="menu_import">Tuo</string>
   <string name="undo">Kumoa</string>

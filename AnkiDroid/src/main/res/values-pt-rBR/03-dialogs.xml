@@ -73,7 +73,7 @@
   <string name="intent_aedict_empty">Categoria \'padrão\' está vazia</string>
   <string name="intent_aedict_category">Para adicionar cartões ao AnkiDroid remova todas as categorias das notas ou adicione uma com o nome \'default\'</string>
   <string name="custom_study_new_total_new">Novos cartões no deck: %s</string>
-  <string name="custom_study_rev_total_rev">Revisões programadas no deck: %s</string>
+  <string name="custom_study_rev_total_rev">Revisões pendentes no deck: %s</string>
   <string name="custom_study_new_extend">Aumentar o limite de novos cartões hoje em</string>
   <string name="custom_study_rev_extend">Aumentar o limite de revisões hoje em</string>
   <string name="custom_study_forgotten">Revisar cartões esquecidos nos últimos x dias:</string>
@@ -116,7 +116,7 @@
   <string name="check_media_db_updated">Banco de dados de mídia reconstruído.</string>
   <string name="check_media_delete_unused">Excluir não utilizados</string>
   <string name="check_media_deleted">Arquivos apagados: %d</string>
-  <string name="tags_dialog_option_all_cards">All cards</string>
-  <string name="tags_dialog_option_new_cards">New</string>
-  <string name="tags_dialog_option_due_cards">Due</string>
+  <string name="tags_dialog_option_all_cards">Todos cartões</string>
+  <string name="tags_dialog_option_new_cards">Novos</string>
+  <string name="tags_dialog_option_due_cards">Pendentes</string>
 </resources>

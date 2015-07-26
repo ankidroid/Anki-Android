@@ -39,18 +39,18 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="decks">Decks</string>
-  <string name="card_browser">Card browser</string>
+  <string name="decks">牌組</string>
+  <string name="card_browser">卡片瀏覽器</string>
   <string name="statistics">Statistics</string>
-  <string name="settings">Settings</string>
-  <string name="help">Help</string>
-  <string name="send_feedback">Send feedback</string>
-  <string name="studyoptions_title">Study options</string>
+  <string name="settings">設置</string>
+  <string name="help">幫助</string>
+  <string name="send_feedback">反饋</string>
+  <string name="studyoptions_title">學習選項</string>
   <string name="studyoptions_due_today">今天到期:</string>
   <string name="studyoptions_new_total">新卡片數量:</string>
   <string name="studyoptions_total_cards">卡片總數:</string>
   <string name="studyoptions_eta">估計時間(分鐘):</string>
-  <string name="studyoptions_start">Study</string>
+  <string name="studyoptions_start">開始學習</string>
   <plurals name="deckpicker_title">
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
@@ -60,16 +60,16 @@
   <plurals name="reviewer_window_title">
     <item quantity="other">%d minutes left</item>
   </plurals>
-  <string name="type_answer_hint">Type answer</string>
+  <string name="type_answer_hint">輸入答案</string>
   <string name="show_answer">看答案</string>
-  <string name="ease_button_again">再一次</string>
-  <string name="ease_button_hard">難</string>
-  <string name="ease_button_good">中等</string>
-  <string name="ease_button_easy">簡單</string>
+  <string name="ease1_successive">再一次</string>
+  <string name="ease2_successive">難</string>
+  <string name="ease3_successive">中等</string>
+  <string name="ease3_learning">簡單</string>
   <string name="studyoptions_congrats_undo">復原 %s</string>
-  <string name="menu_import">Import</string>
+  <string name="menu_import">匯入</string>
   <string name="undo">復原</string>
-  <string name="undo_action_review">last review</string>
+  <string name="undo_action_review">上次複習</string>
   <string name="undo_action_edit">編輯筆記</string>
   <string name="undo_action_bury">暫時隱藏筆記</string>
   <string name="undo_action_suspend_card">長久擱置卡片</string>
@@ -81,11 +81,11 @@
   <string name="contextmenu_deckpicker_rename_deck">重新命名牌組</string>
   <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
-  <string name="menu_add">Add</string>
+  <string name="menu_add">新增</string>
   <string name="menu_add_note">Add note</string>
   <string name="menu_my_account">同步帳號</string>
-  <string name="menu_dismiss_note">Hide / delete</string>
-  <string name="menu_bury_card">Bury card</string>
+  <string name="menu_dismiss_note">隱藏/刪除</string>
+  <string name="menu_bury_card">隱藏卡牌</string>
   <string name="menu_bury_note">暫時隱藏筆記</string>
   <string name="menu_suspend_card">長久擱置卡片</string>
   <string name="menu_suspend_note">長久擱置筆記</string>
@@ -95,7 +95,7 @@
   <string name="menu_search">在%1$s中查詢</string>
   <string name="menu_mark_note">Mark note</string>
   <string name="menu_unmark_note">Unmark note</string>
-  <string name="new_deck">Create deck</string>
+  <string name="new_deck">創建牌組</string>
   <string name="create">建立</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="night_mode">夜間模式</string>
@@ -132,13 +132,13 @@
   <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">同步</string>
   <string name="export">Export</string>
-  <string name="nothing">Nothing</string>
+  <string name="nothing">無</string>
   <string name="title_activity_template_editor">Card types for %s</string>
   <string name="card_template_editor_front">Front template</string>
   <string name="card_template_editor_back">Back template</string>
   <string name="card_template_editor_styling">Styling</string>
   <string name="card_template_editor_menu_add_reverse">Add reverse</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
+  <string name="card_template_editor_menu_delete">刪除</string>
   <string name="card_template_editor_cant_delete">At least one card type is required.</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>

@@ -62,10 +62,10 @@
   </plurals>
   <string name="type_answer_hint">정답 입력</string>
   <string name="show_answer">정답 보기</string>
-  <string name="ease_button_again">다시</string>
-  <string name="ease_button_hard">어려움</string>
-  <string name="ease_button_good">괜찮음</string>
-  <string name="ease_button_easy">쉬움</string>
+  <string name="ease1_successive">다시</string>
+  <string name="ease2_successive">어려움</string>
+  <string name="ease3_successive">괜찮음</string>
+  <string name="ease3_learning">쉬움</string>
   <string name="studyoptions_congrats_undo">%s 실행 취소</string>
   <string name="menu_import">가져오기</string>
   <string name="undo">실행 취소</string>

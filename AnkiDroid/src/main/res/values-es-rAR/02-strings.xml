@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="preference_summary_percentage">XXX %</string>
+  <string name="preference_summary_percentage">XXX%</string>
   <string name="drawer_open">Abrir cajón</string>
   <string name="drawer_close">Cerrar cajón</string>
   <string name="CardEditorLaterMessage">Información guardada para más tarde</string>
@@ -48,12 +48,12 @@
   <string name="CardEditorModel">Tipo:</string>
   <string name="CardEditorTags">Etiquetas: %1$s</string>
   <string name="CardEditorCards">Tarjetas: %1$s</string>
-  <string name="tag_name">Tag name</string>
+  <string name="tag_name">Nombre de la etiqueta</string>
   <string name="add_new_filter_tags">Añadir/filtrar etiquetas</string>
-  <string name="add_tag">Add tag</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
+  <string name="add_tag">Añadir etiqueta</string>
+  <string name="check_all_tags">Seleccionar/deseleccionar todas las etiquetas</string>
   <string name="filter_tags">Filtrar etiquetas</string>
-  <string name="no_tags">You haven’t added any tags yet.</string>
+  <string name="no_tags">No has añadido ninguna etiqueta aún.</string>
   <string name="sdcard_missing_message">Tarjeta SD no disponible debido a que está siendo utilizada como un dispositivo USB. Desconecte el USB para acceder a sus mazos.</string>
   <string name="enable_whiteboard">Activar pizarra</string>
   <string name="disable_whiteboard">Desactivar pizarra</string>
@@ -152,8 +152,8 @@
   <string name="sched_end">(fin)</string>
   <string name="sched_unbury_button">Para verlas ahora, pulse el botón Desenterrar.</string>
   <string name="sched_has_buried">Algunas tarjetas relacionadas o enterradas fueron postergadas para una sesión posterior.</string>
-  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+  <string name="tag_editor_add_feedback">Tocar \"%2$s\" para confirmar la adición de \"%1$s\"</string>
+  <string name="tag_editor_add_feedback_existing">Etiqueta existente \"%1$s\" seleccionada</string>
   <string name="lookup_hint">Luego de copiar el texto, pulse en cualquier lugar sobre la tarjeta para mostrar el ícono de búsqueda</string>
   <string name="add_content_showcase_text">Para comenzar, pulse el botón + para añadir algún nuevo material de estudio.\n\n Presiona \'Ayuda\' para ver el manual.</string>
 </resources>

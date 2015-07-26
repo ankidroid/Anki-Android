@@ -60,15 +60,15 @@
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
-    <item quantity="other">%d minutes left</item>
+    <item quantity="one">%d minut kvar</item>
+    <item quantity="other">%d minuter kvar</item>
   </plurals>
   <string name="type_answer_hint">Skriv svar</string>
   <string name="show_answer">Visa svar</string>
-  <string name="ease_button_again">Igen</string>
-  <string name="ease_button_hard">Svår</string>
-  <string name="ease_button_good">Bra</string>
-  <string name="ease_button_easy">Lätt</string>
+  <string name="ease1_successive">Igen</string>
+  <string name="ease2_successive">Svår</string>
+  <string name="ease3_successive">Bra</string>
+  <string name="ease3_learning">Lätt</string>
   <string name="studyoptions_congrats_undo">Ångra %s</string>
   <string name="menu_import">Importera</string>
   <string name="undo">Ångra</string>

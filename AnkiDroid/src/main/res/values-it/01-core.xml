@@ -60,15 +60,15 @@
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">resta %d minuto</item>
-    <item quantity="other">restano %d minuti</item>
+    <item quantity="one">Resta %d minuto</item>
+    <item quantity="other">Restano %d minuti</item>
   </plurals>
   <string name="type_answer_hint">Digita la risposta</string>
   <string name="show_answer">Mostra la risposta</string>
-  <string name="ease_button_again">Ripeti</string>
-  <string name="ease_button_hard">Difficile</string>
-  <string name="ease_button_good">Buono</string>
-  <string name="ease_button_easy">Facile</string>
+  <string name="ease1_successive">Ripeti</string>
+  <string name="ease2_successive">Difficile</string>
+  <string name="ease3_successive">Buono</string>
+  <string name="ease3_learning">Facile</string>
   <string name="studyoptions_congrats_undo">Annulla %s</string>
   <string name="menu_import">Importa</string>
   <string name="undo">Annulla</string>
@@ -80,7 +80,7 @@
   <string name="undo_action_delete">elimina nota</string>
   <string name="undo_action_mark">contrassegna nota</string>
   <string name="unbury">Disseppellisci</string>
-  <string name="finish_operation">Completamento operazione precedente in corso (probabilmente creazione backup).\nAttendi...</string>
+  <string name="finish_operation">Completamento operazione precedente in corso (probabilmente creazione backup).\nAttendi&#8230;</string>
   <string name="contextmenu_deckpicker_rename_deck">Rinomina il mazzo</string>
   <string name="contextmenu_deckpicker_collapse_deck">Nascondi sottomazzi</string>
   <string name="contextmenu_deckpicker_inflate_deck">Mostra sottomazzi</string>

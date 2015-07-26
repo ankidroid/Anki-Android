@@ -62,10 +62,10 @@
   </plurals>
   <string name="type_answer_hint">回答の入力</string>
   <string name="show_answer">答えの表示</string>
-  <string name="ease_button_again">もう一度</string>
-  <string name="ease_button_hard">難</string>
-  <string name="ease_button_good">普通</string>
-  <string name="ease_button_easy">簡単</string>
+  <string name="ease1_successive">もう一度</string>
+  <string name="ease2_successive">難</string>
+  <string name="ease3_successive">普通</string>
+  <string name="ease3_learning">簡単</string>
   <string name="studyoptions_congrats_undo">%s を元に戻す</string>
   <string name="menu_import">インポート</string>
   <string name="undo">元に戻す</string>
@@ -81,7 +81,7 @@
   <string name="contextmenu_deckpicker_rename_deck">単語帳の名前の変更</string>
   <string name="contextmenu_deckpicker_collapse_deck">単語帳折りたたみ</string>
   <string name="contextmenu_deckpicker_inflate_deck">単語帳展開</string>
-  <string name="menu_add">追加</string>
+  <string name="menu_add">ノートを追加</string>
   <string name="menu_add_note">ノートを追加</string>
   <string name="menu_my_account">アカウントの設定と同期</string>
   <string name="menu_dismiss_note">延期、保留、削除</string>
@@ -95,7 +95,7 @@
   <string name="menu_search">%1$sで探す</string>
   <string name="menu_mark_note">ノートをマーク</string>
   <string name="menu_unmark_note">ノートのマークをはずす</string>
-  <string name="new_deck">単語帳を作成</string>
+  <string name="new_deck">単語帳を新規作成</string>
   <string name="create">作成</string>
   <string name="new_dynamic_deck">フィルター単語帳を作成</string>
   <string name="night_mode">ナイトモード</string>
@@ -124,10 +124,10 @@
   <string name="custom_study_deck_name">カスタム学習セッション</string>
   <string name="custom_study_deck_exists">最初に、既存のカスタム学習の単語帳の名称変更を行ってください。</string>
   <string name="studyoptions_congrats_finished">おめでとうございます！ 今日の課題を達成しました</string>
-  <string name="studyoptions_congrats_more_rev">予定日に達した復習カードがまだ他にも残っていますが、一日あたりの復習カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。</string>
-  <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、一日あたりの新規カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。（ただしそれに伴って短期的に学習の負担が増えますのでご注意ください。）</string>
+  <string name="studyoptions_congrats_more_rev">予定日に達した復習カードがまだ他にも残っていますが、今日復習したカードの枚数が既に一日あたりの上限に達しています。この上限は「単語帳オプション」内の設定で上げられます。</string>
+  <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、今日学習した新規カードの枚数が既に一日あたりの上限に達しています。この上限は「単語帳オプション」内の設定で上げられます。（ただしそれに伴って短期的に学習の負担が増えますのでご注意ください。）</string>
   <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
-  <string name="studyoptions_no_cards_due">今日の課題はまだ残っていますが、どのカードもまだ学習予定時刻に達していません</string>
+  <string name="studyoptions_no_cards_due">今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
   <string name="sd_card_not_mounted">デバイスストレージがマウントされていません</string>
   <string name="button_sync">同期</string>
   <string name="export">エクスポート(書き出し)</string>

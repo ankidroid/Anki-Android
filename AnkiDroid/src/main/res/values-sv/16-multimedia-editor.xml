@@ -84,7 +84,7 @@
   <string name="multimedia_editor_progress_wait_title">Vänta</string>
   <string name="multimedia_editor_something_wrong">Tyvärr, någonting gick fel</string>
   <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the note</string>
-  <string name="multimedia_editor_attach_media">Attach media</string>
+  <string name="multimedia_editor_attach_media">Bifoga media</string>
   <string name="multimedia_editor_audio_view_recording_failed">Inspelning misslyckades</string>
   <string name="multimedia_editor_audio_view_playing_failed">Uppspelning misslyckades</string>
   <string name="title_activity_edit_text">Redigeringsfält</string>

@@ -71,10 +71,10 @@
   </plurals>
   <string name="type_answer_hint">Унесите одговор</string>
   <string name="show_answer">Прикажи одговор</string>
-  <string name="ease_button_again">Поново</string>
-  <string name="ease_button_hard">Тешко</string>
-  <string name="ease_button_good">Добро</string>
-  <string name="ease_button_easy">Лако</string>
+  <string name="ease1_successive">Поново</string>
+  <string name="ease2_successive">Тешко</string>
+  <string name="ease3_successive">Добро</string>
+  <string name="ease3_learning">Лако</string>
   <string name="studyoptions_congrats_undo">Опозови %s</string>
   <string name="menu_import">Увези</string>
   <string name="undo">Опозови</string>

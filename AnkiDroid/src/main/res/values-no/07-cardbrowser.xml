@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">%d kort vist</item>
+    <item quantity="other">%d kort vist</item>
   </plurals>
   <string name="card_browser_all_decks">Alle kortstokker</string>
   <string name="card_browser_delete_card">Slett notat</string>
@@ -55,31 +55,31 @@
   <string name="card_browser_show_suspended">Filtrer suspenderte</string>
   <string name="card_browser_search_by_tag">Filtrer etter emneord</string>
   <string name="card_browser_tags_shown">Emneord: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
+  <string name="card_browser_list_my_searches">Mine søk</string>
+  <string name="card_browser_list_my_searches_save">Lagre søk</string>
+  <string name="card_browser_list_my_searches_title">Velg et lagret søk</string>
+  <string name="card_browser_list_my_searches_new_name">Navn for det gjeldende søket</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">Du kan ikke lagre et søk uten navn</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Navnet finnes allerede</string>
+  <string name="card_browser_list_my_searches_remove_content">Slette “%1$s”?</string>
   <string name="card_browser_change_display_order">Endre visningsrekkefølgen</string>
   <string name="card_browser_change_display_order_title">Velg visningsrekkefølge</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
+  <string name="card_browser_change_display_order_reverse">Velg et felt to ganger for å reversere</string>
   <string name="card_details_question">Spørsmål</string>
   <string name="card_details_answer">Svar</string>
   <string name="card_details_due">Gjenstående</string>
   <string name="card_details_tags">Emneord</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
+  <string name="card_browser_filtering_cards">Filtrerer kort&#8230; \nTrykk på \"tilbake\"-knappen for å avbryte</string>
   <string-array name="card_browser_order_labels">
     <item>Ingen sortering (kjappere)</item>
-    <item>By sort field</item>
-    <item>By created time</item>
-    <item>By edited time</item>
-    <item>By changed time</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
-    <item>By reviews</item>
-    <item>By lapses</item>
+    <item>Etter sorteringsfelt</item>
+    <item>Etter skapelsesdato</item>
+    <item>Etter endringsdato</item>
+    <item>Etter forandringsdato</item>
+    <item>Etter forfallstid</item>
+    <item>Etter intervall</item>
+    <item>Etter letthet</item>
+    <item>Etter gjennomganger</item>
+    <item>Etter antall feilsvar</item>
   </string-array>
 </resources>

@@ -39,36 +39,36 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="decks">Decks</string>
-  <string name="card_browser">Card browser</string>
-  <string name="statistics">Statistics</string>
-  <string name="settings">Settings</string>
-  <string name="help">Help</string>
-  <string name="send_feedback">Send feedback</string>
+  <string name="decks">Baralhos</string>
+  <string name="card_browser">Navegador de fichas</string>
+  <string name="statistics">Estatísticas</string>
+  <string name="settings">Definições</string>
+  <string name="help">Ajuda</string>
+  <string name="send_feedback">Enviar comentários</string>
   <string name="studyoptions_title">Opções de estudo</string>
   <string name="studyoptions_due_today">Para hoje:</string>
-  <string name="studyoptions_new_total">Total Cartões novos:</string>
+  <string name="studyoptions_new_total">Total de fichas novas:</string>
   <string name="studyoptions_total_cards">Total de fichas:</string>
   <string name="studyoptions_eta">Tempo estimado (min):</string>
   <string name="studyoptions_start">Estudar</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">%1$d ficha pendente (%2$s)</item>
+    <item quantity="other">%1$d fichas pendentes (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
-    <item quantity="other">%d minutes left</item>
+    <item quantity="one">%d minuto restante</item>
+    <item quantity="other">%d minutos restantes</item>
   </plurals>
   <string name="type_answer_hint">Escreva a resposta</string>
   <string name="show_answer">Mostrar resposta</string>
-  <string name="ease_button_again">Novamente</string>
-  <string name="ease_button_hard">Difícil</string>
-  <string name="ease_button_good">Bom</string>
-  <string name="ease_button_easy">Fácil</string>
+  <string name="ease1_successive">Novamente</string>
+  <string name="ease2_successive">Difícil</string>
+  <string name="ease3_successive">Bom</string>
+  <string name="ease3_learning">Fácil</string>
   <string name="studyoptions_congrats_undo">Anular %s</string>
   <string name="menu_import">Importar</string>
   <string name="undo">Anular</string>
@@ -77,32 +77,32 @@
   <string name="undo_action_bury">enterrar nota</string>
   <string name="undo_action_suspend_card">suspender ficha</string>
   <string name="undo_action_suspend_note">suspender nota</string>
-  <string name="undo_action_delete">Apagar nota</string>
-  <string name="undo_action_mark">Marcar nota</string>
+  <string name="undo_action_delete">apagar nota</string>
+  <string name="undo_action_mark">marcar nota</string>
   <string name="unbury">Desenterrar</string>
-  <string name="finish_operation">Terminando a operação anterior (provavelmente criação de cópia de segurança).\nPor favor aguarde&#8230;</string>
+  <string name="finish_operation">A terminar a operação anterior (provavelmente criação de cópia de segurança)&#8230;</string>
   <string name="contextmenu_deckpicker_rename_deck">Renomear baralho</string>
   <string name="contextmenu_deckpicker_collapse_deck">Esconder sub-baralhos</string>
   <string name="contextmenu_deckpicker_inflate_deck">Mostrar sub-baralhos</string>
   <string name="menu_add">Adicionar</string>
   <string name="menu_add_note">Adicionar nota</string>
   <string name="menu_my_account">Sincronização de conta</string>
-  <string name="menu_dismiss_note">Ocultar / Eliminar</string>
+  <string name="menu_dismiss_note">Ocultar / eliminar</string>
   <string name="menu_bury_card">Enterrar ficha</string>
   <string name="menu_bury_note">Enterrar Nota</string>
-  <string name="menu_suspend_card">Suspender cartão</string>
+  <string name="menu_suspend_card">Suspender ficha</string>
   <string name="menu_suspend_note">Suspender Nota</string>
   <string name="menu_delete_note">Eliminar nota</string>
   <string name="delete_note_message">Deseja realmente eliminar esta nota e todas as suas fichas?\n%s</string>
   <string name="menu_select">Selecionar texto</string>
   <string name="menu_search">Pesquisar em %1$s</string>
-  <string name="menu_mark_note">Mark note</string>
-  <string name="menu_unmark_note">Unmark note</string>
+  <string name="menu_mark_note">Marcar nota</string>
+  <string name="menu_unmark_note">Desmarcar nota</string>
   <string name="new_deck">Criar baralho</string>
   <string name="create">Criar</string>
   <string name="new_dynamic_deck">Criar baralho filtrado</string>
   <string name="night_mode">Modo noturno</string>
-  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <string name="directory_inaccessible">O directório de AnkiDroid é inacessível</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>
@@ -120,31 +120,31 @@
     <item>%s anos</item>
   </string-array>
   <string name="later">Mais tarde</string>
-  <string name="rebuild_cram_deck">Reconstruindo baralho de \"Estudo Focado\".\nPor favor aguarde&#8230;</string>
+  <string name="rebuild_cram_deck">A reconstruir baralho de estudo focado&#8230;</string>
   <string name="rebuild_cram_label">Reconstruir</string>
   <string name="empty_cram_label">Vazio</string>
-  <string name="empty_cram_deck">Esvaziando baralho de \"Estudo Focado\".\nPor favor aguarde&#8230;</string>
+  <string name="empty_cram_deck">A esvaziar baralho de estudo focado&#8230;</string>
   <string name="custom_study_deck_name">Sessão de estudo personalizado</string>
   <string name="custom_study_deck_exists">Por favor, primeiro altere o nome ao baralho de estudo personalizado existente</string>
   <string name="studyoptions_congrats_finished">Parabéns! Terminou por agora.</string>
-  <string name="studyoptions_congrats_more_rev">Atingiu o limite diário de revisões, mas ainda existem fichas à espera para serem revistas. Para otimizar a memória, considere aumentar o limite diário nas opções.</string>
-  <string name="studyoptions_congrats_more_new">O limite diário foi atingido. Estão disponíveis mais fichas novas; pode aumentar o limite nas opções, mas tenha em conta que isso irá aumentar a sua carga de memorização a curto prazo.</string>
-  <string name="studyoptions_congrats_custom">Para estudar fora da agenda normal, por favor toque no botão de \"Estudo personalizado\"</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <string name="sd_card_not_mounted">Device storage not mounted</string>
+  <string name="studyoptions_congrats_more_rev">O limite diário foi atingido, mas ainda existem fichas à espera para serem revistas. Pode aumentar o limite nas opções.</string>
+  <string name="studyoptions_congrats_more_new">O limite diário foi atingido. Estão disponíveis mais fichas novas; pode aumentar o limite nas opções, mas isto irá aumentar a sua carga de memorização a curto prazo.</string>
+  <string name="studyoptions_congrats_custom">Para estudar fora da agenda normal, toque no botão de \"Estudo personalizado\".</string>
+  <string name="studyoptions_no_cards_due">Nenhuma ficha a fazer por enquanto.</string>
+  <string name="sd_card_not_mounted">Armazenamento de dispositivo não montado</string>
   <string name="button_sync">Sincronizar</string>
   <string name="export">Exportar</string>
-  <string name="nothing">Nothing</string>
-  <string name="title_activity_template_editor">Card types for %s</string>
+  <string name="nothing">Nada</string>
+  <string name="title_activity_template_editor">Tipos de ficha para %s</string>
   <string name="card_template_editor_front">Front template</string>
   <string name="card_template_editor_back">Back template</string>
-  <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <string name="card_template_editor_styling">Estilo</string>
+  <string name="card_template_editor_menu_add_reverse">Adicionar verso</string>
+  <string name="card_template_editor_menu_delete">Eliminar</string>
+  <string name="card_template_editor_cant_delete">Pelo menos um tipo de ficha é necessário.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
-    <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+    <item quantity="one">Remover o tipo de ficha “%2$s” e a sua %1$d ficha?</item>
+    <item quantity="other">Remover o tipo de ficha “%2$s” e as suas %1$d fichas?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">Remover este tipo de ficha resultaria na remoção de uma ou mais notas. Por favor, crie primeiro um novo tipo de ficha.</string>
 </resources>

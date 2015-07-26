@@ -71,8 +71,8 @@
   <string name="reset_languages_summ">Återställ språktilldelningar (för text till tal och ordböcker) för alla kortlekar. Återställ specifika kortlekstilldelningar i kortleksväljaren</string>
   <string name="reset_languages_question">Återställ alla språktilldelningar?</string>
   <string name="reset_confirmation">Alla lägen nollställda</string>
-  <string name="card_zoom">Card zoom</string>
-  <string name="image_zoom">Image zoom</string>
+  <string name="card_zoom">Kort-zoom</string>
+  <string name="image_zoom">Bild-zoom</string>
   <string name="button_size">Storlek på svarsknapp</string>
   <string name="card_browser_font_size">Typsnittsstorlek i kortbläddrare</string>
   <string name="col_path">Sökväg för samling</string>

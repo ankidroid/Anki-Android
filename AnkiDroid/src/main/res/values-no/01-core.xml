@@ -39,12 +39,12 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="decks">Decks</string>
-  <string name="card_browser">Card browser</string>
-  <string name="statistics">Statistics</string>
-  <string name="settings">Settings</string>
-  <string name="help">Help</string>
-  <string name="send_feedback">Send feedback</string>
+  <string name="decks">Kortstokker</string>
+  <string name="card_browser">Kortoversikt</string>
+  <string name="statistics">Statistikk</string>
+  <string name="settings">Oppsett</string>
+  <string name="help">Hjelp</string>
+  <string name="send_feedback">Send tilbakemelding</string>
   <string name="studyoptions_title">Innstillinger</string>
   <string name="studyoptions_due_today">Forfaller i dag:</string>
   <string name="studyoptions_new_total">Totalt nye kort:</string>
@@ -60,15 +60,15 @@
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
-    <item quantity="other">%d minutes left</item>
+    <item quantity="one">%d minutt igjen</item>
+    <item quantity="other">%d minutter igjen</item>
   </plurals>
   <string name="type_answer_hint">Skriv svar</string>
   <string name="show_answer">Vis svaret</string>
-  <string name="ease_button_again">Igjen</string>
-  <string name="ease_button_hard">Vanskelig</string>
-  <string name="ease_button_good">Bra</string>
-  <string name="ease_button_easy">Lett</string>
+  <string name="ease1_successive">Igjen</string>
+  <string name="ease2_successive">Vanskelig</string>
+  <string name="ease3_successive">Bra</string>
+  <string name="ease3_learning">Lett</string>
   <string name="studyoptions_congrats_undo">Angre %s</string>
   <string name="menu_import">Importer</string>
   <string name="undo">Angre</string>
@@ -79,16 +79,16 @@
   <string name="undo_action_suspend_note">suspender notat</string>
   <string name="undo_action_delete">slett notat</string>
   <string name="undo_action_mark">merk notat</string>
-  <string name="unbury">Unbury</string>
+  <string name="unbury">Grav opp igjen</string>
   <string name="finish_operation">Avslutter forrige handling (sannsynligvis sikkerhetskopiering).\nVennligst vent...</string>
   <string name="contextmenu_deckpicker_rename_deck">Gi nytt navn til kortstokk</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
-  <string name="menu_add">Add</string>
-  <string name="menu_add_note">Add note</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Gjem understokker</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Vis understokker</string>
+  <string name="menu_add">Legg til</string>
+  <string name="menu_add_note">Legg til notat</string>
   <string name="menu_my_account">Synkroniser konto</string>
-  <string name="menu_dismiss_note">Hide / delete</string>
-  <string name="menu_bury_card">Bury card</string>
+  <string name="menu_dismiss_note">Gjem / slett</string>
+  <string name="menu_bury_card">Begrav kort</string>
   <string name="menu_bury_note">Begrav notat</string>
   <string name="menu_suspend_card">Suspender kort</string>
   <string name="menu_suspend_note">Utsett notat</string>
@@ -96,13 +96,13 @@
   <string name="delete_note_message">Slette dette notatet med alle kortene?\n%s</string>
   <string name="menu_select">Merk tekst</string>
   <string name="menu_search">Oppslag i %1$s</string>
-  <string name="menu_mark_note">Mark note</string>
-  <string name="menu_unmark_note">Unmark note</string>
-  <string name="new_deck">Create deck</string>
+  <string name="menu_mark_note">Marker notat</string>
+  <string name="menu_unmark_note">Fjern notatmarkering</string>
+  <string name="new_deck">Lag kortstokk</string>
   <string name="create">Opprett</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="new_dynamic_deck">Lag en filtrert kortstokk</string>
   <string name="night_mode">Nattmodus</string>
-  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <string name="directory_inaccessible">AnkiDroid-mappen er utilgjengelig</string>
   <string-array name="next_review_s">
     <item>1 sekund</item>
     <item>1 minutt</item>
@@ -124,27 +124,27 @@
   <string name="rebuild_cram_label">Gjenoppbygg</string>
   <string name="empty_cram_label">Tøm</string>
   <string name="empty_cram_deck">Tømmer pugge-kortstokken.\nVennligst vent...</string>
-  <string name="custom_study_deck_name">Custom study session</string>
-  <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
+  <string name="custom_study_deck_name">Tilpasset studiesesjon</string>
+  <string name="custom_study_deck_exists">Gi den eksisterende tilpassede studiestokken nytt navn først</string>
   <string name="studyoptions_congrats_finished">Gratulerer! Du er ferdig for i dag.</string>
   <string name="studyoptions_congrats_more_rev">Du har nådd grensen for gjennomgang i dag, men det er fortsatt kort du ikke har gått gjennom. For best mulig effekt, bør du vurdere å øke grensen i alternativene.</string>
   <string name="studyoptions_congrats_more_new">Det finnes flere nye kort tilgjengelig, men den daglige grensen er nådd. Du kan øke grensen i innstillingene, men vær oppmerksom på at dette også vil øke den kortsiktige mengden av kort til repetering.</string>
-  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the “Custom study” button.</string>
+  <string name="studyoptions_congrats_custom">For å studere utenfor den vanlige tidsrammen, trykk på \"Tilpassede studier\"-knappen.</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Synkroniser</string>
-  <string name="export">Export</string>
-  <string name="nothing">Nothing</string>
-  <string name="title_activity_template_editor">Card types for %s</string>
-  <string name="card_template_editor_front">Front template</string>
-  <string name="card_template_editor_back">Back template</string>
-  <string name="card_template_editor_styling">Styling</string>
+  <string name="export">Eksporter</string>
+  <string name="nothing">Ingenting</string>
+  <string name="title_activity_template_editor">Korttyper for %s</string>
+  <string name="card_template_editor_front">Framsidemal</string>
+  <string name="card_template_editor_back">Baksidemal</string>
+  <string name="card_template_editor_styling">Formgivning</string>
   <string name="card_template_editor_menu_add_reverse">Add reverse</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <string name="card_template_editor_menu_delete">Slett</string>
+  <string name="card_template_editor_cant_delete">Minst én korttype kreves.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
-    <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+    <item quantity="one">Slette korttypen \"%2$s\" og dens %1$d kort?</item>
+    <item quantity="other">Slette korttypen \"%2$s\" og dens %1$d kort?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">Fjerning av denne korttypen vil føre til at ett eller flere notater slettes. Vennligst lag en ny korttype først.</string>
 </resources>
