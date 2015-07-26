@@ -29,15 +29,12 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.database.SQLException;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
-import net.i2p.android.ext.floatingactionbutton.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -72,7 +69,6 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.widgets.DeckAdapter;
-import com.ichi2.ui.DividerItemDecoration;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask;
@@ -82,8 +78,12 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Sched;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
+import com.ichi2.ui.DividerItemDecoration;
 import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
+
+import net.i2p.android.ext.floatingactionbutton.FloatingActionButton;
+import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -152,6 +152,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // flag asking user to do a full sync which is used in upgrade path
     boolean mRecommendFullSync = false;
+
+    /**
+     * Flag to indicate whether the activity will perform a sync in its onResume.
+     * Since syncing closes the database, this flag allows us to avoid doing any
+     * work in onResume that might use the database and go straight to syncing.
+     */
+    private boolean mSyncOnResume = false;
 
     /**
      * Keep track of which deck was last given focus in the deck list. If we find that this value
@@ -590,7 +597,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         } else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
         } else if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
-            sync();
+            mSyncOnResume = true;
         } else if (requestCode == ADD_SHARED_DECKS) {
             if (intent != null) {
                 mImportPath = intent.getStringExtra("importPath");
@@ -609,7 +616,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.d("onResume()");
         super.onResume();
         selectNavigationItem(R.id.nav_decks);
-        if (colIsOpen()) {
+        if (mSyncOnResume) {
+            sync();
+            mSyncOnResume = false;
+        } else if (colIsOpen()) {
             updateDeckList();
             hideProgressBar();
         }
