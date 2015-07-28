@@ -54,6 +54,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
+import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
@@ -76,6 +77,7 @@ import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Sched;
+import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.DividerItemDecoration;
@@ -135,7 +137,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private static final int BROWSE_CARDS = 14;
     private static final int ADD_SHARED_DECKS = 15;
 
-    
+    // For automatic syncing
+    // 10 minutes in milliseconds.
+    public static final long AUTOMATIC_SYNC_MIN_INTERVAL = 600000;
+
     private MaterialDialog mProgressDialog;
 
     private RecyclerView mRecyclerView;
@@ -686,15 +691,29 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.d("onDestroy()");
     }
 
+    private void automaticSync() {
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+
+        // Check whether the option is selected, the user is signed in and last sync was AUTOMATIC_SYNC_TIME ago
+        // (currently 10 minutes)
+        String hkey = preferences.getString("hkey", "");
+        long lastSyncTime = preferences.getLong("lastSyncTime", 0);
+        if (hkey.length() != 0 && preferences.getBoolean("automaticSyncMode", false) &&
+                        Utils.intNow(1000) - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL) {
+            sync();
+        }
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Timber.i("DeckPicker:: onBackPressed()");
+            automaticSync();
             finishWithAnimation();
             return true;
+        } else {
+            return super.onKeyDown(keyCode, event);
         }
-        return super.onKeyDown(keyCode, event);
     }
 
 
@@ -747,6 +766,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             });
         }
         hideProgressBar();
+
+        automaticSync();
+
     }
 
 
@@ -1391,6 +1413,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
                 // Note: the interface is not refreshed since the activity is restarted after sync.
             }
+
+            // Write the time last sync was carried out. Useful for automatic sync interval.
+            // Turns out getLs() query will get the same old value if the last sync didn't find any changes, thus is
+            // unsuitable.
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+            Editor editor = preferences.edit();
+            editor.putLong("lastSyncTime", System.currentTimeMillis());
+            editor.commit();
         }
     };
 
