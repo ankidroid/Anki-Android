@@ -16,7 +16,7 @@ You can also <a href='Contribution#Become_a_beta_tester.md'>access the latest be
 </li><li>Specific version >= 2.0.3: use direct URL, e.g. for <a href='https://github.com/ankidroid/Anki-Android/releases/tag/v2.1beta10'>2.1beta10</a>, <a href='https://github.com/ankidroid/Anki-Android/releases/tag/v2.0.4'>2.0.4</a>, etc<br>
 </li><li><a href='http://code.google.com/p/ankidroid/downloads/list'>Specific version &lt; 2.0.3</a> (not recommended).</li></ul>
 
-2. Download the apk with the standard browser (Google Chrome may not work)<br>
+2. Download the apk with your stock browser<br>
 <br>
 3. Click on the downloaded .apk, and install<br>
 <br>
