@@ -28,6 +28,7 @@ You can <a href='Contribution#Become_a_beta_tester.md'>access the latest beta ve
 <br>
 <b>Note:</b> Syncing with Anki Web is no longer supported on versions < 2.3.2<br>
 <br>
+
 <h1>Uninstalling</h1>
 <ol><li>Go to the Android settings, then "Applications", then "Manage applications"<br>
 </li><li>Look for "AnkiDroid"<br>
