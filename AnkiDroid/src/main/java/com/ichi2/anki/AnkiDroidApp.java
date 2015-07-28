@@ -155,9 +155,9 @@ public class AnkiDroidApp extends Application {
         if (BuildConfig.DEBUG) {
             // Enable verbose error logging and do method tracing to put the Class name as log tag
             Timber.plant(new Timber.DebugTree());
-            // Don't report crashes, regardless of user setting
-            // note: manually changing crash report mode from within app can re-enable this
+            // Disable crash reporting
             setAcraReportingMode(FEEDBACK_REPORT_NEVER);
+            preferences.edit().putString("reportErrorMode", FEEDBACK_REPORT_NEVER).commit();
             // Use a wider logcat filter incase crash reporting manually re-enabled
             String [] logcatArgs = { "-t", "300", "-v", "long", "ACRA:S"};
             ACRA.getConfig().setLogcatArguments(logcatArgs);
