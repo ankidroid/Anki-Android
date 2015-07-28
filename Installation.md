@@ -1,14 +1,12 @@
+<h1>App store</h1>
+The easiest way to install AnkiDroid is via your favorite app-store:
 
-<img src='http://i.stack.imgur.com/hUgkh.png' align='right'>
+[![Google Play Store](https://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.ichi2.anki)
+[![F-Droid](https://guardianproject.info/wp-content/uploads/2014/07/logo-fdroid.png)](https://f-droid.org/repository/browse/?fdid=com.ichi2.anki)
 
+If these links don't work, open the Google Play application on your device, search for "anki", then in the results click on "AnkiDroid", and then on "Install". 
 
-<h1>Google Play</h1>
-<ol><li>Open Google Play application and search for "anki"<br>
-</li><li>In the results, click on "AnkiDroid" and then on "Install"</li></ol>
-
-It's also possible to install directly from the <a href='https://market.android.com/details?id=com.ichi2.anki'>AnkiDroid page</a> on the Google Play website.<br>
-<br>
-You can <a href='Contribution#Become_a_beta_tester.md'>access the latest beta version on Google Play</a> (registration on forum required).<br>
+You can also <a href='Contribution#Become_a_beta_tester.md'>access the latest beta version on Google Play</a> (registration on forum required).<br>
 <br>
 <h1>APK</h1>
 
