@@ -61,7 +61,6 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         mNavigationView = (NavigationView) mDrawerLayout.findViewById(R.id.navdrawer_items_container);
         mNavigationView.setNavigationItemSelectedListener(this);
-
         Toolbar toolbar = (Toolbar) mainView.findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -253,5 +252,14 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
 
     public static boolean isWholeCollection() {
         return sIsWholeCollection;
+    }
+
+    /**
+     * Get the drawer layout.
+     *
+     * The drawer layout is the parent layout for activities that use the Navigation Drawer.
+     */
+    public DrawerLayout getDrawerLayout() {
+        return mDrawerLayout;
     }
 }

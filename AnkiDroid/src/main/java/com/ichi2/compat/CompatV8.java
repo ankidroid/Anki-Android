@@ -8,11 +8,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.RemoteViews;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.ReadText;
 import com.ichi2.anki.exception.APIVersionException;
 
@@ -113,5 +115,11 @@ public class CompatV8 implements Compat {
         Intent intent = new Intent(activity, DeckPicker.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivityWithoutAnimation(intent);
+    }
+
+    @Override
+    public void setFullScreen(NavigationDrawerActivity activity) {
+        activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 }
