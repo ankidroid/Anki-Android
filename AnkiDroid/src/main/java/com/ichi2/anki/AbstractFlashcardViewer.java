@@ -50,8 +50,8 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;  // Looks like these …
-import android.view.WindowManager;  // … two have LayoutParams members that are not the same.
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.JsResult;
@@ -853,10 +853,22 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         setContentView(R.layout.flashcard);
         View mainView = findViewById(android.R.id.content);
         initNavigationDrawer(mainView);
+        // Set full screen/immersive mode if needed
+        if (mPrefFullscreenReview) {
+            CompatHelper.getCompat().setFullScreen(this);
+        }
         // Load the collection
         startLoadingCollection();
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        // Restore full screen once we regain focus
+        if (mPrefFullscreenReview) {
+            CompatHelper.getCompat().setFullScreen(this);
+        }
+    }
 
     @ Override
     public void onConfigurationChanged(Configuration config) {
@@ -875,10 +887,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         super.onCollectionLoaded(col);
         mSched = col.getSched();
         mBaseUrl = Utils.getBaseUrl(col.getMedia().dir());
-
-        if (mPrefFullscreenReview) {
-            UIUtils.setFullScreen(this);
-        }
 
         registerExternalStorageListener();
 

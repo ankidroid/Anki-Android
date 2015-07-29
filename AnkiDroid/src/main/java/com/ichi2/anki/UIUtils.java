@@ -1,19 +1,13 @@
 
 package com.ichi2.anki;
 
-import android.app.Activity;
 import android.content.Context;
-
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.text.SpannableStringBuilder;
-import android.text.style.CharacterStyle;
-import android.text.style.ForegroundColorSpan;
+import android.os.Build;
+import android.view.View;
 import android.view.WindowManager;
 
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
-import com.ichi2.themes.Themes;
 
 import java.util.Calendar;
 
@@ -37,7 +31,6 @@ public class UIUtils {
         cal.set(Calendar.MILLISECOND, 0);
         return cal.getTimeInMillis();
     }
-
 
 
     public static void saveCollectionInBackground(Context context) {
@@ -65,11 +58,5 @@ public class UIUtils {
                 }
             }, new DeckTask.TaskData(CollectionHelper.getInstance().getCol(context)));
         }
-    }
-
-
-    public static void setFullScreen(Activity activity) {
-        activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 }

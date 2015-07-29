@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.ichi2.anki.AnkiActivity;
+import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.exception.APIVersionException;
 
 /**
@@ -55,5 +56,6 @@ public interface Compat {
     void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls);
     void setAlpha(View view, float alpha);
     void restartActivityInvalidateBackstack(AnkiActivity activity);
+    void setFullScreen(NavigationDrawerActivity activity);
 }
 
