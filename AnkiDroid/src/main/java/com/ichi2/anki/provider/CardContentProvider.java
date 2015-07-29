@@ -794,10 +794,16 @@ public class CardContentProvider extends ContentProvider {
 
     private Card getCard(long noteId, int ord, Collection col){
         Note currentNote = col.getNote(noteId);
-        if (currentNote.cards().size() <= ord) {
+        Card currentCard = null;
+        for(Card card : currentNote.cards()){
+            if(card.getOrd() == ord){
+                currentCard = card;
+            }
+        }
+        if (currentCard == null) {
             throw new IllegalArgumentException("Card with ord " + ord + " does not exist for note " + noteId);
         }
-        return currentNote.cards().get(ord);
+        return currentCard;
     }
 
     private Note getNoteFromUri(Uri uri, Collection col) {
