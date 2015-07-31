@@ -101,6 +101,9 @@
   <string name="sync_account">AnkiWeb 帐户</string>
   <string name="sync_account_summ_logged_out">未登录</string>
   <string name="sync_account_summ_logged_in">%s</string>
+  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
+        minutes ago.</string>
   <string name="fix_hebrew_text">希伯来元音的修补程序</string>
   <string name="fix_hebrew_text_summ">正确显示希伯来语元音的临时解决方法。</string>
   <string name="fix_hebrew_instructions">此设置将绕过Android的 RTL 算法 ，以正确显示希伯来语的元音。\n\n使用此设置，需要下载Tohu.ttf字体，并手动拷贝到:\n%s/fonts/\n\n目录中。不需要修改卡牌。</string>

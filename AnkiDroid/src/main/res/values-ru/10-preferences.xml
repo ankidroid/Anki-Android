@@ -101,6 +101,9 @@
   <string name="sync_account">AnkiWeb аккаунт</string>
   <string name="sync_account_summ_logged_out">Не авторизованы</string>
   <string name="sync_account_summ_logged_in">%s</string>
+  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
+        minutes ago.</string>
   <string name="fix_hebrew_text">Исправление для гласных иврита</string>
   <string name="fix_hebrew_text_summ">Позволяет правильно отображать гласные на иврите.</string>
   <string name="fix_hebrew_instructions">Этот параметр обходит RTL алгоритм системы Android, чтобы показать правильно гласные в тексте на иврите.\n\nЧтобы это работало, вам нужно скачать шрифт Tohu.ttf и вручную скопировать в:\n%s/fonts/\n\nВам не нужно модифицировать ваши карты.</string>

@@ -62,10 +62,10 @@
   </plurals>
   <string name="type_answer_hint">Trả lời</string>
   <string name="show_answer">Hiện đáp án</string>
-  <string name="ease1_successive">Làm lại</string>
-  <string name="ease2_successive">Khó</string>
-  <string name="ease3_successive">Tốt</string>
-  <string name="ease3_learning">Dễ</string>
+  <string name="ease_button_again">Làm lại</string>
+  <string name="ease_button_hard">Khó</string>
+  <string name="ease_button_good">Tốt</string>
+  <string name="ease_button_easy">Dễ</string>
   <string name="studyoptions_congrats_undo">Hoàn tác %s</string>
   <string name="menu_import">Quan trọng</string>
   <string name="undo">Hoàn tác</string>
@@ -79,8 +79,6 @@
   <string name="unbury">Sửa lại</string>
   <string name="finish_operation">Đang hoàn thành nốt hoạt động trước đó (thường là sao lưu).\nChờ chút...</string>
   <string name="contextmenu_deckpicker_rename_deck">Đổi tên tập thẻ</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Ẩn Bài phụ</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Hiện Bài phụ</string>
   <string name="menu_add">Thêm</string>
   <string name="menu_add_note">Thêm ghi chú</string>
   <string name="menu_my_account">Tài khoản đồng bộ</string>

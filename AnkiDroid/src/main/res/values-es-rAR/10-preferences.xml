@@ -101,6 +101,9 @@
   <string name="sync_account">Cuenta de AnkiWeb</string>
   <string name="sync_account_summ_logged_out">No ha iniciado sesión</string>
   <string name="sync_account_summ_logged_in">%s</string>
+  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
+        minutes ago.</string>
   <string name="fix_hebrew_text">Parche para vocales en hebreo</string>
   <string name="fix_hebrew_text_summ">Solución para renderizar las vocales hebreas correctamente.</string>
   <string name="fix_hebrew_instructions">Esta característica evita el algoritmo RTL de Android para mostrar texto en hebreo con las vocales correctas.\n\nPara que esto funcione debe descargar la fuente Tohu.ttf y copiarla manualmente a:\n%sfonts\n\nNo deberá modificar sus tarjetas.</string>

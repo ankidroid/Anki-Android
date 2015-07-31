@@ -101,6 +101,9 @@
   <string name="sync_account">AnkiWebアカウント</string>
   <string name="sync_account_summ_logged_out">ログインしていません。</string>
   <string name="sync_account_summ_logged_in">%s</string>
+  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
+        minutes ago.</string>
   <string name="fix_hebrew_text">ヘブライ語母音への対応</string>
   <string name="fix_hebrew_text_summ">ヘブライ語の母音を適切に描画するための回避策です</string>
   <string name="fix_hebrew_instructions">この設定は、ヘブライ語を表示するために、AndroidのRTLアルゴリズムをバイパスします\n\nこのが機能を使うために、フォント（Tohu.ttf）をダウンロードして手動で:\n%s/fonts/\n\nへコピーする必要があります。カードを変更する必要はありません。</string>

@@ -91,4 +91,5 @@
   <string name="title_activity_translation">ترجمه</string>
   <string name="title_activity_load_pronounciation">تلفظ</string>
   <string name="title_activity_search_image">جستجوی تصویری گوگل</string>
+  <string name="network_no_connection">No connection.</string>
 </resources>

@@ -101,6 +101,9 @@
   <string name="sync_account">AnkiWeb 帳號</string>
   <string name="sync_account_summ_logged_out">未登入</string>
   <string name="sync_account_summ_logged_in">%s</string>
+  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
+        minutes ago.</string>
   <string name="fix_hebrew_text">修復希伯來文母音</string>
   <string name="fix_hebrew_text_summ">為正確呈現希伯來文母音的變通方法</string>
   <string name="fix_hebrew_instructions">此設定會繞過 Android 內部的 RTL 演算法，以正確顯示希伯來文字與母音。\n\n 你需要下載 Tohu.ttf 字體，手動將它複製到:\n%s/fonts/\n\n這個設定才會生效。因此你不需要修改你的卡片。</string>

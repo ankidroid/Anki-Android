@@ -62,10 +62,10 @@
   </plurals>
   <string name="type_answer_hint">정답 입력</string>
   <string name="show_answer">정답 보기</string>
-  <string name="ease1_successive">다시</string>
-  <string name="ease2_successive">어려움</string>
-  <string name="ease3_successive">괜찮음</string>
-  <string name="ease3_learning">쉬움</string>
+  <string name="ease_button_again">다시</string>
+  <string name="ease_button_hard">어려움</string>
+  <string name="ease_button_good">괜찮음</string>
+  <string name="ease_button_easy">쉬움</string>
   <string name="studyoptions_congrats_undo">%s 실행 취소</string>
   <string name="menu_import">가져오기</string>
   <string name="undo">실행 취소</string>
@@ -79,8 +79,6 @@
   <string name="unbury">넣었던 카드 꺼내기</string>
   <string name="finish_operation">이전 작업을 완료 중입니다. (백업 생성 중일 가능성이 큽니다).\n잠시만 기다려주세요...</string>
   <string name="contextmenu_deckpicker_rename_deck">덱 이름 바꾸기</string>
-  <string name="contextmenu_deckpicker_collapse_deck">하위 묶음 숨김</string>
-  <string name="contextmenu_deckpicker_inflate_deck">하위 묶음 표시</string>
   <string name="menu_add">추가</string>
   <string name="menu_add_note">노트 추가</string>
   <string name="menu_my_account">계정 동기화</string>

@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">Válasz begépelése</string>
   <string name="show_answer">Válasz mutatása</string>
-  <string name="ease1_successive">Újra</string>
-  <string name="ease2_successive">Nehéz</string>
-  <string name="ease3_successive">Jó</string>
-  <string name="ease3_learning">Könnyű</string>
+  <string name="ease_button_again">Újra</string>
+  <string name="ease_button_hard">Nehéz</string>
+  <string name="ease_button_good">Jó</string>
+  <string name="ease_button_easy">Könnyű</string>
   <string name="studyoptions_congrats_undo">Visszavonás %s</string>
   <string name="menu_import">Importálás</string>
   <string name="undo">Visszavonás</string>
@@ -82,8 +82,6 @@
   <string name="unbury">Félretétel megszüntetése</string>
   <string name="finish_operation">Előző művelet befejezése (valószínűleg biztonsági másolat létrehozása). \nKérlek, várj...</string>
   <string name="contextmenu_deckpicker_rename_deck">Pakli átnevezése</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Alpaklik elrejtése</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Alpaklik mutatása</string>
   <string name="menu_add">Hozzáadás</string>
   <string name="menu_add_note">Megjegyzés hozzáadása</string>
   <string name="menu_my_account">Fiók szinkronizálása</string>

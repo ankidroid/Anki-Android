@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Покажи отговора</string>
-  <string name="ease1_successive">Отново</string>
-  <string name="ease2_successive">Твърд</string>
-  <string name="ease3_successive">Добре</string>
-  <string name="ease3_learning">Лесно</string>
+  <string name="ease_button_again">Отново</string>
+  <string name="ease_button_hard">Твърд</string>
+  <string name="ease_button_good">Добре</string>
+  <string name="ease_button_easy">Лесно</string>
   <string name="studyoptions_congrats_undo">Undo %s</string>
   <string name="menu_import">Импортиране</string>
   <string name="undo">Отмени</string>
@@ -82,8 +82,6 @@
   <string name="unbury">Unbury</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation)&#8230;</string>
   <string name="contextmenu_deckpicker_rename_deck">Преименуване на колода</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
   <string name="menu_add">добави</string>
   <string name="menu_add_note">Add note</string>
   <string name="menu_my_account">Sync account</string>

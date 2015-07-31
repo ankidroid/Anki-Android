@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">Antwort eingeben</string>
   <string name="show_answer">Antwort anzeigen</string>
-  <string name="ease1_successive">Nochmal</string>
-  <string name="ease2_successive">Schwer</string>
-  <string name="ease3_successive">Gut</string>
-  <string name="ease3_learning">Einfach</string>
+  <string name="ease_button_again">Nochmal</string>
+  <string name="ease_button_hard">Schwer</string>
+  <string name="ease_button_good">Gut</string>
+  <string name="ease_button_easy">Einfach</string>
   <string name="studyoptions_congrats_undo">%s rückgängig machen</string>
   <string name="menu_import">Importieren</string>
   <string name="undo">Rückgängig</string>
@@ -82,8 +82,6 @@
   <string name="unbury">Zurückstellen aufheben</string>
   <string name="finish_operation">Letzte Operation wird beendet (vermutlich eine Sicherung der Sammlung)&#8230;</string>
   <string name="contextmenu_deckpicker_rename_deck">Stapel umbenennen</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Unterstapel einklappen</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Unterstapel ausklappen</string>
   <string name="menu_add">Hinzufügen</string>
   <string name="menu_add_note">Notiz hinzufügen</string>
   <string name="menu_my_account">Synchronisierungskonto</string>

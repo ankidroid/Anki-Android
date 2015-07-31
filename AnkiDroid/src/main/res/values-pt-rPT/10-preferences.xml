@@ -101,6 +101,9 @@
   <string name="sync_account">Conta AnkiWeb</string>
   <string name="sync_account_summ_logged_out">Sem sessão iniciada</string>
   <string name="sync_account_summ_logged_in">%s</string>
+  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
+        minutes ago.</string>
   <string name="fix_hebrew_text">Correção para vogais em Hebraico</string>
   <string name="fix_hebrew_text_summ">Solução alternativa para processar corretamente  as vogais em Hebraico.</string>
   <string name="fix_hebrew_instructions">Esta definição ignora o algoritmo RTL do Android para mostrar corretamente o texto hebraico com as vogais.\n\nPara funcionar corretamente precisa de instalar o tipo de letra Tohu.ttf e copiá-lo manualmente para:\n%s/fonts/\n\nNão terá de modificar as suas fichas.</string>

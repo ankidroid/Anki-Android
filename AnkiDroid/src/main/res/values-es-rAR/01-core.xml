@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">Escribir respuesta</string>
   <string name="show_answer">Mostrar Respuesta</string>
-  <string name="ease1_successive">Otra vez</string>
-  <string name="ease2_successive">Difícil</string>
-  <string name="ease3_successive">Bien</string>
-  <string name="ease3_learning">Fácil</string>
+  <string name="ease_button_again">Otra vez</string>
+  <string name="ease_button_hard">Difícil</string>
+  <string name="ease_button_good">Bien</string>
+  <string name="ease_button_easy">Fácil</string>
   <string name="studyoptions_congrats_undo">Deshacer %s</string>
   <string name="menu_import">Importar</string>
   <string name="undo">Deshacer</string>
@@ -82,8 +82,6 @@
   <string name="unbury">Desenterrar</string>
   <string name="finish_operation">Finalizando operación previa (probablemente creación de una copia de seguridad).\nPor favor aguarde...</string>
   <string name="contextmenu_deckpicker_rename_deck">Renombrar mazo</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Ocultar submazos</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Mostrar submazos</string>
   <string name="menu_add">Añadir</string>
   <string name="menu_add_note">Añadir nota</string>
   <string name="menu_my_account">Sincronizar cuenta</string>

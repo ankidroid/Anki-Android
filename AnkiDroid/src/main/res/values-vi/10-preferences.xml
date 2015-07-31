@@ -101,6 +101,9 @@
   <string name="sync_account">tài khoản AnkiWeb </string>
   <string name="sync_account_summ_logged_out">Chưa đăng nhập</string>
   <string name="sync_account_summ_logged_in">%s</string>
+  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
+        minutes ago.</string>
   <string name="fix_hebrew_text">Sửa chữa cho nguyên âm tiếng Do Thái</string>
   <string name="fix_hebrew_text_summ">Workaround để làm cho tiếng Do Thái nguyên âm một cách chính xác.</string>
   <string name="fix_hebrew_instructions">Cài đặt này đi qua các thuật toán RTL của Android để hiển thị các văn bản tiếng Do Thái với nguyên âm correctly.\n\nFor để làm việc này, bạn cần phải tải về phông chữ Tohu.ttf và sao chép nó bằng tay đến: \n%s/fonts/\n\nYou sẽ không phải sửa đổi thẻ của bạn.</string>

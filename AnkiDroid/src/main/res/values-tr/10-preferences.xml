@@ -101,6 +101,9 @@
   <string name="sync_account">AnkiWeb hesabı</string>
   <string name="sync_account_summ_logged_out">Giriş yapılmamış</string>
   <string name="sync_account_summ_logged_in">%s</string>
+  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
+        minutes ago.</string>
   <string name="fix_hebrew_text">İbranice ünlüler için düzeltme</string>
   <string name="fix_hebrew_text_summ">İbrânice sesli harflerin düzgün gözükmesi için çözüm</string>
   <string name="fix_hebrew_instructions">Bu ayar İbrânice yazılarda sesli harflerin düzgün gösterilmesi için Android\'in RTL algoritmasını atlar.\n\nBunun işe yaraması için, Tohu.tff fontunu indirip kendiniz şu klasöre kopyalamanız gerekiyor:\n%s/fonts/\n\nKartlarınızda bir değişiklik yapmanız gerekmez.</string>

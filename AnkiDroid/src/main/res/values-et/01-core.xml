@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">Kirjuta vastus</string>
   <string name="show_answer">Kuva vastus</string>
-  <string name="ease1_successive">Uuesti</string>
-  <string name="ease2_successive">Keeruline</string>
-  <string name="ease3_successive">Hea</string>
-  <string name="ease3_learning">Lihtne</string>
+  <string name="ease_button_again">Uuesti</string>
+  <string name="ease_button_hard">Keeruline</string>
+  <string name="ease_button_good">Hea</string>
+  <string name="ease_button_easy">Lihtne</string>
   <string name="studyoptions_congrats_undo">Võta tagasi %s</string>
   <string name="menu_import">Impordi</string>
   <string name="undo">Võta tagasi</string>
@@ -82,8 +82,6 @@
   <string name="unbury">Unbury</string>
   <string name="finish_operation">Finishing previous operation (most likely backup creation)&#8230;</string>
   <string name="contextmenu_deckpicker_rename_deck">Kaardipaki ümbernimetamine</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Peida alamkaardipakid</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Näita alamkaardipakke</string>
   <string name="menu_add">Lisa</string>
   <string name="menu_add_note">Add note</string>
   <string name="menu_my_account">Sünkrooni konto</string>

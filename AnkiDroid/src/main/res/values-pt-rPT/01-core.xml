@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">Escreva a resposta</string>
   <string name="show_answer">Mostrar resposta</string>
-  <string name="ease1_successive">Novamente</string>
-  <string name="ease2_successive">Difícil</string>
-  <string name="ease3_successive">Bom</string>
-  <string name="ease3_learning">Fácil</string>
+  <string name="ease_button_again">Novamente</string>
+  <string name="ease_button_hard">Difícil</string>
+  <string name="ease_button_good">Bom</string>
+  <string name="ease_button_easy">Fácil</string>
   <string name="studyoptions_congrats_undo">Anular %s</string>
   <string name="menu_import">Importar</string>
   <string name="undo">Anular</string>
@@ -82,8 +82,6 @@
   <string name="unbury">Desenterrar</string>
   <string name="finish_operation">A terminar a operação anterior (provavelmente criação de cópia de segurança)&#8230;</string>
   <string name="contextmenu_deckpicker_rename_deck">Renomear baralho</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Esconder sub-baralhos</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Mostrar sub-baralhos</string>
   <string name="menu_add">Adicionar</string>
   <string name="menu_add_note">Adicionar nota</string>
   <string name="menu_my_account">Sincronização de conta</string>

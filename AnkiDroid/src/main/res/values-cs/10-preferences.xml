@@ -101,6 +101,9 @@
   <string name="sync_account">AnkiWeb účet</string>
   <string name="sync_account_summ_logged_out">Nejste přihlášen</string>
   <string name="sync_account_summ_logged_in">%s</string>
+  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
+        minutes ago.</string>
   <string name="fix_hebrew_text">Oprava pro hebrejské samohlásky</string>
   <string name="fix_hebrew_text_summ">Úprava pro správné vykreslování hebrejských samohlásek </string>
   <string name="fix_hebrew_instructions">Toto nastavení obejde RTL algoritmus Androidu, aby ukázal správně hebrejský text s samohláskami.\n\nAby to fungovalo potřebujete stáhnout font Tohu.ttf a ručně ho zkopírovat do:\n%s/fonts/\n\nNemusíte upravovat vaše karty.</string>

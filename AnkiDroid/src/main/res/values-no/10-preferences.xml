@@ -101,6 +101,9 @@
   <string name="sync_account">AnkiWeb account</string>
   <string name="sync_account_summ_logged_out">Not logged in</string>
   <string name="sync_account_summ_logged_in">%s</string>
+  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
+        minutes ago.</string>
   <string name="fix_hebrew_text">Løsning for hebraiske vokaler</string>
   <string name="fix_hebrew_text_summ">Nødløsning for å rendre hebraiske vokaler på riktig måte.</string>
   <string name="fix_hebrew_instructions">Denne innstillingen omgår RTL-algoritmen til Android for å vise hebraisk tekst med vokaler på riktig måte.\n\nFor at dette skal fungere, må du laste ned skrifttypen Tohu.ttf og kopiere den manuelt til:\n%s/fonts/\n\nDu kommer ikke til å behøve å endre kortene dine.</string>

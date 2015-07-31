@@ -101,6 +101,9 @@
   <string name="sync_account">AnkiWeb account</string>
   <string name="sync_account_summ_logged_out">Not logged in</string>
   <string name="sync_account_summ_logged_in">%s</string>
+  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
+        minutes ago.</string>
   <string name="fix_hebrew_text">Διόρθωση Εβραϊκών φωνηέντων</string>
   <string name="fix_hebrew_text_summ">Διόρθωση για τη σωστή απόδοση των Εβραϊκών φωνηέντων.</string>
   <string name="fix_hebrew_instructions">Αυτή η ρύθμιση παρακάμπτει τον αλγόριθμο RTL του Android για τη σωστή αναπαραγωγή εβραϊκού κειμένου με φωνήεντα.\n\nΓια να λειτουργήσει, πρέπει να κατεβάσετε τη γραμματοσειρά Tohu.ttf και να την αντιγράψετε χειροκίνητα σto:\n%s/fonts/\n\nΔε χρειάζετε να τροποποιήσετε τις κάρτες σας.</string>

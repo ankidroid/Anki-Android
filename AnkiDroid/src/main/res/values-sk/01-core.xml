@@ -68,10 +68,10 @@
   </plurals>
   <string name="type_answer_hint">Napísať odpoveď</string>
   <string name="show_answer">Zobraziť odpoveď</string>
-  <string name="ease1_successive">Znovu</string>
-  <string name="ease2_successive">Ťažké</string>
-  <string name="ease3_successive">Dobre</string>
-  <string name="ease3_learning">Ľahké</string>
+  <string name="ease_button_again">Znovu</string>
+  <string name="ease_button_hard">Ťažké</string>
+  <string name="ease_button_good">Dobre</string>
+  <string name="ease_button_easy">Ľahké</string>
   <string name="studyoptions_congrats_undo">Späť %s</string>
   <string name="menu_import">Import</string>
   <string name="undo">Späť</string>
@@ -85,8 +85,6 @@
   <string name="unbury">Vyhrabať</string>
   <string name="finish_operation">Dokončujem predchádzajúcu operáciu (pravdepodobne vytváram zálohu).\nProsím počkajte...</string>
   <string name="contextmenu_deckpicker_rename_deck">Premenovať balíček</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Skryť podbalíčky</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Zobraziť podbalíčky</string>
   <string name="menu_add">Pridať</string>
   <string name="menu_add_note">Pridať poznámku</string>
   <string name="menu_my_account">Synchronizácia účtu</string>

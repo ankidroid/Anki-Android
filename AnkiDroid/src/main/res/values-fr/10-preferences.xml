@@ -101,6 +101,9 @@
   <string name="sync_account">Compte AnkiWeb</string>
   <string name="sync_account_summ_logged_out">Pas connecté</string>
   <string name="sync_account_summ_logged_in">%s</string>
+  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
+        minutes ago.</string>
   <string name="fix_hebrew_text">Correctif pour les voyelles en Hébreu</string>
   <string name="fix_hebrew_text_summ">Solution de rechange pour afficher correctement les voyelles hébraïques.</string>
   <string name="fix_hebrew_instructions">Ce paramètre contourne l\'algorithme RTL d’Android, pour afficher correctement les voyelles.\n\nPour que ça fonctionne, vous devez téléchargez la police Tohu.ttf et la copier manuellement vers :\n%s/fonts/\n\nVous n\'aurez pas à modifier vos cartes.</string>

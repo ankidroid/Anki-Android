@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Mostra la resposta</string>
-  <string name="ease1_successive">De nou</string>
-  <string name="ease2_successive">Difícil</string>
-  <string name="ease3_successive">Correcte</string>
-  <string name="ease3_learning">Fàcil</string>
+  <string name="ease_button_again">De nou</string>
+  <string name="ease_button_hard">Difícil</string>
+  <string name="ease_button_good">Correcte</string>
+  <string name="ease_button_easy">Fàcil</string>
   <string name="studyoptions_congrats_undo">Desfés %s</string>
   <string name="menu_import">Import</string>
   <string name="undo">Desfés</string>
@@ -82,8 +82,6 @@
   <string name="unbury">Unbury</string>
   <string name="finish_operation">S\'està acabant l\'operació anterior (probablement la creació de la còpia de seguretat). \nEspereu...</string>
   <string name="contextmenu_deckpicker_rename_deck">Canvia el nom del paquet</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>
   <string name="menu_my_account">Compte de sincronització</string>

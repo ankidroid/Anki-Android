@@ -77,10 +77,10 @@
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">أظهر الإجابة</string>
-  <string name="ease1_successive">مجددا</string>
-  <string name="ease2_successive">صعب</string>
-  <string name="ease3_successive">جيد</string>
-  <string name="ease3_learning">سهل</string>
+  <string name="ease_button_again">مجددا</string>
+  <string name="ease_button_hard">صعب</string>
+  <string name="ease_button_good">جيد</string>
+  <string name="ease_button_easy">سهل</string>
   <string name="studyoptions_congrats_undo">تراجع عن%s</string>
   <string name="menu_import">Import</string>
   <string name="undo">تراجع</string>
@@ -94,8 +94,6 @@
   <string name="unbury">Unbury</string>
   <string name="finish_operation">الانتهاء من العملية السابقة ( الأكثر احتمالاً إنشاء النسخة الاحتياطية).\n يرجى الانتظار...</string>
   <string name="contextmenu_deckpicker_rename_deck">أعد تسمية الرزمة</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>
   <string name="menu_my_account">حساب المزامنة</string>

@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Εμφάνιση Απάντησης</string>
-  <string name="ease1_successive">Ξανά</string>
-  <string name="ease2_successive">Δύσκολη</string>
-  <string name="ease3_successive">Καλή</string>
-  <string name="ease3_learning">Εύκολη</string>
+  <string name="ease_button_again">Ξανά</string>
+  <string name="ease_button_hard">Δύσκολη</string>
+  <string name="ease_button_good">Καλή</string>
+  <string name="ease_button_easy">Εύκολη</string>
   <string name="studyoptions_congrats_undo">Αναίρεση %s</string>
   <string name="menu_import">Import</string>
   <string name="undo">Αναίρεση</string>
@@ -82,8 +82,6 @@
   <string name="unbury">Unbury</string>
   <string name="finish_operation">Ολοκλήρωση προηγούμενης διαδικασίας (πιθανότατα δημιουργία αντιγράφων).\nΠαρακαλούμε περιμένετε...</string>
   <string name="contextmenu_deckpicker_rename_deck">Μετονομασία τράπουλας</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>
   <string name="menu_my_account">Συγχρονισμός λογαριασμού</string>

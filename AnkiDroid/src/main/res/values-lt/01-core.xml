@@ -68,10 +68,10 @@
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Parodyti atsakymą</string>
-  <string name="ease1_successive">Dar kartą</string>
-  <string name="ease2_successive">Sunku</string>
-  <string name="ease3_successive">Gerai</string>
-  <string name="ease3_learning">Lengvai</string>
+  <string name="ease_button_again">Dar kartą</string>
+  <string name="ease_button_hard">Sunku</string>
+  <string name="ease_button_good">Gerai</string>
+  <string name="ease_button_easy">Lengvai</string>
   <string name="studyoptions_congrats_undo">Atšaukti %s</string>
   <string name="menu_import">Importuoti</string>
   <string name="undo">Atšaukti</string>
@@ -85,8 +85,6 @@
   <string name="unbury">Ištraukti</string>
   <string name="finish_operation">Užbaigiamas ankstesnis veiksmas (tikriausiai kuriama atsarginė kopija).\n Prašau palaukti...</string>
   <string name="contextmenu_deckpicker_rename_deck">Pervadinti malką</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
   <string name="menu_add">Pridėti</string>
   <string name="menu_add_note">Pridėti pastabą</string>
   <string name="menu_my_account">Sinchronizacijos paskyra</string>

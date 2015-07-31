@@ -71,10 +71,10 @@
   </plurals>
   <string name="type_answer_hint">Унесите одговор</string>
   <string name="show_answer">Прикажи одговор</string>
-  <string name="ease1_successive">Поново</string>
-  <string name="ease2_successive">Тешко</string>
-  <string name="ease3_successive">Добро</string>
-  <string name="ease3_learning">Лако</string>
+  <string name="ease_button_again">Поново</string>
+  <string name="ease_button_hard">Тешко</string>
+  <string name="ease_button_good">Добро</string>
+  <string name="ease_button_easy">Лако</string>
   <string name="studyoptions_congrats_undo">Опозови %s</string>
   <string name="menu_import">Увези</string>
   <string name="undo">Опозови</string>
@@ -88,8 +88,6 @@
   <string name="unbury">Ископај</string>
   <string name="finish_operation">Завршетак претходне операције (прављење резервне копије).\nМолим сачекајте...</string>
   <string name="contextmenu_deckpicker_rename_deck">Преименуј шпил</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Сакриј подшпилове</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Прикажи подшпилове</string>
   <string name="menu_add">Додај</string>
   <string name="menu_add_note">Додај белешку</string>
   <string name="menu_my_account">Синхронизујте налог</string>

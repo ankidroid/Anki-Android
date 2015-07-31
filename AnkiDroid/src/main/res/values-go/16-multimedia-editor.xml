@@ -91,4 +91,5 @@
   <string name="title_activity_translation">Gaskeireins</string>
   <string name="title_activity_load_pronounciation">Pronunciation</string>
   <string name="title_activity_search_image">Google Frisahtigasokeins</string>
+  <string name="network_no_connection">No connection.</string>
 </resources>

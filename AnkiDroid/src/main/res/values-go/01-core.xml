@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">Melei andahaft</string>
   <string name="show_answer">Ataugei andahaft</string>
-  <string name="ease1_successive">Aftra</string>
-  <string name="ease2_successive">Aglus</string>
-  <string name="ease3_successive">Waila</string>
-  <string name="ease3_learning">Azet</string>
+  <string name="ease_button_again">Aftra</string>
+  <string name="ease_button_hard">Aglus</string>
+  <string name="ease_button_good">Waila</string>
+  <string name="ease_button_easy">Azet</string>
   <string name="studyoptions_congrats_undo">Blauþei %s</string>
   <string name="menu_import">Innatbair</string>
   <string name="undo">Blauþei</string>
@@ -82,8 +82,6 @@
   <string name="unbury">Unnawistr</string>
   <string name="finish_operation">Andjand aftumista taui (aufto gafastaskafts)&#8230;</string>
   <string name="contextmenu_deckpicker_rename_deck">Aftranamnei wikon</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Affilh undarwikons</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Ataugei undarwikons</string>
   <string name="menu_add">Biauk</string>
   <string name="menu_add_note">Biauk melein</string>
   <string name="menu_my_account">Galeik kawtsjon</string>

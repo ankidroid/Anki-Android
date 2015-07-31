@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">जवाब दिखाना</string>
-  <string name="ease1_successive">फिर से</string>
-  <string name="ease2_successive">कठिन</string>
-  <string name="ease3_successive">अच्छा</string>
-  <string name="ease3_learning">आसान</string>
+  <string name="ease_button_again">फिर से</string>
+  <string name="ease_button_hard">कठिन</string>
+  <string name="ease_button_good">अच्छा</string>
+  <string name="ease_button_easy">आसान</string>
   <string name="studyoptions_congrats_undo">पूर्ववत् करें %s</string>
   <string name="menu_import">Import</string>
   <string name="undo">पूर्ववत् करें</string>
@@ -82,8 +82,6 @@
   <string name="unbury">Unbury</string>
   <string name="finish_operation">परिष्करण के पिछली कार्रवाई (सबसे अधिक संभावना बैकअप के निर्माण). \nPlease रुको...</string>
   <string name="contextmenu_deckpicker_rename_deck">डेक का नाम बदलें</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Subdecks छुपाएँ</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Subdecks दिखाना</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>
   <string name="menu_my_account">सिंक्रनाइज़ेशन खाता</string>

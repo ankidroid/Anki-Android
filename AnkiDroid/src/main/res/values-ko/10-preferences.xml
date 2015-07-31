@@ -101,6 +101,9 @@
   <string name="sync_account">AnkiWeb 계정</string>
   <string name="sync_account_summ_logged_out">로그인 하지 않음</string>
   <string name="sync_account_summ_logged_in">%s</string>
+  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
+        minutes ago.</string>
   <string name="fix_hebrew_text">히브리어 모음에 대한 수정</string>
   <string name="fix_hebrew_text_summ">히브리어 모음을 올바르게 표시하기 위한 해결 방법입니다.</string>
   <string name="fix_hebrew_instructions">이 설정은 안드로이드의 RTL 알고리즘을 우회하여 히브리어 텍스트의 모음을 바르게 표시하게 합니다.\n\nTohu.ttf를 다운로드하여 직접 %s/fonts/ 폴더에 복사하세요.\n\n기존의 카드를 편집할 필요는 없습니다.</string>

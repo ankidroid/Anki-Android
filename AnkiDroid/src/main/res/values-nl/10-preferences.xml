@@ -101,6 +101,9 @@
   <string name="sync_account">AnkiWeb account</string>
   <string name="sync_account_summ_logged_out">Niet aangemeld</string>
   <string name="sync_account_summ_logged_in">%s</string>
+  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
+        minutes ago.</string>
   <string name="fix_hebrew_text">Hebreeuwse klinkers fix</string>
   <string name="fix_hebrew_text_summ">Alternatieve methode voor correcte weergave Hebreeuwse klinkers.</string>
   <string name="fix_hebrew_instructions">Deze instelling omzeilt het RTL-algoritme van Android, voor een correcte weergave van Hebreeuwse klinkers.\n\nHiervoor moet je de font Tohu.ttf downloaden en handmatig kopiëren naar:\n%s/fonts/\n\nJe hoeft je kaarten hiervoor niet aan te passen.</string>

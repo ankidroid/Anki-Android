@@ -68,10 +68,10 @@
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Arată răspuns</string>
-  <string name="ease1_successive">Din nou</string>
-  <string name="ease2_successive">Greu</string>
-  <string name="ease3_successive">Bine</string>
-  <string name="ease3_learning">Ușor</string>
+  <string name="ease_button_again">Din nou</string>
+  <string name="ease_button_hard">Greu</string>
+  <string name="ease_button_good">Bine</string>
+  <string name="ease_button_easy">Ușor</string>
   <string name="studyoptions_congrats_undo">Anulare %s</string>
   <string name="menu_import">Import</string>
   <string name="undo">Anulare</string>
@@ -85,8 +85,6 @@
   <string name="unbury">Dezgroapă</string>
   <string name="finish_operation">Terminare operațiune precedentă (cel mai probabil, creare de backup). \nVă rugăm să aşteptaţi...</string>
   <string name="contextmenu_deckpicker_rename_deck">Renumeste pachet</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Ascunde Subdecks</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Arată Subdecks</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>
   <string name="menu_my_account">Sincronizare cont</string>

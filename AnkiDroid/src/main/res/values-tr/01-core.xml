@@ -65,10 +65,10 @@
   </plurals>
   <string name="type_answer_hint">Yanıtı yazın</string>
   <string name="show_answer">Yanıtı Göster</string>
-  <string name="ease1_successive">Yeniden</string>
-  <string name="ease2_successive">Zor</string>
-  <string name="ease3_successive">İyi</string>
-  <string name="ease3_learning">Kolay</string>
+  <string name="ease_button_again">Yeniden</string>
+  <string name="ease_button_hard">Zor</string>
+  <string name="ease_button_good">İyi</string>
+  <string name="ease_button_easy">Kolay</string>
   <string name="studyoptions_congrats_undo">%s geri al</string>
   <string name="menu_import">İçeri aktar</string>
   <string name="undo">Geri Al</string>
@@ -82,8 +82,6 @@
   <string name="unbury">Görünür Yap</string>
   <string name="finish_operation">Önceki işlem tamamlanıyor (büyük olasılıkla yedekleme).\nLütfen bekleyin...</string>
   <string name="contextmenu_deckpicker_rename_deck">Destenin adını değiştir</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Altdesteleri Gizle</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Altdesteleri Göster</string>
   <string name="menu_add">Ekle</string>
   <string name="menu_add_note">Not ekle</string>
   <string name="menu_my_account">Hesabı senkronize et</string>
