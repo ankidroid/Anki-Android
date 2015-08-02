@@ -22,7 +22,6 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
-
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDatabaseManager;
@@ -45,6 +44,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -1516,6 +1516,12 @@ public class Collection {
             return;
         }
         StackTraceElement trace = Thread.currentThread().getStackTrace()[3];
+        // Overwrite any args that need special handling for an appropriate string representation
+        for (int i = 0; i < args.length; i++) {
+            if (args[i] instanceof long[]) {
+                args[i] = Arrays.toString((long []) args[i]);
+            }
+        }
         String s = String.format("[%s] %s:%s(): %s", Utils.intNow(), trace.getFileName(), trace.getMethodName(),
                 TextUtils.join(",  ", args));
         mLogHnd.println(s);
