@@ -22,7 +22,7 @@
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingBottom="7dip"
-    android:paddingLeft="10dip"
+    android:paddingLeft="1dip"
     android:paddingRight="5dip"
     android:paddingTop="5dip">
 
