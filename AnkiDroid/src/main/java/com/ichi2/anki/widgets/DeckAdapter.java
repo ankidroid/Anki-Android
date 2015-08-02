@@ -43,7 +43,7 @@ import java.util.List;
 public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
     // Number of dp units to use for each level of deck nesting
-    private static final int INDENT_WIDTH_DIP = 20;
+    private static final int INDENT_WIDTH_DIP = 14;
 
     // The calculated pixel width for the current screen
     private float mIndentWidth;
@@ -217,15 +217,16 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             expander.setImageDrawable(mNoExpander);
         }
         // Now set the padding on the left side to indent nested decks.
-        // Our indenting starts at the middle of where an expander might be
+        // The initial padding is the same width as an expander image. If the row requires
+        // an expander, we remove this padding. This results in aligned deck names with and
+        // without an expander.
         int expanderWidth = mExpandImage.getIntrinsicWidth();
-        int indent = expanderWidth/2;
+        int indent = expanderWidth;
         // Add some indenting for each nested level
         indent += mIndentWidth * node.depth;
         if (collapsed || node.children.size() > 0) {
-            // But if an expand/collapse button exists, pull it back a bit.
-            // This shifts the button partially into the previous indent level.
-            indent -= expanderWidth/2;
+            // If an expand/collapse button exists, remove the initial padding.
+            indent -= expanderWidth;
         }
         expander.setPadding(indent, 0, 0, 0);
     }
