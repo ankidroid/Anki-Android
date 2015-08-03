@@ -95,6 +95,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.TreeMap;
 
 import timber.log.Timber;
 
@@ -1764,16 +1765,37 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (!colIsOpen()) {
             return;
         }
-        String msg = "";
+        if (mContextMenuDid == 1) {
+            showSimpleSnackbar(R.string.delete_deck_default_deck, true);
+            dismissAllDialogFragments();
+            return;
+        }
+        // Get the number of cards contained in this deck and its subdecks
+        TreeMap<String, Long> children = getCol().getDecks().children(mContextMenuDid);
+        long[] dids = new long[children.size() + 1];
+        dids[0] = mContextMenuDid;
+        int i = 1;
+        for (Long l : children.values()) {
+            dids[i++] = l;
+        }
+        String ids = Utils.ids2str(dids);
+        int cnt = getCol().getDb().queryScalar(
+                "select count() from cards where did in " + ids + " or odid in " + ids);
+        // Delete empty decks without warning
+        if (cnt == 0) {
+            deleteContextMenuDeck();
+            dismissAllDialogFragments();
+            return;
+        }
+        // Otherwise we show a warning and require confirmation
+        String msg;
+        String deckName = "\'" + getCol().getDecks().name(mContextMenuDid) + "\'";
         boolean isDyn = getCol().getDecks().isDyn(mContextMenuDid);
         if (isDyn) {
-            msg = String.format(res.getString(R.string.delete_cram_deck_message),
-                    "\'" + getCol().getDecks().name(mContextMenuDid) + "\'");
+            msg = String.format(res.getString(R.string.delete_cram_deck_message), deckName);
         } else {
-            msg = String.format(res.getString(R.string.delete_deck_message),
-                    "\'" + getCol().getDecks().name(mContextMenuDid) + "\'");
+            msg = res.getQuantityString(R.plurals.delete_deck_message, cnt, deckName, cnt);
         }
-        //DeckPickerConfirmDeleteDeckDialog.newInstance(msg).show(parent.getChildFragmentManager(), "dialog");
         showDialogFragment(DeckPickerConfirmDeleteDeckDialog.newInstance(msg));
     }
 
