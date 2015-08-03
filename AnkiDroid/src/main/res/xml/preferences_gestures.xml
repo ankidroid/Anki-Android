@@ -42,6 +42,12 @@
         android:title="@string/swipe_sensitivity"
         app:interval="1"
         app:min="20" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:dependency="gestures"
+        android:key="hideAnswerButtons"
+        android:summary="@string/gestures_hide_answer_buttons_summ"
+        android:title="@string/gestures_hide_answer_buttons"/>
     <PreferenceCategory android:title="@string/pref_cat_actions" >
         <ListPreference
             android:defaultValue="0"
