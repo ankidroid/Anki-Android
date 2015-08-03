@@ -143,6 +143,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public static final int EASE_3 = 3;
     public static final int EASE_4 = 4;
 
+    /** Maximum time in milliseconds to wait before accepting answer button presses. */
+    private static final int DOUBLE_TAP_IGNORE_THRESHOLD = 200;
+
     /** Regex pattern used in removing tags from text before diff */
     private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
     private static final Pattern sBrPattern = Pattern.compile("<br\\s?/?>");
@@ -252,6 +255,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private int mShowChosenAnswerLength = 2000;
 
     /**
+     * A record of the last time the "show answer" or ease buttons were pressed. We keep track
+     * of this time to ignore accidental button presses.
+     */
+    private long mLastClickTime;
+
+
+    /**
      * Whether to use a single {@link WebView} and update its content.
      * <p>
      * If false, we will instead use two WebViews and switch them when changing the content. This is needed because of a
@@ -354,6 +364,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void onClick(View view) {
             Timber.i("AbstractFlashcardViewer:: Show answer button pressed");
+            // Ignore what is most likely an accidental double-tap.
+            if (SystemClock.elapsedRealtime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
+                return;
+            }
+            mLastClickTime = SystemClock.elapsedRealtime();
             mTimeoutHandler.removeCallbacks(mShowAnswerTask);
             displayCardAnswer();
         }
@@ -362,6 +377,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private View.OnClickListener mSelectEaseHandler = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            // Ignore what is most likely an accidental double-tap.
+            if (SystemClock.elapsedRealtime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
+                return;
+            }
+            mLastClickTime = SystemClock.elapsedRealtime();
             mTimeoutHandler.removeCallbacks(mShowQuestionTask);
             switch (view.getId()) {
                 case R.id.flashcard_layout_ease1:
