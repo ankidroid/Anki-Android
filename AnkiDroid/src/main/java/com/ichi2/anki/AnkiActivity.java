@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
@@ -382,6 +383,10 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
         if (listener != null) {
             sb.setAction(actionTextResource, listener);
         }
+        // Make the text white to avoid interference from our theme colors.
+        View view = sb.getView();
+        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        tv.setTextColor(Color.WHITE);
         sb.show();
     }
 
