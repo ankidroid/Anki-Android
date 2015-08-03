@@ -21,6 +21,7 @@ package com.ichi2.async;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 
@@ -663,13 +664,13 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
 
     public static boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        if (cm.getActiveNetworkInfo() != null) {
-            return cm.getActiveNetworkInfo().isConnectedOrConnecting();
-        } else {
+        ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
             return false;
         }
+        return true;
     }
 
 
