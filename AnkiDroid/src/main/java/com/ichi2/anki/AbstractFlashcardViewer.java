@@ -180,6 +180,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mDoubleScrolling;
     private boolean mScrollingButtons;
     private boolean mGesturesEnabled;
+    private boolean mHideAnswerButtons;
     private boolean mPrefFixArabic;
     // Android WebView
     private boolean mSpeakText;
@@ -1391,6 +1392,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mNext4.setVisibility(View.GONE);
         }
 
+        if (mHideAnswerButtons) {
+            findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
+        }
+
         mFlipCard = (Button) findViewById(R.id.flip_card);
         mFlipCard.setTypeface(TypefaceHelper.get(this, "Roboto-Medium"));
         mFlipCardLayout = (LinearLayout) findViewById(R.id.flashcard_layout_flip);
@@ -1646,6 +1651,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
         if (mGesturesEnabled) {
+            mHideAnswerButtons = preferences.getBoolean("hideAnswerButtons", false);
             mGestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
             mGestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
             mGestureSwipeLeft = Integer.parseInt(preferences.getString("gestureSwipeLeft", "8"));
