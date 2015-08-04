@@ -44,8 +44,13 @@
   <string name="check_db_acknowledge">База проверена</string>
   <string name="check_db_acknowledge_shrunk">База проверена и оптимизирована.\nСжато на %d кБ.</string>
   <string name="contextmenu_deckpicker_delete_deck">Удалить колоду</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
   <string name="delete_deck_title">Удалить колоду</string>
-  <string name="delete_deck_message">Вы уверены, что хотите удалить все карты в %s?</string>
+  <plurals name="delete_deck_message">
+    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
+    <item quantity="few">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+  </plurals>
   <string name="delete_cram_deck_message">Вы уверены, что хотите отправить все карты из %s в их оригинальные колоды?</string>
   <string name="no_tts_available_message">Функция преобразования текста в речь недоступна</string>
   <string name="initializing_tts">Инициализация синтеза речи...</string>

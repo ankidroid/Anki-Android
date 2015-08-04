@@ -44,8 +44,13 @@
   <string name="check_db_acknowledge">База даних перевірена</string>
   <string name="check_db_acknowledge_shrunk">База даних перевірена та оптимізована.\nРозмір зменшено на %d кБ.</string>
   <string name="contextmenu_deckpicker_delete_deck">Видалити колоду</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
   <string name="delete_deck_title">Видалити колоду</string>
-  <string name="delete_deck_message">Ви певні, що хочете видалити всі картки в %s?</string>
+  <plurals name="delete_deck_message">
+    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
+    <item quantity="few">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+  </plurals>
   <string name="delete_cram_deck_message">Ви впевнені що хочете відправити всі карти з %s назад до їх початкових колод?</string>
   <string name="no_tts_available_message">Відсутня мова для перетворення тексту в мовлення</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>

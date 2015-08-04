@@ -80,6 +80,8 @@
   <string name="fullscreen_review_summ">Dölj systemets statusrad</string>
   <string name="gestures">Aktivera gester</string>
   <string name="gestures_summ">Koppla gester till handlingar, som t ex att svara på eller redigera kort.</string>
+  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
+  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">Svep uppåt</string>
   <string name="gestures_swipe_down">Svep nedåt</string>
   <string name="gestures_swipe_left">Svep vänster</string>

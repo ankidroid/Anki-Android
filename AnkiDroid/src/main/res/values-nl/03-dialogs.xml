@@ -44,8 +44,12 @@
   <string name="check_db_acknowledge">Database gecontroleerd</string>
   <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Verwijder set</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
   <string name="delete_deck_title">Verwijder set</string>
-  <string name="delete_deck_message">Weet je zeker dat je alle kaarten in %s wilt verwijderen?</string>
+  <plurals name="delete_deck_message">
+    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
+    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+  </plurals>
   <string name="delete_cram_deck_message">Weet u zeker dat u alle kaarten in %s terug wenst te zenden naar hun oorspronkelijke sets?</string>
   <string name="no_tts_available_message">Geen tekst-naar-spraak taal beschikbaar</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>

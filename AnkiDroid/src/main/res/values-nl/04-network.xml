@@ -122,7 +122,7 @@
   <string name="sync_sanity_local">Lokaal</string>
   <string name="sync_sanity_remote">Server</string>
   <string name="force_full_sync_title">Forceer complete synchronisatie</string>
-  <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
+  <string name="force_full_sync_summary">Bij volgende synchronisatie, wijzigingen forceren in één richting</string>
   <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
   <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
   <string name="sync_error_501_upgrade_required">Gelieve te actualiseren naar de meest recente versie van AnkiDroid</string>

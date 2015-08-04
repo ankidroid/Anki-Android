@@ -44,8 +44,13 @@
   <string name="check_db_acknowledge">Baza danych sprawdzona</string>
   <string name="check_db_acknowledge_shrunk">Baza danych sprawdzona i zoptymalizowana.\nZaoszczędzono %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Skasuj talię</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
   <string name="delete_deck_title">Skasuj talię</string>
-  <string name="delete_deck_message">Czy na pewno usunąć wszystkie karty w %s?</string>
+  <plurals name="delete_deck_message">
+    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
+    <item quantity="few">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+  </plurals>
   <string name="delete_cram_deck_message">Czy na pewno chcesz wysłać wszystkie karty w %s z powrotem do ich pierwotnych talii?</string>
   <string name="no_tts_available_message">Brak dostępnego języka zamiany tekstu na mowę</string>
   <string name="initializing_tts">Inicjowanie TTS&#8230;</string>

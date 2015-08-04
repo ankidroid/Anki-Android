@@ -58,7 +58,7 @@
     <item>Verwijder memo</item>
     <item>Media afspelen</item>
     <item>Leren afbreken</item>
-    <item>Bury note</item>
+    <item>Opmerking begraven</item>
     <item>Memo opschorten</item>
   </string-array>
   <string-array name="leech_action_labels">
@@ -78,7 +78,7 @@
     <item>Volgorde van toevoegen</item>
     <item>Volgorde van \'te doen\' kaarten</item>
     <item>Laatste eerst toevoegen</item>
-    <item>Relative overdueness</item>
+    <item>Relatieve overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Limiet nieuwe kaarten voor vandaag verhogen</item>
@@ -99,7 +99,7 @@
     <item>Nieuwe kaarten voor herhaalde kaarten</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
+    <item>Wanneer geen lettertype opgegeven op flitskaartjes</item>
     <item>Altijd</item>
   </string-array>
 </resources>

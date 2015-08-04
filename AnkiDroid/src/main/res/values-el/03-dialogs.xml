@@ -44,8 +44,12 @@
   <string name="check_db_acknowledge">Database checked</string>
   <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Διαγραφή Τράπουλας</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
   <string name="delete_deck_title">Διαγραφή Τράπουλας</string>
-  <string name="delete_deck_message">Είστε βέβαιοι ότι θέλετε να διαγράψετε όλες τις κάρτες στο %s?</string>
+  <plurals name="delete_deck_message">
+    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
+    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+  </plurals>
   <string name="delete_cram_deck_message">Είστε βέβαιοι ότι θέλετε να στείλετε όλες τις κάρτες της %s πίσω στο αρχικές τους τράπουλες;</string>
   <string name="no_tts_available_message">Δεν είναι διαθέσιμη η μετατροπής κειμένου σε ομιλία</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>

@@ -80,6 +80,8 @@
   <string name="fullscreen_review_summ">Masquer la barre de statut système</string>
   <string name="gestures">Activer les mouvements</string>
   <string name="gestures_summ">Assigner des gestes à des actions comme répondre et éditer des cartes.</string>
+  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
+  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">Glissez vers le haut</string>
   <string name="gestures_swipe_down">Glissez vers le bas</string>
   <string name="gestures_swipe_left">Faites glisser vers la gauche</string>

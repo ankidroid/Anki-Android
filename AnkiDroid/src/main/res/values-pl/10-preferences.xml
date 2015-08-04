@@ -80,6 +80,8 @@
   <string name="fullscreen_review_summ">Ukryj systemowy pasek statusu</string>
   <string name="gestures">Włącz obsługę gestów</string>
   <string name="gestures_summ">Przydziel gesty do akcji takich jak odpowiedzi lub edycja kart.</string>
+  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
+  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">Przesuń w górę</string>
   <string name="gestures_swipe_down">Przesuń w dół</string>
   <string name="gestures_swipe_left">Przesuń w lewo</string>

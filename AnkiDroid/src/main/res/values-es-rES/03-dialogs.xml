@@ -44,8 +44,12 @@
   <string name="check_db_acknowledge">Base de datos comprobada</string>
   <string name="check_db_acknowledge_shrunk">Base de datos comprobada y optimizada.\nReducida en %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Eliminar mazo</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
   <string name="delete_deck_title">Eliminar mazo</string>
-  <string name="delete_deck_message">¿Estás seguro que deseas eliminar todas las tarjetas en %s?</string>
+  <plurals name="delete_deck_message">
+    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
+    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+  </plurals>
   <string name="delete_cram_deck_message">¿Estás seguro de que deseas mandar todas las tarjetas de %s de vuelta a sus mazos originales?</string>
   <string name="no_tts_available_message">No hay idiomas de texto-a-voz disponibles</string>
   <string name="initializing_tts">Inicializando TTS...</string>

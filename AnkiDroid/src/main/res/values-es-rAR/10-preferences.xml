@@ -80,6 +80,8 @@
   <string name="fullscreen_review_summ">Ocultar la barra de estado del sistema</string>
   <string name="gestures">Habilitar gestos</string>
   <string name="gestures_summ">Asignar gestos a acciones tales como contestar o editar tarjetas.</string>
+  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
+  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">Deslizar hacia arriba</string>
   <string name="gestures_swipe_down">Deslizar hacia abajo</string>
   <string name="gestures_swipe_left">Deslizar hacia la izquierda</string>

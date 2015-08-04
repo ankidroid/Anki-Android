@@ -44,8 +44,12 @@
   <string name="check_db_acknowledge">Base de dados verificada</string>
   <string name="check_db_acknowledge_shrunk">Base de dados verificada e otimizada.\nComprimida em %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Eliminar baralho</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
   <string name="delete_deck_title">Eliminar baralho?</string>
-  <string name="delete_deck_message">Eliminar todas as fichas em %s?</string>
+  <plurals name="delete_deck_message">
+    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
+    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+  </plurals>
   <string name="delete_cram_deck_message">Enviar todas as fichas em %s para os seus baralhos originais?</string>
   <string name="no_tts_available_message">Nenhum idioma para sintetização de voz disponível</string>
   <string name="initializing_tts">A inicializar o sintetizador de voz&#8230;</string>

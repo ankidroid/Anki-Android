@@ -44,8 +44,11 @@
   <string name="check_db_acknowledge">데이터베이스 점검됨</string>
   <string name="check_db_acknowledge_shrunk">데이터베이스가 점검 및 최적화 되었습니다.\n %d kB 축소됨.</string>
   <string name="contextmenu_deckpicker_delete_deck">카드 묶음 삭제</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
   <string name="delete_deck_title">카드 묶음을 삭제할까요?</string>
-  <string name="delete_deck_message">%s에 있는 모든 카드를 정말로 삭제하시겠습니까?</string>
+  <plurals name="delete_deck_message">
+    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+  </plurals>
   <string name="delete_cram_deck_message">정말로 %s에 있는 모든 카드들을 원래의 카드 묶음으로 되돌려 보내시겠습니까?</string>
   <string name="no_tts_available_message">문장 읽어주기 기능(TTS)을 사용할 수 없음</string>
   <string name="initializing_tts">TTS 초기화 중...</string>

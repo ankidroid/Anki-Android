@@ -80,6 +80,8 @@
   <string name="fullscreen_review_summ">ステータスバーの非表示</string>
   <string name="gestures">ジェスチャー有効化</string>
   <string name="gestures_summ">回答やカード編集などの操作にジェスチャーを割り当てます</string>
+  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
+  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">上にスワイプ</string>
   <string name="gestures_swipe_down">下にスワイプ</string>
   <string name="gestures_swipe_left">左にスワイプ</string>
@@ -101,9 +103,8 @@
   <string name="sync_account">AnkiWebアカウント</string>
   <string name="sync_account_summ_logged_out">ログインしていません。</string>
   <string name="sync_account_summ_logged_in">%s</string>
-  <string name="automatic_sync_choice">Automatic synchronization</string>
-  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
+  <string name="automatic_sync_choice">自動同期</string>
+  <string name="automatic_sync_choice_summ">最後に同期したのが10 分以上前であった場合にアプリ開始/終了時に自動的に同期します</string>
   <string name="fix_hebrew_text">ヘブライ語母音への対応</string>
   <string name="fix_hebrew_text_summ">ヘブライ語の母音を適切に描画するための回避策です</string>
   <string name="fix_hebrew_instructions">この設定は、ヘブライ語を表示するために、AndroidのRTLアルゴリズムをバイパスします\n\nこのが機能を使うために、フォント（Tohu.ttf）をダウンロードして手動で:\n%s/fonts/\n\nへコピーする必要があります。カードを変更する必要はありません。</string>
@@ -159,31 +160,32 @@
   <plurals name="deck_conf_group_summ">
     <item quantity="other">%1$s\n%2$d個の単語帳がこのグループを使用しています</item>
   </plurals>
-  <string name="deck_conf_new_cards">新規カードと基本学習カード</string>
-  <string name="deck_conf_rev_cards">復習カード</string>
-  <string name="deck_conf_lps_cards">忘却（再学習）カード</string>
+  <string name="deck_conf_new_cards">新規カードと基本学習</string>
+  <string name="deck_conf_rev_cards">復習</string>
+  <string name="deck_conf_lps_cards">忘却（再学習）</string>
   <string name="deck_conf_general">一般</string>
   <string name="deck_conf_steps">学習ステップ（分）</string>
   <string name="deck_conf_order">順序</string>
   <string name="deck_conf_new_cards_day">一日あたりの新規カード枚数の上限</string>
-  <string name="deck_conf_graduating_ivl">学習ステップ終了後の最初の表示(最初の復習)までの間隔</string>
+  <string name="deck_conf_graduating_ivl">学習ステップ修了後の間隔\n（学習ステップの最後で「普通」と答えた場合の、次回表示(最初の復習)までの間隔）</string>
   <string name="deck_conf_days">XXX 日</string>
-  <string name="deck_conf_easy_ivl">「簡単」と答えた場合の、次回表示(最初の復習)までの間隔</string>
-  <string name="deck_conf_start_ease">易しさ(復習間隔増加率)の初期値</string>
+  <string name="deck_conf_easy_ivl">学習ステップ跳躍後の間隔（学習ステップのいずれかで「簡単」と答えた場合の、次回表示(最初の復習)までの間隔）</string>
+  <string name="deck_conf_start_ease">易しさの初期値（易しさ：「普通」と回答した場合に、復習間隔を前回と比べてどれぐらい伸ばしてもよいかを表す指標。250%なら2.5倍。学習ステップ修了または跳躍時に設定され、その後の回答に応じて増減していきます）</string>
   <string name="deck_conf_max_rev">一日あたりの復習カード枚数の上限</string>
   <string name="deck_conf_new_bury">新規の関連カードの学習を延期</string>
   <string name="deck_conf_new_bury_summ">新規の関連カード（同じノートから作られた別のカード）の学習を翌日まで延期します</string>
-  <string name="deck_conf_rev_bury">復習の延期</string>
+  <string name="deck_conf_rev_bury">関連カードの復習を延期</string>
   <string name="deck_conf_rev_bury_summ">関連カード（同じノートから作られた別のカード）の復習を翌日まで延期します</string>
-  <string name="deck_conf_easy_bonus">「簡単」と答えた時のボーナス(間隔増加率の上乗せ)</string>
+  <string name="deck_conf_easy_bonus">「簡単」と答えた時のボーナス（「普通」と答えた場合と比べて復習間隔をどれだけ伸ばすか。130%なら1.3倍）</string>
   <string name="deck_conf_ivl_fct">復習頻度の調整</string>
   <string name="deck_conf_max_ivl">復習間隔の上限</string>
-  <string name="deck_conf_new_lps_ivl">学習ステップ終了後に再開する復習の間隔の縮小率</string>
-  <string name="deck_conf_min_ivl">学習ステップ終了後に再開する復習の間隔の下限</string>
+  <string name="deck_conf_new_lps_ivl">復習間隔の縮小 
+（学習ステップ終了後に再開する復習の間隔を、前回と比べてどれだけ縮めるか。例：前回の復習間隔が100日の場合、0%なら0日(ただし次の項目の制限により、実際には1日)、20％なら20日）</string>
+  <string name="deck_conf_min_ivl">復習間隔の下限（1日以上）</string>
   <string name="deck_conf_leech_thres">無駄（習得困難）カードと判定する基準</string>
   <string name="deck_conf_fails">XXX 回 忘却（復習カードに「もう一度」と回答）した時</string>
   <string name="deck_conf_leech_action">無駄（習得困難）カードへの処置</string>
-  <string name="deck_conf_max_time">統計情報に利用する解答時間の最大値</string>
+  <string name="deck_conf_max_time">統計に利用する解答時間の最大値</string>
   <string name="deck_conf_seconds">XXX 秒</string>
   <string name="deck_conf_timer">タイマーの表示</string>
   <string name="deck_conf_autoplay">音声を自動再生する</string>

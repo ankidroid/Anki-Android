@@ -80,6 +80,8 @@
   <string name="fullscreen_review_summ">Ẩn thanh trạng thái hệ thống</string>
   <string name="gestures">Kích hoạt Cử chỉ</string>
   <string name="gestures_summ">Chỉ định các cử chỉ để hành động như trả lời và chỉnh sửa thẻ.</string>
+  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
+  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">Kéo lên</string>
   <string name="gestures_swipe_down">Kéo xuống</string>
   <string name="gestures_swipe_left">Kéo trái</string>

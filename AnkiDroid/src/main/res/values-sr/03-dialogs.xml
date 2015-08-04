@@ -44,8 +44,14 @@
   <string name="check_db_acknowledge">База проверена</string>
   <string name="check_db_acknowledge_shrunk">База је проверена и оптимизована.\nУмањење за %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Избриши шпил</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
   <string name="delete_deck_title">Избриши шпил</string>
-  <string name="delete_deck_message">Да ли сте сигурни да желите да избришете све картице у %s?</string>
+  <plurals name="delete_deck_message">
+    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
+    <item quantity="few">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="many">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+  </plurals>
   <string name="delete_cram_deck_message">Да ли сте сигурни да желите да пошаљете све картице из %s у њихове оригиналне шпилове?</string>
   <string name="no_tts_available_message">Функција претварања текста у говор није доступна</string>
   <string name="initializing_tts">Иницијализација синтезе говора&#8230;</string>

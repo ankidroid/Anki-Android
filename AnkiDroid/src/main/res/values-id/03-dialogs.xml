@@ -44,8 +44,11 @@
   <string name="check_db_acknowledge">Database checked</string>
   <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Hapus Dek</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
   <string name="delete_deck_title">Hapus Dek</string>
-  <string name="delete_deck_message">Apakah Anda yakin akan menghapus semua kartu di %s?</string>
+  <plurals name="delete_deck_message">
+    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+  </plurals>
   <string name="delete_cram_deck_message">Apakah Anda yakin akan mengembalikan semua kartu di %s kembali ke dek asli mereka?</string>
   <string name="no_tts_available_message">Tiada teks-kepada-bahasa tersedia</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>

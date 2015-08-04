@@ -44,8 +44,11 @@
   <string name="check_db_acknowledge">已检查数据库</string>
   <string name="check_db_acknowledge_shrunk">已检查并优化数据库。\n缩小了 %d kB</string>
   <string name="contextmenu_deckpicker_delete_deck">删除牌组</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
   <string name="delete_deck_title">删除牌组</string>
-  <string name="delete_deck_message">你确定要删除%s中的所有卡牌吗？</string>
+  <plurals name="delete_deck_message">
+    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+  </plurals>
   <string name="delete_cram_deck_message">你确定要把所有卡牌发送回它们原来的牌组吗？</string>
   <string name="no_tts_available_message">没有可用的文字转语音（TTS）语言</string>
   <string name="initializing_tts">正在初始化TTS引擎...</string>

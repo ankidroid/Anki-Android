@@ -80,6 +80,8 @@
   <string name="fullscreen_review_summ">Спрятать системную панель статуса</string>
   <string name="gestures">Разрешить жесты</string>
   <string name="gestures_summ">Использовать жесты для таких действий, как ответ и редактирование карт.</string>
+  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
+  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">Росчерк вверх</string>
   <string name="gestures_swipe_down">Росчерк вниз</string>
   <string name="gestures_swipe_left">Росчерк налево</string>

@@ -80,6 +80,8 @@
   <string name="fullscreen_review_summ">Piilota järjestelmän tilapalkki</string>
   <string name="gestures">Ota eleet käyttöön</string>
   <string name="gestures_summ">Liitä eleitä toimintoihin, kuten vastaamiseen ja korttien muokkaamiseen.</string>
+  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
+  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">Pyyhkäisy ylös</string>
   <string name="gestures_swipe_down">Pyyhkäisy alas</string>
   <string name="gestures_swipe_left">Pyyhkäisy vasemmalle</string>

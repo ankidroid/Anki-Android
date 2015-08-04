@@ -80,6 +80,8 @@
   <string name="fullscreen_review_summ">Сакриј системски део екрана</string>
   <string name="gestures">Омогући гестове</string>
   <string name="gestures_summ">Додели гестове за дејства као одговарње и уређивање картица.</string>
+  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
+  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">Пребацити горе</string>
   <string name="gestures_swipe_down">Пребацити доле</string>
   <string name="gestures_swipe_left">Пребацити лево</string>

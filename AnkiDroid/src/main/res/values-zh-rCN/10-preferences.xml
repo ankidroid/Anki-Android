@@ -80,6 +80,8 @@
   <string name="fullscreen_review_summ">隐藏系统状态栏</string>
   <string name="gestures">启用手势</string>
   <string name="gestures_summ">为回答或编辑卡片等动作指定手势。</string>
+  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
+  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">向上滑动</string>
   <string name="gestures_swipe_down">向下滑动</string>
   <string name="gestures_swipe_left">向左滑动</string>

@@ -44,8 +44,12 @@
   <string name="check_db_acknowledge">Banco de dados verificado</string>
   <string name="check_db_acknowledge_shrunk">Banco de dados verificado e otimizado.\nReduzido em %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Excluir Deck</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
   <string name="delete_deck_title">Excluir Deck</string>
-  <string name="delete_deck_message">Tem certeza que deseja excluir todas os cartões em %s?</string>
+  <plurals name="delete_deck_message">
+    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
+    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+  </plurals>
   <string name="delete_cram_deck_message">Você tem certeza de que deseja enviar todos os cartões em %s para os seus decks originais?</string>
   <string name="no_tts_available_message">Nenhum idioma de texto para fala disponível</string>
   <string name="initializing_tts">Inicializando TTS&#8230;</string>

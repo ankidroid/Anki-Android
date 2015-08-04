@@ -39,14 +39,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_young">復習カード(未熟)</string>
-  <string name="statistics_mature">復習カード(熟知)</string>
-  <string name="statistics_young_and_learn">基本学習カード＋復習カード(未熟)</string>
-  <string name="statistics_unlearned">新規カード（未学習のカード）</string>
-  <string name="statistics_suspended">保留カード＋延期カード</string>
-  <string name="statistics_relearn">再学習カード</string>
-  <string name="statistics_learn">新規カード＋基本学習カード</string>
-  <string name="statistics_cram">フィルター単語帳カード</string>
+  <string name="statistics_young">復習(未熟)</string>
+  <string name="statistics_mature">復習(熟知)</string>
+  <string name="statistics_young_and_learn">基本学習＋復習(未熟)</string>
+  <string name="statistics_unlearned">未学習（未済の新規）</string>
+  <string name="statistics_suspended">保留＋延期</string>
+  <string name="statistics_relearn">再学習</string>
+  <string name="statistics_learn">基本学習（新規カードの学習を含む）</string>
+  <string name="statistics_cram">フィルター単語帳</string>
   <string name="stats_cards">枚数</string>
   <string name="stats_cards_intervals">次の復習予定日が ～後のカード</string>
   <string name="stats_cumulative_cards">累積枚数 〔折れ線グラフ〕</string>
@@ -71,7 +71,7 @@
   <string name="stats_answer_type">回答の種類</string>
   <string name="stats_today_again_count">忘却回数: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(正解率: &lt;b&gt;%.1f%%&lt;/b&gt;)</string>
-  <string name="stats_today_type_breakdown">学習: &lt;b&gt;%1$s&lt;/b&gt;枚、復習: &lt;b&gt;%2$s&lt;/b&gt;枚、再学習: &lt;b&gt;%3$s&lt;/b&gt;枚、\nフィルター単語帳: &lt;b&gt;%4$s&lt;/b&gt;枚</string>
+  <string name="stats_today_type_breakdown">基本学習: &lt;b&gt;%1$s&lt;/b&gt;枚、復習: &lt;b&gt;%2$s&lt;/b&gt;枚、再学習: &lt;b&gt;%3$s&lt;/b&gt;枚、\nフィルター単語帳: &lt;b&gt;%4$s&lt;/b&gt;枚</string>
   <string name="stats_today_mature_cards">熟知な復習カードの正解: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">熟知な復習カードは学習していません。</string>
   <string name="deck_summary_all_decks">すべての単語帳</string>

@@ -80,6 +80,8 @@
   <string name="fullscreen_review_summ">Hide the system status bar</string>
   <string name="gestures">فعالسازی حرکات لمسی</string>
   <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
+  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
+  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">ضربه به سمت بالا</string>
   <string name="gestures_swipe_down">ضربه به سمت پایین</string>
   <string name="gestures_swipe_left">ضربه سمت چپ</string>

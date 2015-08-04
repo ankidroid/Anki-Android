@@ -80,6 +80,8 @@
   <string name="fullscreen_review_summ">Ausblenden der Statusleiste</string>
   <string name="gestures">Gesten aktivieren</string>
   <string name="gestures_summ">Weise Aktionen, wie zum Beispiel Beantworten oder Bearbeiten der Karten, Gesten zu.</string>
+  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
+  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">Nach oben wischen</string>
   <string name="gestures_swipe_down">Nach unten wischen</string>
   <string name="gestures_swipe_left">Nach links wischen</string>
@@ -101,7 +103,7 @@
   <string name="sync_account">AnkiWeb-Konto</string>
   <string name="sync_account_summ_logged_out">Nicht eingeloggt</string>
   <string name="sync_account_summ_logged_in">%s</string>
-  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice">Automatische Synchronisierung</string>
   <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
   <string name="fix_hebrew_text">Übergangslösung für hebräische Vokale</string>

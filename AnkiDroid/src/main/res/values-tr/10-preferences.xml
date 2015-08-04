@@ -80,6 +80,8 @@
   <string name="fullscreen_review_summ">Sistem durum çubuğunu gizle</string>
   <string name="gestures">Jestleri etkinleştir</string>
   <string name="gestures_summ">Yanıtlama ve kartları düzenleme gibi eylemlere jestler ata.</string>
+  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
+  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">Yukarı sürükleme</string>
   <string name="gestures_swipe_down">Aşağı sürükleme</string>
   <string name="gestures_swipe_left">Sola sürükleme</string>

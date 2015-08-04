@@ -44,8 +44,12 @@
   <string name="check_db_acknowledge">Adatbázis ellenőrizve</string>
   <string name="check_db_acknowledge_shrunk">Adatbázis ellenőrizve és optimalizálva.\n%d kB-t csökkent.</string>
   <string name="contextmenu_deckpicker_delete_deck">Pakli törlése</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
   <string name="delete_deck_title">Pakli törlése</string>
-  <string name="delete_deck_message">Biztos, hogy törlöd a %s pakli összes kártyáját?</string>
+  <plurals name="delete_deck_message">
+    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
+    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+  </plurals>
   <string name="delete_cram_deck_message">Biztosan szeretnéd, hogy a %s kártyái visszakerüljenek az eredeti paklijukba?</string>
   <string name="no_tts_available_message">Nincs rendelkezésre álló szövegfelolvasási nyelv</string>
   <string name="initializing_tts">TTS indítása&#8230;</string>

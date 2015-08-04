@@ -80,6 +80,8 @@
   <string name="fullscreen_review_summ">시스템 상태 표시줄 숨기기</string>
   <string name="gestures">제스처 사용</string>
   <string name="gestures_summ">응답 및 카드 편집 등의 작업에 제스쳐 할당</string>
+  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
+  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">위로 밀기</string>
   <string name="gestures_swipe_down">아래로 밀기</string>
   <string name="gestures_swipe_left">왼쪽 밀기</string>

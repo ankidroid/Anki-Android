@@ -79,7 +79,7 @@
   </string-array>
   <string name="cardeditor_title_add_note">Kaart toevoegen</string>
   <string name="cardeditor_title_edit_card">Kaart bewerken</string>
-  <string name="discard_unsaved_changes">Close and lose current input?</string>
+  <string name="discard_unsaved_changes">Afsluiten en huidige invoer verloren laten gaan?</string>
   <string name="factadder_saving_error">Fout bij opslaan kaart</string>
   <string name="saving_facts">Kaart opslaan</string>
   <string name="saving_model">Model aan het opslaan</string>

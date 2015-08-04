@@ -80,6 +80,8 @@
   <string name="fullscreen_review_summ">Sembunyikan sistem status bar</string>
   <string name="gestures">Aktifkan gerakan</string>
   <string name="gestures_summ">Menetapkan gerakan-gerakan menjadi tindakan-tindakan seperti menjawab dan mengedit kartu-kartu.</string>
+  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
+  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">Sapu ke atas</string>
   <string name="gestures_swipe_down">Sapu ke bawah</string>
   <string name="gestures_swipe_left">Sapu ke kiri</string>

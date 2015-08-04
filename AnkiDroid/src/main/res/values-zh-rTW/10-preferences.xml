@@ -80,6 +80,8 @@
   <string name="fullscreen_review_summ">Hide the system status bar</string>
   <string name="gestures">Enable gestures</string>
   <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
+  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
+  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">向上撥動</string>
   <string name="gestures_swipe_down">向下撥動</string>
   <string name="gestures_swipe_left">向左撥動</string>

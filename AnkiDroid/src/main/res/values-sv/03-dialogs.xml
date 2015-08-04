@@ -44,8 +44,12 @@
   <string name="check_db_acknowledge">Databas kontrollerad</string>
   <string name="check_db_acknowledge_shrunk">Databas kontrollerad och optimerad. \nMinskad med %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Radera kortlek</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
   <string name="delete_deck_title">Radera kortlek</string>
-  <string name="delete_deck_message">Är du säker på att du vill ta bort alla kort i %s?</string>
+  <plurals name="delete_deck_message">
+    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
+    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+  </plurals>
   <string name="delete_cram_deck_message">Är du säker du vill skicka alla kort i %s tillbaka till deras ursprungliga kortlekar?</string>
   <string name="no_tts_available_message">Det finns inget språk för text-till-tal</string>
   <string name="initializing_tts">Initierar TTS&#8230;</string>

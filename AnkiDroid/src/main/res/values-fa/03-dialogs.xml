@@ -44,8 +44,11 @@
   <string name="check_db_acknowledge">بانک اطلاعاتی بررسی شد</string>
   <string name="check_db_acknowledge_shrunk">بانک اطلاعاتی بررسی و بهینه سازی شد.\nفضای از بین رفته %d کیلوبایت.</string>
   <string name="contextmenu_deckpicker_delete_deck">حذف دسته</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
   <string name="delete_deck_title">حذف دسته</string>
-  <string name="delete_deck_message">شما مایل به حذف تمام کارت در %s هستید؟</string>
+  <plurals name="delete_deck_message">
+    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+  </plurals>
   <string name="delete_cram_deck_message">آیا مایلید که همه کارتهای موجود در %s  را به دسته اصلی خودتان برگردانید؟</string>
   <string name="no_tts_available_message">زبان متن به گفتار در دسترس نیست</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>

@@ -44,8 +44,12 @@
   <string name="check_db_acknowledge">Veritabanı kontrol edildi</string>
   <string name="check_db_acknowledge_shrunk">Veritabanı kontrol ve optimize edildi.\n%d KB küçültüldü.</string>
   <string name="contextmenu_deckpicker_delete_deck">Desteyi Sil</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
   <string name="delete_deck_title">Desteyi Sil</string>
-  <string name="delete_deck_message">%s içindeki bütün kartları silmek istediğinize emin misiniz?</string>
+  <plurals name="delete_deck_message">
+    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
+    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+  </plurals>
   <string name="delete_cram_deck_message">Tüm kartları orijinal destelerine %s geri göndermek istediğinizden emin misiniz?</string>
   <string name="no_tts_available_message">Mevcut metin okuma dili yok</string>
   <string name="initializing_tts">TTS başlatılıyor&#8230;</string>
