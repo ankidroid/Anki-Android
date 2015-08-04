@@ -16,6 +16,9 @@ package com.ichi2.utils;
 
 import android.text.TextUtils;
 
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.Preferences;
+
 import java.util.Locale;
 
 /**
@@ -31,14 +34,24 @@ public class LanguageUtil {
 
     /**
      * Returns the {@link Locale} for the given code or the default locale, if no code is given.
-     * 
+     *
      * @param localeCode The locale code of the language
      * @return The {@link Locale} for the given code
      */
+    public static Locale getLocale() {
+        return getLocale("");
+    }
     public static Locale getLocale(String localeCode) {
         Locale locale;
+        if (localeCode == null || TextUtils.isEmpty(localeCode)) {
+
+            localeCode = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getString(
+                    Preferences.LANGUAGE, "");
+            // If no code provided use the app language.
+        }
         if (TextUtils.isEmpty(localeCode)) {
             locale = Locale.getDefault();
+            // Fall back to (system) default only if that fails.
         } else if (localeCode.length() > 2) {
             try {
                 locale = new Locale(localeCode.substring(0, 2), localeCode.substring(3, 5));

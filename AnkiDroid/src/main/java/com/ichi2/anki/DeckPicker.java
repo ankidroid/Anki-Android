@@ -1647,7 +1647,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     if (getCol().cardCount() != -1) {
                         String time = "-";
                         if (eta != -1) {
-                            time = res.getQuantityString(R.plurals.deckpicker_title_minutes, eta, eta);
+                            time = res.getString(R.string.time_quantity_minutes, eta);
                         }
                         getSupportActionBar().setSubtitle(res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
                     }

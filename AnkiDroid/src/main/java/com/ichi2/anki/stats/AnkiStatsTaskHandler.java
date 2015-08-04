@@ -15,10 +15,10 @@
  ****************************************************************************************/
 package com.ichi2.anki.stats;
 
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v4.view.ViewPager;
-
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
@@ -281,7 +281,8 @@ public class AnkiStatsTaskHandler {
                 mTextView = (TextView) params[1];
 
                 //eventually put this in Stats (in desktop it is not though)
-                int cards, thetime;
+                int cards;
+                int minutes;
                 Cursor cur = null;
                 String query = "select count(), sum(time)/1000 from revlog where id > " + ((collection.getSched().getDayCutoff()-86400)*1000);
                 Timber.d("CreateSmallTodayOverview query: " + query);
@@ -293,15 +294,15 @@ public class AnkiStatsTaskHandler {
 
                     cur.moveToFirst();
                     cards = cur.getInt(0);
-                    thetime = cur.getInt(1);
-
-
+                    minutes = (int) Math.round(cur.getInt(1)/60.0);
                 } finally {
                     if (cur != null && !cur.isClosed()) {
                         cur.close();
                     }
                 }
-                return mTextView.getResources().getQuantityString(R.plurals.stats_today_cards_not_bold, cards, cards, Utils.fmtTimeSpan(thetime, 1));
+                Resources res = mTextView.getResources();
+                final String span = res.getQuantityString(R.plurals.time_span_minutes, minutes, minutes);
+                return res.getQuantityString(R.plurals.studied_cards_today, cards, cards, span);
             }finally {
                 sLock.unlock();
             }

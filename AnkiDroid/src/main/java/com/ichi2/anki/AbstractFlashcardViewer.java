@@ -1573,13 +1573,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         // Show next review time
         if (mShowNextReviewTime) {
-            mNext1.setText(mSched.nextIvlStr(mCurrentCard, 1));
-            mNext2.setText(mSched.nextIvlStr(mCurrentCard, 2));
+            mNext1.setText(mSched.nextIvlStr(this, mCurrentCard, 1));
+            mNext2.setText(mSched.nextIvlStr(this, mCurrentCard, 2));
             if (buttonCount > 2) {
-                mNext3.setText(mSched.nextIvlStr(mCurrentCard, 3));
+                mNext3.setText(mSched.nextIvlStr(this, mCurrentCard, 3));
             }
             if (buttonCount > 3) {
-                mNext4.setText(mSched.nextIvlStr(mCurrentCard, 4));
+                mNext4.setText(mSched.nextIvlStr(this, mCurrentCard, 4));
             }
         }
     }

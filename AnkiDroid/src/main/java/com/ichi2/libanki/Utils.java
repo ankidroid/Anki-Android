@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.text.Html;
 
@@ -36,6 +37,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
+import com.ichi2.utils.LanguageUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -103,16 +105,16 @@ public class Utils {
     private static TreeSet<Long> sIdTree;
     private static long sIdTime;
 
-    private static final int TIME_SECONDS = 0;
-    private static final int TIME_MINUTES = 1;
-    private static final int TIME_HOURS = 2;
-    private static final int TIME_DAYS = 3;
-    private static final int TIME_MONTHS = 4;
-    private static final int TIME_YEARS = 5;
+    // These are doubles on purpose because we want a rounded, not integer result later.
+    private static final double TIME_MINUTE = 60.0;  // seconds
+    private static final double TIME_HOUR = 60 * TIME_MINUTE;
+    private static final double TIME_DAY = 24 * TIME_HOUR;
+    // How long is a year? This is a tropical year, according to NIST.
+    // http://www.physics.nist.gov/Pubs/SP811/appenB9.html
+    private static final double TIME_YEAR = 31556930.0;  // seconds
+    // Pretty much everybody agrees that one year is twelve months
+    private static final double TIME_MONTH = TIME_YEAR / 12.0;
 
-    public static final int TIME_FORMAT_DEFAULT = 0;
-    public static final int TIME_FORMAT_IN = 1;
-    public static final int TIME_FORMAT_BEFORE = 2;
 
     // List of all extensions we accept as font files.
     private static final String[] FONT_FILE_EXTENSIONS = new String[] {".ttf",".ttc",".otf"};
@@ -146,98 +148,63 @@ public class Utils {
         return (long) (now() * scale);
     }
 
-    // timetable
-    // aftertimetable
-    // shorttimetable
+    /**
+     * Return a string representing a time quantity
+     *
+     * @param context The application's environment.
+     * @param time_s The time to format, in seconds
+     * @return The time quantity string. Something like "3 s" or "1.7 yr".
+     */
+    public static String timeQuantity(Context context, int time_s) {
+        Resources res = context.getResources();
+        // N.B.: the integer s, min, h, d and (one decimal, rounded by format) double for month, year is
+        // hard-coded. See also 01-core.xml
+        if (Math.abs(time_s) < TIME_MINUTE ) {
+            return res.getString(R.string.time_quantity_seconds, time_s);
+        } else if (Math.abs(time_s) < TIME_HOUR) {
+            return res.getString(R.string.time_quantity_minutes, (int) Math.round(time_s/TIME_MINUTE));
+        } else if (Math.abs(time_s) < TIME_DAY) {
+            return res.getString(R.string.time_quantity_hours, (int) Math.round(time_s/TIME_HOUR));
+        } else if (Math.abs(time_s) < TIME_MONTH) {
+            return res.getString(R.string.time_quantity_days, (int) Math.round(time_s/TIME_DAY));
+        } else if (Math.abs(time_s) < TIME_YEAR) {
+            return res.getString(R.string.time_quantity_months, time_s/TIME_MONTH);
+        } else {
+            return res.getString(R.string.time_quantity_years, time_s/TIME_YEAR);
+        }
+    }
 
     /**
-     * Return a string representing a time span (eg '2 days').
+     * Return a string representing a time
+     * (If you want a certain unit, use the strings directly)
+     *
+     * @param context The application's environment.
+     * @param time_s The time to format, in seconds
+     * @return The formatted, localized time string. The time is always an integer.
      */
-    public static String fmtTimeSpan(int time, int unit) {
-        return fmtTimeSpan(time, 0, false, false, unit);
-    }
-    public static String fmtTimeSpan(int time) {
-        return fmtTimeSpan(time, 0, false, false, 99);
-    }
-    public static String fmtTimeSpan(int time, boolean _short) {
-        return fmtTimeSpan(time, 0, _short, false, 99);
-    }
-    public static String fmtTimeSpan(int time, int format, boolean _short, boolean boldNumber, int unit) {
-        int type;
-        int point = 0;
-        if (Math.abs(time) < 60 || unit < 1) {
-            type = TIME_SECONDS;
-        } else if (Math.abs(time) < 3600 || unit < 2) {
-            type = TIME_MINUTES;
-        } else if (Math.abs(time) < 60 * 60 * 24 || unit < 3) {
-            type = TIME_HOURS;
-        } else if (Math.abs(time) < 60 * 60 * 24 * 29.5 || unit < 4) {
-            type = TIME_DAYS;
-        } else if (Math.abs(time) < 60 * 60 * 24 * 30 * 11.95 || unit < 5) {
-            type = TIME_MONTHS;
-            point = 1;
+    public static String timeSpan(Context context, int time_s) {
+        int time_x;  // Time in unit x
+        Resources res = context.getResources();
+        if (Math.abs(time_s) < TIME_MINUTE ) {
+            return res.getQuantityString(R.plurals.time_span_seconds, time_s, time_s);
+        } else if (Math.abs(time_s) < TIME_HOUR) {
+            time_x = (int) Math.round(time_s/TIME_MINUTE);
+            return res.getQuantityString(R.plurals.time_span_minutes, time_x, time_x);
+        } else if (Math.abs(time_s) < TIME_DAY) {
+            time_x = (int) Math.round(time_s/TIME_HOUR);
+            return res.getQuantityString(R.plurals.time_span_hours, time_x, time_x);
+        } else if (Math.abs(time_s) < TIME_MONTH) {
+            time_x = (int) Math.round(time_s/TIME_DAY);
+            return res.getQuantityString(R.plurals.time_span_days, time_x, time_x);
+        } else if (Math.abs(time_s) < TIME_YEAR) {
+            time_x = (int) Math.round(time_s/TIME_MONTH);
+            return res.getQuantityString(R.plurals.time_span_months, time_x, time_x);
         } else {
-            type = TIME_YEARS;
-            point = 1;
-        }
-        double ftime = convertSecondsTo(time, type);
-
-        int formatId;
-        if (false){//_short) {
-            //formatId = R.array.next_review_short;
-        } else {
-            switch (format) {
-            case TIME_FORMAT_IN:
-                if (Math.round(ftime * 10) == 10) {
-                    formatId = R.array.next_review_in_s;
-                } else {
-                    formatId = R.array.next_review_in_p;
-                }
-                break;
-            case TIME_FORMAT_BEFORE:
-                if (Math.round(ftime * 10) == 10) {
-                    formatId = R.array.next_review_before_s;
-                } else {
-                    formatId = R.array.next_review_before_p;
-                }
-                break;
-            case TIME_FORMAT_DEFAULT:
-            default:
-                if (Math.round(ftime * 10) == 10) {
-                    formatId = R.array.next_review_s;
-                } else {
-                    formatId = R.array.next_review_p;
-                }
-                break;
-            }
-        }
-
-        String timeString = String.format(AnkiDroidApp.getAppResources().getStringArray(formatId)[type], boldNumber ? "<b>" + fmtDouble(ftime, point) + "</b>" : fmtDouble(ftime, point));
-        if (boldNumber && time == 1) {
-            timeString = timeString.replace("1", "<b>1</b>");
-        }
-        return timeString;
-    }
-
-
-    private static double convertSecondsTo(int seconds, int type) {
-        switch (type) {
-        case TIME_SECONDS:
-            return seconds;
-        case TIME_MINUTES:
-            return seconds / 60.0;
-        case TIME_HOURS:
-            return seconds / 3600.0;
-        case TIME_DAYS:
-            return seconds / 86400.0;
-        case TIME_MONTHS:
-            return seconds / 2592000.0;
-        case TIME_YEARS:
-            return seconds / 31536000.0;
-        default:
-            return 0;
+            time_x = (int) Math.round(time_s/TIME_YEAR);
+            return res.getQuantityString(R.plurals.time_span_years, time_x, time_x);
         }
     }
+
 
     /**
      * Locale
@@ -253,27 +220,13 @@ public class Utils {
     public static String fmtPercentage(Double value, int point) {
         // only retrieve the percentage format the first time
         if (mCurrentPercentageFormat == null) {
-            mCurrentPercentageFormat = NumberFormat.getPercentInstance(Locale.getDefault());
+            mCurrentPercentageFormat = NumberFormat.getPercentInstance(LanguageUtil.getLocale());
         }
         mCurrentNumberFormat.setMaximumFractionDigits(point);
         return mCurrentPercentageFormat.format(value);
     }
 
-
-    /**
-     * @return a string with decimal separator according to current locale
-     */
-    public static String fmtDouble(Double value) {
-        return fmtDouble(value, 1);
-    }
-    public static String fmtDouble(Double value, int point) {
-        // only retrieve the number format the first time
-        if (mCurrentNumberFormat == null) {
-            mCurrentNumberFormat = NumberFormat.getInstance(Locale.getDefault());
-        }
-        mCurrentNumberFormat.setMaximumFractionDigits(point);
-        return mCurrentNumberFormat.format(value);
-    }
+    // Removed fmtDouble(). Was used only by other functions here. We now use getString() with localized formatting now.
 
     /**
      * HTML
@@ -973,19 +926,8 @@ public class Utils {
     }
 
 
-    public static String doubleToTime(double value) {
-        int time = (int) Math.round(value);
-        int seconds = time % 60;
-        int minutes = (time - seconds) / 60;
-        String formattedTime;
-        if (seconds < 10) {
-            formattedTime = Integer.toString(minutes) + ":0" + Integer.toString(seconds);
-        } else {
-            formattedTime = Integer.toString(minutes) + ":" + Integer.toString(seconds);
-        }
-        return formattedTime;
-    }
-
+    // Use DateUtil.formatElapsedTime((long) value) instead of doubleToTime.
+    // public static String doubleToTime(double value) { ...}
 
     /**
      * Indicates whether the specified action can be used as an intent. This method queries the package manager for
