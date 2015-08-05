@@ -38,6 +38,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -106,7 +107,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     private Button mButtonStart;
     private Button mButtonCustomStudy;
     private Button mButtonUnbury;
-    private ImageButton mFloatingActionButton;
     private TextView mTextDeckName;
     private TextView mTextDeckDescription;
     private TextView mTextTodayNew;
@@ -115,14 +115,11 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     private TextView mTextNewTotal;
     private TextView mTextTotal;
     private TextView mTextETA;
-    private LinearLayout mSmallChart;
-    private LinearLayout mDeckCounts;
-    private LinearLayout mDeckChart;
     private Button mDeckOptions;
     private Button mCramOptions;
     private TextView mTextCongratsMessage;
     private View mCongratsLayout;
-
+    private ChartView mChartView;
     private String mSearchTerms;
 
     // Flag to indicate if the fragment should load the deck options immediately after it loads
@@ -323,6 +320,14 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
 
     private void initAllContentViews() {
+        // The fragmented view contains a chart
+        if (mFragmented) {
+            mChartView = (ChartView) mStudyOptionsView.findViewById(R.id.chart_view_small_chart);
+            // Since the chart takes a while to build, we start with it hidden and fade it into
+            // view later once it has finished building.
+            mChartView.setVisibility(View.INVISIBLE);
+        }
+
         mDeckInfoLayout = mStudyOptionsView.findViewById(R.id.studyoptions_deckinformation);
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
         mTextDeckDescription = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_description);
@@ -356,11 +361,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         mTextNewTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_total_new);
         mTextTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_total);
         mTextETA = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_eta);
-        mSmallChart = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_mall_chart);
-
-        mDeckCounts = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_deckcounts);
-        mDeckChart = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_chart);
-
         mButtonStart.setOnClickListener(mButtonClickListener);
         mButtonCustomStudy.setOnClickListener(mButtonClickListener);
         mDeckOptions.setOnClickListener(mButtonClickListener);
@@ -519,17 +519,13 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
 
     private void updateChart(double[][] serieslist) {
-        if (mSmallChart != null) {
-
-            ChartView chartView = (ChartView) mSmallChart.findViewById(R.id.chart_view_small_chart);
-            chartView.setBackgroundColor(Color.BLACK);
+        if (mChartView != null) {
             Collection col = CollectionHelper.getInstance().getCol(getActivity());
-            AnkiStatsTaskHandler.createSmallDueChartChart(col, serieslist, chartView);
-            if (mDeckChart.getVisibility() == View.INVISIBLE) {
-                mDeckChart.setVisibility(View.VISIBLE);
-                mDeckChart.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+            AnkiStatsTaskHandler.createSmallDueChartChart(col, serieslist, mChartView);
+            if (mChartView.getVisibility() == View.INVISIBLE) {
+                mChartView.setVisibility(View.VISIBLE);
+                mChartView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
             }
-
         }
     }
 
@@ -681,7 +677,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         // Load the deck counts for the deck from Collection asynchronously
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_VALUES_FROM_DECK,
                 getDeckTaskListener(resetDecklist),
-                new DeckTask.TaskData(getCol(), new Object[]{resetSched, mSmallChart != null}));
+                new DeckTask.TaskData(getCol(), new Object[]{resetSched, mChartView != null}));
     }
 
 
@@ -764,7 +760,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                         mTextCongratsMessage.setText(getCol().getSched().finishedMsg(getActivity()));
                         mButtonStart.setVisibility(View.GONE);
                     } else {
-                        mDeckCounts.setVisibility(View.VISIBLE); // not working without this... why?
                         mCurrentContentView = CONTENT_STUDY_OPTIONS;
                         mDeckInfoLayout.setVisibility(View.VISIBLE);
                         mCongratsLayout.setVisibility(View.GONE);
