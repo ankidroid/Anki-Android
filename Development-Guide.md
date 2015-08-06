@@ -1,7 +1,5 @@
 # Source code
-First, register here on github, and follow the forking instructions for the Anki-Android repository. 
-
-If you want to be notified about each new improvement/bugfix, please subscribe to the [commits feed for the development branch](https://github.com/ankidroid/Anki-Android/commits/develop.atom).
+First, register here on github, and follow the forking instructions for the Anki-Android repository. If you want to be notified about each new improvement/bugfix, please subscribe to the [commits feed for the development branch](https://github.com/ankidroid/Anki-Android/commits/develop.atom).
 
 The project has been configured to work "out of the box" with Android Studio, though you first need to set up the Android SDK as follows.
 
