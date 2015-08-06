@@ -103,9 +103,9 @@ _Created on version: 1.1.3beta3_
   1. Verify that a map of Europe with the country of England in red is shown.
 
 
-# Introduction
+# Manual testing record
 
-This page list testing records for various versions of AnkiDroid.
+This lists testing records for various versions of AnkiDroid.
 
 If you want to be a manual tester for AnkiDroid please email **flerda@gmail.com** with **"AnkiDroid Manual Testing"** in the subject. When needed, we will email you with a link to the new build and the tests that need to be performed and instructions on how to report your results.
 
@@ -114,7 +114,6 @@ If you want to perform your own tests and contribute the results, get the list o
 # Updating the testing record
 For each new version, create a new section at the top of the page. Each section should contain a bulleted list containing the name of the tester that has performed the tests and the results. The result should contain the name of the tests performed. You can copy the list of tests from the ManualTesting page and add <font color='green'>PASS</font>**or**<font color='red'>FAIL</font>**next to them.**
 
-# Manual testing record
 
 ## 1.1.2beta1
 
