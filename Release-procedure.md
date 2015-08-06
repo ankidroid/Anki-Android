@@ -1,17 +1,17 @@
-
-
 This page describes how to release AnkiDroid. It can be interesting as an insight to understand the project better, or to improve the procedure.
 
 # Development lifecycle
+There are three main phases the project alternates between (alpha, beta, stable).
 
-There are only two phases, the project is always alternating alpha->beta->alpha->beta etc.
-When switching from alpha to beta, create a release branch, for instance release-0.6.
+We use the [gitflow branching model](http://nvie.com/posts/a-successful-git-branching-model/), so "develop" (the default branch) contains the latest development code, whereas "master" contains the code for the latest stable release. When we move into the "beta" phase of the development cycle, we implement a feature freeze, and a temporary branch "release-N.n" (N.n being the version code) is created which is only for important bug fixes. During this period, changes to "release-N.n" are regularly merged back into the "develop" branch so that it doesn't fall behind. If an urgent bug is discovered shortly after a major release, a special "hotfix-N.n" branch will be created from master.
+
+In most cases you should base your code on and send pull requests to the default "develop" branch. However, if you are working on a critical bug fix during the feature freeze period or for a hot-fix, you should use the "release-N.n" or "hotfix-N.n" branch. If you are unsure which branch to use, please ask on the forum.
 
 ## Alpha phase
-Commits are liberally merged into master, provided the code compiles.
+Commits are liberally merged into develop, provided the code compiles.
 
 ## Beta phase
-Recognizable by AndroidManifest.xml containg the word "beta" in the versionName attribute. The code is "freezed", meaning that only the following commits are merged into master:
+Recognizable by AndroidManifest.xml containg the word "beta" in the versionName attribute. The code is "frozen", meaning that only the following commits are merged into develop:
   * Bug fixes
   * Translations
   * Development tools
@@ -20,8 +20,8 @@ Recognizable by AndroidManifest.xml containg the word "beta" in the versionName 
   * Always use this repository: https://github.com/ankidroid/Anki-Android
   * Checkout the branch to release ("develop" for an alpha, or for instance "release-0.6" for a beta)
   * In AndroidManifest.xml change android:versionName from 0.6beta11 to 0.6beta12 (for instance), and change android:versionCode accordingly.
-  * Build an APK using "ant release" or Eclipse (be sure to refresh Eclipse's project).
-  * Upload the APK to http://code.google.com/p/ankidroid/downloads
+  * Build an APK using `./gradlew assembleRelease` or Android Studio
+  * Upload the APK to github
   * Upload the APK to Google Play alpha or beta
   * Commit and push
 The tools/release.sh script can perform some of those steps effortlessly.
@@ -31,17 +31,14 @@ The tools/release.sh script can perform some of those steps effortlessly.
 ## Build
   * Always use this repository: https://github.com/ankidroid/Anki-Android
   * Switch to the branch to release, for instance "release-0.6"
-  * Run tools/comment-logs.sh
-  * Try to compile. If it fails, fix any multiple-lines log line, run tools/uncomment-logs.sh, commit and start the whole procedure again.
-  * Commit
-  * change icons to blue by reverting the first icon commit of this version ( tools/change-icons-to-blue.sh )
+  * Change icons to blue by reverting the first icon commit of this version ( tools/change-icons-to-blue.sh )
   * In AndroidManifest.xml change android:versionName from 0.6beta13 to 0.6 (for instance) and change android:versionCode accordingly.
   * Commit, push.
   * Tag the version: git tag v0.6
   * Push: git push --tags
-  * Build a signed APK using "ant clean release". Rename it from bin/AnkiDroid-release.apk to AnkiDroid-0.6.apk for instance
+  * Build a signed APK using `./gradlew clean assembleRelease`. Rename it from bin/AnkiDroid-release.apk to AnkiDroid-0.6.apk for instance
   * Go to https://github.com/ankidroid/Anki-Android/tags click "Edit release notes" drop APK over drop zone, press "Update release".
-Running "tools/release.sh public" can perform some of those steps effortlessly.
+Running `./tools/release.sh public` can perform some of those steps effortlessly.
 
 ## Android Market
 Upload the APK to Android market. Archive the previous APK from the "Active" section, then publish.
