@@ -1,6 +1,5 @@
 # Important Note
-**Support for font in AnkiDroid 2.x is based on the support in Anki 2.x, as described here:**
-http://ankisrs.net/docs/manual.html#installing-fonts
+**Support for font in AnkiDroid 2.x is based on the support in Anki 2.x, as described [here](https://ankidroid.org/docs/manual.html#customFonts):**
 
 The following is keep only for **historic** purposes (but it _should_ still work).
 
