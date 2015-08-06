@@ -10,11 +10,10 @@ You can also <a href='Contribution#Become_a_beta_tester.md'>access the latest be
 <br>
 <h1>APK</h1>
 
-1. Choose the desired version:<br>
-<ul><li><a href='https://github.com/ankidroid/Anki-Android/releases/latest'>Latest stable release</a>
-</li><li><a href='https://github.com/ankidroid/Anki-Android/releases'>Latest development version</a>
-</li><li>Specific version >= 2.0.3: use direct URL, e.g. for <a href='https://github.com/ankidroid/Anki-Android/releases/tag/v2.1beta10'>2.1beta10</a>, <a href='https://github.com/ankidroid/Anki-Android/releases/tag/v2.0.4'>2.0.4</a>, etc<br>
-</li><li><a href='http://code.google.com/p/ankidroid/downloads/list'>Specific version &lt; 2.0.3</a> (not recommended).</li></ul>
+1. Choose the desired version:
+ - <a href='https://github.com/ankidroid/Anki-Android/releases/latest'>Latest stable release</a>
+ - <a href='https://github.com/ankidroid/Anki-Android/releases'>Latest development version</a>
+ - Specific version: use direct URL, e.g. for <a href='https://github.com/ankidroid/Anki-Android/releases/tag/v2.1beta10'>2.1beta10</a>, <a href='https://github.com/ankidroid/Anki-Android/releases/tag/v2.0.4'>2.0.4</a>, etc
 
 2. Download the apk with your stock browser<br>
 <br>
