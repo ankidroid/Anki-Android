@@ -9,10 +9,10 @@ No AnkiDroid is not restricted in any way, see the [[installation guide|Installa
 
 ## I don't like the last update of AnkiDroid, how can I return to a previous version?
 
-All versions are available as APK files, see the [[installation guide|Installation]]. Don't forget to [let us know](https://code.google.com/p/ankidroid/issues) what bothers you, and we will try to fix it.
+All versions are available as APK files, see the [[installation guide|Installation]]. Don't forget to [let us know](http://ankidroid.org/help.html) what bothers you, and we will try to fix it.
 
 ## How do I upgrade from version 1.x?
-If you wish to upgrade from an old (2012 and older) 1.x version of AnkiDroid, please read the official [1.x upgrading instructions](http://code.google.com/p/ankidroid/wiki/Upgrading).
+If you wish to upgrade from an old (2012 and older) 1.x version of AnkiDroid, please read these [1.x upgrading instructions](http://android.stackexchange.com/questions/116414/how-to-upgrade-my-ankidroid-flashcards-from-1-x-to-2-0).
 
 # Using AnkiDroid
 ## Is there a manual?
