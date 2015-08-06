@@ -2,6 +2,7 @@
 
 <i>Audience: This page is for Android apps developers. AnkiDroid users can ignore it.</i>
 
+## CREATE\_FLASHCARD intent
 AnkiDroid's add card intent follows the approach suggested here: http://www.openintents.org/en/node/720
 
 To implement an add-card-to-AnkiDroid-deck-option into your app, use this intent action:
@@ -14,26 +15,7 @@ Submit your information with intent extras SOURCE\_TEXT and TARGET\_TEXT. You ca
 
 For an example, checkout https://github.com/nicolas-raoul/Indiclash/tree/master/IndiclashDictionaryApp.
 
-## Proposed new Intent
-A new intent is currently being proposed which will allow sending of multiple flashcards, and a larger number of fields than just the front and back of a flashcard. The proposed specification is below:
-
-```
-org.openintents.action.CREATE_FLASHCARDS
-```
-
-The intent should contain the following "extra" parameters:
-  * `NOTES` -> Type `ArrayList<HashMap<String, Serializable>>` (required) main data structure
-  * `VERSION` -> Type `int` (required) version number of intent to allow changes in the future. The current version of this specification is 1.
-  * `DEFAULT_NOTE_TYPE` -> Type `String` (optional) default name of model to choose for adding the cards.
-_Note: `DEFAULT_NOTE_TYPE` should either be user specifiable in the app sending the intent, or left `null`. It will be ignored by AnkiDroid if there is no note type with this name._
-
-The NOTES structure has the following key / values:
-
-  * "SOURCE\_TEXT" -> Type `String` (required) must make sense when on front of flashcard
-  * "TARGET\_TEXT" -> Type `String` (required) must make sense when on back of flashcard
-  * "OPTIONAL\_PARAMETERS" -> Type `String[]` (optional) arbitrary number of optional fields which will be filled one by one into the available fields of the chosen model in AnkiDroid
-
-## Alternative
+## SEND intent
 Although it is not recommended, you can use this intent action
 
 ```
@@ -43,3 +25,7 @@ android.intent.action.SEND
 It will work too, but you will not see exclusively the flashcards applications.
 
 In case you use this action, transmit your information with Intent.EXTRA\_SUBJECT and Intent.EXTRA\_TEXT
+
+## Adding directly via ContentProvider
+
+From AnkiDroid v2.5, notes can be added directly to AnkiDroid by external applications via the ContentProvider. See the source code for the [contract file](https://github.com/ankidroid/Anki-Android/blob/develop/AnkiDroid/src/main/java/com/ichi2/anki/provider/FlashCardsContract.java) and the [unit test](https://github.com/ankidroid/Anki-Android/blob/develop/AnkiDroid/src/androidTest/java/com.ichi2.anki.tests/ContentProviderTest.java) for implementation details. There is also a rudimentary [example app](https://github.com/federvieh/AnkiDroidProviderTest) which may give some hints on how to set up the ContentProvider.
