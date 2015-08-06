@@ -73,6 +73,8 @@ http://www.wazu.jp/gallery/Fonts_Korean.html
 |NAME|LICENSE|WRITING SYSTEMS SUPPORTED|PROJECT WEBSITE|DOWNLOAD|
 |:---|:------|:------------------------|:--------------|:-------|
 |Doulos SIL|SIL Open Font License|IPA                      |http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=DoulosSILfont|http://scripts.sil.org/cms/scripts/render_download.php?format=file&media_id=DoulosSIL-4.110.zip&filename=DoulosSIL-4.110.zip|
+|Constructium|SIL Open Font License|Mixed Latin/Greek/Cyrillic, IPA, and conlang text|http://www.kreativekorp.com/software/fonts/constructium.shtml|see project site|
+|Judson|SIL Open Font License|Basic Latin, Western European, Euro Catalan, Baltic, Turkish, Central European, Romanian, Vietnamese, Pan African Latin, Dutch, Afrikaans, Pinyin,  IPA, Igbo Onwu|http://openfontlibrary.org/en/font/judson|see project site|
 
 # Arabic
 |NAME|LICENSE|WRITING SYSTEMS SUPPORTED|PROJECT WEBSITE|DOWNLOAD|
