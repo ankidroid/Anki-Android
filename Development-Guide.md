@@ -1,5 +1,5 @@
 # Source code
-First, register here on github, and follow the forking instructions for the Anki-Android repository. If you want to be notified about each new improvement/bugfix, please subscribe to the [commits feed for the development branch](https://github.com/ankidroid/Anki-Android/commits/develop.atom).
+First, register here on github, and follow the [forking instructions](https://help.github.com/articles/fork-a-repo/) for the Anki-Android repository. If you want to be notified about each new improvement/bugfix, please subscribe to the [commits feed for the development branch](https://github.com/ankidroid/Anki-Android/commits/develop.atom).
 
 The project has been configured to work "out of the box" with Android Studio, though you first need to set up the Android SDK as follows.
 
@@ -51,10 +51,7 @@ Several unit tests are defined in the `AnkiDroid/androidTest` folder. You can ru
 Eclipse is no longer officially supported, however it may be possible to get it working using the gradle plugin for Eclipse.
 
 ## Branching Model
-We use the [gitflow branching model](http://nvie.com/posts/a-successful-git-branching-model/), so "develop" (the default branch) contains the latest development code, whereas "master" contains the code for the latest stable release. When we move into the "beta" phase of the development cycle, we implement a feature freeze, and a temporary branch "release-N.n" (N.n being the version code) is created which is only for important bug fixes. During this period, changes to "release-N.n" are regularly merged back into the "develop" branch so that it doesn't fall behind. If an urgent bug is discovered shortly after a major release, a special "hotfix-N.n" branch will be created from master.
-
-In most cases you should base your code on and send pull requests to the default "develop" branch. However, if you are working on a critical bug fix during the feature freeze period or for a hot-fix, you should use the "release-N.n" or "hotfix-N.n" branch. If you are unsure which branch to use, please ask on the forum.
-
+See the [[Release Procedure Wiki Page|Release-Procedure]]
 
 # Other development tools
 
