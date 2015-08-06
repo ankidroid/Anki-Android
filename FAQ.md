@@ -4,15 +4,15 @@
 # Installing AnkiDroid
 
 ## After installing the latest version of AnkiDroid, it starts crashing
-Please first try uninstalling / re-installing the application, as this often fixes such problems. If the issue persists, see the [bug reports help page](Help#Bug_Reports_and_Feature_Requests.md).
+Please first try uninstalling / re-installing the application, as this often fixes such problems. If the issue persists, see the [bug reports help page](https://ankidroid.org/docs/help.html).
 
 ## I cannot find AnkiDroid on Android Market. Is the app restricted in some way?
 
-No AnkiDroid is not restricted in any way, see the [installation guide](Installation.md) for help with installing.
+No AnkiDroid is not restricted in any way, see the [[installation guide|Installation]] for help with installing.
 
 ## I don't like the last update of AnkiDroid, how can I return to a previous version?
 
-All versions are available as APK files, see the [installation guide](Installation#APK.md). Don't forget to [let us know](https://code.google.com/p/ankidroid/issues) what bothers you, and we will try to fix it.
+All versions are available as APK files, see the [[installation guide|Installation]]. Don't forget to [let us know](https://code.google.com/p/ankidroid/issues) what bothers you, and we will try to fix it.
 
 ## How do I upgrade from version 1.x?
 If you wish to upgrade from an old (2012 and older) 1.x version of AnkiDroid, please read the official [1.x upgrading instructions](http://code.google.com/p/ankidroid/wiki/Upgrading).
@@ -44,20 +44,20 @@ AnkiDroid is designed primarily as a tool for reviewing cards created with Anki 
   * [Modify / create a note type](http://ankisrs.net/docs/manual.html#note-types)
   * Perform operations on multiple cards, such as change the deck, apply tags, etc
 
-See the FAQ on [how to sync Anki Desktop with AnkiDroid](FAQ#How_do_I_make_changes_to_my_collection_with_Anki_Desktop?.md) if you are unsure how to use Anki Desktop.
+See the FAQ on [how to sync Anki Desktop with AnkiDroid](FAQ#how-do-i-make-changes-to-my-collection-with-anki-desktop) if you are unsure how to use Anki Desktop.
 
 
 ## How can I add pictures and sounds to my deck?
-See the [Media section](FAQ#Media.md) below.
+See the [Media section](FAQ#media) below.
 
 ## How can I use custom fonts?
 See the [AnkiDroid manual](http://ankidroid.org/manual.html#customFonts) for the new method of adding fonts.
 
-The [old method of using custom fonts](version1#Using_custom_fonts_with_AnkiDroid.md) from AnkiDroid 1.x is no longer officially suppported because it is not robust, however it does generally still work, and users who wish to use it may continue to do so.
+The [[old method of using custom fonts|AnkiDroid-1.x-custom-fonts]] from AnkiDroid 1.x is no longer officially suppported because it is not robust, however it does generally still work, and users who wish to use it may continue to do so.
 
 
 ## How can I use selective study, e.g. to review certain chapters of a textbook?
-The easiest way is to organize your material into subdecks using the browser in [Anki Desktop](FAQ#Do_I_need_Anki_Desktop_too?.md). You can create a new subdeck in AnkiDroid by clicking "create deck" then using the syntax "PARENTDECKNAME::NEWSUBDECKNAME", or alternatively create the deck on Anki Desktop and drag and drop it onto an existing deck.
+The easiest way is to organize your material into subdecks using the browser in [Anki Desktop](FAQ#do-i-need-anki-desktop-too). You can create a new subdeck in AnkiDroid by clicking "create deck" then using the syntax "PARENTDECKNAME::NEWSUBDECKNAME", or alternatively create the deck on Anki Desktop and drag and drop it onto an existing deck.
 
 Alternatively, in AnkiDroid you can study cards of only a particular tag by opening a deck, tapping the "custom study" button, and choosing "Limit to particular tags". This will automatically create a new [filtered deck](http://ankisrs.net/docs/manual.html#filtered) with the cards of the tag you specified.
 
@@ -66,7 +66,7 @@ At the "Congratulations! You have finished for now." screen at the end of the st
 
 ## Changing the study options of a deck changes the options of my other decks?!
 
-The new version of Anki Desktop introduced an "[option grouping feature](http://ankisrs.net/docs/manual.html#deck-options)". If you want different decks to have different study options, it is currently necessary to change the option group assigned to each deck ("Configuration set" in the AnkiDroid deck options). To create and delete option groups, it is currently necessary to use [Anki Desktop](FAQ#Do_I_need_Anki_Desktop_too?.md).
+The new version of Anki Desktop introduced an "[option grouping feature](http://ankisrs.net/docs/manual.html#deck-options)". If you want different decks to have different study options, it is currently necessary to change the option group assigned to each deck ("Configuration set" in the AnkiDroid deck options). To create and delete option groups, it is currently necessary to use [Anki Desktop](FAQ#do-i-need-anki-desktop-too).
 
 
 ## How do I type the answer, not type the answer, hide the correct answer?
@@ -102,7 +102,7 @@ Please make sure you have the latest version of AnkiDroid installed as this bug 
 It appears like your decks have disappeared? Don't burn your phone yet: AnkiDroid does regular backups, so you will probably be able to recover your decks. See the [backups section of the manual](http://ankidroid.org/docs/manual.html#backups) for more info.
 ## Help! My collection is corrupted!
 
-Corruption happens mostly when users copy the main collection.anki2 file while it is still opened. AnkiDroid has a backup system which saves your collection file every day into the subfolder "backup". If your collection becomes corrupted, you can always [restore from one of the these backups](FAQ#Lost_my_decks.md).
+Corruption happens mostly when users copy the main collection.anki2 file while it is still opened. AnkiDroid has a backup system which saves your collection file every day into the subfolder "backup". If your collection becomes corrupted, you can always [restore from one of the these backups](FAQ#lost-my-decks).
 
 Also see the main Anki documentation for more info: http://ankisrs.net/docs/manual.html#_corrupt_collections
 
@@ -118,7 +118,7 @@ and [here is the plugin for the Zeemote controller](https://www.google.com/url?q
 # Media
 
 ## How can I use media files on AnkiDroid?
-The recommended way is to use Anki Desktop, which has a comprehensive media editor function. Please see the [above FAQ](FAQ#How_do_I_make_changes_to_my_collection_with_Anki_Desktop?.md) on how to edit your collection on Anki Desktop.
+The recommended way is to use Anki Desktop, which has a comprehensive media editor function. Please see the [above FAQ](FAQ#how-do-i-make-changes-to-my-collection-with-anki-desktop) on how to edit your collection on Anki Desktop.
 
 Starting from AnkiDroid v2.2, it is also possible to add pictures and sounds to your deck directly from AnkiDroid, by editing a card and tapping the media button on the right of a field. Although the video is a bit outdated, some of the main features of this new media editor are shown in [this youtube video](http://youtu.be/bVh2xEYKvRI).
 
@@ -167,7 +167,7 @@ If you must use media references to fields, for example if you have a large numb
 
 ## Instead of the correct character to display, a square is shown. Why is that?
 
-Because, by default, Android does not have complete support of the full Unicode character set so it does not know how to display these characters. The part of Unicode that Android supports depends on the specific device and on where that device is distributed. If you would like to add support for some specific language, see the [using custom fonts section](FAQ#How_can_I_use_custom_fonts?.md).
+Because, by default, Android does not have complete support of the full Unicode character set so it does not know how to display these characters. The part of Unicode that Android supports depends on the specific device and on where that device is distributed. If you would like to add support for some specific language, see the [custom fonts section of the user manual](https://ankidroid.org/docs/manual.html#customFonts).
 
 # Formatting tips
 Note: this section assumes you know how to edit card templates using Anki Desktop. Please check [this tutorial video](https://www.youtube.com/watch?v=F1j1Zx0mXME) for an introduction.
