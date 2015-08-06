@@ -68,8 +68,6 @@ At the "Congratulations! You have finished for now." screen at the end of the st
 
 The new version of Anki Desktop introduced an "[option grouping feature](http://ankisrs.net/docs/manual.html#deck-options)". If you want different decks to have different study options, it is currently necessary to change the option group assigned to each deck ("Configuration set" in the AnkiDroid deck options). To create and delete option groups, it is currently necessary to use [Anki Desktop](FAQ#Do_I_need_Anki_Desktop_too?.md).
 
-## How can I make my flashcards vertically center aligned again?
-From version 2.0.2, vertical center alignment has been disabled by default for consistency with other Anki clients. You can re-enable it under "Menu -> Preferences -> Reviewing -> Center card content vertically".
 
 ## How do I type the answer, not type the answer, hide the correct answer?
 See the [AnkiDroid user manual](http://ankidroid.org/manual.html#typeInAnswer)
@@ -126,24 +124,102 @@ If your device does not support ExFAT, one possible workaround for this problem 
 
 While not officially supported, another possible solution may be to organize your media files into subfolders. Of course it is also necessary to update your notes to include the reference to the subfolder.
 
-## Why does my media work on Anki Desktop but not on AnkiDroid?
-First please ensure that the "fetch media on sync" preference is enabled and/or the media files are actually on the device. If the media files are correctly on the device, there is probably a problem with your template. For example, as per the [Anki documentation](http://ankisrs.net/docs/manual.html#_media_amp_latex_references), templates should not contain media references to fields such as `[sound:{{Word}}]`. To work on AnkiDroid, it's necessary to explicitly have `[sound:pathtosoundfile]` in the field itself.
+## Why doesn't my sound or image work on AnkiDroid
+The most likely reason is that the media files are not in the main AnkiDroid `collection.media` folder. If you are using sync then please make sure that the "fetch media on sync" preference is enabled in all of your Anki clients, and if not then re-sync from all your clients.
 
-If you must use media references to fields, for example if you have a large number of notes and use a specific naming convention based on the content of certain fields, there is an [add-on available for Anki Desktop](https://github.com/timrae/anki-replaceall) which allows you to batch render an expression such as `[sound:{{Word}}.mp3]` into a new field. Be sure to backup before attempting to use this add-on.
+If that doesn't work then please check if the media works correctly on both AnkiWeb and Anki Desktop. If you synced correctly with media sync enabled, and the media does not play on either AnkiWeb or Anki Desktop, then there is probably a problem with the cards themselves. Please read the Anki Desktop manual, or ask on the [Anki Desktop support site](http://ankisrs.net/docs/help.html) for help resolving this problem.
 
-## But still AnkiDroid does not show my images!
+If you have checked that you have correctly done a media sync, and that the media is playing correctly on both Anki Desktop and AnkiWeb but not on AnkiDroid, then use a file manager like "ES File Explorer" to check that the media files exist in your `AnkiDroid/collection.media` folder. If the media files do not exist then obviously AnkiDroid cannot play them. You can try manually copying them from Anki Desktop as a last resort.
 
-Android platform has built-in support for the following image formats: JPEG (.jpg), GIF (.gif), PNG (.png) and BMP (.bmp). The format of your image file has to be one of these or be in the list of specific supported formats for your device. See [Android Core Media Formats](http://developer.android.com/intl/zh-TW/guide/appendix/media-formats.html#core).
+## But still AnkiDroid does not play my media!
 
-## But still AnkiDroid does not play my audio!
+The Android platform has built-in support for the following image formats:
+```
+JPEG (.jpg), GIF (.gif), PNG (.png) and BMP (.bmp)
+```
 
-Android platform has built-in support for the next audio formats: 3GPP (.3gp), MPEG-4 (.mp4, .m4a), 3GPP (.3gp), MP3 (.mp3), Type 0 and 1 (.mid, .xmf, .mxmf), RTTTL/RTX (.rtttl, .rtx), OTA (.ota), iMelody (.imy), Ogg (.ogg) and WAVE (.wav). The format of your audio file has to be one of these or be in the list of specific supported formats for your device. See [Android Core Media Formats](http://developer.android.com/intl/zh-TW/guide/appendix/media-formats.html#core).
+the following audio formats:
+```
+3GPP (.3gp), MPEG-4 (.mp4, .m4a), 3GPP (.3gp), MP3 (.mp3), Type 0 and 1 (.mid, .xmf, .mxmf), RTTTL/RTX (.rtttl, .rtx), OTA (.ota), iMelody (.imy), Ogg (.ogg) and WAVE (.wav). 
+```
+
+and the following video formats (example video deck can be found [here](https://github.com/ankidroid/Anki-Android/raw/develop/tools/test-decks/video.apkg)):
+```
+.3gp files with H.263 or MPEG-4 SP codec, .mp4 files with H.263 codec
+```
+
+The format of your media file has to be one of these, or be in the list of [Android Core Media Formats](http://developer.android.com/guide/appendix/media-formats.html#core) for your device.
+
+If you have verified that the media files are physically on your device, that they are in one of the supported formats, and that they are playing properly on Anki Desktop, one possibility is that you are using an [unsupported feature](http://ankisrs.net/docs/manual.html#importing-media) of Anki Desktop, where you code a pattern for the path of the file into the template -- i.e. if you have something like `[sound:{{Word}}]` in your template, this will probably not work on AnkiDroid, where it's necessary to explicitly have `[sound:pathtosoundfile]` in the field itself.
+
+If you must use media references to fields, for example if you have a large number of notes and use a specific naming convention based on the content of certain fields, you should use the [search and replace feature](http://ankisrs.net/docs/manual.html#importing-media), or alternatively there is an [add-on available for Anki Desktop](https://github.com/timrae/anki-replaceall) which allows you to batch render an expression such as `[sound:{{Word}}.mp3]` into a new field. Be sure to backup before attempting to use this add-on.
 
 # Displaying special characters from other languages
 
 ## Instead of the correct character to display, a square is shown. Why is that?
 
 Because, by default, Android does not have complete support of the full Unicode character set so it does not know how to display these characters. The part of Unicode that Android supports depends on the specific device and on where that device is distributed. If you would like to add support for some specific language, see the [using custom fonts section](FAQ#How_can_I_use_custom_fonts?.md).
+
+# Formatting tips
+Note: this section assumes you know how to edit card templates using Anki Desktop. Please check [this tutorial video](https://www.youtube.com/watch?v=F1j1Zx0mXME) for an introduction.
+
+
+## How to make my flashcards vertically center aligned
+Since AnkiDroid version 2.0.2, vertical center alignment has been disabled by default for consistency with other Anki clients.
+
+The recommended way to center-align your cards is to add the following code to the `.card` class in the "Styling" section of you card templates
+
+```
+.card {
+  ...
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  -webkit-box-align: stretch;
+  -webkit-box-pack: center;
+  -webkit-box-orient: vertical;
+}
+```
+
+
+If you only want the cards to be centered on AnkiDroid and don't care about consistency with other clients, a simpler way is to go to "Settings -> Reviewing -> Center align" and enable the check box.
+
+## How to make long words "wrap"
+
+Since Android 4.4 Kit-Kat, Android no longer automatically breaks up long words so that they don't stretch past the edge of the screen. This can be particularly troublesome if you have gestures enabled, because you'll sometimes have to swipe left twice (once to scroll to the edge of the Webview, and again to actually get the swipe to register).
+
+You can fix this issue by adding the following to the `.card` class in the "Styling" section of you card templates:
+
+```
+.card {
+ ...
+ word-wrap: break-word;
+}
+```
+
+## How to use formatting like bold and italic with custom fonts
+
+Some custom fonts (especially for Asian languages like Japanese) have separate font files for applying bold, etc. You can get these multiple files working using the  official "font-face" method, by using the sample below for the "Styling" section of the card template:
+
+
+```
+.card {
+ ...
+ font-family: NotoSansJP;
+}
+
+@font-face { font-family: "NotoSansJP"; src: url('_NotoSansJP-Regular.otf'); }
+@font-face { font-family: "NotoSansJP"; src: url('_NotoSansJP-Bold.otf'); font-weight: bold; }
+```
+
+
+## How to remove the audio play button from flashcards
+If you prefer to use the "replay audio" action in the menu, and have the play button hidden on the flashcards, add the following to the bottom of the "Styling" section of your card template:
+
+```
+.replaybutton {display: none;}
+```
 
 # Other questions
 
