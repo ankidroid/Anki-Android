@@ -25,6 +25,12 @@ After forking and cloning the Anki-Android git repository, open Android Studio a
  * `%root/res/layout/` contains the GUI layouts for most screens.
  * `%root/res/drawable-****/` contains the icons used throughout the app at [various resolutions](https://www.google.com/design/spec/style/icons.html).
 
+## Running unit tests
+Several unit tests are defined in the `AnkiDroid/androidTest` folder. You can run the tests from within Android Studio by simply right clicking on the test and running it (be sure to choose the icon with the Android symbol if there are multiple options shown), or from the command line using
+```
+./gradlew connectedCheck
+```
+
 ## Compiling from the command line
 If you have the Android SDK installed, you should be able to compile from the command line even without installing Android Studio.
 
@@ -41,17 +47,19 @@ gradlew.bat assembleDebug
 An apk file signed with a standard "debug" key will be generated named `"AnkiDroid-debug.apk"` in:
 `%AnkiDroidRoot%/AnkiDroid/build/outputs/apk/`
 
-## Running unit tests
-Several unit tests are defined in the `AnkiDroid/androidTest` folder. You can run the tests from within Android Studio by simply right clicking on the test and running it (be sure to choose the icon with the Android symbol if there are multiple options shown), or from the command line using
-```
-./gradlew connectedCheck
-```
-
-## Using Eclipse
-Eclipse is no longer officially supported, however it may be possible to get it working using the gradle plugin for Eclipse.
 
 ## Branching Model
 See the [[Release Procedure Wiki Page|Release-Procedure]]
+
+## Localization Administration
+Updating the master strings from Git to Crowdin is a pretty delicate thing. Uploading an empty string.xml for instance would delete all translations. And uploading changed strings delete as well all translations. This is the desired behavior in most cases, but when just some English typos are corrected this shouldn't destroy all translations.
+
+In this case, it's necessary to:
+
+  1. rebuild a download package at first (option "r" in script [currently broken])
+  1. download all translations (update-translations.py)
+  1. upload the changed strings
+  1. reupload the translations (option "t" and language "all").
 
 # Other development tools
 
