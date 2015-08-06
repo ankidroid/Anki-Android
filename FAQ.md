@@ -1,6 +1,3 @@
-# Contents
-
-
 # Installing AnkiDroid
 
 ## After installing the latest version of AnkiDroid, it starts crashing
