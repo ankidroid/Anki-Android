@@ -1,24 +1,33 @@
-<h1>App store</h1>
-The easiest way to install AnkiDroid is via your favorite app-store:
 
-[![Google Play Store](https://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.ichi2.anki)
-[![F-Droid](https://guardianproject.info/wp-content/uploads/2014/07/logo-fdroid.png)](https://f-droid.org/repository/browse/?fdid=com.ichi2.anki)
+<img src='http://i.stack.imgur.com/hUgkh.png' align='right'>
 
-If these links don't work, open the Google Play application on your device, search for "anki", then in the results click on "AnkiDroid", and then on "Install". 
 
-You can also <a href='Contribution#Become_a_beta_tester.md'>access the latest beta version on Google Play</a> (registration on forum required).<br>
+<h1>Google Play</h1>
+<ol><li>Open Google Play application and search for "anki"<br>
+</li><li>In the results, click on "AnkiDroid" and then on "Install"</li></ol>
+
+It's also possible to install directly from the <a href='https://market.android.com/details?id=com.ichi2.anki'>AnkiDroid page</a> on the Google Play website.<br>
 <br>
-<h1>APK</h1>
-
-1. Choose the desired version:<br>
-<ul><li><a href='https://github.com/ankidroid/Anki-Android/releases/latest'>Latest stable release</a>
-</li><li><a href='https://github.com/ankidroid/Anki-Android/releases'>Latest development version</a>
-</li><li>Specific version >= 2.0.3: use direct URL, e.g. for <a href='https://github.com/ankidroid/Anki-Android/releases/tag/v2.1beta10'>2.1beta10</a>, <a href='https://github.com/ankidroid/Anki-Android/releases/tag/v2.0.4'>2.0.4</a>, etc<br>
-</li><li><a href='http://code.google.com/p/ankidroid/downloads/list'>Specific version &lt; 2.0.3</a> (not recommended).</li></ul>
-
-2. Download the apk with your stock browser<br>
+You can <a href='http://ankidroid.org/manual.html#betaTesting'>access the latest beta version on Google Play</a> (registration on forum required).<br>
 <br>
-3. Click on the downloaded .apk, and install<br>
+<h1>Project Website</h1>
+AnkiDroid can be downloaded as an APK file directly from the project website on github:<br>
+<br>
+<h2>Latest stable version</h2>
+The latest stable version, which is identical to the version on the Android market is available from here:<br>
+<ul><li><a href='https://github.com/ankidroid/Anki-Android/releases/latest'>Latest stable release</a></li></ul>
+
+<h2>Other versions</h2>
+The latest development version (i.e. alpha / beta) as well as all older versions of the app can be found here:<br>
+<br>
+<ul><li><a href='https://github.com/ankidroid/Anki-Android/releases'>Latest development version</a>
+</li><li>Type a direct URL to access a specific version, e.g. <a href='https://github.com/ankidroid/Anki-Android/releases/tag/v2.1beta10'>2.1beta10</a>, <a href='https://github.com/ankidroid/Anki-Android/releases/tag/v2.0.4'>2.0.4</a>, etc</li></ul>
+
+<h2>Installation instructions</h2>
+
+1. Download the desired apk file from above with the standard browser<br>
+<br>
+2. Click on the downloaded .apk, and install<br>
 <br>
 <b>Note:</b> You need to allow installation of non-Market applications in main Android settings (e.g. Applications -> Unknown Sources in Android 2.x)<br>
 <br>
@@ -26,7 +35,6 @@ You can also <a href='Contribution#Become_a_beta_tester.md'>access the latest be
 <br>
 <b>Note:</b> Syncing with Anki Web is no longer supported on versions < 2.3.2<br>
 <br>
-
 <h1>Uninstalling</h1>
 <ol><li>Go to the Android settings, then "Applications", then "Manage applications"<br>
 </li><li>Look for "AnkiDroid"<br>
