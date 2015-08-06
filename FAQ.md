@@ -106,6 +106,9 @@ Corruption happens mostly when users copy the main collection.anki2 file while i
 
 Also see the main Anki documentation for more info: http://ankisrs.net/docs/manual.html#_corrupt_collections
 
+## How can I use Zeemote?
+While we do not officially support the [Zeemote JS1 Controller](http://zeemote.com/), some users have noted that they could successfully pair AnkiDroid with the Zeemote using [this 3rd party app](https://play.google.com/store/apps/details?id=com.hexad.bluezime). 
+
 # Media
 
 ## How can I use media files on AnkiDroid?
