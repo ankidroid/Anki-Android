@@ -107,7 +107,13 @@ Corruption happens mostly when users copy the main collection.anki2 file while i
 Also see the main Anki documentation for more info: http://ankisrs.net/docs/manual.html#_corrupt_collections
 
 ## How can I use Zeemote?
-While we do not officially support the [Zeemote JS1 Controller](http://zeemote.com/), some users have noted that they could successfully pair AnkiDroid with the Zeemote using [this 3rd party app](https://play.google.com/store/apps/details?id=com.hexad.bluezime). 
+While we do not officially support the [Zeemote JS1 Controller](http://zeemote.com/), some users have noted that they could successfully pair AnkiDroid with the Zeemote using a 3rd party app called  [Bluez IME](https://play.google.com/store/apps/details?id=com.hexad.bluezime).
+
+A very old development version of AnkiDroid did once have native support for Zeemote, however it was removed as the libraries were not open source, and therefore incompatible with AnkiDroid's GPL License. There was an effort to add support for Zeemote and other controllers via plugins. Unfortunately at the time it involved some work merging with the new version, which never got done due to time constraints, and now it's slipped even further away.
+
+If someone would like to continue that work:
+[Here is the unmerged commit](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2Fankidroid%2FAnki-Android%2Fcommit%2Ff899cb98f6fb90c1b4d5d48aff786e813adcf237&sa=D&sntz=1&usg=AFQjCNGmi_WBEvhq55r7DGHEwwmTb-JaWA) for the plugin interface for controllers
+and [here is the plugin for the Zeemote controller](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2Finiju%2FAnkiDroid-Zeemote&sa=D&sntz=1&usg=AFQjCNF8ASmfUyI_oM-1mMq1lhBYbqGfRQ)
 
 # Media
 
