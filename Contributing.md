@@ -4,7 +4,7 @@
 Please see the AnkiDroid manual for [how to become a beta tester](http://ankidroid.org/manual.html#betaTesting).
 
 # Donate
-Please see the [maual](http://ankidroid.org/manual.html#contributing) for information on donating.
+Please see the [manual](http://ankidroid.org/manual.html#contributing) for information on donating.
 
 # Translate AnkiDroid into your language
 Even if you prefer to use AnkiDroid in English, other people in your country might prefer to use it in their own language. Translating AnkiDroid to your native language means your country's AnkiDroid will grow much faster, leading to better shared decks in your language.
@@ -19,7 +19,11 @@ Translating is easy and fun:
   * Grey bullet=missing, Green bullet=done
   * Terms like "%s", "%1$d" are placeholders for strings or numbers which will be filled later by AnkiDroid. They must not be changed, e.g. reversed ("1%d2") or filled with spaces ("% s").
 
-For each grey bullet, translate the English text to your language. For terms like "fact" or "leech", see how they are translated in Anki Desktop. If you don't have Anki on any computer, see [here](https://translations.launchpad.net/anki/trunk/+pots/ankiqt).
+For each grey bullet, translate the English text to your language.
+
+**Tip:**
+
+Many terms such as "note" or "leech" and some other messages should be consistent with Anki Desktop. You can copy the translations from Anki Desktop via it's [Launchpad page](http://bazaar.launchpad.net/~resolve/anki/master/files/head:/anki/). Click on a _language code_.po file (e.g. "ja.po" for Japanese) to view a single language, or click "view revision"->"download tarball" to download all the languages at once.
 
 ## Logic of the separation in different files
 
@@ -56,7 +60,7 @@ Then compile the manual as follows:
 
 The preferred method of contributing to the documentation is to fork the `ankidroiddocs` project on github, and send a pull request with your additions in the usual way. However, if you don't know how to use github, you can simply download the "manual.txt" file and send it to a project member or the Google Group.
 
-To create a translation of the manual, please make a copy of "manual.txt" and add "-LANUGAGE\_CODE". For example for Italian submit a translated file called "manual-it.txt" based on the original source file.
+To create a translation of the manual, please make a copy of "manual.txt" and add "-LANUGAGE\_CODE" ([list of ISO\_639-1 language codes](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)). For example for Italian submit a translated file called "manual-it.txt" based on the original source file.
 
 Translations should be periodically updated to reflect any changes in the original manual. Details of all changes can be found in the [list of commits on github](https://github.com/ankidroid/ankidroiddocs/commits/master/).
 
@@ -80,7 +84,6 @@ To take screenshots for several languages, you can switch the AnkiDroid UI langu
   * Send us your ManualTesting results about the alphas/betas.
   * **Blog** about AnkiDroid and spread the word :-)
   * Follow us on [Twitter](https://twitter.com/#!/AnkiDroid) and [Facebook](http://www.facebook.com/AnkiDroid).
-  * Sort the crash reports with **[AnkiDroidTriage](AnkiDroidTriage.md)**.
   * Here is a **[list of tasks](http://code.google.com/p/ankidroid/issues/list?q=label:Nondeveloper)** that can be done by people who can't code.
 
 
@@ -162,9 +165,12 @@ On Ubuntu Linux:<br>
 </li><li>Perform the same review sequence on both at the same time.<br>
 </li><li>Copy the modified decks for comparizon.<br>
 </li><li>Run:<br>
-<pre><code>echo .dump | sqlite3 desktop_collection.anki2 &gt; desktop.dump<br>
-echo .dump | sqlite3 android_collection.anki2 &gt; android.dump<br>
-diff desktop.dump android.dump<br>
+<pre><code>echo .dump | sqlite3 desktop_collection.anki2 &gt; desktop.dump
+<br>
+echo .dump | sqlite3 android_collection.anki2 &gt; android.dump
+<br>
+diff desktop.dump android.dump
+<br>
 </code></pre>
 </li><li>Check that times are not too different, and check for any other difference.</li></ul>
 
@@ -180,10 +186,6 @@ In addition to <a href='http://code.google.com/p/ankidroid/issues'>bugs and enha
 <h2>Alternative markets</h2>
 </li><li>Check whether the versions are AnkiDroid's latest release. If not, contact the person responsible for this Market.<br>
 </li><li>Look for new alternative markets (especially in non-English languages) and upload there (please update the Wiki then).</li></ul>
-
-<h1>Development cycle</h1>
-
-<a href='http://ankidroid.googlecode.com/files/ankidroid-dev-cycle.png'><img src='http://ankidroid.googlecode.com/files/ankidroid-dev-cycle.png' /></a>
 
 <h1>How to sponsor development</h1>
 
@@ -205,41 +207,18 @@ Summary of the workflow:<br>
 <a href='http://i.stack.imgur.com/EdSXK.png'><img src='http://i.stack.imgur.com/EdSXK.png' /></a>
 
 
-<h1>Modifying the AnkiDroid-triage tool</h1>
-
-Note: This paragraph describes how to modify to triage tool. Most developers do not need to bother with this.<br>
+<h1>Crash reporting system</h1>
+Prior to AnkiDroid version 2.4, crash reports were collected by an app we called "Triage", and reports were publicly viewable at <a href='http://ankidroid-triage.appspot.com'>http://ankidroid-triage.appspot.com</a>. However this tool had a number of shortcomings, and from version 2.4 we now use the <a href='https://github.com/ACRA/acra'>Acra</a> library to send the crash reports to our private server which is running Acralyzer.<br>
 <br>
-The database can be read/modified here if Kostas has given you the rights: <a href='https://appengine.google.com/dashboard?&app_id=ankidroid-triage'>Main page</a> <a href='https://appengine.google.com/datastore/explorer?submitted=1&app_id=ankidroid-triage&viewby=gql&query=SELECT+*+FROM+CrashReport+ORDER+BY+crashTime+DESC&namespace=&options=Run+Query'>Recent crashes</a> <a href='https://appengine.google.com/datastore/explorer?submitted=1&app_id=ankidroid-triage&viewby=gql&query=SELECT+*+FROM+Feedback+ORDER+BY+sendTime+DESC&namespace=&options=Run+Query'>Feedback</a>
-
-Anyone can download and contribute to the source of AnkiDroid-triage, which is at <a href='https://github.com/iniju/ankidroid-triage'>https://github.com/iniju/ankidroid-triage</a>
-
-<h2>Testing AnkiDroid-triage on Ubuntu 2010.10</h2>
-
-Google AppEngine needs Python 2.5 and Ubuntu 2010.10's stock Python 2.6.6 won't do so <a href='http://www.python.org/download/releases/2.5.5/'>go download it</a>.<br>
+Crash reports can be viewed <a href='https://ankidroid.org/couchdb/acralyzer/_design/acralyzer/index.html#/reports-browser/ankidroid'>here</a>, however a password is required in order to protect the privacy of our users, since the crash reports can contain logcat and user comments where private information could potentially be revealed.<br>
 <br>
-Install header files for SQLite3: sudo apt-get install libsqlite3-dev<br>
-<br>
-Uncompress the downloaded Python 2.5 archive (for instance as ~/programs/python2.5), enter the directory and run: ./configure"<br>
-<br>
-It should take a few seconds, then run: make<br>
-<br>
-It will take about 30 seconds.<br>
-<br>
-Download <a href='http://www.djangoproject.com/download/1.1.4/tarball/'>Django 1.1.4</a>, unarchive it, and copy its "django" directory to the "Lib" directory of Python 2.5<br>
-<br>
-Download the latest <a href='https://code.google.com/appengine/downloads.html#Google_App_Engine_SDK_for_Python'>AppEngine SDK for Python</a> and unarchive it (for instance as ~/programs/google_appengine).<br>
-<br>
-Fork or download <a href='https://github.com/iniju/ankidroid-triage'>AnkiDroid-triage</a> and put it at the root of AppEngine (for instance ~/programs/google_appengine/ankidroid-triage)<br>
-<br>
-From AppEngine's directory, run: ~/programs/python2.5/python ankidroid-triage<br>
-<br>
-Open a browser to <a href='http://localhost:8080'>http://localhost:8080</a> and you should see something similar to <a href='http://ankidroid-triage.appspot.com'>this</a> except it contains zero crashes.<br>
+Non-core developers wishing to get a stacktrace or logcat for a specific issue should request this in the appropriate thread on the issue tracker, and someone from the AnkiDroid team will post the relevant information. Developers wishing to browse / search through the crash report database can request a password by emailing one of the core developers.<br>
 <br>
 <h1>Markets</h1>
 
 <table><thead><th> <b>Market</b> </th><th> <b>Maintainer</b> </th><th> <b>AnkiDroid Version</b> </th><th> <b>Status</b> </th><th> <b>Downloads</b> </th></thead><tbody>
-<tr><td> <a href='https://play.google.com/store/apps/details?id=com.ichi2.anki'>Google Play</a> </td><td> Nicolas Raoul     </td><td> 2.3.2                    </td><td> Published     </td><td> 1,172,876        </td></tr>
-<tr><td> Amazon AppStore </td><td> Nicolas Raoul     </td><td> 0.5.1                    </td><td> Published     </td><td> 54               </td></tr>
+<tr><td> <a href='https://play.google.com/store/apps/details?id=com.ichi2.anki'>Google Play</a> </td><td> Nicolas Raoul and Tim </td><td> 2.4                      </td><td> Published     </td><td> 1,379,647        </td></tr>
+<tr><td> Amazon AppStore </td><td> Tim               </td><td> 2.4                      </td><td> Published     </td><td> 10,014           </td></tr>
 <tr><td> <a href='http://www.appslib.com/'>AppsLib</a> </td><td> Mike Morrison     </td><td> 2.3.2                    </td><td> Published     </td><td> 1,157 (all versions) </td></tr>
 <tr><td> <a href='http://ankidroid.store.aptoide.com/app/market/com.ichi2.anki/20400107/7588240/AnkiDroid%20Flashcards'>Aptoide</a> </td><td> Nicolas Raoul     </td><td> 2.4alpha7                </td><td> Published     </td><td> 0                </td></tr>
 <tr><td> <a href='http://fastapp.com/~usergen_90ea90105b978ab58d51d0076ecfcb3c'>FastApp</a> </td><td> Mike Morrison     </td><td> Referrer to Google's market </td><td> 0.6 info published; 0.7 info submitted; FastApp appears to be down as of Nov. 2014 </td><td> Unknown          </td></tr>
@@ -253,7 +232,7 @@ Open a browser to <a href='http://localhost:8080'>http://localhost:8080</a> and 
 <tr><td> Ndoo (aka nduao, N多市场) </td><td> Nicolas Raoul     </td><td> <a href='http://www.nduoa.com/apk/detail/234425'>1.1beta21</a> </td><td> Published     </td><td> 13,131           </td></tr>
 <tr><td> <a href='http://www.telefon.de/apps_detail.asp?app_id=86373'>telefon.de</a> </td><td> Nicolas Raoul     </td><td> Facade to Google's market </td><td> Published     </td><td> Can't be known   </td></tr>
 <tr><td> <a href='http://f-droid.org/repository/browse/?fdfilter=ankidroid&fdid=com.ichi2.anki'>F-Droid</a> </td><td> Anyone            </td><td> 2.3.2                    </td><td> Published     </td><td> Can't be known   </td></tr>
-<tr><td> Direct APK download </td><td> Nicolas Raoul     </td><td> all major versions       </td><td> Published     </td><td> Thousands        </td></tr></tbody></table>
+<tr><td> <a href='https://github.com/ankidroid/Anki-Android/releases'>Direct APK download</a> </td><td> Nicolas Raoul and Tim </td><td> all versions             </td><td> Published     </td><td> Thousands        </td></tr></tbody></table>
 
 <h1>Administration</h1>
 
@@ -271,7 +250,7 @@ We are on very friendly terms with other app creators, and some have already re-
 <h1>Contributors</h1>
 
 Many thanks to all of the people and companies who contributed to AnkiDroid! :<br>
-<ul><li>A hundred people are <a href='https://github.com/nicolas-raoul/Anki-Android/network/members'>working on the code</a>, some sending just one patch, some becoming very involved.<br>
+<ul><li>A hundred people are <a href='https://github.com/ankidroid/Anki-Android/graphs/contributors'>working on the code</a>, some sending just one patch, some becoming very involved.<br>
 </li><li>Simplified Chinese translation by / 简体中文版 安智网汉化 <a href='http://goapk.com'>http://goapk.com</a>
 </li><li>Tens of anonymous translation contributors<br>
 </li><li>Hundreds of people are <a href='https://groups.google.com/group/anki-android/members'>participating in the forum</a>
