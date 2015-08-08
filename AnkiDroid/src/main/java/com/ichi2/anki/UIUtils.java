@@ -56,7 +56,7 @@ public class UIUtils {
                 @Override
                 public void onCancelled() {
                 }
-            }, new DeckTask.TaskData(CollectionHelper.getInstance().getCol(context)));
+            });
         }
     }
 }

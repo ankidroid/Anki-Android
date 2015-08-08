@@ -84,8 +84,8 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
 
         col.getSched().reset();     // Reset schedule incase card had previous been loaded
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(getCol(), mSched, null,
-                0));
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
+                new DeckTask.TaskData(null, 0));
 
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
@@ -115,8 +115,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             case R.id.action_mark_card:
                 Timber.i("Reviewer:: Mark button pressed");
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 0));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(mCurrentCard, 0));
                 break;
 
             case R.id.action_replay:
@@ -130,26 +129,22 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             case R.id.action_bury_card:
                 Timber.i("Reviewer:: Bury card button pressed");
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 4));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 4));
                 break;
 
             case R.id.action_bury_note:
                 Timber.i("Reviewer:: Bury note button pressed");
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 0));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 0));
                 break;
 
             case R.id.action_suspend_card:
                 Timber.i("Reviewer:: Suspend card button pressed");
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 1));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 1));
                 break;
 
             case R.id.action_suspend_note:
                 Timber.i("Reviewer:: Suspend note button pressed");
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 2));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 2));
                 break;
 
             case R.id.action_delete:
@@ -282,28 +277,23 @@ public class Reviewer extends AbstractFlashcardViewer {
 	            return true;
 	        }
 	        if (keyPressed == '*') {
-	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 0));
+	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(mCurrentCard, 0));
 	            return true;
 	        }
 	        if (keyPressed == '-') {
-	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 4));
+	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 4));
 	            return true;
 	        }
 	        if (keyPressed == '=') {
-	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 0));
+	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 0));
 	            return true;
 	        }
 	        if (keyPressed == '@') {
-	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 1));
+	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 1));
 	            return true;
 	        }
 	        if (keyPressed == '!') {
-	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 2));
+	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 2));
 	            return true;
 	        }
 	        if (keyPressed == 'r' || keyCode == KeyEvent.KEYCODE_F5) {

@@ -454,7 +454,7 @@ public class CardTemplateEditor extends AnkiActivity {
         private void deleteTemplate(JSONObject tmpl, JSONObject model) {
             CardTemplateEditor activity = ((CardTemplateEditor) getActivity());
             activity.getCol().modSchemaNoCheck();
-            Object [] args = new Object[] {activity.getCol(), model, tmpl};
+            Object [] args = new Object[] {model, tmpl};
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REMOVE_TEMPLATE,
                     activity.mUpdateTemplateHandler,  new DeckTask.TaskData(args));
             activity.dismissAllDialogFragments();
@@ -508,7 +508,7 @@ public class CardTemplateEditor extends AnkiActivity {
                 throw new RuntimeException(e);
             }
             // Add new template to the current model via AsyncTask
-            Object [] args = new Object[] {activity.getCol(), model, newTemplate};
+            Object [] args = new Object[] {model, newTemplate};
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_TEMPLATE,
                     activity.mUpdateTemplateHandler,  new DeckTask.TaskData(args));
             activity.dismissAllDialogFragments();
