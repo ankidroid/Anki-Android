@@ -10,6 +10,10 @@
             android:icon="@drawable/ic_search_black_24dp"
             android:title="@string/card_browser"/>
         <item
+            android:id="@+id/nav_model_browser"
+            android:icon="@drawable/ic_mode_edit_white_24dp"
+            android:title="@string/model_browser"/>
+        <item
             android:id="@+id/nav_stats"
             android:icon="@drawable/ic_equalizer_black_24dp"
             android:title="@string/statistics"/>

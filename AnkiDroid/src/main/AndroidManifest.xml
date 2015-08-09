@@ -164,6 +164,14 @@
                 android:value="com.ichi2.anki.DeckPicker" />
         </activity>
         <activity
+        android:name=".ModelBrowser"
+        android:configChanges="keyboardHidden|orientation|locale|screenSize"
+        android:label="@string/model_browser_label" />
+        <activity
+            android:name=".ModelEditor"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            android:label="@string/model_editor_label" />
+        <activity
             android:name="com.ichi2.anki.Reviewer"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden"

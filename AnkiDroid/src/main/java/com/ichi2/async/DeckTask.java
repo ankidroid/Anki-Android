@@ -105,6 +105,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_CHECK_MEDIA = 38;
     public static final int TASK_TYPE_ADD_TEMPLATE = 39;
     public static final int TASK_TYPE_REMOVE_TEMPLATE = 40;
+    public static final int TASK_TYPE_COUNT_MODELS = 41;
+    public static final int TASK_TYPE_DELETE_MODEL = 42;
 
     /**
      * The most recently started {@link DeckTask} instance.
@@ -333,6 +335,12 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_REMOVE_TEMPLATE:
                 return doInBackgroundRemoveTemplate(params);
+
+            case TASK_TYPE_COUNT_MODELS:
+                return doInBackgroundCountModels(params);
+
+            case TASK_TYPE_DELETE_MODEL:
+                return  doInBackGroundDeleteModel(params);
 
             default:
                 Timber.e("unknown task type: %d", mType);
@@ -1194,6 +1202,67 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
         return new TaskData(true);
     }
+
+
+    /*
+     * Async task for the ModelBrowser Class
+     * Returns an ArrayList of all models alphabetically ordered and the number of notes
+     * associated with each model.
+     *
+     * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
+     */
+    private TaskData doInBackgroundCountModels(TaskData... params){
+        Timber.d("doInBackgroundLoadModels");
+        Collection col = params[0].getCollection();
+
+        ArrayList<JSONObject> models = (ArrayList<JSONObject>) col.getModels().all();
+        ArrayList<Integer> cardCount = new ArrayList<Integer>();
+        Collections.sort(models, new Comparator<JSONObject>() {
+            @Override
+            public int compare(JSONObject a, JSONObject b) {
+                try {
+                    return a.getString("name").compareTo(b.getString("name"));
+                }
+                catch(JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        for (JSONObject n : models) {
+            try {
+                long modID = n.getLong("id");
+                cardCount.add(col.getModels().nids(col.getModels().get(modID)).size());
+            } catch (JSONException e) {
+                Timber.e("doInBackgroundLoadModels :: JSONException");
+                return new TaskData(false);
+            }
+        }
+        Object[] data = new Object[2];
+        data[0] = models;
+        data[1] = cardCount;
+        return (new TaskData(0, data, true));
+    }
+
+
+    /**
+     * Deletes the given model (stored in the long field of TaskData)
+     * and all notes associated with it
+     */
+    private TaskData doInBackGroundDeleteModel(TaskData... params){
+        Timber.d("doInBackGroundDeleteModel");
+        long modID = params[0].getLong();
+        Collection col = params[0].getCollection();
+        try {
+            col.getModels().rem(col.getModels().get(modID));
+        }
+        catch (ConfirmModSchemaException e) {
+            Timber.e("doInBackGroundDeleteModel :: ConfirmModSchemaException");
+            return new TaskData(false);
+        }
+        return new TaskData(true);
+    }
+
 
     /**
      * Listener for the status and result of a {@link DeckTask}.
