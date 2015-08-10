@@ -180,7 +180,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 case CardBrowserContextMenu.CONTEXT_MENU_MARK:
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD,
                             mUpdateCardHandler,
-                            new DeckTask.TaskData(getCol(), getCol().getSched(), getCol().getCard(Long.parseLong(getCards().get(
+                            new DeckTask.TaskData(getCol().getCard(Long.parseLong(getCards().get(
                                     mPositionInCardsList).get("id"))), 0));
                     return;
 
@@ -188,7 +188,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     DeckTask.launchDeckTask(
                             DeckTask.TASK_TYPE_DISMISS_NOTE,
                             mSuspendCardHandler,
-                            new DeckTask.TaskData(getCol(), getCol().getSched(), getCol().getCard(Long.parseLong(getCards().get(
+                            new DeckTask.TaskData(getCol().getCard(Long.parseLong(getCards().get(
                                     mPositionInCardsList).get("id"))), 1));
                     return;
 
@@ -209,7 +209,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                                     Card card = getCol().getCard(Long.parseLong(getCards().get(mPositionInCardsList).get("id")));
                                     deleteNote(card);
                                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDeleteNoteHandler,
-                                                            new DeckTask.TaskData(getCol(), getCol().getSched(), card, 3));
+                                                            new DeckTask.TaskData(card, 3));
                                 }
                             })
                             .build().show();
@@ -705,7 +705,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
             Timber.i("CardBrowser:: CardBrowser: Saving card...");
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
-                    new DeckTask.TaskData(getCol(), getCol().getSched(), sCardBrowserCard, false));
+                    new DeckTask.TaskData(sCardBrowserCard, false));
         } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
             if (mSearchView != null) {
                 mSearchTerms = mSearchView.getQuery().toString();
@@ -817,7 +817,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mCardsAdapter.notifyDataSetChanged();
             // Perform database query to get all card ids / sfld. Shows "filtering cards..." progress message
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SEARCH_CARDS, mSearchCardsHandler, new DeckTask.TaskData(
-                    new Object[] { getCol(), mDeckNames, searchText, ((mOrder != CARD_ORDER_NONE)) }));
+                    new Object[] { mDeckNames, searchText, ((mOrder != CARD_ORDER_NONE)) }));
         }
     }
 
@@ -1079,8 +1079,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 updateList();
                 dismissProgressDialog();
                 // After the initial searchCards query, start rendering the question and answer in the background
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler, new DeckTask.TaskData(
-                        new Object[] { getCol(), mCards, 0, 100 }));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler,
+                        new DeckTask.TaskData(new Object[] { mCards, 0, 100 }));
             } else {
                 // this is a hack -- see DeckTask.launchDeckTask for more info
                 Timber.w("doInBackgroundSearchCards onPostExecute() called but result was null");
@@ -1154,7 +1154,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 int startIdx = listView.getFirstVisiblePosition();
                 int numVisible = listView.getLastVisiblePosition() - startIdx;
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler, new DeckTask.TaskData(
-                        new Object[] { getCol(), getCards(), startIdx - 5 , 2*numVisible + 5}));
+                        new Object[] {getCards(), startIdx - 5 , 2*numVisible + 5}));
             }
         }
     }

@@ -167,7 +167,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             if (oldValue != newValue) {
                                 mOptions.getJSONObject("new").put("order", newValue);
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REORDER, mConfChangeHandler,
-                                        new DeckTask.TaskData(new Object[] { mCol, mOptions }));
+                                        new DeckTask.TaskData(new Object[] { mOptions }));
                             }
                             mOptions.getJSONObject("new").put("order", Integer.parseInt((String) value));
                         } else if (key.equals("newPerDay")) {
@@ -225,7 +225,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             long newConfId = Long.parseLong((String) value);
                             mOptions = mCol.getDecks().getConf(newConfId);
                             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_CHANGE, mConfChangeHandler,
-                                    new DeckTask.TaskData(new Object[] { mCol, mDeck, mOptions }));
+                                    new DeckTask.TaskData(new Object[] { mDeck, mOptions }));
                             // Restart to reflect the new preference values
                             restartActivity();
                         } else if (key.equals("confRename")) {
@@ -236,7 +236,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                         } else if (key.equals("confReset")) {
                             if ((Boolean) value) {
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_RESET, mConfChangeHandler,
-                                        new DeckTask.TaskData(new Object[] { mCol, mOptions }));
+                                        new DeckTask.TaskData(new Object[] { mOptions }));
                             }
                         } else if (key.equals("confAdd")) {
                             String newName = (String) value;
@@ -280,7 +280,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                         } else if (key.equals("confSetSubdecks")) {
                             if ((Boolean) value) {
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_SET_SUBDECKS, mConfChangeHandler,
-                                        new DeckTask.TaskData(new Object[] { mCol, mDeck, mOptions }));
+                                        new DeckTask.TaskData(new Object[] { mDeck, mOptions }));
                             }
                         }
                     }
@@ -406,7 +406,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                     mCol.getDecks().remConf(mOptions.getLong("id"));
                     // Run the CPU intensive re-sort operation in a background thread
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_REMOVE, mConfChangeHandler,
-                            new DeckTask.TaskData(new Object[] { mCol, mOptions }));
+                            new DeckTask.TaskData(new Object[] { mOptions }));
                     mDeck.put("conf", 1);
                 } catch (JSONException e) {
                     throw new RuntimeException(e);

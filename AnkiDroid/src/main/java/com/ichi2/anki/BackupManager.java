@@ -355,11 +355,6 @@ public class BackupManager {
     }
 
 
-    // public static boolean deleteAllBackups() {
-    // return removeDir(getBackupDirectory());
-    // }
-    //
-
     public static boolean removeDir(File dir) {
         if (dir.isDirectory()) {
             File[] files = dir.listFiles();

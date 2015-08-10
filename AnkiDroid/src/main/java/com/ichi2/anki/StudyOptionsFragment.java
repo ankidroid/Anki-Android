@@ -187,14 +187,14 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                             getResources().getString(R.string.rebuild_cram_deck), true);
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, getDeckTaskListener(true),
-                            new DeckTask.TaskData(getCol(), getCol().getDecks().selected(), mFragmented));
+                            new DeckTask.TaskData(mFragmented));
                     return;
                 case R.id.studyoptions_empty_cram:
                     Timber.i("StudyOptionsFragment:: empty cram deck button pressed");
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                             getResources().getString(R.string.empty_cram_deck), false);
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EMPTY_CRAM, getDeckTaskListener(true),
-                            new DeckTask.TaskData(col, col.getDecks().selected(), mFragmented));
+                            new DeckTask.TaskData(mFragmented));
                     return;
                 default:
             }
@@ -502,8 +502,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                         getResources().getString(R.string.rebuild_custom_study_deck), false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, getDeckTaskListener(true),
-                        new DeckTask.TaskData(getCol(), getCol().getDecks().selected(),
-                                mFragmented));
+                        new DeckTask.TaskData(mFragmented));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -610,7 +609,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                             getResources().getString(R.string.rebuild_cram_deck), true);
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, getDeckTaskListener(true),
-                            new DeckTask.TaskData(getCol(), getCol().getDecks().selected(), mFragmented));
+                            new DeckTask.TaskData(mFragmented));
             } else {
                 DeckTask.waitToFinish();
                 refreshInterface(true);
@@ -677,7 +676,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         // Load the deck counts for the deck from Collection asynchronously
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_VALUES_FROM_DECK,
                 getDeckTaskListener(resetDecklist),
-                new DeckTask.TaskData(getCol(), new Object[]{resetSched, mChartView != null}));
+                new DeckTask.TaskData(new Object[]{resetSched, mChartView != null}));
     }
 
 
