@@ -153,4 +153,23 @@
   <string name="tag_editor_add_feedback_existing">기존 태그 \"%1$s\" 선택됨</string>
   <string name="lookup_hint">텍스트 복사 후, 플래시카드의 아무 곳이나 두드려 검색 아이콘 표시</string>
   <string name="add_content_showcase_text">시작하려면 + 버튼을 두드려 새로운 학습물을 추가합니다.\n\n \'도움말\'을 눌러 설명서를 보세요.</string>
+  <plurals name="time_span_seconds">
+    <item quantity="other">%s seconds</item>
+  </plurals>
+  <plurals name="time_span_minutes">
+    <item quantity="other">%s minutes</item>
+  </plurals>
+  <plurals name="time_span_hours">
+    <item quantity="other">%s hours</item>
+  </plurals>
+  <plurals name="time_span_days">
+    <item quantity="other">%s days</item>
+  </plurals>
+  <plurals name="time_span_months">
+    <item quantity="other">%s months</item>
+  </plurals>
+  <plurals name="time_span_years">
+    <item quantity="other">%s years</item>
+  </plurals>
+  <string name="less_than_time">&lt; %s</string>
 </resources>

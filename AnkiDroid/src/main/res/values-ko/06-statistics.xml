@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">오늘 어떠한 오래된 카드도 공부하지 않았습니다.</string>
   <string name="deck_summary_all_decks">모든 카드 묶음</string>
   <string name="stats_select_time_scale">시간 단위 선택</string>
-  <string-array name="next_review_in_s">
-    <item>1초 내에</item>
-    <item>1분에</item>
-    <item>1일 내에</item>
-    <item>하루에</item>
-    <item>1개월 내에</item>
-    <item>1일 내에</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>%s초 내에</item>
-    <item>%s분 내에</item>
-    <item>%s시간 내에</item>
-    <item>%s일 내에</item>
-    <item>%s개월 내에</item>
-    <item>%s년 내에</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>1초 전</item>
-    <item>1분 전</item>
-    <item>1시간 전</item>
-    <item>1일 전</item>
-    <item>1개월 전</item>
-    <item>1년 전</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s초 전</item>
-    <item>%s분 전</item>
-    <item>%s시간 전</item>
-    <item>%s일 전</item>
-    <item>%s개월 전</item>
-    <item>﻿%s년 전</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>일</item>
     <item>주</item>
@@ -153,8 +121,5 @@
   </string-array>
   <plurals name="stats_today_cards">
     <item quantity="other">오늘 &lt;b&gt;%1$d 카드를&lt;/b&gt;에 &lt;b&gt;%2$s&lt;/b&gt; 공부했습니다.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="other">오늘 %1$d 카드를 %2$s 에 공부했습니다.</item>
   </plurals>
 </resources>

@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">Bugün olgun bir kart çalışılmadı.</string>
   <string name="deck_summary_all_decks">Tüm desteler</string>
   <string name="stats_select_time_scale">Zaman ölçeği seçin</string>
-  <string-array name="next_review_in_s">
-    <item>1 saniye sonra</item>
-    <item>1 dakika sonra</item>
-    <item>1 saat sonra</item>
-    <item>1 gün sonra</item>
-    <item>1 ay sonra</item>
-    <item>1 yıl sonra</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>%s saniye sonra</item>
-    <item>%s dakika sonra</item>
-    <item>%s saat sonra</item>
-    <item>%s gün sonra</item>
-    <item>%s ay sonra</item>
-    <item>%s yıl sonra</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>1 saniye önce</item>
-    <item>1 dakika önce</item>
-    <item>1 saat önce</item>
-    <item>1 gün önce</item>
-    <item>1 ay önce</item>
-    <item>1 yıl önce</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s saniye önce</item>
-    <item>%s dakika önce</item>
-    <item>%s saat önce</item>
-    <item>%s gün önce</item>
-    <item>%s ay önce</item>
-    <item>%s yıl önce</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Gün</item>
     <item>Hafta</item>
@@ -154,9 +122,5 @@
   <plurals name="stats_today_cards">
     <item quantity="one">Bugün &lt;b&gt;%2$s&lt;/b&gt; içinde &lt;b&gt;%1$d kart&lt;/b&gt; çalışıldı.</item>
     <item quantity="other">Bugün &lt;b&gt;%2$s&lt;/b&gt; içinde &lt;b&gt;%1$d kart&lt;/b&gt; çalışıldı.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Bugün %2$s içinde %1$d kart çalışıldı.</item>
-    <item quantity="other">Bugün %2$s içinde %1$d kart çalışıldı.</item>
   </plurals>
 </resources>

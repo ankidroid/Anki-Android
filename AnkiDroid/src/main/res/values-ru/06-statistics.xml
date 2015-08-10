@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">Сегодня не было изучено ни одной развитой карты.</string>
   <string name="deck_summary_all_decks">Все колоды</string>
   <string name="stats_select_time_scale">выберите временной интервал</string>
-  <string-array name="next_review_in_s">
-    <item>через 1 секунду</item>
-    <item>через 1 минуту</item>
-    <item>в течение 1 часа</item>
-    <item>через 1 день</item>
-    <item>через 1 месяц</item>
-    <item>через 1 год</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>через %s секунд</item>
-    <item>через %s минут</item>
-    <item>через %s ч</item>
-    <item>через %s дн</item>
-    <item>через %s мес</item>
-    <item>через %s год</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>1 секунду назад</item>
-    <item>1 минуту назад</item>
-    <item>1 час назад</item>
-    <item>1 день назад</item>
-    <item>1 месяц назад</item>
-    <item>1 год назад</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s секунд назад</item>
-    <item>%s минут назад</item>
-    <item>%s часов назад</item>
-    <item>%s дней назад</item>
-    <item>%s месяцев назад</item>
-    <item>%s лет назад</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Дни</item>
     <item>Недель</item>
@@ -155,10 +123,5 @@
     <item quantity="one">Сегодня выучена &lt;b&gt;%1$d карта&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;.</item>
     <item quantity="few">Сегодня выучены &lt;b&gt;%1$d карты&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;.</item>
     <item quantity="other">Сегодня выучены &lt;b&gt;%1$d карт&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Сегодня выучена %1$d карта за %2$s.</item>
-    <item quantity="few">Сегодня выучены %1$d карты за %2$s.</item>
-    <item quantity="other">Сегодня выучены %1$d карт за %2$s.</item>
   </plurals>
 </resources>

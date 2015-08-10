@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">Inga mogna kort studerades idag.</string>
   <string name="deck_summary_all_decks">Alla kortlekar</string>
   <string name="stats_select_time_scale">Välj tidsram</string>
-  <string-array name="next_review_in_s">
-    <item>om 1 sekund</item>
-    <item>om 1 minut</item>
-    <item>om 1 timme</item>
-    <item>om 1 dag</item>
-    <item>om 1 månad</item>
-    <item>om 1 år</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>om %s sekunder</item>
-    <item>om %s minuter</item>
-    <item>om %s timmar</item>
-    <item>om %s dagar</item>
-    <item>om %s månader</item>
-    <item>om %s år</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>1 sekund innan</item>
-    <item>1 minut innan</item>
-    <item>1 timme innan</item>
-    <item>1 dag innan</item>
-    <item>1 månad innan</item>
-    <item>1 år innan</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s sekunder innan</item>
-    <item>%s minuter innan</item>
-    <item>%s timmar innan</item>
-    <item>%s dagar innan</item>
-    <item>%s månader innan</item>
-    <item>%s år innan</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Dagar</item>
     <item>Veckor</item>
@@ -154,9 +122,5 @@
   <plurals name="stats_today_cards">
     <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Studied %1$d card in %2$s today.</item>
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

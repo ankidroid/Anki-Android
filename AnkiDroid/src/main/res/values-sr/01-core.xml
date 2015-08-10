@@ -57,17 +57,17 @@
     <item quantity="many">%1$d cards due (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d мин.</item>
-    <item quantity="few">%d min.</item>
-    <item quantity="many">%d min.</item>
-    <item quantity="other">%d min.</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d минута остало</item>
     <item quantity="few">%d minutes left</item>
     <item quantity="many">%d minutes left</item>
     <item quantity="other">%d minutes left</item>
+  </plurals>
+  <plurals name="studied_cards_today">
+    <item quantity="one">Studied %1$d card in %2$s today</item>
+    <item quantity="few">Studied %1$d cards in %2$s today</item>
+    <item quantity="many">Studied %1$d cards in %2$s today</item>
+    <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
   <string name="type_answer_hint">Унесите одговор</string>
   <string name="show_answer">Прикажи одговор</string>
@@ -107,22 +107,12 @@
   <string name="new_dynamic_deck">Направи филтриран шпил</string>
   <string name="night_mode">Ноћни режим</string>
   <string name="directory_inaccessible">Недоступан каталог AnkiDroid</string>
-  <string-array name="next_review_s">
-    <item>1 секунда</item>
-    <item>1 минут</item>
-    <item>1 час</item>
-    <item>1 дан</item>
-    <item>1 месец</item>
-    <item>1 година</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s секунди</item>
-    <item>%s минута</item>
-    <item>%s часова</item>
-    <item>%s дана</item>
-    <item>%s месеци</item>
-    <item>%s година</item>
-  </string-array>
+  <string name="time_quantity_seconds">%d s</string>
+  <string name="time_quantity_minutes">%d min</string>
+  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_days">%d d</string>
+  <string name="time_quantity_months">%.1f mo</string>
+  <string name="time_quantity_years">%.1f yr</string>
   <string name="later">Касније</string>
   <string name="rebuild_cram_deck">Обнова слагања шпила.\nМолим сачекајте...</string>
   <string name="rebuild_cram_label">Ремонтуј</string>

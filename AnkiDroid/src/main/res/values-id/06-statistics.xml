@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
   <string name="deck_summary_all_decks">Semua dek</string>
   <string name="stats_select_time_scale">Select timescale</string>
-  <string-array name="next_review_in_s">
-    <item>dalam 1 saat</item>
-    <item>dalam 1 minit</item>
-    <item>dalam 1 jam</item>
-    <item>dalam 1 hari</item>
-    <item>dalam 1 bulan</item>
-    <item>dalam 1 tahun</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>dalam %s saat</item>
-    <item>dalam %s minit</item>
-    <item>dalam %s jam</item>
-    <item>dalam %s hari</item>
-    <item>dalam %s bulan</item>
-    <item>dalam %s tahun</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>1 saat sebelum</item>
-    <item>1 minit sebelum</item>
-    <item>1 jam sebelum</item>
-    <item>1 hari sebelum</item>
-    <item>1 bulan sebelum</item>
-    <item>1 tahun sebelum</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s saat sebelum</item>
-    <item>%s minit sebelum</item>
-    <item>%s jam sebelum</item>
-    <item>%s hari sebelum</item>
-    <item>%s bulan sebelum</item>
-    <item>%s tahun sebelum</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Days</item>
     <item>Weeks</item>
@@ -153,8 +121,5 @@
   </string-array>
   <plurals name="stats_today_cards">
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

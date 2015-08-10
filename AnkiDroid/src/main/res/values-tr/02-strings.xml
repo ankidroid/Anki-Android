@@ -156,4 +156,29 @@
   <string name="tag_editor_add_feedback_existing">Varolan bir etiketi seçtiniz: \"%1$s\"</string>
   <string name="lookup_hint">Metni kopyaladıktan sonra, arama simgesini göstermek için bilgi kartının üzerine dokunun</string>
   <string name="add_content_showcase_text">Başlamak için, çalışacak yeni birşeyler eklemeye + düğmesine dokunun.\n\nKılavuzu görmek için \"Yardım\"a basın.</string>
+  <plurals name="time_span_seconds">
+    <item quantity="one">%s second</item>
+    <item quantity="other">%s seconds</item>
+  </plurals>
+  <plurals name="time_span_minutes">
+    <item quantity="one">%s minute</item>
+    <item quantity="other">%s minutes</item>
+  </plurals>
+  <plurals name="time_span_hours">
+    <item quantity="one">%s hour</item>
+    <item quantity="other">%s hours</item>
+  </plurals>
+  <plurals name="time_span_days">
+    <item quantity="one">%s day</item>
+    <item quantity="other">%s days</item>
+  </plurals>
+  <plurals name="time_span_months">
+    <item quantity="one">%s month</item>
+    <item quantity="other">%s months</item>
+  </plurals>
+  <plurals name="time_span_years">
+    <item quantity="one">%s year</item>
+    <item quantity="other">%s years</item>
+  </plurals>
+  <string name="less_than_time">&lt; %s</string>
 </resources>

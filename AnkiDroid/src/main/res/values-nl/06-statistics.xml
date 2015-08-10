@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">Geen rijpe kaarten zijn vandaag bestudeerd.</string>
   <string name="deck_summary_all_decks">Alle leersets</string>
   <string name="stats_select_time_scale">Kies tijdschaal</string>
-  <string-array name="next_review_in_s">
-    <item>in 1 seconde</item>
-    <item>in 1 minuut</item>
-    <item>in 1 uur</item>
-    <item>in 1 dag</item>
-    <item>in 1 maand</item>
-    <item>in 1 jaar</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>in %s seconden</item>
-    <item>in %s minuten</item>
-    <item>in %s uur</item>
-    <item>in %s dagen</item>
-    <item>in %s maanden</item>
-    <item>in %s jaar</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>1 seconde eerder</item>
-    <item>1 minuut eerder</item>
-    <item>1 uur eerder</item>
-    <item>1 dag eerder</item>
-    <item>1 maand eerder</item>
-    <item>1 jaar eerder</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s seconden eerder</item>
-    <item>%s minuten eerder</item>
-    <item>%s uren eerder</item>
-    <item>%s dagen eerder</item>
-    <item>%s maanden eerder</item>
-    <item>%s jaar eerder</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Dagen</item>
     <item>Weken</item>
@@ -154,9 +122,5 @@
   <plurals name="stats_today_cards">
     <item quantity="one">Vandaag &lt;b&gt;%1$d kaart gestudeerd&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; .</item>
     <item quantity="other">Vandaag &lt;b&gt;%1$d kaart gestudeerd&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; .</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Vandaag %1$d kaart gestudeerd in %2$s.</item>
-    <item quantity="other">Vandaag %1$d kaarten gestudeerd in %2$s.</item>
   </plurals>
 </resources>

@@ -54,11 +54,11 @@
   <plurals name="deckpicker_title">
     <item quantity="other">%1$d개의 카드 예정 (%2$s)</item>
   </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="other">%d분</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="other">%d분 남음</item>
+  </plurals>
+  <plurals name="studied_cards_today">
+    <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
   <string name="type_answer_hint">정답 입력</string>
   <string name="show_answer">정답 보기</string>
@@ -98,22 +98,12 @@
   <string name="new_dynamic_deck">필터링된 카드 묶음 만들기</string>
   <string name="night_mode">야간 모드</string>
   <string name="directory_inaccessible">AnkiDroid 폴더에 접근할 수 없습니다</string>
-  <string-array name="next_review_s">
-    <item>1초</item>
-    <item>1분</item>
-    <item>1시간</item>
-    <item>1일</item>
-    <item>1개월</item>
-    <item>1년</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s초</item>
-    <item>%s분</item>
-    <item>%s시간</item>
-    <item>%s일</item>
-    <item>%s개월</item>
-    <item>%s년</item>
-  </string-array>
+  <string name="time_quantity_seconds">%d s</string>
+  <string name="time_quantity_minutes">%d min</string>
+  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_days">%d d</string>
+  <string name="time_quantity_months">%.1f mo</string>
+  <string name="time_quantity_years">%.1f yr</string>
   <string name="later">나중에</string>
   <string name="rebuild_cram_deck">벼락치기 덱을 다시 섞는 중입니다.\n잠시만 기다려 주세요...</string>
   <string name="rebuild_cram_label">재생성</string>

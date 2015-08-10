@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
   <string name="deck_summary_all_decks">Alle kortstokker</string>
   <string name="stats_select_time_scale">Select timescale</string>
-  <string-array name="next_review_in_s">
-    <item>om ett sekund</item>
-    <item>om ett minutt</item>
-    <item>om én time</item>
-    <item>om én dag</item>
-    <item>om én måned</item>
-    <item>om ett år</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>om %s sekunder</item>
-    <item>om %s minutter</item>
-    <item>om %s timer</item>
-    <item>om %s dager</item>
-    <item>om %s måneder</item>
-    <item>om %s år</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>For 1 sekund siden</item>
-    <item>For 1 minutt siden</item>
-    <item>For 1 time siden</item>
-    <item>For 1 dag siden</item>
-    <item>For 1 måned siden</item>
-    <item>1 år før</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>For %s sekunder siden</item>
-    <item>For %s minutter siden</item>
-    <item>For %s timer siden</item>
-    <item>For %s dager siden</item>
-    <item>For %s måneder siden</item>
-    <item>For %s år siden</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Dager</item>
     <item>Uker</item>
@@ -154,9 +122,5 @@
   <plurals name="stats_today_cards">
     <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Studied %1$d card in %2$s today.</item>
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

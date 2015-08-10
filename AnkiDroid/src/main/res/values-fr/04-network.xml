@@ -53,7 +53,7 @@
   <string name="login_create_account_message">Vous devez vous connecter à un compte AnkiWeb. Vous pourrez en créer un à la prochaine étape.</string>
   <string name="no_email_client">Aucun client de messagerie disponible</string>
   <string name="username">Adresse électronique</string>
-  <string name="username_repeat">Confirmation de l\'adresse électronique</string>
+  <string name="username_repeat">Confirmation de l’adresse électronique</string>
   <string name="password">Mot de passe</string>
   <string name="password_repeat">Confirmation du mot de passe</string>
   <string name="log_in">Se connecter</string>
@@ -62,7 +62,7 @@
   <string name="sign_up_terms">En cliquant sur <i>s\'inscrire</i>, vous confirmez que vous avez lu et accepté nos <a href="https://ankiweb.net/account/terms">conditions d\'utilisation</a>.</string>
   <string name="logged_as">Connecté en tant que</string>
   <string name="log_out">Se déconnecter</string>
-  <string name="alert_logging_message">Connexion, patientez s\'il vous plaît ...</string>
+  <string name="alert_logging_message">Connexion, patientez s’il vous plaît &#8230;</string>
   <string name="invalid_username_password">Votre adresse électronique ou mot de passe est invalide.</string>
   <string name="reset_password">Réinitialiser le mot de passe</string>
   <string name="downloaddeck_search">Recherche</string>
@@ -81,7 +81,7 @@
   <string name="sync_downloading_media">Téléchargement du média %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Synchronisation complète depuis la version locale</string>
   <string name="sync_log_downloading_message">Synchronisation complète depuis la version serveur</string>
-  <string name="sync_log_clocks_unsynchronized">L\'heure sur votre appareil est incorrecte de %1$d secondes %2$s; La synchronisation requiert que votre horloge et le fuseau horaire soient définis correctement afin d\'éviter les erreurs. Veuillez vous assurer que les date, heure et fuseau horaire sur votre appareil sont correctement réglés, puis resynchronisez.</string>
+  <string name="sync_log_clocks_unsynchronized">L’heure sur votre appareil est incorrecte de %1$d secondes %2$s; La synchronisation requiert que votre horloge et le fuseau horaire soient définis correctement afin d’éviter les erreurs. Veuillez vous assurer que les date, heure et fuseau horaire sur votre appareil sont correctement réglés, puis resynchronisez.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, le fuseau horaire de l\'appareil est peut-être erroné</string>
   <string name="sync_log_clocks_unsynchronized_date">, la date de l\'appareil est peut-être erronée</string>
   <string name="sync_conflict_title">Conflit de synchronisation</string>
@@ -90,15 +90,15 @@
   <string name="sync_log_error_specific">Erreur de synchronisation, type:%1$s, message:%2$s</string>
   <string name="sync_corrupt_database">Votre base de données est corrompue. Veuillez la réparer avant de tenter à nouveau de synchroniser.\n\nVoir %s pour plus d\'informations sur la réparation de votre base de données.</string>
   <string name="sync_too_busy">Serveur trop occupé. Réessayez plus tard.</string>
-  <string name="sync_remote_db_error">La base de données téléchargée est corrompue. Merci d\'essayer de nouveau.</string>
+  <string name="sync_remote_db_error">La base de données téléchargée est corrompue. Merci d’essayer de nouveau.</string>
   <string name="sync_overwrite_error">Votre collection actuelle ne peut pas être écrasée par le fichier téléchargé.</string>
   <string name="sync_connection_error">La connexion a expiré. Vérifiez votre connexion internet, ou peut-être avez-vous un très gros fichier dans votre dossier de médias ?</string>
   <string name="sync_error_409">Seulement un client peut accéder à AnkiWeb à la fois. Si une précédente synchronisation a échoué, veuillez réessayer dans quelques minutes.</string>
-  <string name="sync_write_access_error">Le fichier téléchargé n\'a pas pu être sauvegardé sur la carte SD. Soit votre carte SD est montée en lecture seule soit il n\'y a pas assez d\'espace libre dessus.</string>
+  <string name="sync_write_access_error">Le fichier téléchargé n’a pas pu être sauvegardé sur la carte SD. Soit votre carte SD est montée en lecture seule soit il n’y a pas assez d’espace libre dessus.</string>
   <string name="sync_deletions_message">Synchronisation des suppressions...</string>
   <string name="sync_small_objects_message">Synchronisation des petits objets...</string>
   <string name="sync_finish_message">Fin de la synchronisation...</string>
-  <string name="sync_log_finish_error">Erreur lors de l\'envoi de la commande de finalisation au serveur</string>
+  <string name="sync_log_finish_error">Erreur lors de l’envoi de la commande de finalisation au serveur</string>
   <string name="sync_writing_db">Ecriture des changements dans la base de données...</string>
   <string name="sync_download_chunk">Téléchargement des changements...</string>
   <string name="sync_upload_chunk">Envoi des changements&#8230;</string>
@@ -111,19 +111,19 @@
   <string name="sync_media_success">Médias synchronisés avec succès.</string>
   <string name="sync_media_changes_count">%d modifications de médias à envoyer</string>
   <string name="sync_media_downloaded_count">%d médias téléchargés</string>
-  <string name="sync_sanity_failed">Après la synchronisation, la collection s\'est retrouvée dans un état incohérent. Pour résoudre ce problème, AnkiDroid va forcer une synchronisation complète. Veuillez choisir avec quelle version vous voulez continuer, ou annulez si vous voulez synchroniser plus tard.</string>
-  <string name="sync_media_sanity_failed">La synchronisation des médias est achevée mais le nombre de médias ne correspond pas à celui du serveur. La prochaine synchronisation des médias sera complète afin de corriger d\'éventuelles erreurs.</string>
+  <string name="sync_sanity_failed">Après la synchronisation, la collection s’est retrouvée dans un état incohérent. Pour résoudre ce problème, AnkiDroid va forcer une synchronisation complète. Veuillez choisir avec quelle version vous voulez continuer, ou annulez si vous voulez synchroniser plus tard.</string>
+  <string name="sync_media_sanity_failed">La synchronisation des médias est achevée mais le nombre de médias ne correspond pas à celui du serveur. La prochaine synchronisation des médias sera complète afin de corriger d’éventuelles erreurs.</string>
   <string name="sync_media_error">Erreur pendant la synchronisation des médias.</string>
   <string name="sync_media_unsupported">Les noms de fichiers de média compliqués ne sont gérés ni par Android 2.2 ni par ses versions antérieures. La synchronisation multimédia a été désactivée.</string>
   <string name="register_error">Une erreur s\'est produite. Veuillez réessayer plus tard.</string>
   <string name="register_title">Créer un compte</string>
-  <string name="register_mismatch">Le couple nom d\'utilisateur/mot de passe ne correspond pas ou est vide. Veuillez réessayer.</string>
+  <string name="register_mismatch">Le couple nom d’utilisateur/mot de passe ne correspond pas ou est vide. Veuillez réessayer.</string>
   <string name="registering_message">Compte en cours de création. \nVeuillez patienter...</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Distant</string>
   <string name="force_full_sync_title">Forcer synchronisation complète</string>
   <string name="force_full_sync_summary">La prochaine fois, forcer la synchronisation dans une direction</string>
   <string name="full_sync_confirmation">Une telle modification suppose de ré-envoyer la totalité de la base de données lors de la prochaine synchronisation de la collection. S’il y de plus récentes modifications à partir d’un appareil tiers, qui n’ont pu être synchronisées, celles-ci seront perdues. Continuer ?</string>
-  <string name="full_sync_confirmation_upgrade">En raison d\'un bogue dans la version précédemment installée d\'AnkiDroid, il est recommandé de forcer une synchronisation complète.</string>
+  <string name="full_sync_confirmation_upgrade">En raison d’un bogue dans la version précédemment installée d’AnkiDroid, il est recommandé de forcer une synchronisation complète.</string>
   <string name="sync_error_501_upgrade_required">Veuillez mettre à jour AnkiDroid</string>
 </resources>

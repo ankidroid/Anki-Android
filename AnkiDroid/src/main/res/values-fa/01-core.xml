@@ -54,11 +54,11 @@
   <plurals name="deckpicker_title">
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="other">%d min.</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="other">%d minutes left</item>
+  </plurals>
+  <plurals name="studied_cards_today">
+    <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
   <string name="type_answer_hint">پاسخ را تایپ کنید</string>
   <string name="show_answer">نمایش پاسخ</string>
@@ -98,22 +98,12 @@
   <string name="new_dynamic_deck">ایجاد دسته فیلتر شده</string>
   <string name="night_mode">حالت شب</string>
   <string name="directory_inaccessible">AnkiDroid فهرست غیر قابل دسترس است</string>
-  <string-array name="next_review_s">
-    <item>1 ثانیه</item>
-    <item>1 دقیقه</item>
-    <item>1 ساعت</item>
-    <item>1 روز</item>
-    <item>1 ماه</item>
-    <item>1 سال</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s ثانیه</item>
-    <item>%s دقیقه</item>
-    <item>%s ساعت</item>
-    <item>%s روز</item>
-    <item>%s ماه</item>
-    <item>%s سال</item>
-  </string-array>
+  <string name="time_quantity_seconds">%d s</string>
+  <string name="time_quantity_minutes">%d min</string>
+  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_days">%d d</string>
+  <string name="time_quantity_months">%.1f mo</string>
+  <string name="time_quantity_years">%.1f yr</string>
   <string name="later">بعدا</string>
   <string name="rebuild_cram_deck">درحال بازسازی دسته کارت آزمون.\nلطفا صبر کنید...</string>
   <string name="rebuild_cram_label">بازسازی</string>

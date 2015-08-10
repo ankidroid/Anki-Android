@@ -168,4 +168,53 @@
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
   <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\nPress “Help” to see the manual.</string>
+  <plurals name="time_span_seconds">
+    <item quantity="zero">%s seconds</item>
+    <item quantity="one">%s second</item>
+    <item quantity="two">%s seconds</item>
+    <item quantity="few">%s seconds</item>
+    <item quantity="many">%s seconds</item>
+    <item quantity="other">%s seconds</item>
+  </plurals>
+  <plurals name="time_span_minutes">
+    <item quantity="zero">%s minutes</item>
+    <item quantity="one">%s minute</item>
+    <item quantity="two">%s minutes</item>
+    <item quantity="few">%s minutes</item>
+    <item quantity="many">%s minutes</item>
+    <item quantity="other">%s minutes</item>
+  </plurals>
+  <plurals name="time_span_hours">
+    <item quantity="zero">%s hours</item>
+    <item quantity="one">%s hour</item>
+    <item quantity="two">%s hours</item>
+    <item quantity="few">%s hours</item>
+    <item quantity="many">%s hours</item>
+    <item quantity="other">%s hours</item>
+  </plurals>
+  <plurals name="time_span_days">
+    <item quantity="zero">%s days</item>
+    <item quantity="one">%s day</item>
+    <item quantity="two">%s days</item>
+    <item quantity="few">%s days</item>
+    <item quantity="many">%s days</item>
+    <item quantity="other">%s days</item>
+  </plurals>
+  <plurals name="time_span_months">
+    <item quantity="zero">%s months</item>
+    <item quantity="one">%s month</item>
+    <item quantity="two">%s months</item>
+    <item quantity="few">%s months</item>
+    <item quantity="many">%s months</item>
+    <item quantity="other">%s months</item>
+  </plurals>
+  <plurals name="time_span_years">
+    <item quantity="zero">%s years</item>
+    <item quantity="one">%s year</item>
+    <item quantity="two">%s years</item>
+    <item quantity="few">%s years</item>
+    <item quantity="many">%s years</item>
+    <item quantity="other">%s years</item>
+  </plurals>
+  <string name="less_than_time">&lt; %s</string>
 </resources>

@@ -73,47 +73,15 @@
   <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correctes)</string>
   <string name="stats_today_type_breakdown">Apprentissage : &lt;b&gt;%1$s&lt;/b&gt;, Révision : &lt;b&gt;%2$s&lt;/b&gt;, Réapprentissage : &lt;b&gt;%3$s&lt;/b&gt;, Filtrées : &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Réponses exactes sur les anciennes cartes : %1$d/%2$d (%3$.1f%%)</string>
-  <string name="stats_today_no_mature_cards">Aucune ancienne carte n\'a été étudiée aujourd\'hui.</string>
+  <string name="stats_today_no_mature_cards">Aucune ancienne carte n’a été étudiée aujourd’hui.</string>
   <string name="deck_summary_all_decks">Tous les paquets</string>
-  <string name="stats_select_time_scale">Choisir l\'échelle de temps</string>
-  <string-array name="next_review_in_s">
-    <item>dans 1 seconde</item>
-    <item>dans 1 minute</item>
-    <item>dans 1 h</item>
-    <item>demain</item>
-    <item>dans 1 mois</item>
-    <item>dans 1 an</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>dans %s secondes</item>
-    <item>dans %s minutes</item>
-    <item>dans %s heures</item>
-    <item>dans %s jours</item>
-    <item>dans %s mois</item>
-    <item>dans %s ans</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>1 seconde avant</item>
-    <item>1 minute avant</item>
-    <item>1 heure avant</item>
-    <item>1 jour avant</item>
-    <item>1 mois avant</item>
-    <item>1 an avant</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s secondes avant</item>
-    <item>%s minutes avant</item>
-    <item>%s heures avant</item>
-    <item>%s jours avant</item>
-    <item>%s mois avant</item>
-    <item>%s années avant</item>
-  </string-array>
+  <string name="stats_select_time_scale">Choisir l’échelle de temps</string>
   <string-array name="due_x_axis_title">
     <item>Jours</item>
     <item>semaines</item>
     <item>mois</item>
   </string-array>
-  <string name="stats_today">Aujourd\'hui</string>
+  <string name="stats_today">Aujourd’hui</string>
   <string name="stats_forecast">Prévisions</string>
   <string name="stats_review_count">Nombre de révisions</string>
   <string name="stats_review_time">Temps de révision</string>
@@ -154,9 +122,5 @@
   <plurals name="stats_today_cards">
     <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Aujourd\'hui, %1$d carte a été étudiée en %2$s.</item>
-    <item quantity="other">Aujourd\'hui, %1$d cartes ont été étudiées en %2$s.</item>
   </plurals>
 </resources>

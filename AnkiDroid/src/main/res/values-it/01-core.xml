@@ -55,13 +55,13 @@
     <item quantity="one">%1$d carta da ripetere (%2$s)</item>
     <item quantity="other">%1$d carte da ripetere (%2$s)</item>
   </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d min.</item>
-    <item quantity="other">%d min.</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">Resta %d minuto</item>
     <item quantity="other">Restano %d minuti</item>
+  </plurals>
+  <plurals name="studied_cards_today">
+    <item quantity="one">Studied %1$d card in %2$s today</item>
+    <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
   <string name="type_answer_hint">Digita la risposta</string>
   <string name="show_answer">Mostra la risposta</string>
@@ -101,22 +101,12 @@
   <string name="new_dynamic_deck">Crea mazzo filtrato</string>
   <string name="night_mode">Modalità notturna</string>
   <string name="directory_inaccessible">La directory AnkiDroid è inaccessibile</string>
-  <string-array name="next_review_s">
-    <item>1 secondo</item>
-    <item>1 minuto</item>
-    <item>1 ora</item>
-    <item>1 giorno</item>
-    <item>1 mese</item>
-    <item>1 anno</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s secondi</item>
-    <item>%s minuti</item>
-    <item>%s ore</item>
-    <item>%s giorni</item>
-    <item>%s mesi</item>
-    <item>%s anni</item>
-  </string-array>
+  <string name="time_quantity_seconds">%d s</string>
+  <string name="time_quantity_minutes">%d min</string>
+  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_days">%d d</string>
+  <string name="time_quantity_months">%.1f mo</string>
+  <string name="time_quantity_years">%.1f yr</string>
   <string name="later">Più tardi</string>
   <string name="rebuild_cram_deck">Ricreo mazzo per lo studio focalizzato.\nAttendi...</string>
   <string name="rebuild_cram_label">Ricrea</string>

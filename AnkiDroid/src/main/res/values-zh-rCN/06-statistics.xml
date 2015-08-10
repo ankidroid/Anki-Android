@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">今天未学习熟悉类型的卡牌</string>
   <string name="deck_summary_all_decks">所有牌组</string>
   <string name="stats_select_time_scale">选择时间段</string>
-  <string-array name="next_review_in_s">
-    <item>在 1 秒内</item>
-    <item>在 1 分钟内</item>
-    <item>1小时后</item>
-    <item>1天后</item>
-    <item>1个月后</item>
-    <item>1年后</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>在%s秒内</item>
-    <item>在%s分钟内</item>
-    <item>%s小时后</item>
-    <item>%s天后</item>
-    <item>%s个月后</item>
-    <item>%s年后</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>1 秒前</item>
-    <item>1 分钟前</item>
-    <item>1 小时前</item>
-    <item>1 天前</item>
-    <item>1 个月前</item>
-    <item>1 年前</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s 秒前</item>
-    <item>%s 分钟前</item>
-    <item>%s 小时前</item>
-    <item>%s 天前</item>
-    <item>%s 个月前</item>
-    <item>%s 年前</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>天</item>
     <item>周</item>
@@ -153,8 +121,5 @@
   </string-array>
   <plurals name="stats_today_cards">
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

@@ -159,4 +159,35 @@
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">Po skopiowaniu tekstu, stuknięcie dowolnego miejsca na karcie pokazuje ikonę szukania</string>
   <string name="add_content_showcase_text">Na początek naciśnij +, aby dodać nowy materiał do nauki.\n\n Przycisk \'Pomoc\' wyświetla podręcznik.</string>
+  <plurals name="time_span_seconds">
+    <item quantity="one">%s second</item>
+    <item quantity="few">%s seconds</item>
+    <item quantity="other">%s seconds</item>
+  </plurals>
+  <plurals name="time_span_minutes">
+    <item quantity="one">%s minute</item>
+    <item quantity="few">%s minutes</item>
+    <item quantity="other">%s minutes</item>
+  </plurals>
+  <plurals name="time_span_hours">
+    <item quantity="one">%s hour</item>
+    <item quantity="few">%s hours</item>
+    <item quantity="other">%s hours</item>
+  </plurals>
+  <plurals name="time_span_days">
+    <item quantity="one">%s day</item>
+    <item quantity="few">%s days</item>
+    <item quantity="other">%s days</item>
+  </plurals>
+  <plurals name="time_span_months">
+    <item quantity="one">%s month</item>
+    <item quantity="few">%s months</item>
+    <item quantity="other">%s months</item>
+  </plurals>
+  <plurals name="time_span_years">
+    <item quantity="one">%s year</item>
+    <item quantity="few">%s years</item>
+    <item quantity="other">%s years</item>
+  </plurals>
+  <string name="less_than_time">&lt; %s</string>
 </resources>

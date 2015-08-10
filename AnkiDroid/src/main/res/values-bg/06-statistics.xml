@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
   <string name="deck_summary_all_decks">Всички колоди</string>
   <string name="stats_select_time_scale">Select timescale</string>
-  <string-array name="next_review_in_s">
-    <item>в 1 секунда</item>
-    <item>в 1 минута</item>
-    <item>в 1 час</item>
-    <item>в 1 ден</item>
-    <item>в 1 месец</item>
-    <item>в 1 година</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>%s секунди</item>
-    <item>в %s минути</item>
-    <item>в %s часа</item>
-    <item>в %s дни</item>
-    <item>в %s месеци</item>
-    <item>в %s години</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>Преди 1 секунда</item>
-    <item>Преди 1 минута</item>
-    <item>Преди 1 час</item>
-    <item>Преди 1 ден</item>
-    <item>Преди 1 месец</item>
-    <item>Преди 1 година</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s секунди преди</item>
-    <item>%s минути преди</item>
-    <item>%s часа преди</item>
-    <item>%s дни преди</item>
-    <item>%s месеца преди</item>
-    <item>%s години преди</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Days</item>
     <item>Weeks</item>
@@ -154,9 +122,5 @@
   <plurals name="stats_today_cards">
     <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Studied %1$d card in %2$s today.</item>
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

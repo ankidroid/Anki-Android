@@ -55,13 +55,13 @@
     <item quantity="one">%1$d kart çalışılacak (%2$s)</item>
     <item quantity="other">%1$d kart çalışılacak (%2$s)</item>
   </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d dk.</item>
-    <item quantity="other">%d dk.</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d dakika kaldı</item>
     <item quantity="other">%d dakika kaldı</item>
+  </plurals>
+  <plurals name="studied_cards_today">
+    <item quantity="one">Studied %1$d card in %2$s today</item>
+    <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
   <string name="type_answer_hint">Yanıtı yazın</string>
   <string name="show_answer">Yanıtı Göster</string>
@@ -101,22 +101,12 @@
   <string name="new_dynamic_deck">Filtreli deste oluştur</string>
   <string name="night_mode">Gece modu</string>
   <string name="directory_inaccessible">AnkiDroid dizinine ulaşılamıyor</string>
-  <string-array name="next_review_s">
-    <item>1 saniye</item>
-    <item>1 dakika</item>
-    <item>1 saat</item>
-    <item>1 gün</item>
-    <item>1 ay</item>
-    <item>1 yıl</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s saniye</item>
-    <item>%s dakika</item>
-    <item>%s saat</item>
-    <item>%s gün</item>
-    <item>%s ay</item>
-    <item>%s yıl</item>
-  </string-array>
+  <string name="time_quantity_seconds">%d s</string>
+  <string name="time_quantity_minutes">%d min</string>
+  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_days">%d d</string>
+  <string name="time_quantity_months">%.1f mo</string>
+  <string name="time_quantity_years">%.1f yr</string>
   <string name="later">Daha sonra</string>
   <string name="rebuild_cram_deck">İnekleme destesi yeniden oluşturuluyor.\nLütfen bekleyin...</string>
   <string name="rebuild_cram_label">Yeniden Oluştur</string>

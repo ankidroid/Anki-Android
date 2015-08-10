@@ -55,13 +55,13 @@
     <item quantity="one">%1$d kaart te gaan (%2$s)</item>
     <item quantity="other">%1$d kaarten te gaan (%2$s)</item>
   </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d min.</item>
-    <item quantity="other">%d min.</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minuut over</item>
     <item quantity="other">%d minuten over</item>
+  </plurals>
+  <plurals name="studied_cards_today">
+    <item quantity="one">Studied %1$d card in %2$s today</item>
+    <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
   <string name="type_answer_hint">Antwoord schrijven</string>
   <string name="show_answer">Toon antwoord</string>
@@ -101,22 +101,12 @@
   <string name="new_dynamic_deck">Gefilterde set maken</string>
   <string name="night_mode">Nachtmodus</string>
   <string name="directory_inaccessible">AnkiDroidmap is ontoegankelijk</string>
-  <string-array name="next_review_s">
-    <item>1 seconde</item>
-    <item>1 minuut</item>
-    <item>1 uur</item>
-    <item>1 dag</item>
-    <item>1 maand</item>
-    <item>1 jaar</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s seconden</item>
-    <item>%s minuten</item>
-    <item>%s uren</item>
-    <item>%s dagen</item>
-    <item>%s maanden</item>
-    <item>%s jaren</item>
-  </string-array>
+  <string name="time_quantity_seconds">%d s</string>
+  <string name="time_quantity_minutes">%d min</string>
+  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_days">%d d</string>
+  <string name="time_quantity_months">%.1f mo</string>
+  <string name="time_quantity_years">%.1f yr</string>
   <string name="later">Later</string>
   <string name="rebuild_cram_deck">Stampset wordt opnieuw opgebouwd.\nEven geduld...</string>
   <string name="rebuild_cram_label">Opnieuw opbouwen</string>

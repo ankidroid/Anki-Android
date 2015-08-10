@@ -69,9 +69,9 @@
   <string name="reschedule_card_dialog_message">Replanifier pour révision dans x jours :</string>
   <string name="reschedule_card_dialog_acknowledge">Carte replanifiée</string>
   <string name="answering_error_title">Erreur de la base de données</string>
-  <string name="answering_error_message">Il s’est produit une erreur en écrivant dans la collection. Cela est peut-être lié à une base de données corrompue ou à un espace disque insuffisant.\n\nSi cela arrive souvent, vérifiez la base de données, réparez la collection ou restaurez-la à partir d’une sauvegarde, en allant dans les « options ».\n\nCependant, il peut s\'agir d\'un bug d’AnkiDroid. Signalez-le nous.</string>
+  <string name="answering_error_message">Il s’est produit une erreur en écrivant dans la collection. Cela est peut-être lié à une base de données corrompue ou à un espace disque insuffisant.\n\nSi cela arrive souvent, vérifiez la base de données, réparez la collection ou restaurez-la à partir d’une sauvegarde, en allant dans les « options ».\n\nCependant, il peut s’agir d’un bug d’AnkiDroid. Signalez-le nous.</string>
   <string name="answering_error_report">Signaler les erreurs</string>
-  <string name="repair_deck_dialog">Voulez-vous vraiment essayer de réparer la base de données ?\n\nAvant de commencer, une copie sera créée dans le sous-dossier \'%s\'.</string>
+  <string name="repair_deck_dialog">Voulez-vous vraiment essayer de réparer la base de données ?\n\nAvant de commencer, une copie sera créée dans le sous-dossier « %s ».</string>
   <string name="intent_add_saved_information">Données sauvegardées</string>
   <string name="intent_add_clear_all">Effacer tout</string>
   <string name="intent_aedict_empty">La catégorie \'default\' est vide</string>
@@ -85,11 +85,11 @@
   <string name="custom_study_random">Sélectionner x cartes au hasard dans ce paquet :</string>
   <string name="custom_study_preview">Afficher les nouvelles cartes ajoutées dans les x derniers jours :</string>
   <string name="rebuild_custom_study_deck">Reconstruction du paquet d\'étude personnalisée.\nMerci de patienter&#8230;</string>
-  <string name="import_unpacking">Décompression de l\'archive.\nVeuillez patienter&#8230;</string>
+  <string name="import_unpacking">Décompression de l’archive.\nVeuillez patienter&#8230;</string>
   <string name="importing_collection">Importation de la collection. \nVeuillez patienter&#8230;</string>
   <string name="import_media_count">Importation des fichiers médias %1$d%%\nVeuillez patienter&#8230;</string>
   <string name="import_update_counts">Mise à jour des compteurs des paquets.\nVeuillez patienter&#8230;</string>
-  <string name="import_add_progress">• Décompression de l\'archive %1$s\n• Importation des notes %2$d%%\n• Importation des cartes %3$d%%\n• Nettoyage %4$s</string>
+  <string name="import_add_progress">• Décompression de l’archive %1$s\n• Importation des notes %2$d%%\n• Importation des cartes %3$d%%\n• Nettoyage %4$s</string>
   <string name="sd_card_full_title">Carte SD pleine</string>
   <string name="sd_card_almost_full_title">Carte SD presque pleine</string>
   <string name="restore_backup_title">Restaurer la sauvegarde ?</string>
