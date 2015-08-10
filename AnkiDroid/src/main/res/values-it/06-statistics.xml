@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">Oggi non è stata studiata nessuna carta matura.</string>
   <string name="deck_summary_all_decks">Tutti i mazzi</string>
   <string name="stats_select_time_scale">Seleziona la scala cronologica</string>
-  <string-array name="next_review_in_s">
-    <item>in 1 secondo</item>
-    <item>in 1 minuto</item>
-    <item>in 1 ora</item>
-    <item>in 1 giorno</item>
-    <item>in 1 mese</item>
-    <item>in 1 anno</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>in %s secondi</item>
-    <item>in %s minuti</item>
-    <item>in %s ore</item>
-    <item>in %s giorni</item>
-    <item>in %s mesi</item>
-    <item>in %s anni</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>1 secondo prima</item>
-    <item>1 minuto prima</item>
-    <item>1 ora prima</item>
-    <item>1 giorno prima</item>
-    <item>1 mese prima</item>
-    <item>1 anno prima</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s secondi prima</item>
-    <item>%s minuti prima</item>
-    <item>%s ore prima</item>
-    <item>%s giorni prima</item>
-    <item>%s mesi prima</item>
-    <item>%s anni prima</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Giorni</item>
     <item>Settimane</item>
@@ -154,9 +122,5 @@
   <plurals name="stats_today_cards">
     <item quantity="one">Oggi hai studiato &lt;b&gt;%1$d carta&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt;.</item>
     <item quantity="other">Oggi hai studiato &lt;b&gt;%1$d carte&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt;.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Oggi hai studiato %1$d carta in %2$s.</item>
-    <item quantity="other">Oggi hai studiato %1$d carte in %2$s.</item>
   </plurals>
 </resources>

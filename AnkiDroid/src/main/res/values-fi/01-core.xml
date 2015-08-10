@@ -55,13 +55,13 @@
     <item quantity="one">%1$d card due (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d min.</item>
-    <item quantity="other">%d min.</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minute left</item>
     <item quantity="other">%d minutes left</item>
+  </plurals>
+  <plurals name="studied_cards_today">
+    <item quantity="one">Studied %1$d card in %2$s today</item>
+    <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
   <string name="type_answer_hint">Kirjoita vastaus</string>
   <string name="show_answer">Näytä vastaus</string>
@@ -101,22 +101,12 @@
   <string name="new_dynamic_deck">Uusi suodatettu pakka</string>
   <string name="night_mode">Yötila</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
-  <string-array name="next_review_s">
-    <item>1 sekunti</item>
-    <item>1 minuutti</item>
-    <item>1 tunti</item>
-    <item>1 päivä</item>
-    <item>1 kuukausi</item>
-    <item>1 vuosi</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s sekuntia</item>
-    <item>%s minuuttia</item>
-    <item>%s tuntia</item>
-    <item>%s päivää</item>
-    <item>%s kuukautta</item>
-    <item>%s vuotta</item>
-  </string-array>
+  <string name="time_quantity_seconds">%d s</string>
+  <string name="time_quantity_minutes">%d min</string>
+  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_days">%d d</string>
+  <string name="time_quantity_months">%.1f mo</string>
+  <string name="time_quantity_years">%.1f yr</string>
   <string name="later">Myöhemmin</string>
   <string name="rebuild_cram_deck">Kasataan pänttäyspakkaa&#8230;</string>
   <string name="rebuild_cram_label">Rakenna uudelleen</string>

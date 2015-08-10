@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">Dojrzałe karty nie były dziś pokazywane.</string>
   <string name="deck_summary_all_decks">Wszystkie talie</string>
   <string name="stats_select_time_scale">Wybierz skalę czasową</string>
-  <string-array name="next_review_in_s">
-    <item>za 1 sekundę</item>
-    <item>za 1 minutę</item>
-    <item>za 1 godzinę</item>
-    <item>za 1 dzień</item>
-    <item>za miesiąc</item>
-    <item>za rok</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>za %s sekund(y)</item>
-    <item>za %s minut(y)</item>
-    <item>za %s godzin</item>
-    <item>za %s dni</item>
-    <item>za %s miesięcy</item>
-    <item>za %s lat</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>1 sekundę temu</item>
-    <item>1 minutę temu</item>
-    <item>1 godzinę temu</item>
-    <item>1 dzień temu</item>
-    <item>1 miesiąc temu</item>
-    <item>1 rok temu</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s sekund(y) temu</item>
-    <item>%s minut(y) temu</item>
-    <item>%s godzin(y) temu</item>
-    <item>%s dni temu</item>
-    <item>%s miesiące(y) temu</item>
-    <item>%s lat(a) temu</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Dni</item>
     <item>Tygodnie</item>
@@ -155,10 +123,5 @@
     <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="few">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Studied %1$d card in %2$s today.</item>
-    <item quantity="few">Studied %1$d cards in %2$s today.</item>
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

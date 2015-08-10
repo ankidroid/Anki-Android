@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">Nenhum cartão maduro foi estudado hoje.</string>
   <string name="deck_summary_all_decks">Todos decks</string>
   <string name="stats_select_time_scale">Selecione a escala de tempo</string>
-  <string-array name="next_review_in_s">
-    <item>em 1 segundo</item>
-    <item>em 1 minuto</item>
-    <item>em 1 hora</item>
-    <item>em 1 dia</item>
-    <item>em 1 mês</item>
-    <item>em 1 ano</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>em %s segundos</item>
-    <item>em %s minutos</item>
-    <item>em %s horas</item>
-    <item>em %s dias</item>
-    <item>em %s meses</item>
-    <item>em %s anos</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>1 segundo antes</item>
-    <item>1 minuto antes</item>
-    <item>1 hora antes</item>
-    <item>1 dia antes</item>
-    <item>1 mês antes</item>
-    <item>1 ano antes</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s segundos antes</item>
-    <item>%s minutos antes</item>
-    <item>%s horas antes</item>
-    <item>%s dias antes</item>
-    <item>%s meses antes</item>
-    <item>%s anos antes</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Dias</item>
     <item>Semanas</item>
@@ -154,9 +122,5 @@
   <plurals name="stats_today_cards">
     <item quantity="one">&lt;b&gt;%1$d cartão&lt;/b&gt; estudado em &lt;b&gt;%2$s&lt;/b&gt; hoje.</item>
     <item quantity="other">&lt;b&gt;%1$d cartões&lt;/b&gt; estudados em &lt;b&gt;%2$s&lt;/b&gt; hoje.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">%1$d cartão estudado em %2$s hoje.</item>
-    <item quantity="other">%1$d cartões estudados em %2$s hoje.</item>
   </plurals>
 </resources>

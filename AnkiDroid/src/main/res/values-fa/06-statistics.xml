@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
   <string name="deck_summary_all_decks">تمام دسته ها</string>
   <string name="stats_select_time_scale">Select timescale</string>
-  <string-array name="next_review_in_s">
-    <item>در 1 ثانیه</item>
-    <item>در 1 دقیقه</item>
-    <item>در 1 ساعت</item>
-    <item>در 1 روز</item>
-    <item>در 1 ماه</item>
-    <item>در 1 سال</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>در %s ثانیه</item>
-    <item>در %s دقیقه</item>
-    <item>در %s ساعت</item>
-    <item>در %s روز</item>
-    <item>در %s ماه</item>
-    <item>در %s سال</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>1 ثانیه قبل</item>
-    <item>1 دقیقه قبل</item>
-    <item>1 ساعت قبل</item>
-    <item>1 روز قبل</item>
-    <item>1 ماه قبل</item>
-    <item>1 سال قبل</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s ثانیه قبل</item>
-    <item>%s دقیقه قبل</item>
-    <item>%s ساعت قبل</item>
-    <item>%s روز قبل</item>
-    <item>%s ماه قبل</item>
-    <item>%s سال قبل</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>روز</item>
     <item>هفته</item>
@@ -153,8 +121,5 @@
   </string-array>
   <plurals name="stats_today_cards">
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

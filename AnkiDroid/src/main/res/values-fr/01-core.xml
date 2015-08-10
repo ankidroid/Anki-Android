@@ -55,13 +55,13 @@
     <item quantity="one">%1$d card due (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d min.</item>
-    <item quantity="other">%d min.</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minute left</item>
     <item quantity="other">%d minutes restantes</item>
+  </plurals>
+  <plurals name="studied_cards_today">
+    <item quantity="one">Aujourd’hui, %1$d carte a été étudiée en %2$s</item>
+    <item quantity="other">Aujourd’hui, %1$d cartes ont été étudiées en %2$s</item>
   </plurals>
   <string name="type_answer_hint">Taper la réponse</string>
   <string name="show_answer">Afficher la réponse</string>
@@ -101,22 +101,12 @@
   <string name="new_dynamic_deck">Créer un paquet filtré</string>
   <string name="night_mode">Mode nuit</string>
   <string name="directory_inaccessible">Le répertoire d\'AnkiDroid est inaccessible</string>
-  <string-array name="next_review_s">
-    <item>1 seconde</item>
-    <item>1 minute</item>
-    <item>1 heure</item>
-    <item>1 jour</item>
-    <item>1 mois</item>
-    <item>1 année</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s secondes</item>
-    <item>%s minutes</item>
-    <item>%s heures</item>
-    <item>%s jours</item>
-    <item>%s mois</item>
-    <item>%s années</item>
-  </string-array>
+  <string name="time_quantity_seconds">%d s</string>
+  <string name="time_quantity_minutes">%d min</string>
+  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_days">%d d</string>
+  <string name="time_quantity_months">%.1f mo</string>
+  <string name="time_quantity_years">%.1f yr</string>
   <string name="later">Plus tard</string>
   <string name="rebuild_cram_deck">Reconstruction du paquet de bachotage.\nVeuillez patienter&#8230;</string>
   <string name="rebuild_cram_label">Réparer</string>
@@ -125,8 +115,8 @@
   <string name="custom_study_deck_name">Session d\'étude personnalisée</string>
   <string name="custom_study_deck_exists">Merci de renommer d\'abord le paquet d\'étude personnalisée.</string>
   <string name="studyoptions_congrats_finished">Félicitations ! Vous avez terminé… pour l’instant !</string>
-  <string name="studyoptions_congrats_more_rev">Vous avez atteint votre limite aujourd\'hui, mais il reste des cartes à passer en revue. Vous pouvez augmenter le seuil journalier dans les options.</string>
-  <string name="studyoptions_congrats_more_new">Il reste des nouvelles cartes disponibles, mais la limite journalière a été atteinte. Vous pouvez augmenter cette limite dans les options, mais gardez à l\'esprit que cela augmentera votre charge de travail à court terme.</string>
+  <string name="studyoptions_congrats_more_rev">Vous avez atteint votre limite aujourd’hui, mais il reste des cartes à passer en revue. Vous pouvez augmenter le seuil journalier dans les options.</string>
+  <string name="studyoptions_congrats_more_new">Il reste des nouvelles cartes disponibles, mais la limite journalière a été atteinte. Vous pouvez augmenter cette limite dans les options, mais gardez à l’esprit que cela augmentera votre charge de travail à court terme.</string>
   <string name="studyoptions_congrats_custom">Pour étudier en dehors des horaires normaux, cliquez sur le bouton d\'étude personnalisée ci-dessous.</string>
   <string name="studyoptions_no_cards_due">Aucune carte à relire actuellement.</string>
   <string name="sd_card_not_mounted">Device storage not mounted</string>

@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">Et opiskellut tänään kypsiä kortteja.</string>
   <string name="deck_summary_all_decks">Kaikki pakat</string>
   <string name="stats_select_time_scale">Valitse aikaskaala</string>
-  <string-array name="next_review_in_s">
-    <item>sekunnissa</item>
-    <item>minuutissa</item>
-    <item>tunnin kuluttua</item>
-    <item>päivän kuluttua</item>
-    <item>kuukauden kuluttua</item>
-    <item>vuoden kuluttua</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>%s sekunnissa</item>
-    <item>%s minuutissa</item>
-    <item>%s tunnin kuluttua</item>
-    <item>%s päivän kuluttua</item>
-    <item>%s kuukauden kuluttua</item>
-    <item>%s vuoden kuluttua</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>sekunti aiemmin</item>
-    <item>minuutti aiemmin</item>
-    <item>tunti aiemmin</item>
-    <item>päivä aiemmin</item>
-    <item>kuukausi aiemmin</item>
-    <item>vuosi aiemmin</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s sekuntia aiemmin</item>
-    <item>%s minuuttia aiemmin</item>
-    <item>%s tuntia aiemmin</item>
-    <item>%s päivää aiemmin</item>
-    <item>%s kuukautta aiemmin</item>
-    <item>%s vuotta aiemmin</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Päivät</item>
     <item>Viikot</item>
@@ -154,9 +122,5 @@
   <plurals name="stats_today_cards">
     <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Studied %1$d card in %2$s today.</item>
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

@@ -56,15 +56,15 @@
     <item quantity="few">%1$d cards due (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d min.</item>
-    <item quantity="few">%d min.</item>
-    <item quantity="other">%d min.</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minute left</item>
     <item quantity="few">%d minutes left</item>
     <item quantity="other">%d minutes left</item>
+  </plurals>
+  <plurals name="studied_cards_today">
+    <item quantity="one">Studied %1$d card in %2$s today</item>
+    <item quantity="few">Studied %1$d cards in %2$s today</item>
+    <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
   <string name="type_answer_hint">Napísať odpoveď</string>
   <string name="show_answer">Zobraziť odpoveď</string>
@@ -104,22 +104,12 @@
   <string name="new_dynamic_deck">Vytvoriť filtrovaný balíček</string>
   <string name="night_mode">Nočný režim</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
-  <string-array name="next_review_s">
-    <item>1 sekunda</item>
-    <item>1 minúta</item>
-    <item>1 hodina</item>
-    <item>1 deň</item>
-    <item>1 mesiac</item>
-    <item>1 rok</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s sekúnd</item>
-    <item>%s minút</item>
-    <item>%s hodín</item>
-    <item>%s dní</item>
-    <item>%s mesiacov</item>
-    <item>%s rokov</item>
-  </string-array>
+  <string name="time_quantity_seconds">%d s</string>
+  <string name="time_quantity_minutes">%d min</string>
+  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_days">%d d</string>
+  <string name="time_quantity_months">%.1f mo</string>
+  <string name="time_quantity_years">%.1f yr</string>
   <string name="later">Neskôr</string>
   <string name="rebuild_cram_deck">Obnovujem balíček na drvenie sa.\nProsím počkajte...</string>
   <string name="rebuild_cram_label">Znovu zostaviť</string>

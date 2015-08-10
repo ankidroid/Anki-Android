@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
   <string name="deck_summary_all_decks">كل الرزم</string>
   <string name="stats_select_time_scale">Select timescale</string>
-  <string-array name="next_review_in_s">
-    <item>في ثانية واحدة</item>
-    <item>في دقيقة واحدة</item>
-    <item>في ساعة واحدة</item>
-    <item>في يوم واحد</item>
-    <item>في شهر واحد</item>
-    <item>في سنة واحدة</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>في %s ثانية</item>
-    <item>في %s دقيقة</item>
-    <item>في %s ساعات</item>
-    <item>في %s يوما</item>
-    <item>في %s أشهر</item>
-    <item>في %s سنوات</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>قبل ثانية واحدة</item>
-    <item>قبل دقيقة واحدة</item>
-    <item>قبل ساعة واحدة</item>
-    <item>قبل يوم واحد</item>
-    <item>قبل شهر واحد</item>
-    <item>قبل سنة واحدة</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>قبل %s ثانية</item>
-    <item>قبل %s دقيقة</item>
-    <item>قبل %s ساعة</item>
-    <item>قبل %s يوم</item>
-    <item>قبل %s شهر</item>
-    <item>قبل %s سنوات</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>أيام</item>
     <item>أسابيع</item>
@@ -158,13 +126,5 @@
     <item quantity="few">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="many">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="zero">Studied %1$d cards in %2$s today.</item>
-    <item quantity="one">Studied %1$d card in %2$s today.</item>
-    <item quantity="two">Studied %1$d cards in %2$s today.</item>
-    <item quantity="few">Studied %1$d cards in %2$s today.</item>
-    <item quantity="many">Studied %1$d cards in %2$s today.</item>
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

@@ -59,14 +59,6 @@
     <item quantity="many">%1$d cards due (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="zero">%d min.</item>
-    <item quantity="one">%d min.</item>
-    <item quantity="two">%d min.</item>
-    <item quantity="few">%d min.</item>
-    <item quantity="many">%d min.</item>
-    <item quantity="other">%d min.</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="zero">%d minutes left</item>
     <item quantity="one">%d minute left</item>
@@ -74,6 +66,14 @@
     <item quantity="few">%d minutes left</item>
     <item quantity="many">%d minutes left</item>
     <item quantity="other">%d minutes left</item>
+  </plurals>
+  <plurals name="studied_cards_today">
+    <item quantity="zero">Studied %1$d cards in %2$s today</item>
+    <item quantity="one">Studied %1$d card in %2$s today</item>
+    <item quantity="two">Studied %1$d cards in %2$s today</item>
+    <item quantity="few">Studied %1$d cards in %2$s today</item>
+    <item quantity="many">Studied %1$d cards in %2$s today</item>
+    <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">أظهر الإجابة</string>
@@ -113,22 +113,12 @@
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="night_mode">وضع ليلي</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
-  <string-array name="next_review_s">
-    <item>ثانية واحدة</item>
-    <item>دقيقة واحدة</item>
-    <item>1 ساعة</item>
-    <item>1 يوم</item>
-    <item>1 شهر</item>
-    <item>1 سنة</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s ثانية</item>
-    <item>%s دقيقة</item>
-    <item>ساعات%s</item>
-    <item>أيام%s</item>
-    <item>أشهر%s</item>
-    <item>سنوات%s</item>
-  </string-array>
+  <string name="time_quantity_seconds">%d s</string>
+  <string name="time_quantity_minutes">%d min</string>
+  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_days">%d d</string>
+  <string name="time_quantity_months">%.1f mo</string>
+  <string name="time_quantity_years">%.1f yr</string>
   <string name="later">في وقت لاحق</string>
   <string name="rebuild_cram_deck">إعادة بناء حزمة المراجعة المركزة.\n يرجى الانتظار...</string>
   <string name="rebuild_cram_label">إعادة بناء</string>

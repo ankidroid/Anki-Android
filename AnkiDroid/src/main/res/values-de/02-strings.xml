@@ -156,4 +156,29 @@
   <string name="tag_editor_add_feedback_existing">Existierendes Schlagwort »%1$s« ausgewählt</string>
   <string name="lookup_hint">Nach dem Kopieren des Textes, tippen Sie irgendwo auf der Karteikarte um das Suchsymbol anzuzeigen</string>
   <string name="add_content_showcase_text">Zum Einstieg, berühren Sie die + Schaltfläche um neue Lerninhalte hinzuzufügen.\n\n Drücken Sie auf »Hilfe« um das Handbuch zu lesen.</string>
+  <plurals name="time_span_seconds">
+    <item quantity="one">%s Sekunde</item>
+    <item quantity="other">%s Sekunden</item>
+  </plurals>
+  <plurals name="time_span_minutes">
+    <item quantity="one">%s Minute</item>
+    <item quantity="other">%s Minuten</item>
+  </plurals>
+  <plurals name="time_span_hours">
+    <item quantity="one">%s Stunde</item>
+    <item quantity="other">%s Stunden</item>
+  </plurals>
+  <plurals name="time_span_days">
+    <item quantity="one">%s Tag</item>
+    <item quantity="other">%s Tage</item>
+  </plurals>
+  <plurals name="time_span_months">
+    <item quantity="one">%s Monat</item>
+    <item quantity="other">%s Monate</item>
+  </plurals>
+  <plurals name="time_span_years">
+    <item quantity="one">%s Jahr</item>
+    <item quantity="other">%s Jahre</item>
+  </plurals>
+  <string name="less_than_time">&lt; %s</string>
 </resources>

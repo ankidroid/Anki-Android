@@ -56,15 +56,15 @@
     <item quantity="few">%1$d cards due (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d мин.</item>
-    <item quantity="few">%d мин.</item>
-    <item quantity="other">%d мин.</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d минута осталась</item>
     <item quantity="few">%d минуты остались</item>
     <item quantity="other">%d минут остались</item>
+  </plurals>
+  <plurals name="studied_cards_today">
+    <item quantity="one">Studied %1$d card in %2$s today</item>
+    <item quantity="few">Studied %1$d cards in %2$s today</item>
+    <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
   <string name="type_answer_hint">Напечатайте ответ</string>
   <string name="show_answer">Показать ответ</string>
@@ -104,22 +104,12 @@
   <string name="new_dynamic_deck">Создать фильтрованную колоду</string>
   <string name="night_mode">Ночной режим</string>
   <string name="directory_inaccessible">Недоступен каталог AnkiDroid</string>
-  <string-array name="next_review_s">
-    <item>1 секунда</item>
-    <item>1 минута</item>
-    <item>1 час</item>
-    <item>1 день</item>
-    <item>1 месяц</item>
-    <item>1 год</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s секунд</item>
-    <item>%s минут</item>
-    <item>%s часов</item>
-    <item>%s дней</item>
-    <item>%s месяцев</item>
-    <item>%s лет</item>
-  </string-array>
+  <string name="time_quantity_seconds">%d s</string>
+  <string name="time_quantity_minutes">%d min</string>
+  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_days">%d d</string>
+  <string name="time_quantity_months">%.1f mo</string>
+  <string name="time_quantity_years">%.1f yr</string>
   <string name="later">Позже</string>
   <string name="rebuild_cram_deck">Перестроение колоды для зубрёжки.\nПожалуйста, подождите...</string>
   <string name="rebuild_cram_label">Перестроить</string>

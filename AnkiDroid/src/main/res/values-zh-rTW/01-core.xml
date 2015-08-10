@@ -54,11 +54,11 @@
   <plurals name="deckpicker_title">
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="other">%d min.</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="other">%d minutes left</item>
+  </plurals>
+  <plurals name="studied_cards_today">
+    <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
   <string name="type_answer_hint">輸入答案</string>
   <string name="show_answer">看答案</string>
@@ -98,22 +98,12 @@
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="night_mode">夜間模式</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
-  <string-array name="next_review_s">
-    <item>1秒</item>
-    <item>1分鐘</item>
-    <item>1小時</item>
-    <item>1天</item>
-    <item>1個月</item>
-    <item>1年</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s秒</item>
-    <item>%s分鐘</item>
-    <item>%s小時</item>
-    <item>%s天</item>
-    <item>%s個月</item>
-    <item>%s年</item>
-  </string-array>
+  <string name="time_quantity_seconds">%d s</string>
+  <string name="time_quantity_minutes">%d min</string>
+  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_days">%d d</string>
+  <string name="time_quantity_months">%.1f mo</string>
+  <string name="time_quantity_years">%.1f yr</string>
   <string name="later">晚點</string>
   <string name="rebuild_cram_deck">正在重建填鴨式牌組。\n請稍後...</string>
   <string name="rebuild_cram_label">重建</string>

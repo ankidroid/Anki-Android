@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
   <string name="deck_summary_all_decks">Όλες οι τράπουλες</string>
   <string name="stats_select_time_scale">Select timescale</string>
-  <string-array name="next_review_in_s">
-    <item>σε 1 δευτερόλεπτο</item>
-    <item>σε 1 λεπτό</item>
-    <item>σε 1 ώρα</item>
-    <item>σε 1 ημέρα</item>
-    <item>σε 1 μήνα</item>
-    <item>σε 1 χρόνο</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>σε %s δευτερόλεπτα</item>
-    <item>in %s λεπτά</item>
-    <item>σε %s ώρες</item>
-    <item>σε %s ημέρες</item>
-    <item>σε %s μήνες</item>
-    <item>σε %s χρόνια</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>1 δευτερόλεπτο πριν</item>
-    <item>1 λεπτό πριν</item>
-    <item>1 ώρα πριν</item>
-    <item>1 μέρα πριν</item>
-    <item>1 μήνα πριν</item>
-    <item>1 έτος πριν</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s δευτερόλεπτα πριν</item>
-    <item>%s λεπτά πριν</item>
-    <item>%s ώρες πριν</item>
-    <item>%s μέρες πριν</item>
-    <item>%s μήνες πριν</item>
-    <item>%s έτη πριν</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Ημέρες</item>
     <item>Εβδομάδες</item>
@@ -154,9 +122,5 @@
   <plurals name="stats_today_cards">
     <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Studied %1$d card in %2$s today.</item>
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

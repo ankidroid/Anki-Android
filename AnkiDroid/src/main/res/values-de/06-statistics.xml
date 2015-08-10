@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">Heute wurden keine alten Karten wiederholt.</string>
   <string name="deck_summary_all_decks">Alle Stapel</string>
   <string name="stats_select_time_scale">Zeitrahmen wählen</string>
-  <string-array name="next_review_in_s">
-    <item>in 1 Sekunde</item>
-    <item>in 1 Minute</item>
-    <item>in 1 Stunde</item>
-    <item>in 1 Tag</item>
-    <item>in 1 Monat</item>
-    <item>in 1 Jahr</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>in %s Sekunden</item>
-    <item>in %s Minuten</item>
-    <item>in %s Stunden</item>
-    <item>in %s Tagen</item>
-    <item>in %s Monaten</item>
-    <item>in %s Jahren</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>vor 1 Sekunde</item>
-    <item>vor 1 Minute</item>
-    <item>vor 1 Stunde</item>
-    <item>vor 1 Tag</item>
-    <item>vor 1 Monat</item>
-    <item>vor 1 Jahr</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>vor %s Sekunden</item>
-    <item>vor %s Minuten</item>
-    <item>vor %s Stunden</item>
-    <item>vor %s Tagen</item>
-    <item>vor %s Monaten</item>
-    <item>vor %s Jahren</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Tage</item>
     <item>Wochen</item>
@@ -154,9 +122,5 @@
   <plurals name="stats_today_cards">
     <item quantity="one">Sie haben heute &lt;b&gt;%1$d Karte&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; gelernt.</item>
     <item quantity="other">Sie haben heute &lt;b&gt;%1$d Karten&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; gelernt.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Sie haben heute %1$d Karte in %2$s gelernt.</item>
-    <item quantity="other">Sie haben heute %1$d Karten in %2$s gelernt.</item>
   </plurals>
 </resources>

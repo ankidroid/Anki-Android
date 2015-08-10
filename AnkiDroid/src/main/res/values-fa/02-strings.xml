@@ -153,4 +153,23 @@
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
   <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\nPress “Help” to see the manual.</string>
+  <plurals name="time_span_seconds">
+    <item quantity="other">%s seconds</item>
+  </plurals>
+  <plurals name="time_span_minutes">
+    <item quantity="other">%s minutes</item>
+  </plurals>
+  <plurals name="time_span_hours">
+    <item quantity="other">%s hours</item>
+  </plurals>
+  <plurals name="time_span_days">
+    <item quantity="other">%s days</item>
+  </plurals>
+  <plurals name="time_span_months">
+    <item quantity="other">%s months</item>
+  </plurals>
+  <plurals name="time_span_years">
+    <item quantity="other">%s years</item>
+  </plurals>
+  <string name="less_than_time">&lt; %s</string>
 </resources>

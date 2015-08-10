@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
   <string name="deck_summary_all_decks">Toate pachetele</string>
   <string name="stats_select_time_scale">Select timescale</string>
-  <string-array name="next_review_in_s">
-    <item>într-o secundă</item>
-    <item>într-un minut</item>
-    <item>peste o oră</item>
-    <item>peste o zi</item>
-    <item>într-o lună</item>
-    <item>peste un an</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>în %s secunde</item>
-    <item>in %s minute</item>
-    <item>în ore %s</item>
-    <item>în %s zile</item>
-    <item>în %s luni</item>
-    <item>în %s ani</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>o secundă înainte</item>
-    <item>un minut înainte</item>
-    <item>o oră înainte</item>
-    <item>o zi înainte</item>
-    <item>o lună înainte</item>
-    <item>1 an înainte</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s secunde înainte</item>
-    <item>%s minute înainte</item>
-    <item>%s ore înainte</item>
-    <item>%s de zile înainte</item>
-    <item>%s luni înainte</item>
-    <item>%s ani înainte</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Zile</item>
     <item>Săptămâni</item>
@@ -155,10 +123,5 @@
     <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="few">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Studied %1$d card in %2$s today.</item>
-    <item quantity="few">Studied %1$d cards in %2$s today.</item>
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

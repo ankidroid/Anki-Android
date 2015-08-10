@@ -156,4 +156,29 @@
   <string name="tag_editor_add_feedback_existing">Tag existente \"%1$s\" selecionada</string>
   <string name="lookup_hint">Após copiar o texto, toque em qualquer lugar sobre o flashcard para mostrar o ícone de pesquisa</string>
   <string name="add_content_showcase_text">Para começar, toque o botão + para adicionar um novo material de estudo.\n\n Pressione \'Ajuda\' para ver o manual.</string>
+  <plurals name="time_span_seconds">
+    <item quantity="one">%s second</item>
+    <item quantity="other">%s seconds</item>
+  </plurals>
+  <plurals name="time_span_minutes">
+    <item quantity="one">%s minute</item>
+    <item quantity="other">%s minutes</item>
+  </plurals>
+  <plurals name="time_span_hours">
+    <item quantity="one">%s hour</item>
+    <item quantity="other">%s hours</item>
+  </plurals>
+  <plurals name="time_span_days">
+    <item quantity="one">%s day</item>
+    <item quantity="other">%s days</item>
+  </plurals>
+  <plurals name="time_span_months">
+    <item quantity="one">%s month</item>
+    <item quantity="other">%s months</item>
+  </plurals>
+  <plurals name="time_span_years">
+    <item quantity="one">%s year</item>
+    <item quantity="other">%s years</item>
+  </plurals>
+  <string name="less_than_time">&lt; %s</string>
 </resources>

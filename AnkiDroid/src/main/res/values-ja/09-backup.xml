@@ -46,7 +46,7 @@
   <string name="backup_new_collection">新しいコレクション</string>
   <string name="backup_del_collection">コレクションの削除と新規作成</string>
   <string name="backup_del_collection_question">コレクションを削除して、新しいコレクションを作成しますか？　すべての学習進度とすべてのカードが削除されます！</string>
-  <string name="backup_full_sync_from_server">AnkiWeb側コレクションによる完全同期が完了しました</string>
+  <string name="backup_full_sync_from_server">AnkiWeb側コレクションによる完全同期</string>
   <string name="backup_full_sync_from_server_question">AnkiWebからコレクションを上書きしますか？すべての学習進度と、前回の同期後の情報を削除します！</string>
   <string name="error_handling_title">エラー処理</string>
   <string name="error_handling_options">オプション</string>
@@ -60,7 +60,7 @@
   <string name="backup_restore_no_backups">このデバイス上では、このコレクションをバックアップできません。デスクトップコンピューターにバックアップがある場合には、それをあなたのAnkiDroidフォルダに手動でコピーしてください</string>
   <string name="open_collection_failed_title">コレクションを開けませんでした</string>
   <string name="open_collection_failed_message">データベースを開けませんでした。Ankiシステムのデータベースでないか、または破損しています。\n\n\'オプション\'をタップして、データベースを修復するための方法を選んでください。\n\n破損したコレクションを修復するための詳しい情報についてはこちらをご覧ください：\n%1$s</string>
-  <string name="corrupt_db_message">残念ながら、コレクションが破損しています。\n\n「オプション」をタップして、バックアップからコレクションの復元を行ってください。もしそれで解決しない場合は、データベースを手動で修復するために次の手順を試してください：\n%1$s</string>
+  <string name="corrupt_db_message">コレクションが破損しています。\n\n「オプション」をタップして、バックアップからコレクションの復元を行ってください。もしそれで解決しない場合は、データベースを手動で修復するために次の手順を試してください：\n%1$s</string>
   <string name="access_collection_failed_message">コレクションへのアクセス中にエラーが発生しました。無害なバグによって生じた可能性もありますが、コレクションに問題が発生した可能性もあります。\n\n下の「オプション」ボタンをタップして、「データベースのチェック」か「バックアップから復元」を試してください。このメッセージが引き続き表示される場合は、下記リンク先の記載を参照してバグレポートを送信してください:\n%1$s</string>
   <string name="deck_repair_error">コレクションは修復できませんでした</string>
 </resources>

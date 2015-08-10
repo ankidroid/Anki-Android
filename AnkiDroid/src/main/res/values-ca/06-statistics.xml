@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
   <string name="deck_summary_all_decks">Tots els paquets</string>
   <string name="stats_select_time_scale">Select timescale</string>
-  <string-array name="next_review_in_s">
-    <item>en 1 segon</item>
-    <item>en 1 minut</item>
-    <item>en 1 hora</item>
-    <item>demà</item>
-    <item>en 1 mes</item>
-    <item>en 1 any</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>en %s segons</item>
-    <item>en %s minuts</item>
-    <item>en %s hores</item>
-    <item>en %s dies</item>
-    <item>en %s mesos</item>
-    <item>en %s anys</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>Fa un segon</item>
-    <item>fa 1 minut</item>
-    <item>fa 1 hora</item>
-    <item>1 dia abans</item>
-    <item>1 mes abans</item>
-    <item>1 any abans</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s segons abans</item>
-    <item>%s minuts abans de</item>
-    <item>%s hores abans de</item>
-    <item>%s dies abans</item>
-    <item>%s mesos abans</item>
-    <item>%s anys abans</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Dies</item>
     <item>Setmanes</item>
@@ -154,9 +122,5 @@
   <plurals name="stats_today_cards">
     <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Studied %1$d card in %2$s today.</item>
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

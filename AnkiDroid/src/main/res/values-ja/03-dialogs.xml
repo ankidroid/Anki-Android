@@ -44,10 +44,10 @@
   <string name="check_db_acknowledge">データベースのチェックが完了しました</string>
   <string name="check_db_acknowledge_shrunk">データベースがチェックされ、最適化されました。\n 最適化後 %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">単語帳を削除</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
+  <string name="delete_deck_default_deck">このデフォルト単語帳は削除できません</string>
   <string name="delete_deck_title">単語帳を削除</string>
   <plurals name="delete_deck_message">
-    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="other">%1$s内のすべてのカードを削除しますか？　%2$d枚のカードが含まれています</item>
   </plurals>
   <string name="delete_cram_deck_message"> %s のすべてのカードを元の単語帳に戻してもよろしいですか？</string>
   <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>

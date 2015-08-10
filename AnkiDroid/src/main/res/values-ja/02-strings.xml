@@ -154,4 +154,23 @@
   <string name="tag_editor_add_feedback_existing">既存のタグ「%1$s」が選択されました</string>
   <string name="lookup_hint">文字列をコピーした後、カード内でタップすると、検索辞書アイコンが表示されます</string>
   <string name="add_content_showcase_text">開始する場合は、「＋」ボタンをタップして新しい学習データを追加してください。\n\n マニュアルを見る場合は、「ヘルプ」を押してください。</string>
+  <plurals name="time_span_seconds">
+    <item quantity="other">%s秒</item>
+  </plurals>
+  <plurals name="time_span_minutes">
+    <item quantity="other">%s分</item>
+  </plurals>
+  <plurals name="time_span_hours">
+    <item quantity="other">%s時間</item>
+  </plurals>
+  <plurals name="time_span_days">
+    <item quantity="other">%s日間</item>
+  </plurals>
+  <plurals name="time_span_months">
+    <item quantity="other">%sヶ月</item>
+  </plurals>
+  <plurals name="time_span_years">
+    <item quantity="other">%s年</item>
+  </plurals>
+  <string name="less_than_time">&lt; %s</string>
 </resources>

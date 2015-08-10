@@ -1099,15 +1099,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                note type could have lead to the card being deleted */
             if (data!=null && data.hasExtra("reloadRequired")) {
                 getCol().getSched().reset();
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, null, 0));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
+                        new DeckTask.TaskData(null, 0));
             }
 
             if (resultCode == RESULT_OK) {
                 // content of note was changed so update the note and current card
                 Timber.i("AbstractFlashcardViewer:: Saving card...");
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, true));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
+                        new DeckTask.TaskData(mCurrentCard, true));
             } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
                 // nothing was changed by the note editor so just redraw the card
                 fillFlashcard();
@@ -1189,7 +1189,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mProgressDialog = StyledProgressDialog.show(AbstractFlashcardViewer.this, "",
                         getResources().getString(R.string.saving_changes), false);
             }
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mAnswerCardHandler, new DeckTask.TaskData(getCol(), mSched));
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mAnswerCardHandler);
         }
     }
 
@@ -1272,7 +1272,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     public void onPositive(MaterialDialog dialog) {
                         Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler,
-                                new DeckTask.TaskData(getCol(), mSched, mCurrentCard, 3));
+                                new DeckTask.TaskData(mCurrentCard, 3));
                     }
                 })
                 .build().show();
@@ -1343,8 +1343,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Sound.stopSounds();
         mCurrentEase = ease;
 
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
-                getCol(), mSched, mCurrentCard, mCurrentEase));
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
+                new DeckTask.TaskData(mCurrentCard, mCurrentEase));
     }
 
 
@@ -2465,27 +2465,27 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 editCard();
                 break;
             case GESTURE_MARK:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 0));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler,
+                        new DeckTask.TaskData(mCurrentCard, 0));
                 break;
             case GESTURE_LOOKUP:
                 lookUpOrSelectText();
                 break;
             case GESTURE_BURY_CARD:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 4));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler,
+                        new DeckTask.TaskData(mCurrentCard, 4));
                 break;
             case GESTURE_BURY_NOTE:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 0));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler,
+                        new DeckTask.TaskData(mCurrentCard, 0));
                 break;
             case GESTURE_SUSPEND_CARD:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 1));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler,
+                        new DeckTask.TaskData(mCurrentCard, 1));
                 break;
             case GESTURE_SUSPEND_NOTE:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        getCol(), mSched, mCurrentCard, 2));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler,
+                        new DeckTask.TaskData(mCurrentCard, 2));
                 break;
             case GESTURE_DELETE:
                 showDeleteNoteDialog();

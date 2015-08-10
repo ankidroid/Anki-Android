@@ -46,7 +46,7 @@
   <string name="statistics_suspended">保留＋延期</string>
   <string name="statistics_relearn">再学習</string>
   <string name="statistics_learn">基本学習（新規カードの学習を含む）</string>
-  <string name="statistics_cram">フィルター単語帳</string>
+  <string name="statistics_cram">カスタム学習</string>
   <string name="stats_cards">枚数</string>
   <string name="stats_cards_intervals">次の復習予定日が ～後のカード</string>
   <string name="stats_cumulative_cards">累積枚数 〔折れ線グラフ〕</string>
@@ -71,43 +71,11 @@
   <string name="stats_answer_type">回答の種類</string>
   <string name="stats_today_again_count">忘却回数: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(正解率: &lt;b&gt;%.1f%%&lt;/b&gt;)</string>
-  <string name="stats_today_type_breakdown">基本学習: &lt;b&gt;%1$s&lt;/b&gt;枚、復習: &lt;b&gt;%2$s&lt;/b&gt;枚、再学習: &lt;b&gt;%3$s&lt;/b&gt;枚、\nフィルター単語帳: &lt;b&gt;%4$s&lt;/b&gt;枚</string>
+  <string name="stats_today_type_breakdown">基本学習: &lt;b&gt;%1$s&lt;/b&gt;枚、復習: &lt;b&gt;%2$s&lt;/b&gt;枚、再学習: &lt;b&gt;%3$s&lt;/b&gt;枚、\nカスタム学習: &lt;b&gt;%4$s&lt;/b&gt;枚</string>
   <string name="stats_today_mature_cards">熟知な復習カードの正解: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">熟知な復習カードは学習していません。</string>
   <string name="deck_summary_all_decks">すべての単語帳</string>
   <string name="stats_select_time_scale">期間を選択</string>
-  <string-array name="next_review_in_s">
-    <item>1秒で内</item>
-    <item>1分内</item>
-    <item>1時間で</item>
-    <item>1日後</item>
-    <item>1ヶ月後</item>
-    <item>1年後</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>%s秒内</item>
-    <item>%s分内</item>
-    <item>%s時間後</item>
-    <item>%s日後</item>
-    <item>%sヶ月後</item>
-    <item>%s年後</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>1秒前</item>
-    <item>1分前</item>
-    <item>1時間前</item>
-    <item>1日前</item>
-    <item>1ヶ月前</item>
-    <item>1年前</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s秒前</item>
-    <item>%s分前</item>
-    <item>%s時間前</item>
-    <item>%s日前</item>
-    <item>%sヶ月前</item>
-    <item>%s年前</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>日</item>
     <item>週</item>
@@ -153,8 +121,5 @@
   </string-array>
   <plurals name="stats_today_cards">
     <item quantity="other">今日は &lt;b&gt;%1$d枚&lt;/b&gt; のカードを &lt;b&gt;%2$s&lt;/b&gt; で学習しています</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="other">今日は%1$d枚のカードを%2$sで学習しています</item>
   </plurals>
 </resources>

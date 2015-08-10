@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">Ниједна развијена карта данас није научена.</string>
   <string name="deck_summary_all_decks">Сви шпилови</string>
   <string name="stats_select_time_scale">Изаберите временски рок</string>
-  <string-array name="next_review_in_s">
-    <item>кроз 1 секунд</item>
-    <item>кроз 1 минут</item>
-    <item>у току 1 часа</item>
-    <item>кроз 1 дан</item>
-    <item>кроз 1 месец</item>
-    <item>кроз 1 годину</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>кроз %s секунди</item>
-    <item>кроз %s минута</item>
-    <item>кроз %s часова</item>
-    <item>кроз %s дана</item>
-    <item>кроз %s месеци</item>
-    <item>кроз %s година</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>1 секунд раније</item>
-    <item>1 минут раније</item>
-    <item>1 час раније</item>
-    <item>1 дан раније</item>
-    <item>1 месец раније</item>
-    <item>1 годину раније</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s секунди раније</item>
-    <item>%s минута раније</item>
-    <item>%s часова раније</item>
-    <item>%s дана раније</item>
-    <item>%s месеци раније</item>
-    <item>%s година раније</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Дани</item>
     <item>Недеље</item>
@@ -156,11 +124,5 @@
     <item quantity="few">Проучено &lt;b&gt;%1$d карата &lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt; данас.</item>
     <item quantity="many">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Проучено %1$d карте за %2$s данас.</item>
-    <item quantity="few">Проучено %1$d карата за %2$s данас.</item>
-    <item quantity="many">Studied %1$d cards in %2$s today.</item>
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

@@ -69,7 +69,6 @@
     <string name="undo_action_delete">delete note</string>
     <string name="undo_action_mark">mark note</string>
     <string name="unbury">Unbury</string>
-    <string name="finish_operation">Finishing previous operation (most likely backup creation)…</string>
     <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
     <string name="menu_add">Add</string>
     <string name="menu_add_note">Add note</string>
@@ -94,7 +93,7 @@
         The time_quantities are units of time. They are used without
         plurals or dots.
         s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be tranlated, at least not for languages using the Latin
+        not be translated, at least not for languages using the Latin
         alphabet.
     -->
     <string name="time_quantity_seconds">%d s</string>

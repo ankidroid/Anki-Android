@@ -616,8 +616,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 mImportPath = intent.getStringExtra("importPath");
             }
             if (colIsOpen() && mImportPath != null) {
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT, mImportAddListener, new TaskData(getCol(),
-                        mImportPath, true));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT, mImportAddListener, new TaskData(mImportPath, true));
                 mImportPath = null;
             }
         }
@@ -1062,7 +1061,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             @Override
             public void onCancelled() {
             }
-        }, new DeckTask.TaskData(getCol(), CollectionHelper.getCollectionPath(this)));
+        });
     }
 
 
@@ -1107,7 +1106,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             @Override
             public void onCancelled() {
             }
-        }, new DeckTask.TaskData(getCol()));
+        });
     }
 
 
@@ -1144,7 +1143,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             @Override
             public void onCancelled() {
             }
-        }, new DeckTask.TaskData(getCol()));
+        });
     }
 
 
@@ -1450,15 +1449,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public void importAdd(String importPath) {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT, mImportAddListener,
-                new TaskData(getCol(), importPath, false));
+                new TaskData(importPath, false));
     }
 
 
     // Callback to import a file -- replacing the existing collection
     @Override
     public void importReplace(String importPath) {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT_REPLACE, mImportReplaceListener, new TaskData(getCol(),
-                importPath));
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT_REPLACE, mImportReplaceListener, new TaskData(importPath));
     }
 
 
@@ -1679,7 +1677,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             public void onCancelled() {
             }
 
-        }, new TaskData(getCol()));
+        });
     }
 
 
@@ -1850,7 +1848,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             @Override
             public void onCancelled() {
             }
-        }, new TaskData(getCol(), mContextMenuDid));
+        }, new TaskData(mContextMenuDid));
     }
 
 

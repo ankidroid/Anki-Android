@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
   <string name="deck_summary_all_decks">Všetky balíčky</string>
   <string name="stats_select_time_scale">Select timescale</string>
-  <string-array name="next_review_in_s">
-    <item>za 1 sekundu</item>
-    <item>za 1 minútu</item>
-    <item>za 1 hodinu</item>
-    <item>za 1 deň</item>
-    <item>za 1 mesiac</item>
-    <item>za 1 rok</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>za %s sekúnd</item>
-    <item>za %s minút</item>
-    <item>za %s hodín</item>
-    <item>za %s dní</item>
-    <item>za %s mesiacov</item>
-    <item>za %s rokov</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>pred 1 sekundou</item>
-    <item>pred 1 minútou</item>
-    <item>pred 1 hodinou</item>
-    <item>pred 1 dňom</item>
-    <item>pred 1 mesiacom</item>
-    <item>pred 1 rokom</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>pred %s sekundami</item>
-    <item>pred %s minútami</item>
-    <item>pred %s hodinami</item>
-    <item>pred %s dňami</item>
-    <item>pred %s mesiacmi</item>
-    <item>pred %s rokmi</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Dni</item>
     <item>Týždne</item>
@@ -155,10 +123,5 @@
     <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="few">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Studied %1$d card in %2$s today.</item>
-    <item quantity="few">Studied %1$d cards in %2$s today.</item>
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

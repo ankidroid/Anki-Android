@@ -55,13 +55,13 @@
     <item quantity="one">%1$d card due (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d min.</item>
-    <item quantity="other">%d min.</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minut kvar</item>
     <item quantity="other">%d minuter kvar</item>
+  </plurals>
+  <plurals name="studied_cards_today">
+    <item quantity="one">Studied %1$d card in %2$s today</item>
+    <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
   <string name="type_answer_hint">Skriv svar</string>
   <string name="show_answer">Visa svar</string>
@@ -101,22 +101,12 @@
   <string name="new_dynamic_deck">Skapa filtrerad kortlek</string>
   <string name="night_mode">Nattläge</string>
   <string name="directory_inaccessible">AnkiDroid-mappen är inte tillgänglig</string>
-  <string-array name="next_review_s">
-    <item>1 sekund</item>
-    <item>1 minut</item>
-    <item>1 timme</item>
-    <item>1 dag</item>
-    <item>1 månad</item>
-    <item>1 år</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s sekunder</item>
-    <item>%s minuter</item>
-    <item>%s timmar</item>
-    <item>%s dagar</item>
-    <item>%s månader</item>
-    <item>%s år</item>
-  </string-array>
+  <string name="time_quantity_seconds">%d s</string>
+  <string name="time_quantity_minutes">%d min</string>
+  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_days">%d d</string>
+  <string name="time_quantity_months">%.1f mo</string>
+  <string name="time_quantity_years">%.1f yr</string>
   <string name="later">Senare</string>
   <string name="rebuild_cram_deck">Återskapar kortlek för råplugg.\nVänligen vänta...</string>
   <string name="rebuild_cram_label">Återskapa</string>

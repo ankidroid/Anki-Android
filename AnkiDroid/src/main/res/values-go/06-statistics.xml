@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">Ni uswahsjanda karta laisida himma daga.</string>
   <string name="deck_summary_all_decks">Allos wikons</string>
   <string name="stats_select_time_scale">Walei ƕeilamikilduþ</string>
-  <string-array name="next_review_in_s">
-    <item>in 1 saikundau</item>
-    <item>in 1 minutau</item>
-    <item>in 1 ƕeilai</item>
-    <item>in 1 daga</item>
-    <item>in 1 menoþ</item>
-    <item>in 1 jera</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>in %s saikundum</item>
-    <item>in %s minutum</item>
-    <item>in %s ƕeilom</item>
-    <item>in %s dagam</item>
-    <item>in %s menoþum</item>
-    <item>in %s jeram</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>faur saikundau 1</item>
-    <item>faur minutau 1</item>
-    <item>faur ƕeilai 1</item>
-    <item>faur daga 1</item>
-    <item>faur menoþ 1</item>
-    <item>faur jera 1</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>faur saikundum %s</item>
-    <item>faur minutum %s</item>
-    <item>faur ƕeilom %s</item>
-    <item>faur dagam %s</item>
-    <item>faur menoþum %s</item>
-    <item>faur jeram %s</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Dagos</item>
     <item>Wikons</item>
@@ -154,9 +122,5 @@
   <plurals name="stats_today_cards">
     <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Studied %1$d card in %2$s today.</item>
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

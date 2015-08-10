@@ -36,8 +36,8 @@
 -->
 <resources>
   <string-array name="error_reporting_choice_labels">
-    <item>Toujours envoyer un rapport d\'erreur</item>
-    <item>Ne jamais envoyer de rapport d\'erreur</item>
+    <item>Toujours envoyer un rapport d’erreur</item>
+    <item>Ne jamais envoyer de rapport d’erreur</item>
     <item>Me demander</item>
   </string-array>
   <string-array name="gestures_labels">
@@ -52,12 +52,12 @@
     <item>Annuler</item>
     <item>Edit note</item>
     <item>Mark note</item>
-    <item>Rechercher l\'expression</item>
+    <item>Rechercher l’expression</item>
     <item>Enterrer la carte</item>
     <item>Suspendre la carte</item>
     <item>Delete note</item>
     <item>Lancer le média</item>
-    <item>Interrompre l\'apprentissage</item>
+    <item>Interrompre l’apprentissage</item>
     <item>Bury note</item>
     <item>Suspend note</item>
   </string-array>
@@ -67,7 +67,7 @@
   </string-array>
   <string-array name="new_order_labels">
     <item>Nouvelles cartes dans un ordre aléatoire</item>
-    <item>Nouvelles cartes dans l\'ordre d\'ajout</item>
+    <item>Nouvelles cartes dans l’ordre d’ajout</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
     <item>Les plus anciennes en premier</item>
@@ -75,8 +75,8 @@
     <item>Intervalles croissants</item>
     <item>Intervalles décroissants</item>
     <item>Les plus échouées</item>
-    <item>L\'ordre d\'ajout</item>
-    <item>Les plus urgentes d\'abord</item>
+    <item>L’ordre d’ajout</item>
+    <item>Les plus urgentes d’abord</item>
     <item>Les dernières ajoutées d’abord</item>
     <item>Relative overdueness</item>
   </string-array>
@@ -99,7 +99,7 @@
     <item>Nouvelles cartes avant les révisions</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>Lorsque aucune police n\'est spécifié sur la carte</item>
+    <item>Lorsque aucune police n’est spécifié sur la carte</item>
     <item>Toujours</item>
   </string-array>
 </resources>

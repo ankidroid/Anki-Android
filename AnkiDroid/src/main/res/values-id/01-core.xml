@@ -54,11 +54,11 @@
   <plurals name="deckpicker_title">
     <item quantity="other">%1$d kartu jatuh tempo (%2$s)</item>
   </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="other">%d menit.</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="other">%d menit tersisa</item>
+  </plurals>
+  <plurals name="studied_cards_today">
+    <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
   <string name="type_answer_hint">Ketik jawaban</string>
   <string name="show_answer">Tampilkan jawaban</string>
@@ -98,22 +98,12 @@
   <string name="new_dynamic_deck">Buat penyaringan dek</string>
   <string name="night_mode">Mode malam</string>
   <string name="directory_inaccessible">AnkiDroid direktori tidak dapat diakses</string>
-  <string-array name="next_review_s">
-    <item>1 detik</item>
-    <item>1 menit</item>
-    <item>1 jam</item>
-    <item>1 hari</item>
-    <item>1 bulan</item>
-    <item>1 tahun</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s detik</item>
-    <item>%s menit</item>
-    <item>%s jam</item>
-    <item>%s hari-hari</item>
-    <item>%s bulan-bulan</item>
-    <item>%s tahun-tahun</item>
-  </string-array>
+  <string name="time_quantity_seconds">%d s</string>
+  <string name="time_quantity_minutes">%d min</string>
+  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_days">%d d</string>
+  <string name="time_quantity_months">%.1f mo</string>
+  <string name="time_quantity_years">%.1f yr</string>
   <string name="later">Nanti</string>
   <string name="rebuild_cram_deck">Bangun kembali dek persiapan</string>
   <string name="rebuild_cram_label">Bangun kembali</string>

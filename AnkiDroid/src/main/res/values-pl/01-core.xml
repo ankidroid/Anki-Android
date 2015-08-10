@@ -56,15 +56,15 @@
     <item quantity="few">%1$d cards due (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d min.</item>
-    <item quantity="few">%d min.</item>
-    <item quantity="other">%d min.</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minute left</item>
     <item quantity="few">%d minutes left</item>
     <item quantity="other">%d minutes left</item>
+  </plurals>
+  <plurals name="studied_cards_today">
+    <item quantity="one">Studied %1$d card in %2$s today</item>
+    <item quantity="few">Studied %1$d cards in %2$s today</item>
+    <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
   <string name="type_answer_hint">Podaj odpowiedź</string>
   <string name="show_answer">Pokaż odpowiedź</string>
@@ -104,22 +104,12 @@
   <string name="new_dynamic_deck">Stwórz filtrowaną talię</string>
   <string name="night_mode">Tryb nocny</string>
   <string name="directory_inaccessible">Katalog AnkiDroid jest niedostępny</string>
-  <string-array name="next_review_s">
-    <item>1 sekunda</item>
-    <item>1 minuta</item>
-    <item>1 godzina</item>
-    <item>1 dzień</item>
-    <item>1 miesiąc</item>
-    <item>1 rok</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s sekund(y)</item>
-    <item>%s minut(y)</item>
-    <item>%s godzin</item>
-    <item>%s dni</item>
-    <item>%s miesięcy</item>
-    <item>%s lat</item>
-  </string-array>
+  <string name="time_quantity_seconds">%d s</string>
+  <string name="time_quantity_minutes">%d min</string>
+  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_days">%d d</string>
+  <string name="time_quantity_months">%.1f mo</string>
+  <string name="time_quantity_years">%.1f yr</string>
   <string name="later">Później</string>
   <string name="rebuild_cram_deck">Przebudowywanie talii.\nProszę czekać...</string>
   <string name="rebuild_cram_label">Odbuduj</string>

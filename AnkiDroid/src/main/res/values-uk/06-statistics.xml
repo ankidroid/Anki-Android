@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
   <string name="deck_summary_all_decks">Всі колоди</string>
   <string name="stats_select_time_scale">Select timescale</string>
-  <string-array name="next_review_in_s">
-    <item>через 1 секунду</item>
-    <item>через 1 хвилину</item>
-    <item>через 1 годину</item>
-    <item>через 1 день</item>
-    <item>через 1 місяць</item>
-    <item>через 1 рік</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>через %s секунд</item>
-    <item>через %s хвилин</item>
-    <item>через %s годин</item>
-    <item>через %s днів</item>
-    <item>через %s місяців</item>
-    <item>через %s років</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>1 спекунда тому</item>
-    <item>1 хвилина тому</item>
-    <item>1 година тому</item>
-    <item>1 день тому</item>
-    <item>1 місяць тому</item>
-    <item>1 рік тому</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s секунд тому</item>
-    <item>%s хвилин тому</item>
-    <item>%s годин тому</item>
-    <item>%s днів тому</item>
-    <item>%s місяців тому</item>
-    <item>%s років тому</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Дні</item>
     <item>Тижні</item>
@@ -155,10 +123,5 @@
     <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="few">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Studied %1$d card in %2$s today.</item>
-    <item quantity="few">Studied %1$d cards in %2$s today.</item>
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

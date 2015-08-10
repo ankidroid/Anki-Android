@@ -50,18 +50,18 @@
   <string name="studyoptions_new_total">Neue Karten gesamt:</string>
   <string name="studyoptions_total_cards">Karten gesamt:</string>
   <string name="studyoptions_eta">Geschätzte Zeit (Min.):</string>
-  <string name="studyoptions_start">Jetzt lernen</string>
+  <string name="studyoptions_start">Lernen</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d Karte fällig (%2$s)</item>
     <item quantity="other">%1$d Karten fällig (%2$s)</item>
   </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d Min.</item>
-    <item quantity="other">%d Min.</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">noch %d Minute</item>
     <item quantity="other">noch %d Minuten</item>
+  </plurals>
+  <plurals name="studied_cards_today">
+    <item quantity="one">Sie haben heute %1$d Karte in %2$s gelernt</item>
+    <item quantity="other">Sie haben heute %1$d Karten in %2$s gelernt</item>
   </plurals>
   <string name="type_answer_hint">Antwort eingeben</string>
   <string name="show_answer">Antwort anzeigen</string>
@@ -101,22 +101,12 @@
   <string name="new_dynamic_deck">Gefilterten Stapel erstellen</string>
   <string name="night_mode">Nachtmodus</string>
   <string name="directory_inaccessible">Auf AnkiDroid-Verzeichnis kann nicht zugegriffen werden</string>
-  <string-array name="next_review_s">
-    <item>1 Sekunde</item>
-    <item>1 Minute</item>
-    <item>1 Stunde</item>
-    <item>1 Tag</item>
-    <item>1 Monat</item>
-    <item>1 Jahr</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s Sekunden</item>
-    <item>%s Minuten</item>
-    <item>%s Stunden</item>
-    <item>%s Tage</item>
-    <item>%s Monate</item>
-    <item>%s Jahre</item>
-  </string-array>
+  <string name="time_quantity_seconds">%d s</string>
+  <string name="time_quantity_minutes">%d min</string>
+  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_days">%d d</string>
+  <string name="time_quantity_months">%.1f Mo</string>
+  <string name="time_quantity_years">%.1f Jr</string>
   <string name="later">Später</string>
   <string name="rebuild_cram_deck">Dynamischer Stapel wird neu aufgebaut&#8230;</string>
   <string name="rebuild_cram_label">Neu aufbauen</string>

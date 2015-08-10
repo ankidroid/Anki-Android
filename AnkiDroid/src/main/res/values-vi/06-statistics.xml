@@ -76,38 +76,6 @@
   <string name="stats_today_no_mature_cards">Không có thẻ trưởng thành nào được học tập ngày hôm nay.</string>
   <string name="deck_summary_all_decks">Tất cả các bài</string>
   <string name="stats_select_time_scale">Chọn mở rộng thời gian</string>
-  <string-array name="next_review_in_s">
-    <item>trong 1 giây</item>
-    <item>trong 1 phút</item>
-    <item>trong 1 giờ</item>
-    <item>trong 1 ngày</item>
-    <item>trong 1 tháng</item>
-    <item>trong 1 năm</item>
-  </string-array>
-  <string-array name="next_review_in_p">
-    <item>trong %s giây</item>
-    <item>trong %s phút</item>
-    <item>trong %s giờ</item>
-    <item>trong %s ngày</item>
-    <item>trong %s tháng</item>
-    <item>trong %s năm</item>
-  </string-array>
-  <string-array name="next_review_before_s">
-    <item>1 giây trước</item>
-    <item>1 phút trước</item>
-    <item>1 giờ trước</item>
-    <item>1 ngày trước</item>
-    <item>1 tháng trước</item>
-    <item>1 năm trước</item>
-  </string-array>
-  <string-array name="next_review_before_p">
-    <item>%s giây trước</item>
-    <item>%s phút trước</item>
-    <item>%s giờ trước </item>
-    <item>%s ngày trước</item>
-    <item>%s tháng trước</item>
-    <item>%s năm trước</item>
-  </string-array>
   <string-array name="due_x_axis_title">
     <item>Ngày</item>
     <item>Tuần</item>
@@ -153,8 +121,5 @@
   </string-array>
   <plurals name="stats_today_cards">
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-  </plurals>
-  <plurals name="stats_today_cards_not_bold">
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>
