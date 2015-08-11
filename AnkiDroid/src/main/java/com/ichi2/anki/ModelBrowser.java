@@ -296,8 +296,8 @@ public class ModelBrowser extends NavigationDrawerActivity {
 
         addModelList.add(String.format(add, basicName));
         addModelList.add(String.format(add, addForwardReverseName));
-        addModelList.add(String.format(add + addForwardOptionalReverseName));
-        addModelList.add(String.format((add + addClozeModelName)));
+        addModelList.add(String.format(add, addForwardOptionalReverseName));
+        addModelList.add(String.format(add, addClozeModelName));
 
         modelAddName.add(basicName);
         modelAddName.add(addForwardReverseName);

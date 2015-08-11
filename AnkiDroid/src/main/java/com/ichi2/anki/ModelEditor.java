@@ -155,7 +155,7 @@ public class ModelEditor extends AnkiActivity{
                 public void confirm() {
                     try {
                         col.modSchema(false);
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_MODEL, mChangeFieldHandler,
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_FIELD, mChangeFieldHandler,
                                 new DeckTask.TaskData(new Object[]{mod, noteFields.getJSONObject(currentPos)}));
                         if (cMenu != null) {
                             cMenu.dismiss();
@@ -421,7 +421,7 @@ public class ModelEditor extends AnkiActivity{
         @Override
         public void onPreExecute() {
             if (mProgressDialog == null) {
-                mProgressDialog = StyledProgressDialog.show(ModelEditor.this, fieldLabels.get(currentPos),
+                mProgressDialog = StyledProgressDialog.show(ModelEditor.this, getResources().getString(R.string.model_editor_changing),
                         getResources().getString(R.string.model_editor_changing), false);
             }
         }
