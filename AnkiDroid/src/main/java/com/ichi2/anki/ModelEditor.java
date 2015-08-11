@@ -421,7 +421,7 @@ public class ModelEditor extends AnkiActivity{
         @Override
         public void onPreExecute() {
             if (mProgressDialog == null) {
-                mProgressDialog = StyledProgressDialog.show(ModelEditor.this, getResources().getString(R.string.model_editor_changing),
+                mProgressDialog = StyledProgressDialog.show(ModelEditor.this, getIntent().getStringExtra("title"),
                         getResources().getString(R.string.model_editor_changing), false);
             }
         }
