@@ -206,7 +206,7 @@ public class ModelEditor extends AnkiActivity{
                                 } else {
                                     try {
                                         col.modSchema(false);
-                                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPOSITION_FIELD, mChangeFieldHandler,
+                                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FIELD, mChangeFieldHandler,
                                                 new DeckTask.TaskData(new Object[]{mod, fieldName}));
                                     } catch (ConfirmModSchemaException e) {
                                         throw new RuntimeException(e);

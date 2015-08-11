@@ -98,6 +98,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_DELETE_MODEL = 42;
     public static final int TASK_TYPE_DELETE_FIELD = 43;
     public static final int TASK_TYPE_REPOSITION_FIELD = 44;
+    public static final int TASK_TYPE_ADD_FIELD = 45;
 
     /**
      * A reference to the application context to use to fetch the current Collection object.
@@ -330,6 +331,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_REPOSITION_FIELD:
                 return doInBackGroundRepositionField(params);
+
+            case TASK_TYPE_ADD_FIELD:
+                return doInBackgroundAddField(params);
 
             default:
                 Timber.e("unknown task type: %d", mType);
