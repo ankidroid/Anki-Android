@@ -333,7 +333,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 return doInBackGroundRepositionField(params);
 
             case TASK_TYPE_ADD_FIELD:
-                return doInBackgroundAddField(params);
+                return doInBackGroundAddField(params);
 
             default:
                 Timber.e("unknown task type: %d", mType);
