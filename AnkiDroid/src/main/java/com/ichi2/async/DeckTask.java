@@ -49,6 +49,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -95,6 +96,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_REMOVE_TEMPLATE = 40;
     public static final int TASK_TYPE_COUNT_MODELS = 41;
     public static final int TASK_TYPE_DELETE_MODEL = 42;
+    public static final int TASK_TYPE_DELETE_FIELD = 43;
+    public static final int TASK_TYPE_REPOSITION_FIELD = 44;
 
     /**
      * A reference to the application context to use to fetch the current Collection object.
@@ -321,6 +324,12 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_DELETE_MODEL:
                 return  doInBackGroundDeleteModel(params);
+
+            case TASK_TYPE_DELETE_FIELD:
+                return doInBackGroundDeleteField(params);
+
+            case TASK_TYPE_REPOSITION_FIELD:
+                return doInBackGroundRepositionField(params);
 
             default:
                 Timber.e("unknown task type: %d", mType);
@@ -1134,7 +1143,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
      */
     private TaskData doInBackgroundCountModels(TaskData... params){
         Timber.d("doInBackgroundLoadModels");
-        Collection col = params[0].getCollection();
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
 
         ArrayList<JSONObject> models = (ArrayList<JSONObject>) col.getModels().all();
         ArrayList<Integer> cardCount = new ArrayList<Integer>();
@@ -1143,8 +1152,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             public int compare(JSONObject a, JSONObject b) {
                 try {
                     return a.getString("name").compareTo(b.getString("name"));
-                }
-                catch(JSONException e) {
+                } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -1173,7 +1181,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     private TaskData doInBackGroundDeleteModel(TaskData... params){
         Timber.d("doInBackGroundDeleteModel");
         long modID = params[0].getLong();
-        Collection col = params[0].getCollection();
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
         try {
             col.getModels().rem(col.getModels().get(modID));
         }
@@ -1184,6 +1192,72 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         return new TaskData(true);
     }
 
+    /**
+     * Deletes thje given field in the given model
+     */
+    private TaskData doInBackGroundDeleteField(TaskData... params){
+        Timber.d("doInBackGroundDeleteField");
+        Object[] objects = params[0].getObjArray();
+
+        JSONObject model = (JSONObject) objects[0];
+        JSONObject field = (JSONObject) objects[1];
+
+
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        try {
+            col.getModels().remField(model, field);
+        }
+        catch (ConfirmModSchemaException e) {
+            Timber.e("doInBackGroundDeleteField :: ConfirmModSchemaException");
+            return new TaskData(false);
+        }
+        return new TaskData(true);
+    }
+
+    /**
+     * Repositions the given field in the given model
+     */
+    private TaskData doInBackGroundRepositionField(TaskData... params){
+        Timber.d("doInBackgroundRepositionField");
+        Object[] objects = params[0].getObjArray();
+
+        JSONObject model = (JSONObject) objects[0];
+        JSONObject field = (JSONObject) objects[1];
+        int index = (Integer) objects[2];
+
+
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        try {
+            col.getModels().moveField(model, field, index);
+        }
+        catch (ConfirmModSchemaException e) {
+            Timber.e("doInBackGroundMoveField :: ConfirmModSchemaException");
+            return new TaskData(false);
+        }
+        return new TaskData(true);
+    }
+
+    /**
+     * Adds a field of with name in given model
+     */
+    private TaskData doInBackGroundAddField(TaskData... params){
+        Timber.d("doInBackgroundRepositionField");
+        Object[] objects = params[0].getObjArray();
+
+        JSONObject model = (JSONObject) objects[0];
+        String fieldName = (String) objects[1];
+
+
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        try {
+            col.getModels().addField(model, col.getModels().newField(fieldName));
+        }
+        catch (ConfirmModSchemaException e) {
+            Timber.e("doInBackAddField :: ConfirmModSchemaException");
+            return new TaskData(false);
+        }
+        return new TaskData(true);
+    }
 
     /**
      * Listener for the status and result of a {@link DeckTask}.

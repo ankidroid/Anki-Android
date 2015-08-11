@@ -16,7 +16,9 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.ModelEditorContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
+import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONArray;
@@ -42,6 +44,7 @@ public class ModelEditor extends AnkiActivity{
     private ArrayAdapter<String> fieldArrayAdapter;
     private ListView fieldLabelsView;
     private ArrayList<String> fieldLabels;
+    private MaterialDialog mProgressDialog;
 
     private Collection col;
     private JSONArray noteFields;
@@ -135,6 +138,12 @@ public class ModelEditor extends AnkiActivity{
     // HELPER METHODS
     // ----------------------------------------------------------------------------
 
+    private void dismissProgressBar() {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+        mProgressDialog = null;
+    }
 
     //Removes the currently selected field
     private void deleteField(){
@@ -146,8 +155,8 @@ public class ModelEditor extends AnkiActivity{
                 public void confirm() {
                     try {
                         col.modSchema(false);
-                        col.getModels().remField(mod, noteFields.getJSONObject(currentPos));
-                        fullRefreshList();
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_MODEL, mChangeFieldHandler,
+                                new DeckTask.TaskData(new Object[]{mod, noteFields.getJSONObject(currentPos)}));
                         if (cMenu != null) {
                             cMenu.dismiss();
                             cMenu = null;
@@ -197,7 +206,8 @@ public class ModelEditor extends AnkiActivity{
                                 } else {
                                     try {
                                         col.modSchema(false);
-                                        getCol().getModels().addField(mod, getCol().getModels().newField(fieldName));
+                                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPOSITION_FIELD, mChangeFieldHandler,
+                                                new DeckTask.TaskData(new Object[]{mod, fieldName}));
                                     } catch (ConfirmModSchemaException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -282,6 +292,67 @@ public class ModelEditor extends AnkiActivity{
                 .show();
     }
 
+    //Also creates the dialogue, reanames based off of selected element
+    private void repositionField(){
+        fieldNameInput = new EditText(this);
+        fieldNameInput.setSingleLine(true);
+        new MaterialDialog.Builder(this)
+                .title(String.format(getResources().getString(R.string.model_editor_reposition), 1, fieldLabels.size()))
+                .positiveText(R.string.dialog_ok)
+                .customView(fieldNameInput, true)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        ConfirmationDialog c = new ConfirmationDialog() {
+                            public void confirm() {
+                                String newPosition = fieldNameInput.getText().toString();
+                                int pos;
+                                try {
+                                    pos = Integer.parseInt(newPosition);
+                                }
+                                catch (NumberFormatException n) {
+                                    if (cMenu != null) {
+                                        cMenu.dismiss();
+                                        cMenu = null;
+                                    }
+                                    return;
+                                }
+                                if (pos < 1 || pos > fieldLabels.size()) {
+                                    showToast(getResources().getString(R.string.toast_out_of_range));
+                                }
+                                else {
+                                    try {
+                                        col.modSchema(false);
+                                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPOSITION_FIELD, mChangeFieldHandler,
+                                                new DeckTask.TaskData(new Object[]{mod, noteFields.getJSONObject(currentPos), new Integer(pos-1)}));
+                                    } catch (JSONException e) {
+                                        throw new RuntimeException(e);
+                                    } catch (ConfirmModSchemaException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                    if (cMenu != null) {
+                                        cMenu.dismiss();
+                                        cMenu = null;
+                                    }
+                                }
+                            }
+
+                            public void cancel() {
+                                if (cMenu != null) {
+                                    cMenu.dismiss();
+                                    cMenu = null;
+                                }
+                            }
+                        };
+                        c.setArgs(getResources().getString(R.string.full_sync_confirmation));
+                        ModelEditor.this.showDialogFragment(c);
+
+                    }
+                })
+                .negativeText(R.string.dialog_cancel)
+                .show();
+    }
+
 
     //Initializes the main list of field labels
     private void setupLabels(){
@@ -335,6 +406,42 @@ public class ModelEditor extends AnkiActivity{
     // HANDLERS
     // ----------------------------------------------------------------------------
 
+    /**
+     * Displays loading bar when deleting a model loading bar is needed
+     * because deleting a model also deletes all of the associated cards/notes *
+     */
+    private DeckTask.TaskListener mChangeFieldHandler = new DeckTask.TaskListener() {
+
+        @Override
+        public void onCancelled() {
+            //This decktask can not be interrupted
+            return;
+        }
+
+        @Override
+        public void onPreExecute() {
+            if (mProgressDialog == null) {
+                mProgressDialog = StyledProgressDialog.show(ModelEditor.this, fieldLabels.get(currentPos),
+                        getResources().getString(R.string.model_editor_changing), false);
+            }
+        }
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            if (!result.getBoolean()) {
+                closeActivity(DeckPicker.RESULT_DB_ERROR);
+            }
+
+            dismissProgressBar();
+            fullRefreshList();
+        }
+
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+            //This decktask does not publish updates
+            return;
+        }
+    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -379,6 +486,9 @@ public class ModelEditor extends AnkiActivity{
         @Override
         public void onSelection(MaterialDialog materialDialog, View view, int selection, CharSequence charSequence) {
             switch(selection){
+                case ModelEditorContextMenu.FIELD_REPOSITION:
+                    repositionField();
+                    break;
                 case ModelEditorContextMenu.FIELD_DELETE:
                     deleteField();
                     break;

@@ -22,7 +22,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.ModelBrowserContextMenu;
-import com.ichi2.anki.dialogs.ModelEditorContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
@@ -129,8 +128,7 @@ public class ModelBrowser extends NavigationDrawerActivity {
     public void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         this.col = col;
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler,
-                new DeckTask.TaskData(col));
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
     }
 
 
@@ -274,8 +272,7 @@ public class ModelBrowser extends NavigationDrawerActivity {
 
     /* Also reloads everything, takes longer than a normal refresh */
     private void fullRefresh() {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler,
-                new DeckTask.TaskData(col));
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
     }
 
 
@@ -297,10 +294,10 @@ public class ModelBrowser extends NavigationDrawerActivity {
         //Used to fetch model names
         modelAddName = new ArrayList<String>();
 
-        addModelList.add(add + basicName);
-        addModelList.add(add + addForwardReverseName);
-        addModelList.add(add + addForwardOptionalReverseName);
-        addModelList.add(add + addClozeModelName);
+        addModelList.add(String.format(add, basicName));
+        addModelList.add(String.format(add, addForwardReverseName));
+        addModelList.add(String.format(add + addForwardOptionalReverseName));
+        addModelList.add(String.format((add + addClozeModelName)));
 
         modelAddName.add(basicName);
         modelAddName.add(addForwardReverseName);
@@ -309,7 +306,7 @@ public class ModelBrowser extends NavigationDrawerActivity {
 
         for (int i = 0; i < models.size(); i++) {
             try {
-                addModelList.add(clone + models.get(i).getString("name"));
+                addModelList.add(String.format(clone, models.get(i).getString("name")));
                 modelAddName.add(models.get(i).getString("name"));
             } catch (JSONException e) {
                 closeActivity(DB_ERROR_EXIT);
@@ -478,7 +475,7 @@ public class ModelBrowser extends NavigationDrawerActivity {
                     try {
                         col.modSchema(false);
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_MODEL, mDeleteModelHandler,
-                                new DeckTask.TaskData(col, currentID));
+                                new DeckTask.TaskData(currentID));
                         models.remove(currentPos);
                         modelIds.remove(currentPos);
                         modelDisplay.remove(currentPos);

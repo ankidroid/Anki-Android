@@ -630,7 +630,6 @@ public class Models {
             _updateFieldOrds(m);
             save(m);
             _transformFields(m, new TransformFieldMove(idx, oldidx));
-            renameField(m, field, null);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
