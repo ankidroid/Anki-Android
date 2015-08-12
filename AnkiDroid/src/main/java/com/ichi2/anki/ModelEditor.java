@@ -294,8 +294,8 @@ public class ModelEditor extends AnkiActivity{
 
     //Changes the sort field to the current card
     private void sortByField(){
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPOSITION_FIELD, mChangeFieldHandler,
-                new DeckTask.TaskData(new Object[]{mod, new Integer(currentPos-1)}));
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHANGE_SORT_FIELD, mChangeFieldHandler,
+                new DeckTask.TaskData(new Object[]{mod, new Integer(currentPos)}));
     }
 
     //Also creates the dialogue, reanames based off of selected element

@@ -1271,16 +1271,20 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
      * Adds a field of with name in given model
      */
     private TaskData doInBackgroundChangeSortField(TaskData... params){
-        Timber.d("doInBackgroundChangeSortField");
-        Object[] objects = params[0].getObjArray();
+        try {
+            Timber.d("doInBackgroundChangeSortField");
+            Object[] objects = params[0].getObjArray();
 
-        JSONObject model = (JSONObject) objects[0];
-        int idx = (int) objects[1];
+            JSONObject model = (JSONObject) objects[0];
+            int idx = (int) objects[1];
 
 
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
-        col.getModels().setSortIdx(model, idx);
-
+            Collection col = CollectionHelper.getInstance().getCol(mContext);
+            col.getModels().setSortIdx(model, idx);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         return new TaskData(true);
     }
 
