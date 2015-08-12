@@ -12,9 +12,10 @@ import com.ichi2.themes.Themes;
 
 public class ModelEditorContextMenu extends DialogFragment {
 
-    public final static int FIELD_RENAME = 1;
-    public final static int FIELD_DELETE = 2;
     public final static int FIELD_REPOSITION = 0;
+    public final static int SORT_FIELD = 1;
+    public final static int FIELD_RENAME = 2;
+    public final static int FIELD_DELETE = 3;
 
 
     private static MaterialDialog.ListCallback mContextMenuListener;
@@ -37,8 +38,9 @@ public class ModelEditorContextMenu extends DialogFragment {
         Drawable icon = res.getDrawable(R.drawable.ic_settings_applications_black_36dp);
         icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
 
-        String[] entries = new String[3];
+        String[] entries = new String[4];
         entries[FIELD_REPOSITION] = getResources().getString(R.string.model_editor_reposition_menu);
+        entries[SORT_FIELD] = getResources().getString(R.string.model_editor_sort_field);
         entries[FIELD_RENAME] = getResources().getString(R.string.model_editor_rename);
         entries[FIELD_DELETE] = getResources().getString(R.string.model_editor_delete);
 

@@ -99,6 +99,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_DELETE_FIELD = 43;
     public static final int TASK_TYPE_REPOSITION_FIELD = 44;
     public static final int TASK_TYPE_ADD_FIELD = 45;
+    public static final int TASK_TYPE_CHANGE_SORT_FIELD = 46;
 
     /**
      * A reference to the application context to use to fetch the current Collection object.
@@ -334,6 +335,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_ADD_FIELD:
                 return doInBackGroundAddField(params);
+
+            case TASK_TYPE_CHANGE_SORT_FIELD:
+                return doInBackgroundChangeSortField(params);
 
             default:
                 Timber.e("unknown task type: %d", mType);
@@ -1260,6 +1264,23 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             Timber.e("doInBackAddField :: ConfirmModSchemaException");
             return new TaskData(false);
         }
+        return new TaskData(true);
+    }
+
+    /**
+     * Adds a field of with name in given model
+     */
+    private TaskData doInBackgroundChangeSortField(TaskData... params){
+        Timber.d("doInBackgroundChangeSortField");
+        Object[] objects = params[0].getObjArray();
+
+        JSONObject model = (JSONObject) objects[0];
+        int idx = (int) objects[1];
+
+
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        col.getModels().setSortIdx(model, idx);
+
         return new TaskData(true);
     }
 

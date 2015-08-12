@@ -43,6 +43,7 @@
     <string name="model_editor_reposition_menu">Reposition field</string>
     <string name="model_editor_reposition" formatted="false">Reposition field (enter a value %1$d - %2$d)</string>
     <string name="model_editor_changing">Updating fields</string>
+    <string name="model_editor_sort_field">Sort by this field</string>
 
     <string name="model_clone_suffix">copy</string>
 

@@ -292,6 +292,12 @@ public class ModelEditor extends AnkiActivity{
                 .show();
     }
 
+    //Changes the sort field to the current card
+    private void sortByField(){
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPOSITION_FIELD, mChangeFieldHandler,
+                new DeckTask.TaskData(new Object[]{mod, new Integer(currentPos-1)}));
+    }
+
     //Also creates the dialogue, reanames based off of selected element
     private void repositionField(){
         fieldNameInput = new EditText(this);
@@ -486,6 +492,9 @@ public class ModelEditor extends AnkiActivity{
         @Override
         public void onSelection(MaterialDialog materialDialog, View view, int selection, CharSequence charSequence) {
             switch(selection){
+                case ModelEditorContextMenu.SORT_FIELD:
+                    sortByField();
+                    break;
                 case ModelEditorContextMenu.FIELD_REPOSITION:
                     repositionField();
                     break;
