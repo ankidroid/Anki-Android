@@ -38,9 +38,9 @@ public class ModelBrowserCloneInput extends DialogFragment {
         icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
 
         String[] entries = new String[3];
-        entries[FIELD_DELETE] = getResources().getString(R.string.model_editor_delete);
-        entries[FIELD_OPTIONS] = getResources().getString(R.string.model_editor_options);
-        entries[FIELD_RENAME] = getResources().getString(R.string.model_editor_rename);
+        entries[FIELD_DELETE] = getResources().getString(R.string.model_field_editor_delete);
+        entries[FIELD_OPTIONS] = getResources().getString(R.string.model_field_editor_options);
+        entries[FIELD_RENAME] = getResources().getString(R.string.model_field_editor_rename);
 
         return new MaterialDialog.Builder(getActivity())
                 .title(getArguments().getString("label"))

@@ -54,7 +54,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
-import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
@@ -568,6 +567,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
             case R.id.action_check_media:
                 Timber.i("DeckPicker:: Check media button pressed");
                 showMediaCheckDialog(MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK);
+                return true;
+
+            case R.id.action_model_browser_open:
+                Timber.i("DeckPicker:: Model browser button pressed");
+                Intent noteTypeBrowser = new Intent(this, ModelBrowser.class);
+                startActivityForResultWithAnimation(noteTypeBrowser, 0, ActivityTransitionAnimation.LEFT);
                 return true;
 
             case R.id.action_restore_backup:

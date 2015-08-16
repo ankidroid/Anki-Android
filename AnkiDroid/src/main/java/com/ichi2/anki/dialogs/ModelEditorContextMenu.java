@@ -39,10 +39,10 @@ public class ModelEditorContextMenu extends DialogFragment {
         icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
 
         String[] entries = new String[4];
-        entries[FIELD_REPOSITION] = getResources().getString(R.string.model_editor_reposition_menu);
-        entries[SORT_FIELD] = getResources().getString(R.string.model_editor_sort_field);
-        entries[FIELD_RENAME] = getResources().getString(R.string.model_editor_rename);
-        entries[FIELD_DELETE] = getResources().getString(R.string.model_editor_delete);
+        entries[FIELD_REPOSITION] = getResources().getString(R.string.model_field_editor_reposition_menu);
+        entries[SORT_FIELD] = getResources().getString(R.string.model_field_editor_sort_field);
+        entries[FIELD_RENAME] = getResources().getString(R.string.model_field_editor_rename);
+        entries[FIELD_DELETE] = getResources().getString(R.string.model_field_editor_delete);
 
         return new MaterialDialog.Builder(getActivity())
                 .title(getArguments().getString("label"))

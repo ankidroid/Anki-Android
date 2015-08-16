@@ -1216,7 +1216,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             col.getModels().remField(model, field);
         }
         catch (ConfirmModSchemaException e) {
-            Timber.e("doInBackGroundDeleteField :: ConfirmModSchemaException");
+            //Should never be reached
             return new TaskData(false);
         }
         return new TaskData(true);
@@ -1239,7 +1239,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             col.getModels().moveField(model, field, index);
         }
         catch (ConfirmModSchemaException e) {
-            Timber.e("doInBackGroundMoveField :: ConfirmModSchemaException");
+            //Should never be reached
             return new TaskData(false);
         }
         return new TaskData(true);
@@ -1255,13 +1255,12 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         JSONObject model = (JSONObject) objects[0];
         String fieldName = (String) objects[1];
 
-
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         try {
             col.getModels().addField(model, col.getModels().newField(fieldName));
         }
         catch (ConfirmModSchemaException e) {
-            Timber.e("doInBackAddField :: ConfirmModSchemaException");
+            //Should never be reached
             return new TaskData(false);
         }
         return new TaskData(true);
@@ -1277,7 +1276,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             JSONObject model = (JSONObject) objects[0];
             int idx = (int) objects[1];
-
 
             Collection col = CollectionHelper.getInstance().getCol(mContext);
             col.getModels().setSortIdx(model, idx);

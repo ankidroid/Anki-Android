@@ -168,7 +168,7 @@
         android:configChanges="keyboardHidden|orientation|locale|screenSize"
         android:label="@string/model_browser_label" />
         <activity
-            android:name=".ModelEditor"
+            android:name=".ModelFieldEditor"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/model_editor_label" />
         <activity

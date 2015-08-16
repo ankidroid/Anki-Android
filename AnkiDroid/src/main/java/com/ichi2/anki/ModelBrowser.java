@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,12 +40,11 @@ import java.util.Random;
 import timber.log.Timber;
 
 
-public class ModelBrowser extends NavigationDrawerActivity {
+public class ModelBrowser extends AnkiActivity {
 
     private final static int NORMAL_EXIT = 100001;
     private final static int DB_ERROR_EXIT = 100002;
 
-    public static final int REQUEST_ADD = 0;
     public static final int REQUEST_TEMPLATE_EDIT = 3;
 
     DisplayPairAdapter noteTypeArrayAdapter;
@@ -67,8 +67,6 @@ public class ModelBrowser extends NavigationDrawerActivity {
     //Dialogue used in renaming
     private EditText modelNameInput;
 
-    private Spinner addSelectionSpinner;
-    private JSONObject cloneNote;
     private ArrayAdapter<String> addModelAdapter;
 
     private ModelBrowserContextMenu cMenu;
@@ -86,8 +84,11 @@ public class ModelBrowser extends NavigationDrawerActivity {
         super.onCreate(savedInstanceState);
         View mainView = getLayoutInflater().inflate(R.layout.model_browser, null);
         setContentView(mainView);
-        initNavigationDrawer(mainView);
         noteTypeListView = (ListView) findViewById(R.id.note_type_browser_list);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
         mActionBar = getSupportActionBar();
         startLoadingCollection();
     }
@@ -97,7 +98,6 @@ public class ModelBrowser extends NavigationDrawerActivity {
     public void onResume() {
         Timber.d("onResume()");
         super.onResume();
-        selectNavigationItem(R.id.nav_model_browser);
     }
 
 
@@ -128,6 +128,12 @@ public class ModelBrowser extends NavigationDrawerActivity {
     public void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         this.col = col;
+        try {
+            col.modSchema(true);
+        }
+        catch(ConfirmModSchemaException e){
+            System.out.println("--------------------------------------------------------");
+        }
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
     }
 
@@ -137,8 +143,11 @@ public class ModelBrowser extends NavigationDrawerActivity {
     // ----------------------------------------------------------------------------
 
 
-    /* Fills the main list view with model names
-    handles filling the arraylists and attaching arrayadapters to main listview */
+    /*
+     * Fills the main list view with model names.
+     * Handles filling the ArrayLists and attaching
+     * ArrayAdapters to main ListView
+     */
     private void fillModelList() {
         //Anonymous class for handling list item clicks
         modelDisplay = new ArrayList<DisplayPair>();
@@ -162,11 +171,10 @@ public class ModelBrowser extends NavigationDrawerActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 long noteTypeID = modelIds.get(position);
                 currentPos = position;
-                Intent noteOpenIntent = new Intent(ModelBrowser.this, ModelEditor.class);
+                Intent noteOpenIntent = new Intent(ModelBrowser.this, ModelFieldEditor.class);
                 noteOpenIntent.putExtra("title", modelDisplay.get(position).getName());
-                noteOpenIntent.putExtra("requestCode", ModelEditor.EDIT_NOTE_TYPE);
                 noteOpenIntent.putExtra("noteTypeID", noteTypeID);
-                startActivityForResultWithAnimation(noteOpenIntent, ModelEditor.EDIT_NOTE_TYPE, ActivityTransitionAnimation.LEFT);
+                startActivityForResultWithAnimation(noteOpenIntent, 0, ActivityTransitionAnimation.LEFT);
             }
         });
 
@@ -184,8 +192,10 @@ public class ModelBrowser extends NavigationDrawerActivity {
     }
 
 
-    /* Updates the subtitle showing the amount of models available
-    ONLY CALL THIS AFTER initializing the main list */
+    /*
+     * Updates the subtitle showing the amount of models available
+     * ONLY CALL THIS AFTER initializing the main list
+     */
     private void updateSubtitleText() {
         int count = modelIds.size();
         mActionBar.setSubtitle(getResources().getQuantityString(R.plurals.model_browser_types_available, count, count));
@@ -193,91 +203,14 @@ public class ModelBrowser extends NavigationDrawerActivity {
 
 
     // ----------------------------------------------------------------------------
-    // HELPER METHODS
+    // CONTEXT MENU DIALOGS
     // ----------------------------------------------------------------------------
 
 
-    private void dismissProgressBar() {
-        if (mProgressDialog != null) {
-            mProgressDialog.dismiss();
-        }
-        mProgressDialog = null;
-    }
-
-
-    private void renameModel() {
-        try {
-            modelNameInput = new EditText(this);
-            modelNameInput.setSingleLine(true);
-            modelNameInput.setText(models.get(currentPos).getString("name"));
-            modelNameInput.setSelection(modelNameInput.getText().length());
-            new MaterialDialog.Builder(this)
-                    .title(R.string.rename_model)
-                    .positiveText(R.string.dialog_ok)
-                    .customView(modelNameInput, true)
-                    .callback(new MaterialDialog.ButtonCallback() {
-                        @Override
-                        public void onPositive(MaterialDialog dialog) {
-                            JSONObject model = models.get(currentPos);
-                            String deckName = modelNameInput.getText().toString()
-                                    .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
-                            getCol().getDecks().id(deckName, true);
-                            if (deckName.length() > 0) {
-                                try {
-                                    model.put("name", deckName);
-                                } catch (JSONException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                col.getModels().update(model);
-                                try {
-                                    models.get(currentPos).put("name", deckName);
-                                    modelDisplay.set(currentPos, new DisplayPair(models.get(currentPos).getString("name"), cardCounts.get(currentPos)));
-                                } catch (JSONException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                refreshList();
-                                if (cMenu != null) {
-                                    cMenu.dismiss();
-                                    cMenu = null;
-                                }
-                            }
-                            else{
-                                showToast(getResources().getString(R.string.toast_empty_name));
-                                if (cMenu != null) {
-                                    cMenu.dismiss();
-                                    cMenu = null;
-                                }
-                            }
-                        }
-                    })
-                    .negativeText(R.string.dialog_cancel)
-                    .show();
-        } catch (JSONException e) {
-            closeActivity(DB_ERROR_EXIT);
-        }
-    }
-
-
-    private void openTemplateEditor() {
-        Intent intent = new Intent(this, CardTemplateEditor.class);
-        intent.putExtra("modelId", currentID);
-        startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, ActivityTransitionAnimation.LEFT);
-    }
-
-    /* Updates the ArrayAdapters, you must update the arraylists yourself */
-    private void refreshList() {
-        noteTypeArrayAdapter.notifyDataSetChanged();
-        updateSubtitleText();
-    }
-
-    /* Also reloads everything, takes longer than a normal refresh */
-    private void fullRefresh() {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
-    }
-
-
-    /* Creates the dialogue box to select a note type, add a name, and then clone it */
-    private void addNewNote() {
+    /*
+     *Creates the dialogue box to select a note type, add a name, and then clone it
+     */
+    private void addNewNoteDialog() {
 
         String add = getResources().getString(R.string.model_browser_add_add);
         String clone = getResources().getString(R.string.model_browser_add_clone);
@@ -346,81 +279,55 @@ public class ModelBrowser extends NavigationDrawerActivity {
                                 .callback(new MaterialDialog.ButtonCallback() {
                                     @Override
                                     public void onPositive(MaterialDialog dialog) {
-                                        JSONObject model;
+                                        JSONObject model = null;
 
                                         String fieldName = modelNameInput.getText().toString()
                                                 .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
 
                                         //Temporary workaround - Lack of stdmodels class, so can only handle 4 default English models
                                         //like Ankidroid but unlike desktop Anki
-
-                                        if(fieldName.length() > 0) {
-                                            switch (addSelectionSpinner.getSelectedItemPosition()) {
-                                                //Basic Model
-                                                case (0):
-                                                    try {
+                                        try {
+                                            if (fieldName.length() > 0) {
+                                                switch (addSelectionSpinner.getSelectedItemPosition()) {
+                                                    //Basic Model
+                                                    case (0):
                                                         model = Models.addBasicModel(col);
-                                                    } catch (ConfirmModSchemaException e) {
-                                                        throw new RuntimeException(e);
-                                                    }
-                                                    break;
-                                                //Add forward reverse model
-                                                case (1):
-                                                    try {
+                                                        break;
+                                                    //Add forward reverse model
+                                                    case (1):
                                                         model = Models.addForwardReverse(col);
-                                                    } catch (ConfirmModSchemaException e) {
-                                                        throw new RuntimeException(e);
-                                                    }
-                                                    break;
-                                                //Add forward optional reverse model
-                                                case (2):
-                                                    try {
+                                                        break;
+                                                    //Add forward optional reverse model
+                                                    case (2):
                                                         model = Models.addForwardOptionalReverse(col);
-                                                    } catch (ConfirmModSchemaException e) {
-                                                        throw new RuntimeException(e);
-                                                    }
-                                                    break;
-                                                //Close model
-                                                case (3):
-                                                    try {
+                                                        break;
+                                                    //Close model
+                                                    case (3):
                                                         model = Models.addClozeModel(col);
-                                                    } catch (ConfirmModSchemaException e) {
-                                                        throw new RuntimeException(e);
-                                                    }
-                                                    break;
-                                                default:
-                                                    //New model
-                                                    try {
+                                                        break;
+                                                    default:
+                                                        //New model
                                                         //Model that is being cloned
                                                         JSONObject oldModel = new JSONObject(models.get(addSelectionSpinner.getSelectedItemPosition() - 4).toString());
                                                         JSONObject newModel = Models.addBasicModel(col);
                                                         oldModel.put("id", newModel.get("id"));
-
                                                         model = oldModel;
-                                                    } catch (ConfirmModSchemaException e) {
-                                                        throw new RuntimeException(e);
-                                                    } catch (JSONException e) {
-                                                        throw new RuntimeException(e);
-                                                    }
-                                            }
 
-                                            try {
+                                                }
+
                                                 model.put("name", fieldName);
                                                 col.getModels().update(model);
-                                            } catch (JSONException e) {
-                                                throw new RuntimeException(e);
+
+                                                fullRefresh();
+
+                                            } else {
+                                                showToast(getResources().getString(R.string.toast_empty_name));
                                             }
-                                            fullRefresh();
-                                            if (cMenu != null) {
-                                                cMenu.dismiss();
-                                                cMenu = null;
-                                            }
-                                        } else{
-                                            showToast(getResources().getString(R.string.toast_empty_name));
-                                            if (cMenu != null) {
-                                                cMenu.dismiss();
-                                                cMenu = null;
-                                            }
+                                        } catch(ConfirmModSchemaException e){
+                                            //We should never get here since we're only modifying new models
+                                            return;
+                                        } catch(JSONException e){
+                                            throw new RuntimeException(e);
                                         }
                                     }
                                 })
@@ -431,6 +338,151 @@ public class ModelBrowser extends NavigationDrawerActivity {
                 })
                 .negativeText(R.string.dialog_cancel)
                 .show();
+    }
+
+
+    /*
+     * Displays a confirmation box asking if you want to delete the note type and then deletes it if confirmed
+     */
+    private void deleteModelDialog() {
+        if (modelIds.size() > 1) {
+            try {
+                col.modSchema();
+                deleteModel();
+            } catch (ConfirmModSchemaException e) {
+                ConfirmationDialog c = new ConfirmationDialog() {
+                    public void confirm() {
+                        try {
+                            col.modSchema(false);
+                            deleteModel();
+                        } catch (ConfirmModSchemaException e) {
+                            //This should never be reached because it's inside a catch block for ConfirmModSchemaException
+                        }
+                        dismissContextMenu();
+                    }
+                    public void cancel(){
+                        dismissContextMenu();
+                    }
+                };
+                c.setArgs(getResources().getString(R.string.full_sync_confirmation));
+                ModelBrowser.this.showDialogFragment(c);
+            }
+        }
+        // Prevent users from deleting last model
+        else {
+            showToast(getString(R.string.toast_last_model));
+        }
+    }
+
+
+    /*
+     * Displays a confirmation box asking if you want to delete the note type and then deletes it if confirmed
+     */
+    private void renameModelDialog() {
+        try {
+            modelNameInput = new EditText(this);
+            modelNameInput.setSingleLine(true);
+            modelNameInput.setText(models.get(currentPos).getString("name"));
+            modelNameInput.setSelection(modelNameInput.getText().length());
+            new MaterialDialog.Builder(this)
+                    .title(R.string.rename_model)
+                    .positiveText(R.string.dialog_ok)
+                    .customView(modelNameInput, true)
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            JSONObject model = models.get(currentPos);
+                            String deckName = modelNameInput.getText().toString()
+                                    .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                            getCol().getDecks().id(deckName, true);
+                            if (deckName.length() > 0) {
+                                try {
+                                    model.put("name", deckName);
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                col.getModels().update(model);
+                                try {
+                                    models.get(currentPos).put("name", deckName);
+                                    modelDisplay.set(currentPos, new DisplayPair(models.get(currentPos).getString("name"), cardCounts.get(currentPos)));
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                refreshList();
+                            }
+                            else{
+                                showToast(getResources().getString(R.string.toast_empty_name));
+                            }
+                        }
+                    })
+                    .negativeText(R.string.dialog_cancel)
+                    .show();
+        } catch (JSONException e) {
+            closeActivity(DB_ERROR_EXIT);
+        }
+    }
+
+
+    // ----------------------------------------------------------------------------
+    // HELPER METHODS
+    // ----------------------------------------------------------------------------
+
+
+    private void dismissContextMenu(){
+        if (cMenu != null) {
+            cMenu.dismiss();
+            cMenu = null;
+        }
+    }
+
+
+    private void dismissProgressBar() {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+        mProgressDialog = null;
+    }
+
+    /*
+     * Opens the Template Editor (Card Editor) to allow
+     * the user to edit the current note's templates.
+     */
+    private void openTemplateEditor() {
+        Intent intent = new Intent(this, CardTemplateEditor.class);
+        intent.putExtra("modelId", currentID);
+        startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, ActivityTransitionAnimation.LEFT);
+    }
+
+
+    /*
+     * Updates the ArrayAdapters for the main ListView.
+     * ArrayLists must be manually updated.
+     */
+    private void refreshList() {
+        noteTypeArrayAdapter.notifyDataSetChanged();
+        updateSubtitleText();
+    }
+
+
+    /*
+     * Reloads everything
+     */
+    private void fullRefresh() {
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
+    }
+
+
+    /*
+     * Deletes the currently selected model
+     */
+    private void deleteModel() throws ConfirmModSchemaException {
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_MODEL, mDeleteModelHandler,
+                new DeckTask.TaskData(currentID));
+        models.remove(currentPos);
+        modelIds.remove(currentPos);
+        modelDisplay.remove(currentPos);
+        cardCounts.remove(currentPos);
+        refreshList();
     }
 
     // ----------------------------------------------------------------------------
@@ -467,56 +519,18 @@ public class ModelBrowser extends NavigationDrawerActivity {
     }
 
 
-    /* Displays a confirmation box asking if you want to delete the note type and then deletes it if confirmed */
-    private void deleteModel() {
-        if (modelIds.size() > 1) {
-            ConfirmationDialog c = new ConfirmationDialog() {
-                public void confirm() {
-                    try {
-                        col.modSchema(false);
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_MODEL, mDeleteModelHandler,
-                                new DeckTask.TaskData(currentID));
-                        models.remove(currentPos);
-                        modelIds.remove(currentPos);
-                        modelDisplay.remove(currentPos);
-                        cardCounts.remove(currentPos);
-                        refreshList();
-                        if (cMenu != null) {
-                            cMenu.dismiss();
-                            cMenu = null;
-                        }
-                    } catch (ConfirmModSchemaException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                public void cancel() {
-                    if (cMenu != null) {
-                        cMenu.dismiss();
-                        cMenu = null;
-                    }
-                }
-            };
-            c.setArgs(getResources().getString(R.string.full_sync_confirmation));
-            ModelBrowser.this.showDialogFragment(c);
-        }
-        // Prevent users from deleting last model
-        else {
-            showToast(getString(R.string.toast_last_model));
-        }
-    }
-
-
-    /* Listens to long hold context menu for main list items */
+    /*
+     * Listens to long hold context menu for main list items
+     */
     private MaterialDialog.ListCallback mContextMenuListener = new MaterialDialog.ListCallback() {
         @Override
         public void onSelection(MaterialDialog materialDialog, View view, int selection, CharSequence charSequence) {
-            ConfirmationDialog c;
             switch (selection) {
                 case ModelBrowserContextMenu.MODEL_DELETE:
-                    deleteModel();
+                    deleteModelDialog();
                     break;
                 case ModelBrowserContextMenu.MODEL_RENAME:
-                    renameModel();
+                    renameModelDialog();
                     break;
                 case ModelBrowserContextMenu.MODEL_TEMPLATE:
                     openTemplateEditor();
@@ -526,14 +540,14 @@ public class ModelBrowser extends NavigationDrawerActivity {
     };
 
 
-    /**
+    /*
      * Displays the loading bar when loading the models and displaying them
      * loading bar is necessary because card count per model is not cached *
      */
     private DeckTask.TaskListener mLoadingModelsHandler = new DeckTask.TaskListener() {
         @Override
         public void onCancelled() {
-            //This decktask can not be interrupted
+            //This DeckTask can not be interrupted
             return;
         }
 
@@ -541,7 +555,7 @@ public class ModelBrowser extends NavigationDrawerActivity {
         public void onPreExecute() {
             if (mProgressDialog == null) {
                 mProgressDialog = StyledProgressDialog.show(ModelBrowser.this, " ",
-                        getResources().getString(R.string.model_editor_loading_models), false);
+                        getResources().getString(R.string.model_browser_loading_models), false);
             }
         }
 
@@ -567,7 +581,7 @@ public class ModelBrowser extends NavigationDrawerActivity {
     };
 
 
-    /**
+    /*
      * Displays loading bar when deleting a model loading bar is needed
      * because deleting a model also deletes all of the associated cards/notes *
      */
@@ -583,7 +597,7 @@ public class ModelBrowser extends NavigationDrawerActivity {
         public void onPreExecute() {
             if (mProgressDialog == null) {
                 mProgressDialog = StyledProgressDialog.show(ModelBrowser.this, modelDisplay.get(currentPos).getName(),
-                        getResources().getString(R.string.model_editor_deletion_in_progress), false);
+                        getResources().getString(R.string.model_browser_deletion_in_progress), false);
             }
         }
 
@@ -605,9 +619,11 @@ public class ModelBrowser extends NavigationDrawerActivity {
         }
     };
 
-    // Generates a random alphanumeric sequence of 6 characters
-    // Used to append to the end of new note types to dissuade
-    // User from reusing names (which are technically not unique however)
+    /*
+     * Generates a random alphanumeric sequence of 6 characters
+     * Used to append to the end of new note types to dissuade
+     * User from reusing names (which are technically not unique however
+     */
     private String randomizeName(String s) {
         char[] charSet = "123456789abcdefghijklmnopqrstuvqxwzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 
@@ -641,7 +657,7 @@ public class ModelBrowser extends NavigationDrawerActivity {
                 onBackPressed();
                 return true;
             case R.id.action_add_model_to_field:
-                addNewNote();
+                addNewNoteDialog();
 
                 return true;
             default:
@@ -650,11 +666,10 @@ public class ModelBrowser extends NavigationDrawerActivity {
     }
 
 
-    /**
+    /*
      * Used so that the main ListView is able to display the number of notes using the model
      * along with the name.
      */
-
     public class DisplayPair {
         private String name;
         private int count;
@@ -679,7 +694,7 @@ public class ModelBrowser extends NavigationDrawerActivity {
     }
 
 
-    /**
+    /*
      * For display in the main list via an ArrayAdapter
      */
     public class DisplayPairAdapter extends ArrayAdapter<DisplayPair> {

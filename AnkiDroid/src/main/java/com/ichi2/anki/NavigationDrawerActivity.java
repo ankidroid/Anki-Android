@@ -51,7 +51,6 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
     public static final int REQUEST_PREFERENCES_UPDATE = 100;
     public static final int REQUEST_BROWSE_CARDS = 101;
     public static final int REQUEST_STATISTICS = 102;
-    public static final int REQUEST_BROWSE_NOTE_TYPES = 103;
 
 
     // Navigation drawer initialisation
@@ -148,10 +147,6 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
                 }
                 setNightModeIcon();
                 CompatHelper.getCompat().restartActivityInvalidateBackstack(this);
-                return true;
-            case R.id.nav_model_browser:
-                Intent noteTypeBrowser = new Intent(this, ModelBrowser.class);
-                startActivityForResultWithAnimation(noteTypeBrowser, REQUEST_BROWSE_NOTE_TYPES, ActivityTransitionAnimation.RIGHT);
                 return true;
             case R.id.nav_settings:
                 mOldColPath = CollectionHelper.getCurrentAnkiDroidDirectory(this);
