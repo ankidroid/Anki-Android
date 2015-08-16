@@ -171,7 +171,7 @@ public class ModelFieldEditor extends AnkiActivity{
         fieldNameInput.setSingleLine(true);
 
         new MaterialDialog.Builder(this)
-                .title(R.string.model_browser_add)
+                .title(R.string.model_field_editor_add)
                 .positiveText(R.string.dialog_ok)
                 .customView(fieldNameInput, true)
                 .callback(new MaterialDialog.ButtonCallback() {

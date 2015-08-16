@@ -44,7 +44,8 @@
 
 
     <!--Field Editing-->
-    <string name="model_field_editor_title">Edit fields:  %1$s</string>
+    <string name="model_field_editor_title">Edit fields:  %1$s</string>.
+    <string name="model_field_editor_add">Add field</string>
     <string name="model_field_editor_delete">Delete field</string>
     <string name="model_field_editor_options">Field options</string>
     <string name="model_field_editor_rename">Rename field</string>
