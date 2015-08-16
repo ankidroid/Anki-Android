@@ -128,12 +128,6 @@ public class ModelBrowser extends AnkiActivity {
     public void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         this.col = col;
-        try {
-            col.modSchema(true);
-        }
-        catch(ConfirmModSchemaException e){
-            System.out.println("--------------------------------------------------------");
-        }
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
     }
 
@@ -350,24 +344,33 @@ public class ModelBrowser extends AnkiActivity {
                 col.modSchema();
                 deleteModel();
             } catch (ConfirmModSchemaException e) {
-                ConfirmationDialog c = new ConfirmationDialog() {
-                    public void confirm() {
-                        try {
-                            col.modSchema(false);
-                            deleteModel();
-                        } catch (ConfirmModSchemaException e) {
-                            //This should never be reached because it's inside a catch block for ConfirmModSchemaException
-                        }
-                        dismissContextMenu();
-                    }
-                    public void cancel(){
-                        dismissContextMenu();
+                ConfirmationDialog d = new ConfirmationDialog() {
+
+                    public void confirm(){
+                        ConfirmationDialog c = new ConfirmationDialog() {
+                            public void confirm() {
+                                try {
+                                    col.modSchema(false);
+                                    deleteModel();
+                                } catch (ConfirmModSchemaException e) {
+                                    //This should never be reached because it's inside a catch block for ConfirmModSchemaException
+                                }
+                                dismissContextMenu();
+                            }
+                            public void cancel(){
+                                dismissContextMenu();
+                            }
+                        };
+                        c.setArgs(getResources().getString(R.string.full_sync_confirmation));
+                        ModelBrowser.this.showDialogFragment(c);
+
                     }
                 };
-                c.setArgs(getResources().getString(R.string.full_sync_confirmation));
-                ModelBrowser.this.showDialogFragment(c);
+                d.setArgs(getResources().getString(R.string.model_delete_warning));
+                ModelBrowser.this.showDialogFragment(d);
             }
         }
+
         // Prevent users from deleting last model
         else {
             showToast(getString(R.string.toast_last_model));

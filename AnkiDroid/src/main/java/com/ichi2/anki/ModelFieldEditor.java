@@ -2,6 +2,7 @@ package com.ichi2.anki;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -121,18 +122,13 @@ public class ModelFieldEditor extends AnkiActivity{
         fieldLabelsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                                    @Override
                                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                                       cMenu = new ModelEditorContextMenu().newInstance(fieldLabels.get(position), mContextMenuListener);
+                                                       showDialogFragment(cMenu);
+                                                       currentPos = position;
                                                    }
                                                }
         );
 
-        fieldLabelsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                cMenu = new ModelEditorContextMenu().newInstance(fieldLabels.get(position), mContextMenuListener);
-                showDialogFragment(cMenu);
-                currentPos = position;
-                return false;
-            }
-        });
     }
 
 
@@ -239,23 +235,31 @@ public class ModelFieldEditor extends AnkiActivity{
                 throw new RuntimeException(e);
             } catch (ConfirmModSchemaException e) {
 
-                ConfirmationDialog c = new ConfirmationDialog() {
+                ConfirmationDialog d = new ConfirmationDialog() {
                     public void confirm() {
-                        try{
-                            col.modSchemaNoCheck();
-                            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_FIELD, mChangeFieldHandler,
-                                new DeckTask.TaskData(new Object[]{mod, noteFields.getJSONObject(currentPos)}));
-                        } catch(JSONException e){
-                            throw new RuntimeException(e);
-                        }
-                        dismissContextMenu();
-                    }
-                    public void cancel(){
-                        dismissContextMenu();
+                        ConfirmationDialog c = new ConfirmationDialog() {
+                            public void confirm() {
+                                try {
+                                    col.modSchemaNoCheck();
+                                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_FIELD, mChangeFieldHandler,
+                                            new DeckTask.TaskData(new Object[]{mod, noteFields.getJSONObject(currentPos)}));
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                dismissContextMenu();
+                            }
+
+                            public void cancel() {
+                                dismissContextMenu();
+                            }
+                        };
+                        c.setArgs(getResources().getString(R.string.full_sync_confirmation));
+                        ModelFieldEditor.this.showDialogFragment(c);
                     }
                 };
-                c.setArgs(getResources().getString(R.string.full_sync_confirmation));
-                ModelFieldEditor.this.showDialogFragment(c);
+                d.setArgs(getResources().getString(R.string.field_delete_warning));
+                ModelFieldEditor.this.showDialogFragment(d);
+
             }
         }
     }
@@ -322,7 +326,7 @@ public class ModelFieldEditor extends AnkiActivity{
      */
     private void repositionFieldDialog(){
         fieldNameInput = new EditText(this);
-        fieldNameInput.setSingleLine(true);
+        fieldNameInput.setRawInputType(InputType.TYPE_CLASS_NUMBER);
         new MaterialDialog.Builder(this)
                 .title(String.format(getResources().getString(R.string.model_field_editor_reposition), 1, fieldLabels.size()))
                 .positiveText(R.string.dialog_ok)
@@ -393,6 +397,7 @@ public class ModelFieldEditor extends AnkiActivity{
             cMenu = null;
         }
     }
+
 
     private void dismissProgressBar() {
         if (mProgressDialog != null) {
