@@ -5,7 +5,8 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground" >
+    android:background="?android:attr/colorBackground"
+    android:fitsSystemWindows="true">
     <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -61,4 +62,4 @@
         <include layout="@layout/floating_add_button"/>
     </RelativeLayout>
     <include layout="@layout/navigation_drawer" />
-</android.support.v4.widget.DrawerLayout>   
+</android.support.v4.widget.DrawerLayout>
