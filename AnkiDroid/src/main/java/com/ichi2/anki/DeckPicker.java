@@ -1334,7 +1334,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION);
                         }
                     } else if (resultType.equals("dbError")  || resultType.equals("basicCheckFailed")) {
-                        dialogMessage = res.getString(R.string.sync_corrupt_database, R.string.repair_deck);
+                        String repairUrl = res.getString(R.string.repair_deck);
+                        dialogMessage = res.getString(R.string.sync_corrupt_database, repairUrl);
                         showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("overwriteError")) {
                         dialogMessage = res.getString(R.string.sync_overwrite_error);
