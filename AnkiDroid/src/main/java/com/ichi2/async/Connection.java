@@ -24,6 +24,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.PowerManager;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
@@ -73,6 +74,18 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     private TaskListener mListener;
     private CancelCallback mCancelCallback;
 
+    /**
+     * Before syncing, we acquire a wake lock and then release it once the sync is complete.
+     * This ensures that the device remains awake until the sync is complete. Without it,
+     * the process will be paused and the sync can fail due to timing conflicts with AnkiWeb.
+     */
+    private final PowerManager.WakeLock mWakeLock;
+
+    public Connection() {
+        Context context = AnkiDroidApp.getInstance().getApplicationContext();
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Connection");
+    }
 
     private static Connection launchConnectionTask(TaskListener listener, Payload data) {
 
@@ -104,6 +117,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     @Override
     protected void onCancelled() {
         super.onCancelled();
+        // Sync has ended so release the wake lock
+        mWakeLock.release();
         if (mCancelCallback != null) {
             mCancelCallback.cancelAllConnections();
         }
@@ -119,6 +134,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        // Acquire the wake lock before syncing to ensure CPU remains on until the sync completes.
+        mWakeLock.acquire();
         if (mListener != null) {
             mListener.onPreExecute();
         }
@@ -131,6 +148,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     @Override
     protected void onPostExecute(Payload data) {
         super.onPostExecute(data);
+        // Sync has ended so release the wake lock
+        mWakeLock.release();
         if (mListener != null) {
             mListener.onPostExecute(data);
         }
