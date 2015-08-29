@@ -6,16 +6,13 @@
     android:id="@+id/add_content_menu"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentRight="true"
-    android:layout_alignParentEnd="true"
+    android:layout_gravity="end|bottom"
+    android:layout_margin="16dp"
     fab:fab_addButtonColorNormal="@color/fab_normal"
     fab:fab_addButtonColorPressed="@color/fab_pressed"
     fab:fab_icon="@drawable/ic_add_white_24dp"
     fab:fab_labelStyle="@style/menu_labels_style"
-    android:layout_marginBottom="16dp"
-    android:layout_marginRight="16dp"
-    android:layout_marginEnd="16dp">
+    fab:layout_behavior="com.ichi2.anki.widgets.FabBehavior">
     <net.i2p.android.ext.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_deck_action"
         android:layout_width="wrap_content"

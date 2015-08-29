@@ -467,6 +467,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Timber.d("doInBackgroundLoadDeckCounts");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         try {
+            // Get due tree
             Object[] o = new Object[] {col.getSched().deckDueTree()};
             return new TaskData(o);
         } catch (RuntimeException e) {
