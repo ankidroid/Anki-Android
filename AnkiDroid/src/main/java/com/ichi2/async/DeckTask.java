@@ -478,7 +478,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             if (prefs.getString("hkey", "").length() > 0 && prefs.getString("automaticSync", "1").equals(prompt) &&
                     Connection.isOnline()) {
                 slc = slc || col.schemaChanged();
-                slc=slc||col.getDb().getDatabase().rawQuery("SELECT usn FROM revlog WHERE usn==-1", null).getCount()>0;
+                slc=slc||col.getDb().getDatabase().rawQuery("SELECT usn FROM revlog WHERE usn==-1", null).getCount() >0;
                 slc=slc||col.getDb().getDatabase().rawQuery("SELECT usn FROM notes WHERE usn==-1", null).getCount() > 0;
                 slc=slc||col.getDb().getDatabase().rawQuery("SELECT usn FROM cards WHERE usn==-1", null).getCount() > 0;
                 slc=slc||col.getDb().getDatabase().rawQuery("SELECT usn FROM graves WHERE usn==-1", null).getCount() >0;
