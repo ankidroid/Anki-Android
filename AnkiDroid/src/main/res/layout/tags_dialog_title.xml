@@ -7,7 +7,7 @@
     android:minHeight="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
     android:layout_alignParentTop="true"
-    app:theme="@style/ActionBar"
+    android:theme="@style/ActionBar"
     app:popupTheme="?attr/actionBarPopupThemeRef">
 
 

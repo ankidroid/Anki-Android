@@ -158,4 +158,14 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+    <string-array name="automatic_sync_pref_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="automatic_sync_pref_labels">
+        <item>@string/automatic_sync_choice_disabled</item>
+        <item>@string/automatic_sync_choice_prompt</item>
+        <item>@string/automatic_sync_choice_enabled</item>
+    </string-array>
 </resources>

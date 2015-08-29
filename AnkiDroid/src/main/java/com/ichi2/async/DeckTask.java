@@ -19,6 +19,7 @@
 package com.ichi2.async;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 
@@ -28,6 +29,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CollectionHelper;
+import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.APIVersionException;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -467,7 +469,21 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Timber.d("doInBackgroundLoadDeckCounts");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         try {
-            Object[] o = new Object[] {col.getSched().deckDueTree()};
+            // Get due tree
+            Object[] o = new Object[] {col.getSched().deckDueTree(), false};
+            // Check if we should show message prompting to sync when there are local changes to uploaded to AnkiWeb
+            boolean slc = false;
+            SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(mContext.getApplicationContext());
+            String prompt = DeckPicker.AUTOMATIC_SYNC_PROMPT;
+            if (prefs.getString("hkey", "").length() > 0 && prefs.getString("automaticSync", "1").equals(prompt) &&
+                    Connection.isOnline()) {
+                slc = slc || col.schemaChanged();
+                slc=slc||col.getDb().getDatabase().rawQuery("SELECT usn FROM revlog WHERE usn==-1", null).getCount()>0;
+                slc=slc||col.getDb().getDatabase().rawQuery("SELECT usn FROM notes WHERE usn==-1", null).getCount() > 0;
+                slc=slc||col.getDb().getDatabase().rawQuery("SELECT usn FROM cards WHERE usn==-1", null).getCount() > 0;
+                slc=slc||col.getDb().getDatabase().rawQuery("SELECT usn FROM graves WHERE usn==-1", null).getCount() >0;
+            }
+            o[1] = slc;
             return new TaskData(o);
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundLoadDeckCounts - error");

@@ -54,7 +54,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
-import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
@@ -104,20 +103,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
         SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
         MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener {
 
-    public static final int CRAM_DECK_FRAGMENT = -1;
-
     private String mImportPath;
 
-    public static final String EXTRA_START = "start";
     public static final String EXTRA_DECK_ID = "deckId";
-    public static final int EXTRA_START_NOTHING = 0;
-    public static final int EXTRA_START_REVIEWER = 1;
-    public static final int EXTRA_START_DECKPICKER = 2;
-    public static final int EXTRA_DB_ERROR = 3;
 
     public static final int RESULT_MEDIA_EJECTED = 202;
     public static final int RESULT_DB_ERROR = 203;
-    public static final int RESULT_RESTART = 204;
+
 
 
     /**
@@ -141,6 +133,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // For automatic syncing
     // 10 minutes in milliseconds.
     public static final long AUTOMATIC_SYNC_MIN_INTERVAL = 600000;
+    public static final String AUTOMATIC_SYNC_PROMPT = "1";
+    public static final String AUTOMATIC_SYNC_ENABLED = "2";
 
     private MaterialDialog mProgressDialog;
 
@@ -698,8 +692,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // (currently 10 minutes)
         String hkey = preferences.getString("hkey", "");
         long lastSyncTime = preferences.getLong("lastSyncTime", 0);
-        if (hkey.length() != 0 && preferences.getBoolean("automaticSyncMode", false) &&
-                        Utils.intNow(1000) - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL) {
+        if (hkey.length() != 0 && preferences.getString("automaticSync", "1").equals(AUTOMATIC_SYNC_ENABLED) &&
+                Connection.isOnline() && Utils.intNow(1000) - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL) {
             sync();
         }
     }
@@ -1668,6 +1662,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 supportInvalidateOptionsMenu();
                 // Update the mini statistics bar as well
                 AnkiStatsTaskHandler.createSmallTodayOverview(getCol(), mTodayTextView);
+                // Prompt to sync if this setting is enabled and there are local changes to upload
+                if ((boolean) result.getObjArray()[1]) {
+                    OnClickListener listener = new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sync();
+                        }
+                    };
+                    View rootLayout = findViewById(R.id.root_layout);
+                    showSnackbar(R.string.sync_prompt, false, R.string.button_sync, listener, findViewById(R.id.add_content_menu));
+                }
             }
 
             @Override

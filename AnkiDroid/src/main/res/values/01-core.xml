@@ -116,6 +116,7 @@
 
     <string name="sd_card_not_mounted">Device storage not mounted</string>
     <string name="button_sync">Sync</string>
+    <string name="sync_prompt">There are unsynced changes</string>
     <string name="export">Export</string>
     <string name="nothing">Nothing</string>
 
