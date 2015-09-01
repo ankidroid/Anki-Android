@@ -195,3 +195,26 @@ Here is an annotated description of the JSONObjects in the models field of the `
     vers : "Legacy version number (unused)"
 }
 ```
+
+# Decks JSONObjects
+Here is an annotated description of the JSONObjects in the decks field of the `col` table:
+
+```java
+{
+    name: "name of deck", 
+    extendRev: "extended review card limit (for custom study)", 
+    usn: "update sequence number: int used for finding diffs when syncing", 
+    collapsed: "true when deck is collapsed", 
+    browserCollapsed: "true when deck collapsed in browser", 
+    newToday: "two number array used somehow for custom study", 
+    timeToday: "two number array used somehow for custom study", 
+    dyn: "1 if dynamic (AKA filtered) deck", 
+    extendNew: "extended new card limit (for custom study)", 
+    conf: "id of option group from dconf in `col` table", 
+    revToday: "two number array used somehow for custom study", 
+    lrnToday: "two number array used somehow for custom study", 
+    id: "deck ID (automatically generated long)", 
+    mod: "last modification time", 
+    desc: "deck description"
+}
+```
