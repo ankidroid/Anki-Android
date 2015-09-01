@@ -53,6 +53,8 @@ gradlew.bat assembleDebug
 An apk file signed with a standard "debug" key will be generated named `"AnkiDroid-debug.apk"` in:
 `%AnkiDroidRoot%/AnkiDroid/build/outputs/apk/`
 
+## Anki database structure
+See the [[separate wiki page|Database-Structure]] for a description of the database structure
 
 ## Branching Model
 See the [[Release Procedure Wiki Page|Release-Procedure]]
