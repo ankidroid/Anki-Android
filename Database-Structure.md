@@ -4,7 +4,8 @@ Thanks to @sartak and @fasiha for [starting to make this](https://gist.github.co
 
 # Database schema
 ```sql
--- Cards are what you review. There can be multiple cards for each note, determined by the Template.
+-- Cards are what you review. 
+-- There can be multiple cards for each note, determined by the Template.
 CREATE TABLE cards (
     id              integer primary key,
       -- the epoch milliseconds of when the card was created
@@ -36,13 +37,14 @@ CREATE TABLE cards (
     reps            integer not null,
       -- number of reviews
     lapses          integer not null,
-      -- the number of times the card went from a "was answered correctly" to "was answered incorrectly" state
+      -- the number of times the card went from a "was answered correctly" 
+      --     to "was answered incorrectly" state
     left            integer not null,
       -- reps left till graduation
     odue            integer not null,
-      -- original due: only used when the card is currently in a filtered deck to keep track of the original due value
+      -- original due: only used when the card is currently in a filtered deck to keep track of original
     odid            integer not null,
-      -- original did: only used when the card is currently in a filtered deck to keep track of the original did value
+      -- original did: only used when the card is currently in a filtered deck to keep track of original
     flags           integer not null,
       -- currently unused
     data            text not null
@@ -58,13 +60,15 @@ CREATE TABLE col (
     mod             integer not null,
       -- last modified in milliseconds
     scm             integer not null,
-      -- schema mod time: time when "schema" was modified. If the server scm is different from the client scm a full-sync is required
+      -- schema mod time: time when "schema" was modified. 
+      --     If the server scm is different from the client scm a full-sync is required
     ver             integer not null,
       -- version
     dty             integer not null,
       -- dirty: unused, set to 0
     usn             integer not null,
-      -- update sequence number: used for finding diffs when syncing. See usn in cards table for more details.
+      -- update sequence number: used for finding diffs when syncing. 
+      --     See usn in cards table for more details.
     ls              integer not null,
       -- "last sync time"
     conf            text not null,
@@ -79,14 +83,16 @@ CREATE TABLE col (
       -- a cache of tags used in the collection (probably for autocomplete etc)
 );
 
--- Contains deleted cards that need to be synced. usn should be set to -1, and oid is the original card id
+-- Contains deleted cards that need to be synced. 
+-- usn should be set to -1, and oid is the original card id
 CREATE TABLE graves (
     usn             integer not null,
     oid             integer not null,
     type            integer not null
 );
 
--- Notes contain the raw information that is formatted into a number of cards according to the models
+-- Notes contain the raw information that is formatted into a number of cards
+-- according to the models
 CREATE TABLE notes (
     id              integer primary key,
       -- epoch seconds of when the note was created
@@ -97,9 +103,11 @@ CREATE TABLE notes (
     mod             integer not null,
       -- modification timestamp, epoch seconds
     usn             integer not null,
-      -- update sequence number: for finding diffs when syncing. See the description in the cards table for more info
+      -- update sequence number: for finding diffs when syncing.
+      --     See the description in the cards table for more info
     tags            text not null,
-      -- space-separated string of tags. includes space at the beginning and end of the field, for LIKE "% tag %" queries
+      -- space-separated string of tags. 
+      --     includes space at the beginning and end of the field, for LIKE "% tag %" queries
     flds            text not null,
       -- the values of the fields in this note. separated by 0x1f (31) separation character.
     sfld            integer not null,
@@ -119,7 +127,8 @@ CREATE TABLE revlog (
     cid             integer not null,
        -- cards.id
     usn             integer not null,
-        -- update sequence number: for finding diffs when syncing. See the description in the cards table for more info
+        -- update sequence number: for finding diffs when syncing. 
+        --     See the description in the cards table for more info
     ease            integer not null,
        -- which button you pushed to score your recall. 1(wrong), 2(hard), 3(ok), 4(easy)
     ivl             integer not null,
@@ -191,7 +200,7 @@ Here is an annotated description of the JSONObjects in the models field of the `
               }
             ],
     type : "Integer specifying what type of model. 0 for standard, 1 for cloze",
-    usn : "usn: Update sequence number: used for checking whether or not sync is required (see description in cards table for more info)",
+    usn : "usn: Update sequence number: used in same way as other usn vales in db",
     vers : "Legacy version number (unused)"
 }
 ```
@@ -203,7 +212,7 @@ Here is an annotated description of the JSONObjects in the decks field of the `c
 {
     name: "name of deck", 
     extendRev: "extended review card limit (for custom study)", 
-    usn: "update sequence number: int used for finding diffs when syncing", 
+    usn: "usn: Update sequence number: used in same way as other usn vales in db", 
     collapsed: "true when deck is collapsed", 
     browserCollapsed: "true when deck collapsed in browser", 
     newToday: "two number array used somehow for custom study", 
