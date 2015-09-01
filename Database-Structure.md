@@ -84,8 +84,10 @@ CREATE TABLE col (
       -- a cache of tags used in the collection (probably for autocomplete etc)
 );
 
--- Contains deleted cards that need to be synced. 
--- usn should be set to -1, and oid is the original card id
+-- Contains deleted cards, notes, and decks that need to be synced. 
+-- usn should be set to -1, 
+-- oid is the original id.
+-- type: 0 for a card, 1 for a note and 2 for a deck
 CREATE TABLE graves (
     usn             integer not null,
     oid             integer not null,
@@ -154,7 +156,7 @@ CREATE INDEX ix_revlog_cid on revlog (cid);
 CREATE INDEX ix_revlog_usn on revlog (usn);
 ```
 
-# Models JSONObject
+# Models JSONObjects
 Here is an annotated description of the JSONObjects in the models field of the `col` table:
 ``` java
 {
