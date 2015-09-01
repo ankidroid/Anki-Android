@@ -5,7 +5,7 @@ Thanks to @sartak and @fasiha for [starting to make this](https://gist.github.co
 # Database schema
 ```sql
 -- Cards are what you review. 
--- There can be multiple cards for each note, determined by the Template.
+-- There can be multiple cards for each note, as determined by the Template.
 CREATE TABLE cards (
     id              integer primary key,
       -- the epoch milliseconds of when the card was created
@@ -162,7 +162,7 @@ Here is an annotated description of the JSONObjects in the models field of the `
     did :
         "Long specifying the id of the deck that cards are added to by default",
     flds : [
-             "JSONArray containing a JSONObject for each field in the model as follows:",
+             "JSONArray containing object for each field in the model as follows:",
              {
                font : "display font",
                media : "array of media. appears to be unused",
@@ -170,7 +170,8 @@ Here is an annotated description of the JSONObjects in the models field of the `
                ord : "ordinal of the field - goes from 0 to num fields -1",
                rtl : "boolean, right-to-left script",
                size : "font size",
-               sticky : "sticky fields retain the value that was last added to them when adding new notes"
+               sticky : "sticky fields retain the value that was last added 
+                           when adding new notes"
              }
            ],
     id : "model ID, matches cards.mid",
@@ -179,7 +180,8 @@ Here is an annotated description of the JSONObjects in the models field of the `
     mod : "modification time in milliseconds",
     name : "model name",
     req : [
-            "Array of arrays describing which fields are required for each card to be generated",
+            "Array of arrays describing which fields are required 
+                for each card to be generated",
             [
               "array index, 0, 1, ...",
               '? string, "all"',
@@ -190,11 +192,13 @@ Here is an annotated description of the JSONObjects in the models field of the `
     sortf : "Integer specifying which field is used for sorting in the browser",
     tags : "Anki saves the tags of the last added note to the current model",
     tmpls : [
-              "JSONArray containing a JSONObject of the CardTemplate for each card in the model",
+              "JSONArray containing object of CardTemplate for each card in model",
               {
                 afmt : "answer template string",
-                bafmt : "browser answer format: used for displaying answer in browser",
-                bqfmt : "browser question format: used for displaying question in browser",
+                bafmt : "browser answer format: 
+                          used for displaying answer in browser",
+                bqfmt : "browser question format: 
+                          used for displaying question in browser",
                 did : "null",
                 name : "template name",
                 ord : "template number, see flds",
