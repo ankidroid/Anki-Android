@@ -14,7 +14,8 @@ CREATE TABLE cards (
     did             integer not null,
       -- deck id (available in col table)
     ord             integer not null,
-      -- ordinal : identifies which of the card templates it corresponds to (from 0 to num templates - 1)
+      -- ordinal : identifies which of the card templates it corresponds to 
+      --   valid values are from 0 to num templates - 1
     mod             integer not null,
       -- modificaton time as epoch seconds
     usn             integer not null,
@@ -120,7 +121,7 @@ CREATE TABLE notes (
       -- unused
 );
 
--- revlog is a review history; it has a row for every single review you've ever done!
+-- revlog is a review history; it has a row for every review you've ever done!
 CREATE TABLE revlog (
     id              integer primary key,
        -- epoch-seconds timestamp of when you did the review
