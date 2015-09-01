@@ -9,7 +9,7 @@ Thanks to @sartak and @fasiha for [starting to make this](https://gist.github.co
 CREATE TABLE cards (
     id              integer primary key,
       -- the epoch milliseconds of when the card was created
-    nid             integer not null,
+    nid             integer not null,--    
       -- notes.id
     did             integer not null,
       -- deck id (available in col table)
@@ -19,17 +19,17 @@ CREATE TABLE cards (
       -- modificaton time as epoch seconds
     usn             integer not null,
       -- update sequence number : used to figure out diffs when syncing. 
-      --        value of -1 indicates changes that need to be pushed to server. 
-      --        usn < server usn indicates changes that need to be pulled from server.
+      --   value of -1 indicates changes that need to be pushed to server. 
+      --   usn < server usn indicates changes that need to be pulled from server.
     type            integer not null,
       -- 0=new, 1=learning, 2=due
     queue           integer not null,
       -- Same as type, but -1=suspended, -2=user buried, -3=sched buried
     due             integer not null,
      -- Due is used differently for different queues: 
-     --     new queue: note id or random int
-     --     rev queue: integer day
-     --     lrn queue: integer timestamp
+     --   new queue: note id or random int
+     --   rev queue: integer day
+     --   lrn queue: integer timestamp
     ivl             integer not null,
       -- interval (used in SRS algorithm)
     factor          integer not null,
@@ -38,13 +38,13 @@ CREATE TABLE cards (
       -- number of reviews
     lapses          integer not null,
       -- the number of times the card went from a "was answered correctly" 
-      --     to "was answered incorrectly" state
+      --   to "was answered incorrectly" state
     left            integer not null,
       -- reps left till graduation
     odue            integer not null,
-      -- original due: only used when the card is currently in a filtered deck to keep track of original
+      -- original due: only used when the card is currently in filtered deck
     odid            integer not null,
-      -- original did: only used when the card is currently in a filtered deck to keep track of original
+      -- original did: only used when the card is currently in filtered deck
     flags           integer not null,
       -- currently unused
     data            text not null
@@ -61,14 +61,14 @@ CREATE TABLE col (
       -- last modified in milliseconds
     scm             integer not null,
       -- schema mod time: time when "schema" was modified. 
-      --     If the server scm is different from the client scm a full-sync is required
+      --   If server scm is different from the client scm a full-sync is required
     ver             integer not null,
       -- version
     dty             integer not null,
       -- dirty: unused, set to 0
     usn             integer not null,
       -- update sequence number: used for finding diffs when syncing. 
-      --     See usn in cards table for more details.
+      --   See usn in cards table for more details.
     ls              integer not null,
       -- "last sync time"
     conf            text not null,
@@ -104,12 +104,12 @@ CREATE TABLE notes (
       -- modification timestamp, epoch seconds
     usn             integer not null,
       -- update sequence number: for finding diffs when syncing.
-      --     See the description in the cards table for more info
+      --   See the description in the cards table for more info
     tags            text not null,
       -- space-separated string of tags. 
-      --     includes space at the beginning and end of the field, for LIKE "% tag %" queries
+      --   includes space at the beginning and end, for LIKE "% tag %" queries
     flds            text not null,
-      -- the values of the fields in this note. separated by 0x1f (31) separation character.
+      -- the values of the fields in this note. separated by 0x1f (31) character.
     sfld            integer not null,
       -- sort field: used for quick sorting and checking uniqueness
     csum            integer not null,
@@ -128,9 +128,10 @@ CREATE TABLE revlog (
        -- cards.id
     usn             integer not null,
         -- update sequence number: for finding diffs when syncing. 
-        --     See the description in the cards table for more info
+        --   See the description in the cards table for more info
     ease            integer not null,
-       -- which button you pushed to score your recall. 1(wrong), 2(hard), 3(ok), 4(easy)
+       -- which button you pushed to score your recall. 
+       --   1(wrong), 2(hard), 3(ok), 4(easy)
     ivl             integer not null,
        -- interval
     lastIvl         integer not null,
