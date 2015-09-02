@@ -50,13 +50,13 @@
   <string name="stats_cards">Kart</string>
   <string name="stats_cards_intervals">Verilen aralıktaki kartlar</string>
   <string name="stats_cumulative_cards">Toplam Kart</string>
-  <string name="stats_cumulative_answers">Toplam Yanıt</string>
+  <string name="stats_cumulative_answers">Toplam cevap</string>
   <string name="stats_cumulative_time_minutes">Toplam Dakika</string>
   <string name="stats_cumulative_time_hours">Toplam Saat</string>
   <string name="stats_cumulative">Kümülatif</string>
   <string name="stats_cumulative_percentage">Toplam Yüzde</string>
   <string formatted="false" name="stats_cumulative_correct_percentage">Toplam Doğru %</string>
-  <string name="stats_answers">Yanıt</string>
+  <string name="stats_answers">Cevap</string>
   <string name="stats_minutes">Dakika</string>
   <string name="stats_hours">Saat</string>
   <string name="stats_percentage">Yüzde</string>
@@ -68,11 +68,11 @@
   <string name="stats_day_of_week">Gün</string>
   <string formatted="false" name="stats_percentage_correct">% Doğru</string>
   <string name="stats_reviews">Yorumlar</string>
-  <string name="stats_answer_type">Yanıt türü</string>
+  <string name="stats_answer_type">Cevap türü</string>
   <string name="stats_today_again_count">Tekrar Sayın: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; doğru)</string>
   <string name="stats_today_type_breakdown">Öğrenme: &lt;b&gt;%1$s&lt;/b&gt;, Tekrarlama: &lt;b&gt;%2$s&lt;/b&gt;, Yeniden Öğrenme: &lt;b&gt;%3$s&lt;/b&gt;, Süzülmüş: &lt;b&gt;%4$s&lt;/b&gt;</string>
-  <string name="stats_today_mature_cards">Olgun kartlarda doğru yanıtlar: %1$d/%2$d (%3$.1f%%)</string>
+  <string name="stats_today_mature_cards">Olgun kartlarda doğru cevap: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Bugün olgun bir kart çalışılmadı.</string>
   <string name="deck_summary_all_decks">Tüm desteler</string>
   <string name="stats_select_time_scale">Zaman ölçeği seçin</string>

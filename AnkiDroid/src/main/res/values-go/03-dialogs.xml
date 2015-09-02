@@ -39,12 +39,12 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">Check database?</string>
-  <string name="check_db_warning">This may take a long time</string>
-  <string name="check_db_acknowledge">Database checked</string>
+  <string name="check_db_title">Saihv gibahuzd?</string>
+  <string name="check_db_warning">Lagga hveila wairþai mahts ist</string>
+  <string name="check_db_acknowledge">Gibahuzd gasaihvan</string>
   <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Usnim wikon</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
+  <string name="delete_deck_default_deck">Biuhto galisa fraqistjan mahts nist.</string>
   <string name="delete_deck_title">Usnim wikon?</string>
   <plurals name="delete_deck_message">
     <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>

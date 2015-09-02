@@ -39,29 +39,29 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="decks">Decks</string>
-  <string name="card_browser">Card browser</string>
-  <string name="statistics">Statistics</string>
-  <string name="settings">Settings</string>
-  <string name="help">Help</string>
-  <string name="send_feedback">Send feedback</string>
-  <string name="studyoptions_title">Laiseinamahteis</string>
+  <string name="decks">Galisos</string>
+  <string name="card_browser">Sokja faur galisos</string>
+  <string name="statistics">Raþjons</string>
+  <string name="settings">Gawaleinos</string>
+  <string name="help">Hilpa</string>
+  <string name="send_feedback">Sandei staua</string>
+  <string name="studyoptions_title">Laiseinimahteis</string>
   <string name="studyoptions_due_today">Nauh himma daga:</string>
   <string name="studyoptions_new_total">Allos niujos kartos:</string>
   <string name="studyoptions_total_cards">Allos kartos:</string>
   <string name="studyoptions_eta">Beidanda ƕeila (min):</string>
   <string name="studyoptions_start">Laiseins</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">nauh %1$d karta (%2$s)</item>
+    <item quantity="other">nauh %1$d kartos (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
-    <item quantity="other">%d minutes left</item>
+    <item quantity="one">Nauh %d minutus</item>
+    <item quantity="other">Nauh %d minutjus</item>
   </plurals>
   <plurals name="studied_cards_today">
-    <item quantity="one">Studied %1$d card in %2$s today</item>
-    <item quantity="other">Studied %1$d cards in %2$s today</item>
+    <item quantity="one">Galaisida %1$d karta in %2$s himma daga</item>
+    <item quantity="other">Galaisida %1$d kartos in %2$s himma daga</item>
   </plurals>
   <string name="type_answer_hint">Melei andahaft</string>
   <string name="show_answer">Ataugei andahaft</string>
@@ -94,19 +94,19 @@
   <string name="delete_note_message">Wileizu bi sunjai þo melein jah allos kartos is usniman?\n%s</string>
   <string name="menu_select">Walei bokos</string>
   <string name="menu_search">Gasokei in %1$s</string>
-  <string name="menu_mark_note">Mark note</string>
-  <string name="menu_unmark_note">Unmark note</string>
+  <string name="menu_mark_note">Gatarhei melein</string>
+  <string name="menu_unmark_note">Ungatarhei melein</string>
   <string name="new_deck">Skapei wikon</string>
   <string name="create">Skapei</string>
   <string name="new_dynamic_deck">Skapei wikon mi</string>
   <string name="night_mode">Nahtamodus</string>
-  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <string name="directory_inaccessible">AnkiDroid staþ atgaggan mahts nist</string>
   <string name="time_quantity_seconds">%d s</string>
   <string name="time_quantity_minutes">%d min</string>
-  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_hours">%d hv</string>
   <string name="time_quantity_days">%d d</string>
-  <string name="time_quantity_months">%.1f mo</string>
-  <string name="time_quantity_years">%.1f yr</string>
+  <string name="time_quantity_months">%.1f men</string>
+  <string name="time_quantity_years">%.1f jer</string>
   <string name="later">Spediza</string>
   <string name="rebuild_cram_deck">Aftra gatimrjand fulla wikon&#8230;</string>
   <string name="rebuild_cram_label">Gatimrei aftra</string>

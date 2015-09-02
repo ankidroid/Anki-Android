@@ -68,7 +68,7 @@
     <item>Alanı sırala</item>
   </string-array>
   <string-array name="browser_column2_headings">
-    <item>Yanıt</item>
+    <item>Cevap</item>
     <item>Kart</item>
     <item>Deste</item>
     <item>Not</item>
@@ -157,28 +157,28 @@
   <string name="lookup_hint">Metni kopyaladıktan sonra, arama simgesini göstermek için bilgi kartının üzerine dokunun</string>
   <string name="add_content_showcase_text">Başlamak için, çalışacak yeni birşeyler eklemeye + düğmesine dokunun.\n\nKılavuzu görmek için \"Yardım\"a basın.</string>
   <plurals name="time_span_seconds">
-    <item quantity="one">%s second</item>
-    <item quantity="other">%s seconds</item>
+    <item quantity="one">%s saniye</item>
+    <item quantity="other">%s saniye</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="one">%s minute</item>
-    <item quantity="other">%s minutes</item>
+    <item quantity="one">%s dakika</item>
+    <item quantity="other">%s dakika</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="one">%s hour</item>
-    <item quantity="other">%s hours</item>
+    <item quantity="one">%s saat</item>
+    <item quantity="other">%s saat</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="one">%s day</item>
-    <item quantity="other">%s days</item>
+    <item quantity="one">%s gün</item>
+    <item quantity="other">%s gün</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="one">%s month</item>
-    <item quantity="other">%s months</item>
+    <item quantity="one">%s ay</item>
+    <item quantity="other">%s ay</item>
   </plurals>
   <plurals name="time_span_years">
-    <item quantity="one">%s year</item>
-    <item quantity="other">%s years</item>
+    <item quantity="one">%s yıl</item>
+    <item quantity="other">%s yıl</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
 </resources>

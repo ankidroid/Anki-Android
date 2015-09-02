@@ -42,28 +42,28 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>Không làm gì</item>
-    <item>Show answer</item>
+    <item>Cho xem đáp án</item>
     <item>Answer button 1</item>
     <item>Answer button 2</item>
     <item>Answer button 3</item>
     <item>Answer button 4</item>
     <item>Answer recommended (green)</item>
     <item>Answer better than recommended</item>
-    <item>Undo</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Phục hồi</item>
+    <item>Sửa ghi chú</item>
+    <item>Đánh dấu ghi chú</item>
     <item>Biểu thức tra cứu</item>
     <item>Tạm dừng thẻ</item>
     <item>Tạm ngưng thẻ</item>
-    <item>Delete note</item>
+    <item>Xoá ghi chú</item>
     <item>Play media</item>
     <item>Abort learning</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Ẩn ghi chú</item>
+    <item>Tạm dừng ghi chú</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Suspend card</item>
-    <item>Tag only</item>
+    <item>Tạm dừng thẻ</item>
+    <item>Chỉ có thẻ</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>New cards in random order</item>
@@ -71,7 +71,7 @@
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
     <item>Oldest seen first</item>
-    <item>Random</item>
+    <item>Ngẫu nhiên</item>
     <item>Increasing intervals</item>
     <item>Decreasing intervals</item>
     <item>Most lapsed</item>
@@ -81,25 +81,25 @@
     <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>Increase today’s new card limit</item>
+    <item>Tăng giới hạn thẻ mới cho ngày hôm nay</item>
     <item>Increase today’s review card limit</item>
-    <item>Review forgotten cards</item>
-    <item>Review ahead</item>
+    <item>Xem lại thẻ bị quên</item>
+    <item>Duyệt lại trước</item>
     <item>Study a random selection of cards</item>
-    <item>Preview new cards</item>
+    <item>Xem trước thẻ mới</item>
     <item>Limit to particular tags</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
-    <item>Decide by note type</item>
+    <item>Sử dụng xấp thẻ hiện tại</item>
+    <item>Quyết định theo kiểu ghi chú</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>Trộn thẻ mới và đánh giá</item>
+    <item>Thẻ mới sau khi đánh giá</item>
+    <item>Thẻ mới trước khi đánh giá</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>Luôn cho phép</item>
   </string-array>
 </resources>

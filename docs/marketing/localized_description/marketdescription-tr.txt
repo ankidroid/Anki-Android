@@ -19,7 +19,7 @@ Masaüstü uygulaması Anki veya doğrudan AnkiDroid yoluyla malzeme ekleyin. Uy
 • açık kaynaklı
 
 ★ Ek özellikler:
-• yanıtları yazma (isteğe bağlı)
+• cevapları yazma (isteğe bağlı)
 • yazı tahtası
 • kart düzenleyici/ekleyici
 • kart tarayıcı

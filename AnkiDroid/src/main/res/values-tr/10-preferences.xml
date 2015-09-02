@@ -46,7 +46,7 @@
   <string name="pref_cat_reviewer_behaviour">Davranış</string>
   <string name="pref_cat_flashcard">Ekran</string>
   <string name="pref_cat_whiteboard">Yazı tahtası</string>
-  <string name="pref_cat_automatic_display">Yanıtı Otomatik Göster</string>
+  <string name="pref_cat_automatic_display">Cevabı otomatik göster</string>
   <string name="pref_cat_fonts">Fontlar</string>
   <string name="pref_cat_fonts_summ">Varsayılan fontu değiştir</string>
   <string name="pref_cat_gestures">Jestler</string>
@@ -62,8 +62,8 @@
   <string name="whiteboard_stroke_width">Kontur genişliği</string>
   <string name="whiteboard_black">Tek renkli konturlar</string>
   <string name="whiteboard_black_summ">Daha az hafıza kullanır, ama gece modunda çalışmaz</string>
-  <string name="write_answers_disable">Yanıtı yazmayı devredışı bırak</string>
-  <string name="write_answers_disable_summ">\"Yanıtı yazın\" alanları içeren kartlarda klavyenin çıkmasını engeller</string>
+  <string name="write_answers_disable">Cevabı yazmayı devredışı bırak</string>
+  <string name="write_answers_disable_summ">\"Cevabı yaz\" alanları içeren kartlarda klavyenin çıkmasını engeller</string>
   <string name="text_selection_click">Uzun basma çözümü</string>
   <string name="text_selection_click_summ">Metin seçimini basılı tutarak başlatamıyorsanız bunu etkinleştirin</string>
   <string name="dictionary">Sözlüğe bak</string>
@@ -73,15 +73,15 @@
   <string name="reset_confirmation">Bütün durumlar sıfırlandı</string>
   <string name="card_zoom">Kart yakınlaştırma</string>
   <string name="image_zoom">Görüntü yakınlaştırma</string>
-  <string name="button_size">Yanıt düğmesi boyutu</string>
+  <string name="button_size">Cevap düğmesi büyüklüğü</string>
   <string name="card_browser_font_size">Kart tarayıcısı font ölçeği</string>
   <string name="col_path">Koleksiyon yolu</string>
   <string name="fullscreen_review">Tamekran modu</string>
   <string name="fullscreen_review_summ">Sistem durum çubuğunu gizle</string>
   <string name="gestures">Jestleri etkinleştir</string>
-  <string name="gestures_summ">Yanıtlama ve kartları düzenleme gibi eylemlere jestler ata.</string>
-  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
-  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
+  <string name="gestures_summ">Cevap verme ve kart düzenleme gibi eylemlere jestler ata.</string>
+  <string name="gestures_hide_answer_buttons">Cevap düğmelerini gizle</string>
+  <string name="gestures_hide_answer_buttons_summ">Jestler açıkken cevap düğmelerini gösterme</string>
   <string name="gestures_swipe_up">Yukarı sürükleme</string>
   <string name="gestures_swipe_down">Aşağı sürükleme</string>
   <string name="gestures_swipe_left">Sola sürükleme</string>
@@ -97,15 +97,14 @@
   <string name="double_scrolling_gap_summ">eOkuyucu\'yla kaydırma mesafesini iki katına çıkarmak istiyorsanız bunu etkinleştirin</string>
   <string name="swipe_sensitivity">Kaydırma duyarlılığı</string>
   <string name="tts">Metin okuma</string>
-  <string name="tts_summ">Ses dosyası bulunmuyorsa soruyu ve yanıtı sesli okur</string>
+  <string name="tts_summ">Ses dosyası bulunmuyorsa soruyu ve cevabı sesli okur</string>
   <string name="sync_fetch_missing_media">Eşitlemede medyayı aktar</string>
   <string name="sync_fetch_missing_media_summ">Eşitlerken eksik medyayı otomatik olarak aktar</string>
   <string name="sync_account">AnkiWeb hesabı</string>
   <string name="sync_account_summ_logged_out">Giriş yapılmamış</string>
   <string name="sync_account_summ_logged_in">%s</string>
-  <string name="automatic_sync_choice">Automatic synchronization</string>
-  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
+  <string name="automatic_sync_choice">Otomatik senkronizasyon</string>
+  <string name="automatic_sync_choice_summ">Uygulama açılış/kapanışında son senkronizasyon 10 dakikadan daha önceydiyse otomatik olarak senkronize et.</string>
   <string name="fix_hebrew_text">İbranice ünlüler için düzeltme</string>
   <string name="fix_hebrew_text_summ">İbrânice sesli harflerin düzgün gözükmesi için çözüm</string>
   <string name="fix_hebrew_instructions">Bu ayar İbrânice yazılarda sesli harflerin düzgün gösterilmesi için Android\'in RTL algoritmasını atlar.\n\nBunun işe yaraması için, Tohu.tff fontunu indirip kendiniz şu klasöre kopyalamanız gerekiyor:\n%s/fonts/\n\nKartlarınızda bir değişiklik yapmanız gerekmez.</string>
@@ -121,9 +120,9 @@
   <string name="notification_minimum_cards_due">Çalışılacak en az %d kart olduğunda</string>
   <string name="notification_minimum_cards_due_vibrate">Titreş</string>
   <string name="notification_minimum_cards_due_blink">Işığı yanıp söndür</string>
-  <string name="timeout_answer_text">Yanıtı otomatik göster</string>
-  <string name="timeout_answer_summ">Yanıtı kullanıcı girişi olmadan otomatik göster</string>
-  <string name="timeout_answer_seconds">Yanıtı gösterme zamanı</string>
+  <string name="timeout_answer_text">Cevabı otomatik göster</string>
+  <string name="timeout_answer_summ">Cevabı kullanıcı girdisi olmadan otomatik göster</string>
+  <string name="timeout_answer_seconds">Cevabı gösterme zamanı</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Sonraki soruyu gösterme zamanı</string>
   <string name="timeout_question_seconds_summ">XXX s</string>
@@ -134,7 +133,7 @@
   <string name="vertical_centering_summ">Kartların içeriğini dikey olarak ortala</string>
   <string name="pref_backup_max">En fazla yedek sayısı</string>
   <string name="show_estimates">Düğmede zaman göster</string>
-  <string name="show_estimates_summ">Yanıt düğmelerinin üzerinde sonraki çıkma zamanını göster</string>
+  <string name="show_estimates_summ">Cevap düğmelerinin üzerinde sonraki çıkma zamanını göster</string>
   <string name="show_progress">Kalanı göster</string>
   <string name="show_progress_summ">Kalan kart sayısını göster</string>
   <string name="use_current">Yeni kartlar için deste</string>
@@ -186,9 +185,9 @@
   <string name="deck_conf_leech_thres">Asalak Eşiği</string>
   <string name="deck_conf_fails">XXX hatâ</string>
   <string name="deck_conf_leech_action">Asalak Eylemi</string>
-  <string name="deck_conf_max_time">Maksimum yanıt süresi</string>
+  <string name="deck_conf_max_time">Maksimum cevap süresi</string>
   <string name="deck_conf_seconds">XXX saniye</string>
-  <string name="deck_conf_timer">Yanıtlama zamanlayıcısını göster</string>
+  <string name="deck_conf_timer">Cevap verme zamanlayıcısını göster</string>
   <string name="deck_conf_autoplay">Sesi otomatik oynat</string>
   <string name="deck_conf_replayq">Tekrar Sor</string>
   <string name="deck_conf_replayq_summ">Cevap gösterildiği zaman, hem sesi hem de soru ve cevabı tekrarla</string>
@@ -217,7 +216,7 @@
   <string name="deck_conf_cram_limit">Sınırla:</string>
   <string name="deck_conf_cram_order">kart seçme ölçütü:</string>
   <string name="deck_conf_cram_reschedule">Zamanını değiştir</string>
-  <string name="deck_conf_cram_reschedule_summ">Bu destede yanıtlarıma göre kartların zamanını değiştir</string>
+  <string name="deck_conf_cram_reschedule_summ">Bu destede cevaplarıma göre kartların zamanını değiştir</string>
   <string name="deck_conf_cram_steps">Kişisel adımlar</string>
   <string name="deck_conf_cram_steps_summ">Kendi adımlarınızı tanımlayın</string>
 </resources>

@@ -66,7 +66,7 @@
   <string name="card_browser_change_display_order_title">Gösterme sırasını seç</string>
   <string name="card_browser_change_display_order_reverse">İki kez tersine çevirmek için bir alan seçin.</string>
   <string name="card_details_question">Soru</string>
-  <string name="card_details_answer">Yanıt</string>
+  <string name="card_details_answer">Cevap</string>
   <string name="card_details_due">Vade</string>
   <string name="card_details_tags">Etiketler</string>
   <string name="card_browser_filtering_cards">Kartlar filtreleniyor&#8230; \nİptâl etmek için geri düğmesine basın</string>

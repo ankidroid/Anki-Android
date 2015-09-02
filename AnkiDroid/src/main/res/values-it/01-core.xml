@@ -60,8 +60,8 @@
     <item quantity="other">Restano %d minuti</item>
   </plurals>
   <plurals name="studied_cards_today">
-    <item quantity="one">Studied %1$d card in %2$s today</item>
-    <item quantity="other">Studied %1$d cards in %2$s today</item>
+    <item quantity="one">Oggi hai studiato %1$d carta in %2$s</item>
+    <item quantity="other">Oggi hai studiato %1$d carte in %2$s</item>
   </plurals>
   <string name="type_answer_hint">Digita la risposta</string>
   <string name="show_answer">Mostra la risposta</string>
@@ -104,9 +104,9 @@
   <string name="time_quantity_seconds">%d s</string>
   <string name="time_quantity_minutes">%d min</string>
   <string name="time_quantity_hours">%d h</string>
-  <string name="time_quantity_days">%d d</string>
-  <string name="time_quantity_months">%.1f mo</string>
-  <string name="time_quantity_years">%.1f yr</string>
+  <string name="time_quantity_days">%d g</string>
+  <string name="time_quantity_months">%.1f me</string>
+  <string name="time_quantity_years">%.1f a</string>
   <string name="later">Più tardi</string>
   <string name="rebuild_cram_deck">Ricreo mazzo per lo studio focalizzato.\nAttendi...</string>
   <string name="rebuild_cram_label">Ricrea</string>

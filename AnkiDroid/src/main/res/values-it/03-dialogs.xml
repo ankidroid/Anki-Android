@@ -44,11 +44,11 @@
   <string name="check_db_acknowledge">Database controllato</string>
   <string name="check_db_acknowledge_shrunk">Database controllato ed ottimizzato.\nRidotto di %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Elimina il mazzo</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
+  <string name="delete_deck_default_deck">Il mazzo predefinito non può essere eliminato.</string>
   <string name="delete_deck_title">Elimina il mazzo</string>
   <plurals name="delete_deck_message">
-    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
-    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="one">Eliminare tutte le carte in %1$s? Esso contiene %2$d carta.</item>
+    <item quantity="other">Eliminare tutte le carte in %1$s? Esso contiene %2$d carte.</item>
   </plurals>
   <string name="delete_cram_deck_message">Sei sicuro di voler riportare tutte le carte in %s nel loro mazzo originale?</string>
   <string name="no_tts_available_message">Nessuna lingua per la sintesi vocale disponibile</string>

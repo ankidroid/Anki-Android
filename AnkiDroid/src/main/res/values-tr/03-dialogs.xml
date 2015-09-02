@@ -44,11 +44,11 @@
   <string name="check_db_acknowledge">Veritabanı kontrol edildi</string>
   <string name="check_db_acknowledge_shrunk">Veritabanı kontrol ve optimize edildi.\n%d KB küçültüldü.</string>
   <string name="contextmenu_deckpicker_delete_deck">Desteyi Sil</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
+  <string name="delete_deck_default_deck">Varsayılan deste silinemez.</string>
   <string name="delete_deck_title">Desteyi Sil</string>
   <plurals name="delete_deck_message">
-    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
-    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="one">%1$s destesindeki bütün kartlar silinsin mi? İçinde %2$d kart var.</item>
+    <item quantity="other">%1$s destesindeki bütün kartlar silinsin mi? İçinde %2$d kart var.</item>
   </plurals>
   <string name="delete_cram_deck_message">Tüm kartları orijinal destelerine %s geri göndermek istediğinizden emin misiniz?</string>
   <string name="no_tts_available_message">Mevcut metin okuma dili yok</string>

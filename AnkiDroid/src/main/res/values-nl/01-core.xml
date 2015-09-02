@@ -106,7 +106,7 @@
   <string name="time_quantity_hours">%d h</string>
   <string name="time_quantity_days">%d d</string>
   <string name="time_quantity_months">%.1f mo</string>
-  <string name="time_quantity_years">%.1f yr</string>
+  <string name="time_quantity_years">%.1f jr</string>
   <string name="later">Later</string>
   <string name="rebuild_cram_deck">Stampset wordt opnieuw opgebouwd.\nEven geduld...</string>
   <string name="rebuild_cram_label">Opnieuw opbouwen</string>
