@@ -47,6 +47,9 @@
         <item name="navDrawerImage">@drawable/nav_drawer_logo</item>
         <item name="attachFileImage">@drawable/ic_attachment_black_24dp</item>
         <item name="upDownImage">@drawable/ic_import_export_black_24dp</item>
+        <item name="dialogErrorIcon">@drawable/ic_warning_black_36dp</item>
+        <item name="dialogSyncErrorIcon">@drawable/ic_sync_problem_black_36dp</item>
+        <item name="dialogSendIcon">@drawable/ic_send_black_36dp</item>
     </style>
 
     <style name="Theme_White_Statistics" parent="App_Theme_White">

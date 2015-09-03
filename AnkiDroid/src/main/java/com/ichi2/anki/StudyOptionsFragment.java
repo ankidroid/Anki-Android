@@ -381,11 +381,8 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
      */
     private void showCustomStudyContextMenu() {
         Resources res = getResources();
-        Drawable icon = res.getDrawable(R.drawable.ic_sort_black_36dp);
-        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
         MaterialDialog dialog = new MaterialDialog.Builder(this.getActivity())
                 .title(res.getString(R.string.custom_study))
-                .icon(icon)
                 .cancelable(true)
                 .items(res.getStringArray(R.array.custom_study_options_labels))
                 .itemsCallback(new MaterialDialog.ListCallback() {

@@ -93,8 +93,6 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
         builder.cancelable(true)
                 .title(getTitle());
-        Drawable icon_alert = res.getDrawable(R.drawable.ic_warning_black_36dp);
-        icon_alert.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
 
         boolean sqliteInstalled = false;
         try {
@@ -111,7 +109,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 // the activity
                 return builder.cancelable(false)
                         .content(getMessage())
-                        .icon(icon_alert)
+                        .iconAttr(R.attr.dialogErrorIcon)
                         .positiveText(res.getString(R.string.error_handling_options))
                         .negativeText(res.getString(R.string.close))
                         .callback(new MaterialDialog.ButtonCallback() {
@@ -134,7 +132,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 MaterialDialog dialog = builder
                         .cancelable(false)
                         .content(getMessage())
-                        .icon(icon_alert)
+                        .iconAttr(R.attr.dialogErrorIcon)
                         .positiveText(res.getString(R.string.error_handling_options))
                         .negativeText(res.getString(R.string.answering_error_report))
                         .neutralText(res.getString(R.string.close))
@@ -197,7 +195,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                     mRepairValues[i] = values.get(i);
                 }
 
-                dialog = builder.icon(icon_alert)
+                dialog = builder.iconAttr(R.attr.dialogErrorIcon)
                         .negativeText(res.getString(R.string.dialog_cancel))
                         .items(titles)
                         .itemsCallback(new MaterialDialog.ListCallback() {
@@ -236,7 +234,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
             case DIALOG_REPAIR_COLLECTION:
                 // Allow user to run BackupManager.repairCollection()
                 return builder.content(getMessage())
-                        .icon(icon_alert)
+                        .iconAttr(R.attr.dialogErrorIcon)
                         .positiveText(res.getString(R.string.dialog_positive_repair))
                         .negativeText(res.getString(R.string.dialog_cancel))
                         .callback(new MaterialDialog.ButtonCallback() {
@@ -273,10 +271,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                         dates[i] = mBackups[i].getName().replaceAll(
                                 ".*-(\\d{4}-\\d{2}-\\d{2})-(\\d{2})-(\\d{2}).apkg", "$1 ($2:$3 h)");
                     }
-                    Drawable icon_input = res.getDrawable(R.drawable.ic_input_black_36dp);
-                    icon_input.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
                     builder.title(res.getString(R.string.backup_restore_select_title))
-                            .icon(icon_input)
                             .negativeText(res.getString(R.string.dialog_cancel))
                             .callback(new MaterialDialog.ButtonCallback() {
                                 @Override
