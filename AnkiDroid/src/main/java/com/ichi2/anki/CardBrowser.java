@@ -194,11 +194,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
                 case CardBrowserContextMenu.CONTEXT_MENU_DELETE:
                     Resources res = getResources();
-                    Drawable icon = res.getDrawable(R.drawable.ic_warning_black_36dp);
-                    icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
                     new MaterialDialog.Builder(CardBrowser.this)
                             .title(res.getString(R.string.delete_card_title))
-                            .icon(icon)
+                            .iconAttr(R.attr.dialogErrorIcon)
                             .content(res.getString(R.string.delete_card_message, getCards().get(mPositionInCardsList)
                                     .get("sfld")))
                             .positiveText(res.getString(R.string.dialog_positive_delete))

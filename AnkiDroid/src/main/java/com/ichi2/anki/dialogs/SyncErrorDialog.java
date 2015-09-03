@@ -69,10 +69,8 @@ public class SyncErrorDialog extends AsyncDialogFragment {
 
         switch (getArguments().getInt("dialogType")) {
             case DIALOG_USER_NOT_LOGGED_IN_SYNC:
-                Drawable icon = res().getDrawable(R.drawable.ic_sync_problem_black_36dp);
-                icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
                 // User not logged in; take them to login screen
-                return builder.icon(icon)
+                return builder.iconAttr(R.attr.dialogSyncErrorIcon)
                         .positiveText(res().getString(R.string.log_in))
                         .negativeText(res().getString(R.string.dialog_cancel))
                         .callback(new MaterialDialog.ButtonCallback() {
@@ -85,9 +83,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
 
             case DIALOG_CONNECTION_ERROR:
                 // Connection error; allow user to retry or cancel
-                icon = res().getDrawable(R.drawable.ic_sync_problem_black_36dp);
-                icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
-                return builder.icon(icon)
+                return builder.iconAttr(R.attr.dialogSyncErrorIcon)
                         .positiveText(res().getString(R.string.retry))
                         .negativeText(res().getString(R.string.dialog_cancel))
                         .callback(new MaterialDialog.ButtonCallback() {
@@ -106,9 +102,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
 
             case DIALOG_SYNC_CONFLICT_RESOLUTION:
                 // Sync conflict; allow user to cancel, or choose between local and remote versions
-                icon = res().getDrawable(R.drawable.ic_sync_problem_black_36dp);
-                icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
-                return builder.icon(icon)
+                return builder.iconAttr(R.attr.dialogSyncErrorIcon)
                         .positiveText(res().getString(R.string.sync_conflict_local))
                         .negativeText(res().getString(R.string.sync_conflict_remote))
                         .neutralText(res().getString(R.string.dialog_cancel))

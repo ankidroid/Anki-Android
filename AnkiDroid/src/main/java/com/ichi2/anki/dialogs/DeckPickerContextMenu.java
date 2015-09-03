@@ -36,8 +36,6 @@ public class DeckPickerContextMenu extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Resources res = getResources();
-        //Drawable icon = res.getDrawable(R.drawable.ic_settings_applications_black_36dp);
-        //icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
         String[] entries = new String[4];
         entries[CONTEXT_MENU_RENAME_DECK] = res.getString(R.string.contextmenu_deckpicker_rename_deck);
         entries[CONTEXT_MENU_DECK_OPTIONS] = res.getString(R.string.study_options);
@@ -45,7 +43,6 @@ public class DeckPickerContextMenu extends DialogFragment {
         entries[CONTEXT_MENU_EXPORT_DECK] = res.getString(R.string.export);
         return new MaterialDialog.Builder(getActivity())
                 .title(getArguments().getString("dialogTitle"))
-                //.icon(icon)
                 .cancelable(true)
                 .autoDismiss(false)
                 .items(entries)

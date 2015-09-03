@@ -103,11 +103,8 @@ public class ReadText {
         final MaterialDialog.Builder builder = new MaterialDialog.Builder(mReviewer.get());
         if (availableTtsLocales.size() == 0) {
             Timber.w("ReadText.textToSpeech() no TTS languages available");
-            Drawable icon = res.getDrawable(R.drawable.ic_warning_black_36dp);
-            icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
-            // .title(res.getString(R.string.no_tts_available_title));
             builder.content(res.getString(R.string.no_tts_available_message))
-                    .icon(icon)
+                    .iconAttr(R.attr.dialogErrorIcon)
                     .positiveText(res.getString(R.string.dialog_ok));
         } else {
             ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();

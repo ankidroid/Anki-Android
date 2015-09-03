@@ -26,15 +26,12 @@ public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final String exportPath = getArguments().getString("exportPath");
-        Resources res = getResources();
-        Drawable icon = res.getDrawable(R.drawable.ic_send_black_36dp);
-        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
         return new MaterialDialog.Builder(getActivity())
                 .title(getNotificationTitle())
                 .content(getNotificationMessage())
-                .icon(icon)
-                .positiveText(res.getString(R.string.dialog_ok))
-                .negativeText(res.getString(R.string.dialog_cancel))
+                .iconAttr(R.attr.dialogSendIcon)
+                .positiveText(R.string.dialog_ok)
+                .negativeText(R.string.dialog_cancel)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {

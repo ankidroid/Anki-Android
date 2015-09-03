@@ -57,4 +57,7 @@
     <attr name="navDrawerImage" format="integer"/>
     <attr name="attachFileImage" format="integer"/>
     <attr name="upDownImage" format="integer"/>
+    <attr name="dialogErrorIcon" format="integer"/>
+    <attr name="dialogSyncErrorIcon" format="integer"/>
+    <attr name="dialogSendIcon" format="integer"/>
 </resources>
