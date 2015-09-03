@@ -77,7 +77,6 @@
   <string name="undo_action_delete">xóa ghi chú</string>
   <string name="undo_action_mark">đánh dấu ghi chú</string>
   <string name="unbury">Sửa lại</string>
-  <string name="finish_operation">Đang hoàn thành nốt hoạt động trước đó (thường là sao lưu).\nChờ chút...</string>
   <string name="contextmenu_deckpicker_rename_deck">Đổi tên tập thẻ</string>
   <string name="menu_add">Thêm</string>
   <string name="menu_add_note">Thêm ghi chú</string>

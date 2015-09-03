@@ -80,7 +80,6 @@
   <string name="undo_action_delete">διαγραφής κάρτας</string>
   <string name="undo_action_mark">μαρκαρίσματος σημείωσης</string>
   <string name="unbury">Unbury</string>
-  <string name="finish_operation">Ολοκλήρωση προηγούμενης διαδικασίας (πιθανότατα δημιουργία αντιγράφων).\nΠαρακαλούμε περιμένετε...</string>
   <string name="contextmenu_deckpicker_rename_deck">Μετονομασία τράπουλας</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>

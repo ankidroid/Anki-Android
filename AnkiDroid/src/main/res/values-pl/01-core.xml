@@ -83,7 +83,6 @@
   <string name="undo_action_delete">usunięcie notatki</string>
   <string name="undo_action_mark">wyróżnienie notatki</string>
   <string name="unbury">Odkop</string>
-  <string name="finish_operation">Kończenie poprzedniej operacji (najprawdopodobniej tworzenie kopii zapasowej).\nProszę czekać...</string>
   <string name="contextmenu_deckpicker_rename_deck">Zmień nazwę talii</string>
   <string name="menu_add">Dodaj</string>
   <string name="menu_add_note">Dodaj notatkę</string>

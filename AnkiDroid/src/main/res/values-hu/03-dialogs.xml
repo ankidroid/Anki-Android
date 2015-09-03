@@ -55,11 +55,11 @@
   <string name="initializing_tts">TTS indítása&#8230;</string>
   <string name="tts_no_tts">Ne beszélj</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Tanulókártyák Androidra</h2>Az AnkiDroid egy tanulókártya kezelő program, ami teljesen kompatibilis az <a href="%2$s">Anki</a> asztali programmal. Segítségükkel létrehozhatsz, letölthetsz és tanulhatsz különböző tartalmakat, mind az AnkiDroiddal, mind pedig az asztali Anki-val, pakliaidat szinkronizálhatod közöttük.]]></item>
-    <item><![CDATA[Segíts, hogy mégjobb legyen az AnkiDroid! Megkérünk, hogy jelents bármiféle bug-ot <a href="%1$s">itt</a>, de új ötleteket is szívesen fogadunk! Használd a <a href="%2$s">wiki</a>-t, és köszönj be a <a href="%3$s">fórumon</a>.]]></item>
-    <item><![CDATA[Az AnkiDroid egy<a href=\"%1$s\"> nyílt forrású szoftver <a/>, így bárki <a href=\"%2$s\"> csatlakozhat</a> a <a href=\"%3$s\"> közreműködőkhöz</a> :-)]]></item>
-    <item><![CDATA[Akkor is segíthetsz, ha nem vagy fejlesztő, pl. az AnkiDroid <a href="%1$s">fordításával</a> a wiki frissítésével, képernyőképekkel, az Anki Desktop-nak juttatott <a href="%2$s">adománnyal</a>, vagy ha blogolsz egyet az AnkiDroidról!]]></item>
-    <item><![CDATA[Az AnkiDroid a <a href="%1$s">GNU-GPL v3 licensz</a> alatt van kiadva, a forráskód <a href="%2$s">itt </a> érhető el.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
+    <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
+    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, <a href=\"%2$s\">donate</a> to Anki Desktop, or blog about AnkiDroid.]]></item>
+    <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Előnézet</string>
   <string name="reset_card_dialog_title">Kártya folyamatát alaphelyzetbe</string>

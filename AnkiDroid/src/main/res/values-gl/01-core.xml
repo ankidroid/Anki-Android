@@ -80,7 +80,6 @@
   <string name="undo_action_delete">eliminar notación</string>
   <string name="undo_action_mark">marcar notación</string>
   <string name="unbury">Unbury</string>
-  <string name="finish_operation">Rematando operación anterior (probabelmente a creación dunha copia de seguranza).\nAgarda por favor...</string>
   <string name="contextmenu_deckpicker_rename_deck">Renomear baralla</string>
   <string name="menu_add">Engadir</string>
   <string name="menu_add_note">Engadir nota</string>

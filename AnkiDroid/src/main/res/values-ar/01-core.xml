@@ -92,7 +92,6 @@
   <string name="undo_action_delete">احذف الملاحظة</string>
   <string name="undo_action_mark">علم الملاحظة</string>
   <string name="unbury">Unbury</string>
-  <string name="finish_operation">الانتهاء من العملية السابقة ( الأكثر احتمالاً إنشاء النسخة الاحتياطية).\n يرجى الانتظار...</string>
   <string name="contextmenu_deckpicker_rename_deck">أعد تسمية الرزمة</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>

@@ -80,7 +80,6 @@
   <string name="undo_action_delete">Not silmeyi</string>
   <string name="undo_action_mark">Not işâretlemeyi</string>
   <string name="unbury">Görünür Yap</string>
-  <string name="finish_operation">Önceki işlem tamamlanıyor (büyük olasılıkla yedekleme).\nLütfen bekleyin...</string>
   <string name="contextmenu_deckpicker_rename_deck">Destenin adını değiştir</string>
   <string name="menu_add">Ekle</string>
   <string name="menu_add_note">Not ekle</string>

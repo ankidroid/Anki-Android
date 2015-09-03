@@ -83,7 +83,6 @@
   <string name="undo_action_delete">Видалити примітку</string>
   <string name="undo_action_mark">Відмітити примітку</string>
   <string name="unbury">Скасувати зрушення</string>
-  <string name="finish_operation">Завершення попередньої операції (найбільш ймовірно, створення резервної копії). \n Будь ласка, зачекайте...</string>
   <string name="contextmenu_deckpicker_rename_deck">Перейменувати колоду</string>
   <string name="menu_add">Додати</string>
   <string name="menu_add_note">Додати примітку</string>

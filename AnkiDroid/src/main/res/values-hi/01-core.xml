@@ -80,7 +80,6 @@
   <string name="undo_action_delete">नोट हटाएँ</string>
   <string name="undo_action_mark">मार्क नोट करें</string>
   <string name="unbury">Unbury</string>
-  <string name="finish_operation">परिष्करण के पिछली कार्रवाई (सबसे अधिक संभावना बैकअप के निर्माण). \nPlease रुको...</string>
   <string name="contextmenu_deckpicker_rename_deck">डेक का नाम बदलें</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>

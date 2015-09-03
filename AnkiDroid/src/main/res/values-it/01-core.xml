@@ -80,7 +80,6 @@
   <string name="undo_action_delete">elimina nota</string>
   <string name="undo_action_mark">contrassegna nota</string>
   <string name="unbury">Disseppellisci</string>
-  <string name="finish_operation">Completamento operazione precedente in corso (probabilmente creazione backup).\nAttendi&#8230;</string>
   <string name="contextmenu_deckpicker_rename_deck">Rinomina il mazzo</string>
   <string name="menu_add">Aggiungi</string>
   <string name="menu_add_note">Aggiungi nota</string>

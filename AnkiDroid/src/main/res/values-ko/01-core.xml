@@ -77,7 +77,6 @@
   <string name="undo_action_delete">노트 삭제</string>
   <string name="undo_action_mark">노트 표시</string>
   <string name="unbury">넣었던 카드 꺼내기</string>
-  <string name="finish_operation">이전 작업을 완료 중입니다. (백업 생성 중일 가능성이 큽니다).\n잠시만 기다려주세요...</string>
   <string name="contextmenu_deckpicker_rename_deck">덱 이름 바꾸기</string>
   <string name="menu_add">추가</string>
   <string name="menu_add_note">노트 추가</string>
