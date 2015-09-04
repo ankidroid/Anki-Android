@@ -386,7 +386,9 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
         // Make the text white to avoid interference from our theme colors.
         View view = sb.getView();
         TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        TextView action = (TextView) view.findViewById(android.support.design.R.id.snackbar_action);
         tv.setTextColor(Color.WHITE);
+        action.setTextColor(getResources().getColor(R.color.theme_primary));
         sb.show();
     }
 

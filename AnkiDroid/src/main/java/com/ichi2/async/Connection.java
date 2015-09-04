@@ -478,7 +478,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     mediaError = e.getLocalizedMessage();
                 }
             }
-            if (noChanges && noMediaChanges) {
+            if (noChanges && (!media || noMediaChanges)) {
                 data.success = false;
                 data.result = new Object[] { "noChanges" };
                 return data;
