@@ -54,7 +54,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
-import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
@@ -104,20 +103,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
         SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
         MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener {
 
-    public static final int CRAM_DECK_FRAGMENT = -1;
-
     private String mImportPath;
 
-    public static final String EXTRA_START = "start";
     public static final String EXTRA_DECK_ID = "deckId";
-    public static final int EXTRA_START_NOTHING = 0;
-    public static final int EXTRA_START_REVIEWER = 1;
-    public static final int EXTRA_START_DECKPICKER = 2;
-    public static final int EXTRA_DB_ERROR = 3;
 
     public static final int RESULT_MEDIA_EJECTED = 202;
     public static final int RESULT_DB_ERROR = 203;
-    public static final int RESULT_RESTART = 204;
+
 
 
     /**
@@ -141,6 +133,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // For automatic syncing
     // 10 minutes in milliseconds.
     public static final long AUTOMATIC_SYNC_MIN_INTERVAL = 600000;
+    public static final String AUTOMATIC_SYNC_PROMPT = "1";
+    public static final String AUTOMATIC_SYNC_ENABLED = "2";
 
     private MaterialDialog mProgressDialog;
 
@@ -158,6 +152,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // flag asking user to do a full sync which is used in upgrade path
     boolean mRecommendFullSync = false;
+
+    // flag keeping track of when the app has been paused
+    private boolean mActivityPaused = false;
 
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
@@ -627,6 +624,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     protected void onResume() {
         Timber.d("onResume()");
         super.onResume();
+        mActivityPaused = false;
         selectNavigationItem(R.id.nav_decks);
         if (mSyncOnResume) {
             sync();
@@ -663,7 +661,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     protected void onPause() {
         Timber.d("onPause()");
-
+        mActivityPaused = true;
         super.onPause();
     }
 
@@ -698,8 +696,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // (currently 10 minutes)
         String hkey = preferences.getString("hkey", "");
         long lastSyncTime = preferences.getLong("lastSyncTime", 0);
-        if (hkey.length() != 0 && preferences.getBoolean("automaticSyncMode", false) &&
-                        Utils.intNow(1000) - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL) {
+        if (hkey.length() != 0 && preferences.getString("automaticSync", "1").equals(AUTOMATIC_SYNC_ENABLED) &&
+                Connection.isOnline() && Utils.intNow(1000) - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL) {
             sync();
         }
     }
@@ -963,13 +961,20 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    // Show dialogs to deal with sync issues etc
+    /**
+     * Show a specific sync error dialog
+     * @param id id of dialog to show
+     */
     @Override
     public void showSyncErrorDialog(int id) {
         showSyncErrorDialog(id, "");
     }
 
-
+    /**
+     * Show a specific sync error dialog
+     * @param id id of dialog to show
+     * @param message text to show
+     */
     @Override
     public void showSyncErrorDialog(int id, String message) {
         AsyncDialogFragment newFragment = SyncErrorDialog.newInstance(id, message);
@@ -977,26 +982,25 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     /**
-     *  Show log message after sync, using "Sync Error" as the dialog title, and reload activity
+     *  Show simple error dialog with just the message and OK button. Reload the activity when dialog closed.
      * @param message
      */
-    private void showSyncLogDialog(String message) {
-        // Reload activity since collection always closed at end of sync
-        showSyncLogDialog(message, true);
+    private void showSyncErrorMessage(String message) {
+        // Restart activity so that the Collection is also reloaded
+        String title = getResources().getString(R.string.sync_error);
+        showSimpleMessageDialog(title, message, true);
     }
 
     /**
-     *  Show log message after sync, and reload activity
-     * @param message
-     * @param error Show "Sync Error" as dialog title if this flag is set, otherwise use no title
+     *  Show a simple snackbar message or notification if the activity is not in foreground
+     * @param messageResource String resource for message
      */
-    private void showSyncLogDialog(String message, boolean error) {
-        // Reload activity since collection always closed at end of sync
-        if (error) {
-            String title = getResources().getString(R.string.sync_error);
-            showSimpleMessageDialog(title, message, true);
+    private void showSyncLogMessage(int messageResource) {
+        if (mActivityPaused) {
+            Resources res = AnkiDroidApp.getAppResources();
+            showSimpleNotification(res.getString(R.string.app_name), res.getString(messageResource));
         } else {
-            showSimpleMessageDialog(message, true);
+            showSimpleSnackbar(messageResource, false);
         }
     }
 
@@ -1223,7 +1227,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void onDisconnected() {
-            showSyncLogDialog(getResources().getString(R.string.youre_offline));
+            showSyncLogMessage(R.string.youre_offline);
         }
 
 
@@ -1306,8 +1310,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC);
                     } else if (resultType.equals("noChanges")) {
                         // show no changes message, use false flag so we don't show "sync error" as the Dialog title
-                        dialogMessage = res.getString(R.string.sync_no_changes_message);
-                        showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage), false);
+                        showSyncLogMessage(R.string.sync_no_changes_message);
                     } else if (resultType.equals("clockOff")) {
                         long diff = (Long) result[1];
                         if (diff >= 86100) {
@@ -1322,7 +1325,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         } else {
                             dialogMessage = res.getString(R.string.sync_log_clocks_unsynchronized, diff, "");
                         }
-                        showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("fullSync")) {
                         if (getCol().isEmpty()) {
                             // don't prompt user to resolve sync conflict if local collection empty
@@ -1336,37 +1339,37 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     } else if (resultType.equals("dbError")  || resultType.equals("basicCheckFailed")) {
                         String repairUrl = res.getString(R.string.repair_deck);
                         dialogMessage = res.getString(R.string.sync_corrupt_database, repairUrl);
-                        showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("overwriteError")) {
                         dialogMessage = res.getString(R.string.sync_overwrite_error);
-                        showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("remoteDbError")) {
                         dialogMessage = res.getString(R.string.sync_remote_db_error);
-                        showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("sdAccessError")) {
                         dialogMessage = res.getString(R.string.sync_write_access_error);
-                        showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("finishError")) {
                         dialogMessage = res.getString(R.string.sync_log_finish_error);
-                        showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("connectionError")) {
                         dialogMessage = res.getString(R.string.sync_connection_error);
-                        showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("IOException")) {
                         handleDbError();
                     } else if (resultType.equals("genericError")) {
                         dialogMessage = res.getString(R.string.sync_generic_error);
-                        showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("OutOfMemoryError")) {
                         dialogMessage = res.getString(R.string.error_insufficient_memory);
-                        showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("sanityCheckError")) {
                         dialogMessage = res.getString(R.string.sync_sanity_failed);
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_SANITY_ERROR,
                                 joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("serverAbort")) {
                         // syncMsg has already been set above, no need to fetch it here.
-                        showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                     } else {
                         if (result.length > 1 && result[1] instanceof Integer) {
                             int type = (Integer) result[1];
@@ -1390,29 +1393,28 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         } else {
                             dialogMessage = res.getString(R.string.sync_generic_error);
                         }
-                        showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                     }
                 }
             } else {
-                if (data.data[2] != null) {
-                    dialogMessage = (String) data.data[2];
+                if (data.data[2] != null && !data.data[2].equals("")) {
+                    String message = res.getString(R.string.sync_database_acknowledge) + "\n\n" + data.data[2];
+                    showSimpleMessageDialog(message);
                 } else if (data.data.length > 0 && data.data[0] instanceof String
                         && ((String) data.data[0]).length() > 0) {
                     String dataString = (String) data.data[0];
                     if (dataString.equals("upload")) {
-                        dialogMessage = res.getString(R.string.sync_log_uploading_message);
+                        showSyncLogMessage(R.string.sync_log_uploading_message);
                     } else if (dataString.equals("download")) {
-                        dialogMessage = res.getString(R.string.sync_log_downloading_message);
+                        showSyncLogMessage(R.string.sync_log_downloading_message);
                         // set downloaded collection as current one
                     } else {
-                        dialogMessage = res.getString(R.string.sync_database_acknowledge);
+                        showSyncLogMessage(R.string.sync_database_acknowledge);
                     }
                 } else {
-                    dialogMessage = res.getString(R.string.sync_database_acknowledge);
+                    showSyncLogMessage(R.string.sync_database_acknowledge);
                 }
-                showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage), false);
-
-                // Note: the interface is not refreshed since the activity is restarted after sync.
+                updateDeckList();
             }
 
             // Write the time last sync was carried out. Useful for automatic sync interval.
@@ -1668,6 +1670,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 supportInvalidateOptionsMenu();
                 // Update the mini statistics bar as well
                 AnkiStatsTaskHandler.createSmallTodayOverview(getCol(), mTodayTextView);
+                // Prompt to sync if this setting is enabled and there are local changes to upload
+                if ((boolean) result.getObjArray()[1]) {
+                    OnClickListener listener = new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sync();
+                        }
+                    };
+                    View rootLayout = findViewById(R.id.root_layout);
+                    showSnackbar(R.string.sync_prompt, false, R.string.button_sync, listener, rootLayout);
+                }
             }
 
             @Override
