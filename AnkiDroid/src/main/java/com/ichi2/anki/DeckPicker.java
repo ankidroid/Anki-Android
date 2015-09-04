@@ -24,6 +24,7 @@ package com.ichi2.anki;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -1217,7 +1218,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private Connection.TaskListener mSyncListener = new Connection.TaskListener() {
+    private Connection.TaskListener mSyncListener = new Connection.CancellableTaskListener() {
 
         String currentMessage;
         long countUp;
@@ -1228,6 +1229,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
             showSyncLogMessage(R.string.youre_offline);
         }
 
+        @Override
+        public void onCancelled() {
+            mProgressDialog.dismiss();
+            showSyncLogMessage(R.string.sync_cancelled);
+        }
 
         @Override
         public void onPreExecute() {
@@ -1239,6 +1245,34 @@ public class DeckPicker extends NavigationDrawerActivity implements
                                 getResources().getString(R.string.sync_title) + "\n"
                                         + getResources().getString(R.string.sync_up_down_size, countUp, countDown),
                                 false);
+                // Override the back key so that the user has to confirm before a sync is actually cancelled
+                mProgressDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                    @Override
+                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                        // Make sure our method doesn't get called twice
+                        if (event.getAction()!=KeyEvent.ACTION_DOWN) {
+                            return true;
+                        }
+                        // Show confirmation dialog
+                        if (keyCode == KeyEvent.KEYCODE_BACK) {
+                            MaterialDialog.Builder builder = new MaterialDialog.Builder(mProgressDialog.getContext());
+                            builder.content("Are you sure you want to cancel?")
+                                    .cancelable(false)
+                                    .positiveText(android.R.string.ok)
+                                    .negativeText(android.R.string.cancel)
+                                    .callback(new MaterialDialog.ButtonCallback() {
+                                        @Override
+                                        public void onPositive(MaterialDialog dialog) {
+                                            Connection.cancel();
+                                        }
+                                    });
+                            builder.show();
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                });
             }
         }
 

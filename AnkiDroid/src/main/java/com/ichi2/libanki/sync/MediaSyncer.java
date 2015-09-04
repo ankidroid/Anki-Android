@@ -100,6 +100,15 @@ public class MediaSyncer {
             mCol.log("last local usn is " + lastUsn);
             mDownloadCount = 0;
             while (true) {
+                // Allow cancellation
+                if (Connection.getIsCancelled()) {
+                    Timber.i("Sync was cancelled");
+                    try {
+                        mServer.finish();
+                    } catch (UnknownHttpResponseException e) {
+                    }
+                    throw new RuntimeException("UserAbortedSync");
+                }
                 JSONArray data = mServer.mediaChanges(lastUsn);
                 mCol.log("mediaChanges resp count: ", data.length());
                 if (data.length() == 0) {
