@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/studyoptions_main"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center">
 
     <LinearLayout
         android:id="@+id/studyoptions_mainframe"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_gravity="center"
         android:orientation="vertical">
 
         <ScrollView
@@ -286,4 +288,5 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</RelativeLayout>
+    <include layout="@layout/anki_progress"/>
+</android.support.design.widget.CoordinatorLayout>

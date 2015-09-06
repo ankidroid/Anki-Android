@@ -21,14 +21,12 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.MenuItemCompat;
@@ -51,6 +49,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -69,7 +68,6 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
-import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.widget.WidgetStatus;
@@ -107,7 +105,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private MenuItem mSaveSearchItem;
     private MenuItem mMySearchesItem;
 
-    private MaterialDialog mProgressDialog;
     public static Card sCardBrowserCard;
     public static boolean sSearchCancelled = false;
 
@@ -348,7 +345,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         setContentView(mainView);
         
         initNavigationDrawer(mainView);
-        
         startLoadingCollection();
     }
 
@@ -523,7 +519,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 }
             }
         }
-        hideProgressBar();
     }
 
 
@@ -809,7 +804,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         } else {
             searchText = mRestrictOnDeck + mSearchTerms;
         }
-        if (colIsOpen()) {
+        if (colIsOpen() && mCardsAdapter!= null) {
             // clear the existing card list
             getCards().clear();
             mCardsAdapter.notifyDataSetChanged();
@@ -944,11 +939,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
-            Resources res = getResources();
-            if (mProgressDialog == null) {
-                mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
-                        res.getString(R.string.saving_changes), false);
-            }
+            showProgressBar();
         }
 
 
@@ -968,7 +959,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (!result.getBoolean()) {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
-            dismissProgressDialog();
+            hideProgressBar();
         }
 
 
@@ -980,9 +971,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private DeckTask.TaskListener mSuspendCardHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
-            Resources res = getResources();
-            mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res.getString(R.string.saving_changes),
-                    false);
+            showProgressBar();
         }
 
 
@@ -1002,7 +991,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             } else {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
-            dismissProgressDialog();
+            hideProgressBar();
         }
 
 
@@ -1014,9 +1003,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private DeckTask.TaskListener mDeleteNoteHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
-            Resources res = getResources();
-            mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res.getString(R.string.saving_changes),
-                    false);
+            showProgressBar();
         }
 
 
@@ -1027,7 +1014,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            dismissProgressDialog();
+            hideProgressBar();
         }
 
 
@@ -1049,41 +1036,21 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void onPreExecute() {
-            Resources res = getResources();
-            sSearchCancelled = false;
-            if (mProgressDialog == null) {
-                mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
-                        res.getString(R.string.card_browser_filtering_cards), true,
-                        new DialogInterface.OnCancelListener(){
-                            @Override
-                            public void onCancel(DialogInterface dialog){
-                                Timber.i("CardBrowser:: Search cards dialog dismissed");
-                                DeckTask.cancelTask(DeckTask.TASK_TYPE_SEARCH_CARDS);
-                                sSearchCancelled = true;
-                            }
-                });
-            } else {
-                mProgressDialog.setContent(res.getString(R.string.card_browser_filtering_cards));
-                mProgressDialog.show();
-            }
-
+            showProgressBar();
         }
 
 
         @Override
         public void onPostExecute(TaskData result) {            
+            // Launch task to continue the rendering of the second column
             if (result != null && mCards != null) {
                 Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfuly");
                 updateList();
-                dismissProgressDialog();
                 // After the initial searchCards query, start rendering the question and answer in the background
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler,
-                        new DeckTask.TaskData(new Object[] { mCards, 0, 100 }));
-            } else {
-                // this is a hack -- see DeckTask.launchDeckTask for more info
-                Timber.w("doInBackgroundSearchCards onPostExecute() called but result was null");
-                sSearchCancelled = false;
+                        new DeckTask.TaskData(new Object[]{mCards, 0, 100}));
             }
+            hideProgressBar();
         }
         
         @Override
@@ -1213,9 +1180,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 // set font for column
                 setFont(col);
                 // set background color for column
-                int[] attrs = new int[] {android.R.attr.colorBackground, R.attr.markedColor, R.attr.suspendedColor, R.attr.markedColor};
+                int[] attrs = new int[] {android.R.attr.colorBackground, R.attr.markedColor, R.attr.suspendedColor,
+                        R.attr.markedColor};
                 TypedArray ta = obtainStyledAttributes(attrs);
-                col.setBackgroundColor(ta.getColor(color, R.color.material_grey_700));
+                col.setBackgroundColor(ta.getColor(color, getResources().getColor(R.color.material_grey_700)));
                 ta.recycle();
                 // set text for column
                 col.setText(dataSet.get(mFromKeys[i]));
@@ -1285,22 +1253,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private void dismissProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            try {
-                mProgressDialog.dismiss();
-            } catch (IllegalArgumentException e) {
-                // This shouldn't be neccessary, but crashes still occurring (see 4f949b11-9cdc-41fd-80b8-7c4d02b25151)
-                // TODO: Check if multithreading issue
-                Timber.w(e, "Could not dismiss mProgressDialog");
-            }
-        }
-    }
-
-
     private ArrayList<HashMap<String, String>> getCards() {
         if (mCards == null) {
-            mCards = new ArrayList<HashMap<String, String>>();
+            mCards = new ArrayList<>();
         }
         return mCards;
     }
