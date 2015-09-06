@@ -25,6 +25,18 @@ After forking and cloning the Anki-Android git repository, open Android Studio a
  * `%root/res/layout/` contains the GUI layouts for most screens.
  * `%root/res/drawable-****/` contains the icons used throughout the app at [various resolutions](https://www.google.com/design/spec/style/icons.html).
 
+## Running AnkiDroid from within Android studio
+Connect your device to your computer, or [setup an emulator](https://developer.android.com/tools/devices/managing-avds.html), then select `Run -> Run 'AnkiDroid'` from the menu in Android Studio. This will compile a version of AnkiDroid suitable for testing (i.e. signed with a debug key), and pop up a window where you can select the device or emulator that you want to install and run the code on. See the main [Android developer documentation](https://developer.android.com/tools/building/building-studio.html) for more detailed information.
+
+An apk file signed with a standard "debug" key will be generated named `"AnkiDroid-debug.apk"` in:
+`%AnkiDroidRoot%/AnkiDroid/build/outputs/apk/`
+
+## Making "parallel" builds
+If you want to run several different versions of AnkiDroid side by side, you can do this by performing the following 3 steps:
+
+* Change `applicationId` in the `AnkiDroid/build.gradle` from `"com.ichi2.anki"` to something else, like `"com.ichi2.a.anki"`
+*  Open the `%root/AndroidManifest.xml` file, search for "authorities", and change the line that says `android:authorities="com.ichi2.anki.flashcards"` to `android:authorities="com.ichi2.a.anki.flashcards"` where `com.ichi2.a.anki` is the value you set for applicationId in step 1.
+* Open the file `%root/res/values/constants.xml` and change the line `<string name="app_name">AnkiDroid</string>` to whatever you want the application name to be - for example `<string name="app_name">A.AnkiDroid</string>`
 ## Submit improvements
 
 Once you have improved the code, commit it and send a pull request to [AnkiDroid Github Repository](https://github.com/ankidroid/Anki-Android). It will then be accepted after the code has been reviewed, and the enhanced application will be available on the Android Market on the next release. See [the branching model section](https://github.com/ankidroid/Anki-Android/wiki/Release-procedure#development-lifecycle) if you are unsure which branch to push to.
