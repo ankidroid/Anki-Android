@@ -37,6 +37,7 @@ If you want to run several different versions of AnkiDroid side by side, you can
 * Change `applicationId` in the `AnkiDroid/build.gradle` from `"com.ichi2.anki"` to something else, like `"com.ichi2.a.anki"`
 *  Open the `%root/AndroidManifest.xml` file, search for "authorities", and change the line that says `android:authorities="com.ichi2.anki.flashcards"` to `android:authorities="com.ichi2.a.anki.flashcards"` where `com.ichi2.a.anki` is the value you set for applicationId in step 1.
 * Open the file `%root/res/values/constants.xml` and change the line `<string name="app_name">AnkiDroid</string>` to whatever you want the application name to be - for example `<string name="app_name">A.AnkiDroid</string>`
+
 ## Submit improvements
 
 Once you have improved the code, commit it and send a pull request to [AnkiDroid Github Repository](https://github.com/ankidroid/Anki-Android). It will then be accepted after the code has been reviewed, and the enhanced application will be available on the Android Market on the next release. See [the branching model section](https://github.com/ankidroid/Anki-Android/wiki/Release-procedure#development-lifecycle) if you are unsure which branch to push to.
