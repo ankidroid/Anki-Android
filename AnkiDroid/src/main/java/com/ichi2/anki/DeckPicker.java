@@ -285,7 +285,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg));
                 }
                 updateDeckList();
-                hideProgressBar();
             } else {
                 showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), true);
             }
@@ -630,7 +629,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             mSyncOnResume = false;
         } else if (colIsOpen()) {
             updateDeckList();
-            hideProgressBar();
         }
         setTitle(getResources().getString(R.string.app_name));
         sIsWholeCollection = !mFragmented;
@@ -762,10 +760,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             });
         }
-        hideProgressBar();
-
         automaticSync();
-
     }
 
 

@@ -262,6 +262,7 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<Collection> loader, Collection col) {
+        hideProgressBar();
         if (col != null && colIsOpen()) {
             onCollectionLoaded(col);
         } else {
@@ -276,18 +277,18 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
 
-    public void showProgressBar() {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_spinner);
+    protected void showProgressBar() {
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         if (progressBar != null) {
             progressBar.setVisibility(View.VISIBLE);
         }
     }
 
 
-    public void hideProgressBar() {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_spinner);
+    protected void hideProgressBar() {
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         if (progressBar != null) {
-          progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
         }
     }
 

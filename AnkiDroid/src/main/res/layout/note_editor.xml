@@ -125,4 +125,5 @@
 
         </ScrollView>
     </LinearLayout>
+    <include layout="@layout/anki_progress"/>
 </android.support.design.widget.CoordinatorLayout>
