@@ -1254,7 +1254,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             return true;
                         }
                         // Show confirmation dialog
-                        if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        if (keyCode == KeyEvent.KEYCODE_BACK && Connection.isCancellable() &&
+                                !Connection.getIsCancelled()) {
                             MaterialDialog.Builder builder = new MaterialDialog.Builder(mProgressDialog.getContext());
                             builder.content("Are you sure you want to cancel?")
                                     .cancelable(false)

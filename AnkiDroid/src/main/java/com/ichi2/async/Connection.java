@@ -73,6 +73,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     private TaskListener mListener;
     private CancelCallback mCancelCallback;
     private static boolean sIsCancelled;
+    private static boolean sIsCancellable;
 
     /**
      * Before syncing, we acquire a wake lock and then release it once the sync is complete.
@@ -87,6 +88,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     public Connection() {
         sIsCancelled = false;
+        sIsCancellable = false;
         Context context = AnkiDroidApp.getInstance().getApplicationContext();
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Connection");
@@ -331,6 +333,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     private Payload doInBackgroundSync(Payload data) {
         // for for doInBackgroundLoadDeckCounts if any
+        sIsCancellable = true;
         Timber.d("doInBackgroundSync()");
         // Block execution until any previous background task finishes, or timeout after 5s
         boolean ok = DeckTask.waitToFinish(5);
@@ -388,6 +391,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 }
             } else {
                 try {
+                    // Disable sync cancellation for full-sync
+                    sIsCancellable = false;
                     server = new FullSyncer(col, hkey, this);
                     if (conflictResolution.equals("upload")) {
                         Timber.i("Sync - fullsync - upload collection");
@@ -449,6 +454,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 col.clearUndo();
             }
             // then move on to media sync
+            sIsCancellable = true;
             boolean noMediaChanges = false;
             String mediaError = null;
             if (media) {
@@ -509,7 +515,9 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             e.printStackTrace();
             data.success = false;
             if (timeoutOccured(e)) {
-                data.result = new Object[] {"connectionError" };
+                data.result = new Object[]{"connectionError"};
+            } else if (e.getMessage().equals("UserAbortedSync")) {
+                data.result = new Object[] {"UserAbortedSync" };
             } else {
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync");
                 data.result = new Object[] {e.getLocalizedMessage()};
@@ -616,6 +624,10 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         Timber.d("Cancelled Connection task");
         sInstance.cancel(true);
         sIsCancelled = true;
+    }
+
+    public synchronized static boolean isCancellable() {
+        return sIsCancellable;
     }
 
     public class CancelCallback {
