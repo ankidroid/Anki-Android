@@ -95,34 +95,34 @@ sudo apt-get install sqlitebrowser
 Binaries for Windows and Mac can be found [here](https://github.com/sqlitebrowser/sqlitebrowser/releases).
 
 
-<h1>Checking database modifications</h1>
+# Checking database modifications
 
-On Ubuntu Linux:<br>
-<br>
-<ul><li>Install sqlite3 and meld: sudo apt-get install sqlite3 meld<br>
-</li><li>Make sure my desktop and android have about the same clock time.<br>
-</li><li>Copy country-capitals.anki to both<br>
-</li><li>Perform the same review sequence on both at the same time.<br>
-</li><li>Copy the modified decks for comparizon.<br>
-</li><li>Run:<br>
-<pre><code>echo .dump | sqlite3 desktop_collection.anki2 &gt; desktop.dump
-<br>
-echo .dump | sqlite3 android_collection.anki2 &gt; android.dump
-<br>
+On Ubuntu Linux:
+
+1. Install sqlite3 and meld: sudo apt-get install sqlite3 meld.
+1. Make sure my desktop and android have about the same clock time.
+1. Copy country-capitals.anki to both.
+1. Perform the same review sequence on both at the same time.
+1. Copy the modified decks for comparison.
+1. Run the following command and check that times are not too different, and that are no other differences:
+```bash
+echo .dump | sqlite3 desktop_collection.anki2 > desktop.dump
+echo .dump | sqlite3 android_collection.anki2 > android.dump
 diff desktop.dump android.dump
-<br>
-</code></pre>
-</li><li>Check that times are not too different, and check for any other difference.</li></ul>
+```
 
-<h1>To do from time to time</h1>
-In addition to <a href='http://code.google.com/p/ankidroid/issues'>bugs and enhancements</a>, here are a few things that someone or another should perform once in a while, maybe every month or so:<br>
-<h2>Licenses</h2>
-<ul><li>Check that all files mention the GNU-GPL license.<br>
-</li><li>Add it to those who don't.<br>
-<h2>Download localized strings</h2>
-</li><li>From AnkiDroid's top directory, run tools/update-localizations.py<br>
-</li><li>To build a new package on Crowdin, the script needs the Crowdin API key. Ask on the mailing list and we will send it to you<br>
-</li><li>Commit and push<br>
-<h2>Alternative markets</h2>
-</li><li>Check whether the versions are AnkiDroid's latest release. If not, contact the person responsible for this Market.<br>
-</li><li>Look for new alternative markets (especially in non-English languages) and upload there (please update the Wiki then).</li></ul>
+# To do from time to time
+In addition to <a href='http://code.google.com/p/ankidroid/issues'>bugs and enhancements</a>, here are a few things that someone or another should perform once in a while, maybe every month or so.
+
+## Licenses
+1. Check that all files mention the GNU-GPL license.
+1. Add it to those who don't.
+
+## Download localized strings
+1. From AnkiDroid's top directory, run ```./tools/update-localizations.py```.
+1. To build a new package on Crowdin, the script needs the Crowdin API key. Ask on the mailing list and we will send it to you.
+1. Commit and push.
+
+## Alternative markets
+1. Check whether the versions are AnkiDroid's latest release. If not, contact the person responsible for this Market.
+1. Look for new alternative markets (especially in non-English languages) and upload there (please update the Wiki then).
