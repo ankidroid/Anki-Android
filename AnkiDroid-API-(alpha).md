@@ -24,8 +24,7 @@ Example 2
 Example 3
 
 ### Example project
-Link to example project
-
+A very simple example Japanese-English sample dictionary is [available here](https://github.com/ankidroid/apisample), which gives an expected real-world implementation of the API. You can long-press on an item in the list to send one or more cards to AnkiDroid via the share button on the contextual toolbar.
 
 ## Sending cards to AnkiDroid via intent
 While we strongly recommend using the Instant-Add API, it is also possible (and a bit less work) to send simple flashcards to AnkiDroid one at a time via Intents. The disadvantage of this, is that you can't send multiple cards at once, you leave the user on their own to format your content into flashcards, and most importantly -- the user has to go from your app to AnkiDroid, and then press some buttons to complete the add before they can resume what they were doing in your app, which detracts from the user experience.
