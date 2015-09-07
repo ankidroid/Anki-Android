@@ -53,6 +53,8 @@ Several unit tests are defined in the `AnkiDroid/androidTest` folder. You can ru
 ./gradlew connectedCheck
 ```
 
+**Note:** Some of the unit tests involve the deletion of models, which will force a full-sync, so it's not recommended to try running the tests on your main device.
+
 ## Compiling from the command line
 If you have the Android SDK installed, you should be able to compile from the command line even without installing Android Studio.
 
