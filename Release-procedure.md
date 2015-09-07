@@ -56,7 +56,7 @@ Send an email to the mailing list announcing the new version, link to APK, new f
 ## Merging from release or hotfix branch back into develop
 The following procedure can be used to merge commits from a release branch back into develop:
 
-```
+```bash
 # One time setup.
 git clone git@github.com:ankidroid/Anki-Android.git
 cd Anki-Android
