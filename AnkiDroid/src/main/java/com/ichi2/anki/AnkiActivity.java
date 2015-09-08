@@ -440,13 +440,6 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
             Intent resultIntent = new Intent(this, DeckPicker.class);
             resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            if (resultPendingIntent == null) {
-                // PendingIntent could not be created... probably something wrong with the extras
-                // try again without the extras, though the original dialog will not be shown when app started
-                Timber.e("AnkiActivity.showSimpleNotification() failed due to null PendingIntent");
-                resultIntent = new Intent(this, DeckPicker.class);
-                resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            }
             builder.setContentIntent(resultPendingIntent);
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             // mId allows you to update the notification later on.
