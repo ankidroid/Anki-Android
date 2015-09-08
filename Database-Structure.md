@@ -116,7 +116,8 @@ CREATE TABLE notes (
     sfld            integer not null,
       -- sort field: used for quick sorting and duplicate check
     csum            integer not null,
-      -- field checksum used for dupe. check: int from start of sha1 hash of first field
+      -- field checksum used for duplicate check.
+      --   integer representation of first 8 digits of sha1 hash of the first field
     flags           integer not null,
       -- unused
     data            text not null
