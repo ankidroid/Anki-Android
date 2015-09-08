@@ -114,9 +114,9 @@ CREATE TABLE notes (
     flds            text not null,
       -- the values of the fields in this note. separated by 0x1f (31) character.
     sfld            integer not null,
-      -- sort field: used for quick sorting and checking uniqueness
+      -- sort field: used for quick sorting and duplicate check
     csum            integer not null,
-      -- field checksum
+      -- field checksum used for dupe. check: int from start of sha1 hash of first field
     flags           integer not null,
       -- unused
     data            text not null
