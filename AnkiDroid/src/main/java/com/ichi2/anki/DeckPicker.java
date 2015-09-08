@@ -21,6 +21,7 @@
 
 package com.ichi2.anki;
 
+import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,6 +30,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.graphics.PixelFormat;
@@ -36,6 +38,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -102,7 +105,8 @@ import timber.log.Timber;
 public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, DatabaseErrorDialog.DatabaseErrorDialogListener,
         SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
-        MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener {
+        MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener,
+        ActivityCompat.OnRequestPermissionsResultCallback {
 
     private String mImportPath;
 
@@ -116,19 +120,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
     /**
      * Available options performed by other activities
      */
-    // private static final int PREFERENCES_UPDATE = 0;
-    // private static final int DOWNLOAD_SHARED_DECK = 3;
+
+    private static final int REQUEST_STORAGE_PERMISSION = 0;
     public static final int REPORT_FEEDBACK = 4;
-    // private static final int LOG_IN_FOR_DOWNLOAD = 5;
     private static final int LOG_IN_FOR_SYNC = 6;
-    // private static final int STUDYOPTIONS = 7;
     private static final int SHOW_INFO_WELCOME = 8;
     private static final int SHOW_INFO_NEW_VERSION = 9;
     private static final int REPORT_ERROR = 10;
     public static final int SHOW_STUDYOPTIONS = 11;
     private static final int ADD_NOTE = 12;
-    // private static final int LOG_IN = 13;
-    private static final int BROWSE_CARDS = 14;
     private static final int ADD_SHARED_DECKS = 15;
 
     // For automatic syncing
@@ -360,9 +360,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
         Timber.d("onCreate()");
-        Intent intent = getIntent();
         super.onCreate(savedInstanceState);
-
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
         View mainView = getLayoutInflater().inflate(R.layout.deck_picker, null);
@@ -444,8 +442,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
         final Resources res = getResources();
 
         mTodayTextView = (TextView) findViewById(R.id.today_stats_text_view);
-        // Show splash screen and load collection
-        showStartupScreensAndDialogs(preferences, 0);
+        if (! CollectionHelper.hasStorageAccessPermission(this)) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_STORAGE_PERMISSION);
+        } else {
+            // Show splash screen and load collection
+            showStartupScreensAndDialogs(preferences, 0);
+        }
     }
 
 
@@ -613,6 +616,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (colIsOpen() && mImportPath != null) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT, mImportAddListener, new TaskData(mImportPath, true));
                 mImportPath = null;
+            }
+        }
+    }
+
+
+    public void onRequestPermissionsResult (int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_STORAGE_PERMISSION && permissions.length == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(this), 0);
+            } else {
+                showSimpleSnackbar(R.string.directory_inaccessible, false);
             }
         }
     }
@@ -786,7 +800,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // AnkiDroid directory inaccessible
             Intent i = new Intent(this, Preferences.class);
             startActivityWithoutAnimation(i);
-            Themes.showThemedToast(this, getResources().getString(R.string.directory_inaccessible), false);
+            showSimpleSnackbar(R.string.directory_inaccessible, false);
         } else if (!BackupManager.enoughDiscSpace(CollectionHelper.getCurrentAnkiDroidDirectory(this))) {
             // Not enough space to do backup
             showDialogFragment(DeckPickerNoSpaceLeftDialog.newInstance());

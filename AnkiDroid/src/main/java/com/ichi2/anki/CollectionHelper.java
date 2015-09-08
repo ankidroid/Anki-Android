@@ -16,10 +16,13 @@
 
 package com.ichi2.anki;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.libanki.Collection;
@@ -232,5 +235,15 @@ public class CollectionHelper {
      */
     private static String getParentDirectory(String path) {
         return new File(path).getParentFile().getAbsolutePath();
+    }
+
+    /**
+     * Check if we have permission to access the external storage
+     * @param context
+     * @return
+     */
+    public static boolean hasStorageAccessPermission(Context context) {
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED;
     }
 }

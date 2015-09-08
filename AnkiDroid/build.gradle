@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 def homePath = System.properties['user.home']
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
 
     defaultConfig {
         applicationId "com.ichi2.anki"
         minSdkVersion 8
-        targetSdkVersion 22
+        targetSdkVersion 23
         testApplicationId "com.ichi2.anki.tests"
     }
     signingConfigs {
@@ -29,11 +29,14 @@ android {
         abortOnError false
         disable 'TypographyEllipsis'
     }
+    // TODO: Replace deprecated Apache HTTP library with more modern alternative
+    // https://github.com/ankidroid/Anki-Android/issues/3626
+    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:design:22.2.1'
+    compile 'com.android.support:design:23.0.1'
     compile 'com.afollestad:material-dialogs:0.7.6.0'
     compile 'net.i2p.android.ext:floatingactionbutton:1.10.0'
     compile 'ch.acra:acra:4.6.2'

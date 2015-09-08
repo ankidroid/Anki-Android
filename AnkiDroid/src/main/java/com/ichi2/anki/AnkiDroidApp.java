@@ -182,16 +182,17 @@ public class AnkiDroidApp extends Application {
         DEFAULT_SWIPE_THRESHOLD_VELOCITY = vc.getScaledMinimumFlingVelocity();
 
         // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
-        try {
-            String dir = CollectionHelper.getCurrentAnkiDroidDirectory(this);
-            CollectionHelper.initializeAnkiDroidDirectory(dir);
-        } catch (StorageAccessException e) {
-            Timber.e(e, "Could not initialize AnkiDroid directory");
-            if (isSdCardMounted()) {
-                sendExceptionReport(e, "AnkiDroidApp.onCreate");
+        if (CollectionHelper.hasStorageAccessPermission(this)) {
+            try {
+                String dir = CollectionHelper.getCurrentAnkiDroidDirectory(this);
+                CollectionHelper.initializeAnkiDroidDirectory(dir);
+            } catch (StorageAccessException e) {
+                Timber.e(e, "Could not initialize AnkiDroid directory");
+                if (isSdCardMounted()) {
+                    sendExceptionReport(e, "AnkiDroidApp.onCreate");
+                }
             }
         }
-
     }
 
 
