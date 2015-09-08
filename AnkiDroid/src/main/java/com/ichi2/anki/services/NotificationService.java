@@ -14,14 +14,16 @@
 
 package com.ichi2.anki.services;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.IntentCompat;
 
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -48,45 +50,40 @@ public class NotificationService extends Service {
 
 
     @Override
-    public void onStart(Intent intent, int startId) {
-        Timber.i("NotificationService: OnStart");
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Timber.i("NotificationService: OnStartCommand");
 
-        Context context = AnkiDroidApp.getInstance().getBaseContext();
+        Context context = getApplicationContext();
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
-        int minimumCardsDueForNotification = Integer.parseInt(preferences.getString("minimumCardsDueForNotification",
-                "25"));
+        int minCardsDue = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "25"));
         int dueCardsCount = WidgetStatus.fetchDue(context);
-        if (dueCardsCount >= minimumCardsDueForNotification) {
-            // Show a notification
-            int icon = R.drawable.ic_stat_notify;
-            CharSequence tickerText = String.format(
-                    getString(R.string.widget_minimum_cards_due_notification_ticker_text), dueCardsCount);
-            long when = System.currentTimeMillis();
-
-            Notification notification = new Notification(icon, tickerText, when);
-
+        if (dueCardsCount >= minCardsDue) {
+            // Build basic notification
+            String cardsDueText = getString(R.string.widget_minimum_cards_due_notification_ticker_text, dueCardsCount);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.drawable.ic_stat_notify)
+                    .setContentTitle(cardsDueText)
+                    .setTicker(cardsDueText);
+            // Enable vibrate and blink if set in preferences
             if (preferences.getBoolean("widgetVibrate", false)) {
-                notification.defaults |= Notification.DEFAULT_VIBRATE;
+                builder.setVibrate(new long[] { 1000, 1000, 1000});
             }
             if (preferences.getBoolean("widgetBlink", false)) {
-                notification.defaults |= Notification.DEFAULT_LIGHTS;
+                builder.setLights(Color.BLUE, 1000, 1000);
             }
-
-            Context appContext = getApplicationContext();
-            CharSequence contentTitle = getText(R.string.widget_minimum_cards_due_notification_ticker_title);
-
-            Intent ankiDroidIntent = new Intent(context, DeckPicker.class);
-            ankiDroidIntent.setAction(Intent.ACTION_MAIN);
-            ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            PendingIntent pendingAnkiDroidIntent = PendingIntent.getActivity(context, 0, ankiDroidIntent,
+            // Creates an explicit intent for an Activity in your app
+            Intent resultIntent = new Intent(context, DeckPicker.class);
+            resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
-            notification.setLatestEventInfo(appContext, contentTitle, tickerText, pendingAnkiDroidIntent);
-
-            mNotificationManager.notify(WIDGET_NOTIFY_ID, notification);
+            builder.setContentIntent(resultPendingIntent);
+            // mId allows you to update the notification later on.
+            mNotificationManager.notify(WIDGET_NOTIFY_ID, builder.build());
         } else {
             // Cancel the existing notification, if any.
             mNotificationManager.cancel(WIDGET_NOTIFY_ID);
         }
+        return START_STICKY;
     }
 
 
