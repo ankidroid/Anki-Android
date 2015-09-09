@@ -1166,15 +1166,16 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
         });
 
-        for (JSONObject n : models) {
-            try {
+        try{
+            for (JSONObject n : models) {
                 long modID = n.getLong("id");
                 cardCount.add(col.getModels().nids(col.getModels().get(modID)).size());
-            } catch (JSONException e) {
+            }
+        } catch (JSONException e) {
                 Timber.e("doInBackgroundLoadModels :: JSONException");
                 return new TaskData(false);
-            }
         }
+
         Object[] data = new Object[2];
         data[0] = models;
         data[1] = cardCount;

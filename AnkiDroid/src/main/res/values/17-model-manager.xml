@@ -2,8 +2,8 @@
 <resources>
 
     <!--Menu Labels-->
-    <string name="model_browser_label">Manage Note Types</string>
-    <string name="model_editor_label">Manage Fields</string>
+    <string name="model_browser_label">Manage note types</string>
+    <string name="model_editor_label">Manage fields</string>
 
 
     <!--Toasts-->
@@ -28,7 +28,7 @@
 
 
     <!--Button Values-->
-    <string name="model_editor_action_add_model">Add Note Type</string>
+    <string name="model_editor_action_add_model">Add note type</string>
 
 
     <!--Browser-->
@@ -60,6 +60,7 @@
     <string name="model_field_editor_delete_warning">Are you sure that you wish to delete this?  The data contained will be deleted and synchronizing with AnkiWeb servers will require a full sync.</string>
     <string name="model_delete_warning">Are you sure you wish to delete this model?</string>
     <string name="field_delete_warning">Are you sure you wish to delete this field?</string>
+
 
     <!--Progress Dialogues-->
     <string name="model_browser_deletion_in_progress">Deleting Note Type</string>

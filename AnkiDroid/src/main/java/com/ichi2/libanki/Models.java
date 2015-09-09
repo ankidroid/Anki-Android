@@ -511,7 +511,7 @@ public class Models {
 
     public void setSortIdx(JSONObject m, int idx) throws ConfirmModSchemaException{
         try {
-            mCol.modSchema();
+            mCol.modSchema(true);
             m.put("sortf", idx);
             mCol.updateFieldCache(Utils.toPrimitive(nids(m)));
             save(m);

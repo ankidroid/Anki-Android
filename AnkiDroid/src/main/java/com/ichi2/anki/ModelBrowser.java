@@ -42,49 +42,140 @@ import timber.log.Timber;
 
 public class ModelBrowser extends AnkiActivity {
 
-    private final static int NORMAL_EXIT = 100001;
-    private final static int DB_ERROR_EXIT = 100002;
-
     public static final int REQUEST_TEMPLATE_EDIT = 3;
 
-    DisplayPairAdapter noteTypeArrayAdapter;
-    private ListView noteTypeListView;
+    DisplayPairAdapter mModelDisplayAdapter;
+    private ListView mModelListView;
     private MaterialDialog mProgressDialog;
 
     // Of the currently selected model
-    private long currentID;
-    private int currentPos;
+    private long mCurrentID;
+    private int mModelListPosition;
 
     //Used exclusively to display model name
-    private ArrayList<JSONObject> models;
-    private ArrayList<Integer> cardCounts;
-    private ArrayList<Long> modelIds;
-    private ArrayList<DisplayPair> modelDisplay;
+    private ArrayList<JSONObject> mModels;
+    private ArrayList<Integer> mCardCounts;
+    private ArrayList<Long> mModelIds;
+    private ArrayList<DisplayPair> mModelDisplayList;
 
     private Collection col;
     private ActionBar mActionBar;
 
     //Dialogue used in renaming
-    private EditText modelNameInput;
+    private EditText mModelNameInput;
 
-    private ArrayAdapter<String> addModelAdapter;
+    private ArrayAdapter<String> mNewModelAdapter;
 
-    private ModelBrowserContextMenu cMenu;
+    private ModelBrowserContextMenu mContextMenu;
 
-    ArrayList<String> modelAddName;
-    ArrayList<String> addModelList;
+    private ArrayList<String> mNewModelNames;
+    private ArrayList<String> mNewModelLabels;
 
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
+    /*
+     * Displays the loading bar when loading the mModels and displaying them
+     * loading bar is necessary because card count per model is not cached *
+     */
+    private DeckTask.TaskListener mLoadingModelsHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onCancelled() {
+            //This DeckTask can not be interrupted
+            return;
+        }
+
+        @Override
+        public void onPreExecute() {
+            if (mProgressDialog == null) {
+                mProgressDialog = StyledProgressDialog.show(ModelBrowser.this, " ",
+                        getResources().getString(R.string.model_browser_loading_models), false);
+            }
+        }
+
+        @Override
+        public void onPostExecute(TaskData result) {
+            if (!result.getBoolean()) {
+                throw new RuntimeException();
+            }
+
+            dismissProgressBar();
+
+            mModels = (ArrayList<JSONObject>) result.getObjArray()[0];
+            mCardCounts = (ArrayList<Integer>) result.getObjArray()[1];
+
+            fillModelList();
+        }
+
+        @Override
+        public void onProgressUpdate(TaskData... values) {
+            //This decktask does not publish updates
+            return;
+        }
+    };
+    /*
+     * Displays loading bar when deleting a model loading bar is needed
+     * because deleting a model also deletes all of the associated cards/notes *
+     */
+    private DeckTask.TaskListener mDeleteModelHandler = new DeckTask.TaskListener() {
+
+        @Override
+        public void onCancelled() {
+            //This decktask can not be interrupted
+            return;
+        }
+
+        @Override
+        public void onPreExecute() {
+            if (mProgressDialog == null) {
+                mProgressDialog = StyledProgressDialog.show(ModelBrowser.this, mModelDisplayList.get(mModelListPosition).getName(),
+                        getResources().getString(R.string.model_browser_deletion_in_progress), false);
+            }
+        }
+
+        @Override
+        public void onPostExecute(TaskData result) {
+            if (!result.getBoolean()) {
+                throw new RuntimeException();
+            }
+
+            dismissProgressBar();
+            refreshList();
+        }
+
+        @Override
+        public void onProgressUpdate(TaskData... values) {
+            //This decktask does not publish updates
+            return;
+        }
+    };
+    /*
+     * Listens to long hold context menu for main list items
+     */
+    private MaterialDialog.ListCallback mContextMenuListener = new MaterialDialog.ListCallback() {
+        @Override
+        public void onSelection(MaterialDialog materialDialog, View view, int selection, CharSequence charSequence) {
+            switch (selection) {
+                case ModelBrowserContextMenu.MODEL_DELETE:
+                    deleteModelDialog();
+                    break;
+                case ModelBrowserContextMenu.MODEL_RENAME:
+                    renameModelDialog();
+                    break;
+                case ModelBrowserContextMenu.MODEL_TEMPLATE:
+                    openTemplateEditor();
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View mainView = getLayoutInflater().inflate(R.layout.model_browser, null);
         setContentView(mainView);
-        noteTypeListView = (ListView) findViewById(R.id.note_type_browser_list);
+        mModelListView = (ListView) findViewById(R.id.note_type_browser_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -94,6 +185,10 @@ public class ModelBrowser extends AnkiActivity {
     }
 
 
+    // ----------------------------------------------------------------------------
+    // ANKI METHODS
+    // ----------------------------------------------------------------------------
+
     @Override
     public void onResume() {
         Timber.d("onResume()");
@@ -101,13 +196,16 @@ public class ModelBrowser extends AnkiActivity {
     }
 
 
+    // ----------------------------------------------------------------------------
+    // UI SETUP
+    // ----------------------------------------------------------------------------
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.model_browser, menu);
         return true;
     }
-
 
     @Override
     public void onStop() {
@@ -120,9 +218,8 @@ public class ModelBrowser extends AnkiActivity {
 
 
     // ----------------------------------------------------------------------------
-    // ANKI METHODS
+    // CONTEXT MENU DIALOGS
     // ----------------------------------------------------------------------------
-
 
     @Override
     public void onCollectionLoaded(Collection col) {
@@ -131,12 +228,6 @@ public class ModelBrowser extends AnkiActivity {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
     }
 
-
-    // ----------------------------------------------------------------------------
-    // UI SETUP
-    // ----------------------------------------------------------------------------
-
-
     /*
      * Fills the main list view with model names.
      * Handles filling the ArrayLists and attaching
@@ -144,62 +235,59 @@ public class ModelBrowser extends AnkiActivity {
      */
     private void fillModelList() {
         //Anonymous class for handling list item clicks
-        modelDisplay = new ArrayList<DisplayPair>();
-        modelIds = new ArrayList<Long>();
+        mModelDisplayList = new ArrayList<DisplayPair>();
+        mModelIds = new ArrayList<Long>();
 
-        for (int i = 0; i < models.size(); i++) {
+        for (int i = 0; i < mModels.size(); i++) {
             try {
-                modelIds.add(models.get(i).getLong("id"));
-                modelDisplay.add(new DisplayPair(models.get(i).getString("name"), cardCounts.get(i)));
+                mModelIds.add(mModels.get(i).getLong("id"));
+                mModelDisplayList.add(new DisplayPair(mModels.get(i).getString("name"), mCardCounts.get(i)));
             } catch (JSONException e) {
-                closeActivity(DB_ERROR_EXIT);
+                throw new RuntimeException(e);
             }
         }
 
-        noteTypeArrayAdapter = new DisplayPairAdapter(this, modelDisplay);
+        mModelDisplayAdapter = new DisplayPairAdapter(this, mModelDisplayList);
+        mModelListView.setAdapter(mModelDisplayAdapter);
 
-        noteTypeListView.setAdapter(noteTypeArrayAdapter);
-
-        noteTypeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mModelListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                long noteTypeID = modelIds.get(position);
-                currentPos = position;
+                long noteTypeID = mModelIds.get(position);
+                mModelListPosition = position;
                 Intent noteOpenIntent = new Intent(ModelBrowser.this, ModelFieldEditor.class);
-                noteOpenIntent.putExtra("title", modelDisplay.get(position).getName());
+                noteOpenIntent.putExtra("title", mModelDisplayList.get(position).getName());
                 noteOpenIntent.putExtra("noteTypeID", noteTypeID);
                 startActivityForResultWithAnimation(noteOpenIntent, 0, ActivityTransitionAnimation.LEFT);
             }
         });
 
-        noteTypeListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+        mModelListView.setOnItemLongClickListener(new OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                String cardName = modelDisplay.get(position).getName();
-                currentID = modelIds.get(position);
-                currentPos = position;
-                cMenu = new ModelBrowserContextMenu().newInstance(cardName, mContextMenuListener);
-                showDialogFragment(cMenu);
+                String cardName = mModelDisplayList.get(position).getName();
+                mCurrentID = mModelIds.get(position);
+                mModelListPosition = position;
+                mContextMenu = ModelBrowserContextMenu.newInstance(cardName, mContextMenuListener);
+                showDialogFragment(mContextMenu);
                 return true;
             }
         });
         updateSubtitleText();
     }
 
-
     /*
-     * Updates the subtitle showing the amount of models available
+     * Updates the subtitle showing the amount of mModels available
      * ONLY CALL THIS AFTER initializing the main list
      */
     private void updateSubtitleText() {
-        int count = modelIds.size();
+        int count = mModelIds.size();
         mActionBar.setSubtitle(getResources().getQuantityString(R.plurals.model_browser_types_available, count, count));
     }
 
 
     // ----------------------------------------------------------------------------
-    // CONTEXT MENU DIALOGS
+    // HELPER METHODS
     // ----------------------------------------------------------------------------
-
 
     /*
      *Creates the dialogue box to select a note type, add a name, and then clone it
@@ -216,34 +304,34 @@ public class ModelBrowser extends AnkiActivity {
         final String addForwardOptionalReverseName = "Basic (optional reversed card)";
         final String addClozeModelName = "Cloze";
 
-        //Populates arrayadapters listing the models (includes prefixes/suffixes)
-        addModelList = new ArrayList<String>();
+        //Populates arrayadapters listing the mModels (includes prefixes/suffixes)
+        mNewModelLabels = new ArrayList<String>();
+
         //Used to fetch model names
-        modelAddName = new ArrayList<String>();
+        mNewModelNames = new ArrayList<String>();
+        mNewModelLabels.add(String.format(add, basicName));
+        mNewModelLabels.add(String.format(add, addForwardReverseName));
+        mNewModelLabels.add(String.format(add, addForwardOptionalReverseName));
+        mNewModelLabels.add(String.format(add, addClozeModelName));
 
-        addModelList.add(String.format(add, basicName));
-        addModelList.add(String.format(add, addForwardReverseName));
-        addModelList.add(String.format(add, addForwardOptionalReverseName));
-        addModelList.add(String.format(add, addClozeModelName));
+        mNewModelNames.add(basicName);
+        mNewModelNames.add(addForwardReverseName);
+        mNewModelNames.add(addForwardOptionalReverseName);
+        mNewModelNames.add(addClozeModelName);
 
-        modelAddName.add(basicName);
-        modelAddName.add(addForwardReverseName);
-        modelAddName.add(addForwardOptionalReverseName);
-        modelAddName.add(addClozeModelName);
-
-        for (int i = 0; i < models.size(); i++) {
+        for (JSONObject model : mModels) {
             try {
-                addModelList.add(String.format(clone, models.get(i).getString("name")));
-                modelAddName.add(models.get(i).getString("name"));
+                mNewModelLabels.add(String.format(clone, model.getString("name")));
+                mNewModelNames.add(model.getString("name"));
             } catch (JSONException e) {
-                closeActivity(DB_ERROR_EXIT);
+                throw new RuntimeException(e);
             }
         }
 
         final Spinner addSelectionSpinner = new Spinner(this);
-        addModelAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_deck_item, addModelList);
+        mNewModelAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_deck_item, mNewModelLabels);
 
-        addSelectionSpinner.setAdapter(addModelAdapter);
+        addSelectionSpinner.setAdapter(mNewModelAdapter);
 
         new MaterialDialog.Builder(this)
                 .title(R.string.model_browser_add)
@@ -252,33 +340,33 @@ public class ModelBrowser extends AnkiActivity {
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
-                        modelNameInput = new EditText(ModelBrowser.this);
-                        modelNameInput.setSingleLine();
+                        mModelNameInput = new EditText(ModelBrowser.this);
+                        mModelNameInput.setSingleLine();
 
                         //Temporary workaround - Lack of stdmodels class
-                        if (addSelectionSpinner.getSelectedItemPosition() < 4) {
-                            modelNameInput.setText(randomizeName(modelAddName.get(addSelectionSpinner.getSelectedItemPosition())));
+                        if (addSelectionSpinner.getSelectedItemPosition() < mNewModelLabels.size()) {
+                            mModelNameInput.setText(randomizeName(mNewModelNames.get(addSelectionSpinner.getSelectedItemPosition())));
                         } else {
-                            modelNameInput.setText(modelAddName.get(addSelectionSpinner.getSelectedItemPosition()) +
+                            mModelNameInput.setText(mNewModelNames.get(addSelectionSpinner.getSelectedItemPosition()) +
                                     " " + getResources().getString(R.string.model_clone_suffix));
                         }
 
-                        modelNameInput.setSelection(modelNameInput.getText().length());
+                        mModelNameInput.setSelection(mModelNameInput.getText().length());
 
                         //Create textbox to name new model
                         new MaterialDialog.Builder(ModelBrowser.this)
                                 .title(R.string.model_browser_add)
                                 .positiveText(R.string.dialog_ok)
-                                .customView(modelNameInput, true)
+                                .customView(mModelNameInput, true)
                                 .callback(new MaterialDialog.ButtonCallback() {
                                     @Override
                                     public void onPositive(MaterialDialog dialog) {
                                         JSONObject model = null;
 
-                                        String fieldName = modelNameInput.getText().toString()
+                                        String fieldName = mModelNameInput.getText().toString()
                                                 .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
 
-                                        //Temporary workaround - Lack of stdmodels class, so can only handle 4 default English models
+                                        //Temporary workaround - Lack of stdmodels class, so can only handle 4 default English mModels
                                         //like Ankidroid but unlike desktop Anki
                                         try {
                                             if (fieldName.length() > 0) {
@@ -302,7 +390,7 @@ public class ModelBrowser extends AnkiActivity {
                                                     default:
                                                         //New model
                                                         //Model that is being cloned
-                                                        JSONObject oldModel = new JSONObject(models.get(addSelectionSpinner.getSelectedItemPosition() - 4).toString());
+                                                        JSONObject oldModel = new JSONObject(mModels.get(addSelectionSpinner.getSelectedItemPosition() - 4).toString());
                                                         JSONObject newModel = Models.addBasicModel(col);
                                                         oldModel.put("id", newModel.get("id"));
                                                         model = oldModel;
@@ -317,10 +405,10 @@ public class ModelBrowser extends AnkiActivity {
                                             } else {
                                                 showToast(getResources().getString(R.string.toast_empty_name));
                                             }
-                                        } catch(ConfirmModSchemaException e){
-                                            //We should never get here since we're only modifying new models
+                                        } catch (ConfirmModSchemaException e) {
+                                            //We should never get here since we're only modifying new mModels
                                             return;
-                                        } catch(JSONException e){
+                                        } catch (JSONException e) {
                                             throw new RuntimeException(e);
                                         }
                                     }
@@ -334,19 +422,18 @@ public class ModelBrowser extends AnkiActivity {
                 .show();
     }
 
-
     /*
      * Displays a confirmation box asking if you want to delete the note type and then deletes it if confirmed
      */
     private void deleteModelDialog() {
-        if (modelIds.size() > 1) {
+        if (mModelIds.size() > 1) {
             try {
                 col.modSchema();
                 deleteModel();
             } catch (ConfirmModSchemaException e) {
                 ConfirmationDialog d = new ConfirmationDialog() {
 
-                    public void confirm(){
+                    public void confirm() {
                         ConfirmationDialog c = new ConfirmationDialog() {
                             public void confirm() {
                                 try {
@@ -357,13 +444,18 @@ public class ModelBrowser extends AnkiActivity {
                                 }
                                 dismissContextMenu();
                             }
-                            public void cancel(){
+
+                            public void cancel() {
                                 dismissContextMenu();
                             }
                         };
                         c.setArgs(getResources().getString(R.string.full_sync_confirmation));
                         ModelBrowser.this.showDialogFragment(c);
 
+                    }
+
+                    public void cancel() {
+                        dismissContextMenu();
                     }
                 };
                 d.setArgs(getResources().getString(R.string.model_delete_warning));
@@ -377,43 +469,37 @@ public class ModelBrowser extends AnkiActivity {
         }
     }
 
-
     /*
      * Displays a confirmation box asking if you want to delete the note type and then deletes it if confirmed
      */
     private void renameModelDialog() {
         try {
-            modelNameInput = new EditText(this);
-            modelNameInput.setSingleLine(true);
-            modelNameInput.setText(models.get(currentPos).getString("name"));
-            modelNameInput.setSelection(modelNameInput.getText().length());
+            mModelNameInput = new EditText(this);
+            mModelNameInput.setSingleLine(true);
+            mModelNameInput.setText(mModels.get(mModelListPosition).getString("name"));
+            mModelNameInput.setSelection(mModelNameInput.getText().length());
             new MaterialDialog.Builder(this)
                     .title(R.string.rename_model)
                     .positiveText(R.string.dialog_ok)
-                    .customView(modelNameInput, true)
+                    .customView(mModelNameInput, true)
                     .callback(new MaterialDialog.ButtonCallback() {
                         @Override
                         public void onPositive(MaterialDialog dialog) {
-                            JSONObject model = models.get(currentPos);
-                            String deckName = modelNameInput.getText().toString()
+                            JSONObject model = mModels.get(mModelListPosition);
+                            String deckName = mModelNameInput.getText().toString()
                                     .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
                             getCol().getDecks().id(deckName, true);
                             if (deckName.length() > 0) {
                                 try {
                                     model.put("name", deckName);
-                                } catch (JSONException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                col.getModels().update(model);
-                                try {
-                                    models.get(currentPos).put("name", deckName);
-                                    modelDisplay.set(currentPos, new DisplayPair(models.get(currentPos).getString("name"), cardCounts.get(currentPos)));
+                                    col.getModels().update(model);
+                                    mModels.get(mModelListPosition).put("name", deckName);
+                                    mModelDisplayList.set(mModelListPosition, new DisplayPair(mModels.get(mModelListPosition).getString("name"), mCardCounts.get(mModelListPosition)));
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
                                 }
                                 refreshList();
-                            }
-                            else{
+                            } else {
                                 showToast(getResources().getString(R.string.toast_empty_name));
                             }
                         }
@@ -421,23 +507,16 @@ public class ModelBrowser extends AnkiActivity {
                     .negativeText(R.string.dialog_cancel)
                     .show();
         } catch (JSONException e) {
-            closeActivity(DB_ERROR_EXIT);
+            throw new RuntimeException(e);
         }
     }
 
-
-    // ----------------------------------------------------------------------------
-    // HELPER METHODS
-    // ----------------------------------------------------------------------------
-
-
-    private void dismissContextMenu(){
-        if (cMenu != null) {
-            cMenu.dismiss();
-            cMenu = null;
+    private void dismissContextMenu() {
+        if (mContextMenu != null) {
+            mContextMenu.dismiss();
+            mContextMenu = null;
         }
     }
-
 
     private void dismissProgressBar() {
         if (mProgressDialog != null) {
@@ -452,20 +531,22 @@ public class ModelBrowser extends AnkiActivity {
      */
     private void openTemplateEditor() {
         Intent intent = new Intent(this, CardTemplateEditor.class);
-        intent.putExtra("modelId", currentID);
+        intent.putExtra("modelId", mCurrentID);
         startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, ActivityTransitionAnimation.LEFT);
     }
 
+    // ----------------------------------------------------------------------------
+    // HANDLERS
+    // ----------------------------------------------------------------------------
 
     /*
      * Updates the ArrayAdapters for the main ListView.
      * ArrayLists must be manually updated.
      */
     private void refreshList() {
-        noteTypeArrayAdapter.notifyDataSetChanged();
+        mModelDisplayAdapter.notifyDataSetChanged();
         updateSubtitleText();
     }
-
 
     /*
      * Reloads everything
@@ -474,153 +555,23 @@ public class ModelBrowser extends AnkiActivity {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
     }
 
-
     /*
      * Deletes the currently selected model
      */
     private void deleteModel() throws ConfirmModSchemaException {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_MODEL, mDeleteModelHandler,
-                new DeckTask.TaskData(currentID));
-        models.remove(currentPos);
-        modelIds.remove(currentPos);
-        modelDisplay.remove(currentPos);
-        cardCounts.remove(currentPos);
+                new DeckTask.TaskData(mCurrentID));
+        mModels.remove(mModelListPosition);
+        mModelIds.remove(mModelListPosition);
+        mModelDisplayList.remove(mModelListPosition);
+        mCardCounts.remove(mModelListPosition);
         refreshList();
     }
 
-    // ----------------------------------------------------------------------------
-    // HANDLERS
-    // ----------------------------------------------------------------------------
-
-
-    public void closeActivity() {
-        closeActivity(NORMAL_EXIT);
-    }
-
-    private void closeActivity(int reason) {
-        DeckTask.cancelTask();
-        switch (reason) {
-            case NORMAL_EXIT:
-                setResult(NORMAL_EXIT);
-                finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-                break;
-            case DB_ERROR_EXIT:
-                setResult(DB_ERROR_EXIT);
-                finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-                break;
-            default:
-                setResult(NORMAL_EXIT);
-                finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-                break;
-        }
-    }
-
-
     @Override
     public void onBackPressed() {
-        closeActivity();
+        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
     }
-
-
-    /*
-     * Listens to long hold context menu for main list items
-     */
-    private MaterialDialog.ListCallback mContextMenuListener = new MaterialDialog.ListCallback() {
-        @Override
-        public void onSelection(MaterialDialog materialDialog, View view, int selection, CharSequence charSequence) {
-            switch (selection) {
-                case ModelBrowserContextMenu.MODEL_DELETE:
-                    deleteModelDialog();
-                    break;
-                case ModelBrowserContextMenu.MODEL_RENAME:
-                    renameModelDialog();
-                    break;
-                case ModelBrowserContextMenu.MODEL_TEMPLATE:
-                    openTemplateEditor();
-                    break;
-            }
-        }
-    };
-
-
-    /*
-     * Displays the loading bar when loading the models and displaying them
-     * loading bar is necessary because card count per model is not cached *
-     */
-    private DeckTask.TaskListener mLoadingModelsHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onCancelled() {
-            //This DeckTask can not be interrupted
-            return;
-        }
-
-        @Override
-        public void onPreExecute() {
-            if (mProgressDialog == null) {
-                mProgressDialog = StyledProgressDialog.show(ModelBrowser.this, " ",
-                        getResources().getString(R.string.model_browser_loading_models), false);
-            }
-        }
-
-        @Override
-        public void onPostExecute(TaskData result) {
-            if (!result.getBoolean()) {
-                closeActivity(DeckPicker.RESULT_DB_ERROR);
-            }
-
-            dismissProgressBar();
-
-            models = (ArrayList<JSONObject>) result.getObjArray()[0];
-            cardCounts = (ArrayList<Integer>) result.getObjArray()[1];
-
-            fillModelList();
-        }
-
-        @Override
-        public void onProgressUpdate(TaskData... values) {
-            //This decktask does not publish updates
-            return;
-        }
-    };
-
-
-    /*
-     * Displays loading bar when deleting a model loading bar is needed
-     * because deleting a model also deletes all of the associated cards/notes *
-     */
-    private DeckTask.TaskListener mDeleteModelHandler = new DeckTask.TaskListener() {
-
-        @Override
-        public void onCancelled() {
-            //This decktask can not be interrupted
-            return;
-        }
-
-        @Override
-        public void onPreExecute() {
-            if (mProgressDialog == null) {
-                mProgressDialog = StyledProgressDialog.show(ModelBrowser.this, modelDisplay.get(currentPos).getName(),
-                        getResources().getString(R.string.model_browser_deletion_in_progress), false);
-            }
-        }
-
-        @Override
-        public void onPostExecute(TaskData result) {
-            if (!result.getBoolean()) {
-                closeActivity(DeckPicker.RESULT_DB_ERROR);
-            }
-
-            dismissProgressBar();
-
-            refreshList();
-        }
-
-        @Override
-        public void onProgressUpdate(TaskData... values) {
-            //This decktask does not publish updates
-            return;
-        }
-    };
 
     /*
      * Generates a random alphanumeric sequence of 6 characters

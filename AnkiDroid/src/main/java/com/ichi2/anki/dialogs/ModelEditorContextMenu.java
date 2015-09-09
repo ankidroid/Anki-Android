@@ -20,7 +20,7 @@ public class ModelEditorContextMenu extends DialogFragment {
 
     private static MaterialDialog.ListCallback mContextMenuListener;
 
-    public static ModelEditorContextMenu newInstance(String label, MaterialDialog.ListCallback contextMenuListener){
+    public static ModelEditorContextMenu newInstance(String label, MaterialDialog.ListCallback contextMenuListener) {
         ModelEditorContextMenu n = new ModelEditorContextMenu();
         mContextMenuListener = contextMenuListener;
         Bundle b = new Bundle();
@@ -31,7 +31,7 @@ public class ModelEditorContextMenu extends DialogFragment {
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState){
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Resources res = getResources();
