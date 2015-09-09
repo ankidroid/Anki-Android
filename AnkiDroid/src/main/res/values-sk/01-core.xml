@@ -83,7 +83,6 @@
   <string name="undo_action_delete">vymazať poznámku</string>
   <string name="undo_action_mark">označiť poznámku</string>
   <string name="unbury">Vyhrabať</string>
-  <string name="finish_operation">Dokončujem predchádzajúcu operáciu (pravdepodobne vytváram zálohu).\nProsím počkajte...</string>
   <string name="contextmenu_deckpicker_rename_deck">Premenovať balíček</string>
   <string name="menu_add">Pridať</string>
   <string name="menu_add_note">Pridať poznámku</string>

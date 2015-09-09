@@ -54,11 +54,11 @@
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">不要發音</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s: <br/>Android 單字卡</h2>AnkiDroid 是一個單字卡應用程式，與電腦版的 <a href="%2$s">Anki</a> 完全相容。你可以在 AnkiDroid 或電腦版 Anki 上建立、 下載和學習教材，而且很容易就可以同步兩邊的內容。]]></item>
-    <item><![CDATA[要幫助我們把 AnkiDroid 變得更好，請 <a href="%1$s"> 到這裡</a>回報您發生的任何 bug；新功能的想法也是很受歡迎！請使用 <a href="%2$s"> wiki</a> 並來 <a href="%3$s"> 論壇</a> 打個招呼。]]></item>
-    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
-    <item><![CDATA[如果您不是開發人員也同樣可以幫忙，像是 <a href="%1$s"> 翻譯</a> AnkiDroid 介面、或是更新 wiki 和螢幕擷圖、 <a href="%2$s">捐款</a>給電腦版的 Anki，或是在部落格上撰寫關於 AnkiDroid 的文章!]]></item>
-    <item><![CDATA[AnkiDroid 是在 <a href="%1$s"> GNU GPL v3 許可證</a> 下發布，程式原始碼可到 <a href="%2$s"> 這裡</a>取得。]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
+    <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
+    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, <a href=\"%2$s\">donate</a> to Anki Desktop, or blog about AnkiDroid.]]></item>
+    <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Preview</string>
   <string name="reset_card_dialog_title">重置卡片進度</string>

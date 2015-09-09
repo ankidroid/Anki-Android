@@ -105,21 +105,20 @@
     </string-array>
     <string name="link_anki">http://ankisrs.net</string>
     <string name="link_forum">http://groups.google.com/group/anki-android</string>
-    <string name="link_wiki">http://code.google.com/p/ankidroid/wiki/Index</string>
-    <string name="link_issue_tracker">http://code.google.com/p/ankidroid/issues</string>
+    <string name="link_wiki">https://github.com/ankidroid/Anki-Android/wiki</string>
+    <string name="link_issue_tracker">https://github.com/ankidroid/Anki-Android/issues</string>
     <string name="licence_wiki">http://www.gnu.org/licenses/gpl.html</string>
     <string name="link_source">https://github.com/ankidroid/Anki-Android</string>
     <string name="link_donation">http://ankisrs.net/support</string>
     <string name="link_translation">http://crowdin.net/project/ankidroid</string>
     <string name="link_wikipedia_open_source">http://en.wikipedia.org/wiki/Open_source_software</string>
-    <string name="link_contribution">http://code.google.com/p/ankidroid/wiki/Contribution</string>
-    <string name="link_contribution_contributors">http://code.google.com/p/ankidroid/wiki/Contribution</string>
+    <string name="link_contribution">https://github.com/ankidroid/Anki-Android/wiki/Contributing</string>
     <string name="link_help">https://ankidroid.org/docs/help.html</string>
     <string name="link_manual">https://ankidroid.org/docs/manual.html</string>
     <string name="link_help_ja">https://ankidroid.org/docs/help-ja.html</string>
     <string name="link_manual_ja">https://ankidroid.org/docs/manual-ja.html</string>
     <string name="link_manual_getting_started">https://ankidroid.org/docs/manual.html#gettingStarted</string>
-    <string name="link_hebrew_font">http://code.google.com/p/ankidroid/downloads/detail?name=Tohu.ttf</string>
+    <string name="link_hebrew_font">https://github.com/ankidroid/Anki-Android/releases/download/tohu-font/Tohu.ttf</string>
     <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
     <string name="repair_deck">http://ankisrs.net/docs/manual.html#corrupt-collections</string>
     <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>

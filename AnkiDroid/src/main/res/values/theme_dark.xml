@@ -40,6 +40,9 @@
         <item name="navDrawerImage">@drawable/nav_drawer_logo_dark_theme</item>
         <item name="attachFileImage">@drawable/ic_attachment_white_24dp</item>
         <item name="upDownImage">@drawable/ic_import_export_white_24dp</item>
+        <item name="dialogErrorIcon">@drawable/ic_warning_white_36dp</item>
+        <item name="dialogSyncErrorIcon">@drawable/ic_sync_problem_white_36dp</item>
+        <item name="dialogSendIcon">@drawable/ic_send_white_36dp</item>
     </style>
 
 

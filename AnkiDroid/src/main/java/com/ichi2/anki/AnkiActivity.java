@@ -262,6 +262,7 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<Collection> loader, Collection col) {
+        hideProgressBar();
         if (col != null && colIsOpen()) {
             onCollectionLoaded(col);
         } else {
@@ -276,18 +277,18 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
 
-    public void showProgressBar() {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_spinner);
+    protected void showProgressBar() {
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         if (progressBar != null) {
             progressBar.setVisibility(View.VISIBLE);
         }
     }
 
 
-    public void hideProgressBar() {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_spinner);
+    protected void hideProgressBar() {
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         if (progressBar != null) {
-          progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
         }
     }
 
@@ -386,7 +387,9 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
         // Make the text white to avoid interference from our theme colors.
         View view = sb.getView();
         TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        TextView action = (TextView) view.findViewById(android.support.design.R.id.snackbar_action);
         tv.setTextColor(Color.WHITE);
+        action.setTextColor(getResources().getColor(R.color.theme_primary));
         sb.show();
     }
 
@@ -437,13 +440,6 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
             Intent resultIntent = new Intent(this, DeckPicker.class);
             resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            if (resultPendingIntent == null) {
-                // PendingIntent could not be created... probably something wrong with the extras
-                // try again without the extras, though the original dialog will not be shown when app started
-                Timber.e("AnkiActivity.showSimpleNotification() failed due to null PendingIntent");
-                resultIntent = new Intent(this, DeckPicker.class);
-                resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            }
             builder.setContentIntent(resultPendingIntent);
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             // mId allows you to update the notification later on.

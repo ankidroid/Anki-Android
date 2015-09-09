@@ -80,7 +80,6 @@
   <string name="undo_action_delete">למחוק רשומה</string>
   <string name="undo_action_mark">לסמן רשומה</string>
   <string name="unbury">לחלץ</string>
-  <string name="finish_operation">מסיים פעולה קודמת (כנראה גיבוי)\nנא להמטין...</string>
   <string name="contextmenu_deckpicker_rename_deck">שינוי שם חפיסת רשומות</string>
   <string name="menu_add">הוסף</string>
   <string name="menu_add_note">הוסף הערה</string>

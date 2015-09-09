@@ -80,7 +80,6 @@
   <string name="undo_action_delete">poista merkintä</string>
   <string name="undo_action_mark">merkitse merkintä</string>
   <string name="unbury">Paljasta</string>
-  <string name="finish_operation">Viimeistellään edellistä operaatiota (luultavasti varmuuskopion luonti)&#8230;</string>
   <string name="contextmenu_deckpicker_rename_deck">Nimeä pakka uudelleen</string>
   <string name="menu_add">Lisää</string>
   <string name="menu_add_note">Lisää merkintä</string>

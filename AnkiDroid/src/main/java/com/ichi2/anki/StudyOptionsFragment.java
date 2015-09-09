@@ -18,8 +18,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -36,9 +34,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +53,6 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledProgressDialog;
-import com.ichi2.themes.Themes;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -246,6 +242,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
         NavigationDrawerActivity.setIsWholeCollection(false);
         startLoadingCollection();
+        showProgressBar();
         return mStudyOptionsView;
     }
     
@@ -259,7 +256,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         }
         refreshInterface(true);
         setHasOptionsMenu(true);
-        ((AnkiActivity) getActivity()).hideProgressBar();
+        hideProgressBar();
     }
 
 
@@ -381,11 +378,8 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
      */
     private void showCustomStudyContextMenu() {
         Resources res = getResources();
-        Drawable icon = res.getDrawable(R.drawable.ic_sort_black_36dp);
-        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
         MaterialDialog dialog = new MaterialDialog.Builder(this.getActivity())
                 .title(res.getString(R.string.custom_study))
-                .icon(icon)
                 .cancelable(true)
                 .items(res.getStringArray(R.array.custom_study_options_labels))
                 .itemsCallback(new MaterialDialog.ListCallback() {
@@ -878,8 +872,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     protected void startLoadingCollection() {
         // Initialize the open collection loader
         Timber.d("startLoadingCollection()");
-        AnkiActivity activity = (AnkiActivity) getActivity();
-        activity.showProgressBar();
         getLoaderManager().initLoader(0, null, this);  
     }
 
@@ -905,5 +897,22 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onLoaderReset(Loader<Collection> arg0) {
         // We don't currently retain any references, so no need to free any data here
+    }
+
+    private void showProgressBar() {
+        ProgressBar progressBar = (ProgressBar) mStudyOptionsView.findViewById(R.id.progress_bar);
+        if (progressBar != null) {
+            mStudyOptionsView.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+    }
+
+
+    private void hideProgressBar() {
+        ProgressBar progressBar = (ProgressBar) mStudyOptionsView.findViewById(R.id.progress_bar);
+        if (progressBar != null) {
+            mStudyOptionsView.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
+        }
     }
 }

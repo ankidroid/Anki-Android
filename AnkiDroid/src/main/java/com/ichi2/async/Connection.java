@@ -24,6 +24,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.PowerManager;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
@@ -63,7 +64,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     public static final int TASK_TYPE_LOGIN = 0;
     public static final int TASK_TYPE_SYNC = 1;
-    public static final int TASK_TYPE_DOWNLOAD_MEDIA = 5;
     public static final int TASK_TYPE_REGISTER = 6;
     public static final int TASK_TYPE_UPGRADE_DECKS = 7;
     public static final int CONN_TIMEOUT = 30000;
@@ -72,7 +72,27 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     private static Connection sInstance;
     private TaskListener mListener;
     private CancelCallback mCancelCallback;
+    private static boolean sIsCancelled;
+    private static boolean sIsCancellable;
 
+    /**
+     * Before syncing, we acquire a wake lock and then release it once the sync is complete.
+     * This ensures that the device remains awake until the sync is complete. Without it,
+     * the process will be paused and the sync can fail due to timing conflicts with AnkiWeb.
+     */
+    private final PowerManager.WakeLock mWakeLock;
+
+    public static synchronized boolean getIsCancelled() {
+        return sIsCancelled;
+    }
+
+    public Connection() {
+        sIsCancelled = false;
+        sIsCancellable = false;
+        Context context = AnkiDroidApp.getInstance().getApplicationContext();
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Connection");
+    }
 
     private static Connection launchConnectionTask(TaskListener listener, Payload data) {
 
@@ -104,6 +124,9 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     @Override
     protected void onCancelled() {
         super.onCancelled();
+        Timber.i("Connection onCancelled() method called");
+        // Sync has ended so release the wake lock
+        mWakeLock.release();
         if (mCancelCallback != null) {
             mCancelCallback.cancelAllConnections();
         }
@@ -119,6 +142,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        // Acquire the wake lock before syncing to ensure CPU remains on until the sync completes.
+        mWakeLock.acquire();
         if (mListener != null) {
             mListener.onPreExecute();
         }
@@ -131,6 +156,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     @Override
     protected void onPostExecute(Payload data) {
         super.onPostExecute(data);
+        // Sync has ended so release the wake lock
+        mWakeLock.release();
         if (mListener != null) {
             mListener.onPostExecute(data);
         }
@@ -187,9 +214,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
             case TASK_TYPE_SYNC:
                 return doInBackgroundSync(data);
-
-            case TASK_TYPE_DOWNLOAD_MEDIA:
-                return doInBackgroundDownloadMissingMedia(data);
 
             case TASK_TYPE_UPGRADE_DECKS:
                 throw new RuntimeException("Upgrade decks no longer supported");
@@ -309,6 +333,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     private Payload doInBackgroundSync(Payload data) {
         // for for doInBackgroundLoadDeckCounts if any
+        sIsCancellable = true;
         Timber.d("doInBackgroundSync()");
         // Block execution until any previous background task finishes, or timeout after 5s
         boolean ok = DeckTask.waitToFinish(5);
@@ -366,6 +391,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 }
             } else {
                 try {
+                    // Disable sync cancellation for full-sync
+                    sIsCancellable = false;
                     server = new FullSyncer(col, hkey, this);
                     if (conflictResolution.equals("upload")) {
                         Timber.i("Sync - fullsync - upload collection");
@@ -411,6 +438,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 } catch (RuntimeException e) {
                     if (timeoutOccured(e)) {
                         data.result = new Object[] {"connectionError" };
+                    } else if (e.getMessage().equals("UserAbortedSync")) {
+                        data.result = new Object[] {"UserAbortedSync" };
                     } else {
                         AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
                         data.result = new Object[] { "IOException" };
@@ -425,6 +454,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 col.clearUndo();
             }
             // then move on to media sync
+            sIsCancellable = true;
             boolean noMediaChanges = false;
             String mediaError = null;
             if (media) {
@@ -453,13 +483,15 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 } catch (RuntimeException e) {
                     if (timeoutOccured(e)) {
                         data.result = new Object[] {"connectionError" };
+                    } else if (e.getMessage().equals("UserAbortedSync")) {
+                        data.result = new Object[] {"UserAbortedSync" };
                     } else {
                         AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-mediaSync");
                     }
                     mediaError = e.getLocalizedMessage();
                 }
             }
-            if (noChanges && noMediaChanges) {
+            if (noChanges && (!media || noMediaChanges)) {
                 data.success = false;
                 data.result = new Object[] { "noChanges" };
                 return data;
@@ -483,7 +515,9 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             e.printStackTrace();
             data.success = false;
             if (timeoutOccured(e)) {
-                data.result = new Object[] {"connectionError" };
+                data.result = new Object[]{"connectionError"};
+            } else if (e.getMessage().equals("UserAbortedSync")) {
+                data.result = new Object[] {"UserAbortedSync" };
             } else {
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync");
                 data.result = new Object[] {e.getLocalizedMessage()};
@@ -514,154 +548,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     public void publishProgress(int id, long up, long down) {
         super.publishProgress(id, up, down);
     }
-
-
-    /**
-     * Downloads any missing media files according to the mediaURL deckvar.
-     *
-     * @param data
-     * @return The return type contains data.resultType and an array of Integer in data.data. data.data[0] is the number
-     *         of total missing media, data.data[1] is the number of downloaded ones.
-     */
-    private Payload doInBackgroundDownloadMissingMedia(Payload data) {
-        Timber.i("DownloadMissingMedia");
-        HashMap<String, String> missingPaths = new HashMap<String, String>();
-        HashMap<String, String> missingSums = new HashMap<String, String>();
-
-        data.result = (Decks) data.data[0]; // pass it to the return object so we close the deck in the deck picker
-        String syncName = "";// deck.getDeckName();
-
-        data.success = false;
-        data.data = new Object[] { 0, 0, 0 };
-        // if (!deck.hasKey("mediaURL")) {
-        // data.success = true;
-        // return data;
-        // }
-        String urlbase = "";// deck.getVar("mediaURL");
-        if (urlbase.equals("")) {
-            data.success = true;
-            return data;
-        }
-
-        String mdir = "";// deck.mediaDir(true);
-        int totalMissing = 0;
-        int missing = 0;
-        int grabbed = 0;
-
-        Cursor cursor = null;
-        try {
-            cursor = null;// deck.getDB().getDatabase().rawQuery("SELECT filename, originalPath FROM media", null);
-            String path = null;
-            String f = null;
-            while (cursor.moveToNext()) {
-                f = cursor.getString(0);
-                path = mdir + "/" + f;
-                File file = new File(path);
-                if (!file.exists()) {
-                    missingPaths.put(f, path);
-                    missingSums.put(f, cursor.getString(1));
-                    Timber.d("Missing file: %s", f);
-                }
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-
-        totalMissing = missingPaths.size();
-        data.data[0] = totalMissing;
-        if (totalMissing == 0) {
-            data.success = true;
-            return data;
-        }
-        publishProgress(Boolean.FALSE, totalMissing, 0, syncName);
-
-        URL url = null;
-        HttpURLConnection connection = null;
-        String path = null;
-        String sum = null;
-        int readbytes = 0;
-        byte[] buf = new byte[4096];
-        for (String file : missingPaths.keySet()) {
-
-            try {
-                android.net.Uri uri = android.net.Uri.parse(Uri.encode(urlbase, ":/@%") + Uri.encode(file));
-                url = new URI(uri.toString()).toURL();
-                connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                if (connection.getResponseCode() == 200) {
-                    path = missingPaths.get(file);
-                    InputStream is = connection.getInputStream();
-                    BufferedInputStream bis = new BufferedInputStream(is, 4096);
-                    FileOutputStream fos = new FileOutputStream(path);
-                    while ((readbytes = bis.read(buf, 0, 4096)) != -1) {
-                        fos.write(buf, 0, readbytes);
-                        Timber.d("Downloaded %d file: %s", readbytes, path);
-                    }
-                    fos.close();
-
-                    // Verify with checksum
-                    sum = missingSums.get(file);
-                    if (true) {// sum.equals("") || sum.equals(Utils.fileChecksum(path))) {
-                        grabbed++;
-                    } else {
-                        // Download corrupted, delete file
-                        Timber.i("Downloaded media file %s failed checksum.", path);
-                        File f = new File(path);
-                        f.delete();
-                        missing++;
-                    }
-                } else {
-                    Timber.e("Connection error (" + connection.getResponseCode()
-                            + ") while retrieving media file " + urlbase + file);
-                    Timber.e("Connection message: " + connection.getResponseMessage());
-                    if (missingSums.get(file).equals("")) {
-                        // Ignore and keep going
-                        missing++;
-                    } else {
-                        data.success = false;
-                        data.data = new Object[] { file };
-                        return data;
-                    }
-                }
-                connection.disconnect();
-            } catch (URISyntaxException e) {
-                Timber.e(e, "doInBackgroundDownloadMissingMedia URISyntaxException");
-            } catch (MalformedURLException e) {
-                Timber.e(e, "MalformedURLException while download media file " + path);
-                if (missingSums.get(file).equals("")) {
-                    // Ignore and keep going
-                    missing++;
-                } else {
-                    data.success = false;
-                    data.data = new Object[] { file };
-                    return data;
-                }
-            } catch (IOException e) {
-                Timber.e(e, "IOException while download media file " + path);
-                if (missingSums.get(file).equals("")) {
-                    // Ignore and keep going
-                    missing++;
-                } else {
-                    data.success = false;
-                    data.data = new Object[] { file };
-                    return data;
-                }
-            } finally {
-                if (connection != null) {
-                    connection.disconnect();
-                }
-            }
-            publishProgress(Boolean.TRUE, totalMissing, grabbed + missing, syncName);
-        }
-
-        data.data[1] = grabbed;
-        data.data[2] = missing;
-        data.success = true;
-        return data;
-    }
-
 
     public static boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()
@@ -734,6 +620,15 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
     }
 
+    public synchronized static void cancel() {
+        Timber.d("Cancelled Connection task");
+        sInstance.cancel(true);
+        sIsCancelled = true;
+    }
+
+    public synchronized static boolean isCancellable() {
+        return sIsCancellable;
+    }
 
     public class CancelCallback {
         private WeakReference<ThreadSafeClientConnManager> mConnectionManager = null;
@@ -745,6 +640,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
 
         public void cancelAllConnections() {
+            Timber.d("cancelAllConnections()");
             if (mConnectionManager != null) {
                 ThreadSafeClientConnManager connectionManager = mConnectionManager.get();
                 if (connectionManager != null) {

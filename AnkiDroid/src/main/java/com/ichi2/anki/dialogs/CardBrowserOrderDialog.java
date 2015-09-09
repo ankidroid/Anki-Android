@@ -33,9 +33,6 @@ public class CardBrowserOrderDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Resources res = getResources();
-
-        Drawable icon = res.getDrawable(R.drawable.ic_sort_black_36dp);
-        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
         String[] items = res.getStringArray(R.array.card_browser_order_labels);
         // Set sort order arrow
         for (int i = 0; i < items.length; ++i) {
@@ -50,7 +47,6 @@ public class CardBrowserOrderDialog extends DialogFragment {
         }
         return new MaterialDialog.Builder(getActivity())
                 .title(res.getString(R.string.card_browser_change_display_order_title))
-                .icon(icon)
                 .content(res.getString(R.string.card_browser_change_display_order_reverse))
                 .items(items)
                 .itemsCallbackSingleChoice(getArguments().getInt("order"), mOrderDialogListener)

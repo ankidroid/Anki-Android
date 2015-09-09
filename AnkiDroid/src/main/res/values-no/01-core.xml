@@ -80,7 +80,6 @@
   <string name="undo_action_delete">slett notat</string>
   <string name="undo_action_mark">merk notat</string>
   <string name="unbury">Grav opp igjen</string>
-  <string name="finish_operation">Avslutter forrige handling (sannsynligvis sikkerhetskopiering).\nVennligst vent...</string>
   <string name="contextmenu_deckpicker_rename_deck">Gi nytt navn til kortstokk</string>
   <string name="menu_add">Legg til</string>
   <string name="menu_add_note">Legg til notat</string>

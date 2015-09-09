@@ -5,60 +5,66 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground" >
-    <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" >
-
-        <include layout="@layout/toolbar" />
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/deckpicker_view"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="?android:attr/colorBackground"
-            android:orientation="horizontal"
-            android:layout_below="@+id/toolbar">
-
-            <RelativeLayout
-                android:layout_width="0dip"
+    android:background="?android:attr/colorBackground"
+    android:fitsSystemWindows="true">
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/root_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <RelativeLayout
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_weight="2"
                 android:orientation="vertical" >
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/files"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:background="?android:attr/colorBackground"
-                    android:drawSelectorOnTop="true"
-                    android:fastScrollEnabled="true"
-                    android:layout_above="@+id/today_stats_text_view"
-                    android:focusable="true" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/today_stats_text_view"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginBottom="5dp"
-                    android:gravity="center"/>
-            </RelativeLayout>
+            <include layout="@layout/toolbar" />
 
-            <FrameLayout
-                android:id="@+id/studyoptions_fragment"
-                android:name="com.ichi2.anki.StudyOptionsFragment"
-                android:layout_width="0dip"
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/deckpicker_view"
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_weight="3"
-                tools:ignore="InconsistentLayout" >
-            </FrameLayout>
+                android:background="?android:attr/colorBackground"
+                android:orientation="horizontal"
+                android:layout_below="@+id/toolbar">
 
-        </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="2"
+                    android:orientation="vertical" >
 
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/files"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:background="?android:attr/colorBackground"
+                        android:drawSelectorOnTop="true"
+                        android:fastScrollEnabled="true"
+                        android:layout_above="@+id/today_stats_text_view"
+                        android:focusable="true" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/today_stats_text_view"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginBottom="5dp"
+                        android:gravity="center"/>
+                </RelativeLayout>
+
+                <FrameLayout
+                    android:id="@+id/studyoptions_fragment"
+                    android:name="com.ichi2.anki.StudyOptionsFragment"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="3"
+                    tools:ignore="InconsistentLayout" >
+                </FrameLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
         <include layout="@layout/floating_add_button"/>
-    </RelativeLayout>
+        <include layout="@layout/anki_progress"/>
+    </android.support.design.widget.CoordinatorLayout>
     <include layout="@layout/navigation_drawer" />
-</android.support.v4.widget.DrawerLayout>   
+</android.support.v4.widget.DrawerLayout>

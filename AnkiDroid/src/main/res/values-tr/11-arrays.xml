@@ -42,13 +42,13 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>Eylem yok</item>
-    <item>Yanıtı göster</item>
-    <item>1. yanıt düğmesi</item>
-    <item>2. yanıt düğmesi</item>
-    <item>3. yanıt düğmesi</item>
-    <item>4. yanıt düğmesi</item>
-    <item>Önerileni yanıtla (yeşil)</item>
-    <item>Önerilenden daha iyisini yanıtla</item>
+    <item>Cevabı göster</item>
+    <item>1. cevap düğmesi</item>
+    <item>2. cevap düğmesi</item>
+    <item>3. cevap düğmesi</item>
+    <item>4. cevap düğmesi</item>
+    <item>Önerilen cevabı (yeşil) ver</item>
+    <item>Önerilenden daha iyi cevap ver</item>
     <item>Geri al</item>
     <item>Notu düzenle</item>
     <item>Notu işâretle</item>

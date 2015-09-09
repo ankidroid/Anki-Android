@@ -39,12 +39,12 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="decks">Decks</string>
-  <string name="card_browser">Card browser</string>
-  <string name="statistics">Statistics</string>
-  <string name="settings">Settings</string>
-  <string name="help">Help</string>
-  <string name="send_feedback">Send feedback</string>
+  <string name="decks">دسته ها</string>
+  <string name="card_browser">مرورگر کارت</string>
+  <string name="statistics">آمار</string>
+  <string name="settings">تنظیمات</string>
+  <string name="help">راهنما</string>
+  <string name="send_feedback">ارسال بازخورد</string>
   <string name="studyoptions_title">تنظیمات مطالعه</string>
   <string name="studyoptions_due_today">موعد مقرر امروز:</string>
   <string name="studyoptions_new_total">کل کارت های جدید:</string>
@@ -52,7 +52,7 @@
   <string name="studyoptions_eta">زمان برآورد شده (دقیقه):</string>
   <string name="studyoptions_start">مرور کردن</string>
   <plurals name="deckpicker_title">
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="other">%1$dزمان مرور کارت ها (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="other">%d minutes left</item>
@@ -77,7 +77,6 @@
   <string name="undo_action_delete">حذف یادداشت</string>
   <string name="undo_action_mark">علامتگذاری یادداشت</string>
   <string name="unbury">نمایش در نشست جاری</string>
-  <string name="finish_operation">اتمام عملیات قبلی (به احتمال زیاد پشتیبان گیری). \nلطفا صبر کنید...</string>
   <string name="contextmenu_deckpicker_rename_deck">تغییر نام دسته</string>
   <string name="menu_add">افزودن</string>
   <string name="menu_add_note">افزودن یادداشت</string>

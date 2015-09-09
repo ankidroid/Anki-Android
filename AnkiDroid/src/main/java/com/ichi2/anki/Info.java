@@ -27,8 +27,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.ClipboardManager;
 import android.text.method.LinkMovementMethod;
+import android.util.TypedValue;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
@@ -38,7 +38,6 @@ import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.themes.Themes;
 import com.ichi2.utils.VersionUtils;
 
 import org.acra.util.Installation;
@@ -78,14 +77,16 @@ public class Info extends AnkiActivity {
         setTitle(String.format("%s v%s", VersionUtils.getAppName(), VersionUtils.getPkgVersionName()));
         webView = (WebView) findViewById(R.id.info);
         webView.setWebChromeClient(new WebChromeClient() {
-            public void onProgressChanged(WebView view, int progress)
-            {
+            public void onProgressChanged(WebView view, int progress) {
                 // Hide the progress indicator when the page has finished loaded
-                if(progress == 100) {
+                if (progress == 100) {
                     mainView.findViewById(R.id.progress_bar).setVisibility(View.GONE);
                 }
             }
         });
+
+
+
 
         TextView termsAndConditionsView = (TextView) findViewById(R.id.info_terms_and_conditions);
         termsAndConditionsView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -119,7 +120,16 @@ public class Info extends AnkiActivity {
         switch (mType) {
             case TYPE_ABOUT:
                 String[] content = res.getStringArray(R.array.about_content);
-                sb.append("<html><body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">");
+
+                // Apply theme colours.
+                TypedValue typedValue = new TypedValue();
+                getTheme().resolveAttribute(android.R.attr.colorBackground, typedValue, true);
+                webView.setBackgroundColor(typedValue.data);
+                getTheme().resolveAttribute(android.R.attr.textColor, typedValue, true);
+                String textColor = String.format("#%06X", (0xFFFFFF & typedValue.data)); // Color to hex string
+                sb.append("<html><style>body {color:"+textColor+";}</style>");
+
+                sb.append("<body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">");
                 sb.append(
                         String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki)))
                         .append("<br/><br/>");
@@ -129,8 +139,7 @@ public class Info extends AnkiActivity {
                         "<br/><br/>");
                 sb.append(
                         String.format(content[2], res.getString(R.string.link_wikipedia_open_source),
-                                res.getString(R.string.link_contribution),
-                                res.getString(R.string.link_contribution_contributors))).append(" ");
+                                res.getString(R.string.link_contribution))).append(" ");
                 sb.append(
                         String.format(content[3], res.getString(R.string.link_translation),
                                 res.getString(R.string.link_donation))).append("<br/><br/>");

@@ -109,7 +109,7 @@ public class Syncer {
                     // don't abort, but ui should show messages after sync finishes
                     // and require confirmation if it's non-empty
                 }
-
+                throwExceptionIfCancelled(con);
                 long rscm = rMeta.getLong("scm");
                 int rts = rMeta.getInt("ts");
                 mRMod = rMeta.getLong("mod");
@@ -143,6 +143,7 @@ public class Syncer {
                     mCol.log("basic check");
                     return new Object[] { "basicCheckFailed" };
                 }
+                throwExceptionIfCancelled(con);
                 // step 2: deletions
                 publishProgress(con, R.string.sync_deletions_message);
 
@@ -156,6 +157,7 @@ public class Syncer {
                 Timber.i("Sync: sending and receiving removed data");
                 JSONObject rrem = mServer.start(o);
                 Timber.i("Sync: applying removed data");
+                throwExceptionIfCancelled(con);
                 remove(rrem);
                 // ... and small objects
                 publishProgress(con, R.string.sync_small_objects_message);
@@ -167,12 +169,13 @@ public class Syncer {
 
                 Timber.i("Sync: sending and receiving small changes");
                 JSONObject rchg = mServer.applyChanges(sch);
-
+                throwExceptionIfCancelled(con);
                 Timber.i("Sync: merging small changes");
                 mergeChanges(lchg, rchg);
                 // step 3: stream large tables from server
                 publishProgress(con, R.string.sync_download_chunk);
                 while (true) {
+                    throwExceptionIfCancelled(con);
                     Timber.i("Sync: downloading chunked data");
                     JSONObject chunk = mServer.chunk();
                     mCol.log("server chunk", chunk);
@@ -185,6 +188,7 @@ public class Syncer {
                 // step 4: stream to server
                 publishProgress(con, R.string.sync_upload_chunk);
                 while (true) {
+                    throwExceptionIfCancelled(con);
                     Timber.i("Sync: collecting chunked data");
                     JSONObject chunk = chunk();
                     mCol.log("client chunk", chunk);
@@ -875,7 +879,7 @@ public class Syncer {
     private void mergeNotes(JSONArray notes) {
         for (Object[] n : newerRows(notes, "notes", 4)) {
             mCol.getDb().execute("INSERT OR REPLACE INTO notes VALUES (?,?,?,?,?,?,?,?,?,?,?)", n);
-            mCol.updateFieldCache(new long[] { Long.valueOf(((Number) n[0]).longValue()) });
+            mCol.updateFieldCache(new long[]{Long.valueOf(((Number) n[0]).longValue())});
         }
     }
 
@@ -896,6 +900,22 @@ public class Syncer {
 
     private void mergeConf(JSONObject conf) {
         mCol.setConf(conf);
+    }
+
+    /**
+     * If the user asked to cancel the sync then we just throw a Runtime exception which should be gracefully handled
+     * @param con
+     */
+    private void throwExceptionIfCancelled(Connection con) {
+        if (Connection.getIsCancelled()) {
+            Timber.i("Sync was cancelled");
+            publishProgress(con, R.string.sync_cancelled);
+            try {
+                mServer.finish();
+            } catch (UnknownHttpResponseException e) {
+            }
+            throw new RuntimeException("UserAbortedSync");
+        }
     }
 
 }

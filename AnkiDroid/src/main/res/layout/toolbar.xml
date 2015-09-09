@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/toolbar"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
-    android:layout_alignParentTop="true"
-    app:navigationContentDescription="@string/abc_action_bar_up_description"
-    app:navigationIcon="?attr/homeAsUpIndicator"
-    app:theme="?attr/actionBarThemeRef"
-    app:popupTheme="?attr/actionBarPopupThemeRef">
-    <ProgressBar
-        android:id="@+id/progress_spinner"
-        android:layout_width="wrap_content"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:indeterminate="true"
-        android:visibility="gone"/>
-    <Spinner
-        android:id="@+id/toolbar_spinner"
-        android:background="?attr/selectableItemBackground"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"/>
-</android.support.v7.widget.Toolbar>
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:layout_alignParentTop="true"
+        app:navigationContentDescription="@string/abc_action_bar_up_description"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        android:theme="?attr/actionBarThemeRef"
+        app:popupTheme="?attr/actionBarPopupThemeRef">
+        <Spinner
+            android:id="@+id/toolbar_spinner"
+            android:background="?attr/selectableItemBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+    </android.support.v7.widget.Toolbar>
+</merge>

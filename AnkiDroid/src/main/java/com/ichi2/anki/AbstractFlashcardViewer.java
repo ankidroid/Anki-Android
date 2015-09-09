@@ -938,7 +938,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         updateScreenCounts();
         supportInvalidateOptionsMenu();
-        hideProgressBar();
     }
 
 
@@ -1258,11 +1257,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     protected void showDeleteNoteDialog() {
         Resources res = getResources();
-        Drawable icon = res.getDrawable(R.drawable.ic_warning_black_36dp);
-        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
         new MaterialDialog.Builder(this)
                 .title(res.getString(R.string.delete_card_title))
-                .icon(icon)
+                .iconAttr(R.attr.dialogErrorIcon)
                 .content(String.format(res.getString(R.string.delete_note_message),
                         Utils.stripHTML(mCurrentCard.q(true))))
                 .positiveText(res.getString(R.string.dialog_positive_delete))

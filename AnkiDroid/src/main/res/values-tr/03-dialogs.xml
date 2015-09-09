@@ -44,22 +44,22 @@
   <string name="check_db_acknowledge">Veritabanı kontrol edildi</string>
   <string name="check_db_acknowledge_shrunk">Veritabanı kontrol ve optimize edildi.\n%d KB küçültüldü.</string>
   <string name="contextmenu_deckpicker_delete_deck">Desteyi Sil</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
+  <string name="delete_deck_default_deck">Varsayılan deste silinemez.</string>
   <string name="delete_deck_title">Desteyi Sil</string>
   <plurals name="delete_deck_message">
-    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
-    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="one">%1$s destesindeki bütün kartlar silinsin mi? İçinde %2$d kart var.</item>
+    <item quantity="other">%1$s destesindeki bütün kartlar silinsin mi? İçinde %2$d kart var.</item>
   </plurals>
   <string name="delete_cram_deck_message">Tüm kartları orijinal destelerine %s geri göndermek istediğinizden emin misiniz?</string>
   <string name="no_tts_available_message">Mevcut metin okuma dili yok</string>
   <string name="initializing_tts">TTS başlatılıyor&#8230;</string>
   <string name="tts_no_tts">Konuşma</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Android için bilgi kartları</h2>AnkiDroid <a href="%2$s">Anki</a> masaüstü uygulamasıyla tamamen uyumlu bir bilgi kartı uygulamasıdır. İster AnkiDroid\'de ister Anki Masaüstünde içerikler oluşturabilir, indirebilir, öğrenebilir ve kolaylıkla senkronize edebilirsiniz.]]></item>
-    <item><![CDATA[AnkiDroid\'i geliştirmemize yardımcı olmak için, lütfen karşılaştığınız sorunları <a href="%1$s">buradan</a> bildirin; yeni özellik fikirleri de çok iyi olur! Lütfen <a href="%2$s">vikiyi</a> kullanın ve <a href="%3$s">forumda</a> bir selam verin.]]></item>
-    <item><![CDATA[AnkiDroid <a href=\"%1$s\">açık kaynaklı bir yazılımdır<a/>, bu yüzden herkez <a href=\"%3$s\">emeği geçenler</a>in arasına <a href=\"%2$s\">katılmaya</a> davetlidir. :-)]]></item>
-    <item><![CDATA[Programcı olmayanlar da örneğin AnkiDroid\'i <a href="%1$s">çevirerek</a>, vikiyi ve ekran görüntülerini güncelleyerek, Anki Masaüstüne <a href="%2$s">bağış yaparak</a>, veya AnkiDroid hakkında bloglayarak yardımcı olabilir!]]></item>
-    <item><![CDATA[AnkiDroid <a href="%1$s">GNU-GPL 3 lisansı</a> altında yayınlanır ve kaynak kodu <a href="%2$s">burada</a> mevcuttur.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
+    <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
+    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, <a href=\"%2$s\">donate</a> to Anki Desktop, or blog about AnkiDroid.]]></item>
+    <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Önizleme</string>
   <string name="reset_card_dialog_title">Kart ilerlemesini sıfırla</string>

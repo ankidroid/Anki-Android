@@ -26,12 +26,10 @@ public class DeckPickerConfirmDeleteDeckDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Resources res = getResources();
-        Drawable icon = res.getDrawable(R.drawable.ic_warning_black_36dp);
-        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
         return new MaterialDialog.Builder(getActivity())
                 .title(res.getString(R.string.delete_deck_title))
                 .content(getArguments().getString("dialogMessage"))
-                .icon(icon)
+                .iconAttr(R.attr.dialogErrorIcon)
                 .positiveText(res.getString(R.string.dialog_positive_delete))
                 .negativeText(res.getString(R.string.dialog_cancel))
                 .cancelable(true)

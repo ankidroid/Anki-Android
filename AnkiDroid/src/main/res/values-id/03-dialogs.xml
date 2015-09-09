@@ -54,11 +54,11 @@
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Jangan sebut</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Kad imbas untuk Android</h2>AnkiDroid ialah kad imbas yang juga serasi dengan perisian destop <a href="%2$s">Anki</a>. Anda boleh reka, muat turun dan belajar di antara dua perisian ini.]]></item>
-    <item><![CDATA[Bantu kami memperbaiki AnkiDroid dengan melapor bug di <a href="%1$s">sini</a>; Cadangan baru dijemput! Guna <a href="%2$s">wiki</a> dan bincang di dalam  <a href="%3$s">forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
-    <item><![CDATA[Orang ramai boleh membantu, seperti <a href="%1$s">dengan alih bahasa</a> AnkiDroid, mengemas wiki dan gambar, <a href="%2$s">menderma</a> kepada Anki Desktop, atau blogging pasal AnkiDroid!]]></item>
-    <item><![CDATA[AnkiDroid tertakluk kepada <a href="%1$s">Lesen GNU-GPL v3 </a> dan kod sumber disimpan di <a href="%2$s">sini</a>.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
+    <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
+    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, <a href=\"%2$s\">donate</a> to Anki Desktop, or blog about AnkiDroid.]]></item>
+    <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Pratinjau</string>
   <string name="reset_card_dialog_title">Set semula rekod kemajuan kad</string>

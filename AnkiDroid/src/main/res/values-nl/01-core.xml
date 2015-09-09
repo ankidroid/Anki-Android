@@ -80,7 +80,6 @@
   <string name="undo_action_delete">memo verwijderen</string>
   <string name="undo_action_mark">markeer memo</string>
   <string name="unbury">Niet langer verbergen</string>
-  <string name="finish_operation">Vorige operatie afmaken (meestal backup).\nGeduld aub...</string>
   <string name="contextmenu_deckpicker_rename_deck">Setnaam wijzigen</string>
   <string name="menu_add">Toevoegen</string>
   <string name="menu_add_note">Memo toevoegen</string>
@@ -106,7 +105,7 @@
   <string name="time_quantity_hours">%d h</string>
   <string name="time_quantity_days">%d d</string>
   <string name="time_quantity_months">%.1f mo</string>
-  <string name="time_quantity_years">%.1f yr</string>
+  <string name="time_quantity_years">%.1f jr</string>
   <string name="later">Later</string>
   <string name="rebuild_cram_deck">Stampset wordt opnieuw opgebouwd.\nEven geduld...</string>
   <string name="rebuild_cram_label">Opnieuw opbouwen</string>

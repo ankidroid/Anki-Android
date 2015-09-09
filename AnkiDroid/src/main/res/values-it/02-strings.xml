@@ -157,28 +157,28 @@
   <string name="lookup_hint">Dopo aver copiato il testo, tocca la carta in un punto qualsiasi per mostrare l\'icona di ricerca</string>
   <string name="add_content_showcase_text">Per cominciare, pigia il bottone + per aggiungere nuovi contenuti da studiare.\n\n Pigia \'Aiuto\' per vedere il manuale.</string>
   <plurals name="time_span_seconds">
-    <item quantity="one">%s second</item>
-    <item quantity="other">%s seconds</item>
+    <item quantity="one">%s secondo</item>
+    <item quantity="other">%s secondi</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="one">%s minute</item>
-    <item quantity="other">%s minutes</item>
+    <item quantity="one">%s minuto</item>
+    <item quantity="other">%s minuti</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="one">%s hour</item>
-    <item quantity="other">%s hours</item>
+    <item quantity="one">%s ora</item>
+    <item quantity="other">%s ore</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="one">%s day</item>
-    <item quantity="other">%s days</item>
+    <item quantity="one">%s giorno</item>
+    <item quantity="other">%s giorni</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="one">%s month</item>
-    <item quantity="other">%s months</item>
+    <item quantity="one">%s mese</item>
+    <item quantity="other">%s mesi</item>
   </plurals>
   <plurals name="time_span_years">
-    <item quantity="one">%s year</item>
-    <item quantity="other">%s years</item>
+    <item quantity="one">%s anno</item>
+    <item quantity="other">%s anni</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
 </resources>

@@ -2425,7 +2425,7 @@ public class Sched {
                     for (String s : cs) {
                         done += deck.getJSONArray(s + "Today").getInt(1);
                     }
-                    mCachedDeckCounts.put(d.did, new Pair<String[], long[]> (d.names, new long[]{done, d.newCount, d.lrnCount, d.newCount}));
+                    mCachedDeckCounts.put(d.did, new Pair<String[], long[]> (d.names, new long[]{done, d.newCount, d.lrnCount, d.revCount}));
                 }
             }
 
