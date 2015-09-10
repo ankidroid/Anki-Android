@@ -1,4 +1,4 @@
-# API Documentation (note: this documentation is still under preparation)
+# API Documentation
 
 <i>Audience: This page is for Android apps developers. AnkiDroid users can ignore it.</i>
 
@@ -10,18 +10,31 @@ First things first, you should add the following dependency to your module's `bu
 
 ```Gradle
 dependencies {
-    compile 'PLACEHOLDER'
+    compile 'PLACEHOLDER' // The API hasn't been uploaded to JCenter yet
 }
 ```
 
-### Adding a new model
-Example 1
+### Simplest Example
+Here is a very simple example of adding a new note to AnkiDroid. See the sample app for a more complete / detailed example.
 
-### Adding a new deck
-Example 2
-
-### Adding a new flashcard
-Example 3
+```java
+// Instantiate the API
+final AddContentApi api = new AddContentApi(myActivityInstance);
+// Add new deck if one doesn't already exist
+Long did = api.findDeckIdByName(myActivityInstance, "My app name");
+if (did == null) {
+    did = api.addNewDeck(myActivityInstance, "My app name");
+}
+// Add a new model if one doesn't already exist
+Long mid = api.findModelIdByName(myActivityInstance, "com.something.myapp", 2);
+if (mid == null) {
+    // This will add a basic two-field / one card model with no special formatting
+    // See the sample app for a complicated example
+    mid = api.addNewBasicModel(myActivityInstance, "com.something.myapp");
+}
+// Add new note
+api.addNewNote(mid, did, flds, "my_app_name_instant_add");
+```
 
 ### Example project
 A very simple example Japanese-English sample dictionary is [available here](https://github.com/ankidroid/apisample), which gives an expected real-world implementation of the API. You can long-press on an item in the list to send one or more cards to AnkiDroid via the share button on the contextual toolbar.
