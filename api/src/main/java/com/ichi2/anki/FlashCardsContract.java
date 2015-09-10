@@ -2,7 +2,7 @@
  * Copying and distribution of this file, with or without modification, are permitted in any
  * medium without royalty. This file is offered as-is, without any warranty.
  */
-package com.ichi2.anki.provider;
+package com.ichi2.anki;
 import android.net.Uri;
 
 /**
@@ -25,18 +25,15 @@ import android.net.Uri;
  * The most important data of notes/cards are "fields". Fields contain the actual information of the
  * flashcard that is used for learning. Typical fields are "Japanese" and "English" (for a native
  * English speaker to learn Japanese), or just "front" and "back" (for a generic front side and back
- * side of a card, without saying anything about the purpose). Fields can be accessed through the
- * {@link Data} content provider using the special
- * {@link Data.Field#MIMETYPE} for fields.
+ * side of a card, without saying anything about the purpose).
  * </p>
  * <p/>
  * Note and card information is accessed in the following way:
  * </p>
  * <ul>
  * <li>
- * Each row from the {@link Note} provider represents a note that is stored in AnkiDroid.
- * This provider must be used in order to find flashcards. Some of the data that is returned by
- * this provider can also be obtained through the {@link Data} in a more compact way. The notes
+ * Each row from the {@link Note} provider represents a note that is stored in the AnkiDroid database.
+ * This provider must be used in order to find flashcards. The notes
  * can be accessed by the {@link Note#CONTENT_URI}, like this to search for note:
  * <pre>
  *     <code>
@@ -54,11 +51,7 @@ import android.net.Uri;
  * </pre>
  * </li>
  * <li>
- * A row from the {@link Data} provider gives access to notes data, such as fields and tags. The
- * data is accessed as described in the {@link DataColumns} description.
- * </li>
- * <li>
- * A row from the {@link Card} provider gives access to notes cards. The
+ * A row from the {@link Card} sub-provider gives access to notes cards. The
  * cards are accessed as described in the {@link Card} description.
  * </li>
  * <li>
@@ -85,12 +78,6 @@ import android.net.Uri;
  * <td class="colFirst"><code>notes/&lt;note_id&gt;</code></td>
  * <td class="colLast">Note with id <code>note_id</code> as raw data
  * <div class="block">Supports query(). For code examples see class description of {@link Note}.</div>
- * </td>
- * </tr>
- * <tr class="altColor">
- * <td class="colFirst"><code>notes/&lt;note_id&gt;/data</code></td>
- * <td class="colLast">Note with id <code>note_id</code> as high level data (i.e. split fields, tags).
- * <div class="block">Supports update(), query(). For code examples see class description of {@link DataColumns}.</div>
  * </td>
  * </tr>
  * <tr class="rowColor">
@@ -180,8 +167,7 @@ public class FlashCardsContract {
      *     </code>
      * </pre>
      * <p/>
-     * It's not possible to update notes through this interface. Instead the {@link DataColumns}
-     * interface and it's implementations should be used.
+     *
      * <p/>
      * A note consists of the following columns:
      * <p/>
@@ -201,7 +187,7 @@ public class FlashCardsContract {
      * <td>long</td>
      * <td>{@link #GUID}</td>
      * <td>read-only</td>
-     * <td>???</td>
+     * <td>see <a href="https://github.com/ankidroid/Anki-Android/wiki/Database-Structure">main documentation</a></td>
      * </tr>
      * <tr>
      * <td>long</td>
@@ -215,19 +201,19 @@ public class FlashCardsContract {
      * <td>long</td>
      * <td>{@link #MOD}</td>
      * <td>read-only</td>
-     * <td>???</td>
+     * <td>see <a href="https://github.com/ankidroid/Anki-Android/wiki/Database-Structure">main documentation</a></td>
      * </tr>
      * <tr>
      * <td>long</td>
      * <td>{@link #USN}</td>
      * <td>read-only</td>
-     * <td>???</td>
+     * <td>see <a href="https://github.com/ankidroid/Anki-Android/wiki/Database-Structure">main documentation</a></td>
      * </tr>
      * <tr>
      * <td>long</td>
      * <td>{@link #TAGS}</td>
      * <td>read-only</td>
-     * <td>Tags of this note. Tags are separated  by spaces.</td>
+     * <td>NoteTag of this note. NoteTag are separated  by spaces.</td>
      * </tr>
      * <tr>
      * <td>String</td>
@@ -239,25 +225,25 @@ public class FlashCardsContract {
      * <td>long</td>
      * <td>{@link #SFLD}</td>
      * <td>read-only</td>
-     * <td>???</td>
+     * <td>see <a href="https://github.com/ankidroid/Anki-Android/wiki/Database-Structure">main documentation</a></td>
      * </tr>
      * <tr>
      * <td>long</td>
      * <td>{@link #CSUM}</td>
      * <td>read-only</td>
-     * <td>???</td>
+     * <td>see <a href="https://github.com/ankidroid/Anki-Android/wiki/Database-Structure">main documentation</a></td>
      * </tr>
      * <tr>
      * <td>long</td>
      * <td>{@link #FLAGS}</td>
      * <td>read-only</td>
-     * <td>???</td>
+     * <td>see <a href="https://github.com/ankidroid/Anki-Android/wiki/Database-Structure">main documentation</a></td>
      * </tr>
      * <tr>
      * <td>long</td>
      * <td>{@link #DATA}</td>
      * <td>read-only</td>
-     * <td>???</td>
+     * <td>see <a href="https://github.com/ankidroid/Anki-Android/wiki/Database-Structure">main documentation</a></td>
      * </tr>
      * </table>
      */
@@ -327,251 +313,10 @@ public class FlashCardsContract {
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.ichi2.anki.note";
     }
 
-    /**
-     * This is the generic interface class that describes the detailed content of notes.
-     * <p/>
-     * The note details consist of four columns:
-     * <p/>
-     * <table class="jd-sumtable">
-     * <tr>
-     * <th>Type</th><th>Name</th><th>access</th><th>description</th>
-     * </tr>
-     * <tr>
-     * <td>long</td>
-     * <td>{@link #_ID}</td>
-     * <td>read-only</td>
-     * <td>Row ID. This is a virtual ID which actually does not exist in AnkiDroid's data base.</td>
-     * </tr>
-     * <tr>
-     * <td>long</td>
-     * <td>{@link #NOTE_ID}</td>
-     * <td>read-only</td>
-     * <td>This is the ID of the note that this row belongs to (i.e. {@link Note#_ID}).
-     * </td>
-     * </tr>
-     * <tr>
-     * <td>String</td>
-     * <td>{@link #MIMETYPE}</td>
-     * <td>read-only</td>
-     * <td>This describes the MIME type of the row, which describes how to interpret the columns
-     * {@link #DATA1} and {@link #DATA2}.
-     * </td>
-     * </tr>
-     * <tr>
-     * <td>MIMETYPE dependent.</td>
-     * <td>{@link #DATA1}</td>
-     * <td>MIMETYPE dependent.</td>
-     * <td>This is the first of two data columns. The column must be interpreted according to the
-     * {@link #MIMETYPE} column.
-     * </td>
-     * </tr>
-     * <tr>
-     * <td>long</td>
-     * <td>{@link #DATA2}</td>
-     * <td>MIMETYPE dependent.</td>
-     * <td>This is the second of two data columns. The column must be interpreted according to the
-     * {@link #MIMETYPE} column.
-     * </td>
-     * </tr>
-     * </table>
-     * <p/>
-     * Example for querying data and using the aliases from {@link Data.Field} and
-     * {@link Data.Tags}:
-     * <pre>
-     *     <code>
-     *         Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
-     *         Uri dataUri = Uri.withAppendedPath(noteUri, "data");
-     *         final Cursor cur = cr.query(dataUri,
-     *                                     null,  // projection
-     *                                     null,  // selection is ignored for this URI
-     *                                     null,  // selectionArgs is ignored for this URI
-     *                                     null   // sortOrder is ignored for this URI
-     *                                     );
-     *         do {
-     *             if (cur.getString(cur.getColumnIndex(FlashCardsContract.DataColumns.MIMETYPE)).equals(FlashCardsContract.Data.Field.CONTENT_ITEM_TYPE)) {
-     *                 String fieldContent = cur.getString(cur.getColumnIndex(FlashCardsContract.Data.Field.FIELD_CONTENT));
-     *                 String fieldName = cur.getString(cur.getColumnIndex(FlashCardsContract.Data.Field.FIELD_NAME));
-     *                 // Do something
-     *             } else if (cur.getString(cur.getColumnIndex(FlashCardsContract.DataColumns.MIMETYPE)).equals(FlashCardsContract.Data.Tags.CONTENT_ITEM_TYPE)) {
-     *                 String tags = cur.getString(cur.getColumnIndex(FlashCardsContract.Data.Tags.TAG_CONTENT));
-     *                 // Do something
-     *             } else {
-     *                 // Unknown MIME type
-     *             }
-     *         } while (cur.moveToNext());
-     *     </code>
-     * </pre>
-     * <p/>
-     * Example for updating fields using the aliases from {@link Data.Field}:
-     * <pre>
-     *     <code>
-     *         Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
-     *         Uri dataUri = Uri.withAppendedPath(noteUri, "data");
-     *         Cursor cur = cr.query(dataUri, null, null, null, null);
-     *         assertNotNull("Check that there is a valid cursor for detail data", cur);
-     *         assertEquals("Move to beginning of cursor after querying for detail data", true, cur.moveToFirst());
-     *         do {
-     *             if (cur.getString(cur.getColumnIndex(FlashCardsContract.DataColumns.MIMETYPE)).equals(FlashCardsContract.Data.Field.CONTENT_ITEM_TYPE)) {
-     *                 // Update field
-     *                 ContentValues values = new ContentValues();
-     *                 values.put(FlashCardsContract.DataColumns.MIMETYPE, FlashCardsContract.Data.Field.CONTENT_ITEM_TYPE);
-     *                 values.put(FlashCardsContract.Data.Field.FIELD_NAME, cur.getString(cur.getColumnIndex(FlashCardsContract.Data.Field.FIELD_NAME)));
-     *                 values.put(FlashCardsContract.Data.Field.FIELD_CONTENT, TEST_FIELD_VALUE);
-     *                 cr.update(dataUri, values, null, null);
-     *             } else {
-     *                 // ignore other data
-     *             }
-     *         } while (cur.moveToNext());
-     *     </code>
-     * </pre>
-     */
-    public interface DataColumns {
-        /**
-         * Row ID. This is a virtual ID which actually does not exist in AnkiDroid's data base.
-         * This column only exists so that this interface can be used with existing CursorAdapters
-         * that require the existence of a "_id" column. This means, that it CAN NOT be used
-         * reliably over subsequent queries. Especially if the number of cards or fields changes,
-         * the _ID will change too.
-         */
-        public static final String _ID = "_id";
 
-        /**
-         * This is the ID of the note that this row belongs to (i.e. {@link Note#_ID}).
-         */
-        public static final String NOTE_ID = "note_id";
-
-        /**
-         * This describes the MIME type of the row, which describes how to interpret the columns
-         * {@link #DATA1} and {@link #DATA2}. Allowed values are:
-         * <ul>
-         * <li>{@link Data.Field#CONTENT_ITEM_TYPE}:
-         * You can use the aliases described in
-         * {@link Data.Field} to access the
-         * columns instead of the generic "DATA1" or "DATA2".
-         * </li>
-         * <li>{@link Data.Tags#CONTENT_ITEM_TYPE}:
-         * You can use the aliases described in
-         * {@link Data.Tags} to access the
-         * columns instead of the generic "DATA1" or "DATA2".
-         * </li>
-         * </ul>
-         */
-        public static final String MIMETYPE = "mimetype";
-
-        /**
-         * This is the first of two data columns. The column must be interpreted according to the
-         * {@link #MIMETYPE} column.
-         */
-        public static final String DATA1 = "data1";
-
-        /**
-         * This is the second of two data columns. The column must be interpreted according to the
-         * {@link #MIMETYPE} column.
-         */
-        public static final String DATA2 = "data2";
-
-        /**
-         * Default columns that are returned when querying the ...notes/#/data URI.
-         */
-        public static final String[] DEFAULT_PROJECTION = {
-                _ID,
-                NOTE_ID,
-                MIMETYPE,
-                DATA1,
-                DATA2};
-    }
 
     /**
-     * Container for definitions of common data types returned by the data content provider.
-     */
-    public class Data {
-
-        /**
-         * MIME type used for data.
-         */
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.ichi2.anki.note_data";
-
-        /**
-         * A data kind representing a field in a note.
-         * <p/>
-         * You can use the columns defined for
-         * {@link DataColumns} as well as the following
-         * aliases.
-         * <table class="jd-sumtable">
-         * <tr>
-         * <th>Type</th><th>Alias</th><th>Data column</th><th>access</th><th></th>
-         * </tr>
-         * <tr>
-         * <td>String</td>
-         * <td>{@link #FIELD_NAME}</td>
-         * <td>{@link DataColumns#DATA1}</td>
-         * <td>read-only</td>
-         * <td>Field name</td>
-         * </tr>
-         * <tr>
-         * <td>String</td>
-         * <td>{@link #FIELD_CONTENT}</td>
-         * <td>{@link DataColumns#DATA2}</td>
-         * <td>read-write</td>
-         * <td>Field content</td>
-         * </tr>
-         * </table>
-         * <p/>
-         * Since the fields are defined by the model type, it is not possible to insert or delete
-         * fields. To update a field see the class description of {@link DataColumns}.
-         */
-        public class Field implements DataColumns {
-            /**
-             * MIME type used for fields.
-             */
-            public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.ichi2.anki.note_field";
-
-            /**
-             * The field name as defined by the model, e.g. "front" or "back".
-             */
-            public static final String FIELD_NAME = DATA1;
-
-            /**
-             * The content of the field, e.g. "dog" or "犬".
-             */
-            public static final String FIELD_CONTENT = DATA2;
-        }
-
-        /**
-         * A data kind representing tags in a note.
-         * <p/>
-         * You can use the columns defined for
-         * {@link DataColumns} as well as the following
-         * aliases.
-         * <table class="jd-sumtable">
-         * <tr>
-         * <th>Type</th><th>Alias</th><th>Data column</th><th>access</th><th></th>
-         * </tr>
-         * <tr>
-         * <td>String</td>
-         * <td>{@link #TAG_CONTENT}</td>
-         * <td>{@link DataColumns#DATA1}</td>
-         * <td>read-write</td>
-         * <td>Tags, seperated by spaces</td>
-         * </tr>
-         * </table>
-         */
-        public class Tags implements DataColumns {
-            /**
-             * MIME type used for tags.
-             */
-            public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.ichi2.anki.note_tags";
-
-            /**
-             * The tags of this note, e.g. "fruits".
-             */
-            public static final String TAG_CONTENT = DATA1;
-        }
-    }
-
-    /**
-     * A model describes what cards look like. This information is described in the
-     * column {@link #JSONOBJECT}.
+     * A model describes what cards look like.
      * <table class="jd-sumtable">
      * <tr>
      * <th>Type</th><th>Name</th><th>access</th><th>description</th>
@@ -583,17 +328,28 @@ public class FlashCardsContract {
      * <td>Model ID.</td>
      * </tr>
      * <tr>
-     * <td>long</td>
+     * <td>String</td>
      * <td>{@link #NAME}</td>
-     * <td>read-only</td>
      * <td>Name of the model.
+     * </td>
+     * </tr>
+     * <td>String</td>
+     * <td>{@link #CSS}</td>
+     * <td>CSS styling code which is shared across all the templates
      * </td>
      * </tr>
      * <tr>
      * <td>String</td>
-     * <td>{@link #JSONOBJECT}</td>
+     * <td>{@link #FIELD_NAMES}</td>
      * <td>read-only</td>
-     * <td>Describes what the cards for this model will look like.
+     * <td>Names of all the fields, separate by the 0x1f character
+     * </td>
+     * </tr>
+     * <tr>
+     * <td>Integer</td>
+     * <td>{@link #NUM_CARDS}</td>
+     * <td>read-only</td>
+     * <td>Number of card templates, which corresponds to the number of rows in the templates table
      * </td>
      * </tr>
      * </table>
@@ -628,6 +384,15 @@ public class FlashCardsContract {
      *     </code>
      *     </pre>
      * </p>
+     *
+     * Instead of specifying the model ID, it's also possible to get the currently active model using the following URI:
+     * <p>
+     * <pre>
+     *      <code>
+     *          Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, FlashCardsContract.Model.CURRENT_MODEL_ID);
+     *      </code>
+     * </pre>
+     * </p>
      */
     public static class Model {
         /**
@@ -635,6 +400,7 @@ public class FlashCardsContract {
          * note can be directly accessed. See class description above for further details.
          */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "models");
+        public static final String CURRENT_MODEL_ID = "current";
 
         /**
          * This is the ID of the model. It is the same as the note ID in Anki. This ID can be
@@ -643,36 +409,22 @@ public class FlashCardsContract {
          */
         public static final String _ID = "_id";
         public static final String NAME = "name";
-
-        // TODO: The fields need description.
+        public static final String FIELD_NAMES = "field_names";
+        public static final String NUM_CARDS = "num_cards";
+        public static final String CSS = "css";
         /**
-         * The JSONOBJECT can be converted into a org.json.JSONObject and describes the model
-         * in detail. A model consists of
-         * <ul>
-         * <li>sortf: What is this</li>
-         * <li>did: What is this</li>
-         * <li>latexPre: What is this</li>
-         * <li>latexPost: What is this</li>
-         * <li>mod: What is this</li>
-         * <li>usn: What is this</li>
-         * <li>vers: What is this</li>
-         * <li>type: What is this</li>
-         * <li>css: What is this</li>
-         * <li>name: The name of the model (same as in column {@link #NAME})</li>
-         * <li>flds: What is this</li>
-         * <li>tmpls: This is a JSONArray describing the template. Each entry in this array
-         * describes which cards exist for each note that uses this model.</li>
-         * <li>tags: What is this</li>
-         * <li>id: The ID of the model (same as in column {@link #_ID})</li>
-         * <li>req (optional): This seems to describe which fields(?) or cards(?) are required. But required for what?</li>
-         * </ul>
+         * The deck ID that is selected by default when adding new notes with this model.
+         * This is only used when the "Deck for new cards" preference is set to "Decide by note type"
          */
-        public static final String JSONOBJECT = "jsonobject";
+        public static final String DECK_ID = "deck_id";
 
         public static final String[] DEFAULT_PROJECTION = {
                 _ID,
                 NAME,
-                JSONOBJECT};
+                FIELD_NAMES,
+                NUM_CARDS,
+                CSS,
+                DECK_ID};
 
         /**
          * MIME type used for a model.
@@ -683,6 +435,85 @@ public class FlashCardsContract {
          * MIME type used for model.
          */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.ichi2.anki.model";
+    }
+
+
+    /**
+     * Card template for a model. A template defines how to render the fields of a note into the actual HTML that
+     * makes up a flashcard. A model can define multiple card templates, for example a Forward and Reverse Card could
+     * be defined with the forward card allowing to review a word from Japanese->English (e.g. 犬 -> dog), and the
+     * reverse card allowing review in the "reverse" direction (e.g dog -> 犬). When a Note is inserted, a Card will
+     * be generated for each active CardTemplate which is defined.
+     */
+    public static class CardTemplate {
+
+        /**
+         * MIME type used for data.
+         */
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.ichi2.anki.model.template";
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.ichi2.anki.model.template";
+
+        /**
+         * Row ID. This is a virtual ID which actually does not exist in AnkiDroid's data base.
+         * This column only exists so that this interface can be used with existing CursorAdapters
+         * that require the existence of a "_id" column. This means, that it CAN NOT be used
+         * reliably over subsequent queries. Especially if the number of cards or fields changes,
+         * the _ID will change too.
+         */
+        public static final String _ID = "_id";
+
+        /**
+         * This is the ID of the model that this row belongs to (i.e. {@link Model#_ID}).
+         */
+        public static final String MODEL_ID = "model_id";
+
+
+        /**
+         * This is the ordinal / index of the card template (from 0 to number of cards - 1).
+         */
+        public static final String ORD = "ord";
+
+
+        /**
+         * The template name e.g. "Card 1".
+         */
+        public static final String NAME = "card_template_name";
+
+
+        /**
+         * The definition of the template for the question
+         */
+        public static final String QUESTION_FORMAT = "question_format";
+
+
+        /**
+         * The definition of the template for the answer
+         */
+        public static final String ANSWER_FORMAT = "answer_format";
+
+
+        /**
+         * Optional alternative definition of the template for the question when rendered with the browser
+         */
+        public static final String BROWSER_QUESTION_FORMAT = "browser_question_format";
+
+
+        /**
+         * Optional alternative definition of the template for the answer when rendered with the browser
+         */
+        public static final String BROWSER_ANSWER_FORMAT = "browser_answer_format";
+
+
+        /**
+         * Default columns that are returned when querying the ...models/#/templates URI.
+         */
+        public static final String[] DEFAULT_PROJECTION = {
+                _ID,
+                MODEL_ID,
+                ORD,
+                NAME,
+                QUESTION_FORMAT,
+                ANSWER_FORMAT};
     }
 
     /**
@@ -750,9 +581,9 @@ public class FlashCardsContract {
      * </tr>
      * <tr>
      * <td>String</td>
-     * <td>{@link #DECK_NAME}</td>
+     * <td>{@link #DECK_ID}</td>
      * <td>read-write</td>
-     * <td>The name of the deck that this card is part of.
+     * <td>The id of the deck that this card is part of.
      * </td>
      * </tr>
      * <tr>
@@ -795,7 +626,7 @@ public class FlashCardsContract {
      * </tr>
      * </table>
      *
-     * The only writable column is the {@link #DECK_NAME}. Moving a card to another deck, can be
+     * The only writable column is the {@link #DECK_ID}. Moving a card to another deck, can be
      * done as shown in this example
      * <pre>
      *     <code>
@@ -807,11 +638,12 @@ public class FlashCardsContract {
      *                                     null   // sortOrder is ignored for this URI
      *                                     );
      *         do {
-     *             String deckName = cur.getString(cur.getColumnIndex(FlashCardsContract.Card.DECK_NAME));
-     *             if(!deckName.equals("MyDeck")){
-     *                 // Move to "MyDeck"
+     *             long newDid = 12345678L;
+     *             long oldDid = cur.getLong(cur.getColumnIndex(FlashCardsContract.Card.DECK_ID));
+     *             if(newDid != oldDid){
+     *                 // Move to new deck
      *                 ContentValues values = new ContentValues();
-     *                 values.put(FlashCardsContract.Card.DECK_NAME, "MyDeck");
+     *                 values.put(FlashCardsContract.Card.DECK_ID, newDid);
      *                 Uri cardUri = Uri.withAppendedPath(cardsUri, cur.getString(cur.getColumnIndex(FlashCardsContract.Card.CARD_ORD)));
      *                 cr.update(cardUri, values, null, null);
      *             }
@@ -839,7 +671,7 @@ public class FlashCardsContract {
         /**
          * The name of the deck that this card is part of.
          */
-        public static final String DECK_NAME = "deck_name";
+        public static final String DECK_ID = "deck_id";
 
         /**
          * The question for this card.
@@ -871,7 +703,7 @@ public class FlashCardsContract {
                 NOTE_ID,
                 CARD_ORD,
                 CARD_NAME,
-                DECK_NAME,
+                DECK_ID,
                 QUESTION,
                 ANSWER};
 
@@ -916,18 +748,18 @@ public class FlashCardsContract {
      *
      * <p>
      * <pre>
-     *     <code>
-     *         Uri scheduled_cards_uri = FlashCardsContract.ReviewInfo.CONTENT_URI;
-     *         String deckArguments[] = new String[]{"5", "123456789"};
-     *         String deckSelector = "limit=?, deckID=?";
-     *         final Cursor cur = cr.query(scheduled_cards_uri,
-     *                                     null,  // projection
-     *                                     deckSelector,  // if null, default values will be used
-     *                                     deckArguments,  // if null, the deckSelector must not contain any placeholders ("?")
-     *                                     null   // sortOrder is ignored for this URI
-     *                                     );
-     *     </code>
-     *     </pre>
+     *
+     * <code>Uri scheduled_cards_uri = FlashCardsContract.ReviewInfo.CONTENT_URI;
+     * String deckArguments[] = new String[]{"5", "123456789"};
+     * String deckSelector = "limit=?, deckID=?";
+     * final Cursor cur = cr.query(scheduled_cards_uri,
+     *                              null,  // projection
+     *                              deckSelector,  // if null, default values will be used
+     *                              deckArguments,  // if null, the deckSelector must not contain any placeholders ("?")
+     *                              null   // sortOrder is ignored for this URI
+     *                              );
+     * </code>
+     * </pre>
      * </p>
      *
      * A ReviewInfo consists of the following columns:
@@ -975,11 +807,11 @@ public class FlashCardsContract {
      * <td>String</td>
      * <td>{@link #EASE}</td>
      * <td>write-only</td>
-     * <td>The ease of the card. Used when answering the card.
-     * One of {@link com.ichi2.anki.AbstractFlashcardViewer#EASE_4},
-     * {@link com.ichi2.anki.AbstractFlashcardViewer#EASE_3},
-     * {@link com.ichi2.anki.AbstractFlashcardViewer#EASE_2},
-     * {@link com.ichi2.anki.AbstractFlashcardViewer#EASE_1}
+     * <td>The ease of the card. Used when answering the card. One of: <br>
+     *          com.ichi2.anki.AbstractFlashcardViewer.EASE_1<br>
+     *          com.ichi2.anki.AbstractFlashcardViewer.EASE_2<br>
+     *          com.ichi2.anki.AbstractFlashcardViewer.EASE_3<br>
+     *          com.ichi2.anki.AbstractFlashcardViewer.EASE_4
      * </td>
      * </tr>
      * <tr>
@@ -994,21 +826,20 @@ public class FlashCardsContract {
      * The only writable column is the {@link #EASE}, which is used for answering a card.<br/>
      * Answering a card can be done as shown in this example
      * <pre>
-     *     <code>
-     *            ContentResolver cr = getContentResolver();
-     *            Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
-     *            ContentValues values = new ContentValues();
-     *            long noteId = 123456789; //<- insert real note id here
-     *            int cardOrd = 0;   //<- insert real card ord here
-     *            int ease = AbstractFlashcardViewer.EASE_3; //<- insert real ease here
-     *            long timeTaken = System.currentTimeMillis() - cardStartTime; //<- insert real time taken here
+     *    <code>ContentResolver cr = getContentResolver();
+     *    Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
+     *    ContentValues values = new ContentValues();
+     *    long noteId = 123456789; //<- insert real note id here
+     *    int cardOrd = 0;   //<- insert real card ord here
+     *    int ease = AbstractFlashcardViewer.EASE_3; //<- insert real ease here
+     *    long timeTaken = System.currentTimeMillis() - cardStartTime; //<- insert real time taken here
      *
-     *            values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);
-     *            values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd);
-     *            values.put(FlashCardsContract.ReviewInfo.EASE, ease);
-     *            values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken);
-     *            cr.update(reviewInfoUri, values, null, null);
-     *     </code>
+     *    values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);
+     *    values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd);
+     *    values.put(FlashCardsContract.ReviewInfo.EASE, ease);
+     *    values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken);
+     *    cr.update(reviewInfoUri, values, null, null);
+     *    </code>
      * </pre>
      */
     public static class ReviewInfo {
@@ -1065,10 +896,6 @@ public class FlashCardsContract {
                 MEDIA_FILES
         };
 
-        /**
-         * MIME type used for a ReviewInfo.
-         */
-        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.ichi2.anki.review_info";
 
         /**
          * MIME type used for ReviewInfo.
@@ -1187,7 +1014,7 @@ public class FlashCardsContract {
     public static class Deck {
 
         public static final Uri CONTENT_ALL_URI = Uri.withAppendedPath(AUTHORITY_URI, "decks");
-        public static final Uri CONTENT_SELECTED_URI = Uri.withAppendedPath(AUTHORITY_URI, "select_deck");
+        public static final Uri CONTENT_SELECTED_URI = Uri.withAppendedPath(AUTHORITY_URI, "selected_deck");
         /**
          * The name of the Deck
          */
@@ -1215,10 +1042,6 @@ public class FlashCardsContract {
                 OPTIONS
         };
 
-        /**
-         * MIME type used for a Deck.
-         */
-        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.ichi2.anki.review_info";
 
         /**
          * MIME type used for Deck.

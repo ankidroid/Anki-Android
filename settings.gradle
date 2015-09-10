@@ -1,2 +1,2 @@
-include ':ShowcaseView:library'
+include ':api'
 include ':AnkiDroid'

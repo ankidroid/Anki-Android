@@ -1,6 +1,7 @@
 /***************************************************************************************
  *                                                                                      *
  * Copyright (c) 2015 Frank Oltmanns <frank.oltmanns@gmail.com>                         *
+ * Copyright (c) 2015 Timothy Rae <timothy.rae@gmail.com>                               *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -27,15 +28,23 @@ import android.util.Log;
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.provider.FlashCardsContract;
+import com.ichi2.anki.FlashCardsContract;
+import com.ichi2.anki.api.AddContentApi;
+import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Models;
+import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
+import com.ichi2.libanki.Utils;
 
-import org.json.JSONException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -45,24 +54,26 @@ import java.util.List;
  */
 public class ContentProviderTest extends AndroidTestCase {
 
+    private static final String BASIC_MODEL_NAME = "com.ichi2.anki.provider.test.basic.x94oa3F";
     private static final String TEST_FIELD_VALUE = "test field value";
     private static final String TEST_TAG = "aldskfhewjklhfczmxkjshf";
-    private static final String TEST_TAG_2 = "hlawiejfglaksjdfliwueu";
-    private static final String TEST_DECK = "glekrjterglknsdfflkgj";
     private static final String[] TEST_DECKS = {"cmxieunwoogyxsctnjmv"
                                                 ,"sstuljxgmfdyugiujyhq"
                                                 ,"pdsqoelhmemmmbwjunnu"
-                                                ,"scxipjiyozczaaczoawo"
-                                                ,"srwcdmseymjeliacsaas"
-                                                ,"iuzqjlqejtyanluroajl"
-                                                ,"qbcmsoghvbklgrfyinqh"
-                                                ,"safinsysttgwkhclgwks"
-                                                ,"lcgmprhkkdrgydscoseo"
-                                                ,"ejrzzvpwtremcgmbnnjh" };
+                                                ,"scxipjiyozczaaczoawo"};
+    private static final String TEST_MODEL_NAME = "com.ichi2.anki.provider.test.a1x6h9l";
+    private static final String[] TEST_MODEL_FIELDS = {"FRONTS","BACK"};
+    private static final String[] TEST_MODEL_CARDS = {"cArD1", "caRD2"};
+    private static final String[] TEST_MODEL_QFMT = {"{{FRONTS}}", "{{BACK}}"};
+    private static final String[] TEST_MODEL_AFMT = {"{{BACK}}", "{{FRONTS}}"};
+    private static final String[] TEST_NOTE_FIELDS = {"dis is za Fr0nt", "Te$t"};
+    private static final String TEST_MODEL_CSS = "styleeeee";
 
-    private int mCreatedNotes;
-    private int numDecksBeforeTest;
-    private long[] testDeckIds = new long[TEST_DECKS.length];
+    private int mNumDecksBeforeTest;
+    private long[] mTestDeckIds = new long[TEST_DECKS.length];
+    private ArrayList<Uri> mCreatedNotes;
+    private long mModelId = 0;
+    private String[] mDummyFields = new String[1];
     /**
      * Initially create one note for each model.
      */
@@ -70,134 +81,105 @@ public class ContentProviderTest extends AndroidTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         Log.i(AnkiDroidApp.TAG, "setUp()");
-        long modelId = 0;
-
-        final ContentResolver cr = getContext().getContentResolver();
-        // Query all available models
-        final Cursor allModelsCursor = cr.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null);
-        assertNotNull(allModelsCursor);
-        mCreatedNotes = 0;
-        int idColumnIndex = allModelsCursor.getColumnIndexOrThrow(FlashCardsContract.Model._ID);
-        ContentValues values = new ContentValues();
-        try {
-            while (allModelsCursor.moveToNext()) {
-                modelId = allModelsCursor.getLong(idColumnIndex);
-                values.clear();
-                values.put(FlashCardsContract.Note.MID, modelId);
-                Uri newNoteUri = cr.insert(FlashCardsContract.Note.CONTENT_URI, values);
-
-                // Now set a special tag, so that the note can easily be deleted after test
-                Uri newNoteDataUri = Uri.withAppendedPath(newNoteUri, "data");
-                values.clear();
-                values.put(FlashCardsContract.DataColumns.MIMETYPE, FlashCardsContract.Data.Tags.CONTENT_ITEM_TYPE);
-                values.put(FlashCardsContract.Data.Tags.TAG_CONTENT, TEST_TAG);
-                assertEquals("Tag set", 1, cr.update(newNoteDataUri, values, null, null));
-                mCreatedNotes++;
-            }
-        } finally {
-            allModelsCursor.close();
+        mCreatedNotes = new ArrayList<>();
+        final Collection col = CollectionHelper.getInstance().getCol(getContext());
+        // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
+        JSONObject model = Models.addBasicModel(col, BASIC_MODEL_NAME);
+        mModelId = model.getLong("id");
+        ArrayList<String> flds = col.getModels().fieldNames(model);
+        // Use the names of the fields as test values for the notes which will be added
+        mDummyFields = flds.toArray(new String[flds.size()]);
+        // create test decks and add one note for every deck
+        final AddContentApi api = new AddContentApi(getContext());
+        HashMap<Long, String> deckList = api.getDeckList();
+        mNumDecksBeforeTest = deckList.size();
+        // TODO: add the notes directly with libanki
+        for(int i = 0; i < TEST_DECKS.length; i++) {
+            mTestDeckIds[i] = api.addNewDeck(getContext(), TEST_DECKS[i]);
+            Uri newNoteUri = api.addNewNote(mModelId, mTestDeckIds[i], mDummyFields, TEST_TAG);
+            assertNotNull(newNoteUri);
+            mCreatedNotes.add(newNoteUri);
+            // Check that the flds data was set correctly
+            long nid = Long.parseLong(newNoteUri.getLastPathSegment());
+            Note addedNote = col.getNote(nid);
+            assertTrue("Check that the flds data was set correctly", Arrays.equals(addedNote.getFields(), mDummyFields));
+            assertTrue("Check that there was at least one card generated", addedNote.cards().size() > 0);
         }
-        assertTrue("Check that at least one model exists, i.e. one note was created", mCreatedNotes != 0);
-
-
-        // create test decks
-        Collection col;
-        col = CollectionHelper.getInstance().getCol(getContext());
-        numDecksBeforeTest = col.getDecks().count();
-
-
-        // create one note for every test deck
-        int i = 0;
-        for(String newDeckName : TEST_DECKS) {
-            testDeckIds[i] = col.getDecks().id(newDeckName, true);
-
-            values.clear();
-            values.put(FlashCardsContract.Note.MID, modelId);
-            Uri newNoteUri = cr.insert(FlashCardsContract.Note.CONTENT_URI, values);
-
-            // Now set a special tag, so that the note can easily be deleted after test
-            Uri newNoteDataUri = Uri.withAppendedPath(newNoteUri, "data");
-            values.clear();
-            values.put(FlashCardsContract.DataColumns.MIMETYPE, FlashCardsContract.Data.Tags.CONTENT_ITEM_TYPE);
-            values.put(FlashCardsContract.Data.Tags.TAG_CONTENT, TEST_TAG_2);
-            assertEquals("Tag set", 1, cr.update(newNoteDataUri, values, null, null));
-
-            final Cursor cardsCursor = cr.query(newNoteDataUri, null, null, null, null);
-            assertNotNull("Check that there is a valid cursor after query for cards", cardsCursor);
-            try {
-                assertTrue("Check that there is at least one result for cards", cardsCursor.getCount() > 0);
-                while (cardsCursor.moveToNext()) {
-                    // Move to deck
-                    ContentValues cardValues = new ContentValues();
-                    cardValues.put(FlashCardsContract.Card.DECK_NAME, newDeckName);
-                    Uri cardUri = Uri.withAppendedPath(
-                            Uri.withAppendedPath(newNoteUri,"cards"),
-                            ""+0);
-                    cr.update(cardUri, cardValues, null, null);
-                }
-            } finally {
-                cardsCursor.close();
-            }
-
-
-            i++;
-        }
-
+        // Add a note to the default deck as well so that testQueryNextCard() works
+        Uri newNoteUri = api.addNewNote(mModelId, 1, mDummyFields, TEST_TAG);
+        assertNotNull(newNoteUri);
+        mCreatedNotes.add(newNoteUri);
     }
 
     /**
-     * Remove the notes created in setUp().
-     * <p/>
-     * Using direct access to the collection, because there is no plan to include a delete
-     * interface in the content provider.
+     * Remove the notes and decks created in setUp().
      */
     @Override
     protected void tearDown() throws Exception {
         Log.i(AnkiDroidApp.TAG, "tearDown()");
-        Collection col;
-        col = CollectionHelper.getInstance().getCol(getContext());
-        int deletedNotes;
-        List<Long> noteIds = col.findNotes("tag:" + TEST_TAG);
-        if ((noteIds != null) && (noteIds.size() > 0)) {
-            long[] delNotes = new long[noteIds.size()];
-            for (int i = 0; i < noteIds.size(); i++) {
-                delNotes[i] = noteIds.get(i);
+        final Collection col = CollectionHelper.getInstance().getCol(getContext());
+        // Delete all notes
+        List<Long> remnantNotes = col.findNotes("tag:" + TEST_TAG);
+        if (remnantNotes.size() > 0) {
+            long[] nids = new long[remnantNotes.size()];
+            for (int i = 0; i < remnantNotes.size(); i++) {
+                nids[i] = remnantNotes.get(i);
             }
-            col.remNotes(delNotes);
-            deletedNotes = noteIds.size();
-        } else {
-            deletedNotes = 0;
+            col.remNotes(nids);
+            col.save();
+            assertEquals("Check that remnant notes have been deleted", 0, col.findNotes("tag:" + TEST_TAG).size());
         }
-        assertEquals("Check that all created notes have been deleted", mCreatedNotes, deletedNotes);
-
-
         // delete test decks
-        for(long did : testDeckIds) {
+        for(long did : mTestDeckIds) {
             col.getDecks().rem(did, true);
         }
-        // delete notes of test decks
-        noteIds = col.findNotes("tag:" + TEST_TAG_2);
-        if ((noteIds != null) && (noteIds.size() > 0)) {
-            long[] delNotes = new long[noteIds.size()];
-            for (int i = 0; i < noteIds.size(); i++) {
-                delNotes[i] = noteIds.get(i);
-            }
-            col.remNotes(delNotes);
-        }
-        col.getDecks().rem(col.getDecks().id(TEST_DECK));
         col.getDecks().flush();
-        assertEquals("Check that all created decks have been deleted", numDecksBeforeTest, col.getDecks().count());
-
+        assertEquals("Check that all created decks have been deleted", mNumDecksBeforeTest, col.getDecks().count());
+        // Delete test model
+        col.modSchema(false);
+        col.getModels().rem(col.getModels().get(mModelId));
         super.tearDown();
     }
 
+
+    /**
+     * Check that inserting and removing a note into default deck works as expected
+     */
+    public void testInsertAndRemoveNote() throws Exception {
+        // Get required objects for test
+        final ContentResolver cr = getContext().getContentResolver();
+        final Collection col = CollectionHelper.getInstance().getCol(getContext());
+        final AddContentApi api = new AddContentApi(getContext());
+        // Add the note
+        Uri newNoteUri = api.addNewNote(mModelId, 1, TEST_NOTE_FIELDS, TEST_TAG);
+        assertNotNull("Check that URI returned from addNewNote is not null", newNoteUri);
+        // Check that it looks as expected
+        Note addedNote = new Note(col, Long.parseLong(newNoteUri.getLastPathSegment()));
+        addedNote.load();
+        assertTrue("Check that fields were set correctly", Arrays.equals(addedNote.getFields(), TEST_NOTE_FIELDS));
+        assertEquals("Check that tag was set correctly", TEST_TAG, addedNote.getTags().get(0));
+        int expectedNumCards = col.getModels().get(mModelId).getJSONArray("tmpls").length();
+        assertEquals("Check that correct number of cards generated", expectedNumCards, addedNote.cards().size());
+        // Now delete the note
+        cr.delete(newNoteUri, null, null);
+        try {
+            addedNote.load();
+            fail("Expected RuntimeException to be thrown when deleting note");
+        } catch (RuntimeException e) {
+            // Expect RuntimeException to be thrown when loading deleted note
+        }
+    }
+
+    /**
+     * Test that a query for all the notes added in setup() looks correct
+     */
     public void testQueryNoteIds() {
         final ContentResolver cr = getContext().getContentResolver();
         // Query all available notes
         final Cursor allNotesCursor = cr.query(FlashCardsContract.Note.CONTENT_URI, null, "tag:" + TEST_TAG, null, null);
         assertNotNull(allNotesCursor);
         try {
-            assertEquals("Check number of results", mCreatedNotes, allNotesCursor.getCount());
+            assertEquals("Check number of results", mCreatedNotes.size(), allNotesCursor.getCount());
             while (allNotesCursor.moveToNext()) {
                 // Check that it's possible to leave out columns from the projection
                 for (int i = 0; i < FlashCardsContract.Note.DEFAULT_PROJECTION.length; i++) {
@@ -224,6 +206,9 @@ public class ContentProviderTest extends AndroidTestCase {
         }
     }
 
+    /**
+     * Check that a valid Cursor is returned when querying notes table with non-default projections
+     */
     public void testQueryNotesProjection() {
         final ContentResolver cr = getContext().getContentResolver();
         // Query all available notes
@@ -232,7 +217,7 @@ public class ContentProviderTest extends AndroidTestCase {
             final Cursor allNotesCursor = cr.query(FlashCardsContract.Note.CONTENT_URI, projection, "tag:" + TEST_TAG, null, null);
             assertNotNull("Check that there is a valid cursor", allNotesCursor);
             try {
-                assertEquals("Check number of results", mCreatedNotes, allNotesCursor.getCount());
+                assertEquals("Check number of results", mCreatedNotes.size(), allNotesCursor.getCount());
                 // Check columns
                 assertEquals("Check column count", projection.length, allNotesCursor.getColumnCount());
                 for (int j = 0; j < projection.length; j++) {
@@ -255,151 +240,155 @@ public class ContentProviderTest extends AndroidTestCase {
         return outputProjection;
     }
 
-    public void testQueryNoteData() {
+
+    /**
+     * Check that updating the flds column works as expected
+     */
+    public void testUpdateNoteFields() {
         final ContentResolver cr = getContext().getContentResolver();
-        // Query all available notes
-        final Cursor allNotesCursor = cr.query(FlashCardsContract.Note.CONTENT_URI, null, "tag:" + TEST_TAG, null, null);
-        assertNotNull(allNotesCursor);
-        try {
-            assertEquals("Check number of results", mCreatedNotes, allNotesCursor.getCount());
-            while (allNotesCursor.moveToNext()) {
-                // Now iterate over all cursors
-                Uri dataUri = Uri.withAppendedPath(Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, allNotesCursor.getString(allNotesCursor.getColumnIndex(FlashCardsContract.Note._ID))), "data");
-                final Cursor noteDataCursor = cr.query(dataUri, null, null, null, null);
-                assertNotNull("Check that there is a valid cursor for detail data", noteDataCursor);
-                try {
-                    assertTrue("Check that there is at least one result for detail data", noteDataCursor.getCount() > 0);
-                    boolean firstFieldChecked = false;
-                    while (noteDataCursor.moveToNext()) {
-                        String mimeType = noteDataCursor.getString(noteDataCursor.getColumnIndex(FlashCardsContract.DataColumns.MIMETYPE));
-                        if (!firstFieldChecked && mimeType.equals(FlashCardsContract.Data.Field.CONTENT_ITEM_TYPE)) {
-                            assertEquals("Check field content", "temp", noteDataCursor.getString(noteDataCursor.getColumnIndex(FlashCardsContract.Data.Field.FIELD_CONTENT)));
-                            firstFieldChecked = true;
-                        } else if (mimeType.equals(FlashCardsContract.Data.Field.CONTENT_ITEM_TYPE)) {
-                            assertEquals("Check field content", "", noteDataCursor.getString(noteDataCursor.getColumnIndex(FlashCardsContract.Data.Field.FIELD_CONTENT)));
-                        } else if (mimeType.equals(FlashCardsContract.Data.Tags.CONTENT_ITEM_TYPE)) {
-                            assertEquals("Unknown tag", TEST_TAG, noteDataCursor.getString(noteDataCursor.getColumnIndex(FlashCardsContract.Data.Tags.TAG_CONTENT)));
-                        } else {
-                            fail("Unknown MIME type " + noteDataCursor.getString(allNotesCursor.getColumnIndex(FlashCardsContract.DataColumns.MIMETYPE)));
-                        }
-                    }
-                } finally {
-                    noteDataCursor.close();
-                }
+        ContentValues cv = new ContentValues();
+        // Change the fields so that the first field is now "newTestValue"
+        String[] dummyFields2 = mDummyFields.clone();
+        dummyFields2[0] = TEST_FIELD_VALUE;
+        for (Uri uri: mCreatedNotes) {
+            // Update the flds
+            cv.put(FlashCardsContract.Note.FLDS, Utils.joinFields(dummyFields2));
+            cr.update(uri, cv, null, null);
+            // Query the table again
+            Cursor noteCursor = cr.query(uri, FlashCardsContract.Note.DEFAULT_PROJECTION, null, null, null);
+            try {
+                assertNotNull("Check that there is a valid cursor for detail data after update", noteCursor);
+                assertEquals("Check that there is one and only one entry after update", 1, noteCursor.getCount());
+                assertTrue("Move to first item in cursor", noteCursor.moveToFirst());
+                String[] newFlds = Utils.splitFields(
+                        noteCursor.getString(noteCursor.getColumnIndex(FlashCardsContract.Note.FLDS)));
+                assertTrue("Check that the flds have been updated correctly", Arrays.equals(newFlds, dummyFields2));
+            } finally {
+                noteCursor.close();
             }
-        } finally {
-            allNotesCursor.close();
         }
     }
 
-    public void testUpdateNoteField() {
-        final ContentResolver cr = getContext().getContentResolver();
-        // Query all available notes
-        final Cursor allNotesCursor = cr.query(FlashCardsContract.Note.CONTENT_URI, null, "tag:" + TEST_TAG, null, null);
-        assertNotNull(allNotesCursor);
-        try {
-            assertEquals("Check number of results", mCreatedNotes, allNotesCursor.getCount());
-            while (allNotesCursor.moveToNext()) {
-                // Now iterate over all notes
-                Uri dataUri = Uri.withAppendedPath(Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, allNotesCursor.getString(allNotesCursor.getColumnIndex(FlashCardsContract.Note._ID))), "data");
-                Cursor noteDataCursor = cr.query(dataUri, null, null, null, null);
-                assertNotNull("Check that there is a valid cursor for detail data", noteDataCursor);
-                try {
-                    assertTrue("Check that there is at least one result for detail data", noteDataCursor.getCount() > 0);
-                    while (noteDataCursor.moveToNext()) {
-                        if (noteDataCursor.getString(noteDataCursor.getColumnIndex(FlashCardsContract.DataColumns.MIMETYPE)).equals(FlashCardsContract.Data.Field.CONTENT_ITEM_TYPE)) {
-                            // Update field
-                            ContentValues values = new ContentValues();
-                            values.put(FlashCardsContract.DataColumns.MIMETYPE, FlashCardsContract.Data.Field.CONTENT_ITEM_TYPE);
-                            values.put(FlashCardsContract.Data.Field.FIELD_NAME, noteDataCursor.getString(noteDataCursor.getColumnIndex(FlashCardsContract.Data.Field.FIELD_NAME)));
-                            values.put(FlashCardsContract.Data.Field.FIELD_CONTENT, TEST_FIELD_VALUE);
-                            assertEquals("Tag set", 1, cr.update(dataUri, values, null, null));
-                        } else {
-                            // ignore other data
-                        }
-                    }
-                } finally {
-                    noteDataCursor.close();
-                }
 
-                // After update query again
-                noteDataCursor = cr.query(dataUri, null, null, null, null);
-                assertNotNull("Check that there is a valid cursor for detail data after update", noteDataCursor);
-                try {
-                    assertTrue("Check that there is at least one result for detail data after update", noteDataCursor.getCount() > 0);
-                    while (noteDataCursor.moveToNext()) {
-                        if (noteDataCursor.getString(noteDataCursor.getColumnIndex(FlashCardsContract.DataColumns.MIMETYPE)).equals(FlashCardsContract.Data.Field.CONTENT_ITEM_TYPE)) {
-                            assertEquals("Check field content", TEST_FIELD_VALUE, noteDataCursor.getString(noteDataCursor.getColumnIndex(FlashCardsContract.Data.Field.FIELD_CONTENT)));
-                        } else {
-                            //ignore other data
-                        }
-                    }
-                } finally {
-                    noteDataCursor.close();
-                }
+    /**
+     * Check that inserting a new model works as expected
+     */
+    public void testInsertAndUpdateModel() throws Exception {
+        final ContentResolver cr = getContext().getContentResolver();
+        ContentValues cv = new ContentValues();
+        // Insert a new model
+        cv.put(FlashCardsContract.Model.NAME, TEST_MODEL_NAME);
+        cv.put(FlashCardsContract.Model.FIELD_NAMES, Utils.joinFields(TEST_MODEL_FIELDS));
+        cv.put(FlashCardsContract.Model.NUM_CARDS, TEST_MODEL_CARDS.length);
+        cv.put(FlashCardsContract.Model.CSS, TEST_MODEL_CSS);
+        Uri modelUri = cr.insert(FlashCardsContract.Model.CONTENT_URI, cv);
+        assertNotNull("Check inserted model isn't null", modelUri);
+        long mid = Long.parseLong(modelUri.getLastPathSegment());
+        final Collection col = CollectionHelper.getInstance().getCol(getContext());
+        try {
+            JSONObject model = col.getModels().get(mid);
+            assertEquals("Check model name", TEST_MODEL_NAME, model.getString("name"));
+            assertEquals("Check css", TEST_MODEL_CSS, model.getString("css"));
+            assertEquals("Check templates length", TEST_MODEL_CARDS.length, model.getJSONArray("tmpls").length());
+            assertEquals("Check field length", TEST_MODEL_FIELDS.length, model.getJSONArray("flds").length());
+            JSONArray flds = model.getJSONArray("flds");
+            for (int i = 0; i < flds.length(); i++) {
+                assertEquals("Check name of fields", flds.getJSONObject(i).getString("name"), TEST_MODEL_FIELDS[i]);
+            }
+            // Update each of the templates in the model
+            for (int i = 0; i < TEST_MODEL_CARDS.length; i++) {
+                cv = new ContentValues();
+                cv.put(FlashCardsContract.CardTemplate.NAME, TEST_MODEL_CARDS[i]);
+                cv.put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, TEST_MODEL_QFMT[i]);
+                cv.put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, TEST_MODEL_AFMT[i]);
+                cv.put(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT, TEST_MODEL_QFMT[i]);
+                cv.put(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT, TEST_MODEL_AFMT[i]);
+                Uri tmplUri = Uri.withAppendedPath(Uri.withAppendedPath(modelUri, "templates"), Integer.toString(i));
+                assertTrue("Update rows", cr.update(tmplUri, cv, null, null) > 0);
+                JSONObject template = col.getModels().get(mid).getJSONArray("tmpls").getJSONObject(i);
+                assertEquals("Check template name", TEST_MODEL_CARDS[i], template.getString("name"));
+                assertEquals("Check qfmt", TEST_MODEL_QFMT[i], template.getString("qfmt"));
+                assertEquals("Check afmt", TEST_MODEL_AFMT[i], template.getString("afmt"));
+                assertEquals("Check bqfmt", TEST_MODEL_QFMT[i], template.getString("bqfmt"));
+                assertEquals("Check bafmt", TEST_MODEL_AFMT[i], template.getString("bafmt"));
             }
         } finally {
-            allNotesCursor.close();
+            // Delete the model (this will force a full-sync)
+            try {
+                col.modSchema(false);
+                col.getModels().rem(col.getModels().get(mid));
+            } catch (ConfirmModSchemaException e) {
+                // This will never happen
+                throw new IllegalStateException("Unexpected ConfirmModSchemaException trying to remove model");
+            }
         }
     }
 
+    /**
+     * Query .../models URI
+     */
     public void testQueryAllModels() {
         final ContentResolver cr = getContext().getContentResolver();
         // Query all available models
-        final Cursor allModelsCursor = cr.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null);
-        assertNotNull(allModelsCursor);
+        final Cursor allModels = cr.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null);
+        assertNotNull(allModels);
         try {
-            assertTrue("Check that there is at least one result", allModelsCursor.getCount() > 0);
-            while (allModelsCursor.moveToNext()) {
-                long modelId = allModelsCursor.getLong(allModelsCursor.getColumnIndex(FlashCardsContract.Model._ID));
+            assertTrue("Check that there is at least one result", allModels.getCount() > 0);
+            while (allModels.moveToNext()) {
+                long modelId = allModels.getLong(allModels.getColumnIndex(FlashCardsContract.Model._ID));
                 Uri modelUri = Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, Long.toString(modelId));
-                final Cursor singleModelCursor = cr.query(modelUri, null, null, null, null);
-                assertNotNull(singleModelCursor);
+                final Cursor singleModel = cr.query(modelUri, null, null, null, null);
+                assertNotNull(singleModel);
                 try {
-                    assertEquals("Check that there is exactly one result", 1, singleModelCursor.getCount());
-                    assertTrue("Move to beginning of cursor", singleModelCursor.moveToFirst());
-                    String nameFromModels = allModelsCursor.getString(allModelsCursor.getColumnIndex(FlashCardsContract.Model.NAME));
-                    String nameFromModel = singleModelCursor.getString(allModelsCursor.getColumnIndex(FlashCardsContract.Model.NAME));
+                    assertEquals("Check that there is exactly one result", 1, singleModel.getCount());
+                    assertTrue("Move to beginning of cursor", singleModel.moveToFirst());
+                    String nameFromModels = allModels.getString(allModels.getColumnIndex(FlashCardsContract.Model.NAME));
+                    String nameFromModel = singleModel.getString(allModels.getColumnIndex(FlashCardsContract.Model.NAME));
                     assertEquals("Check that model names are the same", nameFromModel, nameFromModels);
-                    String jsonFromModels = allModelsCursor.getString(allModelsCursor.getColumnIndex(FlashCardsContract.Model.JSONOBJECT));
-                    String jsonFromModel = singleModelCursor.getString(allModelsCursor.getColumnIndex(FlashCardsContract.Model.JSONOBJECT));
-                    assertEquals("Check that jsonobjects are the same", jsonFromModel, jsonFromModels);
+                    String flds = allModels.getString(allModels.getColumnIndex(FlashCardsContract.Model.FIELD_NAMES));
+                    assertTrue("Check that valid number of fields", Utils.splitFields(flds).length >= 1);
+                    Integer numCards = allModels.getInt(allModels.getColumnIndex(FlashCardsContract.Model.NUM_CARDS));
+                    assertTrue("Check that valid number of cards", numCards >= 1);
                 } finally {
-                    singleModelCursor.close();
+                    singleModel.close();
                 }
             }
         } finally {
-            allModelsCursor.close();
+            allModels.close();
         }
     }
 
-    public void testMoveToOtherDeck() {
+    /**
+     * Move all the cards from their old decks to the first deck that was added in setup()
+     */
+    public void testMoveCardsToOtherDeck() {
         final ContentResolver cr = getContext().getContentResolver();
         // Query all available notes
         final Cursor allNotesCursor = cr.query(FlashCardsContract.Note.CONTENT_URI, null, "tag:" + TEST_TAG, null, null);
         assertNotNull(allNotesCursor);
         try {
-            assertEquals("Check number of results", mCreatedNotes, allNotesCursor.getCount());
+            assertEquals("Check number of results", mCreatedNotes.size(), allNotesCursor.getCount());
             while (allNotesCursor.moveToNext()) {
                 // Now iterate over all cursors
-                Uri cardsUri = Uri.withAppendedPath(Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, allNotesCursor.getString(allNotesCursor.getColumnIndex(FlashCardsContract.Note._ID))), "cards");
+                Uri cardsUri = Uri.withAppendedPath(Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI,
+                        allNotesCursor.getString(allNotesCursor.getColumnIndex(FlashCardsContract.Note._ID))), "cards");
                 final Cursor cardsCursor = cr.query(cardsUri, null, null, null, null);
                 assertNotNull("Check that there is a valid cursor after query for cards", cardsCursor);
                 try {
                     assertTrue("Check that there is at least one result for cards", cardsCursor.getCount() > 0);
                     while (cardsCursor.moveToNext()) {
-                        String deckName = cardsCursor.getString(cardsCursor.getColumnIndex(FlashCardsContract.Card.DECK_NAME));
-                        assertEquals("Make sure that card is in default deck", "Default", deckName);
+                        long targetDid = mTestDeckIds[0];
                         // Move to test deck
                         ContentValues values = new ContentValues();
-                        values.put(FlashCardsContract.Card.DECK_NAME, TEST_DECK);
-                        Uri cardUri = Uri.withAppendedPath(cardsUri, cardsCursor.getString(cardsCursor.getColumnIndex(FlashCardsContract.Card.CARD_ORD)));
+                        values.put(FlashCardsContract.Card.DECK_ID, targetDid);
+                        Uri cardUri = Uri.withAppendedPath(cardsUri,
+                                cardsCursor.getString(cardsCursor.getColumnIndex(FlashCardsContract.Card.CARD_ORD)));
                         cr.update(cardUri, values, null, null);
                         Cursor movedCardCur = cr.query(cardUri, null, null, null, null);
                         assertNotNull("Check that there is a valid cursor after moving card", movedCardCur);
                         assertTrue("Move to beginning of cursor after moving card", movedCardCur.moveToFirst());
-                        deckName = movedCardCur.getString(movedCardCur.getColumnIndex(FlashCardsContract.Card.DECK_NAME));
-                        assertEquals("Make sure that card is in test deck", TEST_DECK, deckName);
+                        long did = movedCardCur.getLong(movedCardCur.getColumnIndex(FlashCardsContract.Card.DECK_ID));
+                        assertEquals("Make sure that card is in new deck", targetDid, did);
                     }
                 } finally {
                     cardsCursor.close();
@@ -410,20 +399,40 @@ public class ContentProviderTest extends AndroidTestCase {
         }
     }
 
+    /**
+     * Check that querying the current model gives a valid result
+     */
+    public void testQueryCurrentModel() {
+        final ContentResolver cr = getContext().getContentResolver();
+        Uri uri = Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, FlashCardsContract.Model.CURRENT_MODEL_ID);
+        final Cursor modelCursor = cr.query(uri, null, null, null, null);
+        assertNotNull(modelCursor);
+        try {
+            assertEquals("Check that there is exactly one result", 1, modelCursor.getCount());
+            assertTrue("Move to beginning of cursor", modelCursor.moveToFirst());
+            assertNotNull("Check non-empty field names",
+                    modelCursor.getString(modelCursor.getColumnIndex(FlashCardsContract.Model.FIELD_NAMES)));
+            assertTrue("Check at least one template",
+                    modelCursor.getInt(modelCursor.getColumnIndex(FlashCardsContract.Model.NUM_CARDS)) > 0);
+        } finally {
+            modelCursor.close();
+        }
+    }
+
+    /**
+     * Check that an Exception is thrown when unsupported operations are performed
+     */
     public void testUnsupportedOperations() {
         final ContentResolver cr = getContext().getContentResolver();
         ContentValues dummyValues = new ContentValues();
         Uri[] updateUris = {
+                // Can't update most tables in bulk -- only via ID
                 FlashCardsContract.Note.CONTENT_URI,
-                FlashCardsContract.Note.CONTENT_URI.buildUpon()
-                        .appendPath("1234")
-                        .build(),
+                FlashCardsContract.Model.CONTENT_URI,
+                FlashCardsContract.Deck.CONTENT_ALL_URI,
                 FlashCardsContract.Note.CONTENT_URI.buildUpon()
                         .appendPath("1234")
                         .appendPath("cards")
-                        .build(),
-                FlashCardsContract.Model.CONTENT_URI.buildUpon()
-                        .appendPath("1234")
                         .build(),
         };
         for (Uri uri : updateUris) {
@@ -438,13 +447,7 @@ public class ContentProviderTest extends AndroidTestCase {
         }
         Uri[] deleteUris = {
                 FlashCardsContract.Note.CONTENT_URI,
-                FlashCardsContract.Note.CONTENT_URI.buildUpon()
-                        .appendPath("1234")
-                        .build(),
-                FlashCardsContract.Note.CONTENT_URI.buildUpon()
-                        .appendPath("1234")
-                        .appendPath("data")
-                        .build(),
+                // Only note/<id> is supported
                 FlashCardsContract.Note.CONTENT_URI.buildUpon()
                         .appendPath("1234")
                         .appendPath("cards")
@@ -468,12 +471,9 @@ public class ContentProviderTest extends AndroidTestCase {
             }
         }
         Uri[] insertUris = {
+                // Can't do an insert with specific ID on the following tables
                 FlashCardsContract.Note.CONTENT_URI.buildUpon()
                         .appendPath("1234")
-                        .build(),
-                FlashCardsContract.Note.CONTENT_URI.buildUpon()
-                        .appendPath("1234")
-                        .appendPath("data")
                         .build(),
                 FlashCardsContract.Note.CONTENT_URI.buildUpon()
                         .appendPath("1234")
@@ -484,7 +484,6 @@ public class ContentProviderTest extends AndroidTestCase {
                         .appendPath("cards")
                         .appendPath("2345")
                         .build(),
-                FlashCardsContract.Model.CONTENT_URI,
                 FlashCardsContract.Model.CONTENT_URI.buildUpon()
                         .appendPath("1234")
                         .build(),
@@ -501,7 +500,11 @@ public class ContentProviderTest extends AndroidTestCase {
         }
     }
 
-    public void testQueryAllDecks(){
+    /**
+     * Test query to decks table
+     * @throws Exception
+     */
+    public void testQueryAllDecks() throws Exception{
         Collection col;
         col = CollectionHelper.getInstance().getCol(getContext());
         Decks decks = col.getDecks();
@@ -520,19 +523,20 @@ public class ContentProviderTest extends AndroidTestCase {
                 assertNotNull("Check that the deck we received actually exists", deck);
                 assertEquals("Check that the received deck has the correct name", deck.getString("name"), deckName);
             }
-        } catch (JSONException e) {
-            //this should never be the case, since deck always contains the string "name"
-            e.printStackTrace();
         } finally {
             decksCursor.close();
         }
     }
 
-    public void testQueryCertainDeck(){
+    /**
+     * Test query to specific deck ID
+     * @throws Exception
+     */
+    public void testQueryCertainDeck() throws Exception {
         Collection col;
         col = CollectionHelper.getInstance().getCol(getContext());
 
-        long deckId = testDeckIds[0]; //<-- insert real deck ID here
+        long deckId = mTestDeckIds[0];
         Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(deckId));
         Cursor decksCursor = getContext().getContentResolver().query(deckUri, null, null, null, null);
         try {
@@ -546,13 +550,14 @@ public class ContentProviderTest extends AndroidTestCase {
                 assertEquals("Check that received deck ID equals real deck ID", deckId, returnedDeckID);
                 assertEquals("Check that received deck name equals real deck name", realDeck.getString("name"), returnedDeckName);
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         } finally {
             decksCursor.close();
         }
     }
 
+    /**
+     * Test that query for the next card in the schedule returns a valid result without any deck selector
+     */
     public void testQueryNextCard(){
         Collection col;
         col = CollectionHelper.getInstance().getCol(getContext());
@@ -580,8 +585,11 @@ public class ContentProviderTest extends AndroidTestCase {
 
     }
 
+    /**
+     * Test that query for the next card in the schedule returns a valid result WITH a deck selector
+     */
     public void testQueryCardFromCertainDeck(){
-        long deckToTest = testDeckIds[0];
+        long deckToTest = mTestDeckIds[0];
         String deckSelector = "deckID=?";
         String deckArguments[] = {Long.toString(deckToTest)};
         Collection col;
@@ -617,9 +625,11 @@ public class ContentProviderTest extends AndroidTestCase {
         col.getDecks().select(selectedDeckBeforeTest);
     }
 
-
+    /**
+     * Test changing the selected deck
+     */
     public void testSetSelectedDeck(){
-        long deckId = testDeckIds[0];
+        long deckId = mTestDeckIds[0];
         ContentResolver cr = getContext().getContentResolver();
         Uri selectDeckUri = FlashCardsContract.Deck.CONTENT_SELECTED_URI;
         ContentValues values = new ContentValues();
@@ -628,14 +638,17 @@ public class ContentProviderTest extends AndroidTestCase {
 
         Collection col;
         col = CollectionHelper.getInstance().getCol(getContext());
-        assertEquals("Check that the selected deck has not changed", deckId, col.getDecks().selected());
+        assertEquals("Check that the selected deck has been correctly set", deckId, col.getDecks().selected());
     }
 
+    /**
+     * Test giving the answer for a reviewed card
+     */
     public void testAnswerCard(){
         Collection col;
         col = CollectionHelper.getInstance().getCol(getContext());
         Sched sched = col.getSched();
-        long deckId = testDeckIds[0];
+        long deckId = mTestDeckIds[0];
         col.getDecks().select(deckId);
         Card card = sched.getCard();
 
