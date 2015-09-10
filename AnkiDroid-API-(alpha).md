@@ -33,7 +33,7 @@ if (mid == null) {
     mid = api.addNewBasicModel(myActivityInstance, "com.something.myapp");
 }
 // Add new note
-api.addNewNote(mid, did, flds, "my_app_name_instant_add");
+api.addNewNote(mid, did, new String[] {"日の出", "sunrise"}, "my_app_name_instant_add");
 ```
 
 ### Example project
