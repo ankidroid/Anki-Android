@@ -51,9 +51,9 @@
   <string name="tag_name">Taggnamn</string>
   <string name="add_new_filter_tags">Lägg till/Filtrera etiketter</string>
   <string name="add_tag">Lägg till tagg</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
+  <string name="check_all_tags">Markera/avmarkera alla etiketter</string>
   <string name="filter_tags">Filtrera etiketter</string>
-  <string name="no_tags">Du har inte lagt till några taggar än.</string>
+  <string name="no_tags">Du har inte lagt till några etiketter än.</string>
   <string name="sdcard_missing_message">SD-kortet är inte tillgängligt eftersom det används som USB-minne. Koppla ur USB:n för att komma åt din kortlek.</string>
   <string name="enable_whiteboard">Aktivera whiteboard</string>
   <string name="disable_whiteboard">Avaktivera whiteboard</string>
@@ -91,8 +91,8 @@
   <string name="field_remapping">%1$s (från \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Alla kort som inte mappar till något kommer att tas bort. Om en anteckning inte har några kvarvarande kort, kommer den att tas bort. Är du säker på att du vill fortsätta?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="one">Studera %1$d kort i %2$s</item>
+    <item quantity="other">Studera %1$d kort i %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
     <item quantity="one">%1$d minut</item>
@@ -152,33 +152,33 @@
   <string name="sched_end">(slut)</string>
   <string name="sched_unbury_button">För att se dem nu, klicka på knappen \'\'Visa dolda kort\'\'.</string>
   <string name="sched_has_buried">En del relaterade eller dolda kort undanhålls till en senare session.</string>
-  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+  <string name="tag_editor_add_feedback">Tryck på “%2$s” för att bekräfta att lägga till “%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">Befintlig etikett “%1$s” vald</string>
   <string name="lookup_hint">Efter att ha kopierat texten, klicka var som helst på flashkortet för att visa sökikonen</string>
   <string name="add_content_showcase_text">För att börja, klicka på +-knappen för att lägga till nytt studiematerial.\n\n Tryck \"Hjälp\" för att se manualen.</string>
   <plurals name="time_span_seconds">
-    <item quantity="one">%s second</item>
-    <item quantity="other">%s seconds</item>
+    <item quantity="one">%s sekund</item>
+    <item quantity="other">%s sekunder</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="one">%s minute</item>
-    <item quantity="other">%s minutes</item>
+    <item quantity="one">%s minut</item>
+    <item quantity="other">%s minuter</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="one">%s hour</item>
-    <item quantity="other">%s hours</item>
+    <item quantity="one">%s timme</item>
+    <item quantity="other">%s timmar</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="one">%s day</item>
-    <item quantity="other">%s days</item>
+    <item quantity="one">%s dag</item>
+    <item quantity="other">%s dagar</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="one">%s month</item>
-    <item quantity="other">%s months</item>
+    <item quantity="one">%s månad</item>
+    <item quantity="other">%s månader</item>
   </plurals>
   <plurals name="time_span_years">
-    <item quantity="one">%s year</item>
-    <item quantity="other">%s years</item>
+    <item quantity="one">%s år</item>
+    <item quantity="other">%s år</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
 </resources>

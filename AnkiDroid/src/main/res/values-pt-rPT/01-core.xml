@@ -120,6 +120,8 @@
   <string name="studyoptions_no_cards_due">Nenhuma ficha a fazer por enquanto.</string>
   <string name="sd_card_not_mounted">Armazenamento de dispositivo não montado</string>
   <string name="button_sync">Sincronizar</string>
+  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+  <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Exportar</string>
   <string name="nothing">Nada</string>
   <string name="title_activity_template_editor">Tipos de ficha para %s</string>
@@ -134,4 +136,7 @@
     <item quantity="other">Remover o tipo de ficha “%2$s” e as suas %1$d fichas?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Remover este tipo de ficha resultaria na remoção de uma ou mais notas. Por favor, crie primeiro um novo tipo de ficha.</string>
+  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
+        models, and decks, as well as create new ones.</string>
 </resources>

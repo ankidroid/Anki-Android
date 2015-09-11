@@ -46,7 +46,7 @@
   <string name="statistics_suspended">保留＋延期</string>
   <string name="statistics_relearn">再学習</string>
   <string name="statistics_learn">学習</string>
-  <string name="statistics_cram">カスタム学習</string>
+  <string name="statistics_cram">フィルター学習</string>
   <string name="stats_cards">枚数</string>
   <string name="stats_cards_intervals">次の復習予定日が ～後のカード</string>
   <string name="stats_cumulative_cards">累積枚数 〔折れ線グラフ〕</string>
@@ -63,7 +63,7 @@
   <string name="stats_period_month">1か月</string>
   <string name="stats_period_year">1年</string>
   <string name="stats_period_lifetime">すべての期間</string>
-  <string name="stats_deck_collection">すべての単語帳</string>
+  <string name="stats_deck_collection">すべてのデッキ</string>
   <string name="stats_time_of_day">時刻</string>
   <string name="stats_day_of_week">曜日</string>
   <string formatted="false" name="stats_percentage_correct">正解率(%)</string>
@@ -71,10 +71,11 @@
   <string name="stats_answer_type">回答の種類</string>
   <string name="stats_today_again_count">忘却回数: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(正解率: &lt;b&gt;%.1f%%&lt;/b&gt;)</string>
-  <string name="stats_today_type_breakdown">学習: &lt;b&gt;%1$s&lt;/b&gt;枚、復習: &lt;b&gt;%2$s&lt;/b&gt;枚、再学習: &lt;b&gt;%3$s&lt;/b&gt;枚、\nカスタム学習: &lt;b&gt;%4$s&lt;/b&gt;枚</string>
+  <string name="stats_today_type_breakdown">学習: &lt;b&gt;%1$s&lt;/b&gt;枚、復習: &lt;b&gt;%2$s&lt;/b&gt;枚、再学習: &lt;b&gt;%3$s&lt;/b&gt;枚、
+\nフィルター学習: &lt;b&gt;%4$s&lt;/b&gt;枚</string>
   <string name="stats_today_mature_cards">熟知な復習カードの正解: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">熟知な復習カードは学習していません。</string>
-  <string name="deck_summary_all_decks">すべての単語帳</string>
+  <string name="deck_summary_all_decks">すべてのデッキ</string>
   <string name="stats_select_time_scale">期間を選択</string>
   <string-array name="due_x_axis_title">
     <item>日</item>

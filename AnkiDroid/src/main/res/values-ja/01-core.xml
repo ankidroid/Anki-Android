@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="decks">単語帳</string>
+  <string name="decks">デッキ</string>
   <string name="card_browser">ブラウザー</string>
   <string name="statistics">統計</string>
   <string name="settings">設定</string>
@@ -77,7 +77,7 @@
   <string name="undo_action_delete">ノートの削除</string>
   <string name="undo_action_mark">ノートにマークをつける</string>
   <string name="unbury">延期を解除</string>
-  <string name="contextmenu_deckpicker_rename_deck">単語帳の名前の変更</string>
+  <string name="contextmenu_deckpicker_rename_deck">デッキの名前を変更</string>
   <string name="menu_add">ノートを追加</string>
   <string name="menu_add_note">ノートを追加</string>
   <string name="menu_my_account">アカウントの設定と同期</string>
@@ -85,17 +85,17 @@
   <string name="menu_bury_card">カードを延期</string>
   <string name="menu_bury_note">ノートを延期</string>
   <string name="menu_suspend_card">カードを保留</string>
-  <string name="menu_suspend_note">ノートの保留</string>
+  <string name="menu_suspend_note">ノートを保留</string>
   <string name="menu_delete_note">ノートを削除</string>
   <string name="delete_note_message">このカードのノートを削除してよろしいですか？　このノートから作られたカードが全て削除されます。\n%s</string>
-  <string name="menu_select">テキスト選択</string>
+  <string name="menu_select">テキストを選択</string>
   <string name="menu_search">%1$sで探す</string>
   <string name="menu_mark_note">ノートをマーク</string>
   <string name="menu_unmark_note">ノートのマークをはずす</string>
-  <string name="new_deck">単語帳を新規作成</string>
+  <string name="new_deck">デッキを新規作成</string>
   <string name="create">作成</string>
-  <string name="new_dynamic_deck">フィルター単語帳を作成</string>
-  <string name="night_mode">ナイトモード</string>
+  <string name="new_dynamic_deck">フィルターデッキを作成</string>
+  <string name="night_mode">夜間表示（反転）</string>
   <string name="directory_inaccessible">AnkiDroid ディレクトリにアクセスできません</string>
   <string name="time_quantity_seconds">%d秒</string>
   <string name="time_quantity_minutes">%d分</string>
@@ -104,19 +104,21 @@
   <string name="time_quantity_months">%.1fヶ月</string>
   <string name="time_quantity_years">%.1f年</string>
   <string name="later">後で</string>
-  <string name="rebuild_cram_deck">フィルター単語帳を再構築しています...</string>
+  <string name="rebuild_cram_deck">フィルターデッキを再構築しています...</string>
   <string name="rebuild_cram_label">再構築</string>
   <string name="empty_cram_label">全て戻す</string>
-  <string name="empty_cram_deck">カードを元の単語帳へ戻しています...</string>
+  <string name="empty_cram_deck">カードを元のデッキへ戻しています...</string>
   <string name="custom_study_deck_name">カスタム学習セッション</string>
-  <string name="custom_study_deck_exists">最初に、既存のカスタム学習の単語帳の名称変更を行ってください。</string>
+  <string name="custom_study_deck_exists">最初に、既存のカスタム学習デッキの名前を変更してください</string>
   <string name="studyoptions_congrats_finished">おめでとうございます！ 今日の課題を達成しました</string>
-  <string name="studyoptions_congrats_more_rev">予定日に達した復習カードがまだ他にも残っていますが、今日復習したカードの枚数が既に一日あたりの上限に達しています。この上限は「単語帳オプション」内の設定で上げられます。</string>
-  <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、今日学習した新規カードの枚数が既に一日あたりの上限に達しています。この上限は「単語帳オプション」内の設定で上げられます。（ただしそれに伴って短期的に学習の負担が増えますのでご注意ください。）</string>
+  <string name="studyoptions_congrats_more_rev">予定日に達した復習カードがまだ他にも残っていますが、今日復習したカードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で上げられます。</string>
+  <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、今日学習した新規カードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で上げられます。（ただしそれに伴って短期的に学習の負担が増えますのでご注意ください。）</string>
   <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
   <string name="studyoptions_no_cards_due">今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
   <string name="sd_card_not_mounted">デバイスストレージがマウントされていません</string>
   <string name="button_sync">同期</string>
+  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+  <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">エクスポート(書き出し)</string>
   <string name="nothing">Nothing</string>
   <string name="title_activity_template_editor">%sのカードタイプ</string>
@@ -130,4 +132,7 @@
     <item quantity="other">カードタイプ \'%2$s\' とそのカード %1$d 枚を削除しますか？</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、一つ以上のノートも削除することになります。まずは新しいカードタイプを追加してください。</string>
+  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
+        models, and decks, as well as create new ones.</string>
 </resources>

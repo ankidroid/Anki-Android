@@ -47,7 +47,7 @@
     <item quantity="other">%2$s枚中%1$d枚が学習予定日時に達しています</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="other">%1$d個の単語帳</item>
+    <item quantity="other">%1$d個のデッキ</item>
   </plurals>
   <string name="widget_small">AnkiDroid 小</string>
 </resources>

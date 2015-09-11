@@ -120,6 +120,8 @@
   <string name="studyoptions_no_cards_due">Nog geen kaarten te doen.</string>
   <string name="sd_card_not_mounted">Apparaatopslag niet aangesloten</string>
   <string name="button_sync">Synchroniseer</string>
+  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+  <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Exporteren</string>
   <string name="nothing">Niets</string>
   <string name="title_activity_template_editor">Kaarttypes voor %s</string>
@@ -134,4 +136,7 @@
     <item quantity="other">Verwijder het “%2$s” kaarttype, en zijn %1$d kaarten?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Het verwijderen van dit kaarttype zou er mogelijk voor zorgen dat een of meer notities worden verwijderd. Gelieve een nieuw kaarttype eerst te maken.</string>
+  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
+        models, and decks, as well as create new ones.</string>
 </resources>

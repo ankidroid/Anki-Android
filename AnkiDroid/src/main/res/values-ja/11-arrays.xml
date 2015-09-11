@@ -90,7 +90,7 @@
     <item>特定のタグによる選択</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>開いている単語帳へ追加</item>
+    <item>現在のデッキへ追加</item>
     <item>ノートタイプから選択</item>
   </string-array>
   <string-array name="new_spread_labels">

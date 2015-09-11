@@ -43,22 +43,22 @@
   <string name="check_db_warning">これには長い時間がかかることがあります。</string>
   <string name="check_db_acknowledge">データベースのチェックが完了しました</string>
   <string name="check_db_acknowledge_shrunk">データベースがチェックされ、最適化されました。\n 最適化後 %d kB.</string>
-  <string name="contextmenu_deckpicker_delete_deck">単語帳を削除</string>
-  <string name="delete_deck_default_deck">このデフォルト単語帳は削除できません</string>
-  <string name="delete_deck_title">単語帳を削除</string>
+  <string name="contextmenu_deckpicker_delete_deck">デッキを削除</string>
+  <string name="delete_deck_default_deck">デフォルト デッキは削除できません</string>
+  <string name="delete_deck_title">デッキを削除しますか？</string>
   <plurals name="delete_deck_message">
     <item quantity="other">%1$s内のすべてのカードを削除しますか？　%2$d枚のカードが含まれています</item>
   </plurals>
-  <string name="delete_cram_deck_message"> %s のすべてのカードを元の単語帳に戻してもよろしいですか？</string>
+  <string name="delete_cram_deck_message"> %s のすべてのカードを元のデッキに戻してもよろしいですか？</string>
   <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
   <string name="initializing_tts">テキスト読み上げ機能を初期化しています.</string>
   <string name="tts_no_tts">音声なし</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
-    <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
-    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, <a href=\"%2$s\">donate</a> to Anki Desktop, or blog about AnkiDroid.]]></item>
-    <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroid は、PCソフトウェア <a href=\"%2$s\">Anki</a> と完全互換のフラッシュカードアプリです。AnkiDroid と Anki のどちらでも教材を作成し、ダウンロードし、学習し、AnkiWeb を介して簡単に双方を同期することができます。]]></item>
+    <item><![CDATA[AnkiDroid を改善するために、バグを <a href=\"%1$s\">こちら</a>に報告していただけると幸いです。新しい機能のアイデアも大歓迎です。<a href=\"%2$s\">Wiki</a>をご覧になった上で、<a href=\"%3$s\">フォーラム</a> でディスカッションを開始してください。]]></item>
+    <item><![CDATA[AnkiDroid は<a href=\"%1$s\">オープンソースソフトウェア<a/>ですので、誰もが<a href=\"%2$s\">貢献者</a>になることができます :-)]]></item>
+    <item><![CDATA[ソフトウェア開発の専門知識を持っていない方も、例えばAnkiDroidの<a href=\"%1$s\">翻訳を改善</a> したり、wikiを更新したり、スクリーン ショット画像を提供したり、Ankiに1>寄付</a> をしたり、AnkiDroidについてのブログを書いたりするなどして、このアプリの発展に貢献することができます。]]></item>
+    <item><![CDATA[AnkiDroid は、<a href="%1$s">GNU GPL v3 ライセンス</a>の下でリリースされており、ソースコードは<a href="%2$s">こちら</a>です。]]></item>
   </string-array>
   <string name="preview_title">プレビュー</string>
   <string name="reset_card_dialog_title">カードの進行状況をリセット</string>
@@ -75,19 +75,19 @@
   <string name="intent_add_clear_all">すべて消去</string>
   <string name="intent_aedict_empty">カテゴリー \'default\' が空です。</string>
   <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか追、\'default\' という名前のカテゴリを追加してください。</string>
-  <string name="custom_study_new_total_new">単語帳の中の新規カードの枚数: %s</string>
+  <string name="custom_study_new_total_new">デッキの中の新規カードの枚数: %s</string>
   <string name="custom_study_rev_total_rev">予定日時に達した復習カード数: %s</string>
   <string name="custom_study_new_extend">今日の新規カードの上限をあと x 枚上げる</string>
   <string name="custom_study_rev_extend">今日の復習カードの上限をあと x 枚上げる</string>
   <string name="custom_study_forgotten">過去 x 日以内に忘却したカードを復習する</string>
   <string name="custom_study_ahead">先取りする日数</string>
-  <string name="custom_study_random">単語帳からランダムに抽出するカードの枚数</string>
+  <string name="custom_study_random">デッキからランダムに x 枚のカードを抽出する</string>
   <string name="custom_study_preview">過去 x 日間に追加された新規カードをプレビュー</string>
-  <string name="rebuild_custom_study_deck">カスタム単語帳を再構築しています...</string>
+  <string name="rebuild_custom_study_deck">カスタムデッキを再構築しています...</string>
   <string name="import_unpacking">アーカイブを解凍しています。\nお待ちください&#8230;</string>
   <string name="importing_collection">コレクションをインポートしています。\nお待ちください&#8230;</string>
   <string name="import_media_count">メディアファイルをインポートしています。 %1$d%%\nお待ちください&#8230;</string>
-  <string name="import_update_counts">単語帳の数を更新しています。\nお待ちください&#8230;</string>
+  <string name="import_update_counts">デッキの数を更新しています&#8230;</string>
   <string name="import_add_progress">• アーカイブの解凍 %1$s\n• ノートのインポート %2$d%%\n• カードのインポート %3$d%%\n• クリーンアップ %4$s</string>
   <string name="sd_card_full_title">SD カード残量なし</string>
   <string name="sd_card_almost_full_title">SD カード残量わずか</string>

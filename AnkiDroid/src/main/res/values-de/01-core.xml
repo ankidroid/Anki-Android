@@ -120,6 +120,8 @@
   <string name="studyoptions_no_cards_due">Es sind noch keine Karten fällig</string>
   <string name="sd_card_not_mounted">Gerätespeicher nicht eingehängt</string>
   <string name="button_sync">Synchronisieren</string>
+  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+  <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Exportieren</string>
   <string name="nothing">Nichts</string>
   <string name="title_activity_template_editor">Kartentypen für %s</string>
@@ -134,4 +136,7 @@
     <item quantity="other">Kartentyp »%2$s« und seine %1$d Karten löschen?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Kartentyp kann nicht gelöscht werden, da dadurch mindestens eine Notiz gelöscht würde</string>
+  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
+        models, and decks, as well as create new ones.</string>
 </resources>

@@ -120,6 +120,8 @@
   <string name="studyoptions_no_cards_due">Nessuna carta da ripetere ora.</string>
   <string name="sd_card_not_mounted">Dispositivo archiviazione non montato</string>
   <string name="button_sync">Sincronizza</string>
+  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+  <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Esportare</string>
   <string name="nothing">Niente</string>
   <string name="title_activity_template_editor">Tipi di carta per %s</string>
@@ -134,4 +136,7 @@
     <item quantity="other">Eliminare il tipo di carta \'%2$s\', e le sue carte %1$d?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Rimuovendo questo tipo di carta, verrebbero eliminate una o più note. Crea dapprima un nuovo tipo di carta.</string>
+  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
+        models, and decks, as well as create new ones.</string>
 </resources>

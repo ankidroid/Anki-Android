@@ -60,7 +60,7 @@
   <string name="backup_restore_no_backups">Inga säkerhetskopior för samlingen finns på den här enheten. Om du har säkerhetskopior på din stationära dator, kopiera dem manuellt till din AnkiDroid-mapp</string>
   <string name="open_collection_failed_title">Samlingen är inte öppnad</string>
   <string name="open_collection_failed_message">Databasen kunde inte öppnas. Antingen är det inte en riktig Anki-databas eller så har den blivit korrumperad.\n\nKlicka \'alternativ\' för diverse sätt att återställa databasen. För mer information om reparation av korrumperade samlingar, se:\n%1$s</string>
-  <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
-  <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
+  <string name="corrupt_db_message">Din saming har blivit korrupt. \n\n Tryck på \"Alternativ\" för att återställa ifrån en backup, eller om det inte fungerar, läs följande instruktioner för att manuellt reparera databasen:\n%1$s</string>
+  <string name="access_collection_failed_message">Ett fel uppstod vid tillgång till din samling. Det kan ha orsakats av en ofarlig bugg, eller så kan det finnas ett problem med den. \n\nFörsök att köra Kontrollera Databas, eller återställ ifrån backup genom att trycka på “Alternativ” knappen. Om du fortsätter att se detta meddelande, vänligen lämna en felrapport:\n%1$s</string>
   <string name="deck_repair_error">Samlingen kunde inte repareras</string>
 </resources>

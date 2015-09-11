@@ -80,8 +80,8 @@
   <string name="fullscreen_review_summ">Dölj systemets statusrad</string>
   <string name="gestures">Aktivera gester</string>
   <string name="gestures_summ">Koppla gester till handlingar, som t ex att svara på eller redigera kort.</string>
-  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
-  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
+  <string name="gestures_hide_answer_buttons">Göm svarsknappar</string>
+  <string name="gestures_hide_answer_buttons_summ">Visa inte svarsknappar när gester är aktiverade</string>
   <string name="gestures_swipe_up">Svep uppåt</string>
   <string name="gestures_swipe_down">Svep nedåt</string>
   <string name="gestures_swipe_left">Svep vänster</string>
@@ -103,9 +103,8 @@
   <string name="sync_account">AnkiWeb-konto</string>
   <string name="sync_account_summ_logged_out">Ej inloggad</string>
   <string name="sync_account_summ_logged_in">%s</string>
-  <string name="automatic_sync_choice">Automatic synchronization</string>
-  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
+  <string name="automatic_sync_choice">Automatisk synkronering</string>
+  <string name="automatic_sync_choice_summ">Synka automatiskt på app start/avstängning om den senaste synkningen var mer än 10        minuter sedan.</string>
   <string name="fix_hebrew_text">Fix för hebreiska vokaler</string>
   <string name="fix_hebrew_text_summ">Specialfunktion för att rendera hebreiska vokaler korrekt.</string>
   <string name="fix_hebrew_instructions">Denna inställning kringgår Androids RTL-algoritm för att visa vokaler i hebreisk text korrekt.\n\nFör att detta skall fungera måste du hämta teckensnittet Tohu.ttf och kopiera manuellt till:\n%s/fonts/\n\nDu behöver inte ändra dina kort.</string>
@@ -159,8 +158,8 @@
   <string name="deck_conf_deck_description">Kortleksbeskrivning</string>
   <string name="deck_conf_group">Konfigurationsgrupp</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d deck uses this group</item>
-    <item quantity="other">%1$s\n%2$d decks use this group</item>
+    <item quantity="one">%1$s\n%2$d kortlek använder denna grupp</item>
+    <item quantity="other">%1$s\n%2$d kortlekar använder denna grupp</item>
   </plurals>
   <string name="deck_conf_new_cards">Nya kort</string>
   <string name="deck_conf_rev_cards">Repetitioner</string>
@@ -205,8 +204,8 @@
   <string name="deck_conf_remove_message">Radera aktuell konfigurationsgrupp?</string>
   <string name="deck_conf_set_subdecks">Ställ in för alla underkortlekar</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s subdeck will use this group</item>
-    <item quantity="other">%s subdecks will use this group</item>
+    <item quantity="one">%s underkortlek kommer att använda denna grupp</item>
+    <item quantity="other">%s underkortlekar kommer att använda denna grupp</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Ställ in för alla underkortlekar</string>
   <string name="deck_conf_set_subdecks_message">Vill du ställa in den nuvarande konfigurationsgruppen för alla denna kortleks underkortlekar?</string>

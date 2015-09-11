@@ -117,6 +117,8 @@
   <string name="studyoptions_no_cards_due">هیچ کارتی دریافت نشده است </string>
   <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">همگام سازی</string>
+  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+  <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">ارسال کردن</string>
   <string name="nothing">هیچ </string>
   <string name="title_activity_template_editor">Card types for %s</string>
@@ -130,4 +132,7 @@
     <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">پاکسازی این نوع کارت ممکن است منجر به پاک شدن یک یا تعدادی یادداشت شود.لطفاً در ابتدا یک نوع کارت بسازید. </string>
+  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
+        models, and decks, as well as create new ones.</string>
 </resources>
