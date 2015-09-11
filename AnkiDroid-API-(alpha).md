@@ -3,7 +3,7 @@
 <i>Audience: This page is for Android apps developers. AnkiDroid users can ignore it.</i>
 
 ## Instant-Add API (alpha version)
-Starting From AnkiDroid v2.5, notes can be added directly to AnkiDroid's database without sending any intents via a simple API ([click here to read the javadoc](https://ankidroid.org/apidoc/AddContentApi.html)). This is advantageous for developers and end-users, as it allows quickly adding cards to AnkiDroid in bulk, without any user intervention. Additionally, an app-specific model can be used, so that developers can ensure that their content will be formatted into sensible and beautiful flashcards.
+Starting From AnkiDroid v2.5, notes can be added directly to AnkiDroid's database without sending any intents via a simple API library released on the LGPL license ([click here to read the javadoc](https://ankidroid.org/apidoc/AddContentApi.html)). This is advantageous for developers and end-users, as it allows quickly adding cards to AnkiDroid in bulk, without any user intervention. Additionally, an app-specific custom model can be used, so that developers can ensure that their content will be formatted into sensible and beautiful flashcards.
 
 ### Gradle dependency
 First things first, you should add the following dependency to your module's `build.gradle` file:
