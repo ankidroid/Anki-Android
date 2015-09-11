@@ -19,25 +19,25 @@ Here is a very simple example of adding a new note to AnkiDroid. See the sample 
 
 ```java
 // Instantiate the API
-final AddContentApi api = new AddContentApi(myActivityInstance);
+final AddContentApi api = new AddContentApi(context);
 // Add new deck if one doesn't already exist
-Long did = api.findDeckIdByName(myActivityInstance, "My app name");
+Long did = api.findDeckIdByName(context, "My app name");
 if (did == null) {
-    did = api.addNewDeck(myActivityInstance, "My app name");
+    did = api.addNewDeck(context, "My app name");
 }
 // Add a new model if one doesn't already exist
-Long mid = api.findModelIdByName(myActivityInstance, "com.something.myapp", 2);
+Long mid = api.findModelIdByName(context, "com.something.myapp", 2);
 if (mid == null) {
     // This will add a basic two-field / one card model with no special formatting
     // See the sample app for a complicated example
-    mid = api.addNewBasicModel(myActivityInstance, "com.something.myapp");
+    mid = api.addNewBasicModel(context, "com.something.myapp");
 }
 // Add new note
 api.addNewNote(mid, did, new String[] {"日の出", "sunrise"}, "optional_tag");
 ```
 
-### Example project
-A very simple example Japanese-English sample dictionary is [available here](https://github.com/ankidroid/apisample), which gives an expected real-world implementation of the API. You can long-press on an item in the list to send one or more cards to AnkiDroid via the share button on the contextual toolbar.
+### Sample app
+A very simple example application is [available here](https://github.com/ankidroid/apisample), which gives an expected real-world implementation of the API in the form of a prototype Japanese-English dictionary. Long-press on an item in the list to send one or more cards to AnkiDroid via the share button on the contextual toolbar.
 
 ## Sending cards to AnkiDroid via intent
 While we strongly recommend using the Instant-Add API, it is also possible (and a bit less work) to send simple flashcards to AnkiDroid one at a time via Intents. The disadvantage of this, is that you can't send multiple cards at once, you leave the user on their own to format your content into flashcards, and most importantly -- the user has to go from your app to AnkiDroid, and then press some buttons to complete the add before they can resume what they were doing in your app, which detracts from the user experience.
