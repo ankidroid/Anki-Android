@@ -39,7 +39,7 @@ api.addNewNote(mid, did, new String[] {"日の出", "sunrise"}, "optional_tag");
 ```
 
 ### Permissions
-The API requires the permission `com.ichi2.anki.permission.READ_WRITE_DATABASE` which is defined by Android. This permission is automatically requested by the API library when your app installs, so you don't need to explicitly include it in your Manifest, but you should always check that you have any required permissions at runtime before using the API. See the sample app for more details on how to do this.
+The API requires the permission `com.ichi2.anki.permission.READ_WRITE_DATABASE` which is defined by the main AnkiDroid app. If you have included the API library in your app, then this permission will automatically be requested when your app installs. Therefore, you don't need to explicitly include it in your Manifest, but you should always check that you have the required permissions at runtime before using the API. See the sample app for more details on how to do this.
 
 ### Sample app
 A very simple example application is [available here](https://github.com/ankidroid/apisample), which gives an expected real-world implementation of the API in the form of a prototype Japanese-English dictionary. Long-press on an item in the list to send one or more cards to AnkiDroid via the share button on the contextual toolbar.
