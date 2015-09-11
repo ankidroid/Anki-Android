@@ -95,7 +95,7 @@ public class ContentProviderTest extends AndroidTestCase {
         mNumDecksBeforeTest = deckList.size();
         // TODO: add the notes directly with libanki
         for(int i = 0; i < TEST_DECKS.length; i++) {
-            mTestDeckIds[i] = api.addNewDeck(getContext(), TEST_DECKS[i]);
+            mTestDeckIds[i] = api.addNewDeck(TEST_DECKS[i]);
             Uri newNoteUri = api.addNewNote(mModelId, mTestDeckIds[i], mDummyFields, TEST_TAG);
             assertNotNull(newNoteUri);
             mCreatedNotes.add(newNoteUri);
