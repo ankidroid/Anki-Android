@@ -38,11 +38,14 @@ if (mid == null) {
 api.addNewNote(mid, did, new String[] {"日の出", "sunrise"}, "optional_tag");
 ```
 
+### Permissions
+The API requires the permission `com.ichi2.anki.permission.READ_WRITE_DATABASE` which is defined by Android. This permission is automatically requested by the API library when your app installs, so you don't need to explicitly include it in your Manifest, but you should always check that you have any required permissions at runtime before using the API. See the sample app for more details on how to do this.
+
 ### Sample app
 A very simple example application is [available here](https://github.com/ankidroid/apisample), which gives an expected real-world implementation of the API in the form of a prototype Japanese-English dictionary. Long-press on an item in the list to send one or more cards to AnkiDroid via the share button on the contextual toolbar.
 
 ## Sending cards to AnkiDroid via intent
-While we strongly recommend using the Instant-Add API, it is also possible (and a bit less work) to send simple flashcards to AnkiDroid one at a time via Intents. The disadvantage of this, is that you can't send multiple cards at once, you leave the user on their own to format your content into flashcards, and most importantly -- the user has to go from your app to AnkiDroid, and then press some buttons to complete the add before they can resume what they were doing in your app, which detracts from the user experience.
+While we strongly recommend using the Instant-Add API, if the user has a version of AnkiDroid that doesn't support the API, or if they've denied permission to your app to access it, you should fall back on an intent approach. The disadvantage of this, is that you can't send multiple cards at once, you leave the user on their own to format your content into flashcards, and most importantly -- the user has to go from your app to AnkiDroid, and then press some buttons to complete the add before they can resume what they were doing in your app, which detracts from the user experience.
 
 ### ACTION_SEND intent
 The `ACTION_SEND` intent is a universal intent for sharing data with other apps in Android. AnkiDroid expects the front text to be in the subject, and the back text to be in the main content. Use [`ShareCompat`](http://developer.android.com/reference/android/support/v4/app/ShareCompat.html) to build the intent so that information about your app is automatically sent to AnkiDroid with the intent:
