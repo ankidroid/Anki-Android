@@ -2,6 +2,8 @@
 
 <i>Audience: This page is for Android apps developers. AnkiDroid users can ignore it.</i>
 
+The API is currently in alpha version; this document is still under construction.
+
 ## Instant-Add API (alpha version)
 Starting From AnkiDroid v2.5, notes can be added directly to AnkiDroid's database without sending any intents via a simple API library released on the LGPL license ([click here to read the javadoc](https://ankidroid.org/apidoc/AddContentApi.html)). This is advantageous for developers and end-users, as it allows quickly adding cards to AnkiDroid in bulk, without any user intervention. Additionally, an app-specific custom model can be used, so that developers can ensure that their content will be formatted into sensible and beautiful flashcards.
 
@@ -21,16 +23,16 @@ Here is a very simple example of adding a new note to AnkiDroid. See the sample 
 // Instantiate the API
 final AddContentApi api = new AddContentApi(context);
 // Add new deck if one doesn't already exist
-Long did = api.findDeckIdByName(context, "My app name");
+Long did = api.findDeckIdByName("My app name");
 if (did == null) {
-    did = api.addNewDeck(context, "My app name");
+    did = api.addNewDeck("My app name");
 }
 // Add a new model if one doesn't already exist
-Long mid = api.findModelIdByName(context, "com.something.myapp", 2);
+Long mid = api.findModelIdByName("com.something.myapp", 2);
 if (mid == null) {
     // This will add a basic two-field / one card model with no special formatting
     // See the sample app for a complicated example
-    mid = api.addNewBasicModel(context, "com.something.myapp");
+    mid = api.addNewBasicModel("com.something.myapp");
 }
 // Add new note
 api.addNewNote(mid, did, new String[] {"日の出", "sunrise"}, "optional_tag");
