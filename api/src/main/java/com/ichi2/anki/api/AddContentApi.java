@@ -37,12 +37,14 @@ import java.util.Map;
  */
 public final class AddContentApi {
     private final ContentResolver mResolver;
+    private final Context mContext;
     private static final String TEST_TAG = "PREVIEW_NOTE";
     private static final String DECK_REF_DB = "com.ichi2.anki.api.decks";
     private static final String MODEL_REF_DB = "com.ichi2.anki.api.models";
 
     public AddContentApi(Context context) {
-        mResolver = context.getApplicationContext().getContentResolver();
+        mContext = context.getApplicationContext();
+        mResolver = mContext.getContentResolver();
     }
 
     /**
@@ -81,6 +83,32 @@ public final class AddContentApi {
     }
 
     /**
+     * Check if the note which is about to be added is a duplicate
+     * @param mid model id
+     * @param did deck id
+     * @param fields list of fields
+     * @return whether there already exists a card with the same model ID and content in the first field
+     */
+    public boolean checkForDuplicates(long mid, long did, String[] fields) {
+        // TODO: investigate performance optimization using csum if necessary
+        String modelName = getModelName(mid);
+        String deckName = getDeckName(did);
+        if (modelName == null || deckName == null) {
+            return false;
+        }
+        String[] fieldNames = getFieldList(mid);
+        String query = String.format("%s:\"%s\" deck:\"%s\" note:\"%s\"", fieldNames[0], fields[0], deckName,modelName);
+        Cursor notesTableCursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI,
+                FlashCardsContract.Note.DEFAULT_PROJECTION, query, null, null);
+        if (notesTableCursor != null) {
+            int count = notesTableCursor.getCount();
+            notesTableCursor.close();
+            return count > 0;
+        }
+        return false;
+    }
+
+    /**
      * Get the html that would be generated for the specified note type and field list
      * @param flds array of field values for the note. Length must be the same as num. fields in mid.
      * @param mid id for the note type to be used
@@ -113,12 +141,11 @@ public final class AddContentApi {
 
     /**
      * Insert a new basic front/back model with two fields and one card
-     * @param context a Context that can be used to save a reference to the new model ID
      * @param name name of the model
      * @return the mid of the model which was created, or null if it could not be created
      */
-    public Long addNewBasicModel(Context context, String name) {
-        return addNewCustomModel(context, name, BasicModel.FIELDS, BasicModel.CARD_NAMES, BasicModel.QFMT,
+    public Long addNewBasicModel(String name) {
+        return addNewCustomModel(name, BasicModel.FIELDS, BasicModel.CARD_NAMES, BasicModel.QFMT,
                 BasicModel.AFMT, null, null);
     }
 
@@ -126,19 +153,17 @@ public final class AddContentApi {
     /**
      * Insert a new basic front/back model with two fields and TWO cards
      * The first card goes from front->back, and the second goes from back->front
-     * @param context a Context that can be used to save a reference to the new model ID
      * @param name name of the model
      * @return the mid of the model which was created, or null if it could not be created
      */
-    public Long addNewBasic2Model(Context context, String name) {
-        return addNewCustomModel(context, name, Basic2Model.FIELDS, Basic2Model.CARD_NAMES, Basic2Model.QFMT,
+    public Long addNewBasic2Model(String name) {
+        return addNewCustomModel(name, Basic2Model.FIELDS, Basic2Model.CARD_NAMES, Basic2Model.QFMT,
                 Basic2Model.AFMT, null, null);
     }
 
     /**
      * Insert a new model into AnkiDroid.
      * See the <a href="http://ankisrs.net/docs/manual.html#cards-and-templates">Anki Desktop Manual</a> for more help
-     * @param context: a Context that can be used to save a reference to the new model ID
      * @param name: name of model
      * @param fields: array of field names
      * @param cards: array of names for the card templates
@@ -148,7 +173,7 @@ public final class AddContentApi {
      * @param did: default deck to add cards to when using this model. Use null or 1 for the default deck.
      * @return the mid of the model which was created, or null if it could not be created
      */
-    public Long addNewCustomModel(Context context, String name, String[] fields, String[] cards, String[] qfmt,
+    public Long addNewCustomModel(String name, String[] fields, String[] cards, String[] qfmt,
                                   String[] afmt, String css, Long did) {
         // Check that size of arrays are consistent
         if (qfmt.length != cards.length || afmt.length != cards.length) {
@@ -177,7 +202,7 @@ public final class AddContentApi {
             return null;
         } else {
             long mid = Long.parseLong(modelUri.getLastPathSegment());
-            final SharedPreferences modelsDb = context.getSharedPreferences(MODEL_REF_DB, Context.MODE_PRIVATE);
+            final SharedPreferences modelsDb = mContext.getSharedPreferences(MODEL_REF_DB, Context.MODE_PRIVATE);
             modelsDb.edit().putLong(name, mid).commit();
             return mid;
         }
@@ -208,12 +233,11 @@ public final class AddContentApi {
      * If not, but a ref to modelName is stored in SharedPreferences, and that model exists, and has correct number of
      * fields, (i.e. it was renamed), then use that model.Note: this model will not be found if your app is re-installed
      * If there's no reference to modelName anywhere then return null
-     * @param context any Context that can be used to access SharedPreferences
      * @param modelName the name of the model to find
      * @param numFields the minimum number of fields the model is required to have
      * @return the mid of the model in Anki
      */
-    public Long findModelIdByName(Context context, String modelName, int numFields) {
+    public Long findModelIdByName(String modelName, int numFields) {
         // Build list of all models with modelName and at least numFields
         Map<Long, String> modelList = getModelList(numFields);
         ArrayList<Long> foundModels = new ArrayList<>();
@@ -223,7 +247,7 @@ public final class AddContentApi {
             }
         }
         // Try to find the most suitable model
-        SharedPreferences modelsDb = context.getSharedPreferences(MODEL_REF_DB, Context.MODE_PRIVATE);
+        SharedPreferences modelsDb = mContext.getSharedPreferences(MODEL_REF_DB, Context.MODE_PRIVATE);
         Long mid = modelsDb.getLong(modelName, -1);
         if (mid == -1 && foundModels.size() == 0) {
             // return null if completely no reference to modelName
@@ -318,18 +342,17 @@ public final class AddContentApi {
 
     /**
      * Create a new deck with specified name and save the reference to SharedPreferences for later
-     * @param context a Context from which we can load the SharedPreferences
      * @param deckName name of the deck to add
      * @return id of the added deck, or null if the deck was not added
      */
-    public Long addNewDeck(Context context, String deckName) {
+    public Long addNewDeck(String deckName) {
         // Create a new note
         ContentValues values = new ContentValues();
         values.put(FlashCardsContract.Deck.DECK_NAME, deckName);
         Uri newDeckUri = mResolver.insert(FlashCardsContract.Deck.CONTENT_ALL_URI, values);
         if (newDeckUri != null) {
             long did = Long.parseLong(newDeckUri.getLastPathSegment());
-            final SharedPreferences decksDb = context.getSharedPreferences(DECK_REF_DB, Context.MODE_PRIVATE);
+            final SharedPreferences decksDb = mContext.getSharedPreferences(DECK_REF_DB, Context.MODE_PRIVATE);
             decksDb.edit().putLong(deckName, did).commit();
             return did;
         } else {
@@ -382,12 +405,11 @@ public final class AddContentApi {
      * If there's no deck with deckName, but a ref to deckName is stored in SharedPreferences, and that deck exist in
      * AnkiDroid (i.e. it was renamed), then use that deck.Note: this deck will not be found if your app is re-installed
      * If there's no reference to deckName anywhere then return null
-     * @param context any Context that can be used to access SharedPreferences
      * @param deckName the name of the deck to find
      * @return the did of the deck in Anki
      */
-    public Long findDeckIdByName(Context context, String deckName) {
-        SharedPreferences decksDb = context.getSharedPreferences(DECK_REF_DB, Context.MODE_PRIVATE);
+    public Long findDeckIdByName(String deckName) {
+        SharedPreferences decksDb = mContext.getSharedPreferences(DECK_REF_DB, Context.MODE_PRIVATE);
         // Look for deckName in the deck list
         Long did = getDeckId(deckName);
         if (did != null) {
@@ -406,20 +428,6 @@ public final class AddContentApi {
     }
 
 
-    /**
-     * Get the ID of the deck which matches the name
-     * @param deckName Exact name of deck (note: deck names are unique in Anki)
-     * @return the ID of the deck that has given name, or null if no deck was found
-     */
-    private Long getDeckId(String deckName) {
-        Map<Long, String> deckList = getDeckList();
-        for (Map.Entry<Long, String> entry : deckList.entrySet()) {
-            if (entry.getValue().equals(deckName)) {
-                return entry.getKey();
-            }
-        }
-        return null;
-    }
 
     /**
      * Get the name of the deck which has given ID
@@ -476,6 +484,23 @@ public final class AddContentApi {
      * Private methods
      * ***********************************************************************************************
      */
+
+
+    /**
+     * Get the ID of the deck which matches the name
+     * @param deckName Exact name of deck (note: deck names are unique in Anki)
+     * @return the ID of the deck that has given name, or null if no deck was found
+     */
+    private Long getDeckId(String deckName) {
+        Map<Long, String> deckList = getDeckList();
+        for (Map.Entry<Long, String> entry : deckList.entrySet()) {
+            if (entry.getValue().equals(deckName)) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
 
     private static String joinFields(String[] list) {
         StringBuilder result = new StringBuilder(128);
