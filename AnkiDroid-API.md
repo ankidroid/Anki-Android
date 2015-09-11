@@ -12,7 +12,7 @@ First things first, you should add the following dependency to your module's `bu
 
 ```Gradle
 dependencies {
-    compile 'PLACEHOLDER' // The API hasn't been uploaded to JCenter yet
+    compile 'com.ichi2.anki:api-1.0.0alpha2'
 }
 ```
 
