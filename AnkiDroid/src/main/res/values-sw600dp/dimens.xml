@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="keyline_1">24dp</dimen>
     <dimen name="default_width">64dp</dimen>
 </resources>
