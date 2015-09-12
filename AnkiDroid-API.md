@@ -63,11 +63,11 @@ The `ACTION_SEND` intent is a universal intent for sharing data with other apps 
     }
 ```
 
-### CREATE_FLASHCARD intent 
+### ~~CREATE_FLASHCARD intent~~
 
-*Note: CREATE_FLASHCARD is deprecated from AnkiDroid 2.5*
+*Note: CREATE_FLASHCARD is deprecated from AnkiDroid 2.5. Please use ACTION_SEND instead.*
 
-Another intent which is supported by AnkiDroid for backwards compatibility is the `org.openintents.action.CREATE_FLASHCARD` intent. You can submit your information with intent extras `SOURCE_TEXT` and `TARGET_TEXT` for the front and back respectively:
+Another intent which is currently supported by AnkiDroid for backwards compatibility is the `org.openintents.action.CREATE_FLASHCARD` intent. Fields are submitted with intent extras `SOURCE_TEXT` and `TARGET_TEXT` for the front and back respectively:
 
 ```java
 Intent intent = new Intent();
