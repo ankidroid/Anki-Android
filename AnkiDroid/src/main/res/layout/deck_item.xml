@@ -21,7 +21,8 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingLeft="@dimen/keyline_1">
+    android:paddingLeft="@dimen/deck_picker_left_padding"
+    android:paddingRight="@dimen/deck_picker_right_padding">
     <ImageButton
         android:id="@+id/deckpicker_indent"
         android:minWidth="0dp"
@@ -36,13 +37,11 @@
         android:layout_toRightOf="@+id/deckpicker_indent"
         android:orientation="horizontal"
         android:gravity="center_vertical">
-        <!-- The 36dp image has a lot of padding built into it, so we trim off some of that using negative padding -->
         <ImageButton
             android:id="@+id/deckpicker_expander"
             android:layout_height="@dimen/deck_picker_expander_height"
-            android:layout_width="30dp"
-            android:background="@android:color/transparent"
-            android:paddingLeft="-6dp" />
+            android:layout_width="36dp"
+            android:background="@android:color/transparent" />
         <TextView
             android:id="@+id/deckpicker_name"
             android:layout_width="wrap_content"

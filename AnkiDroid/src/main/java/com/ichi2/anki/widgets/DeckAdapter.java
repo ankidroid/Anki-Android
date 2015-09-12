@@ -157,9 +157,20 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         // Update views for this node
         Sched.DeckDueTreeNode node = mDeckList.get(position);
-
-        // Create the correct expander for this deck
-        setDeckExpander(holder.deckExpander, holder.indentView, node, mHasSubdecks);
+        // Set the expander icon and padding according to whether or not there are any subdecks
+        RelativeLayout deckLayout = holder.deckLayout;
+        int rightPadding = (int) deckLayout.getResources().getDimension(R.dimen.deck_picker_right_padding);
+        if (mHasSubdecks) {
+            int smallPadding = (int) deckLayout.getResources().getDimension(R.dimen.deck_picker_left_padding_small);
+            deckLayout.setPadding(smallPadding, 0, rightPadding, 0);
+            holder.deckExpander.setVisibility(View.VISIBLE);
+            // Create the correct expander for this deck
+            setDeckExpander(holder.deckExpander, holder.indentView, node);
+        } else {
+            holder.deckExpander.setVisibility(View.GONE);
+            int normalPadding = (int) deckLayout.getResources().getDimension(R.dimen.deck_picker_left_padding);
+            deckLayout.setPadding(normalPadding, 0, rightPadding, 0);
+        }
 
         if (node.children.size() > 0) {
             holder.deckExpander.setTag(node.did);
@@ -203,20 +214,15 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     }
 
 
-    private void setDeckExpander(ImageButton expander, ImageButton indent, Sched.DeckDueTreeNode node,boolean subDecks){
-        if (subDecks) {
-            expander.setVisibility(View.VISIBLE);
-            boolean collapsed = mCol.getDecks().get(node.did).optBoolean("collapsed", false);
-            // Apply the correct expand/collapse drawable
-            if (collapsed) {
-                expander.setImageDrawable(mExpandImage);
-            } else if (node.children.size() > 0) {
-                expander.setImageDrawable(mCollapseImage);
-            } else {
-                expander.setImageDrawable(mNoExpander);
-            }
+    private void setDeckExpander(ImageButton expander, ImageButton indent, Sched.DeckDueTreeNode node){
+        boolean collapsed = mCol.getDecks().get(node.did).optBoolean("collapsed", false);
+        // Apply the correct expand/collapse drawable
+        if (collapsed) {
+            expander.setImageDrawable(mExpandImage);
+        } else if (node.children.size() > 0) {
+            expander.setImageDrawable(mCollapseImage);
         } else {
-            expander.setVisibility(View.GONE);
+            expander.setImageDrawable(mNoExpander);
         }
         // Add some indenting for each nested level
         int width = (int) indent.getResources().getDimension(R.dimen.keyline_1) * node.depth;
