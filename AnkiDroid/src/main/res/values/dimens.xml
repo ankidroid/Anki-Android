@@ -19,4 +19,10 @@
     <!-- Material design typography -->
     <dimen name="title_textsize">20sp</dimen>
     <dimen name="content_textsize">18sp</dimen>
+
+    <!-- DeckPicker -->
+    <dimen name="deck_picker_left_padding_small">4dp</dimen>
+    <dimen name="deck_picker_left_padding">24dp</dimen>
+    <dimen name="deck_picker_right_padding">4dp</dimen>
+    <dimen name="deck_picker_expander_height">36dp</dimen>
 </resources>

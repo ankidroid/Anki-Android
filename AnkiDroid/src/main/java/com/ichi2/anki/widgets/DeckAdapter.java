@@ -23,7 +23,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,12 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
-
-    // Number of dp units to use for each level of deck nesting
-    private static final int INDENT_WIDTH_DIP = 14;
-
-    // The calculated pixel width for the current screen
-    private float mIndentWidth;
 
     private LayoutInflater mLayoutInflater;
     private List<Sched.DeckDueTreeNode> mDeckList;
@@ -74,10 +67,14 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     private int mLrn;
     private int mRev;
 
+    // Flags
+    private boolean mHasSubdecks;
+
     // ViewHolder class to save inflated views for recycling
     public class ViewHolder extends RecyclerView.ViewHolder {
         public RelativeLayout deckLayout;
         public ImageButton deckExpander;
+        public ImageButton indentView;
         public TextView deckName;
         public TextView deckNew, deckLearn, deckRev;
 
@@ -85,6 +82,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             super(v);
             deckLayout = (RelativeLayout) v.findViewById(R.id.DeckPickerHoriz);
             deckExpander = (ImageButton) v.findViewById(R.id.deckpicker_expander);
+            indentView = (ImageButton) v.findViewById(R.id.deckpicker_indent);
             deckName = (TextView) v.findViewById(R.id.deckpicker_name);
             deckNew = (TextView) v.findViewById(R.id.deckpicker_new);
             deckLearn = (TextView) v.findViewById(R.id.deckpicker_lrn);
@@ -120,8 +118,6 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         mExpandImage = ta.getDrawable(8);
         mCollapseImage = ta.getDrawable(9);
         ta.recycle();
-        mIndentWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, INDENT_WIDTH_DIP,
-                res.getDisplayMetrics());
     }
 
     public void setDeckClickListener(View.OnClickListener listener) {
@@ -144,6 +140,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         mCol = col;
         mDeckList.clear();
         mNew = mLrn = mRev = 0;
+        mHasSubdecks = false;
         processNodes(nodes);
         notifyDataSetChanged();
     }
@@ -160,9 +157,20 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         // Update views for this node
         Sched.DeckDueTreeNode node = mDeckList.get(position);
-
-        // Create the right expander for this deck
-        setDeckExpander(holder.deckExpander, node);
+        // Set the expander icon and padding according to whether or not there are any subdecks
+        RelativeLayout deckLayout = holder.deckLayout;
+        int rightPadding = (int) deckLayout.getResources().getDimension(R.dimen.deck_picker_right_padding);
+        if (mHasSubdecks) {
+            int smallPadding = (int) deckLayout.getResources().getDimension(R.dimen.deck_picker_left_padding_small);
+            deckLayout.setPadding(smallPadding, 0, rightPadding, 0);
+            holder.deckExpander.setVisibility(View.VISIBLE);
+            // Create the correct expander for this deck
+            setDeckExpander(holder.deckExpander, holder.indentView, node);
+        } else {
+            holder.deckExpander.setVisibility(View.GONE);
+            int normalPadding = (int) deckLayout.getResources().getDimension(R.dimen.deck_picker_left_padding);
+            deckLayout.setPadding(normalPadding, 0, rightPadding, 0);
+        }
 
         if (node.children.size() > 0) {
             holder.deckExpander.setTag(node.did);
@@ -206,7 +214,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     }
 
 
-    private void setDeckExpander(ImageButton expander, Sched.DeckDueTreeNode node) {
+    private void setDeckExpander(ImageButton expander, ImageButton indent, Sched.DeckDueTreeNode node){
         boolean collapsed = mCol.getDecks().get(node.did).optBoolean("collapsed", false);
         // Apply the correct expand/collapse drawable
         if (collapsed) {
@@ -216,19 +224,9 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         } else {
             expander.setImageDrawable(mNoExpander);
         }
-        // Now set the padding on the left side to indent nested decks.
-        // The initial padding is the same width as an expander image. If the row requires
-        // an expander, we remove this padding. This results in aligned deck names with and
-        // without an expander.
-        int expanderWidth = mExpandImage.getIntrinsicWidth();
-        int indent = expanderWidth;
         // Add some indenting for each nested level
-        indent += mIndentWidth * node.depth;
-        if (collapsed || node.children.size() > 0) {
-            // If an expand/collapse button exists, remove the initial padding.
-            indent -= expanderWidth;
-        }
-        expander.setPadding(indent, 0, 0, 0);
+        int width = (int) indent.getResources().getDimension(R.dimen.keyline_1) * node.depth;
+        indent.setMinimumWidth(width);
     }
 
 
@@ -248,6 +246,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             }
             // If any of this node's parents are collapsed, don't add it to the deck list
             for (JSONObject parent : mCol.getDecks().parents(node.did)) {
+                mHasSubdecks = true;    // If a deck has a parent it means it's a subdeck so set a flag
                 if (parent.optBoolean("collapsed")) {
                     return;
                 }
