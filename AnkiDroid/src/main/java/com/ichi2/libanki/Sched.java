@@ -1149,7 +1149,7 @@ public class Sched {
     }
 
 
-    private void log(long id, int usn, int ease, int ivl, int lastIvl, int factor, long timeTaken, int type) {
+    private void log(long id, int usn, int ease, int ivl, int lastIvl, int factor, int timeTaken, int type) {
         try {
             mCol.getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
                     new Object[]{Utils.now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type});

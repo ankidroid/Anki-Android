@@ -31,7 +31,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -44,6 +43,7 @@ import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
+import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
@@ -608,7 +608,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void onPreExecute() {
             mProgressBar.setVisibility(View.VISIBLE);
-            mCardTimer.stop();
             blockControls();
         }
 
@@ -952,7 +951,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         longClickHandler.removeCallbacks(longClickTestRunnable);
         longClickHandler.removeCallbacks(startLongClickAction);
 
-        stopTimer();
+        pauseTimer();
         Sound.stopSounds();
     }
 
@@ -960,7 +959,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        restartTimer();
+        resumeTimer();
         // Set the context for the Sound manager
         Sound.setContext(new WeakReference<Activity>(this));
         // Reset the activity title
@@ -1159,23 +1158,28 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    private void stopTimer() {
-        // Stop visible timer and card timer
-        if (mCardTimer != null) {
-            mCardTimer.stop();
-        }
+    private void pauseTimer() {
         if (mCurrentCard != null) {
             mCurrentCard.stopTimer();
         }
+        // We also stop the UI timer so it doesn't trigger the tick listener while paused. Letting
+        // it run would trigger the time limit condition (red, stopped timer) in the background.
+        mCardTimer.stop();
     }
 
 
-    private void restartTimer() {
-        // Restart visible timer and card timer
+    private void resumeTimer() {
         if (mCurrentCard != null) {
-            mCardTimer.setBase(SystemClock.elapsedRealtime() - mCurrentCard.timeTaken());
-            mCardTimer.start();
+            // Resume the card timer first. It internally accounts for the time gap between
+            // suspend and resume.
             mCurrentCard.resumeTimer();
+            // Then update and resume the UI timer. Set the base time as if the timer had started
+            // timeTaken() seconds ago.
+            mCardTimer.setBase(SystemClock.elapsedRealtime() - mCurrentCard.timeTaken());
+            // Don't start the timer if we have already reached the time limit or it will tick over
+            if ((SystemClock.elapsedRealtime() - mCardTimer.getBase()) < mCurrentCard.timeLimit()) {
+                mCardTimer.start();
+            }
         }
     }
 
@@ -1801,14 +1805,34 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     protected void initTimer() {
+        final TypedValue typedValue = new TypedValue();
         mShowTimer = mCurrentCard.showTimer();
         if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
             mCardTimer.setVisibility(View.VISIBLE);
         } else if (!mShowTimer && mCardTimer.getVisibility() != View.INVISIBLE) {
             mCardTimer.setVisibility(View.INVISIBLE);
         }
+        // Set normal timer color
+        getTheme().resolveAttribute(android.R.attr.textColor, typedValue, true);
+        mCardTimer.setTextColor(typedValue.data);
+
         mCardTimer.setBase(SystemClock.elapsedRealtime());
         mCardTimer.start();
+
+        // Stop and highlight the timer if it reaches the time limit.
+        getTheme().resolveAttribute(R.attr.maxTimerColor, typedValue, true);
+        final int limit = mCurrentCard.timeLimit();
+        mCardTimer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                long elapsed = SystemClock.elapsedRealtime() - chronometer.getBase();
+                Timber.e("Elapsed: " + elapsed);
+                if (elapsed >= limit) {
+                    chronometer.setTextColor(typedValue.data);
+                    chronometer.stop();
+                }
+            }
+        });
     }
 
 
