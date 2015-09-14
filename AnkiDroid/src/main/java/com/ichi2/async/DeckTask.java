@@ -99,6 +99,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
      */
     private Context mContext;
 
+
     /**
      * The most recently started {@link DeckTask} instance.
      */
@@ -121,12 +122,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
      */
     public static DeckTask launchDeckTask(int type, Listener listener, TaskData... params) {
         // Start new task
-        /* Note: It seems that doing this can lead to replacing sLatestInstance with a new DeckTask after calling cancel()
-        but BEFORE actually finishing the task. This interferes with code checking for onCancelled(), which is very problematic */
-        // TODO: change to a cleaner way of doing this
-        sLatestInstance = new DeckTask(type, listener, sLatestInstance);
-        sLatestInstance.execute(params);
-        return sLatestInstance;
+        DeckTask newTask = new DeckTask(type, listener, sLatestInstance);
+        newTask.execute(params);
+        return newTask;
     }
 
 
@@ -182,17 +180,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     }
 
 
-    public static boolean taskIsRunning() {
-        try {
-            if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-                return true;
-            }
-        } catch (Exception e) {
-            return true;
-        }
-        return false;
-    }
-
     private final int mType;
     private final Listener mListener;
     private DeckTask mPreviousTask;
@@ -228,7 +215,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 Timber.e(e, "previously running task was cancelled: %d", mPreviousTask.mType);
             }
         }
-
+        sLatestInstance = this;
         mContext = AnkiDroidApp.getInstance().getApplicationContext();
 
         // Actually execute the task now that we are at the front of the queue.
@@ -637,7 +624,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         String query = (String) params[0].getObjArray()[1];
         Boolean order = (Boolean) params[0].getObjArray()[2];
         ArrayList<HashMap<String,String>> searchResult = col.findCardsForCardBrowser(query, order, deckNames);
-        if (isCancelled() || CardBrowser.sSearchCancelled) {
+        if (isCancelled()) {
             Timber.d("doInBackgroundSearchCards was cancelled so return null");
             return null;
         } else {
@@ -663,6 +650,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 CardBrowser.updateSearchItemQA(items.get(i), c);
                 // Stop if cancelled
                 if (isCancelled()) {
+                    Timber.d("doInBackgroundRenderBrowserQA was aborted");
                     return null;
                 } else {
                     float progress = (float) i / n * 100;
@@ -1430,12 +1418,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             return mObjects;
         }
     }
-    
-    public static boolean taskIsCancelled(){
-        return sLatestInstance!=null && sLatestInstance.isCancelled();
-    }
-    
-    public static boolean taskIsCancelled(int taskType){
-        return sLatestInstance != null && sLatestInstance.mType == taskType && taskIsCancelled();
+
+    public static synchronized DeckTask getInstance() {
+        return sLatestInstance;
     }
 }

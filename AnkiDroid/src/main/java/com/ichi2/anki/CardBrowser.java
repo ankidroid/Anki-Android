@@ -106,7 +106,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private MenuItem mMySearchesItem;
 
     public static Card sCardBrowserCard;
-    public static boolean sSearchCancelled = false;
 
     private int mPositionInCardsList;
 
@@ -1058,7 +1057,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void onCancelled(){
             // reset the hacky static variable which Finder is listening to check if main thread has requested cancellation
             Timber.d("doInBackgroundSearchCards onCancelled() called");
-            sSearchCancelled = false;
         }
     };
 
