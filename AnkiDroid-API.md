@@ -20,7 +20,7 @@ dependencies {
 Here is a very simple example of adding a new note to AnkiDroid. See the sample app for a more complete / detailed example.
 
 ```java
-// Instantiate the API
+// Instantiate the API (you should do some checks first; see the sample app)
 final AddContentApi api = new AddContentApi(context);
 // Add new deck if one doesn't already exist
 Long did = api.findDeckIdByName("My app name");
@@ -31,7 +31,7 @@ if (did == null) {
 Long mid = api.findModelIdByName("com.something.myapp", 2);
 if (mid == null) {
     // This will add a basic two-field / one card model with no special formatting
-    // See the sample app for a complicated example
+    // See the sample app for an example using a fully-customized model
     mid = api.addNewBasicModel("com.something.myapp");
 }
 // Add new note
