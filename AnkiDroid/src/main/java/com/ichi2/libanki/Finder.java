@@ -1042,10 +1042,10 @@ public class Finder {
         Cursor cur = null;
         try {
             cur = mCol.getDb().getDatabase().rawQuery(sql, args);
+            DeckTask task = DeckTask.getInstance();
             while (cur.moveToNext()) {
                 // cancel if the launching task was cancelled. 
-                // Note that checking sSearchCancelled is a hack -- see comments in DeckTask.launchDeckTask
-                if (DeckTask.taskIsCancelled(DeckTask.TASK_TYPE_SEARCH_CARDS) || CardBrowser.sSearchCancelled){
+                if (task.isCancelled()){
                     Timber.i("_findCardsForCardBrowser() cancelled...");
                     return null;
                 }                
