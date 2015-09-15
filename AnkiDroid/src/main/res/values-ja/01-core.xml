@@ -44,7 +44,7 @@
   <string name="statistics">統計</string>
   <string name="settings">設定</string>
   <string name="help">ヘルプ</string>
-  <string name="send_feedback">フィードバックを送信</string>
+  <string name="send_feedback">フィードバック</string>
   <string name="studyoptions_title">学習オプション</string>
   <string name="studyoptions_due_today">今日の課題:</string>
   <string name="studyoptions_new_total">新規カードの枚数:</string>
@@ -95,7 +95,7 @@
   <string name="new_deck">デッキを新規作成</string>
   <string name="create">作成</string>
   <string name="new_dynamic_deck">フィルターデッキを作成</string>
-  <string name="night_mode">夜間表示（反転）</string>
+  <string name="night_mode">ナイトモード</string>
   <string name="directory_inaccessible">AnkiDroid ディレクトリにアクセスできません</string>
   <string name="time_quantity_seconds">%d秒</string>
   <string name="time_quantity_minutes">%d分</string>
@@ -117,9 +117,9 @@
   <string name="studyoptions_no_cards_due">今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
   <string name="sd_card_not_mounted">デバイスストレージがマウントされていません</string>
   <string name="button_sync">同期</string>
-  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-  <string name="sync_cancelled">Sync cancelled</string>
-  <string name="export">エクスポート(書き出し)</string>
+  <string name="cancel_sync_confirm">同期をキャンセルしますか？</string>
+  <string name="sync_cancelled">同期がキャンセルされました</string>
+  <string name="export">エクスポート</string>
   <string name="nothing">Nothing</string>
   <string name="title_activity_template_editor">%sのカードタイプ</string>
   <string name="card_template_editor_front">表面のテンプレート</string>
@@ -132,7 +132,6 @@
     <item quantity="other">カードタイプ \'%2$s\' とそのカード %1$d 枚を削除しますか？</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、一つ以上のノートも削除することになります。まずは新しいカードタイプを追加してください。</string>
-  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
-        models, and decks, as well as create new ones.</string>
+  <string name="read_write_permission_label">AnkiDroid データベースの読み書き</string>
+  <string name="read_write_permission_description">このアプリケーションに新規のノート・カード・ノートタイプ・デッキの作成を許可するとともに、既存のノート・カード・ノートタイプ・デッキへのアクセスも許可します</string>
 </resources>

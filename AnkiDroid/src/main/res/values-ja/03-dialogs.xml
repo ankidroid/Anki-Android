@@ -51,13 +51,13 @@
   </plurals>
   <string name="delete_cram_deck_message"> %s のすべてのカードを元のデッキに戻してもよろしいですか？</string>
   <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
-  <string name="initializing_tts">テキスト読み上げ機能を初期化しています.</string>
+  <string name="initializing_tts">テキスト読み上げ機能を初期化しています...</string>
   <string name="tts_no_tts">音声なし</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroid は、PCソフトウェア <a href=\"%2$s\">Anki</a> と完全互換のフラッシュカードアプリです。AnkiDroid と Anki のどちらでも教材を作成し、ダウンロードし、学習し、AnkiWeb を介して簡単に双方を同期することができます。]]></item>
     <item><![CDATA[AnkiDroid を改善するために、バグを <a href=\"%1$s\">こちら</a>に報告していただけると幸いです。新しい機能のアイデアも大歓迎です。<a href=\"%2$s\">Wiki</a>をご覧になった上で、<a href=\"%3$s\">フォーラム</a> でディスカッションを開始してください。]]></item>
     <item><![CDATA[AnkiDroid は<a href=\"%1$s\">オープンソースソフトウェア<a/>ですので、誰もが<a href=\"%2$s\">貢献者</a>になることができます :-)]]></item>
-    <item><![CDATA[ソフトウェア開発の専門知識を持っていない方も、例えばAnkiDroidの<a href=\"%1$s\">翻訳を改善</a> したり、wikiを更新したり、スクリーン ショット画像を提供したり、Ankiに1>寄付</a> をしたり、AnkiDroidについてのブログを書いたりするなどして、このアプリの発展に貢献することができます。]]></item>
+    <item><![CDATA[ソフトウェア開発の専門知識を持っていない方も、例えばAnkiDroidの<a href=\"%1$s\">翻訳を改善</a> したり、wikiを更新したり、スクリーン ショット画像を提供したり、Ankiに<a href=\"%2$s\">寄付</a> をしたり、AnkiDroidについてのブログを書いたりするなどして、このアプリの発展に貢献することができます。]]></item>
     <item><![CDATA[AnkiDroid は、<a href="%1$s">GNU GPL v3 ライセンス</a>の下でリリースされており、ソースコードは<a href="%2$s">こちら</a>です。]]></item>
   </string-array>
   <string name="preview_title">プレビュー</string>

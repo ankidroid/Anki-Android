@@ -45,7 +45,7 @@
   <string name="CardEditorLaterMessage">後日のために情報を保存</string>
   <string name="CardEditorCardDeck">デッキ:</string>
   <string name="CardEditorNoteDeck">デッキ:</string>
-  <string name="CardEditorModel">ノートタイプ:</string>
+  <string name="CardEditorModel">タイプ:</string>
   <string name="CardEditorTags">タグ: %1$s</string>
   <string name="CardEditorCards">カード:%1$s</string>
   <string name="tag_name">タグ名</string>
@@ -70,7 +70,7 @@
   <string-array name="browser_column2_headings">
     <item>解答</item>
     <item>カード</item>
-    <item>デッキ:</item>
+    <item>デッキ</item>
     <item>ノートタイプ</item>
     <item>質問</item>
     <item>タグ</item>
