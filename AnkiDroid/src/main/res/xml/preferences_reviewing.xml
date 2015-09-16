@@ -52,11 +52,6 @@
             android:title="@string/time_limit"
             app:max="9999"
             app:min="0" />
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="writeAnswersDisable"
-            android:summary="@string/write_answers_disable_summ"
-            android:title="@string/write_answers_disable" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_flashcard" >
         <CheckBoxPreference
@@ -104,7 +99,7 @@
             android:text=" %"
             android:title="@string/button_size"
             app:interval="10"
-            app:min="100" />                
+            app:min="100" />
         <CheckBoxPreference
             android:key="showProgress"
             android:summary="@string/show_progress_summ"
