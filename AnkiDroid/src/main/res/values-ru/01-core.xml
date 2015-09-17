@@ -123,6 +123,8 @@
   <string name="studyoptions_no_cards_due">Нет карт в очереди.</string>
   <string name="sd_card_not_mounted">Карта памяти не примонтирована</string>
   <string name="button_sync">Синхронизация</string>
+  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+  <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Экспорт</string>
   <string name="nothing">Ничего</string>
   <string name="title_activity_template_editor">Типы карт для %s</string>
@@ -139,4 +141,7 @@
   </plurals>
   <string name="card_template_editor_would_delete_note"> Удаление этого типа карт приведет к удалению одного
         или нескольких примечаний, создайте сначала новый тип карт.</string>
+  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
+        models, and decks, as well as create new ones.</string>
 </resources>

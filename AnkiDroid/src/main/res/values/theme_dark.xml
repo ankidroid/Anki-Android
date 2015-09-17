@@ -18,8 +18,8 @@
         <item name="currentDeckBackgroundColor">@color/deckadapter_row_current_night</item>
         <item name="dynDeckColor">@color/deckadapter_deck_name_dyn_night</item>
         <item name="deckDivider">@drawable/divider_dark</item>
-        <item name="expandRef">@drawable/ic_chevron_right_white_24dp</item>
-        <item name="collapseRef">@drawable/ic_expand_more_white_24dp</item>
+        <item name="expandRef">@drawable/ic_chevron_right_white_36dp</item>
+        <item name="collapseRef">@drawable/ic_expand_more_white_36dp</item>
         <!-- Reviewer colors -->
         <item name="topBarColor">@color/theme_primary_light_inv</item>
         <item name="newCountColor">@color/new_count_night</item>

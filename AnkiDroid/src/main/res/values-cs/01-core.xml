@@ -123,6 +123,8 @@
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Synchronizovat</string>
+  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+  <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Export</string>
   <string name="nothing">Nic</string>
   <string name="title_activity_template_editor">Typy karet pro %s</string>
@@ -138,4 +140,7 @@
     <item quantity="other">Odstranit typ karty \'%2$s\' a jeho %1$d karty?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note"> Odstraněním tohoto typu karty můžete způsobit, že jedna nebo         více poznámek budou odstraněny. Nejprve vytvořte nový typ karty.</string>
+  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
+        models, and decks, as well as create new ones.</string>
 </resources>

@@ -21,33 +21,40 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingBottom="7dip"
-    android:paddingLeft="1dip"
-    android:paddingRight="5dip"
-    android:paddingTop="5dip">
-
+    android:paddingLeft="@dimen/deck_picker_left_padding"
+    android:paddingRight="@dimen/deck_picker_right_padding">
     <ImageButton
-        android:id="@+id/deckpicker_expander"
-        android:layout_width="wrap_content"
+        android:id="@+id/deckpicker_indent"
+        android:minWidth="0dp"
+        android:minHeight="@dimen/deck_picker_expander_height"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
         android:background="@android:color/transparent" />
-
-    <TextView
-        android:id="@+id/deckpicker_name"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/deckpicker_expander"
+        android:layout_toRightOf="@+id/deckpicker_indent"
         android:layout_toLeftOf="@+id/deckpicker_new"
-        android:background="@color/transparent"
-        android:gravity="left"
-        android:maxLines="2"
-        android:textColor="?android:textColorPrimary"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <ImageButton
+            android:id="@+id/deckpicker_expander"
+            android:layout_height="@dimen/deck_picker_expander_height"
+            android:layout_width="36dp"
+            android:background="@android:color/transparent" />
+        <TextView
+            android:id="@+id/deckpicker_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/deck_picker_expander_height"
+            android:background="@color/transparent"
+            android:gravity="left|center_vertical"
+            android:maxLines="2"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
     <TextView
         android:id="@+id/deckpicker_new"
         android:layout_width="wrap_content"

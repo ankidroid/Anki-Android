@@ -120,6 +120,8 @@
   <string name="studyoptions_no_cards_due">Aucune carte à relire actuellement.</string>
   <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Synchroniser</string>
+  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+  <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Exporter</string>
   <string name="nothing">Rien</string>
   <string name="title_activity_template_editor">Types de carte pour %s</string>
@@ -135,4 +137,7 @@
   </plurals>
   <string name="card_template_editor_would_delete_note"> Retirer ce type de carte provoquerait la suppression 
         d\'une ou de plusieurs notes. Veuillez d\'abord créer un nouveau type de carte.</string>
+  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
+        models, and decks, as well as create new ones.</string>
 </resources>

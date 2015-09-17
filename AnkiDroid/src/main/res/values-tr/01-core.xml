@@ -120,6 +120,8 @@
   <string name="studyoptions_no_cards_due">Henüz çalışılacak kart yok.</string>
   <string name="sd_card_not_mounted">Cihaz hafızası takılı değil</string>
   <string name="button_sync">Eşitle</string>
+  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+  <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Dışarı aktar</string>
   <string name="nothing">Hiçbirşey</string>
   <string name="title_activity_template_editor">%s için kart türleri</string>
@@ -134,4 +136,7 @@
     <item quantity="other">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note"> Bu kart tipini kaldırmak bir veya daha fazla notun silinmesine neden olur. Lütfen önce yeni bir kart türü oluşturun.</string>
+  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
+        models, and decks, as well as create new ones.</string>
 </resources>

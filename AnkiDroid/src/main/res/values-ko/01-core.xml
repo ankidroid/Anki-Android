@@ -117,6 +117,8 @@
   <string name="studyoptions_no_cards_due">남은 카드가 없습니다.</string>
   <string name="sd_card_not_mounted">기기 저장소가 장착되지 않았습니다</string>
   <string name="button_sync">동기화</string>
+  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+  <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">내보내기</string>
   <string name="nothing">없음</string>
   <string name="title_activity_template_editor">%s의 카드 형식</string>
@@ -130,4 +132,7 @@
     <item quantity="other">\'%2$s\' 카드 형식과 %1$d 카드를 삭제할까요?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">이 카드 형식을 제거하면 하나 또는 여러개의 노트가 삭제됩니다. 먼저 새 카드 형식을 만드세요.</string>
+  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
+        models, and decks, as well as create new ones.</string>
 </resources>

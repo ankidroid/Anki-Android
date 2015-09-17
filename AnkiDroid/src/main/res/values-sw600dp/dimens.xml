@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="keyline_1">24dp</dimen>
     <dimen name="default_width">64dp</dimen>
+    <dimen name="deck_picker_left_padding_small">12dp</dimen>
+    <dimen name="deck_picker_left_padding">24dp</dimen>
+    <dimen name="deck_picker_right_padding">12dp</dimen>
 </resources>

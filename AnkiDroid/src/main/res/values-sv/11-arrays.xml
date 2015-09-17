@@ -50,16 +50,16 @@
     <item>Rekommenderat svar (grön)</item>
     <item>Svar bättre än rekommenderat</item>
     <item>Ångra</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Editera not</item>
+    <item>Markera not</item>
     <item>Sökutryck</item>
     <item>Dölj kort</item>
     <item>Åsidosätt kort</item>
-    <item>Delete note</item>
+    <item>Ta bort not</item>
     <item>Spela upp media</item>
     <item>Avbryt inlärning</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Dölj not</item>
+    <item>Lås not</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Åsidosätt kort</item>
@@ -78,7 +78,7 @@
     <item>Ordningen de lades till</item>
     <item>Efter förfallotid</item>
     <item>Senast tillagda först</item>
-    <item>Relative overdueness</item>
+    <item>Relativ försenhet</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>Öka dagens gräns för nya kort</item>

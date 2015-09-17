@@ -40,14 +40,14 @@
 
 -->
 <resources>
-  <string name="youre_offline">オフライン状態です</string>
+  <string name="youre_offline">オフラインです</string>
   <string name="sync_error">同期エラー</string>
   <string name="vague_error">エラー</string>
   <string name="retry">再実行</string>
   <string name="cancel">キャンセル</string>
-  <string name="loading_shared_decks">利用可能な共有単語帳を読み込んでいます...</string>
+  <string name="loading_shared_decks">利用可能な共有デッキを読み込んでいます...</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms"> 利用規約</a></string>
-  <string name="menu_get_shared_decks">共有単語帳を取得</string>
+  <string name="menu_get_shared_decks">共有デッキを取得</string>
   <string name="connection_error_message">ネットワークエラーが発生しました</string>
   <string name="not_logged_in_title">AnkiWebへのログイン</string>
   <string name="login_create_account_message">AnkiWebにログインする必要があります。次の手順でアカウントを作成できます。</string>

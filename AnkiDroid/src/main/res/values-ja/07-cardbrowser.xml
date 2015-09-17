@@ -42,7 +42,7 @@
   <plurals name="card_browser_subtitle">
     <item quantity="other">%d枚のカード</item>
   </plurals>
-  <string name="card_browser_all_decks">すべての単語帳</string>
+  <string name="card_browser_all_decks">すべてのデッキ</string>
   <string name="card_browser_delete_card">ノートを削除</string>
   <string name="card_browser_suspend_card">カードを保留</string>
   <string name="card_browser_unsuspend_card">カードの保留解除</string>

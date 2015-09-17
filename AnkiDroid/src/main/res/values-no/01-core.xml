@@ -120,6 +120,8 @@
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Synkroniser</string>
+  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+  <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Eksporter</string>
   <string name="nothing">Ingenting</string>
   <string name="title_activity_template_editor">Korttyper for %s</string>
@@ -134,4 +136,7 @@
     <item quantity="other">Slette korttypen \"%2$s\" og dens %1$d kort?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Fjerning av denne korttypen vil føre til at ett eller flere notater slettes. Vennligst lag en ny korttype først.</string>
+  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
+        models, and decks, as well as create new ones.</string>
 </resources>

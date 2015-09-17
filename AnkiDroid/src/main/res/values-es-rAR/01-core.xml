@@ -120,6 +120,8 @@
   <string name="studyoptions_no_cards_due">Aún no hay tarjetas programadas.</string>
   <string name="sd_card_not_mounted">El almacenamiento del dispositivo no se encuentra montado</string>
   <string name="button_sync">Sincronización</string>
+  <string name="cancel_sync_confirm">¿Deseas cancelar la sincronización?</string>
+  <string name="sync_cancelled">Sincronización cancelada</string>
   <string name="export">Exportar</string>
   <string name="nothing">Nada</string>
   <string name="title_activity_template_editor">Tipos de Tarjeta por %s</string>
@@ -134,4 +136,6 @@
     <item quantity="other">¿Eliminar el tipo de tarjeta \'%2$s\' y sus %1$d tarjetas?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Eliminar este tipo de tarjeta podría causar la eliminación de una o más notas. Por favor, cree primero un nuevo tipo de tarjeta.</string>
+  <string name="read_write_permission_label">Leer y escribir en la base de datos de AnkiDroid</string>
+  <string name="read_write_permission_description">Permite que la aplicación pueda acceder a las notas, tarjetas, modelos y mazos existentes, así como crear nuevos.</string>
 </resources>

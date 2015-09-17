@@ -136,10 +136,10 @@
   <string name="import_importing">Karten werden importiert&#8230;</string>
   <string name="export_include_schedule">Zeitabstände einbeziehen</string>
   <string name="export_include_media">Medien einbeziehen</string>
-  <string name="confirm_apkg_export">Sammulung als Apkg-Datei exportieren?</string>
-  <string name="confirm_apkg_export_deck">»%s« als Apkg-Datei exportieren?</string>
+  <string name="confirm_apkg_export">Sammlung als apkg-Datei exportieren?</string>
+  <string name="confirm_apkg_export_deck">»%s« als apkg-Datei exportieren?</string>
   <string name="export_in_progress">Exportiere apkg-Datei&#8230;</string>
-  <string name="export_successful_title">Apkg e-mailen?</string>
+  <string name="export_successful_title">Apkg-Datei e-mailen?</string>
   <string name="export_successful">Datei »%s« wurde exportiert. Wollen Sie sie e-mailen?</string>
   <string name="export_unsuccessful">Fehler beim Exportieren der Sammlung</string>
   <string name="import_hint">Kopieren Sie die apkg-Datei ins Verzeichnis »%s« und berühren Sie »OK« um Karten zu importieren</string>

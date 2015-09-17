@@ -42,7 +42,7 @@
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">一般設定</string>
   <string name="pref_cat_reviewing">カードの学習</string>
-  <string name="pref_cat_reviewing_summ">特定の単語帳に限定されない設定</string>
+  <string name="pref_cat_reviewing_summ">特定のデッキに限定されない設定</string>
   <string name="pref_cat_reviewer_behaviour">動作</string>
   <string name="pref_cat_flashcard">画面表示</string>
   <string name="pref_cat_whiteboard">ホワイトボード機能</string>
@@ -68,7 +68,7 @@
   <string name="text_selection_click_summ">もし、長押しタップでテキストの選択が出来ない場合、これを有効にしてください。</string>
   <string name="dictionary">検索辞書</string>
   <string name="reset_languages">言語設定のリセット</string>
-  <string name="reset_languages_summ">すべての単語帳の言語の設定（音声合成、辞書）をリセットします。単語帳選択で選択した単語帳の設定をリセットします</string>
+  <string name="reset_languages_summ">すべてのデッキの言語の設定（音声合成、辞書）をリセットします。デッキ選択で選択したデッキの設定をリセットします</string>
   <string name="reset_languages_question">言語の割り当てをリセットしますか?</string>
   <string name="reset_confirmation">すべての状態をリセット</string>
   <string name="card_zoom">カードの拡大・縮小</string>
@@ -104,7 +104,7 @@
   <string name="sync_account_summ_logged_out">ログインしていません。</string>
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="automatic_sync_choice">自動同期</string>
-  <string name="automatic_sync_choice_summ">最後に同期したのが10 分以上前であった場合にアプリ開始/終了時に自動的に同期します</string>
+  <string name="automatic_sync_choice_summ">最後に同期したのが10 分以上前であった場合、アプリ起動/終了時に自動的に同期します</string>
   <string name="fix_hebrew_text">ヘブライ語母音への対応</string>
   <string name="fix_hebrew_text_summ">ヘブライ語の母音を適切に描画するための回避策です</string>
   <string name="fix_hebrew_instructions">この設定は、ヘブライ語を表示するために、AndroidのRTLアルゴリズムをバイパスします\n\nこのが機能を使うために、フォント（Tohu.ttf）をダウンロードして手動で:\n%s/fonts/\n\nへコピーする必要があります。カードを変更する必要はありません。</string>
@@ -116,7 +116,7 @@
   <string name="notification_pref">通知</string>
   <string name="notification_pref_title">通知のタイミング</string>
   <string name="never_notify">通知なし</string>
-  <string name="notify_when_pending">バックグラウンドでの動作中に保留（ユーザーの操作待ち）状態になった時</string>
+  <string name="notify_when_pending">バックグラウンドでのデータ処理中、ユーザーの操作を待機する状態になった時</string>
   <string name="notification_minimum_cards_due">課題のカードが%d枚を超えている時</string>
   <string name="notification_minimum_cards_due_vibrate">振動で通知</string>
   <string name="notification_minimum_cards_due_blink">ライト点滅で通知</string>
@@ -135,8 +135,8 @@
   <string name="show_estimates">ボタン上に時間を表示</string>
   <string name="show_estimates_summ">回答ボタンの上に、次の復習間隔を表示します</string>
   <string name="show_progress">残りのカード枚数を表示</string>
-  <string name="show_progress_summ">画面左上に、残りのカード枚数を表示します（青: 新規、赤: 学習および再学習、緑: 復習）</string>
-  <string name="use_current">新規カードの追加先</string>
+  <string name="show_progress_summ">画面左上に、残りのカード枚数を表示します（青: 新規、赤: 基本学習および再学習、緑: 復習）</string>
+  <string name="use_current">新規カードの追加先デッキ</string>
   <string name="new_spread">新規カードの追加場所</string>
   <string name="learn_cutoff">先取り学習の限度</string>
   <string name="learn_cutoff_summ">XXX 分</string>
@@ -155,12 +155,12 @@
   <string name="filter_google_translate_summ">翻訳元と結果の保存</string>
   <string name="convert_fen_text_summ">Forsyth Edwards Notation 表記法を使いチェス盤を描画します。この表記は[fen][/fen] で囲む必要があります</string>
   <string name="studyoptions_limit_select_tags">タグを選択</string>
-  <string name="deck_conf_deck_description">単語帳の説明</string>
+  <string name="deck_conf_deck_description">デッキの説明</string>
   <string name="deck_conf_group">オプショングループ</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="other">%1$s\n%2$d個の単語帳がこのグループを使用しています</item>
+    <item quantity="other">%1$s\n%2$d個のデッキがこのグループを使用しています</item>
   </plurals>
-  <string name="deck_conf_new_cards">新規カードと学習（短期集中反復）</string>
+  <string name="deck_conf_new_cards">新規カードと基本学習（短期集中反復）</string>
   <string name="deck_conf_rev_cards">復習（中長期間隔の反復）</string>
   <string name="deck_conf_lps_cards">忘却と再学習</string>
   <string name="deck_conf_general">一般</string>
@@ -179,7 +179,7 @@
   <string name="deck_conf_easy_bonus">「簡単」と答えた時のボーナス（復習間隔の伸び率の割増し）</string>
   <string name="deck_conf_ivl_fct">復習ペース（復習間隔の伸び率の増えやすさ）の調整</string>
   <string name="deck_conf_max_ivl">復習間隔の上限</string>
-  <string name="deck_conf_new_lps_ivl">再学習後に再開する復習の間隔の縮小（前回比）</string>
+  <string name="deck_conf_new_lps_ivl">再学習後に再開する復習の間隔（前回比）</string>
   <string name="deck_conf_min_ivl">再学習後に再開する復習の間隔の下限</string>
   <string name="deck_conf_leech_thres">無駄（習得困難）カードと判定する基準</string>
   <string name="deck_conf_fails">XXX 回 忘却（復習カードに「もう一度」と回答）した時</string>
@@ -187,9 +187,9 @@
   <string name="deck_conf_max_time">統計に利用する解答時間の最大値</string>
   <string name="deck_conf_seconds">XXX 秒</string>
   <string name="deck_conf_timer">タイマーの表示</string>
-  <string name="deck_conf_autoplay">音声を自動再生する</string>
-  <string name="deck_conf_replayq">質問音声のリプレイ</string>
-  <string name="deck_conf_replayq_summ">解答が表示されている時に「音声のリプレイ」を選択すると、質問と解答の音声を順番に再生します</string>
+  <string name="deck_conf_autoplay">音声・動画を自動再生する</string>
+  <string name="deck_conf_replayq">質問の音声・動画も再生</string>
+  <string name="deck_conf_replayq_summ">解答が表示されている時に「音声・動画を再生」を選択すると、解答の音声・動画の前に質問の音声・動画も再生します</string>
   <string name="deck_conf_manage">グループ管理</string>
   <string name="deck_conf_current_group">現在のオプショングループ</string>
   <string name="deck_conf_rename">名前の変更</string>
@@ -201,12 +201,12 @@
   <string name="deck_conf_remove">削除</string>
   <string name="deck_conf_remove_title">削除</string>
   <string name="deck_conf_remove_message">現在のオプショングループを削除しますか？</string>
-  <string name="deck_conf_set_subdecks">全てのサブ単語帳に適用</string>
+  <string name="deck_conf_set_subdecks">全てのサブデッキに適用</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="other">この設定を行うと %s個のサブ単語帳もこのオプショングループを使用することになります</item>
+    <item quantity="other">この設定を行うと %s個のサブデッキもこのオプショングループを使用することになります</item>
   </plurals>
-  <string name="deck_conf_set_subdecks_title">全てのサブ単語帳に適用</string>
-  <string name="deck_conf_set_subdecks_message">現在のオプショングループをすべてのサブ単語帳に適用しますか？</string>
+  <string name="deck_conf_set_subdecks_title">全てのサブデッキに適用</string>
+  <string name="deck_conf_set_subdecks_message">現在のオプショングループをすべてのサブデッキに適用しますか？</string>
   <string name="pref_browser_editor_font">閲覧時と編集時のフォント</string>
   <string name="deck_conf_cram_filter">フィルター</string>
   <string name="deck_conf_cram_options">オプション</string>
@@ -214,7 +214,7 @@
   <string name="deck_conf_cram_limit">抽出件数の上限</string>
   <string name="deck_conf_cram_order">抽出されたカードの並べ方</string>
   <string name="deck_conf_cram_reschedule">スケジュールを変更</string>
-  <string name="deck_conf_cram_reschedule_summ">復習結果を単語帳のスケジュールへ反映する</string>
+  <string name="deck_conf_cram_reschedule_summ">回答結果を元のデッキでのスケジュールに反映させる</string>
   <string name="deck_conf_cram_steps">カスタムステップ</string>
   <string name="deck_conf_cram_steps_summ">設定したカスタムステップを使用する</string>
 </resources>

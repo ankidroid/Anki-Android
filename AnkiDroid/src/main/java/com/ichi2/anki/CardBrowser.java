@@ -106,7 +106,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private MenuItem mMySearchesItem;
 
     public static Card sCardBrowserCard;
-    public static boolean sSearchCancelled = false;
 
     private int mPositionInCardsList;
 
@@ -526,6 +525,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     protected void onStop() {
         Timber.d("onStop()");
         // cancel rendering the question and answer, which has shared access to mCards
+        DeckTask.cancelTask(DeckTask.TASK_TYPE_SEARCH_CARDS);
         DeckTask.cancelTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA);
         super.onStop();
         if (!isFinishing()) {
@@ -771,9 +771,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     public void selectDropDownItem(int position) {
-        // cancel rendering the question and answer, which has shared access to mCards
-        DeckTask.cancelTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA);
-
         mActionBarSpinner.setSelection(position);
         if (position == 0) {
             sIsWholeCollection = true;
@@ -798,6 +795,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private void searchCards() {
+        // cancel the previous search & render tasks if still running
+        DeckTask.cancelTask(DeckTask.TASK_TYPE_SEARCH_CARDS);
+        DeckTask.cancelTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA);
         String searchText;
         if (mSearchTerms.contains("deck:")) {
             searchText = mSearchTerms;
@@ -1057,7 +1057,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void onCancelled(){
             // reset the hacky static variable which Finder is listening to check if main thread has requested cancellation
             Timber.d("doInBackgroundSearchCards onCancelled() called");
-            sSearchCancelled = false;
         }
     };
 
@@ -1112,7 +1111,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onScrollStateChanged(AbsListView listView, int scrollState) {
             // Cancel any rendering so that scrolling occurs as fluidly as possible
-            Timber.v("Scroll state changed to "+Integer.toString(scrollState));
             DeckTask.cancelTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA);
             // Resume rendering once the scrolling has finished
             if (scrollState == SCROLL_STATE_IDLE) {

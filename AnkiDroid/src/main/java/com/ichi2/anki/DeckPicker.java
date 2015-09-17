@@ -1753,9 +1753,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Resources res = getResources();
         mDialogEditText = new EditText(DeckPicker.this);
         mDialogEditText.setSingleLine();
-        mDialogEditText.setText(getCol().getDecks().name(mContextMenuDid));
-        // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
-
+        final String currentName = getCol().getDecks().name(mContextMenuDid);
+        mDialogEditText.setText(currentName);
         new MaterialDialog.Builder(DeckPicker.this)
                 .title(res.getString(R.string.contextmenu_deckpicker_rename_deck))
                 .customView(mDialogEditText, true)
@@ -1765,22 +1764,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         String newName = mDialogEditText.getText().toString().replaceAll("\"", "");
-                        Timber.i("DeckPicker:: Renaming deck...", newName);
                         Collection col = getCol();
-                        if (col != null) {
-                            if (col.getDecks().rename(col.getDecks().get(mContextMenuDid), newName)) {
-                                updateDeckList();
-                            } else {
-                                try {
-                                    Themes.showThemedToast(
-                                            DeckPicker.this,
-                                            getResources().getString(R.string.rename_error,
-                                                    col.getDecks().get(mContextMenuDid).get("name")), false);
-                                } catch (JSONException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
+                        if (!newName.equals(currentName) &&
+                                !col.getDecks().rename(col.getDecks().get(mContextMenuDid), newName)) {
+                            Themes.showThemedToast(DeckPicker.this,
+                                    getResources().getString(R.string.rename_error, currentName), false);
+
                         }
+                        dismissAllDialogFragments();
                         mDeckListAdapter.notifyDataSetChanged();
                         updateDeckList();
                     }

@@ -109,7 +109,7 @@ public class CustomFontsReviewerExt implements ReviewerExt {
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
             AnkiFont defaultFont = customFontsMap.get(preferences.getString("defaultFont", null));
             if (defaultFont != null) {
-                mDefaultFontStyle = "BODY { " + defaultFont.getCSS() + " }\n";
+                mDefaultFontStyle = "BODY { " + defaultFont.getCSS(false) + " }\n";
             } else {
                 mDefaultFontStyle = "";
             }
@@ -129,7 +129,7 @@ public class CustomFontsReviewerExt implements ReviewerExt {
             AnkiFont defaultFont = customFontsMap.get(preferences.getString("defaultFont", null));
             boolean overrideFont = preferences.getString("overrideFontBehavior", "0").equals("1");
             if (defaultFont != null && overrideFont) {
-                mOverrideFontStyle = "BODY, .card, * { " + defaultFont.getCSS() + " }\n";
+                mOverrideFontStyle = "BODY, .card, * { " + defaultFont.getCSS(true) + " }\n";
             } else {
                 mOverrideFontStyle = "";
             }
