@@ -47,8 +47,8 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     private int mNewCountColor;
     private int mLearnCountColor;
     private int mReviewCountColor;
-    private int mRowDefaultColor;
-    private int mRowCurrentColor;
+    private int mRowDefaultDrawable;
+    private int mRowCurrentDrawable;
     private int mDeckNameDefaultColor;
     private int mDeckNameDynColor;
     private Drawable mExpandImage;
@@ -99,8 +99,8 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
                 R.attr.newCountColor,
                 R.attr.learnCountColor,
                 R.attr.reviewCountColor,
-                android.R.attr.colorBackground,
-                R.attr.currentDeckBackgroundColor,
+                R.attr.selectableItemBackground,
+                R.attr.currentDeckBackground,
                 android.R.attr.textColor,
                 R.attr.dynDeckColor,
                 R.attr.expandRef,
@@ -111,8 +111,8 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         mNewCountColor = ta.getColor(1, res.getColor(R.color.new_count));
         mLearnCountColor = ta.getColor(2, res.getColor(R.color.learn_count));
         mReviewCountColor = ta.getColor(3, res.getColor(R.color.review_count));
-        mRowDefaultColor = ta.getColor(4, res.getColor(R.color.black));
-        mRowCurrentColor = ta.getColor(5, res.getColor(R.color.deckadapter_row_current));
+        mRowDefaultDrawable = ta.getResourceId(4, 0);
+        mRowCurrentDrawable = ta.getResourceId(5, 0);
         mDeckNameDefaultColor = ta.getColor(6, res.getColor(R.color.black));
         mDeckNameDynColor = ta.getColor(7, res.getColor(R.color.deckadapter_deck_name_dyn));
         mExpandImage = ta.getDrawable(8);
@@ -179,9 +179,9 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
         // Set background colour. The current deck has its own color
         if (node.did == mCol.getDecks().current().optLong("id")) {
-            holder.deckLayout.setBackgroundColor(mRowCurrentColor);
+            holder.deckLayout.setBackgroundResource(mRowCurrentDrawable);
         } else {
-            holder.deckLayout.setBackgroundColor(mRowDefaultColor);
+            holder.deckLayout.setBackgroundResource(mRowDefaultDrawable);
         }
 
         // Set deck name and colour. Filtered decks have their own colour
