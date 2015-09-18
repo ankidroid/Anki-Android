@@ -1627,8 +1627,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         getCol().getDecks().select(did);
         mFocusedDeck = did;
         openStudyOptions(false);
-        // Make sure the adapter knows about the new current deck so it will be correctly highlighted.
-        mDeckListAdapter.notifyDataSetChanged();
     }
 
 

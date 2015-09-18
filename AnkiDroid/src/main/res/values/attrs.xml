@@ -33,7 +33,7 @@
         <attr name="interval" format="integer" />
     </declare-styleable>
     <!-- Deck list colors, divider, and expander -->
-    <attr name="currentDeckBackgroundColor" format="color"/>
+    <attr name="currentDeckBackground" format="reference"/>
     <attr name="dynDeckColor" format="color"/>
     <attr name="deckDivider" format="reference"/>
     <attr name="expandRef" format="reference"/>
