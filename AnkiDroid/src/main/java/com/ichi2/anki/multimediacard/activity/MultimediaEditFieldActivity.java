@@ -19,9 +19,13 @@
 
 package com.ichi2.anki.multimediacard.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,7 +50,8 @@ import java.io.File;
 
 import timber.log.Timber;
 
-public class MultimediaEditFieldActivity extends AnkiActivity {
+public class MultimediaEditFieldActivity extends AnkiActivity
+        implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     public static final String EXTRA_RESULT_FIELD = "edit.field.result.field";
     public static final String EXTRA_RESULT_FIELD_INDEX = "edit.field.result.field.index";
@@ -56,6 +61,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity {
     public static final String EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note";
 
     private static final String BUNDLE_KEY_SHUT_OFF = "key.edit.field.shut.off";
+    private static final int REQUEST_AUDIO_PERMISSION = 0;
 
     IField mField;
     IMultimediaEditableNote mNote;
@@ -115,6 +121,14 @@ public class MultimediaEditFieldActivity extends AnkiActivity {
 
         if (mFieldController == null) {
             Timber.d("Field controller creation failed");
+            return;
+        }
+
+        // Request permission to record if audio field
+        if (mField instanceof AudioField && ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO},
+                    REQUEST_AUDIO_PERMISSION);
             return;
         }
 
@@ -297,6 +311,13 @@ public class MultimediaEditFieldActivity extends AnkiActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+
+    public void onRequestPermissionsResult (int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_AUDIO_PERMISSION && permissions.length == 1) {
+            // TODO:  Disable the record button / show some feedback to the user
+            recreateEditingUi();
+        }
+    }
 
     public void handleFieldChanged(IField newField) {
         mField = newField;
