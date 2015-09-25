@@ -7,7 +7,8 @@ android {
     defaultConfig {
         applicationId "com.ichi2.anki"
         minSdkVersion 8
-        targetSdkVersion 23
+        //TODO: Update targetSdkVersion to v23 when Android issue 183547 is fixed or we switch to MaterialDrawer library
+        targetSdkVersion 22
         testApplicationId "com.ichi2.anki.tests"
     }
     signingConfigs {
@@ -36,8 +37,11 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:design:23.0.1'
-    compile 'com.afollestad:material-dialogs:0.7.6.0'
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:design:22.2.1'
+    compile('com.afollestad.material-dialogs:core:0.8.1.0@aar') {
+        transitive = true
+    }
     compile 'net.i2p.android.ext:floatingactionbutton:1.10.0'
     compile 'ch.acra:acra:4.6.2'
     compile 'com.jakewharton.timber:timber:2.5.1'
