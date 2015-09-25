@@ -50,6 +50,7 @@
     <attr name="easyButtonRef" format= "reference"/>
     <!-- Reviewer other colors -->
     <attr name="topBarColor" format="color"/>
+    <attr name="maxTimerColor" format="color"/>
     <!-- Browser colors -->
     <attr name="suspendedColor" format="color"/>
     <attr name="markedColor" format="color"/>

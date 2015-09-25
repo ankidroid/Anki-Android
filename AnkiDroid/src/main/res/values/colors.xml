@@ -90,6 +90,8 @@
     <color name="review_count_night">@color/material_green_200</color>
     <color name="zero_count_night">#202020</color>
     <color name="actionbar_background">#f5f5f5</color>
+    <color name="max_timer">@color/material_red_500</color>
+    <color name="max_timer_night">@color/material_red_300</color>
 
     <!-- Material Design: http://www.google.com/design/spec/style/color.html#color-color-palette -->
     <!-- Can eventually be shortened once settled on a color scheme -->

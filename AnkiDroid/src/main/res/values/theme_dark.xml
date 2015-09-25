@@ -22,6 +22,7 @@
         <item name="collapseRef">@drawable/ic_expand_more_white_36dp</item>
         <!-- Reviewer colors -->
         <item name="topBarColor">@color/theme_primary_light_inv</item>
+        <item name="maxTimerColor">@color/max_timer_night</item>
         <item name="newCountColor">@color/new_count_night</item>
         <item name="learnCountColor">@color/learn_count_night</item>
         <item name="zeroCountColor">@color/zero_count_night</item>
