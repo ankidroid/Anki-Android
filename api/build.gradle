@@ -5,8 +5,8 @@ def artifactId = "api"
 def version = "1.0.0alpha2"
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
 
     defaultConfig {
         minSdkVersion 8
