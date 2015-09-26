@@ -199,6 +199,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             long deckId = (long) v.getTag();
             Timber.i("DeckPicker:: Selected deck with id %d", deckId);
             handleDeckSelection(deckId);
+            if (mFragmented) {
+                mDeckListAdapter.notifyDataSetChanged();
+            }
         }
     };
 
@@ -1638,9 +1641,22 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void handleDeckSelection(long did) {
-        getCol().getDecks().select(did);
-        mFocusedDeck = did;
-        openStudyOptions(false);
+        if (getCol().cardCount(new long[]{did}) > 0) {
+            // Select the deck and open studyoptions if the deck isn't empty
+            getCol().getDecks().select(did);
+            mFocusedDeck = did;
+            openStudyOptions(false);
+        } else {
+            // If the deck is empty then just show a snackbar saying the deck is empty, with a link to help
+            showSnackbar(R.string.studyoptions_empty, false, R.string.help, new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(getResources()
+                            .getString(R.string.link_manual_getting_started)));
+                    startActivityWithoutAnimation(helpIntent);
+                }
+            }, findViewById(R.id.root_layout));
+        }
     }
 
 

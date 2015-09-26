@@ -82,6 +82,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
      */
     public static final int CONTENT_STUDY_OPTIONS = 0;
     public static final int CONTENT_CONGRATS = 1;
+    public static final int CONTENT_EMPTY = 2;
 
     // Threshold at which the total number of new cards is truncated by libanki
     private static final int NEW_CARD_COUNT_TRUNCATE_THRESHOLD = 1000;
@@ -512,7 +513,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
 
     private void updateChart(double[][] serieslist) {
-        if (mChartView != null) {
+        if (mChartView != null && mCurrentContentView != CONTENT_EMPTY) {
             Collection col = CollectionHelper.getInstance().getCol(getActivity());
             AnkiStatsTaskHandler.createSmallDueChartChart(col, serieslist, mChartView);
             if (mChartView.getVisibility() == View.INVISIBLE) {
@@ -745,8 +746,17 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                         return;
                     }
 
-                    // Switch between the ordinary view and "congratulations" view
-                    if (newCards + lrnCards + revCards == 0) {
+                    // Switch between the empty view, the ordinary view, and the "congratulations" view
+                    if (totalCards == 0) {
+                        mCurrentContentView = CONTENT_EMPTY;
+                        mDeckInfoLayout.setVisibility(View.GONE);
+                        mCongratsLayout.setVisibility(View.VISIBLE);
+                        mTextCongratsMessage.setText(R.string.studyoptions_empty);
+                        mButtonStart.setVisibility(View.GONE);
+                        if (mChartView != null) {
+                            mChartView.setVisibility(View.INVISIBLE);
+                        }
+                    } else if (newCards + lrnCards + revCards == 0) {
                         mCurrentContentView = CONTENT_CONGRATS;
                         mDeckInfoLayout.setVisibility(View.GONE);
                         mCongratsLayout.setVisibility(View.VISIBLE);
