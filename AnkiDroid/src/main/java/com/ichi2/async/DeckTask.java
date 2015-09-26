@@ -49,6 +49,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -93,6 +94,12 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_CHECK_MEDIA = 38;
     public static final int TASK_TYPE_ADD_TEMPLATE = 39;
     public static final int TASK_TYPE_REMOVE_TEMPLATE = 40;
+    public static final int TASK_TYPE_COUNT_MODELS = 41;
+    public static final int TASK_TYPE_DELETE_MODEL = 42;
+    public static final int TASK_TYPE_DELETE_FIELD = 43;
+    public static final int TASK_TYPE_REPOSITION_FIELD = 44;
+    public static final int TASK_TYPE_ADD_FIELD = 45;
+    public static final int TASK_TYPE_CHANGE_SORT_FIELD = 46;
 
     /**
      * A reference to the application context to use to fetch the current Collection object.
@@ -300,6 +307,24 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_REMOVE_TEMPLATE:
                 return doInBackgroundRemoveTemplate(params);
+
+            case TASK_TYPE_COUNT_MODELS:
+                return doInBackgroundCountModels(params);
+
+            case TASK_TYPE_DELETE_MODEL:
+                return  doInBackGroundDeleteModel(params);
+
+            case TASK_TYPE_DELETE_FIELD:
+                return doInBackGroundDeleteField(params);
+
+            case TASK_TYPE_REPOSITION_FIELD:
+                return doInBackGroundRepositionField(params);
+
+            case TASK_TYPE_ADD_FIELD:
+                return doInBackGroundAddField(params);
+
+            case TASK_TYPE_CHANGE_SORT_FIELD:
+                return doInBackgroundChangeSortField(params);
 
             default:
                 Timber.e("unknown task type: %d", mType);
@@ -1101,6 +1126,152 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         } catch (ConfirmModSchemaException e) {
             Timber.e("doInBackgroundRemoveTemplate :: ConfirmModSchemaException");
             return new TaskData(false);
+        }
+        return new TaskData(true);
+    }
+
+
+    /*
+     * Async task for the ModelBrowser Class
+     * Returns an ArrayList of all models alphabetically ordered and the number of notes
+     * associated with each model.
+     *
+     * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
+     */
+    private TaskData doInBackgroundCountModels(TaskData... params){
+        Timber.d("doInBackgroundLoadModels");
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+
+        ArrayList<JSONObject> models = (ArrayList<JSONObject>) col.getModels().all();
+        ArrayList<Integer> cardCount = new ArrayList<Integer>();
+        Collections.sort(models, new Comparator<JSONObject>() {
+            @Override
+            public int compare(JSONObject a, JSONObject b) {
+                try {
+                    return a.getString("name").compareTo(b.getString("name"));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        try{
+            for (JSONObject n : models) {
+                long modID = n.getLong("id");
+                cardCount.add(col.getModels().nids(col.getModels().get(modID)).size());
+            }
+        } catch (JSONException e) {
+                Timber.e("doInBackgroundLoadModels :: JSONException");
+                return new TaskData(false);
+        }
+
+        Object[] data = new Object[2];
+        data[0] = models;
+        data[1] = cardCount;
+        return (new TaskData(0, data, true));
+    }
+
+
+    /**
+     * Deletes the given model (stored in the long field of TaskData)
+     * and all notes associated with it
+     */
+    private TaskData doInBackGroundDeleteModel(TaskData... params){
+        Timber.d("doInBackGroundDeleteModel");
+        long modID = params[0].getLong();
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        try {
+            col.getModels().rem(col.getModels().get(modID));
+        }
+        catch (ConfirmModSchemaException e) {
+            Timber.e("doInBackGroundDeleteModel :: ConfirmModSchemaException");
+            return new TaskData(false);
+        }
+        return new TaskData(true);
+    }
+
+    /**
+     * Deletes thje given field in the given model
+     */
+    private TaskData doInBackGroundDeleteField(TaskData... params){
+        Timber.d("doInBackGroundDeleteField");
+        Object[] objects = params[0].getObjArray();
+
+        JSONObject model = (JSONObject) objects[0];
+        JSONObject field = (JSONObject) objects[1];
+
+
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        try {
+            col.getModels().remField(model, field);
+        }
+        catch (ConfirmModSchemaException e) {
+            //Should never be reached
+            return new TaskData(false);
+        }
+        return new TaskData(true);
+    }
+
+    /**
+     * Repositions the given field in the given model
+     */
+    private TaskData doInBackGroundRepositionField(TaskData... params){
+        Timber.d("doInBackgroundRepositionField");
+        Object[] objects = params[0].getObjArray();
+
+        JSONObject model = (JSONObject) objects[0];
+        JSONObject field = (JSONObject) objects[1];
+        int index = (Integer) objects[2];
+
+
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        try {
+            col.getModels().moveField(model, field, index);
+        }
+        catch (ConfirmModSchemaException e) {
+            //Should never be reached
+            return new TaskData(false);
+        }
+        return new TaskData(true);
+    }
+
+    /**
+     * Adds a field of with name in given model
+     */
+    private TaskData doInBackGroundAddField(TaskData... params){
+        Timber.d("doInBackgroundRepositionField");
+        Object[] objects = params[0].getObjArray();
+
+        JSONObject model = (JSONObject) objects[0];
+        String fieldName = (String) objects[1];
+
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        try {
+            col.getModels().addField(model, col.getModels().newField(fieldName));
+        }
+        catch (ConfirmModSchemaException e) {
+            //Should never be reached
+            return new TaskData(false);
+        }
+        return new TaskData(true);
+    }
+
+    /**
+     * Adds a field of with name in given model
+     */
+    private TaskData doInBackgroundChangeSortField(TaskData... params){
+        try {
+            Timber.d("doInBackgroundChangeSortField");
+            Object[] objects = params[0].getObjArray();
+
+            JSONObject model = (JSONObject) objects[0];
+            int idx = (int) objects[1];
+
+            Collection col = CollectionHelper.getInstance().getCol(mContext);
+            col.getModels().setSortIdx(model, idx);
+        }
+        catch(Exception e){
+            e.printStackTrace();
         }
         return new TaskData(true);
     }
