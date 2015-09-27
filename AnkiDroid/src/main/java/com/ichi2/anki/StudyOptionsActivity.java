@@ -138,6 +138,13 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
 
     @Override
+    public void onResume() {
+        super.onResume();
+        selectNavigationItem(-1);
+    }
+
+
+    @Override
     public void onRequireDeckListUpdate() {
         getCurrentFragment().refreshInterface();
     }
