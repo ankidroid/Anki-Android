@@ -3,7 +3,8 @@
     android:id="@+id/root_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -22,13 +23,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="?android:attr/colorBackground" />
+                android:background="?android:attr/colorBackground"
+                app:popupTheme="?attr/actionBarPopupThemeRef"/>
 
             <Spinner
                 android:id="@+id/browser_column2_spinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                app:popupTheme="?attr/actionBarPopupThemeRef"/>
         </LinearLayout>
 
         <ListView
