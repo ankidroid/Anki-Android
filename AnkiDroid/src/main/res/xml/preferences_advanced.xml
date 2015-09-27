@@ -64,11 +64,6 @@
                 android:key="fixHebrewText"
                 android:summary="@string/fix_hebrew_text_summ"
                 android:title="@string/fix_hebrew_text" />
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="fixArabicText"
-                android:summary="@string/fix_arabic_text_summ"
-                android:title="@string/fix_arabic_text" />
         </PreferenceCategory>
         <PreferenceCategory
             android:key="category_plugins"

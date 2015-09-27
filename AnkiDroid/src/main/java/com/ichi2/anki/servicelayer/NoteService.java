@@ -192,9 +192,6 @@ public class NoteService {
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
-            } catch (APIVersionException e) {
-                // A useful error dialog would be a better idea here.
-                throw new RuntimeException(e);
             }
         }
     }
