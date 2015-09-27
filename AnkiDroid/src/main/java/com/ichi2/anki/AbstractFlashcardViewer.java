@@ -965,6 +965,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // Reset the activity title
         setTitle();
         updateScreenCounts();
+        selectNavigationItem(-1);
     }
 
 
