@@ -571,6 +571,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 showMediaCheckDialog(MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK);
                 return true;
 
+            case R.id.action_model_browser_open:
+                Timber.i("DeckPicker:: Model browser button pressed");
+                Intent noteTypeBrowser = new Intent(this, ModelBrowser.class);
+                startActivityForResultWithAnimation(noteTypeBrowser, 0, ActivityTransitionAnimation.LEFT);
+                return true;
+
             case R.id.action_restore_backup:
                 Timber.i("DeckPicker:: Restore from backup button pressed");
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_RESTORE_BACKUP);

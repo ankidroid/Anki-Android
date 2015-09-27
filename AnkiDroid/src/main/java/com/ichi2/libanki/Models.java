@@ -509,16 +509,17 @@ public class Models {
     }
 
 
-    // public int setSortIdx(JSONObject m, int idx) {
-    // try {
-    // mCol.modSchema();
-    // m.put("sortf", idx);
-    // mCol.updateFieldCache(nids(m));
-    // save(m);
-    // } catch (JSONException e) {
-    // throw new RuntimeException(e);
-    // }
-    // }
+    public void setSortIdx(JSONObject m, int idx) throws ConfirmModSchemaException{
+        try {
+            mCol.modSchema(true);
+            m.put("sortf", idx);
+            mCol.updateFieldCache(Utils.toPrimitive(nids(m)));
+            save(m);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void addField(JSONObject m, JSONObject field) throws ConfirmModSchemaException {
         // only mod schema if model isn't new
@@ -630,7 +631,6 @@ public class Models {
             _updateFieldOrds(m);
             save(m);
             _transformFields(m, new TransformFieldMove(idx, oldidx));
-            renameField(m, field, null);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
