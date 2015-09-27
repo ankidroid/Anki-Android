@@ -34,10 +34,6 @@ public class ModelEditorContextMenu extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Resources res = getResources();
-        Drawable icon = res.getDrawable(R.drawable.ic_settings_applications_black_36dp);
-        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
-
         String[] entries = new String[4];
         entries[FIELD_REPOSITION] = getResources().getString(R.string.model_field_editor_reposition_menu);
         entries[SORT_FIELD] = getResources().getString(R.string.model_field_editor_sort_field);
@@ -46,7 +42,6 @@ public class ModelEditorContextMenu extends DialogFragment {
 
         return new MaterialDialog.Builder(getActivity())
                 .title(getArguments().getString("label"))
-                .icon(icon)
                 .items(entries)
                 .itemsCallback(mContextMenuListener)
                 .build();

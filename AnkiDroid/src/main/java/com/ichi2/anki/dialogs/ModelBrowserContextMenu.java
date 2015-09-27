@@ -31,10 +31,6 @@ public class ModelBrowserContextMenu extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Resources res = getResources();
-        Drawable icon = res.getDrawable(R.drawable.ic_settings_applications_black_36dp);
-        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
-
         String[] entries = new String[3];
         entries[MODEL_TEMPLATE] = getResources().getString(R.string.model_browser_template);
         entries[MODEL_RENAME] = getResources().getString(R.string.model_browser_rename);
@@ -42,7 +38,6 @@ public class ModelBrowserContextMenu extends DialogFragment {
 
         return new MaterialDialog.Builder(getActivity())
                 .title(getArguments().getString("label"))
-                .icon(icon)
                 .items(entries)
                 .itemsCallback(mContextMenuListener)
                 .build();

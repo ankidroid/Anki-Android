@@ -1,3 +1,19 @@
+/****************************************************************************************
+ * Copyright (c) 2015 Ryan Annis <squeenix@live.ca>                                     *
+ * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
 package com.ichi2.anki;
 
 import android.os.Bundle;
@@ -33,9 +49,8 @@ public class ModelFieldEditor extends AnkiActivity {
     private final static int NORMAL_EXIT = 100001;
 
     //Position of the current field selected
-    private int currentPos;
+    private int mCurrentPos;
 
-    private ArrayAdapter<String> mFieldLabelAdapter;
     private ListView mFieldLabelView;
     private ArrayList<String> mFieldLabels;
     private MaterialDialog mProgressDialog;
@@ -44,7 +59,7 @@ public class ModelFieldEditor extends AnkiActivity {
     private JSONArray mNoteFields;
     private JSONObject mMod;
 
-    private ModelEditorContextMenu cMenu;
+    private ModelEditorContextMenu mContextMenu;
     private EditText mFieldNameInput;
 
 
@@ -56,19 +71,21 @@ public class ModelFieldEditor extends AnkiActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View mainView = getLayoutInflater().inflate(R.layout.model_editor, null);
-        setContentView(mainView);
+        setContentView(R.layout.model_field_editor);
         startLoadingCollection();
 
-        Toolbar toolbar = (Toolbar) mainView.findViewById(R.id.toolbar);
-        mFieldLabelView = (ListView) mainView.findViewById(R.id.note_type_editor_fields);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mFieldLabelView = (ListView) findViewById(R.id.note_type_editor_fields);
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
 
-        String title = String.format(getResources().getString(R.string.model_field_editor_title), getIntent().getStringExtra("title"));
-        getSupportActionBar().setTitle(title);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.model_field_editor_title);
+            getSupportActionBar().setSubtitle(getIntent().getStringExtra("title"));
+        }
     }
 
 
@@ -113,16 +130,16 @@ public class ModelFieldEditor extends AnkiActivity {
      * Containing clickable labels for the fields
      */
     private void createfieldLabels() {
-        mFieldLabelAdapter = new ArrayAdapter<String>(this, R.layout.model_editor_list_item, mFieldLabels);
+        ArrayAdapter<String> mFieldLabelAdapter = new ArrayAdapter<>(this, R.layout.model_field_editor_list_item, mFieldLabels);
         mFieldLabelView.setAdapter(mFieldLabelAdapter);
         mFieldLabelView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                                   @Override
-                                                   public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                                       cMenu = ModelEditorContextMenu.newInstance(mFieldLabels.get(position), mContextMenuListener);
-                                                       showDialogFragment(cMenu);
-                                                       currentPos = position;
-                                                   }
-                                               });
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mContextMenu = ModelEditorContextMenu.newInstance(mFieldLabels.get(position), mContextMenuListener);
+                showDialogFragment(mContextMenu);
+                mCurrentPos = position;
+            }
+        });
     }
 
 
@@ -133,7 +150,7 @@ public class ModelFieldEditor extends AnkiActivity {
         long noteTypeID = getIntent().getLongExtra("noteTypeID", 0);
         mMod = mCol.getModels().get(noteTypeID);
 
-        mFieldLabels = new ArrayList<String>();
+        mFieldLabels = new ArrayList<>();
         try {
             mNoteFields = mMod.getJSONArray("flds");
             for (int i = 0; i < mNoteFields.length(); i++) {
@@ -221,42 +238,50 @@ public class ModelFieldEditor extends AnkiActivity {
         } else {
             try {
                 mCol.modSchema();
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_FIELD, mChangeFieldHandler,
-                        new DeckTask.TaskData(new Object[]{mMod, mNoteFields.getJSONObject(currentPos)}));
-            } catch (ConfirmModSchemaException e) {
-
                 ConfirmationDialog d = new ConfirmationDialog() {
                     public void confirm() {
-                        ConfirmationDialog c = new ConfirmationDialog() {
-                            public void confirm() {
-                                try {
-                                    mCol.modSchemaNoCheck();
-                                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_FIELD, mChangeFieldHandler,
-                                            new DeckTask.TaskData(new Object[]{mMod, mNoteFields.getJSONObject(currentPos)}));
-                                    dismissContextMenu();
-                                } catch (JSONException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-
-                            public void cancel() {
-                                dismissContextMenu();
-                            }
-                        };
-                        c.setArgs(getResources().getString(R.string.full_sync_confirmation));
-                        ModelFieldEditor.this.showDialogFragment(c);
+                        try {
+                            mCol.modSchema(false);
+                            deleteField();
+                        } catch (ConfirmModSchemaException e) {
+                            //This should never be reached because modSchema() didn't throw an exception
+                        }
+                        dismissContextMenu();
+                    }
+                    public void cancel() {
+                        dismissContextMenu();
+                    }
+                };
+                d.setArgs(getResources().getString(R.string.field_delete_warning));
+                showDialogFragment(d);
+            } catch (ConfirmModSchemaException e) {
+                ConfirmationDialog c = new ConfirmationDialog() {
+                    public void confirm() {
+                        try {
+                            mCol.modSchema(false);
+                            deleteField();
+                        } catch (ConfirmModSchemaException e) {
+                            //This should never be reached because we gave false argument to modSchema
+                        }
+                        dismissContextMenu();
                     }
 
                     public void cancel() {
                         dismissContextMenu();
                     }
                 };
-
-                d.setArgs(getResources().getString(R.string.field_delete_warning));
-                ModelFieldEditor.this.showDialogFragment(d);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+                c.setArgs(getResources().getString(R.string.full_sync_confirmation));
+                showDialogFragment(c);
             }
+        }
+    }
+
+    private void deleteField() {
+        try {
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_FIELD, mChangeFieldHandler,
+                    new DeckTask.TaskData(new Object[]{mMod, mNoteFields.getJSONObject(mCurrentPos)}));
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -268,7 +293,7 @@ public class ModelFieldEditor extends AnkiActivity {
     private void renameFieldDialog() {
         mFieldNameInput = new EditText(this);
         mFieldNameInput.setSingleLine(true);
-        mFieldNameInput.setText(mFieldLabels.get(currentPos));
+        mFieldNameInput.setText(mFieldLabels.get(mCurrentPos));
         mFieldNameInput.setSelection(mFieldNameInput.getText().length());
         new MaterialDialog.Builder(this)
                 .title(R.string.rename_model)
@@ -349,7 +374,8 @@ public class ModelFieldEditor extends AnkiActivity {
                             try {
                                 mCol.modSchema();
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPOSITION_FIELD, mChangeFieldHandler,
-                                        new DeckTask.TaskData(new Object[]{mMod, mNoteFields.getJSONObject(currentPos), new Integer(pos - 1)}));
+                                        new DeckTask.TaskData(new Object[]{mMod,
+                                                mNoteFields.getJSONObject(mCurrentPos), pos - 1}));
                             } catch (ConfirmModSchemaException e) {
 
                                 // Handle mod schema confirmation
@@ -359,8 +385,9 @@ public class ModelFieldEditor extends AnkiActivity {
                                             mCol.modSchemaNoCheck();
                                             String newPosition = mFieldNameInput.getText().toString();
                                             int pos = Integer.parseInt(newPosition);
-                                            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPOSITION_FIELD, mChangeFieldHandler,
-                                                    new DeckTask.TaskData(new Object[]{mMod, mNoteFields.getJSONObject(currentPos), new Integer(pos - 1)}));
+                                            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPOSITION_FIELD,
+                                                    mChangeFieldHandler, new DeckTask.TaskData(new Object[]{mMod,
+                                                            mNoteFields.getJSONObject(mCurrentPos),pos - 1}));
                                             dismissContextMenu();
                                         } catch (JSONException e) {
                                             throw new RuntimeException(e);
@@ -393,9 +420,9 @@ public class ModelFieldEditor extends AnkiActivity {
      * Useful when a confirmation dialog is created within another dialog
      */
     private void dismissContextMenu() {
-        if (cMenu != null) {
-            cMenu.dismiss();
-            cMenu = null;
+        if (mContextMenu != null) {
+            mContextMenu.dismiss();
+            mContextMenu = null;
         }
     }
 
@@ -415,7 +442,7 @@ public class ModelFieldEditor extends AnkiActivity {
         try {
             String fieldLabel = mFieldNameInput.getText().toString()
                     .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
-            JSONObject field = (JSONObject) mNoteFields.get(currentPos);
+            JSONObject field = (JSONObject) mNoteFields.get(mCurrentPos);
             mCol.getModels().renameField(mMod, field, fieldLabel);
             mCol.getModels().save();
             fullRefreshList();
@@ -432,14 +459,14 @@ public class ModelFieldEditor extends AnkiActivity {
         try {
             mCol.modSchema();
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHANGE_SORT_FIELD, mChangeFieldHandler,
-                    new DeckTask.TaskData(new Object[]{mMod, new Integer(currentPos)}));
+                    new DeckTask.TaskData(new Object[]{mMod, mCurrentPos}));
         } catch (ConfirmModSchemaException e) {
             // Handler mMod schema confirmation
             ConfirmationDialog c = new ConfirmationDialog() {
                 public void confirm() {
                     mCol.modSchemaNoCheck();
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHANGE_SORT_FIELD, mChangeFieldHandler,
-                            new DeckTask.TaskData(new Object[]{mMod, new Integer(currentPos)}));
+                            new DeckTask.TaskData(new Object[]{mMod, mCurrentPos}));
                     dismissContextMenu();
                 }
 
@@ -450,15 +477,6 @@ public class ModelFieldEditor extends AnkiActivity {
             c.setArgs(getResources().getString(R.string.full_sync_confirmation));
             ModelFieldEditor.this.showDialogFragment(c);
         }
-    }
-
-
-    /*
-     * Updates the ArrayAdapters for the main ListView.
-     * ArrayLists must be manually updated.
-     */
-    private void refreshList() {
-        mFieldLabelAdapter.notifyDataSetChanged();
     }
 
 
@@ -504,7 +522,6 @@ public class ModelFieldEditor extends AnkiActivity {
         @Override
         public void onCancelled() {
             //This decktask can not be interrupted
-            return;
         }
 
         @Override
@@ -528,7 +545,6 @@ public class ModelFieldEditor extends AnkiActivity {
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             //This decktask does not publish updates
-            return;
         }
     };
 

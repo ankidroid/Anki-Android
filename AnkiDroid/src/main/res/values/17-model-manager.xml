@@ -44,7 +44,7 @@
 
 
     <!--Field Editing-->
-    <string name="model_field_editor_title">Edit fields:  %1$s</string>.
+    <string name="model_field_editor_title">Edit fields</string>.
     <string name="model_field_editor_add">Add field</string>
     <string name="model_field_editor_delete">Delete field</string>
     <string name="model_field_editor_options">Field options</string>
@@ -57,14 +57,8 @@
 
 
     <!--Warnings-->
-    <string name="model_field_editor_delete_warning">Are you sure that you wish to delete this?  The data contained will be deleted and synchronizing with AnkiWeb servers will require a full sync.</string>
     <string name="model_delete_warning">Are you sure you wish to delete this model?</string>
     <string name="field_delete_warning">Are you sure you wish to delete this field?</string>
-
-
-    <!--Progress Dialogues-->
-    <string name="model_browser_deletion_in_progress">Deleting Note Type</string>
-    <string name="model_browser_loading_models">Loading Note Types</string>
 
 
     <!--Model Add Suffixes-->

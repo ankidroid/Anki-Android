@@ -3,9 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="7dip"
-    android:paddingLeft="10dip"
+    android:paddingLeft="@dimen/keyline_1"
     android:paddingRight="5dip"
     android:textSize="20sp"
-
-    android:gravity="center"
     android:textColor="?android:textColorPrimary"/>
