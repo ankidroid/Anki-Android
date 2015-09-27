@@ -478,12 +478,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // The action bar home/up action should open or close the drawer.
-        // ActionBarDrawerToggle will take care of this.
-        if (getDrawerToggle().onOptionsItemSelected(item)) {
-            return true;
-        }
-
         Resources res = getResources();
         switch (item.getItemId()) {
 
@@ -646,7 +640,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.d("onResume()");
         super.onResume();
         mActivityPaused = false;
-        selectNavigationItem(R.id.nav_decks);
+        selectNavigationItem(DRAWER_DECK_PICKER);
         if (mSyncOnResume) {
             sync();
             mSyncOnResume = false;

@@ -34,14 +34,7 @@
         <item>Fora</item>
         <item>Nciku (Web)</item>
     </string-array>
-    <string-array name="navigation_titles">
-        <item>@string/decks</item>
-        <item>@string/card_browser</item>
-        <item>@string/statistics</item>
-        <item>@string/settings</item>
-        <item>@string/help</item>
-        <item>@string/send_feedback</item>
-    </string-array>
+
     <string-array name="dictionary_values">
         <item>0</item>
         <item>1</item>

@@ -87,9 +87,9 @@ public class Statistics extends NavigationDrawerActivity implements
         sIsSubtitle = true;
         super.onCreate(savedInstanceState);
 
-        mMainLayout = getLayoutInflater().inflate(R.layout.activity_anki_stats, null);
+        setContentView(R.layout.activity_anki_stats);
+        mMainLayout = findViewById(android.R.id.content);
         initNavigationDrawer(mMainLayout);
-        setContentView(mMainLayout);
         startLoadingCollection();
     }
     
@@ -168,7 +168,7 @@ public class Statistics extends NavigationDrawerActivity implements
     @Override
     protected void onResume() {
         Timber.d("onResume()");
-        selectNavigationItem(R.id.nav_stats);
+        selectNavigationItem(DRAWER_STATISTICS);
         super.onResume();
     }
 
@@ -210,11 +210,6 @@ public class Statistics extends NavigationDrawerActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // The action bar home/up action should open or close the drawer.
-        // ActionBarDrawerToggle will take care of this.
-        if (getDrawerToggle().onOptionsItemSelected(item)) {
-            return true;
-        }
         int itemId =item.getItemId();
         switch (itemId) {
             case R.id.item_time_month:

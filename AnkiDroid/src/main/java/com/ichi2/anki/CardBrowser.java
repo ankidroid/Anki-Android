@@ -49,7 +49,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -564,7 +563,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     protected void onResume() {
         Timber.d("onResume()");
         super.onResume();
-        selectNavigationItem(R.id.nav_browser);
+        selectNavigationItem(DRAWER_BROWSER);
     }
 
 
@@ -622,12 +621,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // The action bar home/up action should open or close the drawer.
-        // ActionBarDrawerToggle will take care of this.
-        if (getDrawerToggle().onOptionsItemSelected(item)) {
-            return true;
-        }       
-        
         switch (item.getItemId()) {
 
             case R.id.action_add_card_from_card_browser:
