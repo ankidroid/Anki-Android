@@ -1,27 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
-    android:fitsSystemWindows="true">
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/root_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/root_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <include layout="@layout/toolbar" />
+        <include layout="@layout/toolbar" />
 
-            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/studyoptions_frame"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
-        </LinearLayout>
-    </android.support.design.widget.CoordinatorLayout>
-    <include layout="@layout/navigation_drawer" />
-</android.support.v4.widget.DrawerLayout>
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/studyoptions_frame"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
 

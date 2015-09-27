@@ -79,12 +79,6 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // The action bar home/up action should open or close the drawer.
-        // ActionBarDrawerToggle will take care of this.
-        if (getDrawerToggle().onOptionsItemSelected(item)) {
-            return true;
-        }
-        
         switch (item.getItemId()) {
 
             case android.R.id.home:
@@ -93,7 +87,6 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
             default:
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
