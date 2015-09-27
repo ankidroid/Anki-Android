@@ -40,8 +40,8 @@ import com.ichi2.libanki.sync.RemoteMediaServer;
 import com.ichi2.libanki.sync.RemoteServer;
 import com.ichi2.libanki.sync.Syncer;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import cz.msebera.android.httpclient.HttpResponse;
+import cz.msebera.android.httpclient.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 

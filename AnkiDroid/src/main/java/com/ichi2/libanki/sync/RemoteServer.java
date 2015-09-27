@@ -24,7 +24,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.VersionUtils;
 
-import org.apache.http.HttpResponse;
+import cz.msebera.android.httpclient.HttpResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
