@@ -1079,15 +1079,11 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     private TaskData doInBackgroundCheckMedia(TaskData... params) {
         Timber.d("doInBackgroundCheckMedia");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        try {
-            // A media check on AnkiDroid will also update the media db
-            col.getMedia().findChanges(true);
-            // Then do the actual check
-            List<List<String>> result = col.getMedia().check();
-            return new TaskData(0, new Object[]{result}, true);
-        } catch (APIVersionException e) {
-            return new TaskData(false);
-        }
+        // A media check on AnkiDroid will also update the media db
+        col.getMedia().findChanges(true);
+        // Then do the actual check
+        List<List<String>> result = col.getMedia().check();
+        return new TaskData(0, new Object[]{result}, true);
     }
 
     /**

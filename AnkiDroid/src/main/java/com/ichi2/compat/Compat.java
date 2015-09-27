@@ -32,7 +32,7 @@ import com.ichi2.anki.exception.APIVersionException;
  * A set of implementations for the supported platforms are available.
  * <p>
  * Each implementation ends with a {@code V<n>} prefix, identifying the minimum API version on which this implementation
- * can be used. For example, see {@link CompatV8}.
+ * can be used. For example, see {@link CompatV10}.
  * <p>
  * Each implementation should extend the previous implementation and implement this interface.
  * <p>
@@ -47,14 +47,11 @@ import com.ichi2.anki.exception.APIVersionException;
  * unless the behaviour is supposed to be different there.
  */
 public interface Compat {
-    String nfcNormalized(String txt) throws APIVersionException;
     String detagged(String txt);
-    void setOverScrollModeNever(View v);
     void setTtsOnUtteranceProgressListener(TextToSpeech tts);
     void disableDatabaseWriteAheadLogging(SQLiteDatabase db);
     void enableCookiesForFileSchemePages();
     void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls);
-    void setAlpha(View view, float alpha);
     void restartActivityInvalidateBackstack(AnkiActivity activity);
     void setFullScreen(NavigationDrawerActivity activity);
 }

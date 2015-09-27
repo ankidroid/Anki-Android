@@ -71,7 +71,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
-import com.ichi2.anki.exception.APIVersionException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.ReviewerExtRegistry;
 import com.ichi2.async.DeckTask;
@@ -86,8 +85,8 @@ import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
+import com.ichi2.utils.HtmlUtil;
 
-import org.amr.arabic.ArabicUtilities;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -184,7 +183,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mScrollingButtons;
     private boolean mGesturesEnabled;
     private boolean mHideAnswerButtons;
-    private boolean mPrefFixArabic;
     // Android WebView
     private boolean mSpeakText;
     protected boolean mDisableClipboard = false;
@@ -1366,10 +1364,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         }
         mCardFrame.removeAllViews();
-        // hunt for input issue 720, like android issue 3341
-        if (CompatHelper.getSdkVersion() == 7 && (mCard != null)) {
-            mCard.setFocusableInTouchMode(true);
-        }
 
         // Initialize swipe
         gestureDetector = new GestureDetector(new MyGestureDetector());
@@ -1661,7 +1655,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mImageZoom = preferences.getInt("imageZoom", 100);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mInputWorkaround = preferences.getBoolean("inputWorkaround", false);
-        mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
         mSpeakText = preferences.getBoolean("tts", false);
         mPrefSafeDisplay = preferences.getBoolean("safeDisplay", false);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
@@ -1866,10 +1859,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             question = getCol().getMedia().escapeImages(question);
             question = typeAnsQuestionFilter(question);
 
-            if (mPrefFixArabic) {
-                question = ArabicUtilities.reshapeSentence(question, true);
-            }
-
             Timber.d("question: '%s'", question);
             // If the user wants to write the answer
             if (typeAnswer()) {
@@ -1914,11 +1903,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         answerText = matcher.replaceAll("\n");
         matcher = Sound.sSoundPattern.matcher(answerText);
         answerText = matcher.replaceAll("");
-        try {
-            return CompatHelper.getCompat().nfcNormalized(answerText);
-        } catch (APIVersionException e) {
-            return answerText;
-        }
+        return HtmlUtil.nfcNormalized(answerText);
     }
 
 
@@ -1932,11 +1917,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (answer == null || answer.equals("")) {
             return "";
         }
-        try {
-            return CompatHelper.getCompat().nfcNormalized(answer.trim());
-        } catch (APIVersionException e) {
-            return answer.trim();
-        }
+        return HtmlUtil.nfcNormalized(answer.trim());
     }
 
 
@@ -1961,16 +1942,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         Sound.stopSounds();
         answer = getCol().getMedia().escapeImages(answer);
-        if (mPrefFixArabic) {
-            // reshape
-            answer = ArabicUtilities.reshapeSentence(answer, true);
-        }
 
         mAnswerField.setVisibility(View.GONE);
-        if (mPrefFixArabic) {
-            // reshape
-            mTypeCorrect = ArabicUtilities.reshapeSentence(mTypeCorrect, true);
-        }
         // Clean up the user answer and the correct answer
         String userAnswer = cleanTypedAnswer(mAnswerField.getText().toString());
         String correctAnswer = cleanCorrectAnswer(mTypeCorrect);
@@ -2216,10 +2189,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mNextCard = createWebView();
             mNextCard.setVisibility(View.GONE);
             mCardFrame.addView(mNextCard, 0);
-            // hunt for input issue 720, like android issue 3341
-            if (CompatHelper.getSdkVersion() == 7) {
-                mCard.setFocusableInTouchMode(true);
-            }
         } else if (mCard != null) {
             mCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
         }

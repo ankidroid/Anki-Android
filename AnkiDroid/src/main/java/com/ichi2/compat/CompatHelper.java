@@ -42,10 +42,8 @@ public class CompatHelper {
             mCompat = new CompatV11();
         } else if (getSdkVersion() >= 12) {
             mCompat = new CompatV12();
-        } else if (getSdkVersion() >= 9) {
-            mCompat = new CompatV9();
         } else {
-            mCompat = new CompatV8();
+            mCompat = new CompatV10();
         }
     }
 
@@ -111,9 +109,6 @@ public class CompatHelper {
 
     public static void removeHiddenPreferences(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        if (getSdkVersion() >= 9){
-            preferences.edit().remove("fixArabicText").commit();
-        }
         if (isHoneycomb()){
             preferences.edit().remove("longclickWorkaround").commit();
         }

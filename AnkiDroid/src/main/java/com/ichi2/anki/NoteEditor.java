@@ -76,7 +76,6 @@ import com.ichi2.themes.Themes;
 import com.ichi2.widget.PopupMenuWithIcons;
 import com.ichi2.widget.WidgetStatus;
 
-import org.amr.arabic.ArabicUtilities;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -179,8 +178,6 @@ public class NoteEditor extends AnkiActivity {
 
     private String[] mSourceText;
 
-
-    private boolean mPrefFixArabic;
 
     // A bundle that maps field ords to the text content of that field for use in
     // restoring the Activity.
@@ -548,8 +545,6 @@ public class NoteEditor extends AnkiActivity {
         }
 
 
-        mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
-
         ((LinearLayout) findViewById(R.id.CardEditorTagButton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -837,11 +832,6 @@ public class NoteEditor extends AnkiActivity {
             menu.findItem(R.id.action_reset_card_progress).setVisible(true);
             menu.findItem(R.id.action_reschedule_card).setVisible(true);
             menu.findItem(R.id.action_reset_card_progress).setVisible(true);
-            // if Arabic reshaping is enabled, disable the Save button to avoid
-            // saving the reshaped string to the deck
-            if (mPrefFixArabic) {
-                menu.findItem(R.id.action_save).setEnabled(false);
-            }
         }
         if (mEditFields != null) {
             for (int i = 0; i < mEditFields.size(); i++) {
@@ -1264,11 +1254,7 @@ public class NoteEditor extends AnkiActivity {
     private void initFieldEditText(FieldEditText editText, final int index, String[] values, Typeface customTypeface, boolean enabled) {
         String name = values[0];
         String content = values[1];
-        if (mPrefFixArabic) {
-            content = ArabicUtilities.reshapeSentence(content);
-        }
         editText.init(index, name, content);
-
         if (customTypeface != null) {
             editText.setTypeface(customTypeface);
         }

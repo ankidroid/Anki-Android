@@ -18,6 +18,8 @@ package com.ichi2.utils;
 
 import android.text.Html;
 
+import java.text.Normalizer;
+
 /**
  * Static helper containing functions to deal with HTML text.
  */
@@ -37,6 +39,21 @@ public class HtmlUtil {
      */
     public static String unescape(String htmlText) {
         return Html.fromHtml(htmlText).toString();
+    }
+
+
+    /*
+     *  Return the input string in the Unicode normalized form. This helps with text comparisons, for example a ü
+     *  stored as u plus the dots but typed as a single character compare as the same.
+     *
+     * @param txt Text to be normalized
+     * @return The input text in its NFC normalized form form.
+    */
+    public static String nfcNormalized(String txt) {
+        if (!Normalizer.isNormalized(txt, Normalizer.Form.NFC)) {
+            return Normalizer.normalize(txt, Normalizer.Form.NFC);
+        }
+        return txt;
     }
 
 }

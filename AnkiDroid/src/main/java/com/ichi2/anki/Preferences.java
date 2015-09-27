@@ -575,12 +575,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             CheckBoxPreference inputWorkaround = (CheckBoxPreference) screen.findPreference("inputWorkaround");
             CheckBoxPreference longclickWorkaround = (CheckBoxPreference) screen.findPreference("textSelectionLongclickWorkaround");
             CheckBoxPreference fixHebrewText = (CheckBoxPreference) screen.findPreference("fixHebrewText");
-            CheckBoxPreference fixArabicText = (CheckBoxPreference) screen.findPreference("fixArabicText");
             CheckBoxPreference safeDisplayMode = (CheckBoxPreference) screen.findPreference("safeDisplay");
             CompatHelper.removeHiddenPreferences(this.getApplicationContext());
-            if (CompatHelper.getSdkVersion() >= 9) {
-                workarounds.removePreference(fixArabicText);
-            }
             if (CompatHelper.isHoneycomb()) {
                 workarounds.removePreference(longclickWorkaround);
             }

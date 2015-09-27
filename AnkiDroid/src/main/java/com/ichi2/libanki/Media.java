@@ -26,9 +26,8 @@ import android.util.Pair;
 
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
-import com.ichi2.anki.exception.APIVersionException;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.template.Template;
+import com.ichi2.utils.HtmlUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -219,7 +218,7 @@ public class Media {
      * In AnkiDroid, adding a media file will not only copy it to the media directory, but will also insert an entry
      * into the media database marking it as a new addition.
      */
-    public String addFile(File ofile) throws IOException, APIVersionException {
+    public String addFile(File ofile) throws IOException {
         String fname = writeData(ofile);
         markFileAdd(fname);
         return fname;
@@ -232,11 +231,11 @@ public class Media {
      * Unlike the python version of this method, we don't read the file into memory as a string. All our operations are
      * done on streams opened on the file, so there is no second parameter for the string object here.
      */
-    private String writeData(File ofile) throws IOException, APIVersionException {
+    private String writeData(File ofile) throws IOException {
         // get the file name
         String fname = ofile.getName();
         // make sure we write it in NFC form and return an NFC-encoded reference
-        fname = CompatHelper.getCompat().nfcNormalized(fname);
+        fname = HtmlUtil.nfcNormalized(fname);
         // remove any dangerous characters
         String base = stripIllegal(fname);
         String root = Utils.removeExtension(base);
@@ -410,12 +409,12 @@ public class Media {
      *
      * @return A list containing three lists of files (missingFiles, unusedFiles, invalidFiles)
      */
-    public List<List<String>> check() throws APIVersionException {
+    public List<List<String>> check() {
         return check(null);
     }
 
 
-    private List<List<String>> check(File[] local) throws APIVersionException {
+    private List<List<String>> check(File[] local) {
         File mdir = new File(dir());
         // gather all media references in NFC form
         Set<String> allRefs = new HashSet<String>();
@@ -430,7 +429,7 @@ public class Media {
                 // check the refs are in NFC
                 for (String f : noteRefs) {
                     // if they're not, we'll need to fix them first
-                    if (!f.equals(CompatHelper.getCompat().nfcNormalized(f))) {
+                    if (!f.equals(HtmlUtil.nfcNormalized(f))) {
                         _normalizeNoteRefs(nid);
                         noteRefs = filesInStr(mid, flds);
                         break;
@@ -464,7 +463,7 @@ public class Media {
                 // leading _ says to ignore file
                 continue;
             }
-            File nfcFile = new File(dir(), CompatHelper.getCompat().nfcNormalized(file.getName()));
+            File nfcFile = new File(dir(), HtmlUtil.nfcNormalized(file.getName()));
             // we enforce NFC fs encoding
             if (local == null) {
                 if (!file.getName().equals(nfcFile.getName())) {
@@ -505,12 +504,12 @@ public class Media {
     }
 
 
-    private void _normalizeNoteRefs(long nid) throws APIVersionException {
+    private void _normalizeNoteRefs(long nid) {
         Note note = mCol.getNote(nid);
         String[] flds = note.getFields();
         for (int c = 0; c < flds.length; c++) {
             String fld = flds[c];
-            String nfc = CompatHelper.getCompat().nfcNormalized(fld);
+            String nfc = HtmlUtil.nfcNormalized(fld);
             if (!nfc.equals(fld)) {
                 note.setField(c, nfc);
             }
@@ -553,7 +552,7 @@ public class Media {
     /**
      * Scan the media folder if it's changed, and note any changes.
      */
-    public void findChanges() throws APIVersionException {
+    public void findChanges() {
         findChanges(false);
     }
 
@@ -562,7 +561,7 @@ public class Media {
      * @param force Unconditionally scan the media folder for changes (i.e., ignore differences in recorded and current
      *            directory mod times). Use this when rebuilding the media database.
      */
-    public void findChanges(boolean force) throws APIVersionException {
+    public void findChanges(boolean force) {
         if (force || _changed() != null) {
             _logChanges();
         }
@@ -609,7 +608,7 @@ public class Media {
     }
 
 
-    private void _logChanges() throws APIVersionException  {
+    private void _logChanges()  {
         Pair<List<String>, List<String>> result = _changes();
         List<String> added = result.first;
         List<String> removed = result.second;
@@ -629,7 +628,7 @@ public class Media {
     }
 
 
-    private Pair<List<String>, List<String>> _changes() throws APIVersionException  {
+    private Pair<List<String>, List<String>> _changes() {
         Map<String, Object[]> cache = new HashMap<String, Object[]>();
         Cursor cur = null;
         try {
@@ -674,7 +673,7 @@ public class Media {
                 continue;
             }
             // check encoding
-            String normf = CompatHelper.getCompat().nfcNormalized(fname);
+            String normf = HtmlUtil.nfcNormalized(fname);
             if (!fname.equals(normf)) {
                 // wrong filename encoding which will cause sync errors
                 File nf = new File(dir(), normf);
@@ -800,7 +799,7 @@ public class Media {
      * and mark it as removed in the database. (This behaviour differs from the desktop client).
      * <p>
      */
-    public Pair<File, List<String>> mediaChangesZip() throws APIVersionException {
+    public Pair<File, List<String>> mediaChangesZip() {
         File f = new File(mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncToServer.zip"));
         Cursor cur = null;
         try {
@@ -822,7 +821,7 @@ public class Media {
                 String fname = cur.getString(0);
                 String csum = cur.getString(1);
                 fnames.add(fname);
-                String normname = CompatHelper.getCompat().nfcNormalized(fname);
+                String normname = HtmlUtil.nfcNormalized(fname);
 
                 if (!TextUtils.isEmpty(csum)) {
                     try {
@@ -877,7 +876,7 @@ public class Media {
      *
      * This method closes the file before it returns.
      */
-    public int addFilesFromZip(ZipFile z) throws APIVersionException, IOException {
+    public int addFilesFromZip(ZipFile z) throws IOException {
         try {
             List<Object[]> media = new ArrayList<Object[]>();
             // get meta info first
@@ -891,7 +890,7 @@ public class Media {
                 } else {
                     String name = meta.getString(i.getName());
                     // normalize name for platform
-                    name = CompatHelper.getCompat().nfcNormalized(name);
+                    name = HtmlUtil.nfcNormalized(name);
                     // save file
                     String destPath = dir().concat(File.separator).concat(name);
                     Utils.writeToFile(z.getInputStream(i), destPath);

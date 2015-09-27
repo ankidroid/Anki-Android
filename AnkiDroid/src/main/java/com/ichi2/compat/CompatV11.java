@@ -15,11 +15,7 @@ import timber.log.Timber;
 
 /** Implementation of {@link Compat} for SDK level 11 (Honeycomb) */
 @TargetApi(11)
-public class CompatV11 extends CompatV9 implements Compat {
-    @Override
-    public void setAlpha(View view, float alpha) {
-        view.setAlpha(alpha);
-    }
+public class CompatV11 extends CompatV10 implements Compat {
 
     /**
      * Restart the activity and discard old backstack, creating it new from the heirarchy in the manifest
