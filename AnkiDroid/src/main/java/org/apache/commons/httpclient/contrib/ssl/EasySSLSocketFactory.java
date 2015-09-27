@@ -1,11 +1,11 @@
 
 package org.apache.commons.httpclient.contrib.ssl;
 
-import org.apache.http.conn.ConnectTimeoutException;
-import org.apache.http.conn.scheme.LayeredSocketFactory;
-import org.apache.http.conn.scheme.SocketFactory;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
+import cz.msebera.android.httpclient.conn.ConnectTimeoutException;
+import cz.msebera.android.httpclient.conn.scheme.LayeredSocketFactory;
+import cz.msebera.android.httpclient.conn.scheme.SocketFactory;
+import cz.msebera.android.httpclient.params.HttpConnectionParams;
+import cz.msebera.android.httpclient.params.HttpParams;
 
 import java.io.IOException;
 import java.net.InetAddress;
