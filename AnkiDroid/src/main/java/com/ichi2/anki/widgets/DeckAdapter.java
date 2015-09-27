@@ -296,4 +296,12 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     public int getDue() {
         return mNew + mLrn + mRev;
     }
+
+    public boolean hasCards(long did) {
+        if (mCol.cardCount(new long[]{did}) > 0) {
+            return true;
+        }
+        int i = findDeckPosition(did);
+        return mDeckList.get(i).children.size() > 0;
+    }
 }
