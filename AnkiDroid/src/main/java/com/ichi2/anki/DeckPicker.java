@@ -1641,7 +1641,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void handleDeckSelection(long did) {
-        if (getCol().cardCount(new long[]{did}) > 0) {
+        if (mDeckListAdapter.hasCards(did)) {
             // Select the deck and open studyoptions if the deck isn't empty
             getCol().getDecks().select(did);
             mFocusedDeck = did;
