@@ -58,6 +58,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
+import com.ichi2.anki.dialogs.CustomStudyDialog;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
@@ -90,7 +91,6 @@ import com.ichi2.widget.WidgetStatus;
 import net.i2p.android.ext.floatingactionbutton.FloatingActionButton;
 import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -106,7 +106,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, DatabaseErrorDialog.DatabaseErrorDialogListener,
         SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
         MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener,
-        ActivityCompat.OnRequestPermissionsResultCallback {
+        ActivityCompat.OnRequestPermissionsResultCallback, CustomStudyDialog.CustomStudyListener {
 
     private String mImportPath;
 
@@ -456,11 +456,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     @Override
+    public boolean onPrepareOptionsMenu (Menu menu) {
+        // Enable / disable the unbury option
+        menu.findItem(R.id.action_unbury).setVisible(getCol().getSched().haveBuried());
+        return true;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.deck_picker, menu);
         boolean sdCardAvailable = AnkiDroidApp.isSdCardMounted();
         menu.findItem(R.id.action_sync).setEnabled(sdCardAvailable);
-        menu.findItem(R.id.action_new_deck).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_new_filtered_deck).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_database).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
@@ -484,41 +490,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             case R.id.action_sync:
                 Timber.i("DeckPicker:: Sync button pressed");
                 sync();
-                return true;
-
-            case R.id.action_add_note_from_deck_picker:
-                Timber.i("DeckPicker:: Add note button pressed");
-                addNote();
-                return true;
-
-            case R.id.action_shared_decks:
-                Timber.i("DeckPicker:: Get shared deck button pressed");
-                if (colIsOpen()) {
-                    addSharedDeck();
-                }
-                return true;
-
-            case R.id.action_new_deck:
-                Timber.i("DeckPicker:: Add deck button pressed");
-                mDialogEditText = new EditText(DeckPicker.this);
-                mDialogEditText.setSingleLine(true);
-                // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
-                new MaterialDialog.Builder(DeckPicker.this)
-                        .title(R.string.new_deck)
-                        .positiveText(R.string.create)
-                        .customView(mDialogEditText, true)
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                String deckName = mDialogEditText.getText().toString()
-                                        .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
-                                Timber.i("DeckPicker:: Creating new deck...");
-                                getCol().getDecks().id(deckName, true);
-                                updateDeckList();
-                            }
-                        })
-                        .negativeText(R.string.dialog_cancel)
-                        .show();
                 return true;
 
             case R.id.action_import:
@@ -619,6 +590,42 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (colIsOpen() && mImportPath != null) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT, mImportAddListener, new TaskData(mImportPath, true));
                 mImportPath = null;
+            }
+        } else if (requestCode == REQUEST_REVIEW && resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
+            // Show a message when reviewing has finished
+            int[] counts = getCol().getSched().counts();
+            if ((counts[0]+counts[1]+counts[2])>0) {
+                // If no more cards getting returned while counts > 0 then show a no cards left to study message
+                showSimpleSnackbar(R.string.studyoptions_no_cards_due, false);
+            } else {
+                // Otherwise show standard congratulations message
+                showSnackbar(R.string.studyoptions_congrats_finished, false, R.string.undo, new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, new DeckTask.TaskListener() {
+                            @Override
+                            public void onPreExecute() {
+                                showProgressBar();
+                            }
+
+                            @Override
+                            public void onPostExecute(TaskData result) {
+                                hideProgressBar();
+                                openReviewer();
+                            }
+
+                            @Override
+                            public void onProgressUpdate(TaskData... values) {
+
+                            }
+
+                            @Override
+                            public void onCancelled() {
+                                hideProgressBar();
+                            }
+                        });
+                    }
+                }, findViewById(R.id.root_layout));
             }
         }
     }
@@ -1641,19 +1648,45 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void handleDeckSelection(long did) {
-        if (mDeckListAdapter.hasCards(did)) {
-            // Select the deck and open studyoptions if the deck isn't empty
-            getCol().getDecks().select(did);
-            mFocusedDeck = did;
+        // Select the deck
+        getCol().getDecks().select(did);
+        mFocusedDeck = did;
+        // Get some info about the deck to handle special cases
+        int pos = mDeckListAdapter.findDeckPosition(did);
+        Sched.DeckDueTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
+        if (getCol().getDecks().isDyn(did) || mFragmented) {
+            // Go to StudyOptions screen when using filtered decks so that it's clearer to the user that it's different
             openStudyOptions(false);
-        } else {
-            // If the deck is empty then just show a snackbar saying the deck is empty, with a link to help
-            showSnackbar(R.string.studyoptions_empty, false, R.string.help, new OnClickListener() {
+        } else if (deckDueTreeNode.newCount + deckDueTreeNode.lrnCount + deckDueTreeNode.revCount > 0) {
+            // If normal deck and there are cards to study then jump straight to the reviewer
+            openReviewer();
+        } else if (getCol().getSched().newDue() || getCol().getSched().revDue()) {
+            // If there are no cards to review because of the daily study limit then give "Study more" option
+            showSnackbar(R.string.studyoptions_limit_reached, false, R.string.study_more, new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CustomStudyDialog d = CustomStudyDialog.newInstance(CustomStudyDialog.CONTEXT_MENU_LIMITS, true);
+                    showDialogFragment(d);
+                }
+            }, findViewById(R.id.root_layout));
+        } else if (deckDueTreeNode.children.size() == 0 && getCol().cardCount(new long[]{did}) == 0) {
+            // If the deck is empty and has no children then show a message saying it's empty
+            showSnackbar(R.string.empty_deck, false, R.string.help, new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(getResources()
                             .getString(R.string.link_manual_getting_started)));
                     startActivityWithoutAnimation(helpIntent);
+                }
+            }, findViewById(R.id.root_layout));
+        } else {
+            // Otherwise say there are no cards scheduled to study, and give option to do custom study
+            showSnackbar(R.string.studyoptions_empty_schedule, false, R.string.custom_study, new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CustomStudyDialog d = CustomStudyDialog.newInstance(
+                            CustomStudyDialog.CONTEXT_MENU_EMPTY_SCHEDULE, true);
+                    showDialogFragment(d);
                 }
             }, findViewById(R.id.root_layout));
         }
@@ -1917,8 +1950,23 @@ public class DeckPicker extends NavigationDrawerActivity implements
         updateDeckList();
     }
 
+
+    private void openReviewer() {
+        Intent reviewer = new Intent(this, Reviewer.class);
+        startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, ActivityTransitionAnimation.LEFT);
+        getCol().startTimebox();
+    }
+
     @Override
-    public void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched) {
-        getFragment().createFilteredDeck(delays, terms, resched);
+    public void onCreateCustomStudySession() {
+        openStudyOptions(false);
+    }
+
+    @Override
+    public void onExtendStudyLimits() {
+        if (mFragmented) {
+            getFragment().refreshInterface(true);
+        }
+        updateDeckList();
     }
 }

@@ -19,13 +19,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -43,22 +41,17 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.dialogs.CustomStudyDialog;
-import com.ichi2.anki.dialogs.TagsDialog;
-import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.stats.ChartView;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledProgressDialog;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -71,7 +64,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
      * Available options performed by other activities
      */
     public static final int PREFERENCES_UPDATE = 0;
-    private static final int REQUEST_REVIEW = 1;
     private static final int ADD_NOTE = 2;
     private static final int BROWSE_CARDS = 3;
     private static final int STATISTICS = 4;
@@ -117,7 +109,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     private TextView mTextCongratsMessage;
     private View mCongratsLayout;
     private ChartView mChartView;
-    private String mSearchTerms;
 
     // Flag to indicate if the fragment should load the deck options immediately after it loads
     private boolean mLoadWithDeckOptions;
@@ -131,8 +122,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
 
     public interface StudyOptionsListener {
-        public void onRequireDeckListUpdate();
-        public void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched);
+        void onRequireDeckListUpdate();
     }
 
     @Override
@@ -297,7 +287,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
     private void openReviewer() {
         Intent reviewer = new Intent(getActivity(), Reviewer.class);
-        startActivityForResult(reviewer, REQUEST_REVIEW);
+        startActivityForResult(reviewer, AnkiActivity.REQUEST_REVIEW);
         animateLeft();
         getCol().startTimebox();
     }
@@ -366,134 +356,11 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
 
     /**
-     * Special method to show the context menu for the custom study options
-     * TODO: Turn this into a DialogFragment
+     * Show the context menu for the custom study options
      */
     private void showCustomStudyContextMenu() {
-        Resources res = getResources();
-        MaterialDialog dialog = new MaterialDialog.Builder(this.getActivity())
-                .title(res.getString(R.string.custom_study))
-                .cancelable(true)
-                .items(res.getStringArray(R.array.custom_study_options_labels))
-                .itemsCallback(new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog materialDialog, View view, int which,
-                                            CharSequence charSequence) {
-                        DialogFragment dialogFragment;
-                        if (which == CustomStudyDialog.CUSTOM_STUDY_TAGS) {
-                            /*
-                             * This is a special Dialog for CUSTOM STUDY, where instead of only collecting a
-                             * number, it is necessary to collect a list of tags. This case handles the creation
-                             * of that Dialog.
-                             */
-                            dialogFragment = com.ichi2.anki.dialogs.TagsDialog.newInstance(
-                                    TagsDialog.TYPE_CUSTOM_STUDY_TAGS, new ArrayList<String>(),
-                                    new ArrayList<String>(getCol().getTags().all()));
-
-                            ((TagsDialog) dialogFragment).setTagsDialogListener(new TagsDialogListener() {
-                                @Override
-                                public void onPositive(List<String> selectedTags, int option) {
-                                    /*
-                                     * Here's the method that gathers the final selection of tags, type of cards and generates the search
-                                     * screen for the custom study deck.
-                                     */
-                                    StringBuilder sb = new StringBuilder();
-                                    switch (option) {
-                                        case 1:
-                                            sb.append("is:new ");
-                                            break;
-                                        case 2:
-                                            sb.append("is:due ");
-                                            break;
-                                        default:
-                                            // Logging here might be appropriate : )
-                                            break;
-                                    }
-                                    List<String> arr = new ArrayList<>();
-                                    if (selectedTags.size() > 0) {
-                                        for (String tag : selectedTags) {
-                                            arr.add(String.format("tag:'%s'", tag));
-                                        }
-                                        sb.append("(" + TextUtils.join(" or ", arr) + ")");
-                                    }
-                                    mSearchTerms = sb.toString();
-                                    createFilteredDeck(new JSONArray(), new Object[]{mSearchTerms, Consts.DYN_MAX_SIZE,
-                                            Consts.DYN_RANDOM}, false);
-                                }
-                            });
-                        } else {
-                            // Show CustomStudyDialog for all options other than the tags dialog
-                            dialogFragment = CustomStudyDialog.newInstance(which);
-                            // If we increase limits, refresh the interface to reflect the new counts
-                            ((CustomStudyDialog) dialogFragment).setCustomStudyDialogListener(
-                                    new CustomStudyDialog.CustomStudyDialogListener() {
-                                        @Override
-                                        public void onPositive(int option) {
-                                            if (option == CustomStudyDialog.CUSTOM_STUDY_NEW ||
-                                                    option == CustomStudyDialog.CUSTOM_STUDY_REV) {
-                                                refreshInterfaceAndDecklist(true);
-                                            }
-                                        }
-                                    });
-                        }
-                        // Show the DialogFragment via Activity
-                        ((AnkiActivity) getActivity()).showDialogFragment(dialogFragment);
-                    }
-                })
-                .build();
-        dialog.setOwnerActivity(getActivity());
-        dialog.show();
-    }
-
-    public void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched) {
-        JSONObject dyn;
-        if (colOpen()) {
-            Collection col = getCol();
-            try {
-                String deckName = col.getDecks().current().getString("name");
-                String customStudyDeck = getResources().getString(R.string.custom_study_deck_name);
-                JSONObject cur = col.getDecks().byName(customStudyDeck);
-                if (cur != null) {
-                    if (cur.getInt("dyn") != 1) {
-                        new MaterialDialog.Builder(getActivity())
-                                .content(R.string.custom_study_deck_exists)
-                                .negativeText(R.string.dialog_cancel)
-                                .build().show();
-                        return;
-                    } else {
-                        // safe to empty
-                        col.getSched().emptyDyn(cur.getLong("id"));
-                        // reuse; don't delete as it may have children
-                        dyn = cur;
-                        col.getDecks().select(cur.getLong("id"));
-                    }
-                } else {
-                    long did = col.getDecks().newDyn(customStudyDeck);
-                    dyn = col.getDecks().get(did);
-                }
-                // and then set various options
-                if (delays.length() > 0) {
-                    dyn.put("delays", delays);
-                } else {
-                    dyn.put("delays", JSONObject.NULL);
-                }
-                JSONArray ar = dyn.getJSONArray("terms");
-                ar.getJSONArray(0).put(0,
-                        new StringBuilder("deck:\"").append(deckName).append("\" ").append(terms[0]).toString());
-                ar.getJSONArray(0).put(1, terms[1]);
-                ar.getJSONArray(0).put(2, terms[2]);
-                dyn.put("resched", resched);
-
-
-                // Initial rebuild
-                mProgressDialog = StyledProgressDialog.show(getActivity(), "",
-                        getResources().getString(R.string.rebuild_custom_study_deck), false);
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, getDeckTaskListener(true),
-                        new DeckTask.TaskData(mFragmented));
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        CustomStudyDialog d = CustomStudyDialog.newInstance(CustomStudyDialog.CONTEXT_MENU_STANDARD);
+        ((AnkiActivity)getActivity()).showDialogFragment(d);
     }
 
 
@@ -601,7 +468,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 DeckTask.waitToFinish();
                 refreshInterface(true);
             }
-        } else if (requestCode == REQUEST_REVIEW) {
+        } else if (requestCode == AnkiActivity.REQUEST_REVIEW) {
             if (resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
                 // If no more cards getting returned while counts > 0 then show a toast
                 int[] counts = getCol().getSched().counts();
@@ -654,16 +521,10 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
      *                      also refresh the deck list.
      */
     protected void refreshInterface(boolean resetSched, boolean resetDecklist) {
-        // Exit if collection not open
-        if (!colOpen()) {
-            Timber.e("StudyOptionsFragment.refreshInterface failed due to Collection being closed");
-            return;
-        }
         Timber.d("Refreshing StudyOptionsFragment");
         // Load the deck counts for the deck from Collection asynchronously
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_VALUES_FROM_DECK,
-                getDeckTaskListener(resetDecklist),
-                new DeckTask.TaskData(new Object[]{resetSched, mChartView != null}));
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_VALUES_FROM_DECK, getDeckTaskListener(resetDecklist),
+                new DeckTask.TaskData(new Object[]{resetSched}));
     }
 
 
@@ -737,11 +598,11 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                         openFilteredDeckOptions(mLoadWithDeckOptions);
                         return;
                     }
-
                     // Switch between the empty view, the ordinary view, and the "congratulations" view
-                    if (totalCards == 0) {
+                    boolean isDynamic = deck.optInt("dyn", 0) != 0;
+                    if (totalCards == 0 && !isDynamic) {
                         mCurrentContentView = CONTENT_EMPTY;
-                        mDeckInfoLayout.setVisibility(View.GONE);
+                        mDeckInfoLayout.setVisibility(View.VISIBLE);
                         mCongratsLayout.setVisibility(View.VISIBLE);
                         mTextCongratsMessage.setText(R.string.studyoptions_empty);
                         mButtonStart.setVisibility(View.GONE);
@@ -750,7 +611,9 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                         }
                     } else if (newCards + lrnCards + revCards == 0) {
                         mCurrentContentView = CONTENT_CONGRATS;
-                        mDeckInfoLayout.setVisibility(View.GONE);
+                        if (!isDynamic) {
+                            mDeckInfoLayout.setVisibility(View.GONE);
+                        }
                         mCongratsLayout.setVisibility(View.VISIBLE);
                         mTextCongratsMessage.setText(getCol().getSched().finishedMsg(getActivity()));
                         mButtonStart.setVisibility(View.GONE);
@@ -763,14 +626,10 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
                     // Set deck description
                     String desc;
-                    try {
-                        if (deck.getInt("dyn") == 0) {
-                            desc = getCol().getDecks().getActualDescription();
-                        } else {
-                            desc = getResources().getString(R.string.dyn_deck_desc);
-                        }
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                    if (isDynamic) {
+                        desc = getResources().getString(R.string.dyn_deck_desc);
+                    } else {
+                        desc = getCol().getDecks().getActualDescription();
                     }
                     if (desc.length() > 0) {
                         mTextDeckDescription.setText(Html.fromHtml(desc));

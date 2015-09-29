@@ -24,7 +24,7 @@
 
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
+    android:gravity="left"
     android:orientation="vertical" >
 
     <TextView
@@ -38,35 +38,29 @@
         android:text=""
         android:textSize="16sp" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/custom_study_details_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginBottom="16dip"
+        android:layout_marginLeft="4dip"
+        android:layout_weight="4"
+        android:gravity="left|center"
+        android:lines="2"
+        android:text=""
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/custom_study_details_edittext2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/custom_study_details_text2"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginBottom="16dip"
-            android:layout_marginLeft="4dip"
-            android:layout_weight="4"
-            android:gravity="left|center"
-            android:lines="2"
-            android:text=""
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/custom_study_details_edittext2"
-            android:layout_width="0dip"
-            android:layout_height="38dip"
-            android:layout_marginBottom="16dip"
-            android:layout_marginRight="4dip"
-            android:layout_weight="1"
-            android:gravity="bottom"
-            android:inputType="number"
-            android:text="1"
-            tools:ignore="HardcodedText"/>
-    </LinearLayout>
-
+        android:layout_marginBottom="16dip"
+        android:layout_marginLeft="4dip"
+        android:layout_marginRight="4dip"
+        android:layout_weight="1"
+        android:gravity="left|bottom"
+        android:inputType="number"
+        android:text="1"
+        tools:ignore="HardcodedText"/>
 </LinearLayout>

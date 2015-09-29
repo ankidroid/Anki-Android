@@ -25,6 +25,7 @@ import android.view.View;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
+import com.ichi2.anki.dialogs.CustomStudyDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
@@ -32,7 +33,8 @@ import org.json.JSONArray;
 
 import timber.log.Timber;
 
-public class StudyOptionsActivity extends NavigationDrawerActivity implements StudyOptionsListener {
+public class StudyOptionsActivity extends NavigationDrawerActivity implements StudyOptionsListener,
+        CustomStudyDialog.CustomStudyListener {
 
 
     @Override
@@ -149,9 +151,18 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         getCurrentFragment().refreshInterface();
     }
 
+    /**
+     * Callback methods from CustomStudyDialog
+     */
+    @Override
+    public void onCreateCustomStudySession() {
+        // Sched already reset by DeckTask in CustomStudyDialog
+        getCurrentFragment().refreshInterface();
+    }
 
     @Override
-    public void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched) {
-        getCurrentFragment().createFilteredDeck(delays, terms, resched);
+    public void onExtendStudyLimits() {
+        // Sched needs to be reset so provide true argument
+        getCurrentFragment().refreshInterface(true);
     }
 }

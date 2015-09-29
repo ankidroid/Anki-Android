@@ -733,10 +733,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             double progressMature = ((double) sched.matureCount()) / ((double) totalCount);
             double progressAll = 1 - (((double) (totalNewCount + counts[1])) / ((double) totalCount));
             double[][] serieslist = null;
-            // only calculate stats if necessary
-            if ((Boolean) obj[1]) {
-                serieslist = Stats.getSmallDueStats(col);
-            }
+            serieslist = Stats.getSmallDueStats(col);
             return new TaskData(new Object[] { counts[0], counts[1], counts[2], totalNewCount, totalCount,
                     progressMature, progressAll, sched.eta(counts), serieslist });
         } catch (RuntimeException e) {
@@ -758,18 +755,16 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     private TaskData doInBackgroundRebuildCram(TaskData... params) {
         Timber.d("doInBackgroundRebuildCram");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        boolean fragmented = params[0].getBoolean();
         col.getSched().rebuildDyn(col.getDecks().selected());
-        return doInBackgroundUpdateValuesFromDeck(new DeckTask.TaskData(new Object[]{true, fragmented}));
+        return doInBackgroundUpdateValuesFromDeck(new DeckTask.TaskData(new Object[]{true}));
     }
 
 
     private TaskData doInBackgroundEmptyCram(TaskData... params) {
         Timber.d("doInBackgroundEmptyCram");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        boolean fragmented = params[0].getBoolean();
         col.getSched().emptyDyn(col.getDecks().selected());
-        return doInBackgroundUpdateValuesFromDeck(new DeckTask.TaskData(new Object[]{true, fragmented}));
+        return doInBackgroundUpdateValuesFromDeck(new DeckTask.TaskData(new Object[]{true}));
     }
 
 

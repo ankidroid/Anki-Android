@@ -169,6 +169,7 @@
                     android:id="@+id/studyoptions_congrats_layout"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
                     android:orientation="vertical">
 
                     <TextView

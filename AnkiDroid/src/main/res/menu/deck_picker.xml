@@ -2,29 +2,15 @@
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
 
     <item
-        android:id="@+id/action_add_decks"
-        android:icon="@drawable/ic_add_white_24dp"
-        android:title="@string/menu_add"
-        ankidroid:showAsAction="always"
-            android:visible="false">
-        <menu>
-            <item
-                android:id="@+id/action_add_note_from_deck_picker"
-                android:title="@string/menu_add_note"/>
-            <item
-                android:id="@+id/action_shared_decks"
-                android:title="@string/menu_get_shared_decks"/>
-            <item
-                android:id="@+id/action_new_deck"
-                android:title="@string/new_deck"/>
-        </menu>
-    </item>
-    <item
         android:id="@+id/action_sync"
-        android:enabled="false"
         android:icon="@drawable/ic_sync_white_24dp"
         android:title="@string/sync_title"
         ankidroid:showAsAction="always"/>
+    <item
+        android:id="@+id/action_unbury"
+        android:enabled="false"
+        android:title="@string/unbury"
+        ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_new_filtered_deck"
         android:enabled="false"
