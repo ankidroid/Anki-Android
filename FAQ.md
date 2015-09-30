@@ -228,7 +228,7 @@ If you prefer to use the "replay audio" action in the menu, and have the play bu
 ```
 
 # How to remove the margin when displaying images?
-You can adapt the following CSS template on AnkiDroid 2.5+
+You can adapt the [following CSS template](https://groups.google.com/d/topic/anki-android/TjakbVGJLmk/discussion) on AnkiDroid 2.5+
 ```css
 .card {
 font-family: 'Linux Biolinum O';
