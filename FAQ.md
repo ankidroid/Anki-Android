@@ -227,6 +227,23 @@ If you prefer to use the "replay audio" action in the menu, and have the play bu
 .replaybutton {display: none;}
 ```
 
+# How to remove the margin when displaying images?
+You can adapt the following CSS template on AnkiDroid 2.5+
+```css
+.card {
+font-family: 'Linux Biolinum O';
+font-size: 24px;
+text-align: center;
+color: #657b83;
+background-color: #fdf6e3;
+margin: 1ex 0.5em;
+}
+.card img {max-width: 100%; max-height: none;}
+.mobile .card img {max-width: 100%; max-height: none;}
+.mobile .card {margin: 0.5ex 0em;}
+.mobile #content {margin: 0.5ex 0em;}
+```
+
 # Other questions
 
 Please refer to the main [Help](http://ankidroid.org/docs/help.html) page.
