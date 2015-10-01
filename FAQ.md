@@ -175,7 +175,7 @@ Since AnkiDroid version 2.0.2, vertical center alignment has been disabled by de
 
 The recommended way to center-align your cards is to add the following code to the `.card` class in the "Styling" section of you card templates
 
-```
+```css
 .card {
   ...
   position: absolute;
@@ -197,7 +197,7 @@ Since Android 4.4 Kit-Kat, Android no longer automatically breaks up long words 
 
 You can fix this issue by adding the following to the `.card` class in the "Styling" section of you card templates:
 
-```
+```css
 .card {
  ...
  word-wrap: break-word;
@@ -209,7 +209,7 @@ You can fix this issue by adding the following to the `.card` class in the "Styl
 Some custom fonts (especially for Asian languages like Japanese) have separate font files for applying bold, etc. You can get these multiple files working using the  official "font-face" method, by using the sample below for the "Styling" section of the card template:
 
 
-```
+```css
 .card {
  ...
  font-family: NotoSansJP;
@@ -223,7 +223,7 @@ Some custom fonts (especially for Asian languages like Japanese) have separate f
 ## How to remove the audio play button from flashcards
 If you prefer to use the "replay audio" action in the menu, and have the play button hidden on the flashcards, add the following to the bottom of the "Styling" section of your card template:
 
-```
+```css
 .replaybutton {display: none;}
 ```
 
