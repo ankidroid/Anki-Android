@@ -366,8 +366,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         super.onCreate(savedInstanceState);
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
-        View mainView = getLayoutInflater().inflate(R.layout.deck_picker, null);
-        setContentView(mainView);
+        setContentView(R.layout.homescreen);
+        View mainView = findViewById(android.R.id.content);
 
         // check, if tablet layout
         View studyoptionsFrame = findViewById(R.id.studyoptions_fragment);

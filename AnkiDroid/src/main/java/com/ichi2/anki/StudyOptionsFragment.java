@@ -318,14 +318,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
 
     private void initAllContentViews() {
-        // The fragmented view contains a chart
-        if (mFragmented) {
-            mChartView = (ChartView) mStudyOptionsView.findViewById(R.id.chart_view_small_chart);
-            // Since the chart takes a while to build, we start with it hidden and fade it into
-            // view later once it has finished building.
-            mChartView.setVisibility(View.INVISIBLE);
-        }
-
         mDeckInfoLayout = mStudyOptionsView.findViewById(R.id.studyoptions_deckinformation);
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
         mTextDeckDescription = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_description);
@@ -344,8 +336,8 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             Button emptyBut = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_empty_cram);
             emptyBut.setOnClickListener(mButtonClickListener);
             // Enable the dynamic deck buttons and disable the normal ones
-            ((LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_cram_buttons)).setVisibility(View.VISIBLE);
-            ((LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_regular_buttons)).setVisibility(View.GONE);
+            mStudyOptionsView.findViewById(R.id.studyoptions_cram_buttons).setVisibility(View.VISIBLE);
+            mStudyOptionsView.findViewById(R.id.studyoptions_regular_buttons).setVisibility(View.GONE);
             // Dynamic decks have their own unbury button to keep a reference to
             mButtonUnbury = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_unbury_cram);
         } else {
