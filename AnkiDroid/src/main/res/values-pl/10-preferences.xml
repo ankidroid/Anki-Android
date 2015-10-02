@@ -149,8 +149,6 @@
   <string name="input_workaround_summ">Obejście problemu nieaktywnych pól tekstowych HTML na niektórych urządzeniach.</string>
   <string name="pref_keep_screen_on">Utrzymuj włączony ekran</string>
   <string name="pref_keep_screen_on_summ">Zablokuj wyłącznik czasowy ekranu</string>
-  <string name="fix_arabic_text">Popraw wyświetlanie arabskiego</string>
-  <string name="fix_arabic_text_summ">Częściowe obejście problemu z ograniczoną obsługą arabskiego przez Androida. Kiedy jest włączone, niemożliwa jest edycja kart.</string>
   <string name="convert_fen_text">Obsługa notacji szachowej</string>
   <string name="filter_google_translate">Z Google Translate</string>
   <string name="filter_google_translate_summ">Po prostu zapisz słowo źródłowe i tłumaczenie</string>

@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Kopējais kāršu skaits:</string>
   <string name="studyoptions_eta">Paredzētais laiks (min):</string>
   <string name="studyoptions_start">Study</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="zero">%1$d cards due (%2$s)</item>
     <item quantity="one">%1$d card due (%2$s)</item>
@@ -116,6 +117,10 @@
   <string name="empty_cram_deck">Piepildītais deks iztukšojas.\nLūdzu uzgaidiet...</string>
   <string name="custom_study_deck_name">Pielāgota pētījuma sesija</string>
   <string name="custom_study_deck_exists">Lūdzu vispirms pārsauciet eksistējošo Pielāgoto pētījuma Deku.</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Apsveicu! Patreiz visu esat pabeidzis.</string>
   <string name="studyoptions_congrats_more_rev">Šodienas vērtēšanas limits ir sasniegts, bet vēl ir kārtis kas ir jāizvērtē. Optimālai atmiņai apsveriet iespēju palielināt dienas limitu (iestatījumos).</string>
   <string name="studyoptions_congrats_more_new">Ir pieejamas vairākas jaunas kārtis, bet dienas limits ir sasniegts. Jūs vara palielināt šo limitu iestatījumos, bet ņemiet vērā, ka tas palielinās Jūsu īstermiņa pārskatīšanas darba slodzi.</string>

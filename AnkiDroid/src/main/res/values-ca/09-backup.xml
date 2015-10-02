@@ -55,12 +55,12 @@
   <string name="backup_repair_deck">Repara</string>
   <string name="backup_repair_deck_progress">S\'està reparant la base de dades.\nUn moment si us plau...</string>
   <string name="backup_error">Error</string>
-  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
+  <string name="backup_invalid_file_error">El fitxer backup seleccionat era invàlid</string>
   <string name="backup_restore_select_title">Seleccioneu la còpia de seguretat que voleu restaurar</string>
   <string name="backup_restore_no_backups">No hi ha còpies de seguretat disponibles d\'aquesta coŀlecció en aquest dispositiu. Si teniu més còpies a l\'ordinador, si us plau, copieu-les manualment a la carpeta d\'AnkiDroid</string>
   <string name="open_collection_failed_title">No es pot obrir la col·lecció</string>
-  <string name="open_collection_failed_message">Database couldn’t be opened. It’s either not a real Anki database or has been corrupted.\n\nTouch “options” for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
-  <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
-  <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
+  <string name="open_collection_failed_message">No s\'ha pogur obrir la base de dades. O no és una base de dades de Anki real o ha estat encorrumpuda.\n\nApreti \"Opcions\" per a diferents opcions de restaurar la base de dades, o per a més informació sobre la reparació de col·leccions encorrumpudes veieu: \n%1$s</string>
+  <string name="corrupt_db_message">La col·lecció s\'ha danyat.\n\nApreti \"Opcions\" per restaurar des d\'una còpia de seguretat, o si això no funciona, vegeu les instruccions següents per a reparar manualment la base de dades: \n%1$s</string>
+  <string name="access_collection_failed_message">S\'ha produït un error al accedir a la seva col·lecció. Això pot haver estat causat per un error inofensiu, o hi pot haver un problema amb això. \n\nProvi fent una comprovació de base de dades, o restaurar des de un backup prement el botó \"Opcions\". Si continueu veient aquest missatge, si us plau creeu un informe d\'error: \n%1$s</string>
   <string name="deck_repair_error">No ha estat possible reparar la col·lecció</string>
 </resources>

@@ -148,8 +148,6 @@
   <string name="input_workaround_summ">Abhilfe für die Fokussierungsprobleme auf HTML Eingabefeldern. Verursacht Probleme auf verschiedenen Geräten</string>
   <string name="pref_keep_screen_on">Bildschirm nicht ausschalten</string>
   <string name="pref_keep_screen_on_summ">Bildschirm-Timeout deaktivieren</string>
-  <string name="fix_arabic_text">Anzeige von Arabisch verbessern</string>
-  <string name="fix_arabic_text_summ">Partielle Lösung für begrenztet Unterstützung arabischer Schrift auf Android. Wenn dies aktiviert ist können keine Karten bearbeitet werden.</string>
   <string name="convert_fen_text">Unterstützung für Schach-Notation</string>
   <string name="filter_google_translate">Aus Google-Translate</string>
   <string name="filter_google_translate_summ">Nur das Ausgangswort und Übersetzung speichern</string>

@@ -149,8 +149,6 @@
   <string name="input_workaround_summ">Korjaus fokusointiongelmiin HTML-tekstinsyöttölaatikoissa. Aiheuttaa ongelmia useilla laitteilla.</string>
   <string name="pref_keep_screen_on">Pidä näyttö päällä</string>
   <string name="pref_keep_screen_on_summ">Poista näytön aikakatkaisu</string>
-  <string name="fix_arabic_text">Parantaa arabiankielistä näyttöä</string>
-  <string name="fix_arabic_text_summ">Osittainen korjaus joka mahdollistaa rajoitetun tuen arabiankielelle Androidissa. Korttien muokkaaminen ei ole mahdollista, kun tämä on valittu.</string>
   <string name="convert_fen_text">Tuki shakkinotaatiolle</string>
   <string name="filter_google_translate">Google Translaten mukaan</string>
   <string name="filter_google_translate_summ">Tallenna vain lähdesana ja käännös</string>

@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Totaal aantal kaarten:</string>
   <string name="studyoptions_eta">Geschatte tijd (min):</string>
   <string name="studyoptions_start">Studeer nu</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d kaart te gaan (%2$s)</item>
     <item quantity="other">%1$d kaarten te gaan (%2$s)</item>
@@ -113,6 +114,10 @@
   <string name="empty_cram_deck">Set om te stampen aan het leegmaken.\n Even geduld alstublieft...</string>
   <string name="custom_study_deck_name">Aangepaste studiesessie</string>
   <string name="custom_study_deck_exists">Gelieve eerst de bestaande aangepaste studieset te hernoemen.</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Gefeliciteerd! Je bent nu klaar.</string>
   <string name="studyoptions_congrats_more_rev">Je hebt de overhoringslimiet bereikt, maar er wachten nog kaarten om overhoord te worden. Voor een optimale geheugentraining, overweeg om de dagelijkse limiet te verhogen bij instellingen.</string>
   <string name="studyoptions_congrats_more_new">Er zijn meer nieuwe kaarten beschikbaar, maar de dagelijkse limiet is bereikt. Je kunt de limiet verhogen in de instellingen, maar houd er rekening mee dat dit de werklast voor de korte termijn zal verhogen.</string>

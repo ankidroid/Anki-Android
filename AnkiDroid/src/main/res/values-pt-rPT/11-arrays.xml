@@ -81,13 +81,13 @@
     <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>Aumentar o limite de novas fichas para hoje</item>
-    <item>Aumentar o limite de revisões para hoje</item>
-    <item>Rever fichas esquecidas</item>
-    <item>Antecipar revisão</item>
-    <item>Estudar uma seleção aleatória de fichas</item>
-    <item>Pré-vizualizar fichas novas</item>
-    <item>Limitar a etiquetas específicas</item>
+    <item>@string/custom_study_increase_new_limit</item>
+    <item>@string/custom_study_increase_review_limit</item>
+    <item>@string/custom_study_review_forgotten</item>
+    <item>@string/custom_study_review_ahead</item>
+    <item>@string/custom_study_random_selection</item>
+    <item>@string/custom_study_preview_new</item>
+    <item>@string/custom_study_limit_tags</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Usar o baralho atual</item>

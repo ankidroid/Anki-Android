@@ -54,11 +54,11 @@
   <string name="initializing_tts">テキスト読み上げ機能を初期化しています...</string>
   <string name="tts_no_tts">音声なし</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroid は、PCソフトウェア <a href=\"%2$s\">Anki</a> と完全互換のフラッシュカードアプリです。AnkiDroid と Anki のどちらでも教材を作成し、ダウンロードし、学習し、AnkiWeb を介して簡単に双方を同期することができます。]]></item>
-    <item><![CDATA[AnkiDroid を改善するために、バグを <a href=\"%1$s\">こちら</a>に報告していただけると幸いです。新しい機能のアイデアも大歓迎です。<a href=\"%2$s\">Wiki</a>をご覧になった上で、<a href=\"%3$s\">フォーラム</a> でディスカッションを開始してください。]]></item>
-    <item><![CDATA[AnkiDroid は<a href=\"%1$s\">オープンソースソフトウェア<a/>ですので、誰もが<a href=\"%2$s\">貢献者</a>になることができます :-)]]></item>
-    <item><![CDATA[ソフトウェア開発の専門知識を持っていない方も、例えばAnkiDroidの<a href=\"%1$s\">翻訳を改善</a> したり、wikiを更新したり、スクリーン ショット画像を提供したり、Ankiに<a href=\"%2$s\">寄付</a> をしたり、AnkiDroidについてのブログを書いたりするなどして、このアプリの発展に貢献することができます。]]></item>
-    <item><![CDATA[AnkiDroid は、<a href="%1$s">GNU GPL v3 ライセンス</a>の下でリリースされており、ソースコードは<a href="%2$s">こちら</a>です。]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、PCソフトウェア<a href=\"%2$s\">Anki</a>と完全互換のフラッシュカードアプリです。AnkiDroidとAnkiのどちらでも教材を作成し、ダウンロードし、学習し、無料のオンラインサービスAnkiWebを介して簡単に双方を同期することができます。]]></item>
+    <item><![CDATA[AnkiDroidを改善するために、バグを<a href=\"%1$s\">こちら</a>に報告していただけると幸いです。新しい機能のアイデアも大歓迎です。<a href=\"%2$s\">Wiki</a>をご覧になった上で、<a href=\"%3$s\">フォーラム</a>でディスカッションを開始してください。]]></item>
+    <item><![CDATA[AnkiDroid は<a href=\"%1$s\">オープンソースソフトウェア<a/>ですので、誰もが<a href=\"%2$s\">貢献者</a>になることができます :-)　]]></item>
+    <item><![CDATA[ソフトウェア開発の専門知識を持っていない方も、例えばAnkiDroidの<a href=\"%1$s\">翻訳を改善</a>したり、Wikiを更新したり、スクリーンショット画像を提供したり、Ankiに<a href=\"%2$s\">寄付</a>をしたり、AnkiDroidのことをSNSに書いたりするなどして、このアプリの発展に貢献することができます。]]></item>
+    <item><![CDATA[AnkiDroidは、<a href="%1$s">GNU GPL v3 ライセンス</a>の下でリリースされており、ソースコードは<a href="%2$s">こちら</a>です。]]></item>
   </string-array>
   <string name="preview_title">プレビュー</string>
   <string name="reset_card_dialog_title">カードの進行状況をリセット</string>
@@ -114,10 +114,10 @@
   <string name="check_media_failed">メディアのチェック時にエラーが発生しました</string>
   <string name="check_media_invalid">エンコーディングが無効なファイル数: %d</string>
   <string name="check_media_unused">(1) メディア用フォルダ内に存在するが、どのカードにも使用されていないファイル: %d 個</string>
-  <string name="check_media_nohave">(2) カードに表示するよう指定されているが、メディア用フォルダー内に存在しないファイルの数: %d 個</string>
+  <string name="check_media_nohave">(2) カードに表示するよう指定されているが、メディア用フォルダ内に存在しないファイル: %d 個</string>
   <string name="check_media_no_unused_missing">使われていないファイル、不足しているファイルはありませんでした。</string>
   <string name="check_media_db_updated">メディアのデータベースが再構築されました。</string>
-  <string name="check_media_delete_unused">(1) を削除</string>
+  <string name="check_media_delete_unused">(1) のファイルを削除</string>
   <string name="check_media_deleted">削除されたファイル: %d</string>
   <string name="tags_dialog_option_all_cards">すべて</string>
   <string name="tags_dialog_option_new_cards">新規</string>

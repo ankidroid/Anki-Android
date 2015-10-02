@@ -149,8 +149,6 @@
   <string name="input_workaround_summ">راه‌حلی برای برطرف کردن مشکلات در ورودی‌های HTML. باعث ایجاد مشکلاتی در برخی دستگاه‌ها می‌شود</string>
   <string name="pref_keep_screen_on">روشن نگه‌داشتن صفحه</string>
   <string name="pref_keep_screen_on_summ">غیرفعال کردن زمان خاموش شدن صفحه نمایش</string>
-  <string name="fix_arabic_text">اصلاح نمایش عربی</string>
-  <string name="fix_arabic_text_summ">راه‌حل ناقص برای پشتیبانی محدود از نوشتار عربی در سیستم اندروید. وقتی فعال باشد امکان ویرایش و تغییر کارت‌ها وجود ندارد</string>
   <string name="convert_fen_text">پشتیبانی از ثبت حرکات شطرنج</string>
   <string name="filter_google_translate">ترجمه از گوگل</string>
   <string name="filter_google_translate_summ">اکنون کلمه اصلی و ترجمه را ذخیره کنید</string>

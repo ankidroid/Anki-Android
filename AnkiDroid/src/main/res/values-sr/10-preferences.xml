@@ -149,8 +149,6 @@
   <string name="input_workaround_summ">Решење проблема са HTML пољима уноса. Решење је проблематично на више уређаја.</string>
   <string name="pref_keep_screen_on">Држи екран укљученим</string>
   <string name="pref_keep_screen_on_summ">Онемогући спавање екрана</string>
-  <string name="fix_arabic_text">Побољшај приказ арапског</string>
-  <string name="fix_arabic_text_summ">Делимични трик за подржавање Арапски језик на Android-у. Када је укључен, није могуће уредите картице.</string>
   <string name="convert_fen_text">Подршка шаховских бележака</string>
   <string name="filter_google_translate">Из Google Преводиоца</string>
   <string name="filter_google_translate_summ">Једноставно чување изворне речи и превода</string>
@@ -161,7 +159,6 @@
   <plurals name="deck_conf_group_summ">
     <item quantity="one">%1$s\n%2$d deck uses this group</item>
     <item quantity="few">%1$s\n%2$d decks use this group</item>
-    <item quantity="many">%1$s\n%2$d decks use this group</item>
     <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">Нове картице</string>
@@ -209,7 +206,6 @@
   <plurals name="deck_conf_set_subdecks_summ">
     <item quantity="one">%s subdeck will use this group</item>
     <item quantity="few">%s subdecks will use this group</item>
-    <item quantity="many">%s subdecks will use this group</item>
     <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Задај за све групе шпилова</string>

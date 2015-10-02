@@ -35,9 +35,9 @@
 -->
 <resources>
   <string name="multimedia_editor_popup_image">이미지 추가</string>
-  <string name="multimedia_editor_popup_audio">오디오 녹음음</string>
+  <string name="multimedia_editor_popup_audio">오디오 녹음</string>
   <string name="multimedia_editor_popup_text">고급 편집기</string>
-  <string name="multimedia_editor_trans_poweredglosbe">Powered by glosbe.com</string>
+  <string name="multimedia_editor_trans_poweredglosbe">Glosbe.com 주관</string>
   <string name="multimedia_editor_trans_from">보낸 사람</string>
   <string name="multimedia_editor_trans_to">받는 사람</string>
   <string name="multimedia_editor_trans_translate">번역하기</string>
@@ -91,5 +91,5 @@
   <string name="title_activity_translation">번역</string>
   <string name="title_activity_load_pronounciation">발음</string>
   <string name="title_activity_search_image">Google 이미지 검색</string>
-  <string name="network_no_connection">No connection.</string>
+  <string name="network_no_connection">연결이 되어있지 않습니다</string>
 </resources>

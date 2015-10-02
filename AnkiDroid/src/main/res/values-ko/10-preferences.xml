@@ -149,8 +149,6 @@
   <string name="input_workaround_summ">HTML 입력 박스를 선택할 수 없는 문제와 관련된 차선책입니다. 일부 기기에서 문제를 일으킬 수 있습니다.</string>
   <string name="pref_keep_screen_on">화면 계속 유지</string>
   <string name="pref_keep_screen_on_summ">화면 시간 제한 해제</string>
-  <string name="fix_arabic_text">아랍어 디스플레이 개선</string>
-  <string name="fix_arabic_text_summ">제한적인 아랍어 지원과 관련된 차선책입니다. 활성화되면 카드를 편집할 수 없습니다.</string>
   <string name="convert_fen_text">체스 표기법 지원</string>
   <string name="filter_google_translate">구글 번역기</string>
   <string name="filter_google_translate_summ">원본 단어와 번역을 그대로 저장</string>

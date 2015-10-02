@@ -122,7 +122,6 @@
   <plurals name="stats_today_cards">
     <item quantity="one">Проучено &lt;b&gt;%1$d карте &lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt; данас.</item>
     <item quantity="few">Проучено &lt;b&gt;%1$d карата &lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt; данас.</item>
-    <item quantity="many">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
   </plurals>
 </resources>

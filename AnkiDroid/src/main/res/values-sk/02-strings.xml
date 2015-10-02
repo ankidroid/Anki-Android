@@ -77,6 +77,13 @@
     <item>Zabudnutia</item>
     <item>Opakovania</item>
   </string-array>
+  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
+  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
+  <string name="custom_study_review_forgotten">Review forgotten cards</string>
+  <string name="custom_study_review_ahead">Review ahead</string>
+  <string name="custom_study_random_selection">Study a random selection of cards</string>
+  <string name="custom_study_preview_new">Preview new cards</string>
+  <string name="custom_study_limit_tags">Limit to particular tags</string>
   <string name="cardeditor_title_add_note">Pridať poznámku</string>
   <string name="cardeditor_title_edit_card">Upraviť poznámku</string>
   <string name="discard_unsaved_changes">Close and lose current input?</string>
@@ -149,6 +156,7 @@
   <string name="upgrade_import_no_file_found">Žiaden importovateľný %1$s súbor nebol nájdený</string>
   <string name="study_options">Nastavenia balíčku</string>
   <string name="custom_study">Vlastné štúdium</string>
+  <string name="more_options">More</string>
   <string name="dyn_deck_desc">Toto je špeciálny balíček na štúdium mimo bežného plánu. Karty sa automaticky vrátia do ich pôvodných balíčkov po tom čo si ich zopakujete. Po odstránení tohto balíčka zo zoznamu balíčkov sa všetky zostávajúce karty vrátia do ich pôvodných balíčkov.</string>
   <string name="steps_error">Kroky musia byť čísla väčšie ako 0</string>
   <string name="steps_min_error">Je nutné zadať aspoň jeden krok</string>

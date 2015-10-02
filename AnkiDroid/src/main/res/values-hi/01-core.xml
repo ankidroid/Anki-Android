@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">कुल कार्ड:</string>
   <string name="studyoptions_eta">अनुमानित समय (मिनट):</string>
   <string name="studyoptions_start">Study</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
@@ -113,6 +114,10 @@
   <string name="empty_cram_deck">Emptying रटना डेक. \nPlease रुको...</string>
   <string name="custom_study_deck_name">कस्टम अध्ययन सत्र</string>
   <string name="custom_study_deck_exists">कृपया पहले मौजूदा कस्टम अध्ययन डेक का नाम बदलें।</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">बधाइयाँ! आप अभी के लिए समाप्त कर दिया है।</string>
   <string name="studyoptions_congrats_more_rev">आज की समीक्षा की सीमा तक पहुँच गया है, लेकिन वहाँ अभी भी कार्ड की समीक्षा की जा करने के लिए इंतज़ार कर रहे हैं। इष्टतम स्मृति के लिए, विकल्प में दैनिक सीमा बढ़ाने पर विचार करें।</string>
   <string name="studyoptions_congrats_more_new">वहाँ और अधिक नए कार्ड उपलब्ध हैं, लेकिन दैनिक सीमा तक पहुँच गया है। आप विकल्पों में सीमा में वृद्धि कर सकते हैं, लेकिन कि यह अपने अल्पकालिक समीक्षा काम का बोझ बढ़ जाएगा मन में भालू कृपया।</string>

@@ -81,13 +81,13 @@
     <item>Sobreprogramación relativa</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>Aumentar el límite de tarjetas nuevas para hoy</item>
-    <item>Aumentar el límite de repasos para hoy</item>
-    <item>Repasar tarjetas olvidadas</item>
-    <item>Repasar con antelación</item>
-    <item>Estudiar una selección aleatoria de tarjetas</item>
-    <item>Previsualizar tarjetas nuevas</item>
-    <item>Limitar a etiquetas concretas</item>
+    <item>@string/custom_study_increase_new_limit</item>
+    <item>@string/custom_study_increase_review_limit</item>
+    <item>@string/custom_study_review_forgotten</item>
+    <item>@string/custom_study_review_ahead</item>
+    <item>@string/custom_study_random_selection</item>
+    <item>@string/custom_study_preview_new</item>
+    <item>@string/custom_study_limit_tags</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Usar mazo actual</item>

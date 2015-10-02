@@ -81,13 +81,13 @@
     <item>Ritardo relativo</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>Aumenta il limite odierno di carte nuove</item>
-    <item>Aumenta il limite odierno di ripetizioni</item>
-    <item>Ripeti carte dimenticate</item>
-    <item>Ripeti in anticipo</item>
-    <item>Studia una selezione casuale di carte</item>
-    <item>Anteprima carte nuove</item>
-    <item>Limita ad etichette particolari</item>
+    <item>@string/custom_study_increase_new_limit</item>
+    <item>@string/custom_study_increase_review_limit</item>
+    <item>@string/custom_study_review_forgotten</item>
+    <item>@string/custom_study_review_ahead</item>
+    <item>@string/custom_study_random_selection</item>
+    <item>@string/custom_study_preview_new</item>
+    <item>@string/custom_study_limit_tags</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Utilizza il mazzo attuale</item>

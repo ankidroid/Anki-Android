@@ -77,6 +77,13 @@
     <item>Falhas</item>
     <item>Revisões</item>
   </string-array>
+  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
+  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
+  <string name="custom_study_review_forgotten">Review forgotten cards</string>
+  <string name="custom_study_review_ahead">Review ahead</string>
+  <string name="custom_study_random_selection">Study a random selection of cards</string>
+  <string name="custom_study_preview_new">Preview new cards</string>
+  <string name="custom_study_limit_tags">Limit to particular tags</string>
   <string name="cardeditor_title_add_note">Adicionar nota</string>
   <string name="cardeditor_title_edit_card">Editar nota</string>
   <string name="discard_unsaved_changes">Fechar e perder a entrada atual?</string>
@@ -132,7 +139,7 @@
   <string name="import_log_error">Importação falhada</string>
   <string name="import_log_no_apkg">Este não é um ficheiro apkg válido</string>
   <string name="import_error_not_apkg_extension">O arquivo \"%s\" não tem a extensão .apkg</string>
-  <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
+  <string name="import_error_content_provider">Não foi possível importar automaticamente o ficheiro selecionado com AnkiDroid. Por favor, consulte o manual do utilizador para saber como importar manualmente os ficheiros anki: \n%s</string>
   <string name="import_importing">A Importar fichas.\nPor favor aguarde&#8230;</string>
   <string name="export_include_schedule">Incluir agendamento</string>
   <string name="export_include_media">Incluir multimédia</string>
@@ -146,6 +153,7 @@
   <string name="upgrade_import_no_file_found">Não foi encontrado ficheiro %1$s para importar</string>
   <string name="study_options">Opções de baralho</string>
   <string name="custom_study">Estudo personalizado</string>
+  <string name="more_options">More</string>
   <string name="dyn_deck_desc">Este é um baralho especial para estudar fora do horário normal. As fichas irão automaticamente voltar para os seus baralhos originais após a revisão. Eliminando este baralho da lista de baralhos irá enviar as fichas restantes para o seu baralho original.</string>
   <string name="steps_error">Número de passos deve ser maior que 0</string>
   <string name="steps_min_error">É necessário pelo menos um passo</string>
@@ -157,28 +165,28 @@
   <string name="lookup_hint">Depois de copiar o texto, toque em qualquer ponto da ficha para mostrar o ícone de procura</string>
   <string name="add_content_showcase_text">Para começar, carregue no botão + para adicionar material de estudo novo.\n\n Toque em \'Ajuda\' para aceder ao manual.</string>
   <plurals name="time_span_seconds">
-    <item quantity="one">%s second</item>
-    <item quantity="other">%s seconds</item>
+    <item quantity="one">%s segundo</item>
+    <item quantity="other">%s segundos</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="one">%s minute</item>
-    <item quantity="other">%s minutes</item>
+    <item quantity="one">%s minuto</item>
+    <item quantity="other">%s minutos</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="one">%s hour</item>
-    <item quantity="other">%s hours</item>
+    <item quantity="one">%s hora</item>
+    <item quantity="other">%s horas</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="one">%s day</item>
-    <item quantity="other">%s days</item>
+    <item quantity="one">%s dia</item>
+    <item quantity="other">%s dias</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="one">%s month</item>
-    <item quantity="other">%s months</item>
+    <item quantity="one">%s mês</item>
+    <item quantity="other">%s meses</item>
   </plurals>
   <plurals name="time_span_years">
-    <item quantity="one">%s year</item>
-    <item quantity="other">%s years</item>
+    <item quantity="one">%s ano</item>
+    <item quantity="other">%s anos</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
 </resources>

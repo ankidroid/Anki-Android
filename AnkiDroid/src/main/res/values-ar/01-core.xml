@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">مجموع البطاقات:</string>
   <string name="studyoptions_eta">الوقت المقدر (دقيقة):</string>
   <string name="studyoptions_start">دراسة</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="zero">%1$d cards due (%2$s)</item>
     <item quantity="one">%1$d card due (%2$s)</item>
@@ -125,6 +126,10 @@
   <string name="empty_cram_deck">إفراغ حزمة المراجعة المركزة.\n يرجى الانتظار...</string>
   <string name="custom_study_deck_name">دورة دراسية مخصصة</string>
   <string name="custom_study_deck_exists">الرجاء إعادة تسمية قاعدة الدراسة المخصصة الحالية اولاً.</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">تهانينا! لقد انتهيت لهذا الوقت.</string>
   <string name="studyoptions_congrats_more_rev">لقد بلغت حد المراجعة لهذا اليوم، ولكن لا زالت هناك بطاقات تنتظر المراجعة. للذاكرة المثلى، أعد التفكير في زيادة الحد اليومي من قائمة الخيارات.</string>
   <string name="studyoptions_congrats_more_new">هناك المزيد من البطاقات الجديدة المتاحة، ولكن وصلت إلى الحد الأقصى اليومي. يمكنك زيادة الحد الأقصى في الخيارات، ولكن يرجى أن تضع في الاعتبار أن ذلك سيزيد من عبء العمل الخاص بك للمراجعة قصيرة المدى.</string>

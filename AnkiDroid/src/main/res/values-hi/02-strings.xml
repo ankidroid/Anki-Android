@@ -77,6 +77,13 @@
     <item>Lapses</item>
     <item>Reviews</item>
   </string-array>
+  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
+  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
+  <string name="custom_study_review_forgotten">Review forgotten cards</string>
+  <string name="custom_study_review_ahead">Review ahead</string>
+  <string name="custom_study_random_selection">Study a random selection of cards</string>
+  <string name="custom_study_preview_new">Preview new cards</string>
+  <string name="custom_study_limit_tags">Limit to particular tags</string>
   <string name="cardeditor_title_add_note">नोट जोड़ें</string>
   <string name="cardeditor_title_edit_card">नोट संपादित करें</string>
   <string name="discard_unsaved_changes">Close and lose current input?</string>
@@ -146,6 +153,7 @@
   <string name="upgrade_import_no_file_found">कोई आयातयोग्य %1$s फ़ाइल मिली</string>
   <string name="study_options">Deck options</string>
   <string name="custom_study">कस्टम अध्ययन</string>
+  <string name="more_options">More</string>
   <string name="dyn_deck_desc">यह सामान्य समय के बाहर अध्ययन करने के लिए एक विशेष डेक है। तुम उन की समीक्षा करने के बाद कार्ड स्वचालित रूप से उनके मूल डेक को लौट जाएगा। इस डेक डेक सूची से हटाने के सभी शेष कार्ड उनके मूल डेक करने के लिए वापस आ जाएगी।</string>
   <string name="steps_error">कदम नंबर 0 से अधिक होना चाहिए</string>
   <string name="steps_min_error">कम से कम एक कदम की आवश्यकता है</string>

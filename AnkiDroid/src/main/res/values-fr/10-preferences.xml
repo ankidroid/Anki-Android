@@ -149,8 +149,6 @@
   <string name="input_workaround_summ">Solution de contournement pour le focus HTML sur les zones de texte. Pose problèmes sur plusieurs appareils.</string>
   <string name="pref_keep_screen_on">Garder l’écran allumé</string>
   <string name="pref_keep_screen_on_summ">Désactiver l’extinction aromatique de l’écran</string>
-  <string name="fix_arabic_text">Améliorer l’affichage de l’arabe</string>
-  <string name="fix_arabic_text_summ">Solution partielle pour la prise en charge limitée de la langue arabe par la plateforme Android. Quand activé, il n’est pas possible de modifier les cartes.</string>
   <string name="convert_fen_text">Support de la notation algébrique (échecs)</string>
   <string name="filter_google_translate">Depuis Google Traduction</string>
   <string name="filter_google_translate_summ">Enregistrer uniquement le mot source et sa traduction</string>

@@ -40,12 +40,12 @@
 -->
 <resources>
   <string name="error_reporting_choice">Envia informes d\'error</string>
-  <string name="feedback_disclaimer">Disclaimer: We don’t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
+  <string name="feedback_disclaimer">Avís: Nosaltres no apleguem cap informació personal com podrien ser la seva adreça de correu electrònic, número de telèfon, o la adreça IMEI del seu telèfon mòbil. En canvi, apleguem informació sobre el seu dispositiu, model i versió del seu Android, també errors reportats i els passos que van deixar que passesin.</string>
   <string name="feedback_title">Comentaris</string>
   <string name="feedback_default_text">Si us plau, introduiu els vostres comentaris, o informació sobre la natura dels errors que esteu describint.</string>
-  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
-  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
-  <string name="feedback_copy_debug">Copy debug info</string>
-  <string name="feedback_report">Report</string>
-  <string name="feedback_report_automatically">Send error reports automatically</string>
+  <string name="feedback_auto_toast_text">AnkiDroid ha trobat un problema; un informe està sent enviat als desenvolupadors&#8230;</string>
+  <string name="feedback_manual_toast_text">AnkiDroid ha trobat un problema; un informe està sent generat&#8230;</string>
+  <string name="feedback_copy_debug">Copiar informació de depuració</string>
+  <string name="feedback_report">Reportar</string>
+  <string name="feedback_report_automatically">Enviar automàticament informes d\'error</string>
 </resources>

@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">전체 카드:</string>
   <string name="studyoptions_eta">예상 소요 시간 (분):</string>
   <string name="studyoptions_start">학습</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="other">%1$d개의 카드 예정 (%2$s)</item>
   </plurals>
@@ -110,6 +111,10 @@
   <string name="empty_cram_deck">벼락치기 덱을 비우는 중입니다.\n잠시만 기다려 주세요...</string>
   <string name="custom_study_deck_name">맞춤 학습 세션</string>
   <string name="custom_study_deck_exists">기존의 맞춤 학습 덱의 이름을 먼저 변경하세요.</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">축하합니다! 오늘의 학습을 모두 끝냈습니다.</string>
   <string name="studyoptions_congrats_more_rev">오늘의 복습량은 채웠지만 복습할 카드가 더 남아있습니다. 최적의 암기를 위해서, 학습 옵션에서 하루 복습량을 늘리는 것을 고려해보세요.</string>
   <string name="studyoptions_congrats_more_new">오늘의 학습량을 달성했어요. 하지만 새 카드가 아직 남아 있어요. 학습할 새 카드의 수를 옵션에서 늘릴 수 있지만 그러면 단기적으로 공부할 양이 증가한다는 것을 명심하세요.</string>

@@ -81,13 +81,13 @@
     <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>Augmenter pour ce jour le quota de nouveautés</item>
-    <item>Augmenter pour ce jour le quota de révisions</item>
-    <item>Réviser des cartes oubliées</item>
-    <item>Réviser en avance</item>
-    <item>Étudier des cartes au hasard</item>
-    <item>Voir en avance</item>
-    <item>Limiter à certaines étiquettes</item>
+    <item>@string/custom_study_increase_new_limit</item>
+    <item>@string/custom_study_increase_review_limit</item>
+    <item>@string/custom_study_review_forgotten</item>
+    <item>@string/custom_study_review_ahead</item>
+    <item>@string/custom_study_random_selection</item>
+    <item>@string/custom_study_preview_new</item>
+    <item>@string/custom_study_limit_tags</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Utilisez le paquet courant</item>

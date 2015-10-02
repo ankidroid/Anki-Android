@@ -47,10 +47,11 @@
   <string name="send_feedback">フィードバック</string>
   <string name="studyoptions_title">学習オプション</string>
   <string name="studyoptions_due_today">今日の課題:</string>
-  <string name="studyoptions_new_total">新規カードの枚数:</string>
-  <string name="studyoptions_total_cards">カードの総数:</string>
+  <string name="studyoptions_new_total">新規カード:</string>
+  <string name="studyoptions_total_cards">カード総数:</string>
   <string name="studyoptions_eta">推定学習時間 (分):</string>
   <string name="studyoptions_start">学習開始</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="other">現在の課題: %1$d枚 (%2$s)</item>
   </plurals>
@@ -61,7 +62,7 @@
     <item quantity="other">今日は%1$d枚のカードを%2$sで学習しています</item>
   </plurals>
   <string name="type_answer_hint">回答の入力</string>
-  <string name="show_answer">答えの表示</string>
+  <string name="show_answer">解答を表示</string>
   <string name="ease_button_again">もう一度</string>
   <string name="ease_button_hard">難しい</string>
   <string name="ease_button_good">普通</string>
@@ -87,7 +88,7 @@
   <string name="menu_suspend_card">カードを保留</string>
   <string name="menu_suspend_note">ノートを保留</string>
   <string name="menu_delete_note">ノートを削除</string>
-  <string name="delete_note_message">このカードのノートを削除してよろしいですか？　このノートから作られたカードが全て削除されます。\n%s</string>
+  <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらも全て削除されます。\n%s</string>
   <string name="menu_select">テキストを選択</string>
   <string name="menu_search">%1$sで探す</string>
   <string name="menu_mark_note">ノートをマーク</string>
@@ -110,6 +111,10 @@
   <string name="empty_cram_deck">カードを元のデッキへ戻しています...</string>
   <string name="custom_study_deck_name">カスタム学習セッション</string>
   <string name="custom_study_deck_exists">最初に、既存のカスタム学習デッキの名前を変更してください</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">おめでとうございます！ 今日の課題を達成しました</string>
   <string name="studyoptions_congrats_more_rev">予定日に達した復習カードがまだ他にも残っていますが、今日復習したカードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で上げられます。</string>
   <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、今日学習した新規カードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で上げられます。（ただしそれに伴って短期的に学習の負担が増えますのでご注意ください。）</string>

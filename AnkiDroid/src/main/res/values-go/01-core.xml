@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Allos kartos:</string>
   <string name="studyoptions_eta">Beidanda ƕeila (min):</string>
   <string name="studyoptions_start">Laiseins</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">nauh %1$d karta (%2$s)</item>
     <item quantity="other">nauh %1$d kartos (%2$s)</item>
@@ -113,6 +114,10 @@
   <string name="empty_cram_deck">Lausjand fulla wikon&#8230;</string>
   <string name="custom_study_deck_name">Anþara laiseinasaisjo</string>
   <string name="custom_study_deck_exists">Gif þata frumist niujata namo du wisandon laiseinawikon</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Is manwiþ nu.</string>
   <string name="studyoptions_congrats_more_rev">Marka bigitana himma daga, akei ju sind kartos gakiusan. Magt biaukan marka in mahtim.</string>
   <string name="studyoptions_congrats_more_new">Marka bigitana himma daga. Ni ju sind niujos kartos; magt biaukan marka in mahtim, akei þata biaukiþ þeinana sprautana waurst.</string>

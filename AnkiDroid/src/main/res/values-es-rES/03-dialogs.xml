@@ -44,11 +44,11 @@
   <string name="check_db_acknowledge">Base de datos comprobada</string>
   <string name="check_db_acknowledge_shrunk">Base de datos comprobada y optimizada.\nReducida en %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Eliminar mazo</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
+  <string name="delete_deck_default_deck">El paquete por defecto no se puede eliminar.</string>
   <string name="delete_deck_title">Eliminar mazo</string>
   <plurals name="delete_deck_message">
-    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
-    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="one">¿Borrar todas las tarjetas en %1$s? Contiene %2$d tarjeta.</item>
+    <item quantity="other">¿Borrar todas las tarjetas en %1$s? Contiene %2$d tarjetas.</item>
   </plurals>
   <string name="delete_cram_deck_message">¿Estás seguro de que deseas mandar todas las tarjetas de %s de vuelta a sus mazos originales?</string>
   <string name="no_tts_available_message">No hay idiomas de texto-a-voz disponibles</string>
@@ -56,10 +56,10 @@
   <string name="tts_no_tts">No hablar</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
-    <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
+    <item><![CDATA[Para ayudarnos a mejorar la AnkiDroid, por favor informe los errores por <a href=\"%1$s\">el issue tracker</a>; nuevas ideas son muy agradadecidas también. Encuentre las respuestas en <a href=\"%2$s\"> la wiki</a> o inicie una discusión en <a href=\"%3$s\">el foro</a>.]]></item>
+    <item><![CDATA[AnkiDroid es <a href=\"%1$s\">software libre <a/>, por lo que todo el mundo se anima a <a href=\"%2$s\"> ser un colaborador</a> :-)]]></item>
     <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, <a href=\"%2$s\">donate</a> to Anki Desktop, or blog about AnkiDroid.]]></item>
-    <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
+    <item><![CDATA[AnkiDroid está publicado bajo la <a href=\"%1$s\"> licencia de GNU-GPL v3</a> y el código fuente está disponible <a href=\"%2$s\">en GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Vista Previa</string>
   <string name="reset_card_dialog_title">Resetear el progreso de la tarjeta</string>

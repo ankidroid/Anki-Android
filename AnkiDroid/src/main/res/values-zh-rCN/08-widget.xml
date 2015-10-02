@@ -39,15 +39,15 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_minimum_cards_due_notification_ticker_title">卡牌到期</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">有%d张AnkiDroid卡牌到期需要复习</string>
-  <string name="widget_no_cards_due">没有卡牌到期</string>
-  <string name="widget_loading">载入桌面小部件中...</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">卡片到期</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">有%d张卡片需要复习</string>
+  <string name="widget_no_cards_due">没有卡片待复习</string>
+  <string name="widget_loading">载入桌面小部件中&#8230;&#8230;</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="other">%2$s中有%1$d张卡片待复习</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="other">%1$d decks</item>
+    <item quantity="other">%1$d个牌组</item>
   </plurals>
   <string name="widget_small">AnkiDroid小号插件</string>
 </resources>

@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">卡片總數:</string>
   <string name="studyoptions_eta">估計時間(分鐘):</string>
   <string name="studyoptions_start">開始學習</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
@@ -110,6 +111,10 @@
   <string name="empty_cram_deck">正在清空填鴨式牌組。\n請稍後...</string>
   <string name="custom_study_deck_name">自訂學程</string>
   <string name="custom_study_deck_exists">請先重新命名現有的「自訂學習」牌組。</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">恭喜！你完成今天的進度了。</string>
   <string name="studyoptions_congrats_more_rev">今天的複習上限已經達到了，但還有卡片尚待複習。為達最佳記憶效果，可考慮在選項中增加每日複習上限。
 </string>

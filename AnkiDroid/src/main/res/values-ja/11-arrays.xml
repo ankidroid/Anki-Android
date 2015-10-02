@@ -42,14 +42,14 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>何もしない</item>
-    <item>答えの表示</item>
+    <item>解答を表示</item>
     <item>回答ボタン１</item>
     <item>回答ボタン２</item>
     <item>回答ボタン３</item>
     <item>回答ボタン４</item>
     <item>推奨される回答（緑色）</item>
     <item>推奨される回答よりも良い回答</item>
-    <item>戻す</item>
+    <item>元に戻す</item>
     <item>ノートを編集</item>
     <item>ノートにマーク</item>
     <item>検索式</item>
@@ -81,13 +81,13 @@
     <item>期日超過が相対的に大きい順</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>今日の新規カードの上限を上げる</item>
-    <item>今日の復習カードの上限を上げる</item>
-    <item>忘却したカードを復習する</item>
-    <item>先取りして復習する</item>
-    <item>カードをランダムに学習する</item>
-    <item>新規カードをプレビューする</item>
-    <item>特定のタグによる選択</item>
+    <item>@string/custom_study_increase_new_limit</item>
+    <item>@string/custom_study_increase_review_limit</item>
+    <item>@string/custom_study_review_forgotten</item>
+    <item>@string/custom_study_review_ahead</item>
+    <item>@string/custom_study_random_selection</item>
+    <item>@string/custom_study_preview_new</item>
+    <item>@string/custom_study_limit_tags</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>選択中のデッキ</item>

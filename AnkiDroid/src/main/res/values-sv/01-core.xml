@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Totalt antal kort:</string>
   <string name="studyoptions_eta">Uppskattad tid (min):</string>
   <string name="studyoptions_start">Plugga nu</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d kort i kö (%2$s)</item>
     <item quantity="other">%1$d kort i kö (%2$s)</item>
@@ -113,6 +114,10 @@
   <string name="empty_cram_deck">Tömmer kortleken för råplugg.\nVar god vänta...</string>
   <string name="custom_study_deck_name">Anpassad studiesession</string>
   <string name="custom_study_deck_exists">Var god döp om den existerande anpassade studiekortleken först.</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Grattis! Du är klar för stunden.</string>
   <string name="studyoptions_congrats_more_rev">Dagens gräns för antal repetitioner har uppnåtts, men det finns fortfarande kort kvar att repetera. För att optimera inlärningsprocessen, överväg att öka den dagliga gränsen för antal repetitioner i inställningarna.</string>
   <string name="studyoptions_congrats_more_new">Det finns fler nya kort, men den dagliga gränsen har uppnåtts. Du kan höja gränsen i inställningarna, men kom ihåg att detta också ökar antalet repetitioner på kort sikt.</string>

@@ -39,33 +39,33 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="preference_summary_percentage">XXX%</string>
+  <string name="preference_summary_percentage">XX%</string>
   <string name="drawer_open">打开侧栏</string>
   <string name="drawer_close">关闭侧栏</string>
-  <string name="CardEditorLaterMessage">保存的信息</string>
-  <string name="CardEditorCardDeck">Card deck:</string>
-  <string name="CardEditorNoteDeck">Deck:</string>
-  <string name="CardEditorModel">Type:</string>
+  <string name="CardEditorLaterMessage">随后保存相关信息</string>
+  <string name="CardEditorCardDeck">牌组</string>
+  <string name="CardEditorNoteDeck">牌组</string>
+  <string name="CardEditorModel">笔记类型</string>
   <string name="CardEditorTags">标签：%1$s</string>
-  <string name="CardEditorCards">Cards: %1$s</string>
-  <string name="tag_name">Tag name</string>
+  <string name="CardEditorCards">卡片：%1$s</string>
+  <string name="tag_name">标签</string>
   <string name="add_new_filter_tags">添加/过滤标签</string>
-  <string name="add_tag">Add tag</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
+  <string name="add_tag">添加标签</string>
+  <string name="check_all_tags">选中/取消所有标签</string>
   <string name="filter_tags">过滤标签</string>
-  <string name="no_tags">You haven’t added any tags yet.</string>
+  <string name="no_tags">你还没有添加任何标签。</string>
   <string name="sdcard_missing_message">SD卡暂时不可用，因为当前正作为USB存储设备。拔掉USB之后即可访问你的牌组。</string>
   <string name="enable_whiteboard">启用白板</string>
   <string name="disable_whiteboard">禁用白板</string>
   <string name="show_whiteboard">显示计时器/白板</string>
   <string name="hide_whiteboard">隐藏白板</string>
-  <string name="clear_whiteboard">清除白板</string>
-  <string name="replay_audio">重播</string>
-  <string name="leech_suspend_notification">卡牌被标记为记忆难点并暂停复习</string>
-  <string name="leech_notification">卡牌被标记为记忆难点</string>
+  <string name="clear_whiteboard">清空白板</string>
+  <string name="replay_audio">重新播放</string>
+  <string name="leech_suspend_notification">卡片被标记为记忆难点并暂停复习</string>
+  <string name="leech_notification">卡片被标记为记忆难点</string>
   <string name="corrupt_font">字体文件 %s 已损坏</string>
   <string-array name="browser_column1_headings">
-    <item>Sort field</item>
+    <item>字段</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>答案</item>
@@ -77,99 +77,107 @@
     <item>失误</item>
     <item>复习</item>
   </string-array>
+  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
+  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
+  <string name="custom_study_review_forgotten">Review forgotten cards</string>
+  <string name="custom_study_review_ahead">Review ahead</string>
+  <string name="custom_study_random_selection">Study a random selection of cards</string>
+  <string name="custom_study_preview_new">Preview new cards</string>
+  <string name="custom_study_limit_tags">Limit to particular tags</string>
   <string name="cardeditor_title_add_note">增加条目注释</string>
   <string name="cardeditor_title_edit_card">编辑卡牌记录</string>
   <string name="discard_unsaved_changes">直接关闭吗？您将丢失所有已输入的内容。</string>
   <string name="factadder_saving_error">保存条目注释时出现错误</string>
   <string name="saving_facts">保存卡牌记录</string>
-  <string name="saving_model">Saving model</string>
+  <string name="saving_model">正在保存</string>
   <string name="add">添加</string>
   <string name="close">关闭</string>
   <string name="select">选择</string>
   <string name="saving_changes">正在保存设置&#8230;</string>
   <string name="reordering_cards">重新排列卡片中...</string>
-  <string name="field_remapping">%1$s (from “%2$s”)</string>
-  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+  <string name="field_remapping">%1$s （从“%2$s”）</string>
+  <string name="confirm_map_cards_to_nothing">在笔记类型中没有相应模板的卡片将被删除。如果该笔记没有生成其他的卡片，则该笔记将会丢失。你确定要继续吗？</string>
   <plurals name="timebox_reached">
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="other">在%2$s内学习了%1$d张卡片</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="other">%1$d分钟</item>
   </plurals>
   <string name="studyoptions_welcome_title">欢迎进入 AnkiDroid</string>
-  <string name="fact_adder_intent_title">AnkiDroid卡牌</string>
-  <string name="card_editor_add_card">添加卡牌记录</string>
-  <string name="card_editor_copy_card">复制卡牌</string>
+  <string name="fact_adder_intent_title">AnkiDroid卡片</string>
+  <string name="card_editor_add_card">添加笔记</string>
+  <string name="card_editor_copy_card">复制卡片</string>
   <string name="card_editor_reset_card">清空学习记录</string>
-  <string name="card_editor_reschedule_card">Reschedule card</string>
+  <string name="card_editor_reschedule_card">重设学习进度</string>
   <string name="card_editor_preview_card">预览</string>
   <string name="error_insufficient_memory">由于设备内存不足导致操作无法完成。</string>
   <string name="rename">重命名</string>
-  <string name="rename_error">牌组 %s 无法重命名</string>
-  <string name="default_conf_delete_error">不能删除默认的选项组</string>
+  <string name="rename_error">牌组“%s”无法重命名</string>
+  <string name="default_conf_delete_error">不能删除默认牌组</string>
   <plurals name="factadder_cards_added">
-    <item quantity="other">%d cards added</item>
+    <item quantity="other">已添加%d张卡片</item>
   </plurals>
   <string name="help_title">帮助</string>
   <string name="check_db">检查数据库</string>
   <string name="check_media">检查媒体</string>
-  <string name="check_db_message">检查数据库。\n请等待...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">空卡牌。在桌面客户端上运行”工具 &gt; 空卡...\"。</string>
-  <string name="unknown_type_field_warning">键入答案： 未知的字段 %s</string>
-  <string name="delete_deck">删除牌组...\n请等待.</string>
+  <string name="check_db_message">正在检查数据库\n请等待...</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">这是一张空白卡片。\n请在桌面客户端上运行”工具 &gt; 空卡片\"以删除。</string>
+  <string name="unknown_type_field_warning">输入答案：未知字段 %s</string>
+  <string name="delete_deck">删除牌组\n请稍等&#8230;&#8230;</string>
   <string name="show_hint">显示 %s</string>
-  <string name="info_rate">评价AnkiDroid</string>
-  <string name="col_load_failed">加载集合失败。\n 按返回键，关闭AnkiDroid。</string>
-  <string name="import_title">导入卡牌</string>
+  <string name="info_rate">给AnkiDroid评分</string>
+  <string name="col_load_failed">集合加载失败\n按返回键关闭AnkiDroid。</string>
+  <string name="import_title">导入卡片</string>
   <string name="import_select_title">选择要导入的文件</string>
   <string name="import_message_add">添加</string>
-  <string name="import_message_replace_confirm">这将删除你当前的牌组集合，并用文件%s中的内容加以替换。你确定吗？</string>
-  <string name="import_message_add_confirm">添加 \"%s\" 到集合？这可能需要一些时间</string>
-  <string name="import_log_success">成功导入 %d 张卡牌</string>
+  <string name="import_message_replace_confirm">这将删除你当前的所有记忆库，并用文件%s中的内容加以替换。你确定吗？</string>
+  <string name="import_message_add_confirm">要添加 \"%s\" 到记忆库吗？</string>
+  <string name="import_log_success">成功导入%d张卡片</string>
   <string name="import_log_error">导入失败</string>
-  <string name="import_log_no_apkg">这不是一个正确的 apkg 文件</string>
-  <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg extension</string>
-  <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
-  <string name="import_importing">导入卡牌。\n请稍后...</string>
-  <string name="export_include_schedule">Include scheduling</string>
-  <string name="export_include_media">Include media</string>
-  <string name="confirm_apkg_export">Export collection as apkg file?</string>
-  <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
+  <string name="import_log_no_apkg">这不是一个有效的 apkg 文件</string>
+  <string name="import_error_not_apkg_extension">\"%s\"并不是具有 .apkg 扩展名的文件</string>
+  <string name="import_error_content_provider">AnkiDroid 不能导入所选择的文件。请参阅用户手册以查看如何导入Anki记忆库：\n%s</string>
+  <string name="import_importing">正在导入卡片&#8230;&#8230;</string>
+  <string name="export_include_schedule">包括学习进度</string>
+  <string name="export_include_media">包括媒体文件</string>
+  <string name="confirm_apkg_export">要将记忆库集合导出为apkg文件吗？</string>
+  <string name="confirm_apkg_export_deck">将“%s”导出为akpg文件？</string>
   <string name="export_in_progress">正在导出apkg文件&#8230;</string>
-  <string name="export_successful_title">Email apkg?</string>
+  <string name="export_successful_title">发送apkg文件</string>
   <string name="export_successful">文件“%s”导出完毕，您想将其用电子邮件发出吗？</string>
-  <string name="export_unsuccessful">导出集合错误</string>
-  <string name="import_hint">要导入卡牌，请把apkg文件放在%s目录中，然后按确定。</string>
+  <string name="export_unsuccessful">导出记忆库错误</string>
+  <string name="import_hint">请把apkg文件放在%s目录中，然后按确定。</string>
   <string name="upgrade_import_no_file_found">没有找到可导入的 %1$s 文件</string>
-  <string name="study_options">卡牌选项</string>
+  <string name="study_options">牌组选项</string>
   <string name="custom_study">自定义学习</string>
-  <string name="dyn_deck_desc">这是一个特殊牌组，在计划外学习。卡牌在复习后，会自动返回原来的牌组。在牌组列表中删除此牌组，将把所有卡牌发回原来的牌组。</string>
+  <string name="more_options">More</string>
+  <string name="dyn_deck_desc">这是一个在计划外学习的特殊牌组，卡片在复习后会自动返回原来的牌组。\n在牌组列表中删除此牌组也将会把所有卡片都移回原来的牌组。</string>
   <string name="steps_error">步长必须是大于 0 的数字</string>
   <string name="steps_min_error">至少需要一个步骤</string>
   <string name="sched_end">(结束)</string>
-  <string name="sched_unbury_button">要显示这些卡牌，请点击取消隐藏按钮。</string>
-  <string name="sched_has_buried">有些相关或隐藏卡牌，推迟到下一次显示。</string>
-  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
-  <string name="lookup_hint">复制文字完毕后，轻触快闪卡任意处以显示搜索图标</string>
-  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\nPress “Help” to see the manual.</string>
+  <string name="sched_unbury_button">要显示这些卡牌，请点击“取消隐藏”按钮。</string>
+  <string name="sched_has_buried">一些相关的或被隐藏的卡片被推迟到明天。</string>
+  <string name="tag_editor_add_feedback">点击“%2$s”以确认添加“%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">已选中%1$s</string>
+  <string name="lookup_hint">复制文字后，点击卡片任意处以显示搜索图标</string>
+  <string name="add_content_showcase_text">若要开始，请点击 + 按钮来添加一些学习资料。\n点击\"帮助\"查看用户手册。</string>
   <plurals name="time_span_seconds">
-    <item quantity="other">%s seconds</item>
+    <item quantity="other">%s秒</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="other">%s minutes</item>
+    <item quantity="other">%s分钟</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="other">%s hours</item>
+    <item quantity="other">%s小时</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="other">%s days</item>
+    <item quantity="other">%s天</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="other">%s months</item>
+    <item quantity="other">%s个月</item>
   </plurals>
   <plurals name="time_span_years">
-    <item quantity="other">%s years</item>
+    <item quantity="other">%s年</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
 </resources>

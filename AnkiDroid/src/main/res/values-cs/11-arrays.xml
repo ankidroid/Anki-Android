@@ -81,13 +81,13 @@
     <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>Zvýšit dnešní limit nových karet</item>
-    <item>Zvýšit dnešní limit opakování</item>
-    <item>Opakovat zapomenuté karty</item>
-    <item>Opakovat dopředu</item>
-    <item>Studovat náhodný výběr karet</item>
-    <item>Zkoušení nových karet</item>
-    <item>Omezit podle štítků</item>
+    <item>@string/custom_study_increase_new_limit</item>
+    <item>@string/custom_study_increase_review_limit</item>
+    <item>@string/custom_study_review_forgotten</item>
+    <item>@string/custom_study_review_ahead</item>
+    <item>@string/custom_study_random_selection</item>
+    <item>@string/custom_study_preview_new</item>
+    <item>@string/custom_study_limit_tags</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Použít aktuální balíček</item>

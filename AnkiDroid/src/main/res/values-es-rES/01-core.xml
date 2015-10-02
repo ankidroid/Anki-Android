@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Tarjetas totales:</string>
   <string name="studyoptions_eta">Tiempo estimado (min):</string>
   <string name="studyoptions_start">Estudiar</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d tarjeta pendiente (%2$s)</item>
     <item quantity="other">%1$d tarjeta pendiente (%2$s)</item>
@@ -60,8 +61,8 @@
     <item quantity="other">%d minutos restantes</item>
   </plurals>
   <plurals name="studied_cards_today">
-    <item quantity="one">Studied %1$d card in %2$s today</item>
-    <item quantity="other">Studied %1$d cards in %2$s today</item>
+    <item quantity="one">Estudiada %1$d tarjeta en %2$s hoy</item>
+    <item quantity="other">Estudiadas %1$d tarjetas en %2$s hoy</item>
   </plurals>
   <string name="type_answer_hint">Escribir respuesta</string>
   <string name="show_answer">Mostrar respuesta</string>
@@ -104,8 +105,8 @@
   <string name="time_quantity_minutes">%d min</string>
   <string name="time_quantity_hours">%d h</string>
   <string name="time_quantity_days">%d d</string>
-  <string name="time_quantity_months">%.1f mo</string>
-  <string name="time_quantity_years">%.1f yr</string>
+  <string name="time_quantity_months">%.1f mes</string>
+  <string name="time_quantity_years">%.1f año</string>
   <string name="later">Más tarde</string>
   <string name="rebuild_cram_deck">Reconstruyendo mazo de estudio intensivo.\nPor favor, espera...</string>
   <string name="rebuild_cram_label">Reconstruir</string>
@@ -113,6 +114,10 @@
   <string name="empty_cram_deck">Vaciando mazo de estudio intensivo.\nPor favor, espera...</string>
   <string name="custom_study_deck_name">Sesión de estudio personalizado</string>
   <string name="custom_study_deck_exists">Por favor, primero renombra el mazo de Estudio Personalizado.</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">¡Felicidades! Has terminado por ahora.</string>
   <string name="studyoptions_congrats_more_rev">Se ha alcanzado el límite de repasos de hoy, pero todavía hay tarjetas a la espera de ser repasadas. Para una memorización óptima, considera la posibilidad de aumentar el límite diario en las opciones.</string>
   <string name="studyoptions_congrats_more_new">Hay más tarjetas nuevas disponibles, pero el límite diario ha sido alcanzado. Puedes aumentar el límite en las opciones, pero ten en cuenta que esto también aumentará tu carga de trabajo de repasos a corto plazo.</string>
@@ -120,8 +125,8 @@
   <string name="studyoptions_no_cards_due">Ninguna carta pendiente todavía.</string>
   <string name="sd_card_not_mounted">Almacenamiento del dispositivo no montado</string>
   <string name="button_sync">Sincronizar</string>
-  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-  <string name="sync_cancelled">Sync cancelled</string>
+  <string name="cancel_sync_confirm">¿Desea cancelar la sincronización?</string>
+  <string name="sync_cancelled">Sincronización cancelada</string>
   <string name="export">Exportar</string>
   <string name="nothing">Nada</string>
   <string name="title_activity_template_editor">Tipos de tarjeta de %s</string>
@@ -136,7 +141,7 @@
     <item quantity="other">¿Eliminar el tipo de tarjeta \'%2$s\' y sus %1$d tarjetas?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note"> Eliminar este tipo de tarjeta podría causar que una o más notas se eliminen. Por favor, cree un nuevo tipo de tarjeta primero.</string>
-  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+  <string name="read_write_permission_label">Leer y escribir en la base de datos de AnkiDroid</string>
   <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
         models, and decks, as well as create new ones.</string>
 </resources>

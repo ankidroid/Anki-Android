@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Łącznie kart:</string>
   <string name="studyoptions_eta">Szacowany czas (min):</string>
   <string name="studyoptions_start">Ucz się teraz</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
     <item quantity="few">%1$d cards due (%2$s)</item>
@@ -116,6 +117,10 @@
   <string name="empty_cram_deck">Czyszczenie talii.\nProszę czekać...</string>
   <string name="custom_study_deck_name">Sesja nauki niestandardowej</string>
   <string name="custom_study_deck_exists">Najpierw zmień nazwę istniejącej talii nauki niestandardowej.</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Gratulacje! Zakończono powtórki na dziś.</string>
   <string name="studyoptions_congrats_more_rev">Dzisiejszy limit powtórek został wyczerpany, ale wciąż pozostają karty do przejrzenia. Dla optymalnego zapamiętywania proszę rozważyć zwiększenie dziennego limitu w ustawieniach.</string>
   <string name="studyoptions_congrats_more_new">Pozostało więcej kart do przejrzenia, ale dzienny limit został osiągnięty. Możesz zwiększyć limit w opcjach, ale miej na uwadze, że zwiększy to ilość powtórzeń w najbliższych dniach.</string>

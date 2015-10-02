@@ -77,6 +77,13 @@
     <item>Sai sót</item>
     <item>Đánh giá</item>
   </string-array>
+  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
+  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
+  <string name="custom_study_review_forgotten">Review forgotten cards</string>
+  <string name="custom_study_review_ahead">Review ahead</string>
+  <string name="custom_study_random_selection">Study a random selection of cards</string>
+  <string name="custom_study_preview_new">Preview new cards</string>
+  <string name="custom_study_limit_tags">Limit to particular tags</string>
   <string name="cardeditor_title_add_note">Thêm ghi chú</string>
   <string name="cardeditor_title_edit_card">Sửa ghi chú</string>
   <string name="discard_unsaved_changes">Đóng lại và mất đầu vào hiện tại?</string>
@@ -143,6 +150,7 @@
   <string name="upgrade_import_no_file_found">Không tìm thấy %1$s tập tin có thể nhập</string>
   <string name="study_options">Tùy chọn Bài</string>
   <string name="custom_study">Sửa cách học</string>
+  <string name="more_options">More</string>
   <string name="dyn_deck_desc">Đây là một bộ Bài đặc biệt phục vụ cho học ngoài lịch. Các thẻ sẽ tự động quay lại sau khi bại xem lại chúng. Việc xóa các bộ bài từ danh sách sẽ đưa tất cả các Thẻ về Bộ bài nguyên gốc.</string>
   <string name="steps_error">Các bước phải là số lớn hơn 0</string>
   <string name="steps_min_error">Yêu cầu ít nhất một bước</string>

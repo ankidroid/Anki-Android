@@ -81,13 +81,13 @@
     <item>Relatieve overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>Limiet nieuwe kaarten voor vandaag verhogen</item>
-    <item>Limiet te herhalen kaarten voor vandaag verhogen</item>
-    <item>Vergeten kaarten herhalen</item>
-    <item>Herhaal vooruit</item>
-    <item>Een willekeurige selectie van kaarten studeren</item>
-    <item>Geef voorbeeld van nieuwe kaarten</item>
-    <item>Beperken tot bepaalde tags</item>
+    <item>@string/custom_study_increase_new_limit</item>
+    <item>@string/custom_study_increase_review_limit</item>
+    <item>@string/custom_study_review_forgotten</item>
+    <item>@string/custom_study_review_ahead</item>
+    <item>@string/custom_study_random_selection</item>
+    <item>@string/custom_study_preview_new</item>
+    <item>@string/custom_study_limit_tags</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Gebruik huidige set</item>

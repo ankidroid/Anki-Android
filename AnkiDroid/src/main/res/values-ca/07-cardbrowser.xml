@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">%d carta ensenyada</item>
+    <item quantity="other">%d cartes ensenyades</item>
   </plurals>
   <string name="card_browser_all_decks">Tots els paquets</string>
   <string name="card_browser_delete_card">Suprimeix la nota</string>
@@ -55,13 +55,13 @@
   <string name="card_browser_show_suspended">Filtra les suspes</string>
   <string name="card_browser_search_by_tag">Filtrar per la etiqueta</string>
   <string name="card_browser_tags_shown">Etiquetes: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
+  <string name="card_browser_list_my_searches">Les meves cerques</string>
+  <string name="card_browser_list_my_searches_save">Guardeu cerca</string>
+  <string name="card_browser_list_my_searches_title">Trieu un cerca desada</string>
+  <string name="card_browser_list_my_searches_new_name">Nom per a la recerca actual</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">No podeu desar una cerca sense un nom</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">El nom ja existeix</string>
+  <string name="card_browser_list_my_searches_remove_content">Voleu suprimir \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Canvia l\'ordre de presentació</string>
   <string name="card_browser_change_display_order_title">Trieu l\'ordre de visualització</string>
   <string name="card_browser_change_display_order_reverse">Seleccioneu un camp dues vegades per invertir-lo.</string>
@@ -69,7 +69,7 @@
   <string name="card_details_answer">Resposta</string>
   <string name="card_details_due">Pendents</string>
   <string name="card_details_tags">Etiquetes</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
+  <string name="card_browser_filtering_cards">Filtrant cartes...\nPremeu el botó d\'enrere per cancel·lar</string>
   <string-array name="card_browser_order_labels">
     <item>Cap ordenació (més ràpid)</item>
     <item>By sort field</item>

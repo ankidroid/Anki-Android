@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Total de cartóns:</string>
   <string name="studyoptions_eta">Tempo estimado (min):</string>
   <string name="studyoptions_start">Study</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
@@ -113,6 +114,10 @@
   <string name="empty_cram_deck">Baleirando baralla de chapar.\nAgarde por favor...</string>
   <string name="custom_study_deck_name">Sesión de estudo personalizado</string>
   <string name="custom_study_deck_exists">Por favor, renomee a baralla de estudo personalizado existente primeiro.</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Noraboa!Remataches polo de agora.</string>
   <string name="studyoptions_congrats_more_rev">Acadouse o límite de repasos por hoxe, pero aínda hai cartas agardando a ser repasadas. Para unha memoria óptima, sopesa ampliar o límite diario nas opcións.</string>
   <string name="studyoptions_congrats_more_new">Hai máis cartóns dispoñibles, pero o límite diario foi acadado. Podes ampliar o límite nas opcións, pero ten en conta que isto incrementará a carga de traballo do repaso a curto plazo.</string>

@@ -45,7 +45,7 @@
   <string name="card_browser_all_decks">すべてのデッキ</string>
   <string name="card_browser_delete_card">ノートを削除</string>
   <string name="card_browser_suspend_card">カードを保留</string>
-  <string name="card_browser_unsuspend_card">カードの保留解除</string>
+  <string name="card_browser_unsuspend_card">カードの保留を解除</string>
   <string name="card_browser_mark_card">ノートにマーク</string>
   <string name="card_browser_unmark_card">マークを解除</string>
   <string name="delete_card_title">ノートの削除</string>
@@ -72,9 +72,9 @@
   <string-array name="card_browser_order_labels">
     <item>並び替えなし（高速）</item>
     <item>ソートフィールド順</item>
-    <item>作成時刻順</item>
-    <item>編集時刻順</item>
-    <item>変更時刻順</item>
+    <item>作成日時順</item>
+    <item>編集日時順</item>
+    <item>変更日時順</item>
     <item>学習予定日時順</item>
     <item>間隔順</item>
     <item>易しさ順</item>

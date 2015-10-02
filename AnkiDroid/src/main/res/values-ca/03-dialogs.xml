@@ -40,34 +40,34 @@
 -->
 <resources>
   <string name="check_db_title">Base de dades de verificació</string>
-  <string name="check_db_warning">This may take a long time</string>
-  <string name="check_db_acknowledge">Database checked</string>
-  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
+  <string name="check_db_warning">Això pot trigar molt de temps</string>
+  <string name="check_db_acknowledge">Base de dades comprovada</string>
+  <string name="check_db_acknowledge_shrunk">Base de dades controlada i optimitzada. \nEncongida per %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Suprimeix el paquet</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
+  <string name="delete_deck_default_deck">No es pot suprimir el paquet per defecte.</string>
   <string name="delete_deck_title">Suprimeix el paquet</string>
   <plurals name="delete_deck_message">
-    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
-    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="one">Eliminar totes les cartes en %1$s? Conté %2$d carta.</item>
+    <item quantity="other">Eliminar totes les cartes en %1$s? Conté %2$d cartes.</item>
   </plurals>
   <string name="delete_cram_deck_message">Esteu segur que voleu enviar totes les fitxes de %s als seus paquets inicials?</string>
   <string name="no_tts_available_message">No hi ha idiomes de síntesi de veu disponibles</string>
-  <string name="initializing_tts">Initializing TTS&#8230;</string>
+  <string name="initializing_tts">S\'està inicialitzant el TTS&#8230;</string>
   <string name="tts_no_tts">No parlis</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
-    <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
-    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, <a href=\"%2$s\">donate</a> to Anki Desktop, or blog about AnkiDroid.]]></item>
-    <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
+    <item><![CDATA[<h2>%1$s: <br/> Flashcards per Android</h2>AnkiDroid és una aplicació de flashcards que és totalment compatible amb el programari d\'escriptori <a href=\"%2$s\"> Anki</a>. Podeu crear, descarregar i aprendre sobre aquest material en tant AnkiDroid o Anki i sincronitzar-los fàcilment amb AnkiWeb.]]></item>
+    <item><![CDATA[Per ajudar-nos a fer millor la AnkiDroid, si us plau informeu els errors al <a href=\"%1$s\"> buscador d\'incidències</a>; noves idees són molt benvingudes. Trobeu respostes a la <a href=\"%2$s\"> wiki</a> o comenceu un debat al <a href=\"%3$s\"> fòrum</a>.]]></item>
+    <item><![CDATA[AnkiDroid és <a href=\"%1$s\"> programari de font oberta <a/>, així que tothom es animat a <a href=\"%2$s\"> ser col·laborador</a> :-)]]></item>
+    <item><![CDATA[Els no desenvolupadors també pot ajudar. Per exemple, vostè pot <a href=\"%1$s\"> ajudar a traduir</a> AnkiDroid, actualitzar la wiki, proporcionant captures de pantalla, <a href=\"%2$s\"> donar</a> a Anki, o fer blogs sobre AnkiDroid.]]></item>
+    <item><![CDATA[AnkiDroid és alliberat sota la <a href=\"%1$s\"> llicència de GNU-GPL v3</a> i el codi font està disponible <a href=\"%2$s\"> a GitHub</a>.]]></item>
   </string-array>
-  <string name="preview_title">Preview</string>
+  <string name="preview_title">Previsualització</string>
   <string name="reset_card_dialog_title">Reinicia el progrés de les fitxes</string>
-  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
-  <string name="reset_card_dialog_acknowledge">Card reset</string>
-  <string name="reschedule_card_dialog_title">Reschedule card</string>
-  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
-  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
+  <string name="reset_card_dialog_message">Aquesta carta es posarà al final de la cua de les cartes noves.</string>
+  <string name="reset_card_dialog_acknowledge">Reinicialització de la carta</string>
+  <string name="reschedule_card_dialog_title">Reorganitza la targeta</string>
+  <string name="reschedule_card_dialog_message">Planificar una revisió en x dies:</string>
+  <string name="reschedule_card_dialog_acknowledge">Carta planificada</string>
   <string name="answering_error_title">Error de la base de dades</string>
   <string name="answering_error_message">S\'ha produït un error en escriure a la col·lecció. Això podria estar relacionat amb una base de dades defectuosa o amb espai insuficient al disc.\n\nSi passa molt sovint, si us plau, intenteu comprovar la base de dades, reparar la col·lecció o restaurar-ho des d\'una còpia de seguretat. Feu clic a \"opcions\" per a fer-ho.\n\nTot i així, també podria ser un error d\'AnkiDroid; si us plau envieu l\'error i podrem comprovar-ho.</string>
   <string name="answering_error_report">Informa dels errors</string>
@@ -90,37 +90,37 @@
   <string name="import_media_count">S\'estant importació els continguts multimèdia %1$d%%\nun moment si us plau...</string>
   <string name="import_update_counts">S\'està actualitzant el número de paquets. \nUn moment si us plau...</string>
   <string name="import_add_progress">• S\'està desempaquetant l\'arxiu %1$s\n• importació de notes %2$d%%\n• importació de fitxes %3$d%%\n• Neteja %4$s</string>
-  <string name="sd_card_full_title">SD card full</string>
-  <string name="sd_card_almost_full_title">SD card almost full</string>
-  <string name="restore_backup_title">Restore backup?</string>
-  <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
-  <string name="dialog_cancel">Cancel</string>
-  <string name="dialog_ok">OK</string>
-  <string name="dialog_continue">Continue</string>
-  <string name="dialog_positive_create">Create</string>
-  <string name="dialog_positive_delete">Delete</string>
-  <string name="dialog_positive_disable">Disable</string>
-  <string name="dialog_positive_overwrite">Overwrite</string>
-  <string name="dialog_positive_remove">Remove</string>
-  <string name="dialog_positive_repair">Repair</string>
-  <string name="dialog_positive_replace">Replace</string>
-  <string name="dialog_positive_restore">Restore</string>
-  <string name="dialog_positive_set">Set</string>
-  <string name="lookup_button_content">Look up</string>
-  <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
-  <string name="check_media_title">Check media?</string>
-  <string name="check_media_warning">This may take a long time with large media collections</string>
-  <string name="check_media_message">Checking media&#8230;</string>
-  <string name="check_media_acknowledge">Media checked</string>
-  <string name="check_media_failed">Media check failed</string>
-  <string name="check_media_invalid">Files with invalid encoding: %d</string>
-  <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
-  <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
-  <string name="check_media_no_unused_missing">No unused or missing files found</string>
-  <string name="check_media_db_updated">Media database rebuilt</string>
-  <string name="check_media_delete_unused">Delete unused</string>
-  <string name="check_media_deleted">Files deleted: %d</string>
-  <string name="tags_dialog_option_all_cards">All cards</string>
-  <string name="tags_dialog_option_new_cards">New</string>
-  <string name="tags_dialog_option_due_cards">Due</string>
+  <string name="sd_card_full_title">Targeta SD plena</string>
+  <string name="sd_card_almost_full_title">Targeta SD gairebé plena</string>
+  <string name="restore_backup_title">Restaurar la còpia de seguretat?</string>
+  <string name="restore_backup">La seva col·lecció serà replaçada per una còpia anterior. Tots els canvis fets després de desar es perdran.</string>
+  <string name="dialog_cancel">Cancel·la</string>
+  <string name="dialog_ok">D\'acord</string>
+  <string name="dialog_continue">Continuar</string>
+  <string name="dialog_positive_create">Crear</string>
+  <string name="dialog_positive_delete">Eliminar</string>
+  <string name="dialog_positive_disable">Deshabilita</string>
+  <string name="dialog_positive_overwrite">Sobreescriure</string>
+  <string name="dialog_positive_remove">El·liminar</string>
+  <string name="dialog_positive_repair">Repara</string>
+  <string name="dialog_positive_replace">Reemplaça</string>
+  <string name="dialog_positive_restore">Restaura</string>
+  <string name="dialog_positive_set">Aplicar</string>
+  <string name="lookup_button_content">Cercar</string>
+  <string name="dialog_collection_path_not_dir">El camí especificat no era un directori vàlid</string>
+  <string name="check_media_title">Comprovar la multimèdia?</string>
+  <string name="check_media_warning">Això pot trigar molt de temps amb col·leccions de grans recursos de multimèdia</string>
+  <string name="check_media_message">Comprovant multimèdia&#8230;</string>
+  <string name="check_media_acknowledge">Multimèdia comprovada</string>
+  <string name="check_media_failed">Ha fallat la comprovació de la multimèdia</string>
+  <string name="check_media_invalid">Arxius amb codificació no vàlida: %d</string>
+  <string name="check_media_unused">Arxius existents en carpeta de multimèdia però no utilitzats per qualsevol carta: %d</string>
+  <string name="check_media_nohave">Fitxers utilitzats en cartes però no existents en carpeta de multimèdia: %d</string>
+  <string name="check_media_no_unused_missing">Cap arixu no utilitzat o mancant trobat</string>
+  <string name="check_media_db_updated">Base de dades de multimèdia reconstruïda</string>
+  <string name="check_media_delete_unused">Suprimir no utilitzats</string>
+  <string name="check_media_deleted">Arxius suprimits: %d</string>
+  <string name="tags_dialog_option_all_cards">Totes les cartes</string>
+  <string name="tags_dialog_option_new_cards">Nou</string>
+  <string name="tags_dialog_option_due_cards">Venciment</string>
 </resources>

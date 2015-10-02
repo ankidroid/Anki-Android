@@ -148,8 +148,6 @@
   <string name="input_workaround_summ">Solución para focalizar problemas en cuadros de entrada de HTML. Genera problemas en muchos dispositivos.</string>
   <string name="pref_keep_screen_on">Mantener la pantalla encendida</string>
   <string name="pref_keep_screen_on_summ">Desactivar el tiempo de espera de pantalla</string>
-  <string name="fix_arabic_text">Mejorar la visualización del árabe</string>
-  <string name="fix_arabic_text_summ">Solución parcial para el soporte limitado de Árabe por la plataforma Android. Cuando se activa no es posible modificar las tarjetas.</string>
   <string name="convert_fen_text">Soporte para notación de ajedrez</string>
   <string name="filter_google_translate">Desde el Traductor de Google</string>
   <string name="filter_google_translate_summ">Guardar solamente la palabra fuente y la traducción</string>

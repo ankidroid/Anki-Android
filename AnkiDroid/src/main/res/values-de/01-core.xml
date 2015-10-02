@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Karten gesamt:</string>
   <string name="studyoptions_eta">Geschätzte Zeit (Min.):</string>
   <string name="studyoptions_start">Lernen</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d Karte fällig (%2$s)</item>
     <item quantity="other">%1$d Karten fällig (%2$s)</item>
@@ -113,6 +114,10 @@
   <string name="empty_cram_deck">Leere dynamischen Stapel&#8230;</string>
   <string name="custom_study_deck_name">Benutzerdefinierte Sitzung</string>
   <string name="custom_study_deck_exists">Bitte benennen Sie zunächst den existierenden Stapel \"Benutzerdefinierte Sitzung\" um.</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Herzlichen Glückwunsch! Sie sind für heute fertig.</string>
   <string name="studyoptions_congrats_more_rev">Ihr heutiges Limit ist erreicht, aber es sind noch Karten fällig. Sie können das Limit in den Stapeloptionen erhöhen.</string>
   <string name="studyoptions_congrats_more_new">Es sind noch neue Karten verfügbar, aber das tägliche Lernlimit wurde erreicht. Sie können das Limit in den Optionen erhöhen, bedenken Sie aber, dass dies Ihr kurzfristiges Arbeitspensum erhöht.</string>
@@ -120,8 +125,8 @@
   <string name="studyoptions_no_cards_due">Es sind noch keine Karten fällig</string>
   <string name="sd_card_not_mounted">Gerätespeicher nicht eingehängt</string>
   <string name="button_sync">Synchronisieren</string>
-  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-  <string name="sync_cancelled">Sync cancelled</string>
+  <string name="cancel_sync_confirm">Wollen Sie die Synchronisation abbrechen?</string>
+  <string name="sync_cancelled">Synchronisation abgebrochen</string>
   <string name="export">Exportieren</string>
   <string name="nothing">Nichts</string>
   <string name="title_activity_template_editor">Kartentypen für %s</string>
@@ -136,7 +141,6 @@
     <item quantity="other">Kartentyp »%2$s« und seine %1$d Karten löschen?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Kartentyp kann nicht gelöscht werden, da dadurch mindestens eine Notiz gelöscht würde</string>
-  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
-        models, and decks, as well as create new ones.</string>
+  <string name="read_write_permission_label">AnkiDroid-Datenbank lesen und schreiben</string>
+  <string name="read_write_permission_description">Der Anwendung auf existierende Notizen, Karten, Notiztypen und Stapel zugreifen lassen und neue erstellen lassen.</string>
 </resources>

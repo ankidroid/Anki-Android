@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Celkový počet kariet:</string>
   <string name="studyoptions_eta">Odhadovaný čas (min):</string>
   <string name="studyoptions_start">Študovať teraz</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
     <item quantity="few">%1$d cards due (%2$s)</item>
@@ -116,6 +117,10 @@
   <string name="empty_cram_deck">Vyprázdňujem balíček na drvenie sa.\nProsím počkajte...</string>
   <string name="custom_study_deck_name">Vlastné štúdium</string>
   <string name="custom_study_deck_exists">Prosím premenujte najprv existujúci balíček Vlastné štúdium.</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Blahoželáme! Na teraz ste tento balíček dokončili.</string>
   <string name="studyoptions_congrats_more_rev">Bol dosiahnutý denný limit, ale stále zostávajú nejaké karty na opakovanie. Pre optimálne zapamätanie zvážte zvýšenie tohto limitu v nastaveniach.</string>
   <string name="studyoptions_congrats_more_new">Dostupné sú aj ďalšie nové karty, ale bol dosiahnutý denný limit.  Môžete ho zvýšiť v nastaveniach, ale prosím majte na pamäti, že tým sa v najbližšej dobe zvýši aj počet kariet na opakovanie.</string>

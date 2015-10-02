@@ -77,6 +77,13 @@
     <item>Lapses</item>
     <item>Reviews</item>
   </string-array>
+  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
+  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
+  <string name="custom_study_review_forgotten">Review forgotten cards</string>
+  <string name="custom_study_review_ahead">Review ahead</string>
+  <string name="custom_study_random_selection">Study a random selection of cards</string>
+  <string name="custom_study_preview_new">Preview new cards</string>
+  <string name="custom_study_limit_tags">Limit to particular tags</string>
   <string name="cardeditor_title_add_note">Προσθήκη Σημείωσης</string>
   <string name="cardeditor_title_edit_card">Σύνταξη Σημείωσης</string>
   <string name="discard_unsaved_changes">Close and lose current input?</string>
@@ -146,6 +153,7 @@
   <string name="upgrade_import_no_file_found">Δεν βρέθηκε αρχείο %1$s με δυνατότητα εισαγωγής</string>
   <string name="study_options">Deck options</string>
   <string name="custom_study">Προσαρμοσμένη μελέτη</string>
+  <string name="more_options">More</string>
   <string name="dyn_deck_desc">Αυτή είναι μια ειδική τράπουλα για μάθηση εκτός του κανονικού προγράμματος. Οι κάρτες θα επιστραφούν αυτόματα στην αρχική τους τράπουλα μετά την επανάληψή τους. Η διαγραφή αυτής της τράπουλας από τη λίστα τραπουλών θα επιστρέψει όλες τις κάρτες στην αρχική τους τράπουλα.</string>
   <string name="steps_error">Steps must be numbers greater than 0</string>
   <string name="steps_min_error">At least one step is required</string>

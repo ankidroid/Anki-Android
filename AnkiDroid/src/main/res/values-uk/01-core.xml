@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Всього карток:</string>
   <string name="studyoptions_eta">Оцінка часу (хв.):</string>
   <string name="studyoptions_start">Почати вивчення</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
     <item quantity="few">%1$d cards due (%2$s)</item>
@@ -116,6 +117,10 @@
   <string name="empty_cram_deck">Очищення колоди для Зубріння.\n Будь ласка, зачекайте...</string>
   <string name="custom_study_deck_name">Додатковий тренінг</string>
   <string name="custom_study_deck_exists">Спочатку перейменуйте існуючу колоду для тренінгу.</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Вітаємо! На разі це все.</string>
   <string name="studyoptions_congrats_more_rev">Ви вичерпали ліміт повторювання на сьогодні, але досі є картки, які чекають на перегляд. Для оптимального запам\'ятовування можна збільшити щоденнній лиміт у налаштуваннях.</string>
   <string name="studyoptions_congrats_more_new">Доступно більше нових карток але денний ліміт вичерпано. Ви можете збільшити ліміт в налаштуваннях, але, будь-ласка, зверніть увагу що це збільшить навантаження.</string>

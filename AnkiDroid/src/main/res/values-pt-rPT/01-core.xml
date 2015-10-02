@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Total de fichas:</string>
   <string name="studyoptions_eta">Tempo estimado (min):</string>
   <string name="studyoptions_start">Estudar</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d ficha pendente (%2$s)</item>
     <item quantity="other">%1$d fichas pendentes (%2$s)</item>
@@ -113,6 +114,10 @@
   <string name="empty_cram_deck">A esvaziar baralho de estudo focado&#8230;</string>
   <string name="custom_study_deck_name">Sessão de estudo personalizado</string>
   <string name="custom_study_deck_exists">Por favor, primeiro altere o nome ao baralho de estudo personalizado existente</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Parabéns! Terminou por agora.</string>
   <string name="studyoptions_congrats_more_rev">O limite diário foi atingido, mas ainda existem fichas à espera para serem revistas. Pode aumentar o limite nas opções.</string>
   <string name="studyoptions_congrats_more_new">O limite diário foi atingido. Estão disponíveis mais fichas novas; pode aumentar o limite nas opções, mas isto irá aumentar a sua carga de memorização a curto prazo.</string>

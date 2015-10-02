@@ -77,6 +77,13 @@
     <item>دفعات اشتباه</item>
     <item>بازبینی ها</item>
   </string-array>
+  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
+  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
+  <string name="custom_study_review_forgotten">Review forgotten cards</string>
+  <string name="custom_study_review_ahead">Review ahead</string>
+  <string name="custom_study_random_selection">Study a random selection of cards</string>
+  <string name="custom_study_preview_new">Preview new cards</string>
+  <string name="custom_study_limit_tags">Limit to particular tags</string>
   <string name="cardeditor_title_add_note">افزودن یادداشت</string>
   <string name="cardeditor_title_edit_card">ویرایش یادداشت</string>
   <string name="discard_unsaved_changes">آیا می خواهید خارج شوید؟ورودی ها از بین خواهد رفت.</string>
@@ -143,6 +150,7 @@
   <string name="upgrade_import_no_file_found">غیر وارد کردنی %1$s فایل یافت شد</string>
   <string name="study_options">Deck options</string>
   <string name="custom_study">مطالعه بر اساس تنظیمات دلخواه</string>
+  <string name="more_options">More</string>
   <string name="dyn_deck_desc">این یک دسته ویژه برای مطالعه در خارج از زمان بندی عادی می باشد.بعد از مرور کارتها آنها بطور خودکار به دسته های اصلی برگردانده خواهد شد.حذف کردن این دسته از لیست دسته ها سبب می شود که همه کارتهای باقیمانده نیز به دسته اصلی برگردانده شود.</string>
   <string name="steps_error">مراحل باید با اعداد بزرگتر از 0 شماره گذاری گردند</string>
   <string name="steps_min_error">حداقل یک مرحله لازم است</string>

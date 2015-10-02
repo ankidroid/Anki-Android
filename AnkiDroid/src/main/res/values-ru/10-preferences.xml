@@ -149,8 +149,6 @@
   <string name="input_workaround_summ">Заплатка для проблем, касающихся блоков для ввода в HTML . Приводит к проблемам на некоторых устройствах.</string>
   <string name="pref_keep_screen_on">Не выключать экран</string>
   <string name="pref_keep_screen_on_summ">Отключить таймаут экрана</string>
-  <string name="fix_arabic_text">Улучшить вывод арабского</string>
-  <string name="fix_arabic_text_summ">Частичная заплатка для неполной поддержки Арабского для платформы Андроид. Когда активирована, невозможно изменять карты.</string>
   <string name="convert_fen_text">Поддержка шахматной нотации</string>
   <string name="filter_google_translate">Из Google-Переводчика</string>
   <string name="filter_google_translate_summ">Сохранить только исходное слово и перевод</string>

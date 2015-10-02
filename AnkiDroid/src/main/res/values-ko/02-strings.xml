@@ -77,6 +77,13 @@
     <item>오답 횟수</item>
     <item>복습</item>
   </string-array>
+  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
+  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
+  <string name="custom_study_review_forgotten">Review forgotten cards</string>
+  <string name="custom_study_review_ahead">Review ahead</string>
+  <string name="custom_study_random_selection">Study a random selection of cards</string>
+  <string name="custom_study_preview_new">Preview new cards</string>
+  <string name="custom_study_limit_tags">Limit to particular tags</string>
   <string name="cardeditor_title_add_note">노트 추가하기</string>
   <string name="cardeditor_title_edit_card">노트 편집하기</string>
   <string name="discard_unsaved_changes">현재 입력된 내용을 버리고 닫을까요?</string>
@@ -143,6 +150,7 @@
   <string name="upgrade_import_no_file_found">가져올 수 있는 %1$s 파일이 발견되지 않음</string>
   <string name="study_options">카드 묶음 옵션</string>
   <string name="custom_study">맞춤 학습</string>
+  <string name="more_options">More</string>
   <string name="dyn_deck_desc">이것은 평상시 일정 이상으로 학습하기 위한 특별한 카드 묶음입니다. 카드들은 복습 후 자동으로 원래의 카드 묶음으로 돌아가게 됩니다. 카드 묶음 목록에서 이 카드 묶음을 지운다면 남아 있는 모든 카드는 원래의 카드 묶음으로 돌아가게 됩니다.</string>
   <string name="steps_error">단계는 0보다 큰 숫자여야 합니다.</string>
   <string name="steps_min_error">적어도 하나 이상의 단계가 필요합니다.</string>

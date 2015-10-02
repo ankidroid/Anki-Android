@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">کل کارتها:</string>
   <string name="studyoptions_eta">زمان برآورد شده (دقیقه):</string>
   <string name="studyoptions_start">مرور کردن</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="other">%1$dزمان مرور کارت ها (%2$s)</item>
   </plurals>
@@ -110,6 +111,10 @@
   <string name="empty_cram_deck">در حال خالی کردن دسته مطالعه فشرده .\nلطفا صبر کنید...</string>
   <string name="custom_study_deck_name">جلسه مطالعه سفارشی</string>
   <string name="custom_study_deck_exists">لطفا ابتدا دسته مطالعه سفارشی موجود را مجددا نام گذاری کنید.</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">تبریک ! فعلا کارتان تمام شد.</string>
   <string name="studyoptions_congrats_more_rev">به حد روزانه مرور رسیده اید، ولی هنوز کارتهایی هستند که باید مرور شوند. برای بهینه سازی حافظه، می توانید حد روزانه مرور را در بخش گزینه ها افزایش دهید.</string>
   <string name="studyoptions_congrats_more_new">کارتهای جدید بیشتری موجودند، ولی شما به حد تعیین شده روزانه مرور رسیده اید. شما می توانید این حد را در بخش گزینه ها افزایش دهید، ولی لطفا به یاد داشته باشید که بار کاری مرور کوتاه مدت شما افزایش خواهد یافت.</string>

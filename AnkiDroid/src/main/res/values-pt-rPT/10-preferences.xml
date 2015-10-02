@@ -88,7 +88,7 @@
   <string name="gestures_swipe_right">Deslizar à direita</string>
   <string name="gestures_double_tap">Toque duplo</string>
   <string name="gestures_tap_top">Toque no topo</string>
-  <string name="gestures_tap_bottom">Toque na parte inferior</string>
+  <string name="gestures_tap_bottom">Toque na base</string>
   <string name="gestures_tap_left">Toque à esquerda</string>
   <string name="gestures_tap_right">Toque à direita</string>
   <string name="more_scrolling_buttons">eReader</string>
@@ -149,8 +149,6 @@
   <string name="input_workaround_summ">Solução alternativa para problemas de focus em caixas de entrada de texto HTML. Causa problemas em vários dispositivos.</string>
   <string name="pref_keep_screen_on">Manter o ecrã aceso</string>
   <string name="pref_keep_screen_on_summ">Desativar o tempo limite de ecrã</string>
-  <string name="fix_arabic_text">Melhora a exibição da língua Árabe</string>
-  <string name="fix_arabic_text_summ">Solução alternativa parcial para suporte limitado da língua Árabe na plataforma Android. Quando activada, não é possível alterar fichas.</string>
   <string name="convert_fen_text">Suporte para notação de xadrez</string>
   <string name="filter_google_translate">Do tradutor da Google</string>
   <string name="filter_google_translate_summ">Guardar somente a palavra original e a tradução</string>

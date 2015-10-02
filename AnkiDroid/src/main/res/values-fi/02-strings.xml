@@ -77,6 +77,13 @@
     <item>Virheet</item>
     <item>Kertaukset</item>
   </string-array>
+  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
+  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
+  <string name="custom_study_review_forgotten">Review forgotten cards</string>
+  <string name="custom_study_review_ahead">Review ahead</string>
+  <string name="custom_study_random_selection">Study a random selection of cards</string>
+  <string name="custom_study_preview_new">Preview new cards</string>
+  <string name="custom_study_limit_tags">Limit to particular tags</string>
   <string name="cardeditor_title_add_note">Lisää merkintä</string>
   <string name="cardeditor_title_edit_card">Muokkaa merkintää</string>
   <string name="discard_unsaved_changes">Sulje ja menetä muutokset?</string>
@@ -146,6 +153,7 @@
   <string name="upgrade_import_no_file_found">Tuotavaa tiedostoa %1$s ei löytynyt</string>
   <string name="study_options">Pakan asetukset</string>
   <string name="custom_study">Mukautettu opiskelu</string>
+  <string name="more_options">More</string>
   <string name="dyn_deck_desc">Tämä on erityispakka normaalin aikataulun ulkopuolella tapahtuvaan opiskeluun. Kortit palautetaan automaattisesti alkuperäisiin pakkoihinsa läpikäynnin jälkeen. Tämän pakan poistaminen palauttaa kaikki sen sisältämät kortit alkuperäisiin pakkoihin.</string>
   <string name="steps_error">Vaiheiden on oltava numeroita, jotka ovat suurempia kuin 0</string>
   <string name="steps_min_error">Vähintään yksi vaihe on pakollinen</string>

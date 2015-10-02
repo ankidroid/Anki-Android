@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Iš viso kortų:</string>
   <string name="studyoptions_eta">Apskaičiuotas laikas (min):</string>
   <string name="studyoptions_start">Pradėti mokytis</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
     <item quantity="few">%1$d cards due (%2$s)</item>
@@ -116,6 +117,10 @@
   <string name="empty_cram_deck">Emptying cram deck&#8230;</string>
   <string name="custom_study_deck_name">Individualizuota studijų sesija</string>
   <string name="custom_study_deck_exists">Prašome pirma pervardyti esamą Individualizuotą studijų malką.</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Sveikinimai! Kol kas peržiūra pasibaigė.</string>
   <string name="studyoptions_congrats_more_rev">Šiandienos apžvalgų riba pasiekta, bet dar yra likusių neperžvelgtų kortelių. Atminties optimizavimui siūlome parinktyse padidinti dienos limitą.</string>
   <string name="studyoptions_congrats_more_new">Today’s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>

@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Total cartes :</string>
   <string name="studyoptions_eta">Temps estimé (min):</string>
   <string name="studyoptions_start">Réviser</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
@@ -113,6 +114,10 @@
   <string name="empty_cram_deck">Paquet de bachotage en cours de vidage&#8230;</string>
   <string name="custom_study_deck_name">Session d\'étude personnalisée</string>
   <string name="custom_study_deck_exists">Merci de renommer d\'abord le paquet d\'étude personnalisée.</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Félicitations ! Vous avez terminé… pour l’instant !</string>
   <string name="studyoptions_congrats_more_rev">Vous avez atteint votre limite aujourd’hui, mais il reste des cartes à passer en revue. Vous pouvez augmenter le seuil journalier dans les options.</string>
   <string name="studyoptions_congrats_more_new">Il reste des nouvelles cartes disponibles, mais la limite journalière a été atteinte. Vous pouvez augmenter cette limite dans les options, mais gardez à l’esprit que cela augmentera votre charge de travail à court terme.</string>

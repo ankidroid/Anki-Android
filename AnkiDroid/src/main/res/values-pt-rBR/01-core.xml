@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Total cartões:</string>
   <string name="studyoptions_eta">Tempo estimado (min):</string>
   <string name="studyoptions_start">Estudar agora</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d cartão programado (%2$s)</item>
     <item quantity="other">%1$d cartões programados (%2$s)</item>
@@ -113,6 +114,10 @@
   <string name="empty_cram_deck">Esvaziando deck do cursinho.\nPor favor aguarde...</string>
   <string name="custom_study_deck_name">Sessão de Estudo Personalizado</string>
   <string name="custom_study_deck_exists">Por favor renomeie o deck de Estudo Personalizado existente primeiro.</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Parabéns! Você terminou por enquanto.</string>
   <string name="studyoptions_congrats_more_rev">O limite de revisão de hoje foi atingido, mas ainda existem cartões esperando para serem revistos. Para uma ótima memória, considere aumentar o limite diário nas opções.</string>
   <string name="studyoptions_congrats_more_new">Existem mais cartões novos disponíveis, mas o limite diário foi alcançado. Você pode aumentar o limite nas opções, mas por favor, tenha em mente que isso vai aumentar sua carga de trabalho de revisão a curto prazo.</string>

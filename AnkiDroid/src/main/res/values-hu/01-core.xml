@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Összes kártya:</string>
   <string name="studyoptions_eta">Becsült idő (perc):</string>
   <string name="studyoptions_start">Gyakorlás</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
@@ -113,6 +114,10 @@
   <string name="empty_cram_deck">Magoló pakli ürítése.\nKérlek, várj...</string>
   <string name="custom_study_deck_name">Egyéni tanulás pakli</string>
   <string name="custom_study_deck_exists">Kérlek, előbb nevezd át a meglevő, Egyéni tanulás paklit.</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Gratulálok! Mára végeztél.</string>
   <string name="studyoptions_congrats_more_rev">A mai átnézési korlátot elérted, de még mindig maradt átnézendő kártya. Az optimális tanulás érdekében lehet, hogy meg kellene emelni a napi korlátot a Beállítások menüben.</string>
   <string name="studyoptions_congrats_more_new">További új kártyák állnak rendelkezésre, azonban a napi limitet elérted. A napi limitet az opciók menüben módosíthatod, de kérlek ne feledd, hogy ez rövidtávon megnöveli az ismétléseid számát.</string>

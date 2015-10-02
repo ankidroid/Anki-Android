@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Kortteja yhteensä:</string>
   <string name="studyoptions_eta">Arvioitu aika (min):</string>
   <string name="studyoptions_start">Opiskele nyt</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
@@ -113,6 +114,10 @@
   <string name="empty_cram_deck">Tyhjennetään pänttäyspakkaa&#8230;</string>
   <string name="custom_study_deck_name">Mukautettu istunto</string>
   <string name="custom_study_deck_exists">Nimeä olemassa oleva mukautettu pakka ensin</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Onnittelut! Olet nyt valmis hetkeksi.</string>
   <string name="studyoptions_congrats_more_rev">Tämän päivän kertauskiintiö on täynnä, mutta pakassa on vielä läpikäyntiä odottavia kortteja. Voit nostaa kiintiötä asetuksista.</string>
   <string name="studyoptions_congrats_more_new">Pakassa on lisää uusia kortteja, mutta päivittäinen raja on täyttynyt. Voit korottaa rajaa asetuksista, mutta huomioi, että tämä lisää lyhytaikaisen läpikäynnin työmäärää.</string>

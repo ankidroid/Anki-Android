@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Total carduri:</string>
   <string name="studyoptions_eta">Timp estimat (min):</string>
   <string name="studyoptions_start">Studiază Acum</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
     <item quantity="few">%1$d cards due (%2$s)</item>
@@ -116,6 +117,10 @@
   <string name="empty_cram_deck">Golire pachet. \n Va rugam asteptati aşteptaţi...</string>
   <string name="custom_study_deck_name">Sesiune de studiu personalizata</string>
   <string name="custom_study_deck_exists">Vă rugăm să redenumiţi mai inati pachetul de Studiu Personalizat .</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Felicitări! Aţi terminat pentru moment.</string>
   <string name="studyoptions_congrats_more_rev">S-a atins limita de recapitulare pentru astăzi, dar încă mai există carduri ce aştepta sa fie revizuite. Pentru memorare optima, ia în considerare creşterea limitei zilnice în opţiuni.</string>
   <string name="studyoptions_congrats_more_new">Sunt disponibile mai multe carduri noi, dar s-a atins limita zilnică. Puteţi mări limita în opţiuni, dar vă rugăm să ţineţi cont de faptul că aceasta va creşte volumul dumneavoastră de muncă de revizuire pe termen scurt.</string>

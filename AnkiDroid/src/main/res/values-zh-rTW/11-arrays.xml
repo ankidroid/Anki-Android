@@ -81,13 +81,13 @@
     <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>增加今天的新卡片限制</item>
-    <item>增加今日複習卡的上限</item>
-    <item>複習忘記的卡片</item>
-    <item>提早複習</item>
-    <item>依隨機順序學習卡片</item>
-    <item>預覽新卡片</item>
-    <item>僅限特定標籤的卡片</item>
+    <item>@string/custom_study_increase_new_limit</item>
+    <item>@string/custom_study_increase_review_limit</item>
+    <item>@string/custom_study_review_forgotten</item>
+    <item>@string/custom_study_review_ahead</item>
+    <item>@string/custom_study_random_selection</item>
+    <item>@string/custom_study_preview_new</item>
+    <item>@string/custom_study_limit_tags</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Use current deck</item>

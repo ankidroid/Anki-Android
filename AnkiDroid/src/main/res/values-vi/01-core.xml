@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Tổng số thẻ:</string>
   <string name="studyoptions_eta">Thời gian ước tính (phút):</string>
   <string name="studyoptions_start">Bắt đầu học</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
@@ -110,6 +111,10 @@
   <string name="empty_cram_deck">Thẻ bài chống. \n Đợi chút nhé...</string>
   <string name="custom_study_deck_name">Tùy chỉnh Bài học</string>
   <string name="custom_study_deck_exists">Xin đổi tên tập thẻ trước</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Chúc mừng! Bạn đã tạm thời hoàn thành.</string>
   <string name="studyoptions_congrats_more_rev">Đã tới giới hạn ôn tập của ngày hôm nay, nhưng vẫn còn có thẻ đợi được ôn tập. Để tối ưu sự ghi nhớ, cân nhắc tùy chọn tăng giới hạn hàng ngày.</string>
   <string name="studyoptions_congrats_more_new">Không có thẻ mới, nhưng bạn đã đạt giới hạn hàng ngày. Bạn có thể tăng giới hạn trong các tùy chọn, nhưng vui lòng nhớ rằng điều này sẽ làm tăng khối lượng  công việc của bạn.</string>

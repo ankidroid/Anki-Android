@@ -71,8 +71,8 @@
   <string name="reset_languages_summ">重置所有牌组的语言指定(用于文字转语音和词典)。请在牌组选择界面重置特定牌组的语言</string>
   <string name="reset_languages_question">要重置所有牌组的语言指定吗？</string>
   <string name="reset_confirmation">重置所有状态</string>
-  <string name="card_zoom">Card zoom</string>
-  <string name="image_zoom">Image zoom</string>
+  <string name="card_zoom">卡片缩放</string>
+  <string name="image_zoom">图片缩放</string>
   <string name="button_size">显示答案按钮大小</string>
   <string name="card_browser_font_size">卡牌浏览器字体缩放</string>
   <string name="col_path">集合的路径</string>
@@ -80,8 +80,8 @@
   <string name="fullscreen_review_summ">隐藏系统状态栏</string>
   <string name="gestures">启用手势</string>
   <string name="gestures_summ">为回答或编辑卡片等动作指定手势。</string>
-  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
-  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
+  <string name="gestures_hide_answer_buttons">隐藏回答时的按钮</string>
+  <string name="gestures_hide_answer_buttons_summ">当启用手势时不显示按钮</string>
   <string name="gestures_swipe_up">向上滑动</string>
   <string name="gestures_swipe_down">向下滑动</string>
   <string name="gestures_swipe_left">向左滑动</string>
@@ -103,7 +103,7 @@
   <string name="sync_account">AnkiWeb 帐户</string>
   <string name="sync_account_summ_logged_out">未登录</string>
   <string name="sync_account_summ_logged_in">%s</string>
-  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice">自动同步</string>
   <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
   <string name="fix_hebrew_text">希伯来元音的修补程序</string>
@@ -149,8 +149,6 @@
   <string name="input_workaround_summ">解决HTML输入框焦点问题的变通办法，这个问题存在于若干设备上。</string>
   <string name="pref_keep_screen_on">保持屏幕常亮</string>
   <string name="pref_keep_screen_on_summ">禁用屏幕超时</string>
-  <string name="fix_arabic_text">改善阿拉伯文显示</string>
-  <string name="fix_arabic_text_summ">由于Android系统对于阿拉伯语支持不足，这是一个不完全的变通解决方法。当启用后，无法更改卡牌。</string>
   <string name="convert_fen_text">国际象棋标注支持</string>
   <string name="filter_google_translate">从谷歌翻译</string>
   <string name="filter_google_translate_summ">保存源词与翻译</string>

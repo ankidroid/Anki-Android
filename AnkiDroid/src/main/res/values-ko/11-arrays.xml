@@ -81,13 +81,13 @@
     <item>상대적 기간초과</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>오늘의 새로운 카드 학습량 늘리기</item>
-    <item>오늘의 복습량 늘리기</item>
-    <item>잊어버린 카드 복습하기</item>
-    <item>미리 복습하기</item>
-    <item>무작위 카드 학습하기</item>
-    <item>새로운 카드 예습하기</item>
-    <item>특정 태그로만 제한하기</item>
+    <item>@string/custom_study_increase_new_limit</item>
+    <item>@string/custom_study_increase_review_limit</item>
+    <item>@string/custom_study_review_forgotten</item>
+    <item>@string/custom_study_review_ahead</item>
+    <item>@string/custom_study_random_selection</item>
+    <item>@string/custom_study_preview_new</item>
+    <item>@string/custom_study_limit_tags</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>현재 카드 묶음을 사용</item>

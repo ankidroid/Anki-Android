@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Skupaj kartic:</string>
   <string name="studyoptions_eta">Predviden čas (min):</string>
   <string name="studyoptions_start">Study</string>
+  <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
     <item quantity="two">%1$d cards due (%2$s)</item>
@@ -119,6 +120,10 @@
   <string name="empty_cram_deck">Praznim natrpan komplet.\nProsimo počakajte...</string>
   <string name="custom_study_deck_name">Učenje po meri</string>
   <string name="custom_study_deck_exists">Najprej preimenujte obstoječo kolekcijo za učenje po meri.</string>
+  <string name="empty_deck">This deck is empty</string>
+  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_limit_reached">Daily study limit reached</string>
+  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Čestitam! Za zdaj ste končali.</string>
   <string name="studyoptions_congrats_more_rev">Dosežena je bila današnja omejitev za pregled, vendar pa je prostalo še nekaj kartic, ki jih je potrebno pregledati. Za optimalno pomnjenje priporočamo povečanje nastavitve dnevne omejitve med možnostmi.</string>
   <string name="studyoptions_congrats_more_new">Kartic ni več na voljo, čeprav dnevna omejitev ni bila dosežena. Med možnostmi lahko povečate omejitev, toda prosim imejte v mislih, da boste s tem povečali obremenitev pri kratkoročnem pregledu.</string>

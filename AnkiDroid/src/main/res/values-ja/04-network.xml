@@ -53,18 +53,18 @@
   <string name="login_create_account_message">AnkiWebにログインする必要があります。次の手順でアカウントを作成できます。</string>
   <string name="no_email_client">E-mailアドレスが無効です</string>
   <string name="username">メールアドレス</string>
-  <string name="username_repeat">もう一度メールアドレスを入力</string>
+  <string name="username_repeat">メールアドレス（確認）</string>
   <string name="password">パスワード</string>
-  <string name="password_repeat">パスワードの再入力</string>
+  <string name="password_repeat">パスワード（確認）</string>
   <string name="log_in">ログイン</string>
   <string name="sign_up_description">AnkiWebのアカウントを新規登録（無料）</string>
   <string name="sign_up">サインアップ</string>
-  <string name="sign_up_terms"><i>サインアップ</i> をタップして、当社の <a href="https://ankiweb.net/account/terms"> 利用規約</a> への同意を確認します。</string>
+  <string name="sign_up_terms"><i>サインアップ</i> をタップすると、<a href="https://ankiweb.net/account/terms">利用規約</a>に同意したことになります。</string>
   <string name="logged_as">ログイン名</string>
   <string name="log_out">ログアウト</string>
   <string name="alert_logging_message">ログインしています。しばらくお待ちください&#8230;</string>
   <string name="invalid_username_password">メールアドレスまたはパスワードが無効です</string>
-  <string name="reset_password">パスワードリセット</string>
+  <string name="reset_password">パスワードを再設定</string>
   <string name="downloaddeck_search">検索</string>
   <string name="preferences_title">設定</string>
   <string name="deckpreferences_title">XXX のオプション</string>
@@ -111,13 +111,13 @@
   <string name="sync_media_success">メディアの同期が完了しました</string>
   <string name="sync_media_changes_count">%d 個のメディアが変更されアップロードが必要です</string>
   <string name="sync_media_downloaded_count">%d 個のメディアをダウンロードしました</string>
-  <string name="sync_sanity_failed">同期後にコレクションの不整合が発見されました。この問題を解決するためにコレクションの完全な同期が必要です。Ankiweb側（リモート）か、AnkiDroid側（ローカル）のデータを保持するかを選択して同期するか、同期をキャンセルしてください。</string>
+  <string name="sync_sanity_failed">同期中にコレクションの不整合が発見されました。この問題を解決するためには完全同期が必要です。Ankiweb側と AnkiDroid側（この端末）のいずれのコレクションを保持するかを選択してください。</string>
   <string name="sync_media_sanity_failed">メディアの同期が完了しました。しかし、メディアの数がAnkiWeb上のものと一致しません。次にメディアを同期するときには、エラーを修正するために完全同期を行います。</string>
   <string name="sync_media_error">メディアデータの同期中のエラー</string>
   <string name="sync_media_unsupported">Android 2.2 およびそれ以前のバージョンでは、複雑なメディア ファイル名はサポートされません。メディアの同期を無効にされています。</string>
   <string name="register_error">エラーが発生しました。後でもう一度実行してください。</string>
   <string name="register_title">アカウントの登録</string>
-  <string name="register_mismatch">ユーザー名/パスワードが一致しません。再入力してください。</string>
+  <string name="register_mismatch">「メールアドレス（確認）」または「パスワード（確認）」が元の文字列と一致しないか、無記入です。</string>
   <string name="registering_message">アカウントを作成しています...</string>
   <string name="sync_sanity_local">ローカル</string>
   <string name="sync_sanity_remote">リモート</string>

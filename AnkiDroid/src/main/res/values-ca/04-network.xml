@@ -40,18 +40,18 @@
 
 -->
 <resources>
-  <string name="youre_offline">You are offline</string>
-  <string name="sync_error">Sync error</string>
+  <string name="youre_offline">Treballeu fora de línia</string>
+  <string name="sync_error">Error de sincronització</string>
   <string name="vague_error">Error</string>
   <string name="retry">Intenta-ho de nou</string>
   <string name="cancel">Anul·la</string>
   <string name="loading_shared_decks">S\estàn carregant els paquets compartits...</string>
-  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Termes i condicions</a></string>
   <string name="menu_get_shared_decks">Baixeu paquets compartits</string>
   <string name="connection_error_message">Hi ha hagut un error de la xarxa.</string>
-  <string name="not_logged_in_title">Log in to AnkiWeb</string>
-  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
-  <string name="no_email_client">No email client available</string>
+  <string name="not_logged_in_title">Entra a AnkiWeb</string>
+  <string name="login_create_account_message">Cal estar registrat per a un compte de AnkiWeb. Podeu crear un en el pròxim pas.</string>
+  <string name="no_email_client">Cap client de correu electrònic disponible</string>
   <string name="username">Adreça de correu electrònic</string>
   <string name="username_repeat">Repeteix l\'adreça de correu electrònic</string>
   <string name="password">Contrasenya</string>
@@ -59,15 +59,15 @@
   <string name="log_in">Inicia la sessió</string>
   <string name="sign_up_description">No teniu un compte d\'AnkiWeb? És gratuït!</string>
   <string name="sign_up">Registreu-vos</string>
-  <string name="sign_up_terms">By touching <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
+  <string name="sign_up_terms">Tocant a <i>inscriure\'s</i>, vostè confirma que ha llegit i accepta les <a href="https://ankiweb.net/account/terms"> condicions d\'ús</a>.</string>
   <string name="logged_as">Heu entrat com a</string>
   <string name="log_out">Desconnecta</string>
   <string name="alert_logging_message">S\'està iniciant la sessió, un moment...</string>
   <string name="invalid_username_password">L\'adreça de correu electrònic o la contrasenya no són vàlides.</string>
-  <string name="reset_password">Reset password</string>
+  <string name="reset_password">Restableix la contrasenya</string>
   <string name="downloaddeck_search">Cerca</string>
   <string name="preferences_title">Preferències</string>
-  <string name="deckpreferences_title">Options for XXX</string>
+  <string name="deckpreferences_title">Opcions per XXX</string>
   <string name="sync_conflict_message">Els vostres paquets aquí i a AnkiWeb difereixen de tal manera que no es poden combinar junts, per això cal que trieu un dels dos paquets.\n\nVoleu carregar el paquets des d\'aquí, o descarregar el d\'AnkiWeb?</string>
   <string name="sync_conflict_local">Puja</string>
   <string name="sync_conflict_remote">Descarrega</string>
@@ -86,14 +86,14 @@
   <string name="sync_log_clocks_unsynchronized_date">Sembla que la data del dispositiu podria ser incorrecta</string>
   <string name="sync_conflict_title">Conflicte de sincronització</string>
   <string name="sync_no_changes_message">No s\'ha trobat cap canvi.</string>
-  <string name="sync_database_acknowledge">Collection synchronized</string>
+  <string name="sync_database_acknowledge">Col·lecció sincronitzada</string>
   <string name="sync_log_error_specific">Error de sincronització, tipus: %1$s, missatge: %2$s</string>
   <string name="sync_corrupt_database">La base de dades està feta malbé. Corregiu-ho abans d\'intentar una nova sincronització.\n\nVeieu %s per a obtenir informació sobre com reparar la base de dades.</string>
   <string name="sync_too_busy">El servidor està ocupat. Torna-ho a provar més endavant.</string>
   <string name="sync_remote_db_error">La base de dades descarregada era corrupta. Si us plau proveu-ho de nou.</string>
   <string name="sync_overwrite_error">No ha estat possible sobreescriure la vostra col·lecció actual amb l\'arxiu descarregat.</string>
-  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
-  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
+  <string name="sync_connection_error">S\'agotat el temps d\'espera de la conexió. O la connexió a internet està experimentant problemes o teniu un fitxer molt gran a la seva carpeta de multimèdia.</string>
+  <string name="sync_error_409">Només un client pot accedir a AnkiWeb en un moment. Si una sincronització ha fracassat, si us plau intenti una altra vegada en pocs minuts.</string>
   <string name="sync_write_access_error">No ha estat possible desar l\'arxiu descarregat a la targeta SD. O bé la vostra targeta SD està muntada com a només de lectura o bé no hi ha prou espai.</string>
   <string name="sync_deletions_message">S\'estan sincronitzant les supressions...</string>
   <string name="sync_small_objects_message">S\'estan sincronitzant els petits objectes...</string>
@@ -109,21 +109,21 @@
   <string name="sync_media_find">S\'esta cercant els media que han canviat...</string>
   <string name="sync_media_no_changes">No hi ha canvis als arxius dels media.</string>
   <string name="sync_media_success">S\'han sincronitzat correctament els media.</string>
-  <string name="sync_media_changes_count">%d media changes to upload</string>
-  <string name="sync_media_downloaded_count">%d media files downloaded</string>
+  <string name="sync_media_changes_count">%d canvis de multimèdia per carregar</string>
+  <string name="sync_media_downloaded_count">%d fitxers descarregats</string>
   <string name="sync_sanity_failed">Després de sincronitzar, la col·lecció ha quedat en un estat inconsistent. Per resoldre-ho, Ankidroid forçarà una sincronització total. Si us plau trieu el costat que preferiu conservar, o anul·leu-ho si ho preferiu sincronitzar més endavant.</string>
   <string name="sync_media_sanity_failed">S\'ha completat la sincronització dels media, però el nombre dels media no concorda amb el del servidor. La propera sincronització serà completa per tal de corregir qualsevol error.</string>
   <string name="sync_media_error">S\'ha produït un error en sincronitzar les dades dels media.</string>
-  <string name="sync_media_unsupported">Complex media file names aren’t supported on Android 2.2 and below. Media syncing has been disabled.</string>
+  <string name="sync_media_unsupported">Noms d\'arxiu multimèdia complexes no s\'admeten en Android 2.2 i sota. La sincronització de multimèdia s\'ha inhabilitat.</string>
   <string name="register_error">S\'ha produït un error Si us plau proveu de nou més tard.</string>
   <string name="register_title">Registreu el compte</string>
   <string name="register_mismatch">Els noms d\'usuari o les contrasenyes no coincideixen o estàn buits. Torneu-ho a intentar.</string>
   <string name="registering_message">S\'està creant el compte. \nEspereu...</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Remot</string>
-  <string name="force_full_sync_title">Force full sync</string>
-  <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
-  <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
-  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
+  <string name="force_full_sync_title">Forçar sincronització completa</string>
+  <string name="force_full_sync_summary">En la sincronització següent, força els canvis en una direcció</string>
+  <string name="full_sync_confirmation">El canvi sol·licitat requerirà una càrrega completa de la base de dades quan sincronitzeu la col·lecció. Si teniu revisions o altres canvis esperant a un altre dispositiu que encara no s\'han sincronitzat aquí encara, estaran perduts. Voleu continuar?</string>
+  <string name="full_sync_confirmation_upgrade">Per un error en la versió anteriorment instal·lada de AnkiDroid, es recomana forçar una sincronització completa.</string>
+  <string name="sync_error_501_upgrade_required">Si us plau actualitzeu a la versió de AnkiDroid</string>
 </resources>

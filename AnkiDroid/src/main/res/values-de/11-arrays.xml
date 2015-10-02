@@ -81,13 +81,13 @@
     <item>Relative Überfälligkeit</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>Erhöhe das heutige Tageslimit an neuen Karten</item>
-    <item>Das Tageslimit an Wiederholungen erhöhen</item>
-    <item>Vergessene Karten nochmals lernen</item>
-    <item>Im Voraus lernen</item>
-    <item>Zufällige Kartenauswahl lernen</item>
-    <item>Zeige Vorschau von neuen Karten</item>
-    <item>Auf bestimmte Schlagworte beschränken</item>
+    <item>@string/custom_study_increase_new_limit</item>
+    <item>@string/custom_study_increase_review_limit</item>
+    <item>@string/custom_study_review_forgotten</item>
+    <item>@string/custom_study_review_ahead</item>
+    <item>@string/custom_study_random_selection</item>
+    <item>@string/custom_study_preview_new</item>
+    <item>@string/custom_study_limit_tags</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Aktuellen Stapel verwenden</item>

@@ -77,6 +77,13 @@
     <item>Провали</item>
     <item>Огляди</item>
   </string-array>
+  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
+  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
+  <string name="custom_study_review_forgotten">Review forgotten cards</string>
+  <string name="custom_study_review_ahead">Review ahead</string>
+  <string name="custom_study_random_selection">Study a random selection of cards</string>
+  <string name="custom_study_preview_new">Preview new cards</string>
+  <string name="custom_study_limit_tags">Limit to particular tags</string>
   <string name="cardeditor_title_add_note">Додати Запис</string>
   <string name="cardeditor_title_edit_card">Змінити запис</string>
   <string name="discard_unsaved_changes">Close and lose current input?</string>
@@ -149,6 +156,7 @@
   <string name="upgrade_import_no_file_found">Ввізного файлу %1$s не знайдено</string>
   <string name="study_options">Параметри колоди</string>
   <string name="custom_study">Додатковий трейнінг</string>
+  <string name="more_options">More</string>
   <string name="dyn_deck_desc">Це спеціальна колекція для навчання поза межами нормального розкладу. Картки будуть автоматично повернуті до їх початкових колекцій після повторення. Видалення цієї колекції з списку поврне всі карточки до початкових колекцій.</string>
   <string name="steps_error">Дії повинні бути числами, більшими за 0</string>
   <string name="steps_min_error">Принаймні один крок потрібний</string>

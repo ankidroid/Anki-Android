@@ -46,13 +46,11 @@
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">%1$d карата следи за %2$s</item>
     <item quantity="few">%1$d cards due in %2$s</item>
-    <item quantity="many">%1$d cards due in %2$s</item>
     <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">%1$d шпил</item>
     <item quantity="few">%1$d decks</item>
-    <item quantity="many">%1$d decks</item>
     <item quantity="other">%1$d decks</item>
   </plurals>
   <string name="widget_small">АнкиДројд мало</string>

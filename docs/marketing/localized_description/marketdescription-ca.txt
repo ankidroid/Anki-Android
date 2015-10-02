@@ -29,8 +29,8 @@ Afegiu material a través de l'aplicació d'escriptori Anki o directament a trav
 • afegiu fitxes a partir d'altres aplicacions com ara diccionaris
 • permet personalitzar el tipus de lletra
 • complet sistema de còpia de seguretat
-• navigation by swipe, tap
-• customisable
+• navegació apta per lliscar i apretar
+• personitzable
 • gestió dinàmica dels paquets
 • mode nocturn
 • Adaptat a 27 idiomes

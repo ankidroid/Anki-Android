@@ -81,13 +81,13 @@
     <item>Relativ försenhet</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>Öka dagens gräns för nya kort</item>
-    <item>Öka dagens gräns för kortrepetitioner</item>
-    <item>Repetera glömda kort</item>
-    <item>Repetera i förväg</item>
-    <item>Studera slumpvalda kort</item>
-    <item>Förhandsgranska nya kort</item>
-    <item>Begränsa till vissa etiketter</item>
+    <item>@string/custom_study_increase_new_limit</item>
+    <item>@string/custom_study_increase_review_limit</item>
+    <item>@string/custom_study_review_forgotten</item>
+    <item>@string/custom_study_review_ahead</item>
+    <item>@string/custom_study_random_selection</item>
+    <item>@string/custom_study_preview_new</item>
+    <item>@string/custom_study_limit_tags</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Använd nuvarande kortlek</item>

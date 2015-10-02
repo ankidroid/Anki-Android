@@ -149,8 +149,6 @@
   <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
   <string name="pref_keep_screen_on">Keep screen on</string>
   <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
-  <string name="fix_arabic_text">Forbedre visning av arabisk</string>
-  <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
   <string name="convert_fen_text">Støtte for sjakk-notasjon</string>
   <string name="filter_google_translate">Fra Google Oversetter</string>
   <string name="filter_google_translate_summ">Lagre kun kildeord og oversettelse</string>

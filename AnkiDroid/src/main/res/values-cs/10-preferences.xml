@@ -149,8 +149,6 @@
   <string name="input_workaround_summ">Řešení problémů s HTML vstupními poli. Způsobuje problémy na některých zařízeních.</string>
   <string name="pref_keep_screen_on">Nevypínat obrazovku</string>
   <string name="pref_keep_screen_on_summ">Nepovolit zhasnutí displeje</string>
-  <string name="fix_arabic_text">Zlepšit arabské zobrazení</string>
-  <string name="fix_arabic_text_summ">Částečné řešení pro omezenou podporu arabštiny v Androidu. Při aktivaci není možné měnit karty.</string>
   <string name="convert_fen_text">Podpora šachovnicového zápisu</string>
   <string name="filter_google_translate">Z Google překladače</string>
   <string name="filter_google_translate_summ">Uložit původní slovo a překlad</string>

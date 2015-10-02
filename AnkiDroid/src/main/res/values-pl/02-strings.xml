@@ -77,6 +77,13 @@
     <item>Pomyłki</item>
     <item>Powtórki</item>
   </string-array>
+  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
+  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
+  <string name="custom_study_review_forgotten">Review forgotten cards</string>
+  <string name="custom_study_review_ahead">Review ahead</string>
+  <string name="custom_study_random_selection">Study a random selection of cards</string>
+  <string name="custom_study_preview_new">Preview new cards</string>
+  <string name="custom_study_limit_tags">Limit to particular tags</string>
   <string name="cardeditor_title_add_note">Dodaj notatkę</string>
   <string name="cardeditor_title_edit_card">Edytuj notatkę</string>
   <string name="discard_unsaved_changes">Zamknąć i utracić bieżący wkład?</string>
@@ -149,6 +156,7 @@
   <string name="upgrade_import_no_file_found">Nie znaleziono żadnych plików do zaimportowania (%1$s)</string>
   <string name="study_options">Opcje talii</string>
   <string name="custom_study">Nauka niestandardowa</string>
+  <string name="more_options">More</string>
   <string name="dyn_deck_desc">To jest specjalna talia do nauki poza normalnym trybem. Karty automatycznie powrócą do oryginalnych talii po ich przejrzeniu. Usunięcie tej talii z listy spowoduje przywrócenie pozostałych w niej kart do oryginalnych talii.</string>
   <string name="steps_error">Kroki muszą być liczbą większą niż 0</string>
   <string name="steps_min_error">Przynajmniej jeden krok jest wymagany</string>

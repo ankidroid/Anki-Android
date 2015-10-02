@@ -50,16 +50,16 @@
     <item>Resposta recomanada (verd)</item>
     <item>Resposta millor que la recomanada</item>
     <item>Desfés</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Edita l\'anotació</item>
+    <item>Marca l\'anotació</item>
     <item>Cerca l\'expressió</item>
     <item>Aparca la fitxa</item>
     <item>Suspèn la fitxa</item>
-    <item>Delete note</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Elimina l\'anotació</item>
+    <item>Reprodueix el media</item>
+    <item>Abandona l\'estudi</item>
+    <item>Enterrar l\'anotació</item>
+    <item>Amaga l\'anotació</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Suspèn la fitxa</item>
@@ -78,28 +78,28 @@
     <item>Ordre en que s\'han afegit</item>
     <item>Per ordre de venciment</item>
     <item>Primera les darrers que s\'ahn afegit</item>
-    <item>Relative overdueness</item>
+    <item>Retràs d\'entrega relatiu</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>Augmenta el límit de fitxes d\'avui</item>
-    <item>Augmentar el límit de fitxes per revisar d\'avui</item>
-    <item>Revisa les fitxes oblidades</item>
-    <item>Revisa endavant</item>
-    <item>Estudi d\'una selecció aleatòria de les fitxes</item>
-    <item>Vista prèvia de les fitxes noves</item>
-    <item>Limit per a determinades etiquetes</item>
+    <item>@string/custom_study_increase_new_limit</item>
+    <item>@string/custom_study_increase_review_limit</item>
+    <item>@string/custom_study_review_forgotten</item>
+    <item>@string/custom_study_review_ahead</item>
+    <item>@string/custom_study_random_selection</item>
+    <item>@string/custom_study_preview_new</item>
+    <item>@string/custom_study_limit_tags</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
-    <item>Decide by note type</item>
+    <item>Utilitza aquest paquet</item>
+    <item>Dedueix pel tipus de nota</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>Barreja cartes noves i revisions</item>
+    <item>Cartes noves després de revisions</item>
+    <item>Cartes noves abans de revisions</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>Quan cap font està especificada en les flashcards</item>
+    <item>Sempre</item>
   </string-array>
 </resources>

@@ -77,6 +77,13 @@
     <item>Feilsvar</item>
     <item>Reviews</item>
   </string-array>
+  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
+  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
+  <string name="custom_study_review_forgotten">Review forgotten cards</string>
+  <string name="custom_study_review_ahead">Review ahead</string>
+  <string name="custom_study_random_selection">Study a random selection of cards</string>
+  <string name="custom_study_preview_new">Preview new cards</string>
+  <string name="custom_study_limit_tags">Limit to particular tags</string>
   <string name="cardeditor_title_add_note">Legg til notat</string>
   <string name="cardeditor_title_edit_card">Rediger notat</string>
   <string name="discard_unsaved_changes">Close and lose current input?</string>
@@ -146,6 +153,7 @@
   <string name="upgrade_import_no_file_found">Ingen importerbar %1$s-fil funnet</string>
   <string name="study_options">Kortstokkinnstillinger</string>
   <string name="custom_study">Tilpasset studie</string>
+  <string name="more_options">More</string>
   <string name="dyn_deck_desc">Det finnes en spesiell kortstokk for å studere utenfor den vanlige tidsrammen. Kort vil automatisk bli satt tilbake i de opprinnelige kortstokkene sine etter at du har gått gjennom dem. Ved å slette denne kortstokken fra kortstokklisten, vil alle gjenværende kort bli satt tilbake i de opprinnelige kortstokkene sine.</string>
   <string name="steps_error">Stegantallet må være av tall høyere enn 0</string>
   <string name="steps_min_error">Minst ett steg kreves</string>

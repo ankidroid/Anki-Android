@@ -81,13 +81,13 @@
     <item>Relative overdueness</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>Lisää tämän päivän uusien korttien rajoitusta</item>
-    <item>Lisää tämän päivän kertauskorttien rajoitusta</item>
-    <item>Kertaa unohdettuja kortteja</item>
-    <item>Kertaa etukäteen</item>
-    <item>Opiskele satunnaisia kortteja</item>
-    <item>Esikatsele uusia kortteja</item>
-    <item>Rajoitu tiettyhin tunnisteisiin</item>
+    <item>@string/custom_study_increase_new_limit</item>
+    <item>@string/custom_study_increase_review_limit</item>
+    <item>@string/custom_study_review_forgotten</item>
+    <item>@string/custom_study_review_ahead</item>
+    <item>@string/custom_study_random_selection</item>
+    <item>@string/custom_study_preview_new</item>
+    <item>@string/custom_study_limit_tags</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Käytä tätä pakkaa</item>
