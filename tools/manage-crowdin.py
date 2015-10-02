@@ -29,7 +29,7 @@ PROJECT_IDENTIFIER = 'ankidroid'
 
 path = './AnkiDroid/src/main/res/values/'
 
-files = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '14-marketdescription', '16-multimedia-editor']
+files = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '14-marketdescription', '16-multimedia-editor', '17-model-manager']
 alllang = ['ar', 'ca', 'cs', 'de', 'el', 'es-AR', 'es-ES', 'fa', 'fi', 'fr', 'hu', 'id', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-PT', 'pt-BR', 'ro', 'ru', 'sr', 'sv-SE', 'th', 'tr', 'vi', 'zh-CN', 'zh-TW']
 
 
