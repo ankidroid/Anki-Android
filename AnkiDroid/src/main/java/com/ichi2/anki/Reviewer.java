@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.FrameLayout;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
@@ -173,6 +174,13 @@ public class Reviewer extends AbstractFlashcardViewer {
             case R.id.action_search_dictionary:
                 Timber.i("Reviewer:: Search dictionary button pressed");
                 lookUpOrSelectText();
+                break;
+
+            case R.id.action_open_deck_overview:
+                Intent intent = new Intent();
+                intent.putExtra("withDeckOptions", false);
+                intent.setClass(this, StudyOptionsActivity.class);
+                startActivityWithAnimation(intent, ActivityTransitionAnimation.LEFT);
                 break;
 
             default:

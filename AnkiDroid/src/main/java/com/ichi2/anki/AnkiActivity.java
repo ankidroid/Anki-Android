@@ -42,6 +42,7 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
         SimpleMessageDialog.SimpleMessageDialogListener {
 
     public final int SIMPLE_NOTIFICATION_ID = 0;
+    public static final int REQUEST_REVIEW = 901;
 
     private DialogHandler mHandler = new DialogHandler(this);
 
@@ -277,7 +278,7 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
 
-    protected void showProgressBar() {
+    public void showProgressBar() {
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         if (progressBar != null) {
             progressBar.setVisibility(View.VISIBLE);
@@ -285,7 +286,7 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
 
-    protected void hideProgressBar() {
+    public void hideProgressBar() {
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         if (progressBar != null) {
             progressBar.setVisibility(View.GONE);
