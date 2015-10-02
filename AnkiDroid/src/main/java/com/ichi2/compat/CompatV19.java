@@ -2,20 +2,10 @@
 package com.ichi2.compat;
 
 import android.annotation.TargetApi;
-import android.appwidget.AppWidgetManager;
-import android.appwidget.AppWidgetProviderInfo;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.text.Html;
-import android.util.TypedValue;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
-import android.widget.RemoteViews;
 
 import com.ichi2.anki.NavigationDrawerActivity;
-import com.ichi2.anki.R;
 
 /** Implementation of {@link Compat} for SDK level 19 */
 @TargetApi(19)
@@ -27,8 +17,10 @@ public class CompatV19 extends CompatV16 implements Compat {
         // display the status bar. Having it enabled prevents the window from consuming
         // all the space made available when hiding the system UI, so we turn it off here.
         // Since we are hiding the status bar, there is no problem with turning this off.
-        activity.getDrawerLayout().setFitsSystemWindows(false);
-
+        DrawerLayout drawerLayout = activity.getDrawerLayout();
+        if (drawerLayout != null) {
+            drawerLayout.setFitsSystemWindows(false);
+        }
         // Set appropriate flags to enable Sticky Immersive mode.
         activity.getWindow().getDecorView().setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE

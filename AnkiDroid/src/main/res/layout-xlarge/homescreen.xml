@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/deckpicker_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="?android:attr/colorBackground"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <include layout="@layout/deck_picker"
+             android:layout_width="0dip"
+             android:layout_weight="3"
+             android:layout_height="match_parent"/>
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="fill_parent"
+        android:layout_weight="2"
+        android:orientation="vertical">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/studyOptionsToolbar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="?attr/actionBarThemeRef"
+            app:popupTheme="?attr/actionBarPopupThemeRef"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <View
+                android:id="@+id/studyoptions_gradient"
+                android:layout_width="15dp"
+                android:layout_height="fill_parent"
+                android:background="@drawable/shadow_left" />
+            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/studyoptions_fragment"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -870,7 +870,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // create inherited navigation drawer layout here so that it can be used by parent class
         setContentView(R.layout.flashcard);
         View mainView = findViewById(android.R.id.content);
-        initNavigationDrawer(mainView);
+        initNavigationDrawer(mainView, savedInstanceState, mPrefFullscreenReview);
         // Set full screen/immersive mode if needed
         if (mPrefFullscreenReview) {
             CompatHelper.getCompat().setFullScreen(this);
