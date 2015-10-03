@@ -52,18 +52,6 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         }
     }
 
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu){
-        // Make the add button visible when not fragmented layout
-        MenuItem addFromStudyOptions = menu.findItem(R.id.action_add_note_from_study_options);
-        if (addFromStudyOptions != null) {
-            addFromStudyOptions.setVisible(true);
-        }
-        return true;
-    }
-
-
     private void loadStudyOptionsFragment() {
         boolean withDeckOptions = false;
         if (getIntent().getExtras() != null) {

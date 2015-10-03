@@ -163,7 +163,9 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
     @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
-        getSupportActionBar().setTitle(mTitle);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(mTitle);
+        }
     }
 
 

@@ -38,6 +38,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -467,6 +468,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         getMenuInflater().inflate(R.menu.deck_picker, menu);
         boolean sdCardAvailable = AnkiDroidApp.isSdCardMounted();
         menu.findItem(R.id.action_sync).setEnabled(sdCardAvailable);
+        menu.findItem(R.id.action_unbury).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_new_filtered_deck).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_database).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
@@ -625,7 +627,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             }
                         });
                     }
-                }, findViewById(R.id.root_layout));
+                }, findViewById(R.id.root_layout), mSnackbarShowHideCallback);
             }
         }
     }
@@ -1668,7 +1670,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     CustomStudyDialog d = CustomStudyDialog.newInstance(CustomStudyDialog.CONTEXT_MENU_LIMITS, true);
                     showDialogFragment(d);
                 }
-            }, findViewById(R.id.root_layout));
+            }, findViewById(R.id.root_layout), mSnackbarShowHideCallback);
         } else if (deckDueTreeNode.children.size() == 0 && getCol().cardCount(new long[]{did}) == 0) {
             // If the deck is empty and has no children then show a message saying it's empty
             showSnackbar(R.string.empty_deck, false, R.string.help, new OnClickListener() {
@@ -1678,7 +1680,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             .getString(R.string.link_manual_getting_started)));
                     startActivityWithoutAnimation(helpIntent);
                 }
-            }, findViewById(R.id.root_layout));
+            }, findViewById(R.id.root_layout), mSnackbarShowHideCallback);
         } else {
             // Otherwise say there are no cards scheduled to study, and give option to do custom study
             showSnackbar(R.string.studyoptions_empty_schedule, false, R.string.custom_study, new OnClickListener() {
@@ -1688,7 +1690,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             CustomStudyDialog.CONTEXT_MENU_EMPTY_SCHEDULE, true);
                     showDialogFragment(d);
                 }
-            }, findViewById(R.id.root_layout));
+            }, findViewById(R.id.root_layout), mSnackbarShowHideCallback);
         }
     }
 
@@ -1739,7 +1741,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         if (eta != -1) {
                             time = res.getString(R.string.time_quantity_minutes, eta);
                         }
-                        getSupportActionBar().setSubtitle(res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
+                        if (getSupportActionBar() != null) {
+                            getSupportActionBar().setSubtitle(res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
+                        }
                     }
                 } catch (RuntimeException e) {
                     Timber.e(e, "RuntimeException setting time remaining");
@@ -1969,4 +1973,25 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
         updateDeckList();
     }
+
+    /**
+     * FAB can't be animated to move out of the way of the snackbar button on API < 11
+     */
+    Snackbar.Callback mSnackbarShowHideCallback = new Snackbar.Callback() {
+        @Override
+        public void onDismissed(Snackbar snackbar, int event) {
+            if (!CompatHelper.isHoneycomb()) {
+                final FloatingActionsMenu actionsMenu = (FloatingActionsMenu) findViewById(R.id.add_content_menu);
+                actionsMenu.setEnabled(true);
+            }
+        }
+
+        @Override
+        public void onShown(Snackbar snackbar) {
+            if (!CompatHelper.isHoneycomb()) {
+                final FloatingActionsMenu actionsMenu = (FloatingActionsMenu) findViewById(R.id.add_content_menu);
+                actionsMenu.setEnabled(false);
+            }
+        }
+    };
 }

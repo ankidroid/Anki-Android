@@ -13,7 +13,8 @@
 
         <LinearLayout
             android:id="@+id/LinearLayoutForSpareMenuFieldEdit"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/match_parent_or_600dp"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
         </LinearLayout>

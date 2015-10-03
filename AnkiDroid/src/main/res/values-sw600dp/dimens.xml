@@ -2,7 +2,9 @@
 <resources>
     <dimen name="keyline_1">24dp</dimen>
     <dimen name="default_width">64dp</dimen>
+    <dimen name="study_options_padding">16dp</dimen>
     <dimen name="deck_picker_left_padding_small">12dp</dimen>
     <dimen name="deck_picker_left_padding">24dp</dimen>
     <dimen name="deck_picker_right_padding">12dp</dimen>
+    <dimen name="match_parent_or_600dp">600dp</dimen>
 </resources>
