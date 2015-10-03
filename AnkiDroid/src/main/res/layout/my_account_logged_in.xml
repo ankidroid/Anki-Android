@@ -15,10 +15,10 @@
 
         <LinearLayout
             android:id="@+id/logged_text"
-            android:layout_width="fill_parent"
+            android:layout_width="@dimen/match_parent_or_600dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="20dp"
             android:layout_centerInParent="true"

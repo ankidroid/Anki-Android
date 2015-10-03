@@ -15,8 +15,9 @@
 
         <ScrollView
             android:id="@+id/CardEditorScroll"
-            android:layout_width="fill_parent"
+            android:layout_width="@dimen/match_parent_or_600dp"
             android:layout_height="fill_parent"
+            android:layout_gravity="center_horizontal"
             android:padding="5dp" >
 
             <LinearLayout

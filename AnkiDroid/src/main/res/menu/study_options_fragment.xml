@@ -5,12 +5,23 @@
         android:enabled="true"
         android:icon="@drawable/ic_undo_white_24dp"
         android:title="@string/undo"
-        ankidroid:showAsAction="always"
-        android:visibility = "gone" />
+        ankidroid:showAsAction="always"/>
     <item
-        android:id="@+id/action_add_note_from_study_options"
-        android:icon="@drawable/ic_add_white_24dp"
-        android:title="@string/menu_add"
-        ankidroid:showAsAction="always"
-        android:visible="false" />
+        android:id="@+id/action_deck_options"
+        android:title="@string/study_options"/>
+    <item
+        android:id="@+id/action_custom_study"
+        android:title="@string/custom_study"/>
+    <item
+        android:id="@+id/action_unbury"
+        android:title="@string/unbury"
+        android:visibility = "gone"/>
+    <item
+        android:id="@+id/action_rebuild"
+        android:title="@string/rebuild_cram_label"
+        android:visibility = "gone"/>
+    <item
+        android:id="@+id/action_empty"
+        android:title="@string/empty_cram_label"
+        android:visibility = "gone"/>
 </menu>

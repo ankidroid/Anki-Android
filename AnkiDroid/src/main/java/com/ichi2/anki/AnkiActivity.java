@@ -371,8 +371,12 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
      * @param listener listener for the action (if null no action shown)
      * @oaram root View Snackbar will attach to. Should be CoordinatorLayout for swipe-to-dismiss to work.
      */
-    protected void showSnackbar(int mainTextResource, boolean shortLength,
-                                int actionTextResource, View.OnClickListener listener, View root) {
+    protected void showSnackbar(int mainTextResource, boolean shortLength, int actionTextResource,
+                                View.OnClickListener listener, View root) {
+        showSnackbar(mainTextResource,shortLength,actionTextResource,listener,root);
+    }
+    protected void showSnackbar(int mainTextResource, boolean shortLength, int actionTextResource,
+                                View.OnClickListener listener, View root, Snackbar.Callback callback) {
         if (root == null) {
             root = findViewById(android.R.id.content);
             if (root == null) {
@@ -384,6 +388,9 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
         Snackbar sb = Snackbar.make(root, mainTextResource, length);
         if (listener != null) {
             sb.setAction(actionTextResource, listener);
+        }
+        if (callback != null) {
+            sb.setCallback(callback);
         }
         // Make the text white to avoid interference from our theme colors.
         View view = sb.getView();

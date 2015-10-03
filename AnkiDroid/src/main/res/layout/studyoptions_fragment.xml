@@ -1,59 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/studyoptions_main"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingLeft="@dimen/keyline_1"
-    android:paddingRight="@dimen/keyline_1"
     android:orientation="vertical"
     android:gravity="center">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/studyoptions_mainframe"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:paddingBottom="32dp" >
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/studyOptionsToolbar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="?attr/actionBarThemeRef"
+            android:layout_alignParentTop="true"
+            app:popupTheme="?attr/actionBarPopupThemeRef"/>
         <ScrollView
             android:id="@+id/studyoptions_scrollview"
+            android:layout_below="@id/studyOptionsToolbar"
+            android:layout_above="@id/bottom_area_layout"
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:paddingLeft="@dimen/study_options_padding"
+            android:paddingRight="@dimen/study_options_padding"
+            android:paddingBottom="16dp"
             android:fadeScrollbars="false"
             android:fillViewport="true">
 
             <LinearLayout
                 android:id="@+id/studyoptions_scrollcontainer"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_gravity="center"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/studyoptions_deck_name"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
                     android:ellipsize="end"
                     android:gravity="center"
                     android:maxLines="3"
-                    android:text=""
+                    android:text="Deck Title"
                     android:textSize="28sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/studyoptions_deckinformation"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
 
                     <TableLayout
                         android:id="@+id/studyoptions_deckcounts"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="5dip"
                         android:layout_marginEnd="3dip"
@@ -69,7 +84,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="0dip"
                                 android:paddingRight="5dip"
-                                android:text="@string/studyoptions_due_today" />
+                                android:text="@string/studyoptions_due_today"/>
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -147,149 +162,48 @@
                                 android:gravity="end" />
                         </TableRow>
                     </TableLayout>
-
-                    <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/studyoptions_deck_description"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:gravity="center"
-                            android:text="" />
-                    </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/studyoptions_congrats_layout"
-                    android:layout_width="fill_parent"
+                <TextView
+                    android:id="@+id/studyoptions_deck_description"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/studyoptions_congrats_message"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:gravity="center"
-                        android:text="" />
-                </LinearLayout>
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:text="This is a deck description. It tells us about what the deck does and where it comes from blah blah." />
             </LinearLayout>
         </ScrollView>
-
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:id="@+id/bottom_area_layout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="5dip">
-
-            <LinearLayout
-                android:layout_width="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/studyoptions_congrats_message"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/studyoptions_start"
-                    android:layout_width="0dip"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:lines="3"
-                    android:text="@string/studyoptions_start"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <!-- This is the layout for a normal deck (not filtered). We show this by default and
-            hide/replace it with another one if it's a filtered deck.-->
-            <LinearLayout
-                android:id="@+id/studyoptions_regular_buttons"
-                android:layout_width="fill_parent"
+                android:minLines="2"
+                android:text="Congratulations! You have finished for now."
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"/>
+            <Button
+                android:id="@+id/studyoptions_start"
+                android:background="@color/fab_normal"
+                android:textColor="@color/white"
+                android:layout_marginTop="16dp"
+                android:layout_width="200dip"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/studyoptions_options"
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:lines="1"
-                    android:text="@string/study_options"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/studyoptions_custom"
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:lines="1"
-                    android:text="@string/custom_study"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/studyoptions_unbury"
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:lines="1"
-                    android:text="@string/unbury"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-            </LinearLayout>
-
-            <!-- This is the layout used for filtered decks. It is hidden by default and made visible
-            at runtime if we are loading a filtered deck. -->
-            <LinearLayout
-                android:id="@+id/studyoptions_cram_buttons"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <Button
-                    android:id="@+id/studyoptions_options_cram"
-                    android:layout_width="0px"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:text="@string/study_options"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/studyoptions_rebuild_cram"
-                    android:layout_width="0px"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:text="@string/rebuild_cram_label"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/studyoptions_empty_cram"
-                    android:layout_width="0px"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:text="@string/empty_cram_label"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/studyoptions_unbury_cram"
-                    android:layout_width="0px"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:text="@string/unbury"
-                    android:textSize="12sp"
-                    android:visibility="gone" />
-            </LinearLayout>
+                android:lines="2"
+                android:text="@string/studyoptions_start"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"/>
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
     <include layout="@layout/anki_progress"/>
 </android.support.design.widget.CoordinatorLayout>

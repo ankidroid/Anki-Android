@@ -12,10 +12,9 @@
         <include layout="@layout/toolbar" />
 
         <ListView
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/match_parent_or_600dp"
+            android:gravity="center"
             android:layout_height="wrap_content"
-            android:id="@+id/note_type_editor_fields"
-            android:layout_gravity="center_horizontal"/>
-
+            android:id="@+id/note_type_editor_fields"/>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
