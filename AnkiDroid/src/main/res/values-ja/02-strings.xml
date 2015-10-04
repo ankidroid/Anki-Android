@@ -77,8 +77,8 @@
     <item>忘却回数</item>
     <item>学習回数</item>
   </string-array>
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
+  <string name="custom_study_increase_new_limit">今日の新規カードの上限を上げる</string>
+  <string name="custom_study_increase_review_limit">今日の復習カードの上限を上げる</string>
   <string name="custom_study_review_forgotten">Review forgotten cards</string>
   <string name="custom_study_review_ahead">Review ahead</string>
   <string name="custom_study_random_selection">Study a random selection of cards</string>

@@ -77,13 +77,13 @@
     <item>Lapsos</item>
     <item>Revisões</item>
   </string-array>
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
-  <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_increase_new_limit">Aumentar o limite de cartões novos de hoje</string>
+  <string name="custom_study_increase_review_limit">Aumentar o limite de revisões de hoje</string>
+  <string name="custom_study_review_forgotten">Revisar cartões esquecidos</string>
+  <string name="custom_study_review_ahead">Antecipar revisão</string>
+  <string name="custom_study_random_selection">Estudar uma seleção aleatória de cartões</string>
+  <string name="custom_study_preview_new">Visualizar cartões novos</string>
+  <string name="custom_study_limit_tags">Limitar a tags específicas</string>
   <string name="cardeditor_title_add_note">Adicionar Nota</string>
   <string name="cardeditor_title_edit_card">Editar Nota</string>
   <string name="discard_unsaved_changes">Fechar e perder a entrada atual?</string>
@@ -153,7 +153,7 @@
   <string name="upgrade_import_no_file_found">Nenhum arquivo %1$s importável encontrado</string>
   <string name="study_options">Opções de Deck</string>
   <string name="custom_study">Estudo personalizado</string>
-  <string name="more_options">More</string>
+  <string name="more_options">Mais</string>
   <string name="dyn_deck_desc">Esse é um deck especial para estudar fora do planejamento normal. Os cartões serão retornados automaticamente para os decks originais após revisá-los. Ao apagar esse deck da lista de decks os cartões restantes serão retornados para os decks originais.</string>
   <string name="steps_error">Número de passos deve ser maior do que 0</string>
   <string name="steps_min_error">Pelo menos um passo é necessário</string>

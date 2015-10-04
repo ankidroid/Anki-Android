@@ -51,7 +51,7 @@
   <string name="studyoptions_total_cards">Total cartões:</string>
   <string name="studyoptions_eta">Tempo estimado (min):</string>
   <string name="studyoptions_start">Estudar agora</string>
-  <string name="study_more">Study more</string>
+  <string name="study_more">Estudar mais</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d cartão programado (%2$s)</item>
     <item quantity="other">%1$d cartões programados (%2$s)</item>
@@ -61,8 +61,8 @@
     <item quantity="other">%d minutos restantes</item>
   </plurals>
   <plurals name="studied_cards_today">
-    <item quantity="one">Studied %1$d card in %2$s today</item>
-    <item quantity="other">Studied %1$d cards in %2$s today</item>
+    <item quantity="one">%1$d cartão estudado em %2$s hoje</item>
+    <item quantity="other">%1$d cartões estudados em %2$s hoje</item>
   </plurals>
   <string name="type_answer_hint">Digitar resposta</string>
   <string name="show_answer">Mostrar Resposta</string>
@@ -105,8 +105,8 @@
   <string name="time_quantity_minutes">%d min</string>
   <string name="time_quantity_hours">%d h</string>
   <string name="time_quantity_days">%d d</string>
-  <string name="time_quantity_months">%.1f mo</string>
-  <string name="time_quantity_years">%.1f yr</string>
+  <string name="time_quantity_months">%.1f mês</string>
+  <string name="time_quantity_years">%.1f ano</string>
   <string name="later">Mais tarde</string>
   <string name="rebuild_cram_deck">Reconstruindo deck do cursinho.\nPor favor aguarde...</string>
   <string name="rebuild_cram_label">Reconstruir</string>
@@ -114,10 +114,10 @@
   <string name="empty_cram_deck">Esvaziando deck do cursinho.\nPor favor aguarde...</string>
   <string name="custom_study_deck_name">Sessão de Estudo Personalizado</string>
   <string name="custom_study_deck_exists">Por favor renomeie o deck de Estudo Personalizado existente primeiro.</string>
-  <string name="empty_deck">This deck is empty</string>
-  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-  <string name="studyoptions_limit_reached">Daily study limit reached</string>
-  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+  <string name="empty_deck">Este baralho está vazio</string>
+  <string name="studyoptions_empty">Este baralho está vazio. Pressione o botão + para adicionar novos conteúdos.</string>
+  <string name="studyoptions_limit_reached">Limite diário de estudo atingido</string>
+  <string name="studyoptions_empty_schedule">Sem cartões programados para estudar</string>
   <string name="studyoptions_congrats_finished">Parabéns! Você terminou por enquanto.</string>
   <string name="studyoptions_congrats_more_rev">O limite de revisão de hoje foi atingido, mas ainda existem cartões esperando para serem revistos. Para uma ótima memória, considere aumentar o limite diário nas opções.</string>
   <string name="studyoptions_congrats_more_new">Existem mais cartões novos disponíveis, mas o limite diário foi alcançado. Você pode aumentar o limite nas opções, mas por favor, tenha em mente que isso vai aumentar sua carga de trabalho de revisão a curto prazo.</string>
@@ -125,8 +125,8 @@
   <string name="studyoptions_no_cards_due">Nenhum cartão a fazer por enquanto.</string>
   <string name="sd_card_not_mounted">Armazenamento de dispositivo não montado</string>
   <string name="button_sync">Sincronizar</string>
-  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-  <string name="sync_cancelled">Sync cancelled</string>
+  <string name="cancel_sync_confirm">Você quer cancelar a sincronização?</string>
+  <string name="sync_cancelled">Sincronização cancelada</string>
   <string name="export">Exportar</string>
   <string name="nothing">Nada</string>
   <string name="title_activity_template_editor">Tipos de Cartão para %s</string>
@@ -141,7 +141,6 @@
     <item quantity="other">Remover o tipo de cartão %2$s e seus %1$d cartões?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Remover este tipo de cartão resultaria na remoção de uma ou mais notas. Por favor, crie primeiro um novo tipo de cartão.</string>
-  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
-        models, and decks, as well as create new ones.</string>
+  <string name="read_write_permission_label">Ler e escrever para o banco de dados AnkiDroid</string>
+  <string name="read_write_permission_description">Permitir que o aplicativo seja capaz de acessar notas existentes, cartões, modelos e baralhos, bem como criar novos.</string>
 </resources>

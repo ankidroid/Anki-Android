@@ -51,7 +51,7 @@
   <string name="studyoptions_total_cards">カード総数:</string>
   <string name="studyoptions_eta">推定学習時間 (分):</string>
   <string name="studyoptions_start">学習開始</string>
-  <string name="study_more">Study more</string>
+  <string name="study_more">さらに学習</string>
   <plurals name="deckpicker_title">
     <item quantity="other">現在の課題: %1$d枚 (%2$s)</item>
   </plurals>
@@ -111,10 +111,10 @@
   <string name="empty_cram_deck">カードを元のデッキへ戻しています...</string>
   <string name="custom_study_deck_name">カスタム学習セッション</string>
   <string name="custom_study_deck_exists">最初に、既存のカスタム学習デッキの名前を変更してください</string>
-  <string name="empty_deck">This deck is empty</string>
-  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-  <string name="studyoptions_limit_reached">Daily study limit reached</string>
-  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+  <string name="empty_deck">このデッキにはカードが入っていません</string>
+  <string name="studyoptions_empty">このデッキにはカードが入っていません。「＋」ボタンをタップしてカードを追加してください。</string>
+  <string name="studyoptions_limit_reached">既に一日あたりの学習枚数の上限に達しています</string>
+  <string name="studyoptions_empty_schedule">現在のところ課題はありません</string>
   <string name="studyoptions_congrats_finished">おめでとうございます！ 今日の課題を達成しました</string>
   <string name="studyoptions_congrats_more_rev">予定日に達した復習カードがまだ他にも残っていますが、今日復習したカードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で上げられます。</string>
   <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、今日学習した新規カードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で上げられます。（ただしそれに伴って短期的に学習の負担が増えますのでご注意ください。）</string>

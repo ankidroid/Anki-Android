@@ -80,8 +80,8 @@
   <string name="fullscreen_review_summ">Ocultar a barra de status do sistema</string>
   <string name="gestures">Habilitar gestos</string>
   <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar cartões.</string>
-  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
-  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
+  <string name="gestures_hide_answer_buttons">Ocultar botões de resposta</string>
+  <string name="gestures_hide_answer_buttons_summ">Não mostrar botões de resposta quando gestos estão habilitados</string>
   <string name="gestures_swipe_up">Deslizar para cima</string>
   <string name="gestures_swipe_down">Deslizar para baixo</string>
   <string name="gestures_swipe_left">Deslizar à esquerda</string>
@@ -103,9 +103,8 @@
   <string name="sync_account">Conta AnkiWeb</string>
   <string name="sync_account_summ_logged_out">Não está logado</string>
   <string name="sync_account_summ_logged_in">%s</string>
-  <string name="automatic_sync_choice">Automatic synchronization</string>
-  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
+  <string name="automatic_sync_choice">Sincronização automática</string>
+  <string name="automatic_sync_choice_summ">Sincronizar automaticamente ao iniciar/sair do aplicativo se a última sincronização foi há mais de 10 minutos.</string>
   <string name="fix_hebrew_text">Correção para vogais em Hebraico</string>
   <string name="fix_hebrew_text_summ">Solução alternativa de renderização correta dos sons de vogais do Hebraico.</string>
   <string name="fix_hebrew_instructions">Esta definição ignora o algoritmo do Android para mostrar texto Hebraico com vogais corretamente.\n\nPara isso funcionar, você precisa baixar a fonte Tohu.ttf e copiá-la manualmente para:\n%s/fonts/\n\nVocê não terá que modificar seus cartões.</string>
