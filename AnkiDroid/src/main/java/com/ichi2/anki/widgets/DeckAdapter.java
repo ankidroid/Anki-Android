@@ -31,6 +31,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ichi2.anki.R;
+import com.ichi2.compat.Compat;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Sched;
 
@@ -47,7 +49,6 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     private int mNewCountColor;
     private int mLearnCountColor;
     private int mReviewCountColor;
-    private int mRowDefaultDrawable;
     private int mRowCurrentDrawable;
     private int mDeckNameDefaultColor;
     private int mDeckNameDynColor;
@@ -99,7 +100,6 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
                 R.attr.newCountColor,
                 R.attr.learnCountColor,
                 R.attr.reviewCountColor,
-                R.attr.selectableItemBackground,
                 R.attr.currentDeckBackground,
                 android.R.attr.textColor,
                 R.attr.dynDeckColor,
@@ -111,12 +111,11 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         mNewCountColor = ta.getColor(1, res.getColor(R.color.new_count));
         mLearnCountColor = ta.getColor(2, res.getColor(R.color.learn_count));
         mReviewCountColor = ta.getColor(3, res.getColor(R.color.review_count));
-        mRowDefaultDrawable = ta.getResourceId(4, 0);
-        mRowCurrentDrawable = ta.getResourceId(5, 0);
-        mDeckNameDefaultColor = ta.getColor(6, res.getColor(R.color.black));
-        mDeckNameDynColor = ta.getColor(7, res.getColor(R.color.deckadapter_deck_name_dyn));
-        mExpandImage = ta.getDrawable(8);
-        mCollapseImage = ta.getDrawable(9);
+        mRowCurrentDrawable = ta.getResourceId(4, 0);
+        mDeckNameDefaultColor = ta.getColor(5, res.getColor(R.color.black));
+        mDeckNameDynColor = ta.getColor(6, res.getColor(R.color.deckadapter_deck_name_dyn));
+        mExpandImage = ta.getDrawable(7);
+        mCollapseImage = ta.getDrawable(8);
         ta.recycle();
     }
 
@@ -176,14 +175,13 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             holder.deckExpander.setTag(node.did);
             holder.deckExpander.setOnClickListener(mDeckExpanderClickListener);
         }
-
+        holder.deckLayout.setBackgroundResource(mRowCurrentDrawable);
         // Set background colour. The current deck has its own color
         if (node.did == mCol.getDecks().current().optLong("id")) {
             holder.deckLayout.setBackgroundResource(mRowCurrentDrawable);
         } else {
-            holder.deckLayout.setBackgroundResource(mRowDefaultDrawable);
+            CompatHelper.getCompat().setSelectableBackground(holder.deckLayout);
         }
-
         // Set deck name and colour. Filtered decks have their own colour
         holder.deckName.setText(node.names[0]);
         if (mCol.getDecks().isDyn(node.did)) {

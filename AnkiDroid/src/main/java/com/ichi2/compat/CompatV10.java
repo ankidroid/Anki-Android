@@ -4,15 +4,19 @@ package com.ichi2.compat;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.RemoteViews;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.NavigationDrawerActivity;
+import com.ichi2.anki.R;
 import com.ichi2.anki.ReadText;
 
 import timber.log.Timber;
@@ -79,5 +83,16 @@ public class CompatV10 implements Compat {
     public void setFullScreen(NavigationDrawerActivity activity) {
         activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+
+    @Override
+    public void setSelectableBackground(View view) {
+        // NOTE: we can't use android.R.attr.selectableItemBackground until API 11
+        Resources res = view.getContext().getResources();
+        int[] attrs = new int[] {android.R.attr.colorBackground};
+        TypedArray ta = view.getContext().obtainStyledAttributes(attrs);
+        view.setBackgroundColor(ta.getColor(0, res.getColor(R.color.white)));
+        ta.recycle();
     }
 }

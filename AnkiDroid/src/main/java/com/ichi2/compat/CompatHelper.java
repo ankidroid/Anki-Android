@@ -32,6 +32,8 @@ public class CompatHelper {
 
         if (isNookHdOrHdPlus() && getSdkVersion() == 15) {
             mCompat = new CompatV15NookHdOrHdPlus();
+        } else if (getSdkVersion() >= 21) {
+            mCompat = new CompatV21();
         } else if (getSdkVersion() >= 19) {
             mCompat = new CompatV19();
         } else if (getSdkVersion() >= 16) {
@@ -56,6 +58,10 @@ public class CompatHelper {
     /** Determine if the device is running API level 11 or higher. */
     public static boolean isHoneycomb() {
         return getSdkVersion() >= Build.VERSION_CODES.HONEYCOMB;
+    }
+    /** Determine if the device is running API level 21 or higher. */
+    public static boolean isLollipop() {
+        return getSdkVersion() >= Build.VERSION_CODES.LOLLIPOP;
     }
 
     /**

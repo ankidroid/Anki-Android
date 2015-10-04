@@ -200,7 +200,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             long deckId = (long) v.getTag();
             Timber.i("DeckPicker:: Selected deck with id %d", deckId);
             handleDeckSelection(deckId);
-            if (mFragmented) {
+            if (mFragmented || !CompatHelper.isLollipop()) {
+                // Calling notifyDataSetChanged() will update the color of the selected deck.
+                // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
                 mDeckListAdapter.notifyDataSetChanged();
             }
         }

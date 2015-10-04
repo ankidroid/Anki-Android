@@ -54,5 +54,6 @@ public interface Compat {
     void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls);
     void restartActivityInvalidateBackstack(AnkiActivity activity);
     void setFullScreen(NavigationDrawerActivity activity);
+    void setSelectableBackground(View view);
 }
 
