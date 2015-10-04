@@ -496,32 +496,34 @@ public class ModelBrowser extends AnkiActivity {
             mModelNameInput.setSingleLine(true);
             mModelNameInput.setText(mModels.get(mModelListPosition).getString("name"));
             mModelNameInput.setSelection(mModelNameInput.getText().length());
-            ConfirmationDialog d = new ConfirmationDialog() {
-                @Override
-                public void confirm() {
-                    JSONObject model = mModels.get(mModelListPosition);
-                    String deckName = mModelNameInput.getText().toString()
-                            .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
-                    getCol().getDecks().id(deckName, true);
-                    if (deckName.length() > 0) {
-                        try {
-                            model.put("name", deckName);
-                            col.getModels().update(model);
-                            mModels.get(mModelListPosition).put("name", deckName);
-                            mModelDisplayList.set(mModelListPosition,
-                                    new DisplayPair(mModels.get(mModelListPosition).getString("name"),
-                                            mCardCounts.get(mModelListPosition)));
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                        refreshList();
-                    } else {
-                        showToast(getResources().getString(R.string.toast_empty_name));
-                    }
-                }
-            };
-            d.setArgs(getResources().getString(R.string.rename_model));
-            showDialogFragment(d);
+            new MaterialDialog.Builder(this)
+                                .title(R.string.rename_model)
+                                .positiveText(R.string.dialog_ok)
+                                .customView(mModelNameInput, true)
+                                .callback(new MaterialDialog.ButtonCallback() {
+                                    @Override
+                                    public void onPositive(MaterialDialog dialog) {
+                                        JSONObject model = mModels.get(mModelListPosition);
+                                        String deckName = mModelNameInput.getText().toString()
+                                                .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                                        getCol().getDecks().id(deckName, true);
+                                        if (deckName.length() > 0) {
+                                            try {
+                                                model.put("name", deckName);
+                                                col.getModels().update(model);
+                                                mModels.get(mModelListPosition).put("name", deckName);
+                                                mModelDisplayList.set(mModelListPosition,
+                                                        new DisplayPair(mModels.get(mModelListPosition).getString("name"),
+                                                                mCardCounts.get(mModelListPosition)));
+                                            } catch (JSONException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                            refreshList();
+                                        } else {
+                                            showToast(getResources().getString(R.string.toast_empty_name));
+                                        }
+                                    }
+                                }).show();
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
