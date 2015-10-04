@@ -7,7 +7,6 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:gravity="center">
-
     <RelativeLayout
         android:id="@+id/studyoptions_mainframe"
         android:layout_width="fill_parent"
@@ -38,10 +37,9 @@
 
             <LinearLayout
                 android:id="@+id/studyoptions_scrollcontainer"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_gravity="center"
                 android:orientation="vertical">
 
                 <TextView
