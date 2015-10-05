@@ -49,7 +49,6 @@
                     android:ellipsize="end"
                     android:gravity="center"
                     android:maxLines="3"
-                    android:text="Deck Title"
                     android:textSize="28sp"
                     android:textStyle="bold" />
 
@@ -170,8 +169,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:gravity="center"
-                    android:text="This is a deck description. It tells us about what the deck does and where it comes from blah blah." />
+                    android:gravity="center"/>
             </LinearLayout>
         </ScrollView>
         <LinearLayout
@@ -186,7 +184,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minLines="2"
-                android:text="Congratulations! You have finished for now."
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"/>
             <Button
