@@ -63,6 +63,6 @@
         android:id="@+id/action_enable_whiteboard"
         android:title="@string/enable_whiteboard" />
     <item
-        android:id="@+id/action_open_deck_overview"
-        android:title="@string/studyoptions_title" />
+        android:id="@+id/action_open_deck_options"
+        android:title="@string/study_options" />
 </menu>
