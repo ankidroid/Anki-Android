@@ -178,6 +178,9 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
         if (mDrawer != null && mDrawer.getDrawerLayout() != null) {
             mDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         }
+        if (mCrossFader != null) {
+            mCrossFader.getCrossFadeSlidingPaneLayout().setCanSlide(false);
+        }
     }
 
     /**
@@ -187,6 +190,9 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
     protected void enableDrawerSwipe() {
         if (mDrawer != null && mDrawer.getDrawerLayout() != null) {
             mDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        }
+        if (mCrossFader != null) {
+            mCrossFader.getCrossFadeSlidingPaneLayout().setCanSlide(true);
         }
     }
 
