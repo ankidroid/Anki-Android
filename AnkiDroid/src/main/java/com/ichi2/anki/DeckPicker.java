@@ -556,6 +556,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 String msg = getResources().getString(R.string.confirm_apkg_export);
                 showDialogFragment(ExportDialog.newInstance(msg));
                 return true;
+
+            case R.id.action_unbury:
+                Timber.i("DeckPicker:: Unbury button pressed");
+                getCol().getSched().unburyCardsForDeck();
+                updateDeckList();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
 

@@ -176,11 +176,9 @@ public class Reviewer extends AbstractFlashcardViewer {
                 lookUpOrSelectText();
                 break;
 
-            case R.id.action_open_deck_overview:
-                Intent intent = new Intent();
-                intent.putExtra("withDeckOptions", false);
-                intent.setClass(this, StudyOptionsActivity.class);
-                startActivityWithAnimation(intent, ActivityTransitionAnimation.LEFT);
+            case R.id.action_open_deck_options:
+                Intent i = new Intent(this, DeckOptions.class);
+                startActivityWithAnimation(i, ActivityTransitionAnimation.FADE);
                 break;
 
             default:
