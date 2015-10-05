@@ -181,15 +181,15 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
         restorePreferences();
         mStudyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false);
-        mToolbar = (Toolbar) mStudyOptionsView.findViewById(R.id.studyOptionsToolbar);
-        if (mToolbar != null) {
-            configureToolbar();
-        }
         mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
         NavigationDrawerActivity.setIsWholeCollection(false);
         initAllContentViews();
         if (getArguments() != null) {
             mLoadWithDeckOptions = getArguments().getBoolean("withDeckOptions");
+        }
+        mToolbar = (Toolbar) mStudyOptionsView.findViewById(R.id.studyOptionsToolbar);
+        if (mToolbar != null) {
+            configureToolbar();
         }
         refreshInterface(true);
         return mStudyOptionsView;
@@ -282,8 +282,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             case R.id.action_undo:
                 Timber.i("StudyOptionsFragment:: Undo button pressed");
                 getCol().undo();
-                refreshInterfaceAndDecklist(true);
-                configureToolbar();
+                openReviewer();
                 return true;
             case R.id.action_deck_options:
                 Timber.i("StudyOptionsFragment:: Deck options button pressed");
@@ -303,6 +302,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 Timber.i("StudyOptionsFragment:: unbury button pressed");
                 getCol().getSched().unburyCardsForDeck();
                 refreshInterfaceAndDecklist(true);
+                item.setVisible(false);
                 return true;
             case R.id.action_rebuild:
                 Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed");
@@ -339,8 +339,8 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
         // Switch on or off unbury depending on if there are cards to unbury
         menu.findItem(R.id.action_unbury).setVisible(getCol().getSched().haveBuried());
-        // Switch on or off unbury depending on whether undo is available
-        if (!getCol().undoAvailable()) {
+        // Switch on or off undo depending on whether undo is available
+        if (!getCol().undoAvailable() || mFragmented) {
             menu.findItem(R.id.action_undo).setVisible(false);
         } else {
             menu.findItem(R.id.action_undo).setVisible(true);
