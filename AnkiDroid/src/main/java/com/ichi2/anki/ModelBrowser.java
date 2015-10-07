@@ -332,6 +332,8 @@ public class ModelBrowser extends AnkiActivity {
         mNewModelNames.add(addForwardOptionalReverseName);
         mNewModelNames.add(addClozeModelName);
 
+        final int numStdModels = mNewModelLabels.size();
+
         for (JSONObject model : mModels) {
             try {
                 mNewModelLabels.add(String.format(clone, model.getString("name")));
@@ -357,7 +359,7 @@ public class ModelBrowser extends AnkiActivity {
                         mModelNameInput.setSingleLine();
 
                         //Temporary workaround - Lack of stdmodels class
-                        if (addSelectionSpinner.getSelectedItemPosition() < mNewModelLabels.size()) {
+                        if (addSelectionSpinner.getSelectedItemPosition() < numStdModels) {
                             mModelNameInput.setText(randomizeName(mNewModelNames.get(addSelectionSpinner.getSelectedItemPosition())));
                         } else {
                             mModelNameInput.setText(mNewModelNames.get(addSelectionSpinner.getSelectedItemPosition()) +
