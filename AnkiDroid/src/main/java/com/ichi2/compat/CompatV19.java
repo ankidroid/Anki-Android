@@ -29,6 +29,5 @@ public class CompatV19 extends CompatV16 implements Compat {
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        registerHideActionBarListener(activity);
     }
 }
