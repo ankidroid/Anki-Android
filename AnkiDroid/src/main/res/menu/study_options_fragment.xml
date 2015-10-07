@@ -10,18 +10,36 @@
         android:id="@+id/action_deck_options"
         android:title="@string/study_options"/>
     <item
+        android:id="@+id/action_rebuild"
+        android:title="@string/rebuild_cram_label"
+        android:visibility = "gone"
+        android:icon="@drawable/ic_refresh_white_24dp"
+        ankidroid:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_empty"
+        android:title="@string/empty_cram_label"
+        android:visibility = "gone"
+        android:icon="@drawable/ic_clear_white_24dp"
+        ankidroid:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/action_custom_study"
-        android:title="@string/custom_study"/>
+        android:title="@string/custom_study"
+        android:icon="@drawable/ic_build_white_24dp"
+        ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_unbury"
         android:title="@string/unbury"
         android:visibility = "gone"/>
     <item
-        android:id="@+id/action_rebuild"
-        android:title="@string/rebuild_cram_label"
+        android:id="@+id/action_rename"
+        android:title="@string/rename"
         android:visibility = "gone"/>
     <item
-        android:id="@+id/action_empty"
-        android:title="@string/empty_cram_label"
+        android:id="@+id/action_delete"
+        android:title="@string/contextmenu_deckpicker_delete_deck"
+        android:visibility = "gone"/>
+    <item
+        android:id="@+id/action_export"
+        android:title="@string/export"
         android:visibility = "gone"/>
 </menu>

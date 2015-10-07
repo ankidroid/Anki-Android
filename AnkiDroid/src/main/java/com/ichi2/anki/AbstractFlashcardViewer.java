@@ -123,6 +123,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * Available options performed by other activities.
      */
     public static final int EDIT_CURRENT_CARD = 0;
+    public static final int DECK_OPTIONS = 1;
 
     /** Constant for class attribute signaling answer */
     public static final String ANSWER_CLASS = "answer";
@@ -1085,11 +1086,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             finishNoStorageAvailable();
         }
 
-        if (!colIsOpen()) {
-            Timber.e("onActivityResult -- Collection is not open... aborting");
-            return;
-        }
-
         if (requestCode == EDIT_CURRENT_CARD) {
             /* Reset the schedule and reload the latest card off the top of the stack if required.
                The card could have been rescheduled, the deck could have changed, or a change of
@@ -1109,6 +1105,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 // nothing was changed by the note editor so just redraw the card
                 fillFlashcard();
             }
+        } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
+            getCol().getSched().reset();
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
+                    new DeckTask.TaskData(null, 0));
         }
         if (!mDisableClipboard) {
             clipboardSetText("");

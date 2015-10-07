@@ -73,6 +73,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     private JSONObject mOptions;
     private JSONObject mDeck;
     private Collection mCol;
+    private boolean mPreferenceChanged = false;
 
     private BroadcastReceiver mUnmountReceiver = null;
 
@@ -549,7 +550,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                closeWithResult();
                 return true;
         }
         return false;
@@ -559,6 +560,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         // update values on changed preference
+        mPreferenceChanged = true;
         this.updateSummaries();
     }
 
@@ -583,11 +585,20 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Timber.i("DeckOptions - onBackPressed()");
-            finish();
-            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
+            closeWithResult();
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private void closeWithResult() {
+        if (mPreferenceChanged) {
+            setResult(RESULT_OK);
+        } else {
+            setResult(RESULT_CANCELED);
+        }
+        finish();
+        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
     }
 
 

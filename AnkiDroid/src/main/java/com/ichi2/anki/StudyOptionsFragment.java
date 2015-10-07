@@ -188,6 +188,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             mLoadWithDeckOptions = getArguments().getBoolean("withDeckOptions");
         }
         mToolbar = (Toolbar) mStudyOptionsView.findViewById(R.id.studyOptionsToolbar);
+        mToolbar.inflateMenu(R.menu.study_options_fragment);
         if (mToolbar != null) {
             configureToolbar();
         }
@@ -242,6 +243,9 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
 
     private void initAllContentViews() {
+        if (mFragmented) {
+            mStudyOptionsView.findViewById(R.id.studyoptions_gradient).setVisibility(View.VISIBLE);
+        }
         mDeckInfoLayout = mStudyOptionsView.findViewById(R.id.studyoptions_deckinformation);
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
         mTextDeckDescription = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_description);
@@ -318,13 +322,21 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EMPTY_CRAM, getDeckTaskListener(true),
                         new DeckTask.TaskData(mFragmented));
                 return true;
+            case R.id.action_rename:
+                ((DeckPicker) getActivity()).renameDeckDialog(getCol().getDecks().selected());
+                return true;
+            case R.id.action_delete:
+                ((DeckPicker) getActivity()).confirmDeckDeletion(getCol().getDecks().selected());
+                return true;
+            case R.id.action_export:
+                ((DeckPicker) getActivity()).exportDeck(getCol().getDecks().selected());
+                return true;
             default:
                 return false;
         }
     }
 
     public void configureToolbar() {
-        mToolbar.inflateMenu(R.menu.study_options_fragment);
         mToolbar.setOnMenuItemClickListener(this);
         Menu menu = mToolbar.getMenu();
         // Switch on or off rebuild/empty/custom study depending on whether or not filtered deck
@@ -337,16 +349,32 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             menu.findItem(R.id.action_empty).setVisible(false);
             menu.findItem(R.id.action_custom_study).setVisible(true);
         }
+        // Don't show custom study icon if congrats shown
+        if (mCurrentContentView == CONTENT_CONGRATS) {
+            menu.findItem(R.id.action_custom_study).setVisible(false);
+        }
+        // Switch on rename / delete / export if tablet layout
+        if (mFragmented) {
+            menu.findItem(R.id.action_rename).setVisible(true);
+            menu.findItem(R.id.action_delete).setVisible(true);
+            menu.findItem(R.id.action_export).setVisible(true);
+        } else {
+            menu.findItem(R.id.action_rename).setVisible(false);
+            menu.findItem(R.id.action_delete).setVisible(false);
+            menu.findItem(R.id.action_export).setVisible(false);
+        }
         // Switch on or off unbury depending on if there are cards to unbury
         menu.findItem(R.id.action_unbury).setVisible(getCol().getSched().haveBuried());
         // Switch on or off undo depending on whether undo is available
-        if (!getCol().undoAvailable() || mFragmented) {
+        if (!getCol().undoAvailable()) {
             menu.findItem(R.id.action_undo).setVisible(false);
         } else {
             menu.findItem(R.id.action_undo).setVisible(true);
             Resources res = AnkiDroidApp.getAppResources();
             menu.findItem(R.id.action_undo).setTitle(res.getString(R.string.studyoptions_congrats_undo, getCol().undoName(res)));
         }
+        // Set title
+        mToolbar.setTitle(R.string.studyoptions_title);
         // Set the back button listener
         if (!mFragmented) {
             mToolbar.setNavigationIcon(new IconicsDrawable(getContext())
@@ -369,7 +397,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         Timber.d("onActivityResult (requestCode = %d, resultCode = %d)", requestCode, resultCode);
 
         // rebuild action bar
-        getActivity().supportInvalidateOptionsMenu();
+        configureToolbar();
 
         // boot back to deck picker if there was an error
         if (resultCode == DeckPicker.RESULT_DB_ERROR || resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
@@ -518,6 +546,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                             nameBuilder.append("\n").append(name[name.length - 1]);
                         }
                         mTextDeckName.setText(nameBuilder.toString());
+
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -619,7 +648,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                         mTextETA.setText("-");
                     }
                     // Rebuild the options menu
-                    getActivity().supportInvalidateOptionsMenu();
+                    configureToolbar();
                 }
 
                 // If in fragmented mode, refresh the deck list

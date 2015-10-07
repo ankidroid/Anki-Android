@@ -1,4 +1,18 @@
-
+/****************************************************************************************
+ * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
 package com.ichi2.anki.dialogs;
 
 import android.app.Dialog;
@@ -21,7 +35,6 @@ import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckOptions;
-import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.Reviewer;
 import com.ichi2.async.DeckTask;
@@ -33,6 +46,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -57,11 +71,6 @@ public class CustomStudyDialog extends DialogFragment {
         void onCreateCustomStudySession();
         void onExtendStudyLimits();
     }
-
-    /**
-     * Context menu entries
-     */
-    private ArrayList<Integer> mEntries = new ArrayList<>();
 
     /**
      * Instance factories
@@ -97,74 +106,82 @@ public class CustomStudyDialog extends DialogFragment {
      * @return
      */
     private MaterialDialog buildContextMenu(int id) {
-        String[] entries = getListEntries(id);
+        int[] listIds = getListIds(id);
         final boolean jumpToReviewer = getArguments ().getBoolean("jumpToReviewer");
         return new MaterialDialog.Builder(this.getActivity())
                 .title(R.string.custom_study)
                 .cancelable(true)
-                .items(entries)
+                .itemsIds(listIds)
+                .items(ContextMenuHelper.getValuesFromKeys(getKeyValueMap(), listIds))
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog materialDialog, View view, int which,
                                             CharSequence charSequence) {
                         AnkiActivity activity = (AnkiActivity) getActivity();
-                        if (mEntries.get(which) == DECK_OPTIONS) {
-                            // User asked to permanently change the deck options
-                            Intent i = new Intent(activity, DeckOptions.class);
-                            i.putExtra("did", activity.getCol().getDecks().selected());
-                            getActivity().startActivity(i);
-                        } else if (mEntries.get(which) == MORE_OPTIONS) {
-                            // User asked to see all custom study options
-                            CustomStudyDialog d = CustomStudyDialog.newInstance(CONTEXT_MENU_STANDARD, jumpToReviewer);
-                            activity.showDialogFragment(d);
-                        } else if (mEntries.get(which) == CUSTOM_STUDY_TAGS) {
-                            /*
-                             * This is a special Dialog for CUSTOM STUDY, where instead of only collecting a
-                             * number, it is necessary to collect a list of tags. This case handles the creation
-                             * of that Dialog.
-                             */
-                            TagsDialog dialogFragment = TagsDialog.newInstance(
-                                    TagsDialog.TYPE_CUSTOM_STUDY_TAGS, new ArrayList<String>(),
-                                    new ArrayList<>(activity.getCol().getTags().all()));
-                            dialogFragment.setTagsDialogListener(new TagsDialog.TagsDialogListener() {
-                                @Override
-                                public void onPositive(List<String> selectedTags, int option) {
-                                    /*
-                                     * Here's the method that gathers the final selection of tags, type of cards and
-                                     * generates the search screen for the custom study deck.
-                                     */
-                                    StringBuilder sb = new StringBuilder();
-                                    switch (option) {
-                                        case 1:
-                                            sb.append("is:new ");
-                                            break;
-                                        case 2:
-                                            sb.append("is:due ");
-                                            break;
-                                        default:
-                                            // Logging here might be appropriate : )
-                                            break;
-                                    }
-                                    List<String> arr = new ArrayList<>();
-                                    if (selectedTags.size() > 0) {
-                                        for (String tag : selectedTags) {
-                                            arr.add(String.format("tag:'%s'", tag));
+                        switch (view.getId()) {
+                            case DECK_OPTIONS: {
+                                // User asked to permanently change the deck options
+                                Intent i = new Intent(activity, DeckOptions.class);
+                                i.putExtra("did", activity.getCol().getDecks().selected());
+                                getActivity().startActivity(i);
+                                break;
+                            }
+                            case MORE_OPTIONS: {
+                                // User asked to see all custom study options
+                                CustomStudyDialog d = CustomStudyDialog.newInstance(CONTEXT_MENU_STANDARD, jumpToReviewer);
+                                activity.showDialogFragment(d);
+                                break;
+                            }
+                            case CUSTOM_STUDY_TAGS: {
+                                /*
+                                 * This is a special Dialog for CUSTOM STUDY, where instead of only collecting a
+                                 * number, it is necessary to collect a list of tags. This case handles the creation
+                                 * of that Dialog.
+                                 */
+                                TagsDialog dialogFragment = TagsDialog.newInstance(
+                                        TagsDialog.TYPE_CUSTOM_STUDY_TAGS, new ArrayList<String>(),
+                                        new ArrayList<>(activity.getCol().getTags().all()));
+                                dialogFragment.setTagsDialogListener(new TagsDialog.TagsDialogListener() {
+                                    @Override
+                                    public void onPositive(List<String> selectedTags, int option) {
+                                        /*
+                                         * Here's the method that gathers the final selection of tags, type of cards and
+                                         * generates the search screen for the custom study deck.
+                                         */
+                                        StringBuilder sb = new StringBuilder();
+                                        switch (option) {
+                                            case 1:
+                                                sb.append("is:new ");
+                                                break;
+                                            case 2:
+                                                sb.append("is:due ");
+                                                break;
+                                            default:
+                                                // Logging here might be appropriate : )
+                                                break;
                                         }
-                                        sb.append("(").append(TextUtils.join(" or ", arr)).append(")");
+                                        List<String> arr = new ArrayList<>();
+                                        if (selectedTags.size() > 0) {
+                                            for (String tag : selectedTags) {
+                                                arr.add(String.format("tag:'%s'", tag));
+                                            }
+                                            sb.append("(").append(TextUtils.join(" or ", arr)).append(")");
+                                        }
+                                        createCustomStudySession(new JSONArray(), new Object[]{sb.toString(),
+                                                Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM}, false);
                                     }
-                                    createCustomStudySession(new JSONArray(), new Object[]{sb.toString(),
-                                            Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM}, false);
-                                }
-                            });
-                            activity.showDialogFragment(dialogFragment);
-                        } else {
-                            // User asked for a standard custom study option
-                            CustomStudyDialog d = CustomStudyDialog.newInstance(mEntries.get(which), jumpToReviewer);
-                            ((AnkiActivity) getActivity()).showDialogFragment(d);
+                                });
+                                activity.showDialogFragment(dialogFragment);
+                                break;
+                            }
+                            default: {
+                                // User asked for a standard custom study option
+                                CustomStudyDialog d = CustomStudyDialog.newInstance(view.getId(), jumpToReviewer);
+                                ((AnkiActivity) getActivity()).showDialogFragment(d);
+                            }
                         }
                     }
-                })
-                .build();
+                }).build();
     }
 
     /**
@@ -279,82 +296,52 @@ public class CustomStudyDialog extends DialogFragment {
         return dialog;
     }
 
-    /**
-     * Build the list of options to show in the custom study dialog, and the map between position and task name
-     * @param idx option to specify which tasks are shown in the list
-     * @return the strings to show in the list
-     */
-    private String[] getListEntries(int idx) {
-        mEntries.clear();
+    private HashMap<Integer, String> getKeyValueMap() {
         Resources res = getResources();
-        String[] entries;
+        HashMap<Integer, String> keyValueMap = new HashMap<>();
+        keyValueMap.put(CONTEXT_MENU_STANDARD, res.getString(R.string.custom_study));
+        keyValueMap.put(CUSTOM_STUDY_NEW, res.getString(R.string.custom_study_increase_new_limit));
+        keyValueMap.put(CUSTOM_STUDY_REV, res.getString(R.string.custom_study_increase_review_limit));
+        keyValueMap.put(CUSTOM_STUDY_FORGOT, res.getString(R.string.custom_study_review_forgotten));
+        keyValueMap.put(CUSTOM_STUDY_AHEAD, res.getString(R.string.custom_study_review_ahead));
+        keyValueMap.put(CUSTOM_STUDY_RANDOM, res.getString(R.string.custom_study_random_selection));
+        keyValueMap.put(CUSTOM_STUDY_PREVIEW, res.getString(R.string.custom_study_preview_new));
+        keyValueMap.put(CUSTOM_STUDY_TAGS, res.getString(R.string.custom_study_limit_tags));
+        keyValueMap.put(DECK_OPTIONS, res.getString(R.string.study_options));
+        keyValueMap.put(MORE_OPTIONS, res.getString(R.string.more_options));
+        return keyValueMap;
+    }
+
+
+    /**
+     * Retrieve the list of ids to put in the context menu list
+     * @param dialogId option to specify which tasks are shown in the list
+     * @return the ids of which values to show
+     */
+    private int[] getListIds(int dialogId) {
         Collection col = ((AnkiActivity) getActivity()).getCol();
-        switch (idx) {
+        switch (dialogId) {
             case CONTEXT_MENU_STANDARD:
-                // Standard custom study options
-                mEntries.add(CUSTOM_STUDY_NEW);
-                mEntries.add(CUSTOM_STUDY_REV);
-                mEntries.add(CUSTOM_STUDY_FORGOT);
-                mEntries.add(CUSTOM_STUDY_AHEAD);
-                mEntries.add(CUSTOM_STUDY_RANDOM);
-                mEntries.add(CUSTOM_STUDY_PREVIEW);
-                mEntries.add(CUSTOM_STUDY_TAGS);
-                entries = new String[7];
-                entries[0] = res.getString(R.string.custom_study_increase_new_limit);
-                entries[1] = res.getString(R.string.custom_study_increase_review_limit);
-                entries[2] = res.getString(R.string.custom_study_review_forgotten);
-                entries[3] = res.getString(R.string.custom_study_review_ahead);
-                entries[4] = res.getString(R.string.custom_study_random_selection);
-                entries[5] = res.getString(R.string.custom_study_preview_new);
-                entries[6] = res.getString(R.string.custom_study_limit_tags);
-                break;
+                // Standard context menu
+                return new int[] {CUSTOM_STUDY_NEW, CUSTOM_STUDY_REV, CUSTOM_STUDY_FORGOT, CUSTOM_STUDY_AHEAD,
+                        CUSTOM_STUDY_RANDOM, CUSTOM_STUDY_PREVIEW, CUSTOM_STUDY_TAGS};
             case CONTEXT_MENU_LIMITS:
                 // Special custom study options to show when the daily study limit has been reached
                 if (col.getSched().newDue() && col.getSched().revDue()) {
-                    // Both new and due limits have been reached
-                    entries = new String[4];
-                    entries[0] = res.getString(R.string.custom_study_increase_new_limit);
-                    entries[1] = res.getString(R.string.custom_study_increase_review_limit);
-                    entries[2] = res.getString(R.string.study_options);
-                    entries[3] = res.getString(R.string.custom_study);
-                    mEntries.add(CUSTOM_STUDY_NEW);
-                    mEntries.add(CUSTOM_STUDY_REV);
+                    return new int[] {CUSTOM_STUDY_NEW, CUSTOM_STUDY_REV, DECK_OPTIONS, CONTEXT_MENU_STANDARD};
                 } else {
-                    // One and only one of the limits has been reached -- don't show both
-                    entries = new String[3];
                     if (col.getSched().newDue()) {
-                        entries[0] = res.getString(R.string.custom_study_increase_new_limit);
-                        mEntries.add(CUSTOM_STUDY_NEW);
+                        return new int[]{CUSTOM_STUDY_NEW, DECK_OPTIONS, CONTEXT_MENU_STANDARD};
                     } else {
-                        entries[0] = res.getString(R.string.custom_study_increase_review_limit);
-                        mEntries.add(CUSTOM_STUDY_REV);
+                        return new int[]{CUSTOM_STUDY_REV, DECK_OPTIONS, CONTEXT_MENU_STANDARD};
                     }
-                    entries[1] = res.getString(R.string.study_options);
-                    entries[2] = res.getString(R.string.more_options);
                 }
-                mEntries.add(DECK_OPTIONS);
-                mEntries.add(MORE_OPTIONS);
-                break;
             case CONTEXT_MENU_EMPTY_SCHEDULE:
                 // Special custom study options to show when extending the daily study limits is not applicable
-                mEntries.add(CUSTOM_STUDY_FORGOT);
-                mEntries.add(CUSTOM_STUDY_AHEAD);
-                mEntries.add(CUSTOM_STUDY_RANDOM);
-                mEntries.add(CUSTOM_STUDY_PREVIEW);
-                mEntries.add(CUSTOM_STUDY_TAGS);
-                mEntries.add(DECK_OPTIONS);
-                entries = new String[6];
-                entries[0] = res.getString(R.string.custom_study_review_forgotten);
-                entries[1] = res.getString(R.string.custom_study_review_ahead);
-                entries[2] = res.getString(R.string.custom_study_random_selection);
-                entries[3] = res.getString(R.string.custom_study_preview_new);
-                entries[4] = res.getString(R.string.custom_study_limit_tags);
-                entries[5] = res.getString(R.string.study_options);
-                break;
-            default:
-                entries = null;
+                return new int[] {CUSTOM_STUDY_FORGOT, CUSTOM_STUDY_AHEAD, CUSTOM_STUDY_RANDOM,
+                        CUSTOM_STUDY_PREVIEW, CUSTOM_STUDY_TAGS, DECK_OPTIONS};
         }
-        return entries;
+        return null;
     }
 
 

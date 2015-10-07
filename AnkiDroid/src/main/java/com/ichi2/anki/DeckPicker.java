@@ -214,8 +214,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             long deckId = (long) v.getTag();
             Timber.i("DeckPicker:: Long tapped on deck with id %d", deckId);
             mContextMenuDid = deckId;
-            String deckName = getCol().getDecks().name(mContextMenuDid);
-            showDialogFragment(DeckPickerContextMenu.newInstance(deckName));
+            showDialogFragment(DeckPickerContextMenu.newInstance(deckId));
             return true;
         }
     };
@@ -457,20 +456,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-
-    @Override
-    public boolean onPrepareOptionsMenu (Menu menu) {
-        // Enable / disable the unbury option
-        menu.findItem(R.id.action_unbury).setVisible(getCol().getSched().haveBuried());
-        return true;
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.deck_picker, menu);
         boolean sdCardAvailable = AnkiDroidApp.isSdCardMounted();
         menu.findItem(R.id.action_sync).setEnabled(sdCardAvailable);
-        menu.findItem(R.id.action_unbury).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_new_filtered_deck).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_database).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
@@ -555,12 +545,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 Timber.i("DeckPicker:: Export collection button pressed");
                 String msg = getResources().getString(R.string.confirm_apkg_export);
                 showDialogFragment(ExportDialog.newInstance(msg));
-                return true;
-
-            case R.id.action_unbury:
-                Timber.i("DeckPicker:: Unbury button pressed");
-                getCol().getSched().unburyCardsForDeck();
-                updateDeckList();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -1804,7 +1788,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // Callback to show export dialog for currently selected deck
     public void showContextMenuExportDialog() {
-        Long did = mContextMenuDid;
+        exportDeck(mContextMenuDid);
+    }
+    public void exportDeck(long did) {
         String msg;
         try {
             msg = getResources().getString(R.string.confirm_apkg_export_deck, getCol().getDecks().get(did).get("name"));
@@ -1816,11 +1802,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     // Callback to show dialog to rename the current deck
-    public void renameContextMenuDeckDialog() {
+    public void renameDeckDialog() {
+        renameDeckDialog(mContextMenuDid);
+    }
+    public void renameDeckDialog(final long did) {
         Resources res = getResources();
         mDialogEditText = new EditText(DeckPicker.this);
         mDialogEditText.setSingleLine();
-        final String currentName = getCol().getDecks().name(mContextMenuDid);
+        final String currentName = getCol().getDecks().name(did);
         mDialogEditText.setText(currentName);
         new MaterialDialog.Builder(DeckPicker.this)
                 .title(res.getString(R.string.contextmenu_deckpicker_rename_deck))
@@ -1833,7 +1822,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         String newName = mDialogEditText.getText().toString().replaceAll("\"", "");
                         Collection col = getCol();
                         if (!newName.equals(currentName) &&
-                                !col.getDecks().rename(col.getDecks().get(mContextMenuDid), newName)) {
+                                !col.getDecks().rename(col.getDecks().get(did), newName)) {
                             Themes.showThemedToast(DeckPicker.this,
                                     getResources().getString(R.string.rename_error, currentName), false);
 
@@ -1841,6 +1830,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         dismissAllDialogFragments();
                         mDeckListAdapter.notifyDataSetChanged();
                         updateDeckList();
+                        if (mFragmented) {
+                            loadStudyOptionsFragment(false);
+                        }
                     }
 
                     @Override
@@ -1853,20 +1845,23 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     // Callback to show confirm deck deletion dialog before deleting currently selected deck
-    public void confirmDeckDeletion(DialogFragment parent) {
+    public void confirmDeckDeletion() {
+        confirmDeckDeletion(mContextMenuDid);
+    }
+    public void confirmDeckDeletion(long did) {
         Resources res = getResources();
         if (!colIsOpen()) {
             return;
         }
-        if (mContextMenuDid == 1) {
+        if (did == 1) {
             showSimpleSnackbar(R.string.delete_deck_default_deck, true);
             dismissAllDialogFragments();
             return;
         }
         // Get the number of cards contained in this deck and its subdecks
-        TreeMap<String, Long> children = getCol().getDecks().children(mContextMenuDid);
+        TreeMap<String, Long> children = getCol().getDecks().children(did);
         long[] dids = new long[children.size() + 1];
-        dids[0] = mContextMenuDid;
+        dids[0] = did;
         int i = 1;
         for (Long l : children.values()) {
             dids[i++] = l;
@@ -1876,14 +1871,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 "select count() from cards where did in " + ids + " or odid in " + ids);
         // Delete empty decks without warning
         if (cnt == 0) {
-            deleteContextMenuDeck();
+            deleteDeck(did);
             dismissAllDialogFragments();
             return;
         }
         // Otherwise we show a warning and require confirmation
         String msg;
-        String deckName = "\'" + getCol().getDecks().name(mContextMenuDid) + "\'";
-        boolean isDyn = getCol().getDecks().isDyn(mContextMenuDid);
+        String deckName = "\'" + getCol().getDecks().name(did) + "\'";
+        boolean isDyn = getCol().getDecks().isDyn(did);
         if (isDyn) {
             msg = String.format(res.getString(R.string.delete_cram_deck_message), deckName);
         } else {
@@ -1895,6 +1890,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // Callback to delete currently selected deck
     public void deleteContextMenuDeck() {
+        deleteDeck(mContextMenuDid);
+    }
+    public void deleteDeck(final long did) {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_DECK, new DeckTask.TaskListener() {
             // Flag to indicate if the deck being deleted is the current deck.
             private boolean removingCurrent;
@@ -1903,7 +1901,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
                         getResources().getString(R.string.delete_deck), false);
-                if (mContextMenuDid == getCol().getDecks().current().optLong("id")) {
+                if (did == getCol().getDecks().current().optLong("id")) {
                     removingCurrent = true;
                 }
             }
@@ -1943,7 +1941,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             @Override
             public void onCancelled() {
             }
-        }, new TaskData(mContextMenuDid));
+        }, new TaskData(did));
     }
 
 
@@ -1971,6 +1969,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public void onCreateCustomStudySession() {
+        updateDeckList();
         openStudyOptions(false);
     }
 

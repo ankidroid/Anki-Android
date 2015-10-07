@@ -2331,6 +2331,21 @@ public class Sched {
      * ***********************************************************
      */
 
+    public boolean haveBuried(long did) {
+        long odid = mCol.getDecks().selected();
+        mCol.getDecks().select(did);
+        boolean buried = haveBuried();
+        mCol.getDecks().select(odid);
+        return buried;
+    }
+
+    public void unburyCardsForDeck(long did) {
+        long odid = mCol.getDecks().selected();
+        mCol.getDecks().select(did);
+        unburyCardsForDeck();
+        mCol.getDecks().select(odid);
+    }
+
 
     public String getName() {
         return mName;
