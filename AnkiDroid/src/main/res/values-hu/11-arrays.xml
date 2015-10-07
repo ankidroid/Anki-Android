@@ -80,15 +80,6 @@
     <item>Utoljára hozzáadott előbb</item>
     <item>Relative overdueness</item>
   </string-array>
-  <string-array name="custom_study_options_labels">
-    <item>@string/custom_study_increase_new_limit</item>
-    <item>@string/custom_study_increase_review_limit</item>
-    <item>@string/custom_study_review_forgotten</item>
-    <item>@string/custom_study_review_ahead</item>
-    <item>@string/custom_study_random_selection</item>
-    <item>@string/custom_study_preview_new</item>
-    <item>@string/custom_study_limit_tags</item>
-  </string-array>
   <string-array name="add_to_cur_labels">
     <item>Use current deck</item>
     <item>Decide by note type</item>

@@ -45,7 +45,7 @@
   <string name="settings">Configuración</string>
   <string name="help">Ayuda</string>
   <string name="send_feedback">Enviar comentarios</string>
-  <string name="studyoptions_title">Opciones de Estudio</string>
+  <string name="studyoptions_title">Deck overview</string>
   <string name="studyoptions_due_today">Programadas hoy:</string>
   <string name="studyoptions_new_total">Tarjetas nuevas totales:</string>
   <string name="studyoptions_total_cards">Tarjetas totales:</string>

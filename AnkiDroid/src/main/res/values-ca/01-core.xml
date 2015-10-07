@@ -45,7 +45,7 @@
   <string name="settings">Configuració</string>
   <string name="help">Ajuda</string>
   <string name="send_feedback">Enviar feedback</string>
-  <string name="studyoptions_title">Opcions d\'estudi</string>
+  <string name="studyoptions_title">Deck overview</string>
   <string name="studyoptions_due_today">Venç avui:</string>
   <string name="studyoptions_new_total">Total de noves fitxes:</string>
   <string name="studyoptions_total_cards">Total de fitxes:</string>

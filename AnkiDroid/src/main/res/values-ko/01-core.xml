@@ -45,7 +45,7 @@
   <string name="settings">설정</string>
   <string name="help">도움말</string>
   <string name="send_feedback">의견 보내기</string>
-  <string name="studyoptions_title">학습 옵션</string>
+  <string name="studyoptions_title">Deck overview</string>
   <string name="studyoptions_due_today">오늘 학습할 카드:</string>
   <string name="studyoptions_new_total">전체 새 카드:</string>
   <string name="studyoptions_total_cards">전체 카드:</string>

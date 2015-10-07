@@ -45,7 +45,7 @@
   <string name="settings">Settings</string>
   <string name="help">Help</string>
   <string name="send_feedback">Send feedback</string>
-  <string name="studyoptions_title">Opiskeluasetukset</string>
+  <string name="studyoptions_title">Deck overview</string>
   <string name="studyoptions_due_today">Tälle päivälle:</string>
   <string name="studyoptions_new_total">Uusia kortteja yhteensä:</string>
   <string name="studyoptions_total_cards">Kortteja yhteensä:</string>

@@ -45,7 +45,7 @@
   <string name="settings">设置</string>
   <string name="help">帮助</string>
   <string name="send_feedback">反馈</string>
-  <string name="studyoptions_title">学习选项</string>
+  <string name="studyoptions_title">Deck overview</string>
   <string name="studyoptions_due_today">今天待复习：</string>
   <string name="studyoptions_new_total">新卡片数量：</string>
   <string name="studyoptions_total_cards">全部卡片数量：</string>

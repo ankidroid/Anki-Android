@@ -104,7 +104,7 @@
   <string name="sync_account_summ_logged_out">Nicht eingeloggt</string>
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="automatic_sync_choice">Automatische Synchronisierung</string>
-  <string name="automatic_sync_choice_summ">Automatisch synchronisieren beim Programmstart oder -stopp, wenn seit letzter Synchronisierung mehr als  10 Minuten vergangen sind.</string>
+  <string name="automatic_sync_choice_summ">Automatisch synchronisieren beim Programmstart oder -stopp, wenn seit letzter Synchronisierung mehr als 10 Minuten vergangen sind.</string>
   <string name="fix_hebrew_text">Übergangslösung für hebräische Vokale</string>
   <string name="fix_hebrew_text_summ">Übergangslösung um hebräische Vokale korrekt anzuzeigen.</string>
   <string name="fix_hebrew_instructions">Diese Einstellung umgeht den RTL-Algorithmus von Android, um hebräischen Text mit Vokalen korrekt anzuzeigen.\n\nDamit dies funktioniert, müssen Sie die Schriftart Tohu.ttf herunterladen und manuell in dieses Verzeichnis kopieren:\n»%s/font/«\n\nIhre Karten müssen Sie dafür nicht ändern.</string>
@@ -139,9 +139,9 @@
   <string name="use_current">Stapel für neue Karten</string>
   <string name="new_spread">Position neuer Karten</string>
   <string name="learn_cutoff">Grenzwert für vorzeitiges Lernen</string>
-  <string name="learn_cutoff_summ">XXX Min</string>
+  <string name="learn_cutoff_summ">XXX min</string>
   <string name="time_limit">Zeitlimitwert</string>
-  <string name="time_limit_summ">XXX Min</string>
+  <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">Anfang des nächsten Tages</string>
   <string name="day_offset_summ">XXX Stunden nach Mitternacht</string>
   <string name="input_workaround">Eingabe Abhilfe</string>

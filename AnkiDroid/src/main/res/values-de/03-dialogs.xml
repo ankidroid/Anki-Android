@@ -78,8 +78,8 @@
   <string name="intent_aedict_category">Entfernen Sie alle Notepad-Kategorien um Karten zu AnkiDroid hinzuzufügen oder fügen Sie die Kategorie »Standard« hinzu</string>
   <string name="custom_study_new_total_new">Neue Karten im Stapel: %s</string>
   <string name="custom_study_rev_total_rev">Fällige Wiederholungen des Stapels: %s</string>
-  <string name="custom_study_new_extend">heutiges Tageslimit für neue Karten erhöhen um</string>
-  <string name="custom_study_rev_extend">heutiges Tageslimit für Wiederholungen erhöhen um</string>
+  <string name="custom_study_new_extend">Limit für neue Karten für heute erhöhen um</string>
+  <string name="custom_study_rev_extend">Limit für Wiederholungen für heute erhöhen um</string>
   <string name="custom_study_forgotten">Karten wiederholen, die in den letzten x Tagen vergessen wurden:</string>
   <string name="custom_study_ahead">x Tage im Voraus lernen:</string>
   <string name="custom_study_random">x Karten zufällig aus dem Stapel wählen:</string>

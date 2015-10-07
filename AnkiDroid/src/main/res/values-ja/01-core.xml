@@ -45,7 +45,7 @@
   <string name="settings">設定</string>
   <string name="help">ヘルプ</string>
   <string name="send_feedback">フィードバック</string>
-  <string name="studyoptions_title">学習オプション</string>
+  <string name="studyoptions_title">Deck overview</string>
   <string name="studyoptions_due_today">今日の課題:</string>
   <string name="studyoptions_new_total">新規カード:</string>
   <string name="studyoptions_total_cards">カード総数:</string>

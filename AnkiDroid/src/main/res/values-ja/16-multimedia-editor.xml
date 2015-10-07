@@ -90,6 +90,6 @@
   <string name="title_activity_edit_text">フィールド編集</string>
   <string name="title_activity_translation">翻訳</string>
   <string name="title_activity_load_pronounciation">発音</string>
-  <string name="title_activity_search_image">Google のイメージ検索</string>
+  <string name="title_activity_search_image">Google 画像検索</string>
   <string name="network_no_connection">ネットワークに接続されていません</string>
 </resources>

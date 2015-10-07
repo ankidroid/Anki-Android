@@ -45,7 +45,7 @@
   <string name="settings">Cài đặt</string>
   <string name="help">Trợ giúp</string>
   <string name="send_feedback">Gửi phản hồi</string>
-  <string name="studyoptions_title">Các chủ điểm học</string>
+  <string name="studyoptions_title">Deck overview</string>
   <string name="studyoptions_due_today">Tới hạn hôm nay:</string>
   <string name="studyoptions_new_total">Tổng số thẻ mới:</string>
   <string name="studyoptions_total_cards">Tổng số thẻ:</string>

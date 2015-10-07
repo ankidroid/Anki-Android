@@ -79,11 +79,11 @@
   </string-array>
   <string name="custom_study_increase_new_limit">今日の新規カードの上限を上げる</string>
   <string name="custom_study_increase_review_limit">今日の復習カードの上限を上げる</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
-  <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_review_forgotten">忘却したカードを復習する</string>
+  <string name="custom_study_review_ahead">先取りして復習する</string>
+  <string name="custom_study_random_selection">カードをランダムに学習する</string>
+  <string name="custom_study_preview_new">新規カードをプレビューする</string>
+  <string name="custom_study_limit_tags">特定のタグによる選択</string>
   <string name="cardeditor_title_add_note">ノートを追加</string>
   <string name="cardeditor_title_edit_card">ノートの編集</string>
   <string name="discard_unsaved_changes">閉じて現在の入力を破棄しますか？</string>
@@ -150,7 +150,7 @@
   <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>
   <string name="study_options">デッキ オプション</string>
   <string name="custom_study">カスタム学習</string>
-  <string name="more_options">More</string>
+  <string name="more_options">その他</string>
   <string name="dyn_deck_desc">これは標準のスケジュールから外れて学習する特別なデッキです。 カードは復習が済んだら元のデッキに自動的に戻ります。 このデッキを削除すると、残りのカードも全て元のデッキに戻ります。</string>
   <string name="steps_error">学習ステップには1以上の数字を入力してください</string>
   <string name="steps_min_error">少なくとも 1 つの学習ステップが必要です。</string>

@@ -45,7 +45,7 @@
   <string name="settings">Настройки</string>
   <string name="help">Помощь</string>
   <string name="send_feedback">Отправить отзыв</string>
-  <string name="studyoptions_title">Варианты обучения</string>
+  <string name="studyoptions_title">Deck overview</string>
   <string name="studyoptions_due_today">Повторов сегодня:</string>
   <string name="studyoptions_new_total">Всего новых карт:</string>
   <string name="studyoptions_total_cards">Всего карт:</string>
