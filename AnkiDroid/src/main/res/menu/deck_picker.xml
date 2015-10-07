@@ -7,11 +7,6 @@
         android:title="@string/sync_title"
         ankidroid:showAsAction="always"/>
     <item
-        android:id="@+id/action_unbury"
-        android:enabled="false"
-        android:title="@string/unbury"
-        ankidroid:showAsAction="never"/>
-    <item
         android:id="@+id/action_new_filtered_deck"
         android:enabled="false"
         android:menuCategory="secondary"

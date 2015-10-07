@@ -214,8 +214,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             long deckId = (long) v.getTag();
             Timber.i("DeckPicker:: Long tapped on deck with id %d", deckId);
             mContextMenuDid = deckId;
-            String deckName = getCol().getDecks().name(mContextMenuDid);
-            showDialogFragment(DeckPickerContextMenu.newInstance(deckName));
+            showDialogFragment(DeckPickerContextMenu.newInstance(deckId));
             return true;
         }
     };
@@ -457,20 +456,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-
-    @Override
-    public boolean onPrepareOptionsMenu (Menu menu) {
-        // Enable / disable the unbury option
-        menu.findItem(R.id.action_unbury).setVisible(getCol().getSched().haveBuried());
-        return true;
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.deck_picker, menu);
         boolean sdCardAvailable = AnkiDroidApp.isSdCardMounted();
         menu.findItem(R.id.action_sync).setEnabled(sdCardAvailable);
-        menu.findItem(R.id.action_unbury).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_new_filtered_deck).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_database).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
@@ -555,12 +545,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 Timber.i("DeckPicker:: Export collection button pressed");
                 String msg = getResources().getString(R.string.confirm_apkg_export);
                 showDialogFragment(ExportDialog.newInstance(msg));
-                return true;
-
-            case R.id.action_unbury:
-                Timber.i("DeckPicker:: Unbury button pressed");
-                getCol().getSched().unburyCardsForDeck();
-                updateDeckList();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

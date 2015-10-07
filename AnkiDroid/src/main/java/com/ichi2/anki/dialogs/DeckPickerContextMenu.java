@@ -1,4 +1,18 @@
-
+/****************************************************************************************
+ * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
 package com.ichi2.anki.dialogs;
 
 import android.app.Dialog;
@@ -9,8 +23,14 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
+import com.ichi2.anki.StudyOptionsFragment;
+import com.ichi2.libanki.Collection;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import timber.log.Timber;
 
@@ -23,13 +43,13 @@ public class DeckPickerContextMenu extends DialogFragment {
     private static final int CONTEXT_MENU_CUSTOM_STUDY = 2;
     private static final int CONTEXT_MENU_DELETE_DECK = 3;
     private static final int CONTEXT_MENU_EXPORT_DECK = 4;
+    private static final int CONTEXT_MENU_UNBURY = 5;
 
 
-
-    public static DeckPickerContextMenu newInstance(String dialogTitle) {
+    public static DeckPickerContextMenu newInstance(long did) {
         DeckPickerContextMenu f = new DeckPickerContextMenu();
         Bundle args = new Bundle();
-        args.putString("dialogTitle", dialogTitle);
+        args.putLong("did", did);
         f.setArguments(args);
         return f;
     }
@@ -38,21 +58,51 @@ public class DeckPickerContextMenu extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Resources res = getResources();
-        String[] entries = new String[5];
-        entries[CONTEXT_MENU_RENAME_DECK] = res.getString(R.string.contextmenu_deckpicker_rename_deck);
-        entries[CONTEXT_MENU_DECK_OPTIONS] = res.getString(R.string.study_options);
-        entries[CONTEXT_MENU_CUSTOM_STUDY] = res.getString(R.string.custom_study);
-        entries[CONTEXT_MENU_DELETE_DECK] = res.getString(R.string.contextmenu_deckpicker_delete_deck);
-        entries[CONTEXT_MENU_EXPORT_DECK] = res.getString(R.string.export);
-
+        long did = getArguments().getLong("did");
+        String title = CollectionHelper.getInstance().getCol(getContext()).getDecks().name(did);
+        int[] itemIds = getListIds();
         return new MaterialDialog.Builder(getActivity())
-                .title(getArguments().getString("dialogTitle"))
+                .title(title)
                 .cancelable(true)
                 .autoDismiss(false)
-                .items(entries)
+                .itemsIds(itemIds)
+                .items(ContextMenuHelper.getValuesFromKeys(getKeyValueMap(), itemIds))
                 .itemsCallback(mContextMenuListener)
                 .build();
+    }
+
+
+    private HashMap<Integer, String> getKeyValueMap() {
+        Resources res = getResources();
+        HashMap<Integer, String> keyValueMap = new HashMap<>();
+        keyValueMap.put(CONTEXT_MENU_RENAME_DECK, res.getString(R.string.contextmenu_deckpicker_rename_deck));
+        keyValueMap.put(CONTEXT_MENU_DECK_OPTIONS, res.getString(R.string.study_options));
+        keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY, res.getString(R.string.custom_study));
+        keyValueMap.put(CONTEXT_MENU_DELETE_DECK, res.getString(R.string.contextmenu_deckpicker_delete_deck));
+        keyValueMap.put(CONTEXT_MENU_EXPORT_DECK, res.getString(R.string.export));
+        keyValueMap.put(CONTEXT_MENU_UNBURY, res.getString(R.string.unbury));
+        return keyValueMap;
+    }
+
+    /**
+     * Retrieve the list of ids to put in the context menu list
+     * @return the ids of which values to show
+     */
+    private int[] getListIds() {
+        Collection col = CollectionHelper.getInstance().getCol(getContext());
+        long did = getArguments().getLong("did");
+        ArrayList<Integer> itemIds = new ArrayList<>();
+        itemIds.add(CONTEXT_MENU_RENAME_DECK);
+        itemIds.add(CONTEXT_MENU_DECK_OPTIONS);
+        if (!col.getDecks().isDyn(did)) {
+            itemIds.add(CONTEXT_MENU_CUSTOM_STUDY);
+        }
+        itemIds.add(CONTEXT_MENU_DELETE_DECK);
+        itemIds.add(CONTEXT_MENU_EXPORT_DECK);
+        if (col.getSched().haveBuried(did)) {
+            itemIds.add(CONTEXT_MENU_UNBURY);
+        }
+        return ContextMenuHelper.integerListToArray(itemIds);
     }
 
     // Handle item selection on context menu which is shown when the user long-clicks on a deck
@@ -60,34 +110,42 @@ public class DeckPickerContextMenu extends DialogFragment {
         @Override
         public void onSelection(MaterialDialog materialDialog, View view, int item,
                 CharSequence charSequence) {
-            switch (item) {
+            switch (view.getId()) {
                 case CONTEXT_MENU_DELETE_DECK:
                     Timber.i("Delete deck selected");
                     ((DeckPicker) getActivity()).confirmDeckDeletion(DeckPickerContextMenu.this);
-                    return;
+                    break;
 
                 case CONTEXT_MENU_DECK_OPTIONS:
                     Timber.i("Open deck options selected");
                     ((DeckPicker) getActivity()).showContextMenuDeckOptions();
                     ((AnkiActivity) getActivity()).dismissAllDialogFragments();
-                    return;
-                case CONTEXT_MENU_CUSTOM_STUDY:
-                    // TODO: hide this option when it's a filtered deck
+                    break;
+                case CONTEXT_MENU_CUSTOM_STUDY: {
                     Timber.i("Custom study option selected");
                     CustomStudyDialog d = CustomStudyDialog.newInstance(
                             CustomStudyDialog.CONTEXT_MENU_STANDARD);
                     ((AnkiActivity) getActivity()).showDialogFragment(d);
-                    return;
-
+                    break;
+                }
                 case CONTEXT_MENU_RENAME_DECK:
                     Timber.i("Rename deck selected");
                     ((DeckPicker) getActivity()).renameContextMenuDeckDialog();
-                    return;
+                    break;
 
                 case CONTEXT_MENU_EXPORT_DECK:
                     Timber.i("Export deck selected");
                     ((DeckPicker) getActivity()).showContextMenuExportDialog();
+                    break;
 
+                case CONTEXT_MENU_UNBURY: {
+                    Timber.i("Unbury deck selected");
+                    Collection col = CollectionHelper.getInstance().getCol(getContext());
+                    col.getSched().unburyCardsForDeck(getArguments().getLong("did"));
+                    ((StudyOptionsFragment.StudyOptionsListener) getActivity()).onRequireDeckListUpdate();
+                    ((AnkiActivity) getActivity()).dismissAllDialogFragments();
+                    break;
+                }
             }
         }
     };
