@@ -69,6 +69,7 @@ public class DeckPickerContextMenu extends DialogFragment {
                 case CONTEXT_MENU_DECK_OPTIONS:
                     Timber.i("Open deck options selected");
                     ((DeckPicker) getActivity()).showContextMenuDeckOptions();
+                    ((AnkiActivity) getActivity()).dismissAllDialogFragments();
                     return;
                 case CONTEXT_MENU_CUSTOM_STUDY:
                     // TODO: hide this option when it's a filtered deck

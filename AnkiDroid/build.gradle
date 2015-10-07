@@ -36,7 +36,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.1'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
     compile 'com.android.support:design:23.0.1'
-    compile('com.afollestad.material-dialogs:core:0.8.1.0@aar') {
+    // TODO: this is a commit in-between 0.8.2 and the next release. We should update to official version when available
+    compile('com.afollestad.material-dialogs:core:cedc34bdce@aar') {
         transitive = true
     }
     compile('com.mikepenz:materialdrawer:4.3.2@aar') {
