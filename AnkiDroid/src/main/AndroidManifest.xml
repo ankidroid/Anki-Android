@@ -179,7 +179,7 @@
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.StudyOptionsActivity" />
+                android:value="com.ichi2.anki.DeckPicker" />
         </activity>
         <activity
             android:name="com.ichi2.anki.VideoPlayer"
