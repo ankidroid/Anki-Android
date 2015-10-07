@@ -242,6 +242,9 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
 
     private void initAllContentViews() {
+        if (mFragmented) {
+            mStudyOptionsView.findViewById(R.id.studyoptions_gradient).setVisibility(View.VISIBLE);
+        }
         mDeckInfoLayout = mStudyOptionsView.findViewById(R.id.studyoptions_deckinformation);
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
         mTextDeckDescription = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_description);
@@ -340,7 +343,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         // Switch on or off unbury depending on if there are cards to unbury
         menu.findItem(R.id.action_unbury).setVisible(getCol().getSched().haveBuried());
         // Switch on or off undo depending on whether undo is available
-        if (!getCol().undoAvailable() || mFragmented) {
+        if (!getCol().undoAvailable()) {
             menu.findItem(R.id.action_undo).setVisible(false);
         } else {
             menu.findItem(R.id.action_undo).setVisible(true);

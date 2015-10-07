@@ -10,19 +10,9 @@
              android:layout_width="0dip"
              android:layout_weight="3"
              android:layout_height="match_parent"/>
-    <LinearLayout
-        android:layout_weight="2"
-        android:layout_width="0dip"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-        <View
-            android:id="@+id/studyoptions_gradient"
-            android:layout_width="15dp"
-            android:layout_height="fill_parent"
-            android:background="@drawable/shadow_left" />
-        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                     android:id="@+id/studyoptions_fragment"
-                     android:layout_width="fill_parent"
-                     android:layout_height="fill_parent"/>
-    </LinearLayout>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:id="@+id/studyoptions_fragment"
+                 android:layout_weight="2"
+                 android:layout_width="0dip"
+                 android:layout_height="fill_parent"/>
 </LinearLayout>

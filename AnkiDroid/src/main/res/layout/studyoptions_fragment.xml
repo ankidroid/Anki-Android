@@ -8,12 +8,10 @@
     android:orientation="vertical"
     android:gravity="center">
     <RelativeLayout
-        android:id="@+id/studyoptions_mainframe"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="vertical"
-        android:paddingBottom="32dp" >
+        android:orientation="vertical">
         <android.support.v7.widget.Toolbar
             android:id="@+id/studyOptionsToolbar"
             android:layout_width="fill_parent"
@@ -23,181 +21,198 @@
             android:theme="?attr/actionBarThemeRef"
             android:layout_alignParentTop="true"
             app:popupTheme="?attr/actionBarPopupThemeRef"/>
-        <ScrollView
-            android:id="@+id/studyoptions_scrollview"
+        <LinearLayout
             android:layout_below="@id/studyOptionsToolbar"
-            android:layout_above="@id/bottom_area_layout"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:paddingLeft="@dimen/study_options_padding"
-            android:paddingRight="@dimen/study_options_padding"
-            android:paddingBottom="16dp"
-            android:fadeScrollbars="false"
-            android:fillViewport="true">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <View
+                android:id="@+id/studyoptions_gradient"
+                android:layout_width="15dp"
+                android:layout_height="fill_parent"
+                android:background="@drawable/shadow_left"
+                android:visibility="gone"/>
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                         android:layout_width="fill_parent"
+                         android:layout_height="fill_parent"
+                         android:id="@+id/studyoptions_mainframe"
+                         android:paddingBottom="32dp">
+                <ScrollView
+                    android:id="@+id/studyoptions_scrollview"
+                    android:layout_alignParentTop="true"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:paddingLeft="@dimen/study_options_padding"
+                    android:paddingRight="@dimen/study_options_padding"
+                    android:paddingBottom="16dp"
+                    android:fadeScrollbars="false"
+                    android:fillViewport="true">
 
-            <LinearLayout
-                android:id="@+id/studyoptions_scrollcontainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/studyoptions_deck_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:maxLines="3"
-                    android:textSize="28sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:id="@+id/studyoptions_deckinformation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:layout_gravity="center_horizontal">
-
-                    <TableLayout
-                        android:id="@+id/studyoptions_deckcounts"
+                    <LinearLayout
+                        android:id="@+id/studyoptions_scrollcontainer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="5dip"
-                        android:layout_marginEnd="3dip"
-                        android:layout_marginLeft="5dip"
-                        android:layout_marginRight="3dip"
-                        android:layout_marginStart="5dip"
                         android:orientation="vertical">
 
-                        <TableRow>
+                        <TextView
+                            android:id="@+id/studyoptions_deck_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:maxLines="3"
+                            android:textSize="28sp"
+                            android:textStyle="bold" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:id="@+id/studyoptions_deckinformation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:layout_gravity="center_horizontal">
+
+                            <TableLayout
+                                android:id="@+id/studyoptions_deckcounts"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="0dip"
-                                android:paddingRight="5dip"
-                                android:text="@string/studyoptions_due_today"/>
+                                android:gravity="center"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginBottom="5dip"
+                                android:layout_marginEnd="3dip"
+                                android:layout_marginLeft="5dip"
+                                android:layout_marginRight="3dip"
+                                android:layout_marginStart="5dip"
+                                android:orientation="vertical">
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                <TableRow>
 
-                                <TextView
-                                    android:id="@+id/studyoptions_new"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="?attr/newCountColor" />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingLeft="0dip"
+                                        android:paddingRight="5dip"
+                                        android:text="@string/studyoptions_due_today"/>
 
-                                <TextView
-                                    android:id="@+id/studyoptions_lrn"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dip"
-                                    android:layout_marginStart="5dip"
-                                    android:textColor="?attr/learnCountColor" />
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content">
 
-                                <TextView
-                                    android:id="@+id/studyoptions_rev"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dip"
-                                    android:layout_marginStart="5dip"
-                                    android:textColor="?attr/reviewCountColor" />
-                            </LinearLayout>
-                        </TableRow>
+                                        <TextView
+                                            android:id="@+id/studyoptions_new"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textColor="?attr/newCountColor" />
 
-                        <TableRow>
+                                        <TextView
+                                            android:id="@+id/studyoptions_lrn"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="5dip"
+                                            android:layout_marginStart="5dip"
+                                            android:textColor="?attr/learnCountColor" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="0dip"
-                                android:paddingRight="5dip"
-                                android:text="@string/studyoptions_new_total" />
+                                        <TextView
+                                            android:id="@+id/studyoptions_rev"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="5dip"
+                                            android:layout_marginStart="5dip"
+                                            android:textColor="?attr/reviewCountColor" />
+                                    </LinearLayout>
+                                </TableRow>
 
-                            <TextView
-                                android:id="@+id/studyoptions_total_new"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="end" />
-                        </TableRow>
+                                <TableRow>
 
-                        <TableRow>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingLeft="0dip"
+                                        android:paddingRight="5dip"
+                                        android:text="@string/studyoptions_new_total" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="0dip"
-                                android:paddingRight="5dip"
-                                android:text="@string/studyoptions_total_cards" />
+                                    <TextView
+                                        android:id="@+id/studyoptions_total_new"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="end" />
+                                </TableRow>
 
-                            <TextView
-                                android:id="@+id/studyoptions_total"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="end" />
-                        </TableRow>
+                                <TableRow>
 
-                        <TableRow>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingLeft="0dip"
+                                        android:paddingRight="5dip"
+                                        android:text="@string/studyoptions_total_cards" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="0dip"
-                                android:paddingRight="5dip"
-                                android:text="@string/studyoptions_eta" />
+                                    <TextView
+                                        android:id="@+id/studyoptions_total"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="end" />
+                                </TableRow>
 
-                            <TextView
-                                android:id="@+id/studyoptions_eta"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="end" />
-                        </TableRow>
-                    </TableLayout>
-                </LinearLayout>
+                                <TableRow>
 
-                <TextView
-                    android:id="@+id/studyoptions_deck_description"
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingLeft="0dip"
+                                        android:paddingRight="5dip"
+                                        android:text="@string/studyoptions_eta" />
+
+                                    <TextView
+                                        android:id="@+id/studyoptions_eta"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="end" />
+                                </TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/studyoptions_deck_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:gravity="center"/>
+                    </LinearLayout>
+                </ScrollView>
+                <LinearLayout
+                    android:id="@+id/bottom_area_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center"/>
-            </LinearLayout>
-        </ScrollView>
-        <LinearLayout
-            android:id="@+id/bottom_area_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/studyoptions_congrats_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minLines="2"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"/>
-            <Button
-                android:id="@+id/studyoptions_start"
-                android:background="@color/fab_normal"
-                android:textColor="@color/white"
-                android:layout_marginTop="16dp"
-                android:layout_width="200dip"
-                android:layout_height="wrap_content"
-                android:lines="2"
-                android:text="@string/studyoptions_start"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal"/>
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/studyoptions_congrats_message"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minLines="2"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"/>
+                    <Button
+                        android:id="@+id/studyoptions_start"
+                        android:background="@color/fab_normal"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="16dp"
+                        android:layout_width="200dip"
+                        android:layout_height="wrap_content"
+                        android:lines="2"
+                        android:text="@string/studyoptions_start"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
     <include layout="@layout/anki_progress"/>
