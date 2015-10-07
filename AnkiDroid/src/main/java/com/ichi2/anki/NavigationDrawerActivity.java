@@ -19,7 +19,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -28,15 +27,11 @@ import android.widget.CompoundButton;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.compat.CompatHelper;
-import com.mikepenz.crossfader.Crossfader;
-import com.mikepenz.crossfader.util.UIUtils;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.MiniDrawer;
-import com.mikepenz.materialdrawer.interfaces.ICrossfader;
 import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
@@ -54,8 +49,6 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
     // Preselection for DeckDropDownAdapter
     protected static boolean sIsWholeCollection = true;
     private Drawer mDrawer;
-    private MiniDrawer mMiniDrawer;
-    private Crossfader mCrossFader;
     private AccountHeader mHeader = null;
     // Other members
     private String mOldColPath;
@@ -76,9 +69,9 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
 
     // Navigation drawer initialisation
     protected void initNavigationDrawer(View mainView) {
-        initNavigationDrawer(mainView, null, false);
+        initNavigationDrawer(mainView, false);
     }
-    protected void initNavigationDrawer(View mainView, Bundle savedInstanceState, boolean fullScreen){
+    protected void initNavigationDrawer(View mainView, boolean fullScreen){
         // Setup toolbar
         Toolbar toolbar = (Toolbar) mainView.findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -126,36 +119,13 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
                         nightModeItem, settingsItem, helpItem, feedbackItem
                 )
                 .withOnDrawerItemClickListener(this);
-        if (dpWidth >= 1024) {
-            mDrawer = builder.withTranslucentStatusBar(false).buildView();
-            // Make a mini-drawer for the tablet view
-            mMiniDrawer = new MiniDrawer().withDrawer(mDrawer)
-                    .withInnerShadow(true)
-                    .withIncludeSecondaryDrawerItems(true)
-                    .withAccountHeader(mHeader);
-
-            int first = (int) UIUtils.convertDpToPixel(300, this);
-            int second = (int) UIUtils.convertDpToPixel(72, this);
-
-            mCrossFader = new Crossfader()
-                    .withContent(mainView)
-                    .withFirst(mDrawer.getSlider(), first)
-                    .withSecond(mMiniDrawer.build(this), second)
-                    .withSavedInstance(savedInstanceState)
-                    .build();
-            mMiniDrawer.withCrossFader(new CrossfadeWrapper(mCrossFader));
-        } else {
-            mDrawer = builder.build();
-        }
+        mDrawer = builder.build();
     }
 
 
     /** Sets selected navigation drawer item */
     protected void selectNavigationItem(int itemId) {
         mDrawer.setSelection(itemId, false);
-        if (mMiniDrawer != null) {
-            mMiniDrawer.setSelection(itemId);
-        }
         mSelectedItem = itemId;
     }
 
@@ -178,9 +148,6 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
         if (mDrawer != null && mDrawer.getDrawerLayout() != null) {
             mDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         }
-        if (mCrossFader != null) {
-            mCrossFader.getCrossFadeSlidingPaneLayout().setCanSlide(false);
-        }
     }
 
     /**
@@ -190,9 +157,6 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
     protected void enableDrawerSwipe() {
         if (mDrawer != null && mDrawer.getDrawerLayout() != null) {
             mDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-        }
-        if (mCrossFader != null) {
-            mCrossFader.getCrossFadeSlidingPaneLayout().setCanSlide(true);
         }
     }
 
@@ -280,24 +244,7 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
         }
         mDrawer.closeDrawer();
         mSelectedItem = iDrawerItem.getIdentifier();
-        if (mMiniDrawer != null) {
-            return mMiniDrawer.onItemClick(iDrawerItem);
-        }
         return true;
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        if (mDrawer != null) {
-            outState = mDrawer.saveInstanceState(outState);
-        }
-        if (mHeader != null) {
-            outState = mHeader.saveInstanceState(outState);
-        }
-        if (mCrossFader != null) {
-            outState = mCrossFader.saveInstanceState(outState);
-        }
-        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -309,23 +256,5 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
             preferences.edit().putBoolean("invertedColors", true).commit();
         }
         CompatHelper.getCompat().restartActivityInvalidateBackstack(this);
-    }
-
-    class CrossfadeWrapper implements ICrossfader {
-        private Crossfader mCrossfader;
-
-        public CrossfadeWrapper(Crossfader crossfader) {
-            this.mCrossfader = crossfader;
-        }
-
-        @Override
-        public void crossfade() {
-            mCrossfader.crossFade();
-        }
-
-        @Override
-        public boolean isCrossfaded() {
-            return mCrossfader.isCrossFaded();
-        }
     }
 }

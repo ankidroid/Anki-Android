@@ -5,9 +5,6 @@
     <dimen name="keyline_1">16dp</dimen>
     <dimen name="study_options_padding">8dp</dimen>
 
-    <!-- match_parent or max 600dp -->
-    <dimen name="match_parent_or_600dp">-1px</dimen>
-
     <!-- Top margin for action bar subtitles -->
     <dimen name="action_bar_subtitle_top_margin">-3dp</dimen>
 
