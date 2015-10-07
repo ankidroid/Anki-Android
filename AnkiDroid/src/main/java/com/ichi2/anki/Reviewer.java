@@ -178,7 +178,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             case R.id.action_open_deck_options:
                 Intent i = new Intent(this, DeckOptions.class);
-                startActivityWithAnimation(i, ActivityTransitionAnimation.FADE);
+                startActivityForResultWithAnimation(i, DECK_OPTIONS, ActivityTransitionAnimation.FADE);
                 break;
 
             default:
@@ -242,6 +242,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (!CompatHelper.isHoneycomb() && !mDisableClipboard) {
             menu.findItem(R.id.action_search_dictionary).setVisible(true).setEnabled(!(mPrefWhiteboard && mShowWhiteboard))
                     .setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
+        }
+        if (getCol().getDecks().isDyn(getParentDid())) {
+            menu.findItem(R.id.action_open_deck_options).setVisible(false);
         }
         return super.onCreateOptionsMenu(menu);
     }
