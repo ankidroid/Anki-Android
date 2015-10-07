@@ -113,7 +113,7 @@ public class DeckPickerContextMenu extends DialogFragment {
             switch (view.getId()) {
                 case CONTEXT_MENU_DELETE_DECK:
                     Timber.i("Delete deck selected");
-                    ((DeckPicker) getActivity()).confirmDeckDeletion(DeckPickerContextMenu.this);
+                    ((DeckPicker) getActivity()).confirmDeckDeletion();
                     break;
 
                 case CONTEXT_MENU_DECK_OPTIONS:
@@ -130,7 +130,7 @@ public class DeckPickerContextMenu extends DialogFragment {
                 }
                 case CONTEXT_MENU_RENAME_DECK:
                     Timber.i("Rename deck selected");
-                    ((DeckPicker) getActivity()).renameContextMenuDeckDialog();
+                    ((DeckPicker) getActivity()).renameDeckDialog();
                     break;
 
                 case CONTEXT_MENU_EXPORT_DECK:
