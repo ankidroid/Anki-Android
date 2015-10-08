@@ -75,11 +75,11 @@ public class DeckPickerContextMenu extends DialogFragment {
     private HashMap<Integer, String> getKeyValueMap() {
         Resources res = getResources();
         HashMap<Integer, String> keyValueMap = new HashMap<>();
-        keyValueMap.put(CONTEXT_MENU_RENAME_DECK, res.getString(R.string.contextmenu_deckpicker_rename_deck));
+        keyValueMap.put(CONTEXT_MENU_RENAME_DECK, res.getString(R.string.rename_deck));
         keyValueMap.put(CONTEXT_MENU_DECK_OPTIONS, res.getString(R.string.study_options));
         keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY, res.getString(R.string.custom_study));
         keyValueMap.put(CONTEXT_MENU_DELETE_DECK, res.getString(R.string.contextmenu_deckpicker_delete_deck));
-        keyValueMap.put(CONTEXT_MENU_EXPORT_DECK, res.getString(R.string.export));
+        keyValueMap.put(CONTEXT_MENU_EXPORT_DECK, res.getString(R.string.export_deck));
         keyValueMap.put(CONTEXT_MENU_UNBURY, res.getString(R.string.unbury));
         return keyValueMap;
     }

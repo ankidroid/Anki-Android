@@ -1812,7 +1812,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         final String currentName = getCol().getDecks().name(did);
         mDialogEditText.setText(currentName);
         new MaterialDialog.Builder(DeckPicker.this)
-                .title(res.getString(R.string.contextmenu_deckpicker_rename_deck))
+                .title(res.getString(R.string.rename_deck))
                 .customView(mDialogEditText, true)
                 .positiveText(res.getString(R.string.rename))
                 .negativeText(res.getString(R.string.dialog_cancel))
