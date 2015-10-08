@@ -163,7 +163,7 @@
     <string name="steps_error">Steps must be numbers greater than 0</string>
     <string name="steps_min_error">At least one step is required</string>
     <string name="sched_end">(end)</string>
-    <string name="sched_unbury_button">To see them now touch the “Unbury” button.</string>
+    <string name="sched_unbury_button">To see them now touch the “Unbury” item in the deck overview menu.</string>
     <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
