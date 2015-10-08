@@ -153,6 +153,8 @@
   <string name="filter_google_translate">Dari Google Terjemahan</string>
   <string name="filter_google_translate_summ">Hanya simpan sumber kata dan terjemahan</string>
   <string name="convert_fen_text_summ">Menggambar papan catur dari Notasi Forsyth-Edwards. Notasi harus tertutup dalam tag [fen][/fen].</string>
+  <string name="enable_api_title">Enable AnkiDroid API</string>
+  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
   <string name="studyoptions_limit_select_tags">Pilih tag</string>
   <string name="deck_conf_deck_description">Deskripsi dek</string>
   <string name="deck_conf_group">Pilihan-pilihan grup</string>

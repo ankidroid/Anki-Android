@@ -153,6 +153,8 @@
   <string name="filter_google_translate">ترجمه از گوگل</string>
   <string name="filter_google_translate_summ">اکنون کلمه اصلی و ترجمه را ذخیره کنید</string>
   <string name="convert_fen_text_summ">رسم صفحه شطرنجی از Forsyth Edwards Notation. یادداشت باید داخل تگ [fen][/fen] محصور باشد</string>
+  <string name="enable_api_title">Enable AnkiDroid API</string>
+  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
   <string name="studyoptions_limit_select_tags">انتخاب برچسبها</string>
   <string name="deck_conf_deck_description">توصیف دسته</string>
   <string name="deck_conf_group">Options group</string>

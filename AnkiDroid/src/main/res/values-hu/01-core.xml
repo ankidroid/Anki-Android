@@ -81,7 +81,7 @@
   <string name="undo_action_delete">jegyzet törlése</string>
   <string name="undo_action_mark">jegyzet megjelölése</string>
   <string name="unbury">Félretétel megszüntetése</string>
-  <string name="contextmenu_deckpicker_rename_deck">Pakli átnevezése</string>
+  <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Hozzáadás</string>
   <string name="menu_add_note">Megjegyzés hozzáadása</string>
   <string name="menu_my_account">Fiók szinkronizálása</string>
@@ -128,6 +128,8 @@
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
   <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Exportálás</string>
+  <string name="export_collection">Export collection</string>
+  <string name="export_deck">Export deck</string>
   <string name="nothing">Nothing</string>
   <string name="title_activity_template_editor">Card types for %s</string>
   <string name="card_template_editor_front">Front template</string>

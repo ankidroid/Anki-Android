@@ -158,7 +158,7 @@
   <string name="steps_error">A lépések száma 0-nál nagyobb kell hogy legyen</string>
   <string name="steps_min_error">Legalább egy lépés szükség</string>
   <string name="sched_end">(vége)</string>
-  <string name="sched_unbury_button">Megtekintéshez érintsd meg a \"Félretétel megszüntetése\" gombot!</string>
+  <string name="sched_unbury_button">To see them now touch the “Unbury” item in the deck overview menu.</string>
   <string name="sched_has_buried">Néhány kapcsolódó vagy félretett kártya halasztásra került a következő gyakorlásig.</string>
   <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>

@@ -45,7 +45,7 @@
   <string name="settings">Einstellungen</string>
   <string name="help">Hilfe</string>
   <string name="send_feedback">Rückmeldung senden</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <string name="studyoptions_title">Stapelübersicht</string>
   <string name="studyoptions_due_today">Heute fällig:</string>
   <string name="studyoptions_new_total">Neue Karten gesamt:</string>
   <string name="studyoptions_total_cards">Karten gesamt:</string>
@@ -81,7 +81,7 @@
   <string name="undo_action_delete">Notiz löschen</string>
   <string name="undo_action_mark">Notiz markieren</string>
   <string name="unbury">Zurückstellen aufheben</string>
-  <string name="contextmenu_deckpicker_rename_deck">Stapel umbenennen</string>
+  <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Hinzufügen</string>
   <string name="menu_add_note">Notiz hinzufügen</string>
   <string name="menu_my_account">Synchronisierungskonto</string>
@@ -128,6 +128,8 @@
   <string name="cancel_sync_confirm">Wollen Sie die Synchronisation abbrechen?</string>
   <string name="sync_cancelled">Synchronisation abgebrochen</string>
   <string name="export">Exportieren</string>
+  <string name="export_collection">Export collection</string>
+  <string name="export_deck">Export deck</string>
   <string name="nothing">Nichts</string>
   <string name="title_activity_template_editor">Kartentypen für %s</string>
   <string name="card_template_editor_front">Vorlage für Vorderseite</string>

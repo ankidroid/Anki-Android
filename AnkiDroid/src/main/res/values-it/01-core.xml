@@ -81,7 +81,7 @@
   <string name="undo_action_delete">elimina nota</string>
   <string name="undo_action_mark">contrassegna nota</string>
   <string name="unbury">Disseppellisci</string>
-  <string name="contextmenu_deckpicker_rename_deck">Rinomina il mazzo</string>
+  <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Aggiungi</string>
   <string name="menu_add_note">Aggiungi nota</string>
   <string name="menu_my_account">Sincronizza account</string>
@@ -128,6 +128,8 @@
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
   <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Esportare</string>
+  <string name="export_collection">Export collection</string>
+  <string name="export_deck">Export deck</string>
   <string name="nothing">Niente</string>
   <string name="title_activity_template_editor">Tipi di carta per %s</string>
   <string name="card_template_editor_front">Modello del fronte</string>

@@ -161,7 +161,7 @@
   <string name="steps_error">Кораци треба да буду бројеви већи од 0</string>
   <string name="steps_min_error">Неопходан је бар један корак</string>
   <string name="sched_end">(крај)</string>
-  <string name="sched_unbury_button">Да бисте их видели, притисните дугме Одустани.</string>
+  <string name="sched_unbury_button">To see them now touch the “Unbury” item in the deck overview menu.</string>
   <string name="sched_has_buried">Неке повезане или закопане картице су одложене до следеће сесије.</string>
   <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>

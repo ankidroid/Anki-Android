@@ -48,7 +48,7 @@
   <string name="model_field_editor_options">Feldoptionen</string>
   <string name="model_field_editor_rename">Feld umbenennen</string>
   <string name="model_field_editor_reposition_menu">Feld neu positionieren</string>
-  <string name="model_field_editor_reposition" formatted="false">Feld neu positionieren (Wert von %1$d bis %2$d eingeben)</string>
+  <string name="model_field_editor_reposition" formatted="false">Reposition field (enter a value %1$d–%2$d)</string>
   <string name="model_field_editor_changing">Aktualisieren Felder</string>
   <string name="model_field_editor_sort_field">Nach diesem Feld sortieren</string>
   <string name="model_clone_suffix">Kopie</string>

@@ -78,7 +78,7 @@
   <string name="undo_action_delete">노트 삭제</string>
   <string name="undo_action_mark">노트 표시</string>
   <string name="unbury">넣었던 카드 꺼내기</string>
-  <string name="contextmenu_deckpicker_rename_deck">덱 이름 바꾸기</string>
+  <string name="rename_deck">Rename deck</string>
   <string name="menu_add">추가</string>
   <string name="menu_add_note">노트 추가</string>
   <string name="menu_my_account">계정 동기화</string>
@@ -125,6 +125,8 @@
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
   <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">내보내기</string>
+  <string name="export_collection">Export collection</string>
+  <string name="export_deck">Export deck</string>
   <string name="nothing">없음</string>
   <string name="title_activity_template_editor">%s의 카드 형식</string>
   <string name="card_template_editor_front">전면 템플릿</string>

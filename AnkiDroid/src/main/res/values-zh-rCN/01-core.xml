@@ -78,7 +78,7 @@
   <string name="undo_action_delete">删除笔记</string>
   <string name="undo_action_mark">标记笔记</string>
   <string name="unbury">取消隐藏</string>
-  <string name="contextmenu_deckpicker_rename_deck">重命名牌组</string>
+  <string name="rename_deck">Rename deck</string>
   <string name="menu_add">添加</string>
   <string name="menu_add_note">添加笔记</string>
   <string name="menu_my_account">同步帐户</string>
@@ -125,6 +125,8 @@
   <string name="cancel_sync_confirm">你想要取消同步吗？</string>
   <string name="sync_cancelled">同步已取消</string>
   <string name="export">导出</string>
+  <string name="export_collection">Export collection</string>
+  <string name="export_deck">Export deck</string>
   <string name="nothing">无</string>
   <string name="title_activity_template_editor">%s的笔记类型</string>
   <string name="card_template_editor_front">正面</string>

@@ -84,7 +84,7 @@
   <string name="undo_action_delete">Удалить запись</string>
   <string name="undo_action_mark">Отметить заметку</string>
   <string name="unbury">Отменить сдвиг</string>
-  <string name="contextmenu_deckpicker_rename_deck">Переименовать колоду</string>
+  <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Добавить</string>
   <string name="menu_add_note">Добавить заметку</string>
   <string name="menu_my_account">Учётная запись синхронизации</string>
@@ -131,6 +131,8 @@
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
   <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Экспорт</string>
+  <string name="export_collection">Export collection</string>
+  <string name="export_deck">Export deck</string>
   <string name="nothing">Ничего</string>
   <string name="title_activity_template_editor">Типы карт для %s</string>
   <string name="card_template_editor_front">Шаблон лицевой стороны</string>

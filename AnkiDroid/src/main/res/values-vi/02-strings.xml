@@ -155,7 +155,7 @@
   <string name="steps_error">Các bước phải là số lớn hơn 0</string>
   <string name="steps_min_error">Yêu cầu ít nhất một bước</string>
   <string name="sched_end">(kết thúc)</string>
-  <string name="sched_unbury_button">Để nhìn thấy chúng bây giờ, hãy nhấp vào nút Hồi phục.</string>
+  <string name="sched_unbury_button">To see them now touch the “Unbury” item in the deck overview menu.</string>
   <string name="sched_has_buried">Một số Thẻ liên quan hoặc bị chôn vùi bị trì hoãn cho đến ngày mai.</string>
   <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>

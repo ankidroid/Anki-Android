@@ -153,6 +153,8 @@
   <string name="filter_google_translate">구글 번역기</string>
   <string name="filter_google_translate_summ">원본 단어와 번역을 그대로 저장</string>
   <string name="convert_fen_text_summ">Forsyth–Edwards 표기법으로 체스판을 그립니다. 표기법은 [fen][/fen] 태그에서 묶어야 합니다.</string>
+  <string name="enable_api_title">Enable AnkiDroid API</string>
+  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
   <string name="studyoptions_limit_select_tags">태그 선택</string>
   <string name="deck_conf_deck_description">꾸러미 설명</string>
   <string name="deck_conf_group">옵션 그룹</string>

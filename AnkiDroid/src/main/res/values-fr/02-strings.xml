@@ -158,7 +158,7 @@
   <string name="steps_error">Les pas souvent être des nombres supérieurs à 0</string>
   <string name="steps_min_error">Au moins un pas est requis</string>
   <string name="sched_end">(fin)</string>
-  <string name="sched_unbury_button">Pour les voir maintenant, appuyer sur le bouton Déterrer.</string>
+  <string name="sched_unbury_button">To see them now touch the “Unbury” item in the deck overview menu.</string>
   <string name="sched_has_buried">Certaines cartes enterrées ou différées ont été reportées à une prochaine séance.</string>
   <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>

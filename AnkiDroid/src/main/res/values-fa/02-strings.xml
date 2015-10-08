@@ -155,7 +155,7 @@
   <string name="steps_error">مراحل باید با اعداد بزرگتر از 0 شماره گذاری گردند</string>
   <string name="steps_min_error">حداقل یک مرحله لازم است</string>
   <string name="sched_end">(پایان)</string>
-  <string name="sched_unbury_button">برای دیدن آنها در حال حاضر، دکمه Unbury بزنید.</string>
+  <string name="sched_unbury_button">To see them now touch the “Unbury” item in the deck overview menu.</string>
   <string name="sched_has_buried">تعدادی از کارت های مرتبط یا مخفی شده تا نشست بعدی نمایش داده نخواهند شد.</string>
   <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>

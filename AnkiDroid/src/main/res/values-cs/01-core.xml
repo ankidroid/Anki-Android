@@ -84,7 +84,7 @@
   <string name="undo_action_delete">odstranit poznámku</string>
   <string name="undo_action_mark">označit poznámku</string>
   <string name="unbury">Zruš odložení</string>
-  <string name="contextmenu_deckpicker_rename_deck">Přejmenovat balíček</string>
+  <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Přidat</string>
   <string name="menu_add_note">Přidat poznámku</string>
   <string name="menu_my_account">Synchronizovat účet</string>
@@ -131,6 +131,8 @@
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
   <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Export</string>
+  <string name="export_collection">Export collection</string>
+  <string name="export_deck">Export deck</string>
   <string name="nothing">Nic</string>
   <string name="title_activity_template_editor">Typy karet pro %s</string>
   <string name="card_template_editor_front">Šablona lícu</string>

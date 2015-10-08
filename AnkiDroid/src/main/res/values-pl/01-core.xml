@@ -84,7 +84,7 @@
   <string name="undo_action_delete">usunięcie notatki</string>
   <string name="undo_action_mark">wyróżnienie notatki</string>
   <string name="unbury">Odkop</string>
-  <string name="contextmenu_deckpicker_rename_deck">Zmień nazwę talii</string>
+  <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Dodaj</string>
   <string name="menu_add_note">Dodaj notatkę</string>
   <string name="menu_my_account">Synchronizacja konta</string>
@@ -131,6 +131,8 @@
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
   <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Eksportuj</string>
+  <string name="export_collection">Export collection</string>
+  <string name="export_deck">Export deck</string>
   <string name="nothing">Nic</string>
   <string name="title_activity_template_editor">Typy kart dla %s</string>
   <string name="card_template_editor_front">Szablon przodu</string>

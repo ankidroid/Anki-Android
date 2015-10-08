@@ -81,7 +81,7 @@
   <string name="undo_action_delete">poista merkintä</string>
   <string name="undo_action_mark">merkitse merkintä</string>
   <string name="unbury">Paljasta</string>
-  <string name="contextmenu_deckpicker_rename_deck">Nimeä pakka uudelleen</string>
+  <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Lisää</string>
   <string name="menu_add_note">Lisää merkintä</string>
   <string name="menu_my_account">Synkronoi tili</string>
@@ -128,6 +128,8 @@
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
   <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Vie</string>
+  <string name="export_collection">Export collection</string>
+  <string name="export_deck">Export deck</string>
   <string name="nothing">Nothing</string>
   <string name="title_activity_template_editor">Card types for %s</string>
   <string name="card_template_editor_front">Front template</string>

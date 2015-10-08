@@ -153,6 +153,8 @@
   <string name="filter_google_translate">Z Google Translate</string>
   <string name="filter_google_translate_summ">Po prostu zapisz słowo źródłowe i tłumaczenie</string>
   <string name="convert_fen_text_summ">Rysuj szachownicę z notacji Forsytha-Edwardsa. Notacja musi być w znacznikach [fen][/fen].</string>
+  <string name="enable_api_title">Enable AnkiDroid API</string>
+  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
   <string name="studyoptions_limit_select_tags">Wybierz etykiety</string>
   <string name="deck_conf_deck_description">Opis talii</string>
   <string name="deck_conf_group">Grupa opcji</string>

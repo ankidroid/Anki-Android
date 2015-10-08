@@ -84,7 +84,7 @@
   <string name="undo_action_delete">pastabos pašalinimą</string>
   <string name="undo_action_mark">pastabos pažimėjimą</string>
   <string name="unbury">Ištraukti</string>
-  <string name="contextmenu_deckpicker_rename_deck">Pervadinti malką</string>
+  <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Pridėti</string>
   <string name="menu_add_note">Pridėti pastabą</string>
   <string name="menu_my_account">Sinchronizacijos paskyra</string>
@@ -131,6 +131,8 @@
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
   <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Eksportuoti</string>
+  <string name="export_collection">Export collection</string>
+  <string name="export_deck">Export deck</string>
   <string name="nothing">Nothing</string>
   <string name="title_activity_template_editor">Card types for %s</string>
   <string name="card_template_editor_front">Front template</string>

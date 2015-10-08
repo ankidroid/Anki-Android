@@ -93,7 +93,7 @@
   <string name="undo_action_delete">احذف الملاحظة</string>
   <string name="undo_action_mark">علم الملاحظة</string>
   <string name="unbury">Unbury</string>
-  <string name="contextmenu_deckpicker_rename_deck">أعد تسمية الرزمة</string>
+  <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>
   <string name="menu_my_account">حساب المزامنة</string>
@@ -140,6 +140,8 @@
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
   <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Export</string>
+  <string name="export_collection">Export collection</string>
+  <string name="export_deck">Export deck</string>
   <string name="nothing">Nothing</string>
   <string name="title_activity_template_editor">Card types for %s</string>
   <string name="card_template_editor_front">Front template</string>

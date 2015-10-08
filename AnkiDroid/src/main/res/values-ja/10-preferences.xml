@@ -152,6 +152,8 @@
   <string name="filter_google_translate">Google翻訳から</string>
   <string name="filter_google_translate_summ">翻訳元と結果の保存</string>
   <string name="convert_fen_text_summ">Forsyth Edwards Notation 表記法を使いチェス盤を描画します。この表記は[fen][/fen] で囲む必要があります</string>
+  <string name="enable_api_title">Enable AnkiDroid API</string>
+  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
   <string name="studyoptions_limit_select_tags">タグを選択</string>
   <string name="deck_conf_deck_description">デッキの説明</string>
   <string name="deck_conf_group">オプショングループ</string>

@@ -84,7 +84,7 @@
   <string name="undo_action_delete">избриши белешку</string>
   <string name="undo_action_mark">означи белешку</string>
   <string name="unbury">Ископај</string>
-  <string name="contextmenu_deckpicker_rename_deck">Преименуј шпил</string>
+  <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Додај</string>
   <string name="menu_add_note">Додај белешку</string>
   <string name="menu_my_account">Синхронизујте налог</string>
@@ -131,6 +131,8 @@
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
   <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Извози</string>
+  <string name="export_collection">Export collection</string>
+  <string name="export_deck">Export deck</string>
   <string name="nothing">Ништа</string>
   <string name="title_activity_template_editor">Типови карата за %s</string>
   <string name="card_template_editor_front">Предњи шаблон</string>

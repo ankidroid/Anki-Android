@@ -153,6 +153,8 @@
   <string name="filter_google_translate">Van Google Translate</string>
   <string name="filter_google_translate_summ">Gewoon woord en vertaling opslaan</string>
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
+  <string name="enable_api_title">Enable AnkiDroid API</string>
+  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
   <string name="studyoptions_limit_select_tags">Selecteer Tags</string>
   <string name="deck_conf_deck_description">Omschrijving van de leerset</string>
   <string name="deck_conf_group">Optiesgroep</string>

@@ -84,7 +84,7 @@
   <string name="undo_action_delete">Видалити примітку</string>
   <string name="undo_action_mark">Відмітити примітку</string>
   <string name="unbury">Скасувати зрушення</string>
-  <string name="contextmenu_deckpicker_rename_deck">Перейменувати колоду</string>
+  <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Додати</string>
   <string name="menu_add_note">Додати примітку</string>
   <string name="menu_my_account">Змінити обліковий запис</string>
@@ -131,6 +131,8 @@
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
   <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Export</string>
+  <string name="export_collection">Export collection</string>
+  <string name="export_deck">Export deck</string>
   <string name="nothing">Nothing</string>
   <string name="title_activity_template_editor">Card types for %s</string>
   <string name="card_template_editor_front">Front template</string>

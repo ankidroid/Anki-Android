@@ -153,6 +153,8 @@
   <string name="filter_google_translate">从谷歌翻译</string>
   <string name="filter_google_translate_summ">保存源词与翻译</string>
   <string name="convert_fen_text_summ">使用福斯夫－爱德华兹记号法来画棋盘。记号必须用[fen][/fen]标签括起来。</string>
+  <string name="enable_api_title">Enable AnkiDroid API</string>
+  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
   <string name="studyoptions_limit_select_tags">选择标签</string>
   <string name="deck_conf_deck_description">牌组说明</string>
   <string name="deck_conf_group">选项组</string>

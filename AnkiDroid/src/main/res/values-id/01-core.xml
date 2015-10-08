@@ -78,7 +78,7 @@
   <string name="undo_action_delete">Hapus Catatan</string>
   <string name="undo_action_mark">tandai catatan</string>
   <string name="unbury">angkat</string>
-  <string name="contextmenu_deckpicker_rename_deck">Ubah nama deck</string>
+  <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Tambahkan</string>
   <string name="menu_add_note">Tambah catatan</string>
   <string name="menu_my_account">Sinkronisasi akun</string>
@@ -125,6 +125,8 @@
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
   <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Keluarkan</string>
+  <string name="export_collection">Export collection</string>
+  <string name="export_deck">Export deck</string>
   <string name="nothing">Tidak ada</string>
   <string name="title_activity_template_editor">Jenis kartu untuk %s</string>
   <string name="card_template_editor_front">Template depan</string>

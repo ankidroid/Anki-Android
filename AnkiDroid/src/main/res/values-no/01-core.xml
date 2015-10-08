@@ -81,7 +81,7 @@
   <string name="undo_action_delete">slett notat</string>
   <string name="undo_action_mark">merk notat</string>
   <string name="unbury">Grav opp igjen</string>
-  <string name="contextmenu_deckpicker_rename_deck">Gi nytt navn til kortstokk</string>
+  <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Legg til</string>
   <string name="menu_add_note">Legg til notat</string>
   <string name="menu_my_account">Synkroniser konto</string>
@@ -128,6 +128,8 @@
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
   <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Eksporter</string>
+  <string name="export_collection">Export collection</string>
+  <string name="export_deck">Export deck</string>
   <string name="nothing">Ingenting</string>
   <string name="title_activity_template_editor">Korttyper for %s</string>
   <string name="card_template_editor_front">Framsidemal</string>
