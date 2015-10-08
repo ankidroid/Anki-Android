@@ -36,5 +36,5 @@
     <item
         android:id="@+id/action_export"
         android:menuCategory="secondary"
-        android:title="@string/export"/>
+        android:title="@string/export_collection"/>
 </menu>

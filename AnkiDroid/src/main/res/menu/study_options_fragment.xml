@@ -7,9 +7,6 @@
         android:title="@string/undo"
         ankidroid:showAsAction="always"/>
     <item
-        android:id="@+id/action_deck_options"
-        android:title="@string/study_options"/>
-    <item
         android:id="@+id/action_rebuild"
         android:title="@string/rebuild_cram_label"
         android:visibility = "gone"
@@ -27,19 +24,22 @@
         android:icon="@drawable/ic_build_white_24dp"
         ankidroid:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/action_unbury"
-        android:title="@string/unbury"
+        android:id="@+id/action_rename"
+        android:title="@string/rename_deck"
         android:visibility = "gone"/>
     <item
-        android:id="@+id/action_rename"
-        android:title="@string/rename"
-        android:visibility = "gone"/>
+        android:id="@+id/action_deck_options"
+        android:title="@string/study_options"/>
     <item
         android:id="@+id/action_delete"
         android:title="@string/contextmenu_deckpicker_delete_deck"
         android:visibility = "gone"/>
     <item
         android:id="@+id/action_export"
-        android:title="@string/export"
+        android:title="@string/export_deck"
+        android:visibility = "gone"/>
+    <item
+        android:id="@+id/action_unbury"
+        android:title="@string/unbury"
         android:visibility = "gone"/>
 </menu>
