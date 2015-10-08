@@ -21,9 +21,11 @@
 package com.ichi2.anki;
 
 import android.annotation.TargetApi;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
@@ -374,10 +376,11 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             Preference pref = screen.findPreference(key);
             // Handle special cases
             switch (key) {
-                case "timeoutAnswer":
+                case "timeoutAnswer": {
                     CheckBoxPreference keepScreenOn = (CheckBoxPreference) screen.findPreference("keepScreenOn");
                     keepScreenOn.setChecked(((CheckBoxPreference) pref).isChecked());
                     break;
+                }
                 case LANGUAGE:
                     closePreferences();
                     break;
@@ -420,24 +423,27 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     mCol.getConf().put("addToCur", ((ListPreference) pref).getValue().equals("0"));
                     mCol.setMod();
                     break;
-                case "dayOffset":
+                case "dayOffset": {
                     int hours = ((SeekBarPreference) pref).getValue();
                     Calendar date = new GregorianCalendar();
                     date.set(Calendar.HOUR_OF_DAY, hours);
                     mCol.setCrt(date.getTimeInMillis() / 1000);
                     mCol.setMod();
                     break;
-                case "minimumCardsDueForNotification":
+                }
+                case "minimumCardsDueForNotification": {
                     ListPreference listpref = (ListPreference) screen.findPreference("minimumCardsDueForNotification");
                     if (listpref != null) {
                         updateNotificationPreference(listpref);
                     }
                     break;
-                case "reportErrorMode":
+                }
+                case "reportErrorMode": {
                     String value = prefs.getString("reportErrorMode", "");
                     AnkiDroidApp.getInstance().setAcraReportingMode(value);
                     break;
-                case "syncAccount":
+                }
+                case "syncAccount": {
                     SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
                     String username = preferences.getString("username", "");
                     Preference syncAccount = screen.findPreference("syncAccount");
@@ -449,6 +455,21 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         }
                     }
                     break;
+                }
+                case "providerEnabled": {
+                    ComponentName providerName = new ComponentName(this, "com.ichi2.anki.provider.CardContentProvider");
+                    PackageManager pm = getPackageManager();
+                    int state;
+                    if (((CheckBoxPreference) pref).isChecked()) {
+                         state = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+                        Timber.i("AnkiDroid ContentProvider enabled by user");
+                    } else {
+                        state = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+                        Timber.i("AnkiDroid ContentProvider disabled by user");
+                    }
+                    pm.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP);
+                    break;
+                }
             }
             // Update the summary text to reflect new value
             updateSummary(pref);

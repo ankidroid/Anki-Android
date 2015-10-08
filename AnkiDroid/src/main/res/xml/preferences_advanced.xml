@@ -69,6 +69,11 @@
             android:key="category_plugins"
             android:title="@string/pref_cat_plugins" >
             <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="providerEnabled"
+                android:summary="@string/enable_api_summary"
+                android:title="@string/enable_api_title"/>
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="tts"
                 android:summary="@string/tts_summ"
