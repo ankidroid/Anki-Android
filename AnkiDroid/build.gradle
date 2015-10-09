@@ -51,4 +51,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.3'
     compile "cz.msebera.android:httpclient:4.4.1.1"
     compile project(":api")
+    compile 'com.android.support:customtabs:23.0.0'
 }

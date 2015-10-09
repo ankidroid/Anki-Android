@@ -1623,8 +1623,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void addSharedDeck() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.shared_decks_url)));
-        startActivityWithoutAnimation(intent);
+        openUrl(Uri.parse(getResources().getString(R.string.shared_decks_url)));
     }
 
 
@@ -1665,12 +1664,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }, findViewById(R.id.root_layout), mSnackbarShowHideCallback);
         } else if (deckDueTreeNode.children.size() == 0 && getCol().cardCount(new long[]{did}) == 0) {
             // If the deck is empty and has no children then show a message saying it's empty
+            final Uri helpUrl = Uri.parse(getResources().getString(R.string.link_manual_getting_started));
+            mayOpenUrl(helpUrl);
             showSnackbar(R.string.empty_deck, false, R.string.help, new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(getResources()
-                            .getString(R.string.link_manual_getting_started)));
-                    startActivityWithoutAnimation(helpIntent);
+                    openUrl(helpUrl);
                 }
             }, findViewById(R.id.root_layout), mSnackbarShowHideCallback);
         } else {

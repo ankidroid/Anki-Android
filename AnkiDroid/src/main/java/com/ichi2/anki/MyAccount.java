@@ -40,31 +40,22 @@ import com.ichi2.themes.StyledProgressDialog;
 import timber.log.Timber;
 
 public class MyAccount extends AnkiActivity {
-    private final static int STATE_ACCOUNT_SIGN_UP = 0;
     private final static int STATE_LOG_IN  = 1;
     private final static int STATE_LOGGED_IN = 2;
 
     private View mLoginToMyAccountView;
     private View mLoggedIntoMyAccountView;
-    private View mRegisterView;
 
     private EditText mUsername;
     private EditText mPassword;
 
-    private EditText mUsername1;
-    private EditText mPassword1;
-    private EditText mUsername2;
-    private EditText mPassword2;
-
     private TextView mUsernameLoggedIn;
-    private int mCurrentState;
 
     private MaterialDialog mProgressDialog;
     Toolbar mToolbar = null;
 
 
     private void switchToState(int newState) {
-        mCurrentState = newState;
         switch (newState) {
             case STATE_LOGGED_IN:
                 String username = AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("username", "");
@@ -85,15 +76,6 @@ public class MyAccount extends AnkiActivity {
                 }
                 setContentView(mLoginToMyAccountView);
                 break;
-
-            case STATE_ACCOUNT_SIGN_UP:
-                mToolbar = (Toolbar) mRegisterView.findViewById(R.id.toolbar);
-                if (mToolbar!= null) {
-                    mToolbar.setTitle(getString(R.string.sync_account));  // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
-                    setSupportActionBar(mToolbar);
-                }
-                setContentView(mRegisterView);
-                break;
         }
 
 
@@ -104,7 +86,7 @@ public class MyAccount extends AnkiActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        mayOpenUrl(Uri.parse(getResources().getString(R.string.register_url)));
         initAllContentViews();
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
@@ -163,22 +145,6 @@ public class MyAccount extends AnkiActivity {
     }
 
 
-    private void register() {
-        // Hide soft keyboard
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(mUsername.getWindowToken(), 0);
-
-        String username = mUsername1.getText().toString().trim(); // trim spaces, issue 1586
-        String password = mPassword1.getText().toString();
-
-        if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
-            Connection.register(registerListener, new Connection.Payload(new Object[] { username, password }));
-        } else {
-            showSimpleSnackbar(R.string.invalid_username_password, true);
-        }
-    }
-
-
     private void logout() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         Editor editor = preferences.edit();
@@ -231,7 +197,7 @@ public class MyAccount extends AnkiActivity {
         signUpButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchToState(STATE_ACCOUNT_SIGN_UP);
+                openUrl(Uri.parse(getResources().getString(R.string.register_url)));
             }
 
         });
@@ -244,43 +210,6 @@ public class MyAccount extends AnkiActivity {
             @Override
             public void onClick(View v) {
                 logout();
-            }
-
-        });
-
-        mRegisterView = getLayoutInflater().inflate(R.layout.my_account_register, null);
-        mUsername1 = (EditText) mRegisterView.findViewById(R.id.username1);
-        mPassword1 = (EditText) mRegisterView.findViewById(R.id.password1);
-        mUsername2 = (EditText) mRegisterView.findViewById(R.id.username2);
-        mPassword2 = (EditText) mRegisterView.findViewById(R.id.password2);
-
-        // Make the terms of use link clickable
-        TextView terms = (TextView) mRegisterView.findViewById(R.id.terms_link);
-        terms.setMovementMethod(LinkMovementMethod.getInstance());
-
-        Button registerButton = (Button) mRegisterView.findViewById(R.id.register_button);
-        registerButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (mUsername1.getText().toString().length() > 0 && mPassword1.getText().toString().length() > 0
-                        && mUsername1.getText().toString().equals(mUsername2.getText().toString())
-                        && mPassword1.getText().toString().equals(mPassword2.getText().toString())) {
-                    register();
-                } else {
-                    showSimpleSnackbar(R.string.register_mismatch, true);
-                    mPassword1.setText("");
-                    mPassword2.setText("");
-                }
-            }
-
-        });
-
-        Button cancelButton = (Button) mRegisterView.findViewById(R.id.cancel_button);
-        cancelButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switchToState(STATE_LOG_IN);
             }
 
         });
@@ -403,13 +332,8 @@ public class MyAccount extends AnkiActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Timber.i("MyAccount - onBackPressed()");
-            if (mCurrentState == STATE_ACCOUNT_SIGN_UP) {
-                switchToState(STATE_LOG_IN);
-                return true;
-            } else {
-                finishWithAnimation(ActivityTransitionAnimation.FADE);
-                return true;
-            }
+            finishWithAnimation(ActivityTransitionAnimation.FADE);
+            return true;
         }
         return super.onKeyDown(keyCode, event);
     }

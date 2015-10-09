@@ -232,12 +232,10 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
                 startActivityForResultWithAnimation(new Intent(this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.FADE);
                 break;
             case DRAWER_HELP:
-                Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(AnkiDroidApp.getManualUrl()));
-                startActivityWithoutAnimation(helpIntent);
+                openUrl(Uri.parse(AnkiDroidApp.getManualUrl()));
                 break;
             case DRAWER_FEEDBACK:
-                Intent feedbackIntent = new Intent("android.intent.action.VIEW", Uri.parse(AnkiDroidApp.getFeedbackUrl()));
-                startActivityWithoutAnimation(feedbackIntent);
+                openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()));
                 break;
             default:
                 return false;
