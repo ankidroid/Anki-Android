@@ -377,10 +377,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         mToolbar.setTitle(R.string.studyoptions_title);
         // Set the back button listener
         if (!mFragmented) {
-            mToolbar.setNavigationIcon(new IconicsDrawable(getContext())
-                    .icon(GoogleMaterial.Icon.gmd_arrow_back)
-                    .color(Color.WHITE)
-                    .sizeDp(16));
+            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

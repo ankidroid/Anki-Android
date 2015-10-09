@@ -64,14 +64,12 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     public static final int TASK_TYPE_LOGIN = 0;
     public static final int TASK_TYPE_SYNC = 1;
-    public static final int TASK_TYPE_REGISTER = 6;
     public static final int TASK_TYPE_UPGRADE_DECKS = 7;
     public static final int CONN_TIMEOUT = 30000;
 
 
     private static Connection sInstance;
     private TaskListener mListener;
-    private CancelCallback mCancelCallback;
     private static boolean sIsCancelled;
     private static boolean sIsCancellable;
 
@@ -127,9 +125,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         Timber.i("Connection onCancelled() method called");
         // Sync has ended so release the wake lock
         mWakeLock.release();
-        if (mCancelCallback != null) {
-            mCancelCallback.cancelAllConnections();
-        }
         if (mListener instanceof CancellableTaskListener) {
             ((CancellableTaskListener) mListener).onCancelled();
         }
@@ -182,12 +177,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
 
-    public static Connection register(TaskListener listener, Payload data) {
-        data.taskType = TASK_TYPE_REGISTER;
-        return launchConnectionTask(listener, data);
-    }
-
-
     public static Connection sync(TaskListener listener, Payload data) {
         data.taskType = TASK_TYPE_SYNC;
         return launchConnectionTask(listener, data);
@@ -208,9 +197,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         switch (data.taskType) {
             case TASK_TYPE_LOGIN:
                 return doInBackgroundLogin(data);
-
-            case TASK_TYPE_REGISTER:
-                return doInBackgroundRegister(data);
 
             case TASK_TYPE_SYNC:
                 return doInBackgroundSync(data);
@@ -270,51 +256,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             data.data = new String[] { username, hostkey };
         } else {
             data.success = false;
-        }
-        return data;
-    }
-
-
-    private Payload doInBackgroundRegister(Payload data) {
-        String username = (String) data.data[0];
-        String password = (String) data.data[1];
-        HttpSyncer server = new RemoteServer(this, null);
-        HttpResponse ret;
-        try {
-            ret = server.register(username, password);
-        } catch (UnknownHttpResponseException e) {
-            data.success = false;
-            data.result = new Object[] { "error", e.getResponseCode(), e.getMessage() };
-            return data;
-        }
-        String hostkey = null;
-        boolean valid = false;
-        String status = null;
-        if (ret != null) {
-            data.returnType = ret.getStatusLine().getStatusCode();
-            if (data.returnType == 200) {
-                try {
-                    JSONObject jo = (new JSONObject(server.stream2String(ret.getEntity().getContent())));
-                    status = jo.getString("status");
-                    if (status.equals("ok")) {
-                        hostkey = jo.getString("hkey");
-                        valid = (hostkey != null) && (hostkey.length() > 0);
-                    }
-                } catch (JSONException e) {
-                } catch (IllegalStateException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        if (valid) {
-            data.success = true;
-            data.data = new String[] { username, hostkey };
-        } else {
-            data.success = false;
-            data.data = new String[] { status != null ? status : AnkiDroidApp.getAppResources().getString(
-                    R.string.connection_error_message) };
         }
         return data;
     }

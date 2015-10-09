@@ -116,6 +116,7 @@
     <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
     <string name="repair_deck">http://ankisrs.net/docs/manual.html#corrupt-collections</string>
     <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>
+    <string name="register_url">https://ankiweb.net/account/login</string>
     <string name="changelog_url">https://ankidroid.org/docs/changelog.html</string>
 
     <string-array name="leech_action_values">

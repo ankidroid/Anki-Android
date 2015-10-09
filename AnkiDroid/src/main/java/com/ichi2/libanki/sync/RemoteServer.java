@@ -17,7 +17,6 @@
 
 package com.ichi2.libanki.sync;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Consts;
@@ -52,21 +51,6 @@ public class RemoteServer extends HttpSyncer {
             jo.put("p", pw);
             return super.req("hostKey", super.getInputStream(Utils.jsonToString(jo)));
         } catch (JSONException e) {
-            return null;
-        }
-    }
-
-
-    @Override
-    public HttpResponse register(String user, String pw) throws UnknownHttpResponseException {
-        try {
-            JSONObject jo = new JSONObject();
-            jo.put("u", URLEncoder.encode(user, "UTF-8"));
-            jo.put("p", URLEncoder.encode(pw, "UTF-8"));
-            return super.req("register", null, 6, jo);
-        } catch (JSONException e) {
-            return null;
-        } catch (UnsupportedEncodingException e) {
             return null;
         }
     }

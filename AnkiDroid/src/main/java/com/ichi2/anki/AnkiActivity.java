@@ -7,9 +7,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -33,6 +36,9 @@ import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.async.CollectionLoader;
+import com.ichi2.compat.customtabs.CustomTabActivityHelper;
+import com.ichi2.compat.customtabs.CustomTabsFallback;
+import com.ichi2.compat.customtabs.CustomTabsHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.Themes;
 
@@ -46,6 +52,9 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private DialogHandler mHandler = new DialogHandler(this);
 
+    // custom tabs
+    private CustomTabActivityHelper mCustomTabActivityHelper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +63,21 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
         // Set the theme
         Themes.setTheme(this);
         super.onCreate(savedInstanceState);
+        mCustomTabActivityHelper = new CustomTabActivityHelper();
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mCustomTabActivityHelper.bindCustomTabsService(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mCustomTabActivityHelper.unbindCustomTabsService(this);
+    }
+
 
     @Override
     protected void onResume() {
@@ -291,6 +314,25 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
         if (progressBar != null) {
             progressBar.setVisibility(View.GONE);
         }
+    }
+
+
+    protected void mayOpenUrl(Uri url) {
+        boolean success = mCustomTabActivityHelper.mayLaunchUrl(url, null, null);
+        if (!success) {
+            Timber.w("Couldn't preload url: %s", url.toString());
+        }
+    }
+
+    protected void openUrl(Uri url) {
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder(mCustomTabActivityHelper.getSession());
+        builder.setToolbarColor(getResources().getColor(R.color.theme_primary)).setShowTitle(true);
+        builder.setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out);
+        builder.setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out);
+        builder.setCloseButtonIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_arrow_back_white_24dp));
+        CustomTabsIntent customTabsIntent = builder.build();
+        CustomTabsHelper.addKeepAliveExtra(this, customTabsIntent.intent);
+        CustomTabActivityHelper.openCustomTab(this, customTabsIntent, url, new CustomTabsFallback());
     }
 
 
