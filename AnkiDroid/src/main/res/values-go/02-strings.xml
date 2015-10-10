@@ -158,12 +158,11 @@
   <string name="steps_error">Steps must be numbers greater than 0</string>
   <string name="steps_min_error">Mais þau aina griþs binah</string>
   <string name="sched_end">(andeis)</string>
-  <string name="sched_unbury_button">To see them now touch the “Unbury” item in the deck overview menu.</string>
+  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
   <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>
   <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">Afar galeikon boko, atsnarpei ƕaruh ana snillakartom gasokifrisaht ataugjan</string>
-  <string name="add_content_showcase_text">Du duginnan, skalt + knuppa atsnarpjan biaukan niujos laiseinawaihts.\n\n Atsnarpei \'Hilpa\' hilpabokos saiƕan.</string>
   <plurals name="time_span_seconds">
     <item quantity="one">%s second</item>
     <item quantity="other">%s seconds</item>

@@ -158,12 +158,11 @@
   <string name="steps_error">Steg måste definieras som siffror högre än 0</string>
   <string name="steps_min_error">Du måste ha minst ett steg</string>
   <string name="sched_end">(slut)</string>
-  <string name="sched_unbury_button">To see them now touch the “Unbury” item in the deck overview menu.</string>
+  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
   <string name="sched_has_buried">En del relaterade eller dolda kort undanhålls till en senare session.</string>
   <string name="tag_editor_add_feedback">Tryck på “%2$s” för att bekräfta att lägga till “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Befintlig etikett “%1$s” vald</string>
   <string name="lookup_hint">Efter att ha kopierat texten, klicka var som helst på flashkortet för att visa sökikonen</string>
-  <string name="add_content_showcase_text">För att börja, klicka på +-knappen för att lägga till nytt studiematerial.\n\n Tryck \"Hjälp\" för att se manualen.</string>
   <plurals name="time_span_seconds">
     <item quantity="one">%s sekund</item>
     <item quantity="other">%s sekunder</item>

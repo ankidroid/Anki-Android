@@ -161,12 +161,11 @@
   <string name="steps_error">Дії повинні бути числами, більшими за 0</string>
   <string name="steps_min_error">Принаймні один крок потрібний</string>
   <string name="sched_end">(кінець)</string>
-  <string name="sched_unbury_button">To see them now touch the “Unbury” item in the deck overview menu.</string>
+  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
   <string name="sched_has_buried">Деякі пов\'язані або приховані карти відкладені до наступної сесії.</string>
   <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
-  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\nPress “Help” to see the manual.</string>
   <plurals name="time_span_seconds">
     <item quantity="one">%s second</item>
     <item quantity="few">%s seconds</item>

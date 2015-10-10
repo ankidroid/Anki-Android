@@ -161,12 +161,11 @@
   <string name="steps_error">Kroky musia byť čísla väčšie ako 0</string>
   <string name="steps_min_error">Je nutné zadať aspoň jeden krok</string>
   <string name="sched_end">(koniec)</string>
-  <string name="sched_unbury_button">To see them now touch the “Unbury” item in the deck overview menu.</string>
+  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
   <string name="sched_has_buried">Niektoré súvisiace alebo zahrabané karty boli posunuté na neskôr.</string>
   <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
-  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\nPress “Help” to see the manual.</string>
   <plurals name="time_span_seconds">
     <item quantity="one">%s second</item>
     <item quantity="few">%s seconds</item>

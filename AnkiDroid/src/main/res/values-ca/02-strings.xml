@@ -158,12 +158,11 @@
   <string name="steps_error">Els passos han de ser números majors que 0</string>
   <string name="steps_min_error">Com a mínim un pas s\'exigeix</string>
   <string name="sched_end">(fi)</string>
-  <string name="sched_unbury_button">To see them now touch the “Unbury” item in the deck overview menu.</string>
+  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
   <string name="sched_has_buried">Algunes cartes relacionades o enterrades es van retardar fins demà.</string>
   <string name="tag_editor_add_feedback">Apreti \"%2$s\" per confirmar afegir \"%1$s\"</string>
   <string name="tag_editor_add_feedback_existing">Etiqueta existent \"%1$s\" seleccionada</string>
   <string name="lookup_hint">Després de copiar el text, apreti a qualsevol lloc en la carta per mostrar la icona de cerca</string>
-  <string name="add_content_showcase_text">Per començar, apreti el botó \"+\" per afegir material d\'estudi nou.\n\nApreti \"Ajuda\" per veure el manual.</string>
   <plurals name="time_span_seconds">
     <item quantity="one">%s segon</item>
     <item quantity="other">%s segons</item>

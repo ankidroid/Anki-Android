@@ -155,12 +155,11 @@
   <string name="steps_error">步长必须是大于 0 的数字</string>
   <string name="steps_min_error">至少需要一个步骤</string>
   <string name="sched_end">(结束)</string>
-  <string name="sched_unbury_button">To see them now touch the “Unbury” item in the deck overview menu.</string>
+  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
   <string name="sched_has_buried">一些相关的或被隐藏的卡片被推迟到明天。</string>
   <string name="tag_editor_add_feedback">点击“%2$s”以确认添加“%1$s”</string>
   <string name="tag_editor_add_feedback_existing">已选中%1$s</string>
   <string name="lookup_hint">复制文字后，点击卡片任意处以显示搜索图标</string>
-  <string name="add_content_showcase_text">若要开始，请点击 + 按钮来添加一些学习资料。\n点击\"帮助\"查看用户手册。</string>
   <plurals name="time_span_seconds">
     <item quantity="other">%s秒</item>
   </plurals>

@@ -158,12 +158,11 @@
   <string name="steps_error">Aantal stappen moet hoger zijn dan 0</string>
   <string name="steps_min_error">Ten minste één stap is vereist</string>
   <string name="sched_end">(einde)</string>
-  <string name="sched_unbury_button">To see them now touch the “Unbury” item in the deck overview menu.</string>
+  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
   <string name="sched_has_buried">Sommige gerelateerde of geblokkeerde kaarten zijn vertraagd tot een latere sessie.</string>
   <string name="tag_editor_add_feedback">Druk op  “%2$s” om het toevoegen van “%1$s” te bevestigen</string>
   <string name="tag_editor_add_feedback_existing">Bestaand kenmerk “%1$s” geselecteerd</string>
   <string name="lookup_hint">Nadat de teks is gekopieerd, tikt u waar dan ook op de flitskaart om het zoekicoon weer te geven</string>
-  <string name="add_content_showcase_text">Om te beginnen, tikt u op de +-knop om wat nieuw studie materiaal toe te voegen.\n\n Druk op \'Help\' om de handleiding te zien.</string>
   <plurals name="time_span_seconds">
     <item quantity="one">%s second</item>
     <item quantity="other">%s seconds</item>

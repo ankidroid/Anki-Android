@@ -158,12 +158,11 @@
   <string name="steps_error">Die Schrittanzahl muss größer als 0 sein</string>
   <string name="steps_min_error">Mindestens ein Schritt ist erforderlich</string>
   <string name="sched_end">(Ende)</string>
-  <string name="sched_unbury_button">To see them now touch the “Unbury” item in the deck overview menu.</string>
+  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
   <string name="sched_has_buried">Einige verwandte oder zurückgestellte Karten wurden auf morgen verschoben.</string>
   <string name="tag_editor_add_feedback">Berühren Sie »%2$s« um »%1$s« hinzuzufügen</string>
   <string name="tag_editor_add_feedback_existing">Existierendes Schlagwort »%1$s« ausgewählt</string>
   <string name="lookup_hint">Nach dem Kopieren des Textes, tippen Sie irgendwo auf der Karteikarte um das Suchsymbol anzuzeigen</string>
-  <string name="add_content_showcase_text">Zum Einstieg, berühren Sie die + Schaltfläche um neue Lerninhalte hinzuzufügen.\n\n Drücken Sie auf »Hilfe« um das Handbuch zu lesen.</string>
   <plurals name="time_span_seconds">
     <item quantity="one">%s Sekunde</item>
     <item quantity="other">%s Sekunden</item>

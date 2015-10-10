@@ -161,12 +161,11 @@
   <string name="steps_error">Kroky musí být číslo větší než 0</string>
   <string name="steps_min_error">Je požadován alespoň jeden krok</string>
   <string name="sched_end">(konec)</string>
-  <string name="sched_unbury_button">To see them now touch the “Unbury” item in the deck overview menu.</string>
+  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
   <string name="sched_has_buried">Některé související nebo pozastavené karty byly odloženy do pozdější relace.</string>
   <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">Po zkopírování textu, klepněte kdekoli na kartičku pro zobrazení ikony hledání</string>
-  <string name="add_content_showcase_text">Chcete-li začít, klepněte na tlačítko + pro přidání nového studijního materiálu.\n\n Klepněte na \'Nápověda\' pro zobrazení manuálu.</string>
   <plurals name="time_span_seconds">
     <item quantity="one">%s second</item>
     <item quantity="few">%s seconds</item>

@@ -155,13 +155,12 @@
   <string name="steps_error">学習ステップには1以上の数字を入力してください</string>
   <string name="steps_min_error">少なくとも 1 つの学習ステップが必要です。</string>
   <string name="sched_end">（終了）</string>
-  <string name="sched_unbury_button">To see them now touch the “Unbury” item in the deck overview menu.</string>
+  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
   <string name="sched_has_buried">関連カード、延期カードの学習は明日まで延期されます。</string>
   <string name="tag_editor_add_feedback">タグ「%1$s」を作成しますか？　よろしければ「%2$s」をタップしてください。
 </string>
   <string name="tag_editor_add_feedback_existing">既存のタグ「%1$s」が選択されました</string>
   <string name="lookup_hint">文字列をコピーした後、カード内でタップすると、検索辞書アイコンが表示されます</string>
-  <string name="add_content_showcase_text">開始する場合は、「＋」ボタンをタップして新しい学習データを追加してください。\n\n マニュアルを見る場合は、「ヘルプ」を押してください。</string>
   <plurals name="time_span_seconds">
     <item quantity="other">%s秒</item>
   </plurals>

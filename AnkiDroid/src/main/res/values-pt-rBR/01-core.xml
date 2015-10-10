@@ -128,7 +128,7 @@
   <string name="cancel_sync_confirm">Você quer cancelar a sincronização?</string>
   <string name="sync_cancelled">Sincronização cancelada</string>
   <string name="export">Exportar</string>
-  <string name="export_collection">Export collection</string>
+  <string name="export_collection">Exportar coleção</string>
   <string name="export_deck">Export deck</string>
   <string name="nothing">Nada</string>
   <string name="title_activity_template_editor">Tipos de Cartão para %s</string>

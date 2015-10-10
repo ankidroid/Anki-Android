@@ -158,12 +158,11 @@
   <string name="steps_error">I passi devono essere un numero maggiore di 0</string>
   <string name="steps_min_error">Almeno un passo è necessario</string>
   <string name="sched_end">(fine)</string>
-  <string name="sched_unbury_button">To see them now touch the “Unbury” item in the deck overview menu.</string>
+  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
   <string name="sched_has_buried">Alcune carte correlate o seppellite sono state rinviate ad una prossima sessione.</string>
   <string name="tag_editor_add_feedback">Tocca \"%2$s\" per confermare l\'aggiunta di \"%1$s\"</string>
   <string name="tag_editor_add_feedback_existing">Etichetta esistente \"%1$s\" selezionata</string>
   <string name="lookup_hint">Dopo aver copiato il testo, tocca la carta in un punto qualsiasi per mostrare l\'icona di ricerca</string>
-  <string name="add_content_showcase_text">Per cominciare, pigia il bottone + per aggiungere nuovi contenuti da studiare.\n\n Pigia \'Aiuto\' per vedere il manuale.</string>
   <plurals name="time_span_seconds">
     <item quantity="one">%s secondo</item>
     <item quantity="other">%s secondi</item>
