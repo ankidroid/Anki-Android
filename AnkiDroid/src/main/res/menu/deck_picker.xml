@@ -2,6 +2,12 @@
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
 
     <item
+        android:id="@+id/action_undo"
+        android:icon="@drawable/ic_undo_white_24dp"
+        android:title="@string/undo_action_review"
+        ankidroid:showAsAction="always"
+        android:visible="false"/>
+    <item
         android:id="@+id/action_sync"
         android:icon="@drawable/ic_sync_white_24dp"
         android:title="@string/sync_title"

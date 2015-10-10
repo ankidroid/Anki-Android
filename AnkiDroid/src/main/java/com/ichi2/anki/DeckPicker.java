@@ -156,6 +156,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // flag keeping track of when the app has been paused
     private boolean mActivityPaused = false;
 
+    // Flag keeping track of when congratulations was shown for showing the undo button
+    private boolean mCongratulationsShown = false;
+
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
      * Since syncing closes the database, this flag allows us to avoid doing any
@@ -471,6 +474,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
             menu.findItem(R.id.action_import).setVisible(false);
             menu.findItem(R.id.action_export).setVisible(false);
         }
+        // Show the undo button if the congratulations message was just shown and not tablet
+        if (mCongratulationsShown && !mFragmented) {
+            Resources res = getResources();
+            menu.findItem(R.id.action_undo).setVisible(true);
+            String undo = res.getString(R.string.studyoptions_congrats_undo, getCol().undoName(res));
+            menu.findItem(R.id.action_undo).setTitle(undo);
+        } else {
+            menu.findItem(R.id.action_undo).setVisible(false);
+        }
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -480,6 +492,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         Resources res = getResources();
         switch (item.getItemId()) {
+
+            case R.id.action_undo:
+                Timber.i("DeckPicker:: Undo button pressed");
+                undoLastReview();
+                return true;
 
             case R.id.action_sync:
                 Timber.i("DeckPicker:: Sync button pressed");
@@ -593,33 +610,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 showSimpleSnackbar(R.string.studyoptions_no_cards_due, false);
             } else {
                 // Otherwise show standard congratulations message
-                showSnackbar(R.string.studyoptions_congrats_finished, false, R.string.undo, new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, new DeckTask.TaskListener() {
-                            @Override
-                            public void onPreExecute() {
-                                showProgressBar();
-                            }
-
-                            @Override
-                            public void onPostExecute(TaskData result) {
-                                hideProgressBar();
-                                openReviewer();
-                            }
-
-                            @Override
-                            public void onProgressUpdate(TaskData... values) {
-
-                            }
-
-                            @Override
-                            public void onCancelled() {
-                                hideProgressBar();
-                            }
-                        });
-                    }
-                }, findViewById(R.id.root_layout), mSnackbarShowHideCallback);
+                showSimpleSnackbar(R.string.studyoptions_congrats_finished, false);
+                mCongratulationsShown = true;
             }
         }
     }
@@ -950,6 +942,26 @@ public class DeckPicker extends NavigationDrawerActivity implements
             preferences.edit().remove("useBackup").commit();
             preferences.edit().remove("intentAdditionInstantAdd").commit();
         }
+    }
+
+    private void undoLastReview() {
+        mCongratulationsShown = false;
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, new DeckTask.TaskListener() {
+            @Override
+            public void onCancelled() {hideProgressBar();}
+
+            @Override
+            public void onPreExecute() {showProgressBar();}
+
+            @Override
+            public void onPostExecute(TaskData result) {
+                hideProgressBar();
+                openReviewer();
+            }
+
+            @Override
+            public void onProgressUpdate(TaskData... values) {}
+        });
     }
 
 
@@ -1628,6 +1640,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void openStudyOptions(boolean withDeckOptions) {
+        // Clear the undo history when selecting a new deck
+        getCol().clearUndo();
+        mCongratulationsShown = false;
         if (mFragmented) {
             // The fragment will show the study options screen instead of launching a new activity.
             loadStudyOptionsFragment(withDeckOptions);
@@ -1647,6 +1662,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Get some info about the deck to handle special cases
         int pos = mDeckListAdapter.findDeckPosition(did);
         Sched.DeckDueTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
+        // Figure out what action to take
         if (getCol().getDecks().isDyn(did) || mFragmented) {
             // Go to StudyOptions screen when using filtered decks so that it's clearer to the user that it's different
             openStudyOptions(false);
@@ -1804,6 +1820,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void renameDeckDialog() {
         renameDeckDialog(mContextMenuDid);
     }
+
     public void renameDeckDialog(final long did) {
         Resources res = getResources();
         mDialogEditText = new EditText(DeckPicker.this);
@@ -1847,6 +1864,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void confirmDeckDeletion() {
         confirmDeckDeletion(mContextMenuDid);
     }
+
     public void confirmDeckDeletion(long did) {
         Resources res = getResources();
         if (!colIsOpen()) {
@@ -1961,6 +1979,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void openReviewer() {
+        // Clear the undo history when selecting a new deck
+        getCol().clearUndo();
+        mCongratulationsShown = false;
         Intent reviewer = new Intent(this, Reviewer.class);
         startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, ActivityTransitionAnimation.LEFT);
         getCol().startTimebox();
