@@ -373,8 +373,6 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             Resources res = AnkiDroidApp.getAppResources();
             menu.findItem(R.id.action_undo).setTitle(res.getString(R.string.studyoptions_congrats_undo, getCol().undoName(res)));
         }
-        // Set title
-        mToolbar.setTitle(R.string.studyoptions_title);
         // Set the back button listener
         if (!mFragmented) {
             mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);

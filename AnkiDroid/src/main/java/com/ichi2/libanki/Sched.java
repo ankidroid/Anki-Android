@@ -29,7 +29,6 @@ import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.util.Pair;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.hooks.Hooks;
 
@@ -1930,7 +1929,7 @@ public class Sched {
         if (haveBuried()) {
             String now;
             if (mHaveCustomStudy) {
-                now = " " + context.getString(R.string.sched_unbury_button);
+                now = " " + context.getString(R.string.sched_unbury_action);
             } else {
                 now = "";
             }
@@ -2204,7 +2203,7 @@ public class Sched {
      */
     public void resetCards(long[] ids) {
         long[] nonNew = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, String.format(Locale.US,
-                        "select id from cards where id in %s and (queue != 0 or type != 0)", Utils.ids2str(ids)), 0));
+                "select id from cards where id in %s and (queue != 0 or type != 0)", Utils.ids2str(ids)), 0));
         mCol.getDb().execute("update cards set reps=0, lapses=0 where id in " + Utils.ids2str(nonNew));
         forgetCards(nonNew);
         mCol.log(ids);
