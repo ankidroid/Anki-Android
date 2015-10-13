@@ -1,7 +1,7 @@
 /****************************************************************************************
  * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  * Copyright (c) 2014 Bruno Romero de Azevedo <brunodea@inf.ufsm.br>                    *
- * Copyright (c) 2014 Roland Sieker <ospalh@gmail.com>                                  *
+ * Copyright (c) 2014–15 Roland Sieker <ospalh@gmail.com>                               *
  * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
@@ -95,6 +95,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.net.URLDecoder;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -143,6 +144,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public static final int EASE_3 = 3;
     public static final int EASE_4 = 4;
 
+    /** Use an input tag inside the card for newer Androids, the old-style text input line for older ones. */
+    protected static final boolean USE_INPUT_TAG = (CompatHelper.getSdkVersion() >= 15);
+
     /** Maximum time in milliseconds to wait before accepting answer button presses. */
     private static final int DOUBLE_TAP_IGNORE_THRESHOLD = 200;
 
@@ -150,8 +154,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
     private static final Pattern sBrPattern = Pattern.compile("<br\\s?/?>");
 
-    // Type answer pattern
+    // Type answer patterns
     private static final Pattern sTypeAnsPat = Pattern.compile("\\[\\[type:(.+?)\\]\\]");
+    private static final Pattern sTypeAnsTyped = Pattern.compile("typed=([^&]*)");
 
     /** to be sento to and from the card editor */
     private static Card sEditorCard;
@@ -197,10 +202,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mShowRemainingCardCount;
 
     // Answer card & cloze deletion variables
-    /**
-     * The correct answer in the compare to field if answer should be given by learner. Null if no answer is expected.
-     */
-    private String mTypeCorrect;
+    private String mTypeCorrect = null;
+    // The correct answer in the compare to field if answer should be given by learner. Null if no answer is expected.
+    private String mTypeInput = "";  // What the learner actually typed
+    private String mTypeFont = "";  // Font face of the compare to field
+    private int mTypeSize = 0;  // Its font size
     private String mTypeWarning;
 
     private boolean mIsSelecting = false;
@@ -690,6 +696,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      */
     private void updateTypeAnswerInfo() {
         mTypeCorrect = null;
+        mTypeInput = "";
         String q = mCurrentCard.q(false);
         Matcher m = sTypeAnsPat.matcher(q);
         int clozeIdx = 0;
@@ -714,6 +721,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                         // narrow to cloze
                         mTypeCorrect = contentForCloze(mTypeCorrect, clozeIdx);
                     }
+                    mTypeFont = (String) (ja.getJSONObject(i).get("font"));
+                    mTypeSize = (int) (ja.getJSONObject(i).get("size"));
                     break;
                 }
             }
@@ -746,11 +755,27 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mTypeWarning != null) {
             return m.replaceFirst(mTypeWarning);
         }
-        if (mPrefWriteAnswers) {
-            return m.replaceFirst("<span id=typeans class=\"typePrompt\">........</span>");
+        StringBuilder sb = new StringBuilder();
+        if (USE_INPUT_TAG) {
+            // These functions are definde in the JavaScript file assets/scripts/card.js. We get the text back in
+            // shouldOverrideUrlLoading() in createWebView() in this file.
+            sb.append("<center>\n<input type=text name=typed id=typeans onfocus=\"taFocus();\" " +
+                      "onblur=\"taBlur(this);\" onKeyPress=\"return taKey(this, event)\" autocomplete=\"off\" ");
+            // We have to watch out. For the preview we don’t know the font or font size. Skip those there. (Anki
+            // desktop just doesn’t show the input tag there. Do it with standard values here instead.)
+            if (mTypeFont != null && !TextUtils.isEmpty(mTypeFont) && mTypeSize > 0) {
+                sb.append("style=\"font-family: '" + mTypeFont + "'; font-size: " + Integer.toString(mTypeSize) +
+                    "px;\" ");
+            }
+            sb.append(">\n</center>\n");
         } else {
-            return m.replaceFirst("<span id=typeans class=\"typePrompt typeOff\">........</span>");
+            sb.append("<span id=typeans class=\"typePrompt");
+            if (mPrefWriteAnswers) {
+                sb.append(" typeOff");
+            }
+            sb.append("\">........</span>");
         }
+        return m.replaceAll(sb.toString());
     }
 
 
@@ -767,7 +792,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         DiffEngine diffEngine = new DiffEngine();
         StringBuilder sb = new StringBuilder();
         sb.append("<div");
-        if (!mPrefWriteAnswers) {
+        if (!USE_INPUT_TAG && !mPrefWriteAnswers) {
             sb.append(" class=\"typeOff\"");
         }
         sb.append("><code id=typeans>");
@@ -795,7 +820,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
         }
         sb.append("</code></div>");
-        return m.replaceFirst(sb.toString());
+        return m.replaceAll(sb.toString());
     }
 
 
@@ -1466,7 +1491,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
-        webView.setFocusableInTouchMode(false);
+        // Problems with focus and input tags is the reason we keep the old type answer mechanism for old Androids.
+        webView.setFocusableInTouchMode(USE_INPUT_TAG);
         webView.setScrollbarFadingEnabled(true);
         Timber.d("Focusable = %s, Focusable in touch mode = %s",webView.isFocusable(),webView.isFocusableInTouchMode());
 
@@ -1485,6 +1511,26 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 }
                 if (url.startsWith("file") || url.startsWith("data:")) {
                     return false; // Let the webview load files, i.e. local images.
+                }
+                if (url.startsWith("typeblurtext:")) {
+                    // Store the text the javascript has send us…
+                    mTypeInput = URLDecoder.decode(url.replaceFirst("typeblurtext:", ""));
+                    // … and show the “SHOW ANSWER” button again.
+                    mFlipCardLayout.setVisibility(View.VISIBLE);
+                    return true;
+                }
+                if (url.startsWith("typeentertext:")) {
+                    // Store the text the javascript has send us…
+                    mTypeInput = URLDecoder.decode(url.replaceFirst("typeentertext:", ""));
+                    // … and show the answer.
+                    mFlipCardLayout.performClick();
+                    return true;
+                }
+                if (url.equals("signal:typefocus")) {
+                    // Hide the “SHOW ANSWER” button when the input has focus. The soft keyboard takes up enough space
+                    // by itself.
+                    mFlipCardLayout.setVisibility(View.GONE);
+                    return true;
                 }
                 Timber.d("Opening external link \"%s\" with an Intent", url);
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -1632,7 +1678,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mAnswerField.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER)) {
+                if (event.getAction() == KeyEvent.ACTION_UP &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER)) {
                     displayCardAnswer();
                     return true;
                 }
@@ -1645,7 +1692,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
-        mPrefWriteAnswers = !preferences.getBoolean("writeAnswersDisable", false);
+        mPrefWriteAnswers = (!preferences.getBoolean("writeAnswersDisable", false)) && !USE_INPUT_TAG;
+        // On newer Androids, ignore this setting, which sholud be hidden in the prefs anyway.
         mDisableClipboard = preferences.getString("dictionary", "0").equals("0");
         mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
         // mDeckFilename = preferences.getString("deckFilename", "");
@@ -1945,7 +1993,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         mAnswerField.setVisibility(View.GONE);
         // Clean up the user answer and the correct answer
-        String userAnswer = cleanTypedAnswer(mAnswerField.getText().toString());
+        String userAnswer;
+        if (USE_INPUT_TAG) {
+            userAnswer = cleanTypedAnswer(mTypeInput);
+        } else {
+            userAnswer = cleanTypedAnswer(mAnswerField.getText().toString());
+        }
         String correctAnswer = cleanCorrectAnswer(mTypeCorrect);
         Timber.d("correct answer = %s", correctAnswer);
         Timber.d("user answer = %s", userAnswer);
