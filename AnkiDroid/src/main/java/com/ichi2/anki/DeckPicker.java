@@ -379,8 +379,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // set protected variable from NavigationDrawerActivity
         mFragmented = studyoptionsFrame != null && studyoptionsFrame.getVisibility() == View.VISIBLE;
 
-        sIsWholeCollection = !mFragmented;
-
         registerExternalStorageListener();
 
         // create inherited navigation drawer layout here so that it can be used by parent class
@@ -424,6 +422,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                                                 .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
                                         Timber.i("DeckPicker:: Creating new deck...");
                                         getCol().getDecks().id(deckName, true);
+                                        CardBrowser.clearSelectedDeck();
                                         updateDeckList();
                                     }
                                 })
@@ -641,7 +640,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             updateDeckList();
         }
         setTitle(getResources().getString(R.string.app_name));
-        sIsWholeCollection = !mFragmented;
     }
 
 
@@ -1656,6 +1654,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void handleDeckSelection(long did) {
+        // Forget what the last used deck was in the browser
+        CardBrowser.clearSelectedDeck();
         // Select the deck
         getCol().getDecks().select(did);
         mFocusedDeck = did;
@@ -1947,6 +1947,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         Timber.e(e, "onPostExecute - Exception dismissing dialog");
                     }
                 }
+                CardBrowser.clearSelectedDeck();
             }
 
 

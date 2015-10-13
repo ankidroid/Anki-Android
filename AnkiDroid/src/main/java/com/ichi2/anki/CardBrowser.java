@@ -105,6 +105,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private MenuItem mMySearchesItem;
 
     public static Card sCardBrowserCard;
+    private static int sLastSelectedDeckIndex = -1;
 
     private int mPositionInCardsList;
 
@@ -341,7 +342,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         Timber.d("onCreate()");
         View mainView = getLayoutInflater().inflate(R.layout.card_browser, null);
         setContentView(mainView);
-        
+
         initNavigationDrawer(mainView);
         startLoadingCollection();
     }
@@ -496,7 +497,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mSearchTerms = "";
 
         // set the currently selected deck
-        if (!sIsWholeCollection) {
+        if (sLastSelectedDeckIndex == -1) {
             String currentDeckName;
             try {
                 currentDeckName = getCol().getDecks().current().getString("name");
@@ -516,6 +517,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     break;
                 }
             }
+        } else if (sLastSelectedDeckIndex > 0 && sLastSelectedDeckIndex < mDropDownDecks.size()) {
+            selectDropDownItem(sLastSelectedDeckIndex);
         }
     }
 
@@ -765,11 +768,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     public void selectDropDownItem(int position) {
         mActionBarSpinner.setSelection(position);
+        sLastSelectedDeckIndex = position;
         if (position == 0) {
-            sIsWholeCollection = true;
             mRestrictOnDeck = "";
         } else {
-            sIsWholeCollection = false;
             JSONObject deck = mDropDownDecks.get(position - 1);
             String deckName;
             try {
@@ -1039,6 +1041,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (result != null && mCards != null) {
                 Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfuly");
                 updateList();
+                if (!mSearchView.isIconified()) {
+                    showSimpleSnackbar(getSubtitleText(), false);
+                }
                 // After the initial searchCards query, start rendering the question and answer in the background
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler,
                         new DeckTask.TaskData(new Object[]{mCards, 0, 100}));
@@ -1090,6 +1095,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void closeCardBrowser(int result, Intent data) {
         setResult(result, data);
         finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+    }
+
+    public static void clearSelectedDeck() {
+        sLastSelectedDeckIndex = -1;
     }
 
     /**

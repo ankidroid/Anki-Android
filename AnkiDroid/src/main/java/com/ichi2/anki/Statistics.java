@@ -78,6 +78,7 @@ public class Statistics extends NavigationDrawerActivity implements
     private ArrayList<JSONObject> mDropDownDecks;
     private DeckDropDownAdapter mDropDownAdapter;
     private Spinner mActionBarSpinner;
+    private boolean mIsWholeCollection = false;
     private static boolean sIsSubtitle;
 
 
@@ -145,11 +146,11 @@ public class Statistics extends NavigationDrawerActivity implements
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        if (sIsWholeCollection) {
+        if (mIsWholeCollection) {
             selectDropDownItem(0);
         } else {
             for (int dropDownDeckIdx = 0; dropDownDeckIdx < mDropDownDecks.size();
-                    dropDownDeckIdx++) {
+                 dropDownDeckIdx++) {
                 JSONObject deck = mDropDownDecks.get(dropDownDeckIdx);
                 String deckName;
                 try {
@@ -246,9 +247,9 @@ public class Statistics extends NavigationDrawerActivity implements
     public void selectDropDownItem(int position) {
         mActionBarSpinner.setSelection(position);
         if (position == 0) {
-            sIsWholeCollection = true;
+            mIsWholeCollection = true;
         } else {
-            sIsWholeCollection = false;
+            mIsWholeCollection = false;
             JSONObject deck = mDropDownDecks.get(position - 1);
             try {
                 getCol().getDecks().select(deck.getLong("id"));
@@ -256,6 +257,7 @@ public class Statistics extends NavigationDrawerActivity implements
                 Timber.e(e, "Could not get ID from deck");
             }
         }
+        mTaskHandler.setIsWholeCollection(mIsWholeCollection);
         mSectionsPagerAdapter.notifyDataSetChanged();
     }
 
@@ -345,8 +347,6 @@ public class Statistics extends NavigationDrawerActivity implements
 
         //track current settings for each individual fragment
         protected long mDeckId;
-        protected boolean mIsWholeCollection;
-
         protected ViewPager mActivityPager;
         protected SectionsPagerAdapter mActivitySectionPagerAdapter;
 
@@ -467,9 +467,7 @@ public class Statistics extends NavigationDrawerActivity implements
             mActivityPager = ((Statistics)getActivity()).getViewPager();
             mActivitySectionPagerAdapter = ((Statistics)getActivity()).getSectionsPagerAdapter();
             mDeckId = CollectionHelper.getInstance().getCol(getActivity()).getDecks().selected();
-            mIsWholeCollection = sIsWholeCollection;
-
-            if(!sIsWholeCollection) {
+            if (!isWholeCollection()) {
                 try {
                     Collection col = CollectionHelper.getInstance().getCol(getActivity());
                     List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::"));
@@ -481,11 +479,13 @@ public class Statistics extends NavigationDrawerActivity implements
                     throw new RuntimeException(e);
                 }
             } else {
-                if(sIsSubtitle)
+                if(sIsSubtitle) {
                     ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(R.string.stats_deck_collection);
-                else
+                } else {
                     getActivity().setTitle(getResources().getString(R.string.stats_deck_collection));
+                }
             }
+
             return rootView;
         }
 
@@ -543,15 +543,13 @@ public class Statistics extends NavigationDrawerActivity implements
                 Collection col = CollectionHelper.getInstance().getCol(getActivity());
                 if(mHeight != height || mWidth != width ||
                         mType != (((Statistics)getActivity()).getTaskHandler()).getStatType() ||
-                        mDeckId != col.getDecks().selected() ||
-                        mIsWholeCollection != sIsWholeCollection){
+                        mDeckId != col.getDecks().selected() || isWholeCollection()){
                     mHeight = height;
                     mWidth = width;
                     mType = (((Statistics)getActivity()).getTaskHandler()).getStatType();
                     mProgressBar.setVisibility(View.VISIBLE);
                     mChart.setVisibility(View.GONE);
                     mDeckId = col.getDecks().selected();
-                    mIsWholeCollection = sIsWholeCollection;
                     if(mCreateChartTask != null && !mCreateChartTask.isCancelled()){
                         mCreateChartTask.cancel(true);
                     }
@@ -560,7 +558,9 @@ public class Statistics extends NavigationDrawerActivity implements
             }
         }
 
-
+        private boolean isWholeCollection() {
+            return ((Statistics) getActivity()).mIsWholeCollection;
+        }
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -626,25 +626,30 @@ public class Statistics extends NavigationDrawerActivity implements
             mActivityPager = ((Statistics)getActivity()).getViewPager();
             mActivitySectionPagerAdapter = ((Statistics)getActivity()).getSectionsPagerAdapter();
             Collection col = CollectionHelper.getInstance().getCol(getActivity());
-            mDeckId = col.getDecks().selected();
-            mIsWholeCollection = sIsWholeCollection;
-            if(!sIsWholeCollection) {
+            if (!isWholeCollection()) {
+                mDeckId = col.getDecks().selected();
                 try {
                     List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::"));
-                    if(sIsSubtitle)
+                    if (sIsSubtitle) {
                         ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(parts.get(parts.size() - 1));
-                    else
+                    } else {
                         getActivity().setTitle(parts.get(parts.size() - 1));
+                    }
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
             } else {
-                if(sIsSubtitle)
+                if (sIsSubtitle) {
                     ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(R.string.stats_deck_collection);
-                else
-                    getActivity().setTitle(getResources().getString(R.string.stats_deck_collection));
+                } else {
+                    getActivity().setTitle(R.string.stats_deck_collection);
+                }
             }
             return rootView;
+        }
+
+        private boolean isWholeCollection() {
+            return ((Statistics) getActivity()).mIsWholeCollection;
         }
 
         private void createStatisticOverview(){
@@ -665,13 +670,11 @@ public class Statistics extends NavigationDrawerActivity implements
             }
             Collection col = CollectionHelper.getInstance().getCol(getActivity());
             if(mType != (((Statistics)getActivity()).getTaskHandler()).getStatType() ||
-                    mDeckId != col.getDecks().selected() ||
-                    mIsWholeCollection != sIsWholeCollection){
+                    mDeckId != col.getDecks().selected() || isWholeCollection()){
                 mType = (((Statistics)getActivity()).getTaskHandler()).getStatType();
                 mProgressBar.setVisibility(View.VISIBLE);
                 mWebView.setVisibility(View.GONE);
                 mDeckId = col.getDecks().selected();
-                mIsWholeCollection = sIsWholeCollection;
                 if(mCreateStatisticsOverviewTask != null && !mCreateStatisticsOverviewTask.isCancelled()){
                     mCreateStatisticsOverviewTask.cancel(true);
                 }

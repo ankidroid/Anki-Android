@@ -42,18 +42,6 @@ public class Stats {
 
     public static enum ChartType {FORECAST, REVIEW_COUNT, REVIEW_TIME,
         INTERVALS, HOURLY_BREAKDOWN, WEEKLY_BREAKDOWN, ANSWER_BUTTONS, CARDS_TYPES, OTHER};
-    public static final int TYPE_FORECAST = 0;
-    public static final int TYPE_REVIEW_COUNT = 1;
-    public static final int TYPE_REVIEW_TIME = 2;
-    public static final int TYPE_INTERVALS = 3;
-    public static final int TYPE_HOURLY_BREAKDOWN = 4;
-    public static final int TYPE_WEEKLY_BREAKDOWN = 5;
-    public static final int TYPE_ANSWER_BUTTONS = 6;
-    public static final int TYPE_CARDS_TYPES = 7;
-
-    //public static final int TYPE_REVIEWS = 4;
-    //public static final int TYPE_REVIEWING_TIME = 5;
-    // public static final int TYPE_DECK_SUMMARY = 5;
 
     private static Stats sCurrentInstance;
 

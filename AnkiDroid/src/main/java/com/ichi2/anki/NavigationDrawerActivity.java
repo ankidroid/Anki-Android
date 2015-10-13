@@ -46,8 +46,6 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
     /** Navigation Drawer */
     protected CharSequence mTitle;
     protected Boolean mFragmented = false;
-    // Preselection for DeckDropDownAdapter
-    protected static boolean sIsWholeCollection = true;
     private Drawer mDrawer;
     private AccountHeader mHeader = null;
     // Other members
@@ -186,14 +184,6 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
         }
     }
 
-
-    public static void setIsWholeCollection(boolean isWholeCollection){
-        sIsWholeCollection = isWholeCollection;
-    }
-
-    public static boolean isWholeCollection() {
-        return sIsWholeCollection;
-    }
 
     /**
      * Get the drawer layout.
