@@ -1820,7 +1820,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
                 long elapsed = SystemClock.elapsedRealtime() - chronometer.getBase();
-                Timber.e("Elapsed: " + elapsed);
                 if (elapsed >= limit) {
                     chronometer.setTextColor(typedValue.data);
                     chronometer.stop();
