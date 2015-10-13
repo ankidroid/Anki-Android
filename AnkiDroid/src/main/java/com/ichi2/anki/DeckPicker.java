@@ -422,6 +422,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                                                 .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
                                         Timber.i("DeckPicker:: Creating new deck...");
                                         getCol().getDecks().id(deckName, true);
+                                        CardBrowser.clearSelectedDeck();
                                         updateDeckList();
                                     }
                                 })
@@ -1946,6 +1947,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         Timber.e(e, "onPostExecute - Exception dismissing dialog");
                     }
                 }
+                CardBrowser.clearSelectedDeck();
             }
 
 

@@ -404,6 +404,10 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
         View root = findViewById(R.id.root_layout);
         showSnackbar(mainTextResource, shortLength, -1, null, root);
     }
+    protected void showSimpleSnackbar(String mainText, boolean shortLength) {
+        View root = findViewById(R.id.root_layout);
+        showSnackbar(mainText, shortLength, -1, null, root, null);
+    }
 
     /**
      * Show a snackbar with an action
@@ -419,6 +423,11 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
     }
     protected void showSnackbar(int mainTextResource, boolean shortLength, int actionTextResource,
                                 View.OnClickListener listener, View root, Snackbar.Callback callback) {
+        String mainText = getResources().getString(mainTextResource);
+        showSnackbar(mainText, shortLength, actionTextResource, listener, root, callback);
+    }
+    protected void showSnackbar(String mainText, boolean shortLength, int actionTextResource,
+                                View.OnClickListener listener, View root, Snackbar.Callback callback) {
         if (root == null) {
             root = findViewById(android.R.id.content);
             if (root == null) {
@@ -427,7 +436,7 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         }
         int length = shortLength ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG;
-        Snackbar sb = Snackbar.make(root, mainTextResource, length);
+        Snackbar sb = Snackbar.make(root, mainText, length);
         if (listener != null) {
             sb.setAction(actionTextResource, listener);
         }

@@ -1041,6 +1041,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (result != null && mCards != null) {
                 Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfuly");
                 updateList();
+                if (!mSearchView.isIconified()) {
+                    showSimpleSnackbar(getSubtitleText(), false);
+                }
                 // After the initial searchCards query, start rendering the question and answer in the background
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler,
                         new DeckTask.TaskData(new Object[]{mCards, 0, 100}));
