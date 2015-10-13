@@ -182,7 +182,6 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         restorePreferences();
         mStudyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false);
         mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
-        NavigationDrawerActivity.setIsWholeCollection(false);
         initAllContentViews();
         if (getArguments() != null) {
             mLoadWithDeckOptions = getArguments().getBoolean("withDeckOptions");

@@ -22,7 +22,6 @@ import android.webkit.WebView;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
-import com.ichi2.libanki.Utils;
 
 public class InfoStatsBuilder {
     private final int CARDS_INDEX = 0;
@@ -38,7 +37,6 @@ public class InfoStatsBuilder {
     private final WebView mWebView; //for resources access
     private final Collection mCollectionData;
     private final boolean mIsWholeCollection;
-    private String mTodayString = "";
 
     public InfoStatsBuilder(WebView chartView, Collection collectionData, boolean isWholeCollection){
         mWebView = chartView;
