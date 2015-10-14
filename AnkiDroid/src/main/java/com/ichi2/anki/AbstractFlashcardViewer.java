@@ -770,7 +770,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             sb.append(">\n</center>\n");
         } else {
             sb.append("<span id=typeans class=\"typePrompt");
-            if (mPrefWriteAnswers) {
+            if (!mPrefWriteAnswers) {
                 sb.append(" typeOff");
             }
             sb.append("\">........</span>");
