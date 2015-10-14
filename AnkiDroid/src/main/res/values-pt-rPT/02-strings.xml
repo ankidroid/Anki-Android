@@ -43,7 +43,7 @@
   <string name="drawer_open">Abrir painel</string>
   <string name="drawer_close">Fechar painel</string>
   <string name="CardEditorLaterMessage">Informação guardada para mais tarde</string>
-  <string name="CardEditorCardDeck">Baralho de cartões:</string>
+  <string name="CardEditorCardDeck">Baralho de fichas:</string>
   <string name="CardEditorNoteDeck">Baralho:</string>
   <string name="CardEditorModel">Tipo:</string>
   <string name="CardEditorTags">Etiquetas: %1$s</string>
@@ -54,7 +54,7 @@
   <string name="check_all_tags">Marcar/desmarcar todas as etiquetas</string>
   <string name="filter_tags">Filtrar etiquetas</string>
   <string name="no_tags">Ainda não adicionou nenhuma etiqueta.</string>
-  <string name="sdcard_missing_message">Desactivar o armazenamento USB para aceder aos seus baralhos</string>
+  <string name="sdcard_missing_message">Desativar o armazenamento USB para aceder aos seus baralhos</string>
   <string name="enable_whiteboard">Activar quadro</string>
   <string name="disable_whiteboard">Desactivar quadro</string>
   <string name="show_whiteboard">Mostrar quadro</string>
@@ -114,7 +114,7 @@
   <string name="card_editor_preview_card">Pré-visualizar</string>
   <string name="error_insufficient_memory">Operação impossível devido a memória insuficiente no dispositivo</string>
   <string name="rename">Renomear</string>
-  <string name="rename_error">Baralho %s não pôde ser renomeado</string>
+  <string name="rename_error">Não foi possível renomear o baralho %s</string>
   <string name="default_conf_delete_error">O grupo de opções padrão não pode ser removido</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d cartão adicionado</item>
@@ -126,7 +126,7 @@
   <string name="check_db_message">Verificando a base de dados.\nEspere um momento&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Ficha vazia. Execute \"Ferramentas&gt;Fichas Vazias...\" na aplicação para PC.</string>
   <string name="unknown_type_field_warning">Escreva a resposta: campo desconhecido %s</string>
-  <string name="delete_deck">A eliminar baralho.\nEspere um momento&#8230;</string>
+  <string name="delete_deck">A eliminar o baralho&#8230;</string>
   <string name="show_hint">Mostrar %s</string>
   <string name="info_rate">Avaliar o AnkiDroid</string>
   <string name="col_load_failed">Carregamento da coleção falhou. \nPrima Voltar para fechar o AnkiDroid.</string>
@@ -154,7 +154,7 @@
   <string name="study_options">Opções de baralho</string>
   <string name="custom_study">Estudo personalizado</string>
   <string name="more_options">More</string>
-  <string name="dyn_deck_desc">Este é um baralho especial para estudar fora do horário normal. As fichas irão automaticamente voltar para os seus baralhos originais após a revisão. Eliminando este baralho da lista de baralhos irá enviar as fichas restantes para o seu baralho original.</string>
+  <string name="dyn_deck_desc">Este é um baralho especial para estudar fora do horário normal. As fichas serão automaticamente devolvidas para os seus baralhos originais depois de os rever. Ao eliminar este baralho da lista de baralhos irá enviar devolver todas as fichas restantes para o seu baralho original.</string>
   <string name="steps_error">Número de passos deve ser maior que 0</string>
   <string name="steps_min_error">É necessário pelo menos um passo</string>
   <string name="sched_end">(fim)</string>
@@ -162,7 +162,7 @@
   <string name="sched_has_buried">Algumas fichas relacionadas ou enterradas foram adiadas para amanhã.</string>
   <string name="tag_editor_add_feedback">Toque \"%2$s\" para confirmar a adição de \"%1$s\"</string>
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
-  <string name="lookup_hint">Depois de copiar o texto, toque em qualquer ponto da ficha para mostrar o ícone de procura</string>
+  <string name="lookup_hint">Depois de copiar o texto, toque na ficha em qualquer lugar para mostrar o ícone de procura</string>
   <plurals name="time_span_seconds">
     <item quantity="one">%s segundo</item>
     <item quantity="other">%s segundos</item>

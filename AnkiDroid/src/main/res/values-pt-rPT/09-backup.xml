@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_deck_no_space_left">Cópia de segurança não pôde ser gravada por falta de espaço no cartão SD. Por favor, diminua a profundidade da cópia de segurança ou liberte espaço no cartão.</string>
+  <string name="backup_deck_no_space_left">Cópia de segurança não guardada. Espaço insuficiente no cartão SD. Diminua a profundidade da cópia de segurança ou remova alguns dos outros ficheiros.</string>
   <string name="sd_space_warning">Menos de %d MB de espaço livre no seu cartão SD.\nLiberte algum espaço para evitar perda de dados.</string>
   <string name="backup_delete">Apagando cópias de segurança.\nPor favor aguarde&#8230;</string>
   <string name="backup_restore">Restaurar a partir de cópia de segurança</string>
@@ -53,7 +53,7 @@
   <string name="backup_retry_opening">Tentar abrir novamente</string>
   <string name="backup_error_menu_repair">Reparar a base de dados</string>
   <string name="backup_repair_deck">Reparar</string>
-  <string name="backup_repair_deck_progress">A reparar a base de dados.\nPor favor aguarde&#8230;</string>
+  <string name="backup_repair_deck_progress">A reparar a base de dados&#8230;</string>
   <string name="backup_error">Erro</string>
   <string name="backup_invalid_file_error">O ficheiro de cópia de segurança selecionado é inválido</string>
   <string name="backup_restore_select_title">Selecione a cópia de segurança para restaurar</string>
@@ -62,5 +62,5 @@
   <string name="open_collection_failed_message">Database couldn’t be opened. It’s either not a real Anki database or has been corrupted.\n\nTouch “options” for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
   <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
   <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
-  <string name="deck_repair_error">Colecção não pôde ser reparada</string>
+  <string name="deck_repair_error">Não foi possível reparar a coleção</string>
 </resources>

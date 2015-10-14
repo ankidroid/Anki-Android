@@ -68,8 +68,8 @@
   <string name="multimedia_editor_text_field_editing_search_label">Procurar por:</string>
   <string name="multimedia_editor_text_field_editing_show">Imagem</string>
   <string name="multimedia_editor_text_field_editing_say">Pronúncia</string>
-  <string name="multimedia_editor_text_field_editing_clear">Apagar</string>
-  <string name="multimedia_editor_text_field_editing_clone">Duplicar de</string>
+  <string name="multimedia_editor_text_field_editing_clear">Limpar</string>
+  <string name="multimedia_editor_text_field_editing_clone">Clonar de</string>
   <string name="multimedia_editor_text_field_editing_translate">Tradução</string>
   <string name="multimedia_editor_text_field_editing_no_text">Escreva primeiro algum texto</string>
   <string name="multimedia_editor_text_field_editing_many_words">Normalmente, o dicionário espera somente uma palavra</string>
@@ -79,7 +79,7 @@
   <string name="multimedia_editor_general_downloading">A baixar</string>
   <string name="multimedia_editor_general_done">Concluído</string>
   <string name="multimedia_editor_error_word_not_found">A palavra não foi encontrada</string>
-  <string name="multimedia_editor_trans_getting_failure">Falha ao obter tradução</string>
+  <string name="multimedia_editor_trans_getting_failure">Falha ao obter a tradução</string>
   <string name="multimedia_editor_searching_word">A procurar a palavra</string>
   <string name="multimedia_editor_progress_wait_title">Aguarde</string>
   <string name="multimedia_editor_something_wrong">Algo correu mal</string>

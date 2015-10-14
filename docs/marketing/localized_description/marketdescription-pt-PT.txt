@@ -4,16 +4,16 @@ AnkiDroid permite-lhe memorizar fichas de pergunta/resposta eficientemente ao mo
 
 Estude todo o tipo de coisas, onde e quando quiser. Faça bom uso do tempo livre em viagens de comboio, em filas de supermercado ou em qualquer outra situação!
 
-Crie os seus próprios baralhos de fichas de perguntas ou faça download gratuitamente de baralhos compilados para várias línguas e tópicos (mais de 6000 disponíveis).
+Crie os seus próprios baralhos de fichas ou transfira baralhos gratuitos compilados para vários idiomas e tópicos (disponíveis mais de 6.000).
 
 Adicione material através da aplicação para PC do Anki ou diretamente atravs do AnkiDroid. A aplicação suporta até mesmo adicionar material automaticamente a partir de um dicionário!
 
 ★ Características principais:
-• conteúdo suportado nas fichas de pergunta: texto, imagens, sons, LaTeX
+• conteúdos de ficha suportados: texto, imagens, sons, LaTeX
 • repetição espaçada (algoritmo de supermemo 2)
-• integração texto-para-fala
+• integração de texto para voz
 • mais de 6000 baralhos já criados
-• widget mostrando o progresso
+• widget de progresso
 • estatísticas detalhadas
 • sincronização com o AnkiWeb
 • código aberto (open source)
@@ -21,7 +21,7 @@ Adicione material através da aplicação para PC do Anki ou diretamente atravs 
 ★ Características adicionais:
 • grave respostas (opcional)
 • quadro para escrever/desenhar
-• editor/adicionador de fichas
+• editor/criador de fichas
 • navegador de fichas
 • layout compatível com tablets
 • importar arquivos de coleção existentes (via Anki Desktop)
@@ -29,9 +29,9 @@ Adicione material através da aplicação para PC do Anki ou diretamente atravs 
 • Adicionar fichas a partir de outras apps tais como dicionários
 • suporte a tipo de letra personalizado
 • sistema completo de cópia de segurança
-• navegação por gestos
+• navegação por deslizar, toques
 • personalizável
-• gestão dinâmica de baralhos
+• gestão de baralhos dinâmica
 • modo noturno
 • 27 traduções
 • Todas as versões anteriores do AnkiDroid disponíveis para download no site

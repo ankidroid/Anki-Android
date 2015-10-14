@@ -40,7 +40,7 @@
 -->
 <resources>
   <string name="backup_deck_no_space_left">最後のバックアップ·アクションは、あなたのSDカード上のスペース不足が原因で実行できませんでした\n\n必要なスペースを確保してください。</string>
-  <string name="sd_space_warning">SDカードに、 %d mb 以下の空きしかありません。\nデータの損失を避けるために空き領域を増やしてください。</string>
+  <string name="sd_space_warning">SDカードの空き領域が %dMBを下回っています。\nデータの損失を避けるために空き領域を増やしてください。</string>
   <string name="backup_delete">バックアップ削除中。\nしばらくお待ちください...</string>
   <string name="backup_restore">バックアップから復元</string>
   <string name="backup_new_collection">新しいコレクション</string>

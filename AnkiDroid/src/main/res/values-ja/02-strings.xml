@@ -155,7 +155,7 @@
   <string name="steps_error">学習ステップには1以上の数字を入力してください</string>
   <string name="steps_min_error">少なくとも 1 つの学習ステップが必要です。</string>
   <string name="sched_end">（終了）</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
+  <string name="sched_unbury_action">それらを今見る場合はメニューの「延期解除」をタップしてください</string>
   <string name="sched_has_buried">関連カード、延期カードの学習は明日まで延期されます。</string>
   <string name="tag_editor_add_feedback">タグ「%1$s」を作成しますか？　よろしければ「%2$s」をタップしてください。
 </string>

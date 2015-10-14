@@ -45,7 +45,7 @@
   <string name="settings">Configurações</string>
   <string name="help">Ajuda</string>
   <string name="send_feedback">Envie Comentários</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <string name="studyoptions_title">Resumo do baralho</string>
   <string name="studyoptions_due_today">Devidos hoje:</string>
   <string name="studyoptions_new_total">Total cartões novos:</string>
   <string name="studyoptions_total_cards">Total cartões:</string>
@@ -81,7 +81,7 @@
   <string name="undo_action_delete">deletar nota</string>
   <string name="undo_action_mark">marcar nota</string>
   <string name="unbury">Desocultar</string>
-  <string name="rename_deck">Rename deck</string>
+  <string name="rename_deck">Renomear baralho</string>
   <string name="menu_add">Adicionar</string>
   <string name="menu_add_note">Adicionar nota</string>
   <string name="menu_my_account">Conta de sincronização</string>
@@ -129,7 +129,7 @@
   <string name="sync_cancelled">Sincronização cancelada</string>
   <string name="export">Exportar</string>
   <string name="export_collection">Exportar coleção</string>
-  <string name="export_deck">Export deck</string>
+  <string name="export_deck">Exportar baralho</string>
   <string name="nothing">Nada</string>
   <string name="title_activity_template_editor">Tipos de Cartão para %s</string>
   <string name="card_template_editor_front">Modelo da Frente</string>

@@ -158,7 +158,7 @@
   <string name="steps_error">Número de passos deve ser maior do que 0</string>
   <string name="steps_min_error">Pelo menos um passo é necessário</string>
   <string name="sched_end">(fim)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
+  <string name="sched_unbury_action">Para vê-los agora, selecione o item \"Desenterrar\" no menu.</string>
   <string name="sched_has_buried">Alguns cartões relacionados ou enterrados foram adiados para uma sessão posterior.</string>
   <string name="tag_editor_add_feedback">Toque \"%2$s\" para confirmar a adição de \"%1$s\"</string>
   <string name="tag_editor_add_feedback_existing">Tag existente \"%1$s\" selecionada</string>

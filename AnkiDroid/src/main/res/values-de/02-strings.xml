@@ -135,7 +135,7 @@
   <string name="import_message_add">Hinzufügen</string>
   <string name="import_message_replace_confirm">Ihre bestehende Sammlung wird gelöscht und durch die aus der Datei %s ersetzt</string>
   <string name="import_message_add_confirm">»%s« zu Ihrer Sammlung hinzufügen? Das kann lange dauern</string>
-  <string name="import_log_success">Erfolgreich %d Karten importiert</string>
+  <string name="import_log_success">%d Karten importiert</string>
   <string name="import_log_error">Import fehlgeschlagen</string>
   <string name="import_log_no_apkg">Dies ist keine gültige apgk-Datei</string>
   <string name="import_error_not_apkg_extension">Dateiname »%s« hat keine .apkg-Endung</string>
@@ -158,7 +158,7 @@
   <string name="steps_error">Die Schrittanzahl muss größer als 0 sein</string>
   <string name="steps_min_error">Mindestens ein Schritt ist erforderlich</string>
   <string name="sched_end">(Ende)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
+  <string name="sched_unbury_action">Um sie jetzt zu sehen berühren Sie »Zurückstellen aufheben« im Menü.</string>
   <string name="sched_has_buried">Einige verwandte oder zurückgestellte Karten wurden auf morgen verschoben.</string>
   <string name="tag_editor_add_feedback">Berühren Sie »%2$s« um »%1$s« hinzuzufügen</string>
   <string name="tag_editor_add_feedback_existing">Existierendes Schlagwort »%1$s« ausgewählt</string>

@@ -74,7 +74,7 @@
   <string name="card_zoom">カードの拡大・縮小</string>
   <string name="image_zoom">画像の拡大・縮小</string>
   <string name="button_size">解答表示ボタン・回答ボタンのサイズ</string>
-  <string name="card_browser_font_size">ブラウザー用フォントサイズ調整</string>
+  <string name="card_browser_font_size">ブラウザ用フォントサイズ調整</string>
   <string name="col_path">コレクションの保存先</string>
   <string name="fullscreen_review">フルスクリーンモード</string>
   <string name="fullscreen_review_summ">Androidのステータスバー（通知バー）の非表示</string>
@@ -152,8 +152,8 @@
   <string name="filter_google_translate">Google翻訳から</string>
   <string name="filter_google_translate_summ">翻訳元と結果の保存</string>
   <string name="convert_fen_text_summ">Forsyth Edwards Notation 表記法を使いチェス盤を描画します。この表記は[fen][/fen] で囲む必要があります</string>
-  <string name="enable_api_title">Enable AnkiDroid API</string>
-  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+  <string name="enable_api_title">AnkiDroid API を有効にする</string>
+  <string name="enable_api_summary">他のアプリがAnkiDroidに接続しデータを読み書きすることを許可します</string>
   <string name="studyoptions_limit_select_tags">タグを選択</string>
   <string name="deck_conf_deck_description">デッキの説明</string>
   <string name="deck_conf_group">オプショングループ</string>

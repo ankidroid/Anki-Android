@@ -45,13 +45,13 @@
   <string name="settings">Impostazioni</string>
   <string name="help">Guida</string>
   <string name="send_feedback">Invia commenti</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <string name="studyoptions_title">Panoramica del mazzo</string>
   <string name="studyoptions_due_today">Scadono oggi:</string>
   <string name="studyoptions_new_total">Totale carte nuove:</string>
   <string name="studyoptions_total_cards">Totale carte:</string>
   <string name="studyoptions_eta">Tempo stimato (min):</string>
   <string name="studyoptions_start">Studia ora</string>
-  <string name="study_more">Study more</string>
+  <string name="study_more">Studia ancora</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d carta da ripetere (%2$s)</item>
     <item quantity="other">%1$d carte da ripetere (%2$s)</item>
@@ -81,7 +81,7 @@
   <string name="undo_action_delete">elimina nota</string>
   <string name="undo_action_mark">contrassegna nota</string>
   <string name="unbury">Disseppellisci</string>
-  <string name="rename_deck">Rename deck</string>
+  <string name="rename_deck">Rinomina mazzo</string>
   <string name="menu_add">Aggiungi</string>
   <string name="menu_add_note">Aggiungi nota</string>
   <string name="menu_my_account">Sincronizza account</string>
@@ -114,10 +114,10 @@
   <string name="empty_cram_deck">Svuoto mazzo per lo studio focalizzato.\nAttendi...</string>
   <string name="custom_study_deck_name">Sessione di Studio Personalizzato</string>
   <string name="custom_study_deck_exists">Rinomina dapprima il mazzo di Studio Personalizzato esistente.</string>
-  <string name="empty_deck">This deck is empty</string>
-  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-  <string name="studyoptions_limit_reached">Daily study limit reached</string>
-  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+  <string name="empty_deck">Questo mazzo è vuoto</string>
+  <string name="studyoptions_empty">Questo mazzo è vuoto. Premi il pulsante + per aggiungere nuovi contenuti.</string>
+  <string name="studyoptions_limit_reached">Raggiunto il limite giornaliero di studio</string>
+  <string name="studyoptions_empty_schedule">Nessuna carta programmata per lo studio</string>
   <string name="studyoptions_congrats_finished">Complimenti! Per ora hai finito.</string>
   <string name="studyoptions_congrats_more_rev">Il limite delle ripetizioni per oggi è stato raggiunto, ma ci sono ancora carte che aspettano di essere ripetute. Per un utilizzo ottimale della memoria, considera di aumentare il limite giornaliero nelle opzioni.</string>
   <string name="studyoptions_congrats_more_new">Ci sono ulteriori carte nuove disponibili, ma il limite giornaliero è stato raggiunto. Puoi aumentare il limite nelle opzioni, ma ricordati che ciò aumenterà il tuo carico di lavoro per le ripetizioni a breve termine.</string>
@@ -125,11 +125,11 @@
   <string name="studyoptions_no_cards_due">Nessuna carta da ripetere ora.</string>
   <string name="sd_card_not_mounted">Dispositivo archiviazione non montato</string>
   <string name="button_sync">Sincronizza</string>
-  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-  <string name="sync_cancelled">Sync cancelled</string>
+  <string name="cancel_sync_confirm">Vuoi annullare la sincronizzazione?</string>
+  <string name="sync_cancelled">Sincronizzazione annullata</string>
   <string name="export">Esportare</string>
-  <string name="export_collection">Export collection</string>
-  <string name="export_deck">Export deck</string>
+  <string name="export_collection">Esporta la collezione</string>
+  <string name="export_deck">Esporta il mazzo</string>
   <string name="nothing">Niente</string>
   <string name="title_activity_template_editor">Tipi di carta per %s</string>
   <string name="card_template_editor_front">Modello del fronte</string>
@@ -143,7 +143,6 @@
     <item quantity="other">Eliminare il tipo di carta \'%2$s\', e le sue carte %1$d?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Rimuovendo questo tipo di carta, verrebbero eliminate una o più note. Crea dapprima un nuovo tipo di carta.</string>
-  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
-        models, and decks, as well as create new ones.</string>
+  <string name="read_write_permission_label">Leggere e scrivere nel database di AnkiDroid</string>
+  <string name="read_write_permission_description">Consenti all\'applicazione di accedere a note esistenti, carte, modelli e mazzi, nonché di crearne di nuovi.</string>
 </resources>

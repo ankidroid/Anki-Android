@@ -42,14 +42,14 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Fichas agendadas</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d fichas pendentes no AnkiDroid</string>
   <string name="widget_no_cards_due">Sem fichas pendentes</string>
-  <string name="widget_loading">Carregando widget&#8230;</string>
+  <string name="widget_loading">A carregar widget&#8230;</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d card due in %2$s</item>
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="one">%1$d ficha pendente em %2$s</item>
+    <item quantity="other">%1$d fichas pendentes em %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
-    <item quantity="other">%1$d decks</item>
+    <item quantity="one">%1$d baralho</item>
+    <item quantity="other">%1$d baralhos</item>
   </plurals>
   <string name="widget_small">AnkiDroid pequeno</string>
 </resources>

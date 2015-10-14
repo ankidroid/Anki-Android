@@ -44,22 +44,22 @@
   <string name="check_db_acknowledge">Base de dados verificada</string>
   <string name="check_db_acknowledge_shrunk">Base de dados verificada e otimizada.\nComprimida em %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Eliminar baralho</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
+  <string name="delete_deck_default_deck">O baralho predefinido não pode ser eliminado.</string>
   <string name="delete_deck_title">Eliminar baralho?</string>
   <plurals name="delete_deck_message">
-    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
-    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="one">Eliminar todas as fichas em %1$s? Contém %2$d ficha.</item>
+    <item quantity="other">Eliminar todas as fichas em %1$s? Contém %2$d fichas.</item>
   </plurals>
   <string name="delete_cram_deck_message">Enviar todas as fichas em %s para os seus baralhos originais?</string>
-  <string name="no_tts_available_message">Nenhum idioma para sintetização de voz disponível</string>
+  <string name="no_tts_available_message">Nenhum idioma disponível para o texto para voz</string>
   <string name="initializing_tts">A inicializar o sintetizador de voz&#8230;</string>
   <string name="tts_no_tts">Não falar</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
-    <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
+    <item><![CDATA[Para nos ajudar a melhorar a AnkiDroid, por favor, comunique os erros para <a href=\"%1$s\">o rastreador de problemas</a>; também são bem-vindas as novas ideias de funcionalidades. Encontrar respostas na <a href=\"%2$s\">wiki</a> ou iniciar uma discussão no <a href=\"%3$s\">Fórum</a>.]]></item>
+    <item><![CDATA[AnkiDroid é um <a href=\"%1$s\">programa de código aberto<a/>, e assim toda a gente é incentivada a <a href=\"%2$s\">tornar-se um colaborador</a> :-)]]></item>
     <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, <a href=\"%2$s\">donate</a> to Anki Desktop, or blog about AnkiDroid.]]></item>
-    <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
+    <item><![CDATA[O AnkiDroid é publicado sob a <a href=\"%1$s\">licença GNU-GPL v3</a> e o código fonte está disponível no <a href=\"%2$s\">GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Pré-visualizar</string>
   <string name="reset_card_dialog_title">Reinicializar o progresso da ficha</string>
@@ -71,7 +71,7 @@
   <string name="answering_error_title">Erro na base de dados</string>
   <string name="answering_error_message">Ocorreu um erro ao gravar na coleção. Tal poderá estar relacionado com uma base de dados corrompida ou espaço insuficiente no disco.\n\nSe isso acontecer mais frequentemente, tente verificar a base de dados, repare a coleção ou restaure-a de uma cópia de segurança. Para tal, carregue em \'Opções\'.\n\nEm todo caso, isso poderá até ser um bug do AnkiDroid; denuncie o erro para que o possamos verificar.</string>
   <string name="answering_error_report">Denunciar erro</string>
-  <string name="repair_deck_dialog">Você realmente deseja tentar reparar a base de dados?\n\nAntes de iniciar a tentativa, uma cópia será criada na subpasta \'%s\'.</string>
+  <string name="repair_deck_dialog">Realmente deseja tentar reparar a base de dados?\n\nAntes de iniciar a tentativa, será criada uma cópia na subpasta \'%s\'.</string>
   <string name="intent_add_saved_information">Dados guardados</string>
   <string name="intent_add_clear_all">Apagar tudo</string>
   <string name="intent_aedict_empty">Categoria \'padrão\' está vazia</string>
@@ -82,13 +82,13 @@
   <string name="custom_study_rev_extend">Aumentar o limite de revisões de hoje em</string>
   <string name="custom_study_forgotten">Rever fichas esquecidas nos últimos x dias:</string>
   <string name="custom_study_ahead">Rever em avanço por x dias:</string>
-  <string name="custom_study_random">Seleccionar aleatoriamente x fichas do baralho:</string>
+  <string name="custom_study_random">Selecionar aleatoriamente x fichas do baralho:</string>
   <string name="custom_study_preview">Pré-visualizar novas fichas adicionadas nos últimos x dias:</string>
   <string name="rebuild_custom_study_deck">A reconstruir o baralho de estudo personalizado&#8230;</string>
   <string name="import_unpacking">A descompactar o arquivo&#8230;</string>
   <string name="importing_collection">A importar colecção&#8230;</string>
   <string name="import_media_count">A importar os arquivos multimédia %1$d%%&#8230;</string>
-  <string name="import_update_counts">A actualizar os contadores de baralho&#8230;</string>
+  <string name="import_update_counts">A atualizar os contadores de baralho&#8230;</string>
   <string name="import_add_progress">• Descompactando o arquivo %1$s\n• Importação de notas %2$d%%\n• Importação de fichas %3$d%%\n• Limpeza %4$s</string>
   <string name="sd_card_full_title">Cartão SD cheio</string>
   <string name="sd_card_almost_full_title">Cartão SD quase cheio</string>

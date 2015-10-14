@@ -38,7 +38,7 @@
   <string-array name="error_reporting_choice_labels">
     <item>Enviar relatório sempre</item>
     <item>Nunca enviar relatório</item>
-    <item>Pergunte-me</item>
+    <item>Perguntar-me</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Nenhuma ação</item>
@@ -50,16 +50,16 @@
     <item>Resposta recomendada (verde)</item>
     <item>Resposta melhor que recomendada</item>
     <item>Desfazer</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Editar nota</item>
+    <item>Marcar nota</item>
     <item>Consultar expressão</item>
     <item>Enterrar ficha</item>
     <item>Suspender ficha</item>
-    <item>Delete note</item>
+    <item>Eliminar nota</item>
     <item>Reproduzir multimédia</item>
     <item>Abortar a aprendizagem</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Ocultar nota</item>
+    <item>Suspender nota</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Suspender ficha</item>
@@ -70,14 +70,14 @@
     <item>Novas fichas na ordem de adição</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Mais antigas primeiro</item>
+    <item>Mais antigos primeiro</item>
     <item>Aleatória</item>
     <item>Intervalos crescentes</item>
     <item>Intervalos decrescentes</item>
     <item>Mais falhadas</item>
     <item>Ordem de adição</item>
     <item>Ordem de revisão</item>
-    <item>Última adicionada em primeiro lugar</item>
+    <item>Primeiro, a última adicionada</item>
     <item>Relative overdueness</item>
   </string-array>
   <string-array name="add_to_cur_labels">
