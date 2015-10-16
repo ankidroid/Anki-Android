@@ -1,6 +1,7 @@
 package com.ichi2.anki.dialogs;
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -26,7 +27,7 @@ import timber.log.Timber;
  */
 public class DialogHandler extends Handler {
 
-    public static final long INTENT_SYNC_MIN_INTERVAL = 60000;
+    public static final long INTENT_SYNC_MIN_INTERVAL = 2*60000;    // 2min minimum sync interval
 
     /**
      * Handler messages
@@ -47,7 +48,7 @@ public class DialogHandler extends Handler {
     
     public DialogHandler(AnkiActivity activity) {
         // Use weak reference to main activity to prevent leaking the activity when it's closed
-        mActivity = new WeakReference<AnkiActivity>(activity);
+        mActivity = new WeakReference<>(activity);
     }
 
 
@@ -97,17 +98,20 @@ public class DialogHandler extends Handler {
             (mActivity.get()).showDialogFragment(dialog);
         } else if (msg.what == MSG_DO_SYNC) {
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(mActivity.get());
+            Resources res = mActivity.get().getResources();
             String hkey = preferences.getString("hkey", "");
             boolean limited = Utils.intNow(1000) - preferences.getLong("lastSyncTime", 0) < INTENT_SYNC_MIN_INTERVAL;
-            if (!limited) {
+            if (!limited && hkey.length() > 0 && Connection.isOnline()) {
                 ((DeckPicker) mActivity.get()).sync();
             } else {
-                mActivity.get().showSimpleSnackbar(R.string.sync_too_busy, false);
+                String err = res.getString(R.string.sync_error);
+                if (limited) {
+                    mActivity.get().showSimpleNotification(err, res.getString(R.string.sync_too_busy));
+                } else {
+                    mActivity.get().showSimpleNotification(err, res.getString(R.string.youre_offline));
+                }
             }
-            if (hkey.length() > 0 && Connection.isOnline() && !limited) {
-                // Minimize the activity to the background if logged in
-                mActivity.get().finishWithoutAnimation();
-            }
+            mActivity.get().finishWithoutAnimation();
         }
     }
 
