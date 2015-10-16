@@ -78,7 +78,7 @@ startActivity(intent);
 ```
 
 # Sync Intent
-AnkiDroid v2.5 now supports background syncing via an intent which can be sent from Tasker:
+AnkiDroid v2.5 supports background syncing via an experimental intent which can be sent from Tasker:
 
 ```
 Sync Intent [ 
@@ -90,5 +90,5 @@ Sync Intent [
  Extra: 
  Package:
  Class: 
- Target:Activity ]
+ Target:Service ]
 ```
