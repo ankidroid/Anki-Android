@@ -140,6 +140,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="application/x-apkg"/>
             </intent-filter>
+            <intent-filter>
+                <action android:name="com.ichi2.anki.DO_SYNC" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.ichi2.anki.DeckPicker"

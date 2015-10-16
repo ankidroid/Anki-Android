@@ -1,7 +1,5 @@
 package com.ichi2.anki.dialogs;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,6 +32,7 @@ public class DialogHandler extends Handler {
     public static final int MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG = 5;
     public static final int MSG_SHOW_DATABASE_ERROR_DIALOG = 6;
     public static final int MSG_SHOW_FORCE_FULL_SYNC_DIALOG = 7;
+    public static final int MSG_DO_SYNC = 8;
 
 
     WeakReference<AnkiActivity> mActivity;
@@ -89,6 +88,12 @@ public class DialogHandler extends Handler {
             };
             dialog.setArgs(msgData.getString("message"));
             (mActivity.get()).showDialogFragment(dialog);
+        } else if (msg.what == MSG_DO_SYNC) {
+            ((DeckPicker) mActivity.get()).sync();
+            if (AnkiDroidApp.getSharedPrefs(mActivity.get()).getString("hkey", "").length() > 0) {
+                // Minimize the activity to the background if logged in
+                mActivity.get().moveTaskToBack(true);
+            }
         }
     }
 
