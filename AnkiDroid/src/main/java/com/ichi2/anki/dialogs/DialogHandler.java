@@ -1,5 +1,6 @@
 package com.ichi2.anki.dialogs;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -7,6 +8,10 @@ import android.os.Message;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.R;
+import com.ichi2.async.Connection;
+import com.ichi2.libanki.Utils;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +25,8 @@ import timber.log.Timber;
  * around this by using a message handler.
  */
 public class DialogHandler extends Handler {
+
+    public static final long INTENT_SYNC_MIN_INTERVAL = 60000;
 
     /**
      * Handler messages
@@ -89,10 +96,17 @@ public class DialogHandler extends Handler {
             dialog.setArgs(msgData.getString("message"));
             (mActivity.get()).showDialogFragment(dialog);
         } else if (msg.what == MSG_DO_SYNC) {
-            ((DeckPicker) mActivity.get()).sync();
-            if (AnkiDroidApp.getSharedPrefs(mActivity.get()).getString("hkey", "").length() > 0) {
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(mActivity.get());
+            String hkey = preferences.getString("hkey", "");
+            boolean limited = Utils.intNow(1000) - preferences.getLong("lastSyncTime", 0) < INTENT_SYNC_MIN_INTERVAL;
+            if (!limited) {
+                ((DeckPicker) mActivity.get()).sync();
+            } else {
+                mActivity.get().showSimpleSnackbar(R.string.sync_too_busy, false);
+            }
+            if (hkey.length() > 0 && Connection.isOnline() && !limited) {
                 // Minimize the activity to the background if logged in
-                mActivity.get().moveTaskToBack(true);
+                mActivity.get().finishWithoutAnimation();
             }
         }
     }
