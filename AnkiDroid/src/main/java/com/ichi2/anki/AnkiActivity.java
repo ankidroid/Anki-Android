@@ -400,11 +400,11 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
      * @param mainTextResource
      * @param shortLength
      */
-    protected void showSimpleSnackbar(int mainTextResource, boolean shortLength) {
+    public void showSimpleSnackbar(int mainTextResource, boolean shortLength) {
         View root = findViewById(R.id.root_layout);
         showSnackbar(mainTextResource, shortLength, -1, null, root);
     }
-    protected void showSimpleSnackbar(String mainText, boolean shortLength) {
+    public void showSimpleSnackbar(String mainText, boolean shortLength) {
         View root = findViewById(R.id.root_layout);
         showSnackbar(mainText, shortLength, -1, null, root, null);
     }
