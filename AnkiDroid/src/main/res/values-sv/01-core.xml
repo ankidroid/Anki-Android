@@ -131,7 +131,7 @@
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Export deck</string>
   <string name="nothing">Inget</string>
-  <string name="title_activity_template_editor">Korttyper för %s</string>
+  <string name="title_activity_template_editor">Card types</string>
   <string name="card_template_editor_front">Kortmall för framsida</string>
   <string name="card_template_editor_back">Kortmall för baksida</string>
   <string name="card_template_editor_styling">Formgivning</string>

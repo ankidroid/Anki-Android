@@ -131,7 +131,7 @@
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Export deck</string>
   <string name="nothing">Hiçbirşey</string>
-  <string name="title_activity_template_editor">%s için kart türleri</string>
+  <string name="title_activity_template_editor">Card types</string>
   <string name="card_template_editor_front">Şablon Ön Yüz</string>
   <string name="card_template_editor_back">Şablon Arka Yüz</string>
   <string name="card_template_editor_styling">Stil</string>

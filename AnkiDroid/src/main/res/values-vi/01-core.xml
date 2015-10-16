@@ -128,7 +128,7 @@
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Export deck</string>
   <string name="nothing">không có gì</string>
-  <string name="title_activity_template_editor">Các loại thẻ cho %s</string>
+  <string name="title_activity_template_editor">Card types</string>
   <string name="card_template_editor_front">Nền mặt trước của thẻ</string>
   <string name="card_template_editor_back">Nền mặt sau của thẻ</string>
   <string name="card_template_editor_styling">Phong cách</string>

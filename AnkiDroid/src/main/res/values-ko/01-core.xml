@@ -128,7 +128,7 @@
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Export deck</string>
   <string name="nothing">없음</string>
-  <string name="title_activity_template_editor">%s의 카드 형식</string>
+  <string name="title_activity_template_editor">Card types</string>
   <string name="card_template_editor_front">전면 템플릿</string>
   <string name="card_template_editor_back">후면 템플릿</string>
   <string name="card_template_editor_styling">꾸미기</string>

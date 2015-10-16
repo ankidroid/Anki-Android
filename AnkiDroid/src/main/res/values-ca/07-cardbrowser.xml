@@ -72,7 +72,7 @@
   <string name="card_browser_filtering_cards">Filtrant cartes...\nPremeu el botó d\'enrere per cancel·lar</string>
   <string-array name="card_browser_order_labels">
     <item>Cap ordenació (més ràpid)</item>
-    <item>By sort field</item>
+    <item>Per camp d\'ordenació</item>
     <item>Per hora de creació</item>
     <item>Per hora d\'edició</item>
     <item>Per hora de modificació</item>

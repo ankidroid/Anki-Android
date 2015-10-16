@@ -134,7 +134,7 @@
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Export deck</string>
   <string name="nothing">Ничего</string>
-  <string name="title_activity_template_editor">Типы карт для %s</string>
+  <string name="title_activity_template_editor">Card types</string>
   <string name="card_template_editor_front">Шаблон лицевой стороны</string>
   <string name="card_template_editor_back">Шаблон обратной стороны</string>
   <string name="card_template_editor_styling">Дизайн</string>

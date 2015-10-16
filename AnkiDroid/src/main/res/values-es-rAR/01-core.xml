@@ -131,7 +131,7 @@
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Export deck</string>
   <string name="nothing">Nada</string>
-  <string name="title_activity_template_editor">Tipos de Tarjeta por %s</string>
+  <string name="title_activity_template_editor">Card types</string>
   <string name="card_template_editor_front">Plantilla Anverso</string>
   <string name="card_template_editor_back">Plantilla Reverso</string>
   <string name="card_template_editor_styling">Estilo</string>

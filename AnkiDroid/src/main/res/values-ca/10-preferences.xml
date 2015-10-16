@@ -62,8 +62,8 @@
   <string name="whiteboard_stroke_width">Amplada del traç</string>
   <string name="whiteboard_black">Traços negres</string>
   <string name="whiteboard_black_summ">Utilitza menys memòria, llevat que estigui en el mode de nit</string>
-  <string name="write_answers_disable">Impossibilitar escrivint en la resposta</string>
-  <string name="write_answers_disable_summ">Impedeix que el teclat apareixi en les cartes que contenen els de tipus text</string>
+  <string name="write_answers_disable">Desactiva l\'escriptura en la resposta</string>
+  <string name="write_answers_disable_summ">Impedeix que el teclat apareixi en les cartes que contenen camps per escriure la resposta</string>
   <string name="text_selection_click">Solució de premsa llarga</string>
   <string name="text_selection_click_summ">Activeu aquesta opció si no podeu seleccionar text amb un clic perllongat</string>
   <string name="dictionary">Diccionari de cerca</string>
@@ -136,7 +136,7 @@
   <string name="show_estimates_summ">Mostra el temps de la pròxima revisió al botons de resposta</string>
   <string name="show_progress">Mostra el romanent</string>
   <string name="show_progress_summ">Mostra el recompte de cartes restants</string>
-  <string name="use_current">Pauet per a noves cartes</string>
+  <string name="use_current">Paquet per a cartes noves</string>
   <string name="new_spread">Nova posició de la carta</string>
   <string name="learn_cutoff">Informeu-vos de límit per davant</string>
   <string name="learn_cutoff_summ">XXX min</string>
@@ -147,12 +147,12 @@
   <string name="input_workaround">Solució d\'entrada</string>
   <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
   <string name="pref_keep_screen_on">Mantenir la pantalla encesa</string>
-  <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
+  <string name="pref_keep_screen_on_summ">Desactiva la pantalla de bloqueig</string>
   <string name="convert_fen_text">Suport de notació d\'escacs</string>
   <string name="filter_google_translate">Des de Google Translate</string>
   <string name="filter_google_translate_summ">Desa només la paraula original i la seva traducció</string>
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
-  <string name="enable_api_title">Enable AnkiDroid API</string>
+  <string name="enable_api_title">Activa l\'API de l\'AnkiDroid</string>
   <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
   <string name="studyoptions_limit_select_tags">Trieu les etiquetes</string>
   <string name="deck_conf_deck_description">Descripció del paquet</string>
@@ -191,7 +191,7 @@
   <string name="deck_conf_autoplay">Reprodueix l\'àudio automàticament</string>
   <string name="deck_conf_replayq">Torna a mostra la pregunta</string>
   <string name="deck_conf_replayq_summ">Al mostra la resposta, torna a reproduir l\'àudio de la pregunta i de la resposta</string>
-  <string name="deck_conf_manage">Gestió de Grup</string>
+  <string name="deck_conf_manage">Administració dels grups</string>
   <string name="deck_conf_current_group">Grup actual</string>
   <string name="deck_conf_rename">Canvia el nom</string>
   <string name="deck_conf_reset">Restaurar valors predeterminats</string>

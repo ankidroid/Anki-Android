@@ -131,7 +131,7 @@
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Export deck</string>
   <string name="nothing">Niets</string>
-  <string name="title_activity_template_editor">Kaarttypes voor %s</string>
+  <string name="title_activity_template_editor">Card types</string>
   <string name="card_template_editor_front">Sjabloon van de voorkant</string>
   <string name="card_template_editor_back">Sjabloon van de achterkant</string>
   <string name="card_template_editor_styling">Stijl</string>

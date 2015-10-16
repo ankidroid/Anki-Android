@@ -56,7 +56,7 @@
   <string name="no_tags">Encara no s\'ha afegit cap etiqueta.</string>
   <string name="sdcard_missing_message">La targeta SD no es troba disponible perquè està sent utilitzada com a emmagatzematge via USB. Desconnecteu l\'USB per accedir a les teves baralles.</string>
   <string name="enable_whiteboard">Activar pissarra</string>
-  <string name="disable_whiteboard">Desactivar pissarra</string>
+  <string name="disable_whiteboard">Desactiva la pissarra</string>
   <string name="show_whiteboard">Mostra la pissarra</string>
   <string name="hide_whiteboard">Amaga la pissarra</string>
   <string name="clear_whiteboard">Esborra la pissarra</string>
@@ -65,7 +65,7 @@
   <string name="leech_notification">Fitxa marcada com a lapa</string>
   <string name="corrupt_font">Fitxer de tipus de lletra incorrecte %s</string>
   <string-array name="browser_column1_headings">
-    <item>Sort field</item>
+    <item>Camp d\'ordenació</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Resposta</item>
@@ -77,13 +77,13 @@
     <item>Errades</item>
     <item>Revisions</item>
   </string-array>
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
-  <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_increase_new_limit">Augmenta el límit de fitxes d\'avui</string>
+  <string name="custom_study_increase_review_limit">Augmenta el límit de fitxes per revisar d\'avui</string>
+  <string name="custom_study_review_forgotten">Revisa les fitxes oblidades</string>
+  <string name="custom_study_review_ahead">Revisa més endavant</string>
+  <string name="custom_study_random_selection">Estudia una selecció aleatòria de les fitxes</string>
+  <string name="custom_study_preview_new">Vista prèvia de les fitxes noves</string>
+  <string name="custom_study_limit_tags">Limita a determinades etiquetes</string>
   <string name="cardeditor_title_add_note">Afegeix una nota</string>
   <string name="cardeditor_title_edit_card">Edita la nota</string>
   <string name="discard_unsaved_changes">Abandonar i perdre el procés sense guardar?</string>
@@ -124,10 +124,10 @@
   <string name="check_db">Comprova la base de dades</string>
   <string name="check_media">Comprovar la multimèdia</string>
   <string name="check_db_message">S\'està comprovant la base de dades.\nUn moment si us plau...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run “Tools&gt;Empty Cards...” on the desktop client.</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">La targeta és buida. Executa \"Eines &gt; targetes buides...\" en el client d\'escriptori.</string>
   <string name="unknown_type_field_warning">Tipus de resposta: camp desconegut %s</string>
-  <string name="delete_deck">S\'està suprimint el paquet...\nun moment si us plau.</string>
-  <string name="show_hint">Mostrar %s</string>
+  <string name="delete_deck">S\'està suprimint el paquet...\nUn moment si us plau.</string>
+  <string name="show_hint">Mostra %s</string>
   <string name="info_rate">Valoreu l\'AnkiDroid</string>
   <string name="col_load_failed">Ha fallat la càrrega de col lecció. \nPremeu Torna per tal de tancar l\'AnkiDroid.</string>
   <string name="import_title">Importa fitxes</string>
@@ -137,7 +137,7 @@
   <string name="import_message_add_confirm">Afegeix \"%s\" a la col·lecció? Això pot trigar molt de temps</string>
   <string name="import_log_success">S\'ha importat %d fitxes correctament</string>
   <string name="import_log_error">No ha estat possible la importació</string>
-  <string name="import_log_no_apkg">Això no és un fitxer apkg vàlid</string>
+  <string name="import_log_no_apkg">Això fitxer apkg no és vàlid</string>
   <string name="import_error_not_apkg_extension">El nom del fitxer \"%s\" no té l\'extensió .apkg</string>
   <string name="import_error_content_provider">El fitxer seleccionat no s\'ha importat automàticament per AnkiDroid. Consulteu el manual d\'usuari per com importar arxius anki manualment: \n%s</string>
   <string name="import_importing">S\'estàn important les fitxes. \nEspereu...</string>
@@ -145,15 +145,15 @@
   <string name="export_include_media">Incloure multimèdia</string>
   <string name="confirm_apkg_export">Exportar col·lecció com a fitxer apkg?</string>
   <string name="confirm_apkg_export_deck">Exportar \"%s\" com a arxiu apkg?</string>
-  <string name="export_in_progress">Exportant l\'arxiu apkg&#8230;</string>
+  <string name="export_in_progress">S\'està important l\'arxiu apkg&#8230;</string>
   <string name="export_successful_title">Enviar per correu electrònic l\'apkg?</string>
   <string name="export_successful">L\'arxiu \"%s\" ha sigut exportat. Voleu enviar-l\'ho per correu electrònic?</string>
-  <string name="export_unsuccessful">Error exportant la col·lecció</string>
+  <string name="export_unsuccessful">Error en exportar la col·lecció</string>
   <string name="import_hint">Per importar fitxes, poseu l\'arxiu apkg a la carpeta %s i premeu d\'acord</string>
   <string name="upgrade_import_no_file_found">No s\'ha trobat cap fitxer %1$s que es pugui importar</string>
-  <string name="study_options">Opcions de paquets</string>
+  <string name="study_options">Opcions dels paquets</string>
   <string name="custom_study">Estudi a mida</string>
-  <string name="more_options">More</string>
+  <string name="more_options"> Més</string>
   <string name="dyn_deck_desc">Es tracta d\'un paquet especial per a l\'estudi fora de la planificació normal. Després de revisar-les, les fitxes es tornaran automàticament al seus paquets originals. Si suprimiu aquest paquet de la llista de paquets, totes les fitxes tornaran al seu paquet inicial.</string>
   <string name="steps_error">Els passos han de ser números majors que 0</string>
   <string name="steps_min_error">Com a mínim un pas s\'exigeix</string>

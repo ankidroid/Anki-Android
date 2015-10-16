@@ -128,7 +128,7 @@
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Export deck</string>
   <string name="nothing">无</string>
-  <string name="title_activity_template_editor">%s的笔记类型</string>
+  <string name="title_activity_template_editor">Card types</string>
   <string name="card_template_editor_front">正面</string>
   <string name="card_template_editor_back">背面</string>
   <string name="card_template_editor_styling">样式</string>

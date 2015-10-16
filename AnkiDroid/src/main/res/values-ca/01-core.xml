@@ -39,19 +39,19 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="decks">Baralla</string>
+  <string name="decks">Paquets</string>
   <string name="card_browser">Navegador de cartes</string>
   <string name="statistics">Estadístiques</string>
   <string name="settings">Configuració</string>
   <string name="help">Ajuda</string>
   <string name="send_feedback">Enviar feedback</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <string name="studyoptions_title">Visió de conjunt dels paquets</string>
   <string name="studyoptions_due_today">Venç avui:</string>
   <string name="studyoptions_new_total">Total de noves fitxes:</string>
   <string name="studyoptions_total_cards">Total de fitxes:</string>
   <string name="studyoptions_eta">Temps estimat (min.):</string>
   <string name="studyoptions_start">Estudiar</string>
-  <string name="study_more">Study more</string>
+  <string name="study_more">Estudia més</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d carta pendent (%2$s)</item>
     <item quantity="other">%1$d cartes pendents (%2$s)</item>
@@ -81,7 +81,7 @@
   <string name="undo_action_delete">Suprimeix la nota</string>
   <string name="undo_action_mark">Marca la nota</string>
   <string name="unbury">Desenterrar</string>
-  <string name="rename_deck">Rename deck</string>
+  <string name="rename_deck">Canvia el nom del paquet</string>
   <string name="menu_add">Afegir</string>
   <string name="menu_add_note">Afegir nota</string>
   <string name="menu_my_account">Compte de sincronització</string>
@@ -96,9 +96,9 @@
   <string name="menu_search">Cerca-ho a %1$s</string>
   <string name="menu_mark_note">Marcar nota</string>
   <string name="menu_unmark_note">Desmarcar</string>
-  <string name="new_deck">Crear baralla</string>
+  <string name="new_deck">Crea un paquet</string>
   <string name="create">Genera</string>
-  <string name="new_dynamic_deck">Crear baralla filtrada</string>
+  <string name="new_dynamic_deck">Crear un paquet filtrat</string>
   <string name="night_mode">Mode nocturn</string>
   <string name="directory_inaccessible">El directori d\'AnkiDroid és inaccessible</string>
   <string name="time_quantity_seconds">%d s</string>
@@ -113,11 +113,11 @@
   <string name="empty_cram_label">Buit</string>
   <string name="empty_cram_deck">S\'està buidant el paquet cram. \nEspereu...</string>
   <string name="custom_study_deck_name">Sessió d\'estudi personalitzat</string>
-  <string name="custom_study_deck_exists">Si us plau, primer canvieu de nom el paquet Estudi a Mida.</string>
-  <string name="empty_deck">This deck is empty</string>
-  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-  <string name="studyoptions_limit_reached">Daily study limit reached</string>
-  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+  <string name="custom_study_deck_exists">Si us plau, primer canvieu de nom el paquet d\'estudi a mida</string>
+  <string name="empty_deck">Aquest paquet és buit</string>
+  <string name="studyoptions_empty">Aquest paquet és buit. Premeu el botó + per afegir nou contingut.</string>
+  <string name="studyoptions_limit_reached">Has arribat al límit d\'estudi diari</string>
+  <string name="studyoptions_empty_schedule">No hi ha cartes previstes per a estudiar</string>
   <string name="studyoptions_congrats_finished">Felicitats! De moment ja heu acabat.</string>
   <string name="studyoptions_congrats_more_rev">S\'ha assolit el límit de revisió d\'avui, però encara hi ha fitxes per a revisar. Per a optimitzar la memòria, considereu augmentar el límit diari a les opcions.</string>
   <string name="studyoptions_congrats_more_new">Hi ha més fitxes noves, però s\'ha assolit el límit diari. Podeu augmentar el límit a les opcions, però si us plau, tingueu en compte que això farà augmentar la càrrega de treball de la revisió a curt termini.</string>
@@ -128,10 +128,10 @@
   <string name="cancel_sync_confirm">Voleu cancel·lar la sincronització?</string>
   <string name="sync_cancelled">Sincronització cancel·lada</string>
   <string name="export">Exportar</string>
-  <string name="export_collection">Export collection</string>
-  <string name="export_deck">Export deck</string>
+  <string name="export_collection">Exporta la col·lecció</string>
+  <string name="export_deck">Exporta el paquet</string>
   <string name="nothing">Res</string>
-  <string name="title_activity_template_editor">Tipus de cartes per %s</string>
+  <string name="title_activity_template_editor">Card types</string>
   <string name="card_template_editor_front">Plantilla frontal</string>
   <string name="card_template_editor_back">Plantilla del darrere</string>
   <string name="card_template_editor_styling">Estilitzar</string>

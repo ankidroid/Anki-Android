@@ -134,7 +134,7 @@
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Export deck</string>
   <string name="nothing">Nic</string>
-  <string name="title_activity_template_editor">Typy kart dla %s</string>
+  <string name="title_activity_template_editor">Card types</string>
   <string name="card_template_editor_front">Szablon przodu</string>
   <string name="card_template_editor_back">Szablon tyłu</string>
   <string name="card_template_editor_styling">Styl</string>

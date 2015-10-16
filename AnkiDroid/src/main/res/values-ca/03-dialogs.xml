@@ -99,7 +99,7 @@
   <string name="dialog_continue">Continuar</string>
   <string name="dialog_positive_create">Crear</string>
   <string name="dialog_positive_delete">Eliminar</string>
-  <string name="dialog_positive_disable">Deshabilita</string>
+  <string name="dialog_positive_disable">Desactiva</string>
   <string name="dialog_positive_overwrite">Sobreescriure</string>
   <string name="dialog_positive_remove">El·liminar</string>
   <string name="dialog_positive_repair">Repara</string>

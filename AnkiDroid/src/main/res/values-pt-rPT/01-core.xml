@@ -131,7 +131,7 @@
   <string name="export_collection">Exportar coleção</string>
   <string name="export_deck">Exportar baralho</string>
   <string name="nothing">Nada</string>
-  <string name="title_activity_template_editor">Tipos de ficha para %s</string>
+  <string name="title_activity_template_editor">Card types</string>
   <string name="card_template_editor_front">Modelo da Frente</string>
   <string name="card_template_editor_back">Modelo de Trás</string>
   <string name="card_template_editor_styling">Estilo</string>

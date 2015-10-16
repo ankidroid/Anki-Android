@@ -128,7 +128,7 @@
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Export deck</string>
   <string name="nothing">Tidak ada</string>
-  <string name="title_activity_template_editor">Jenis kartu untuk %s</string>
+  <string name="title_activity_template_editor">Card types</string>
   <string name="card_template_editor_front">Template depan</string>
   <string name="card_template_editor_back">Template Belakang</string>
   <string name="card_template_editor_styling">Styling</string>
