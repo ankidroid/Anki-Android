@@ -76,3 +76,19 @@ intent.putExtra("SOURCE_TEXT", "日の出");
 intent.putExtra("TARGET_TEXT", "Sunrise");
 startActivity(intent);
 ```
+
+# Sync Intent
+AnkiDroid v2.5 now supports background syncing via an intent which can be sent from Tasker:
+
+```
+Sync Intent [ 
+ Action:com.ichi2.anki.DO_SYNC
+ Cat:Default 
+ Mime Type: 
+ Data: 
+ Extra: 
+ Extra: 
+ Package:
+ Class: 
+ Target:Activity ]
+```
