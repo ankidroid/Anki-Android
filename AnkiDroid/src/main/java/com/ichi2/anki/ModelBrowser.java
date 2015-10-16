@@ -669,4 +669,12 @@ public class ModelBrowser extends AnkiActivity {
             return convertView;
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_TEMPLATE_EDIT) {
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_COUNT_MODELS, mLoadingModelsHandler);
+        }
+    }
 }

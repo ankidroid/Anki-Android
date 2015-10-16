@@ -2,10 +2,16 @@
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
     <item
         android:id="@+id/action_preview"
-        android:icon="@drawable/ic_menu_view"
+        android:icon="@drawable/ic_remove_red_eye_white_24dp"
         android:title="@string/card_editor_preview_card"
         ankidroid:showAsAction="ifRoom"
-        android:visible="false"/>
+        android:visible="true"/>
+    <item
+        android:id="@+id/action_confirm"
+        android:icon="@drawable/ic_done_white_24dp"
+        android:title="@string/dialog_ok"
+        ankidroid:showAsAction="ifRoom"
+        android:visible="true"/>
     <item
         android:id="@+id/action_add"
         android:icon="@drawable/ic_menu_add"
