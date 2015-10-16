@@ -1236,7 +1236,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else {
             Connection.sync(mSyncListener,
                     new Connection.Payload(new Object[] { hkey, preferences.getBoolean("syncFetchesMedia", true),
-                            syncConflictResolution }, CollectionHelper.getInstance().getCol(this)));
+                            syncConflictResolution }));
         }
     }
 

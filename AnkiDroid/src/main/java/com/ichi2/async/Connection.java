@@ -19,10 +19,8 @@
 package com.ichi2.async;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.PowerManager;
 
@@ -32,7 +30,6 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.anki.exception.UnsupportedSyncException;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.sync.FullSyncer;
 import com.ichi2.libanki.sync.HttpSyncer;
 import com.ichi2.libanki.sync.MediaSyncer;
@@ -40,24 +37,14 @@ import com.ichi2.libanki.sync.RemoteMediaServer;
 import com.ichi2.libanki.sync.RemoteServer;
 import com.ichi2.libanki.sync.Syncer;
 
-import cz.msebera.android.httpclient.HttpResponse;
-import cz.msebera.android.httpclient.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.ref.WeakReference;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.HashMap;
 
+import cz.msebera.android.httpclient.HttpResponse;
+import cz.msebera.android.httpclient.impl.conn.tsccm.ThreadSafeClientConnManager;
 import timber.log.Timber;
 
 public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connection.Payload> {
@@ -282,7 +269,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         String hkey = (String) data.data[0];
         boolean media = (Boolean) data.data[1];
         String conflictResolution = (String) data.data[2];
-        Collection col = data.col;
+        Collection col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance());
 
         boolean colCorruptFullSync = false;
         if (!CollectionHelper.getInstance().colIsOpen() || !ok) {
@@ -531,13 +518,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
         public Payload() {
             data = null;
-            success = true;
-        }
-
-
-        public Payload(Object[] data, Collection col) {
-            this.data = data;
-            this.col = col;
             success = true;
         }
 
