@@ -19,56 +19,95 @@
 package com.ichi2.anki;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
-import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Note;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import timber.log.Timber;
 
 public class Previewer extends AbstractFlashcardViewer {
     Long mCurrentCardId;
+    Long mCurrentModelId;
+    int mOrd;
+    private final String DUMMY_TAG = "DUMMY_NOTE_TO_DELETE_x0-90-fa";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         Timber.d("onCreate()");
         mCurrentCardId=getIntent().getLongExtra("currentCardId", -1);
+        mCurrentModelId=getIntent().getLongExtra("modelId", -1);
+        mOrd=getIntent().getIntExtra("cardOrd", -1);
+        if (mCurrentCardId == -1 && (mCurrentModelId == -1 || mOrd == -1)) {
+            Timber.e("Previewer started without a valid card ID or model");
+            finishWithoutAnimation();
+        }
+        super.onCreate(savedInstanceState);
+        showBackIcon();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mCurrentCardId == -1L) {
+            Timber.d("Deleting dummy card(s)");
+            deleteDummyCards();
+        }
+    }
 
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
-        mCurrentCard = col.getCard(mCurrentCardId);
+        if (mCurrentCardId != -1L) {
+            // Use provided card id if given
+            mCurrentCard = col.getCard(mCurrentCardId);
+        } else {
+            // Otherwise create a dummy note
+            mCurrentCard = getDummyCard();
+        }
         displayCardQuestion();
+        showBackIcon();
     }
 
+    /**
+     * Get a dummy card
+     * @return
+     */
+    private Card getDummyCard() {
+        Timber.d("Creating dummy note");
+        JSONObject model = getCol().getModels().get(mCurrentModelId);
+        Note n =getCol().newNote(model);
+        ArrayList<String> fieldNames = getCol().getModels().fieldNames(model);
+        for (int i = 0; i < fieldNames.size(); i++) {
+            n.setField(i, fieldNames.get(i));
+        }
+        n.addTag(DUMMY_TAG);
+        getCol().addNote(n);
+        return getCol().getCard(n.cards().get(mOrd).getId());
+    }
+
+    private void deleteDummyCards() {
+        // TODO: make into an async task
+        List<Long> remnantNotes = getCol().findNotes("tag:" + DUMMY_TAG);
+        if (remnantNotes.size() > 0) {
+            long[] nids = new long[remnantNotes.size()];
+            for (int i = 0; i < remnantNotes.size(); i++) {
+                nids[i] = remnantNotes.get(i);
+            }
+            getCol().remNotes(nids);
+            getCol().save();
+        }
+    }
 
     @Override
     protected void setTitle() {
         getSupportActionBar().setTitle(R.string.preview_title);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finishWithAnimation(ActivityTransitionAnimation.DIALOG_EXIT);
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-        return true;
     }
 
 

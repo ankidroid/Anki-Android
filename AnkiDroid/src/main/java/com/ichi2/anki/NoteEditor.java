@@ -1037,7 +1037,7 @@ public class NoteEditor extends AnkiActivity {
         }
         // Also pass the card ID if not adding new note
         if (!mAddNote) {
-            intent.putExtra("cardId", mCurrentEditedCard.getId());
+            intent.putExtra("noteId", mCurrentEditedCard.note().getId());
         }
         startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, ActivityTransitionAnimation.LEFT);
     }

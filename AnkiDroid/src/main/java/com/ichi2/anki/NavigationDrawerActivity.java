@@ -41,7 +41,8 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 
 
-public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnDrawerItemClickListener, OnCheckedChangeListener {
+public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnDrawerItemClickListener,
+        OnCheckedChangeListener, Drawer.OnDrawerNavigationListener {
 
     /** Navigation Drawer */
     protected CharSequence mTitle;
@@ -116,7 +117,9 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
                         new DividerDrawerItem(),
                         nightModeItem, settingsItem, helpItem, feedbackItem
                 )
+                .withOnDrawerNavigationListener(this)
                 .withOnDrawerItemClickListener(this);
+
         mDrawer = builder.build();
     }
 
@@ -155,6 +158,13 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
     protected void enableDrawerSwipe() {
         if (mDrawer != null && mDrawer.getDrawerLayout() != null) {
             mDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        }
+    }
+
+    protected void showBackIcon() {
+        mDrawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
@@ -244,5 +254,11 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
             preferences.edit().putBoolean("invertedColors", true).commit();
         }
         CompatHelper.getCompat().restartActivityInvalidateBackstack(this);
+    }
+
+    @Override
+    public boolean onNavigationClickListener(View clickedView) {
+        finishWithAnimation(ActivityTransitionAnimation.DIALOG_EXIT);
+        return true;
     }
 }

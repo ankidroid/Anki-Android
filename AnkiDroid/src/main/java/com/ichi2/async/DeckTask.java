@@ -1112,6 +1112,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             if (! success) {
                 return new TaskData("removeTemplateFailed", false);
             }
+            col.getModels().save(model, true);
+            col.reset();
         } catch (ConfirmModSchemaException e) {
             Timber.e("doInBackgroundRemoveTemplate :: ConfirmModSchemaException");
             return new TaskData(false);
