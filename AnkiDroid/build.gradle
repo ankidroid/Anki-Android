@@ -33,10 +33,11 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.1.0'
+    // Note: support library 23.1.0 causes a crash opening prefs: https://github.com/ankidroid/Anki-Android/issues/3739
+    compile 'com.android.support:appcompat-v7:23.0.1'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
-    compile 'com.android.support:design:23.1.0'
-    compile 'com.android.support:customtabs:23.1.0'
+    compile 'com.android.support:design:23.0.1'
+    compile 'com.android.support:customtabs:23.0.1'
     compile('com.afollestad.material-dialogs:core:0.8.3.0@aar') {
         transitive = true
     }
