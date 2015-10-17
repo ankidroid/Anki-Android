@@ -400,11 +400,11 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
      * @param mainTextResource
      * @param shortLength
      */
-    public void showSimpleSnackbar(int mainTextResource, boolean shortLength) {
+    protected void showSimpleSnackbar(int mainTextResource, boolean shortLength) {
         View root = findViewById(R.id.root_layout);
         showSnackbar(mainTextResource, shortLength, -1, null, root);
     }
-    public void showSimpleSnackbar(String mainText, boolean shortLength) {
+    protected void showSimpleSnackbar(String mainText, boolean shortLength) {
         View root = findViewById(R.id.root_layout);
         showSnackbar(mainText, shortLength, -1, null, root, null);
     }
@@ -472,7 +472,7 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
 
-    protected void showSimpleNotification(String title, String message) {
+    public void showSimpleNotification(String title, String message) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
         // Don't show notification if disabled in preferences
         if (Integer.parseInt(prefs.getString("minimumCardsDueForNotification", "0")) <= 1000000) {
