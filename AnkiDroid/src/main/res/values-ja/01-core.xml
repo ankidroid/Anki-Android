@@ -128,7 +128,7 @@
   <string name="export_collection">エクスポート（全デッキ）</string>
   <string name="export_deck">デッキをエクスポート</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_template_editor">Card types</string>
+  <string name="title_activity_template_editor">カードタイプ</string>
   <string name="card_template_editor_front">表面のテンプレート</string>
   <string name="card_template_editor_back">裏面のテンプレート</string>
   <string name="card_template_editor_styling">書式</string>

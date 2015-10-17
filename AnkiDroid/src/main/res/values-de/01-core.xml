@@ -131,7 +131,7 @@
   <string name="export_collection">Sammlung exportieren</string>
   <string name="export_deck">Stapel exportieren</string>
   <string name="nothing">Nichts</string>
-  <string name="title_activity_template_editor">Card types</string>
+  <string name="title_activity_template_editor">Kartentypen</string>
   <string name="card_template_editor_front">Vorlage für Vorderseite</string>
   <string name="card_template_editor_back">Vorlage für Rückseite</string>
   <string name="card_template_editor_styling">Stil</string>
