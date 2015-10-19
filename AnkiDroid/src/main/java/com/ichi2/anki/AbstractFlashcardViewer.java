@@ -1188,7 +1188,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
         // We also stop the UI timer so it doesn't trigger the tick listener while paused. Letting
         // it run would trigger the time limit condition (red, stopped timer) in the background.
-        mCardTimer.stop();
+        if (mCardTimer != null) {
+            mCardTimer.stop();
+        }
     }
 
 
