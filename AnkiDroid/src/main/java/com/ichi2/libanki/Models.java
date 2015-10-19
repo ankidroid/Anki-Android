@@ -174,7 +174,11 @@ public class Models {
         save(m, false);
     }
 
-
+    /**
+     * Save a model
+     * @param m model to save
+     * @param templates flag which (when true) re-generates the cards for each note which uses the model
+     */
     public void save(JSONObject m, boolean templates) {
         if (m != null && m.has("id")) {
             try {
