@@ -878,7 +878,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     }
                 } else {
                     // Don't show new features dialog for development builds
-                    preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).commit();
+                    preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
+                    String ver = getResources().getString(R.string.updated_version, VersionUtils.getPkgVersionName());
+                    showSnackbar(ver, true, -1, null, findViewById(R.id.root_layout), null);
                     showStartupScreensAndDialogs(preferences, 2);
                 }
             }
