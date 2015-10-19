@@ -15,7 +15,7 @@
     <item
         android:id="@+id/action_add"
         android:icon="@drawable/ic_menu_add"
-        android:title="@string/card_template_editor_menu_add_reverse"
+        android:title="@string/menu_add"
         ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_delete"

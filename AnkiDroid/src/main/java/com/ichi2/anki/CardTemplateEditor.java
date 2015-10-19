@@ -17,6 +17,7 @@
 
 package com.ichi2.anki;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -25,7 +26,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -35,24 +35,23 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.ui.SlidingTabLayout;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
 import com.ichi2.themes.Themes;
+import com.ichi2.ui.SlidingTabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -108,7 +107,9 @@ public class CardTemplateEditor extends AnkiActivity {
         }
 
         @Override
-        public void onCancelled() {}
+        public void onCancelled() {
+            hideProgressBar();
+        }
     };
 
 
@@ -176,6 +177,20 @@ public class CardTemplateEditor extends AnkiActivity {
         }
     }
 
+    @Override
+    public void showProgressBar() {
+        super.showProgressBar();
+        findViewById(R.id.progress_description).setVisibility(View.VISIBLE);
+        findViewById(R.id.fragment_parent).setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        super.hideProgressBar();
+        findViewById(R.id.progress_description).setVisibility(View.INVISIBLE);
+        findViewById(R.id.fragment_parent).setVisibility(View.VISIBLE);
+    }
+
     /**
      * Callback used to finish initializing the activity after the collection has been correctly loaded
      * @param col Collection which has been loaded
@@ -190,6 +205,23 @@ public class CardTemplateEditor extends AnkiActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mTemplateAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(final int position, final float v, final int i2) {
+            }
+
+            @Override
+            public void onPageSelected(final int position) {
+                CardTemplateFragment fragment = (CardTemplateFragment) mTemplateAdapter.instantiateItem(mViewPager, position);
+                if (fragment != null) {
+                    fragment.updateCss();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(final int position) {
+            }
+        });
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(mViewPager);
         // Set activity title
@@ -324,6 +356,10 @@ public class CardTemplateEditor extends AnkiActivity {
 
 
     public static class CardTemplateFragment extends Fragment{
+        EditText mFront;
+        EditText mCss;
+        EditText mBack;
+        JSONObject mModel;
         public static CardTemplateFragment newInstance(int position, long modelId, long noteId) {
             CardTemplateFragment f = new CardTemplateFragment();
             Bundle args = new Bundle();
@@ -341,33 +377,27 @@ public class CardTemplateEditor extends AnkiActivity {
             try {
                 // Load template
                 long mid = getArguments().getLong("modelId");
-                final JSONObject model = ((AnkiActivity) getActivity()).getCol().getModels().get(mid);
-                final JSONArray tmpls = model.getJSONArray("tmpls");
+                mModel = ((AnkiActivity) getActivity()).getCol().getModels().get(mid);
+                final JSONArray tmpls = mModel.getJSONArray("tmpls");
                 final JSONObject template = tmpls.getJSONObject(position);
                 // Load EditText Views
-                final EditText front = ((EditText) mainView.findViewById(R.id.front_edit));
-                final EditText css = ((EditText) mainView.findViewById(R.id.styling_edit));
-                final EditText back = ((EditText) mainView.findViewById(R.id.back_edit));
+                mFront = ((EditText) mainView.findViewById(R.id.front_edit));
+                mCss = ((EditText) mainView.findViewById(R.id.styling_edit));
+                mBack = ((EditText) mainView.findViewById(R.id.back_edit));
                 // Set EditText content
-                front.setText(template.getString("qfmt"));
-                css.setText(model.getString("css"));
-                back.setText(template.getString("afmt"));
-                // Disable input for the standard models
-                if (isStandardModel()) {
-                    front.setEnabled(false);
-                    css.setEnabled(false);
-                    back.setEnabled(false);
-                }
+                mFront.setText(template.getString("qfmt"));
+                mCss.setText(mModel.getString("css"));
+                mBack.setText(template.getString("afmt"));
                 // Set text change listeners
                 TextWatcher templateEditorWatcher = new TextWatcher() {
                     @Override
                     public void afterTextChanged(Editable arg0) {
                         try {
-                            template.put("qfmt", front.getText());
-                            template.put("afmt", back.getText());
-                            template.put("css", css.getText());
+                            template.put("qfmt", mFront.getText());
+                            template.put("afmt", mBack.getText());
+                            mModel.put("css", mCss.getText());
                             tmpls.put(position, template);
-                            model.put("tmpls", tmpls);
+                            mModel.put("tmpls", tmpls);
                         } catch (JSONException e) {
                             Timber.e(e, "Could not update card template");
                         }
@@ -377,9 +407,9 @@ public class CardTemplateEditor extends AnkiActivity {
                     @Override
                     public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
                 };
-                front.addTextChangedListener(templateEditorWatcher);
-                css.addTextChangedListener(templateEditorWatcher);
-                back.addTextChangedListener(templateEditorWatcher);
+                mFront.addTextChangedListener(templateEditorWatcher);
+                mCss.addTextChangedListener(templateEditorWatcher);
+                mBack.addTextChangedListener(templateEditorWatcher);
                 // Enable menu
                 setHasOptionsMenu(true);
             } catch (JSONException e) {
@@ -393,32 +423,22 @@ public class CardTemplateEditor extends AnkiActivity {
             super.onResume();
         }
 
-
+        private void updateCss() {
+            if (mCss != null && mModel!= null) {
+                try {
+                    mCss.setText(mModel.getString("css"));
+                } catch (JSONException e) {
+                    // do nothing
+                }
+            }
+        }
 
         @Override
         public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
             inflater.inflate(R.menu.card_template_editor, menu);
-            if (isStandardModel()) {
-                menu.findItem(R.id.action_delete).setVisible(false);
-            }
             super.onCreateOptionsMenu(menu, inflater);
         }
 
-        @Override
-        public void onPrepareOptionsMenu(Menu menu) {
-            /*try {
-                // only show option to add reverse card if one existing card and not standard model
-                if (getModel().getJSONArray("tmpls").length() == 1 && !isStandardModel()) {
-                    menu.findItem(R.id.action_add).setVisible(true);
-                } else {
-                    menu.findItem(R.id.action_add).setVisible(false);
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }*/
-            // TODO: Expose after making a more user-friendly interface for adding / editing card templates
-            menu.findItem(R.id.action_add).setVisible(false);
-        }
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
@@ -453,7 +473,7 @@ public class CardTemplateEditor extends AnkiActivity {
                     Timber.i("CardTemplateEditor:: Preview model button pressed");
                     // Save the model if necessary
                     if (modelHasChanged()) {
-                        col.getModels().save(model, true);
+                        col.getModels().save(model, false);
                     }
                     // Create intent for the previewer and add some arguments
                     Intent i = new Intent(getActivity(), Previewer.class);
@@ -475,15 +495,48 @@ public class CardTemplateEditor extends AnkiActivity {
                 case R.id.action_confirm:
                     Timber.i("CardTemplateEditor:: Save model button pressed");
                     if (modelHasChanged()) {
-                        col.getModels().save(model, true);
-                        col.reset();
+                        // regenerate the cards of the model
+                        DeckTask.TaskData args = new DeckTask.TaskData(new Object[] {model});
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_MODEL, mSaveModelAndExitHandler, args);
+                    } else {
+                        ((AnkiActivity) getActivity()).finishWithAnimation(ActivityTransitionAnimation.RIGHT);
                     }
-                    ((AnkiActivity) getActivity()).finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+
                     return true;
                 default:
                     return super.onOptionsItemSelected(item);
             }
         }
+
+
+        /* Used for updating the collection when a model has been edited */
+        private DeckTask.TaskListener mSaveModelAndExitHandler = new DeckTask.TaskListener() {
+            @Override
+            public void onPreExecute() {
+                ((AnkiActivity) getActivity()).showProgressBar();
+                final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+            }
+
+            @Override
+            public void onProgressUpdate(DeckTask.TaskData... values) {
+            }
+
+            @Override
+            public void onPostExecute(DeckTask.TaskData result) {
+                if (result.getBoolean()) {
+                    getActivity().setResult(RESULT_OK);
+                    ((AnkiActivity) getActivity()).finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+                } else {
+                    // RuntimeException occurred
+                    getActivity().setResult(RESULT_CANCELED);
+                    ((AnkiActivity) getActivity()).finishWithoutAnimation();
+                }
+            }
+
+            @Override
+            public void onCancelled() {}
+        };
 
         private boolean modelHasChanged() {
             return ((CardTemplateEditor) getActivity()).modelHasChanged();
@@ -657,24 +710,6 @@ public class CardTemplateEditor extends AnkiActivity {
                 n+=1;
             }
             return name;
-        }
-
-
-        /**
-         * Check if the model has the same name as any of the standard models, in which case we prevent
-         * editing to protect the user from doing something stupid
-         * @return whether or not the current model has same name as built-in model
-         */
-        public boolean isStandardModel() {
-            // TODO :: Also check if the contents of the model are the same as a standard model
-            final List<String> readonlyModels = Arrays.asList( "Basic",
-                    "Basic (and reversed card)", "Basic (optional reversed card)", "Cloze");
-            try {
-                String modelName =getModel().getString("name");
-                return readonlyModels.contains(modelName);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 }

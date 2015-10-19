@@ -1072,6 +1072,9 @@ public class NoteEditor extends AnkiActivity {
                 }
                 break;
             case REQUEST_TEMPLATE_EDIT:
+                if (resultCode == RESULT_OK) {
+                    mReloadRequired = true;
+                }
                 updateCards(mEditorNote.model());
         }
     }
