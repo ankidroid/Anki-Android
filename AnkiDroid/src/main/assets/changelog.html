@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<!-- saved from url=(0041)https://ankidroid.org/docs/changelog.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.1">
+<meta name="generator" content="Asciidoctor 1.5.2">
 <title>AnkiDroid Changelog</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400">
+<link rel="stylesheet" href="./AnkiDroid Changelog_files/css">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 /* Remove the comments around the @import statement below when using this as a custom stylesheet */
-/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400";*/
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400";*/
 article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
 audio,canvas,video{display:inline-block}
 audio:not([controls]){display:none;height:0}
@@ -274,8 +274,8 @@ dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
 ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
 ul.unstyled,ol.unnumbered,ul.checklist,ul.none{list-style-type:none}
 ul.unstyled,ol.unnumbered,ul.checklist{margin-left:.625em}
-ul.checklist li>p:first-child>.fa-check-square-o:first-child,ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
-ul.checklist li>p:first-child>input[type="checkbox"]:first-child{position:relative;top:1px}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1em;font-size:.85em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{width:1em;position:relative;top:1px}
 ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
 ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
 ul.inline>li>*{display:block}
@@ -407,7 +407,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .print-only{display:block!important}
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
-</style>
+</style><style type="text/css"></style>
 </head>
 <body class="article">
 <div id="header">
@@ -415,7 +415,85 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_version_2_4_3_beta"><a class="anchor" href="#_version_2_4_3_beta"></a>Version 2.4.3 (beta)</h2>
+<h2 id="_version_2_5_beta"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_5_beta"></a>Version 2.5</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Redesigned user interface to use material design</p>
+</li>
+<li>
+<p>Added new dark theme</p>
+</li>
+<li>
+<p>Simplified the study process by bypassing deck overview screen</p>
+</li>
+<li>
+<p>Added ability to add, edit, delete note types</p>
+</li>
+<li>
+<p>Added setting to enable auto-sync and a Tasker intent to trigger sync</p>
+</li>
+<li>
+<p>Replaced "instant add" feature with new API for 3rd party apps to add cards directly to AnkiDroid</p>
+</li>
+<li>
+<p>Improved "type in the answer" feature</p>
+</li>
+<li>
+<p>Made fullscreen-mode immersive and added setting to hide answer buttons when using gestures</p>
+</li>
+<li>
+<p>Added css class for customizing card background color when night mode is enabled</p>
+</li>
+<li>
+<p>Allowed changing media volume from the deck picker</p>
+</li>
+<li>
+<p>Added ability to save and view common searches in the card browser</p>
+</li>
+<li>
+<p>Removed "simple interface"</p>
+</li>
+<li>
+<p>Increased minimum Android version from 2.1 to 2.3.3</p>
+</li>
+<li>
+<p>Added support for Android 6 Marshmallow</p>
+</li>
+<li>
+<p>Many other bug fixes and small improvements</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_version_2_4_4_2015_10_20"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_4_4_2015_10_20"></a>Version 2.4.4 (2015-10-20)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Fix playback of sound files with apostrophes in file name</p>
+</li>
+<li>
+<p>Fix new card siblings not being buried for the same day</p>
+</li>
+<li>
+<p>Fix media on cards when using the Hebrew Fix option</p>
+</li>
+<li>
+<p>Fixed crashes related to "Relative overdueness" and make this sort order available on AnkiDroid</p>
+</li>
+<li>
+<p>When mixing new and review cards, make their rotation more consistent with desktop</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_version_2_4_3_2015_04_21"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_4_3_2015_04_21"></a>Version 2.4.3 (2015-04-21)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -427,6 +505,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li>
 <p>Fix crash caused by widget</p>
+</li>
+<li>
+<p>Fix rare crash in browser</p>
 </li>
 <li>
 <p>Fix a couple of sync issues</p>
@@ -442,7 +523,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_4_2_2015_03_18"><a class="anchor" href="#_version_2_4_2_2015_03_18"></a>Version 2.4.2 (2015-03-18)</h2>
+<h2 id="_version_2_4_2_2015_03_18"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_4_2_2015_03_18"></a>Version 2.4.2 (2015-03-18)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -457,7 +538,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_4_1_2015_03_15"><a class="anchor" href="#_version_2_4_1_2015_03_15"></a>Version 2.4.1 (2015-03-15)</h2>
+<h2 id="_version_2_4_1_2015_03_15"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_4_1_2015_03_15"></a>Version 2.4.1 (2015-03-15)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -490,7 +571,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_4_2015_01_28"><a class="anchor" href="#_version_2_4_2015_01_28"></a>Version 2.4 (2015-01-28)</h2>
+<h2 id="_version_2_4_2015_01_28"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_4_2015_01_28"></a>Version 2.4 (2015-01-28)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -532,19 +613,22 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_3_2_2014_11_06"><a class="anchor" href="#_version_2_3_2_2014_11_06"></a>Version 2.3.2 (2014-11-06)</h2>
+<h2 id="_version_2_3_2_2014_11_06"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_3_2_2014_11_06"></a>Version 2.3.2 (2014-11-06)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
 <p>Bug fixes: Sync, TTS, Remote images, Advanced editor, Export</p>
 </li>
+<li>
+<p>Note: This is the last version of AnkiDroid supported by AnkiWeb. Previous versions will not sync.</p>
+</li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_3_2014_10_27"><a class="anchor" href="#_version_2_3_2014_10_27"></a>Version 2.3 (2014-10-27)</h2>
+<h2 id="_version_2_3_2014_10_27"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_3_2014_10_27"></a>Version 2.3 (2014-10-27)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -607,7 +691,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_2_3_2014_08_04"><a class="anchor" href="#_version_2_2_3_2014_08_04"></a>Version 2.2.3 (2014-08-04)</h2>
+<h2 id="_version_2_2_3_2014_08_04"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_2_3_2014_08_04"></a>Version 2.2.3 (2014-08-04)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -622,7 +706,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_2_2014_07_21"><a class="anchor" href="#_version_2_2_2014_07_21"></a>Version 2.2 (2014-07-21)</h2>
+<h2 id="_version_2_2_2014_07_21"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_2_2014_07_21"></a>Version 2.2 (2014-07-21)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -691,7 +775,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_1_3_2014_04_05"><a class="anchor" href="#_version_2_1_3_2014_04_05"></a>Version 2.1.3 (2014-04-05)</h2>
+<h2 id="_version_2_1_3_2014_04_05"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_1_3_2014_04_05"></a>Version 2.1.3 (2014-04-05)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -706,7 +790,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_1_2014_03_27"><a class="anchor" href="#_version_2_1_2014_03_27"></a>Version 2.1 (2014-03-27)</h2>
+<h2 id="_version_2_1_2014_03_27"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_1_2014_03_27"></a>Version 2.1 (2014-03-27)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -723,7 +807,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>New override font preference in addition to default font</p>
 </li>
 <li>
-<p>New "Kanji Info" feature (enabled in preferences&#8594;reviewing&#8594;Kanji Info)</p>
+<p>New "Kanji Info" feature (enabled in preferences→reviewing→Kanji Info)</p>
 </li>
 <li>
 <p>Improve Aedict integration</p>
@@ -751,7 +835,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_0_4_2014_02_03"><a class="anchor" href="#_version_2_0_4_2014_02_03"></a>Version 2.0.4 (2014-02-03)</h2>
+<h2 id="_version_2_0_4_2014_02_03"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_0_4_2014_02_03"></a>Version 2.0.4 (2014-02-03)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -775,7 +859,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_0_2_2013_12_15"><a class="anchor" href="#_version_2_0_2_2013_12_15"></a>Version 2.0.2 (2013-12-15)</h2>
+<h2 id="_version_2_0_2_2013_12_15"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_0_2_2013_12_15"></a>Version 2.0.2 (2013-12-15)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -832,7 +916,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_0_1_2013_02_06"><a class="anchor" href="#_version_2_0_1_2013_02_06"></a>Version 2.0.1 (2013-02-06)</h2>
+<h2 id="_version_2_0_1_2013_02_06"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_0_1_2013_02_06"></a>Version 2.0.1 (2013-02-06)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -850,7 +934,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_0_2013_01_03"><a class="anchor" href="#_version_2_0_2013_01_03"></a>Version 2.0 (2013-01-03)</h2>
+<h2 id="_version_2_0_2013_01_03"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_0_2013_01_03"></a>Version 2.0 (2013-01-03)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -895,7 +979,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_0_1_to_1_1_3"><a class="anchor" href="#_version_0_1_to_1_1_3"></a>Version 0.1 to 1.1.3</h2>
+<h2 id="_version_0_1_to_1_1_3"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_0_1_to_1_1_3"></a>Version 0.1 to 1.1.3</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>AnkiDroid has continuously evolved collectively as an open source project, with the first version released to the Google Market on <a href="http://nicolas-raoul.blogspot.jp/2009/06/just-published-ankidroid-on-market.html">June 28 2009</a>.
@@ -907,8 +991,8 @@ essentially rewritten from scratch to be compatible with the new Anki Desktop v2
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-04-11 18:37:08 Tokyo Standard Time
+Last updated 2015-10-19 16:50:30 UTC
 </div>
 </div>
-</body>
-</html>
+
+</body></html>

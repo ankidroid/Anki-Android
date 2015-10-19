@@ -38,6 +38,7 @@
     <string name="filter_tags">Filter tags</string>
     <string name="no_tags">You haven’t added any tags yet.</string>
     <string name="sdcard_missing_message">Switch off USB storage to access your decks</string>
+    <string name="updated_version">Updated to version %s</string>
 
     <!-- Reviewer.java -->
     <string name="enable_whiteboard">Enable whiteboard</string>
