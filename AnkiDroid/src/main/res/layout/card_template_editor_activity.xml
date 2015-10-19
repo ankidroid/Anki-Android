@@ -13,6 +13,7 @@
         android:orientation="vertical" >
         <include layout="@layout/toolbar" />
         <LinearLayout
+            android:id="@+id/fragment_parent"
             android:layout_width="match_parent"
             android:gravity="center_horizontal"
             android:layout_height="match_parent"
@@ -27,5 +28,19 @@
                 android:layout_height="match_parent" />
         </LinearLayout>
     </LinearLayout>
-    <include layout="@layout/anki_progress"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include layout="@layout/anki_progress"/>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/progress_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/saving_changes"
+            android:layout_gravity="center"
+            android:layout_below="@+id/progress_bar"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

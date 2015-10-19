@@ -100,6 +100,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_REPOSITION_FIELD = 44;
     public static final int TASK_TYPE_ADD_FIELD = 45;
     public static final int TASK_TYPE_CHANGE_SORT_FIELD = 46;
+    public static final int TASK_TYPE_SAVE_MODEL = 47;
 
     /**
      * A reference to the application context to use to fetch the current Collection object.
@@ -325,6 +326,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_CHANGE_SORT_FIELD:
                 return doInBackgroundChangeSortField(params);
+
+            case TASK_TYPE_SAVE_MODEL:
+                return doInBackgroundSaveModel(params);
 
             default:
                 Timber.e("unknown task type: %d", mType);
@@ -1099,7 +1103,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     }
 
     /**
-     * Remove a card template
+     * Remove a card template. Note: it's necessary to call save model after this to re-generate the cards
      */
     private TaskData doInBackgroundRemoveTemplate(TaskData... params) {
         Timber.d("doInBackgroundRemoveTemplate");
@@ -1112,12 +1116,23 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             if (! success) {
                 return new TaskData("removeTemplateFailed", false);
             }
-            col.getModels().save(model, true);
-            col.reset();
         } catch (ConfirmModSchemaException e) {
             Timber.e("doInBackgroundRemoveTemplate :: ConfirmModSchemaException");
             return new TaskData(false);
         }
+        return new TaskData(true);
+    }
+
+    /**
+     * Regenerate all the cards in a model
+     */
+    private TaskData doInBackgroundSaveModel(TaskData... params) {
+        Timber.d("doInBackgroundSaveModel");
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Object [] args = params[0].getObjArray();
+        JSONObject model = (JSONObject) args[0];
+        col.getModels().save(model, true);
+        col.reset();
         return new TaskData(true);
     }
 

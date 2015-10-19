@@ -515,15 +515,6 @@ public final class AddContentApi {
 
 
     private static String[] splitFields(String fields) {
-        // do not drop empty fields
-        fields = fields.replaceAll("\\x1f\\x1f", "\u001f\u001e\u001f");
-        fields = fields.replaceAll("\\x1f$", "\u001f\u001e");
-        String[] split = fields.split("\\x1f");
-        for (int i = 0; i < split.length; i++) {
-            if (split[i].matches("\\x1e")) {
-                split[i] = "";
-            }
-        }
-        return split;
+        return fields.split("\\x1f", -1);
     }
 }
