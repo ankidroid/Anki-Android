@@ -135,7 +135,6 @@
   <string name="card_template_editor_front">Modelo da Frente</string>
   <string name="card_template_editor_back">Modelo de Trás</string>
   <string name="card_template_editor_styling">Estilo</string>
-  <string name="card_template_editor_menu_add_reverse">Adicionar verso</string>
   <string name="card_template_editor_menu_delete">Eliminar</string>
   <string name="card_template_editor_cant_delete">Pelo menos um tipo de ficha é necessário.</string>
   <plurals name="card_template_editor_confirm_delete">

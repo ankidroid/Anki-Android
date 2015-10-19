@@ -55,6 +55,7 @@
   <string name="filter_tags">Filtrar etiquetas</string>
   <string name="no_tags">No has añadido ninguna etiqueta aún.</string>
   <string name="sdcard_missing_message">Tarjeta SD no disponible debido a que está siendo utilizada como un dispositivo USB. Desconecte el USB para acceder a sus mazos.</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Activar pizarra</string>
   <string name="disable_whiteboard">Desactivar pizarra</string>
   <string name="show_whiteboard">Mostrar pizarra</string>

@@ -55,6 +55,7 @@
   <string name="filter_tags">Suodata tunnisteita</string>
   <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">SD-kortti ei ole käytettävissä, koska sitä käytetään USB-liitännän kautta. Irrota USB käyttääksesi korttipakkojasi</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Ota kirjoitustaulu käyttöön</string>
   <string name="disable_whiteboard">Poista kirjoitustaulu käytöstä</string>
   <string name="show_whiteboard">Näytä kirjoitustaulu</string>

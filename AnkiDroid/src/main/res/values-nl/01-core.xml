@@ -135,7 +135,6 @@
   <string name="card_template_editor_front">Sjabloon van de voorkant</string>
   <string name="card_template_editor_back">Sjabloon van de achterkant</string>
   <string name="card_template_editor_styling">Stijl</string>
-  <string name="card_template_editor_menu_add_reverse">Omgekeerde toevoegen</string>
   <string name="card_template_editor_menu_delete">Verwijder</string>
   <string name="card_template_editor_cant_delete">Minstens een kaarttype is vereist.</string>
   <plurals name="card_template_editor_confirm_delete">

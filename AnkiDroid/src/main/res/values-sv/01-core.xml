@@ -135,7 +135,6 @@
   <string name="card_template_editor_front">Kortmall för framsida</string>
   <string name="card_template_editor_back">Kortmall för baksida</string>
   <string name="card_template_editor_styling">Formgivning</string>
-  <string name="card_template_editor_menu_add_reverse">Lägg till omvänd</string>
   <string name="card_template_editor_menu_delete">Ta bort</string>
   <string name="card_template_editor_cant_delete">Minst en korttyp krävs.</string>
   <plurals name="card_template_editor_confirm_delete">

@@ -132,7 +132,6 @@
   <string name="card_template_editor_front">전면 템플릿</string>
   <string name="card_template_editor_back">후면 템플릿</string>
   <string name="card_template_editor_styling">꾸미기</string>
-  <string name="card_template_editor_menu_add_reverse">역순으로 추가</string>
   <string name="card_template_editor_menu_delete">삭제</string>
   <string name="card_template_editor_cant_delete">적어도 하나의 카드 형식이 필요합니다.</string>
   <plurals name="card_template_editor_confirm_delete">

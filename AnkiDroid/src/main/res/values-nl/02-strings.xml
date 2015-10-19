@@ -55,6 +55,7 @@
   <string name="filter_tags">Filter kenmerken</string>
   <string name="no_tags">Je hebt nog geen kenmerken toegevoegd.</string>
   <string name="sdcard_missing_message">De SD-kaart is niet beschikbaar omdat ze in gebruik is voor USB-opslag. Ontkoppel de USB om toegang te krijgen tot uw sets.</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Whiteboard inschakelen</string>
   <string name="disable_whiteboard">Whiteboard uitschakelen</string>
   <string name="show_whiteboard">Toon het schrijfbord</string>

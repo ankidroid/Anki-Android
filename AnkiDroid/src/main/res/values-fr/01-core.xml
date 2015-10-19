@@ -135,7 +135,6 @@
   <string name="card_template_editor_front">Modèle du recto</string>
   <string name="card_template_editor_back">Modèle Back</string>
   <string name="card_template_editor_styling">Style</string>
-  <string name="card_template_editor_menu_add_reverse">Ajouter l\'inverse</string>
   <string name="card_template_editor_menu_delete">Supprimer</string>
   <string name="card_template_editor_cant_delete">Il faut au moins un type de carte.</string>
   <plurals name="card_template_editor_confirm_delete">

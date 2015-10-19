@@ -135,7 +135,6 @@
   <string name="card_template_editor_front">Vorlage für Vorderseite</string>
   <string name="card_template_editor_back">Vorlage für Rückseite</string>
   <string name="card_template_editor_styling">Stil</string>
-  <string name="card_template_editor_menu_add_reverse">Umgekehrte hinzufügen</string>
   <string name="card_template_editor_menu_delete">Löschen</string>
   <string name="card_template_editor_cant_delete">Mindestens ein Kartentyp wird benötigt</string>
   <plurals name="card_template_editor_confirm_delete">

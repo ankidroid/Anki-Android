@@ -138,7 +138,6 @@
   <string name="card_template_editor_front">Šablona lícu</string>
   <string name="card_template_editor_back">Šablona rubu</string>
   <string name="card_template_editor_styling">Styl</string>
-  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
   <string name="card_template_editor_menu_delete">Odstranit</string>
   <string name="card_template_editor_cant_delete">Je vyžadován alespoň jeden typ karty.</string>
   <plurals name="card_template_editor_confirm_delete">

@@ -55,6 +55,7 @@
   <string name="filter_tags">フィルター (前方一致検索)</string>
   <string name="no_tags">まだタグが一つも作成されていません</string>
   <string name="sdcard_missing_message">USBストレージとして使用されているので、SDカードは使用できません。デッキにアクセスするには、USBを切断してください。</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">ホワイトボードを有効にする</string>
   <string name="disable_whiteboard">ホワイトボードを無効にする</string>
   <string name="show_whiteboard">ホワイトボードを表示する</string>

@@ -55,6 +55,7 @@
   <string name="filter_tags">Filtrovat tagy</string>
   <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">SD karta je nedostupná, protože se používá jako úložiště USB. Odpojte USB pro přístup ke svým balíkům.</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Povolit Tabuly</string>
   <string name="disable_whiteboard">Zakázat Tabuly</string>
   <string name="show_whiteboard">Zobrazit tabuli</string>

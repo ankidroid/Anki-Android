@@ -55,6 +55,7 @@
   <string name="filter_tags">Filtrer etiketter</string>
   <string name="no_tags">Du har ikke lagt til noen etiketter ennå.</string>
   <string name="sdcard_missing_message">SD-kortet er utilgjengelig fordi den brukes som USB-lagring. Frakoble USB for å å få tilgang til dine kortstokker.</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Aktiver tavle</string>
   <string name="disable_whiteboard">Deaktiver tavle</string>
   <string name="show_whiteboard">Vis tavle</string>

@@ -55,6 +55,7 @@
   <string name="filter_tags">Filtra etichette</string>
   <string name="no_tags">Non hai ancora aggiunto nessuna etichetta.</string>
   <string name="sdcard_missing_message">La scheda SD non è disponibile, perché è usata come unità USB. Scollegare l\'USB per accedere ai mazzi.</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Abilita la lavagna</string>
   <string name="disable_whiteboard">Disabilita la lavagna</string>
   <string name="show_whiteboard">Mostra lavagna</string>

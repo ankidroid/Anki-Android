@@ -55,6 +55,7 @@
   <string name="filter_tags">태그 필터링</string>
   <string name="no_tags">아직 추가된 태그가 없습니다.</string>
   <string name="sdcard_missing_message">현재 SD카드가 USB 저장소로 사용되고 있어 사용이 불가능합니다. 덱에 접근하려면 USB 연결을 해제하세요.</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">칠판 사용</string>
   <string name="disable_whiteboard">칠판 해제</string>
   <string name="show_whiteboard">화이트 보드 보이기</string>

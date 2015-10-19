@@ -55,6 +55,7 @@
   <string name="filter_tags">Filtrar tags</string>
   <string name="no_tags">Você ainda não adicionou nenhuma tag.</string>
   <string name="sdcard_missing_message">Cartão SD não está disponível porque ele está sendo usado em armazenamento USB. Desconecte o USB para acessar seus decks.</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Habilitar whiteboard</string>
   <string name="disable_whiteboard">Desativar whiteboard</string>
   <string name="show_whiteboard">Mostrar Quadro</string>

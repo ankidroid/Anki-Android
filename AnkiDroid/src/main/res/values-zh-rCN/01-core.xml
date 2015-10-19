@@ -132,7 +132,6 @@
   <string name="card_template_editor_front">正面</string>
   <string name="card_template_editor_back">背面</string>
   <string name="card_template_editor_styling">样式</string>
-  <string name="card_template_editor_menu_add_reverse">添加反向卡片</string>
   <string name="card_template_editor_menu_delete">删除</string>
   <string name="card_template_editor_cant_delete">至少需要保留一个卡片类型。</string>
   <plurals name="card_template_editor_confirm_delete">

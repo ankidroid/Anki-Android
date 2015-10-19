@@ -135,7 +135,6 @@
   <string name="card_template_editor_front">Plantilla frontal</string>
   <string name="card_template_editor_back">Plantilla del darrere</string>
   <string name="card_template_editor_styling">Estilitzar</string>
-  <string name="card_template_editor_menu_add_reverse">Afegir revers</string>
   <string name="card_template_editor_menu_delete">Eliminar</string>
   <string name="card_template_editor_cant_delete">Com a mínim un tipus de carta és necessari.</string>
   <plurals name="card_template_editor_confirm_delete">

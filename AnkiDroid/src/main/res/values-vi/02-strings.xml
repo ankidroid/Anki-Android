@@ -55,6 +55,7 @@
   <string name="filter_tags">các bộ lọc đánh dấu</string>
   <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">Thẻ SD hiện đang được sử dụng như một ổ lưu trữ USB. Hãy ngắt kết nối USB để có thể truy cập được vào các tập thẻ của bạn.</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Bật  bảng whiteboard</string>
   <string name="disable_whiteboard">Tắt bảng whiteboard</string>
   <string name="show_whiteboard">Hiện Bảng viết</string>

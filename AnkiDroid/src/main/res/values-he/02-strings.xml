@@ -55,6 +55,7 @@
   <string name="filter_tags">סנן תגיות</string>
   <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">כרטיס SD לא זמין כיוון שהוא בשימוש כאיחסון USB. נא לנתק את ה־USB כדי לגשת לחפיסות שלך.</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">לאפשר ציור</string>
   <string name="disable_whiteboard">בטל הציור</string>
   <string name="show_whiteboard">הצג לוח ציור</string>

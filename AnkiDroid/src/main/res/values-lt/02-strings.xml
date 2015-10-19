@@ -55,6 +55,7 @@
   <string name="filter_tags">Filtruoti žymas</string>
   <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">SD kortelė yra nepasiekiama, nes jis yra naudojama kaip USB laikmena. Atjunkite USB, jei norite naudoti savo rinkinius.</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Enable whiteboard</string>
   <string name="disable_whiteboard">Disable whiteboard</string>
   <string name="show_whiteboard">Rodyti baltą lentą</string>

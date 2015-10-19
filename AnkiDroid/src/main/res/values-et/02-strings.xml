@@ -55,6 +55,7 @@
   <string name="filter_tags">Filter tags</string>
   <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">SD kaart pole saadaval kuna see on kasutuses kui USB mäluseade. Katkesta USB ühendus kaardipakkidele juurdepääsuks.</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Enable whiteboard</string>
   <string name="disable_whiteboard">Disable whiteboard</string>
   <string name="show_whiteboard">Kuva valgetahvel</string>

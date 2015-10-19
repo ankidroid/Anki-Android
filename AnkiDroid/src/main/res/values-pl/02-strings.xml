@@ -55,6 +55,7 @@
   <string name="filter_tags">Filtruj tagi</string>
   <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">Karta SD jest niedostępna, ponieważ jest ona używana jako pamięć masowa USB. Odłącz USB, aby uzyskać dostęp do Twoich talii.</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Włącz tablicę</string>
   <string name="disable_whiteboard">Wyłącz tablicę</string>
   <string name="show_whiteboard">Pokaż tablicę</string>

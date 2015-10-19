@@ -138,7 +138,6 @@
   <string name="card_template_editor_front">Szablon przodu</string>
   <string name="card_template_editor_back">Szablon tyłu</string>
   <string name="card_template_editor_styling">Styl</string>
-  <string name="card_template_editor_menu_add_reverse">Dodaj odwrotność</string>
   <string name="card_template_editor_menu_delete">Usuń</string>
   <string name="card_template_editor_cant_delete">Wymagany jest przynajmniej jeden typ karty.</string>
   <plurals name="card_template_editor_confirm_delete">

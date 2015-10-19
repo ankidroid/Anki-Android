@@ -55,6 +55,7 @@
   <string name="filter_tags">Schlagworte filtern</string>
   <string name="no_tags">Sie haben noch keine Schlagworte hinzugefügt.</string>
   <string name="sdcard_missing_message">Deaktivieren Sie den  USB-Speicher um auf Ihre Stapel zuzugreifen</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Whiteboard aktivieren</string>
   <string name="disable_whiteboard">Whiteboard ausschalten</string>
   <string name="show_whiteboard">Whiteboard anzeigen</string>

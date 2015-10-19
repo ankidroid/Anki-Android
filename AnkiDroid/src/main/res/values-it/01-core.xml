@@ -135,7 +135,6 @@
   <string name="card_template_editor_front">Modello del fronte</string>
   <string name="card_template_editor_back">Modello del retro</string>
   <string name="card_template_editor_styling">Stile</string>
-  <string name="card_template_editor_menu_add_reverse">Aggiungi inversa</string>
   <string name="card_template_editor_menu_delete">Elimina</string>
   <string name="card_template_editor_cant_delete">È necessario almeno un tipo di carta.</string>
   <plurals name="card_template_editor_confirm_delete">

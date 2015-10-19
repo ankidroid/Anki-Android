@@ -138,7 +138,6 @@
   <string name="card_template_editor_front">Предњи шаблон</string>
   <string name="card_template_editor_back">Задњи шаблон</string>
   <string name="card_template_editor_styling">Стил</string>
-  <string name="card_template_editor_menu_add_reverse">Додај задњу страну</string>
   <string name="card_template_editor_menu_delete">Избриши</string>
   <string name="card_template_editor_cant_delete">Потребан је бар један тип.</string>
   <plurals name="card_template_editor_confirm_delete">

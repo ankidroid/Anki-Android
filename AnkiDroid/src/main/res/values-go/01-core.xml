@@ -135,7 +135,6 @@
   <string name="card_template_editor_front">Frumawlits</string>
   <string name="card_template_editor_back">Hindarwlits</string>
   <string name="card_template_editor_styling">Wlits</string>
-  <string name="card_template_editor_menu_add_reverse">Biauk gaƕairba</string>
   <string name="card_template_editor_menu_delete">Usnim</string>
   <string name="card_template_editor_cant_delete">Mais þau ain kartahaidus ganauhiþ.</string>
   <plurals name="card_template_editor_confirm_delete">

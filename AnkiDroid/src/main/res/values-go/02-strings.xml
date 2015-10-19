@@ -55,6 +55,7 @@
   <string name="filter_tags">Filter tags</string>
   <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">Switch off USB storage to access your decks</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Brukei ƕeitabaurd</string>
   <string name="disable_whiteboard">Unsatei ƕeitabaurd</string>
   <string name="show_whiteboard">Ataugei ƕeitabaurd</string>

@@ -55,6 +55,7 @@
   <string name="filter_tags">过滤标签</string>
   <string name="no_tags">你还没有添加任何标签。</string>
   <string name="sdcard_missing_message">SD卡暂时不可用，因为当前正作为USB存储设备。拔掉USB之后即可访问你的牌组。</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">启用白板</string>
   <string name="disable_whiteboard">禁用白板</string>
   <string name="show_whiteboard">显示计时器/白板</string>

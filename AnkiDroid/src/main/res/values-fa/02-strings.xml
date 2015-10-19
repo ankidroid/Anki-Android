@@ -55,6 +55,7 @@
   <string name="filter_tags">فیلترکردن برچسب ها</string>
   <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">کارت حافظه در دسترس نیست زیرا حافظه یواس بی در حال استفاده است.اتصال را برای دسترسی به دسته های کارت قطع نمایید.</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">فعال سازی تخته سفید</string>
   <string name="disable_whiteboard">غیر فعال کردن تخته سفید</string>
   <string name="show_whiteboard">نمایش تخته سفید</string>

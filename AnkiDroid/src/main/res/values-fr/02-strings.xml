@@ -55,6 +55,7 @@
   <string name="filter_tags">Filtrer les étiquettes</string>
   <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">La carte SD est indisponible car elle sert de mémoire USB. Déconnectez l’USB pour accéder à vos paquets.</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Activer le tableau blanc</string>
   <string name="disable_whiteboard">Désactiver le tableau blanc</string>
   <string name="show_whiteboard">Afficher le tableau blanc</string>

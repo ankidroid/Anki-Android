@@ -138,7 +138,6 @@
   <string name="card_template_editor_front">Шаблон лицевой стороны</string>
   <string name="card_template_editor_back">Шаблон обратной стороны</string>
   <string name="card_template_editor_styling">Дизайн</string>
-  <string name="card_template_editor_menu_add_reverse">Добавить обратную сторону</string>
   <string name="card_template_editor_menu_delete">Удалить</string>
   <string name="card_template_editor_cant_delete">Требуется по крайней мере один тип.</string>
   <plurals name="card_template_editor_confirm_delete">

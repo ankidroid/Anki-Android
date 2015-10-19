@@ -132,7 +132,6 @@
   <string name="card_template_editor_front">Front template</string>
   <string name="card_template_editor_back">Back template</string>
   <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
   <string name="card_template_editor_menu_delete">Delete</string>
   <string name="card_template_editor_cant_delete">حداقل یک کارت وارد کنید.</string>
   <plurals name="card_template_editor_confirm_delete">

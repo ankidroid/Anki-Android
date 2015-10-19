@@ -55,6 +55,7 @@
   <string name="filter_tags">Filter tags</string>
   <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">بطاقة التخزين المؤمنة غير متوفرة بسبب أنها مستخدمة كوحدة تخزين USB . افصل USB للوصول إلى رزمك.</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Enable whiteboard</string>
   <string name="disable_whiteboard">Disable whiteboard</string>
   <string name="show_whiteboard">إظهار  لوح السبورة</string>

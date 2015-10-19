@@ -132,7 +132,6 @@
   <string name="card_template_editor_front">Template depan</string>
   <string name="card_template_editor_back">Template Belakang</string>
   <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_add_reverse">Tambah kebalikan</string>
   <string name="card_template_editor_menu_delete">Hapus</string>
   <string name="card_template_editor_cant_delete">Diperlukan setidaknya satu jenis kartu.</string>
   <plurals name="card_template_editor_confirm_delete">

@@ -135,7 +135,6 @@
   <string name="card_template_editor_front">Plantilla delantera</string>
   <string name="card_template_editor_back">Plantilla trasera</string>
   <string name="card_template_editor_styling">Estilo</string>
-  <string name="card_template_editor_menu_add_reverse">Añadir inverso</string>
   <string name="card_template_editor_menu_delete">Eliminar</string>
   <string name="card_template_editor_cant_delete">Por lo menos un tipo de tarjeta es requerido.</string>
   <plurals name="card_template_editor_confirm_delete">

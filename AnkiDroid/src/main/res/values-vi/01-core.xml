@@ -132,7 +132,6 @@
   <string name="card_template_editor_front">Nền mặt trước của thẻ</string>
   <string name="card_template_editor_back">Nền mặt sau của thẻ</string>
   <string name="card_template_editor_styling">Phong cách</string>
-  <string name="card_template_editor_menu_add_reverse">Thêm vào mặt sau</string>
   <string name="card_template_editor_menu_delete">Xóa</string>
   <string name="card_template_editor_cant_delete">Tối thiểu cần có một loại thẻ.</string>
   <plurals name="card_template_editor_confirm_delete">

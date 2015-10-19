@@ -55,6 +55,7 @@
   <string name="filter_tags">Filter tags</string>
   <string name="no_tags">You haven’t added any tags yet.</string>
   <string name="sdcard_missing_message">Kad SD tidak tercapai kerana sedang diguna sebagai storan USB. Tanggalkan USB untuk mendapatkan dek anda.</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Enable whiteboard</string>
   <string name="disable_whiteboard">Disable whiteboard</string>
   <string name="show_whiteboard">Tunjuk Papan hitam</string>

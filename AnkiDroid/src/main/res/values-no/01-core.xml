@@ -135,7 +135,6 @@
   <string name="card_template_editor_front">Framsidemal</string>
   <string name="card_template_editor_back">Baksidemal</string>
   <string name="card_template_editor_styling">Formgivning</string>
-  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
   <string name="card_template_editor_menu_delete">Slett</string>
   <string name="card_template_editor_cant_delete">Minst én korttype kreves.</string>
   <plurals name="card_template_editor_confirm_delete">

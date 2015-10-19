@@ -55,6 +55,7 @@
   <string name="filter_tags">Filtrar etiquetas</string>
   <string name="no_tags">Ainda não adicionou nenhuma etiqueta.</string>
   <string name="sdcard_missing_message">Desativar o armazenamento USB para aceder aos seus baralhos</string>
+  <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Activar quadro</string>
   <string name="disable_whiteboard">Desactivar quadro</string>
   <string name="show_whiteboard">Mostrar quadro</string>

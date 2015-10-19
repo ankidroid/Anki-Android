@@ -135,7 +135,6 @@
   <string name="card_template_editor_front">Şablon Ön Yüz</string>
   <string name="card_template_editor_back">Şablon Arka Yüz</string>
   <string name="card_template_editor_styling">Stil</string>
-  <string name="card_template_editor_menu_add_reverse">Tersini Ekle</string>
   <string name="card_template_editor_menu_delete">Sil</string>
   <string name="card_template_editor_cant_delete">En az bir kart türü gerekiyor.</string>
   <plurals name="card_template_editor_confirm_delete">
