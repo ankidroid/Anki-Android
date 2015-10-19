@@ -131,7 +131,7 @@
   <string name="export_collection">Esporta la collezione</string>
   <string name="export_deck">Esporta il mazzo</string>
   <string name="nothing">Niente</string>
-  <string name="title_activity_template_editor">Card types</string>
+  <string name="title_activity_template_editor">Tipi di carte</string>
   <string name="card_template_editor_front">Modello del fronte</string>
   <string name="card_template_editor_back">Modello del retro</string>
   <string name="card_template_editor_styling">Stile</string>

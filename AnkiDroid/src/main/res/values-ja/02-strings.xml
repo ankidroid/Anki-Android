@@ -125,7 +125,7 @@
   <string name="unknown_type_field_warning">タイピングして答えを入力: 不明なフィールド %s</string>
   <string name="delete_deck">デッキを削除しています...</string>
   <string name="show_hint">%s を表示</string>
-  <string name="info_rate">AnkiDroidを評価</string>
+  <string name="info_rate">このアプリを評価</string>
   <string name="col_load_failed">コレクションの読み込みに失敗しました\n Backボタンを押して AnkiDroid を終了してください</string>
   <string name="import_title">カードのインポート</string>
   <string name="import_select_title">インポートするファイルを選択</string>

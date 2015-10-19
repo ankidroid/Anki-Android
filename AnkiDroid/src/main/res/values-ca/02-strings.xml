@@ -158,7 +158,7 @@
   <string name="steps_error">Els passos han de ser números majors que 0</string>
   <string name="steps_min_error">Com a mínim un pas s\'exigeix</string>
   <string name="sched_end">(fi)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
+  <string name="sched_unbury_action">Per veure-les apreti el botó de \"Desenterrar\" al menú.</string>
   <string name="sched_has_buried">Algunes cartes relacionades o enterrades es van retardar fins demà.</string>
   <string name="tag_editor_add_feedback">Apreti \"%2$s\" per confirmar afegir \"%1$s\"</string>
   <string name="tag_editor_add_feedback_existing">Etiqueta existent \"%1$s\" seleccionada</string>

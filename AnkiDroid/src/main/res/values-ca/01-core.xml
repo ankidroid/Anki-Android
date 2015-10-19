@@ -131,7 +131,7 @@
   <string name="export_collection">Exporta la col·lecció</string>
   <string name="export_deck">Exporta el paquet</string>
   <string name="nothing">Res</string>
-  <string name="title_activity_template_editor">Card types</string>
+  <string name="title_activity_template_editor">Tipus de cartes</string>
   <string name="card_template_editor_front">Plantilla frontal</string>
   <string name="card_template_editor_back">Plantilla del darrere</string>
   <string name="card_template_editor_styling">Estilitzar</string>
