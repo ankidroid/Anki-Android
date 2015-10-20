@@ -441,6 +441,9 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     }
 
     private void dismissProgressDialog() {
+        if (mStudyOptionsView != null && mStudyOptionsView.findViewById(R.id.progress_bar) != null) {
+            mStudyOptionsView.findViewById(R.id.progress_bar).setVisibility(View.GONE);
+        }
         // for rebuilding cram decks
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             try {
