@@ -226,6 +226,7 @@ public class Info extends ActionBarActivity {
                     sb.append("</li>");
                 }
                 sb.append("</ul>");
+                sb.append("<br><br><br>A new design is coming in v2.5, <a href=\"https://groups.google.com/d/msg/anki-android/DrMPHn9NQtk/aZYXdIZRCwAJ\">preview it here</a>!");
                 sb.append("</body></html>");
                 mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
 
