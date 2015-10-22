@@ -24,6 +24,8 @@ import android.support.customtabs.CustomTabsSession;
 
 import java.util.List;
 
+import timber.log.Timber;
+
 
 /**
  * This is a helper class to manage the connection to the Custom Tabs Service.
@@ -52,6 +54,8 @@ public class CustomTabActivityHelper implements ServiceConnectionCallback {
         if (packageName == null) {
             if (fallback != null) {
                 fallback.openUri(activity, uri);
+            } else {
+                Timber.e("A version of Chrome supporting custom tabs was not available, and the fallback was null");
             }
         } else {
             customTabsIntent.intent.setPackage(packageName);

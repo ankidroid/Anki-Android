@@ -24,6 +24,8 @@ import android.support.customtabs.CustomTabsService;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.ichi2.compat.CompatHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +42,7 @@ public class CustomTabsHelper {
             "android.support.customtabs.extra.KEEP_ALIVE";
 
     private static String sPackageNameToUse;
+    private static final int MIN_SDK = 16;
 
     private CustomTabsHelper() {}
 
@@ -60,6 +63,9 @@ public class CustomTabsHelper {
      * @return The package name recommended to use for connecting to custom tabs related components.
      */
     public static String getPackageNameToUse(Context context) {
+        if (CompatHelper.getSdkVersion() < MIN_SDK) {
+            return null;
+        }
         if (sPackageNameToUse != null) return sPackageNameToUse;
 
         PackageManager pm = context.getPackageManager();

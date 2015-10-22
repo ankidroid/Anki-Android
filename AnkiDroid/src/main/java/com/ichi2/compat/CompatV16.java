@@ -8,13 +8,20 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.text.Html;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
+import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.compat.customtabs.CustomTabActivityHelper;
+import com.ichi2.compat.customtabs.CustomTabsFallback;
+import com.ichi2.compat.customtabs.CustomTabsHelper;
 
 /** Implementation of {@link Compat} for SDK level 16 */
 @TargetApi(16)
@@ -44,7 +51,6 @@ public class CompatV16 extends CompatV15 implements Compat {
         AppWidgetManager manager = AppWidgetManager.getInstance(context);
         int[] ids = manager.getAppWidgetIds(new ComponentName(context, cls));
         for (int id : ids) {
-            AppWidgetProviderInfo providerInfo = manager.getAppWidgetInfo(id);
             final float scale = context.getResources().getDisplayMetrics().density;
             Bundle options = manager.getAppWidgetOptions(id);
             float width, height;
@@ -70,7 +76,20 @@ public class CompatV16 extends CompatV15 implements Compat {
             updateViews.setTextViewTextSize(R.id.widget_due, TypedValue.COMPLEX_UNIT_SP, text);
             updateViews.setTextViewTextSize(R.id.widget_eta, TypedValue.COMPLEX_UNIT_SP, text);
             updateViews.setViewPadding(R.id.ankidroid_widget_text_layout, horizontal, vertical, horizontal, vertical);
-            }
-
         }
     }
+
+
+    @Override
+    public void openUrl(AnkiActivity activity, Uri uri) {
+        CustomTabActivityHelper helper = activity.getCustomTabActivityHelper();
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder(helper.getSession());
+        builder.setToolbarColor(activity.getResources().getColor(R.color.theme_primary)).setShowTitle(true);
+        builder.setStartAnimations(activity, R.anim.slide_right_in, R.anim.slide_left_out);
+        builder.setExitAnimations(activity, R.anim.slide_left_in, R.anim.slide_right_out);
+        builder.setCloseButtonIcon(BitmapFactory.decodeResource(activity.getResources(), R.drawable.ic_arrow_back_white_24dp));
+        CustomTabsIntent customTabsIntent = builder.build();
+        CustomTabsHelper.addKeepAliveExtra(activity, customTabsIntent.intent);
+        CustomTabActivityHelper.openCustomTab(activity, customTabsIntent, uri, new CustomTabsFallback());
+    }
+}

@@ -18,6 +18,7 @@ package com.ichi2.compat;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -55,5 +56,6 @@ public interface Compat {
     void restartActivityInvalidateBackstack(AnkiActivity activity);
     void setFullScreen(NavigationDrawerActivity activity);
     void setSelectableBackground(View view);
+    void openUrl(AnkiActivity activity, Uri uri);
 }
 
