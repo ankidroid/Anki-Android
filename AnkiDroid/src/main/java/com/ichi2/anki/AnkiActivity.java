@@ -7,12 +7,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -36,9 +34,8 @@ import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.async.CollectionLoader;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
-import com.ichi2.compat.customtabs.CustomTabsFallback;
-import com.ichi2.compat.customtabs.CustomTabsHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.Themes;
 
@@ -325,14 +322,11 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     protected void openUrl(Uri url) {
-        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder(mCustomTabActivityHelper.getSession());
-        builder.setToolbarColor(getResources().getColor(R.color.theme_primary)).setShowTitle(true);
-        builder.setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out);
-        builder.setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out);
-        builder.setCloseButtonIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_arrow_back_white_24dp));
-        CustomTabsIntent customTabsIntent = builder.build();
-        CustomTabsHelper.addKeepAliveExtra(this, customTabsIntent.intent);
-        CustomTabActivityHelper.openCustomTab(this, customTabsIntent, url, new CustomTabsFallback());
+        CompatHelper.getCompat().openUrl(this, url);
+    }
+
+    public CustomTabActivityHelper getCustomTabActivityHelper() {
+        return mCustomTabActivityHelper;
     }
 
 
