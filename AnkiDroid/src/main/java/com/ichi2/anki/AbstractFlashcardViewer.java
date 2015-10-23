@@ -2569,8 +2569,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         AbstractFlashcardViewer.this.setResult(result);
 
-        // updateBigWidget(!mCardFrame.isEnabled());
-
         if (saveDeck) {
             UIUtils.saveCollectionInBackground(this);
         }

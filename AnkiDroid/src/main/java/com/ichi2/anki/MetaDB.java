@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.util.Pair;
 
 
 import com.ichi2.libanki.Utils;
@@ -91,7 +92,7 @@ public class MetaDB {
         mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS customDictionary (" + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "did INTEGER NOT NULL, " + "dictionary INTEGER)");
         mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS smallWidgetStatus (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + "progress INTEGER NOT NULL, left INTEGER NOT NULL, eta INTEGER NOT NULL)");
+                + "due INTEGER NOT NULL, eta INTEGER NOT NULL)");
         // Use pragma to get info about widgetStatus.
         Cursor c = mMetaDb.rawQuery("PRAGMA table_info(widgetStatus)", null);
         int columnNumber = c.getCount();
@@ -370,52 +371,16 @@ public class MetaDB {
     /**
      * Return the current status of the widget.
      * 
-     * @return an array of {@link DeckStatus} objects, each representing the status of one of the known decks
-     */
-    public static DeckStatus[] getWidgetStatus(Context context) {
-        openDBIfClosed(context);
-        Cursor cursor = null;
-        try {
-            cursor = mMetaDb.query("widgetStatus", new String[] { "deckId", "deckName", "newCards", "lrnCards",
-                    "dueCards", "progress", "eta" }, null, null, null, null, "deckName");
-            int count = cursor.getCount();
-            DeckStatus[] decks = new DeckStatus[count];
-            for (int index = 0; index < count; ++index) {
-                if (!cursor.moveToNext()) {
-                    throw new SQLiteException("cursor count was incorrect");
-                }
-                decks[index] = new DeckStatus(cursor.getLong(cursor.getColumnIndexOrThrow("deckId")),
-                        cursor.getString(cursor.getColumnIndexOrThrow("deckName")), cursor.getInt(cursor
-                                .getColumnIndexOrThrow("newCards")), cursor.getInt(cursor
-                                .getColumnIndexOrThrow("lrnCards")), cursor.getInt(cursor
-                                .getColumnIndexOrThrow("dueCards")), cursor.getInt(cursor
-                                .getColumnIndexOrThrow("progress")), cursor.getInt(cursor.getColumnIndexOrThrow("eta")));
-            }
-            return decks;
-        } catch (SQLiteException e) {
-            Timber.e(e, "Error while querying widgetStatus");
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
-        return new DeckStatus[0];
-    }
-
-
-    /**
-     * Return the current status of the widget.
-     * 
-     * @return an int array, containing due, progress, eta
+     * @return [due, eta]
      */
     public static int[] getWidgetSmallStatus(Context context) {
         openDBIfClosed(context);
         Cursor cursor = null;
         try {
-            cursor = mMetaDb.query("smallWidgetStatus", new String[] { "progress", "left", "eta" }, null, null, null,
-                    null, null);
+            cursor = mMetaDb.query("smallWidgetStatus", new String[] { "due", "eta" },
+                    null, null, null, null, null);
             while (cursor.moveToNext()) {
-                return (new int[] { cursor.getInt(0), cursor.getInt(1), cursor.getInt(2) });
+                return new int[]{cursor.getInt(0), cursor.getInt(1)};
             }
         } catch (SQLiteException e) {
             Timber.e(e, "Error while querying widgetStatus");
@@ -424,7 +389,7 @@ public class MetaDB {
                 cursor.close();
             }
         }
-        return null;
+        return new int[]{0, 0};
     }
 
 
@@ -433,13 +398,10 @@ public class MetaDB {
         Cursor cursor = null;
         int due = 0;
         try {
-            cursor = mMetaDb.query("smallWidgetStatus", new String[] { "left" }, null, null, null, null, null);
+            cursor = mMetaDb.query("smallWidgetStatus", new String[] { "due" }, null, null, null, null, null);
             if (cursor.moveToFirst()) {
                 return cursor.getInt(0);
             }
-            // while (cursor.moveToNext()) {
-            // due += cursor.getInt(0) + cursor.getInt(1) + cursor.getInt(2);
-            // }
         } catch (SQLiteException e) {
             Timber.e(e, "Error while querying widgetStatus");
         } finally {
@@ -451,15 +413,15 @@ public class MetaDB {
     }
 
 
-    public static void storeSmallWidgetStatus(Context context, float[] progress) {
+    public static void storeSmallWidgetStatus(Context context, Pair<Integer, Integer> status) {
         openDBIfClosed(context);
         try {
             mMetaDb.beginTransaction();
             try {
                 // First clear all the existing content.
                 mMetaDb.execSQL("DELETE FROM smallWidgetStatus");
-                mMetaDb.execSQL("INSERT INTO smallWidgetStatus(progress, left, eta) VALUES (?, ?, ?)", new Object[] {
-                        (int) (progress[1] * 1000), (int) progress[2], (int) progress[3] });
+                mMetaDb.execSQL("INSERT INTO smallWidgetStatus(due, eta) VALUES (?, ?)",
+                        new Object[]{status.first, status.second});
                 mMetaDb.setTransactionSuccessful();
             } finally {
                 mMetaDb.endTransaction();
@@ -468,40 +430,6 @@ public class MetaDB {
             Timber.e(e, "MetaDB.storeSmallWidgetStatus: failed");
         } catch (SQLiteException e) {
             Timber.e(e, "MetaDB.storeSmallWidgetStatus: failed");
-            closeDB();
-            Timber.i("MetaDB:: Trying to reset Widget: " + resetWidget(context));
-        }
-    }
-
-
-    /**
-     * Stores the current state of the widget.
-     * <p>
-     * It replaces any stored state for the widget.
-     * 
-     * @param decks an array of {@link DeckStatus} objects, one for each of the know decks.
-     */
-    public static void storeWidgetStatus(Context context, DeckStatus[] decks) {
-        openDBIfClosed(context);
-        try {
-            mMetaDb.beginTransaction();
-            try {
-                // First clear all the existing content.
-                mMetaDb.execSQL("DELETE FROM widgetStatus");
-                for (DeckStatus deck : decks) {
-                    mMetaDb.execSQL(
-                            "INSERT INTO widgetStatus(deckId, deckName, newCards, lrnCards, dueCards, progress, eta) "
-                                    + "VALUES (?, ?, ?, ?, ?, ?, ?)", new Object[] { deck.mDeckId, deck.mDeckName,
-                                    deck.mNewCards, deck.mLrnCards, deck.mDueCards, deck.mProgress, deck.mEta });
-                }
-                mMetaDb.setTransactionSuccessful();
-            } finally {
-                mMetaDb.endTransaction();
-            }
-        } catch (IllegalStateException e) {
-            Timber.e(e, "MetaDB.storeWidgetStatus: failed");
-        } catch (SQLiteException e) {
-            Timber.e(e, "MetaDB.storeWidgetStatus: failed");
             closeDB();
             Timber.i("MetaDB:: Trying to reset Widget: " + resetWidget(context));
         }

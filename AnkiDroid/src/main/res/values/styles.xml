@@ -7,17 +7,6 @@
     <!-- Theme for crash report dialog -->
     <style name="Theme.CrashReportDialog" parent="@android:style/Theme.Dialog" />
 
-    <!-- Widget elements -->
-    <style name="Widget.ProgressBar.Horizontal" parent="@android:style/Widget.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/progress_horizontal</item>
-        <item name="android:orientation">vertical</item>
-    </style>
-
-    <style name="Widget.ProgressBar.BigWidget.Horizontal" parent="@android:style/Widget.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/progress_widgetbig_horizontal</item>
-        <item name="android:orientation">vertical</item>
-    </style>
-
     <style name="Animation.Translucent" parent="@android:style/Animation.Translucent">
         <item name="android:windowEnterAnimation">@null</item>
         <item name="android:windowExitAnimation">@anim/translucent_exit</item>

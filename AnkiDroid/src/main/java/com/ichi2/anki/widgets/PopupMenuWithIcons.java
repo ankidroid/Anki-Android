@@ -1,4 +1,4 @@
-package com.ichi2.widget;
+package com.ichi2.anki.widgets;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
