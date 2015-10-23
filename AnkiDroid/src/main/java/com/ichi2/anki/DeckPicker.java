@@ -1765,9 +1765,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     scrollDecklistToDeck(current);
                     mFocusedDeck = current;
                 }
-
-                // update widget
-                WidgetStatus.update(DeckPicker.this, nodes);
                 // update options menu and clear welcome screen
                 supportInvalidateOptionsMenu();
                 // Update the mini statistics bar as well

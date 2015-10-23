@@ -18,17 +18,13 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.appwidget.AppWidgetProviderInfo;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.os.Bundle;
 import android.os.IBinder;
-
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -83,8 +79,6 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         /** The cached number of total due cards. */
         private int dueCardsCount;
 
-        /** Today's total progress */
-        private int progress;
 
         /** The cached estimated reviewing time. */
         private int eta;
@@ -111,7 +105,6 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
             if (!mounted) {
                 updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE);
                 updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE);
-                updateViews.setViewVisibility(R.id.widget_progress_frame, View.INVISIBLE);
                 updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.GONE);
 
                 if (mMountReceiver == null) {
@@ -141,13 +134,10 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
             } else {
                 // If we do not have a cached version, always update.
                 if (dueCardsCount == 0 || updateDueDecksNow) {
-                    // Build a list of decks with due cards.
-                    // Also compute the total number of cards due.
+                    // Compute the total number of cards due.
                     int[] counts = WidgetStatus.fetchSmall(context);
-
-                    progress = counts[0];
-                    dueCardsCount = counts[1];
-                    eta = counts[2];
+                    dueCardsCount = counts[0];
+                    eta = counts[1];
                     if (dueCardsCount <= 0) {
                         if (dueCardsCount == 0) {
                             updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE);
@@ -155,13 +145,10 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                             updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE);
                         }
                         updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE);
-                        updateViews.setViewVisibility(R.id.widget_progress_frame, View.INVISIBLE);
                     } else {
                         updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE);
                         updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE);
-                        updateViews.setViewVisibility(R.id.widget_progress_frame, View.VISIBLE);
                         updateViews.setTextViewText(R.id.widget_due, Integer.toString(dueCardsCount));
-                        updateViews.setProgressBar(R.id.widget_progress, 1000, progress, false);
                     }
                     if (eta <= 0 || dueCardsCount <= 0) {
                         updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE);

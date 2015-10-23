@@ -73,7 +73,7 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
-import com.ichi2.widget.PopupMenuWithIcons;
+import com.ichi2.anki.widgets.PopupMenuWithIcons;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONArray;
@@ -119,9 +119,6 @@ public class NoteEditor extends AnkiActivity {
     public static final int CALLER_REVIEWER = 1;
     public static final int CALLER_STUDYOPTIONS = 2;
     public static final int CALLER_DECKPICKER = 3;
-
-    public static final int CALLER_BIGWIDGET_EDIT = 4;
-    public static final int CALLER_BIGWIDGET_ADD = 5;
 
     public static final int CALLER_CARDBROWSER_EDIT = 6;
     public static final int CALLER_CARDBROWSER_ADD = 7;
@@ -199,11 +196,7 @@ public class NoteEditor extends AnkiActivity {
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             int count = values[0].getInt();
-            if (mCaller == CALLER_BIGWIDGET_EDIT) {
-                // AnkiDroidWidgetBig.setCard(values[0].getCard());
-                // AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_NOT_SPECIFIED);
-                mChanged = true;
-            } else if (count > 0) {
+            if (count > 0) {
                 mChanged = true;
                 mSourceText = null;
                 Note oldNote = mEditorNote.clone();
@@ -227,7 +220,7 @@ public class NoteEditor extends AnkiActivity {
             } else {
                 Themes.showThemedToast(NoteEditor.this, getResources().getString(R.string.factadder_saving_error), true);
             }
-            if (!mAddNote || mCaller == CALLER_CARDEDITOR || mCaller == CALLER_BIGWIDGET_EDIT || mAedictIntent) {
+            if (!mAddNote || mCaller == CALLER_CARDEDITOR || mAedictIntent) {
                 mChanged = true;
                 mCloseAfter = true;
             } else if (mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
@@ -386,20 +379,6 @@ public class NoteEditor extends AnkiActivity {
 
             case CALLER_STUDYOPTIONS:
             case CALLER_DECKPICKER:
-                mAddNote = true;
-                break;
-
-            case CALLER_BIGWIDGET_EDIT:
-                // Card widgetCard = AnkiDroidWidgetBig.getCard();
-                // if (widgetCard == null) {
-                // finish();
-                // return;
-                // }
-                // mEditorNote = widgetCard.getFact();
-                // mAddNote = false;
-                break;
-
-            case CALLER_BIGWIDGET_ADD:
                 mAddNote = true;
                 break;
 
@@ -989,8 +968,7 @@ public class NoteEditor extends AnkiActivity {
             setResult(result);
         }
 
-        if (mCaller == CALLER_CARDEDITOR_INTENT_ADD || mCaller == CALLER_BIGWIDGET_EDIT
-                || mCaller == CALLER_BIGWIDGET_ADD) {
+        if (mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
             finishWithAnimation(ActivityTransitionAnimation.FADE);
         } else if (mCaller == CALLER_INDICLASH) {
             finishWithAnimation(ActivityTransitionAnimation.NONE);
