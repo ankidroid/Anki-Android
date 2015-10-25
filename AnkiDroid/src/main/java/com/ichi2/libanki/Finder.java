@@ -707,7 +707,7 @@ public class Finder {
         /*
          * For the pattern, we use the javaVal expression that uses JAVA REGEX syntax
          */
-        Pattern pattern = Pattern.compile("\\Q" + javaVal + "\\E", Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile("\\Q" + javaVal + "\\E", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
         // find models that have that field
         Map<Long, Object[]> mods = new HashMap<Long, Object[]>();
