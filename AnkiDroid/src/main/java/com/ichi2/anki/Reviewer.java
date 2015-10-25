@@ -341,7 +341,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         if (!isFinishing()) {
             if (colIsOpen() && mSched != null) {
-                WidgetStatus.update(this, mSched.progressToday(null, mCurrentCard, true));
+                WidgetStatus.update(this);
             }
         }
         UIUtils.saveCollectionInBackground(this);

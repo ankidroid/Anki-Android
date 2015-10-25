@@ -27,7 +27,6 @@ import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
-import android.util.Pair;
 
 import com.ichi2.anki.R;
 import com.ichi2.libanki.hooks.Hooks;
@@ -49,7 +48,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Random;
 
 import timber.log.Timber;
@@ -93,7 +91,6 @@ public class Sched {
     private LinkedList<Long> mRevDids;
 
     // Not in libanki
-    private HashMap<Long, Pair<String[], long[]>> mCachedDeckCounts;
     private WeakReference<Activity> mContextReference;
 
     /**
@@ -1852,7 +1849,7 @@ public class Sched {
      * This function uses GregorianCalendar so as to be sensitive to leap years, daylight savings, etc.
      */
 
-    public void _updateCutoff() {
+    private void _updateCutoff() {
         int oldToday = mToday;
         // days since col created
         mToday = (int) ((Utils.now() - mCol.getCrt()) / 86400);
@@ -2389,102 +2386,6 @@ public class Sched {
     public int matureCount() {
         String dids = _deckLimit();
         return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE type = 2 AND ivl >= 21 AND did IN " + dids);
-    }
-
-
-    /** returns today's progress
-     *
-     * @param counts (if empty, cached version will be used if any)
-     * @param card
-     * @return [progressCurrentDeck, progressAllDecks, leftCards, eta]
-     */
-    public float[] progressToday(List<DeckDueTreeNode> counts, Card card, boolean eta) {
-        try {
-            int doneCurrent = 0;
-            int[] leftCurrent = new int[]{0, 0, 0};
-            String[] cs = new String[]{"new", "lrn", "rev"};
-            long currentDid = 0;
-
-            // current selected deck
-            if (counts == null) {
-                JSONObject deck = mCol.getDecks().current();
-                currentDid = deck.getLong("id");
-                for (String s : cs) {
-                    doneCurrent += deck.getJSONArray(s + "Today").getInt(1);
-                }
-                if (card != null) {
-                    int idx = countIdx(card);
-                    leftCurrent[idx] += idx == 1 ? card.getLeft() / 1000 : 1;
-                } else {
-                    reset();
-                }
-                leftCurrent[0] += mNewCount;
-                leftCurrent[1] += mLrnCount;
-                leftCurrent[2] += mRevCount;
-            }
-
-            // refresh deck progresses with fresh counts if necessary
-            if (counts != null || mCachedDeckCounts == null) {
-                if (mCachedDeckCounts == null) {
-                    mCachedDeckCounts = new HashMap<Long, Pair<String[], long[]>>();
-                }
-                mCachedDeckCounts.clear();
-                if (counts == null) {
-                    // reload counts
-                    counts = deckDueList();
-                }
-                for (DeckDueTreeNode d : counts) {
-                    int done = 0;
-                    JSONObject deck = mCol.getDecks().get(d.did);
-                    for (String s : cs) {
-                        done += deck.getJSONArray(s + "Today").getInt(1);
-                    }
-                    mCachedDeckCounts.put(d.did, new Pair<String[], long[]> (d.names, new long[]{done, d.newCount, d.lrnCount, d.revCount}));
-                }
-            }
-
-            int doneAll = 0;
-            int[] leftAll = new int[]{0, 0, 0};
-            for (Map.Entry<Long, Pair<String[], long[]>> d : mCachedDeckCounts.entrySet()) {
-                boolean exclude = d.getKey() == currentDid; // || mCol.getDecks().isDyn(d.getKey());
-                if (d.getValue().first.length == 1) {
-                    if (exclude) {
-                        // don't count cached version of current deck
-                        continue;
-                    }
-                    long[] c = d.getValue().second;
-                    doneAll += c[0];
-                    leftAll[0] += c[1];
-                    leftAll[1] += c[2];
-                    leftAll[2] += c[3];
-                } else if (exclude) {
-                    // exclude cached values for current deck in order to avoid double count
-                    long[] c = d.getValue().second;
-                    doneAll -= c[0];
-                    leftAll[0] -= c[1];
-                    leftAll[1] -= c[2];
-                    leftAll[2] -= c[3];
-                }
-            }
-            doneAll += doneCurrent;
-            leftAll[0] += leftCurrent[0];
-            leftAll[1] += leftCurrent[1];
-            leftAll[2] += leftCurrent[2];
-            int totalAll = doneAll + leftAll[0] + leftAll[1] + leftAll[2];
-            int totalCurrent = doneCurrent + leftCurrent[0] + leftCurrent[1] + leftCurrent[2];
-
-            float progressCurrent = -1;
-            if (totalCurrent != 0) {
-                progressCurrent = (float) doneCurrent / (float) totalCurrent;
-            }
-            float progressTotal = -1;
-            if (totalAll != 0) {
-                progressTotal = (float) doneAll / (float) totalAll;
-            }
-            return new float[]{ progressCurrent, progressTotal, totalAll - doneAll, eta ? eta(leftAll, false) : -1};
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 
