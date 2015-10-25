@@ -141,6 +141,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mRecyclerViewLayoutManager;
     private DeckAdapter mDeckListAdapter;
+    private FloatingActionsMenu mActionsMenu;
 
     private TextView mTodayTextView;
 
@@ -202,6 +203,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         public void onClick(View v) {
             long deckId = (long) v.getTag();
             Timber.i("DeckPicker:: Selected deck with id %d", deckId);
+            mActionsMenu.collapse();
             handleDeckSelection(deckId);
             if (mFragmented || !CompatHelper.isLollipop()) {
                 // Calling notifyDataSetChanged() will update the color of the selected deck.
@@ -400,14 +402,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mRecyclerView.setAdapter(mDeckListAdapter);
 
         // Setup the FloatingActionButtons
-        final FloatingActionsMenu actionsMenu = (FloatingActionsMenu) findViewById(R.id.add_content_menu);
+        mActionsMenu = (FloatingActionsMenu) findViewById(R.id.add_content_menu);
         final FloatingActionButton addDeckButton = (FloatingActionButton) findViewById(R.id.add_deck_action);
         final FloatingActionButton addSharedButton = (FloatingActionButton) findViewById(R.id.add_shared_action);
         final FloatingActionButton addNoteButton = (FloatingActionButton) findViewById(R.id.add_note_action);
         addDeckButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                actionsMenu.collapse();
+                mActionsMenu.collapse();
                 mDialogEditText = new EditText(DeckPicker.this);
                 mDialogEditText.setSingleLine(true);
                 // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
@@ -433,14 +435,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
         addSharedButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                actionsMenu.collapse();
+                mActionsMenu.collapse();
                 addSharedDeck();
             }
         });
         addNoteButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                actionsMenu.collapse();
+                mActionsMenu.collapse();
                 addNote();
             }
         });
