@@ -31,6 +31,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -1510,7 +1511,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // Problems with focus and input tags is the reason we keep the old type answer mechanism for old Androids.
         webView.setFocusableInTouchMode(USE_INPUT_TAG);
         webView.setScrollbarFadingEnabled(true);
-        Timber.d("Focusable = %s, Focusable in touch mode = %s",webView.isFocusable(),webView.isFocusableInTouchMode());
+        Timber.d("Focusable = %s, Focusable in touch mode = %s", webView.isFocusable(), webView.isFocusableInTouchMode());
 
         webView.setWebViewClient(new WebViewClient() {
             // Filter any links using the custom "playsound" protocol defined in Sound.java.
@@ -1552,7 +1553,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 try {
                     startActivityWithoutAnimation(intent);
-                } catch(ActivityNotFoundException e) {
+                } catch (ActivityNotFoundException e) {
                     e.printStackTrace(); // Don't crash if the intent is not handled
                 }
                 return true;
@@ -1566,7 +1567,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 view.loadUrl("javascript:onPageFinished();");
             }
         });
-
+        // Set transparent color to prevent flashing white when night mode enabled
+        webView.setBackgroundColor(Color.argb(1, 0, 0, 0));
         return webView;
     }
 
