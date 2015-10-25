@@ -227,8 +227,8 @@ If you prefer to use the "replay audio" action in the menu, and have the play bu
 .replaybutton {display: none;}
 ```
 
-## How to customize the colors used with night-mode
-AnkiDroid contains a very basic color inverter that e.g. changes white to black and black to white when night mode is enabled. If you prefer to disable the inverter and setup your own colors, you should include a `.night_mode` class in your styling (takes effect in AnkiDroid v2.5+). For example the following will use a dark grey background instead of black:
+## How to customize the colors with night-mode?
+AnkiDroid contains a very basic color inverter that e.g. changes white to black and black to white when night mode is enabled. If you prefer to disable the inverter and setup your own colors, you should include a `.night_mode` class in your styling (takes effect in AnkiDroid v2.5+). For example the following will use a dark grey background instead of black when night mode is enabled:
 
 ```css
 .card.night_mode {
@@ -237,7 +237,14 @@ AnkiDroid contains a very basic color inverter that e.g. changes white to black 
 }
 ```
 
-# How to remove the margin when displaying images?
+## How to hide the input box on cards using the "type in the answer" feature?
+```css
+.mobile input#typeans{
+display: none;
+}
+```
+
+## How to remove the margin when displaying images?
 You can adapt the [following CSS template](https://groups.google.com/d/topic/anki-android/TjakbVGJLmk/discussion) on AnkiDroid 2.5+
 ```css
 .card {
