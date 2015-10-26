@@ -1284,10 +1284,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         if (keyCode == KeyEvent.KEYCODE_BACK && Connection.isCancellable() &&
                                 !Connection.getIsCancelled()) {
                             MaterialDialog.Builder builder = new MaterialDialog.Builder(mProgressDialog.getContext());
-                            builder.content("Are you sure you want to cancel?")
+                            builder.content(R.string.cancel_sync_confirm)
                                     .cancelable(false)
-                                    .positiveText(android.R.string.ok)
-                                    .negativeText(android.R.string.cancel)
+                                    .positiveText(R.string.dialog_ok)
+                                    .negativeText(R.string.continue_sync)
                                     .callback(new MaterialDialog.ButtonCallback() {
                                         @Override
                                         public void onPositive(MaterialDialog dialog) {
