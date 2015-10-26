@@ -158,7 +158,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private static final Pattern sTypeAnsPat = Pattern.compile("\\[\\[type:(.+?)\\]\\]");
     private static final Pattern sTypeAnsTyped = Pattern.compile("typed=([^&]*)");
 
-    /** to be sento to and from the card editor */
+    /** to be sent to and from the card editor */
     private static Card sEditorCard;
 
     protected static boolean sDisplayAnswer = false;
@@ -1444,6 +1444,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mFlipCardLayout = (LinearLayout) findViewById(R.id.flashcard_layout_flip);
         mFlipCardLayout.setOnClickListener(mFlipCardListener);
 
+        if (!mButtonHeightSet && mRelativeButtonSize != 100) {
+            ViewGroup.LayoutParams params = mFlipCardLayout.getLayoutParams();
+            params.height = params.height * mRelativeButtonSize / 100;
+            params = mEase1Layout.getLayoutParams();
+            params.height = params.height * mRelativeButtonSize / 100;
+            params = mEase2Layout.getLayoutParams();
+            params.height = params.height * mRelativeButtonSize / 100;
+            params = mEase3Layout.getLayoutParams();
+            params.height = params.height * mRelativeButtonSize / 100;
+            params = mEase4Layout.getLayoutParams();
+            params.height = params.height * mRelativeButtonSize / 100;
+            mButtonHeightSet = true;
+        }
+
         mTextBarNew = (TextView) findViewById(R.id.new_number);
         mTextBarLearn = (TextView) findViewById(R.id.learn_number);
         mTextBarReview = (TextView) findViewById(R.id.review_number);
@@ -1882,20 +1896,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void displayCardQuestion() {
         Timber.d("displayCardQuestion()");
         sDisplayAnswer = false;
-
-        if (!mButtonHeightSet && mRelativeButtonSize != 100) {
-            ViewGroup.LayoutParams params = mFlipCardLayout.getLayoutParams();
-            params.height = params.height * mRelativeButtonSize / 100;
-            params = mEase1Layout.getLayoutParams();
-            params.height = params.height * mRelativeButtonSize / 100;
-            params = mEase2Layout.getLayoutParams();
-            params.height = params.height * mRelativeButtonSize / 100;
-            params = mEase3Layout.getLayoutParams();
-            params.height = params.height * mRelativeButtonSize / 100;
-            params = mEase4Layout.getLayoutParams();
-            params.height = params.height * mRelativeButtonSize / 100;
-            mButtonHeightSet = true;
-        }
 
         setInterface();
 
