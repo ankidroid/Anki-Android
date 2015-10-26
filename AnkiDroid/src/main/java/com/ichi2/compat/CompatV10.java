@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ReadText;
+import com.ichi2.compat.customtabs.CustomTabsFallback;
 
 import timber.log.Timber;
 
@@ -94,5 +96,10 @@ public class CompatV10 implements Compat {
         TypedArray ta = view.getContext().obtainStyledAttributes(attrs);
         view.setBackgroundColor(ta.getColor(0, res.getColor(R.color.white)));
         ta.recycle();
+    }
+
+    @Override
+    public void openUrl(AnkiActivity activity, Uri uri) {
+        new CustomTabsFallback().openUri(activity, uri);
     }
 }
