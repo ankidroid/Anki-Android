@@ -51,8 +51,6 @@ dependencies {
     compile('com.mikepenz:materialdrawer:4.3.6@aar') {
         transitive = true
     }
-    compile 'com.mikepenz:iconics-core:1.7.6@aar'
-    compile 'com.mikepenz:google-material-typeface:1.2.0.1@aar'
     compile 'net.i2p.android.ext:floatingactionbutton:1.10.0'
     compile 'ch.acra:acra:4.6.2'
     compile 'com.jakewharton.timber:timber:2.7.1'
