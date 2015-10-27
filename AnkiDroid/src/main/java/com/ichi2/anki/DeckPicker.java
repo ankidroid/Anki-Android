@@ -1475,6 +1475,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     showSyncLogMessage(R.string.sync_database_acknowledge);
                 }
                 updateDeckList();
+                WidgetStatus.update(DeckPicker.this);
             }
 
             // Write the time last sync was carried out. Useful for automatic sync interval.
