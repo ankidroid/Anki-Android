@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="preference_summary_percentage">XX%</string>
+  <string name="preference_summary_percentage">XXX%</string>
   <string name="drawer_open">打开侧栏</string>
   <string name="drawer_close">关闭侧栏</string>
   <string name="CardEditorLaterMessage">随后保存相关信息</string>
@@ -55,7 +55,7 @@
   <string name="filter_tags">过滤标签</string>
   <string name="no_tags">你还没有添加任何标签。</string>
   <string name="sdcard_missing_message">SD卡暂时不可用，因为当前正作为USB存储设备。拔掉USB之后即可访问你的牌组。</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="updated_version">更新到%s版本</string>
   <string name="enable_whiteboard">启用白板</string>
   <string name="disable_whiteboard">禁用白板</string>
   <string name="show_whiteboard">显示计时器/白板</string>
@@ -78,17 +78,17 @@
     <item>失误</item>
     <item>复习</item>
   </string-array>
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
-  <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_increase_new_limit">增加今天的新卡片数量</string>
+  <string name="custom_study_increase_review_limit">增加今天的复习数量</string>
+  <string name="custom_study_review_forgotten">复习忘记的卡片</string>
+  <string name="custom_study_review_ahead">提前复习</string>
+  <string name="custom_study_random_selection">学习随机选择的卡片</string>
+  <string name="custom_study_preview_new">预览新卡片</string>
+  <string name="custom_study_limit_tags">仅限于特定标签</string>
   <string name="cardeditor_title_add_note">增加条目注释</string>
   <string name="cardeditor_title_edit_card">编辑卡牌记录</string>
   <string name="discard_unsaved_changes">直接关闭吗？您将丢失所有已输入的内容。</string>
-  <string name="factadder_saving_error">保存条目注释时出现错误</string>
+  <string name="factadder_saving_error">保存笔记时出现错误</string>
   <string name="saving_facts">保存卡牌记录</string>
   <string name="saving_model">正在保存</string>
   <string name="add">添加</string>
@@ -151,12 +151,12 @@
   <string name="upgrade_import_no_file_found">没有找到可导入的 %1$s 文件</string>
   <string name="study_options">牌组选项</string>
   <string name="custom_study">自定义学习</string>
-  <string name="more_options">More</string>
+  <string name="more_options">更多</string>
   <string name="dyn_deck_desc">这是一个在计划外学习的特殊牌组，卡片在复习后会自动返回原来的牌组。\n在牌组列表中删除此牌组也将会把所有卡片都移回原来的牌组。</string>
   <string name="steps_error">步长必须是大于 0 的数字</string>
   <string name="steps_min_error">至少需要一个步骤</string>
   <string name="sched_end">(结束)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
+  <string name="sched_unbury_action">在菜单中点击“取消隐藏”来查看这些卡片</string>
   <string name="sched_has_buried">一些相关的或被隐藏的卡片被推迟到明天。</string>
   <string name="tag_editor_add_feedback">点击“%2$s”以确认添加“%1$s”</string>
   <string name="tag_editor_add_feedback_existing">已选中%1$s</string>

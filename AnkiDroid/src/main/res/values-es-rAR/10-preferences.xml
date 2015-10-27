@@ -153,7 +153,7 @@
   <string name="filter_google_translate_summ">Guardar solamente la palabra fuente y la traducción</string>
   <string name="convert_fen_text_summ">Dibujar un tablero de ajedrez a partir de la notación de Edward Forsyth. La notación debe estar enmarcada en una etiqueta que contenga [fen][/fen].</string>
   <string name="enable_api_title">Enable AnkiDroid API</string>
-  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+  <string name="enable_api_summary">Permitir que otras aplicaciones conecten a AnkiDroid y lean / escriban datos sin tu intervención</string>
   <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>
   <string name="deck_conf_deck_description">Descripción del mazo</string>
   <string name="deck_conf_group">Grupo de opciones</string>

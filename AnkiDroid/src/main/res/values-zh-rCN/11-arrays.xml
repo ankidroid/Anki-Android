@@ -43,54 +43,54 @@
   <string-array name="gestures_labels">
     <item>不采取行动</item>
     <item>显示答案</item>
-    <item>答按钮1</item>
-    <item>答按钮2</item>
-    <item>答按钮3</item>
-    <item>答按钮4</item>
-    <item>建议的答案（绿色）</item>
-    <item>好于建议的答案</item>
+    <item>回答按钮 1</item>
+    <item>回答按钮 2</item>
+    <item>回答按钮 3</item>
+    <item>回答按钮 4</item>
+    <item>建议的回答（绿色）</item>
+    <item>好于建议的回答</item>
     <item>撤销</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>编辑笔记</item>
+    <item>标记笔记</item>
     <item>查找表达式</item>
-    <item>留到下回合</item>
-    <item>不要复习</item>
-    <item>Delete note</item>
+    <item>隐藏卡片</item>
+    <item>暂停卡片</item>
+    <item>删除笔记</item>
     <item>播放媒体</item>
     <item>终止学习</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>隐藏笔记</item>
+    <item>暂停笔记</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>暂停卡牌</item>
+    <item>暂停卡片</item>
     <item>仅标签</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>按随机顺序学习新卡牌</item>
-    <item>按添加顺序卡牌新卡片</item>
+    <item>按随机顺序学习新卡片</item>
+    <item>按添加顺序学习新卡片</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>优先显示老卡牌</item>
+    <item>优先显示老卡片</item>
     <item>随机</item>
     <item>增加时间间隔</item>
     <item>减少时间间隔</item>
     <item>忘记最多的</item>
-    <item>添加的顺序</item>
-    <item>根据到期顺序</item>
-    <item>最晚添加的优先</item>
-    <item>Relative overdueness</item>
+    <item>添加顺序</item>
+    <item>到期顺序</item>
+    <item>优先显示最晚添加的卡片</item>
+    <item>相对到期</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>使用当前牌组</item>
-    <item>由注释类型决定</item>
+    <item>由笔记类型决定</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>混合新卡牌和复习</item>
-    <item>学习新卡牌后再复习</item>
-    <item>复习后再学习新卡牌</item>
+    <item>混合新卡片和复习</item>
+    <item>复习后再学习新卡片</item>
+    <item>学习新卡片后再复习</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>当快闪卡没有指定字体时</item>
+    <item>当卡片中没有指定字体时</item>
     <item>总是</item>
   </string-array>
 </resources>

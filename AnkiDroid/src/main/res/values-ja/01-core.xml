@@ -40,7 +40,7 @@
 -->
 <resources>
   <string name="decks">デッキ</string>
-  <string name="card_browser">ブラウザー</string>
+  <string name="card_browser">ブラウザ</string>
   <string name="statistics">統計</string>
   <string name="settings">設定</string>
   <string name="help">ヘルプ</string>
@@ -123,6 +123,7 @@
   <string name="sd_card_not_mounted">デバイスストレージがマウントされていません</string>
   <string name="button_sync">同期</string>
   <string name="cancel_sync_confirm">同期をキャンセルしますか？</string>
+  <string name="continue_sync">Continue sync</string>
   <string name="sync_cancelled">同期がキャンセルされました</string>
   <string name="export">エクスポート</string>
   <string name="export_collection">エクスポート（全デッキ）</string>

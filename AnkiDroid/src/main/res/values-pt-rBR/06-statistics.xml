@@ -62,7 +62,7 @@
   <string name="stats_percentage">Porcentagem</string>
   <string name="stats_period_month">1 mês</string>
   <string name="stats_period_year">1 ano</string>
-  <string name="stats_period_lifetime">Toda a vida do deck</string>
+  <string name="stats_period_lifetime">vida do baralho</string>
   <string name="stats_deck_collection">coleção</string>
   <string name="stats_time_of_day">Hora do Dia</string>
   <string name="stats_day_of_week">Dia da Semana</string>
@@ -74,7 +74,7 @@
   <string name="stats_today_type_breakdown">Aprender: &lt;b&gt;%1$s&lt;/b&gt;, Revisar: &lt;b&gt;%2$s&lt;/b&gt;, Reaprender: &lt;b&gt;%3$s&lt;/b&gt;, Filtradas: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Respostas corretas em cartões maduros: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Nenhum cartão maduro foi estudado hoje.</string>
-  <string name="deck_summary_all_decks">Todos decks</string>
+  <string name="deck_summary_all_decks">Todos os baralhos</string>
   <string name="stats_select_time_scale">Selecione a escala de tempo</string>
   <string-array name="due_x_axis_title">
     <item>Dias</item>

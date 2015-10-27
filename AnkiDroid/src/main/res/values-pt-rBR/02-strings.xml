@@ -43,8 +43,8 @@
   <string name="drawer_open">Abrir Gaveta</string>
   <string name="drawer_close">Fechar gaveta</string>
   <string name="CardEditorLaterMessage">Informação salva para mais tarde</string>
-  <string name="CardEditorCardDeck">Deck:</string>
-  <string name="CardEditorNoteDeck">Deck:</string>
+  <string name="CardEditorCardDeck">Baralho de cartões:</string>
+  <string name="CardEditorNoteDeck">Baralho:</string>
   <string name="CardEditorModel">Tipo:</string>
   <string name="CardEditorTags">Tags: %1$s</string>
   <string name="CardEditorCards">Cartões: %1$s</string>
@@ -111,11 +111,11 @@
   <string name="card_editor_add_card">Adicionar nota</string>
   <string name="card_editor_copy_card">Copiar cartão</string>
   <string name="card_editor_reset_card">Redefinir progresso</string>
-  <string name="card_editor_reschedule_card">Reagendar carta</string>
+  <string name="card_editor_reschedule_card">Remarcar cartão</string>
   <string name="card_editor_preview_card">Pré-visualização</string>
   <string name="error_insufficient_memory">Operação impossível devido a memória insuficiente no dispositivo</string>
   <string name="rename">Renomear</string>
-  <string name="rename_error">Deck %s não pôde ser renomeado</string>
+  <string name="rename_error">Baralho \"%s\" não pôde ser renomeado</string>
   <string name="default_conf_delete_error">O grupo de opções padrão não pode ser removido</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d cartão adicionado</item>
@@ -127,7 +127,7 @@
   <string name="check_db_message">Verificando banco de dados.\nPor favor Aguarde...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Cartão vazio. Rode \"Ferramentas&gt;Cartões vazios...\" no cliente para desktop.</string>
   <string name="unknown_type_field_warning">Digite a resposta: campo desconhecido %s</string>
-  <string name="delete_deck">Deletando deck...\nPor favor aguarde.</string>
+  <string name="delete_deck">Apagando baralho&#8230;</string>
   <string name="show_hint">Mostrar %s</string>
   <string name="info_rate">Qualifique o AnkiDroid</string>
   <string name="col_load_failed">Carregamento da coleção falhou.\nPressione voltar para fechar AnkiDroid.</string>
@@ -145,17 +145,17 @@
   <string name="export_include_schedule">Incluir agendamento</string>
   <string name="export_include_media">Incluir a média</string>
   <string name="confirm_apkg_export">Exportar a coleção como arquivo apkg?</string>
-  <string name="confirm_apkg_export_deck">Exportar \"%s\" como apkg?</string>
+  <string name="confirm_apkg_export_deck">Exportar \"%s\" como arquivo apkg?</string>
   <string name="export_in_progress">Exportando arquivo apkg...</string>
   <string name="export_successful_title">E-mail apkg?</string>
   <string name="export_successful">Arquivo \"%s\" foi exportado. Você quer enviar um e-mail?</string>
   <string name="export_unsuccessful">Erro exportando coleção</string>
   <string name="import_hint">Para importar cartões, coloque o arquivo apkg no diretório %s e pressione ok</string>
   <string name="upgrade_import_no_file_found">Nenhum arquivo %1$s importável encontrado</string>
-  <string name="study_options">Opções de Deck</string>
+  <string name="study_options">Opções de baralho</string>
   <string name="custom_study">Estudo personalizado</string>
   <string name="more_options">Mais</string>
-  <string name="dyn_deck_desc">Esse é um deck especial para estudar fora do planejamento normal. Os cartões serão retornados automaticamente para os decks originais após revisá-los. Ao apagar esse deck da lista de decks os cartões restantes serão retornados para os decks originais.</string>
+  <string name="dyn_deck_desc">Esse é um baralho especial para estudar fora do planejamento normal. Os cartões serão retornados automaticamente para os baralhos originais após revisá-los. Ao apagar esse baralho da lista de baralhos os cartões restantes serão retornados para os baralhos originais.</string>
   <string name="steps_error">Número de passos deve ser maior do que 0</string>
   <string name="steps_min_error">Pelo menos um passo é necessário</string>
   <string name="sched_end">(fim)</string>

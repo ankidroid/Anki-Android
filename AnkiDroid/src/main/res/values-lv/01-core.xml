@@ -129,6 +129,7 @@
   <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Sinhronizācija</string>
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+  <string name="continue_sync">Continue sync</string>
   <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Export</string>
   <string name="export_collection">Export collection</string>

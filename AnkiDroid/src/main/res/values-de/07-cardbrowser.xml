@@ -49,7 +49,7 @@
   <string name="card_browser_unsuspend_card">Aussetzen aufheben</string>
   <string name="card_browser_mark_card">Notiz markieren</string>
   <string name="card_browser_unmark_card">Markierung entfernen</string>
-  <string name="delete_card_title">Notiz löschen</string>
+  <string name="delete_card_title">Notiz löschen?</string>
   <string name="delete_card_message">Alle Karten dieser Notiz löschen?\nSuchfeld: %s</string>
   <string name="card_browser_show_marked">Markierte herausfiltern</string>
   <string name="card_browser_show_suspended">Ausgesetzte herausfiltern</string>
@@ -59,11 +59,11 @@
   <string name="card_browser_list_my_searches_save">Suche speichern</string>
   <string name="card_browser_list_my_searches_title">Wählen Sie eine gespeicherte Suche</string>
   <string name="card_browser_list_my_searches_new_name">Name für die aktuelle Suche</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">Sie können keine unbenannte Suche speichern.</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">Sie können keine unbenannte Suche speichern</string>
   <string name="card_browser_list_my_searches_new_search_error_dup">Name bereits vorhanden</string>
   <string name="card_browser_list_my_searches_remove_content">»%1$s« löschen?</string>
-  <string name="card_browser_change_display_order">Anzeigereihenfolge</string>
-  <string name="card_browser_change_display_order_title">Anzeigereihenfolge</string>
+  <string name="card_browser_change_display_order">Anzeigereihenfolge ändern</string>
+  <string name="card_browser_change_display_order_title">Anzeigereihenfolge auswählen</string>
   <string name="card_browser_change_display_order_reverse">Zum Umkehren ein Feld zweimal wählen.</string>
   <string name="card_details_question">Frage</string>
   <string name="card_details_answer">Antwort</string>

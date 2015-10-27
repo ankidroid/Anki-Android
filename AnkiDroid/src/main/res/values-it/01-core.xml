@@ -126,6 +126,7 @@
   <string name="sd_card_not_mounted">Dispositivo archiviazione non montato</string>
   <string name="button_sync">Sincronizza</string>
   <string name="cancel_sync_confirm">Vuoi annullare la sincronizzazione?</string>
+  <string name="continue_sync">Continue sync</string>
   <string name="sync_cancelled">Sincronizzazione annullata</string>
   <string name="export">Esportare</string>
   <string name="export_collection">Esporta la collezione</string>

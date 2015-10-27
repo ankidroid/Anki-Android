@@ -68,7 +68,7 @@
   <string name="text_selection_click_summ">Ative isso se você não é capaz de iniciar a seleção de texto por meio de clique longo</string>
   <string name="dictionary">Dicionário de busca</string>
   <string name="reset_languages">Redefinir línguas</string>
-  <string name="reset_languages_summ">Redefina as atribuições de idioma (de conversão de texto em fala e dicionários) para todos os decks. Redefinir as atribuições específicas de deck no selecionador de decks</string>
+  <string name="reset_languages_summ">Redefina as atribuições de idioma (de conversão de texto em fala e dicionários) para todos os baralhos. Redefinir as atribuições específicas de baralho no selecionador de baralhos.</string>
   <string name="reset_languages_question">Redefinir todas as atribuições de idioma?</string>
   <string name="reset_confirmation">Redefinir todos os estados</string>
   <string name="card_zoom">Zoom do cartão</string>
@@ -136,7 +136,7 @@
   <string name="show_estimates_summ">Mostrar a próxima revisão acima dos botões de resposta</string>
   <string name="show_progress">Mostar restantes</string>
   <string name="show_progress_summ">Mostrar contagem de cartões restantes</string>
-  <string name="use_current">Deck para novos cartões</string>
+  <string name="use_current">Baralho para novos cartões</string>
   <string name="new_spread">Posição do novo cartão</string>
   <string name="learn_cutoff">Aprender antes do limite</string>
   <string name="learn_cutoff_summ">XXX min</string>
@@ -158,8 +158,8 @@
   <string name="deck_conf_deck_description">Descrição do deck</string>
   <string name="deck_conf_group">Grupo de opções</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">O cartão %1$s\n%2$d utiliza este grupo</item>
-    <item quantity="other">Os cartões %1$s\n%2$d utilizam este grupo</item>
+    <item quantity="one">O baralho %1$s\n%2$d utiliza este grupo</item>
+    <item quantity="other">Os baralhos %1$s\n%2$d utilizam este grupo</item>
   </plurals>
   <string name="deck_conf_new_cards">Novos cartões</string>
   <string name="deck_conf_rev_cards">Revisões</string>
@@ -208,14 +208,14 @@
     <item quantity="other">Subdecks %s utilizarão este subgrupo</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Definir para todos os subdecks</string>
-  <string name="deck_conf_set_subdecks_message">Definir o atual grupo de opções para todos os subdecks deste deck?</string>
+  <string name="deck_conf_set_subdecks_message">Definir o atual grupo de opções para todos os subdecks deste baralho?</string>
   <string name="pref_browser_editor_font">Navegador e editor de fonte</string>
   <string name="deck_conf_cram_filter">Filtro</string>
   <string name="deck_conf_cram_options">Opções</string>
   <string name="deck_conf_cram_search">Pesquisa</string>
   <string name="deck_conf_cram_limit">Limitar para</string>
-  <string name="deck_conf_cram_order">Cartões selecionados por</string>
-  <string name="deck_conf_cram_reschedule">Reagendar</string>
+  <string name="deck_conf_cram_order">cartões selecionados por</string>
+  <string name="deck_conf_cram_reschedule">Remarcar</string>
   <string name="deck_conf_cram_reschedule_summ">Reagendar cartões baseado nas minhas respostas deste deck</string>
   <string name="deck_conf_cram_steps">Passos personalizados</string>
   <string name="deck_conf_cram_steps_summ">Definir passoss personalizados</string>

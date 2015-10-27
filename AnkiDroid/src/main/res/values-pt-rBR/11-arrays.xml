@@ -81,7 +81,7 @@
     <item>Atrasos relativos</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Usar o deck atual</item>
+    <item>Usar o baralho atual</item>
     <item>Decidir pelo tipo de nota</item>
   </string-array>
   <string-array name="new_spread_labels">

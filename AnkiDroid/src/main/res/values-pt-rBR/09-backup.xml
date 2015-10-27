@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_deck_no_space_left">Última ação de backup não pode ser executada devido à falta de espaço no seu cartão sd.\n\nLibere algum espaço ou diminua a profundidade do backup.</string>
+  <string name="backup_deck_no_space_left">Última ação de backup não pode ser executada devido à falta de espaço no seu cartão SD.\n\nLibere algum espaço ou diminua a profundidade do backup.</string>
   <string name="sd_space_warning">Menos de %d mb de espaço livres no seu cartão sd. \nLibere algum espaço para evitar perda de dados.</string>
   <string name="backup_delete">Apagando backups. \nPor favor espere...</string>
   <string name="backup_restore">Restaurar do backup</string>
@@ -53,7 +53,7 @@
   <string name="backup_retry_opening">Tentar abrir novamente</string>
   <string name="backup_error_menu_repair">Consertar banco de dados</string>
   <string name="backup_repair_deck">Consertar</string>
-  <string name="backup_repair_deck_progress">Consertando banco de dados.\nPor favor aguarde...</string>
+  <string name="backup_repair_deck_progress">Consertando banco de dados&#8230;</string>
   <string name="backup_error">Erro</string>
   <string name="backup_invalid_file_error">O arquivo de backup selecionado era inválido</string>
   <string name="backup_restore_select_title">Selecione o backup para restaurar</string>
@@ -62,5 +62,5 @@
   <string name="open_collection_failed_message">Banco de dados não pode ser aberto. Ele não é um banco de dados real do Anki ou foi corrompido.\n\nAperte em \'opções\' para diversas opções para restaurar o banco de dados, ou para maiores informações sobre o reparo de coleções corrompidas veja:\n%1$s</string>
   <string name="corrupt_db_message">Infelizmente sua coleção corrompeu-se.\n\nAperte em \'opções\' para restaurar a partir de uma cópia de segurança ou, se isto não funcionar, veja as seguintes instruções de como reparar manualmente um banco de dados:\n%1$s</string>
   <string name="access_collection_failed_message">Um erro ocorreu enquanto sua coleção estava sendo acessada. Isto pode ter sido causado por um bug inofensivo ou ela pode ter algum problema.\n\nTente rodar uma checagem no banco de dados ou restaure a partir de uma cópia de segurança apertando no botão de \'opções\'. Se você continuar a ver esta mensagem, por favor relate um bug:\n%1$s</string>
-  <string name="deck_repair_error">Coleção não pôde ser reparada</string>
+  <string name="deck_repair_error">Coleção não pôde ser consertada</string>
 </resources>

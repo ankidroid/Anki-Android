@@ -123,6 +123,7 @@
   <string name="sd_card_not_mounted">기기 저장소가 장착되지 않았습니다</string>
   <string name="button_sync">동기화</string>
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+  <string name="continue_sync">Continue sync</string>
   <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">내보내기</string>
   <string name="export_collection">Export collection</string>

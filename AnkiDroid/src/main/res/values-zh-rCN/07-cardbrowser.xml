@@ -40,27 +40,27 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="other">%d cards shown</item>
+    <item quantity="other">共有%d张卡片</item>
   </plurals>
   <string name="card_browser_all_decks">所有牌组</string>
-  <string name="card_browser_delete_card">删除卡牌记录</string>
+  <string name="card_browser_delete_card">删除笔记</string>
   <string name="card_browser_suspend_card">不要复习</string>
   <string name="card_browser_unsuspend_card">恢复复习</string>
-  <string name="card_browser_mark_card">已标记的卡牌记录</string>
-  <string name="card_browser_unmark_card">未标记的卡牌记录</string>
-  <string name="delete_card_title">删除卡牌记录</string>
-  <string name="delete_card_message">真的删除此卡牌记录的所有卡牌？\n搜索字段：%s</string>
+  <string name="card_browser_mark_card">已标记的笔记</string>
+  <string name="card_browser_unmark_card">未标记的笔记</string>
+  <string name="delete_card_title">确认删除笔记？</string>
+  <string name="delete_card_message">确认删除此笔记的所有卡片？\n搜索字段：%s</string>
   <string name="card_browser_show_marked">筛选已标记卡牌</string>
   <string name="card_browser_show_suspended">筛选已暂停卡牌</string>
   <string name="card_browser_search_by_tag">按标签筛选</string>
   <string name="card_browser_tags_shown">标签: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
+  <string name="card_browser_list_my_searches">我的搜索</string>
+  <string name="card_browser_list_my_searches_save">保存搜索结果</string>
+  <string name="card_browser_list_my_searches_title">选择一个已保存的搜索结果</string>
+  <string name="card_browser_list_my_searches_new_name">当前搜索的名称</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">没有输入名称时不能保存搜索结果</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">名称已存在</string>
+  <string name="card_browser_list_my_searches_remove_content">确认删除“%1$s”？</string>
   <string name="card_browser_change_display_order">改变排序方式</string>
   <string name="card_browser_change_display_order_title">排序方式</string>
   <string name="card_browser_change_display_order_reverse">选择字段两次，以翻转。</string>
@@ -71,14 +71,14 @@
   <string name="card_browser_filtering_cards">正在筛选卡牌&#8230; \n按返回键取消</string>
   <string-array name="card_browser_order_labels">
     <item>不排序(更快)</item>
-    <item>By sort field</item>
+    <item>按字段名称排序</item>
     <item>按照创建时间排序</item>
-    <item>按照编辑时间排序</item>
-    <item>按照变更时间排序</item>
-    <item>按照到期时间排序</item>
-    <item>按照间隔时间排序</item>
-    <item>按照难易程度排序</item>
-    <item>按照复习时间排序</item>
-    <item>按照失误次数排序</item>
+    <item>按编辑时间排序</item>
+    <item>按改变时间排序</item>
+    <item>按到期时间排序</item>
+    <item>按间隔时间排序</item>
+    <item>按难易程度排序</item>
+    <item>按复习时间排序</item>
+    <item>按失误次数排序</item>
   </string-array>
 </resources>

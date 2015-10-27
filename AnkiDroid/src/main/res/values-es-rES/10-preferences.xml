@@ -80,7 +80,7 @@
   <string name="fullscreen_review_summ">Ocultar la barra de estado del sistema</string>
   <string name="gestures">Habilitar gestos</string>
   <string name="gestures_summ">Asignar gestos a acciones tales como contestaro editar tarjetas.</string>
-  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
+  <string name="gestures_hide_answer_buttons">Ocultar botones de respuesta</string>
   <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">Deslizar hacia arriba</string>
   <string name="gestures_swipe_down">Deslizar hacia abajo</string>
@@ -103,7 +103,7 @@
   <string name="sync_account">Cuenta AnkiWeb</string>
   <string name="sync_account_summ_logged_out">No has iniciado sesión</string>
   <string name="sync_account_summ_logged_in">%s</string>
-  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice">Sincronización automática</string>
   <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
   <string name="fix_hebrew_text">Corrección para vocales hebreas</string>
@@ -154,7 +154,7 @@
   <string name="filter_google_translate_summ">Guardar solamente la traducción y la palabra de origen</string>
   <string name="convert_fen_text_summ">Tablero de dibujo de notación de Forsyth-Edwards. La notación debe adjuntar etiquetas del [fen][/fen].</string>
   <string name="enable_api_title">Enable AnkiDroid API</string>
-  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+  <string name="enable_api_summary">Permitir que otras aplicaciones conecten a AnkiDroid y lean / escriban datos sin tu intervención</string>
   <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>
   <string name="deck_conf_deck_description">Descripción del mazo</string>
   <string name="deck_conf_group">Grupo de opciones</string>

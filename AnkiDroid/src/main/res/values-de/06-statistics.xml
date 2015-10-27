@@ -49,7 +49,7 @@
   <string name="statistics_cram">Gepaukte</string>
   <string name="stats_cards">Karten</string>
   <string name="stats_cards_intervals">Karten mit gegebenem Intervall</string>
-  <string name="stats_cumulative_cards">Wiederholungen insgesamt</string>
+  <string name="stats_cumulative_cards">Karten insgesamt</string>
   <string name="stats_cumulative_answers">Antworten insgesamt</string>
   <string name="stats_cumulative_time_minutes">Minuten insgesamt</string>
   <string name="stats_cumulative_time_hours">Stunden insgesamt</string>
@@ -86,8 +86,8 @@
   <string name="stats_review_count">Anzahl Wiederholungen</string>
   <string name="stats_review_time">Lernzeit</string>
   <string name="stats_review_intervals">Intervalle</string>
-  <string name="stats_breakdown">Gedächtnisleistung nach Tageszeit</string>
-  <string name="stats_weekly_breakdown">Gedächtnisleistung nach Wochentag</string>
+  <string name="stats_breakdown">Stündliche Aufschlüsselung</string>
+  <string name="stats_weekly_breakdown">Wöchentliche Aufschlüsselung</string>
   <string name="stats_answer_buttons">Antwortschaltflächen</string>
   <string name="stats_cards_types">Kartentypen</string>
   <string-array name="stats_day_time_strings">

@@ -43,7 +43,7 @@
   <string name="drawer_open">Abrir cajón</string>
   <string name="drawer_close">Cerrar cajón</string>
   <string name="CardEditorLaterMessage">Información guardada para más tarde</string>
-  <string name="CardEditorCardDeck">Mazo de cartas:</string>
+  <string name="CardEditorCardDeck">Mazo de tarjetas:</string>
   <string name="CardEditorNoteDeck">Mazo:</string>
   <string name="CardEditorModel">Tipo:</string>
   <string name="CardEditorTags">Etiquetas: %1$s</string>
@@ -70,7 +70,7 @@
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Respuesta</item>
-    <item>Carta</item>
+    <item>Tarjeta</item>
     <item>Mazo</item>
     <item>Nota</item>
     <item>Pregunta</item>
@@ -97,7 +97,7 @@
   <string name="saving_changes">Guardando cambios...</string>
   <string name="reordering_cards">Ordenando tarjetas...</string>
   <string name="field_remapping">%1$s (de \'%2$s\')</string>
-  <string name="confirm_map_cards_to_nothing">Se eliminará cualquier tarjeta no asignada a nada. Si una nota no tiene cartas restantes, se perderá. ¿Está seguro de que desea continuar?</string>
+  <string name="confirm_map_cards_to_nothing">Se eliminará cualquier tarjeta no asignada a nada. Si una nota no tiene tarjetas restantes, se perderá. ¿Estás seguro de que desea continuar?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d tarjeta estudiada en %2$s</item>
     <item quantity="other">%1$d tarjetas estudiadas en %2$s</item>
@@ -131,7 +131,7 @@
   <string name="show_hint">Mostrar %s</string>
   <string name="info_rate">Puntúa AnkiDroid</string>
   <string name="col_load_failed">Error al cargar la colección.\nPulsa el botón volver para cerrar AnkiDroid.</string>
-  <string name="import_title">Importar Tarjetas</string>
+  <string name="import_title">Importar tarjetas</string>
   <string name="import_select_title">Elija un archivo para importar</string>
   <string name="import_message_add">Añadir</string>
   <string name="import_message_replace_confirm">Esto eliminará tu colección actual y la reemplazará con los datos del archivo %s. ¿Estás seguro?</string>
@@ -154,7 +154,7 @@
   <string name="upgrade_import_no_file_found">No se encontró archivo importable %1$s</string>
   <string name="study_options">Opciones de mazo</string>
   <string name="custom_study">Estudio personalizado</string>
-  <string name="more_options">More</string>
+  <string name="more_options">Más</string>
   <string name="dyn_deck_desc">Este es un mazo especial para estudiar fuera del programa normal. Las tarjetas serán devueltas automáticamente a sus mazos originales después de que las repases. Borrar este mazo de la lista de mazos devolverá todas las tarjetas restantes a su mazo original.</string>
   <string name="steps_error">Pasos tiene que ser un número mayor que 0</string>
   <string name="steps_min_error">Se requiere al menos un paso</string>
@@ -165,28 +165,28 @@
   <string name="tag_editor_add_feedback_existing">Etiqueta existente \"%1$s\" seleccionada</string>
   <string name="lookup_hint">Después de copiar el texto, pulsa en cualquier lugar sobre la tarjeta para mostrar el icono de búsqueda.</string>
   <plurals name="time_span_seconds">
-    <item quantity="one">%s second</item>
-    <item quantity="other">%s seconds</item>
+    <item quantity="one">%s segundo</item>
+    <item quantity="other">%s segundos</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="one">%s minute</item>
-    <item quantity="other">%s minutes</item>
+    <item quantity="one">%s minuto</item>
+    <item quantity="other">%s minutos</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="one">%s hour</item>
-    <item quantity="other">%s hours</item>
+    <item quantity="one">%s hora</item>
+    <item quantity="other">%s horas</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="one">%s day</item>
-    <item quantity="other">%s days</item>
+    <item quantity="one">%s día</item>
+    <item quantity="other">%s días</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="one">%s month</item>
-    <item quantity="other">%s months</item>
+    <item quantity="one">%s mes</item>
+    <item quantity="other">%s meses</item>
   </plurals>
   <plurals name="time_span_years">
-    <item quantity="one">%s year</item>
-    <item quantity="other">%s years</item>
+    <item quantity="one">%s año</item>
+    <item quantity="other">%s años</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
 </resources>

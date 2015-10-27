@@ -53,8 +53,8 @@
   <string name="delete_card_message">Voulez vous vraiment supprimer toutes les cartes de cette note ?\nChamp de recherche : %s</string>
   <string name="card_browser_show_marked">Filtrer les notes marquées</string>
   <string name="card_browser_show_suspended">Filtrer les cartes suspendues</string>
-  <string name="card_browser_search_by_tag">Filtrer par tag</string>
-  <string name="card_browser_tags_shown">Labels: %1$s</string>
+  <string name="card_browser_search_by_tag">Filtrer par étiquette</string>
+  <string name="card_browser_tags_shown">Étiquettes : %1$s</string>
   <string name="card_browser_list_my_searches">Mes recherches</string>
   <string name="card_browser_list_my_searches_save">Enregistrer la recherche</string>
   <string name="card_browser_list_my_searches_title">Choisissez une recherche enregistrée</string>
@@ -68,7 +68,7 @@
   <string name="card_details_question">Question</string>
   <string name="card_details_answer">Réponse</string>
   <string name="card_details_due">Dû</string>
-  <string name="card_details_tags">Balises</string>
+  <string name="card_details_tags">Étiquettes</string>
   <string name="card_browser_filtering_cards">Filtrage des cartes en cours... \nAppuyez sur le bouton retour pour annuler</string>
   <string-array name="card_browser_order_labels">
     <item>Pas de tri (plus rapide)</item>

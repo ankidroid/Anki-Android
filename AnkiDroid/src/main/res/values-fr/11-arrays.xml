@@ -50,20 +50,20 @@
     <item>Réponse recommandée (vert)</item>
     <item>Réponse meilleure que celle recommandée</item>
     <item>Annuler</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Modifier la note</item>
+    <item>Marquer la note</item>
     <item>Rechercher l’expression</item>
     <item>Enterrer la carte</item>
     <item>Suspendre la carte</item>
-    <item>Delete note</item>
+    <item>Supprimer la note</item>
     <item>Lancer le média</item>
     <item>Interrompre l’apprentissage</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Enterrer la note</item>
+    <item>Suspendre la note</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Suspendre la carte</item>
-    <item>Taguer uniquement</item>
+    <item>Étiqueter uniquement</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Nouvelles cartes dans un ordre aléatoire</item>

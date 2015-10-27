@@ -84,12 +84,12 @@
   <string name="multimedia_editor_progress_wait_title">Patienter</string>
   <string name="multimedia_editor_something_wrong">Quelque chose s’est mal passé</string>
   <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the note</string>
-  <string name="multimedia_editor_attach_media">Attach media</string>
+  <string name="multimedia_editor_attach_media">Ajouter un média</string>
   <string name="multimedia_editor_audio_view_recording_failed">Échec de l’enregistrement</string>
   <string name="multimedia_editor_audio_view_playing_failed">Échec de la lecture</string>
   <string name="title_activity_edit_text">Champs d’édition</string>
   <string name="title_activity_translation">Traduction</string>
   <string name="title_activity_load_pronounciation">Prononciation</string>
   <string name="title_activity_search_image">Recherche d’image Google</string>
-  <string name="network_no_connection">No connection.</string>
+  <string name="network_no_connection">Pas de connexion.</string>
 </resources>
