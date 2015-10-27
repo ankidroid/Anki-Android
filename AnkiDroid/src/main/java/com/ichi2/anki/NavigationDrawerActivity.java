@@ -27,7 +27,6 @@ import android.widget.CompoundButton;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.compat.CompatHelper;
-import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -78,21 +77,21 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
         }
         // Create the items for the navigation drawer
         PrimaryDrawerItem deckListItem = new PrimaryDrawerItem().withName(R.string.decks)
-                .withIcon(GoogleMaterial.Icon.gmd_list).withIdentifier(DRAWER_DECK_PICKER);
+                .withIcon(R.drawable.ic_list_black_24dp).withIdentifier(DRAWER_DECK_PICKER).withIconTintingEnabled(true);
         PrimaryDrawerItem browserItem = new PrimaryDrawerItem().withName(R.string.card_browser)
-                .withIcon(GoogleMaterial.Icon.gmd_search).withIdentifier(DRAWER_BROWSER);
+                .withIcon(R.drawable.ic_search_black_24dp).withIdentifier(DRAWER_BROWSER).withIconTintingEnabled(true);
         PrimaryDrawerItem statsItem = new PrimaryDrawerItem().withName(R.string.statistics)
-                .withIcon(GoogleMaterial.Icon.gmd_equalizer).withIdentifier(DRAWER_STATISTICS);
+                .withIcon(R.drawable.ic_equalizer_black_24dp).withIdentifier(DRAWER_STATISTICS).withIconTintingEnabled(true);
         SecondarySwitchDrawerItem nightModeItem = new SecondarySwitchDrawerItem().withName(R.string.night_mode)
                 .withChecked(AnkiDroidApp.getSharedPrefs(this).getBoolean("invertedColors", false))
                 .withOnCheckedChangeListener(this).withSelectable(false)
-                .withIcon(GoogleMaterial.Icon.gmd_brightness_3).withIdentifier(DRAWER_NIGHT_MODE);
+                .withIcon(R.drawable.ic_brightness_3_black_24dp).withIdentifier(DRAWER_NIGHT_MODE).withIconTintingEnabled(true);
         SecondaryDrawerItem settingsItem = new SecondaryDrawerItem().withName(R.string.settings)
-                .withIcon(GoogleMaterial.Icon.gmd_settings).withIdentifier(DRAWER_SETTINGS);
+                .withIcon(R.drawable.ic_settings_black_24dp).withIdentifier(DRAWER_SETTINGS).withIconTintingEnabled(true);
         SecondaryDrawerItem helpItem = new SecondaryDrawerItem().withName(R.string.help)
-                .withIcon(GoogleMaterial.Icon.gmd_help).withIdentifier(DRAWER_HELP);
+                .withIcon(R.drawable.ic_help_black_24dp).withIdentifier(DRAWER_HELP).withIconTintingEnabled(true);
         SecondaryDrawerItem feedbackItem = new SecondaryDrawerItem().withName(R.string.send_feedback)
-                .withIcon(GoogleMaterial.Icon.gmd_feedback).withIdentifier(DRAWER_FEEDBACK);
+                .withIcon(R.drawable.ic_feedback_black_24dp).withIdentifier(DRAWER_FEEDBACK).withIconTintingEnabled(true);
         // Create the header if the screen isn't tiny
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
