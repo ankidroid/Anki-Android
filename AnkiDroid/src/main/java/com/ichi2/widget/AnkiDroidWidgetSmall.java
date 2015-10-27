@@ -29,7 +29,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.IntentHandler;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
 
@@ -161,7 +161,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
             // Add a click listener to open Anki from the icon.
             // This should be always there, whether there are due cards or not.
-            Intent ankiDroidIntent = new Intent(context, DeckPicker.class);
+            Intent ankiDroidIntent = new Intent(context, IntentHandler.class);
             ankiDroidIntent.setAction(Intent.ACTION_MAIN);
             ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
             PendingIntent pendingAnkiDroidIntent = PendingIntent.getActivity(context, 0, ankiDroidIntent,
