@@ -1476,6 +1476,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
                 updateDeckList();
                 WidgetStatus.update(DeckPicker.this);
+                if (mFragmented) {
+                    loadStudyOptionsFragment(false);
+                }
             }
 
             // Write the time last sync was carried out. Useful for automatic sync interval.
