@@ -41,6 +41,11 @@ If you want to run several different versions of AnkiDroid side by side, you can
 
 Compile and run the code as usual. Note that third party apps will probably not be able to use these alternate builds with the API.
 
+## Issues to get started with
+If you are a new developer looking to contribute something to AnkiDroid, but you don't know what work to get started with, please take a look and see if there's anything that you'd like to work on in the issue tracker. In particular, [issues with the label "HelpWanted"](https://github.com/ankidroid/Anki-Android/labels/HelpWanted) are tasks that have been specially highlighted as work that we'd really like to have done, but don't have time to do ourselves. 
+
+If it's unclear exactly what needs to be done, or how to do it, please don't hesitate to ask for clarification or help!
+
 ## Submit improvements
 
 Once you have improved the code, commit it and send a pull request to [AnkiDroid Github Repository](https://github.com/ankidroid/Anki-Android). It will then be accepted after the code has been reviewed, and the enhanced application will be available on the Android Market on the next release. See [the branching model section](https://github.com/ankidroid/Anki-Android/wiki/Release-procedure#development-lifecycle) if you are unsure which branch to push to.
