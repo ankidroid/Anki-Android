@@ -32,7 +32,7 @@
                 android:title="@string/deck_conf_add" />
 
             <com.ichi2.preferences.CustomDialogPreference
-                android:dialogIcon="@android:drawable/ic_dialog_alert"
+                android:dialogIcon="@drawable/ic_dialog_alert"
                 android:dialogMessage="@string/deck_conf_remove_message"
                 android:dialogTitle="@string/deck_conf_remove_title"
                 android:key="confRemove"
@@ -45,7 +45,7 @@
                 android:title="@string/deck_conf_rename" />
 
             <com.ichi2.preferences.CustomDialogPreference
-                android:dialogIcon="@android:drawable/ic_dialog_alert"
+                android:dialogIcon="@drawable/ic_dialog_alert"
                 android:dialogMessage="@string/deck_conf_reset_message"
                 android:dialogTitle="@string/deck_conf_reset_title"
                 android:key="confRestore"
@@ -53,7 +53,7 @@
                 android:positiveButtonText="@string/dialog_positive_restore"
                 android:title="@string/deck_conf_reset_title" />
             <com.ichi2.preferences.CustomDialogPreference
-                android:dialogIcon="@android:drawable/ic_dialog_alert"
+                android:dialogIcon="@drawable/ic_dialog_alert"
                 android:dialogMessage="@string/deck_conf_set_subdecks_message"
                 android:dialogTitle="@string/deck_conf_set_subdecks_title"
                 android:key="confSetSubdecks"

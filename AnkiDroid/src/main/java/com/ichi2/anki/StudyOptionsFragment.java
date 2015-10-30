@@ -264,7 +264,8 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      * Show the context menu for the custom study options
      */
     private void showCustomStudyContextMenu() {
-        CustomStudyDialog d = CustomStudyDialog.newInstance(CustomStudyDialog.CONTEXT_MENU_STANDARD);
+        CustomStudyDialog d = CustomStudyDialog.newInstance(CustomStudyDialog.CONTEXT_MENU_STANDARD,
+                getCol().getDecks().selected());
         ((AnkiActivity)getActivity()).showDialogFragment(d);
     }
 
