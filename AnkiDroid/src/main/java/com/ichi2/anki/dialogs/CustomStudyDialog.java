@@ -75,14 +75,15 @@ public class CustomStudyDialog extends DialogFragment {
     /**
      * Instance factories
      */
-    public static CustomStudyDialog newInstance(int id) {
-        return newInstance(id, false);
+    public static CustomStudyDialog newInstance(int id, long did) {
+        return newInstance(id, did, false);
     }
 
-    public static CustomStudyDialog newInstance(int id, boolean jumpToReviewer) {
+    public static CustomStudyDialog newInstance(int id, long did, boolean jumpToReviewer) {
         CustomStudyDialog f = new CustomStudyDialog();
         Bundle args = new Bundle();
         args.putInt("id", id);
+        args.putLong("did", did);
         args.putBoolean("jumpToReviewer", jumpToReviewer);
         f.setArguments(args);
         return f;
@@ -128,7 +129,8 @@ public class CustomStudyDialog extends DialogFragment {
                             }
                             case MORE_OPTIONS: {
                                 // User asked to see all custom study options
-                                CustomStudyDialog d = CustomStudyDialog.newInstance(CONTEXT_MENU_STANDARD, jumpToReviewer);
+                                CustomStudyDialog d = CustomStudyDialog.newInstance(CONTEXT_MENU_STANDARD,
+                                        getArguments().getLong("did"), jumpToReviewer);
                                 activity.showDialogFragment(d);
                                 break;
                             }
@@ -176,7 +178,8 @@ public class CustomStudyDialog extends DialogFragment {
                             }
                             default: {
                                 // User asked for a standard custom study option
-                                CustomStudyDialog d = CustomStudyDialog.newInstance(view.getId(), jumpToReviewer);
+                                CustomStudyDialog d = CustomStudyDialog.newInstance(view.getId(),
+                                        getArguments().getLong("did"), jumpToReviewer);
                                 ((AnkiActivity) getActivity()).showDialogFragment(d);
                             }
                         }
@@ -409,7 +412,8 @@ public class CustomStudyDialog extends DialogFragment {
         final AnkiActivity activity = (AnkiActivity) getActivity();
         Collection col = CollectionHelper.getInstance().getCol(activity);
         try {
-            String deckName = col.getDecks().current().getString("name");
+            long did = getArguments().getLong("did");
+            String deckName = col.getDecks().get(did).getString("name");
             String customStudyDeck = getResources().getString(R.string.custom_study_deck_name);
             JSONObject cur = col.getDecks().byName(customStudyDeck);
             if (cur != null) {
@@ -427,8 +431,8 @@ public class CustomStudyDialog extends DialogFragment {
                     col.getDecks().select(cur.getLong("id"));
                 }
             } else {
-                long did = col.getDecks().newDyn(customStudyDeck);
-                dyn = col.getDecks().get(did);
+                long customStudyDid = col.getDecks().newDyn(customStudyDeck);
+                dyn = col.getDecks().get(customStudyDid);
             }
             // and then set various options
             if (delays.length() > 0) {

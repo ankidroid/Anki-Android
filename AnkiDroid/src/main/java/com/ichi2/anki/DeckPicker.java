@@ -1682,7 +1682,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             showSnackbar(R.string.studyoptions_limit_reached, false, R.string.study_more, new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CustomStudyDialog d = CustomStudyDialog.newInstance(CustomStudyDialog.CONTEXT_MENU_LIMITS, true);
+                    CustomStudyDialog d = CustomStudyDialog.newInstance(
+                            CustomStudyDialog.CONTEXT_MENU_LIMITS,
+                            getCol().getDecks().selected(), true);
                     showDialogFragment(d);
                 }
             }, findViewById(R.id.root_layout), mSnackbarShowHideCallback);
@@ -1702,7 +1704,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 @Override
                 public void onClick(View v) {
                     CustomStudyDialog d = CustomStudyDialog.newInstance(
-                            CustomStudyDialog.CONTEXT_MENU_EMPTY_SCHEDULE, true);
+                            CustomStudyDialog.CONTEXT_MENU_EMPTY_SCHEDULE,
+                            getCol().getDecks().selected(), true);
                     showDialogFragment(d);
                 }
             }, findViewById(R.id.root_layout), mSnackbarShowHideCallback);

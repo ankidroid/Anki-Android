@@ -123,8 +123,9 @@ public class DeckPickerContextMenu extends DialogFragment {
                     break;
                 case CONTEXT_MENU_CUSTOM_STUDY: {
                     Timber.i("Custom study option selected");
+                    long did = getArguments().getLong("did");
                     CustomStudyDialog d = CustomStudyDialog.newInstance(
-                            CustomStudyDialog.CONTEXT_MENU_STANDARD);
+                            CustomStudyDialog.CONTEXT_MENU_STANDARD, did);
                     ((AnkiActivity) getActivity()).showDialogFragment(d);
                     break;
                 }
