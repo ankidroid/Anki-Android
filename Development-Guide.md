@@ -35,7 +35,7 @@ An apk file signed with a standard "debug" key will be generated named `"AnkiDro
 If you want to run several different versions of AnkiDroid side by side, you can do this by performing the following 4 steps:
 
 * Change `applicationId` in the `AnkiDroid/build.gradle` from `"com.ichi2.anki"` to something else, like `"com.ichi2.a.anki"`
-*  Open the `%root/AndroidManifest.xml` file, search for "authorities", and change the line that says `android:authorities="com.ichi2.anki.flashcards"` to `android:authorities="com.ichi2.a.anki.flashcards"` where `com.ichi2.a.anki` is the value you set for applicationId in step 1.
+*  Open the `%root/AndroidManifest.xml` file, search for "authorities", and change the line that says `android:authorities="com.ichi2.anki.flashcards"` to `android:authorities="com.ichi2.a.anki.flashcards"` where `com.ichi2.a.anki` is the value you set for applicationId in step 1. Also search for `com.ichi2.anki.permission.READ_WRITE_DATABASE` and change it to `com.ichi2.a.anki.permission.READ_WRITE_DATABASE`.
 * Open the file `%root/res/values/constants.xml` and change the line `<string name="app_name">AnkiDroid</string>` to whatever you want the application name to be - for example `<string name="app_name">A.AnkiDroid</string>`
 * Do a global search in `%root` for `android:targetPackage="com.ichi2.anki"` and replace with e.g. `android:targetPackage="com.ichi2.a.anki"`. You can do the search and replace with e.g. [grepwin](http://sourceforge.net/projects/grepwin/)
 
