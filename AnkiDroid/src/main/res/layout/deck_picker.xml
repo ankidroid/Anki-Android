@@ -30,6 +30,7 @@
             android:id="@+id/today_stats_text_view"
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
+            android:layout_marginBottom="4dp"
             android:gravity="center"/>
     </RelativeLayout>
     <include layout="@layout/anki_progress"/>
