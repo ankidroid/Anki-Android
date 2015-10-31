@@ -28,6 +28,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
@@ -154,7 +155,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         "ease",
         "edited",
         "interval"};
-
+    private long mLastRenderStart = 0;
     private ActionBar mActionBar;
     private DeckDropDownAdapter mDropDownAdapter;
     private Spinner mActionBarSpinner;
@@ -1082,6 +1083,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void onPreExecute() {
+            Timber.d("Starting Q&A background rendering");
         }
 
 
@@ -1100,6 +1102,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void onCancelled() {
+            hideProgressBar();
         }
     };
 
@@ -1125,23 +1128,34 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             // Show the progress bar if scrolling to given position requires rendering of the question / answer
             int lastVisibleItem = firstVisibleItem + visibleItemCount;
-            if (lastVisibleItem > MIN_CARDS_TO_RENDER && getCards().size() > lastVisibleItem) {
+            // Don't try to start rendering before scrolling has begun (firstVisibleItem == 0)
+            if (firstVisibleItem > 0 && lastVisibleItem > 0 && getCards().size() > lastVisibleItem) {
                 String firstAns = getCards().get(firstVisibleItem).get("answer");
-                String lastAns = getCards().get(lastVisibleItem).get("answer");
+                // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
+                String lastAns = getCards().get(lastVisibleItem - 1).get("answer");
                 if (firstAns != null && firstAns.equals("") || lastAns != null && lastAns.equals("")) {
                     showProgressBar();
+                    // Also start rendering the items on the screen every 300ms while scrolling
+                    long currentTime = SystemClock.elapsedRealtime ();
+                    if ((currentTime - mLastRenderStart > 300 || lastVisibleItem >= totalItemCount)) {
+                        mLastRenderStart = currentTime;
+                        DeckTask.cancelTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA);
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler,
+                                new DeckTask.TaskData(new Object[]{getCards(), firstVisibleItem, visibleItemCount}));
+                    }
                 }
             }
         }
 
         @Override
         public void onScrollStateChanged(AbsListView listView, int scrollState) {
+            // TODO: Try change to RecyclerView as currently gets stuck a lot when using scrollbar on right of ListView
             // Start rendering the question & answer every time the user stops scrolling
             if (scrollState == SCROLL_STATE_IDLE) {
                 int startIdx = listView.getFirstVisiblePosition();
                 int numVisible = listView.getLastVisiblePosition() - startIdx;
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler, new DeckTask.TaskData(
-                        new Object[]{getCards(), startIdx - 5, 2*numVisible + 5}));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler,
+                        new DeckTask.TaskData(new Object[]{getCards(), startIdx - 5, 2 * numVisible + 5}));
             }
         }
     }
