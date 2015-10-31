@@ -69,8 +69,10 @@ public class AnkiDb {
                             | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
         }
 
-        if (mDatabase != null) {
-            setWalJournalMode();
+        if (mDatabase != null && AnkiDroidApp.getInstance() != null) {
+            if (AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).getBoolean("enableWal", false)) {
+                setWalJournalMode();
+            }
             mDatabase.rawQuery("PRAGMA synchronous = 2", null);
         }
         // getDatabase().beginTransactionNonExclusive();
