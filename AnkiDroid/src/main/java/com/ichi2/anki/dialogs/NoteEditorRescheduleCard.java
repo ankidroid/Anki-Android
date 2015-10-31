@@ -24,6 +24,7 @@ public class NoteEditorRescheduleCard extends DialogFragment {
                 .positiveText(getResources().getString(R.string.dialog_ok))
                 .negativeText(R.string.cancel)
                 .inputType(InputType.TYPE_CLASS_NUMBER)
+                .inputRange(1, -1)
                 .input(R.string.reschedule_card_dialog_message, R.string.empty_string, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(MaterialDialog dialog, CharSequence text) {
