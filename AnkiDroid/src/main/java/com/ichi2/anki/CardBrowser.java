@@ -87,9 +87,7 @@ import timber.log.Timber;
 public class CardBrowser extends NavigationDrawerActivity implements
         DeckDropDownAdapter.SubtitleListener {
 
-    // private List<Long> mCardIds = new ArrayList<Long>();
     private ArrayList<HashMap<String, String>> mCards;
-    // private ArrayList<HashMap<String, String>> mAllCards;
     private HashMap<String, String> mDeckNames;
     private ArrayList<JSONObject> mDropDownDecks;
     private SearchView mSearchView;
@@ -111,6 +109,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private int mOrder;
     private boolean mOrderAsc;
+    private int mColumn1Index;
     private int mColumn2Index;
 
     private static final int DIALOG_TAGS = 3;
@@ -123,7 +122,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private static final int EDIT_CARD = 0;
     private static final int ADD_NOTE = 1;
     private static final int DEFAULT_FONT_SIZE_RATIO = 100;
-
+    // Minimum number of cards to render
+    private static final int MIN_CARDS_TO_RENDER = 1000;
     // Should match order of R.array.card_browser_order_labels
     public static final int CARD_ORDER_NONE = 0;
     private static final String[] fSortTypes = new String[] {
@@ -139,7 +139,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         "cardLapses"};
     // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings.
     // Note: the last 6 are currently hidden
-    private static final String[] COLUMN_KEYS = {"answer",
+    private static final String[] COLUMN1_KEYS = {"question", "sfld"};
+    private static final String[] COLUMN2_KEYS = {"answer",
         "card",
         "deck",
         "note",
@@ -402,16 +403,34 @@ public class CardBrowser extends NavigationDrawerActivity implements
             throw new RuntimeException(e);
         }
         
-        mCards = new ArrayList<HashMap<String, String>>();
+        mCards = new ArrayList<>();
         mCardsListView = (ListView) findViewById(R.id.card_browser_list);
-        // Create a spinner for column1, but without letting the user change column
-        // TODO: Maybe allow column1 to be changed as well, but always make default sfld
+        // Create a spinner for column1
         mCardsColumn1Spinner = (Spinner) findViewById(R.id.browser_column1_spinner);
         ArrayAdapter<CharSequence> column1Adapter = ArrayAdapter.createFromResource(this,
                 R.array.browser_column1_headings, android.R.layout.simple_spinner_item);
         column1Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mCardsColumn1Spinner.setAdapter(column1Adapter);
-        mCardsColumn1Spinner.setClickable(false); // We disable and set plain background since it only has 1 item
+        mColumn1Index = AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserColumn1", 0);
+        mCardsColumn1Spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                // If a new column was selected then change the key used to map from mCards to the column TextView
+                if (pos != mColumn1Index) {
+                    mColumn1Index = pos;
+                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
+                            .putInt("cardBrowserColumn1", mColumn1Index).commit();
+                    String[] fromMap = mCardsAdapter.getFromMapping();
+                    fromMap[0] = COLUMN1_KEYS[mColumn1Index];
+                    mCardsAdapter.setFromMapping(fromMap);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do Nothing
+            }
+        });
         // Load default value for column2 selection
         mColumn2Index = AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserColumn2", 0);
         // Setup the column 2 heading as a spinner so that users can easily change the column type
@@ -430,11 +449,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
                             .putInt("cardBrowserColumn2", mColumn2Index).commit();
                     String[] fromMap = mCardsAdapter.getFromMapping();
-                    fromMap[1] = COLUMN_KEYS[mColumn2Index];
+                    fromMap[1] = COLUMN2_KEYS[mColumn2Index];
                     mCardsAdapter.setFromMapping(fromMap);
                 }
             }
-
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -449,7 +467,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 this,
                 mCards,
                 R.layout.card_item_browser,
-                new String[] {"sfld", COLUMN_KEYS[mColumn2Index]},
+                new String[] {COLUMN1_KEYS[mColumn1Index], COLUMN2_KEYS[mColumn2Index]},
                 new int[] {R.id.card_sfld, R.id.card_column2},
                 "flags",
                 sflRelativeFontSize,
@@ -459,6 +477,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // make the second column load dynamically when scrolling
         mCardsListView.setOnScrollListener(new RenderOnScroll());
         // set the spinner index
+        mCardsColumn1Spinner.setSelection(mColumn1Index);
         mCardsColumn2Spinner.setSelection(mColumn2Index);
 
 
@@ -872,9 +891,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
     public static void updateSearchItemQA(HashMap<String, String> item, Card c) {
         // render question and answer
         HashMap<String, String> qa = c._getQA(true, true);
-        // Render full answer if the bafmt (i.e. "browser appearance") setting forced blank result
-        if (qa.get("a").equals("")) {
-            qa = c._getQA(true, false);
+        // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
+        if (qa.get("q").equals("") || qa.get("a").equals("")) {
+            HashMap<String, String> qaFull = c._getQA(true, false);
+            if (qa.get("q").equals("")) {
+                qa.put("q", qaFull.get("q"));
+            }
+            if (qa.get("a").equals("")) {
+                qa.put("a", qaFull.get("a"));
+            }
         }
         // update the original hash map to include rendered question & answer
         String q = qa.get("q");
@@ -940,10 +965,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-            // // Update list if search involved marked
-            // if (fSearchMarkedPattern.matcher(mSearchTerms).find()) {
-            // updateCardsList();
-            // }
             updateCardInList(values[0].getCard(), values[0].getString());
         }
 
@@ -978,10 +999,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (result.getBoolean() && mCards != null) {
-                // // Update list if search on suspended
-                // if (fSearchSuspendedPattern.matcher(mSearchTerms).find()) {
-                // updateCardsList();
-                // }
                 updateCardInList(getCol().getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id"))), null);
             } else {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
@@ -1037,7 +1054,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void onPostExecute(TaskData result) {            
-            // Launch task to continue the rendering of the second column
             if (result != null && mCards != null) {
                 Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfuly");
                 updateList();
@@ -1046,14 +1062,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 }
                 // After the initial searchCards query, start rendering the question and answer in the background
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler,
-                        new DeckTask.TaskData(new Object[]{mCards, 0, 100}));
+                        new DeckTask.TaskData(new Object[]{mCards, 0, Math.min(mCards.size(), MIN_CARDS_TO_RENDER)}));
             }
             hideProgressBar();
         }
         
         @Override
         public void onCancelled(){
-            // reset the hacky static variable which Finder is listening to check if main thread has requested cancellation
             Timber.d("doInBackgroundSearchCards onCancelled() called");
         }
     };
@@ -1073,6 +1088,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onPostExecute(TaskData result) {
             if (result != null) {
+                hideProgressBar();
                 mCardsAdapter.notifyDataSetChanged();
                 Timber.d("Completed doInBackgroundRenderBrowserQA Successfuly");
             } else {
@@ -1106,20 +1122,26 @@ public class CardBrowser extends NavigationDrawerActivity implements
      */
     private final class RenderOnScroll implements AbsListView.OnScrollListener {
         @Override
-        public void onScroll(AbsListView view, int firstVisibleItem,
-                             int visibleItemCount, int totalItemCount) {
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            // Show the progress bar if scrolling to given position requires rendering of the question / answer
+            int lastVisibleItem = firstVisibleItem + visibleItemCount;
+            if (lastVisibleItem > MIN_CARDS_TO_RENDER && getCards().size() > lastVisibleItem) {
+                String firstAns = getCards().get(firstVisibleItem).get("answer");
+                String lastAns = getCards().get(lastVisibleItem).get("answer");
+                if (firstAns != null && firstAns.equals("") || lastAns != null && lastAns.equals("")) {
+                    showProgressBar();
+                }
+            }
         }
 
         @Override
         public void onScrollStateChanged(AbsListView listView, int scrollState) {
-            // Cancel any rendering so that scrolling occurs as fluidly as possible
-            DeckTask.cancelTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA);
-            // Resume rendering once the scrolling has finished
+            // Start rendering the question & answer every time the user stops scrolling
             if (scrollState == SCROLL_STATE_IDLE) {
                 int startIdx = listView.getFirstVisiblePosition();
                 int numVisible = listView.getLastVisiblePosition() - startIdx;
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler, new DeckTask.TaskData(
-                        new Object[] {getCards(), startIdx - 5 , 2*numVisible + 5}));
+                        new Object[]{getCards(), startIdx - 5, 2*numVisible + 5}));
             }
         }
     }
