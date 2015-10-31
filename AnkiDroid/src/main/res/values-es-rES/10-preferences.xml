@@ -81,7 +81,7 @@
   <string name="gestures">Habilitar gestos</string>
   <string name="gestures_summ">Asignar gestos a acciones tales como contestaro editar tarjetas.</string>
   <string name="gestures_hide_answer_buttons">Ocultar botones de respuesta</string>
-  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
+  <string name="gestures_hide_answer_buttons_summ">No mostrar botones de respuesta cuando los gestos están activados</string>
   <string name="gestures_swipe_up">Deslizar hacia arriba</string>
   <string name="gestures_swipe_down">Deslizar hacia abajo</string>
   <string name="gestures_swipe_left">Deslizar hacia la izquierda</string>
@@ -104,8 +104,7 @@
   <string name="sync_account_summ_logged_out">No has iniciado sesión</string>
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="automatic_sync_choice">Sincronización automática</string>
-  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
+  <string name="automatic_sync_choice_summ">Sincronizar automáticamente al abrir/cerrar la aplicación si hace        más de 10 minutos desde la última sincronización.</string>
   <string name="fix_hebrew_text">Corrección para vocales hebreas</string>
   <string name="fix_hebrew_text_summ">Solución para mostrar las vocales Hebreas correctamente.</string>
   <string name="fix_hebrew_instructions">Esta opción evade el algoritmo RTL de Android para mostrar correctamente texto hebreo con vocales.\n\nPara que esto funcione, necesitas descargar la fuente Tohu.ttf y copiarla manualmente a:\n%s/fonts/\n\nNo necesitarás hacer ninguna modificación a tus tarjetas.</string>
@@ -113,7 +112,7 @@
   <string name="default_font">Fuente predeterminada</string>
   <string name="override_font">Aplicabilidad de fuente por defecto</string>
   <string name="language">Idioma</string>
-  <string name="language_system">Idioma del Sistema</string>
+  <string name="language_system">Idioma del sistema</string>
   <string name="notification_pref">Notificaciones</string>
   <string name="notification_pref_title">Notificar cuando</string>
   <string name="never_notify">No notificar nunca</string>
@@ -127,7 +126,7 @@
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Tiempo para mostrar la siguiente pregunta</string>
   <string name="timeout_question_seconds_summ">XXX s</string>
-  <string name="select_locale_title">Seleccione Idioma</string>
+  <string name="select_locale_title">Selecciona idioma</string>
   <string name="safe_display">Modo de visualización segura</string>
   <string name="safe_display_summ">Deshabilitar todas las animaciones y usar un método más seguro para dibujar las tarjetas. Los dispositivos de tinta electrónica y dispositivos más viejos que utilizan fuentes personalizadas pueden requerir esta opción.</string>
   <string name="vertical_centering">Alinear al centro</string>
@@ -153,7 +152,7 @@
   <string name="filter_google_translate">Desde Google Translate</string>
   <string name="filter_google_translate_summ">Guardar solamente la traducción y la palabra de origen</string>
   <string name="convert_fen_text_summ">Tablero de dibujo de notación de Forsyth-Edwards. La notación debe adjuntar etiquetas del [fen][/fen].</string>
-  <string name="enable_api_title">Enable AnkiDroid API</string>
+  <string name="enable_api_title">Habilitar API de AnkiDroid</string>
   <string name="enable_api_summary">Permitir que otras aplicaciones conecten a AnkiDroid y lean / escriban datos sin tu intervención</string>
   <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>
   <string name="deck_conf_deck_description">Descripción del mazo</string>

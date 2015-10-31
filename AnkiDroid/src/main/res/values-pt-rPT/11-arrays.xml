@@ -36,8 +36,8 @@
 -->
 <resources>
   <string-array name="error_reporting_choice_labels">
-    <item>Enviar relatório sempre</item>
-    <item>Nunca enviar relatório</item>
+    <item>Comunicar sempre</item>
+    <item>Nunca comunicar</item>
     <item>Perguntar-me</item>
   </string-array>
   <string-array name="gestures_labels">
@@ -49,7 +49,7 @@
     <item>Botão de resposta 4</item>
     <item>Resposta recomendada (verde)</item>
     <item>Resposta melhor que recomendada</item>
-    <item>Desfazer</item>
+    <item>Anular</item>
     <item>Editar nota</item>
     <item>Marcar nota</item>
     <item>Consultar expressão</item>
@@ -57,7 +57,7 @@
     <item>Suspender ficha</item>
     <item>Eliminar nota</item>
     <item>Reproduzir multimédia</item>
-    <item>Abortar a aprendizagem</item>
+    <item>Abortar aprendizagem</item>
     <item>Ocultar nota</item>
     <item>Suspender nota</item>
   </string-array>

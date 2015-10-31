@@ -66,7 +66,8 @@
   <string name="leech_notification">Markerat som utsugarkort</string>
   <string name="corrupt_font">Felaktig teckensnittsfil %s</string>
   <string-array name="browser_column1_headings">
-    <item>Sortera fält</item>
+    <item>Question</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Svar</item>

@@ -55,7 +55,7 @@
   <string name="filter_tags">Filtrar etiquetas</string>
   <string name="no_tags">No has añadido ninguna etiqueta aún.</string>
   <string name="sdcard_missing_message">Tarjeta SD no disponible debido a que está siendo utilizada como un dispositivo USB. Desconecte el USB para acceder a sus mazos.</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="updated_version">Actualizado a la versión %s</string>
   <string name="enable_whiteboard">Activar pizarra</string>
   <string name="disable_whiteboard">Desactivar pizarra</string>
   <string name="show_whiteboard">Mostrar pizarra</string>
@@ -66,7 +66,8 @@
   <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
   <string name="corrupt_font">Archivo de fuente corrupto %s</string>
   <string-array name="browser_column1_headings">
-    <item>Campo de ordenamiento</item>
+    <item>Pregunta</item>
+    <item>Ordenar campo</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Respuesta</item>
@@ -78,13 +79,13 @@
     <item>Intervalos</item>
     <item>Repasos</item>
   </string-array>
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
-  <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_increase_new_limit">Aumentar el límite de tarjetas nuevas para hoy</string>
+  <string name="custom_study_increase_review_limit">Aumentar el límite de repasos para hoy</string>
+  <string name="custom_study_review_forgotten">Revisar tarjetas olvidadas</string>
+  <string name="custom_study_review_ahead">Revisar por adelantado</string>
+  <string name="custom_study_random_selection">Estudiar una selección al azar de tarjetas</string>
+  <string name="custom_study_preview_new">Previsualizar tarjetas nuevas</string>
+  <string name="custom_study_limit_tags">Limitar a etiquetas particulares</string>
   <string name="cardeditor_title_add_note">Añadir nota</string>
   <string name="cardeditor_title_edit_card">Editar nota</string>
   <string name="discard_unsaved_changes">¿Cerrar y perder la entrada actual?</string>
@@ -159,7 +160,7 @@
   <string name="steps_error">Los pasos debe ser números mayores que 0</string>
   <string name="steps_min_error">Se requiere al menos un paso</string>
   <string name="sched_end">(fin)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
+  <string name="sched_unbury_action">Para verlos ahora pulsa \"Desenterrar\" en el menú.</string>
   <string name="sched_has_buried">Algunas tarjetas relacionadas o enterradas fueron postergadas para una sesión posterior.</string>
   <string name="tag_editor_add_feedback">Tocar \"%2$s\" para confirmar la adición de \"%1$s\"</string>
   <string name="tag_editor_add_feedback_existing">Etiqueta existente \"%1$s\" seleccionada</string>

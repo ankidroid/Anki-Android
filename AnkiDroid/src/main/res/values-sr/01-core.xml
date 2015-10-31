@@ -45,7 +45,7 @@
   <string name="settings">Поставке</string>
   <string name="help">Помоћ</string>
   <string name="send_feedback">Пошаљи повратне информације</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <string name="studyoptions_title">Преглед шпилова</string>
   <string name="studyoptions_due_today">За данас:</string>
   <string name="studyoptions_new_total">Укупно нових картица:</string>
   <string name="studyoptions_total_cards">Укупно картица:</string>
@@ -87,7 +87,7 @@
   <string name="rename_deck">Преименуј шпил</string>
   <string name="menu_add">Додај</string>
   <string name="menu_add_note">Додај белешку</string>
-  <string name="menu_my_account">Синхронизујте налог</string>
+  <string name="menu_my_account">Налог за синхронизацију</string>
   <string name="menu_dismiss_note">Сакриј / Избриши</string>
   <string name="menu_bury_card">Закопај картицу</string>
   <string name="menu_bury_note">Закопај белешку</string>
@@ -129,11 +129,11 @@
   <string name="sd_card_not_mounted">Уређај за чување није монтиран</string>
   <string name="button_sync">Синхронизујте</string>
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-  <string name="continue_sync">Continue sync</string>
+  <string name="continue_sync">Настави синхронизацију</string>
   <string name="sync_cancelled">Синхронизација отказана</string>
   <string name="export">Извози</string>
-  <string name="export_collection">Export collection</string>
-  <string name="export_deck">Export deck</string>
+  <string name="export_collection">Извози колекцију</string>
+  <string name="export_deck">Извози шпил</string>
   <string name="nothing">Ништа</string>
   <string name="title_activity_template_editor">Типови картица</string>
   <string name="card_template_editor_front">Предњи шаблон</string>
@@ -142,9 +142,9 @@
   <string name="card_template_editor_menu_delete">Избриши</string>
   <string name="card_template_editor_cant_delete">Потребан је бар један тип.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Да избришем тип карте \'%2$s\' и све %1$d његове карте?</item>
-    <item quantity="few">Delete the “%2$s” card type, and its %1$d cards?</item>
-    <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+    <item quantity="one">Да избришем тип картице \'%2$s\' и његову %1$d картицу?</item>
+    <item quantity="few">Да избришем тип картице \'%2$s\' и све %1$d његове картице?</item>
+    <item quantity="other">Да избришем тип картице \'%2$s\' и све %1$d његове картице?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Брисање тог типа карата довешће до брисања једног или неколико белешки. Направите прво нови тип карата.</string>
   <string name="read_write_permission_label">Читати и писати у бази података AnkiDroid</string>

@@ -45,15 +45,15 @@
   <string name="CardEditorLaterMessage">Сачувана информација за касније</string>
   <string name="CardEditorCardDeck">Шпил карата:</string>
   <string name="CardEditorNoteDeck">Шпил:</string>
-  <string name="CardEditorModel">Врста:</string>
+  <string name="CardEditorModel">Тип:</string>
   <string name="CardEditorTags">Ознаке: %1$s</string>
   <string name="CardEditorCards">Карте: %1$s</string>
-  <string name="tag_name">Tag name</string>
+  <string name="tag_name">Име ознаке</string>
   <string name="add_new_filter_tags">Додај/филтрирај ознаке</string>
-  <string name="add_tag">Add tag</string>
+  <string name="add_tag">Додај ознаку</string>
   <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">Филтрирај ознаке</string>
-  <string name="no_tags">You haven’t added any tags yet.</string>
+  <string name="no_tags">Још нисте додали никакве ознаке.</string>
   <string name="sdcard_missing_message">SD картица је недоступна јер се употребљава као USB. Искључите USB да бисте добили приступ шпиловима.</string>
   <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Омогући белу таблу</string>
@@ -66,7 +66,8 @@
   <string name="leech_notification">Картица је означена као пијавица</string>
   <string name="corrupt_font">Оштећена датотека фонта %s</string>
   <string-array name="browser_column1_headings">
-    <item>Поље за сортирање</item>
+    <item>Question</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Одговор</item>
@@ -78,13 +79,13 @@
     <item>Промашаји</item>
     <item>Понављања</item>
   </string-array>
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
+  <string name="custom_study_increase_new_limit">Увећај данашњи лимит нових картица</string>
+  <string name="custom_study_increase_review_limit">Увећај данашњи лимит прегледавања</string>
   <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
-  <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_review_ahead">Прегледај унапред</string>
+  <string name="custom_study_random_selection">Учи случајну групу картица</string>
+  <string name="custom_study_preview_new">Преглед нових картица</string>
+  <string name="custom_study_limit_tags">Постави ограничење по ознакама</string>
   <string name="cardeditor_title_add_note">Додај белешку</string>
   <string name="cardeditor_title_edit_card">Уреди белешку</string>
   <string name="discard_unsaved_changes">Да затворим и искористим текући унос?</string>
@@ -157,7 +158,7 @@
   <string name="upgrade_import_no_file_found">Пронађена је неувезена датотека %1$s</string>
   <string name="study_options">Опције шпила</string>
   <string name="custom_study">Прилагођено учење</string>
-  <string name="more_options">More</string>
+  <string name="more_options">Више</string>
   <string name="dyn_deck_desc">Ово су специјални шпилови за учење ван нормалног распореда. После прегледа, картице ће аутоматски бити враћене у њихов изворни шпил. Брисање овог шпила из списка шпилова, вратиће све остале карте у њихове изворне шпилове.</string>
   <string name="steps_error">Кораци треба да буду бројеви већи од 0</string>
   <string name="steps_min_error">Неопходан је бар један корак</string>
@@ -168,34 +169,34 @@
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">Након копирање текста, тапните било где на картице да прикажете иконицу за претраживање.</string>
   <plurals name="time_span_seconds">
-    <item quantity="one">%s second</item>
-    <item quantity="few">%s seconds</item>
-    <item quantity="other">%s seconds</item>
+    <item quantity="one">%s секунда</item>
+    <item quantity="few">%s секунде</item>
+    <item quantity="other">%s секунда</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="one">%s minute</item>
-    <item quantity="few">%s minutes</item>
-    <item quantity="other">%s minutes</item>
+    <item quantity="one">%s минут</item>
+    <item quantity="few">%s минута</item>
+    <item quantity="other">%s минута</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="one">%s hour</item>
-    <item quantity="few">%s hours</item>
-    <item quantity="other">%s hours</item>
+    <item quantity="one">%s сат</item>
+    <item quantity="few">%s сата</item>
+    <item quantity="other">%s сати</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="one">%s day</item>
-    <item quantity="few">%s days</item>
-    <item quantity="other">%s days</item>
+    <item quantity="one">%s дан</item>
+    <item quantity="few">%s дана</item>
+    <item quantity="other">%s дана</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="one">%s month</item>
-    <item quantity="few">%s months</item>
-    <item quantity="other">%s months</item>
+    <item quantity="one">%s месец</item>
+    <item quantity="few">%s месеца</item>
+    <item quantity="other">%s месеци</item>
   </plurals>
   <plurals name="time_span_years">
-    <item quantity="one">%s year</item>
-    <item quantity="few">%s years</item>
-    <item quantity="other">%s years</item>
+    <item quantity="one">%s година</item>
+    <item quantity="few">%s године</item>
+    <item quantity="other">%s година</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
 </resources>

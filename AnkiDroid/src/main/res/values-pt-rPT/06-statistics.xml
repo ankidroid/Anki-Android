@@ -91,11 +91,11 @@
   <string name="stats_answer_buttons">Botões de resposta</string>
   <string name="stats_cards_types">Tipos de fichas</string>
   <string-array name="stats_day_time_strings">
-    <item>4:00</item>
+    <item>04:00</item>
     <item>10:00</item>
     <item>16:00</item>
     <item>22:00</item>
-    <item>3:00</item>
+    <item>03:00</item>
   </string-array>
   <string-array name="stats_week_days">
     <item>Dom</item>

@@ -66,7 +66,8 @@
   <string name="leech_notification">Kart asalak olarak işaretlenmiş</string>
   <string name="corrupt_font">Bozuk yazı tipi dosyası %s</string>
   <string-array name="browser_column1_headings">
-    <item>Alanı sırala</item>
+    <item>Question</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Cevap</item>

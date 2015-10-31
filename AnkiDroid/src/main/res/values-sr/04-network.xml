@@ -71,8 +71,8 @@
   <string name="sync_conflict_message">Ваши шпилови овде и на AnkiWeb се разликују и не могу бити обједињени, јер је неопходно попуно презаписати један шпил другим.\n\nЖелите ли да учитате шпил одавде или да преузмете шпил са AnkiWeb овамо?</string>
   <string name="sync_conflict_local">Учитавање</string>
   <string name="sync_conflict_remote">Преузми</string>
-  <string name="sync_conflict_remote_confirm">Да ли заиста желите да преузмете колекцију са сервера? Имајте на уму да ће то довести до презаписивања локалне колекције.</string>
-  <string name="sync_conflict_local_confirm">Да ли заиста желите да учитате на сервер локалну колекцију? Имајте на умуз да ће то заменити вашу колекцију на серверу.</string>
+  <string name="sync_conflict_remote_confirm">Презапиши локалну колекцију?</string>
+  <string name="sync_conflict_local_confirm">Презапиши колекцију на серверу?</string>
   <string name="sync_prepare_syncing">Припрема синхронизације...</string>
   <string name="sync_preparing_full_sync_message">Pripremanje pune sinhronizacije...</string>
   <string name="sync_uploading_message">Слање података...</string>

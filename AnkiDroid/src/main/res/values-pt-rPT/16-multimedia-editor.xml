@@ -53,7 +53,7 @@
   <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
   <string name="multimedia_editor_imgs_saving_image">A guardar imagem</string>
   <string name="multimedia_editor_imgs_loading_image">A carregar imagem</string>
-  <string name="multimedia_editor_imgs_no_results">Procura não encontrou resultados</string>
+  <string name="multimedia_editor_imgs_no_results">A procura não encontrou resultados</string>
   <string name="multimedia_editor_imgs_images_found">Imagens encontradas</string>
   <string name="multimedia_editor_imgs_pow_by_google">Powered by Google Image Search</string>
   <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
@@ -83,13 +83,13 @@
   <string name="multimedia_editor_searching_word">A procurar a palavra</string>
   <string name="multimedia_editor_progress_wait_title">Aguarde</string>
   <string name="multimedia_editor_something_wrong">Algo correu mal</string>
-  <string name="multimedia_editor_attach_mm_content">Anexar conteúdo multimédia à nota</string>
+  <string name="multimedia_editor_attach_mm_content">Anexar conteúdo de multimédia à nota</string>
   <string name="multimedia_editor_attach_media">Anexar multimédia</string>
   <string name="multimedia_editor_audio_view_recording_failed">Falha na gravação</string>
   <string name="multimedia_editor_audio_view_playing_failed">Falha na reprodução</string>
   <string name="title_activity_edit_text">Campo de edição</string>
   <string name="title_activity_translation">Tradução</string>
-  <string name="title_activity_load_pronounciation">Pronúncia</string>
+  <string name="title_activity_load_pronounciation">Pronunciação</string>
   <string name="title_activity_search_image">Pesquisa de Imagens da Google</string>
-  <string name="network_no_connection">No connection.</string>
+  <string name="network_no_connection">Sem ligação.</string>
 </resources>

@@ -43,9 +43,9 @@
   <string name="drawer_open">打开侧栏</string>
   <string name="drawer_close">关闭侧栏</string>
   <string name="CardEditorLaterMessage">随后保存相关信息</string>
-  <string name="CardEditorCardDeck">牌组</string>
-  <string name="CardEditorNoteDeck">牌组</string>
-  <string name="CardEditorModel">笔记类型</string>
+  <string name="CardEditorCardDeck">牌组：</string>
+  <string name="CardEditorNoteDeck">牌组：</string>
+  <string name="CardEditorModel">类型：</string>
   <string name="CardEditorTags">标签：%1$s</string>
   <string name="CardEditorCards">卡片：%1$s</string>
   <string name="tag_name">标签</string>
@@ -58,7 +58,7 @@
   <string name="updated_version">更新到%s版本</string>
   <string name="enable_whiteboard">启用白板</string>
   <string name="disable_whiteboard">禁用白板</string>
-  <string name="show_whiteboard">显示计时器/白板</string>
+  <string name="show_whiteboard">显示白板</string>
   <string name="hide_whiteboard">隐藏白板</string>
   <string name="clear_whiteboard">清空白板</string>
   <string name="replay_audio">重新播放</string>
@@ -66,6 +66,7 @@
   <string name="leech_notification">卡片被标记为记忆难点</string>
   <string name="corrupt_font">字体文件 %s 已损坏</string>
   <string-array name="browser_column1_headings">
+    <item>问题</item>
     <item>字段</item>
   </string-array>
   <string-array name="browser_column2_headings">
@@ -125,7 +126,7 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">这是一张空白卡片。\n请在桌面客户端上运行”工具 &gt; 空卡片\"以删除。</string>
   <string name="unknown_type_field_warning">输入答案：未知字段 %s</string>
   <string name="delete_deck">删除牌组\n请稍等&#8230;&#8230;</string>
-  <string name="show_hint">显示 %s</string>
+  <string name="show_hint">显示%s</string>
   <string name="info_rate">给AnkiDroid评分</string>
   <string name="col_load_failed">集合加载失败\n按返回键关闭AnkiDroid。</string>
   <string name="import_title">导入卡片</string>

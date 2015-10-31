@@ -66,7 +66,8 @@
   <string name="leech_notification">Ficha marcada como sanguessuga</string>
   <string name="corrupt_font">Ficheiro de tipo de letra corrompido %s</string>
   <string-array name="browser_column1_headings">
-    <item>Ordenar campo</item>
+    <item>Question</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Resposta</item>
@@ -94,7 +95,7 @@
   <string name="add">Adicionar</string>
   <string name="close">Fechar</string>
   <string name="select">Selecionar</string>
-  <string name="saving_changes">A guardar as alterações&#8230;</string>
+  <string name="saving_changes">A guardar as  alterações...</string>
   <string name="reordering_cards">A reordenar fichas&#8230;</string>
   <string name="field_remapping">%1$s (de \"%2$s\")</string>
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
@@ -106,30 +107,30 @@
     <item quantity="one">%1$d minuto</item>
     <item quantity="other">%1$d minutos</item>
   </plurals>
-  <string name="studyoptions_welcome_title">Bem-vindo ao AnkiDroid</string>
+  <string name="studyoptions_welcome_title">Bem-vindo à AnkiDroid</string>
   <string name="fact_adder_intent_title">Ficha AnkiDroid</string>
   <string name="card_editor_add_card">Adicionar nota</string>
   <string name="card_editor_copy_card">Copiar ficha</string>
-  <string name="card_editor_reset_card">Redefinir progresso</string>
+  <string name="card_editor_reset_card">Reiniciar progresso</string>
   <string name="card_editor_reschedule_card">Reagendar ficha</string>
   <string name="card_editor_preview_card">Pré-visualizar</string>
-  <string name="error_insufficient_memory">Operação impossível devido a memória insuficiente no dispositivo</string>
+  <string name="error_insufficient_memory">Operação impossível devido a memória insuficiente no seu dispositivo</string>
   <string name="rename">Renomear</string>
   <string name="rename_error">Não foi possível renomear o baralho %s</string>
-  <string name="default_conf_delete_error">O grupo de opções padrão não pode ser removido</string>
+  <string name="default_conf_delete_error">O grupo de opções predefinido não pode ser removido</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d cartão adicionado</item>
-    <item quantity="other">%d cartões adicionados</item>
+    <item quantity="one">%d ficha adicionada</item>
+    <item quantity="other">%d fichas adicionadas</item>
   </plurals>
   <string name="help_title">Ajuda</string>
   <string name="check_db">Verificar base de dados</string>
   <string name="check_media">Verificar multimédia</string>
-  <string name="check_db_message">Verificando a base de dados.\nEspere um momento&#8230;</string>
+  <string name="check_db_message">A verificar a base de dados&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Ficha vazia. Execute \"Ferramentas&gt;Fichas Vazias...\" na aplicação para PC.</string>
   <string name="unknown_type_field_warning">Escreva a resposta: campo desconhecido %s</string>
   <string name="delete_deck">A eliminar o baralho&#8230;</string>
   <string name="show_hint">Mostrar %s</string>
-  <string name="info_rate">Avaliar o AnkiDroid</string>
+  <string name="info_rate">Classificar AnkiDroid</string>
   <string name="col_load_failed">Carregamento da coleção falhou. \nPrima Voltar para fechar o AnkiDroid.</string>
   <string name="import_title">Importar fichas</string>
   <string name="import_select_title">Escolha um ficheiro para importar</string>
@@ -141,12 +142,12 @@
   <string name="import_log_no_apkg">Este não é um ficheiro apkg válido</string>
   <string name="import_error_not_apkg_extension">O arquivo \"%s\" não tem a extensão .apkg</string>
   <string name="import_error_content_provider">Não foi possível importar automaticamente o ficheiro selecionado com AnkiDroid. Por favor, consulte o manual do utilizador para saber como importar manualmente os ficheiros anki: \n%s</string>
-  <string name="import_importing">A Importar fichas.\nPor favor aguarde&#8230;</string>
+  <string name="import_importing">A Importar as fichas.\nPor favor, aguarde&#8230;</string>
   <string name="export_include_schedule">Incluir agendamento</string>
   <string name="export_include_media">Incluir multimédia</string>
   <string name="confirm_apkg_export">Exportar coleção como ficheiro apkg?</string>
   <string name="confirm_apkg_export_deck">Exportar \"%s\" como ficheiro apkg?</string>
-  <string name="export_in_progress">Exportando ficheiro apkg&#8230;</string>
+  <string name="export_in_progress">A exportar o ficheiro apkg&#8230;</string>
   <string name="export_successful_title">Enviar ficheiro apkg por email?</string>
   <string name="export_successful">Ficheiro \"%s\" foi exportado. Deseja envia-lo por email?</string>
   <string name="export_unsuccessful">Erro ao exportar a coleção</string>
@@ -154,7 +155,7 @@
   <string name="upgrade_import_no_file_found">Não foi encontrado ficheiro %1$s para importar</string>
   <string name="study_options">Opções de baralho</string>
   <string name="custom_study">Estudo personalizado</string>
-  <string name="more_options">More</string>
+  <string name="more_options">Mais</string>
   <string name="dyn_deck_desc">Este é um baralho especial para estudar fora do horário normal. As fichas serão automaticamente devolvidas para os seus baralhos originais depois de os rever. Ao eliminar este baralho da lista de baralhos irá enviar devolver todas as fichas restantes para o seu baralho original.</string>
   <string name="steps_error">Número de passos deve ser maior que 0</string>
   <string name="steps_min_error">É necessário pelo menos um passo</string>

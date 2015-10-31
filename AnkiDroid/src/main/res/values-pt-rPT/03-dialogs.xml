@@ -40,7 +40,7 @@
 -->
 <resources>
   <string name="check_db_title">Verificar base de dados?</string>
-  <string name="check_db_warning">Isto poderá levar bastante tempo</string>
+  <string name="check_db_warning">Isto poderá demorar bastante tempo</string>
   <string name="check_db_acknowledge">Base de dados verificada</string>
   <string name="check_db_acknowledge_shrunk">Base de dados verificada e otimizada.\nComprimida em %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Eliminar baralho</string>
@@ -62,7 +62,7 @@
     <item><![CDATA[O AnkiDroid é publicado sob a <a href=\"%1$s\">licença GNU-GPL v3</a> e o código fonte está disponível no <a href=\"%2$s\">GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Pré-visualizar</string>
-  <string name="reset_card_dialog_title">Reinicializar o progresso da ficha</string>
+  <string name="reset_card_dialog_title">Reiniciar progresso da ficha</string>
   <string name="reset_card_dialog_message">Esta ficha será colocada no fim da fila de fichas novas.</string>
   <string name="reset_card_dialog_acknowledge">Ficha reinicializada</string>
   <string name="reschedule_card_dialog_title">Reagendar ficha</string>
@@ -70,12 +70,12 @@
   <string name="reschedule_card_dialog_acknowledge">Ficha reagendada</string>
   <string name="answering_error_title">Erro na base de dados</string>
   <string name="answering_error_message">Ocorreu um erro ao gravar na coleção. Tal poderá estar relacionado com uma base de dados corrompida ou espaço insuficiente no disco.\n\nSe isso acontecer mais frequentemente, tente verificar a base de dados, repare a coleção ou restaure-a de uma cópia de segurança. Para tal, carregue em \'Opções\'.\n\nEm todo caso, isso poderá até ser um bug do AnkiDroid; denuncie o erro para que o possamos verificar.</string>
-  <string name="answering_error_report">Denunciar erro</string>
+  <string name="answering_error_report">Comunicar erro</string>
   <string name="repair_deck_dialog">Realmente deseja tentar reparar a base de dados?\n\nAntes de iniciar a tentativa, será criada uma cópia na subpasta \'%s\'.</string>
   <string name="intent_add_saved_information">Dados guardados</string>
-  <string name="intent_add_clear_all">Apagar tudo</string>
-  <string name="intent_aedict_empty">Categoria \'padrão\' está vazia</string>
-  <string name="intent_aedict_category">Para adicionar fichas ao AnkiDroid remova todas as categorias de notas ou adicione uma com o nome \'default\'</string>
+  <string name="intent_add_clear_all">Limpar tudo</string>
+  <string name="intent_aedict_empty">A categoria \'predefinida\' está vazia</string>
+  <string name="intent_aedict_category">Para adicionar fichas na AnkiDroid remova todas as categorias de notas ou adicione uma com o nome \'predefinida\'</string>
   <string name="custom_study_new_total_new">Novas fichas no baralho: %s</string>
   <string name="custom_study_rev_total_rev">Revisões pendentes no baralho: %s</string>
   <string name="custom_study_new_extend">Aumentar o limite de fichas novas de hoje em</string>
@@ -95,7 +95,7 @@
   <string name="restore_backup_title">Restaurar cópia de segurança?</string>
   <string name="restore_backup">A sua coleção será substituída por uma cópia mais antiga. Qualquer progresso não guardado será perdido.</string>
   <string name="dialog_cancel">Cancelar</string>
-  <string name="dialog_ok">OK</string>
+  <string name="dialog_ok">ACEITAR</string>
   <string name="dialog_continue">Continuar</string>
   <string name="dialog_positive_create">Criar</string>
   <string name="dialog_positive_delete">Eliminar</string>
@@ -115,7 +115,7 @@
   <string name="check_media_failed">Verificação de multimédia falhou</string>
   <string name="check_media_invalid">Ficheiros com codificação inválida: %d</string>
   <string name="check_media_unused">Ficheiros na pasta de multimédia mas não utilizados por nenhuma ficha: %d</string>
-  <string name="check_media_nohave">Ficheiros usados em fichas mas não presentes na pasta de multimédia: %d</string>
+  <string name="check_media_nohave">Ficheiros usados nas fichas, mas não presentes na pasta de multimédia: %d</string>
   <string name="check_media_no_unused_missing">Nenhum ficheiro inútil ou em falta foi encontrado.</string>
   <string name="check_media_db_updated">Base de dados de multimédia reconstruída.</string>
   <string name="check_media_delete_unused">Eliminar inúteis</string>

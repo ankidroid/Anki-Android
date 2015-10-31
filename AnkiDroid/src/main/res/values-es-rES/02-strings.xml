@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="preference_summary_percentage">XXX %</string>
+  <string name="preference_summary_percentage">XXX%</string>
   <string name="drawer_open">Abrir cajón</string>
   <string name="drawer_close">Cerrar cajón</string>
   <string name="CardEditorLaterMessage">Información guardada para más tarde</string>
@@ -55,17 +55,18 @@
   <string name="filter_tags">Filtrar etiquetas</string>
   <string name="no_tags">Todavía no has añadido cualquier etiqueta.</string>
   <string name="sdcard_missing_message">La tarjeta SD no se encuentra disponible porque está siendo usada como almacenamiento via USB. Desconecta el USB para acceder a tus mazos.</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="updated_version">Actualizado a la versión %s</string>
   <string name="enable_whiteboard">Habilitar pizarra</string>
-  <string name="disable_whiteboard">Desactivar la pizarra</string>
+  <string name="disable_whiteboard">Deshabilitar la pizarra</string>
   <string name="show_whiteboard">Mostrar pizarra</string>
-  <string name="hide_whiteboard">Ocultar Pizarra</string>
-  <string name="clear_whiteboard">Limpiar Pizarra</string>
+  <string name="hide_whiteboard">Ocultar pizarra</string>
+  <string name="clear_whiteboard">Limpiar pizarra</string>
   <string name="replay_audio">Repetir audio</string>
   <string name="leech_suspend_notification">Tarjeta marcada como sanguijuela y suspendida</string>
   <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
-  <string name="corrupt_font">Archivo de fuentes corrupto %s</string>
+  <string name="corrupt_font">Archivo de fuentes %s corrupto</string>
   <string-array name="browser_column1_headings">
+    <item>Pregunta</item>
     <item>Ordenar campo</item>
   </string-array>
   <string-array name="browser_column2_headings">
@@ -78,15 +79,15 @@
     <item>Olvidos</item>
     <item>Repasos</item>
   </string-array>
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
-  <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
-  <string name="cardeditor_title_add_note">Añadir Nota</string>
-  <string name="cardeditor_title_edit_card">Editar Nota</string>
+  <string name="custom_study_increase_new_limit">Aumentar el límite de tarjetas nuevas para hoy</string>
+  <string name="custom_study_increase_review_limit">Aumentar el límite de repasos para hoy</string>
+  <string name="custom_study_review_forgotten">Repasar tarjetas olvidadas</string>
+  <string name="custom_study_review_ahead">Repasar con antelación</string>
+  <string name="custom_study_random_selection">Estudiar una selección aleatoria de tarjetas</string>
+  <string name="custom_study_preview_new">Previsualizar tarjetas nuevas</string>
+  <string name="custom_study_limit_tags">Limitar a etiquetas concretas</string>
+  <string name="cardeditor_title_add_note">Añadir nota</string>
+  <string name="cardeditor_title_edit_card">Editar nota</string>
   <string name="discard_unsaved_changes">¿Cerrar y perder la entrada de actual?</string>
   <string name="factadder_saving_error">Error al guardar la nota</string>
   <string name="saving_facts">Guardando nota</string>
@@ -94,9 +95,9 @@
   <string name="add">Añadir</string>
   <string name="close">Cerrar</string>
   <string name="select">Seleccionar</string>
-  <string name="saving_changes">Guardando cambios...</string>
+  <string name="saving_changes">Guardando cambios&#8230;</string>
   <string name="reordering_cards">Ordenando tarjetas...</string>
-  <string name="field_remapping">%1$s (de \'%2$s\')</string>
+  <string name="field_remapping">%1$s (de \"%2$s\")</string>
   <string name="confirm_map_cards_to_nothing">Se eliminará cualquier tarjeta no asignada a nada. Si una nota no tiene tarjetas restantes, se perderá. ¿Estás seguro de que desea continuar?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d tarjeta estudiada en %2$s</item>
@@ -115,7 +116,7 @@
   <string name="card_editor_preview_card">Vista previa</string>
   <string name="error_insufficient_memory">La operación no es posible debido a insuficiencia de memoria en tu dispositivo</string>
   <string name="rename">Renombrar</string>
-  <string name="rename_error">El mazo %s no pudo ser renombrado</string>
+  <string name="rename_error">El mazo \"%s\" no pudo ser renombrado</string>
   <string name="default_conf_delete_error">El grupo de opciones por defecto no se puede eliminar</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">Se ha añadido %d tarjeta</item>
@@ -124,10 +125,10 @@
   <string name="help_title">Ayuda</string>
   <string name="check_db">Comprobar base de datos</string>
   <string name="check_media">Comprobar medio</string>
-  <string name="check_db_message">Comprobando base de datos.\nPor favor, espera...</string>
+  <string name="check_db_message">Comprobando base de datos&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tarjeta vacía. Ejecute \"Herramientas&gt;Tarjetas vacías...\" en el cliente de escritorio.</string>
   <string name="unknown_type_field_warning">Escribir respuesta: campo %s desconocido</string>
-  <string name="delete_deck">Eliminando mazo...\nPor favor, espera.</string>
+  <string name="delete_deck">Eliminando mazo&#8230;</string>
   <string name="show_hint">Mostrar %s</string>
   <string name="info_rate">Puntúa AnkiDroid</string>
   <string name="col_load_failed">Error al cargar la colección.\nPulsa el botón volver para cerrar AnkiDroid.</string>
@@ -159,7 +160,7 @@
   <string name="steps_error">Pasos tiene que ser un número mayor que 0</string>
   <string name="steps_min_error">Se requiere al menos un paso</string>
   <string name="sched_end">(fin)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
+  <string name="sched_unbury_action">Para verlos ahora pulsa \"Desenterrar\" en el menú.</string>
   <string name="sched_has_buried">Algunas tarjetas relacionadas o enterradas fueron postergadas para una sesión posterior.</string>
   <string name="tag_editor_add_feedback">Tocar \"%2$s\" para confirmar la adición de \"%1$s\"</string>
   <string name="tag_editor_add_feedback_existing">Etiqueta existente \"%1$s\" seleccionada</string>

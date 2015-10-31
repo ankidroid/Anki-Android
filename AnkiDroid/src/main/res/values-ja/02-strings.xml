@@ -66,6 +66,7 @@
   <string name="leech_notification">このカードに \"leech\" （無駄）というタグを付けました</string>
   <string name="corrupt_font">使用できないフォントファイル %s</string>
   <string-array name="browser_column1_headings">
+    <item>質問</item>
     <item>ソートフィールド</item>
   </string-array>
   <string-array name="browser_column2_headings">

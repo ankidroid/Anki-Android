@@ -66,7 +66,8 @@
   <string name="leech_notification">Karta byla označena jako pijavice</string>
   <string name="corrupt_font">Poškozený soubor písma %s</string>
   <string-array name="browser_column1_headings">
-    <item>Pole pro třídění</item>
+    <item>Question</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Odpověď</item>

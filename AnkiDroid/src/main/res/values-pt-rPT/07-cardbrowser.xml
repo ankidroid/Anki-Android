@@ -49,7 +49,7 @@
   <string name="card_browser_unsuspend_card">Cancelar suspensão</string>
   <string name="card_browser_mark_card">Marcar nota</string>
   <string name="card_browser_unmark_card">Desmarcar nota</string>
-  <string name="delete_card_title">Eliminar a nota?</string>
+  <string name="delete_card_title">Eliminar nota?</string>
   <string name="delete_card_message">Deseja realmente eliminar todas as fichas desta nota? \nCampo de pesquisa: %s</string>
   <string name="card_browser_show_marked">Filtro marcado</string>
   <string name="card_browser_show_suspended">Filtro suspenso</string>
@@ -63,7 +63,7 @@
   <string name="card_browser_list_my_searches_new_search_error_dup">Nome já existe</string>
   <string name="card_browser_list_my_searches_remove_content">Eliminar \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Alterar a ordem de exibição</string>
-  <string name="card_browser_change_display_order_title">Escolha a ordem de exibição</string>
+  <string name="card_browser_change_display_order_title">Escolher a ordem de exibição</string>
   <string name="card_browser_change_display_order_reverse">Selecione um campo duas vezes para inverter a ordem</string>
   <string name="card_details_question">Pergunta</string>
   <string name="card_details_answer">Resposta</string>

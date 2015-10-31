@@ -66,6 +66,7 @@
   <string name="leech_notification">Κάρτα σημαδεμένη ως βδέλλα</string>
   <string name="corrupt_font">Κατεστραμμένο αρχείο γραμματοσειράς %s</string>
   <string-array name="browser_column1_headings">
+    <item>Question</item>
     <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
