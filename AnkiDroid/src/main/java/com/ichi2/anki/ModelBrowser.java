@@ -334,12 +334,14 @@ public class ModelBrowser extends AnkiActivity {
 
         final int numStdModels = mNewModelLabels.size();
 
-        for (JSONObject model : mModels) {
-            try {
-                mNewModelLabels.add(String.format(clone, model.getString("name")));
-                mNewModelNames.add(model.getString("name"));
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+        if (mModels != null) {
+            for (JSONObject model : mModels) {
+                try {
+                    mNewModelLabels.add(String.format(clone, model.getString("name")));
+                    mNewModelNames.add(model.getString("name"));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
 
