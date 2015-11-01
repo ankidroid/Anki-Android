@@ -7,12 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Pair;
 
-
-import com.ichi2.libanki.Utils;
-import com.ichi2.widget.DeckStatus;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

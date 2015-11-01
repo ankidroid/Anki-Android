@@ -79,7 +79,7 @@ public final class WidgetStatus {
     private static class UpdateDeckStatusAsyncTask extends BaseAsyncTask<Context, Void, Context> {
 
         // due, eta
-        private static Pair<Integer, Integer> mSmallWidgetStatus;
+        private static Pair<Integer, Integer> sSmallWidgetStatus = new Pair<>(0, 0);
 
         @Override
         protected Context doInBackground(Context... params) {
@@ -89,7 +89,11 @@ public final class WidgetStatus {
             if (!AnkiDroidApp.isSdCardMounted()) {
                 return context;
             }
-            mSmallWidgetStatus = getCounts(context);
+            try {
+                updateCounts(context);
+            } catch (Exception e) {
+                Timber.e(e, "Could not update widget");
+            }
             return context;
         }
 
@@ -98,7 +102,7 @@ public final class WidgetStatus {
         protected void onPostExecute(Context context) {
             super.onPostExecute(context);
             Timber.d("WidgetStatus.UpdateDeckStatusAsyncTask.onPostExecute()");
-            MetaDB.storeSmallWidgetStatus(context, mSmallWidgetStatus);
+            MetaDB.storeSmallWidgetStatus(context, sSmallWidgetStatus);
             if (sSmallWidgetEnabled) {
                 Intent intent;
                 intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);
@@ -110,24 +114,24 @@ public final class WidgetStatus {
                 context.startService(intent);
             }
         }
-    }
 
 
-    private static Pair<Integer, Integer> getCounts(Context context) {
-        int[] total = {0, 0, 0};
-        Collection col = CollectionHelper.getInstance().getCol(context);
-        // Ensure queues are reset if we cross over to the next day.
-        col.getSched()._checkDay();
+        private void updateCounts(Context context) {
+            int[] total = {0, 0, 0};
+            Collection col = CollectionHelper.getInstance().getCol(context);
+            // Ensure queues are reset if we cross over to the next day.
+            col.getSched()._checkDay();
 
-        // Only count the top-level decks in the total
-        List<Sched.DeckDueTreeNode> nodes = col.getSched().deckDueTree();
-        for (Sched.DeckDueTreeNode node : nodes) {
-            total[0] += node.newCount;
-            total[1] += node.lrnCount;
-            total[2] += node.revCount;
+            // Only count the top-level decks in the total
+            List<Sched.DeckDueTreeNode> nodes = col.getSched().deckDueTree();
+            for (Sched.DeckDueTreeNode node : nodes) {
+                total[0] += node.newCount;
+                total[1] += node.lrnCount;
+                total[2] += node.revCount;
+            }
+            int due = total[0] + total[1] + total[2];
+            int eta = col.getSched().eta(total, false);
+            sSmallWidgetStatus = new Pair<>(due, eta);
         }
-        int due = total[0] + total[1] + total[2];
-        int eta = col.getSched().eta(total, false);
-        return new Pair<>(due, eta);
     }
 }
