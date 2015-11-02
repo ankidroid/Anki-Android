@@ -40,44 +40,44 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">%d cartón amosado</item>
+    <item quantity="other">%d cartóns amosados</item>
   </plurals>
   <string name="card_browser_all_decks">Todas as barallas</string>
   <string name="card_browser_delete_card">Eliminar notación</string>
   <string name="card_browser_suspend_card">Suspender cartón</string>
   <string name="card_browser_unsuspend_card">Reactivar o cartón</string>
-  <string name="card_browser_mark_card">Mark note</string>
-  <string name="card_browser_unmark_card">Unmark note</string>
-  <string name="delete_card_title">Delete note?</string>
-  <string name="delete_card_message">Delete all cards of this note?\nSearch field: %s</string>
+  <string name="card_browser_mark_card">Marcar notación</string>
+  <string name="card_browser_unmark_card">Desmarcar notación</string>
+  <string name="delete_card_title">Eliminar notación?</string>
+  <string name="delete_card_message">Eliminar todos os cartóns desta notación?\nCampo de busca: %s</string>
   <string name="card_browser_show_marked">Filter marked</string>
   <string name="card_browser_show_suspended">Filter suspended</string>
-  <string name="card_browser_search_by_tag">Filter by tag</string>
-  <string name="card_browser_tags_shown">Tags: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
+  <string name="card_browser_search_by_tag">Filtrar por etiqueta</string>
+  <string name="card_browser_tags_shown">Etiquetas: %1$s</string>
+  <string name="card_browser_list_my_searches">As miñas buscas</string>
+  <string name="card_browser_list_my_searches_save">Gardar a busca</string>
+  <string name="card_browser_list_my_searches_title">Seleccionar unha busca gardada</string>
+  <string name="card_browser_list_my_searches_new_name">Nome para a busca actual</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">Non podes gardar unha busca se lle poñer un nome</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">O nome xa existe</string>
+  <string name="card_browser_list_my_searches_remove_content">Eliminar “%1$s”?</string>
   <string name="card_browser_change_display_order">Change display order</string>
   <string name="card_browser_change_display_order_title">Choose display order</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
-  <string name="card_details_question">Question</string>
-  <string name="card_details_answer">Answer</string>
+  <string name="card_browser_change_display_order_reverse">Selecciona un campo dúas veces para reservalo</string>
+  <string name="card_details_question">Pregunta</string>
+  <string name="card_details_answer">Resposta</string>
   <string name="card_details_due">Due</string>
-  <string name="card_details_tags">Tags</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
+  <string name="card_details_tags">Etiquetas</string>
+  <string name="card_browser_filtering_cards">Filtrando os cartóns...\nPreme o botón volver para cancelar</string>
   <string-array name="card_browser_order_labels">
     <item>No sorting (faster)</item>
     <item>By sort field</item>
-    <item>By created time</item>
+    <item>Por data de creación</item>
     <item>By edited time</item>
     <item>By changed time</item>
     <item>By due time</item>
-    <item>By interval</item>
+    <item>Por intervalo</item>
     <item>By ease</item>
     <item>By reviews</item>
     <item>By lapses</item>

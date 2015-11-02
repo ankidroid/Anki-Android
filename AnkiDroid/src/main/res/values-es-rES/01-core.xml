@@ -61,8 +61,8 @@
     <item quantity="other">%d minutos restantes</item>
   </plurals>
   <plurals name="studied_cards_today">
-    <item quantity="one">%1$d tarjeta estudiada en %2$s hoy</item>
-    <item quantity="other">%1$d tarjetas estudiadas en %2$s hoy</item>
+    <item quantity="one">Has estudiado %1$d tarjeta en %2$s hoy</item>
+    <item quantity="other">Has estudiado %1$d tarjetas en %2$s hoy</item>
   </plurals>
   <string name="type_answer_hint">Escribir respuesta</string>
   <string name="show_answer">Mostrar respuesta</string>

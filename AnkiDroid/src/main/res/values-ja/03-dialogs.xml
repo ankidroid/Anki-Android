@@ -43,7 +43,7 @@
   <string name="check_db_warning">これには長い時間がかかることがあります。</string>
   <string name="check_db_acknowledge">データベースのチェックが完了しました</string>
   <string name="check_db_acknowledge_shrunk">データベースがチェックされ、最適化されました。\n 最適化後 %d kB.</string>
-  <string name="contextmenu_deckpicker_delete_deck">デッキを削除</string>
+  <string name="contextmenu_deckpicker_delete_deck">このデッキを削除</string>
   <string name="delete_deck_default_deck">デフォルト デッキは削除できません</string>
   <string name="delete_deck_title">デッキを削除しますか？</string>
   <plurals name="delete_deck_message">

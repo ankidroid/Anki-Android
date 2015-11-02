@@ -66,8 +66,8 @@
   <string name="leech_notification">Carta contrassegnata come sanguisuga</string>
   <string name="corrupt_font">File dei caratteri corrotto %s</string>
   <string-array name="browser_column1_headings">
-    <item>Question</item>
-    <item>Sort field</item>
+    <item>Domanda</item>
+    <item>Ordina per</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Risposta</item>

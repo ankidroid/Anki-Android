@@ -55,7 +55,7 @@
   <string name="initializing_tts">Inicializando TTS&#8230;</string>
   <string name="tts_no_tts">No hablar</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Tarjetas para Android</h2>AnkiDroid es una aplicación de tarjetas totalmente compatible con <a href=\"%2$s\">Anki</a>, el software de escritorio. Se puede crear, descargar y aprender material tanto en AnkiDroid como en Anki de escritorio, y sincronizarlo fácilmente con AnkiWeb.]]></item>
     <item><![CDATA[Para ayudarnos a mejorar la AnkiDroid, por favor informe los errores por <a href=\"%1$s\">el issue tracker</a>; nuevas ideas son muy agradadecidas también. Encuentre las respuestas en <a href=\"%2$s\"> la wiki</a> o inicie una discusión en <a href=\"%3$s\">el foro</a>.]]></item>
     <item><![CDATA[AnkiDroid es <a href=\"%1$s\">software libre<a/>, por lo que todo el mundo se anima a <a href=\"%2$s\"> ser un colaborador</a> :-)]]></item>
     <item><![CDATA[No-desarrolladores también pueden ayudar. Por ejemplo, puedes <a href=\"%1$s\">ayudar a traducir</a> AnkiDroid, actualizar el wiki, proveer capturas de pantalla, <a href=\"%2$s\">donar</a> a Anki Desktop o bloguear acerca de AnkiDroid.]]></item>

@@ -56,7 +56,7 @@
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="other">%d minutes left</item>
+    <item quantity="other">還有%d分鐘</item>
   </plurals>
   <plurals name="studied_cards_today">
     <item quantity="other">Studied %1$d cards in %2$s today</item>
@@ -98,12 +98,12 @@
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="night_mode">夜間模式</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
-  <string name="time_quantity_seconds">%d s</string>
-  <string name="time_quantity_minutes">%d min</string>
-  <string name="time_quantity_hours">%d h</string>
-  <string name="time_quantity_days">%d d</string>
-  <string name="time_quantity_months">%.1f mo</string>
-  <string name="time_quantity_years">%.1f yr</string>
+  <string name="time_quantity_seconds">%d秒</string>
+  <string name="time_quantity_minutes">%d分鐘</string>
+  <string name="time_quantity_hours">%d個小時</string>
+  <string name="time_quantity_days">%d天</string>
+  <string name="time_quantity_months">%.1f個月</string>
+  <string name="time_quantity_years">%.1f年</string>
   <string name="later">晚點</string>
   <string name="rebuild_cram_deck">正在重建填鴨式牌組。\n請稍後...</string>
   <string name="rebuild_cram_label">重建</string>
@@ -124,7 +124,7 @@
   <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">同步</string>
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-  <string name="continue_sync">Continue sync</string>
+  <string name="continue_sync">繼續同步</string>
   <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Export</string>
   <string name="export_collection">Export collection</string>

@@ -41,46 +41,46 @@
 <resources>
   <plurals name="card_browser_subtitle">
     <item quantity="one">%d card shown</item>
-    <item quantity="few">%d cards shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="few">%d zobrazené karty</item>
+    <item quantity="other">%d zobrazených kariet</item>
   </plurals>
   <string name="card_browser_all_decks">Všetky balíčky</string>
-  <string name="card_browser_delete_card">Odstrániť poznámku</string>
-  <string name="card_browser_suspend_card">Dať kartu bokom</string>
-  <string name="card_browser_unsuspend_card">Vrátiť kartu medzi ostatné</string>
+  <string name="card_browser_delete_card">Vymazať poznámku</string>
+  <string name="card_browser_suspend_card">Pozastaviť kartu</string>
+  <string name="card_browser_unsuspend_card">Vypnúť pozastavenie karty</string>
   <string name="card_browser_mark_card">Označiť poznámku</string>
-  <string name="card_browser_unmark_card">Zrušiť označenie poznámky</string>
-  <string name="delete_card_title">Vymazať poznámku</string>
+  <string name="card_browser_unmark_card">Odznačiť poznámku</string>
+  <string name="delete_card_title">Vymazať poznámku?</string>
   <string name="delete_card_message">Skutočne chcete vymazať všetky karty tejto poznámky?\nPole vyhľadávania: %s</string>
   <string name="card_browser_show_marked">Filtrovať označené</string>
-  <string name="card_browser_show_suspended">Filtrovať odložené bokom</string>
+  <string name="card_browser_show_suspended">Filtrovať pozastavené</string>
   <string name="card_browser_search_by_tag">Filtrovať podľa štítku</string>
   <string name="card_browser_tags_shown">Štítky: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
+  <string name="card_browser_list_my_searches">Moje vyhľadávania</string>
+  <string name="card_browser_list_my_searches_save">Uložiť vyhľadávanie</string>
+  <string name="card_browser_list_my_searches_title">Vybrať uložené vyhľadávanie</string>
+  <string name="card_browser_list_my_searches_new_name">Názov aktuálneho hľadania</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">Nemôžete uložiť vyhľadávanie bez názvu</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Názov existuje</string>
+  <string name="card_browser_list_my_searches_remove_content">Vymazať “%1$s”?</string>
   <string name="card_browser_change_display_order">Zmeniť poradie zobrazenia</string>
   <string name="card_browser_change_display_order_title">Zvoliť poradie zobrazenia</string>
   <string name="card_browser_change_display_order_reverse">Pre prevrátenie vyberte pole dvakrát.</string>
   <string name="card_details_question">Otázka</string>
   <string name="card_details_answer">Odpoveď</string>
-  <string name="card_details_due">Na skúšanie</string>
+  <string name="card_details_due">Na preskúšanie</string>
   <string name="card_details_tags">Štítky</string>
   <string name="card_browser_filtering_cards">Filtrujem karty&#8230;\nPre zrušenie stlačte tlačidlo Späť</string>
   <string-array name="card_browser_order_labels">
-    <item>Bez zoraďovania (rýchlejšie)</item>
-    <item>By sort field</item>
+    <item>Bez triedenia (rýchlejšie)</item>
+    <item>Podľa druhu poľa</item>
     <item>Podľa času vytvorenia</item>
     <item>Podľa času úpravy</item>
     <item>Podľa času zmeny</item>
-    <item>Podľa času skúšania</item>
+    <item>Podľa času preskúšania</item>
     <item>Podľa intervalu</item>
     <item>Podľa jednoduchosti</item>
     <item>Podľa opakovaní</item>
-    <item>Podľa zabudnutí</item>
+    <item>Podľa pochybení</item>
   </string-array>
 </resources>

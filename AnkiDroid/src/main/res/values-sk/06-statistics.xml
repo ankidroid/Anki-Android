@@ -41,70 +41,70 @@
 <resources>
   <string name="statistics_young">Mladé</string>
   <string name="statistics_mature">Zrelé</string>
-  <string name="statistics_young_and_learn">Young and learn</string>
-  <string name="statistics_unlearned">Unseen</string>
-  <string name="statistics_suspended">Suspended</string>
+  <string name="statistics_young_and_learn">Mladé a novonaučené</string>
+  <string name="statistics_unlearned">Neučené</string>
+  <string name="statistics_suspended">Pozastavené</string>
   <string name="statistics_relearn">Zabudnuté</string>
   <string name="statistics_learn">Učené</string>
-  <string name="statistics_cram">Drvené</string>
+  <string name="statistics_cram">Nabiflené</string>
   <string name="stats_cards">Karty</string>
-  <string name="stats_cards_intervals">Cards with given interval</string>
-  <string name="stats_cumulative_cards">Cumulative cards</string>
-  <string name="stats_cumulative_answers">Cumulative answers</string>
-  <string name="stats_cumulative_time_minutes">Cumulative minutes</string>
-  <string name="stats_cumulative_time_hours">Cumulative hours</string>
-  <string name="stats_cumulative">Cumulative</string>
-  <string name="stats_cumulative_percentage">Cumulative percentage</string>
-  <string formatted="false" name="stats_cumulative_correct_percentage">Cumulative correct %</string>
+  <string name="stats_cards_intervals">Karty s intervalom</string>
+  <string name="stats_cumulative_cards">Kumulované karty</string>
+  <string name="stats_cumulative_answers">Kumulované odpovede</string>
+  <string name="stats_cumulative_time_minutes">Kumulované minúty</string>
+  <string name="stats_cumulative_time_hours">Kumulované hodiny</string>
+  <string name="stats_cumulative">Kumulatívne</string>
+  <string name="stats_cumulative_percentage">Kumulované percentá</string>
+  <string formatted="false" name="stats_cumulative_correct_percentage">% kumulatívne správnych</string>
   <string name="stats_answers">Odpovede</string>
   <string name="stats_minutes">Minút</string>
   <string name="stats_hours">Hodín</string>
-  <string name="stats_percentage">Percentage</string>
-  <string name="stats_period_month">1 month</string>
-  <string name="stats_period_year">1 year</string>
-  <string name="stats_period_lifetime">deck life</string>
-  <string name="stats_deck_collection">collection</string>
-  <string name="stats_time_of_day">Time of day</string>
-  <string name="stats_day_of_week">Day of week</string>
-  <string formatted="false" name="stats_percentage_correct">% correct</string>
-  <string name="stats_reviews">Reviews</string>
-  <string name="stats_answer_type">Answer type</string>
-  <string name="stats_today_again_count">Again count: &lt;b&gt;%d&lt;/b&gt;</string>
-  <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correct)</string>
-  <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, review: &lt;b&gt;%2$s&lt;/b&gt;, relearn: &lt;b&gt;%3$s&lt;/b&gt;, filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
-  <string name="stats_today_mature_cards">Correct answers on mature cards: %1$d/%2$d (%3$.1f%%)</string>
-  <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
+  <string name="stats_percentage">Percentá</string>
+  <string name="stats_period_month">1 mesiac</string>
+  <string name="stats_period_year">1 rok</string>
+  <string name="stats_period_lifetime">celý čas balíčka</string>
+  <string name="stats_deck_collection">zbierka</string>
+  <string name="stats_time_of_day">Hodina dňa</string>
+  <string name="stats_day_of_week">Deň v týždni</string>
+  <string formatted="false" name="stats_percentage_correct">% správnych</string>
+  <string name="stats_reviews">Opakovania</string>
+  <string name="stats_answer_type">Typ odpovede</string>
+  <string name="stats_today_again_count">Počet znovu: &lt;b&gt;%d&lt;/b&gt;</string>
+  <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; správne)</string>
+  <string name="stats_today_type_breakdown">Novonaučených: &lt;b&gt;%1$s&lt;/b&gt;, Zopakovaných: &lt;b&gt;%2$s&lt;/b&gt;, Znovunaučených: &lt;b&gt;%3$s&lt;/b&gt;, Filtrovaných: &lt;b&gt;%4$s&lt;/b&gt;</string>
+  <string name="stats_today_mature_cards">Správne odpovede pri zrelých kartách: %1$d/%2$d (%3$.1f%%)</string>
+  <string name="stats_today_no_mature_cards">Dnes ste neštudovali žiadne zrelé karty.</string>
   <string name="deck_summary_all_decks">Všetky balíčky</string>
-  <string name="stats_select_time_scale">Select timescale</string>
+  <string name="stats_select_time_scale">Zvoliť časové rozhranie</string>
   <string-array name="due_x_axis_title">
     <item>Dni</item>
     <item>Týždne</item>
     <item>Mesiace</item>
   </string-array>
-  <string name="stats_today">Today</string>
+  <string name="stats_today">Dnes</string>
   <string name="stats_forecast">Predpoveď</string>
   <string name="stats_review_count">Počet opakovaní</string>
   <string name="stats_review_time">Čas na opakovanie</string>
-  <string name="stats_review_intervals">Intervals</string>
-  <string name="stats_breakdown">Hourly breakdown</string>
-  <string name="stats_weekly_breakdown">Weekly breakdown</string>
-  <string name="stats_answer_buttons">Answer buttons</string>
-  <string name="stats_cards_types">Cards types</string>
+  <string name="stats_review_intervals">Intervaly</string>
+  <string name="stats_breakdown">Hodinový prehľad</string>
+  <string name="stats_weekly_breakdown">Týždenný prehľad</string>
+  <string name="stats_answer_buttons">Tlačidlá s odpoveďami</string>
+  <string name="stats_cards_types">Typy kariet</string>
   <string-array name="stats_day_time_strings">
-    <item>4AM</item>
-    <item>10AM</item>
-    <item>4PM</item>
-    <item>10PM</item>
-    <item>3AM</item>
+    <item>4:00</item>
+    <item>10:00</item>
+    <item>16:00</item>
+    <item>22:00</item>
+    <item>3:00</item>
   </string-array>
   <string-array name="stats_week_days">
-    <item>Sun</item>
-    <item>Mon</item>
-    <item>Tue</item>
-    <item>Wed</item>
-    <item>Thu</item>
-    <item>Fri</item>
-    <item>Sat</item>
+    <item>Ned</item>
+    <item>Pon</item>
+    <item>Ut</item>
+    <item>Str</item>
+    <item>Štv</item>
+    <item>Pia</item>
+    <item>Sob</item>
   </string-array>
   <string-array name="stats_eases_ticks">
     <item>1</item>
@@ -120,8 +120,8 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-    <item quantity="few">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-    <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
+    <item quantity="one">Dnes preštudovaná &lt;b&gt;%1$d card&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;.</item>
+    <item quantity="few">Dnes preštudované &lt;b&gt;%1$d card&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;.</item>
+    <item quantity="other">Dnes preštudovaných &lt;b&gt;%1$d card&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;.</item>
   </plurals>
 </resources>

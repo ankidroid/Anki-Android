@@ -39,28 +39,28 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_deck_no_space_left">Posledné zálohovanie bolo neúspešné kvôli nedostatku miesta na vašej sd karte.\n\nUvoľnite nejaké miesto alebo zmenšite veľkosť zálohy.</string>
+  <string name="backup_deck_no_space_left">Posledná záloha bola neúspešná v dôsledku nedostatku miesta na SD karte. Odstráňte nejaké nepotrebné súbory alebo znížte počet záloh AnkiDroid.</string>
   <string name="sd_space_warning">Na SD karte je menej než %d MB miesta. \nUvoľnite prosím miesto, predídete tým prípadnej strate dát.</string>
-  <string name="backup_delete">Odstraňujem zálohy.\nProsím počkajte...</string>
+  <string name="backup_delete">Zálohy sa vymazujú&#8230;</string>
   <string name="backup_restore">Obnoviť zo zálohy</string>
   <string name="backup_new_collection">Nová zbierka</string>
   <string name="backup_del_collection">Odstrániť zbierku a vytvoriť novú</string>
-  <string name="backup_del_collection_question">Skutočne chcete odstrániť zbierku a vytvoriť novú? Týmto zrušíte celé učenie a vymažete všetky karty!</string>
-  <string name="backup_full_sync_from_server">Úplná synchronizácia so serverom</string>
-  <string name="backup_full_sync_from_server_question">Skutočne chcete prepísať vašu zbierku tou z AnkiWeb? Prídete tak o všetky zmeny a informácie pridané od poslednej synchronizácie!</string>
+  <string name="backup_del_collection_question">Skutočne chcete odstrániť zbierku a vytvoriť novú? Týmto zrušíte celý proces učenia a vymažete všetky karty.</string>
+  <string name="backup_full_sync_from_server">Úplná synchronizácia zo serveru</string>
+  <string name="backup_full_sync_from_server_question">Skutočne chcete prepísať vašu zbierku tou z AnkiWeb? Prídete tak o všetky zmeny a informácie zaznamenané od poslednej synchronizácie.</string>
   <string name="error_handling_title">Chyba pri spracovaní</string>
   <string name="error_handling_options">Možnosti</string>
-  <string name="backup_retry_opening">Znova skúsiť otvoriť</string>
+  <string name="backup_retry_opening">Skúsiť otvoriť znova</string>
   <string name="backup_error_menu_repair">Opraviť databázu</string>
   <string name="backup_repair_deck">Opraviť</string>
-  <string name="backup_repair_deck_progress">Opravujem databázu.\nProsím počkajte...</string>
+  <string name="backup_repair_deck_progress">Databáza sa opravuje&#8230;</string>
   <string name="backup_error">Chyba</string>
-  <string name="backup_invalid_file_error">Vybratý záložný súbor je neplatný</string>
-  <string name="backup_restore_select_title">Výber zálohy na obnovenie</string>
-  <string name="backup_restore_no_backups">Na tomto zariadení nie sú dostupné žiadne zálohy pre túto zbierku. Ak máte zálohy vo vašom počítači, skopírujte ich prosím ručne do vášho AnkiDroid priečinka</string>
-  <string name="open_collection_failed_title">Zbierka nebola otvorená</string>
-  <string name="open_collection_failed_message">Database couldn’t be opened. It’s either not a real Anki database or has been corrupted.\n\nTouch “options” for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
-  <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
-  <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
-  <string name="deck_repair_error">Zbierku sa nepodarilo opraviť</string>
+  <string name="backup_invalid_file_error">Zvolený súbor zálohy je neplatný</string>
+  <string name="backup_restore_select_title">Zvoľte zálohu pre obnovu</string>
+  <string name="backup_restore_no_backups">Na tomto zariadení nie sú k dispozícii žiadne zálohy. Ak máte zálohy na svojom počítači, skopírujte ich manuálne do priečinku AnkiDroid.</string>
+  <string name="open_collection_failed_title">Zbierka neotvorená</string>
+  <string name="open_collection_failed_message">Databázu nebolo možné otvoriť. Buď nejde o databázu Anki alebo je databáza poškodená.\n\nŤuknite na “Možnosti” pre obnovenie databázy. Ďalšie informácie o oprave poškodených zbierok:\n%1$s</string>
+  <string name="corrupt_db_message">Vaša zbierka bola poškodená.\n\nŤuknite na “Možnosti” pre obnovenie zo zálohy. Ak to nepomôže, postupujte podľa nasledovných pokynov pre manuálnu opravu databázy:\n%1$s</string>
+  <string name="access_collection_failed_message">Počas prístupu k vašej zbierke sa vyskytla chyba. Mohlo to byť spôsobené chybou v aplikácii, alebo ide o problém s vašou kolekciou. \n\nPokúste sa spustiť kontrolu databázy alebo obnovu zo zálohy ťuknutím na tlačítko “Možnosti”. V prípade, že sa táto správa objaví znova, zašlite nám, prosím, správu:\n%1$s</string>
+  <string name="deck_repair_error">Zbierka nebolo možné opraviť</string>
 </resources>

@@ -67,7 +67,7 @@
   <string name="corrupt_font">Archivo de fuentes %s corrupto</string>
   <string-array name="browser_column1_headings">
     <item>Pregunta</item>
-    <item>Ordenar campo</item>
+    <item>Campo de clasificación</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Respuesta</item>
@@ -96,7 +96,7 @@
   <string name="close">Cerrar</string>
   <string name="select">Seleccionar</string>
   <string name="saving_changes">Guardando cambios&#8230;</string>
-  <string name="reordering_cards">Ordenando tarjetas...</string>
+  <string name="reordering_cards">Reorganizando tarjetas&#8230;</string>
   <string name="field_remapping">%1$s (de \"%2$s\")</string>
   <string name="confirm_map_cards_to_nothing">Se eliminará cualquier tarjeta no asignada a nada. Si una nota no tiene tarjetas restantes, se perderá. ¿Estás seguro de que desea continuar?</string>
   <plurals name="timebox_reached">
