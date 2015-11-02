@@ -425,7 +425,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     break;
                 case "dayOffset": {
                     int hours = ((SeekBarPreference) pref).getValue();
-                    Calendar date = new GregorianCalendar();
+                    Timestamp crtTime = new Timestamp(mCol.getCrt() * 1000);
+                    Calendar date = GregorianCalendar.getInstance();
+                    date.setTimeInMillis(crtTime.getTime());
                     date.set(Calendar.HOUR_OF_DAY, hours);
                     mCol.setCrt(date.getTimeInMillis() / 1000);
                     mCol.setMod();
