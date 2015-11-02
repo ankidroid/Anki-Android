@@ -3,6 +3,9 @@ package com.ichi2.compat;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.View;
@@ -30,4 +33,29 @@ public class CompatV11 extends CompatV10 implements Compat {
         activity.finishWithoutAnimation();
     }
 
+    @Override
+    public void enableDatabaseWriteAheadLogging(SQLiteDatabase db) {
+        db.enableWriteAheadLogging();
+    }
+
+    @Override
+    public void disableDatabaseWriteAheadLogging(SQLiteDatabase db) {
+        // disableWriteAheadLogging() method only available from API 16
+        db.rawQuery("PRAGMA journal_mode = DELETE", null);
+    }
+
+    public boolean isWriteAheadLoggingEnabled(SQLiteDatabase db) {
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("pragma journal_mode", null);
+            if (!cursor.moveToNext()) {
+                throw new SQLException("No result for query: pragma journal_mode");
+            }
+            return cursor.getString(0).toLowerCase().equals("wal");
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
 }
