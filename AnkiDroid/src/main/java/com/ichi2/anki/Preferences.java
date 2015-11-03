@@ -93,7 +93,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
     /** Key of the language preference */
     public static final String LANGUAGE = "language";
-    private Collection mCol;
 
     // Other variables
     private final HashMap<String, String> mOriginalSumarries = new HashMap<>();
@@ -111,7 +110,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         Themes.setThemeLegacy(this);
 
         super.onCreate(savedInstanceState);
-        mCol = CollectionHelper.getInstance().getCol(this);
 
         // Legacy code using intents instead of PreferenceFragments
         String action = getIntent().getAction();
@@ -129,6 +127,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         // Add a home button to the actionbar
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private Collection getCol() {
+        return CollectionHelper.getInstance().getCol(this);
     }
 
 
@@ -268,14 +270,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 Preference fullSyncPreference = screen.findPreference("force_full_sync");
                 fullSyncPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                     public boolean onPreferenceClick(Preference preference) {
-                        if (mCol != null && mCol.getDb() != null) {
-                            // TODO: Could be useful to show the full confirmation dialog
-                            mCol.modSchemaNoCheck();
-                            mCol.setMod();
-                            Toast.makeText(getApplicationContext(), android.R.string.ok, Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getApplicationContext(), R.string.vague_error, Toast.LENGTH_SHORT).show();
-                        }
+                        // TODO: Could be useful to show the full confirmation dialog
+                        getCol().modSchemaNoCheck();
+                        getCol().setMod();
+                        Toast.makeText(getApplicationContext(), android.R.string.ok, Toast.LENGTH_SHORT).show();
                         return true;
                     }
                 });
@@ -316,9 +314,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     private void initPreference(Preference pref) {
         // Load stored values from Preferences which are stored in the Collection
         if (Arrays.asList(sCollectionPreferences).contains(pref.getKey())) {
-            if (mCol != null) {
+            Collection col = getCol();
+            if (col != null) {
                 try {
-                    JSONObject conf = mCol.getConf();
+                    JSONObject conf = col.getConf();
                     switch (pref.getKey()) {
                         case "showEstimates":
                             ((CheckBoxPreference)pref).setChecked(conf.getBoolean("estTimes"));
@@ -340,7 +339,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             break;
                         case "dayOffset":
                             Calendar calendar = new GregorianCalendar();
-                            Timestamp timestamp = new Timestamp(mCol.getCrt() * 1000);
+                            Timestamp timestamp = new Timestamp(col.getCrt() * 1000);
                             calendar.setTimeInMillis(timestamp.getTime());
                             ((SeekBarPreference)pref).setValue(calendar.get(Calendar.HOUR_OF_DAY));
                             break;
@@ -400,37 +399,37 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     }
                     break;
                 case "showProgress":
-                    mCol.getConf().put("dueCounts", ((CheckBoxPreference) pref).isChecked());
-                    mCol.setMod();
+                    getCol().getConf().put("dueCounts", ((CheckBoxPreference) pref).isChecked());
+                    getCol().setMod();
                     break;
                 case "showEstimates":
-                    mCol.getConf().put("estTimes", ((CheckBoxPreference) pref).isChecked());
-                    mCol.setMod();
+                    getCol().getConf().put("estTimes", ((CheckBoxPreference) pref).isChecked());
+                    getCol().setMod();
                     break;
                 case "newSpread":
-                    mCol.getConf().put("newSpread", Integer.parseInt(((ListPreference) pref).getValue()));
-                    mCol.setMod();
+                    getCol().getConf().put("newSpread", Integer.parseInt(((ListPreference) pref).getValue()));
+                    getCol().setMod();
                     break;
                 case "timeLimit":
-                    mCol.getConf().put("timeLim", ((NumberRangePreference) pref).getValue() * 60);
-                    mCol.setMod();
+                    getCol().getConf().put("timeLim", ((NumberRangePreference) pref).getValue() * 60);
+                    getCol().setMod();
                     break;
                 case "learnCutoff":
-                    mCol.getConf().put("collapseTime", ((NumberRangePreference) pref).getValue() * 60);
-                    mCol.setMod();
+                    getCol().getConf().put("collapseTime", ((NumberRangePreference) pref).getValue() * 60);
+                    getCol().setMod();
                     break;
                 case "useCurrent":
-                    mCol.getConf().put("addToCur", ((ListPreference) pref).getValue().equals("0"));
-                    mCol.setMod();
+                    getCol().getConf().put("addToCur", ((ListPreference) pref).getValue().equals("0"));
+                    getCol().setMod();
                     break;
                 case "dayOffset": {
                     int hours = ((SeekBarPreference) pref).getValue();
-                    Timestamp crtTime = new Timestamp(mCol.getCrt() * 1000);
+                    Timestamp crtTime = new Timestamp(getCol().getCrt() * 1000);
                     Calendar date = GregorianCalendar.getInstance();
                     date.setTimeInMillis(crtTime.getTime());
                     date.set(Calendar.HOUR_OF_DAY, hours);
-                    mCol.setCrt(date.getTimeInMillis() / 1000);
-                    mCol.setMod();
+                    getCol().setCrt(date.getTimeInMillis() / 1000);
+                    getCol().setMod();
                     break;
                 }
                 case "minimumCardsDueForNotification": {
@@ -471,6 +470,13 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     }
                     pm.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP);
                     break;
+                }
+                case "enableWal": {
+                    if (((CheckBoxPreference) pref).isChecked()) {
+                        CompatHelper.getCompat().enableDatabaseWriteAheadLogging(getCol().getDb().getDatabase());
+                    } else {
+                        CompatHelper.getCompat().disableDatabaseWriteAheadLogging(getCol().getDb().getDatabase());
+                    }
                 }
             }
             // Update the summary text to reflect new value
@@ -663,8 +669,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     private void closePreferences() {
         finish();
         ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
-        if (mCol != null && mCol.getDb()!= null) {
-            mCol.save();
+        if (getCol() != null && getCol().getDb()!= null) {
+            getCol().save();
         }
     }
 

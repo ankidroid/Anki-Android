@@ -69,8 +69,14 @@ public class AnkiDb {
                             | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
         }
 
-        if (mDatabase != null) {
-            setWalJournalMode();
+        if (mDatabase != null && AnkiDroidApp.getInstance() != null) {
+            if (AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).getBoolean("enableWal", false)) {
+                // Compat class internally prevents WAL from getting used before API 11
+                CompatHelper.getCompat().enableDatabaseWriteAheadLogging(mDatabase);
+            } else if (CompatHelper.getCompat().isWriteAheadLoggingEnabled(mDatabase)) {
+                // Disable WAL if it's been disabled in settings but currently enabled
+                CompatHelper.getCompat().disableDatabaseWriteAheadLogging(mDatabase);
+            }
             mDatabase.rawQuery("PRAGMA synchronous = 2", null);
         }
         // getDatabase().beginTransactionNonExclusive();
@@ -95,7 +101,9 @@ public class AnkiDb {
     public void closeDatabase() {
         if (mDatabase != null) {
             // set journal mode again to delete in order to make the db accessible for anki desktop and for full upload
-            setDeleteJournalMode();
+            if (CompatHelper.getCompat().isWriteAheadLoggingEnabled(mDatabase)) {
+                disableWriteAheadLogging();
+            }
             mDatabase.close();
             Timber.d("closeDatabase, database %s closed = %s", mDatabase.getPath(), !mDatabase.isOpen());
             mDatabase = null;
@@ -352,31 +360,7 @@ public class AnkiDb {
 
 
     /**
-     * Anki desktop only uses a journal_mode of DELETE. We therefore set this before database closure to ensure
-     * compatibility. This allows full upload to AnkiWeb and manual collection migration, but has no bearing on partial
-     * progress syncs.
-     */
-    protected void setDeleteJournalMode() {
-        disableWriteAheadLogging();
-        queryString("PRAGMA journal_mode = DELETE");
-    }
-
-
-    /** to be called for each database upon opening */
-    private void setWalJournalMode() {
-        if (CompatHelper.isHoneycomb()) {
-            queryString("PRAGMA journal_mode = WAL");
-        } else {
-            setDeleteJournalMode();
-        }
-    }
-
-
-    /**
-     * Attempts to disable write ahead logging using a method on the {@link SQLiteDatabase} object.
-     * <p>
-     * The method might not exist (it is only included in API level 16) but we attempt anyway since it is part of
-     * present in a number of implementations.
+     * Ensures no transactions are in progress and disables write ahead logging with SDK dependent implementation
      */
     private void disableWriteAheadLogging() {
         SQLiteDatabase db = getDatabase();

@@ -40,6 +40,11 @@
                 android:title="@string/pref_backup_max"
                 app:interval="1"
                 app:min="0" />
+            <CheckBoxPreference
+                android:key="enableWal"
+                android:defaultValue="false"
+                android:summary="@string/wal_enable_summ"
+                android:title="@string/wal_enable" />
         </PreferenceCategory>
         <PreferenceCategory
             android:key="category_workarounds"
