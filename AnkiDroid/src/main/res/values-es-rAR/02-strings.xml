@@ -43,7 +43,7 @@
   <string name="drawer_open">Abrir cajón</string>
   <string name="drawer_close">Cerrar cajón</string>
   <string name="CardEditorLaterMessage">Información guardada para más tarde</string>
-  <string name="CardEditorCardDeck">Mazo de tarjeta:</string>
+  <string name="CardEditorCardDeck">Mazo de tarjetas:</string>
   <string name="CardEditorNoteDeck">Mazo:</string>
   <string name="CardEditorModel">Tipo:</string>
   <string name="CardEditorTags">Etiquetas: %1$s</string>
@@ -67,7 +67,7 @@
   <string name="corrupt_font">Archivo de fuente corrupto %s</string>
   <string-array name="browser_column1_headings">
     <item>Pregunta</item>
-    <item>Campo de clasificación</item>
+    <item>Campo de ordenamiento</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Respuesta</item>

@@ -59,11 +59,11 @@
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">zostáva %d minúta</item>
-    <item quantity="few">zostáva %d minúty</item>
+    <item quantity="few">zostávajú %d minúty</item>
     <item quantity="other">zostáva %d minút</item>
   </plurals>
   <plurals name="studied_cards_today">
-    <item quantity="one">Dnes naučená %1$d kartu počas %2$s</item>
+    <item quantity="one">Dnes naučená %1$d karta počas %2$s</item>
     <item quantity="few">Dnes naučené %1$d karty počas %2$s</item>
     <item quantity="other">Dnes naučených %1$d kariet počas %2$s</item>
   </plurals>
@@ -71,7 +71,7 @@
   <string name="show_answer">Zobraziť odpoveď</string>
   <string name="ease_button_again">Znovu</string>
   <string name="ease_button_hard">Ťažké</string>
-  <string name="ease_button_good">Normálne</string>
+  <string name="ease_button_good">Dobré</string>
   <string name="ease_button_easy">Ľahké</string>
   <string name="studyoptions_congrats_undo">Späť %s</string>
   <string name="menu_import">Import</string>
@@ -91,8 +91,8 @@
   <string name="menu_dismiss_note">Skryt / vymazať</string>
   <string name="menu_bury_card">Zahrabať kartu</string>
   <string name="menu_bury_note">Zahrabať poznámku</string>
-  <string name="menu_suspend_card">Dať kartu bokom</string>
-  <string name="menu_suspend_note">Dať poznámku bokom</string>
+  <string name="menu_suspend_card">Pozastaviť kartu</string>
+  <string name="menu_suspend_note">Pozastaviť poznámku</string>
   <string name="menu_delete_note">Odstrániť poznámku</string>
   <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej karty?\n%s</string>
   <string name="menu_select">Zvoliť text</string>
@@ -113,7 +113,7 @@
   <string name="later">Neskôr</string>
   <string name="rebuild_cram_deck">Obnovujem balíček na drvenie sa.\nProsím počkajte...</string>
   <string name="rebuild_cram_label">Znovu zostaviť</string>
-  <string name="empty_cram_label">Prázdne</string>
+  <string name="empty_cram_label">Vyprázdniť</string>
   <string name="empty_cram_deck">Vyprázdňujem balíček na drvenie sa.\nProsím počkajte...</string>
   <string name="custom_study_deck_name">Vlastné štúdium</string>
   <string name="custom_study_deck_exists">Prosím premenujte najprv existujúci balíček Vlastné štúdium.</string>
@@ -123,7 +123,7 @@
   <string name="studyoptions_empty_schedule">Na dnes nie sú naplánované žiadne karty na učenie</string>
   <string name="studyoptions_congrats_finished">Blahoželáme! Na teraz ste tento balíček dokončili.</string>
   <string name="studyoptions_congrats_more_rev">Bol dosiahnutý denný limit, ale stále zostávajú nejaké karty na opakovanie. Pre optimálne zapamätanie zvážte zvýšenie tohto limitu v nastaveniach.</string>
-  <string name="studyoptions_congrats_more_new">Dostupné sú aj ďalšie nové karty, ale bol dosiahnutý denný limit.  Môžete ho zvýšiť v nastaveniach, ale prosím majte na pamäti, že tým sa v najbližšej dobe zvýši aj počet kariet na opakovanie.</string>
+  <string name="studyoptions_congrats_more_new">Bol dosiahnutý denný limit. Dostupné sú aj ďalšie nové karty; v nastaveniach môžete zvýšiť svoj denný limit, no bude to mať za následok zvýšenie počtu kariet na opakovanie.</string>
   <string name="studyoptions_congrats_custom">Ak chcete študovať mimo bežný plán, kliknite na tlačidlo Vlastné štúdium nižšie.</string>
   <string name="studyoptions_no_cards_due">Ešte nie sú žiadne karty na preskúšanie.</string>
   <string name="sd_card_not_mounted">Ukladacie zariadenie nepripojené</string>
