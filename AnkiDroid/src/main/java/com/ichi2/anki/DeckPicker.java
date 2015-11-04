@@ -1470,7 +1470,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 updateDeckList();
                 WidgetStatus.update(DeckPicker.this);
                 if (mFragmented) {
-                    loadStudyOptionsFragment(false);
+                    try {
+                        loadStudyOptionsFragment(false);
+                    } catch (IllegalStateException e) {
+                        // Activity was stopped or destroyed when the sync finished. Losing the
+                        // fragment here is fine since we build a fresh fragment on resume anyway.
+                        Timber.w(e, "Failed to load StudyOptionsFragment after sync.");
+                    }
                 }
             }
 
@@ -1582,9 +1588,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsFragment details = StudyOptionsFragment.newInstance(withDeckOptions);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.studyoptions_fragment, details);
-        // Commit allowing state loss in case the fragment tries to update while the activity is paused
-        // (e.g., after sync). Losing state here is fine since we build a fresh fragment on resume anyway.
-        ft.commitAllowingStateLoss();
+        ft.commit();
     }
 
 
