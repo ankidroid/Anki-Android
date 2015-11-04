@@ -89,7 +89,7 @@
   <string name="menu_bury_card">Enterrar ficha</string>
   <string name="menu_bury_note">Enterrar Nota</string>
   <string name="menu_suspend_card">Suspender ficha</string>
-  <string name="menu_suspend_note">Suspender Nota</string>
+  <string name="menu_suspend_note">Suspender nota</string>
   <string name="menu_delete_note">Eliminar nota</string>
   <string name="delete_note_message">Deseja realmente eliminar esta nota e todas as suas fichas?\n%s</string>
   <string name="menu_select">Selecionar texto</string>
@@ -116,8 +116,8 @@
   <string name="custom_study_deck_exists">Renomear primeiro o baralho de estudo personalizado existente</string>
   <string name="empty_deck">Este baralho está vazio</string>
   <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-  <string name="studyoptions_limit_reached">Daily study limit reached</string>
-  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+  <string name="studyoptions_limit_reached">Limite diário de estudo atingido</string>
+  <string name="studyoptions_empty_schedule">Sem fichas agendadas para estudar</string>
   <string name="studyoptions_congrats_finished">Parabéns! Terminou por agora.</string>
   <string name="studyoptions_congrats_more_rev">O limite diário foi atingido, mas ainda existem fichas à espera para serem revistas. Pode aumentar o limite nas opções.</string>
   <string name="studyoptions_congrats_more_new">O limite diário foi atingido. Estão disponíveis mais fichas novas; pode aumentar o limite nas opções, mas isto irá aumentar a sua carga de memorização a curto prazo.</string>
@@ -125,16 +125,16 @@
   <string name="studyoptions_no_cards_due">Nenhuma ficha a fazer por enquanto.</string>
   <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
   <string name="button_sync">Sincronizar</string>
-  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+  <string name="cancel_sync_confirm">Deseja cancelar a sincronização?</string>
   <string name="continue_sync">Continuar sincronização</string>
   <string name="sync_cancelled">Sincronização cancelada</string>
   <string name="export">Exportar</string>
   <string name="export_collection">Exportar coleção</string>
   <string name="export_deck">Exportar baralho</string>
   <string name="nothing">Nada</string>
-  <string name="title_activity_template_editor">Card types</string>
-  <string name="card_template_editor_front">Modelo da Frente</string>
-  <string name="card_template_editor_back">Modelo de Trás</string>
+  <string name="title_activity_template_editor">Tipos de ficha</string>
+  <string name="card_template_editor_front">Modelo da frente</string>
+  <string name="card_template_editor_back">Modelo de trás</string>
   <string name="card_template_editor_styling">Estilo</string>
   <string name="card_template_editor_menu_delete">Eliminar</string>
   <string name="card_template_editor_cant_delete">Pelo menos um tipo de ficha é necessário.</string>
@@ -142,7 +142,7 @@
     <item quantity="one">Remover o tipo de ficha “%2$s” e a sua %1$d ficha?</item>
     <item quantity="other">Remover o tipo de ficha “%2$s” e as suas %1$d fichas?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note">Remover este tipo de ficha resultaria na remoção de uma ou mais notas. Por favor, crie primeiro um novo tipo de ficha.</string>
+  <string name="card_template_editor_would_delete_note">Ao remover este tipo de ficha resultará na eliminação de uma ou mais notas. Por favor, crie primeiro um novo tipo de ficha.</string>
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
   <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
         models, and decks, as well as create new ones.</string>

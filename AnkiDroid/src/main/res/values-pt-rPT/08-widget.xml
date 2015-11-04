@@ -40,7 +40,7 @@
 -->
 <resources>
   <string name="widget_minimum_cards_due_notification_ticker_title">Fichas agendadas</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d fichas pendentes no AnkiDroid</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d fichas pendentes na AnkiDroid</string>
   <string name="widget_no_cards_due">Sem fichas pendentes</string>
   <string name="widget_loading">A carregar widget&#8230;</string>
   <plurals name="widget_cards_in_decks_due">

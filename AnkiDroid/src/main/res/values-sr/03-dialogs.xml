@@ -56,11 +56,11 @@
   <string name="initializing_tts">Иницијализација синтезе говора&#8230;</string>
   <string name="tts_no_tts">Не изговарај</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
-    <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
-    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, <a href=\"%2$s\">donate</a> to Anki Desktop, or blog about AnkiDroid.]]></item>
-    <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Kартице за учење за Android</h2>AnkiDroid је програм који користи картице за учење и добро ради са десктоп верзијом <a href=\"%2$s\">Anki</a>. Можете да правите, преузимате и проучавате информације и у AnkiDroid и у Anki Desktop, синхронизујући их међусобно.]]></item>
+    <item><![CDATA[Како би нам помогли да AnkiDroid буде бољи, молимо вас да пријавите грешке на <a href=\"%1$s\"> базу грешака</a>; Идеје за нове функционалности су добродошле. Пронађите одговор на <a href=\"%2$s\"> wiki</a> или започните дискусију на <a href=\"%3$s\">форуму</a>.]]></item>
+    <item><![CDATA[AnkiDroid je <a href=\"%1$s\"> open source software<a/>, тако да су сви позвани да <a href=\"%2$s\"> допринесу развоју</a> :-)]]></item>
+    <item><![CDATA[И они који нису програмери могу да помогну. На пример, можете да <a href=\"%1$s\">помогнете превођење</a> AnkiDroid, допуните wiki страницу, направите снимке апликације, <a href=\"%2$s\">донирате</a> за Anki Desktop, или пишете на блогу о AnkiDroid.]]></item>
+    <item><![CDATA[AnkiDroid је објављен под <a href=\"%1$s\">GNU-GPL v3 лиценцом</a> и изворни код је доступан <a href=\"%2$s\">овде</a>.]]></item>
   </string-array>
   <string name="preview_title">Преглед</string>
   <string name="reset_card_dialog_title">Ресетовање прогреса учења карте</string>
@@ -123,5 +123,5 @@
   <string name="check_media_deleted">Датотеке избрисане: %d</string>
   <string name="tags_dialog_option_all_cards">Све картице</string>
   <string name="tags_dialog_option_new_cards">Нове</string>
-  <string name="tags_dialog_option_due_cards">Due</string>
+  <string name="tags_dialog_option_due_cards">Рок</string>
 </resources>

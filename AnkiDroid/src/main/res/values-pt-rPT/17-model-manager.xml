@@ -47,13 +47,13 @@
   <string name="model_field_editor_delete">Eliminar campo</string>
   <string name="model_field_editor_options">Opções do campo</string>
   <string name="model_field_editor_rename">Renomear campo</string>
-  <string name="model_field_editor_reposition_menu">Reposition field</string>
+  <string name="model_field_editor_reposition_menu">Campo de reposição</string>
   <string name="model_field_editor_reposition" formatted="false">Reposition field (enter a value %1$d–%2$d)</string>
   <string name="model_field_editor_changing">A atualizar os campos</string>
   <string name="model_field_editor_sort_field">Ordenar por este campo</string>
   <string name="model_clone_suffix">copiar</string>
   <string name="model_delete_warning">Tem a certeza que pretende eliminar este modelo?</string>
-  <string name="field_delete_warning">Are you sure you wish to delete this field?</string>
+  <string name="field_delete_warning">Tem a certeza que pretende eliminar este campo?</string>
   <string name="model_browser_add_add">Adicionar: %1$s </string>
   <string name="model_browser_add_clone">Clonar: %1$s </string>
 </resources>
