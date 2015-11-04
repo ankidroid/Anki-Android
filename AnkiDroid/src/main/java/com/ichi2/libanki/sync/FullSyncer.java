@@ -29,7 +29,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.VersionUtils;
 
-import cz.msebera.android.httpclient.HttpResponse;
+import org.apache.http.HttpResponse;
 
 import java.io.File;
 import java.io.FileInputStream;

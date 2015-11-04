@@ -30,7 +30,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.ConvUtils;
 
-import cz.msebera.android.httpclient.HttpResponse;
+import org.apache.http.HttpResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

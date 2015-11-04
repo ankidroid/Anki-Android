@@ -21,14 +21,14 @@ package com.ichi2.anki.web;
 
 import android.content.Context;
 
-import cz.msebera.android.httpclient.HttpResponse;
-import cz.msebera.android.httpclient.client.HttpClient;
-import cz.msebera.android.httpclient.client.methods.HttpGet;
-import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
-import cz.msebera.android.httpclient.params.HttpConnectionParams;
-import cz.msebera.android.httpclient.params.HttpParams;
-import cz.msebera.android.httpclient.protocol.BasicHttpContext;
-import cz.msebera.android.httpclient.protocol.HttpContext;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
 
 import java.io.BufferedReader;
 import java.io.File;
