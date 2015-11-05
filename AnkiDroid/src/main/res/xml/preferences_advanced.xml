@@ -26,6 +26,11 @@
     android:title="@string/pref_cat_advanced"
     android:summary="@string/pref_cat_advanced_summ"
     android:key="pref_screen_advanced">
+        <EditTextPreference
+            android:defaultValue="/sdcard/AnkiDroid"
+            android:key="deckPath"
+            android:summary="@string/preference_summary_literal"
+            android:title="@string/col_path" />
         <Preference
             android:key="force_full_sync"
             android:title="@string/force_full_sync_title"
