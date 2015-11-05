@@ -78,7 +78,7 @@ startActivity(intent);
 ```
 
 # Sync Intent
-AnkiDroid v2.5 supports background syncing via an experimental intent which can be sent from [Tasker](http://tasker.dinglisch.net/):
+AnkiDroid v2.5 supports background syncing via an experimental intent which can be sent from [Tasker](http://tasker.dinglisch.net/). Note: a "server is busy" error will be shown if you try to sync more often than once every 5 minutes.
 
 ```
 Sync Intent [ 
@@ -92,3 +92,5 @@ Sync Intent [
  Class: 
  Target:Service ]
 ```
+
+As an example, if you import [this XML file](https://raw.githubusercontent.com/ankidroid/apisample/master/AnkiDroid_Sync.prf.xml) into a Tasker profile, it will trigger AnkiDroid to sync when the power is plugged in. See the [Tasker FAQ](http://tasker.dinglisch.net/userguide/en/faqs/faq-how.html#q) for instructions on how to import profiles.
