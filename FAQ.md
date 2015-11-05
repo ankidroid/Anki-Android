@@ -71,34 +71,29 @@ See the [AnkiDroid user manual](http://ankidroid.org/manual.html#typeInAnswer)
 
 
 ## My AnkiDroid files are stored on a SD card, how can I point AnkiDroid to them?
-If you have your AnkiDroid folder stored on an external SD card, you must specify the path to that folder in !Ankidroid. To do so, go to menu > preferences > General > Collection path, and enter the the exact path, including any capital letters because AnkiDroid collection path is case sensitive on some devices.
-
-For example: /storage/extSdCard/AnkiDroid or /mnt/extSdCard/AnkiDroid
-
-Your path maybe different depending on the phone model and ROM; to find the correct collection path, use a file explorer app and write down the path. If you entered the wrong path or case, you must reinstall AnkiDroid again and try again.
+External SD cards are not officially supported by AnkiDroid, and we highly recommend using the storage built into your device. If you really must use an external SD card, please see [this issue on github](https://github.com/ankidroid/Anki-Android/issues/3106).
 
 ## How do I make changes to my collection with Anki Desktop?
 See the [AnkiDroid user manual](http://ankidroid.org/manual.html#AnkiDesktop)
+
+## How can I remove unwanted tags from AnkiDroid?
+You can remove tags that are not currently in use by any card by running "check collection" from the overflow menu in the AnkiDroid deck list. If you want to remove tags that are used by some cards, you'll need to remove the tags from those cards before running check collection. See [this forum thread](https://groups.google.com/d/topic/anki-android/Kuu2UFnKZNQ/discussion) for more information on doing that.
 
 ## I cannot change preferences / they get reset after some time
 
 This is an Android problem and AnkiDroid needs to be reset. Go to system preferences --> applications --> manager applications --> AnkiDroid and choose "delete data".
 
-## How can I hide the "default deck"?
-It's currently not possible to hide the default deck in AnkiDroid, this will hopefully be fixed in a future version.
-
 ## How to use different Anki profiles
-If several people use the same device, they can use a different Anki profile, by installing parallel versions of AnkiDroid besides the normal AnkiDroid and setting a different collection path. Parallel versions of AnkiDroid can be found here: https://github.com/trashcutter/Anki-Android/releases The settings, sync account, and decks will be kept separate. Each AnkiDroid will have its own icon.
+If several people use the same device, they can use a different Anki profile, by installing parallel versions of AnkiDroid besides the normal AnkiDroid and setting a different collection path. Parallel versions of AnkiDroid can be found here (note: this is no longer maintained): https://github.com/trashcutter/Anki-Android/releases The settings, sync account, and decks will be kept separate.
 
 To use 2 profiles, install the normal AnkiDroid AND flavor1. To use 3 profiles, install the normal AnkiDroid AND flavor1 AND flavor2. Etc.
 
-## When I open AnkiDroid it gets stuck on the "opening collection" screen.
-Please make sure you have the latest version of AnkiDroid installed as this bug shouldn't occur anymore. However if the problem does occur, it can usually be solved by simply pressing the hardware back button to close AnkiDroid, and then when you restart AnkiDroid it should start correctly.
+You can build your own parallel versions of AnkiDroid by following the [instructions in the Development Wiki](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#making-parallel-builds)
 
 ## Lost my decks
 It appears like your decks have disappeared? Don't burn your phone yet: AnkiDroid does regular backups, so you will probably be able to recover your decks. See the [backups section of the manual](http://ankidroid.org/docs/manual.html#backups) for more info.
-## Help! My collection is corrupted!
 
+## Help! My collection is corrupted!
 Corruption happens mostly when users copy the main collection.anki2 file while it is still opened. AnkiDroid has a backup system which saves your collection file every day into the subfolder "backup". If your collection becomes corrupted, you can always [restore from one of the these backups](FAQ#lost-my-decks).
 
 Also see the main Anki documentation for more info: http://ankisrs.net/docs/manual.html#_corrupt_collections
