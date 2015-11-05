@@ -61,6 +61,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     private JSONObject mDeck;
     private Collection mCol;
     private boolean mAllowCommit = true;
+    private boolean mPrefChanged = false;
 
     private BroadcastReceiver mUnmountReceiver = null;
 
@@ -402,7 +403,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                closeDeckOptions();
                 return true;
         }
         return false;
@@ -413,6 +414,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         // update values on changed preference
         this.updateSummaries();
+        mPrefChanged = true;
     }
 
 
@@ -420,11 +422,19 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Timber.i("DeckOptions - onBackPressed()");
-            finish();
-            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
+            closeDeckOptions();
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private void closeDeckOptions() {
+        if (mPrefChanged) {
+            // Rebuild the filtered deck if a setting has changed
+            mCol.getSched().rebuildDyn(mCol.getDecks().selected());
+        }
+        finish();
+        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
     }
 
 
