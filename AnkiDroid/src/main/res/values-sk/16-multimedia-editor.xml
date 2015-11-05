@@ -53,7 +53,7 @@
   <string name="multimedia_editor_poweredbeolingus">Technológia od Beolingus</string>
   <string name="multimedia_editor_imgs_saving_image">Uloženie obrázku</string>
   <string name="multimedia_editor_imgs_loading_image">Načítanie obrázku</string>
-  <string name="multimedia_editor_imgs_no_results">Hľadanie nevrátilo žiadne výsledky</string>
+  <string name="multimedia_editor_imgs_no_results">Hľadanie neprinieslo žiadne výsledky</string>
   <string name="multimedia_editor_imgs_images_found">Obrázky nájdené</string>
   <string name="multimedia_editor_imgs_pow_by_google">Technológia od Google Image Search</string>
   <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>

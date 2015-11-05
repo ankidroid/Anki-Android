@@ -55,7 +55,7 @@
   <string name="filter_tags">Etiket filtrele</string>
   <string name="no_tags">Henüz herhangi bir etiket eklemediniz.</string>
   <string name="sdcard_missing_message">SD kart USB depolama olarak kullanıldığı için kullanılamıyor. Destelerinize erişmek için USB bağlantısını kesin.</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="updated_version">%s versiyonuna güncellendi</string>
   <string name="enable_whiteboard">Yazı tahtasını etkinleştir</string>
   <string name="disable_whiteboard">Yazı tahtasını devredışı bırak</string>
   <string name="show_whiteboard">Yazı tahtasını göster</string>
@@ -66,8 +66,8 @@
   <string name="leech_notification">Kart asalak olarak işaretlenmiş</string>
   <string name="corrupt_font">Bozuk yazı tipi dosyası %s</string>
   <string-array name="browser_column1_headings">
-    <item>Question</item>
-    <item>Sort field</item>
+    <item>Soru</item>
+    <item>Alanı sırala</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Cevap</item>
@@ -79,13 +79,13 @@
     <item>Yanlışlar</item>
     <item>Çalışmalar</item>
   </string-array>
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
-  <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_increase_new_limit">Bugünün yeni kart sınırını yükselt</string>
+  <string name="custom_study_increase_review_limit">Bugünün tekrar edilecek kart sınırını yükselt</string>
+  <string name="custom_study_review_forgotten">Unutulmuş kartları tekrarla</string>
+  <string name="custom_study_review_ahead">Önceden çalış</string>
+  <string name="custom_study_random_selection">Rastgele seçilmiş kartları çalış</string>
+  <string name="custom_study_preview_new">Yeni kartlara önden bak</string>
+  <string name="custom_study_limit_tags">Belirli etiketlere sınırla</string>
   <string name="cardeditor_title_add_note">Not Ekle</string>
   <string name="cardeditor_title_edit_card">Notu Düzenle</string>
   <string name="discard_unsaved_changes">Kapatıp şu anki girdi kaybedilsin mi?</string>
@@ -155,12 +155,12 @@
   <string name="upgrade_import_no_file_found">İçeri aktarılabilir %1$s dosyası bulunmuyor</string>
   <string name="study_options">Deste seçenekleri</string>
   <string name="custom_study">Kişisel Çalışma</string>
-  <string name="more_options">More</string>
+  <string name="more_options">Daha fazlası</string>
   <string name="dyn_deck_desc">Bu normal programın dışında çalışmak için özel bir deste. Kartlar çalışıldıktan sonra otomatik olarak kendi destelerine geri dönecekler. Bu desteyi deste listesinden silmek kalan bütün kartları kendi destelerine geri döndürecek.</string>
   <string name="steps_error">Adım 0\'dan büyük bir sayı olmalıdır</string>
   <string name="steps_min_error">En az bir adım gerekiyor</string>
   <string name="sched_end">(bitiş)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
+  <string name="sched_unbury_action">Onları şimdi görmek için menüden \"Görünür Yap\"a dokunun.</string>
   <string name="sched_has_buried">Bazı ilgili veya gizli kartlar sonraki bir seansa kadar geciktirildi.</string>
   <string name="tag_editor_add_feedback">\"%1$s\" eklemek için buna dokunun: \"%2$s\"</string>
   <string name="tag_editor_add_feedback_existing">Varolan bir etiketi seçtiniz: \"%1$s\"</string>
