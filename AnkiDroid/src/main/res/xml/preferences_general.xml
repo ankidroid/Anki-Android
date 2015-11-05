@@ -22,14 +22,8 @@
 
 <!--  General Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
     android:title="@string/pref_cat_general"
     android:summary="@string/pref_cat_general_summ" >
-    <EditTextPreference
-        android:defaultValue="/sdcard/AnkiDroid"
-        android:key="deckPath"
-        android:summary="@string/preference_summary_literal"
-        android:title="@string/col_path" />
     <Preference
         android:dialogTitle="@string/sync_account"
         android:key="syncAccount"

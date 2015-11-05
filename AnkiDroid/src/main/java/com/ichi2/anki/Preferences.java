@@ -236,21 +236,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 screen = listener.getPreferenceScreen();
                 // Build languages
                 initializeLanguageDialog(screen);
-                // Check that input is valid before committing change in the collection path
-                EditTextPreference collectionPathPreference = (EditTextPreference) screen.findPreference("deckPath");
-                collectionPathPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-                    public boolean onPreferenceChange(Preference preference, final Object newValue) {
-                        final String newPath = (String) newValue;
-                        try {
-                            CollectionHelper.initializeAnkiDroidDirectory(newPath);
-                            return true;
-                        } catch (StorageAccessException e) {
-                            Timber.e(e, "Could not initialize directory: %s", newPath);
-                            Toast.makeText(getApplicationContext(), R.string.dialog_collection_path_not_dir, Toast.LENGTH_LONG).show();
-                            return false;
-                        }
-                    }
-                });
                 break;
             case "com.ichi2.anki.prefs.reviewing":
                 listener.addPreferencesFromResource(R.xml.preferences_reviewing);
@@ -266,6 +251,21 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             case "com.ichi2.anki.prefs.advanced":
                 listener.addPreferencesFromResource(R.xml.preferences_advanced);
                 screen = listener.getPreferenceScreen();
+                // Check that input is valid before committing change in the collection path
+                EditTextPreference collectionPathPreference = (EditTextPreference) screen.findPreference("deckPath");
+                collectionPathPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+                    public boolean onPreferenceChange(Preference preference, final Object newValue) {
+                        final String newPath = (String) newValue;
+                        try {
+                            CollectionHelper.initializeAnkiDroidDirectory(newPath);
+                            return true;
+                        } catch (StorageAccessException e) {
+                            Timber.e(e, "Could not initialize directory: %s", newPath);
+                            Toast.makeText(getApplicationContext(), R.string.dialog_collection_path_not_dir, Toast.LENGTH_LONG).show();
+                            return false;
+                        }
+                    }
+                });
                 // Force full sync option
                 Preference fullSyncPreference = screen.findPreference("force_full_sync");
                 fullSyncPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
