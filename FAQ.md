@@ -35,11 +35,7 @@ If you are willing to [root your device](https://duckduckgo.com/?q=why%20root%20
 If you are unable to update the timezone definitions on your device, you'll have to manually set the time on your device. To do this, go to the main Android date & time settings, and disable automatic date & time as well as automatic timezone. Now manually change the time by the amount specified in the message (e.g. if the message says 3560 seconds, try changing the time by +/- 1hr) and then try syncing again with this new (but incorrect) time. Once syncing is working again with the incorrect time, you can find a timezone which gives you the correct time while still allowing you to sync.
 
 ## Do I need Anki Desktop too?
-AnkiDroid is designed primarily as a tool for reviewing cards created with Anki Desktop, rather than as a complete replacement for it. As such you will need [Anki Desktop](http://ankisrs.net/) to perform some tasks, such as the following:
-  * [Change the appearance of a card](http://ankisrs.net/docs/manual.html#cards-and-templates)
-  * [Generate reverse cards](http://ankisrs.net/docs/manual.html#_reverse_cards)
-  * [Modify / create a note type](http://ankisrs.net/docs/manual.html#note-types)
-  * Perform operations on multiple cards, such as change the deck, apply tags, etc
+AnkiDroid is designed primarily as a tool for reviewing cards created with Anki Desktop, rather than as a complete replacement for it. As such you will need [Anki Desktop](http://ankisrs.net/) to perform some tasks, especially if you want to perform operations on multiple cards at once, like change the deck, apply tags, etc
 
 See the FAQ on [how to sync Anki Desktop with AnkiDroid](FAQ#how-do-i-make-changes-to-my-collection-with-anki-desktop) if you are unsure how to use Anki Desktop.
 
@@ -57,9 +53,6 @@ The [[old method of using custom fonts|AnkiDroid-1.x-custom-fonts]] from AnkiDro
 The easiest way is to organize your material into subdecks using the browser in [Anki Desktop](FAQ#do-i-need-anki-desktop-too). You can create a new subdeck in AnkiDroid by clicking "create deck" then using the syntax "PARENTDECKNAME::NEWSUBDECKNAME", or alternatively create the deck on Anki Desktop and drag and drop it onto an existing deck.
 
 Alternatively, in AnkiDroid you can study cards of only a particular tag by opening a deck, tapping the "custom study" button, and choosing "Limit to particular tags". This will automatically create a new [filtered deck](http://ankisrs.net/docs/manual.html#filtered) with the cards of the tag you specified.
-
-## How do I keep studying more after I reach the daily study limit?
-At the "Congratulations! You have finished for now." screen at the end of the study session, tap the "custom study" button.
 
 ## Changing the study options of a deck changes the options of my other decks?!
 
