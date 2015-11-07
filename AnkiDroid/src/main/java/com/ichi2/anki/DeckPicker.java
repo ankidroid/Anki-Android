@@ -1005,7 +1005,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * @param message
      */
     private void showSyncErrorMessage(String message) {
-        // Restart activity so that the Collection is also reloaded
         String title = getResources().getString(R.string.sync_error);
         showSimpleMessageDialog(title, message, true);
     }
@@ -1423,6 +1422,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     } else if (resultType.equals("serverAbort")) {
                         // syncMsg has already been set above, no need to fetch it here.
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                    } else if (resultType.equals("mediaSyncServerError")) {
+                        dialogMessage = res.getString(R.string.sync_media_error_check);
+                        showSyncErrorDialog(SyncErrorDialog.DIALOG_MEDIA_SYNC_ERROR,
+                                joinSyncMessages(dialogMessage, syncMessage));
                     } else {
                         if (result.length > 1 && result[1] instanceof Integer) {
                             int type = (Integer) result[1];

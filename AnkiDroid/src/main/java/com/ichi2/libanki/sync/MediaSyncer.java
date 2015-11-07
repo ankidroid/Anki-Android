@@ -22,6 +22,7 @@ import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.anki.exception.MediaSyncException;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
@@ -76,7 +77,7 @@ public class MediaSyncer {
     }
 
 
-    public String sync() {
+    public String sync() throws UnknownHttpResponseException, MediaSyncException {
         try {
             // check if there have been any changes
             // If we haven't built the media db yet, do so on this sync. See note at the top
@@ -215,9 +216,6 @@ public class MediaSyncer {
                 return sRet;
             }
         } catch (JSONException e) {
-            throw new RuntimeException(e);
-        } catch (Exception e) {
-            Timber.e(e, "Syncing error");
             throw new RuntimeException(e);
         }
     }
