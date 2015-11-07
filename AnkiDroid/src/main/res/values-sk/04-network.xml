@@ -114,7 +114,7 @@
   <string name="sync_sanity_failed">Po synchronizácii bola zbierka v nekonzistentnom stave. Pre vyriešenie tohto problému, AnkiDroid vykoná úplnú synchronizáciu. Zvoľte prosím, ktorú stranu by ste chceli zachovať.</string>
   <string name="sync_media_sanity_failed">Synchronizácia multimédií bola dokončená, ale počet médií nesúhlasí so serverom. Nasledujúca synchronizácia multimédií bude úplná, aby sa napravili akékoľvek chyby.</string>
   <string name="sync_media_error">Pri synchronizácií mediálnych súborov sa vyskytla chyba</string>
-  <string name="sync_media_unsupported">Zložité názvy multimediálnych súborov nie sú podporované na verziách Androidu 2.2 a nižšie. Synchronizácia multimédií bola zakázaná.</string>
+  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
   <string name="register_error">Vyskytla sa chyba. Skúste to znova neskôr.</string>
   <string name="register_title">Registrovať účet</string>
   <string name="register_mismatch">Zopakovanie užívateľského mena/hesla sa nezhoduje alebo je prázdne.</string>

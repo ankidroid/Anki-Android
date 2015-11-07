@@ -114,7 +114,7 @@
   <string name="sync_sanity_failed">同步之后，牌组集合处于不一致的状态。AnkiDroid将会强制完全同步以修复这一问题。请选择你想保留哪一方的状态，如果你想稍后再同步，请取消</string>
   <string name="sync_media_sanity_failed">媒体同步完成，但媒体数量与服务器不一致。下一次将进行全部同步，以纠正错误。</string>
   <string name="sync_media_error">同步媒体数据出错。</string>
-  <string name="sync_media_unsupported">Android 2.2及以下不支持复杂媒体文件，媒体同步现已禁用。</string>
+  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
   <string name="register_error">发生错误。请稍后重试。</string>
   <string name="register_title">注册账户</string>
   <string name="register_mismatch">用户名/确认密码不匹配，或者为空。请重新输入。</string>

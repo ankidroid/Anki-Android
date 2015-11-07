@@ -22,7 +22,7 @@
 <resources>
   <string name="model_browser_label">Gerenciar tipos de nota</string>
   <string name="model_editor_label">Gerenciar campos</string>
-  <string name="toast_last_model">Não é possível excluir o último modelo</string>
+  <string name="toast_last_model">Não é possível excluir seu último modelo</string>
   <string name="toast_last_field">Tipos de nota devem ter pelo menos um campo</string>
   <string name="toast_empty_name">Você deve digitar um nome</string>
   <string name="toast_duplicate_field">Nome do campo já utilizado</string>

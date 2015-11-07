@@ -6,7 +6,7 @@ Estude todo o tipo de coisas, onde e quando quiser. Faça bom uso do tempo livre
 
 Crie os seus próprios baralhos de fichas ou transfira baralhos gratuitos compilados para vários idiomas e tópicos (disponíveis mais de 6.000).
 
-Adicione material através da aplicação Anki para Pc ou diretamente através da AnkiDroid. A aplicação suporta até mesmo adicionar material automaticamente a partir de um dicionário!
+Adicione material através da aplicação Anki para Pc ou diretamente através da AnkiDroid. A aplicação até suporta a adição automática de material a partir de um dicionário!
 
 ★ Funcionalidades principais:
 • conteúdos de ficha suportados: texto, imagens, sons, LaTeX
@@ -15,7 +15,7 @@ Adicione material através da aplicação Anki para Pc ou diretamente através d
 • mais de 6000 baralhos já criados
 • widget de progresso
 • estatísticas detalhadas
-• sincronização com o AnkiWeb
+• sincronização com a AnkiWeb
 • código aberto
 
 ★ Funcionalidades adicionais:
@@ -26,7 +26,7 @@ Adicione material através da aplicação Anki para Pc ou diretamente através d
 • layout para tablet
 • importar ficheiros de coleção existentes (via Anki Desktop)
 • integração de dicionário (ColorDict, GoldenDict, Leo.org, Aedict, diversos dicionários da web)
-• Adicionar fichas a partir de outras apps tais como dicionários
+• adicionar fichas a partir de outras aplicações, tal como dicionários
 • suporte a tipo de letra personalizado
 • sistema completo de cópia de segurança
 • navegação por deslizar, toques

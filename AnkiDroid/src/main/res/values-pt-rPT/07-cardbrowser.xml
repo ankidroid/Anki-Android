@@ -46,7 +46,7 @@
   <string name="card_browser_all_decks">Todos os baralhos</string>
   <string name="card_browser_delete_card">Eliminar nota</string>
   <string name="card_browser_suspend_card">Suspender ficha</string>
-  <string name="card_browser_unsuspend_card">Cancelar suspensão</string>
+  <string name="card_browser_unsuspend_card">Cancelar suspensão da ficha</string>
   <string name="card_browser_mark_card">Marcar nota</string>
   <string name="card_browser_unmark_card">Desmarcar nota</string>
   <string name="delete_card_title">Eliminar nota?</string>
@@ -72,7 +72,7 @@
   <string name="card_browser_filtering_cards">A filtrar as fichas&#8230;\nPrima voltar para cancelar</string>
   <string-array name="card_browser_order_labels">
     <item>Sem ordenação (mais rápido)</item>
-    <item>By sort field</item>
+    <item>Por campo de ordenação</item>
     <item>Por data de criação</item>
     <item>Por data de edição</item>
     <item>Por data de modificação</item>

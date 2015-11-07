@@ -114,7 +114,7 @@
   <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Choose which side you would like to keep.</string>
   <string name="sync_media_sanity_failed">Ο συγχρονισμός πολυμέσων ολοκληρώθηκε, αλλά ο αριθμός πολυμέσων διαφέρει από αυτόν του διακομιστή. Ο επόμενος συγχρονισμός θα είναι πλήρης για να διορθώσει οτιδήποτε σφάλμα.</string>
   <string name="sync_media_error">Σφάλμα κατά το συγχρονισμό πολυμέσων.</string>
-  <string name="sync_media_unsupported">Complex media file names aren’t supported on Android 2.2 and below. Media syncing has been disabled.</string>
+  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
   <string name="register_error">Συνέβη σφάλμα. Παρακαλούμε ξαναπροσπαθήστε αργότερα.</string>
   <string name="register_title">Δημιουργία λογαριασμού</string>
   <string name="register_mismatch">Η επανάληψη του ονόματος χρήστη/κωδικού δεν ταιριάζει ή είναι κενή. Παρακαλούμε πληκτρολογήστε τους ξανά.</string>

@@ -114,7 +114,7 @@
   <string name="sync_sanity_failed">Після синхронізації, деякі дані вашої колекції виявилися в суперечливому стані. Щоб усунути цю проблему, AnkiDroid виконає повну синхронізацію. Будь ласка, виберіть яку версію Ви хочете залишити, або скасуйте, якщо ви хочете синхронізувати пізніше.</string>
   <string name="sync_media_sanity_failed">Синхронізацію медіа завершено, але кількість медіа файлів не співпала з кількістю файлів на сервері. Наступна синхронізація буде повною, щоб виправити будь-які помилки.</string>
   <string name="sync_media_error">Помилка синхронізації даних медіа.</string>
-  <string name="sync_media_unsupported">Complex media file names aren’t supported on Android 2.2 and below. Media syncing has been disabled.</string>
+  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
   <string name="register_error">Виникла помилка. Будь ласка, спробуйте пізніше.</string>
   <string name="register_title">Реєстрація облікового запису</string>
   <string name="register_mismatch">Пара ім’я користувача/пароль не співпадає або порожня. Будь ласка, введіть ще раз.</string>

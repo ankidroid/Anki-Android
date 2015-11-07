@@ -23,7 +23,7 @@
   <string name="model_browser_label">Gerir tipos de nota</string>
   <string name="model_editor_label">Gerir campos</string>
   <string name="toast_last_model">Não pode eliminar o seu último modelo</string>
-  <string name="toast_last_field">Note types must have at least one field</string>
+  <string name="toast_last_field">Os tipos de nota devem ter pelo menos um campo</string>
   <string name="toast_empty_name">Deves inserir um nome</string>
   <string name="toast_duplicate_field">Nome do campo já usado</string>
   <string name="toast_out_of_range">Deve inserir um valor válido</string>

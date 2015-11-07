@@ -53,9 +53,9 @@
   <string name="stats_cumulative_answers">Respostas cumulativas</string>
   <string name="stats_cumulative_time_minutes">Minutos cumulativos</string>
   <string name="stats_cumulative_time_hours">Horas cumulativas</string>
-  <string name="stats_cumulative">Cumulativo</string>
-  <string name="stats_cumulative_percentage">Percentagem cumulativa</string>
-  <string formatted="false" name="stats_cumulative_correct_percentage">% Correta cumulativa</string>
+  <string name="stats_cumulative">Acumulativa</string>
+  <string name="stats_cumulative_percentage">Percentagem acumulativa</string>
+  <string formatted="false" name="stats_cumulative_correct_percentage">% acumulativa correta</string>
   <string name="stats_answers">Respostas</string>
   <string name="stats_minutes">Minutos</string>
   <string name="stats_hours">Horas</string>
