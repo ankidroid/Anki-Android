@@ -19,24 +19,22 @@ import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.Suppress;
 
 import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.exception.APIVersionException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Media;
-import com.ichi2.anki.tests.Shared;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import com.ichi2.utils.*;
 
 
 /**
  * Unit tests for {@link Media}.
  */
 public class MediaTest extends AndroidTestCase {
-    public void testAdd() throws IOException, APIVersionException {
+    public void testAdd() throws IOException {
         // open new empty collection
         Collection d = Shared.getEmptyCol(getContext());
         File dir = Shared.getTestDir(getContext());
@@ -114,7 +112,7 @@ public class MediaTest extends AndroidTestCase {
         assertEquals("<img src=\"foo%20bar.jpg\">", d.getMedia().escapeImages("<img src=\"foo bar.jpg\">"));
     }
 
-    public void testDeckIntegration() throws IOException, APIVersionException {
+    public void testDeckIntegration() throws IOException {
         Collection d = Shared.getEmptyCol(getContext());
         // create a media dir
         d.getMedia().dir();
@@ -162,7 +160,7 @@ public class MediaTest extends AndroidTestCase {
         return d.getMedia().getDb().queryColumn(String.class, "select fname from media where csum is null", 0);
     }
 
-    public void testChanges() throws IOException, APIVersionException {
+    public void testChanges() throws IOException {
         Collection d = Shared.getEmptyCol(getContext());
         assertTrue(d.getMedia()._changed() != null);
         assertTrue(added(d).size() == 0);

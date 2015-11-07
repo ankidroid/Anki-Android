@@ -22,9 +22,8 @@ import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
-import com.ichi2.anki.exception.APIVersionException;
+import com.ichi2.anki.exception.MediaSyncException;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
-import com.ichi2.anki.exception.UnsupportedSyncException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -78,7 +77,7 @@ public class MediaSyncer {
     }
 
 
-    public String sync() throws UnsupportedSyncException {
+    public String sync() throws UnknownHttpResponseException, MediaSyncException {
         try {
             // check if there have been any changes
             // If we haven't built the media db yet, do so on this sync. See note at the top
@@ -218,18 +217,11 @@ public class MediaSyncer {
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
-        } catch (APIVersionException e) {
-            UnsupportedSyncException ee = new UnsupportedSyncException("Cannot sync media on this version of Android");
-            Timber.e(e.getMessage());
-            throw ee;
-        } catch (Exception e) {
-            Timber.e(e, "Syncing error");
-            throw new RuntimeException(e);
         }
     }
 
 
-    private void _downloadFiles(List<String> fnames) throws APIVersionException {
+    private void _downloadFiles(List<String> fnames) {
         mCol.log(fnames.size() + " files to fetch");
         while (fnames.size() > 0) {
             try {

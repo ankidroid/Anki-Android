@@ -25,7 +25,6 @@ import android.widget.RemoteViews;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.NavigationDrawerActivity;
-import com.ichi2.anki.exception.APIVersionException;
 
 /**
  * This interface defines a set of functions that are not available on all platforms.

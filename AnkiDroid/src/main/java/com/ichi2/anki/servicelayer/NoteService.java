@@ -19,7 +19,6 @@
 
 package com.ichi2.anki.servicelayer;
 
-import com.ichi2.anki.exception.APIVersionException;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.fields.AudioField;
 import com.ichi2.anki.multimediacard.fields.IField;
