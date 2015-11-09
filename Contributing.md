@@ -46,7 +46,7 @@ Many terms such as "note" or "leech" and some other messages should be consisten
 ## Translating the AnkiDroid manual
 The source for the AnkiDroid manual can be found on the [ankidroiddocs github page](https://github.com/ankidroid/ankidroiddocs). The manual is written in a plain text markup language called [asciidoctor](http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/) which is very easy to use. The asciidoctor file is called "manual.txt" and it can be compiled to html by following the [instructions in the ankidroiddocs repository](https://github.com/ankidroid/ankidroiddocs).
 
-## Take screenshots
+# Take screenshots
 For each language we need:
   * A few screenshots on a normal phone (review with image, review with sound, card edition, deck list)
   * At least one screenshot on a ~7inch screen
