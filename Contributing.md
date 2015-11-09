@@ -1,11 +1,8 @@
-# Develop for AnkiDroid
-See the [[Development guide|Development-Guide]]
-
-# Become a beta tester
-See the AnkiDroid manual for [how to become a beta tester](http://ankidroid.org/manual.html#betaTesting).
-
-# Donate
-See the [manual](http://ankidroid.org/manual.html#contributing) for information on donating.
+# Links
+Here are some links to other pages related to contributing to AnkiDroid:
+* [[Development guide|Development-Guide]]
+* [Alpha/beta testing](http://ankidroid.org/manual.html#betaTesting)
+* [Donating](http://ankidroid.org/manual.html#contributing)
 
 # Translate AnkiDroid into your language
 Even if you prefer to use AnkiDroid in English, other people in your country might prefer to use it in their own language. Translating AnkiDroid to your native language means your country's AnkiDroid will grow much faster, leading to better shared decks in your language.
