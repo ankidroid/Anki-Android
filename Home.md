@@ -14,9 +14,9 @@ Other supplementary information can be found in the Wiki pages below:
 * [List of freely distributable fonts](wiki/Freely-distributable-fonts)
 
 ## Documentation for contributors and developers
-* [Contributing](wiki/Contributing)
+* [Contributing (non-developers)](wiki/Contributing)
 * [Development Guide](wiki/Development-Guide)
+* [Release procedure](wiki/Release-procedure)
 * [API documentation](wiki/AnkiDroid-API)
 * [Database Structure](wiki/Database-Structure)
 * [Manual testing](wiki/Manual-testing)
-* [Release procedure](wiki/Release-procedure)
