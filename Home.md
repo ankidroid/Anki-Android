@@ -18,8 +18,8 @@ Other supplementary information can be found in the Wiki pages below:
 The following pages contain information for people interested in contributing to the AnkiDroid project. Everyone is welcome!
 
 * [Contributing (non-developers)](wiki/Contributing)
-* [Development Guide](wiki/Development-Guide)
+* [Development guide](wiki/Development-Guide)
 * [Release procedure](wiki/Release-procedure)
 * [API documentation](wiki/AnkiDroid-API)
-* [Database Structure](wiki/Database-Structure)
+* [Database structure](wiki/Database-Structure)
 * [Manual testing](wiki/Manual-testing)
