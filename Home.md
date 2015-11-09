@@ -2,10 +2,12 @@
 The main AnkiDroid documentation is hosted on ankidroid.org. Translations and corrections can be submitted to the [ankidroiddocs github page](https://github.com/ankidroid/ankidroiddocs).
 
 * [Official user manual](https://ankidroid.org/docs/manual.html)
-* [Help page](https://ankidroid.org/docs/help.html)
+* [Bug reports and feature requests](https://ankidroid.org/docs/help.html)
 * [Change log](https://ankidroid.org/docs/changelog.html)
 
 ## Other documentation for users
+Other supplementary information can be found in the Wiki pages below:
+
 * [Installation guide](wiki/Installation)
 * [Frequently asked questions](wiki/FAQ)
 * [List of permissions](wiki/Permissions)
