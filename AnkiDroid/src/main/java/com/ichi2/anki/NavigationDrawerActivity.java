@@ -161,6 +161,17 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
         }
     }
 
+
+    /**
+     * Enable the workaround that allows the activity to resize when a software keyboard
+     * appears. Use this instead of android:windowSoftInputMode="adjustResize" for any
+     * activity that extends this class.
+     */
+    protected void allowResizeForSoftKeyboard() {
+        mDrawer.keyboardSupportEnabled(this, true);
+    }
+
+
     protected void showBackIcon() {
         mDrawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
         if (getSupportActionBar() != null) {
