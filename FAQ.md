@@ -58,7 +58,9 @@ Alternatively, in AnkiDroid you can study cards of only a particular tag by open
 
 ### Changing the study options of a deck changes the options of my other decks?!
 
-Anki has an "[option grouping feature](http://ankisrs.net/docs/manual.html#deck-options)" which allows you to share options between multiple decks. If you want different decks to have different study options, you can change the option group assigned to each deck by going to Group management in the deck options.
+Anki has an "[option grouping feature](http://ankisrs.net/docs/manual.html#deck-options)" which allows you to share options between multiple decks, and by default all decks share the same option group. If you want different decks to have different study options, you need to change the option group assigned to each deck by going to the "Group management" section in the deck options.
+
+We realize that this is quite unintuitive for new users, but unfortunately this is currently the way that Anki Desktop works, and consistency with Anki Desktop is a very high priority for AnkiDroid.
 
 ### How do I type the answer, not type the answer, hide the correct answer?
 See the [AnkiDroid user manual](http://ankidroid.org/manual.html#typeInAnswer)
