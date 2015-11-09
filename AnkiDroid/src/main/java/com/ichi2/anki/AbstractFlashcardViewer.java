@@ -900,6 +900,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         setContentView(R.layout.flashcard);
         View mainView = findViewById(android.R.id.content);
         initNavigationDrawer(mainView, mPrefFullscreenReview);
+        // Ensure software keyboard resizes the screen when used in typing fields
+        allowResizeForSoftKeyboard();
         // Set full screen/immersive mode if needed
         if (mPrefFullscreenReview) {
             CompatHelper.getCompat().setFullScreen(this);
