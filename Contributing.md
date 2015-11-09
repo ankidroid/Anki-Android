@@ -4,7 +4,7 @@ Here are some links to other pages related to contributing to AnkiDroid:
 * [Alpha/beta testing](http://ankidroid.org/manual.html#betaTesting)
 * [Donating](http://ankidroid.org/manual.html#contributing)
 
-# Translate AnkiDroid into your language
+# Translate AnkiDroid
 Even if you prefer to use AnkiDroid in English, other people in your country might prefer to use it in their own language. Translating AnkiDroid to your native language means your country's AnkiDroid will grow much faster, leading to better shared decks in your language.
 
 Translating is easy and fun:
