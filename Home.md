@@ -10,10 +10,13 @@ Other supplementary information can be found in the Wiki pages below:
 
 * [Installation guide](wiki/Installation)
 * [Frequently asked questions](wiki/FAQ)
+* [Advanced card formatting guide](wiki/Advanced-formatting)
 * [List of permissions](wiki/Permissions)
 * [List of freely distributable fonts](wiki/Freely-distributable-fonts)
 
 ## Documentation for contributors and developers
+The following pages contain information for people interested in contributing to the AnkiDroid project. Everyone is welcome!
+
 * [Contributing (non-developers)](wiki/Contributing)
 * [Development Guide](wiki/Development-Guide)
 * [Release procedure](wiki/Release-procedure)
