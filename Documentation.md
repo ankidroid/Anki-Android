@@ -1,5 +1,3 @@
-Welcome to the AnkiDroid Wiki.
-
 ## Main documentation
 The main AnkiDroid documentation is hosted on ankidroid.org. Translations and corrections can be submitted to the [ankidroiddocs github page](https://github.com/ankidroid/ankidroiddocs).
 
