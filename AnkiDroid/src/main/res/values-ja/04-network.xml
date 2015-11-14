@@ -114,7 +114,7 @@
   <string name="sync_sanity_failed">同期中にコレクションの不整合が発見されました。この問題を解決するためには完全同期が必要です。Ankiweb側と AnkiDroid側（この端末）のいずれのコレクションを保持するかを選択してください。</string>
   <string name="sync_media_sanity_failed">メディアの同期が完了しました。しかし、メディアの数がAnkiWeb上のものと一致しません。次にメディアを同期するときには、エラーを修正するために完全同期を行います。</string>
   <string name="sync_media_error">メディアデータの同期中のエラー</string>
-  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
+  <string name="sync_media_error_check">メディアの同期中にエラーが発生しました。「メディアをチェック」を実行することをおすすめします。</string>
   <string name="register_error">エラーが発生しました。後でもう一度実行してください。</string>
   <string name="register_title">アカウントの登録</string>
   <string name="register_mismatch">「メールアドレス（確認）」または「パスワード（確認）」が元の文字列と一致しないか、無記入です。</string>

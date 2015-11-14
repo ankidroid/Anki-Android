@@ -114,7 +114,7 @@
   <string name="sync_sanity_failed">Nach dem Synchronisieren war Ihre Sammlung in einem widersprüchlichen Zustand. Um dieses Problem zu beheben wird AnkiDroid eine vollständige Synchronisierung erzwingen. Bitte wählen Sie die Seite, die Sie behalten wollen oder brechen Sie ab, falls Sie später synchronisieren wollen.</string>
   <string name="sync_media_sanity_failed">Die Multimedia-Synchronisierung wurde abgeschlossen, aber die Medienanzahl stimmt nicht mit der auf dem Server überein. Die nächste Medien-Synchronisierung wird die Medien voll synchronisieren, um den Fehler zu beheben.</string>
   <string name="sync_media_error">Fehler beim Synchronisieren der Multimedia-Dateien.</string>
-  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
+  <string name="sync_media_error_check">Fehler beim Synchronisieren der Multimedia-Dateien. Eine Überprüfung der Medien wird empfohlen.</string>
   <string name="register_error">Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.</string>
   <string name="register_title">Konto erstellen</string>
   <string name="register_mismatch">Die Wiederholung der Benutzernamens bzw. des Passworts ist falsch oder leer. Bitte geben Sie die Informationen erneut ein.</string>

@@ -40,7 +40,7 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="other">%d cards shown</item>
+    <item quantity="other">已顯示 %d 張卡片</item>
   </plurals>
   <string name="card_browser_all_decks">所有牌組</string>
   <string name="card_browser_delete_card">刪除筆記</string>
@@ -54,13 +54,13 @@
   <string name="card_browser_show_suspended">篩選出擱置的卡片</string>
   <string name="card_browser_search_by_tag">按標籤篩選</string>
   <string name="card_browser_tags_shown">標籤：%1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
+  <string name="card_browser_list_my_searches">我的搜尋</string>
+  <string name="card_browser_list_my_searches_save">儲存搜尋</string>
+  <string name="card_browser_list_my_searches_title">選擇一個已儲存的搜尋</string>
+  <string name="card_browser_list_my_searches_new_name">目前搜尋的名稱</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">您不能儲存沒有名稱的搜尋</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">名稱已存在</string>
+  <string name="card_browser_list_my_searches_remove_content">刪除 \"%1$s\" 嗎？</string>
   <string name="card_browser_change_display_order">更改顯示順序</string>
   <string name="card_browser_change_display_order_title">選擇顯示順序</string>
   <string name="card_browser_change_display_order_reverse">點兩下欄位來反向順序排列</string>
@@ -68,7 +68,7 @@
   <string name="card_details_answer">答案</string>
   <string name="card_details_due">到期</string>
   <string name="card_details_tags">標籤</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
+  <string name="card_browser_filtering_cards">正在篩選卡片&#8230;\n按下返回鍵取消</string>
   <string-array name="card_browser_order_labels">
     <item>不要排序(較快)</item>
     <item>By sort field</item>

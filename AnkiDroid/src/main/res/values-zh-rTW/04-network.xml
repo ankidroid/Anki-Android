@@ -40,18 +40,18 @@
 
 -->
 <resources>
-  <string name="youre_offline">You are offline</string>
-  <string name="sync_error">Sync error</string>
-  <string name="vague_error">Error</string>
+  <string name="youre_offline">目前是離線狀態</string>
+  <string name="sync_error">同步錯誤</string>
+  <string name="vague_error">錯誤</string>
   <string name="retry">重試</string>
   <string name="cancel">取消</string>
   <string name="loading_shared_decks">正在載入共享牌組...</string>
-  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
-  <string name="menu_get_shared_decks">取得共用的牌組</string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">使用條款</a></string>
+  <string name="menu_get_shared_decks">取得共享的牌組</string>
   <string name="connection_error_message">網路出了點問題。</string>
-  <string name="not_logged_in_title">Log in to AnkiWeb</string>
-  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
-  <string name="no_email_client">No email client available</string>
+  <string name="not_logged_in_title">登入 AnkiWeb</string>
+  <string name="login_create_account_message">您必須登入 AnkiWeb 帳號。您可以在下一步驟新增一個。</string>
+  <string name="no_email_client">沒有可用的電子郵件應用程式</string>
   <string name="username">電子郵件地址</string>
   <string name="username_repeat">再次輸入電子郵件地址</string>
   <string name="password">密碼</string>
@@ -59,20 +59,20 @@
   <string name="log_in">登入</string>
   <string name="sign_up_description">沒有 AnkiWeb 帳戶嗎？它是免費的！</string>
   <string name="sign_up">註冊</string>
-  <string name="sign_up_terms">By touching <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
+  <string name="sign_up_terms">點選<i>註冊</i>後，表示您已經閱讀且同意我們的<a href="https://ankiweb.net/account/terms">使用條款</a>.</string>
   <string name="logged_as">登入為</string>
   <string name="log_out">登出</string>
   <string name="alert_logging_message">正在登入，請稍候...</string>
   <string name="invalid_username_password">無效的電子郵件地址或密碼。</string>
-  <string name="reset_password">Reset password</string>
+  <string name="reset_password">忘記密碼</string>
   <string name="downloaddeck_search">搜尋</string>
   <string name="preferences_title">偏好設定</string>
-  <string name="deckpreferences_title">Options for XXX</string>
+  <string name="deckpreferences_title">XXX 的選項</string>
   <string name="sync_conflict_message">您本地的牌組與 AnkiWeb 牌組之間的差異無法合併，因此需要以某一方的牌組來覆寫另一方的牌組。\n\n您想要上傳本地的牌組，或是從AnkiDroid 下載牌組呢？</string>
   <string name="sync_conflict_local">上傳</string>
   <string name="sync_conflict_remote">下載</string>
-  <string name="sync_conflict_remote_confirm">你真的想要下載伺服器上的收藏嗎？請注意這將覆寫您本地的收藏。</string>
-  <string name="sync_conflict_local_confirm">你真的想上傳本地收藏嗎？注意：這將覆蓋您在伺服器上的收藏。</string>
+  <string name="sync_conflict_remote_confirm">你真的想要下載伺服器上的蒐藏嗎？請注意這將覆寫您本地的蒐藏。</string>
+  <string name="sync_conflict_local_confirm">你真的想上傳本地蒐藏嗎？注意：這將覆蓋您在伺服器上的蒐藏。</string>
   <string name="sync_prepare_syncing">正在準備同步...</string>
   <string name="sync_preparing_full_sync_message">正在準備完整同步...</string>
   <string name="sync_uploading_message">上傳中...</string>
@@ -86,14 +86,14 @@
   <string name="sync_log_clocks_unsynchronized_date">，裝置的日期可能是錯誤的</string>
   <string name="sync_conflict_title">同步衝突</string>
   <string name="sync_no_changes_message">未發現資料變動</string>
-  <string name="sync_database_acknowledge">Collection synchronized</string>
+  <string name="sync_database_acknowledge">蒐藏同步完成</string>
   <string name="sync_log_error_specific">同步錯誤，類型：%1$s，訊息：%2$s</string>
   <string name="sync_corrupt_database">您的資料庫已損壞。請先嘗試修復然後再試一次。關於如何修復資料庫，請參考 %s 。</string>
   <string name="sync_too_busy">伺服器忙碌中。請稍後再試。</string>
   <string name="sync_remote_db_error">已下載的資料庫已損壞。請再試一次。</string>
   <string name="sync_overwrite_error">所下載的檔案無法覆蓋您當前的收藏。</string>
-  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
-  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
+  <string name="sync_connection_error">連線逾時。可能是您的網路連線有問題，或是您的媒體資料夾內有很大的檔案。</string>
+  <string name="sync_error_409">一次只能有一個用戶連線到 AnkiWeb，如果上次同步失敗了，請幾分鐘後再嘗試。</string>
   <string name="sync_write_access_error">下載的檔無法保存到 SD 卡。你的 SD 卡設定為唯讀，或者沒有足夠的空間。</string>
   <string name="sync_deletions_message">同步刪除...</string>
   <string name="sync_small_objects_message">同步小物件...</string>
@@ -109,21 +109,21 @@
   <string name="sync_media_find">尋找變更的媒體檔...</string>
   <string name="sync_media_no_changes">媒體檔無變更</string>
   <string name="sync_media_success">成功同步媒體檔</string>
-  <string name="sync_media_changes_count">%d media changes to upload</string>
-  <string name="sync_media_downloaded_count">%d media files downloaded</string>
+  <string name="sync_media_changes_count">將上傳 %d 個媒體檔變更</string>
+  <string name="sync_media_downloaded_count">已下載 %d 個給媒體檔案</string>
   <string name="sync_sanity_failed">您的收藏狀態在同步以後不一致，AnkiDroid 會強制進行完整同步來修復這問題。請選擇你想要保留哪一邊的檔案。如果您想要稍後進行同步，請選擇取消。</string>
   <string name="sync_media_sanity_failed">媒體檔案同步完成，不過媒體檔數量與伺服器上的不相等。下次將進行完整同步來更正這問題。</string>
   <string name="sync_media_error">同步媒體資料時出錯。</string>
-  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
+  <string name="sync_media_error_check">同步媒體檔時發生錯誤。建議進行一次媒體檢查。</string>
   <string name="register_error">出現了一個錯誤。請稍後再試一次。</string>
   <string name="register_title">註冊帳號</string>
   <string name="register_mismatch">再次輸入的用戶名稱或密碼不符，或者是欄位空的。請重新輸入。</string>
   <string name="registering_message">建立帳號中\n請稍後...</string>
   <string name="sync_sanity_local">本機</string>
   <string name="sync_sanity_remote">遠端</string>
-  <string name="force_full_sync_title">Force full sync</string>
-  <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
+  <string name="force_full_sync_title">強制完整同步</string>
+  <string name="force_full_sync_summary">下一次同步時，強制單方面的修改</string>
   <string name="full_sync_confirmation">此變動會使您下一次同步您的收藏時，需要完整上傳您的資料庫。如果同步的話，您其他的裝置上尚未同步的複習卡片或其他變動的部分將會遺失，您是否要繼續？</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
-  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
+  <string name="full_sync_confirmation_upgrade">由於先前安裝的 AnkiDroid 版本的 bug，我們建議您強制完整同步一次。</string>
+  <string name="sync_error_501_upgrade_required">請更新到最新版的 AnkiDroid</string>
 </resources>
