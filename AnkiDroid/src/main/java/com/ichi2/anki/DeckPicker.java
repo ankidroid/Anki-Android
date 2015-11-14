@@ -605,7 +605,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         } else if (requestCode == REQUEST_REVIEW && resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
             // Show a message when reviewing has finished
-            showSimpleSnackbar(R.string.studyoptions_congrats_finished, false);
+            int[] studyOptionsCounts = getCol().getSched().counts();
+            if (studyOptionsCounts[0] + studyOptionsCounts[1] + studyOptionsCounts[2] == 0) {
+                showSimpleSnackbar(R.string.studyoptions_congrats_finished, false);
+            } else {
+                showSimpleSnackbar(R.string.studyoptions_no_cards_due, false);
+            }
             mCongratulationsShown = true;
         }
     }
@@ -1672,6 +1677,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Get some info about the deck to handle special cases
         int pos = mDeckListAdapter.findDeckPosition(did);
         Sched.DeckDueTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
+        int[] studyOptionsCounts = getCol().getSched().counts();
         // Figure out what action to take
         if (getCol().getDecks().isDyn(did) || mFragmented) {
             // Go to StudyOptions screen when using filtered decks so that it's clearer to the user that it's different
@@ -1679,6 +1685,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else if (deckDueTreeNode.newCount + deckDueTreeNode.lrnCount + deckDueTreeNode.revCount > 0) {
             // If normal deck and there are cards to study then jump straight to the reviewer
             openReviewer();
+        } else if (studyOptionsCounts[0] + studyOptionsCounts[1] + studyOptionsCounts[2] > 0) {
+            // If there are cards due that can't be studied yet (due to the learn ahead limit) then go to study options
+            openStudyOptions(false);
         } else if (getCol().getSched().newDue() || getCol().getSched().revDue()) {
             // If there are no cards to review because of the daily study limit then give "Study more" option
             showSnackbar(R.string.studyoptions_limit_reached, false, R.string.study_more, new OnClickListener() {
