@@ -30,6 +30,8 @@ import android.widget.VideoView;
 public class VideoPlayer extends Activity implements android.view.SurfaceHolder.Callback {
     VideoView mVideoView;
     String mPath;
+    Sound mSoundPlayer;
+
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +42,15 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);        
         mVideoView = (VideoView) findViewById(R.id.video_surface);
         mVideoView.getHolder().addCallback(this);
+        mSoundPlayer = new Sound();
     }
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Sound.playSound(mPath, new MediaPlayer.OnCompletionListener() {
+        mSoundPlayer.playSound(mPath, new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 finish();
-                MediaPlayer.OnCompletionListener originalListener = Sound.getMediaCompletionListener();
+                MediaPlayer.OnCompletionListener originalListener = mSoundPlayer.getMediaCompletionListener();
                 if (originalListener != null) {
                     originalListener.onCompletion(mp);
                 }
@@ -62,12 +65,13 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
     }
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        mSoundPlayer.stopSounds();
         finish();
     }
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        Sound.notifyConfigurationChanged(mVideoView);
+        mSoundPlayer.notifyConfigurationChanged(mVideoView);
     }
     @Override
     public void onStop() {

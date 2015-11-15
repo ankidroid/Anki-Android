@@ -328,18 +328,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     private ReviewerExtRegistry mExtensions;
 
+    private Sound mSoundPlayer = new Sound();
+
     // private int zEase;
 
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
 
-    private static Handler sHandler = new Handler() {
+    private Handler mHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
-            Sound.stopSounds();
-            Sound.playSound((String) msg.obj, null);
+            mSoundPlayer.stopSounds();
+            mSoundPlayer.playSound((String) msg.obj, null);
         }
     };
 
@@ -567,7 +569,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
 
             if (sDisplayAnswer) {
-                Sound.resetSounds(); // load sounds from scratch, to expose any edit changes
+                mSoundPlayer.resetSounds(); // load sounds from scratch, to expose any edit changes
                 mAnswerSoundsAdded = false; // causes answer sounds to be reloaded
                 generateQuestionSoundList(); // questions must be intentionally regenerated
                 displayCardAnswer();
@@ -977,7 +979,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         longClickHandler.removeCallbacks(startLongClickAction);
 
         pauseTimer();
-        Sound.stopSounds();
+        mSoundPlayer.stopSounds();
     }
 
 
@@ -986,7 +988,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         super.onResume();
         resumeTimer();
         // Set the context for the Sound manager
-        Sound.setContext(new WeakReference<Activity>(this));
+        mSoundPlayer.setContext(new WeakReference<Activity>(this));
         // Reset the activity title
         setTitle();
         updateScreenCounts();
@@ -1240,7 +1242,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     protected void generateQuestionSoundList() {
-        Sound.addSounds(mBaseUrl, mCurrentCard.qSimple(), Sound.SOUNDS_QUESTION);
+        mSoundPlayer.addSounds(mBaseUrl, mCurrentCard.qSimple(), Sound.SOUNDS_QUESTION);
     }
 
 
@@ -1368,7 +1370,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // remove chosen answer hint after a while
         mTimerHandler.removeCallbacks(removeChosenAnswerText);
         mTimerHandler.postDelayed(removeChosenAnswerText, mShowChosenAnswerLength);
-        Sound.stopSounds();
+        mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
@@ -1523,7 +1525,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     Message msg = Message.obtain();
                     String soundPath = url.replaceFirst("playsound:", "");
                     msg.obj = soundPath;
-                    sHandler.sendMessage(msg);
+                    mHandler.sendMessage(msg);
                     return true;
                 }
                 if (url.startsWith("file") || url.startsWith("data:")) {
@@ -1991,7 +1993,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         String answer = mCurrentCard.a();
 
-        Sound.stopSounds();
+        mSoundPlayer.stopSounds();
         answer = getCol().getMedia().escapeImages(answer);
 
         mAnswerField.setVisibility(View.GONE);
@@ -2053,15 +2055,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             // additionally, this condition reduces computation time
             if (!mAnswerSoundsAdded) {
                 String answerSoundSource = removeFrontSideAudio(content);
-                Sound.addSounds(mBaseUrl, answerSoundSource, Sound.SOUNDS_ANSWER);
+                mSoundPlayer.addSounds(mBaseUrl, answerSoundSource, Sound.SOUNDS_ANSWER);
                 mAnswerSoundsAdded = true;
             }
         } else {
             // reset sounds each time first side of card is displayed, which may happen repeatedly without ever
             // leaving the card (such as when edited)
-            Sound.resetSounds();
+            mSoundPlayer.resetSounds();
             mAnswerSoundsAdded = false;
-            Sound.addSounds(mBaseUrl, content, Sound.SOUNDS_QUESTION);
+            mSoundPlayer.addSounds(mBaseUrl, content, Sound.SOUNDS_QUESTION);
         }
 
         content = Sound.expandSounds(mBaseUrl, content);
@@ -2165,16 +2167,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (autoPlayEnabled || doAudioReplay) {
             // Use TTS if TTS preference enabled and no other sound source
             boolean useTTS = mSpeakText &&
-                    !(sDisplayAnswer && Sound.hasAnswer()) && !(!sDisplayAnswer && Sound.hasQuestion());
+                    !(sDisplayAnswer && mSoundPlayer.hasAnswer()) && !(!sDisplayAnswer && mSoundPlayer.hasQuestion());
             // We need to play the sounds from the proper side of the card
             if (!useTTS) { // Text to speech not in effect here
                 if (doAudioReplay && replayQuestion && sDisplayAnswer) {
                     // only when all of the above are true will question be played with answer, to match desktop
-                    Sound.playSounds(Sound.SOUNDS_QUESTION_AND_ANSWER);
+                    mSoundPlayer.playSounds(Sound.SOUNDS_QUESTION_AND_ANSWER);
                 } else if (sDisplayAnswer) {
-                    Sound.playSounds(Sound.SOUNDS_ANSWER);
+                    mSoundPlayer.playSounds(Sound.SOUNDS_ANSWER);
                 } else { // question is displayed
-                    Sound.playSounds(Sound.SOUNDS_QUESTION);
+                    mSoundPlayer.playSounds(Sound.SOUNDS_QUESTION);
                 }
             } else { // Text to speech is in effect here
                 // If the question is displayed or if the question should be replayed, read the question
