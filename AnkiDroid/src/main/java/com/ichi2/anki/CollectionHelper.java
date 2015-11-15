@@ -207,7 +207,7 @@ public class CollectionHelper {
      * external storage directory.
      * @return the folder path
      */
-    private static String getDefaultAnkiDroidDirectory() {
+    public static String getDefaultAnkiDroidDirectory() {
         return new File(Environment.getExternalStorageDirectory(), "AnkiDroid").getAbsolutePath();
     }
 

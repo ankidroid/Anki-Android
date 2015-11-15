@@ -188,7 +188,9 @@ public class AnkiDroidApp extends Application {
                 CollectionHelper.initializeAnkiDroidDirectory(dir);
             } catch (StorageAccessException e) {
                 Timber.e(e, "Could not initialize AnkiDroid directory");
-                if (isSdCardMounted()) {
+                String defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory();
+                if (isSdCardMounted() && CollectionHelper.getCurrentAnkiDroidDirectory(this).equals(defaultDir)) {
+                    // Don't send report if the user is using a custom directory as SD cards trip up here a lot
                     sendExceptionReport(e, "AnkiDroidApp.onCreate");
                 }
             }
