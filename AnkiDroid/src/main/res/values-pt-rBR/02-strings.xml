@@ -56,11 +56,11 @@
   <string name="no_tags">Você ainda não adicionou nenhuma tag.</string>
   <string name="sdcard_missing_message">Desconecte o armazenamento USB para acessar seus decks</string>
   <string name="updated_version">Atualizado para a versão %s</string>
-  <string name="enable_whiteboard">Habilitar whiteboard</string>
-  <string name="disable_whiteboard">Desativar whiteboard</string>
-  <string name="show_whiteboard">Mostrar Quadro</string>
-  <string name="hide_whiteboard">Esconder Quadro</string>
-  <string name="clear_whiteboard">Limpar Quadro</string>
+  <string name="enable_whiteboard">Habilitar quadro</string>
+  <string name="disable_whiteboard">Desativar quadro</string>
+  <string name="show_whiteboard">Mostrar quadro</string>
+  <string name="hide_whiteboard">Esconder quadro</string>
+  <string name="clear_whiteboard">Limpar quadro</string>
   <string name="replay_audio">Tocar audio novamente</string>
   <string name="leech_suspend_notification">Cartão marcado como sanguessuga e suspenso</string>
   <string name="leech_notification">Cartão marcado como sanguessuga</string>

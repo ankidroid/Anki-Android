@@ -114,7 +114,7 @@
   <string name="sync_sanity_failed">Luego de sincronizar, la colección tuvo un estado inconsistente. Para solucionar este problema, AnkiDroid forzará una sincronización completa. Por favor, elija qué lado desea mantener, o cancele si prefiere sincronizar más tarde.</string>
   <string name="sync_media_sanity_failed">Sincronización multimedia finalizada pero el contador multimedia no coincide con el servidor. La próxima sincronización multimedia será completa a fin de corregir cualquier error.</string>
   <string name="sync_media_error">Error al sincronizar datos multimedia.</string>
-  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
+  <string name="sync_media_error_check">Error al sincronizar multimedia. Se recomienda una comprobación de archivos multimedia.</string>
   <string name="register_error">Ocurrió un error. Por favor intente nuevamente más tarde.</string>
   <string name="register_title">Registrar cuenta</string>
   <string name="register_mismatch">La repetición del usuario/contraseña no coincide o está vacía. Por favor, vuelva a ingresar.</string>

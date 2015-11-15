@@ -56,8 +56,8 @@
   <string name="no_tags">Todavía no has añadido cualquier etiqueta.</string>
   <string name="sdcard_missing_message">La tarjeta SD no se encuentra disponible porque está siendo usada como almacenamiento via USB. Desconecta el USB para acceder a tus mazos.</string>
   <string name="updated_version">Actualizado a la versión %s</string>
-  <string name="enable_whiteboard">Habilitar pizarra</string>
-  <string name="disable_whiteboard">Deshabilitar la pizarra</string>
+  <string name="enable_whiteboard">Activar pizarra</string>
+  <string name="disable_whiteboard">Desactivar pizarra</string>
   <string name="show_whiteboard">Mostrar pizarra</string>
   <string name="hide_whiteboard">Ocultar pizarra</string>
   <string name="clear_whiteboard">Limpiar pizarra</string>

@@ -50,16 +50,16 @@
     <item>建議的答案 (綠色)</item>
     <item>優於建議的答案</item>
     <item>復原</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>編輯筆記</item>
+    <item>標記筆記</item>
     <item>查找運算式</item>
     <item>暫時隱藏卡片</item>
     <item>長久擱置卡片</item>
-    <item>Delete note</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>刪除筆記</item>
+    <item>播放媒體檔</item>
+    <item>中止學習</item>
+    <item>暫時隱藏筆記</item>
+    <item>長久擱置筆記</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>長久擱置卡片</item>
@@ -78,19 +78,19 @@
     <item>依新增順序</item>
     <item>依到期順序</item>
     <item>最後加入的先</item>
-    <item>Relative overdueness</item>
+    <item>相對逾期</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
-    <item>Decide by note type</item>
+    <item>使用當前牌組</item>
+    <item>由筆記種類決定</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>混合新卡片和複習卡片</item>
+    <item>新卡片在複習卡片之後</item>
+    <item>新卡片在複習卡片之前</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>當 flashcard 沒有指定字體時</item>
+    <item>總是</item>
   </string-array>
 </resources>
