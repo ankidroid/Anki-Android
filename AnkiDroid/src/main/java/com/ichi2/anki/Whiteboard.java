@@ -209,6 +209,7 @@ public class Whiteboard extends View {
         mPath.moveTo(x, y);
         mX = x;
         mY = y;
+        mCanvas.drawPoint(x, y, mPaint);
     }
 
 

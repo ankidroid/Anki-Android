@@ -76,7 +76,7 @@
         <com.ichi2.ui.SeekBarPreference
             android:defaultValue="100"
             android:key="cardZoom"
-            android:max="150"
+            android:max="300"
             android:summary="@string/preference_summary_percentage"
             android:text=" %"
             android:title="@string/card_zoom"
@@ -94,7 +94,7 @@
         <com.ichi2.ui.SeekBarPreference
             android:defaultValue="100"
             android:key="answerButtonSize"
-            android:max="170"
+            android:max="200"
             android:summary="@string/preference_summary_percentage"
             android:text=" %"
             android:title="@string/button_size"
