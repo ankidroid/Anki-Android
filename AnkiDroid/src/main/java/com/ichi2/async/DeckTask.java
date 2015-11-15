@@ -1057,7 +1057,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 if (child.getInt("dyn") == 1) {
                     continue;
                 }
-                TaskData newParams = new TaskData(new Object[] { col, child, conf });
+                TaskData newParams = new TaskData(new Object[] { child, conf });
                 boolean changed = doInBackgroundConfChange(newParams).getBoolean();
                 if (!changed) {
                     return new TaskData(false);

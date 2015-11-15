@@ -91,7 +91,7 @@
                 android:summary="@string/preference_summary_literal"
                 android:title="@string/dictionary" />
             <com.ichi2.preferences.CustomDialogPreference
-                android:dialogIcon="@android:drawable/ic_dialog_alert"
+                android:dialogIcon="@drawable/ic_dialog_alert"
                 android:dialogMessage="@string/reset_languages_question"
                 android:dialogTitle="@string/reset_languages"
                 android:negativeButtonText="@string/dialog_cancel"
