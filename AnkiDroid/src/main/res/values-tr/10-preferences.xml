@@ -152,8 +152,8 @@
   <string name="filter_google_translate">Google Çeviri\'den</string>
   <string name="filter_google_translate_summ">Yalnızca kaynak sözcük ve çeviriyi kaydet</string>
   <string name="convert_fen_text_summ">Forsyth Edwards Notasyonundan satranç tahtası çiz. Notasyon [fen][/fen] etiketi içine alınmış olmalıdır.</string>
-  <string name="enable_api_title">Enable AnkiDroid API</string>
-  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+  <string name="enable_api_title">AnkiDroid API etkinleştir</string>
+  <string name="enable_api_summary">Diğer uygulamaların AnkiDroid\'e bağlanmasına ve müdahaleniz olmadan veriyi okuyup / yazmasına izin verir</string>
   <string name="studyoptions_limit_select_tags">Etiketleri Seçin</string>
   <string name="deck_conf_deck_description">Deste tanımı</string>
   <string name="deck_conf_group">Seçenek grubu</string>

@@ -126,6 +126,7 @@
   <string name="sd_card_not_mounted">Cihaz hafızası takılı değil</string>
   <string name="button_sync">Eşitle</string>
   <string name="cancel_sync_confirm">Senkronizasyonu iptâl etmek istiyor musunuz?</string>
+  <string name="continue_sync">Continue sync</string>
   <string name="sync_cancelled">Senkronizasyon iptâl edildi</string>
   <string name="export">Dışarı aktar</string>
   <string name="export_collection">Export collection</string>

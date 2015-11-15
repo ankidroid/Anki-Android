@@ -43,7 +43,7 @@
     <item quantity="one">%d cartão exibido</item>
     <item quantity="other">%d cartões exibidos</item>
   </plurals>
-  <string name="card_browser_all_decks">Todos os decks</string>
+  <string name="card_browser_all_decks">Todos os baralhos</string>
   <string name="card_browser_delete_card">Excluir nota</string>
   <string name="card_browser_suspend_card">Suspender cartão</string>
   <string name="card_browser_unsuspend_card">Cancelar suspensão</string>

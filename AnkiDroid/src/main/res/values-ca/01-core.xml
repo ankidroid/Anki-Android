@@ -126,6 +126,7 @@
   <string name="sd_card_not_mounted">La tarjeta SD no funciona correctament</string>
   <string name="button_sync">Sincronització</string>
   <string name="cancel_sync_confirm">Voleu cancel·lar la sincronització?</string>
+  <string name="continue_sync">Continue sync</string>
   <string name="sync_cancelled">Sincronització cancel·lada</string>
   <string name="export">Exportar</string>
   <string name="export_collection">Exporta la col·lecció</string>

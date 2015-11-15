@@ -59,7 +59,7 @@
   <string name="log_in">Se connecter</string>
   <string name="sign_up_description">Vous n\'avez pas de compte AnkiWeb ? C\'est gratuit !</string>
   <string name="sign_up">Inscrivez-vous</string>
-  <string name="sign_up_terms">En cliquant sur <i>s\'inscrire</i>, vous confirmez que vous avez lu et accepté nos <a href="https://ankiweb.net/account/terms">conditions d\'utilisation</a>.</string>
+  <string name="sign_up_terms">En touchant <i>s\'inscrire</i>, vous confirmez que vous avez lu et accepté nos <a href="https://ankiweb.net/account/terms">conditions d\'utilisation</a>.</string>
   <string name="logged_as">Connecté en tant que</string>
   <string name="log_out">Se déconnecter</string>
   <string name="alert_logging_message">Connexion, patientez s’il vous plaît &#8230;</string>

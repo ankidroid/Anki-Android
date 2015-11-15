@@ -45,13 +45,13 @@
   <string name="settings">设置</string>
   <string name="help">帮助</string>
   <string name="send_feedback">反馈</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <string name="studyoptions_title">牌组概览</string>
   <string name="studyoptions_due_today">今天待复习：</string>
   <string name="studyoptions_new_total">新卡片数量：</string>
   <string name="studyoptions_total_cards">全部卡片数量：</string>
   <string name="studyoptions_eta">预计所需时间（分钟）：</string>
   <string name="studyoptions_start">开始学习</string>
-  <string name="study_more">Study more</string>
+  <string name="study_more">学习更多</string>
   <plurals name="deckpicker_title">
     <item quantity="other">%1$d张卡片待复习 (%2$s)</item>
   </plurals>
@@ -78,7 +78,7 @@
   <string name="undo_action_delete">删除笔记</string>
   <string name="undo_action_mark">标记笔记</string>
   <string name="unbury">取消隐藏</string>
-  <string name="rename_deck">Rename deck</string>
+  <string name="rename_deck">重命名</string>
   <string name="menu_add">添加</string>
   <string name="menu_add_note">添加笔记</string>
   <string name="menu_my_account">同步帐户</string>
@@ -111,10 +111,10 @@
   <string name="empty_cram_deck">清空强记模式牌组。\n请等待...</string>
   <string name="custom_study_deck_name">自定义学习的进程</string>
   <string name="custom_study_deck_exists">请先重命名现有的自定义学习牌组。</string>
-  <string name="empty_deck">This deck is empty</string>
-  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-  <string name="studyoptions_limit_reached">Daily study limit reached</string>
-  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+  <string name="empty_deck">这个牌组是空的~</string>
+  <string name="studyoptions_empty">这个牌组是空的，请点击 + 按钮来添加内容。</string>
+  <string name="studyoptions_limit_reached">达到每日学习限制</string>
+  <string name="studyoptions_empty_schedule">计划中没有需要学习的卡片</string>
   <string name="studyoptions_congrats_finished">恭喜！你已经完成了今天的学习任务。</string>
   <string name="studyoptions_congrats_more_rev">已达到今天的复习数量限制，但仍有一些卡片需要复习。为了能有更好的记忆效果，请考虑在牌组选项中增加每天的复习数量。</string>
   <string name="studyoptions_congrats_more_new">还有新卡牌待学习，但已达到每日上限。您可以增加设置中的每日学习上限，不过请留意，这会增加您短期的复习工作量。</string>
@@ -123,12 +123,13 @@
   <string name="sd_card_not_mounted">未挂载储存设备</string>
   <string name="button_sync">同步</string>
   <string name="cancel_sync_confirm">你想要取消同步吗？</string>
+  <string name="continue_sync">Continue sync</string>
   <string name="sync_cancelled">同步已取消</string>
   <string name="export">导出</string>
-  <string name="export_collection">Export collection</string>
-  <string name="export_deck">Export deck</string>
+  <string name="export_collection">导出集合</string>
+  <string name="export_deck">导出牌组</string>
   <string name="nothing">无</string>
-  <string name="title_activity_template_editor">Card types</string>
+  <string name="title_activity_template_editor">卡片类型</string>
   <string name="card_template_editor_front">正面</string>
   <string name="card_template_editor_back">背面</string>
   <string name="card_template_editor_styling">样式</string>

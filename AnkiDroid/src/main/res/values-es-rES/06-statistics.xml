@@ -55,7 +55,7 @@
   <string name="stats_cumulative_time_hours">Horas acumuladas</string>
   <string name="stats_cumulative">Acumulado</string>
   <string name="stats_cumulative_percentage">Porcentaje acumulado</string>
-  <string formatted="false" name="stats_cumulative_correct_percentage">%  Acumulado correcto</string>
+  <string formatted="false" name="stats_cumulative_correct_percentage">% acumulado correcto</string>
   <string name="stats_answers">Respuestas</string>
   <string name="stats_minutes">Minutos</string>
   <string name="stats_hours">Horas</string>
@@ -70,8 +70,8 @@
   <string name="stats_reviews">Revisiones</string>
   <string name="stats_answer_type">Tipo de respuesta</string>
   <string name="stats_today_again_count">Contar de nuevo: &lt;b&gt;%d&lt;/b&gt;</string>
-  <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correcta)</string>
-  <string name="stats_today_type_breakdown">Aprender: &lt;b&gt;%1$s&lt;/b&gt;, Revisar: &lt;b&gt;%2$s&lt;/b&gt;, Reaprender: &lt;b&gt;%3$s&lt;/b&gt;, Filtradas: &lt;b&gt;%4$s&lt;/b&gt;</string>
+  <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correctas)</string>
+  <string name="stats_today_type_breakdown">Aprender: &lt;b&gt;%1$s&lt;/b&gt;, revisar: &lt;b&gt;%2$s&lt;/b&gt;, reaprender: &lt;b&gt;%3$s&lt;/b&gt;, filtradas: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Respuestas correctas en tarjetas maduras: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">No se han estudiado tarjetas maduras hoy.</string>
   <string name="deck_summary_all_decks">Todos los mazos</string>

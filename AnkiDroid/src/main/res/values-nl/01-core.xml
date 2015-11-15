@@ -126,6 +126,7 @@
   <string name="sd_card_not_mounted">Apparaatopslag niet aangesloten</string>
   <string name="button_sync">Synchroniseer</string>
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+  <string name="continue_sync">Continue sync</string>
   <string name="sync_cancelled">Sync cancelled</string>
   <string name="export">Exporteren</string>
   <string name="export_collection">Export collection</string>

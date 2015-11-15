@@ -22,10 +22,10 @@
 <resources>
   <string name="model_browser_label">Notiztypen verwalten</string>
   <string name="model_editor_label">Felder verwalten</string>
-  <string name="toast_last_model">Sie können den letzten Notiztyp nicht löschen</string>
+  <string name="toast_last_model">Sie können das letzte Modell nicht löschen</string>
   <string name="toast_last_field">Notizypen müssen mindestens ein Feld haben</string>
   <string name="toast_empty_name">Sie müssen einen Namen eingeben</string>
-  <string name="toast_duplicate_field">Feldname schon verwendet</string>
+  <string name="toast_duplicate_field">Feldname bereits verwendet</string>
   <string name="toast_out_of_range">Sie müssen einen gültigen Wert eingeben</string>
   <plurals name="model_browser_types_available">
     <item quantity="one">%d Notiztyp verfügbar</item>
@@ -41,7 +41,7 @@
   <string name="model_browser_options">Optionen</string>
   <string name="model_browser_template">Karten bearbeiten</string>
   <string name="model_browser_add">Notiztyp hinzufügen</string>
-  <string name="rename_model">Notiztyp umbenennen</string>
+  <string name="rename_model">Modell umbenennen</string>
   <string name="model_field_editor_title">Felder bearbeiten</string>
   <string name="model_field_editor_add">Feld hinzufügen</string>
   <string name="model_field_editor_delete">Feld löschen</string>
@@ -49,7 +49,7 @@
   <string name="model_field_editor_rename">Feld umbenennen</string>
   <string name="model_field_editor_reposition_menu">Feld neu positionieren</string>
   <string name="model_field_editor_reposition" formatted="false">Feld neu positionieren (Wert von %1$d bis %2$d eingeben)</string>
-  <string name="model_field_editor_changing">Aktualisieren Felder</string>
+  <string name="model_field_editor_changing">Aktualisierung der Felder</string>
   <string name="model_field_editor_sort_field">Nach diesem Feld sortieren</string>
   <string name="model_clone_suffix">Kopie</string>
   <string name="model_delete_warning">Möchten Sie diesen Notiztyp wirklich löschen?</string>

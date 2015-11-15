@@ -39,30 +39,30 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="preference_summary_percentage">XXX%</string>
+  <string name="preference_summary_percentage">XXX %</string>
   <string name="drawer_open">Ouvrir la barre de navigation</string>
   <string name="drawer_close">Fermer la barre de navigation</string>
   <string name="CardEditorLaterMessage">Information sauvegardée pour plus tard</string>
   <string name="CardEditorCardDeck">Paquet de cartes :</string>
   <string name="CardEditorNoteDeck">Paquet :</string>
   <string name="CardEditorModel">Type :</string>
-  <string name="CardEditorTags">Marqueurs : %1$s</string>
+  <string name="CardEditorTags">Étiquettes : %1$s</string>
   <string name="CardEditorCards">Cartes : %1$s</string>
-  <string name="tag_name">Tag name</string>
+  <string name="tag_name">Nom d\'étiquette</string>
   <string name="add_new_filter_tags">Ajouter/filtrer étiquettes</string>
-  <string name="add_tag">Add tag</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
+  <string name="add_tag">Ajouter une étiquette</string>
+  <string name="check_all_tags">Marquer/démarquer toutes les étiquettes</string>
   <string name="filter_tags">Filtrer les étiquettes</string>
-  <string name="no_tags">You haven’t added any tags yet.</string>
+  <string name="no_tags">Vous n\'avez pas encore ajouté des étiquettes.</string>
   <string name="sdcard_missing_message">La carte SD est indisponible car elle sert de mémoire USB. Déconnectez l’USB pour accéder à vos paquets.</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="updated_version">Mis à jour à la version %s</string>
   <string name="enable_whiteboard">Activer le tableau blanc</string>
   <string name="disable_whiteboard">Désactiver le tableau blanc</string>
   <string name="show_whiteboard">Afficher le tableau blanc</string>
   <string name="hide_whiteboard">Masquer le tableau blanc</string>
   <string name="clear_whiteboard">Effacer le tableau blanc</string>
   <string name="replay_audio">Rejouer le son</string>
-  <string name="leech_suspend_notification">La carte a été marquée « pénible » et est masquée</string>
+  <string name="leech_suspend_notification">La carte a été marquée « encombrante » et est suspendue</string>
   <string name="leech_notification">Carte marquée « encombrante »</string>
   <string name="corrupt_font">Fichier de police corrompu %s</string>
   <string-array name="browser_column1_headings">
@@ -78,13 +78,13 @@
     <item>Échecs</item>
     <item>Révisions</item>
   </string-array>
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
-  <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_increase_new_limit">Augmenter la limite de nouvelles cartes pour aujourd\'hui</string>
+  <string name="custom_study_increase_review_limit">Augmenter la limite de révisions pour aujourd\'hui</string>
+  <string name="custom_study_review_forgotten">Réviser des cartes oubliées</string>
+  <string name="custom_study_review_ahead">Réviser en avance</string>
+  <string name="custom_study_random_selection">Réviser une sélection aléatoire de cartes</string>
+  <string name="custom_study_preview_new">Prévisualiser les cartes nouvelles</string>
+  <string name="custom_study_limit_tags">Limiter à certaines étiquettes</string>
   <string name="cardeditor_title_add_note">Ajouter une note</string>
   <string name="cardeditor_title_edit_card">Modifier la note</string>
   <string name="discard_unsaved_changes">Fermer et perdre la saisie en cours ?</string>
@@ -99,8 +99,8 @@
   <string name="field_remapping">%1$s (de « %2$s »)</string>
   <string name="confirm_map_cards_to_nothing">Toute carte sans connexion sera effacée. Si une note n’a aucune carte restante , elle sera perdue. Êtes-vous sûr de vouloir continuer ?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="one">%1$d carte étudiée en %2$s</item>
+    <item quantity="other">%1$d cartes étudiées en %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
     <item quantity="one">%1$d minute</item>
@@ -118,8 +118,8 @@
   <string name="rename_error">Le paquet %s n\'a pas pu être renommé</string>
   <string name="default_conf_delete_error">Le groupe d’option par défaut ne peut pas être supprimé</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="one">%d carte ajoutée</item>
+    <item quantity="other">%d cartes ajoutées</item>
   </plurals>
   <string name="help_title">Aide</string>
   <string name="check_db">Vérification de la base de données</string>
@@ -150,43 +150,43 @@
   <string name="export_successful_title">Envoyer l’apkg par e-mail ?</string>
   <string name="export_successful">Le fichier « %s » a été exporté. Voulez-vous l’envoyer par email ?</string>
   <string name="export_unsuccessful">Erreur pendant l’exportation de la collection</string>
-  <string name="import_hint">Pour importer des cartes, placez le fichier apkg dans le répertoire %s et appuyez sur ok</string>
+  <string name="import_hint">Pour importer des cartes, placez le fichier apkg dans le répertoire « %s » et touchez « OK »</string>
   <string name="upgrade_import_no_file_found">Pas de fichier %1$s importable trouvé</string>
   <string name="study_options">Option des paquets</string>
   <string name="custom_study">Étude personnalisée</string>
-  <string name="more_options">More</string>
+  <string name="more_options">Plus</string>
   <string name="dyn_deck_desc">Ceci est un paquet pour l\'étude en dehors des horaires normaux. Les cartes reviendront automatiquement à leur paquet d\'origine après leur révision. La suppression de ce paquet remettra toutes les cartes restantes dans leur paquet d\'origine.</string>
   <string name="steps_error">Les pas souvent être des nombres supérieurs à 0</string>
   <string name="steps_min_error">Au moins un pas est requis</string>
   <string name="sched_end">(fin)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
+  <string name="sched_unbury_action">Pour les voir maintenant touchez « Déterrer » dans le menu.</string>
   <string name="sched_has_buried">Certaines cartes enterrées ou différées ont été reportées à une prochaine séance.</string>
-  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+  <string name="tag_editor_add_feedback">Touchez «%2$s» pour confirmer l\'addition de «%1$s»</string>
+  <string name="tag_editor_add_feedback_existing">Étiquette existante «%1$s» sélectionnée</string>
   <string name="lookup_hint">Après avoir copié le texte, touchez la carte n’importe où pour afficher l’icône de recherche</string>
   <plurals name="time_span_seconds">
-    <item quantity="one">%s second</item>
-    <item quantity="other">%s seconds</item>
+    <item quantity="one">%s seconde</item>
+    <item quantity="other">%s secondes</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="one">%s minute</item>
+    <item quantity="one">%s minute</item>
     <item quantity="other">%s minutes</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="one">%s hour</item>
-    <item quantity="other">%s hours</item>
+    <item quantity="one">%s heure</item>
+    <item quantity="other">%s heures</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="one">%s day</item>
-    <item quantity="other">%s days</item>
+    <item quantity="one">%s jour</item>
+    <item quantity="other">%s jours</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="one">%s month</item>
-    <item quantity="other">%s months</item>
+    <item quantity="one">%s mois</item>
+    <item quantity="other">%s mois</item>
   </plurals>
   <plurals name="time_span_years">
-    <item quantity="one">%s year</item>
-    <item quantity="other">%s years</item>
+    <item quantity="one">%s an</item>
+    <item quantity="other">%s ans</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
 </resources>

@@ -51,7 +51,7 @@
   <string name="studyoptions_total_cards">Укупно картица:</string>
   <string name="studyoptions_eta">Процењено време (мин):</string>
   <string name="studyoptions_start">Започни учење</string>
-  <string name="study_more">Study more</string>
+  <string name="study_more">Учити више</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d карта за (%2$s)</item>
     <item quantity="few">%1$d карата за (%2$s)</item>
@@ -63,9 +63,9 @@
     <item quantity="other">%d minutes left</item>
   </plurals>
   <plurals name="studied_cards_today">
-    <item quantity="one">Studied %1$d card in %2$s today</item>
-    <item quantity="few">Studied %1$d cards in %2$s today</item>
-    <item quantity="other">Studied %1$d cards in %2$s today</item>
+    <item quantity="one">Проучено %1$d карте за %2$s данас</item>
+    <item quantity="few">Проучено %1$d карата за %2$s данас</item>
+    <item quantity="other">Проучено %1$d карата за %2$s данас</item>
   </plurals>
   <string name="type_answer_hint">Унесите одговор</string>
   <string name="show_answer">Прикажи одговор</string>
@@ -84,7 +84,7 @@
   <string name="undo_action_delete">избриши белешку</string>
   <string name="undo_action_mark">означи белешку</string>
   <string name="unbury">Ископај</string>
-  <string name="rename_deck">Rename deck</string>
+  <string name="rename_deck">Преименуј шпил</string>
   <string name="menu_add">Додај</string>
   <string name="menu_add_note">Додај белешку</string>
   <string name="menu_my_account">Синхронизујте налог</string>
@@ -97,8 +97,8 @@
   <string name="delete_note_message">Да ли заисте желите да избришете белешку и све повезане картице?\n%s</string>
   <string name="menu_select">Означи текст</string>
   <string name="menu_search">Потражи у %1$s</string>
-  <string name="menu_mark_note">Mark note</string>
-  <string name="menu_unmark_note">Unmark note</string>
+  <string name="menu_mark_note">Означи белешку</string>
+  <string name="menu_unmark_note">Уклони ознаку белешке</string>
   <string name="new_deck">Направи шпил</string>
   <string name="create">Креирај</string>
   <string name="new_dynamic_deck">Направи филтриран шпил</string>
@@ -117,7 +117,7 @@
   <string name="empty_cram_deck">Чишћење уклапања шпила.\nМолим сачекајте...</string>
   <string name="custom_study_deck_name">Посебна сесија проучавања</string>
   <string name="custom_study_deck_exists">Прво преименујте постојеће специјалне шпилове.</string>
-  <string name="empty_deck">This deck is empty</string>
+  <string name="empty_deck">Овај шпил је празан</string>
   <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
   <string name="studyoptions_limit_reached">Daily study limit reached</string>
   <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
@@ -129,12 +129,13 @@
   <string name="sd_card_not_mounted">Уређај за чување није монтиран</string>
   <string name="button_sync">Синхронизујте</string>
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-  <string name="sync_cancelled">Sync cancelled</string>
+  <string name="continue_sync">Continue sync</string>
+  <string name="sync_cancelled">Синхронизација отказана</string>
   <string name="export">Извози</string>
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Export deck</string>
   <string name="nothing">Ништа</string>
-  <string name="title_activity_template_editor">Card types</string>
+  <string name="title_activity_template_editor">Типови картица</string>
   <string name="card_template_editor_front">Предњи шаблон</string>
   <string name="card_template_editor_back">Задњи шаблон</string>
   <string name="card_template_editor_styling">Стил</string>
@@ -146,7 +147,7 @@
     <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Брисање тог типа карата довешће до брисања једног или неколико белешки. Направите прво нови тип карата.</string>
-  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+  <string name="read_write_permission_label">Читати и писати у бази података AnkiDroid</string>
   <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
         models, and decks, as well as create new ones.</string>
 </resources>

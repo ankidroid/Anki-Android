@@ -49,7 +49,7 @@
   <string name="multimedia_editor_pron_load">Laden</string>
   <string name="multimedia_editor_pron_looking_up">Schlage Aussprache nach</string>
   <string name="multimedia_editor_pron_pronunciation_failed">Aussprache fehlgeschlagen</string>
-  <string name="multimedia_editor_word_search_try_lower_case">Versuchen Sie es mit Kleinbuchstaben</string>
+  <string name="multimedia_editor_word_search_try_lower_case">Versuchen Sie es nur mit Kleinbuchstaben</string>
   <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
   <string name="multimedia_editor_imgs_saving_image">Speichere Bild</string>
   <string name="multimedia_editor_imgs_loading_image">Lade Bild</string>
@@ -83,13 +83,13 @@
   <string name="multimedia_editor_searching_word">Suche nach dem Wort</string>
   <string name="multimedia_editor_progress_wait_title">Warten</string>
   <string name="multimedia_editor_something_wrong">Etwas ist schiefgelaufen</string>
-  <string name="multimedia_editor_attach_mm_content">Multimediainhalt der Notiz hinzufügen</string>
+  <string name="multimedia_editor_attach_mm_content">Multimediainhalt zur Notiz hinzufügen</string>
   <string name="multimedia_editor_attach_media">Medien anhängen</string>
   <string name="multimedia_editor_audio_view_recording_failed">Aufnahme fehlgeschlagen</string>
   <string name="multimedia_editor_audio_view_playing_failed">Abspielen fehlgeschlagen</string>
   <string name="title_activity_edit_text">Bearbeite Feld</string>
   <string name="title_activity_translation">Übersetzung</string>
   <string name="title_activity_load_pronounciation">Aussprache</string>
-  <string name="title_activity_search_image">Google-Bildsuche</string>
+  <string name="title_activity_search_image">Google-Bildersuche</string>
   <string name="network_no_connection">Keine Verbindung.</string>
 </resources>

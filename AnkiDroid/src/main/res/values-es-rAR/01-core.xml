@@ -51,7 +51,7 @@
   <string name="studyoptions_total_cards">Total de tarjetas:</string>
   <string name="studyoptions_eta">Tiempo estimado (min):</string>
   <string name="studyoptions_start">Estudiar ahora</string>
-  <string name="study_more">Study more</string>
+  <string name="study_more">Estudiar más</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d tarjeta programada (%2$s)</item>
     <item quantity="other">%1$d tarjetas programadas (%2$s)</item>
@@ -81,7 +81,7 @@
   <string name="undo_action_delete">Eliminar nota</string>
   <string name="undo_action_mark">Marcar nota</string>
   <string name="unbury">Desenterrar</string>
-  <string name="rename_deck">Rename deck</string>
+  <string name="rename_deck">Renombrar mazo</string>
   <string name="menu_add">Añadir</string>
   <string name="menu_add_note">Añadir nota</string>
   <string name="menu_my_account">Sincronizar cuenta</string>
@@ -114,8 +114,8 @@
   <string name="empty_cram_deck">Vaciando mazo empollado.\nPor favor aguarde...</string>
   <string name="custom_study_deck_name">Sesión de Estudio Personalizado</string>
   <string name="custom_study_deck_exists">Por fovar, renombre primero el mazo de Estudio Personalizado existente.</string>
-  <string name="empty_deck">This deck is empty</string>
-  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="empty_deck">Este mazo está vacío</string>
+  <string name="studyoptions_empty">Este mazo está vacío. Pulsa el botón + para añadir contenido nuevo.</string>
   <string name="studyoptions_limit_reached">Daily study limit reached</string>
   <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">¡Felicitaciones! Ha terminado por ahora.</string>
@@ -126,12 +126,13 @@
   <string name="sd_card_not_mounted">El almacenamiento del dispositivo no se encuentra montado</string>
   <string name="button_sync">Sincronización</string>
   <string name="cancel_sync_confirm">¿Deseas cancelar la sincronización?</string>
+  <string name="continue_sync">Continue sync</string>
   <string name="sync_cancelled">Sincronización cancelada</string>
   <string name="export">Exportar</string>
-  <string name="export_collection">Export collection</string>
-  <string name="export_deck">Export deck</string>
+  <string name="export_collection">Exportar colección</string>
+  <string name="export_deck">Exportar mazo</string>
   <string name="nothing">Nada</string>
-  <string name="title_activity_template_editor">Card types</string>
+  <string name="title_activity_template_editor">Tipos de tarjeta</string>
   <string name="card_template_editor_front">Plantilla Anverso</string>
   <string name="card_template_editor_back">Plantilla Reverso</string>
   <string name="card_template_editor_styling">Estilo</string>

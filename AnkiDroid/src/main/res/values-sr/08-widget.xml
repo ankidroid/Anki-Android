@@ -40,7 +40,7 @@
 -->
 <resources>
   <string name="widget_minimum_cards_due_notification_ticker_title">Картице за преглед</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d АнкиДројд картица за преглед</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid картица за преглед</string>
   <string name="widget_no_cards_due">Нема картица за учење</string>
   <string name="widget_loading">Виџет се учитава...</string>
   <plurals name="widget_cards_in_decks_due">

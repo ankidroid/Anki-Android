@@ -51,5 +51,5 @@
     <item quantity="one">%1$d Stapel</item>
     <item quantity="other">%1$d Stapel</item>
   </plurals>
-  <string name="widget_small">AnkiDroid Klein</string>
+  <string name="widget_small">AnkiDroid klein</string>
 </resources>

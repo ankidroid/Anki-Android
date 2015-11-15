@@ -58,9 +58,9 @@
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
-    <item quantity="few">%d minutes left</item>
-    <item quantity="other">%d minutes left</item>
+    <item quantity="one">Została %d minuta</item>
+    <item quantity="few">Zostało minut: %d</item>
+    <item quantity="other">Zostało %d minut</item>
   </plurals>
   <plurals name="studied_cards_today">
     <item quantity="one">Studied %1$d card in %2$s today</item>
@@ -84,7 +84,7 @@
   <string name="undo_action_delete">usunięcie notatki</string>
   <string name="undo_action_mark">wyróżnienie notatki</string>
   <string name="unbury">Odkop</string>
-  <string name="rename_deck">Rename deck</string>
+  <string name="rename_deck">Zmień nazwę talii</string>
   <string name="menu_add">Dodaj</string>
   <string name="menu_add_note">Dodaj notatkę</string>
   <string name="menu_my_account">Synchronizacja konta</string>
@@ -117,10 +117,10 @@
   <string name="empty_cram_deck">Czyszczenie talii.\nProszę czekać...</string>
   <string name="custom_study_deck_name">Sesja nauki niestandardowej</string>
   <string name="custom_study_deck_exists">Najpierw zmień nazwę istniejącej talii nauki niestandardowej.</string>
-  <string name="empty_deck">This deck is empty</string>
-  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-  <string name="studyoptions_limit_reached">Daily study limit reached</string>
-  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+  <string name="empty_deck">Ta talia jest pusta</string>
+  <string name="studyoptions_empty">Talia jest pusta. Wybierz przycisk + żeby dodać karty.</string>
+  <string name="studyoptions_limit_reached">Dzienny limit nauki został wyczerpany</string>
+  <string name="studyoptions_empty_schedule">Nie ma zaplanowanych kart do nauki</string>
   <string name="studyoptions_congrats_finished">Gratulacje! Zakończono powtórki na dziś.</string>
   <string name="studyoptions_congrats_more_rev">Dzisiejszy limit powtórek został wyczerpany, ale wciąż pozostają karty do przejrzenia. Dla optymalnego zapamiętywania proszę rozważyć zwiększenie dziennego limitu w ustawieniach.</string>
   <string name="studyoptions_congrats_more_new">Pozostało więcej kart do przejrzenia, ale dzienny limit został osiągnięty. Możesz zwiększyć limit w opcjach, ale miej na uwadze, że zwiększy to ilość powtórzeń w najbliższych dniach.</string>
@@ -128,13 +128,14 @@
   <string name="studyoptions_no_cards_due">Nie ma żadnych kart do przejrzenia.</string>
   <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Synchronizuj</string>
-  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-  <string name="sync_cancelled">Sync cancelled</string>
+  <string name="cancel_sync_confirm">Chcesz przerwać synchronizację?</string>
+  <string name="continue_sync">Continue sync</string>
+  <string name="sync_cancelled">Synchronizacja przerwana</string>
   <string name="export">Eksportuj</string>
-  <string name="export_collection">Export collection</string>
-  <string name="export_deck">Export deck</string>
+  <string name="export_collection">Eksportuj kolekcję</string>
+  <string name="export_deck">Eksportuj talię</string>
   <string name="nothing">Nic</string>
-  <string name="title_activity_template_editor">Card types</string>
+  <string name="title_activity_template_editor">Typ karty</string>
   <string name="card_template_editor_front">Szablon przodu</string>
   <string name="card_template_editor_back">Szablon tyłu</string>
   <string name="card_template_editor_styling">Styl</string>
