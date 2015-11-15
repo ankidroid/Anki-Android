@@ -243,7 +243,7 @@ public class Template {
         });
 
         for (String mod : mods) {
-            Timber.d("Models.get():: Processing field: modifier=%s, extra=%s, tag=%s, txt=%s", mod, extra, tag, txt);
+            //Timber.d("Models.get():: Processing field: modifier=%s, extra=%s, tag=%s, txt=%s", mod, extra, tag, txt);
             // built-in modifiers
             if (mod.equals("text")) {
                 // strip html
