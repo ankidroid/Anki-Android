@@ -62,7 +62,7 @@ git clone git@github.com:ankidroid/Anki-Android.git
 cd Anki-Android
 
 # Every time setup.
-RELEASE_BRANCH=hotfix-2.3.1  # Update this accordingly.
+RELEASE_BRANCH=release-2.5  # Update this accordingly.
 git fetch
 git checkout $RELEASE_BRANCH
 git pull --ff-only
@@ -104,8 +104,7 @@ done
 # You should resolve the conflict and press ENTER to continue.
 # Remember to add 
 # Make sure things still build.
-./create-build-files.sh 
-ant clean debug
+./gradlew clean assembleDebug
 
 # Generate a merge.log
 git log --first-parent origin/develop..develop --format='%B' --reverse >$HOME/merge.log
@@ -115,5 +114,5 @@ git push
 # Send the merge log to anki-android@googlegroups.com
 # If a thread for the logs already exist, add a message to that thread,
 # otherwise create a new thread named:
-#   Catching up develo to $RELEASE_BRANCH
+#   Catching up develop to $RELEASE_BRANCH
 ```
