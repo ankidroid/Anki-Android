@@ -605,15 +605,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         } else if (requestCode == REQUEST_REVIEW && resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
             // Show a message when reviewing has finished
-            int[] counts = getCol().getSched().counts();
-            if ((counts[0]+counts[1]+counts[2])>0) {
-                // If no more cards getting returned while counts > 0 then show a no cards left to study message
-                showSimpleSnackbar(R.string.studyoptions_no_cards_due, false);
-            } else {
-                // Otherwise show standard congratulations message
-                showSimpleSnackbar(R.string.studyoptions_congrats_finished, false);
-                mCongratulationsShown = true;
-            }
+            showSimpleSnackbar(R.string.studyoptions_congrats_finished, false);
+            mCongratulationsShown = true;
         }
     }
 
