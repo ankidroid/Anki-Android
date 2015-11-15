@@ -66,7 +66,8 @@
   <string name="leech_notification">כרטיס מסומן כעלוקה</string>
   <string name="corrupt_font">קובץ גופן %s פגום</string>
   <string-array name="browser_column1_headings">
-    <item>שדה המיון</item>
+    <item>Question</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>תשובה</item>

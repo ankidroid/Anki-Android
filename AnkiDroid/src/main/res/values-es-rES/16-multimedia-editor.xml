@@ -44,7 +44,7 @@
   <string name="multimedia_editor_trans_translating_online">Traducción en línea</string>
   <string name="multimedia_editor_trans_pick_translation">Elegir traducción</string>
   <string name="multimedia_editor_trans_translation_failed">Traducción fallida</string>
-  <string name="multimedia_editor_trans_pick_translation_source">Seleccionar diccionario</string>
+  <string name="multimedia_editor_trans_pick_translation_source">Elegir diccionario</string>
   <string name="multimedia_editor_trans_install_color_dict">Primero instale ColorDict</string>
   <string name="multimedia_editor_pron_load">Cargar</string>
   <string name="multimedia_editor_pron_looking_up">Buscando la pronunciación</string>
@@ -71,7 +71,7 @@
   <string name="multimedia_editor_text_field_editing_clear">Limpiar</string>
   <string name="multimedia_editor_text_field_editing_clone">Clonar de</string>
   <string name="multimedia_editor_text_field_editing_translate">Traducción</string>
-  <string name="multimedia_editor_text_field_editing_no_text">Introduzca texto antes</string>
+  <string name="multimedia_editor_text_field_editing_no_text">Introduce texto antes</string>
   <string name="multimedia_editor_text_field_editing_many_words">El diccionario normalmente espera una palabra</string>
   <string name="multimedia_editor_text_field_editing_clone_source">Tomado de</string>
   <string name="multimedia_editor_image_field_editing_galery">Galería</string>

@@ -46,7 +46,7 @@
   <string name="pref_cat_reviewer_behaviour">Comportament</string>
   <string name="pref_cat_flashcard">Pantalla</string>
   <string name="pref_cat_whiteboard">Pissarra</string>
-  <string name="pref_cat_automatic_display">Automatic display answer</string>
+  <string name="pref_cat_automatic_display">Mostra la resposta automàticament</string>
   <string name="pref_cat_fonts">Tipus de lletra</string>
   <string name="pref_cat_fonts_summ">Canviar el tamany i tipus de lletra per defecte</string>
   <string name="pref_cat_gestures">Gestos</string>
@@ -74,7 +74,7 @@
   <string name="card_zoom">Zoom de carta</string>
   <string name="image_zoom">Zoom d\'imatge</string>
   <string name="button_size">Mida de botó de resposta</string>
-  <string name="card_browser_font_size">Card browser font scaling</string>
+  <string name="card_browser_font_size">Tamany de lletra al cercador de targetes</string>
   <string name="col_path">Camí de la col·lecció</string>
   <string name="fullscreen_review">Mode de pantalla completa</string>
   <string name="fullscreen_review_summ">Amaga la barra d\'estat de sistema</string>
@@ -153,7 +153,7 @@
   <string name="filter_google_translate_summ">Desa només la paraula original i la seva traducció</string>
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
   <string name="enable_api_title">Activa l\'API de l\'AnkiDroid</string>
-  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+  <string name="enable_api_summary">Deixar altres apps connectar-se a AnkiDroid i llegir / escriure dades sense la seva intervenció</string>
   <string name="studyoptions_limit_select_tags">Trieu les etiquetes</string>
   <string name="deck_conf_deck_description">Descripció del paquet</string>
   <string name="deck_conf_group">Grup d\'opcions</string>
@@ -173,8 +173,8 @@
   <string name="deck_conf_easy_ivl">Interval amb facilitat</string>
   <string name="deck_conf_start_ease">Interval de partida</string>
   <string name="deck_conf_max_rev">Nombre màxim de revisions/dia</string>
-  <string name="deck_conf_new_bury">Bury related new cards</string>
-  <string name="deck_conf_new_bury_summ">Related new cards are buried until the next day</string>
+  <string name="deck_conf_new_bury">Enterra noves cartes relacionades</string>
+  <string name="deck_conf_new_bury_summ">Les noves targetes relacionades seran enterrades fins al dia següent</string>
   <string name="deck_conf_rev_bury">Enterra revisions relacionades</string>
   <string name="deck_conf_rev_bury_summ">Les revisions relacionades estan enterrades fins al dia següent</string>
   <string name="deck_conf_easy_bonus">Bonus de facilitat</string>

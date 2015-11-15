@@ -88,7 +88,7 @@
   <string name="stats_review_intervals">Intervals</string>
   <string name="stats_breakdown">Hourly breakdown</string>
   <string name="stats_weekly_breakdown">Weekly breakdown</string>
-  <string name="stats_answer_buttons">Answer buttons</string>
+  <string name="stats_answer_buttons">Válasz gombok</string>
   <string name="stats_cards_types">Cards types</string>
   <string-array name="stats_day_time_strings">
     <item>4AM</item>
@@ -104,7 +104,7 @@
     <item>Wed</item>
     <item>Thu</item>
     <item>Fri</item>
-    <item>Sat</item>
+    <item>Szombat</item>
   </string-array>
   <string-array name="stats_eases_ticks">
     <item>1</item>

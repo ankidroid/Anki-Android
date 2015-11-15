@@ -45,7 +45,7 @@
   <string name="settings">Configuración</string>
   <string name="help">Ayuda</string>
   <string name="send_feedback">Enviar comentarios</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <string name="studyoptions_title">Perspectiva general del mazo</string>
   <string name="studyoptions_due_today">Programadas para hoy:</string>
   <string name="studyoptions_new_total">Total de tarjetas nuevas:</string>
   <string name="studyoptions_total_cards">Total de tarjetas:</string>
@@ -116,8 +116,8 @@
   <string name="custom_study_deck_exists">Por fovar, renombre primero el mazo de Estudio Personalizado existente.</string>
   <string name="empty_deck">Este mazo está vacío</string>
   <string name="studyoptions_empty">Este mazo está vacío. Pulsa el botón + para añadir contenido nuevo.</string>
-  <string name="studyoptions_limit_reached">Daily study limit reached</string>
-  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+  <string name="studyoptions_limit_reached">Límite de estudio diario alcanzado</string>
+  <string name="studyoptions_empty_schedule">No hay tarjetas programadas para estudiar</string>
   <string name="studyoptions_congrats_finished">¡Felicitaciones! Ha terminado por ahora.</string>
   <string name="studyoptions_congrats_more_rev">El límite de revisión para hoy ha sido alcanzado pero aún hay tarjetas esperando a ser revisadas. Para una memoria óptima considere incrementar el límite diario en las ocpiones.</string>
   <string name="studyoptions_congrats_more_new">Hay más tarjetas nuevas disponibles pero el límite diario ha sido alcanzado. Puede incrementar el límite en las opciones, pero por favor tenga en cuenta que esto incrementará el trabajo de revisión a corto plazo.</string>
@@ -126,7 +126,7 @@
   <string name="sd_card_not_mounted">El almacenamiento del dispositivo no se encuentra montado</string>
   <string name="button_sync">Sincronización</string>
   <string name="cancel_sync_confirm">¿Deseas cancelar la sincronización?</string>
-  <string name="continue_sync">Continue sync</string>
+  <string name="continue_sync">Continuar la sincronización</string>
   <string name="sync_cancelled">Sincronización cancelada</string>
   <string name="export">Exportar</string>
   <string name="export_collection">Exportar colección</string>

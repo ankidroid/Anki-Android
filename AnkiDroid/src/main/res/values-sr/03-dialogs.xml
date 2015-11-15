@@ -39,17 +39,17 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">Провери базу података</string>
+  <string name="check_db_title">Провери базу података?</string>
   <string name="check_db_warning">Ово може узети много времена</string>
   <string name="check_db_acknowledge">База проверена</string>
   <string name="check_db_acknowledge_shrunk">База је проверена и оптимизована.\nУмањење за %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Избриши шпил</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
-  <string name="delete_deck_title">Избриши шпил</string>
+  <string name="delete_deck_default_deck">Подразумеван шпил се не могу избрисати.</string>
+  <string name="delete_deck_title">Избриши шпил?</string>
   <plurals name="delete_deck_message">
-    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
-    <item quantity="few">Delete all cards in %1$s? It contains %2$d cards.</item>
-    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="one">Избриши све картице у %1$s? Садржи %2$d картица.</item>
+    <item quantity="few">Избриши све картице у %1$s? Садржи %2$d картице.</item>
+    <item quantity="other">Избриши све картице у %1$s? Садржи %2$d картица.</item>
   </plurals>
   <string name="delete_cram_deck_message">Да ли сте сигурни да желите да пошаљете све картице из %s у њихове оригиналне шпилове?</string>
   <string name="no_tts_available_message">Функција претварања текста у говор није доступна</string>
@@ -121,7 +121,7 @@
   <string name="check_media_db_updated">База за медије обновљена.</string>
   <string name="check_media_delete_unused">Избриши некоришћених</string>
   <string name="check_media_deleted">Датотеке избрисане: %d</string>
-  <string name="tags_dialog_option_all_cards">All cards</string>
-  <string name="tags_dialog_option_new_cards">New</string>
+  <string name="tags_dialog_option_all_cards">Све картице</string>
+  <string name="tags_dialog_option_new_cards">Нове</string>
   <string name="tags_dialog_option_due_cards">Due</string>
 </resources>

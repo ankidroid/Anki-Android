@@ -61,7 +61,7 @@
     <item quantity="other">%d minutos restantes</item>
   </plurals>
   <plurals name="studied_cards_today">
-    <item quantity="one">%1$d cartão estudado em %2$s hoje</item>
+    <item quantity="one">%1$d cartões estudados em %2$s hoje</item>
     <item quantity="other">%1$d cartões estudados em %2$s hoje</item>
   </plurals>
   <string name="type_answer_hint">Digitar resposta</string>
@@ -75,7 +75,7 @@
   <string name="undo">Desfazer</string>
   <string name="undo_action_review">última revisão</string>
   <string name="undo_action_edit">editar nota</string>
-  <string name="undo_action_bury">ocultar nota</string>
+  <string name="undo_action_bury">enterrar nota</string>
   <string name="undo_action_suspend_card">suspender cartão</string>
   <string name="undo_action_suspend_note">suspender nota</string>
   <string name="undo_action_delete">deletar nota</string>
@@ -85,9 +85,9 @@
   <string name="menu_add">Adicionar</string>
   <string name="menu_add_note">Adicionar nota</string>
   <string name="menu_my_account">Sincronizar conta</string>
-  <string name="menu_dismiss_note">Ocultar / Excluir</string>
+  <string name="menu_dismiss_note">Ocultar / excluir</string>
   <string name="menu_bury_card">Ocultar cartão</string>
-  <string name="menu_bury_note">Ocultar nota</string>
+  <string name="menu_bury_note">Enterrar Nota</string>
   <string name="menu_suspend_card">Suspender cartão</string>
   <string name="menu_suspend_note">Suspender nota</string>
   <string name="menu_delete_note">Deletar nota</string>
@@ -108,11 +108,11 @@
   <string name="time_quantity_months">%.1f mês</string>
   <string name="time_quantity_years">%.1f ano</string>
   <string name="later">Mais tarde</string>
-  <string name="rebuild_cram_deck">A reconstruir o baralho de estudo intensivo&#8230;</string>
+  <string name="rebuild_cram_deck">Reconstruindo baralho de estudo intensivo&#8230;</string>
   <string name="rebuild_cram_label">Reconstruir</string>
-  <string name="empty_cram_label">Vazio</string>
+  <string name="empty_cram_label">Esvaziar</string>
   <string name="empty_cram_deck">A limpar o baralho de estudo intensivo&#8230;</string>
-  <string name="custom_study_deck_name">Sessão de Estudo Personalizado</string>
+  <string name="custom_study_deck_name">Sessão de estudo personalizado</string>
   <string name="custom_study_deck_exists">Por favor renomeie o baralho de estudo personalizado existente primeiro</string>
   <string name="empty_deck">Este baralho está vazio</string>
   <string name="studyoptions_empty">Este baralho está vazio. Pressione o botão + para adicionar novos conteúdos.</string>
@@ -126,7 +126,7 @@
   <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
   <string name="button_sync">Sincronizar</string>
   <string name="cancel_sync_confirm">Você quer cancelar a sincronização?</string>
-  <string name="continue_sync">Continue sync</string>
+  <string name="continue_sync">Continuar a sincronização</string>
   <string name="sync_cancelled">Sincronização cancelada</string>
   <string name="export">Exportar</string>
   <string name="export_collection">Exportar coleção</string>
@@ -144,5 +144,5 @@
   </plurals>
   <string name="card_template_editor_would_delete_note">Remover este tipo de cartão resultaria na remoção de uma ou mais notas. Por favor, crie primeiro um novo tipo de cartão.</string>
   <string name="read_write_permission_label">Ler e escrever para o banco de dados do AnkiDroid</string>
-  <string name="read_write_permission_description">Permitir que o aplicativo seja capaz de acessar notas existentes, cartões, modelos e baralhos, bem como criar novos.</string>
+  <string name="read_write_permission_description">Permitir que o aplicativo seja capaz de acessar notas, cartões,        modelos e baralhos existentes, bem como criar novos.</string>
 </resources>

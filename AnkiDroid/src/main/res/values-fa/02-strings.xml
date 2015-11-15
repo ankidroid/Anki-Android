@@ -66,6 +66,7 @@
   <string name="leech_notification">کارت به عنوان مزاحم مشخص شده است</string>
   <string name="corrupt_font">فونت فایل خراب %s</string>
   <string-array name="browser_column1_headings">
+    <item>Question</item>
     <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">

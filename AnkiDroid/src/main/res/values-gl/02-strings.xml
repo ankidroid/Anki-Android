@@ -66,6 +66,7 @@
   <string name="leech_notification">Cartón marcado como sambesuga</string>
   <string name="corrupt_font">Arquivo de fonte corrupto %s</string>
   <string-array name="browser_column1_headings">
+    <item>Question</item>
     <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">

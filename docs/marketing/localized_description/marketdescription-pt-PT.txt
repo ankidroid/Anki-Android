@@ -1,4 +1,4 @@
-Memorize qualquer coisa com o AnkiDroid!
+Memorize qualquer coisa com AnkiDroid!
 
 AnkiDroid permite-lhe memorizar fichas de pergunta/resposta eficientemente ao mostrá-las antes que você as esqueça. É totalmente compatível com o software de repetição espaçada Anki (incluindo sincronização), que está disponível para Windows, Linux e MacOS.
 
@@ -6,9 +6,9 @@ Estude todo o tipo de coisas, onde e quando quiser. Faça bom uso do tempo livre
 
 Crie os seus próprios baralhos de fichas ou transfira baralhos gratuitos compilados para vários idiomas e tópicos (disponíveis mais de 6.000).
 
-Adicione material através da aplicação para PC do Anki ou diretamente atravs do AnkiDroid. A aplicação suporta até mesmo adicionar material automaticamente a partir de um dicionário!
+Adicione material através da aplicação Anki para Pc ou diretamente através da AnkiDroid. A aplicação suporta até mesmo adicionar material automaticamente a partir de um dicionário!
 
-★ Características principais:
+★ Funcionalidades principais:
 • conteúdos de ficha suportados: texto, imagens, sons, LaTeX
 • repetição espaçada (algoritmo de supermemo 2)
 • integração de texto para voz
@@ -16,14 +16,14 @@ Adicione material através da aplicação para PC do Anki ou diretamente atravs 
 • widget de progresso
 • estatísticas detalhadas
 • sincronização com o AnkiWeb
-• código aberto (open source)
+• código aberto
 
-★ Características adicionais:
+★ Funcionalidades adicionais:
 • grave respostas (opcional)
 • quadro para escrever/desenhar
 • editor/criador de fichas
 • navegador de fichas
-• layout compatível com tablets
+• layout para tablet
 • importar arquivos de coleção existentes (via Anki Desktop)
 • integração de dicionário (ColorDict, GoldenDict, Leo.org, Aedict, diversos dicionários da web)
 • Adicionar fichas a partir de outras apps tais como dicionários
@@ -33,5 +33,5 @@ Adicione material através da aplicação para PC do Anki ou diretamente atravs 
 • personalizável
 • gestão de baralhos dinâmica
 • modo noturno
-• 27 traduções
-• Todas as versões anteriores do AnkiDroid disponíveis para download no site
+• 27 localizações
+• Podem ser transferidas do site da Web todas as versões anteriores da AnkiDroid

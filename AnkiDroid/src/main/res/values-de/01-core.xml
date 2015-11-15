@@ -126,7 +126,7 @@
   <string name="sd_card_not_mounted">Gerätespeicher nicht eingehängt</string>
   <string name="button_sync">Synchronisieren</string>
   <string name="cancel_sync_confirm">Wollen Sie die Synchronisation abbrechen?</string>
-  <string name="continue_sync">Continue sync</string>
+  <string name="continue_sync">Weiter synchronisieren</string>
   <string name="sync_cancelled">Synchronisation abgebrochen</string>
   <string name="export">Exportieren</string>
   <string name="export_collection">Sammlung exportieren</string>

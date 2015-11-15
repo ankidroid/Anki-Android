@@ -50,16 +50,16 @@
     <item>Препоручени одговор (зелени)</item>
     <item>Боље од препорученог</item>
     <item>Опозови</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Уреди белешку</item>
+    <item>Означи белешку</item>
     <item>Претрага израза</item>
     <item>Сакриј, покажи касније</item>
     <item>Откажи картицу</item>
-    <item>Delete note</item>
+    <item>Избриши белешку</item>
     <item>Пусти медију</item>
     <item>Прекини учење</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Закопај белешку</item>
+    <item>Откажи белешку</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Откажи картицу</item>

@@ -55,7 +55,7 @@
   <string name="filter_tags">Filtrar etiquetes</string>
   <string name="no_tags">Encara no s\'ha afegit cap etiqueta.</string>
   <string name="sdcard_missing_message">La targeta SD no es troba disponible perquè està sent utilitzada com a emmagatzematge via USB. Desconnecteu l\'USB per accedir a les teves baralles.</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="updated_version">Actualitzeu a la versió %s</string>
   <string name="enable_whiteboard">Activar pissarra</string>
   <string name="disable_whiteboard">Desactiva la pissarra</string>
   <string name="show_whiteboard">Mostra la pissarra</string>
@@ -66,7 +66,8 @@
   <string name="leech_notification">Fitxa marcada com a lapa</string>
   <string name="corrupt_font">Fitxer de tipus de lletra incorrecte %s</string>
   <string-array name="browser_column1_headings">
-    <item>Camp d\'ordenació</item>
+    <item>Question</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Resposta</item>

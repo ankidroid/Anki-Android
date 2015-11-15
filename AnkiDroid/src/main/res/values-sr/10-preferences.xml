@@ -71,8 +71,8 @@
   <string name="reset_languages_summ">Ресетуј језике (за претварање текста у звук и речнике) за све шпилове. Ресетуј за конкретне шпилове - у садржају шпилова</string>
   <string name="reset_languages_question">Да ресетујем све језичке поставке?</string>
   <string name="reset_confirmation">Ресетована сва подешавања</string>
-  <string name="card_zoom">Card zoom</string>
-  <string name="image_zoom">Image zoom</string>
+  <string name="card_zoom">Зумирање картице</string>
+  <string name="image_zoom">Зумирање слике</string>
   <string name="button_size">Величина дугмета за одговор</string>
   <string name="card_browser_font_size">Величина фонта прегледача картица</string>
   <string name="col_path">Фасцикла са колекцијом</string>
@@ -103,7 +103,7 @@
   <string name="sync_account">AnkiWeb налог</string>
   <string name="sync_account_summ_logged_out">Нисте ауторизовани</string>
   <string name="sync_account_summ_logged_in">%s</string>
-  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice">Аутоматска синхронизација</string>
   <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
   <string name="fix_hebrew_text">Исправке за хебрејске гласове</string>
@@ -153,15 +153,15 @@
   <string name="filter_google_translate">Из Google Преводиоца</string>
   <string name="filter_google_translate_summ">Једноставно чување изворне речи и превода</string>
   <string name="convert_fen_text_summ">Цртај шаховску таблу са Форсит-Едвардс нотацијом. Нотација мора да буде ограђена [fen][/fen] таговима.</string>
-  <string name="enable_api_title">Enable AnkiDroid API</string>
+  <string name="enable_api_title">Омогући AnkiDroid API</string>
   <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
   <string name="studyoptions_limit_select_tags">Изаберите ознаке</string>
   <string name="deck_conf_deck_description">Опис шпила</string>
   <string name="deck_conf_group">Група опције</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d deck uses this group</item>
-    <item quantity="few">%1$s\n%2$d decks use this group</item>
-    <item quantity="other">%1$s\n%2$d decks use this group</item>
+    <item quantity="one">%1$s\n%2$d шпил користи ову групу</item>
+    <item quantity="few">%1$s\n%2$d шпила користи ову групу</item>
+    <item quantity="other">%1$s\n%2$d шпилова користи ову групу</item>
   </plurals>
   <string name="deck_conf_new_cards">Нове картице</string>
   <string name="deck_conf_rev_cards">Понављања</string>
@@ -206,9 +206,9 @@
   <string name="deck_conf_remove_message">Да уклоним текућу групу опција?</string>
   <string name="deck_conf_set_subdecks">Задај за све групе подшпилова</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s subdeck will use this group</item>
-    <item quantity="few">%s subdecks will use this group</item>
-    <item quantity="other">%s subdecks will use this group</item>
+    <item quantity="one">%s подшпил ће да користи ову групу</item>
+    <item quantity="few">%s подшпила ће да користи ову групу</item>
+    <item quantity="other">%s подшпила ће да користи ову групу</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Задај за све групе шпилова</string>
   <string name="deck_conf_set_subdecks_message">Да задам текућу групу опција за све подшпилове ових шпилова?</string>

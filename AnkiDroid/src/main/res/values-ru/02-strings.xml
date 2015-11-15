@@ -66,7 +66,8 @@
   <string name="leech_notification">Карта помечена как \"приставучая\"</string>
   <string name="corrupt_font">Повреждённый файл шрифта %s</string>
   <string-array name="browser_column1_headings">
-    <item>Поле сортировки</item>
+    <item>Question</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Ответ</item>
