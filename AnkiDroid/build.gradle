@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.github.triplet.play'
 def homePath = System.properties['user.home']
 android {
     compileSdkVersion 23
@@ -10,13 +11,17 @@ android {
         targetSdkVersion 23
         testApplicationId "com.ichi2.anki.tests"
     }
+    lintOptions {
+        abortOnError false
+        disable 'TypographyEllipsis'
+    }
     signingConfigs {
-      release {
-        storeFile file("${homePath}/src/android-keystore")
-        keyAlias "nrkeystorealias"
-        storePassword System.getenv("KSTOREPWD")
-        keyPassword System.getenv("KEYPWD")
-      }
+        release {
+            storeFile file("${homePath}/src/android-keystore")
+            keyAlias "nrkeystorealias"
+            storePassword System.getenv("KSTOREPWD")
+            keyPassword System.getenv("KEYPWD")
+        }
     }
     buildTypes {
         release {
@@ -24,11 +29,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
-    }   
-    lintOptions {
-        abortOnError false
-        disable 'TypographyEllipsis'
     }
+}
+
+
+play {
+    serviceAccountEmail = '294046724212-r3bef6kl46pb9gk0h1pl5rcjmpfrdpjl@developer.gserviceaccount.com'
+    pk12File = file("${homePath}/src/583631bdd16d.p12")
 }
 
 dependencies {
