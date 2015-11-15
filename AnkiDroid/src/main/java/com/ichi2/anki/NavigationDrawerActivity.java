@@ -102,6 +102,7 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
             mHeader = new AccountHeaderBuilder()
                     .withActivity(this)
                     .withHeaderBackground(ta.getResourceId(0, R.drawable.nav_drawer_logo))
+                    .withDividerBelowHeader(false)
                     .build();
         }
         // Add the items to the drawer and build it

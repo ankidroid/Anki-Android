@@ -45,10 +45,13 @@ dependencies {
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
     compile 'com.android.support:design:23.0.1'
     compile 'com.android.support:customtabs:23.0.1'
-    compile('com.afollestad.material-dialogs:core:0.8.3.0@aar') {
+    compile 'com.android.support:recyclerview-v7:23.0.1'
+    compile('com.afollestad.material-dialogs:core:0.8.5.0@aar') {
         transitive = true
+        exclude group: 'com.android.support'
     }
-    compile('com.mikepenz:materialdrawer:4.3.6@aar') {
+    compile('com.mikepenz:materialdrawer:4.4.3@aar') {
+        exclude group: 'com.android.support'
         transitive = true
     }
     compile 'net.i2p.android.ext:floatingactionbutton:1.10.0'
