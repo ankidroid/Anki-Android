@@ -1260,6 +1260,11 @@ public class Collection {
     		note3.flush(note3.getMod(), false);
     		return (Long) data[3];
 
+        case UNDO_BURY_CARD:
+            for (Card cc : (ArrayList<Card>)data[2]) {
+                cc.flush(false);
+            }
+            return (Long) data[3];
         default:
         	return 0;
     	}
@@ -1274,24 +1279,24 @@ public class Collection {
     	case UNDO_EDIT_NOTE:
     		mUndo.add(new Object[]{type, ((Note)o[0]).clone(), o[1], o[2]});
     		break;
-        case UNDO_BURY_CARD:
+        case UNDO_BURY_NOTE:
             mUndo.add(new Object[]{type, o[0], o[1], o[2]});
             break;
-    	case UNDO_BURY_NOTE:
-    		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
-    		break;
-    	case UNDO_SUSPEND_CARD:
-    		mUndo.add(new Object[]{type, ((Card)o[0]).clone()});
-    		break;
-    	case UNDO_SUSPEND_NOTE:
-    		mUndo.add(new Object[]{type, o[0], o[1]});
-    		break;
+        case UNDO_SUSPEND_CARD:
+            mUndo.add(new Object[]{type, ((Card)o[0]).clone()});
+            break;
+        case UNDO_SUSPEND_NOTE:
+            mUndo.add(new Object[]{type, o[0], o[1]});
+            break;
     	case UNDO_DELETE_NOTE:
     		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
     		break;
     	case UNDO_MARK_NOTE:
     		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
     		break;
+        case UNDO_BURY_CARD:
+            mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+            break;
     	}
     	while (mUndo.size() > UNDO_SIZE_MAX) {
     		mUndo.removeFirst();
