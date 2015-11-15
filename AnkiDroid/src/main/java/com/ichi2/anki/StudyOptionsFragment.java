@@ -30,7 +30,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -426,10 +425,12 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             }
         } else if (requestCode == AnkiActivity.REQUEST_REVIEW) {
             if (resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
-                // If no more cards getting returned while counts > 0 then show a toast
+                // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
                 int[] counts = getCol().getSched().counts();
-                if ((counts[0]+counts[1]+counts[2])>0) {
-                    Toast.makeText(getActivity(), R.string.studyoptions_no_cards_due , Toast.LENGTH_LONG).show();
+                if ((counts[0]+counts[1]+counts[2])>0 && mStudyOptionsView != null) {
+                    View rootLayout = mStudyOptionsView.findViewById(R.id.studyoptions_main);
+                    AnkiActivity activity = (AnkiActivity) getActivity();
+                    activity.showSnackbar(R.string.studyoptions_no_cards_due, false, 0, null, rootLayout);
                 }
             }
         } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
