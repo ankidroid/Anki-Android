@@ -55,19 +55,19 @@
   <string name="filter_tags">Filtrar etiquetas</string>
   <string name="no_tags">Ainda não adicionou nenhuma etiqueta.</string>
   <string name="sdcard_missing_message">Desativar o armazenamento USB para aceder aos seus baralhos</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="updated_version">Atualizada para a versão %s</string>
   <string name="enable_whiteboard">Activar quadro</string>
   <string name="disable_whiteboard">Desactivar quadro</string>
   <string name="show_whiteboard">Mostrar quadro</string>
   <string name="hide_whiteboard">Esconder quadro</string>
   <string name="clear_whiteboard">Limpar quadro</string>
-  <string name="replay_audio">Tocar som novamente</string>
+  <string name="replay_audio">Repetir áudio</string>
   <string name="leech_suspend_notification">Ficha marcada como sanguessuga e suspensa</string>
   <string name="leech_notification">Ficha marcada como sanguessuga</string>
-  <string name="corrupt_font">Ficheiro de tipo de letra corrompido %s</string>
+  <string name="corrupt_font">Ficheiro de tipo de letra %s corrompido</string>
   <string-array name="browser_column1_headings">
-    <item>Question</item>
-    <item>Sort field</item>
+    <item>Pergunta</item>
+    <item>Ordenar campo</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Resposta</item>
@@ -81,22 +81,22 @@
   </string-array>
   <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
   <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
+  <string name="custom_study_review_forgotten">Rever fichas esquecidas</string>
   <string name="custom_study_review_ahead">Review ahead</string>
   <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
+  <string name="custom_study_preview_new">Pré-visualizar fichas novas</string>
   <string name="custom_study_limit_tags">Limit to particular tags</string>
   <string name="cardeditor_title_add_note">Adicionar nota</string>
   <string name="cardeditor_title_edit_card">Editar nota</string>
   <string name="discard_unsaved_changes">Fechar e perder a entrada atual?</string>
-  <string name="factadder_saving_error">Erro ao guardar nota</string>
+  <string name="factadder_saving_error">Erro ao guardar a nota</string>
   <string name="saving_facts">A guardar nota</string>
   <string name="saving_model">Saving model</string>
   <string name="add">Adicionar</string>
   <string name="close">Fechar</string>
   <string name="select">Selecionar</string>
   <string name="saving_changes">A guardar as  alterações...</string>
-  <string name="reordering_cards">A reordenar fichas&#8230;</string>
+  <string name="reordering_cards">A reordenar as fichas&#8230;</string>
   <string name="field_remapping">%1$s (de \"%2$s\")</string>
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
@@ -127,7 +127,7 @@
   <string name="check_media">Verificar multimédia</string>
   <string name="check_db_message">A verificar a base de dados&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Ficha vazia. Execute \"Ferramentas&gt;Fichas Vazias...\" na aplicação para PC.</string>
-  <string name="unknown_type_field_warning">Escreva a resposta: campo desconhecido %s</string>
+  <string name="unknown_type_field_warning">Escrever resposta: campo desconhecido %s</string>
   <string name="delete_deck">A eliminar o baralho&#8230;</string>
   <string name="show_hint">Mostrar %s</string>
   <string name="info_rate">Classificar AnkiDroid</string>
@@ -138,11 +138,11 @@
   <string name="import_message_replace_confirm">Isto irá apagar a sua coleção existente substituindo-a pelos dados do ficheiro %s</string>
   <string name="import_message_add_confirm">Adicionar \"%s\" à coleção? Tal poderá demorar bastante tempo</string>
   <string name="import_log_success">%d fichas importadas</string>
-  <string name="import_log_error">Importação falhada</string>
+  <string name="import_log_error">A importação falhou</string>
   <string name="import_log_no_apkg">Este não é um ficheiro apkg válido</string>
   <string name="import_error_not_apkg_extension">O arquivo \"%s\" não tem a extensão .apkg</string>
   <string name="import_error_content_provider">Não foi possível importar automaticamente o ficheiro selecionado com AnkiDroid. Por favor, consulte o manual do utilizador para saber como importar manualmente os ficheiros anki: \n%s</string>
-  <string name="import_importing">A Importar as fichas.\nPor favor, aguarde&#8230;</string>
+  <string name="import_importing">A Importar as fichas&#8230;</string>
   <string name="export_include_schedule">Incluir agendamento</string>
   <string name="export_include_media">Incluir multimédia</string>
   <string name="confirm_apkg_export">Exportar coleção como ficheiro apkg?</string>
@@ -151,7 +151,7 @@
   <string name="export_successful_title">Enviar ficheiro apkg por email?</string>
   <string name="export_successful">Ficheiro \"%s\" foi exportado. Deseja envia-lo por email?</string>
   <string name="export_unsuccessful">Erro ao exportar a coleção</string>
-  <string name="import_hint">Para importar fichas, coloque o ficheiro apkg na pasta %s e prima \"OK\"</string>
+  <string name="import_hint">Coloque o ficheiro apkg na diretoria %s e toque em \"ACEITAR\" para importar as fichas</string>
   <string name="upgrade_import_no_file_found">Não foi encontrado ficheiro %1$s para importar</string>
   <string name="study_options">Opções de baralho</string>
   <string name="custom_study">Estudo personalizado</string>

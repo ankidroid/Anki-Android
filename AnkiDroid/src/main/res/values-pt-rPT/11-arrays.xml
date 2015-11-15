@@ -48,7 +48,7 @@
     <item>Botão de resposta 3</item>
     <item>Botão de resposta 4</item>
     <item>Resposta recomendada (verde)</item>
-    <item>Resposta melhor que recomendada</item>
+    <item>Resposta melhor do que a recomendada</item>
     <item>Anular</item>
     <item>Editar nota</item>
     <item>Marcar nota</item>
@@ -86,7 +86,7 @@
   </string-array>
   <string-array name="new_spread_labels">
     <item>Misturar fichas novas e revisões</item>
-    <item>Fichas novas após revisões</item>
+    <item>Fichas novas depois das revisões</item>
     <item>Fichas novas antes das revisões</item>
   </string-array>
   <string-array name="override_font_labels">

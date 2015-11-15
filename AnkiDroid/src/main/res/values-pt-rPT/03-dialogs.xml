@@ -52,7 +52,7 @@
   </plurals>
   <string name="delete_cram_deck_message">Enviar todas as fichas em %s para os seus baralhos originais?</string>
   <string name="no_tts_available_message">Nenhum idioma disponível para o texto para voz</string>
-  <string name="initializing_tts">A inicializar o sintetizador de voz&#8230;</string>
+  <string name="initializing_tts">A inicializar TTS&#8230;</string>
   <string name="tts_no_tts">Não falar</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
@@ -63,7 +63,7 @@
   </string-array>
   <string name="preview_title">Pré-visualizar</string>
   <string name="reset_card_dialog_title">Reiniciar progresso da ficha</string>
-  <string name="reset_card_dialog_message">Esta ficha será colocada no fim da fila de fichas novas.</string>
+  <string name="reset_card_dialog_message">Esta ficha será colocada no fim da fila das fichas novas.</string>
   <string name="reset_card_dialog_acknowledge">Ficha reinicializada</string>
   <string name="reschedule_card_dialog_title">Reagendar ficha</string>
   <string name="reschedule_card_dialog_message">Reagendar para revisão em x dias:</string>
@@ -114,13 +114,13 @@
   <string name="check_media_acknowledge">Multimédia verificada</string>
   <string name="check_media_failed">Verificação de multimédia falhou</string>
   <string name="check_media_invalid">Ficheiros com codificação inválida: %d</string>
-  <string name="check_media_unused">Ficheiros na pasta de multimédia mas não utilizados por nenhuma ficha: %d</string>
+  <string name="check_media_unused">Ficheiros na pasta de multimédia mas não usados por quaisquer fichas: %d</string>
   <string name="check_media_nohave">Ficheiros usados nas fichas, mas não presentes na pasta de multimédia: %d</string>
   <string name="check_media_no_unused_missing">Nenhum ficheiro inútil ou em falta foi encontrado.</string>
   <string name="check_media_db_updated">Base de dados de multimédia reconstruída.</string>
-  <string name="check_media_delete_unused">Eliminar inúteis</string>
+  <string name="check_media_delete_unused">Eliminar não utilizados</string>
   <string name="check_media_deleted">Ficheiros eliminados: %d</string>
   <string name="tags_dialog_option_all_cards">Todas as fichas</string>
-  <string name="tags_dialog_option_new_cards">Novas</string>
+  <string name="tags_dialog_option_new_cards">Nova</string>
   <string name="tags_dialog_option_due_cards">Pendentes</string>
 </resources>

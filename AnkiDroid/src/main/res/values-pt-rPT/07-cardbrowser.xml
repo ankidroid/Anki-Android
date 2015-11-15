@@ -50,12 +50,12 @@
   <string name="card_browser_mark_card">Marcar nota</string>
   <string name="card_browser_unmark_card">Desmarcar nota</string>
   <string name="delete_card_title">Eliminar nota?</string>
-  <string name="delete_card_message">Deseja realmente eliminar todas as fichas desta nota? \nCampo de pesquisa: %s</string>
+  <string name="delete_card_message">Eliminar todas as fichas desta nota? \nCampo de procura: %s</string>
   <string name="card_browser_show_marked">Filtro marcado</string>
   <string name="card_browser_show_suspended">Filtro suspenso</string>
   <string name="card_browser_search_by_tag">Filtrar por etiqueta</string>
-  <string name="card_browser_tags_shown">Etiqueta: %1$s</string>
-  <string name="card_browser_list_my_searches">As minhas procuras</string>
+  <string name="card_browser_tags_shown">Etiquetas: %1$s</string>
+  <string name="card_browser_list_my_searches">Minhas procuras</string>
   <string name="card_browser_list_my_searches_save">Guardar procura</string>
   <string name="card_browser_list_my_searches_title">Escolher uma procura guardada</string>
   <string name="card_browser_list_my_searches_new_name">Nome para a procura atual</string>
@@ -69,7 +69,7 @@
   <string name="card_details_answer">Resposta</string>
   <string name="card_details_due">Agendada</string>
   <string name="card_details_tags">Etiquetas</string>
-  <string name="card_browser_filtering_cards">A filtrar fichas&#8230;\nPrima voltar para cancelar</string>
+  <string name="card_browser_filtering_cards">A filtrar as fichas&#8230;\nPrima voltar para cancelar</string>
   <string-array name="card_browser_order_labels">
     <item>Sem ordenação (mais rápido)</item>
     <item>By sort field</item>
