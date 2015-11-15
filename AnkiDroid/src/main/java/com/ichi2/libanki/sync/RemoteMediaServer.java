@@ -19,8 +19,7 @@ package com.ichi2.libanki.sync;
 
 import android.text.TextUtils;
 
-
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.exception.MediaSyncException;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
@@ -60,7 +59,7 @@ public class RemoteMediaServer extends HttpSyncer {
     }
 
 
-    public JSONObject begin() throws UnknownHttpResponseException {
+    public JSONObject begin() throws UnknownHttpResponseException, MediaSyncException {
         try {
             mPostVars = new HashMap<String, Object>();
             mPostVars.put("k", mHKey);
@@ -81,7 +80,7 @@ public class RemoteMediaServer extends HttpSyncer {
 
 
     // args: lastUsn
-    public JSONArray mediaChanges(int lastUsn) throws UnknownHttpResponseException {
+    public JSONArray mediaChanges(int lastUsn) throws UnknownHttpResponseException, MediaSyncException {
         try {
             mPostVars = new HashMap<String, Object>();
             mPostVars.put("sk", mSKey);
@@ -122,7 +121,7 @@ public class RemoteMediaServer extends HttpSyncer {
     }
 
 
-    public JSONArray uploadChanges(File zip) throws UnknownHttpResponseException {
+    public JSONArray uploadChanges(File zip) throws UnknownHttpResponseException, MediaSyncException {
         try {
             // no compression, as we compress the zip file instead
             HttpResponse resp = super.req("uploadChanges", new FileInputStream(zip), 0);
@@ -137,7 +136,7 @@ public class RemoteMediaServer extends HttpSyncer {
 
 
     // args: local
-    public String mediaSanity(int lcnt) throws UnknownHttpResponseException {
+    public String mediaSanity(int lcnt) throws UnknownHttpResponseException, MediaSyncException {
         try {
             HttpResponse resp = super.req("mediaSanity",
                     super.getInputStream(Utils.jsonToString(new JSONObject().put("local", lcnt))));
@@ -166,13 +165,12 @@ public class RemoteMediaServer extends HttpSyncer {
      *         returnType.
      */
     @SuppressWarnings("unchecked")
-    private <T> T _dataOnly(JSONObject resp, Class<T> returnType) {
+    private <T> T _dataOnly(JSONObject resp, Class<T> returnType) throws MediaSyncException {
         try {
             if (!TextUtils.isEmpty(resp.optString("err"))) {
                 String err = resp.getString("err");
                 mCol.log("error returned: " + err);
-                throw new RuntimeException("SyncError:" + err);
-                // TODO: Should probably define a new exception and handle it accordingly
+                throw new MediaSyncException("SyncError:" + err);
             }
             if (returnType == String.class) {
                 return (T) resp.getString("data");

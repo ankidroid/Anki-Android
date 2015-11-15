@@ -27,8 +27,8 @@ import android.os.PowerManager;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
+import com.ichi2.anki.exception.MediaSyncException;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
-import com.ichi2.anki.exception.UnsupportedSyncException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.sync.FullSyncer;
 import com.ichi2.libanki.sync.HttpSyncer;
@@ -37,14 +37,14 @@ import com.ichi2.libanki.sync.RemoteMediaServer;
 import com.ichi2.libanki.sync.RemoteServer;
 import com.ichi2.libanki.sync.Syncer;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import timber.log.Timber;
 
 public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connection.Payload> {
@@ -404,10 +404,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                             publishProgress(R.string.sync_media_success);
                         }
                     }
-                } catch (UnsupportedSyncException e) {
-                    mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_unsupported);
-                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getApplicationContext()).edit().putBoolean("syncFetchesMedia", false).commit();
-                    AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-mediaSync");
                 } catch (RuntimeException e) {
                     if (timeoutOccured(e)) {
                         data.result = new Object[] {"connectionError" };
@@ -428,6 +424,12 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 data.data = new Object[] { conflictResolution, col, mediaError };
                 return data;
             }
+        } catch (MediaSyncException e) {
+            Timber.e("Media sync rejected by server");
+            data.success = false;
+            data.result = new Object[] {"mediaSyncServerError"};
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync");
+            return data;
         } catch (UnknownHttpResponseException e) {
             Timber.e("doInBackgroundSync -- unknown response code error");
             e.printStackTrace();
@@ -459,7 +461,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             Timber.d("doInBackgroundSync -- reopening collection on outer finally statement");
             CollectionHelper.getInstance().reopenCollection();
         }
-
     }
 
 
