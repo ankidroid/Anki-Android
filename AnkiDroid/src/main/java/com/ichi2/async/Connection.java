@@ -43,8 +43,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 
-import cz.msebera.android.httpclient.HttpResponse;
-import cz.msebera.android.httpclient.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.HttpResponse;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import timber.log.Timber;
 
 public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connection.Payload> {

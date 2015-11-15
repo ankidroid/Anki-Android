@@ -30,6 +30,7 @@ android {
             signingConfig signingConfigs.release
         }
     }
+    useLibrary 'org.apache.http.legacy'
 }
 
 
@@ -58,6 +59,5 @@ dependencies {
     compile 'ch.acra:acra:4.6.2'
     compile 'com.jakewharton.timber:timber:2.7.1'
     compile 'com.google.code.gson:gson:2.4'
-    compile "cz.msebera.android:httpclient:4.4.1.1"
     compile project(":api")
 }
