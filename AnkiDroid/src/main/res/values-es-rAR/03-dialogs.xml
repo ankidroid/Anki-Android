@@ -39,13 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">Comprobar base de datos</string>
+  <string name="check_db_title">¿Comprobar base de datos?</string>
   <string name="check_db_warning">Esto podría tomar un largo tiempo</string>
   <string name="check_db_acknowledge">Base de datos comprobada</string>
   <string name="check_db_acknowledge_shrunk">Base de datos comprobada y optimizada.\nReducida en %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Eliminar mazo</string>
   <string name="delete_deck_default_deck">El mazo predeterminado no puede ser eliminado.</string>
-  <string name="delete_deck_title">Eliminar mazo</string>
+  <string name="delete_deck_title">¿Eliminar mazo?</string>
   <plurals name="delete_deck_message">
     <item quantity="one">¿Eliminar todas las tarjetas en %1$s? Contiene %2$d tarjeta.</item>
     <item quantity="other">¿Eliminar todas las tarjetas en %1$s? Contiene %2$d tarjetas.</item>

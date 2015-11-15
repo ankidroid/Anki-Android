@@ -36,7 +36,7 @@
     <item quantity="other">%d notas</item>
   </plurals>
   <string name="model_editor_action_add_model">Añadir tipo de nota</string>
-  <string name="model_browser_delete">Borrar tipo de nota</string>
+  <string name="model_browser_delete">Eliminar tipo de nota</string>
   <string name="model_browser_rename">Renombrar</string>
   <string name="model_browser_options">Opciones</string>
   <string name="model_browser_template">Editar tarjetas</string>
@@ -44,7 +44,7 @@
   <string name="rename_model">Renombrar modelo</string>
   <string name="model_field_editor_title">Editar campos</string>
   <string name="model_field_editor_add">Añadir campo</string>
-  <string name="model_field_editor_delete">Borrar campo</string>
+  <string name="model_field_editor_delete">Eliminar campo</string>
   <string name="model_field_editor_options">Opciones de campo</string>
   <string name="model_field_editor_rename">Renombrar campo</string>
   <string name="model_field_editor_reposition_menu">Recolocar campo</string>
