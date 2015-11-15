@@ -42,7 +42,7 @@
   <string name="backup_deck_no_space_left">上次备份操作不能执行，由于sd卡剩余空间不足。\n\n请释放更多空间，或者降低备份数量。</string>
   <string name="sd_space_warning">你的sd卡上剩余空间少于%d mb.\n请释放更多空间，以免数据丢失。</string>
   <string name="backup_delete">删除备份。 \n 请稍候...</string>
-  <string name="backup_restore">从备份中恢复</string>
+  <string name="backup_restore">恢复备份</string>
   <string name="backup_new_collection">新建集合</string>
   <string name="backup_del_collection">删除集合，并创建新集合</string>
   <string name="backup_del_collection_question">您确实想要删除该集合，然后创建一个新吗？这将删除所有您的学习进度和删除所有卡牌！</string>

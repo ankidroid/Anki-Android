@@ -97,7 +97,7 @@
   <string name="double_scrolling_gap_summ">eReader とのスクロールのギャップを 2 倍にする場合、これを有効にします</string>
   <string name="swipe_sensitivity">スワイプ感度</string>
   <string name="tts">音声合成</string>
-  <string name="tts_summ">音声ファイルが含まれていない場合に、問題と解答を読み上げます</string>
+  <string name="tts_summ">音声ファイルが含まれていない場合に、質問と解答を読み上げます</string>
   <string name="sync_fetch_missing_media">メディアの同期</string>
   <string name="sync_fetch_missing_media_summ">同期時に、不足しているメディア（画像、音声、動画）を自動的に取得します</string>
   <string name="sync_account">AnkiWebアカウント</string>

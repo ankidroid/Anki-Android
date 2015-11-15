@@ -67,7 +67,7 @@
   <string name="corrupt_font">Archivo de fuente corrupto %s</string>
   <string-array name="browser_column1_headings">
     <item>Pregunta</item>
-    <item>Ordenar campo</item>
+    <item>Campo de clasificación</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Respuesta</item>

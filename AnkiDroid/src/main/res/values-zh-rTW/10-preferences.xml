@@ -47,7 +47,7 @@
   <string name="pref_cat_flashcard">Display</string>
   <string name="pref_cat_whiteboard">白板</string>
   <string name="pref_cat_automatic_display">Automatic display answer</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_fonts">字體</string>
   <string name="pref_cat_fonts_summ">Change default font and size</string>
   <string name="pref_cat_gestures">Gestures</string>
   <string name="pref_cat_gestures_summ">Use taps and swipes instead of buttons</string>
@@ -57,8 +57,8 @@
   <string name="pref_cat_performance">效能</string>
   <string name="pref_cat_workarounds">Workarounds</string>
   <string name="pref_cat_plugins">Plugins</string>
-  <string name="about_title">About AnkiDroid</string>
-  <string name="about_version">Version: </string>
+  <string name="about_title">關於 AnkiDroid</string>
+  <string name="about_version">版本： </string>
   <string name="whiteboard_stroke_width">Stroke width</string>
   <string name="whiteboard_black">Black strokes</string>
   <string name="whiteboard_black_summ">Uses less memory, unless in night mode</string>
@@ -119,7 +119,7 @@
   <string name="never_notify">Never notify</string>
   <string name="notify_when_pending">Pending messages available</string>
   <string name="notification_minimum_cards_due">More than %d cards due</string>
-  <string name="notification_minimum_cards_due_vibrate">Vibrate</string>
+  <string name="notification_minimum_cards_due_vibrate">震動</string>
   <string name="notification_minimum_cards_due_blink">Blink light</string>
   <string name="timeout_answer_text">自動顯示答案</string>
   <string name="timeout_answer_summ">Show answer automatically without user input</string>
@@ -140,9 +140,9 @@
   <string name="use_current">Deck for new cards</string>
   <string name="new_spread">New card position</string>
   <string name="learn_cutoff">Learn ahead limit</string>
-  <string name="learn_cutoff_summ">XXX min</string>
+  <string name="learn_cutoff_summ">XXX分鐘</string>
   <string name="time_limit">Timebox time limit</string>
-  <string name="time_limit_summ">XXX min</string>
+  <string name="time_limit_summ">XXX分鐘</string>
   <string name="day_offset">Start of next day</string>
   <string name="day_offset_summ">XXX hours past midnight</string>
   <string name="input_workaround">Input workaround</string>

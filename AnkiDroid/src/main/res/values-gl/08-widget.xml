@@ -40,16 +40,16 @@
 -->
 <resources>
   <string name="widget_minimum_cards_due_notification_ticker_title">Cartóns pendentes</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
-  <string name="widget_no_cards_due">No cards due</string>
-  <string name="widget_loading">Widget loading&#8230;</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d cartóns pendentes</string>
+  <string name="widget_no_cards_due">Sen cartóns pendentes</string>
+  <string name="widget_loading">Cargando o widget&#8230;</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d card due in %2$s</item>
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="one">%1$d cartón pendente de %2$s</item>
+    <item quantity="other">%1$d cartóns pendentes de %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
-    <item quantity="other">%1$d decks</item>
+    <item quantity="one">%1$d baralla</item>
+    <item quantity="other">%1$d barallas</item>
   </plurals>
-  <string name="widget_small">AnkiDroid small</string>
+  <string name="widget_small">AnkiDroid pequeno</string>
 </resources>

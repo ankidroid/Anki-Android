@@ -40,27 +40,27 @@
 -->
 <resources>
   <string name="backup_deck_no_space_left">A última copia de seguranza non puido ser executada por causa de espazo insuficiente na túa tarxeta sd.\n\nLibera memoria ou diminúe a profundidade da copia de seguranza.</string>
-  <string name="sd_space_warning">Quedan menos de %d mb de espazo na túa tarxeta sd.\nLibera un pouco de espazo para evitar pérdidas de información.</string>
-  <string name="backup_delete">Deleting backups&#8230;</string>
-  <string name="backup_restore">Restore from backup</string>
-  <string name="backup_new_collection">New collection</string>
-  <string name="backup_del_collection">Delete collection and create new one</string>
-  <string name="backup_del_collection_question">Delete the collection and create a new one? This will drop all your learning progress and delete all cards.</string>
-  <string name="backup_full_sync_from_server">Full sync from server</string>
+  <string name="sd_space_warning">Quedan menos de %d MB de espazo na túa tarxeta SD.\nLibera un pouco de espazo para evitar perdas de información.</string>
+  <string name="backup_delete">Eliminando copias&#8230;</string>
+  <string name="backup_restore">Restaurar dende a copia</string>
+  <string name="backup_new_collection">Nova colección</string>
+  <string name="backup_del_collection">Eliminar a colección e crear unha nova</string>
+  <string name="backup_del_collection_question">Eliminar a colección e crear unha nova? Isto eliminará todos os teus progresos e todos os cartóns.</string>
+  <string name="backup_full_sync_from_server">Sincronización completa dende o servidor</string>
   <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
-  <string name="error_handling_title">Error handling</string>
-  <string name="error_handling_options">Options</string>
-  <string name="backup_retry_opening">Retry opening</string>
-  <string name="backup_error_menu_repair">Repair database</string>
-  <string name="backup_repair_deck">Repair</string>
-  <string name="backup_repair_deck_progress">Repairing database&#8230;</string>
-  <string name="backup_error">Error</string>
-  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
-  <string name="backup_restore_select_title">Select backup to restore</string>
-  <string name="backup_restore_no_backups">No backups available on this device. If you have backups on your desktop computer, copy them manually into your AnkiDroid folder.</string>
+  <string name="error_handling_title">Xestión dos erros</string>
+  <string name="error_handling_options">Opcións</string>
+  <string name="backup_retry_opening">Tentar abrir de novo</string>
+  <string name="backup_error_menu_repair">Reparar base de datos</string>
+  <string name="backup_repair_deck">Reparar</string>
+  <string name="backup_repair_deck_progress">Reparando a base de datos&#8230;</string>
+  <string name="backup_error">Erro</string>
+  <string name="backup_invalid_file_error">A copia seleccionada non é válida</string>
+  <string name="backup_restore_select_title">Seleccionar unha copia para restaurar</string>
+  <string name="backup_restore_no_backups">Sen copias dispoñibles neste dispositivo. Se tes copias no teu computador, cópiaas manualmente no cartafol do AnkiDroid.</string>
   <string name="open_collection_failed_title">Collection not opened</string>
   <string name="open_collection_failed_message">Database couldn’t be opened. It’s either not a real Anki database or has been corrupted.\n\nTouch “options” for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
   <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
   <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
-  <string name="deck_repair_error">Collection couldn’t be repaired</string>
+  <string name="deck_repair_error">A colección no se puido reparar</string>
 </resources>

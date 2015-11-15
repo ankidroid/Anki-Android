@@ -40,18 +40,18 @@
 
 -->
 <resources>
-  <string name="youre_offline">Pracujete v režime offline</string>
-  <string name="sync_error">Sync error</string>
+  <string name="youre_offline">Ste offline</string>
+  <string name="sync_error">Chyba synchronizácie</string>
   <string name="vague_error">Chyba</string>
   <string name="retry">Skúsiť znova</string>
   <string name="cancel">Zrušiť</string>
   <string name="loading_shared_decks">Načítavam dostupné zdieľané balíčky...</string>
-  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms"> Obchodné podmienky</a></string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Obchodné podmienky</a></string>
   <string name="menu_get_shared_decks">Stiahnuť zdieľané balíčky</string>
   <string name="connection_error_message">Vyskytla sa chyba siete.</string>
   <string name="not_logged_in_title">Prihlásiť sa do AnkiWeb</string>
   <string name="login_create_account_message">Musíte sa prihlásiť na účet AnkiWeb. Účet môžete vytvoriť v ďalšom kroku.</string>
-  <string name="no_email_client">No email client available</string>
+  <string name="no_email_client">Žiadny emailový klient nie je k dispozícii</string>
   <string name="username">E-mailová adresa</string>
   <string name="username_repeat">Zopakovať e-mailovú adresu</string>
   <string name="password">Heslo</string>
@@ -59,27 +59,27 @@
   <string name="log_in">Prihlásiť sa</string>
   <string name="sign_up_description">Nemáte AnkiWeb účet? Je zadarmo!</string>
   <string name="sign_up">Zaregistrovať sa</string>
-  <string name="sign_up_terms">Ťuknutím na <i>Zaregistrovať</i> potvrdzujete, že ste prečítali a súhlasíte s našimi <a href="https://ankiweb.net/account/terms"> podmienkami použitia</a>.</string>
+  <string name="sign_up_terms">Ťuknutím na <i>Zaregistrovať</i> potvrdzujete, že ste si prečítali a súhlasíte s našimi <a href="https://ankiweb.net/account/terms">podmienkami použitia</a>.</string>
   <string name="logged_as">Prihlásený ako</string>
   <string name="log_out">Odhlásiť</string>
-  <string name="alert_logging_message">Prebieha prihlasovanie, počkajte prosím...</string>
+  <string name="alert_logging_message">Prebieha prihlasovanie&#8230;</string>
   <string name="invalid_username_password">Neplatná e-mailová adresa alebo heslo.</string>
   <string name="reset_password">Obnoviť heslo</string>
   <string name="downloaddeck_search">Hľadať</string>
-  <string name="preferences_title">Predvoľby</string>
+  <string name="preferences_title">Preferencie</string>
   <string name="deckpreferences_title">Možnosti pre XXX</string>
-  <string name="sync_conflict_message">Vaše balíčky tu a na AnkiWeb sa odlišujú príliš na to, aby boli zlúčené. Je preto nutné prepísať balíčky na jednej strane balíčkami na druhej strane.\n\nChcete nahrať tieto balíčky, alebo stiahnuť balíčky z AnkiWeb?</string>
+  <string name="sync_conflict_message">Musíte buď nahrať túto zbierku na Ankiweb alebo stiahnuť zbierku z Ankiweb, nakoľko nemôžu byť zlúčené. Zbierka na jednej strane musí byť prepísaná.</string>
   <string name="sync_conflict_local">Nahrať</string>
   <string name="sync_conflict_remote">Stiahnuť</string>
-  <string name="sync_conflict_remote_confirm">Naozaj chcete stiahnuť zbierku zo serveru? Berte na vedomie, že táto prepíše vašu aktuálnu zbierku.</string>
-  <string name="sync_conflict_local_confirm">Naozaj chcete na server nahrať vašu aktuálnu zbierku? Vezmite na vedomie, že takto sa prepíše zbierka momentálne uložená na serveri.</string>
+  <string name="sync_conflict_remote_confirm">Naozaj chcete stiahnuť zbierku zo serveru a prepísať zbierku v zariadení?</string>
+  <string name="sync_conflict_local_confirm">Naozaj chcete nahrať vašu zbierku zo zariadenia a prepísať tak zbierku na Ankiweb servery?</string>
   <string name="sync_prepare_syncing">Pripravuje sa synchronizácia...</string>
   <string name="sync_preparing_full_sync_message">Pripravuje sa úplná synchronizácia...</string>
   <string name="sync_uploading_message">Nahrávanie...</string>
   <string name="sync_downloading_message">Sťahovanie...</string>
   <string name="sync_title">Synchronizácia</string>
   <string name="sync_downloading_media">Sťahovanie médií %1$d/%2$d...</string>
-  <string name="sync_log_uploading_message">Úplná synchronizácia z miestnej zbierky</string>
+  <string name="sync_log_uploading_message">Úplná synchronizácia z AnkiDroid na server</string>
   <string name="sync_log_downloading_message">Úplná synchronizácia zo servera</string>
   <string name="sync_log_clocks_unsynchronized">Čas vo vašom prístroji je nepresný o %1$d sekúnd%2$s; Synchronizácia vyžaduje, aby váš čas aj časové pásmo boli nastavené správne, aby sa predišlo chybám. Prosím uistite sa, že dátum, čas a časové pásmo na vašom zariadení sú nastavené správne, potom synchronizáciu zopakujte.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, časové pásmo zariadenia pravdepodobne nie je správne</string>
@@ -91,10 +91,10 @@
   <string name="sync_corrupt_database">Vaša databáza je poškodená. Prosím opravte ju pred opätovným pokusom o synchronizáciu.\n\nPozrite si %s pre informácie o oprave databázy.</string>
   <string name="sync_too_busy">Server je príliš zaneprázdnený. Skúste to znova neskôr.</string>
   <string name="sync_remote_db_error">Stiahnutá databáza bola poškodená. Prosím skúste to znova.</string>
-  <string name="sync_overwrite_error">Vašu aktuálnu zbierku sa nepodarilo prepísať stiahnutým súborom.</string>
-  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
-  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
-  <string name="sync_write_access_error">Stiahnutý súbor sa nepodarilo uložiť na sd kartu. Buď je vaša sd karta pripojená iba na čítanie, alebo na nej nie je dostatok miesta.</string>
+  <string name="sync_overwrite_error">Vašu aktuálnu zbierku sa nepodarilo prepísať stiahnutým súborom</string>
+  <string name="sync_connection_error">Vypršal časový limit pripojenia. Buď máte problém s internetovým pripojením alebo máte veľký multimediálny súbor v priečinku.</string>
+  <string name="sync_error_409">V jednej chvíli má prístup k AnkiWeb iba jeden klient. Ak predchádzajúca synchronizácia zlyhala, prosím, pokúste sa o synchronizáciu o pár minút neskôr.</string>
+  <string name="sync_write_access_error">Stiahnutý súbor sa nepodarilo uložiť na SD kartu. Buď je vaša SD karta pripojená iba na čítanie alebo na nej nie je dostatok miesta.</string>
   <string name="sync_deletions_message">Synchronizujú sa odstránené položky...</string>
   <string name="sync_small_objects_message">Synchronizujú sa malé objekty...</string>
   <string name="sync_finish_message">Dokončuje sa synchronizácia...</string>
@@ -105,25 +105,25 @@
   <string name="sync_up_down_size">Nahrávanie: %1$d kb\nSťahovanie: %2$d kb</string>
   <string name="sync_generic_error">Vyskytla sa chyba. Skúste to znova neskôr.</string>
   <string name="sync_check_upload_file">Kontrola súboru pred nahrávaním...</string>
-  <string name="sync_check_download_file">Kontrolujem stiahnutý súbor...</string>
-  <string name="sync_media_find">Hľadám zmenené médiá...</string>
-  <string name="sync_media_no_changes">Žiadne zmeny mediálnych súborov.</string>
-  <string name="sync_media_success">Mediá boli úspešne synchronizované.</string>
-  <string name="sync_media_changes_count">%d media changes to upload</string>
-  <string name="sync_media_downloaded_count">%d media files downloaded</string>
-  <string name="sync_sanity_failed">Po synchronizácii bola zbierka v nekonzistentnom stave. Pre vyriešenie tohto problému AnkiDroid vykoná úplnú synchronizáciu. Zvoľte prosím, ktorú stranu by ste chceli zachovať alebo postup zrušte, ak chcete synchronizovať neskôr.</string>
-  <string name="sync_media_sanity_failed">Synchronizácia médií bola dokončená, ale počet médií nesúhlasí so serverom. Nasledujúca synchronizácia médií bude úplná, aby sa napravili akékoľvek chyby.</string>
-  <string name="sync_media_error">Pri synchronizácií mediálnych súborov sa vyskytla chyba.</string>
-  <string name="sync_media_unsupported">Complex media file names aren’t supported on Android 2.2 and below. Media syncing has been disabled.</string>
+  <string name="sync_check_download_file">Kontrola stiahnutého súboru&#8230;</string>
+  <string name="sync_media_find">Hľadajú sa zmenené multimédiá&#8230;</string>
+  <string name="sync_media_no_changes">Žiadne zmeny multimediálnych súborov</string>
+  <string name="sync_media_success">Multimédia synchronizované</string>
+  <string name="sync_media_changes_count">%d multimediálnych zmien pre nahratie</string>
+  <string name="sync_media_downloaded_count">%d multimediálnych súborov stiahnutých</string>
+  <string name="sync_sanity_failed">Po synchronizácii bola zbierka v nekonzistentnom stave. Pre vyriešenie tohto problému, AnkiDroid vykoná úplnú synchronizáciu. Zvoľte prosím, ktorú stranu by ste chceli zachovať.</string>
+  <string name="sync_media_sanity_failed">Synchronizácia multimédií bola dokončená, ale počet médií nesúhlasí so serverom. Nasledujúca synchronizácia multimédií bude úplná, aby sa napravili akékoľvek chyby.</string>
+  <string name="sync_media_error">Pri synchronizácií mediálnych súborov sa vyskytla chyba</string>
+  <string name="sync_media_unsupported">Zložité názvy multimediálnych súborov nie sú podporované na verziách Androidu 2.2 a nižšie. Synchronizácia multimédií bola zakázaná.</string>
   <string name="register_error">Vyskytla sa chyba. Skúste to znova neskôr.</string>
   <string name="register_title">Registrovať účet</string>
-  <string name="register_mismatch">Zopakovanie užívateľského mena/hesla sa nezhoduje alebo je prázdne. Zadajte znova prosím.</string>
-  <string name="registering_message">Vytváram účet.\nProsím počkajte...</string>
+  <string name="register_mismatch">Zopakovanie užívateľského mena/hesla sa nezhoduje alebo je prázdne.</string>
+  <string name="registering_message">Vytvára sa účet&#8230;</string>
   <string name="sync_sanity_local">Miestnu</string>
   <string name="sync_sanity_remote">Vzdialenú</string>
-  <string name="force_full_sync_title">Force full sync</string>
-  <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
-  <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
-  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
+  <string name="force_full_sync_title">Vynútiť úplnú synchronizáciu</string>
+  <string name="force_full_sync_summary">Pri ďalej synchronizácii, vynútiť zmeny v jednom smere</string>
+  <string name="full_sync_confirmation">Požadované zmeny si vyžadujú úplné nahratie databázy na server pri ďalšej synchronizácii vašej zbierky. Ak máte naplánované skúšanie alebo zmeny na iných zariadeniach, ktoré ešte neboli synchronizované, budú stratené. Chcete pokračovať?</string>
+  <string name="full_sync_confirmation_upgrade">Kvôli chybe v predchádzajúcej nainštalovanej verzii AnkiDroid, odporúča sa úplná synchronizácia.</string>
+  <string name="sync_error_501_upgrade_required">Prosím aktualizujte na najnovšiu verziu AnkiDroid</string>
 </resources>

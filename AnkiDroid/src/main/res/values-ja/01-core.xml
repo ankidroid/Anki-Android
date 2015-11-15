@@ -78,7 +78,7 @@
   <string name="undo_action_delete">ノートの削除</string>
   <string name="undo_action_mark">ノートにマークをつける</string>
   <string name="unbury">延期を解除</string>
-  <string name="rename_deck">デッキの名前を変更</string>
+  <string name="rename_deck">このデッキの名前を変更</string>
   <string name="menu_add">ノートを追加</string>
   <string name="menu_add_note">ノートを追加</string>
   <string name="menu_my_account">アカウントの設定と同期</string>
@@ -127,7 +127,7 @@
   <string name="sync_cancelled">同期がキャンセルされました</string>
   <string name="export">エクスポート</string>
   <string name="export_collection">エクスポート（全デッキ）</string>
-  <string name="export_deck">デッキをエクスポート</string>
+  <string name="export_deck">このデッキをエクスポート</string>
   <string name="nothing">Nothing</string>
   <string name="title_activity_template_editor">カードタイプ</string>
   <string name="card_template_editor_front">表面のテンプレート</string>

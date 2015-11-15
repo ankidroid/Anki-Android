@@ -68,7 +68,7 @@
   <string name="ease_button_good">一般</string>
   <string name="ease_button_easy">简单</string>
   <string name="studyoptions_congrats_undo">撤消%s</string>
-  <string name="menu_import">导入</string>
+  <string name="menu_import">导入牌组</string>
   <string name="undo">撤销</string>
   <string name="undo_action_review">上次复习</string>
   <string name="undo_action_edit">编辑笔记</string>
@@ -95,7 +95,7 @@
   <string name="menu_unmark_note">取消标记</string>
   <string name="new_deck">创建牌组</string>
   <string name="create">创建</string>
-  <string name="new_dynamic_deck">创建筛选牌组</string>
+  <string name="new_dynamic_deck">筛选牌组</string>
   <string name="night_mode">夜间模式</string>
   <string name="directory_inaccessible">无法访问AnkiDroid目录</string>
   <string name="time_quantity_seconds">%d秒</string>

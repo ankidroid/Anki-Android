@@ -47,23 +47,23 @@
     <item>Tlačidlo odpovede 2</item>
     <item>Tlačidlo odpovede 3</item>
     <item>Tlačidlo odpovede 4</item>
-    <item>Navrhovaná odpoveď (zelená)</item>
-    <item>Odpoveď lepšia ako navrhovaná</item>
+    <item>Odporúčaná odpoveď (zelená)</item>
+    <item>Odpoveď lepšia ako odporúčaná</item>
     <item>Späť</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Upraviť poznámku</item>
+    <item>Označiť poznámku</item>
     <item>Vyhľadať výraz</item>
     <item>Zahrabať kartu</item>
-    <item>Dať kartu bokom</item>
-    <item>Delete note</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Pozastaviť kartu</item>
+    <item>Vymazať poznámku</item>
+    <item>Prehrať multimédiá</item>
+    <item>Prerušiť učenie</item>
+    <item>Zahrabať poznámku</item>
+    <item>Pozastaviť poznámku</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Dať kartu bokom</item>
-    <item>Iba pridať štítok</item>
+    <item>Pozastaviť kartu</item>
+    <item>Iba oštítkovať</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Nové karty v náhodnom poradí</item>
@@ -74,20 +74,20 @@
     <item>Náhodne</item>
     <item>Rastúce intervaly</item>
     <item>Klesajúce intervaly</item>
-    <item>Najviac zabudnutí</item>
+    <item>Najviac zabudnuté</item>
     <item>V poradí, v akom boli pridané</item>
-    <item>Podľa času opakovania</item>
+    <item>Podľa poradia opakovania</item>
     <item>Od poslednej pridanej</item>
-    <item>Relative overdueness</item>
+    <item>Relatívne oneskorenie</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Použiť aktuálny balíček</item>
     <item>Rozhodnúť podľa typu poznámky</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Zmiešať nové karty a opakovania</item>
-    <item>Nové karty po opakovaní</item>
-    <item>Nové karty pred opakovaním</item>
+    <item>Zmiešať nové karty s opakovanými</item>
+    <item>Nové karty po opakovaných</item>
+    <item>Nové karty pred opakovanými</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>Keď pre kartičky nie je určené žiadne písmo</item>

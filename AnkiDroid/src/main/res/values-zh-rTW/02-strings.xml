@@ -66,15 +66,15 @@
   <string name="leech_notification">卡片標為榨時卡</string>
   <string name="corrupt_font">損壞的字型檔案 %s</string>
   <string-array name="browser_column1_headings">
-    <item>Question</item>
+    <item>問題</item>
     <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
-    <item>Answer</item>
+    <item>答案</item>
     <item>Card</item>
     <item>Deck</item>
     <item>Note</item>
-    <item>Question</item>
+    <item>問題</item>
     <item>Tags</item>
     <item>Lapses</item>
     <item>Reviews</item>
@@ -126,7 +126,7 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run “Tools&gt;Empty Cards...” on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="delete_deck">刪除牌組中...\n請稍候</string>
-  <string name="show_hint">Show %s</string>
+  <string name="show_hint">顯示%s</string>
   <string name="info_rate">評價AnkiDroid</string>
   <string name="col_load_failed">載入收藏時發生錯誤。\n按返回鍵來關閉 AnkiDroid</string>
   <string name="import_title">匯入卡片</string>
