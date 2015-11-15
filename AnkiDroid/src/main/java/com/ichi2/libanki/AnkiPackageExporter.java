@@ -16,8 +16,6 @@
 
 package com.ichi2.libanki;
 
-import android.content.ContentValues;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
