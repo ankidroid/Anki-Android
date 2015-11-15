@@ -114,7 +114,7 @@
   <string name="sync_sanity_failed">Po synchronizaci byla kolekce v nekonzistentním stavu. Chcete-li tento problém vyřešit, AnkiDroid vynutí úplnou synchronizaci. Vyberte si, na které straně chcete ponechat kolekci. Zvolte Zrušit, pokud chcete synchronizovat později.</string>
   <string name="sync_media_sanity_failed">Synchronizace multimédií dokončena, ale počet multimédií nesouhlasí se serverem. Další synchronizace multimédií bude úplná pro opravu případné chyby.</string>
   <string name="sync_media_error">Chyba synchronizace multimediálních dat.</string>
-  <string name="sync_media_unsupported">Složené názvy multimédii nejsou podporovány na Android 2.2 a nižší. Synchronizace multimédií byla pozastavena .</string>
+  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
   <string name="register_error">Došlo k chybě. Opakujte akci později.</string>
   <string name="register_title">Registrovat účet</string>
   <string name="register_mismatch">Uživatelské jméno nebo hesla se neshodují nebo jsou prázdné. Zadejte znovu.</string>

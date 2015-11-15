@@ -40,7 +40,7 @@
 -->
 <resources>
   <string name="decks">Baralhos</string>
-  <string name="card_browser">Navegador de fichas</string>
+  <string name="card_browser">Explorador de fichas</string>
   <string name="statistics">Estatísticas</string>
   <string name="settings">Definições</string>
   <string name="help">Ajuda</string>
@@ -61,8 +61,8 @@
     <item quantity="other">%d minutos restantes</item>
   </plurals>
   <plurals name="studied_cards_today">
-    <item quantity="one">Estudada hoje %1$d ficha em %2$s</item>
-    <item quantity="other">Estudadas hoje %1$d fichas em %2$s</item>
+    <item quantity="one">Estudou hoje %1$d ficha em %2$s</item>
+    <item quantity="other">Estudou hoje %1$d fichas em %2$s</item>
   </plurals>
   <string name="type_answer_hint">Escreva a resposta</string>
   <string name="show_answer">Mostrar resposta</string>
@@ -75,25 +75,25 @@
   <string name="undo">Anular</string>
   <string name="undo_action_review">última revisão</string>
   <string name="undo_action_edit">editar nota</string>
-  <string name="undo_action_bury">enterrar nota</string>
+  <string name="undo_action_bury">ocultar nota</string>
   <string name="undo_action_suspend_card">suspender ficha</string>
   <string name="undo_action_suspend_note">suspender nota</string>
-  <string name="undo_action_delete">apagar nota</string>
+  <string name="undo_action_delete">eliminar nota</string>
   <string name="undo_action_mark">marcar nota</string>
-  <string name="unbury">Desenterrar</string>
+  <string name="unbury">Mostrar</string>
   <string name="rename_deck">Renomear baralho</string>
   <string name="menu_add">Adicionar</string>
   <string name="menu_add_note">Adicionar nota</string>
   <string name="menu_my_account">Conta de sincronização</string>
   <string name="menu_dismiss_note">Ocultar / Eliminar</string>
-  <string name="menu_bury_card">Enterrar ficha</string>
-  <string name="menu_bury_note">Enterrar Nota</string>
+  <string name="menu_bury_card">Ocultar ficha</string>
+  <string name="menu_bury_note">Ocultar nota</string>
   <string name="menu_suspend_card">Suspender ficha</string>
   <string name="menu_suspend_note">Suspender nota</string>
   <string name="menu_delete_note">Eliminar nota</string>
   <string name="delete_note_message">Deseja realmente eliminar esta nota e todas as suas fichas?\n%s</string>
   <string name="menu_select">Selecionar texto</string>
-  <string name="menu_search">Pesquisar em %1$s</string>
+  <string name="menu_search">Procurar em %1$s</string>
   <string name="menu_mark_note">Marcar nota</string>
   <string name="menu_unmark_note">Desmarcar nota</string>
   <string name="new_deck">Criar baralho</string>
@@ -115,13 +115,13 @@
   <string name="custom_study_deck_name">Sessão de estudo personalizado</string>
   <string name="custom_study_deck_exists">Renomear primeiro o baralho de estudo personalizado existente</string>
   <string name="empty_deck">Este baralho está vazio</string>
-  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_empty">Este baralho está vazio. Toque no botão \"+\" para adicionar novo conteúdo.</string>
   <string name="studyoptions_limit_reached">Limite diário de estudo atingido</string>
   <string name="studyoptions_empty_schedule">Sem fichas agendadas para estudar</string>
   <string name="studyoptions_congrats_finished">Parabéns! Terminou por agora.</string>
   <string name="studyoptions_congrats_more_rev">O limite diário foi atingido, mas ainda existem fichas à espera para serem revistas. Pode aumentar o limite nas opções.</string>
   <string name="studyoptions_congrats_more_new">O limite diário foi atingido. Estão disponíveis mais fichas novas; pode aumentar o limite nas opções, mas isto irá aumentar a sua carga de memorização a curto prazo.</string>
-  <string name="studyoptions_congrats_custom">Para estudar fora da agenda normal, toque no botão de \"Estudo personalizado\".</string>
+  <string name="studyoptions_congrats_custom">Para estudar fora da agendamento normal, toque em \"Estudo personalizado\".</string>
   <string name="studyoptions_no_cards_due">Nenhuma ficha a fazer por enquanto.</string>
   <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
   <string name="button_sync">Sincronizar</string>
@@ -144,6 +144,6 @@
   </plurals>
   <string name="card_template_editor_would_delete_note">Ao remover este tipo de ficha resultará na eliminação de uma ou mais notas. Por favor, crie primeiro um novo tipo de ficha.</string>
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
-        models, and decks, as well as create new ones.</string>
+  <string name="read_write_permission_description">Permitir que a aplicação possa aceder às notas, fichas, modelos,
+        e baralhos existentes, bem como criar novos.</string>
 </resources>

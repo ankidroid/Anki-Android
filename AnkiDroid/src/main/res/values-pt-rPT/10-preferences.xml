@@ -48,7 +48,7 @@
   <string name="pref_cat_whiteboard">Quadro</string>
   <string name="pref_cat_automatic_display">Mostrar resposta automaticamente</string>
   <string name="pref_cat_fonts">Tipos de letra</string>
-  <string name="pref_cat_fonts_summ">Alterar tipo e tamanho de letra padrão</string>
+  <string name="pref_cat_fonts_summ">Alterar tipo e tamanho de letra predefinida</string>
   <string name="pref_cat_gestures">Gestos</string>
   <string name="pref_cat_gestures_summ">Usar toques e deslizar em vez dos botões</string>
   <string name="pref_cat_actions">Ações</string>
@@ -66,13 +66,13 @@
   <string name="write_answers_disable_summ">Impede que o teclado apareça em fichas contendo campos \'escreva a resposta\'</string>
   <string name="text_selection_click">Solução alternativa para toque longo</string>
   <string name="text_selection_click_summ">Ative isto se não conseguir selecionar o texto com um toque longo</string>
-  <string name="dictionary">Dicionário de procura</string>
+  <string name="dictionary">Procurar dicionário</string>
   <string name="reset_languages">Reiniciar idiomas</string>
   <string name="reset_languages_summ">Reiniciar as atribuições de idioma (para texto para voz e dicionários) para todos os baralhos. Reiniciar as atribuições de baralho específicas no selecionador de baralho.</string>
   <string name="reset_languages_question">Reiniciar todas as atribuições de idioma?</string>
   <string name="reset_confirmation">Reinicializar todos os estados</string>
-  <string name="card_zoom">Card zoom</string>
-  <string name="image_zoom">Image zoom</string>
+  <string name="card_zoom">Zoom da ficha</string>
+  <string name="image_zoom">Zoom da imagem</string>
   <string name="button_size">Tamanho do botão de resposta</string>
   <string name="card_browser_font_size">Dimensionamento do texto no navegador de fichas</string>
   <string name="col_path">Caminho da coleção</string>
@@ -104,14 +104,14 @@
   <string name="sync_account_summ_logged_out">Sem sessão iniciada</string>
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="automatic_sync_choice">Sincronização automática</string>
-  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
+  <string name="automatic_sync_choice_summ">Sincronizar automaticalmente ao iniciar/sair da aplicação, se a última sicnronização foi há mais 
+        de 10 minutos.</string>
   <string name="fix_hebrew_text">Correção para vogais em Hebraico</string>
   <string name="fix_hebrew_text_summ">Solução alternativa para processar corretamente  as vogais em Hebraico.</string>
   <string name="fix_hebrew_instructions">Esta definição ignora o algoritmo RTL do Android para mostrar corretamente o texto hebraico com vogais.\n\nPara isto funcionar, precisa de transferir o tipo de letra Tohu.ttf e copiá-lo manualmente para:\n%s/fonts/\n\nNão terá de modificar as suas fichas.</string>
   <string name="fix_hebrew_download_font">Transferir tipo de letra</string>
-  <string name="default_font">Tipo de letra predefinida</string>
-  <string name="override_font">Aplicabilidade do tipo de letra predefinida</string>
+  <string name="default_font">Letra predefinida</string>
+  <string name="override_font">Aplicabilidade da letra predefinida</string>
   <string name="language">Idioma</string>
   <string name="language_system">Idioma do Sistema</string>
   <string name="notification_pref">Notificações</string>
@@ -154,7 +154,7 @@
   <string name="filter_google_translate_summ">Guardar somente a palavra original e a tradução</string>
   <string name="convert_fen_text_summ">Desenhar tabuleiro de xadrez a partir da Notação Forsyth–Edwards. A notação tem que estar entre os delimitadores [fen][/fen].</string>
   <string name="enable_api_title">Ativar API da AnkiDroid</string>
-  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+  <string name="enable_api_summary">Deixe as outras aplicações ligar à AnkiDroid e ler/gravar dados sem a sua intervenção</string>
   <string name="studyoptions_limit_select_tags">Selecione as etiquetas</string>
   <string name="deck_conf_deck_description">Descrição do baralho</string>
   <string name="deck_conf_group">Grupo de opções</string>

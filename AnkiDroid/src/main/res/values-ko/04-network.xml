@@ -114,7 +114,7 @@
   <string name="sync_sanity_failed">동기화 후에, 컬렉션이 불안정한 상태에 있습니다. 이 문제를 해결하기 위해, AnkiDroid는 완전 동기화를 시도할 것입니다. 어느 쪽을 유지하고 싶은지 선택해주세요. 나중에 동기화하고 싶다면 취소를 누르세요.</string>
   <string name="sync_media_sanity_failed">미디어 동기화는 마쳤지만, 미디어 갯수가 서버와 맞지 않습니다. 오류를 해결하기 위해 다음에는 미디어 완전 동기화가 필요합니다.</string>
   <string name="sync_media_error">미디어 데이터 동기화 에러.</string>
-  <string name="sync_media_unsupported">복잡한 미디어 파일명은 안드로이드 2.2 및 이전 버전에서는 지원되지 않습니다. 미디어 동기화가 해제되었습니다.</string>
+  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
   <string name="register_error">오류가 발생 했습니다. 나중에 다시 시도 하십시오.</string>
   <string name="register_title">계정 등록</string>
   <string name="register_mismatch">사용자 이름/암호 재입력이 일치하지 않거나 비어 있습니다. 다시 입력 하십시오.</string>

@@ -114,7 +114,7 @@
   <string name="sync_sanity_failed">Vid synkronisering var den lokala samlingen och den på AnkiWeb i ett oförenligt läge. För att fixa det här kommer AnkiDroid tvinga en full synkronisering. Vänligen välj vilken sida du vill behålla, eller avbryt om du vill synkronisera senare.</string>
   <string name="sync_media_sanity_failed">Mediasynkroniseringen slutfördes, men antalet mediafiler stämmer inte överens med antalet på servern. Nästa mediasynkronisering kommer bli en fullständig synkronisering för att rätta till det som är fel.</string>
   <string name="sync_media_error">Fel vid synkronisering av medieinformation.</string>
-  <string name="sync_media_unsupported">Komplexa mediafilnamn stöds inte av Android 2.2 och tidigare versioner. Mediasynkronisering har inaktiverats.</string>
+  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
   <string name="register_error">Ett fel har uppstått. Försök igen senare.</string>
   <string name="register_title">Registrera konto</string>
   <string name="register_mismatch">Repetitionen av användarnamn/lösenord matchar inte eller är tom. Försök igen.</string>

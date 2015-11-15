@@ -52,8 +52,8 @@
   <string name="not_logged_in_title">Iniciar sessão na AnkiWeb</string>
   <string name="login_create_account_message">Deve iniciar a sessão com uma conta AnkiWeb. Pode criar uma no passo seguinte.</string>
   <string name="no_email_client">Nenhum cliente de e-mail disponível</string>
-  <string name="username">Endereço de e-mail</string>
-  <string name="username_repeat">Repita endereço de e-mail</string>
+  <string name="username">Endereço de correio eletrónico</string>
+  <string name="username_repeat">Repita o endereço de correio eletrónico</string>
   <string name="password">Senha</string>
   <string name="password_repeat">Contrassenha</string>
   <string name="log_in">Iniciar sessão</string>
@@ -68,7 +68,7 @@
   <string name="downloaddeck_search">Procurar</string>
   <string name="preferences_title">Preferências</string>
   <string name="deckpreferences_title">Opções para XXX</string>
-  <string name="sync_conflict_message">Tem que enviar esta coleção ou transferi-la da AnkiWeb, porque estas não podem ser unidas. A coleção de um dos lados será substituída.</string>
+  <string name="sync_conflict_message">Deve enviar esta coleção ou transferi-la da AnkiWeb, porque estas não podem ser unidas. A coleção de um dos lados será substituída.</string>
   <string name="sync_conflict_local">Enviar</string>
   <string name="sync_conflict_remote">Transferir</string>
   <string name="sync_conflict_remote_confirm">Substituir a sua coleção local?</string>
@@ -114,7 +114,7 @@
   <string name="sync_sanity_failed">Após a sincronização, a coleção encontra-se num estado inconsistente. Para corrigir este problema, AnkiDroid terá que impor uma sincronização integral. Escolha qual dos lados deseja manter.</string>
   <string name="sync_media_sanity_failed">Sincronização de multimédia completa, mas não corresponde com o servidor. A próxima sincronização de multimédia terá que ser integral para corrigir qualquer erro.</string>
   <string name="sync_media_error">Erro ao sincronizar dados de multimédia</string>
-  <string name="sync_media_unsupported">Nomes complexos de ficheiros multimédia não são suportados nas versões 2.2 ou anteriores do Android. A sincronização de multimédia foi desativada.</string>
+  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
   <string name="register_error">Ocorreu um erro. Por favor, tente novamente mais tarde.</string>
   <string name="register_title">Registar conta</string>
   <string name="register_mismatch">O nome do utilizador/senha não correspondem ou está em branco.</string>

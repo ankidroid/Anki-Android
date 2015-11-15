@@ -40,7 +40,7 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
   <string name="preference_summary_percentage">XXX%</string>
-  <string name="drawer_open">Abrir Gaveta</string>
+  <string name="drawer_open">Abrir gaveta</string>
   <string name="drawer_close">Fechar gaveta</string>
   <string name="CardEditorLaterMessage">Informação salva para mais tarde</string>
   <string name="CardEditorCardDeck">Baralho de cartões:</string>
@@ -49,12 +49,12 @@
   <string name="CardEditorTags">Tags: %1$s</string>
   <string name="CardEditorCards">Cartões: %1$s</string>
   <string name="tag_name">Nome da tag</string>
-  <string name="add_new_filter_tags">Adicionar/Filtrar tags</string>
+  <string name="add_new_filter_tags">Adicionar/filtrar tags</string>
   <string name="add_tag">Adicionar tag</string>
   <string name="check_all_tags">Marcar/desmarcar todas as tags</string>
   <string name="filter_tags">Filtrar tags</string>
   <string name="no_tags">Você ainda não adicionou nenhuma tag.</string>
-  <string name="sdcard_missing_message">Cartão SD não está disponível porque ele está sendo usado em armazenamento USB. Desconecte o USB para acessar seus decks.</string>
+  <string name="sdcard_missing_message">Desconecte o armazenamento USB para acessar seus decks</string>
   <string name="updated_version">Atualizado para a versão %s</string>
   <string name="enable_whiteboard">Habilitar whiteboard</string>
   <string name="disable_whiteboard">Desativar whiteboard</string>
@@ -95,7 +95,7 @@
   <string name="add">Adicionar</string>
   <string name="close">Fechar</string>
   <string name="select">Selecione</string>
-  <string name="saving_changes">Salvando alterações...</string>
+  <string name="saving_changes">Salvando alterações&#8230;</string>
   <string name="reordering_cards">Reordenando cartões...</string>
   <string name="field_remapping">%1$s (de \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Quaisquer cartões não-mapeados serão removidos. Se não houverem cartões para uma nota, ela será perdida. Tem certeza de que deseja continuar?</string>
@@ -128,14 +128,14 @@
   <string name="check_db_message">Verificando banco de dados.\nPor favor Aguarde...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Cartão vazio. Rode \"Ferramentas&gt;Cartões vazios...\" no cliente para desktop.</string>
   <string name="unknown_type_field_warning">Digite a resposta: campo desconhecido %s</string>
-  <string name="delete_deck">Apagando baralho&#8230;</string>
+  <string name="delete_deck">Excluindo baralho&#8230;</string>
   <string name="show_hint">Mostrar %s</string>
   <string name="info_rate">Qualifique o AnkiDroid</string>
   <string name="col_load_failed">Carregamento da coleção falhou.\nPressione voltar para fechar AnkiDroid.</string>
   <string name="import_title">Importar Cartões</string>
   <string name="import_select_title">Selecione um arquivo para importar</string>
   <string name="import_message_add">Adicionar</string>
-  <string name="import_message_replace_confirm">Isto irá apagar a sua coleção atual e substituí-la pelo conteúdo do arquivo %s. Você tem certeza?</string>
+  <string name="import_message_replace_confirm">Isto irá excluir sua coleção atual e substituí-la pelo conteúdo do arquivo %s</string>
   <string name="import_message_add_confirm">Adicionar \"%s\" a coleção? Isto pode levar um bom tempo</string>
   <string name="import_log_success">%d cartões importados com êxito</string>
   <string name="import_log_error">Importação falhou</string>

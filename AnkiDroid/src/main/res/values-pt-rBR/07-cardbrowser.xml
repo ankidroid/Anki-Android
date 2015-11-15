@@ -50,7 +50,7 @@
   <string name="card_browser_mark_card">Marcar nota</string>
   <string name="card_browser_unmark_card">Desmarcar nota</string>
   <string name="delete_card_title">Excluir nota?</string>
-  <string name="delete_card_message">Realmente excluir todos os cartões desta nota?\nCampo de busca: %s</string>
+  <string name="delete_card_message">Excluir todos os cartões desta nota?\nCampo de busca: %s</string>
   <string name="card_browser_show_marked">Filtrar marcadas</string>
   <string name="card_browser_show_suspended">Filtro suspenso</string>
   <string name="card_browser_search_by_tag">Filtrar por Tag</string>

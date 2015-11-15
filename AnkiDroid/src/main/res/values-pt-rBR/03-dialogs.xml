@@ -43,14 +43,14 @@
   <string name="check_db_warning">Isto pode levar bastante tempo</string>
   <string name="check_db_acknowledge">Banco de dados verificado</string>
   <string name="check_db_acknowledge_shrunk">Banco de dados verificado e otimizado.\nReduzido em %d kB.</string>
-  <string name="contextmenu_deckpicker_delete_deck">Excluir Deck</string>
+  <string name="contextmenu_deckpicker_delete_deck">Excluir baralho</string>
   <string name="delete_deck_default_deck">O baralho padrão não pode ser excluído.</string>
-  <string name="delete_deck_title">Excluir Deck</string>
+  <string name="delete_deck_title">Excluir baralho?</string>
   <plurals name="delete_deck_message">
     <item quantity="one">Excluir todas as cartas em %1$s? Ele contém %2$d cartão.</item>
     <item quantity="other">Excluir todas as cartas em %1$s? Ele contém %2$d cartões.</item>
   </plurals>
-  <string name="delete_cram_deck_message">Você tem certeza de que deseja enviar todos os cartões em %s para os seus baralhos originais?</string>
+  <string name="delete_cram_deck_message">Enviar todos os cartões em %s para seus baralhos originais?</string>
   <string name="no_tts_available_message">Nenhum idioma de texto para fala disponível</string>
   <string name="initializing_tts">Inicializando TTS&#8230;</string>
   <string name="tts_no_tts">Não fale</string>
@@ -98,7 +98,7 @@
   <string name="dialog_ok">OK</string>
   <string name="dialog_continue">Continuar</string>
   <string name="dialog_positive_create">Criar</string>
-  <string name="dialog_positive_delete">Remover</string>
+  <string name="dialog_positive_delete">Excluir</string>
   <string name="dialog_positive_disable">Desativar</string>
   <string name="dialog_positive_overwrite">Sobrescrever</string>
   <string name="dialog_positive_remove">Remover</string>
@@ -119,7 +119,7 @@
   <string name="check_media_no_unused_missing">Não foram encontrados arquivos não utilizados ou faltantes.</string>
   <string name="check_media_db_updated">Banco de dados de mídia reconstruído.</string>
   <string name="check_media_delete_unused">Excluir não utilizados</string>
-  <string name="check_media_deleted">Arquivos apagados: %d</string>
+  <string name="check_media_deleted">Arquivos excluídos: %d</string>
   <string name="tags_dialog_option_all_cards">Todos cartões</string>
   <string name="tags_dialog_option_new_cards">Novos</string>
   <string name="tags_dialog_option_due_cards">Pendentes</string>
