@@ -32,6 +32,10 @@ public class CompatV16 extends CompatV15 implements Compat {
         db.disableWriteAheadLogging();
     }
 
+    public boolean isWriteAheadLoggingEnabled(SQLiteDatabase db) {
+        return db.isWriteAheadLoggingEnabled();
+    }
+
     /*
      *  Return the input string in a form suitable for display on a HTML page.
      *

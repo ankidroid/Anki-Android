@@ -113,6 +113,8 @@
     <string name="select_locale_title">Select language</string>
     <string name="safe_display">Safe display mode</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink and older devices using custom fonts may require this.</string>
+    <string name="wal_enable">Enable write-ahead-logging</string>
+    <string name="wal_enable_summ">This can reduce database latency when reviewing, but may increase the risk of errors.</string>
     <string name="vertical_centering">Center align</string>
     <string name="vertical_centering_summ">Center the content of cards vertically</string>
     <string name="pref_backup_max">Max number of backups</string>
