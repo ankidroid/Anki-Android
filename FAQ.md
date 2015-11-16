@@ -90,9 +90,16 @@ You can build your own parallel versions of AnkiDroid by following the [instruct
 It appears like your decks have disappeared? Don't burn your phone yet: AnkiDroid does regular backups, so you will probably be able to recover your decks. See the [backups section of the manual](http://ankidroid.org/docs/manual.html#backups) for more info.
 
 ### Help! My collection is corrupted!
-Corruption happens mostly when users copy the main collection.anki2 file while it is still opened. AnkiDroid has a backup system which saves your collection file every day into the subfolder "backup". If your collection becomes corrupted, you can always [restore from one of the these backups](FAQ#lost-my-decks).
+Database corruption can occasionally happen for a small minority of users for reasons unknown to us. If this happens to you, we recommend taking the following course of action:
 
-Also see the main Anki documentation for more info: http://ankisrs.net/docs/manual.html#_corrupt_collections
+1. Make a backup copy of the AnkiDroid folder on your device ASAP. Copy it to your PC and/or Google Drive so that our support team can still help you if the below steps fail.
+
+1. Choose the "Restore from backup" option from the menu in the main deck list and select the newest backup which has a time stamp before the problem started occurring.
+
+1. If the restore completed successfully, run "check collection" and see if that also completes successfully. If so, you are done. If not, try restoring from an even older backup.
+
+If restoring from a backup is not possible, you can try to manually "fix" the database by copying the collection.anki2 file in the AnkiDroid folder to your computer, and following the [instructions in the 
+main Anki documentation](http://ankisrs.net/docs/manual.html#_corrupt_collections).
 
 ### How can I use Zeemote?
 While we do not officially support the [Zeemote JS1 Controller](http://zeemote.com/), some users have noted that they could successfully pair AnkiDroid with the Zeemote using a 3rd party app called  [Bluez IME](https://play.google.com/store/apps/details?id=com.hexad.bluezime).
