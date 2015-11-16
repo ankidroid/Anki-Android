@@ -96,6 +96,8 @@ In this case, it's necessary to:
 
 A tool like "SQLite Database Browser" is very useful to understand how your "collection.anki2" file is made, and to test SQL queries. To install it on Ubuntu:
 ```
+sudo apt-add-repository ppa:linuxgndu/sqlitebrowser
+sudo apt-get update
 sudo apt-get install sqlitebrowser
 ```
 
@@ -106,9 +108,9 @@ Binaries for Windows and Mac can be found [here](https://github.com/sqlitebrowse
 
 On Ubuntu Linux:
 
-1. Install sqlite3 and meld: sudo apt-get install sqlite3 meld.
+1. Install sqlite3 as above and meld: sudo apt-get install sqlite3 meld.
 1. Make sure my desktop and android have about the same clock time.
-1. Copy country-capitals.anki to both.
+1. Import the same shared deck to both.
 1. Perform the same review sequence on both at the same time.
 1. Copy the modified decks for comparison.
 1. Run the following command and check that times are not too different, and that are no other differences:
@@ -119,7 +121,7 @@ diff desktop.dump android.dump
 ```
 
 # To do from time to time
-In addition to <a href='http://code.google.com/p/ankidroid/issues'>bugs and enhancements</a>, here are a few things that someone or another should perform once in a while, maybe every month or so.
+In addition to maintaining the issues tracker, here are a few things that someone should perform once in a while, maybe every few months or so.
 
 ## Licenses
 1. Check that all files mention the GNU-GPL license.
