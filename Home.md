@@ -22,4 +22,3 @@ The following pages contain information for people interested in contributing to
 * [Release procedure](wiki/Release-procedure)
 * [API documentation](wiki/AnkiDroid-API)
 * [Database structure](wiki/Database-Structure)
-* [Manual testing](wiki/Manual-testing)
