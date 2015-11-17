@@ -142,6 +142,7 @@
     <item quantity="one">Supprimer le type de carte “%2$s” et son %1$d carte ?</item>
     <item quantity="other">Supprimer le type de carte “%2$s” et ses %1$d cartes ?</item>
   </plurals>
+  <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note"> Retirer ce type de carte provoquerait la suppression 
         d\'une ou de plusieurs notes. Veuillez d\'abord créer un nouveau type de carte.</string>
   <string name="read_write_permission_label">Lire et écrire dans la base de données d\'AnkiDroid</string>

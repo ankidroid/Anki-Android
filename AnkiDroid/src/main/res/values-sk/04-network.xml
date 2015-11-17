@@ -63,7 +63,7 @@
   <string name="logged_as">Prihlásený ako</string>
   <string name="log_out">Odhlásiť</string>
   <string name="alert_logging_message">Prebieha prihlasovanie&#8230;</string>
-  <string name="invalid_username_password">Neplatná e-mailová adresa alebo heslo.</string>
+  <string name="invalid_username_password">Neplatná e-mailová adresa alebo heslo</string>
   <string name="reset_password">Obnoviť heslo</string>
   <string name="downloaddeck_search">Hľadať</string>
   <string name="preferences_title">Preferencie</string>
@@ -79,9 +79,9 @@
   <string name="sync_downloading_message">Sťahovanie...</string>
   <string name="sync_title">Synchronizácia</string>
   <string name="sync_downloading_media">Sťahovanie médií %1$d/%2$d...</string>
-  <string name="sync_log_uploading_message">Úplná synchronizácia z AnkiDroid na server</string>
+  <string name="sync_log_uploading_message">Úplná synchronizácia z AnkiDroid na server Ankiweb</string>
   <string name="sync_log_downloading_message">Úplná synchronizácia zo servera</string>
-  <string name="sync_log_clocks_unsynchronized">Čas vo vašom prístroji je nepresný o %1$d sekúnd%2$s; Synchronizácia vyžaduje, aby váš čas aj časové pásmo boli nastavené správne, aby sa predišlo chybám. Prosím uistite sa, že dátum, čas a časové pásmo na vašom zariadení sú nastavené správne, potom synchronizáciu zopakujte.</string>
+  <string name="sync_log_clocks_unsynchronized">Čas vo vašom prístroji je nepresný o %1$d sekúnd%2$s. Prosím uistite sa, že dátum, čas a časové pásmo na vašom zariadení sú nastavené správne, potom synchronizáciu zopakujte.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, časové pásmo zariadenia pravdepodobne nie je správne</string>
   <string name="sync_log_clocks_unsynchronized_date">, dátum zariadenia pravdepodobne nie je správny</string>
   <string name="sync_conflict_title">Konflikt synchronizácie</string>
@@ -89,7 +89,7 @@
   <string name="sync_database_acknowledge">Kolekcia synchronizovaná</string>
   <string name="sync_log_error_specific">Chyba synchronizácie, typ: %1$s, správa: %2$s</string>
   <string name="sync_corrupt_database">Vaša databáza je poškodená. Prosím opravte ju pred opätovným pokusom o synchronizáciu.\n\nPozrite si %s pre informácie o oprave databázy.</string>
-  <string name="sync_too_busy">Server je príliš zaneprázdnený. Skúste to znova neskôr.</string>
+  <string name="sync_too_busy">Server je zaneprázdnený. Skúste to znova neskôr.</string>
   <string name="sync_remote_db_error">Stiahnutá databáza bola poškodená. Prosím skúste to znova.</string>
   <string name="sync_overwrite_error">Vašu aktuálnu zbierku sa nepodarilo prepísať stiahnutým súborom</string>
   <string name="sync_connection_error">Vypršal časový limit pripojenia. Buď máte problém s internetovým pripojením alebo máte veľký multimediálny súbor v priečinku.</string>
@@ -100,9 +100,9 @@
   <string name="sync_finish_message">Dokončuje sa synchronizácia...</string>
   <string name="sync_log_finish_error">Chyba pri odosielaní koncovej adresy na server</string>
   <string name="sync_writing_db">Zapisujem zmeny do databázy...</string>
-  <string name="sync_download_chunk">Sťahujem zmeny...</string>
+  <string name="sync_download_chunk">Sťahovanie zmien...</string>
   <string name="sync_upload_chunk">Nahrávanie zmien...</string>
-  <string name="sync_up_down_size">Nahrávanie: %1$d kb\nSťahovanie: %2$d kb</string>
+  <string name="sync_up_down_size">Nahrávanie: %1$d kB, Sťahovanie: %2$d kB</string>
   <string name="sync_generic_error">Vyskytla sa chyba. Skúste to znova neskôr.</string>
   <string name="sync_check_upload_file">Kontrola súboru pred nahrávaním...</string>
   <string name="sync_check_download_file">Kontrola stiahnutého súboru&#8230;</string>
@@ -114,7 +114,7 @@
   <string name="sync_sanity_failed">Po synchronizácii bola zbierka v nekonzistentnom stave. Pre vyriešenie tohto problému, AnkiDroid vykoná úplnú synchronizáciu. Zvoľte prosím, ktorú stranu by ste chceli zachovať.</string>
   <string name="sync_media_sanity_failed">Synchronizácia multimédií bola dokončená, ale počet médií nesúhlasí so serverom. Nasledujúca synchronizácia multimédií bude úplná, aby sa napravili akékoľvek chyby.</string>
   <string name="sync_media_error">Pri synchronizácií mediálnych súborov sa vyskytla chyba</string>
-  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
+  <string name="sync_media_error_check">Vyskytla sa chyba pri synchronizácii médií. Odporúča sa kontrola médií.</string>
   <string name="register_error">Vyskytla sa chyba. Skúste to znova neskôr.</string>
   <string name="register_title">Registrovať účet</string>
   <string name="register_mismatch">Zopakovanie užívateľského mena/hesla sa nezhoduje alebo je prázdne.</string>

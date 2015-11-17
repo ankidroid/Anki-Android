@@ -146,6 +146,7 @@
     <item quantity="few">Delete the “%2$s” card type, and its %1$d cards?</item>
     <item quantity="other">Odstranit typ karty \'%2$s\' a jeho %1$d karty?</item>
   </plurals>
+  <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note"> Odstraněním tohoto typu karty můžete způsobit, že jedna nebo         více poznámek budou odstraněny. Nejprve vytvořte nový typ karty.</string>
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
   <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,

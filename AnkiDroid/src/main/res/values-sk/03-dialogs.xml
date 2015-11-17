@@ -40,12 +40,12 @@
 -->
 <resources>
   <string name="check_db_title">Skontrolovať databázu?</string>
-  <string name="check_db_warning">Toto môže zabrať dlhší čas</string>
+  <string name="check_db_warning">Toto môže chvíľu trvať</string>
   <string name="check_db_acknowledge">Databáza skontrolovaná</string>
   <string name="check_db_acknowledge_shrunk">Databáza skontrolovaná a optimalizovaná.\nZmenšená o %d kB.</string>
-  <string name="contextmenu_deckpicker_delete_deck">Odstrániť balíček</string>
+  <string name="contextmenu_deckpicker_delete_deck">Vymazať balíček</string>
   <string name="delete_deck_default_deck">Východiskový balíček sa nemôže vymazať.</string>
-  <string name="delete_deck_title">Odstrániť balíček?</string>
+  <string name="delete_deck_title">Vymazať balíček?</string>
   <plurals name="delete_deck_message">
     <item quantity="one">Vymazať všetky karty v balíčku %1$s? Obsahuje %2$d kartu.</item>
     <item quantity="few">Vymazať všetky karty v balíčku %1$s? Obsahuje %2$d karty.</item>
@@ -56,14 +56,14 @@
   <string name="initializing_tts">Inicializuje sa TTS&#8230;</string>
   <string name="tts_no_tts">Nehovoriť</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Kartičky pre Android</h2>AnkiDroid je kartičková aplikácia plne kompatibilná s desktopovým programom <a href=\"%2$s\">Anki</a>. Môžete si tak vytvoriť, stiahnuť a učiť sa materiály na oboch zariadeniach, či je to AnkiDroid alebo Anki, a synchronizovať ich prostredníctvom AnkiWeb.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Kartičky pre Android</h2>AnkiDroid je kartičková aplikácia plne kompatibilná s desktopovým programom <a href=\"%2$s\">Anki</a>. Môžete si tak vytvoriť, stiahnuť a učiť sa materiály na oboch platformách, či už je to AnkiDroid alebo Anki, a synchronizovať ich prostredníctvom AnkiWeb.]]></item>
     <item><![CDATA[Aby ste nám pomohli spraviť AnkiDroid lepším, zašlite nám chyby na <a href=\"%1$s\">Issue Tracker</a>; nápady týkajúce sa funkcionality aplikácie sú taktiež veľmi vítané. Odpovede na ďalšie otázky môžete nájsť na <a href=\"%2$s\">wiki</a> alebo vytvorte diskusiu na<a href=\"%3$s\">fóre</a>.]]></item>
-    <item><![CDATA[AnkiDroid je <a href=\"%1$s\">open source softvér<a/>, preto podporujeme každého, kto sa chce <a href=\"%2$s\">stať jeho podporovateľom</a> :-)]]></item>
+    <item><![CDATA[AnkiDroid je <a href=\"%1$s\">open source softvér<a/>, preto vítame každého, kto sa chce <a href=\"%2$s\">stať jeho podporovateľom</a> :-)]]></item>
     <item><![CDATA[Dokážete nám pomáhať i napriek tomu, že nie ste vývojári. Napríklad, môžete nám <a href=\"%1$s\">pomôcť s prekladom</a> AnkiDroidu, aktualizovať informácie na wikipédii, poskytnúť screenshoty, <a href=\"%2$s\">prispieť</a> pre desktopovú verziu Anki, alebo blogovať o AnkiDroide.]]></item>
     <item><![CDATA[AnkiDroid je vydaný pod <a href=\"%1$s\">licenciou GNU-GPL v3</a> a jeho zdrojový kód je dostupný na stránke <a href=\"%2$s\">GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Náhľad</string>
-  <string name="reset_card_dialog_title">Vynulovať pokrok karty</string>
+  <string name="reset_card_dialog_title">Vynulovať pokrok v učení</string>
   <string name="reset_card_dialog_message">Táto karta bude umiestnená na posledné miesto v poradí nových kariet.</string>
   <string name="reset_card_dialog_acknowledge">Obnoviť kartu</string>
   <string name="reschedule_card_dialog_title">Preplánovať kartu</string>
@@ -86,10 +86,10 @@
   <string name="custom_study_random">Náhodne vybrať x kariet z balíčka:</string>
   <string name="custom_study_preview">Ukážka nových kariet pridaných za posledných x dní:</string>
   <string name="rebuild_custom_study_deck">Obnovujem balíček vlastného štúdia.\nProsím počkajte...</string>
-  <string name="import_unpacking">Rozbaľujem archív.\nProsím počkajte&#8230;</string>
-  <string name="importing_collection">Importujem zbierku.\nProsím počkajte&#8230;</string>
-  <string name="import_media_count">Importujem mediálne súbory %1$d%%\nProsím počkajte&#8230;</string>
-  <string name="import_update_counts">Aktualizujem balíčky.\nProsím počkajte&#8230;</string>
+  <string name="import_unpacking">Archív sa rozbaľuje&#8230;</string>
+  <string name="importing_collection">Zbierka sa importuje&#8230;</string>
+  <string name="import_media_count">Importujú sa mediálne súbory %1$d%%&#8230;</string>
+  <string name="import_update_counts">Balíčky sa aktualizujú&#8230;</string>
   <string name="import_add_progress">• Rozbaľujem archív %1$s\n• Import poznámok %2$d%%\n• Import kariet %3$d%%\n• Vyčistenie %4$s</string>
   <string name="sd_card_full_title">SD karta je plná</string>
   <string name="sd_card_almost_full_title">SD karta je skoro plná</string>
@@ -99,7 +99,7 @@
   <string name="dialog_ok">Ok</string>
   <string name="dialog_continue">Pokračovať</string>
   <string name="dialog_positive_create">Vytvoriť</string>
-  <string name="dialog_positive_delete">Odstrániť</string>
+  <string name="dialog_positive_delete">Vymazať</string>
   <string name="dialog_positive_disable">Zakázať</string>
   <string name="dialog_positive_overwrite">Prepísať</string>
   <string name="dialog_positive_remove">Odstrániť</string>
@@ -123,5 +123,5 @@
   <string name="check_media_deleted">Vymazaných súborov: %d</string>
   <string name="tags_dialog_option_all_cards">Všetky karty</string>
   <string name="tags_dialog_option_new_cards">Nové</string>
-  <string name="tags_dialog_option_due_cards">Preskúšanie</string>
+  <string name="tags_dialog_option_due_cards">Na preskúšanie</string>
 </resources>

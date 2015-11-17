@@ -142,6 +142,7 @@
     <item quantity="one">¿Eliminar el tipo de tarjeta \'%2$s\' y su %1$d tarjeta?</item>
     <item quantity="other">¿Eliminar el tipo de tarjeta \'%2$s\' y sus %1$d tarjetas?</item>
   </plurals>
+  <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note"> Eliminar este tipo de tarjeta podría causar que una o más notas se eliminen. Por favor, cree un nuevo tipo de tarjeta primero.</string>
   <string name="read_write_permission_label">Leer y escribir en la base de datos de AnkiDroid</string>
   <string name="read_write_permission_description">Permitir que la aplicación pueda acceder a notas, tarjetas,        modelos y mazos existentes, además de crear nuevos.</string>

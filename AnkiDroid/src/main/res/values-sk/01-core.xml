@@ -93,7 +93,7 @@
   <string name="menu_bury_note">Zahrabať poznámku</string>
   <string name="menu_suspend_card">Pozastaviť kartu</string>
   <string name="menu_suspend_note">Pozastaviť poznámku</string>
-  <string name="menu_delete_note">Odstrániť poznámku</string>
+  <string name="menu_delete_note">Vymazať poznámku</string>
   <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej karty?\n%s</string>
   <string name="menu_select">Zvoliť text</string>
   <string name="menu_search">Vyhľadať v %1$s</string>
@@ -146,7 +146,8 @@
     <item quantity="few">Vymazať “%2$s” typy kariet a ich %1$d karty?</item>
     <item quantity="other">Vymazať “%2$s” typov kariet a ich %1$d kariet?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note">Odstránením tejto karty spôsobíte, že jedna alebo viac poznámok budú odstránené. Predtým si vytvorte, prosím, nový typ karty.</string>
+  <string name="invalid_template">A card could not be generated</string>
+  <string name="card_template_editor_would_delete_note">Odstránením tejto karty spôsobíte, že jedna alebo viac poznámok budú vymazané. Predtým si vytvorte, prosím, nový typ karty.</string>
   <string name="read_write_permission_label">Čítať a písať do databázy AnkiDroid</string>
   <string name="read_write_permission_description">Povoliť aplikácii prístup k existujúcim poznámkam, kartám,
         modelom a balíčkom, rovnako ako vytvárať nové.</string>

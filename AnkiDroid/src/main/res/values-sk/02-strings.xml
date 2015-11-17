@@ -45,7 +45,7 @@
   <string name="CardEditorLaterMessage">Informácie uložené na neskôr</string>
   <string name="CardEditorCardDeck">Balíček karty:</string>
   <string name="CardEditorNoteDeck">Balíček:</string>
-  <string name="CardEditorModel">Typ karty:</string>
+  <string name="CardEditorModel">Typ:</string>
   <string name="CardEditorTags">Štítky: %1$s</string>
   <string name="CardEditorCards">Karty: %1$s</string>
   <string name="tag_name">Názov štítku</string>
@@ -54,8 +54,8 @@
   <string name="check_all_tags">Zaškrtnúť/odškrtnúť všetky štítky</string>
   <string name="filter_tags">Filtrovať štítky</string>
   <string name="no_tags">Ešte ste nepridali žiadne štítky.</string>
-  <string name="sdcard_missing_message">SD karta je nedostupná, pretože sa používa ako USB úložisko. Pre prístup k vašim balíčkom odpojte USB.</string>
-  <string name="updated_version">Aktualizovať na verziu %s</string>
+  <string name="sdcard_missing_message">Pre prístup k vašim balíčkom odpojte USB</string>
+  <string name="updated_version">Aktualizované na verziu %s</string>
   <string name="enable_whiteboard">Povoliť tabuľu</string>
   <string name="disable_whiteboard">Zakázať tabuľu</string>
   <string name="show_whiteboard">Zobraziť tabuľu</string>
@@ -67,7 +67,7 @@
   <string name="corrupt_font">Poškodený súbor písma %s</string>
   <string-array name="browser_column1_headings">
     <item>Otázka</item>
-    <item>Pole triedenia</item>
+    <item>Triediace pole</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Odpoveď</item>
@@ -94,7 +94,7 @@
   <string name="saving_model">Ukladanie modelu</string>
   <string name="add">Pridať</string>
   <string name="close">Zavrieť</string>
-  <string name="select">Vybrať</string>
+  <string name="select">Zvoliť</string>
   <string name="saving_changes">Ukladajú sa zmeny ...</string>
   <string name="reordering_cards">Zmena poradia kariet...</string>
   <string name="field_remapping">%1$s (z “%2$s”)</string>
@@ -126,20 +126,20 @@
     <item quantity="other">%d pridaných kariet</item>
   </plurals>
   <string name="help_title">Pomocník</string>
-  <string name="check_db">Kontrola databázy</string>
+  <string name="check_db">Skontrolovať databázu</string>
   <string name="check_media">Skontrolovať multimédia</string>
-  <string name="check_db_message">Kontrolujem databázu.\nProsím počkajte...</string>
+  <string name="check_db_message">Kontroluje sa databáza&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Prázdna karta. Spustite \"Nástroje&gt;Prázdne karty...\" v klientovi pre PC.</string>
   <string name="unknown_type_field_warning">Typ odpovede: neznáme pole %s</string>
-  <string name="delete_deck">Odstraňujem balíček...\nProsím počkajte.</string>
-  <string name="show_hint">Show %s</string>
+  <string name="delete_deck">Balíček sa odstraňuje&#8230;</string>
+  <string name="show_hint">Zobraziť %s</string>
   <string name="info_rate">Ohodnotiť AnkiDroid</string>
-  <string name="col_load_failed">Nahrávanie zbierky zlyhalo.\nProsím stlačte späť a zavrite AnkiDroid.</string>
+  <string name="col_load_failed">Nahrávanie zbierky zlyhalo.\nProsím stlačte tlačidlo Späť a zavrite AnkiDroid.</string>
   <string name="import_title">Import kariet</string>
   <string name="import_select_title">Zvoľte súbor pre import</string>
   <string name="import_message_add">Pridať</string>
   <string name="import_message_replace_confirm">Týmto vymažete vašu existujúcu zbierku a nahradíte ju dátami zo súboru %s. Ste si istý?</string>
-  <string name="import_message_add_confirm">Add “%s” do zbierky? Môže to chvíľu trvať</string>
+  <string name="import_message_add_confirm">Pridať “%s” do zbierky? Môže to chvíľu trvať</string>
   <string name="import_log_success">Úspešne importovaných %d kariet</string>
   <string name="import_log_error">Import zlyhal</string>
   <string name="import_log_no_apkg">Toto nie je platný súbor typu apkg</string>
@@ -159,12 +159,12 @@
   <string name="study_options">Nastavenia balíčka</string>
   <string name="custom_study">Vlastné štúdium</string>
   <string name="more_options">Viac</string>
-  <string name="dyn_deck_desc">Toto je špeciálny balíček na štúdium mimo bežného plánu. Karty sa automaticky vrátia do ich pôvodných balíčkov po tom čo si ich zopakujete. Po odstránení tohto balíčka zo zoznamu balíčkov sa všetky zostávajúce karty vrátia do ich pôvodných balíčkov.</string>
+  <string name="dyn_deck_desc">Toto je špeciálny balíček na štúdium mimo bežného plánu. Karty sa automaticky vrátia do svojich pôvodných balíčkov po tom, čo si ich zopakujete. Odstránením tohto balíčku zo zoznamu balíčkov sa všetky zostávajúce karty vrátia do ich pôvodných balíčkov.</string>
   <string name="steps_error">Kroky musia byť čísla väčšie ako 0</string>
   <string name="steps_min_error">Je nutné zadať aspoň jeden krok</string>
   <string name="sched_end">(koniec)</string>
   <string name="sched_unbury_action">Ak ich chcete vidieť teraz, ťuknite v menu na položku “Odhrabať”.</string>
-  <string name="sched_has_buried">Niektoré súvisiace alebo zahrabané karty boli posunuté na neskôr.</string>
+  <string name="sched_has_buried">Niektoré súvisiace alebo zahrabané karty boli odložené až na zajtra.</string>
   <string name="tag_editor_add_feedback">Ťuknite “%2$s” pre potvrdenie pridania “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Existujúci štítok “%1$s” zvolený</string>
   <string name="lookup_hint">Po skopírovaní textu, ťuknite kdekoľvek na kartičku, aby sa vám zobrazila ikona hľadania</string>

@@ -80,8 +80,8 @@
   <string name="fullscreen_review_summ">Сакриј системски део екрана</string>
   <string name="gestures">Омогући гестове</string>
   <string name="gestures_summ">Додели гестове за дејства као одговарње и уређивање картица.</string>
-  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
-  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
+  <string name="gestures_hide_answer_buttons">Сакриј дугмад одговора</string>
+  <string name="gestures_hide_answer_buttons_summ">Не приказуј дугмад одговора када су покрети омогућени</string>
   <string name="gestures_swipe_up">Пребацити горе</string>
   <string name="gestures_swipe_down">Пребацити доле</string>
   <string name="gestures_swipe_left">Пребацити лево</string>
@@ -104,8 +104,8 @@
   <string name="sync_account_summ_logged_out">Нисте ауторизовани</string>
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="automatic_sync_choice">Аутоматска синхронизација</string>
-  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
+  <string name="automatic_sync_choice_summ">Синхронизуј аутоматски на старт/излаз, ако је од последње синхронизације прошло више
+        од 10 минута.</string>
   <string name="fix_hebrew_text">Исправке за хебрејске гласове</string>
   <string name="fix_hebrew_text_summ">Трик за правилно приказивање самогласника у хебрејском.</string>
   <string name="fix_hebrew_instructions">Овај параметар превазилази RTL алгоритам система Android, да би приказао правилно гласове у тексту на хебрејском,.\n\nДа би то радило, морате преузети фонт Tohu.ttf и ручно га копирати у:\n%s/fonts/\n\nНе морате да модификујете ваше карте.</string>
@@ -154,7 +154,7 @@
   <string name="filter_google_translate_summ">Једноставно чување изворне речи и превода</string>
   <string name="convert_fen_text_summ">Цртај шаховску таблу са Форсит-Едвардс нотацијом. Нотација мора да буде ограђена [fen][/fen] таговима.</string>
   <string name="enable_api_title">Омогући AnkiDroid API</string>
-  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+  <string name="enable_api_summary">Нека се друге апликације повежу са AnkiDroid и читају/записују податке без ваше интервенције</string>
   <string name="studyoptions_limit_select_tags">Изаберите ознаке</string>
   <string name="deck_conf_deck_description">Опис шпила</string>
   <string name="deck_conf_group">Група опције</string>

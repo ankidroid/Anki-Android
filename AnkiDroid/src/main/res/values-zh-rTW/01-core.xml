@@ -139,6 +139,7 @@
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="other">刪除卡片種類 \"%2$s\"，和它的 %1$d 張卡片？</item>
   </plurals>
+  <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note">移除這個卡片種類將會導致一或多個筆記被刪除。請先新增一個卡片種類。</string>
   <string name="read_write_permission_label">讀寫 AnkiDroid 資料庫</string>
   <string name="read_write_permission_description">允許應用程式能夠存取既有的筆記，卡片，模組，跟牌組，或是新增這些內容。</string>

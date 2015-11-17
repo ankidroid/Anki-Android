@@ -142,6 +142,7 @@
     <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
     <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
   </plurals>
+  <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note"> Usniman þis kartahaidaus tawidedi aina fawanda aiþþau 
         managizo fawandaizo meleine. Skapei þata frumist niujata kartahaidu.</string>
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>

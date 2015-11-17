@@ -55,12 +55,12 @@
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d карта за (%2$s)</item>
     <item quantity="few">%1$d карата за (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="other">%1$d карата за (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d минута остало</item>
+    <item quantity="one">%d минут остао</item>
     <item quantity="few">%d minutes left</item>
-    <item quantity="other">%d minutes left</item>
+    <item quantity="other">%d минута остало</item>
   </plurals>
   <plurals name="studied_cards_today">
     <item quantity="one">Проучено %1$d карте за %2$s данас</item>
@@ -79,22 +79,22 @@
   <string name="undo_action_review">последње понављање</string>
   <string name="undo_action_edit">уреди белешку</string>
   <string name="undo_action_bury">закопај белешку</string>
-  <string name="undo_action_suspend_card">откажи картицу</string>
+  <string name="undo_action_suspend_card">откажи карту</string>
   <string name="undo_action_suspend_note">откажи белешку</string>
   <string name="undo_action_delete">избриши белешку</string>
   <string name="undo_action_mark">означи белешку</string>
-  <string name="unbury">Ископај</string>
+  <string name="unbury">Откриј</string>
   <string name="rename_deck">Преименуј шпил</string>
   <string name="menu_add">Додај</string>
   <string name="menu_add_note">Додај белешку</string>
   <string name="menu_my_account">Налог за синхронизацију</string>
   <string name="menu_dismiss_note">Сакриј / Избриши</string>
-  <string name="menu_bury_card">Закопај картицу</string>
-  <string name="menu_bury_note">Закопај белешку</string>
-  <string name="menu_suspend_card">Откажи картицу</string>
+  <string name="menu_bury_card">Сакриј картицу</string>
+  <string name="menu_bury_note">Сакриј белешку</string>
+  <string name="menu_suspend_card">Откажи карту</string>
   <string name="menu_suspend_note">Откажи белешку</string>
   <string name="menu_delete_note">Избриши белешку</string>
-  <string name="delete_note_message">Да ли заисте желите да избришете белешку и све повезане картице?\n%s</string>
+  <string name="delete_note_message">Да ли заисте желите да избришете белешку и све повезане карте?\n%s</string>
   <string name="menu_select">Означи текст</string>
   <string name="menu_search">Потражи у %1$s</string>
   <string name="menu_mark_note">Означи белешку</string>
@@ -118,9 +118,9 @@
   <string name="custom_study_deck_name">Посебна сесија проучавања</string>
   <string name="custom_study_deck_exists">Прво преименујте постојеће специјалне шпилове.</string>
   <string name="empty_deck">Овај шпил је празан</string>
-  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-  <string name="studyoptions_limit_reached">Daily study limit reached</string>
-  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+  <string name="studyoptions_empty">Овај шпил је празан. Притисните дугме +, да бисте додали нови садржај.</string>
+  <string name="studyoptions_limit_reached">Дневни лимит је достигнут</string>
+  <string name="studyoptions_empty_schedule">Нема нових карата, које су планиране за учење</string>
   <string name="studyoptions_congrats_finished">Честитамо! Завршили сте данашњи задатак.</string>
   <string name="studyoptions_congrats_more_rev">Достигнут је лимит броја прегледа за данас, али још постоје карте које чекају на преглед. За оптимално памћење препоручује се да увећате дневни лимит у опцијама.</string>
   <string name="studyoptions_congrats_more_new">Постоје нове карте, али дневни лимит је научен. Можете да повећате лимит, али имајте на уму, да ће то увећати и обим понављања следећих дана.</string>
@@ -128,7 +128,7 @@
   <string name="studyoptions_no_cards_due">Нема редне карте.</string>
   <string name="sd_card_not_mounted">Уређај за чување није монтиран</string>
   <string name="button_sync">Синхронизујте</string>
-  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+  <string name="cancel_sync_confirm">Желите ли да откажете синхронизацију?</string>
   <string name="continue_sync">Настави синхронизацију</string>
   <string name="sync_cancelled">Синхронизација отказана</string>
   <string name="export">Извози</string>
@@ -146,8 +146,8 @@
     <item quantity="few">Да избришем тип картице \'%2$s\' и све %1$d његове картице?</item>
     <item quantity="other">Да избришем тип картице \'%2$s\' и све %1$d његове картице?</item>
   </plurals>
+  <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note">Брисање тог типа карата довешће до брисања једног или неколико белешки. Направите прво нови тип карата.</string>
   <string name="read_write_permission_label">Читати и писати у бази података AnkiDroid</string>
-  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
-        models, and decks, as well as create new ones.</string>
+  <string name="read_write_permission_description">Дозволи апликацији да има доступ ка постојећим белешкама, картама, моделима и шпиловима, а такође да креира нове.</string>
 </resources>
