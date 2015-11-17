@@ -41,6 +41,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import org.json.JSONException;
 
@@ -418,6 +419,13 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     @Override
+    public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
+        // Tell the browser the current card ID so that it can tell us when we need to reload
+        setCurrentCardId(mCurrentCard.getId());
+        return super.onItemClick(view, i, iDrawerItem);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_STATISTICS || requestCode == REQUEST_BROWSE_CARDS) {
             // select original deck if the statistics or card browser were opened,
@@ -425,8 +433,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             if (data != null && data.hasExtra("originalDeck")) {
                 getCol().getDecks().select(data.getLongExtra("originalDeck", 0L));
             }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
