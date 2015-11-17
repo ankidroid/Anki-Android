@@ -32,18 +32,18 @@ An apk file signed with a standard "debug" key will be generated named `"AnkiDro
 `%AnkiDroidRoot%/AnkiDroid/build/outputs/apk/`
 
 ## Making "parallel" builds
-If you want to run several different versions of AnkiDroid side by side, you can do this by performing the following 4 steps:
+If you want to run several different versions of AnkiDroid side by side, you need to edit the package ID (from com.ichi2.anki) in the following places so that every version of AnkiDroid that you install has a unique ID:
 
-* Change `applicationId` in the `AnkiDroid/build.gradle` from `"com.ichi2.anki"` to something else, like `"com.ichi2.a.anki"`
-*  Open the `%root/AndroidManifest.xml` file, search for "authorities", and change the line that says `android:authorities="com.ichi2.anki.flashcards"` to `android:authorities="com.ichi2.a.anki.flashcards"` where `com.ichi2.a.anki` is the value you set for applicationId in step 1. Also search for `com.ichi2.anki.permission.READ_WRITE_DATABASE` and change it to `com.ichi2.a.anki.permission.READ_WRITE_DATABASE`.
-* Open the file `%root/res/values/constants.xml` and change the line `<string name="app_name">AnkiDroid</string>` to whatever you want the application name to be - for example `<string name="app_name">A.AnkiDroid</string>`
-* Do a global search in `%root` for `android:targetPackage="com.ichi2.anki"` and replace with e.g. `android:targetPackage="com.ichi2.a.anki"`. You can do the search and replace with e.g. [grepwin](http://sourceforge.net/projects/grepwin/)
+* `applicationId` in `AnkiDroid/build.gradle`
+*  `android:authorities="com.ichi2.anki.flashcards"` and `com.ichi2.anki.permission.READ_WRITE_DATABASE` in `%AnkiDroidRoot/AndroidManifest.xml`
+* `android:targetPackage="com.ichi2.anki"` in `%AnkiDroidRoot/res/xml/*`
+* and optionally the application name `<string name="app_name">A.AnkiDroid</string>` in `%AnkiDroidRoot/res/values/constants.xml`
 
 There is a convenient bash script that automates this process, which you can run from a bash shell from the top level AnkiDroid directory as follows:
 
 `./tools/parallel-package-name.sh com.ichi2.anki.a AnkiDroid.A`
 
-After running the script you need to compile to .apk as usual. Note that third party apps will probably not be able to use these alternate builds with the API.
+After running the script you need to compile the source code to a .apk file as explained elsewhere in this guide. Note that these alternate builds will not work with the API.
 
 ## Issues to get started with
 If you are a new developer looking to contribute something to AnkiDroid, but you don't know what work to get started with, please take a look and see if there's anything that you'd like to work on in the issue tracker. In particular, [issues with the label "HelpWanted"](https://github.com/ankidroid/Anki-Android/labels/HelpWanted) are tasks that have been specially highlighted as work that we'd really like to have done, but don't have time to do ourselves. 
