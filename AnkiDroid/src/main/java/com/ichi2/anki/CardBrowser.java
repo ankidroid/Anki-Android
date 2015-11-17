@@ -18,7 +18,6 @@
 
 package com.ichi2.anki;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -35,7 +34,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.TypedValue;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -159,6 +157,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private ActionBar mActionBar;
     private DeckDropDownAdapter mDropDownAdapter;
     private Spinner mActionBarSpinner;
+    private boolean mReloadRequired = false;
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -183,6 +182,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     return;
 
                 case CardBrowserContextMenu.CONTEXT_MENU_SUSPEND:
+                    if (currentCardInUseByReviewer()) {
+                        mReloadRequired = true;
+                    }
                     DeckTask.launchDeckTask(
                             DeckTask.TASK_TYPE_DISMISS_NOTE,
                             mSuspendCardHandler,
@@ -566,20 +568,18 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Timber.i("CardBrowser:: CardBrowser - onBackPressed()");
-            Intent data = new Intent();
-            if (getIntent().hasExtra("selectedDeck")) {
-                data.putExtra("originalDeck", getIntent().getLongExtra("selectedDeck", 0L));
-            }
-            closeCardBrowser(Activity.RESULT_OK, data);
-            return true;
+    public void onBackPressed() {
+        Timber.i("CardBrowser:: CardBrowser - onBackPressed()");
+        Intent data = new Intent();
+        if (getIntent().hasExtra("selectedDeck")) {
+            data.putExtra("originalDeck", getIntent().getLongExtra("selectedDeck", 0L));
         }
-
-        return super.onKeyDown(keyCode, event);
+        if (mReloadRequired) {
+            // Add reload flag to result intent so that schedule reset when returning to note editor
+            data.putExtra("reloadRequired", true);
+        }
+        closeCardBrowser(RESULT_OK, data);
     }
     
     @Override
@@ -728,7 +728,25 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (requestCode == EDIT_CARD &&  data!=null && data.hasExtra("reloadRequired")) {
             // if reloadRequired flag was sent from note editor then reload card list
             searchCards();
+            // keep track of changes for reviewer
+            if (currentCardInUseByReviewer()) {
+                mReloadRequired = true;
+            }
         }
+    }
+
+    private boolean currentCardInUseByReviewer() {
+        if (getIntent().hasExtra("currentCard") && getCards().size() > mPositionInCardsList
+                && getCards().get(mPositionInCardsList) != null) {
+            long reviewerCard = getIntent().getExtras().getLong("currentCard");
+            long selectedCard = Long.parseLong(getCards().get(mPositionInCardsList).get("id"));
+            if (selectedCard == reviewerCard) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 
     private DialogFragment showDialogFragment(int id) {
@@ -941,6 +959,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private void deleteNote(Card card) {
+        if (currentCardInUseByReviewer()) {
+            mReloadRequired = true;
+        }
         ArrayList<Card> cards = card.note().cards();
         int pos;
         for (Card c : cards) {

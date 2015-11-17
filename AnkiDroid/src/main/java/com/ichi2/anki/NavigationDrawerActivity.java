@@ -64,6 +64,7 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
     public static final int REQUEST_STATISTICS = 102;
 
     private int mSelectedItem = DRAWER_DECK_PICKER;
+    private long mCurrentCardId = -1L;
 
     // Navigation drawer initialisation
     protected void initNavigationDrawer(View mainView) {
@@ -231,6 +232,9 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
             case DRAWER_BROWSER:
                 Intent cardBrowser = new Intent(this, CardBrowser.class);
                 cardBrowser.putExtra("selectedDeck", getCol().getDecks().selected());
+                if (mCurrentCardId >= 0) {
+                    cardBrowser.putExtra("currentCard", mCurrentCardId);
+                }
                 startActivityForResultWithAnimation(cardBrowser, REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
                 break;
             case DRAWER_STATISTICS:
@@ -271,5 +275,9 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
     public boolean onNavigationClickListener(View clickedView) {
         finishWithAnimation(ActivityTransitionAnimation.DIALOG_EXIT);
         return true;
+    }
+
+    protected void setCurrentCardId(long id) {
+        mCurrentCardId = id;
     }
 }
