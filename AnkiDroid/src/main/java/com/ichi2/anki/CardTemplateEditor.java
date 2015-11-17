@@ -43,8 +43,10 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.DeckTask;
+import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
+import com.ichi2.libanki.Note;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.SlidingTabLayout;
 
@@ -52,6 +54,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -68,6 +72,8 @@ public class CardTemplateEditor extends AnkiActivity {
     private SlidingTabLayout mSlidingTabLayout;
     private long mModelId;
     private long mNoteId;
+    private static final int REQUEST_PREVIEWER = 0;
+    private static final String DUMMY_TAG = "DUMMY_NOTE_TO_DELETE_x0-90-fa";
 
 
     // ----------------------------------------------------------------------------
@@ -478,18 +484,24 @@ public class CardTemplateEditor extends AnkiActivity {
                     // Create intent for the previewer and add some arguments
                     Intent i = new Intent(getActivity(), Previewer.class);
                     int pos = getArguments().getInt("position");
+                    long cid;
                     if (getArguments().getLong("noteId") != -1L && pos <
                             col.getNote(getArguments().getLong("noteId")).cards().size()) {
                         // Give the card ID if we started from an actual note and it has a card generated in this pos
-                        long cid = col.getNote(getArguments().getLong("noteId")).cards().get(pos).getId();
-                        i.putExtra("currentCardId", cid);
+                        cid = col.getNote(getArguments().getLong("noteId")).cards().get(pos).getId();
                     } else {
-                        // Otherwise give the model ID and ord so that the previewer can make a dummy note
-                        i.putExtra("modelId", getArguments().getLong("modelId"));
-                        i.putExtra("cardOrd", pos);
+                        // Otherwise create a dummy card to show the effect of formatting
+                        Card dummyCard = getDummyCard();
+                        if (dummyCard != null) {
+                            cid = dummyCard.getId();
+                        } else {
+                            ((AnkiActivity) getActivity()).showSimpleSnackbar(R.string.invalid_template, false);
+                            return true;
+                        }
                     }
                     // Launch intent
-                    ((AnkiActivity) getActivity()).startActivityWithAnimation(i, ActivityTransitionAnimation.LEFT);
+                    i.putExtra("currentCardId", cid);
+                    startActivityForResult(i, REQUEST_PREVIEWER);
                     return true;
                 }
                 case R.id.action_confirm:
@@ -508,6 +520,44 @@ public class CardTemplateEditor extends AnkiActivity {
             }
         }
 
+        /**
+         * Get a dummy card
+         * @return
+         */
+        private Card getDummyCard() {
+            Timber.d("Creating dummy note");
+            JSONObject model = getCol().getModels().get(getArguments().getLong("modelId"));
+            Note n =getCol().newNote(model);
+            ArrayList<String> fieldNames = getCol().getModels().fieldNames(model);
+            for (int i = 0; i < fieldNames.size(); i++) {
+                n.setField(i, fieldNames.get(i));
+            }
+            n.addTag(DUMMY_TAG);
+            getCol().addNote(n);
+            if (n.cards().size() <= getArguments().getInt("position")) {
+                return null;
+            }
+            return getCol().getCard(n.cards().get(getArguments().getInt("position")).getId());
+        }
+
+        private void deleteDummyCards() {
+            // TODO: make into an async task
+            List<Long> remnantNotes = getCol().findNotes("tag:" + DUMMY_TAG);
+            if (remnantNotes.size() > 0) {
+                long[] nids = new long[remnantNotes.size()];
+                for (int i = 0; i < remnantNotes.size(); i++) {
+                    nids[i] = remnantNotes.get(i);
+                }
+                getCol().remNotes(nids);
+                getCol().save();
+            }
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            deleteDummyCards();
+        }
 
         /* Used for updating the collection when a model has been edited */
         private DeckTask.TaskListener mSaveModelAndExitHandler = new DeckTask.TaskListener() {
@@ -549,6 +599,14 @@ public class CardTemplateEditor extends AnkiActivity {
         private JSONObject getModel() {
             long mid = getArguments().getLong("modelId");
             return ((AnkiActivity) getActivity()).getCol().getModels().get(mid);
+        }
+
+        /**
+         * Get the collection
+         * @return
+         */
+        private Collection getCol() {
+            return ((AnkiActivity) getActivity()).getCol();
         }
 
         /**
