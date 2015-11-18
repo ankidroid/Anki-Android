@@ -508,9 +508,11 @@ public class NoteEditor extends AnkiActivity {
                 if (mAedictIntent && (mEditFields.size() == 3) && mSourceText[1].contains("[")) {
                     contents = mSourceText[1].replaceFirst("\\[", "\u001f" + mSourceText[0] + "\u001f");
                     contents = contents.substring(0, contents.length() - 1);
-                } else {
+                } else if (mEditFields.size() > 0) {
                     mEditFields.get(0).setText(mSourceText[0]);
-                    mEditFields.get(1).setText(mSourceText[1]);
+                    if (mEditFields.size() > 1) {
+                        mEditFields.get(1).setText(mSourceText[1]);
+                    }
                 }
             } else {
                 contents = intent.getStringExtra(EXTRA_CONTENTS);
