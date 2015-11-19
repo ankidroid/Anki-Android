@@ -1688,6 +1688,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         CardBrowser.clearSelectedDeck();
         // Select the deck
         getCol().getDecks().select(did);
+        // Reset the schedule so that we get the counts for the currently selected deck
+        getCol().getSched().reset();
         mFocusedDeck = did;
         // Get some info about the deck to handle special cases
         int pos = mDeckListAdapter.findDeckPosition(did);
