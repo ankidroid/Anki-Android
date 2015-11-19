@@ -878,20 +878,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION);
                     }
                 } else {
-                    // Spam for icon poll
-                    ConfirmationDialog dialog = new ConfirmationDialog () {
-                        @Override
-                        public void confirm() {
-                            openUrl(Uri.parse("http://goo.gl/forms/uWNlAHNr3d"));
-                        }
-                        public void cancel() {
-                        }
-                    };
-                    dialog.setArgs("A new AnkiDroid icon is being proposed; do you want to vote?");
-                    if (previous <= 20500213) {
-                        // TODO: remove this when poll finishes
-                        showDialogFragment(dialog);
-                    }
                     // Don't show new features dialog for development builds
                     preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
                     String ver = getResources().getString(R.string.updated_version, VersionUtils.getPkgVersionName());
