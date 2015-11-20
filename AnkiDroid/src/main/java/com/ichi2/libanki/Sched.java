@@ -287,7 +287,7 @@ public class Sched {
     public void _updateStats(Card card, String type, long cnt) {
         String key = type + "Today";
         long did = card.getDid();
-        ArrayList<JSONObject> list = mCol.getDecks().parents(did);
+        List<JSONObject> list = mCol.getDecks().parents(did);
         list.add(mCol.getDecks().get(did));
         for (JSONObject g : list) {
             try {
@@ -339,7 +339,7 @@ public class Sched {
                     continue;
                 }
                 // check the parents
-                ArrayList<JSONObject> parents = mCol.getDecks().parents(did);
+                List<JSONObject> parents = mCol.getDecks().parents(did);
                 for (JSONObject p : parents) {
                     // add if missing
                     long id = p.getLong("id");
@@ -395,7 +395,7 @@ public class Sched {
                     return deckDueList();
                 }
                 String p;
-                List<String> parts = Arrays.asList(deck.getString("name").split("::"));
+                List<String> parts = Arrays.asList(deck.getString("name").split("::", -1));
                 if (parts.size() < 2) {
                     p = null;
                 } else {
@@ -441,7 +441,7 @@ public class Sched {
     private List<DeckDueTreeNode> _groupChildren(List<DeckDueTreeNode> grps) {
         // first, split the group names into components
         for (DeckDueTreeNode g : grps) {
-            g.names = g.names[0].split("::");
+            g.names = g.names[0].split("::", -1);
         }
         // and sort based on those components
         Collections.sort(grps);
@@ -701,7 +701,7 @@ public class Sched {
             if (fn == null) {
                 fn = Sched.class.getDeclaredMethod("_deckNewLimitSingle", JSONObject.class);
             }
-            ArrayList<JSONObject> decks = mCol.getDecks().parents(did);
+            List<JSONObject> decks = mCol.getDecks().parents(did);
             decks.add(mCol.getDecks().get(did));
             int lim = -1;
             // for the deck and each of its parents
@@ -2198,12 +2198,12 @@ public class Sched {
     /**
      * Completely reset cards for export.
      */
-    public void resetCards(long[] ids) {
+    public void resetCards(Long[] ids) {
         long[] nonNew = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, String.format(Locale.US,
                 "select id from cards where id in %s and (queue != 0 or type != 0)", Utils.ids2str(ids)), 0));
         mCol.getDb().execute("update cards set reps=0, lapses=0 where id in " + Utils.ids2str(nonNew));
         forgetCards(nonNew);
-        mCol.log(ids);
+        mCol.log((Object[]) ids);
     }
 
 
@@ -2283,7 +2283,7 @@ public class Sched {
 
 
     public void resortConf(JSONObject conf) {
-        ArrayList<Long> dids = mCol.getDecks().didsForConf(conf);
+        List<Long> dids = mCol.getDecks().didsForConf(conf);
         try {
             for (long did : dids) {
                 if (conf.getJSONObject("new").getLong("order") == 0) {

@@ -3,6 +3,7 @@
  * Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>                             *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
  * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ * Copyright (c) 2015 Houssam Salem <houssam.salem.au@gmail.com>                        *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -20,74 +21,106 @@
 package com.ichi2.libanki;
 
 import android.content.ContentValues;
+import android.text.TextUtils;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.DeckRenameException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Pattern;
 
-/**
- * A deck stores all of the cards and scheduling information. It is saved in a file with a name ending in .anki See
- * http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Deck
- */
+// fixmes:
+// - make sure users can't set grad interval < 1
+
 public class Decks {
 
-    // private TreeMap<Integer, Model> mModelCache;
-    // private TreeMap<Integer, JSONObject> mGroupConfCache;
 
-    public static final String defaultDeck = "{" + "'newToday': [0, 0], " + // currentDay, count
-            "'revToday': [0, 0], " + "'lrnToday': [0, 0], " + "'timeToday': [0, 0], " + // time in ms
-            "'conf': 1, " + "'usn': 0, " + "'desc': \"\", 'dyn': 0, 'collapsed': False, " +
-            // added in beta11
-            "'extendNew': 10, 'extendRev': 50 }";
+    public static final String defaultDeck = ""
+            + "{"
+                + "'newToday': [0, 0]," // currentDay, count
+                + "'revToday': [0, 0],"
+                + "'lrnToday': [0, 0],"
+                + "'timeToday': [0, 0]," // time in ms
+                + "'conf': 1,"
+                + "'usn': 0,"
+                + "'desc': \"\","
+                + "'dyn': 0," // anki uses int/bool interchangably here
+                + "'collapsed': False,"
+                // added in beta11
+                + "'extendNew': 10,"
+                + "'extendRev': 50"
+            + "}";
 
-    private static final String defaultDynamicDeck = "{" + "'newToday': [0, 0], " + // currentDay, count
-            "'revToday': [0, 0], " + "'lrnToday': [0, 0], " + "'timeToday': [0, 0], " + // time in ms
-            "'collapsed': False, 'dyn': 1, 'desc': \"\", 'usn': 0, 'delays': null, 'separate': True, " +
-            // list of (search, limit, order); we only use first element for now
-            "'terms': [[\"\", 100, 0]], 'resched': True, " +
-            // currently unused
-            "'return': True }";
+    private static final String defaultDynamicDeck = ""
+            + "{"
+                + "'newToday': [0, 0],"
+                + "'revToday': [0, 0],"
+                + "'lrnToday': [0, 0],"
+                + "'timeToday': [0, 0],"
+                + "'collapsed': False,"
+                + "'dyn': 1,"
+                + "'desc': \"\","
+                + "'usn': 0,"
+                + "'delays': null,"
+                + "'separate': True,"
+                // list of (search, limit, order); we only use first element for now
+                + "'terms': [[\"\", 100, 0]],"
+                + "'resched': True,"
+                + "'return': True" // currently unused
+            + "}";
 
-    // default group conf
-    public static final String defaultConf = "{"
-            + "'name': \"Default\","
-            + "'new': {"
-            + "'delays': [1, 10], "
-            + "'ints': [1, 4, 7], "
-            + // 7
-              // is
-              // not
-              // currently
-              // used
-            "'initialFactor': 2500, " + "'separate': True, " + "'order': " + Consts.NEW_CARDS_DUE + ", "
-            + "'perDay': 20, 'bury': True }, " + "'lapse': {" + "'delays': [10], " + "'mult': 0, " + "'minInt': 1, "
-            + "'leechFails': 8, "
-            + "'leechAction': 0 }, "
-            // type 0=suspend, 1=tagonly
-            + "'rev': { " + "'perDay': 100, " + "'ease4': 1.3, " + "'fuzz': 0.05, " + "'minSpace': 1, "
-            + "'ivlFct': 1, " + "'maxIvl': 36500 }, " + "'maxTaken': 60, " + "'timer': 0, " + "'autoplay': True, 'replayq': True, "
-            + "'mod': 0, " + "'usn': 0 }";
+    public static final String defaultConf = ""
+            + "{"
+                + "'name': \"Default\","
+                + "'new': {"
+                    + "'delays': [1, 10],"
+                    + "'ints': [1, 4, 7]," // 7 is not currently used
+                    + "'initialFactor': 2500,"
+                    + "'separate': True,"
+                    + "'order': " + Consts.NEW_CARDS_DUE + ","
+                    + "'perDay': 20,"
+                    // may not be set on old decks
+                    + "'bury': True"
+                + "},"
+                + "'lapse': {"
+                    + "'delays': [10],"
+                    + "'mult': 0,"
+                    + "'minInt': 1,"
+                    + "'leechFails': 8,"
+                    // type 0=suspend, 1=tagonly
+                    + "'leechAction': 0"
+                + "},"
+                + "'rev': {"
+                    + "'perDay': 100,"
+                    + "'ease4': 1.3,"
+                    + "'fuzz': 0.05,"
+                    + "'minSpace': 1," // not currently used
+                    + "'ivlFct': 1,"
+                    + "'maxIvl': 36500,"
+                    // may not be set on old decks
+                    + "'bury': True"
+                + "},"
+                + "'maxTaken': 60,"
+                + "'timer': 0,"
+                + "'autoplay': True,"
+                + "'replayq': True,"
+                + "'mod': 0,"
+                + "'usn': 0"
+            +"}";
 
-    public static final class DeckListComparator implements Comparator<JSONObject> {
-        public int compare(JSONObject o1, JSONObject o2) {
-            try {
-                return o1.getString("name").compareTo(o2.getString("name"));
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
     private Collection mCol;
     private HashMap<Long, JSONObject> mDecks;
@@ -96,8 +129,8 @@ public class Decks {
 
 
     /**
-     * Registry save/load *******************************************************
-     * ****************************************
+     * Registry save/load
+     * ***********************************************************
      */
 
     public Decks(Collection col) {
@@ -106,8 +139,8 @@ public class Decks {
 
 
     public void load(String decks, String dconf) {
-        mDecks = new HashMap<Long, JSONObject>();
-        mDconf = new HashMap<Long, JSONObject>();
+        mDecks = new HashMap<>();
+        mDconf = new HashMap<>();
         try {
             JSONObject decksarray = new JSONObject(decks);
             JSONArray ids = decksarray.names();
@@ -135,7 +168,9 @@ public class Decks {
     }
 
 
-    /** Can be called with either a deck or a deck configuration. */
+    /**
+     * Can be called with either a deck or a deck configuration.
+     */
     public void save(JSONObject g) {
         if (g != null) {
             try {
@@ -173,55 +208,62 @@ public class Decks {
 
 
     /**
-     * Deck save/load *********************************************************** ************************************
+     * Deck save/load
+     * ***********************************************************
      */
 
-    public long id(String name) {
+    public Long id(String name) {
         return id(name, true);
     }
 
 
-    /** Add a deck with NAME. Reuse deck if already exists. Return id as int. */
-    public long id(String name, boolean create) {
+    public Long id(String name, boolean create) {
         return id(name, create, defaultDeck);
     }
 
 
-    public long id(String name, boolean create, String type) {
-        name = name.replace("\"", "");
-        for (Map.Entry<Long, JSONObject> g : mDecks.entrySet()) {
-            try {
+    public Long id(String name, String type) {
+        return id(name, true, type);
+    }
+
+
+    /**
+     * Add a deck with NAME. Reuse deck if already exists. Return id as int.
+     */
+    public Long id(String name, boolean create, String type) {
+        try {
+            name = name.replace("\"", "");
+            for (Map.Entry<Long, JSONObject> g : mDecks.entrySet()) {
                 if (g.getValue().getString("name").equalsIgnoreCase(name)) {
                     return g.getKey();
                 }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
             }
-        }
-        if (!create) {
-            return 0;
-        }
-        if (name.matches(".*::.*")) {
-            // not top level; ensure all parents exist
-            name = _ensureParents(name);
-        }
-        JSONObject g;
-        long id;
-        try {
+            if (!create) {
+                return null;
+            }
+            if (name.contains("::")) {
+                // not top level; ensure all parents exist
+                name = _ensureParents(name);
+            }
+            JSONObject g;
+            long id;
             g = new JSONObject(type);
             g.put("name", name);
-            id = Utils.intNow(1000);
-            while (mDecks.containsKey(id)) {
-                id = Utils.intNow();
+            while (true) {
+                id = Utils.intNow(1000);
+                if (!mDecks.containsKey(id)) {
+                    break;
+                }
             }
             g.put("id", id);
             mDecks.put(id, g);
+            save(g);
+            maybeAddToActive();
+            //runHook("newDeck"); // TODO
+            return id;
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        save(g);
-        maybeAddToActive();
-        return id;
     }
 
 
@@ -230,16 +272,19 @@ public class Decks {
     }
 
 
-    /** Remove the deck. If cardsToo, delete any cards inside. */
     public void rem(long did, boolean cardsToo) {
         rem(did, cardsToo, true);
     }
 
 
+    /**
+     * Remove the deck. If cardsToo, delete any cards inside.
+     */
     public void rem(long did, boolean cardsToo, boolean childrenToo) {
         try {
             if (did == 1) {
-            	// we won't allow the default deck to be deleted, but if it's a child of an existing deck then it needs to be renamed
+            	// we won't allow the default deck to be deleted, but if it's a
+            	// child of an existing deck then it needs to be renamed
             	JSONObject deck = get(did);
             	if (deck.getString("name").contains("::")) {
             		deck.put("name", "Default");
@@ -255,7 +300,8 @@ public class Decks {
             }
             JSONObject deck = get(did);
             if (deck.getInt("dyn") != 0) {
-                // deleting a cramming deck returns cards to their previous deck rather than deleting the cards
+                // deleting a cramming deck returns cards to their previous deck
+                // rather than deleting the cards
                 mCol.getSched().emptyDyn(did);
                 if (childrenToo) {
                     for (long id : children(did).values()) {
@@ -285,20 +331,22 @@ public class Decks {
         mDecks.remove(did);
         // ensure we have an active deck
         if (active().contains(did)) {
-            select((long) (mDecks.keySet().iterator().next()));
+            select(mDecks.keySet().iterator().next());
         }
         save();
     }
 
 
-    /** An unsorted list of all deck names. */
     public ArrayList<String> allNames() {
         return allNames(true);
     }
 
 
+    /**
+     * An unsorted list of all deck names.
+     */
     public ArrayList<String> allNames(boolean dyn) {
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         try {
             if (dyn) {
                 for (JSONObject x : mDecks.values()) {
@@ -322,33 +370,64 @@ public class Decks {
      * A list of all decks.
      */
     public ArrayList<JSONObject> all() {
-        ArrayList<JSONObject> decks = new ArrayList<JSONObject>();
-        Iterator<JSONObject> it = mDecks.values().iterator();
-        while (it.hasNext()) {
-            decks.add(it.next());
+        ArrayList<JSONObject> decks = new ArrayList<>();
+        for (JSONObject deck : mDecks.values()) {
+            decks.add(deck);
         }
         return decks;
     }
 
 
-    // LIBANKI: not in libanki
+    /**
+     * Return the same deck list from all() but sorted using a comparator that ensures the same
+     * sorting order for decks as the desktop client.
+     *
+     * This method does not exist in the original python module but *must* be used for any user
+     * interface components that display a deck list to ensure the ordering is consistent.
+     */
     public ArrayList<JSONObject> allSorted() {
         ArrayList<JSONObject> decks = all();
-        Collections.sort(decks, new DeckListComparator());
+        Collections.sort(decks, new Comparator<JSONObject>() {
+            @Override
+            public int compare(JSONObject lhs, JSONObject rhs) {
+                try {
+                    return lhs.getString("name").compareTo(rhs.getString("name"));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
         return decks;
     }
 
 
-    public long[] allIds() {
-        Iterator<Long> it = mDecks.keySet().iterator();
-        long[] ids = new long[mDecks.size()];
-        int i = 0;
-        while (it.hasNext()) {
-            ids[i] = it.next();
-            i++;
-        }
-        return ids;
+    public Long[] allIds() {
+        return mDecks.keySet().toArray(new Long[mDecks.keySet().size()]);
     }
+
+
+    public void collpase(long did) {
+        try {
+            JSONObject deck = get(did);
+            deck.put("collapsed", !deck.getBoolean("collapsed"));
+            save(deck);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void collapseBrowser(long did) {
+        try {
+            JSONObject deck = get(did);
+            boolean collapsed = deck.optBoolean("browserCollapsed", false);
+            deck.put("browserCollapsed", !collapsed);
+            save(deck);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     /**
      * Return the number of decks.
@@ -363,21 +442,20 @@ public class Decks {
     }
 
 
-    public JSONObject get(long did, boolean defaultvalue) {
+    public JSONObject get(long did, boolean _default) {
         if (mDecks.containsKey(did)) {
             return mDecks.get(did);
-        } else if (defaultvalue) {
-            JSONObject d = mDecks.get(1);
-            if (d == null) {
-                d = mDecks.values().iterator().next();
-            }
-            return d;
+        } else if (_default) {
+            return mDecks.get(1l);
         } else {
             return null;
         }
     }
 
-    /** Get deck by NAME. */
+
+    /**
+     * Get deck with NAME.
+     */
     public JSONObject byName(String name) {
 		try {
 			for (JSONObject m : mDecks.values()) {
@@ -391,7 +469,10 @@ public class Decks {
 		return null;
     }
 
-    /** Add or update an existing deck. Used for syncing and merging. */
+
+    /**
+     * Add or update an existing deck. Used for syncing and merging.
+     */
     public void update(JSONObject g) {
         try {
             mDecks.put(g.getLong("id"), g);
@@ -404,25 +485,32 @@ public class Decks {
     }
 
 
-    /** Rename deck prefix to NAME if not exists. Updates children. */
-    public boolean rename(JSONObject g, String newName) {
+    /**
+     * Rename deck prefix to NAME if not exists. Updates children.
+     */
+    public void rename(JSONObject g, String newName) throws DeckRenameException {
         // make sure target node doesn't already exist
-        if (allNames().contains(newName) || newName.length() == 0) {
-            return false;
+        if (allNames().contains(newName)) {
+            throw new DeckRenameException(DeckRenameException.ALREADY_EXISTS);
         }
-        // ensure we have parents
-        newName = _ensureParents(newName);
-        // rename children
-        String oldName;
         try {
-            oldName = g.getString("name");
+            // ensure we have parents
+            newName = _ensureParents(newName);
+            // make sure we're not nesting under a filtered deck
+            if (newName.contains("::")) {
+                List<String> parts = Arrays.asList(newName.split("::", -1));
+                String newParent = TextUtils.join("::", parts.subList(0, parts.size() - 1));
+                if (byName(newParent).getInt("dyn") != 0) {
+                    throw new DeckRenameException(DeckRenameException.FILTERED_NOSUBDEKCS);
+                }
+            }
+            // rename children
+            String oldName = g.getString("name");
             for (JSONObject grp : all()) {
                 if (grp.getString("name").startsWith(oldName + "::")) {
-                    String on = grp.getString("name");
-                    // unlike the related code in libanki python the following replaceFirst call works with regex
-                    // pattern, so we need to escape the oldName:: with \Q, \E
-                    String nn = on.replaceFirst("\\Q" + oldName + "::\\E", newName + "::");
-                    grp.put("name", nn);
+                    // In Java, String.replaceFirst consumes a regex so we need to quote the pattern to be safe
+                    grp.put("name", grp.getString("name").replaceFirst(Pattern.quote(oldName + "::"),
+                            newName + "::"));
                     save(grp);
                 }
             }
@@ -436,41 +524,114 @@ public class Decks {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    public void renameForDragAndDrop(Long draggedDeckDid, Long ontoDeckDid) throws DeckRenameException {
+        try {
+            JSONObject draggedDeck = get(draggedDeckDid);
+            String draggedDeckName = draggedDeck.getString("name");
+            String ontoDeckName = get(ontoDeckDid).getString("name");
+
+            if (ontoDeckDid == null) {
+                if (_path(draggedDeckName).size() > 1) {
+                    rename(draggedDeck, _basename(draggedDeckName));
+                }
+            } else if (_canDragAndDrop(draggedDeckName, ontoDeckName)) {
+                draggedDeck = get(draggedDeckDid);
+                draggedDeckName = draggedDeck.getString("name");
+                ontoDeckName = get(ontoDeckDid).getString("name");
+                rename(draggedDeck, ontoDeckName + "::" + _basename(draggedDeckName));
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private boolean _canDragAndDrop(String draggedDeckName, String ontoDeckName) {
+        if (draggedDeckName.equals(ontoDeckName)
+                || _isParent(ontoDeckName, draggedDeckName)
+                || _isAncestor(draggedDeckName, ontoDeckName)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+    private boolean _isParent(String parentDeckName, String childDeckName) {
+        List<String> parentDeckPath = _path(parentDeckName);
+        parentDeckPath.add(_basename(childDeckName));
+
+        Iterator<String> cpIt = _path(childDeckName).iterator();
+        Iterator<String> ppIt = parentDeckPath.iterator();
+        while (cpIt.hasNext() && ppIt.hasNext()) {
+            if (!cpIt.next().equals(ppIt.next())) {
+                return false;
+            }
+        }
         return true;
     }
 
 
-    /** Ensure parents exist, and return name with case matching parents. */
+    private boolean _isAncestor(String ancestorDeckName, String descendantDeckName) {
+        Iterator<String> apIt = _path(ancestorDeckName).iterator();
+        Iterator<String> dpIt = _path(descendantDeckName).iterator();
+        while (apIt.hasNext() && dpIt.hasNext()) {
+            if (!apIt.next().equals(dpIt.next())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    private List<String> _path(String name) {
+        return Arrays.asList(name.split("::", -1));
+    }
+    private String _basename(String name) {
+        List<String> path = _path(name);
+        return path.get(path.size() - 1);
+    }
+
+
+    /**
+     * Ensure parents exist, and return name with case matching parents.
+     */
     public String _ensureParents(String name) {
         String s = "";
-        String[] path = name.split("::");
-        if (path.length < 2) {
+        List<String> path = _path(name);
+        if (path.size() < 2) {
             return name;
         }
-        for (int i = 0; i < path.length - 1; i++) {
-            if (i == 0) {
-                s = path[0];
+        for(String p : path.subList(0, path.size() - 1)) {
+            if (TextUtils.isEmpty(s)) {
+                s += p;
             } else {
-                s = s + "::" + path[i];
+                s += "::" + p;
             }
             // fetch or create
             long did = id(s);
             // get original case
             s = name(did);
         }
-        name = s + "::" + path[path.length - 1];
+        name = s + "::" + path.get(path.size() - 1);
         return name;
     }
 
 
     /**
-     * Deck configurations ******************************************************
-     * *****************************************
+     * Deck configurations
+     * ***********************************************************
      */
 
-    /** A list of all deck config. */
+
+    /**
+     * A list of all deck config.
+     */
     public ArrayList<JSONObject> allConf() {
-        ArrayList<JSONObject> confs = new ArrayList<JSONObject>();
+        ArrayList<JSONObject> confs = new ArrayList<>();
         for (JSONObject c : mDconf.values()) {
             confs.add(c);
         }
@@ -479,7 +640,8 @@ public class Decks {
 
 
     public JSONObject confForDid(long did) {
-        JSONObject deck = get(did);
+        JSONObject deck = get(did, false);
+        assert deck != null;
         if (deck.has("conf")) {
             try {
                 JSONObject conf = getConf(deck.getLong("conf"));
@@ -509,12 +671,6 @@ public class Decks {
     }
 
 
-    /**
-     * Create a new configuration and return id. Uses defaultConf as template.
-     *
-     * @param name Name of the new configuration
-     * @return The id of the new configuration
-     */
     public long confId(String name) {
         return confId(name, defaultConf);
     }
@@ -522,10 +678,6 @@ public class Decks {
 
     /**
      * Create a new configuration and return id.
-     *
-     * @param name Name of the new configuration
-     * @param cloneFrom Optional parameter to copy configuration from
-     * @return The id of the new configuration
      */
     public long confId(String name, String cloneFrom) {
         JSONObject c;
@@ -534,7 +686,7 @@ public class Decks {
             c = new JSONObject(cloneFrom);
             while (true) {
                 id = Utils.intNow(1000);
-                if (!mDconf.containsKey(Long.valueOf(id))) {
+                if (!mDconf.containsKey(id)) {
                     break;
                 }
             }
@@ -548,6 +700,7 @@ public class Decks {
         return id;
     }
 
+
     /**
      * Remove a configuration and update all decks using it.
      * @throws ConfirmModSchemaException 
@@ -555,39 +708,38 @@ public class Decks {
     public void remConf(long id) throws ConfirmModSchemaException {
         assert id != 1;
         mCol.modSchema(true);
-        mDconf.remove(Long.valueOf(id));
-        for (JSONObject g : all()) {
-            // ignore cram decks
-            if (!g.has("conf")) {
-                continue;
-            }
-            try {
+        mDconf.remove(id);
+        try {
+            for (JSONObject g : all()) {
+                // ignore cram decks
+                if (!g.has("conf")) {
+                    continue;
+                }
                 if (g.getString("conf").equals(Long.toString(id))) {
                     g.put("conf", 1);
                     save(g);
                 }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
             }
-        }
-    }
-
-    public void setConf(JSONObject deck, long id) {
-        try {
-            deck.put("conf", id);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        save(deck);
     }
 
 
-    public ArrayList<Long> didsForConf(JSONObject conf) {
-        ArrayList<Long> dids = new ArrayList<Long>();
-        Iterator<JSONObject> it = mDecks.values().iterator();
+    public void setConf(JSONObject grp, long id) {
         try {
-            while (it.hasNext()) {
-                JSONObject deck = it.next();
+            grp.put("conf", id);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        save(grp);
+    }
+
+
+    public List<Long> didsForConf(JSONObject conf) {
+        List<Long> dids = new ArrayList<>();
+        try {
+            for(JSONObject deck : mDecks.values()) {
                 if (deck.has("conf") && deck.getLong("conf") == conf.getLong("id")) {
                     dids.add(deck.getLong("id"));
                 }
@@ -598,35 +750,39 @@ public class Decks {
         }
     }
 
+
     public void restoreToDefault(JSONObject conf) {
         try {
             int oldOrder = conf.getJSONObject("new").getInt("order");
-            JSONObject newConf = new JSONObject(defaultConf);
-            newConf.put("id", conf.getLong("id"));
-            newConf.put("name", conf.getString("name"));
-            mDconf.put(conf.getLong("id"), newConf);
-            save(newConf);
+            JSONObject _new = new JSONObject(defaultConf);
+            _new.put("id", conf.getLong("id"));
+            _new.put("name", conf.getString("name"));
+            mDconf.put(conf.getLong("id"), _new);
+            save(_new);
             // if it was previously randomized, resort
             if (oldOrder == 0) {
-                mCol.getSched().resortConf(newConf);
+                mCol.getSched().resortConf(_new);
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
     }
 
+
     /**
-     * Deck utils *************************************************************** ********************************
+     * Deck utils
+     * ***********************************************************
      */
+
 
     public String name(long did) {
         return name(did, false);
     }
 
 
-    public String name(long did, boolean def) {
+    public String name(long did, boolean _default) {
         try {
-            JSONObject deck = get(did, def);
+            JSONObject deck = get(did, _default);
             if (deck != null) {
                 return deck.getString("name");
             }
@@ -651,7 +807,7 @@ public class Decks {
 
 
     public void setDeck(long[] cids, long did) {
-        mCol.getDb().execute("UPDATE cards SET did = ?, usn = ?, mod = ? WHERE id IN " + Utils.ids2str(cids),
+        mCol.getDb().execute("update cards set did=?,usn=?,mod=? where id in " + Utils.ids2str(cids),
                 new Object[] { did, mCol.usn(), Utils.intNow() });
     }
 
@@ -667,49 +823,46 @@ public class Decks {
     }
 
 
-    public long[] cids(long did) {
+    public Long[] cids(long did) {
         return cids(did, false);
     }
 
 
-    public long[] cids(long did, boolean children) {
-        String sql;
-        if (children) {
-            ArrayList<Long> dids = new ArrayList<Long>();
-            dids.add(did);
-            for (long id : children(did).values()) {
-                dids.add(id);
-            }
-            sql = "SELECT id FROM cards WHERE did IN " + Utils.ids2str(Utils.arrayList2array(dids));
-        } else {
-            sql = "SELECT id FROM cards WHERE did = " + did;
+    public Long[] cids(long did, boolean children) {
+        if (!children) {
+            return Utils.list2ObjectArray(mCol.getDb().queryColumn(Long.class, "select id from cards where did=" + did, 0));
         }
-        ArrayList<Long> cids = mCol.getDb().queryColumn(Long.class, sql, 0);
-        long[] result = new long[cids.size()];
-        for (int i = 0; i < cids.size(); i++) {
-            result[i] = cids.get(i);
+        List<Long> dids = new ArrayList<>();
+        dids.add(did);
+        for(Map.Entry<String, Long> entry : children(did).entrySet()) {
+            dids.add(entry.getValue());
         }
-        return result;
+        return Utils.list2ObjectArray(mCol.getDb().queryColumn(Long.class,
+                "select id from cards where did in " + Utils.ids2str(Utils.arrayList2array(dids)), 0));
     }
 
 
     public void recoverOrphans() {
+        Long[] dids = allIds();
         boolean mod = mCol.getDb().getMod();
-        mCol.getDb().execute("UPDATE cards SET did = 1 WHERE did NOT IN " + Utils.ids2str(allIds()));
+        mCol.getDb().execute("update cards set did = 1 where did not in " + Utils.ids2str(dids));
         mCol.getDb().setMod(mod);
     }
 
 
     /**
-     * Deck selection *********************************************************** ************************************
+     * Deck selection
+     * ***********************************************************
      */
 
-    /* The currrently active dids. MAke sure to copy before modifying */
+
+    /**
+     * The currently active dids. Make sure to copy before modifying.
+     */
     public LinkedList<Long> active() {
         try {
-            String actv = mCol.getConf().getString("activeDecks");
-            JSONArray ja = new JSONArray(actv);
-            LinkedList<Long> result = new LinkedList<Long>();
+            JSONArray ja = mCol.getConf().getJSONArray("activeDecks");
+            LinkedList<Long> result = new LinkedList<>();
             for (int i = 0; i < ja.length(); i++) {
                 result.add(ja.getLong(i));
             }
@@ -720,7 +873,9 @@ public class Decks {
     }
 
 
-    /* The currently selected did. */
+    /**
+     * The currently selected did.
+     */
     public long selected() {
         try {
             return mCol.getConf().getLong("curDeck");
@@ -735,14 +890,17 @@ public class Decks {
     }
 
 
-    /* Select a new branch. */
+    /**
+     * Select a new branch.
+     */
     public void select(long did) {
         try {
             String name = mDecks.get(did).getString("name");
+
             // current deck
             mCol.getConf().put("curDeck", Long.toString(did));
             // and active decks (current + all children)
-            TreeMap<String, Long> actv = children(did);
+            TreeMap<String, Long> actv = children(did); // Note: TreeMap is already sorted
             actv.put(name, did);
             JSONArray ja = new JSONArray();
             for (Long n : actv.values()) {
@@ -756,40 +914,23 @@ public class Decks {
     }
 
 
-    /* all children of did as (name, id) */
+    /**
+     * All children of did as nodes of (key:name, value:id)
+     *
+     * TODO: There is likely no need for this collection to be a TreeMap. This method should not
+     * need to sort on behalf of select().
+     */
     public TreeMap<String, Long> children(long did) {
         String name;
         try {
             name = get(did).getString("name");
-            TreeMap<String, Long> list = new TreeMap<String, Long>();
+            TreeMap<String, Long> actv = new TreeMap<>();
             for (JSONObject g : all()) {
                 if (g.getString("name").startsWith(name + "::")) {
-                    list.put(g.getString("name"), g.getLong("id"));
+                    actv.put(g.getString("name"), g.getLong("id"));
                 }
             }
-            return list;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    /* all parents of did */
-    public ArrayList<JSONObject> parents(long did) {
-        // get parent and grandparent names
-        ArrayList<JSONObject> list = new ArrayList<JSONObject>();
-        try {
-            String[] path = get(did).getString("name").split("::");
-            String deckpath = null;
-            for (int i = 0; i < path.length - 1; i++) {
-                if (i == 0) {
-                    deckpath = path[0];
-                } else {
-                    deckpath = deckpath + "::" + path[i];
-                }
-                list.add(get(id(deckpath, false)));
-            }
-            return list;
+            return actv;
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -797,8 +938,37 @@ public class Decks {
 
 
     /**
-     * Sync handling ************************************************************ ***********************************
+     * All parents of did.
      */
+    public List<JSONObject> parents(long did) {
+        // get parent and grandparent names
+        List<String> parents = new ArrayList<>();
+        try {
+            List<String> parts = Arrays.asList(get(did).getString("name").split("::", -1));
+            for (String part : parts.subList(0, parts.size() - 1)) {
+                if (parents.size() == 0) {
+                    parents.add(part);
+                } else {
+                    parents.add(parents.get(parents.size() - 1) + "::" + part);
+                }
+            }
+            // convert to objects
+            List<JSONObject> oParents = new ArrayList<>();
+            for (int i = 0; i < parents.size(); i++) {
+                oParents.add(i, get(id(parents.get(i))));
+            }
+            return oParents;
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    /**
+     * Sync handling
+     * ***********************************************************
+     */
+
 
     public void beforeUpload() {
         try {
@@ -816,12 +986,15 @@ public class Decks {
 
 
     /**
-     * Deck utils
+     * Dynamic decks
      ***************************************************************/
 
-    /* Return a new dynamic deck and set it as the current deck. */
+
+    /**
+     * Return a new dynamic deck and set it as the current deck.
+     */
     public long newDyn(String name) {
-        long did = id(name, true, defaultDynamicDeck);
+        long did = id(name, defaultDynamicDeck);
         select(did);
         return did;
     }
@@ -836,131 +1009,15 @@ public class Decks {
     }
 
 
+    /*
+    * ***********************************************************
+    * The methods below are not in LibAnki.
+    * ***********************************************************
+    */
+
+
     public String getActualDescription() {
     	return current().optString("desc","");
-    }
-
-
-    // /**
-    // * Yes counts
-    // * @return todayAnswers, todayNoAnswers, matureAnswers, matureNoAnswers
-    // */
-    // public int[] yesCounts() {
-    // int dayStart = (getSched().mDayCutoff - 86400) * 10000;
-    // int todayAnswers = (int)
-    // getDB().queryScalar("SELECT count() FROM revlog WHERE time >= " +
-    // dayStart);
-    // int todayNoAnswers = (int)
-    // getDB().queryScalar("SELECT count() FROM revlog WHERE time >= " +
-    // dayStart + " AND ease = 1");
-    // int matureAnswers = (int)
-    // getDB().queryScalar("SELECT count() FROM revlog WHERE lastivl >= 21");
-    // int matureNoAnswers = (int)
-    // getDB().queryScalar("SELECT count() FROM revlog WHERE lastivl >= 21 AND ease = 1");
-    // return new int[] { todayAnswers, todayNoAnswers, matureAnswers,
-    // matureNoAnswers };
-    // }
-    //
-    //
-    // /**
-    // * Yes rates for today's and mature cards
-    // * @return todayRate, matureRate
-    // */
-    // public double[] yesRates() {
-    // int[] counts = yesCounts();
-    // return new double[] { 1 - (double)counts[1]/counts[0], 1 -
-    // (double)counts[3]/counts[2] };
-    // }
-    //
-    //
-    // // Media
-    // // *****
-    //
-    // /**
-    // * Return the media directory if exists, none if couldn't be created.
-    // *
-    // * @param create If true it will attempt to create the folder if it
-    // doesn't exist
-    // * @param rename This is used to simulate the python with create=None that
-    // is only used when renaming the mediaDir
-    // * @return The path of the media directory
-    // */
-    // public String mediaDir() {
-    // return mediaDir(false, false);
-    // }
-    // public String mediaDir(boolean create) {
-    // return mediaDir(create, false);
-    // }
-    // public String mediaDir(boolean create, boolean rename) {
-    // String dir = null;
-    // File mediaDir = null;
-    // if (mDeckPath != null && !mDeckPath.equals("")) {
-    // Timber.i("mediaDir - mediaPrefix = " + mMediaPrefix);
-    // if (mMediaPrefix != null) {
-    // dir = mMediaPrefix + "/" + mDeckName + ".media";
-    // } else {
-    // dir = mDeckPath.replaceAll("\\.anki$", ".media");
-    // }
-    // if (rename) {
-    // // Don't create, but return dir
-    // return dir;
-    // }
-    // mediaDir = new File(dir);
-    // if (!mediaDir.exists() && create) {
-    // try {
-    // if (!mediaDir.mkdir()) {
-    // Timber.e("Couldn't create media directory " + dir);
-    // return null;
-    // }
-    // } catch (SecurityException e) {
-    // Timber.e(
-    // "Security restriction: Couldn't create media directory " + dir);
-    // return null;
-    // }
-    // }
-    // }
-    //
-    // if (dir == null) {
-    // return null;
-    // } else {
-    // if (!mediaDir.exists() || !mediaDir.isDirectory()) {
-    // return null;
-    // }
-    // }
-    // Timber.i("mediaDir - mediaDir = " + dir);
-    // return dir;
-    // }
-    //
-    // public String getMediaPrefix() {
-    // return mMediaPrefix;
-    // }
-    // public void setMediaPrefix(String mediaPrefix) {
-    // mMediaPrefix = mediaPrefix;
-    // }
-    // //
-    // //
-    // //
-    // // private boolean hasLaTeX() {
-    // // Cursor cursor = null;
-    // // try {
-    // // cursor = getDB().getDatabase().rawQuery(
-    // // "SELECT Id FROM fields WHERE " +
-    // // "(value like '%[latex]%[/latex]%') OR " +
-    // // "(value like '%[$]%[/$]%') OR " +
-    // // "(value like '%[$$]%[/$$]%') LIMIT 1 ", null);
-    // // if (cursor.moveToFirst()) {
-    // // return true;
-    // // }
-    // // } finally {
-    // // if (cursor != null) {
-    // // cursor.close();
-    // // }
-    // // }
-    // // return false;
-    // // }
-
-    public HashMap<Long, JSONObject> getDconf() {
-        return mDconf;
     }
 
 

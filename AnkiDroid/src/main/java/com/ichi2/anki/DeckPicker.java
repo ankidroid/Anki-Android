@@ -73,6 +73,7 @@ import com.ichi2.anki.dialogs.ImportDialog;
 import com.ichi2.anki.dialogs.MediaCheckDialog;
 import com.ichi2.anki.dialogs.SyncErrorDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.DeckRenameException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.widgets.DeckAdapter;
@@ -185,16 +186,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
         @Override
         public void onClick(View view) {
             Long did = (Long) view.getTag();
-            try {
-                JSONObject deck = getCol().getDecks().get(did);
-                if (getCol().getDecks().children(did).size() > 0) {
-                    deck.put("collapsed", !deck.getBoolean("collapsed"));
-                    getCol().getDecks().save(deck);
-                    updateDeckList();
-                    dismissAllDialogFragments();
-                }
-            } catch (JSONException e1) {
-                // do nothing
+            if (getCol().getDecks().children(did).size() > 0) {
+                getCol().getDecks().collpase(did);
+                updateDeckList();
+                dismissAllDialogFragments();
             }
         }
     };
@@ -421,8 +416,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                                 .callback(new MaterialDialog.ButtonCallback() {
                                     @Override
                                     public void onPositive(MaterialDialog dialog) {
-                                        String deckName = mDialogEditText.getText().toString()
-                                                .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                                        String deckName = mDialogEditText.getText().toString();
                                         Timber.i("DeckPicker:: Creating new deck...");
                                         getCol().getDecks().id(deckName, true);
                                         CardBrowser.clearSelectedDeck();
@@ -515,12 +509,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 mDialogEditText = new EditText(DeckPicker.this);
                 ArrayList<String> names = getCol().getDecks().allNames();
                 int n = 1;
-                String filteredDeckName = "Filtered Deck 1"; // TODO: needs to be a resource
-                while (names.contains(filteredDeckName)) {
+                String name = String.format("%s %d", res.getString(R.string.filtered_deck_name), n);
+                while (names.contains(name)) {
                     n++;
-                    filteredDeckName = "Filtered Deck " + n;
+                    name = String.format("%s %d", res.getString(R.string.filtered_deck_name), n);
                 }
-                mDialogEditText.setText(filteredDeckName);
+                mDialogEditText.setText(name);
                 // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
                 new MaterialDialog.Builder(DeckPicker.this)
                         .title(res.getString(R.string.new_deck))
@@ -1702,7 +1696,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     showDialogFragment(d);
                 }
             }, findViewById(R.id.root_layout), mSnackbarShowHideCallback);
-        } else if (deckDueTreeNode.children.size() == 0 && getCol().cardCount(new long[]{did}) == 0) {
+        } else if (deckDueTreeNode.children.size() == 0 && getCol().cardCount(new Long[]{did}) == 0) {
             // If the deck is empty and has no children then show a message saying it's empty
             final Uri helpUrl = Uri.parse(getResources().getString(R.string.link_manual_getting_started));
             mayOpenUrl(helpUrl);
@@ -1844,7 +1838,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public void renameDeckDialog(final long did) {
-        Resources res = getResources();
+        final Resources res = getResources();
         mDialogEditText = new EditText(DeckPicker.this);
         mDialogEditText.setSingleLine();
         final String currentName = getCol().getDecks().name(did);
@@ -1859,11 +1853,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     public void onPositive(MaterialDialog dialog) {
                         String newName = mDialogEditText.getText().toString().replaceAll("\"", "");
                         Collection col = getCol();
-                        if (!newName.equals(currentName) &&
-                                !col.getDecks().rename(col.getDecks().get(did), newName)) {
-                            Themes.showThemedToast(DeckPicker.this,
-                                    getResources().getString(R.string.rename_error, currentName), false);
-
+                        if (!TextUtils.isEmpty(newName) && !newName.equals(currentName)) {
+                            try {
+                                col.getDecks().rename(col.getDecks().get(did), newName);
+                            } catch (DeckRenameException e) {
+                                // We get a localized string from libanki to explain the error
+                                Themes.showThemedToast(DeckPicker.this, e.getLocalizedMessage(res), false);
+                            }
                         }
                         dismissAllDialogFragments();
                         mDeckListAdapter.notifyDataSetChanged();

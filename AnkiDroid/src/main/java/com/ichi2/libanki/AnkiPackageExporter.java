@@ -88,9 +88,9 @@ class AnkiExporter extends Exporter {
         Collection dst = Storage.Collection(path);
         mSrc = mCol;
         // find cards
-        long[] cids;
+        Long[] cids;
         if (mDid == null) {
-            cids = Utils.arrayList2array(mSrc.getDb().queryColumn(Long.class, "SELECT id FROM cards", 0));
+            cids = Utils.list2ObjectArray(mSrc.getDb().queryColumn(Long.class, "SELECT id FROM cards", 0));
         } else {
             cids = mSrc.getDecks().cids(mDid, true);
         }
