@@ -50,7 +50,6 @@ public interface Compat {
     String detagged(String txt);
     void setTtsOnUtteranceProgressListener(TextToSpeech tts);
     void disableDatabaseWriteAheadLogging(SQLiteDatabase db);
-    void enableDatabaseWriteAheadLogging(SQLiteDatabase db);
     boolean isWriteAheadLoggingEnabled(SQLiteDatabase db);
     void enableCookiesForFileSchemePages();
     void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls);

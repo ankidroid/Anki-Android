@@ -471,13 +471,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     pm.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP);
                     break;
                 }
-                case "enableWal": {
-                    if (((CheckBoxPreference) pref).isChecked()) {
-                        CompatHelper.getCompat().enableDatabaseWriteAheadLogging(getCol().getDb().getDatabase());
-                    } else {
-                        CompatHelper.getCompat().disableDatabaseWriteAheadLogging(getCol().getDb().getDatabase());
-                    }
-                }
             }
             // Update the summary text to reflect new value
             updateSummary(pref);
