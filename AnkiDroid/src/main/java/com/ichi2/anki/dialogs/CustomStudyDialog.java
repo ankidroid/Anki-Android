@@ -140,9 +140,10 @@ public class CustomStudyDialog extends DialogFragment {
                                  * number, it is necessary to collect a list of tags. This case handles the creation
                                  * of that Dialog.
                                  */
+                                long currentDeck = getArguments().getLong("did");
                                 TagsDialog dialogFragment = TagsDialog.newInstance(
                                         TagsDialog.TYPE_CUSTOM_STUDY_TAGS, new ArrayList<String>(),
-                                        new ArrayList<>(activity.getCol().getTags().all()));
+                                        new ArrayList<>(activity.getCol().getTags().byDeck(currentDeck, true)));
                                 dialogFragment.setTagsDialogListener(new TagsDialog.TagsDialogListener() {
                                     @Override
                                     public void onPositive(List<String> selectedTags, int option) {
