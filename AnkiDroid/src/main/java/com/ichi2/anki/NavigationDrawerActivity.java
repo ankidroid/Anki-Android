@@ -127,8 +127,10 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
 
     /** Sets selected navigation drawer item */
     protected void selectNavigationItem(int itemId) {
-        mDrawer.setSelection(itemId, false);
-        mSelectedItem = itemId;
+        if (mDrawer != null) {
+            mDrawer.setSelection(itemId, false);
+            mSelectedItem = itemId;
+        }
     }
 
 
@@ -169,12 +171,16 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
      * activity that extends this class.
      */
     protected void allowResizeForSoftKeyboard() {
-        mDrawer.keyboardSupportEnabled(this, true);
+        if (mDrawer != null) {
+            mDrawer.keyboardSupportEnabled(this, true);
+        }
     }
 
 
     protected void showBackIcon() {
-        mDrawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
+        if (mDrawer != null) {
+            mDrawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
+        }
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -213,7 +219,11 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
      * The drawer layout is the parent layout for activities that use the Navigation Drawer.
      */
     public DrawerLayout getDrawerLayout() {
-        return mDrawer.getDrawerLayout();
+        if (mDrawer != null) {
+            return mDrawer.getDrawerLayout();
+        } else {
+            return null;
+        }
     }
 
 

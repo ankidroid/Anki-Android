@@ -53,6 +53,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mHasDrawerSwipeConflicts = false;
     private boolean mShowWhiteboard = true;
     private boolean mBlackWhiteboard = true;
+    private boolean mPrefFullscreenReview = false;
 
     @Override
     protected void setTitle() {
@@ -92,8 +93,12 @@ public class Reviewer extends AbstractFlashcardViewer {
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
         mSched.setContext(new WeakReference<Activity>(this));
-    }
 
+        // Set full screen/immersive mode if needed
+        if (mPrefFullscreenReview) {
+            CompatHelper.getCompat().setFullScreen(this);
+        }
+    }
 
 
     @Override
@@ -315,6 +320,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         super.restorePreferences();
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
+        mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", false);
         return preferences;
     }
 
@@ -423,6 +429,17 @@ public class Reviewer extends AbstractFlashcardViewer {
         // Tell the browser the current card ID so that it can tell us when we need to reload
         setCurrentCardId(mCurrentCard.getId());
         return super.onItemClick(view, i, iDrawerItem);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        // Restore full screen once we regain focus
+        if (hasFocus) {
+            delayedHide(INITIAL_HIDE_DELAY);
+        } else {
+            mFullScreenHandler.removeMessages(0);
+        }
     }
 
     @Override

@@ -47,11 +47,11 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:customtabs:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile('com.afollestad.material-dialogs:core:0.8.5.0@aar') {
+    compile('com.afollestad.material-dialogs:core:0.8.5.1@aar') {
         //exclude group: 'com.android.support'  // uncomment to force our local support lib version
         transitive = true
     }
-    compile('com.mikepenz:materialdrawer:4.4.3@aar') {
+    compile('com.mikepenz:materialdrawer:4.4.9@aar') {
         //exclude group: 'com.android.support' // uncomment to force our local support lib version
         transitive = true
     }

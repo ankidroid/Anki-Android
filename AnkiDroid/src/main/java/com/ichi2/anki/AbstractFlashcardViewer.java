@@ -151,6 +151,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /** Maximum time in milliseconds to wait before accepting answer button presses. */
     private static final int DOUBLE_TAP_IGNORE_THRESHOLD = 200;
 
+    /** Time to wait in milliseconds before resuming fullscreen mode **/
+    protected static final int INITIAL_HIDE_DELAY = 200;
+
     /** Regex pattern used in removing tags from text before diff */
     private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
     private static final Pattern sBrPattern = Pattern.compile("<br\\s?/?>");
@@ -902,22 +905,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         initNavigationDrawer(mainView, mPrefFullscreenReview);
         // Ensure software keyboard resizes the screen when used in typing fields
         allowResizeForSoftKeyboard();
-        // Set full screen/immersive mode if needed
-        if (mPrefFullscreenReview) {
-            CompatHelper.getCompat().setFullScreen(this);
-        }
         // Load the collection
         startLoadingCollection();
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        // Restore full screen once we regain focus
-        if (mPrefFullscreenReview) {
-            CompatHelper.getCompat().setFullScreen(this);
-        }
-    }
 
     @ Override
     public void onConfigurationChanged(Configuration config) {
@@ -2691,6 +2682,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 longClickHandler.removeCallbacks(longClickTestRunnable);
                 mTouchStarted = false;
             }
+            delayedHide(INITIAL_HIDE_DELAY);
             return false;
         }
 
@@ -2728,6 +2720,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         return gestureDetector.onTouchEvent(event);
     }
 
+
+    protected final Handler mFullScreenHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (mPrefFullscreenReview) {
+                CompatHelper.getCompat().setFullScreen(AbstractFlashcardViewer.this);
+            }
+        }
+    };
+
+    protected void delayedHide(int delayMillis) {
+        mFullScreenHandler.removeMessages(0);
+        mFullScreenHandler.sendEmptyMessageDelayed(0, delayMillis);
+    }
 
     /**
      * Removes first occurrence in answerContent of any audio that is present due to use of
