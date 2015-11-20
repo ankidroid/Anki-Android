@@ -31,11 +31,6 @@ public class CompatV11 extends CompatV10 implements Compat {
     }
 
     @Override
-    public void enableDatabaseWriteAheadLogging(SQLiteDatabase db) {
-        db.enableWriteAheadLogging();
-    }
-
-    @Override
     public void disableDatabaseWriteAheadLogging(SQLiteDatabase db) {
         // disableWriteAheadLogging() method only available from API 16
         db.rawQuery("PRAGMA journal_mode = DELETE", null);

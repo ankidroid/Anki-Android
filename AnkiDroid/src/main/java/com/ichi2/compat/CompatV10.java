@@ -59,10 +59,6 @@ public class CompatV10 implements Compat {
         return false;
     }
 
-    public void enableDatabaseWriteAheadLogging(SQLiteDatabase db) {
-        // don't use WAL mode on Gingerbread
-    }
-
     public void disableDatabaseWriteAheadLogging(SQLiteDatabase db) {
         // don't use WAL mode on Gingerbread
     }
