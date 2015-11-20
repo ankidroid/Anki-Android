@@ -23,6 +23,7 @@ import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.NavigationDrawerActivity;
 
@@ -55,7 +56,7 @@ public interface Compat {
     void enableCookiesForFileSchemePages();
     void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls);
     void restartActivityInvalidateBackstack(AnkiActivity activity);
-    void setFullScreen(NavigationDrawerActivity activity);
+    void setFullScreen(AbstractFlashcardViewer activity);
     void setSelectableBackground(View view);
     void openUrl(AnkiActivity activity, Uri uri);
 }
