@@ -39,13 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="error_reporting_choice">Modo de comunicação do erro</string>
-  <string name="feedback_disclaimer">Disclaimer: We don’t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
-  <string name="feedback_title">Opinião</string>
-  <string name="feedback_default_text">Insira a sua opinião ou informação sobre a natureza dos quaisquer erros que está a reportar.</string>
-  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
-  <string name="feedback_manual_toast_text">AnkiDroid encontrou um problema; está a ser gerado um relatório&#8230;</string>
-  <string name="feedback_copy_debug">Copiar a informação de depuração</string>
-  <string name="feedback_report">Relatório</string>
+  <string name="error_reporting_choice">Modo de comunicação de erros</string>
+  <string name="feedback_disclaimer">Aviso: Não recolhemos dados pessoais tais como o seu endereço de e-mail, número de telefone ou o IMEI deste telefone. No entanto, recolhemos algumas informações relacionadas com o seu dispositivo, tais como a marca, o modelo e a versão do Android instalada, além de outras informações relacionadas com a natureza dos erros que está a comunicar.</string>
+  <string name="feedback_title">Comentários</string>
+  <string name="feedback_default_text">Digite os seus comentários ou as informações relacionadas com a natureza dos erros que está a comunicar.</string>
+  <string name="feedback_auto_toast_text">O AnkiDroid encontrou um problema; está a ser enviado um relatório aos programadores&#8230;</string>
+  <string name="feedback_manual_toast_text">O AnkiDroid encontrou um problema; está a ser gerado um relatório&#8230;</string>
+  <string name="feedback_copy_debug">Copiar dados de depuração</string>
+  <string name="feedback_report">Enviar</string>
   <string name="feedback_report_automatically">Enviar automaticamente os relatórios de erros</string>
 </resources>

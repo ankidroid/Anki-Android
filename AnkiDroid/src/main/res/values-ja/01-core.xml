@@ -114,7 +114,7 @@
   <string name="empty_deck">このデッキにはカードが入っていません</string>
   <string name="studyoptions_empty">このデッキにはカードが入っていません。「＋」ボタンをタップしてカードを追加してください。</string>
   <string name="studyoptions_limit_reached">既に一日あたりの学習枚数の上限に達しています</string>
-  <string name="studyoptions_empty_schedule">現在のところ課題はありません</string>
+  <string name="studyoptions_empty_schedule">このデッキでは、今日このあと予定されている課題はありません</string>
   <string name="studyoptions_congrats_finished">おめでとうございます！ このデッキの今日の課題を全て達成しました</string>
   <string name="studyoptions_congrats_more_rev">予定日に達した復習カードがまだ他にも残っていますが、今日復習したカードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で上げられます。</string>
   <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、今日学習した新規カードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で上げられます。（ただしそれに伴って短期的に学習の負担が増えますのでご注意ください。）</string>

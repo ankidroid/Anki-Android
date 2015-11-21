@@ -186,8 +186,8 @@
   <string name="deck_conf_leech_action">無駄（習得困難）カードへの処置</string>
   <string name="deck_conf_max_time">統計に利用する解答時間の最大値</string>
   <string name="deck_conf_seconds">XXX 秒</string>
-  <string name="deck_conf_timer">タイマーの表示</string>
-  <string name="deck_conf_autoplay">音声・動画を自動再生する</string>
+  <string name="deck_conf_timer">タイマーを表示</string>
+  <string name="deck_conf_autoplay">音声・動画を自動再生</string>
   <string name="deck_conf_replayq">質問の音声・動画も再生</string>
   <string name="deck_conf_replayq_summ">解答が表示されている時に「音声・動画を再生」を選択すると、解答の音声・動画の前に質問の音声・動画も再生します</string>
   <string name="deck_conf_manage">グループ管理</string>

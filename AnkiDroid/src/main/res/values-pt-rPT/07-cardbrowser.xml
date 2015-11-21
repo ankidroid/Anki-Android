@@ -49,7 +49,7 @@
   <string name="card_browser_unsuspend_card">Cancelar suspensão da ficha</string>
   <string name="card_browser_mark_card">Marcar nota</string>
   <string name="card_browser_unmark_card">Desmarcar nota</string>
-  <string name="delete_card_title">Eliminar nota?</string>
+  <string name="delete_card_title">Apagar nota?</string>
   <string name="delete_card_message">Eliminar todas as fichas desta nota? \nCampo de procura: %s</string>
   <string name="card_browser_show_marked">Filtro marcado</string>
   <string name="card_browser_show_suspended">Filtro suspenso</string>
