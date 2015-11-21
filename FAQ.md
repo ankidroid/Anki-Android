@@ -23,7 +23,7 @@ Yes, starting from v2.3, tap the "Help" item in the side drawer in AnkiDroid to 
 ### How can I swap the front and back of my flashcards?
 See the [AnkiDroid user manual](http://ankidroid.org/manual.html#reverseCards)
 
-### Why won't AnkiDroid let me study my cards when I want to study them?
+### How can I study my cards exactly when I want to study them?
 By design, AnkiDroid uses a [spaced repetition algorithm](https://en.wikipedia.org/wiki/Spaced_repetition) to minimize the amount of wasted study time. You can create [custom study sessions](https://ankidroid.org/docs/manual.html#filtered) in AnkiDroid where you can do extra study in addition to the cards recommended by the scheduling algorithm (for example if you have an upcoming test that you want to cram for) and other similar tasks, however if you find yourself using these features too often, you are probably not fully utilizing the power of spaced repetition.
 
 From the Anki website:
