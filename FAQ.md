@@ -23,6 +23,19 @@ Yes, starting from v2.3, tap the "Help" item in the side drawer in AnkiDroid to 
 ### How can I swap the front and back of my flashcards?
 See the [AnkiDroid user manual](http://ankidroid.org/manual.html#reverseCards)
 
+### Why won't AnkiDroid let me study my cards when I want to study them?
+By design, AnkiDroid uses a [spaced repetition algorithm](https://en.wikipedia.org/wiki/Spaced_repetition) to minimize the amount of wasted study time. You can create [custom study sessions](https://ankidroid.org/docs/manual.html#filtered) in AnkiDroid where you can do extra study in addition to the cards recommended by the scheduling algorithm (for example if you have an upcoming test that you want to cram for) and other similar tasks, however if you find yourself using these features too often, you are probably not fully utilizing the power of spaced repetition.
+
+The main Anki website has a more in-depth article about the difference between Anki and traditional flashcards apps:
+
+> The main purpose of a simple flashcard program is to allow you to enter some content and then flip through the cards, like you could with paper flashcards.
+
+> People looking for a simple flashcard program to help them study a few cards sometimes stumble across Anki. But Anki doesn't really fit the description of a simple flashcard program. Anki is built to implement spaced repetition, a system of scheduling the next reviews of information right before the information is likely to be forgotten, making learning much more efficient. It happens that flashcards are the best way to study using spaced repetition.
+
+> People who are only looking for the “flashcards” part and not the “spaced repetition” part are likely to be frustrated by Anki. Spaced repetition is fairly simple on its face, but studying with Anki is different from what most people are used to, and the additional complexity will probably be unwelcome at first.
+
+[Read more here](https://anki.tenderapp.com/kb/anki-ecosystem/can-i-disable-the-scheduling-algorithm)
+
 ### Why do I get an error about the timezone when I try to sync?
 AnkiWeb requires both the time and the timezone to be set correctly in order to synchronize properly. For most users, enabling "Automatic date & time" and "Automatic time zone" in the main Android date & time settings is enough to ensure that sync works correctly.
 
