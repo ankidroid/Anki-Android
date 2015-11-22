@@ -826,7 +826,7 @@ public class Collection {
 
 
     // NOT IN LIBANKI //
-    public int cardCount(long[] ls) {
+    public int cardCount(Long[] ls) {
         return mDb.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(ls));
     }
 
@@ -961,7 +961,7 @@ public class Collection {
             fields.put("Tags", ((String) data[5]).trim());
             fields.put("Type", (String) model.get("name"));
             fields.put("Deck", mDecks.name((Long) data[3]));
-            String[] parents = fields.get("Deck").split("::");
+            String[] parents = fields.get("Deck").split("::", -1);
             fields.put("Subdeck", parents[parents.length-1]);
             JSONObject template;
             if (model.getInt("type") == Consts.MODEL_STD) {

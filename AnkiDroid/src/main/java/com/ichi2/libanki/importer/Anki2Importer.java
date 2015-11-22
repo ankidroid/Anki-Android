@@ -413,7 +413,7 @@ public class Anki2Importer {
             String name = g.getString("name");
             // if there's a prefix, replace the top level deck
             if (mDeckPrefix != null) {
-                String[] tmpname = name.split("::");
+                String[] tmpname = name.split("::", -1);
                 name = mDeckPrefix;
                 if (tmpname.length > 1) {
                     for (int i = 0; i < tmpname.length - 2; i++) {
@@ -423,7 +423,7 @@ public class Anki2Importer {
             }
             // Manually create any parents so we can pull in descriptions
             String head = "";
-            String[] parents = name.split("::");
+            String[] parents = name.split("::", -1);
             for (int i = 0; i < parents.length - 1; ++i) {
                 if (head.length() > 0) {
                     head = head.concat("::");

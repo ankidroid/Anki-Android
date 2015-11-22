@@ -388,6 +388,10 @@ public class Utils {
         return ar;
     }
 
+    public static Long[] list2ObjectArray(List<Long> list) {
+        return list.toArray(new Long[list.size()]);
+    }
+
     /** Return a non-conflicting timestamp for table. */
     public static long timestampID(AnkiDb db, String table) {
         // be careful not to create multiple objects without flushing them, or they

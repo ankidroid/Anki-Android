@@ -278,7 +278,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             }
         }
         // If the deck is not in our list, we search again using the immediate parent
-        ArrayList<JSONObject> parents = mCol.getDecks().parents(did);
+        List<JSONObject> parents = mCol.getDecks().parents(did);
         if (parents.size() == 0) {
             return 0;
         } else {

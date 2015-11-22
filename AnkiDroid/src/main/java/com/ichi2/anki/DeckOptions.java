@@ -209,11 +209,6 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             mOptions.put("autoplay", (Boolean) value);
                         } else if (key.equals("replayQuestion")) {
                             mOptions.put("replayq", (Boolean) value);
-                        } else if (key.equals("name")) {
-                            if (!mCol.getDecks().rename(mDeck, (String) value)) {
-                                Themes.showThemedToast(DeckOptions.this,
-                                        getResources().getString(R.string.rename_error, mDeck.get("name")), false);
-                            }
                         } else if (key.equals("desc")) {
                             mDeck.put("desc", (String) value);
                             mCol.getDecks().save(mDeck);
