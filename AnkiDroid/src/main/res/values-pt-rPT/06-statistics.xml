@@ -65,8 +65,8 @@
   <string name="stats_period_lifetime">vida do baralho</string>
   <string name="stats_deck_collection">coleção</string>
   <string name="stats_time_of_day">Hora do dia</string>
-  <string name="stats_day_of_week">Dia da Semana</string>
-  <string formatted="false" name="stats_percentage_correct">% Correta</string>
+  <string name="stats_day_of_week">Dia da semana</string>
+  <string formatted="false" name="stats_percentage_correct">% correta</string>
   <string name="stats_reviews">Revisões</string>
   <string name="stats_answer_type">Tipo de resposta</string>
   <string name="stats_today_again_count">Número de repetições: &lt;b&gt;%d&lt;/b&gt;</string>
@@ -120,7 +120,7 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-    <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
+    <item quantity="one">Hoje, estudou &lt;b&gt;%1$d cartão&lt;/b&gt; em &lt;b&gt;%2$s&lt;/b&gt;.</item>
+    <item quantity="other">Hoje, estudou &lt;b&gt;%1$d cartões&lt;/b&gt; em &lt;b&gt;%2$s&lt;/b&gt;.</item>
   </plurals>
 </resources>

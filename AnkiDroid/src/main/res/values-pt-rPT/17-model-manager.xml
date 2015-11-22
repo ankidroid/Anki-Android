@@ -24,7 +24,7 @@
   <string name="model_editor_label">Gerir campos</string>
   <string name="toast_last_model">Não pode eliminar o seu último modelo</string>
   <string name="toast_last_field">Os tipos de nota devem ter pelo menos um campo</string>
-  <string name="toast_empty_name">Deves inserir um nome</string>
+  <string name="toast_empty_name">Tem de digitar um nome</string>
   <string name="toast_duplicate_field">Nome do campo já usado</string>
   <string name="toast_out_of_range">Deve inserir um valor válido</string>
   <plurals name="model_browser_types_available">
@@ -48,7 +48,7 @@
   <string name="model_field_editor_options">Opções do campo</string>
   <string name="model_field_editor_rename">Renomear campo</string>
   <string name="model_field_editor_reposition_menu">Campo de reposição</string>
-  <string name="model_field_editor_reposition" formatted="false">Reposition field (enter a value %1$d–%2$d)</string>
+  <string name="model_field_editor_reposition" formatted="false">Campo de reposição (digite um valor entre %1$d e %2$d)</string>
   <string name="model_field_editor_changing">A atualizar os campos</string>
   <string name="model_field_editor_sort_field">Ordenar por este campo</string>
   <string name="model_clone_suffix">copiar</string>

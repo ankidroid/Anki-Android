@@ -41,7 +41,7 @@
   <string name="multimedia_editor_trans_from">De</string>
   <string name="multimedia_editor_trans_to">Para</string>
   <string name="multimedia_editor_trans_translate">Traduzir</string>
-  <string name="multimedia_editor_trans_translating_online">Tradução on-line</string>
+  <string name="multimedia_editor_trans_translating_online">Tradução online</string>
   <string name="multimedia_editor_trans_pick_translation">Escolher tradução</string>
   <string name="multimedia_editor_trans_translation_failed">Falha na tradução</string>
   <string name="multimedia_editor_trans_pick_translation_source">Escolher dicionário</string>
