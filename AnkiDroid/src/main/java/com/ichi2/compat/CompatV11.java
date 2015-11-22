@@ -8,11 +8,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.TaskStackBuilder;
-import android.view.View;
 
 import com.ichi2.anki.AnkiActivity;
-
-import java.text.Normalizer;
 
 import timber.log.Timber;
 

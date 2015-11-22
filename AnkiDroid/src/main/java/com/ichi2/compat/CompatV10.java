@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.RemoteViews;
 
+import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.NavigationDrawerActivity;
@@ -91,7 +92,7 @@ public class CompatV10 implements Compat {
     }
 
     @Override
-    public void setFullScreen(NavigationDrawerActivity activity) {
+    public void setFullScreen(AbstractFlashcardViewer activity) {
         activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
