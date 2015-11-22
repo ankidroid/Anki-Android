@@ -40,7 +40,7 @@
 -->
 <resources>
   <string name="pref_cat_general">AnkiDroid</string>
-  <string name="pref_cat_general_summ">Obecné nastavenia</string>
+  <string name="pref_cat_general_summ">Všeobecné nastavenia</string>
   <string name="pref_cat_reviewing">Opakovanie</string>
   <string name="pref_cat_reviewing_summ">Obecné nastavenia pre opakovania</string>
   <string name="pref_cat_reviewer_behaviour">Správanie</string>
@@ -52,7 +52,7 @@
   <string name="pref_cat_gestures">Gestá</string>
   <string name="pref_cat_gestures_summ">Ovládanie gestami namiesto tlačidiel</string>
   <string name="pref_cat_actions">Akcie</string>
-  <string name="pref_cat_advanced">Rozšírené</string>
+  <string name="pref_cat_advanced">Pokročilé</string>
   <string name="pref_cat_advanced_summ">Optimalizácia a experimentálne funkcie</string>
   <string name="pref_cat_performance">Výkon</string>
   <string name="pref_cat_workarounds">Možné riešenia</string>
@@ -98,8 +98,8 @@
   <string name="swipe_sensitivity">Citlivosť posunu</string>
   <string name="tts">Prevod textu na reč</string>
   <string name="tts_summ">Prečíta otázku a odpoveď, ak nie je priložený žiaden zvukový súbor</string>
-  <string name="sync_fetch_missing_media">Prevziať médiá počas synchronizácie</string>
-  <string name="sync_fetch_missing_media_summ">Automaticky prevziať chýbajúce médiá počas synchronizácie.</string>
+  <string name="sync_fetch_missing_media">Prevziať multimédiá počas synchronizácie</string>
+  <string name="sync_fetch_missing_media_summ">Automaticky prevziať chýbajúce multimédiá počas synchronizácie</string>
   <string name="sync_account">AnkiWeb účet</string>
   <string name="sync_account_summ_logged_out">Neprihlásený</string>
   <string name="sync_account_summ_logged_in">%s</string>
@@ -109,7 +109,7 @@
   <string name="fix_hebrew_text">Prispôsobiť hebrejským samohláskam</string>
   <string name="fix_hebrew_text_summ">Riešenie správneho zobrazovania Hebrejských samohlások.</string>
   <string name="fix_hebrew_instructions">Toto nastavenie obchádza RTL algoritmus Androidu, aby sa správne zobrazil hebrejský text so samohláskami.\n\nAby to fungovalo musíte, stiahnuť font Tohu.ttf a manuálne ho skopírovať do\n“%s/fonts/”\n\nVaše karty nebudete musieť modifikovať.</string>
-  <string name="fix_hebrew_download_font">Stiahni font</string>
+  <string name="fix_hebrew_download_font">Stiahnuť font</string>
   <string name="default_font">Predvolené písmo</string>
   <string name="override_font">Použitie východiskového písma</string>
   <string name="language">Jazyk</string>
@@ -133,7 +133,7 @@
   <string name="vertical_centering">Zarovnanie na stred</string>
   <string name="vertical_centering_summ">Vycentrovať obsah kariet vertikálne</string>
   <string name="pref_backup_max">Maximálny počet záloh</string>
-  <string name="show_estimates">Zobraziť tlačidlo čas</string>
+  <string name="show_estimates">Zobraziť tlačidlo času</string>
   <string name="show_estimates_summ">Zobraziť čas ďalšieho opakovania nad tlačidlami odpovedí</string>
   <string name="show_progress">Zobraziť zostávajúce</string>
   <string name="show_progress_summ">Zobraziť zostávajúci počet kariet</string>

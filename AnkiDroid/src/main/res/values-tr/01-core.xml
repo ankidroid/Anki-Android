@@ -142,6 +142,7 @@
     <item quantity="one">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
     <item quantity="other">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
   </plurals>
+  <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note"> Bu kart tipini kaldırmak bir veya daha fazla notun silinmesine neden olur. Lütfen önce yeni bir kart türü oluşturun.</string>
   <string name="read_write_permission_label">AnkiDroid veritabanını oku ve yaz</string>
   <string name="read_write_permission_description">Uygulamanın var olan notlara, kartlara, modellere ve destelere

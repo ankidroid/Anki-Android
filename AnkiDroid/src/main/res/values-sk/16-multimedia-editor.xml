@@ -46,7 +46,7 @@
   <string name="multimedia_editor_trans_translation_failed">Preklad zlyhal</string>
   <string name="multimedia_editor_trans_pick_translation_source">Zvoliť slovník</string>
   <string name="multimedia_editor_trans_install_color_dict">Najprv nainštalovať ColorDict</string>
-  <string name="multimedia_editor_pron_load">Načítať</string>
+  <string name="multimedia_editor_pron_load">Nahrať</string>
   <string name="multimedia_editor_pron_looking_up">Vyhľadávanie výslovnosti</string>
   <string name="multimedia_editor_pron_pronunciation_failed">Výslovnosť zlyhala</string>
   <string name="multimedia_editor_word_search_try_lower_case">Skúste použiť len malé písmená</string>
@@ -84,7 +84,7 @@
   <string name="multimedia_editor_progress_wait_title">Počkajte</string>
   <string name="multimedia_editor_something_wrong">Niečo sa pokazilo</string>
   <string name="multimedia_editor_attach_mm_content">Pridať multimediálny obsah k poznámke</string>
-  <string name="multimedia_editor_attach_media">Pridať média</string>
+  <string name="multimedia_editor_attach_media">Pridať multimédia</string>
   <string name="multimedia_editor_audio_view_recording_failed">Nahrávanie zlyhalo</string>
   <string name="multimedia_editor_audio_view_playing_failed">Prehrávanie zlyhalo</string>
   <string name="title_activity_edit_text">Pole úprav</string>

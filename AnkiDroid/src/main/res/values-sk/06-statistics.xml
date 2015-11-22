@@ -44,8 +44,8 @@
   <string name="statistics_young_and_learn">Mladé a novonaučené</string>
   <string name="statistics_unlearned">Neučené</string>
   <string name="statistics_suspended">Pozastavené</string>
-  <string name="statistics_relearn">Zabudnuté</string>
-  <string name="statistics_learn">Učené</string>
+  <string name="statistics_relearn">Znovunaučené</string>
+  <string name="statistics_learn">Novonaučené</string>
   <string name="statistics_cram">Nabiflené</string>
   <string name="stats_cards">Karty</string>
   <string name="stats_cards_intervals">Karty s intervalom</string>
@@ -57,8 +57,8 @@
   <string name="stats_cumulative_percentage">Kumulované percentá</string>
   <string formatted="false" name="stats_cumulative_correct_percentage">% kumulatívne správnych</string>
   <string name="stats_answers">Odpovede</string>
-  <string name="stats_minutes">Minút</string>
-  <string name="stats_hours">Hodín</string>
+  <string name="stats_minutes">Minúty</string>
+  <string name="stats_hours">Hodiny</string>
   <string name="stats_percentage">Percentá</string>
   <string name="stats_period_month">1 mesiac</string>
   <string name="stats_period_year">1 rok</string>
@@ -84,7 +84,7 @@
   <string name="stats_today">Dnes</string>
   <string name="stats_forecast">Predpoveď</string>
   <string name="stats_review_count">Počet opakovaní</string>
-  <string name="stats_review_time">Čas na opakovanie</string>
+  <string name="stats_review_time">Čas opakovania</string>
   <string name="stats_review_intervals">Intervaly</string>
   <string name="stats_breakdown">Hodinový prehľad</string>
   <string name="stats_weekly_breakdown">Týždenný prehľad</string>
@@ -120,8 +120,8 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">Dnes preštudovaná &lt;b&gt;%1$d card&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;.</item>
-    <item quantity="few">Dnes preštudované &lt;b&gt;%1$d card&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;.</item>
-    <item quantity="other">Dnes preštudovaných &lt;b&gt;%1$d card&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;.</item>
+    <item quantity="one">Dnes preštudovaná &lt;b&gt;%1$d karta&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;.</item>
+    <item quantity="few">Dnes preštudované &lt;b&gt;%1$d karty&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;.</item>
+    <item quantity="other">Dnes preštudované &lt;b&gt;%1$d kariet&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;.</item>
   </plurals>
 </resources>

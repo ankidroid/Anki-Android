@@ -138,6 +138,7 @@
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="other">确定删除\"%2$s\"笔记类型类型和它包含的%1$d张卡片吗？</item>
   </plurals>
+  <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note">移除这个笔记类型需要删除一个或多个笔记，请首先创建一个新的笔记类型。</string>
   <string name="read_write_permission_label">读取并写入AnkiDroid数据库</string>
   <string name="read_write_permission_description">允许应用程序访问和创建笔记、卡片、 笔记类型和牌组。</string>

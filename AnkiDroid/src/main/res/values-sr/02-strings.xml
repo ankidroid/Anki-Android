@@ -51,11 +51,11 @@
   <string name="tag_name">Име ознаке</string>
   <string name="add_new_filter_tags">Додај/филтрирај ознаке</string>
   <string name="add_tag">Додај ознаку</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
+  <string name="check_all_tags">Потврди/поништи све ознаке</string>
   <string name="filter_tags">Филтрирај ознаке</string>
   <string name="no_tags">Још нисте додали никакве ознаке.</string>
   <string name="sdcard_missing_message">SD картица је недоступна јер се употребљава као USB. Искључите USB да бисте добили приступ шпиловима.</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="updated_version">Ажурирај до верзије %s</string>
   <string name="enable_whiteboard">Омогући белу таблу</string>
   <string name="disable_whiteboard">Онемогући белу таблу</string>
   <string name="show_whiteboard">Прикажи белу таблу</string>
@@ -66,8 +66,8 @@
   <string name="leech_notification">Картица је означена као пијавица</string>
   <string name="corrupt_font">Оштећена датотека фонта %s</string>
   <string-array name="browser_column1_headings">
-    <item>Question</item>
-    <item>Sort field</item>
+    <item>Питање</item>
+    <item>Поље за сортирање</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Одговор</item>
@@ -81,7 +81,7 @@
   </string-array>
   <string name="custom_study_increase_new_limit">Увећај данашњи лимит нових картица</string>
   <string name="custom_study_increase_review_limit">Увећај данашњи лимит прегледавања</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
+  <string name="custom_study_review_forgotten">Прегледај заборављене картице</string>
   <string name="custom_study_review_ahead">Прегледај унапред</string>
   <string name="custom_study_random_selection">Учи случајну групу картица</string>
   <string name="custom_study_preview_new">Преглед нових картица</string>
@@ -163,10 +163,10 @@
   <string name="steps_error">Кораци треба да буду бројеви већи од 0</string>
   <string name="steps_min_error">Неопходан је бар један корак</string>
   <string name="sched_end">(крај)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
+  <string name="sched_unbury_action">Да би сте их видели, дотакните ставку \"Откриј\" у менију.</string>
   <string name="sched_has_buried">Неке повезане или закопане картице су одложене до следеће сесије.</string>
-  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+  <string name="tag_editor_add_feedback">Притисните “%2$s” да бисте потврдили додавање “%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">Постојећа ознака “%1$s” је изабрана</string>
   <string name="lookup_hint">Након копирање текста, тапните било где на картице да прикажете иконицу за претраживање.</string>
   <plurals name="time_span_seconds">
     <item quantity="one">%s секунда</item>

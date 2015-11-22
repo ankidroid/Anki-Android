@@ -142,6 +142,7 @@
     <item quantity="one">Slette korttypen \"%2$s\" og dens %1$d kort?</item>
     <item quantity="other">Slette korttypen \"%2$s\" og dens %1$d kort?</item>
   </plurals>
+  <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note">Fjerning av denne korttypen vil føre til at ett eller flere notater slettes. Vennligst lag en ny korttype først.</string>
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
   <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,

@@ -142,6 +142,7 @@
     <item quantity="one">Remover o tipo de ficha “%2$s” e a sua %1$d ficha?</item>
     <item quantity="other">Remover o tipo de ficha “%2$s” e as suas %1$d fichas?</item>
   </plurals>
+  <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note">Ao remover este tipo de ficha resultará na eliminação de uma ou mais notas. Por favor, crie primeiro um novo tipo de ficha.</string>
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
   <string name="read_write_permission_description">Permitir que a aplicação possa aceder às notas, fichas, modelos,

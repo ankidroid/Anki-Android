@@ -83,13 +83,13 @@
   <string name="multimedia_editor_searching_word">Претрага реча</string>
   <string name="multimedia_editor_progress_wait_title">Сачекајте</string>
   <string name="multimedia_editor_something_wrong">Неки проблем се десио</string>
-  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the note</string>
-  <string name="multimedia_editor_attach_media">Attach media</string>
+  <string name="multimedia_editor_attach_mm_content">Прикачите медијске датотеке белешки</string>
+  <string name="multimedia_editor_attach_media">Прикачите медијске датотеке</string>
   <string name="multimedia_editor_audio_view_recording_failed">Снимање звука неуспешно</string>
   <string name="multimedia_editor_audio_view_playing_failed">Пуштање медије неуспешно</string>
   <string name="title_activity_edit_text">Поље за уређивање</string>
   <string name="title_activity_translation">Превод</string>
   <string name="title_activity_load_pronounciation">Изговор</string>
   <string name="title_activity_search_image">Гугл претрага слика</string>
-  <string name="network_no_connection">No connection.</string>
+  <string name="network_no_connection">Није повезано.</string>
 </resources>

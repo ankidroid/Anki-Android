@@ -138,6 +138,7 @@
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="other">\'%2$s\' 카드 형식과 %1$d 카드를 삭제할까요?</item>
   </plurals>
+  <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note">이 카드 형식을 제거하면 하나 또는 여러개의 노트가 삭제됩니다. 먼저 새 카드 형식을 만드세요.</string>
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
   <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,

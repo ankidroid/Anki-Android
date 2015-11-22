@@ -40,7 +40,7 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
+    <item quantity="one">%d zobrazená karta</item>
     <item quantity="few">%d zobrazené karty</item>
     <item quantity="other">%d zobrazených kariet</item>
   </plurals>
@@ -70,10 +70,10 @@
   <string name="card_details_answer">Odpoveď</string>
   <string name="card_details_due">Na preskúšanie</string>
   <string name="card_details_tags">Štítky</string>
-  <string name="card_browser_filtering_cards">Filtrujem karty&#8230;\nPre zrušenie stlačte tlačidlo Späť</string>
+  <string name="card_browser_filtering_cards">Karty sa filtrujú&#8230;\nPre zrušenie stlačte tlačidlo Späť</string>
   <string-array name="card_browser_order_labels">
     <item>Bez triedenia (rýchlejšie)</item>
-    <item>Podľa druhu poľa</item>
+    <item>Podľa triediaceho poľa</item>
     <item>Podľa času vytvorenia</item>
     <item>Podľa času úpravy</item>
     <item>Podľa času zmeny</item>

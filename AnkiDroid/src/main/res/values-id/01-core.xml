@@ -138,6 +138,7 @@
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="other">Menghapus jenis kartu \"%2$s\", dan kartu yang %1$d?</item>
   </plurals>
+  <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note">Menghapus jenis kartu ini akan menyebabkan satu atau lebih catatan terhapus. Harap membuat dahulu jenis kartu yang baru.</string>
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
   <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
