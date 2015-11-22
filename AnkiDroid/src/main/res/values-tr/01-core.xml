@@ -84,7 +84,7 @@
   <string name="rename_deck">Destenin adını değiştir</string>
   <string name="menu_add">Ekle</string>
   <string name="menu_add_note">Not ekle</string>
-  <string name="menu_my_account">Hesabı senkronize et</string>
+  <string name="menu_my_account">Senkronizasyon hesabı</string>
   <string name="menu_dismiss_note">Gizle / Sil</string>
   <string name="menu_bury_card">Kartı gizle</string>
   <string name="menu_bury_note">Notu Gizle</string>
@@ -124,7 +124,7 @@
   <string name="studyoptions_congrats_custom">Normal programın dışında çalışmak için, aşağıdaki Kişisel Çalışma düğmesine basın.</string>
   <string name="studyoptions_no_cards_due">Henüz çalışılacak kart yok.</string>
   <string name="sd_card_not_mounted">Cihaz hafızası takılı değil</string>
-  <string name="button_sync">Eşitle</string>
+  <string name="button_sync">Senkronize et</string>
   <string name="cancel_sync_confirm">Senkronizasyonu iptâl etmek istiyor musunuz?</string>
   <string name="continue_sync">Senkronizasyona devam et</string>
   <string name="sync_cancelled">Senkronizasyon iptâl edildi</string>
@@ -142,7 +142,7 @@
     <item quantity="one">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
     <item quantity="other">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
   </plurals>
-  <string name="invalid_template">A card could not be generated</string>
+  <string name="invalid_template">Bir kart oluşturulamadı</string>
   <string name="card_template_editor_would_delete_note"> Bu kart tipini kaldırmak bir veya daha fazla notun silinmesine neden olur. Lütfen önce yeni bir kart türü oluşturun.</string>
   <string name="read_write_permission_label">AnkiDroid veritabanını oku ve yaz</string>
   <string name="read_write_permission_description">Uygulamanın var olan notlara, kartlara, modellere ve destelere
