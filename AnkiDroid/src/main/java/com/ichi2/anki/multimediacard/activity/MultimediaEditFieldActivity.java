@@ -150,7 +150,9 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_edit_text, menu);
-
+        menu.findItem(R.id.multimedia_edit_field_to_text).setVisible(mField.getType() != EFieldType.TEXT);
+        menu.findItem(R.id.multimedia_edit_field_to_audio).setVisible(mField.getType() != EFieldType.AUDIO);
+        menu.findItem(R.id.multimedia_edit_field_to_image).setVisible(mField.getType() != EFieldType.IMAGE);
         return true;
     }
 
@@ -161,16 +163,19 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             case R.id.multimedia_edit_field_to_text:
                 Timber.i("To text field button pressed");
                 toTextField();
+                supportInvalidateOptionsMenu();
                 return true;
 
             case R.id.multimedia_edit_field_to_image:
                 Timber.i("To image button pressed");
                 toImageField();
+                supportInvalidateOptionsMenu();
                 return true;
 
             case R.id.multimedia_edit_field_to_audio:
                 Timber.i("To audio button pressed");
                 toAudioField();
+                supportInvalidateOptionsMenu();
                 return true;
 
             case R.id.multimedia_edit_field_done:
