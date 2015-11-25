@@ -77,11 +77,11 @@
   <string name="card_browser_font_size">ブラウザ用フォントサイズ調整</string>
   <string name="col_path">コレクションの保存先</string>
   <string name="fullscreen_review">フルスクリーンモード</string>
-  <string name="full_screen_off">Off</string>
-  <string name="full_screen_system">Hide the system bars</string>
-  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
-  <string name="gestures">ジェスチャー有効化</string>
+  <string name="full_screen_off">オフ</string>
+  <string name="full_screen_system">ステータスバー（通知領域）を表示しない</string>
+  <string name="full_screen_complete">ステータスバー（通知領域）と回答ボタンを表示しない</string>
+  <string name="full_screen_error_gestures">回答ボタンを非表示にするにはジェスチャーを有効にする必要があります</string>
+  <string name="gestures">ジェスチャーを有効にする</string>
   <string name="gestures_summ">回答やカード編集などの操作にジェスチャーを割り当てます</string>
   <string name="gestures_swipe_up">上にスワイプ</string>
   <string name="gestures_swipe_down">下にスワイプ</string>
