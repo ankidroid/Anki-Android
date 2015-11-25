@@ -1669,7 +1669,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
         // mDeckFilename = preferences.getString("deckFilename", "");
         mNightMode = preferences.getBoolean("invertedColors", false);
-        mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenReview", "0")) >0;
+        mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0")) >0;
         mCardZoom = preferences.getInt("cardZoom", 100);
         mImageZoom = preferences.getInt("imageZoom", 100);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);

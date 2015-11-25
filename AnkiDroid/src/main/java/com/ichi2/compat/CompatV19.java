@@ -45,7 +45,7 @@ public class CompatV19 extends CompatV16 implements Compat {
 
         // Show / hide the Action bar together with the status bar
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(a);
-        final int fullscreenMode = Integer.parseInt(prefs.getString("fullscreenReview", "0"));
+        final int fullscreenMode = Integer.parseInt(prefs.getString("fullscreenMode", "0"));
         View decorView = a.getWindow().getDecorView();
         decorView.setOnSystemUiVisibilityChangeListener
                 (new View.OnSystemUiVisibilityChangeListener() {
