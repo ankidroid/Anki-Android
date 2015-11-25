@@ -77,11 +77,12 @@
   <string name="card_browser_font_size">Dimensionamento de fonte do navegador de cartões</string>
   <string name="col_path">Caminho da coleção</string>
   <string name="fullscreen_review">Modo tela cheia</string>
-  <string name="fullscreen_review_summ">Ocultar a barra de status do sistema</string>
+  <string name="full_screen_off">Off</string>
+  <string name="full_screen_system">Hide the system bars</string>
+  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
+  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
   <string name="gestures">Habilitar gestos</string>
   <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar cartões.</string>
-  <string name="gestures_hide_answer_buttons">Ocultar botões de resposta</string>
-  <string name="gestures_hide_answer_buttons_summ">Não mostrar botões de resposta quando gestos estão habilitados</string>
   <string name="gestures_swipe_up">Deslizar para cima</string>
   <string name="gestures_swipe_down">Deslizar para baixo</string>
   <string name="gestures_swipe_left">Deslizar à esquerda</string>

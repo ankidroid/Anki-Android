@@ -116,7 +116,6 @@
   <string name="card_editor_preview_card">Anteprima</string>
   <string name="error_insufficient_memory">Operazione non possibile a causa di memoria insufficiente sul tuo dispositivo</string>
   <string name="rename">Rinomina</string>
-  <string name="rename_error">Mazzo %s potrebbe non essere rinominato</string>
   <string name="default_conf_delete_error">Il gruppo di opzioni predefinito non può essere rimosso</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d carta aggiunta</item>
@@ -190,4 +189,7 @@
     <item quantity="other">%s anni</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
+  <string name="decks_rename_exists">Quel mazzo esiste già.</string>
+  <string name="decks_rename_filtered_nosubdecks">Un mazzo filtrato non può avere sottomazzi.</string>
+  <string name="filtered_deck_name">Mazzo filtrato</string>
 </resources>

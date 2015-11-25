@@ -77,11 +77,12 @@
   <string name="card_browser_font_size">Schriftskalierung in der Kartenübersicht</string>
   <string name="col_path">Sammlungs-Pfad</string>
   <string name="fullscreen_review">Vollbildmodus</string>
-  <string name="fullscreen_review_summ">Ausblenden der Statusleiste</string>
+  <string name="full_screen_off">Off</string>
+  <string name="full_screen_system">Hide the system bars</string>
+  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
+  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
   <string name="gestures">Gesten aktivieren</string>
   <string name="gestures_summ">Weise Aktionen, wie zum Beispiel Beantworten oder Bearbeiten der Karten, Gesten zu.</string>
-  <string name="gestures_hide_answer_buttons">Antwortschaltflächen ausblenden</string>
-  <string name="gestures_hide_answer_buttons_summ">Antwortschaltflächen nicht anzeigen, wenn Gesten aktiviert sind</string>
   <string name="gestures_swipe_up">Nach oben wischen</string>
   <string name="gestures_swipe_down">Nach unten wischen</string>
   <string name="gestures_swipe_left">Nach links wischen</string>

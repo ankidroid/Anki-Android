@@ -2,7 +2,7 @@ Memorice calquera cousa con AkinDroid!
 
 AnkiDroid permíteche aprender tarxetas eficientemente amosándochas xusto antes de que as esquezas. É completamente compatible co software de repetición espaciada Anki (incluíndo a sincronización), dispoñible para Windows, Linux e MacOS.
 
-Study all sorts of things wherever and whenever you want. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
+Aprende todo tipo de cousas onde e cando queiras. Aproveita os tempos mortos nas viaxes no bus, na quenda do supermercado ou en calquera outra situación!
 
 Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available).
 
@@ -11,27 +11,27 @@ Add material through the desktop application Anki or directly through AnkiDroid.
 ★ Características principais:
 • supported flashcard contents: text, images, sounds, LaTeX
 • spaced repetition (supermemo 2 algorithm)
-• text-to-speech integration
+• integra síntese de voz
 • more than 6000 premade decks
-• progress widget
-• detailed statistics
-• syncing with AnkiWeb
-• open source
+• widget de progreso
+• estatísticas detalladas
+• sincronización con AnkiWeb
+• código aberto
 
 ★ características adicionais:
-• write answers (optional)
-• whiteboard
+• escribir as respostas (opcional)
+• encerado
 • card editor/adder
 • card browser
-• tablet layout
+• compatible con tabletas
 • import existing collection files (via Anki Desktop)
-• dictionary integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse web dictionaries)
+• integración con dicionarios (ColorDict, GoldenDict, Leo.org, Aedict, diversos dicionarios en liña)
 • add cards by intent from other applications like dictionaries
-• custom font support
+• soporte para fontes personalizadas
 • full backup system
-• navigation by swipe, tap
-• customisable
+• navegación tanto esvarando como tocando
+• personalizable
 • dynamic deck handling
 • night mode
-• 27 localisations
-• All previous AnkiDroid versions can be downloaded from the website
+• 27 idiomas
+• Todas as versións anteriores do AnkiDroid pódense baixar do sitio web

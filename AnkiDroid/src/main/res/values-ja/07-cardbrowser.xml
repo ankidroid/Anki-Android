@@ -50,8 +50,8 @@
   <string name="card_browser_unmark_card">マークを解除</string>
   <string name="delete_card_title">ノートの削除</string>
   <string name="delete_card_message">このノートから作られたカードを全て削除してもよろしいですか？\n検索フィールド: %s</string>
-  <string name="card_browser_show_marked">マーク付きカードの抽出</string>
-  <string name="card_browser_show_suspended">保留カードの抽出</string>
+  <string name="card_browser_show_marked">マーク付きカードを抽出</string>
+  <string name="card_browser_show_suspended">保留カードを抽出</string>
   <string name="card_browser_search_by_tag">タグによる抽出</string>
   <string name="card_browser_tags_shown">タグ: %1$s</string>
   <string name="card_browser_list_my_searches">マイ検索条件</string>
@@ -61,9 +61,9 @@
   <string name="card_browser_list_my_searches_new_search_error_empty_name">検索条件に名前をつけてください</string>
   <string name="card_browser_list_my_searches_new_search_error_dup">同じ名前が既に存在します</string>
   <string name="card_browser_list_my_searches_remove_content">「%1$s」を削除しますか？</string>
-  <string name="card_browser_change_display_order">表示順を変更する</string>
+  <string name="card_browser_change_display_order">表示順を変更</string>
   <string name="card_browser_change_display_order_title">表示順の選択</string>
-  <string name="card_browser_change_display_order_reverse">昇順、降順の切り替えは ▼(▲) をタップしてください</string>
+  <string name="card_browser_change_display_order_reverse">現在選択されている項目をタップすると、昇順 (▲)・降順 (▼) が切り替わります</string>
   <string name="card_details_question">質問</string>
   <string name="card_details_answer">解答</string>
   <string name="card_details_due">既に予定日時</string>

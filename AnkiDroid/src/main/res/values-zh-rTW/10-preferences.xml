@@ -77,11 +77,12 @@
   <string name="card_browser_font_size">卡片瀏覽器字體縮放</string>
   <string name="col_path">收藏路徑</string>
   <string name="fullscreen_review">全螢幕模式</string>
-  <string name="fullscreen_review_summ">隱藏系統狀態列</string>
+  <string name="full_screen_off">Off</string>
+  <string name="full_screen_system">Hide the system bars</string>
+  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
+  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
   <string name="gestures">開啓手勢</string>
   <string name="gestures_summ">替動作設定手勢，像是回答問題和編輯卡片。</string>
-  <string name="gestures_hide_answer_buttons">隱藏答案按鈕</string>
-  <string name="gestures_hide_answer_buttons_summ">開啓手勢時不要顯示答案按鈕</string>
   <string name="gestures_swipe_up">向上撥動</string>
   <string name="gestures_swipe_down">向下撥動</string>
   <string name="gestures_swipe_left">向左撥動</string>

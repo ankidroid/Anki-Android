@@ -114,7 +114,6 @@
   <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Operasi gagal kerana tahap memori pada peranti anda</string>
   <string name="rename">Ubah nama</string>
-  <string name="rename_error">Dek %s tidak dapat diganti namanya</string>
   <string name="default_conf_delete_error">Kelompok pilihan default tidak dapat dihapus</string>
   <plurals name="factadder_cards_added">
     <item quantity="other">%d cards added</item>
@@ -181,4 +180,7 @@
     <item quantity="other">%s years</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
+  <string name="decks_rename_exists">That deck already exists.</string>
+  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks.</string>
+  <string name="filtered_deck_name">Filtered Deck</string>
 </resources>

@@ -79,10 +79,10 @@
     <item>Falhas</item>
     <item>Revisões</item>
   </string-array>
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
+  <string name="custom_study_increase_new_limit">Aumentar o limite de novas fichas para hoje</string>
+  <string name="custom_study_increase_review_limit">Aumentar o limite de revisões para hoje</string>
   <string name="custom_study_review_forgotten">Rever fichas esquecidas</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
+  <string name="custom_study_review_ahead">Revisar antecipadamente</string>
   <string name="custom_study_random_selection">Estudar uma seleção aleatória de fichas</string>
   <string name="custom_study_preview_new">Pré-visualizar fichas novas</string>
   <string name="custom_study_limit_tags">Limit to particular tags</string>
@@ -116,7 +116,6 @@
   <string name="card_editor_preview_card">Pré-visualizar</string>
   <string name="error_insufficient_memory">Operação impossível devido a memória insuficiente no seu dispositivo</string>
   <string name="rename">Renomear</string>
-  <string name="rename_error">Não foi possível renomear o baralho %s</string>
   <string name="default_conf_delete_error">O grupo de opções predefinido não pode ser removido</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d ficha adicionada</item>
@@ -190,4 +189,7 @@
     <item quantity="other">%s anos</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
+  <string name="decks_rename_exists">Esse baralho já existe.</string>
+  <string name="decks_rename_filtered_nosubdecks">Um baralho filtrado não pode ter subbaralhos.</string>
+  <string name="filtered_deck_name">Baralho filtrado</string>
 </resources>

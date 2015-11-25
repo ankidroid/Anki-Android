@@ -114,7 +114,6 @@
   <string name="card_editor_preview_card">پیش نمایش</string>
   <string name="error_insufficient_memory">به علت عدم وجود حافظه کافی در دستگاه شما عملیات امکان پذیر نیست</string>
   <string name="rename">تغییر نام</string>
-  <string name="rename_error">نامگذاری مجدد دسته کارت %s ممکن نشد</string>
   <string name="default_conf_delete_error">امکان پاک کردن تنظیمات پیش فرض گروه نمی باشد</string>
   <plurals name="factadder_cards_added">
     <item quantity="other">%d cards added</item>
@@ -181,4 +180,7 @@
     <item quantity="other">%s years</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
+  <string name="decks_rename_exists">That deck already exists.</string>
+  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks.</string>
+  <string name="filtered_deck_name">Filtered Deck</string>
 </resources>

@@ -96,7 +96,7 @@
   <string name="sync_error_409">Sólo un cliente puede acceder AnkiWeb al mismo tiempo. Si una sincronización anterior falló, por favor, vuelve a intentarlo pasados unos minutos.</string>
   <string name="sync_write_access_error">No se pudo guardar el archivo descargado en la tarjeta sd. O bien la tarjeta sd está montada como de sólo lectura, o bien no hay suficiente espacio.</string>
   <string name="sync_deletions_message">Sincronizando elementos eliminados...</string>
-  <string name="sync_small_objects_message">Sincronizando objetos pequeños ...</string>
+  <string name="sync_small_objects_message">Sincronizando objetos pequeños&#8230;</string>
   <string name="sync_finish_message">Finalizando la sincronización...</string>
   <string name="sync_log_finish_error">Ocurrió un error al enviar la dirección de destino al servidor</string>
   <string name="sync_writing_db">Escribiendo los cambios en la base de datos...</string>

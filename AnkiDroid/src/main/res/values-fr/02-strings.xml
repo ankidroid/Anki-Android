@@ -116,7 +116,6 @@
   <string name="card_editor_preview_card">Aperçu</string>
   <string name="error_insufficient_memory">L’opération n’a pas pu être accomplie car votre appareil manque de mémoire disponible</string>
   <string name="rename">Renommer</string>
-  <string name="rename_error">Le paquet %s n\'a pas pu être renommé</string>
   <string name="default_conf_delete_error">Le groupe d’option par défaut ne peut pas être supprimé</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d carte ajoutée</item>
@@ -190,4 +189,7 @@
     <item quantity="other">%s ans</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
+  <string name="decks_rename_exists">That deck already exists.</string>
+  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks.</string>
+  <string name="filtered_deck_name">Filtered Deck</string>
 </resources>

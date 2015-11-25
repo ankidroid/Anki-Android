@@ -77,11 +77,12 @@
   <string name="card_browser_font_size">Skalowanie fontu przeglądania kart</string>
   <string name="col_path">Ścieżka kolekcji</string>
   <string name="fullscreen_review">Tryb pełnoekranowy</string>
-  <string name="fullscreen_review_summ">Ukryj systemowy pasek statusu</string>
+  <string name="full_screen_off">Off</string>
+  <string name="full_screen_system">Hide the system bars</string>
+  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
+  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
   <string name="gestures">Włącz obsługę gestów</string>
   <string name="gestures_summ">Przydziel gesty do akcji takich jak odpowiedzi lub edycja kart.</string>
-  <string name="gestures_hide_answer_buttons">Ukryj przyciski odpowiedzi</string>
-  <string name="gestures_hide_answer_buttons_summ">Gdy gesty są aktywne, nie pokazuj przycisków odpowiedzi</string>
   <string name="gestures_swipe_up">Przesuń w górę</string>
   <string name="gestures_swipe_down">Przesuń w dół</string>
   <string name="gestures_swipe_left">Przesuń w lewo</string>

@@ -116,7 +116,6 @@
   <string name="card_editor_preview_card">Vorschau</string>
   <string name="error_insufficient_memory">Vorgang wegen unzureichenden Gerätespeichers nicht möglich</string>
   <string name="rename">Umbenennen</string>
-  <string name="rename_error">Stapel »%s« konnte nicht umbenannt werden</string>
   <string name="default_conf_delete_error">Die Standard-Optionengruppe kann nicht gelöscht werden</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d Karte hinzugefügt</item>
@@ -190,4 +189,7 @@
     <item quantity="other">%s Jahre</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
+  <string name="decks_rename_exists">Diesen Stapel gibt es schon.</string>
+  <string name="decks_rename_filtered_nosubdecks">Ein gefilterter Stapel kann keine Unterstapel enthalten.</string>
+  <string name="filtered_deck_name">Gefilterter Stapel</string>
 </resources>

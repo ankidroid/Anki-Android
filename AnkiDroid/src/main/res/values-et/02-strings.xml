@@ -116,7 +116,6 @@
   <string name="card_editor_preview_card">Eelvaade</string>
   <string name="error_insufficient_memory">Tegevus pole võimalik seoses sinu seadme ebapiisava mäluga</string>
   <string name="rename">Nimeta ümber</string>
-  <string name="rename_error">Kaardipakki %s ei saanud ümber nimetada</string>
   <string name="default_conf_delete_error">The default options group can’t be removed</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d card added</item>
@@ -190,4 +189,7 @@
     <item quantity="other">%s years</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
+  <string name="decks_rename_exists">That deck already exists.</string>
+  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks.</string>
+  <string name="filtered_deck_name">Filtered Deck</string>
 </resources>

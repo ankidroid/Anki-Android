@@ -77,11 +77,12 @@
   <string name="card_browser_font_size">Величина фонта прегледача картица</string>
   <string name="col_path">Фасцикла са колекцијом</string>
   <string name="fullscreen_review">Пуноекрански режим</string>
-  <string name="fullscreen_review_summ">Сакриј системски део екрана</string>
+  <string name="full_screen_off">Off</string>
+  <string name="full_screen_system">Hide the system bars</string>
+  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
+  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
   <string name="gestures">Омогући гестове</string>
   <string name="gestures_summ">Додели гестове за дејства као одговарње и уређивање картица.</string>
-  <string name="gestures_hide_answer_buttons">Сакриј дугмад одговора</string>
-  <string name="gestures_hide_answer_buttons_summ">Не приказуј дугмад одговора када су покрети омогућени</string>
   <string name="gestures_swipe_up">Пребацити горе</string>
   <string name="gestures_swipe_down">Пребацити доле</string>
   <string name="gestures_swipe_left">Пребацити лево</string>

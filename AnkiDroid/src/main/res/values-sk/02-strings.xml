@@ -118,7 +118,6 @@
   <string name="card_editor_preview_card">Náhľad</string>
   <string name="error_insufficient_memory">Operáciu nie je možné vykonať pre nedostatok pamäte vo vašom prístroji</string>
   <string name="rename">Premenovať</string>
-  <string name="rename_error">Balíček %s nebolo možné premenovať</string>
   <string name="default_conf_delete_error">Predvolenú skupinu nastavení nie je možné odstrániť</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d pridaná karta</item>
@@ -199,4 +198,7 @@
     <item quantity="other">%s rokov</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
+  <string name="decks_rename_exists">That deck already exists.</string>
+  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks.</string>
+  <string name="filtered_deck_name">Filtered Deck</string>
 </resources>
