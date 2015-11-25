@@ -907,7 +907,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (previousVersionCode < 20500219) {
             // clear fullscreen flag as we use a integer
             boolean old =preferences.getBoolean("fullscreenReview", false);
-            preferences.edit().putString("fullscreenReview", old ? "1": "0").commit();
+            preferences.edit().putString("fullscreenMode", old ? "1": "0").commit();
         }
     }
 

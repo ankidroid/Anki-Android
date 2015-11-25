@@ -242,7 +242,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 screen = listener.getPreferenceScreen();
                 // Show error toast if the user tries to disable answer button without gestures on
                 ListPreference fullscreenPreference = (ListPreference)
-                        screen.findPreference("fullscreenReview");
+                        screen.findPreference("fullscreenMode");
                 fullscreenPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
                     public boolean onPreferenceChange(Preference preference, final Object newValue) {
                         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(Preferences.this);
