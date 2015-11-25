@@ -253,8 +253,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private Chronometer mCardTimer;
     protected Whiteboard mWhiteboard;
     private ClipboardManager mClipboard;
-    private MaterialDialog mProgressDialog;
-    private ProgressBar mProgressBar;
 
     protected Card mCurrentCard;
     private int mCurrentEase;
@@ -476,17 +474,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public DeckTask.TaskListener mMarkCardHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
-            Resources res = getResources();
-            mProgressDialog = StyledProgressDialog.show(AbstractFlashcardViewer.this, "",
-                    res.getString(R.string.saving_changes), false);
+            showProgressBar();
         }
 
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-            if (mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();
-            }
+            hideProgressBar();
         }
 
 
@@ -538,13 +532,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public void onPreExecute() {
-            Resources res = getResources();
-            try {
-                mProgressDialog = StyledProgressDialog.show(AbstractFlashcardViewer.this, "",
-                        res.getString(R.string.saving_changes), false);
-            } catch (IllegalArgumentException e) {
-                Timber.e(e, "AbstractReviewer: Error on showing progress dialog");
-            }
+            showProgressBar();
         }
 
 
@@ -563,8 +551,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
                 mNoMoreCards = true;
-                mProgressDialog = StyledProgressDialog.show(AbstractFlashcardViewer.this, "",
-                        getResources().getString(R.string.saving_changes), false);
+                showProgressBar();
                 return;
             }
             if (mPrefWhiteboard && mWhiteboard != null) {
@@ -583,14 +570,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 displayCardQuestion();
                 initTimer();
             }
-            try {
-                if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                    mProgressDialog.dismiss();
-                }
-            } catch (IllegalArgumentException e) {
-                Timber.e(e, "AbstractReviewer: Error on dismissing progress dialog");
-                mProgressDialog = null;
-            }
+            hideProgressBar();
         }
 
 
@@ -618,7 +598,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public void onPreExecute() {
-            mProgressBar.setVisibility(View.VISIBLE);
+            showProgressBar();
             blockControls();
         }
 
@@ -637,12 +617,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
                 mNoMoreCards = true;
-                mProgressDialog = StyledProgressDialog.show(AbstractFlashcardViewer.this, "",
-                        getResources().getString(R.string.saving_changes), false);
             } else {
                 // Start reviewing next card
                 updateTypeAnswerInfo();
-                mProgressBar.setVisibility(View.INVISIBLE);
+                hideProgressBar();
                 AbstractFlashcardViewer.this.unblockControls();
                 AbstractFlashcardViewer.this.displayCardQuestion();
             }
@@ -664,10 +642,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 Themes.showThemedToast(AbstractFlashcardViewer.this, timeboxMessage, true);
                 getCol().startTimebox();
             }
-
-            // if (mChosenAnswer.getText().equals("")) {
-            // setDueMessage();
-            // }
         }
 
 
@@ -683,11 +657,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             if (mNoMoreCards) {
                 closeReviewer(RESULT_NO_MORE_CARDS, true);
             }
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();
-            }
+            hideProgressBar();
             // set the correct mark/unmark icon on action bar
             refreshActionBar();
+            findViewById(R.id.root_layout).requestFocus();
         }
 
 
@@ -1208,12 +1181,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     protected void undo() {
         if (getCol().undoAvailable()) {
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                mProgressDialog.setContent(getResources().getString(R.string.saving_changes));
-            } else {
-                mProgressDialog = StyledProgressDialog.show(AbstractFlashcardViewer.this, "",
-                        getResources().getString(R.string.saving_changes), false);
-            }
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mAnswerCardHandler);
         }
     }
@@ -1390,10 +1357,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         // Initialize swipe
         gestureDetector = new GestureDetector(new MyGestureDetector());
-
-        mProgressBar = (ProgressBar) findViewById(R.id.flashcard_progressbar);
-
-        Resources res = getResources();
 
         mEase1 = (TextView) findViewById(R.id.ease1);
         mEase1.setTypeface(TypefaceHelper.get(this, "Roboto-Medium"));
