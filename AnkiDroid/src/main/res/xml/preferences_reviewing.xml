@@ -61,7 +61,7 @@
             android:title="@string/pref_keep_screen_on" />
         <ListPreference
             android:defaultValue="false"
-            android:key="fullscreenReview"
+            android:key="fullscreenMode"
             android:summary=""
             android:entries="@array/full_screen_mode_labels"
             android:entryValues="@array/full_screen_mode_values"

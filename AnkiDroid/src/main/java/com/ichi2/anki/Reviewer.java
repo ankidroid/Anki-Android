@@ -320,7 +320,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         super.restorePreferences();
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
-        mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenReview", "0")) >0;
+        mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0")) >0;
         return preferences;
     }
 
