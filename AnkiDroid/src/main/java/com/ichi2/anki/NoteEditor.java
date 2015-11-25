@@ -124,8 +124,7 @@ public class NoteEditor extends AnkiActivity {
     public static final int CALLER_CARDBROWSER_ADD = 7;
 
     public static final int CALLER_CARDEDITOR = 8;
-    public static final int CALLER_CARDEDITOR_INTENT_ADD = 9;
-    public static final int CALLER_INDICLASH = 10;
+    public static final int CALLER_CARDEDITOR_INTENT_ADD = 10;
 
     public static final int REQUEST_ADD = 0;
     public static final int REQUEST_MULTIMEDIA_EDIT = 2;
@@ -300,7 +299,7 @@ public class NoteEditor extends AnkiActivity {
                 String action = intent.getAction();
                 if (action != null
                         && (ACTION_CREATE_FLASHCARD.equals(action) || ACTION_CREATE_FLASHCARD_SEND.equals(action))) {
-                    mCaller = CALLER_INDICLASH;
+                    mCaller = CALLER_CARDEDITOR_INTENT_ADD;
                 }
             }
         }
@@ -401,10 +400,6 @@ public class NoteEditor extends AnkiActivity {
                 break;
 
             case CALLER_CARDEDITOR_INTENT_ADD:
-                mAddNote = true;
-                break;
-
-            case CALLER_INDICLASH:
                 fetchIntentInformation(intent);
                 if (mSourceText == null) {
                     finishWithoutAnimation();
@@ -969,10 +964,7 @@ public class NoteEditor extends AnkiActivity {
         } else {
             setResult(result);
         }
-
         if (mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
-            finishWithAnimation(ActivityTransitionAnimation.FADE);
-        } else if (mCaller == CALLER_INDICLASH) {
             finishWithAnimation(ActivityTransitionAnimation.NONE);
         } else {
             finishWithAnimation(ActivityTransitionAnimation.RIGHT);
