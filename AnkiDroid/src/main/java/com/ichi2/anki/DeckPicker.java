@@ -443,7 +443,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         });
 
         mTodayTextView = (TextView) findViewById(R.id.today_stats_text_view);
-        final Resources res = getResources();
 
         mTodayTextView = (TextView) findViewById(R.id.today_stats_text_view);
         if (! CollectionHelper.hasStorageAccessPermission(this)) {
@@ -888,42 +887,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void upgradePreferences(int previousVersionCode) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        // when upgrading from before 2.1alpha08
-        if (previousVersionCode < 20100108) {
-            preferences.edit().putString("overrideFont", preferences.getString("defaultFont", "")).commit();
-            preferences.edit().putString("defaultFont", "").commit();
-        }
-        // when upgrading from before 2.2alpha66
-        if (previousVersionCode < 20200166) {
-            // change name from swipe to gestures
-            preferences.edit().putInt("swipeSensitivity", preferences.getInt("swipeSensibility", 100)).commit();
-            preferences.edit().putBoolean("gestures", preferences.getBoolean("swipe", false)).commit();
-            // set new safeDisplayMode preference based on old behavior
-            boolean safeDisplayMode = preferences.getBoolean("eInkDisplay", false) || CompatHelper.isNook()
-                    || !preferences.getBoolean("forceQuickUpdate", false);
-            preferences.edit().putBoolean("safeDisplay", safeDisplayMode).commit();
-            // set overrideFontBehavior based on old overrideFont settings
-            String overrideFont = preferences.getString("overrideFont", "");
-            if (!overrideFont.equals("")) {
-                preferences.edit().putString("defaultFont", overrideFont).commit();
-                preferences.edit().putString("overrideFontBehavior", "1").commit();
-            } else {
-                preferences.edit().putString("overrideFontBehavior", "0").commit();
-            }
-            // change typed answers setting from enable to disable
-            preferences.edit().putBoolean("writeAnswersDisable", !preferences.getBoolean("writeAnswers", true))
-                    .commit();
-        }
-        // when upgrading from before 2.3alpha30
+        // clear all prefs if super old version to prevent any errors
         if (previousVersionCode < 20300130) {
-            // Increase default number of backups
-            preferences.edit().putInt("backupMax", 8).commit();
+            preferences.edit().clear().commit();
         }
-        // reset swipeSensitivity from 2.4beta3
-        if (previousVersionCode < 20400203) {
-            preferences.edit().putInt("swipeSensitivity", 100).commit();
-        }
-
         // when upgrading from before 2.5alpha35
         if (previousVersionCode < 20500135) {
             // Card zooming behaviour was changed the preferences renamed
@@ -936,6 +903,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
             preferences.edit().remove("useBackup").commit();
             preferences.edit().remove("intentAdditionInstantAdd").commit();
+        }
+        if (previousVersionCode < 20500219) {
+            // clear fullscreen flag as we use a integer
+            boolean old =preferences.getBoolean("fullscreenReview", false);
+            preferences.edit().putString("fullscreenReview", old ? "1": "0").commit();
         }
     }
 

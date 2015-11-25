@@ -192,7 +192,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mDoubleScrolling;
     private boolean mScrollingButtons;
     private boolean mGesturesEnabled;
-    private boolean mHideAnswerButtons;
     // Android WebView
     private boolean mSpeakText;
     protected boolean mDisableClipboard = false;
@@ -1394,10 +1393,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mNext4.setVisibility(View.GONE);
         }
 
-        if (mHideAnswerButtons) {
-            findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
-        }
-
         mFlipCard = (Button) findViewById(R.id.flip_card);
         mFlipCard.setTypeface(TypefaceHelper.get(this, "Roboto-Medium"));
         mFlipCardLayout = (LinearLayout) findViewById(R.id.flashcard_layout_flip);
@@ -1674,7 +1669,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
         // mDeckFilename = preferences.getString("deckFilename", "");
         mNightMode = preferences.getBoolean("invertedColors", false);
-        mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", false);
+        mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenReview", "0")) >0;
         mCardZoom = preferences.getInt("cardZoom", 100);
         mImageZoom = preferences.getInt("imageZoom", 100);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
@@ -1690,7 +1685,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
         if (mGesturesEnabled) {
-            mHideAnswerButtons = preferences.getBoolean("hideAnswerButtons", false);
             mGestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
             mGestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
             mGestureSwipeLeft = Integer.parseInt(preferences.getString("gestureSwipeLeft", "8"));
