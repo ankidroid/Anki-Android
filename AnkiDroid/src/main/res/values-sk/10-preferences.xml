@@ -77,11 +77,12 @@
   <string name="card_browser_font_size">Veľkosť písma v prehliadači kariet</string>
   <string name="col_path">Umiestnenie zbierky</string>
   <string name="fullscreen_review">Celoobrazovkový režim</string>
-  <string name="fullscreen_review_summ">Skryť stavový riadok systému</string>
+  <string name="full_screen_off">Off</string>
+  <string name="full_screen_system">Hide the system bars</string>
+  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
+  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
   <string name="gestures">Povoliť gestá</string>
   <string name="gestures_summ">Prideliť gestá k akciám ako sú odpoveď či editovanie kariet.</string>
-  <string name="gestures_hide_answer_buttons">Skryť tlačidlá s odpoveďami</string>
-  <string name="gestures_hide_answer_buttons_summ">Neukázať tlačidlá s odpoveďami, keď sú povolené gestá</string>
   <string name="gestures_swipe_up">Posun hore</string>
   <string name="gestures_swipe_down">Posun dole</string>
   <string name="gestures_swipe_left">Posun doľava</string>

@@ -116,7 +116,6 @@
   <string name="card_editor_preview_card">Pré-visualização</string>
   <string name="error_insufficient_memory">Operação impossível devido a memória insuficiente no dispositivo</string>
   <string name="rename">Renomear</string>
-  <string name="rename_error">Baralho \"%s\" não pôde ser renomeado</string>
   <string name="default_conf_delete_error">O grupo de opções padrão não pode ser removido</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d cartão adicionado</item>
@@ -190,4 +189,7 @@
     <item quantity="other">%s anos</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
+  <string name="decks_rename_exists">Esse baralho já existe.</string>
+  <string name="decks_rename_filtered_nosubdecks">Um baralho filtrado não pode ter sub-baralhos.</string>
+  <string name="filtered_deck_name">Baralho filtrado</string>
 </resources>

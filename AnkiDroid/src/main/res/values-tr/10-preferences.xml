@@ -77,11 +77,12 @@
   <string name="card_browser_font_size">Kart tarayıcısı font ölçeği</string>
   <string name="col_path">Koleksiyon yolu</string>
   <string name="fullscreen_review">Tamekran modu</string>
-  <string name="fullscreen_review_summ">Sistem durum çubuğunu gizle</string>
+  <string name="full_screen_off">Off</string>
+  <string name="full_screen_system">Hide the system bars</string>
+  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
+  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
   <string name="gestures">Jestleri etkinleştir</string>
   <string name="gestures_summ">Cevap verme ve kart düzenleme gibi eylemlere jestler ata.</string>
-  <string name="gestures_hide_answer_buttons">Cevap düğmelerini gizle</string>
-  <string name="gestures_hide_answer_buttons_summ">Jestler açıkken cevap düğmelerini gösterme</string>
   <string name="gestures_swipe_up">Yukarı sürükleme</string>
   <string name="gestures_swipe_down">Aşağı sürükleme</string>
   <string name="gestures_swipe_left">Sola sürükleme</string>

@@ -77,11 +77,12 @@
   <string name="card_browser_font_size">Card browser font scaling</string>
   <string name="col_path">Ruta da colección</string>
   <string name="fullscreen_review">Modo pantalla completa</string>
-  <string name="fullscreen_review_summ">Hide the system status bar</string>
+  <string name="full_screen_off">Off</string>
+  <string name="full_screen_system">Hide the system bars</string>
+  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
+  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
   <string name="gestures">Activar xestos</string>
   <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
-  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
-  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">Esvarar cara arriba</string>
   <string name="gestures_swipe_down">Evarar cara abaixo</string>
   <string name="gestures_swipe_left">Esvara á esquerda</string>

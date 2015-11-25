@@ -77,11 +77,12 @@
   <string name="card_browser_font_size">Escalado de fuentes del explorador de tarjetas</string>
   <string name="col_path">Directorio de la colección</string>
   <string name="fullscreen_review">Pantalla completa</string>
-  <string name="fullscreen_review_summ">Ocultar la barra de estado del sistema</string>
+  <string name="full_screen_off">Off</string>
+  <string name="full_screen_system">Hide the system bars</string>
+  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
+  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
   <string name="gestures">Habilitar gestos</string>
   <string name="gestures_summ">Asignar gestos a acciones tales como contestar o editar tarjetas.</string>
-  <string name="gestures_hide_answer_buttons">Ocultar los botones de respuesta</string>
-  <string name="gestures_hide_answer_buttons_summ">No mostrar los botones de respuesta cuando los gestos están habilitados</string>
   <string name="gestures_swipe_up">Deslizar hacia arriba</string>
   <string name="gestures_swipe_down">Deslizar hacia abajo</string>
   <string name="gestures_swipe_left">Deslizar hacia la izquierda</string>

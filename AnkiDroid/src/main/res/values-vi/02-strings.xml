@@ -114,7 +114,6 @@
   <string name="card_editor_preview_card">Xem lại</string>
   <string name="error_insufficient_memory">Không thể thao tác vì không đủ bộ nhớ trên thiết bị của bạn</string>
   <string name="rename">Đổi tên</string>
-  <string name="rename_error">Không thể đổi tên tập thẻ %s</string>
   <string name="default_conf_delete_error">Nhóm tùy chọn mặc định không thể được gỡ bỏ</string>
   <plurals name="factadder_cards_added">
     <item quantity="other">%d cards added</item>
@@ -181,4 +180,7 @@
     <item quantity="other">%s years</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
+  <string name="decks_rename_exists">That deck already exists.</string>
+  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks.</string>
+  <string name="filtered_deck_name">Filtered Deck</string>
 </resources>

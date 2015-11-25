@@ -77,11 +77,12 @@
   <string name="card_browser_font_size">Velikost písma v prohlížení</string>
   <string name="col_path">Cesta ke kolekci</string>
   <string name="fullscreen_review">Celoobrazovkový režim</string>
-  <string name="fullscreen_review_summ">Skrýt stavový řádek systému</string>
+  <string name="full_screen_off">Off</string>
+  <string name="full_screen_system">Hide the system bars</string>
+  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
+  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
   <string name="gestures">Povolit gesta</string>
   <string name="gestures_summ">Přiřazení gest jednotlivým akcím.</string>
-  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
-  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">Tažení nahoru</string>
   <string name="gestures_swipe_down">Tažení dolů</string>
   <string name="gestures_swipe_left">Tažení doleva</string>

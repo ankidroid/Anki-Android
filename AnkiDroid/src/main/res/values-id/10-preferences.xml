@@ -77,11 +77,12 @@
   <string name="card_browser_font_size">Kartu browser penskalaan huruf</string>
   <string name="col_path">Koleksi jalur</string>
   <string name="fullscreen_review">Mode layar penuh</string>
-  <string name="fullscreen_review_summ">Sembunyikan sistem status bar</string>
+  <string name="full_screen_off">Off</string>
+  <string name="full_screen_system">Hide the system bars</string>
+  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
+  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
   <string name="gestures">Aktifkan gerakan</string>
   <string name="gestures_summ">Menetapkan gerakan-gerakan menjadi tindakan-tindakan seperti menjawab dan mengedit kartu-kartu.</string>
-  <string name="gestures_hide_answer_buttons">Hide answer buttons</string>
-  <string name="gestures_hide_answer_buttons_summ">Don’t show answer buttons when gestures are enabled</string>
   <string name="gestures_swipe_up">Sapu ke atas</string>
   <string name="gestures_swipe_down">Sapu ke bawah</string>
   <string name="gestures_swipe_left">Sapu ke kiri</string>

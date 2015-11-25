@@ -77,11 +77,12 @@
   <string name="card_browser_font_size">Tamany de lletra al cercador de targetes</string>
   <string name="col_path">Camí de la col·lecció</string>
   <string name="fullscreen_review">Mode de pantalla completa</string>
-  <string name="fullscreen_review_summ">Amaga la barra d\'estat de sistema</string>
+  <string name="full_screen_off">Off</string>
+  <string name="full_screen_system">Hide the system bars</string>
+  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
+  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
   <string name="gestures">Activa gestos</string>
   <string name="gestures_summ">Assignar gestos a accions com cartes de resposta i d\'edició.</string>
-  <string name="gestures_hide_answer_buttons">Amagar els botons de resposta</string>
-  <string name="gestures_hide_answer_buttons_summ">No mostri els botons de resposta quan estan habilitats els gestos</string>
   <string name="gestures_swipe_up">Passeu el dit cap amunt</string>
   <string name="gestures_swipe_down">Passeu el dit cap a sota</string>
   <string name="gestures_swipe_left">Passseu el dit cap a l\'esquerra</string>

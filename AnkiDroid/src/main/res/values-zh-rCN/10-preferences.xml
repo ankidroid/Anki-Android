@@ -77,11 +77,12 @@
   <string name="card_browser_font_size">卡片浏览器字体缩放</string>
   <string name="col_path">集合的路径</string>
   <string name="fullscreen_review">全屏显示</string>
-  <string name="fullscreen_review_summ">隐藏系统状态栏</string>
+  <string name="full_screen_off">Off</string>
+  <string name="full_screen_system">Hide the system bars</string>
+  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
+  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
   <string name="gestures">启用手势</string>
   <string name="gestures_summ">为回答或编辑卡片等动作指定手势。</string>
-  <string name="gestures_hide_answer_buttons">隐藏回答按钮</string>
-  <string name="gestures_hide_answer_buttons_summ">当启用手势时不显示回答按钮</string>
   <string name="gestures_swipe_up">向上滑动</string>
   <string name="gestures_swipe_down">向下滑动</string>
   <string name="gestures_swipe_left">向左滑动</string>
