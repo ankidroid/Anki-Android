@@ -239,6 +239,22 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 break;
             case "com.ichi2.anki.prefs.reviewing":
                 listener.addPreferencesFromResource(R.xml.preferences_reviewing);
+                screen = listener.getPreferenceScreen();
+                // Show error toast if the user tries to disable answer button without gestures on
+                ListPreference fullscreenPreference = (ListPreference)
+                        screen.findPreference("fullscreenReview");
+                fullscreenPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+                    public boolean onPreferenceChange(Preference preference, final Object newValue) {
+                        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(Preferences.this);
+                        if (prefs.getBoolean("gestures", false) || !newValue.equals("2")) {
+                            return true;
+                        } else {
+                            Toast.makeText(getApplicationContext(),
+                                    R.string.full_screen_error_gestures, Toast.LENGTH_LONG).show();
+                            return false;
+                        }
+                    }
+                });
                 break;
             case "com.ichi2.anki.prefs.fonts":
                 listener.addPreferencesFromResource(R.xml.preferences_fonts);

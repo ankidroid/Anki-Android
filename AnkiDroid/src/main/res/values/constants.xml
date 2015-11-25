@@ -153,4 +153,15 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+    <string-array name="full_screen_mode_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="full_screen_mode_labels">
+        <item>@string/full_screen_off</item>
+        <item>@string/full_screen_system</item>
+        <item>@string/full_screen_complete</item>
+    </string-array>
+
 </resources>
