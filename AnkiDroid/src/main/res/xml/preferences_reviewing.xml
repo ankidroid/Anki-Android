@@ -59,10 +59,12 @@
             android:key="keepScreenOn"
             android:summary="@string/pref_keep_screen_on_summ"
             android:title="@string/pref_keep_screen_on" />
-        <CheckBoxPreference
+        <ListPreference
             android:defaultValue="false"
             android:key="fullscreenReview"
-            android:summary="@string/fullscreen_review_summ"
+            android:summary=""
+            android:entries="@array/full_screen_mode_labels"
+            android:entryValues="@array/full_screen_mode_values"
             android:title="@string/fullscreen_review" />
         <CheckBoxPreference
             android:defaultValue="false"
