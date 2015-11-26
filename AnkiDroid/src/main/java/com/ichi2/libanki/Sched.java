@@ -326,16 +326,6 @@ public class Sched {
         }
     }
 
-    /**
-     * NOT in libanki. Convenience method that calls extendLimits() using specified did
-     */
-    public void extendLimitsForDeck(int newc, int rev, long did) {
-        long oldDid = mCol.getDecks().selected();
-        mCol.getDecks().select(did);
-        extendLimits(newc, rev);
-        mCol.getDecks().select(oldDid);
-    }
-
 
     private int _walkingCount(Method limFn, Method cntFn) {
         int tot = 0;

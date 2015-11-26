@@ -95,6 +95,8 @@ public class CustomStudyDialog extends DialogFragment {
         super.onCreate(savedInstanceState);
         final int dialogId = getArguments().getInt("id");
         if (dialogId < 100) {
+            // Select the specified deck
+            CollectionHelper.getInstance().getCol(getActivity()).getDecks().select(getArguments().getLong("did"));
             return buildContextMenu(dialogId);
         } else {
             return buildInputDialog(dialogId);
@@ -123,7 +125,7 @@ public class CustomStudyDialog extends DialogFragment {
                             case DECK_OPTIONS: {
                                 // User asked to permanently change the deck options
                                 Intent i = new Intent(activity, DeckOptions.class);
-                                i.putExtra("did", activity.getCol().getDecks().selected());
+                                i.putExtra("did", getArguments().getLong("did"));
                                 getActivity().startActivity(i);
                                 break;
                             }
@@ -235,7 +237,7 @@ public class CustomStudyDialog extends DialogFragment {
                                     JSONObject deck = col.getDecks().get(did);
                                     deck.put("extendNew", n);
                                     col.getDecks().save(deck);
-                                    col.getSched().extendLimitsForDeck(n, 0, did);
+                                    col.getSched().extendLimits(n, 0);
                                     onLimitsExtended(jumpToReviewer);
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
@@ -247,7 +249,7 @@ public class CustomStudyDialog extends DialogFragment {
                                     JSONObject deck = col.getDecks().get(did);
                                     deck.put("extendRev", n);
                                     col.getDecks().save(deck);
-                                    col.getSched().extendLimitsForDeck(0, n, did);
+                                    col.getSched().extendLimits(0, n);
                                     onLimitsExtended(jumpToReviewer);
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
