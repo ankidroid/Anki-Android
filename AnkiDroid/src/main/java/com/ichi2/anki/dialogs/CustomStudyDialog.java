@@ -212,6 +212,8 @@ public class CustomStudyDialog extends DialogFragment {
         // Give EditText focus and show keyboard
         mEditText.setSelectAllOnFocus(true);
         mEditText.requestFocus();
+        // deck id
+        final long did = getArguments().getLong("did");
         // Whether or not to jump straight to the reviewer
         final boolean jumpToReviewer = getArguments ().getBoolean("jumpToReviewer");
         // Set builder parameters
@@ -230,10 +232,10 @@ public class CustomStudyDialog extends DialogFragment {
                             case CUSTOM_STUDY_NEW:
                                 try {
                                     AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendNew", n).commit();
-                                    JSONObject deck = col.getDecks().current();
+                                    JSONObject deck = col.getDecks().get(did);
                                     deck.put("extendNew", n);
                                     col.getDecks().save(deck);
-                                    col.getSched().extendLimits(n, 0);
+                                    col.getSched().extendLimitsForDeck(n, 0, did);
                                     onLimitsExtended(jumpToReviewer);
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
@@ -242,10 +244,10 @@ public class CustomStudyDialog extends DialogFragment {
                             case CUSTOM_STUDY_REV:
                                 try {
                                     AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendRev", n).commit();
-                                    JSONObject deck = col.getDecks().current();
+                                    JSONObject deck = col.getDecks().get(did);
                                     deck.put("extendRev", n);
                                     col.getDecks().save(deck);
-                                    col.getSched().extendLimits(0, n);
+                                    col.getSched().extendLimitsForDeck(0, n, did);
                                     onLimitsExtended(jumpToReviewer);
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
