@@ -4,6 +4,7 @@ package com.ichi2.compat;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,10 +13,12 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.RemoteViews;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiActivity;
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
@@ -27,6 +30,8 @@ import timber.log.Timber;
 /** Implementation of {@link Compat} for SDK level 7 */
 @TargetApi(10)
 public class CompatV10 implements Compat {
+    protected static final int FULLSCREEN_ALL_GONE = 2;
+
     /*
      *  Return the input string in a form suitable for display on a HTML page. Replace “<”, “>”, “&”, “"” and “'” with
      *  HTML entities.
@@ -88,9 +93,13 @@ public class CompatV10 implements Compat {
     }
 
     @Override
-    public void setFullScreen(AbstractFlashcardViewer activity) {
-        activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    public void setFullScreen(AbstractFlashcardViewer a) {
+        a.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        final int fullscreenMode = Integer.parseInt(AnkiDroidApp.getSharedPrefs(a).getString("fullscreenMode", "0"));
+        if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
+            final LinearLayout answerButtons = (LinearLayout) a.findViewById(R.id.answer_options_layout);
+            answerButtons.setVisibility(View.GONE);
+        }
     }
 
 
