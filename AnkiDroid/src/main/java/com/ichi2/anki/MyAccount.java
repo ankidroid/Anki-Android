@@ -273,60 +273,6 @@ public class MyAccount extends AnkiActivity {
         }
     };
 
-    Connection.TaskListener registerListener = new Connection.TaskListener() {
-
-        @Override
-        public void onProgressUpdate(Object... values) {
-            // Pass
-        }
-
-
-        @Override
-        public void onPreExecute() {
-            Timber.d("registerListener.onPreExcecute()");
-            if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-                mProgressDialog = StyledProgressDialog.show(MyAccount.this, "",
-                        getResources().getString(R.string.registering_message), false);
-            }
-        }
-
-
-        @Override
-        public void onPostExecute(Payload data) {
-            if (mProgressDialog != null) {
-                mProgressDialog.dismiss();
-            }
-
-            if (data.success) {
-                Timber.i("User successfully registered!");
-                saveUserInformation((String) data.data[0], (String) data.data[1]);
-
-                Intent i = MyAccount.this.getIntent();
-                if (i.hasExtra("notLoggedIn") && i.getExtras().getBoolean("notLoggedIn", false)) {
-                    MyAccount.this.setResult(RESULT_OK, i);
-                    finishWithAnimation(ActivityTransitionAnimation.FADE);
-                } else {
-                    // Show logged view
-                    mUsernameLoggedIn.setText((String) data.data[0]);
-                    setContentView(mLoggedIntoMyAccountView);
-                }
-            } else {
-                String title = getResources().getString(R.string.register_title);
-                String msg = getResources().getString(R.string.register_error);
-                if (data.data != null) {
-                    msg = ((String[]) data.data)[0];
-                }
-                showSimpleMessageDialog(title, msg);
-                Timber.e("User registration failed: %s", msg);
-            }
-        }
-
-        @Override
-        public void onDisconnected() {
-            showSimpleSnackbar(R.string.youre_offline, true);
-        }
-    };
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
