@@ -111,6 +111,7 @@
     <color name="material_grey_600">#ff757575</color>
     <color name="material_grey_700">#ff616161</color>
     <color name="material_grey_800">#ff424242</color>
+    <color name="material_grey_900">#ff212121</color>
 
     <color name="material_red_200">#ffef9a9a</color>
     <color name="material_red_300">#ffE57373</color>
@@ -158,7 +159,7 @@
     <color name="theme_primary">@color/material_light_blue_500</color>
     <color name="theme_primary_dark">@color/material_light_blue_700</color>
     <color name="theme_primary_light">@color/material_light_blue_100</color>
-    <color name="theme_primary_light_inv">@color/material_grey_700</color>
+    <color name="theme_primary_light_inv">@color/material_grey_800</color>
     <color name="theme_accent">@color/material_blue_grey_700</color>
 
     <color name="fab_normal">@color/material_light_blue_500</color>
