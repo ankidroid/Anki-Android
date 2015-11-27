@@ -59,7 +59,6 @@
   <string name="log_in">登入</string>
   <string name="sign_up_description">沒有 AnkiWeb 帳戶嗎？它是免費的！</string>
   <string name="sign_up">註冊</string>
-  <string name="sign_up_terms">點選<i>註冊</i>後，表示您已經閱讀且同意我們的<a href="https://ankiweb.net/account/terms">使用條款</a>.</string>
   <string name="logged_as">登入為</string>
   <string name="log_out">登出</string>
   <string name="alert_logging_message">正在登入，請稍候...</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">媒體檔案同步完成，不過媒體檔數量與伺服器上的不相等。下次將進行完整同步來更正這問題。</string>
   <string name="sync_media_error">同步媒體資料時出錯。</string>
   <string name="sync_media_error_check">同步媒體檔時發生錯誤。建議進行一次媒體檢查。</string>
-  <string name="register_error">出現了一個錯誤。請稍後再試一次。</string>
-  <string name="register_title">註冊帳號</string>
-  <string name="register_mismatch">再次輸入的用戶名稱或密碼不符，或者是欄位空的。請重新輸入。</string>
-  <string name="registering_message">建立帳號中\n請稍後...</string>
   <string name="sync_sanity_local">本機</string>
   <string name="sync_sanity_remote">遠端</string>
   <string name="force_full_sync_title">強制完整同步</string>

@@ -53,7 +53,7 @@
   <string name="add_tag">Add tag</string>
   <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">Filter tags</string>
-  <string name="no_tags">You haven’t added any tags yet.</string>
+  <string name="no_tags">You haven’t added any tags yet</string>
   <string name="sdcard_missing_message">Cardul SD este indisponibil, deoarece acesta este utilizat ca unitate de stocare USB. Deconectaţi portul USB pentru a accesa pachetele Anki.</string>
   <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Enable whiteboard</string>
@@ -162,7 +162,7 @@
   <string name="steps_error">Măsurile trebuie să fie numere mai mari decât 0</string>
   <string name="steps_min_error">Cel puțin un pas este necesar</string>
   <string name="sched_end">(final)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
+  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
   <string name="sched_has_buried">Unele carduri conexe sau îngropate  au fost amânate până la o sesiune ulterioară.</string>
   <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
@@ -198,7 +198,7 @@
     <item quantity="other">%s years</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
-  <string name="decks_rename_exists">That deck already exists.</string>
-  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks.</string>
+  <string name="decks_rename_exists">That deck already exists</string>
+  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
   <string name="filtered_deck_name">Filtered Deck</string>
 </resources>

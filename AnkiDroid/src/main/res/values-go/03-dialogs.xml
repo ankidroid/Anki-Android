@@ -63,7 +63,7 @@
   </string-array>
   <string name="preview_title">Preview</string>
   <string name="reset_card_dialog_title">Reset card progress</string>
-  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
   <string name="reset_card_dialog_acknowledge">Card reset</string>
   <string name="reschedule_card_dialog_title">Reschedule card</string>
   <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>

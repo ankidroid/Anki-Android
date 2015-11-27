@@ -44,7 +44,7 @@
   <string name="check_db_acknowledge">Baza danych sprawdzona</string>
   <string name="check_db_acknowledge_shrunk">Baza danych sprawdzona i zoptymalizowana.\nZaoszczędzono %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Skasuj talię</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
   <string name="delete_deck_title">Skasuj talię</string>
   <plurals name="delete_deck_message">
     <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>

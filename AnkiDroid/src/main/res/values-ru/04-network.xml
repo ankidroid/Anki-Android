@@ -59,7 +59,6 @@
   <string name="log_in">Войти</string>
   <string name="sign_up_description">Нет AnkiWeb аккаунта? Это бесплатно!</string>
   <string name="sign_up">Зарегистрироваться</string>
-  <string name="sign_up_terms">Нажатием , <i>Зарегистрироваться</i>, вы подтверждаете, что вы прочитали и согласны с нашими <a href="https://ankiweb.net/account/terms"> условиями использования</a>.</string>
   <string name="logged_as">Используется логин</string>
   <string name="log_out">Завершить сеанс</string>
   <string name="alert_logging_message">Вход в систему, пожалуйста, подождите...</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">Синхронизация медиа-файлов завершена, но количество медиа-файлов на вашем мобильном устройстве не совпадает с количеством на сервере. При следующей синхронизации будут устранены все ошибки.</string>
   <string name="sync_media_error">Ошибка синхронизации медиа-данных.</string>
   <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
-  <string name="register_error">Произошла ошибка. Пожалуйста, повторите попытку позже.</string>
-  <string name="register_title">Зарегистрироваться</string>
-  <string name="register_mismatch">Логин и/или пароль не соответствуют или пусты. Пожалуйста, введите снова.</string>
-  <string name="registering_message">Создание учетной записи.\nПожалуйста, подождите...</string>
   <string name="sync_sanity_local">Локальную</string>
   <string name="sync_sanity_remote">Удалённую</string>
   <string name="force_full_sync_title">Выполнить полную синхронизацию</string>

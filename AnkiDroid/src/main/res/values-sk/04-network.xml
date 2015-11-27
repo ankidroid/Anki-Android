@@ -59,7 +59,6 @@
   <string name="log_in">Prihlásiť sa</string>
   <string name="sign_up_description">Nemáte AnkiWeb účet? Je zadarmo!</string>
   <string name="sign_up">Zaregistrovať sa</string>
-  <string name="sign_up_terms">Ťuknutím na <i>Zaregistrovať</i> potvrdzujete, že ste si prečítali a súhlasíte s našimi <a href="https://ankiweb.net/account/terms">podmienkami použitia</a>.</string>
   <string name="logged_as">Prihlásený ako</string>
   <string name="log_out">Odhlásiť</string>
   <string name="alert_logging_message">Prebieha prihlasovanie&#8230;</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">Synchronizácia multimédií bola dokončená, ale počet médií nesúhlasí so serverom. Nasledujúca synchronizácia multimédií bude úplná, aby sa napravili akékoľvek chyby.</string>
   <string name="sync_media_error">Pri synchronizácií mediálnych súborov sa vyskytla chyba</string>
   <string name="sync_media_error_check">Vyskytla sa chyba pri synchronizácii médií. Odporúča sa kontrola médií.</string>
-  <string name="register_error">Vyskytla sa chyba. Skúste to znova neskôr.</string>
-  <string name="register_title">Registrovať účet</string>
-  <string name="register_mismatch">Zopakovanie užívateľského mena/hesla sa nezhoduje alebo je prázdne.</string>
-  <string name="registering_message">Vytvára sa účet&#8230;</string>
   <string name="sync_sanity_local">Miestnu</string>
   <string name="sync_sanity_remote">Vzdialenú</string>
   <string name="force_full_sync_title">Vynútiť úplnú synchronizáciu</string>

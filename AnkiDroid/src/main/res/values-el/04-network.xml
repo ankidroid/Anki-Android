@@ -59,7 +59,6 @@
   <string name="log_in">Σύνδεση</string>
   <string name="sign_up_description">Δεν έχετε λογαριασμό στο AnkiWeb; Είναι δωρεάν!</string>
   <string name="sign_up">Εγγραφή</string>
-  <string name="sign_up_terms">By touching <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
   <string name="logged_as">Είστε συνδεδεμένοι ως</string>
   <string name="log_out">Αποσύνδεση</string>
   <string name="alert_logging_message">Σύνδεση, παρακαλώ περιμένετε...</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">Ο συγχρονισμός πολυμέσων ολοκληρώθηκε, αλλά ο αριθμός πολυμέσων διαφέρει από αυτόν του διακομιστή. Ο επόμενος συγχρονισμός θα είναι πλήρης για να διορθώσει οτιδήποτε σφάλμα.</string>
   <string name="sync_media_error">Σφάλμα κατά το συγχρονισμό πολυμέσων.</string>
   <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
-  <string name="register_error">Συνέβη σφάλμα. Παρακαλούμε ξαναπροσπαθήστε αργότερα.</string>
-  <string name="register_title">Δημιουργία λογαριασμού</string>
-  <string name="register_mismatch">Η επανάληψη του ονόματος χρήστη/κωδικού δεν ταιριάζει ή είναι κενή. Παρακαλούμε πληκτρολογήστε τους ξανά.</string>
-  <string name="registering_message">Δημιουργία λογαριασμού.\nΠαρακαλούμε περιμένετε...</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Remote</string>
   <string name="force_full_sync_title">Force full sync</string>

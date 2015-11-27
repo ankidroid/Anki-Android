@@ -78,7 +78,7 @@
     <item>L’ordre d’ajout</item>
     <item>Les plus urgentes d’abord</item>
     <item>Les dernières ajoutées d’abord</item>
-    <item>Relative overdueness</item>
+    <item>Retard relatif</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Utilisez le paquet courant</item>

@@ -48,7 +48,7 @@
   <string name="loading_shared_decks">מטעין חפיסות משותפות זמינות&#8230;</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
   <string name="menu_get_shared_decks">Get shared decks</string>
-  <string name="connection_error_message">A network error has occurred.</string>
+  <string name="connection_error_message">A network error has occurred</string>
   <string name="not_logged_in_title">Log in to AnkiWeb</string>
   <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
   <string name="no_email_client">No email client available</string>
@@ -59,7 +59,6 @@
   <string name="log_in">Log in</string>
   <string name="sign_up_description">Don’t have an AnkiWeb account? It’s free!</string>
   <string name="sign_up">Sign up</string>
-  <string name="sign_up_terms">By touching <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
   <string name="logged_as">Logged in as</string>
   <string name="log_out">Log out</string>
   <string name="alert_logging_message">Logging in&#8230;</string>
@@ -85,7 +84,7 @@
   <string name="sync_log_clocks_unsynchronized_tz">, the time zone’s possibly wrong</string>
   <string name="sync_log_clocks_unsynchronized_date">, the date’s possibly wrong</string>
   <string name="sync_conflict_title">Syncing conflict</string>
-  <string name="sync_no_changes_message">No changes found.</string>
+  <string name="sync_no_changes_message">No changes found</string>
   <string name="sync_database_acknowledge">Collection synchronized</string>
   <string name="sync_log_error_specific">Syncing error, type: %1$s, message: %2$s</string>
   <string name="sync_corrupt_database">Your database is corrupt. Please fix it before trying again to sync.\n\nSee %s for information about repairing your database.</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn’t agree with the server. The next media sync will be full to correct any error.</string>
   <string name="sync_media_error">Error syncing media data</string>
   <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
-  <string name="register_error">An error occurred. Try again later.</string>
-  <string name="register_title">Register account</string>
-  <string name="register_mismatch">The username/password repetition doesn’t match or is empty.</string>
-  <string name="registering_message">Creating account&#8230;</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Remote</string>
   <string name="force_full_sync_title">Force full sync</string>

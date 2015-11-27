@@ -122,7 +122,7 @@
   <string name="studyoptions_congrats_more_rev">Du har nådd grensen for gjennomgang i dag, men det er fortsatt kort du ikke har gått gjennom. For best mulig effekt, bør du vurdere å øke grensen i alternativene.</string>
   <string name="studyoptions_congrats_more_new">Det finnes flere nye kort tilgjengelig, men den daglige grensen er nådd. Du kan øke grensen i innstillingene, men vær oppmerksom på at dette også vil øke den kortsiktige mengden av kort til repetering.</string>
   <string name="studyoptions_congrats_custom">For å studere utenfor den vanlige tidsrammen, trykk på \"Tilpassede studier\"-knappen.</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet</string>
   <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Synkroniser</string>
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
@@ -145,6 +145,5 @@
   <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note">Fjerning av denne korttypen vil føre til at ett eller flere notater slettes. Vennligst lag en ny korttype først.</string>
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
-        models, and decks, as well as create new ones.</string>
+  <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

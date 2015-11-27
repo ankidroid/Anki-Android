@@ -77,7 +77,7 @@
   <string name="card_browser_font_size">Schriftskalierung in der Kartenübersicht</string>
   <string name="col_path">Sammlungs-Pfad</string>
   <string name="fullscreen_review">Vollbildmodus</string>
-  <string name="full_screen_off">Off</string>
+  <string name="full_screen_off">Aus</string>
   <string name="full_screen_system">Hide the system bars</string>
   <string name="full_screen_complete">Hide the system bars and answer buttons</string>
   <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>

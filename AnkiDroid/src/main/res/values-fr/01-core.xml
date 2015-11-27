@@ -53,11 +53,11 @@
   <string name="studyoptions_start">Réviser</string>
   <string name="study_more">Réviser plus</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">%1$d carte due (%2$s)</item>
+    <item quantity="other">%1$d cartes dues (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
+    <item quantity="one">%d minute restante</item>
     <item quantity="other">%d minutes restantes</item>
   </plurals>
   <plurals name="studied_cards_today">
@@ -115,7 +115,7 @@
   <string name="custom_study_deck_name">Session d\'étude personnalisée</string>
   <string name="custom_study_deck_exists">Merci de renommer d\'abord le paquet d\'étude personnalisée.</string>
   <string name="empty_deck">Le paquet est vide</string>
-  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="studyoptions_empty">Le paquet est vide. touchez le bouton + pour créer du contenu.</string>
   <string name="studyoptions_limit_reached">Vous avez atteint votre limite aujourd\'hui</string>
   <string name="studyoptions_empty_schedule">Aucune carte à réviser actuellement</string>
   <string name="studyoptions_congrats_finished">Félicitations ! Vous avez terminé… pour l’instant !</string>
@@ -126,7 +126,7 @@
   <string name="sd_card_not_mounted">Le dispositif de stockage n\'est pas monté</string>
   <string name="button_sync">Synchroniser</string>
   <string name="cancel_sync_confirm">Voulez-vous annuler la synchronisation ?</string>
-  <string name="continue_sync">Continue sync</string>
+  <string name="continue_sync">Continuer la synchronisation</string>
   <string name="sync_cancelled">Synchronisation annulée</string>
   <string name="export">Exporter</string>
   <string name="export_collection">Exporter la collection</string>
@@ -142,10 +142,9 @@
     <item quantity="one">Supprimer le type de carte “%2$s” et son %1$d carte ?</item>
     <item quantity="other">Supprimer le type de carte “%2$s” et ses %1$d cartes ?</item>
   </plurals>
-  <string name="invalid_template">A card could not be generated</string>
+  <string name="invalid_template">Une carte n\'a pas pu être générée</string>
   <string name="card_template_editor_would_delete_note"> Retirer ce type de carte provoquerait la suppression 
         d\'une ou de plusieurs notes. Veuillez d\'abord créer un nouveau type de carte.</string>
   <string name="read_write_permission_label">Lire et écrire dans la base de données d\'AnkiDroid</string>
-  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
-        models, and decks, as well as create new ones.</string>
+  <string name="read_write_permission_description">Permettre à l\'application d\'accéder aux notes actuelles, cartes, modèles et des paquets, ainsi que d\'en créer de nouveaux.</string>
 </resources>

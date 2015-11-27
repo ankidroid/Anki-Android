@@ -122,7 +122,7 @@
   <string name="studyoptions_congrats_more_rev">Acadouse o límite de repasos por hoxe, pero aínda hai cartas agardando a ser repasadas. Para unha memoria óptima, sopesa ampliar o límite diario nas opcións.</string>
   <string name="studyoptions_congrats_more_new">Hai máis cartóns dispoñibles, pero o límite diario foi acadado. Podes ampliar o límite nas opcións, pero ten en conta que isto incrementará a carga de traballo do repaso a curto plazo.</string>
   <string name="studyoptions_congrats_custom">Para estudar fóra da planificación normal, faga click no botón Estudo Personalizado abaixo.</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet</string>
   <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Sincronizar</string>
   <string name="cancel_sync_confirm">Queres cancelar a sincronización?</string>
@@ -145,6 +145,5 @@
   <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
-        models, and decks, as well as create new ones.</string>
+  <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

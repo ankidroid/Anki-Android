@@ -59,7 +59,6 @@
   <string name="log_in">Giriş yap</string>
   <string name="sign_up_description">AnkiWeb hesabınız yok mu? Ücretsiz edinin!</string>
   <string name="sign_up">Kaydol</string>
-  <string name="sign_up_terms"><i>Kaydol</i>a basarak, <a href="https://ankiweb.net/account/terms">kullanım koşulları</a>mızı okuyup kabul ettiğinizi onaylıyorsunuz.</string>
   <string name="logged_as">Şu adla giriş yapıldı:</string>
   <string name="log_out">Çıkış yap</string>
   <string name="alert_logging_message">Giriş yapılıyor, lütfen bekleyin...</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">Medya eşitlemesi tamamlandı, ama medya sayısı sunucuyla uyuşmuyor. Bir sonraki medya eşitlemesi hataları düzeltmek için tam yapılacak.</string>
   <string name="sync_media_error">Medya veri senkronizasyonu hatası.</string>
   <string name="sync_media_error_check">Ortam eşitleme sırasında hata oluştu. Medyayı kontrol etmeniz tavsiye edilir.</string>
-  <string name="register_error">Bir hatâ meydana geldi. Lütfen sonra yeniden deneyin.</string>
-  <string name="register_title">Üye ol</string>
-  <string name="register_mismatch">Kullanıcı adı/şifre tekrarı uyuşmuyor veya boş. Lütfen yeniden girin.</string>
-  <string name="registering_message">Hesap oluşturuluyor.\nLütfen bekleyin...</string>
   <string name="sync_sanity_local">Yerel</string>
   <string name="sync_sanity_remote">Sunucu</string>
   <string name="force_full_sync_title">Zorunlu tam senkronizasyon</string>

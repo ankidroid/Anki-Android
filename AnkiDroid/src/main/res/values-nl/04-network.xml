@@ -59,7 +59,6 @@
   <string name="log_in">Inloggen</string>
   <string name="sign_up_description">Heb je nog geen AnkiWeb account? Het is gratis!</string>
   <string name="sign_up">Meld je nu aan</string>
-  <string name="sign_up_terms">Door op <i>Aanmelden</i> te klikken bevestigd u dat u de <a href="https://ankiweb.net/account/terms">Algemene voorwaarden</a> heeft gelezen en ermee akkoord gaat.</string>
   <string name="logged_as">Ingelogd als</string>
   <string name="log_out">Uitloggen</string>
   <string name="alert_logging_message">Inloggen, even geduld...</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">Synchronisatie van de media voltooid, maar het aantal mediabestanden komt niet overeen met dat op de server. De volgende keer zal een volledige synchronisatie van de media worden uitgevoerd om fouten te corrigeren.</string>
   <string name="sync_media_error">Fout tijdens het synchroniseren van mediagegevens.</string>
   <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
-  <string name="register_error">Er is een fout opgetreden. Gelieve later opnieuw te proberen.</string>
-  <string name="register_title">Account registreren</string>
-  <string name="register_mismatch">De herhaalde gebruikersnaam/paswoord-combinatie komt niet overeen met het origineel of is leeg. Gelieve opnieuw in te geven.</string>
-  <string name="registering_message">Bezig uw account aan te maken.\nEven geduld...</string>
   <string name="sync_sanity_local">Lokaal</string>
   <string name="sync_sanity_remote">Server</string>
   <string name="force_full_sync_title">Forceer complete synchronisatie</string>

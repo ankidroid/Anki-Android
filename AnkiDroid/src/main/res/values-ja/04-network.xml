@@ -59,7 +59,6 @@
   <string name="log_in">ログイン</string>
   <string name="sign_up_description">AnkiWebのアカウントを新規登録（無料）</string>
   <string name="sign_up">サインアップ</string>
-  <string name="sign_up_terms"><i>サインアップ</i> をタップすると、<a href="https://ankiweb.net/account/terms">利用規約</a>に同意したことになります。</string>
   <string name="logged_as">ログイン名</string>
   <string name="log_out">ログアウト</string>
   <string name="alert_logging_message">ログインしています。しばらくお待ちください&#8230;</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">メディアの同期が完了しました。しかし、メディアの数がAnkiWeb上のものと一致しません。次にメディアを同期するときには、エラーを修正するために完全同期を行います。</string>
   <string name="sync_media_error">メディアデータの同期中のエラー</string>
   <string name="sync_media_error_check">メディアの同期中にエラーが発生しました。「メディアをチェック」を実行することをおすすめします。</string>
-  <string name="register_error">エラーが発生しました。後でもう一度実行してください。</string>
-  <string name="register_title">アカウントの登録</string>
-  <string name="register_mismatch">「メールアドレス（確認）」または「パスワード（確認）」が元の文字列と一致しないか、無記入です。</string>
-  <string name="registering_message">アカウントを作成しています...</string>
   <string name="sync_sanity_local">ローカル</string>
   <string name="sync_sanity_remote">リモート</string>
   <string name="force_full_sync_title">完全同期を強制する</string>

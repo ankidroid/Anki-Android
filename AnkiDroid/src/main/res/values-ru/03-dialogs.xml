@@ -44,7 +44,7 @@
   <string name="check_db_acknowledge">База проверена</string>
   <string name="check_db_acknowledge_shrunk">База проверена и оптимизирована.\nСжато на %d кБ.</string>
   <string name="contextmenu_deckpicker_delete_deck">Удалить колоду</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
   <string name="delete_deck_title">Удалить колоду</string>
   <plurals name="delete_deck_message">
     <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>

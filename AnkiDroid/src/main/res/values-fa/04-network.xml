@@ -59,7 +59,6 @@
   <string name="log_in">ورود به حساب کاربری</string>
   <string name="sign_up_description">آيا حساب كاربري در آنکی وب نداريد؟ حساب كاربري رايگان است!</string>
   <string name="sign_up">ثبت نام</string>
-  <string name="sign_up_terms">با فشردن <i>ثبت نام</i>, شما تایید می کنید که شرایط استفاده از برنامه <a href="https://ankiweb.net/account/terms"> را خوانده و قبول دارید</a>.</string>
   <string name="logged_as">ورود به حساب کاربری به عنوان</string>
   <string name="log_out">خروج</string>
   <string name="alert_logging_message">ورود اعضاء، لطفا صبر کنید...</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">همگام سازی رسانه کامل شد, اما تعداد رسانه با سرویس دهنده یکسان نیست. برای رفع هر خطایی رسانه بعدی بطور کامل همگام سازی خواهد شد.</string>
   <string name="sync_media_error">خطا در همگام سازی اطلاعات رسانه.</string>
   <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
-  <string name="register_error">خطایی رخ داده است. لطفا بعدا مجددا امتحان نمایید.</string>
-  <string name="register_title">ثبت نام حساب کاربری</string>
-  <string name="register_mismatch">نام کاربری/کلمه عبور یا مطابقت ندارد یا خالی است. لطفا دوباره وارد نمایید.</string>
-  <string name="registering_message">ساخت حساب کاربریt.\nلطفا صبر کنید...</string>
   <string name="sync_sanity_local">محلی</string>
   <string name="sync_sanity_remote">از راه دور</string>
   <string name="force_full_sync_title">Force full sync</string>

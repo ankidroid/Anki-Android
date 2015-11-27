@@ -77,10 +77,10 @@
   <string name="card_browser_font_size">Échelle de la police de l’explorateur</string>
   <string name="col_path">Chemin d’accès à la Collection</string>
   <string name="fullscreen_review">Mode plein écran</string>
-  <string name="full_screen_off">Off</string>
-  <string name="full_screen_system">Hide the system bars</string>
-  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
+  <string name="full_screen_off">Inactif</string>
+  <string name="full_screen_system">Masquer les barres système</string>
+  <string name="full_screen_complete">Masquer les barres système et les boutons de réponse</string>
+  <string name="full_screen_error_gestures">Vous devez activer les gestes pour pouvoir masquer les boutons de réponse</string>
   <string name="gestures">Activer les gestes</string>
   <string name="gestures_summ">Assigner des gestes à des actions comme répondre et éditer des cartes.</string>
   <string name="gestures_swipe_up">Glissez vers le haut</string>
@@ -105,8 +105,7 @@
   <string name="sync_account_summ_logged_out">Pas connecté</string>
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="automatic_sync_choice">Synchronisation automatique</string>
-  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
+  <string name="automatic_sync_choice_summ">Synchroniser automatiquement à la sortie de l\'application si la dernière synchronisation était il y a plus de 10 minutes.</string>
   <string name="fix_hebrew_text">Correctif pour les voyelles en Hébreu</string>
   <string name="fix_hebrew_text_summ">Solution de rechange pour afficher correctement les voyelles hébraïques.</string>
   <string name="fix_hebrew_instructions">Ce paramètre contourne l\'algorithme RTL d’Android, pour afficher correctement les voyelles.\n\nPour que ça fonctionne, vous devez téléchargez la police Tohu.ttf et la copier manuellement vers :\n%s/fonts/\n\nVous n\'aurez pas à modifier vos cartes.</string>
@@ -155,7 +154,7 @@
   <string name="filter_google_translate_summ">Enregistrer uniquement le mot source et sa traduction</string>
   <string name="convert_fen_text_summ">Échiquier avec la notation Forsyth-Edwards Notation. La notation doit être placée entre des balises [fen][/fen].</string>
   <string name="enable_api_title">Activer l\'API AnkiDroid</string>
-  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+  <string name="enable_api_summary">Laissez les autres applications se connecter à AnkiDroid et lire / écrire des données sans votre intervention</string>
   <string name="studyoptions_limit_select_tags">Sélectionner les étiquettes</string>
   <string name="deck_conf_deck_description">Description du paquet</string>
   <string name="deck_conf_group">Groupe d’option</string>

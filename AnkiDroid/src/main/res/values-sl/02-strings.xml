@@ -53,7 +53,7 @@
   <string name="add_tag">Add tag</string>
   <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">Filter tags</string>
-  <string name="no_tags">You haven’t added any tags yet.</string>
+  <string name="no_tags">You haven’t added any tags yet</string>
   <string name="sdcard_missing_message">Spominska SD kartica ni dostopna, ker se trenutno uporablja kot disk USB. Odstranite povezavo USB za dostop do vaših kompletov.</string>
   <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Enable whiteboard</string>
@@ -165,8 +165,8 @@
   <string name="steps_error">Steps must be numbers greater than 0</string>
   <string name="steps_min_error">At least one step is required</string>
   <string name="sched_end">(end)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
-  <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>
+  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
+  <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow</string>
   <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
@@ -207,7 +207,7 @@
     <item quantity="other">%s years</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
-  <string name="decks_rename_exists">That deck already exists.</string>
-  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks.</string>
+  <string name="decks_rename_exists">That deck already exists</string>
+  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
   <string name="filtered_deck_name">Filtered Deck</string>
 </resources>

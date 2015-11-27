@@ -125,7 +125,7 @@
   <string name="studyoptions_congrats_more_rev">Bylo dosaženo limitu dnešního opakování, ale stále existují karty pro přezkoušení. Pro optimální zapamatování zvažte zvýšení denního limitu v možnostech.</string>
   <string name="studyoptions_congrats_more_new">Existuje více nových karet, ale byl dosažen denní limit. Můžete zvýšit tento limit v Nastavení, ale mějte na paměti, že se krátkodobě zvýší vaše zátěž na opakování.</string>
   <string name="studyoptions_congrats_custom">Pro studium mimo normální plán klepněte na tlačítko \'Vlastní učení\'.</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet</string>
   <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Synchronizovat</string>
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
@@ -149,6 +149,5 @@
   <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note"> Odstraněním tohoto typu karty můžete způsobit, že jedna nebo         více poznámek budou odstraněny. Nejprve vytvořte nový typ karty.</string>
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
-        models, and decks, as well as create new ones.</string>
+  <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

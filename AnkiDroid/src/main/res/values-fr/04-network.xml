@@ -59,7 +59,6 @@
   <string name="log_in">Se connecter</string>
   <string name="sign_up_description">Vous n\'avez pas de compte AnkiWeb ? C\'est gratuit !</string>
   <string name="sign_up">Inscrivez-vous</string>
-  <string name="sign_up_terms">En touchant <i>s\'inscrire</i>, vous confirmez que vous avez lu et accepté nos <a href="https://ankiweb.net/account/terms">conditions d\'utilisation</a>.</string>
   <string name="logged_as">Connecté en tant que</string>
   <string name="log_out">Se déconnecter</string>
   <string name="alert_logging_message">Connexion, patientez s’il vous plaît &#8230;</string>
@@ -114,11 +113,7 @@
   <string name="sync_sanity_failed">Après la synchronisation, la collection s’est retrouvée dans un état incohérent. Pour résoudre ce problème, AnkiDroid va forcer une synchronisation complète. Veuillez choisir avec quelle version vous voulez continuer, ou annulez si vous voulez synchroniser plus tard.</string>
   <string name="sync_media_sanity_failed">La synchronisation des médias est achevée mais le nombre de médias ne correspond pas à celui du serveur. La prochaine synchronisation des médias sera complète afin de corriger d’éventuelles erreurs.</string>
   <string name="sync_media_error">Erreur pendant la synchronisation des médias.</string>
-  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
-  <string name="register_error">Une erreur s\'est produite. Veuillez réessayer plus tard.</string>
-  <string name="register_title">Créer un compte</string>
-  <string name="register_mismatch">Le couple nom d’utilisateur/mot de passe ne correspond pas ou est vide. Veuillez réessayer.</string>
-  <string name="registering_message">Compte en cours de création. \nVeuillez patienter...</string>
+  <string name="sync_media_error_check">Erreur lors de la synchronisation des médias. Un contrôle des médias est recommandé.</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Distant</string>
   <string name="force_full_sync_title">Forcer synchronisation complète</string>

@@ -59,7 +59,6 @@
   <string name="log_in">Bejelentkezés</string>
   <string name="sign_up_description">Nincs AnkiWeb fiókod? Ingyenes, meg minden!</string>
   <string name="sign_up">Regisztráció</string>
-  <string name="sign_up_terms">A <i>Feliratkozás</i> megérintésével megerősíted, hogy elolvastad és elfogadod a <a href="https://ankiweb.net/account/terms">felhasználási feltételeinket</a>.</string>
   <string name="logged_as">Bejelentkezve mint</string>
   <string name="log_out">Kijelentkezés</string>
   <string name="alert_logging_message">Bejelentkezés, kérem várjon...</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn’t agree with the server. The next media sync will be full to correct any error.</string>
   <string name="sync_media_error">Hiba a szinkronizálásnál média adatok.</string>
   <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
-  <string name="register_error">Hiba lépett fel. Kérjük, próbálkozzon később.</string>
-  <string name="register_title">Fiók regisztrálása</string>
-  <string name="register_mismatch">A Felhasználónév/Jelszó hibás vagy üres. Adja meg újra.</string>
-  <string name="registering_message">Fiók létrehozása.\nKérlek, várj...</string>
   <string name="sync_sanity_local">Helyi</string>
   <string name="sync_sanity_remote">Távoli</string>
   <string name="force_full_sync_title">Teljes szinkronizáció erőltetése</string>

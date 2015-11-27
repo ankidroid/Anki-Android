@@ -59,7 +59,6 @@
   <string name="log_in">تسجيل الدخول</string>
   <string name="sign_up_description">ألا تملك حساب أنكي ويب؟ إنه مجاني</string>
   <string name="sign_up">التسجيل</string>
-  <string name="sign_up_terms">By touching <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
   <string name="logged_as">تسجيل</string>
   <string name="log_out">تسجيل الخروج</string>
   <string name="alert_logging_message">تسجيل الدخول، الرجاء الانتظار...</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">اكتملت مزامنة الوسائط، ولكن  عدد الوسائط لا يتوافق مع الخادم. مزامنة الوسائط القادمة ستكون شاملة لتصحيح أي خطأ.</string>
   <string name="sync_media_error">الخطأ في مزامنة معلومات الوسائط.</string>
   <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
-  <string name="register_error">حدث خطأ. الرجاء المحاولة مرة أخرى لاحقاً.</string>
-  <string name="register_title">تسجيل حساب</string>
-  <string name="register_mismatch">تكرار اسم المستخدم/كلمة المرور غير متطابق أو فارغة. الرجاء إعادة إدخال.</string>
-  <string name="registering_message">إنشاء حساب.\n يرجى الانتظار...</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Remote</string>
   <string name="force_full_sync_title">Force full sync</string>

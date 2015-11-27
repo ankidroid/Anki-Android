@@ -44,7 +44,7 @@
   <string name="check_db_acknowledge">Database checked</string>
   <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Hapus Dek</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
   <string name="delete_deck_title">Hapus Dek</string>
   <plurals name="delete_deck_message">
     <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
@@ -62,7 +62,7 @@
   </string-array>
   <string name="preview_title">Pratinjau</string>
   <string name="reset_card_dialog_title">Set semula rekod kemajuan kad</string>
-  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
   <string name="reset_card_dialog_acknowledge">Card reset</string>
   <string name="reschedule_card_dialog_title">Reschedule card</string>
   <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
