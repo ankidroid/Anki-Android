@@ -24,43 +24,47 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/pref_cat_general"
     android:summary="@string/pref_cat_general_summ" >
-    <Preference
-        android:dialogTitle="@string/sync_account"
-        android:key="syncAccount"
-        android:summary="@string/sync_account_summ_logged_out"
-        android:title="@string/sync_account" >
-        <intent
-            android:targetClass="com.ichi2.anki.MyAccount"
-            android:targetPackage="com.ichi2.anki" />
-    </Preference>
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="syncFetchesMedia"
-        android:summary="@string/sync_fetch_missing_media_summ"
-        android:title="@string/sync_fetch_missing_media" />
-    <ListPreference
-        android:defaultValue=""
-        android:entries="@array/add_to_cur_labels"
-        android:entryValues="@array/add_to_cur_values"
-        android:key="useCurrent"
-        android:summary=""
-        android:title="@string/use_current" />
-    <ListPreference
-        android:defaultValue=""
-        android:key="language"
-        android:summary="@string/preference_summary_literal"
-        android:title="@string/language" />
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="automaticSyncMode"
-        android:summary="@string/automatic_sync_choice_summ"
-        android:title="@string/automatic_sync_choice" />
-    <ListPreference
-        android:defaultValue="2"
-        android:entries="@array/error_reporting_choice_labels"
-        android:entryValues="@array/error_reporting_choice_values"
-        android:key="reportErrorMode"
-        android:title="@string/error_reporting_choice" />
+    <PreferenceCategory android:title="@string/button_sync" >
+        <Preference
+            android:dialogTitle="@string/sync_account"
+            android:key="syncAccount"
+            android:summary="@string/sync_account_summ_logged_out"
+            android:title="@string/sync_account" >
+            <intent
+                android:targetClass="com.ichi2.anki.MyAccount"
+                android:targetPackage="com.ichi2.anki" />
+        </Preference>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="syncFetchesMedia"
+            android:summary="@string/sync_fetch_missing_media_summ"
+            android:title="@string/sync_fetch_missing_media" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="automaticSyncMode"
+            android:summary="@string/automatic_sync_choice_summ"
+            android:title="@string/automatic_sync_choice" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_general">
+        <ListPreference
+            android:defaultValue=""
+            android:entries="@array/add_to_cur_labels"
+            android:entryValues="@array/add_to_cur_values"
+            android:key="useCurrent"
+            android:summary=""
+            android:title="@string/use_current" />
+        <ListPreference
+            android:defaultValue=""
+            android:key="language"
+            android:summary="@string/preference_summary_literal"
+            android:title="@string/language" />
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/error_reporting_choice_labels"
+            android:entryValues="@array/error_reporting_choice_values"
+            android:key="reportErrorMode"
+            android:title="@string/error_reporting_choice" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/notification_pref" >
         <ListPreference
             android:defaultValue="1000000"
