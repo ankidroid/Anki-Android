@@ -871,6 +871,20 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION);
                     }
                 } else {
+                    // Spam for survey
+                    ConfirmationDialog dialog = new ConfirmationDialog () {
+                        @Override
+                        public void confirm() {
+                            openUrl(Uri.parse("http://goo.gl/forms/cvkZ1e5sE2"));
+                        }
+                        public void cancel() {
+                        }
+                    };
+                    dialog.setArgs("Thank you for participating in the beta program. Version 2.5 is going to be released very soon; would you like to answer a survey?");
+                    if (previous <= 20500227) {
+                        // TODO: remove this before v2.5 final release
+                        showDialogFragment(dialog);
+                    }
                     // Don't show new features dialog for development builds
                     preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
                     String ver = getResources().getString(R.string.updated_version, VersionUtils.getPkgVersionName());
