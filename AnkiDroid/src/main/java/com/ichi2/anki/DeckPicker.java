@@ -1627,8 +1627,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void openStudyOptions(boolean withDeckOptions) {
-        // Clear the undo history when selecting a new deck
-        getCol().clearUndo();
         mCongratulationsShown = false;
         if (mFragmented) {
             // The fragment will show the study options screen instead of launching a new activity.
@@ -1645,6 +1643,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private void handleDeckSelection(long did) {
         // Forget what the last used deck was in the browser
         CardBrowser.clearSelectedDeck();
+        // Clear the undo history when selecting a new deck
+        if (getCol().getDecks().selected() != did) {
+            getCol().clearUndo();
+        }
         // Select the deck
         getCol().getDecks().select(did);
         // Reset the schedule so that we get the counts for the currently selected deck
@@ -1977,8 +1979,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void openReviewer() {
-        // Clear the undo history when selecting a new deck
-        getCol().clearUndo();
         mCongratulationsShown = false;
         Intent reviewer = new Intent(this, Reviewer.class);
         startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, ActivityTransitionAnimation.LEFT);
