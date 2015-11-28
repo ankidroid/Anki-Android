@@ -441,8 +441,11 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
         View view = sb.getView();
         TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
         TextView action = (TextView) view.findViewById(android.support.design.R.id.snackbar_action);
-        tv.setTextColor(Color.WHITE);
-        action.setTextColor(getResources().getColor(R.color.theme_primary));
+        if (tv != null && action != null) {
+            tv.setTextColor(Color.WHITE);
+            action.setTextColor(getResources().getColor(R.color.theme_primary));
+            tv.setMaxLines(2);  // prevent tablets from truncating to 1 line
+        }
         sb.show();
     }
 
