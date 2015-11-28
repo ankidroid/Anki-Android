@@ -4,7 +4,7 @@ Here are some links to other pages related to contributing to AnkiDroid:
 * [Alpha/beta testing](http://ankidroid.org/manual.html#betaTesting)
 * [Donating](http://ankidroid.org/manual.html#contributing)
 
-# Answer questions on the AnkiDroid forum
+# Answer questions on the forum
 AnkiDroid is [free (open source) software](https://en.wikipedia.org/wiki/Free_and_open-source_software), and is run entirely by volunteers. Providing support for users can place a significant burden on the developers, so one of the easiest ways that you can contribute back to AnkiDroid is by regularly answering questions that you know the answer to [on the forum](https://groups.google.com/forum/#!forum/anki-android).
 
 # Translate AnkiDroid
