@@ -1,11 +1,13 @@
-# Links
+# Introduction
+AnkiDroid is [free (open source) software](https://en.wikipedia.org/wiki/Free_and_open-source_software), and is run entirely by volunteers. This page contains information on how you can contribute back to the AnkiDroid project.
+
 Here are some links to other pages related to contributing to AnkiDroid:
 * [[Development guide|Development-Guide]]
 * [Alpha/beta testing](http://ankidroid.org/manual.html#betaTesting)
 * [Donating](http://ankidroid.org/manual.html#contributing)
 
 # Answer questions on the forum
-AnkiDroid is [free (open source) software](https://en.wikipedia.org/wiki/Free_and_open-source_software), and is run entirely by volunteers. Providing support for users can place a significant burden on the developers, so one of the easiest ways that you can contribute back to AnkiDroid is by regularly answering questions that you know the answer to [on the forum](https://groups.google.com/forum/#!forum/anki-android).
+Providing support for users can place a significant burden on the developers, so one of the easiest ways that you can contribute back to AnkiDroid is by regularly answering questions that you know the answer to [on the forum](https://groups.google.com/forum/#!forum/anki-android).
 
 # Translate AnkiDroid
 Even if you prefer to use AnkiDroid in English, other people in your country might prefer to use it in their own language. Translating AnkiDroid to your native language means your country's AnkiDroid will grow much faster, leading to better shared decks in your language.
@@ -90,36 +92,43 @@ Don't hesitate to talk in the name of the AnkiDroid team if you feel part of it.
   * Send us your ManualTesting results about the alphas/betas.
   * **Blog** about AnkiDroid and spread the word :-)
   * Follow us on [Twitter](https://twitter.com/#!/AnkiDroid) and [Facebook](http://www.facebook.com/AnkiDroid).
-  * Here is a **[list of tasks](http://code.google.com/p/ankidroid/issues/list?q=label:Nondeveloper)** that can be done by people who can't code.
+  * Here is a **[list of tasks](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aopen+is%3Aissue+label%3ANondeveloper)** that can be done by people who can't code.
 
-<h1>How to sponsor development</h1>
+# Sponsor development
+In case you are willing to pay money for a feature or fix to be implemented, here is how you can do it:
 
-In case you are willing to pay money for a feature or fix to be implemented, here is how to do:<br>
-<br>
-<ol><li>Find the issue in the <a href='http://code.google.com/p/ankidroid/issues'>issue tracker</a>, or create a new issue if it does not exist yet.<br>
-</li><li>Add as many details as you can, describe how it could work, draw a prototype on paper, etc.<br>
-</li><li>Post a comment asking "If I provide a good quality patch for this feature, will it be merged?" and wait for our answer.<br>
-</li><li>Choose someone to do the job. Use any crowdsourcing platform you trust, or a developer friend, or a software company. Make sure they know Android and Git.</li></ol>
+* Find the issue in the [issue tracker](https://github.com/ankidroid/Anki-Android/issues), or create a new issue if it does not exist yet. 
 
-Reach an agreement with the developer:<br>
-<ol><li>Agree with the developer on the conditions, defining exactly what they must implement.<br>
-</li><li>Insist that produced source code must be released as Open Source (not doing so would be a breach of the GNU-GPLv3 license). A common error would be to ask only for the binary APK (which will quickly get out-of-date and incompatible)<br>
-</li><li>If possible, make it a condition that produced source code must be merged by us before total payment. Or make it half/half. If the issue is Enhancement-Critical or Defect-High or Defect-Critical, then the developer can be assured that we will merge it fast, if the code is good enough.<br>
-</li><li>Propose to become a tester if they need. Giving your feedback early could help. Be sure to test on different devices and in different scenarios.</li></ol>
+* Add as many details as you can, describe how it could work, draw a prototype on paper, etc.
 
-Summary of the workflow:<br>
-<br>
+* Post a comment asking "If I provide a good quality patch for this feature, will it be merged?" and wait for our answer.
+
+* Choose someone to do the job. Use any crowdsourcing platform you trust (for example [bountysource](https://www.bountysource.com/)), or a developer friend, or a software company. Make sure they know Android and Git.
+
+* Reach an agreement with the developer:
+
+* Agree with the developer on the conditions, defining exactly what they must implement.
+
+* Insist that produced source code must be released as Open Source (not doing so would be a breach of the GNU-GPLv3 license). A common error would be to ask only for the binary APK (which will quickly get out-of-date and incompatible)
+
+If possible, make it a condition that produced source code must be merged by us before total payment. Or make it half/half. If the issue is Enhancement-Critical or Defect-High or Defect-Critical, then the developer can be assured that we will merge it fast, if the code is good enough.
+
+Propose to become a tester if they need. Giving your feedback early could help. Be sure to test on different devices and in different scenarios.
+
+Summary of the workflow:
+
 <a href='http://i.stack.imgur.com/EdSXK.png'><img src='http://i.stack.imgur.com/EdSXK.png' /></a>
 
 
-<h1>Crash reporting system</h1>
+# Crash reporting system
 Prior to AnkiDroid version 2.4, crash reports were collected by an app we called "Triage", and reports were publicly viewable at <a href='http://ankidroid-triage.appspot.com'>http://ankidroid-triage.appspot.com</a>. However this tool had a number of shortcomings, and from version 2.4 we now use the <a href='https://github.com/ACRA/acra'>Acra</a> library to send the crash reports to our private server which is running Acralyzer.<br>
 <br>
 Crash reports can be viewed <a href='https://ankidroid.org/couchdb/acralyzer/_design/acralyzer/index.html#/reports-browser/ankidroid'>here</a>, however a password is required in order to protect the privacy of our users, since the crash reports can contain logcat and user comments where private information could potentially be revealed.<br>
 <br>
 Non-core developers wishing to get a stacktrace or logcat for a specific issue should request this in the appropriate thread on the issue tracker, and someone from the AnkiDroid team will post the relevant information. Developers wishing to browse / search through the crash report database can request a password by emailing one of the core developers.<br>
 <br>
-<h1>Markets</h1>
+
+# Markets
 
 <table><thead><th> <b>Market</b> </th><th> <b>Maintainer</b> </th><th> <b>AnkiDroid Version</b> </th><th> <b>Status</b> </th><th> <b>Downloads</b> </th></thead><tbody>
 <tr><td> <a href='https://play.google.com/store/apps/details?id=com.ichi2.anki'>Google Play</a> </td><td> Nicolas Raoul and Tim </td><td> 2.4                      </td><td> Published     </td><td> 1,379,647        </td></tr>
@@ -139,7 +148,7 @@ Non-core developers wishing to get a stacktrace or logcat for a specific issue s
 <tr><td> <a href='http://f-droid.org/repository/browse/?fdfilter=ankidroid&fdid=com.ichi2.anki'>F-Droid</a> </td><td> Anyone            </td><td> 2.3.2                    </td><td> Published     </td><td> Can't be known   </td></tr>
 <tr><td> <a href='https://github.com/ankidroid/Anki-Android/releases'>Direct APK download</a> </td><td> Nicolas Raoul and Tim </td><td> all versions             </td><td> Published     </td><td> Thousands        </td></tr></tbody></table>
 
-<h1>Administration</h1>
+# Administration
 
 Read ReleaseProcedure for some insight on how AnkiDroid is released.<br>
 <br>
@@ -152,7 +161,7 @@ We are on very friendly terms with other app creators, and some have already re-
 </li><li><a href='http://secretsockssoftware.com/androidflashcards/'>Android Flashcards</a>
 </li><li><a href='http://code.google.com/p/kanji-flashcards-android/'>Kanji Flashcards Android</a></li></ul>
 
-<h1>Contributors</h1>
+# Contributors
 
 Many thanks to all of the people and companies who contributed to AnkiDroid! :<br>
 <ul><li>A hundred people are <a href='https://github.com/ankidroid/Anki-Android/graphs/contributors'>working on the code</a>, some sending just one patch, some becoming very involved.<br>
