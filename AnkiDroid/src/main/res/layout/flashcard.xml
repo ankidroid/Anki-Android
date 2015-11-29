@@ -29,7 +29,6 @@
         android:id="@+id/main_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-
         <include layout="@layout/toolbar" />
 
         <!-- Top bar -->
@@ -43,7 +42,7 @@
             android:paddingTop="2dp"
             android:paddingBottom="3dp"
             android:gravity="center_vertical"
-            android:background="?attr/topBarColor"
+            android:background="@android:color/transparent"
             android:layout_below="@+id/toolbar">
 
             <TextView

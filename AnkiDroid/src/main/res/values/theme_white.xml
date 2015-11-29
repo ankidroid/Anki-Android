@@ -28,7 +28,6 @@
         <item name="expandRef">@drawable/ic_chevron_right_black_24dp</item>
         <item name="collapseRef">@drawable/ic_expand_more_black_24dp</item>
         <!-- Reviewer colors -->
-        <item name="topBarColor">@color/theme_primary_light</item>
         <item name="maxTimerColor">@color/max_timer</item>
         <item name="newCountColor">@color/new_count</item>
         <item name="learnCountColor">@color/learn_count</item>
@@ -75,11 +74,12 @@
 
     <!-- ActionBar -->
     <!-- Inheriting from light theme necessary to get light spinner dropdown background in Lollipop -->
-    <style name="ActionBar" parent="Base.ThemeOverlay.AppCompat.ActionBar">
+    <style name="Base.ActionBar" parent="Base.ThemeOverlay.AppCompat.ActionBar">
         <!-- Determines color of text and system icons (overflow etc.) in the action bar -->
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/white</item>
     </style>
+    <style name="ActionBar" parent="Base.ActionBar"/>
 
     <!-- For all other action bar popups (except spinner dropdown in Lollipop) -->
     <style name="ActionBar.Popup" parent="Base.ThemeOverlay.AppCompat.ActionBar">

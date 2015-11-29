@@ -6,4 +6,10 @@
     <style name="App_Theme_Dark" parent="Theme_Dark">
         <item name="currentDeckBackground">@drawable/item_background_selected_night</item>
     </style>
+    <style name="ActionBar" parent="Base.ActionBar">
+        <item name="android:elevation">4dp</item>
+    </style>
+    <style name="ActionBarDark" parent="Base.ActionBarDark">
+        <item name="android:elevation">4dp</item>
+    </style>
 </resources>
