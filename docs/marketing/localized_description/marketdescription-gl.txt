@@ -1,18 +1,18 @@
-Memorice calquera cousa con AkinDroid!
+Memoriza calquera cousa con AkinDroid!
 
 AnkiDroid permíteche aprender tarxetas eficientemente amosándochas xusto antes de que as esquezas. É completamente compatible co software de repetición espaciada Anki (incluíndo a sincronización), dispoñible para Windows, Linux e MacOS.
 
 Aprende todo tipo de cousas onde e cando queiras. Aproveita os tempos mortos nas viaxes no bus, na quenda do supermercado ou en calquera outra situación!
 
-Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available).
+Crea as túas propias barallas de tarxetas ou descárgaas de balde, agrupadas por diferentes idiomas e temas (dispoñibles máis de 6000).
 
-Add material through the desktop application Anki or directly through AnkiDroid. The application even supports adding material automatically from a dictionary!
+Engade material a través da aplicación de escritorio Anki ou directamente dende o AnkiDroid. A aplicación incluso permite engadir contido automaticamente dende un dicionario!
 
 ★ Características principais:
-• supported flashcard contents: text, images, sounds, LaTeX
-• spaced repetition (supermemo 2 algorithm)
+• contido soportado polas tarxetas: texto, imaxes, sons, LaTeX
+• repetición espazada (algoritmo supermemo 2)
 • integra síntese de voz
-• more than 6000 premade decks
+• máis de 6000 barallas xa creadas
 • widget de progreso
 • estatísticas detalladas
 • sincronización con AnkiWeb
@@ -21,17 +21,17 @@ Add material through the desktop application Anki or directly through AnkiDroid.
 ★ características adicionais:
 • escribir as respostas (opcional)
 • encerado
-• card editor/adder
-• card browser
+• editor/creador de cartons
+• explorador de cartóns
 • compatible con tabletas
-• import existing collection files (via Anki Desktop)
+• importar ficheiros de coleccións existentes (vía Anki de escritorio)
 • integración con dicionarios (ColorDict, GoldenDict, Leo.org, Aedict, diversos dicionarios en liña)
-• add cards by intent from other applications like dictionaries
+• engadir cartóns a partir doutras aplicacións, como dicionarios
 • soporte para fontes personalizadas
-• full backup system
+• sistemas completo de copia de seguranza
 • navegación tanto esvarando como tocando
 • personalizable
-• dynamic deck handling
-• night mode
+• xestión de barallas dinámica
+• modo noite
 • 27 idiomas
 • Todas as versións anteriores do AnkiDroid pódense baixar do sitio web

@@ -117,8 +117,8 @@
   <string name="notification_pref">通知</string>
   <string name="notification_pref_title">通知のタイミング</string>
   <string name="never_notify">通知なし</string>
-  <string name="notify_when_pending">AnkiDroidを表示していない間に進行していたデータ処理（例. 同期、バックアップ）が完了し、ユーザーの操作が再び可能な状態になった時 (*)</string>
-  <string name="notification_minimum_cards_due">(*) の時と、課題のカードが%d枚を超えている時</string>
+  <string name="notify_when_pending">待受状態（AnkiDroidを表示していない間に進行していたデータ処理（例. 同期、バックアップ）が完了し、ユーザーの操作が再開できる状態）</string>
+  <string name="notification_minimum_cards_due">待ち受け状態の時と、 課題のカードが%d枚を超えている時</string>
   <string name="notification_minimum_cards_due_vibrate">振動で通知</string>
   <string name="notification_minimum_cards_due_blink">ライト点滅で通知</string>
   <string name="timeout_answer_text">解答を自動的に表示</string>

@@ -113,12 +113,12 @@
   <string name="sync_sanity_failed">Na synchronisatie was de collectie in een inconsistente staat. Om dit probleem op te lossen zal AnkiDroid een volledige synchronisatie uitvoeren. Gelieve te kiezen welke zijde u wenst te behouden, of de operatie te onderbreken indien u liever later synchroniseert.</string>
   <string name="sync_media_sanity_failed">Synchronisatie van de media voltooid, maar het aantal mediabestanden komt niet overeen met dat op de server. De volgende keer zal een volledige synchronisatie van de media worden uitgevoerd om fouten te corrigeren.</string>
   <string name="sync_media_error">Fout tijdens het synchroniseren van mediagegevens.</string>
-  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
+  <string name="sync_media_error_check">Fout tijdens het synchroniseren van media. Een controle van de media wordt aanbevolen.</string>
   <string name="sync_sanity_local">Lokaal</string>
   <string name="sync_sanity_remote">Server</string>
   <string name="force_full_sync_title">Forceer complete synchronisatie</string>
   <string name="force_full_sync_summary">Bij volgende synchronisatie, wijzigingen forceren in één richting</string>
-  <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
+  <string name="full_sync_confirmation">De gevraagde wijziging vergt een volledige upload van de database wanneer u de volgende keer uw collectie synchroniseert. Indien u herhalingen of wijzigingen heeft op een ander apparaat dat nog niet is gesynchroniseerd, dan zullen zij verloren gaan. Wilt u verder gaan?</string>
+  <string name="full_sync_confirmation_upgrade">Vanwege een fout in een vorige versie van AnkiDroid, is het aan te raden om een volledige synchronisatie uit te voeren.</string>
   <string name="sync_error_501_upgrade_required">Gelieve te actualiseren naar de meest recente versie van AnkiDroid</string>
 </resources>

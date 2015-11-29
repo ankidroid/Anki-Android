@@ -85,7 +85,7 @@
   <string name="custom_study_review_ahead">Revisar antecipadamente</string>
   <string name="custom_study_random_selection">Estudar uma seleção aleatória de fichas</string>
   <string name="custom_study_preview_new">Pré-visualizar fichas novas</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_limit_tags">Limitar a etiquetas específicas</string>
   <string name="cardeditor_title_add_note">Adicionar nota</string>
   <string name="cardeditor_title_edit_card">Editar nota</string>
   <string name="discard_unsaved_changes">Fechar e perder a entrada atual?</string>

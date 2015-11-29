@@ -47,14 +47,14 @@
   <string name="send_feedback">Enviar suxestións</string>
   <string name="studyoptions_title">Deck overview</string>
   <string name="studyoptions_due_today">Pendentes hoxe:</string>
-  <string name="studyoptions_new_total">Total de cartas novas:</string>
+  <string name="studyoptions_new_total">Total de cartóns novos:</string>
   <string name="studyoptions_total_cards">Total de cartóns:</string>
   <string name="studyoptions_eta">Tempo estimado (min):</string>
   <string name="studyoptions_start">Study</string>
   <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">%1$d cartón pendente (%2$s)</item>
+    <item quantity="other">%1$d cartóns pendentes (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minute left</item>
@@ -91,7 +91,7 @@
   <string name="menu_suspend_card">Suspender cartón</string>
   <string name="menu_suspend_note">Suspender notación</string>
   <string name="menu_delete_note">Eliminar notación</string>
-  <string name="delete_note_message">¿Desexas realmente eliminar esta notacióne todos os seus cartóns?\n%s</string>
+  <string name="delete_note_message">¿Desexas realmente eliminar esta notación e todos os seus cartóns?\n%s</string>
   <string name="menu_select">Seleccionar texto</string>
   <string name="menu_search">Procurar en %1$s</string>
   <string name="menu_mark_note">Mark note</string>
@@ -119,10 +119,10 @@
   <string name="studyoptions_limit_reached">Daily study limit reached</string>
   <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Noraboa!Remataches polo de agora.</string>
-  <string name="studyoptions_congrats_more_rev">Acadouse o límite de repasos por hoxe, pero aínda hai cartas agardando a ser repasadas. Para unha memoria óptima, sopesa ampliar o límite diario nas opcións.</string>
-  <string name="studyoptions_congrats_more_new">Hai máis cartóns dispoñibles, pero o límite diario foi acadado. Podes ampliar o límite nas opcións, pero ten en conta que isto incrementará a carga de traballo do repaso a curto plazo.</string>
+  <string name="studyoptions_congrats_more_rev">Acadouse o límite de repasos por hoxe, pero aínda hai cartóns agardando ser repasados. Podes ampliar o límite diario nas opcións.</string>
+  <string name="studyoptions_congrats_more_new">Hai máis cartóns dispoñibles, pero o límite diario foi acadado. Podes ampliar o límite nas opcións, pero ten en conta que isto incrementará a carga de traballo do repaso a curto termo.</string>
   <string name="studyoptions_congrats_custom">Para estudar fóra da planificación normal, faga click no botón Estudo Personalizado abaixo.</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet</string>
+  <string name="studyoptions_no_cards_due">Aínda non hai cartóns pendentes</string>
   <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Sincronizar</string>
   <string name="cancel_sync_confirm">Queres cancelar a sincronización?</string>
@@ -132,7 +132,7 @@
   <string name="export_collection">Exportar a colección</string>
   <string name="export_deck">Exportar a baralla</string>
   <string name="nothing">Nada</string>
-  <string name="title_activity_template_editor">Card types</string>
+  <string name="title_activity_template_editor">Tipo de cartóns</string>
   <string name="card_template_editor_front">Front template</string>
   <string name="card_template_editor_back">Back template</string>
   <string name="card_template_editor_styling">Styling</string>
@@ -142,7 +142,7 @@
     <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
     <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
   </plurals>
-  <string name="invalid_template">A card could not be generated</string>
+  <string name="invalid_template">Non foi posible xerar un cartón</string>
   <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
   <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>

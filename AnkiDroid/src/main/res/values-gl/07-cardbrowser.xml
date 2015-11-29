@@ -51,8 +51,8 @@
   <string name="card_browser_unmark_card">Desmarcar notación</string>
   <string name="delete_card_title">Eliminar notación?</string>
   <string name="delete_card_message">Eliminar todos os cartóns desta notación?\nCampo de busca: %s</string>
-  <string name="card_browser_show_marked">Filter marked</string>
-  <string name="card_browser_show_suspended">Filter suspended</string>
+  <string name="card_browser_show_marked">Filtrar as marcadas</string>
+  <string name="card_browser_show_suspended">Filtrar as suspendidas</string>
   <string name="card_browser_search_by_tag">Filtrar por etiqueta</string>
   <string name="card_browser_tags_shown">Etiquetas: %1$s</string>
   <string name="card_browser_list_my_searches">As miñas buscas</string>
@@ -62,24 +62,24 @@
   <string name="card_browser_list_my_searches_new_search_error_empty_name">Non podes gardar unha busca se lle poñer un nome</string>
   <string name="card_browser_list_my_searches_new_search_error_dup">O nome xa existe</string>
   <string name="card_browser_list_my_searches_remove_content">Eliminar “%1$s”?</string>
-  <string name="card_browser_change_display_order">Change display order</string>
-  <string name="card_browser_change_display_order_title">Choose display order</string>
+  <string name="card_browser_change_display_order">Mudar a orde de presentación</string>
+  <string name="card_browser_change_display_order_title">Mudar a orde de presentación</string>
   <string name="card_browser_change_display_order_reverse">Selecciona un campo dúas veces para reservalo</string>
   <string name="card_details_question">Pregunta</string>
   <string name="card_details_answer">Resposta</string>
-  <string name="card_details_due">Due</string>
+  <string name="card_details_due">Pendentes</string>
   <string name="card_details_tags">Etiquetas</string>
-  <string name="card_browser_filtering_cards">Filtrando os cartóns...\nPreme o botón volver para cancelar</string>
+  <string name="card_browser_filtering_cards">Filtrando os cartóns...\nPreme no botón volver para cancelar</string>
   <string-array name="card_browser_order_labels">
-    <item>No sorting (faster)</item>
-    <item>By sort field</item>
+    <item>Sen ordenar (rápido)</item>
+    <item>Por campo de ordenación</item>
     <item>Por data de creación</item>
-    <item>By edited time</item>
-    <item>By changed time</item>
+    <item>Por data de edición</item>
+    <item>Por data de modificación</item>
     <item>By due time</item>
     <item>Por intervalo</item>
-    <item>By ease</item>
-    <item>By reviews</item>
-    <item>By lapses</item>
+    <item>Por facilidade</item>
+    <item>Por revisións</item>
+    <item>Por fallos</item>
   </string-array>
 </resources>

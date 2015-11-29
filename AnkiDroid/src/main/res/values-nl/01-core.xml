@@ -45,13 +45,13 @@
   <string name="settings">Instellingen</string>
   <string name="help">Help</string>
   <string name="send_feedback">Feedback versturen</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <string name="studyoptions_title">Kaartenoverzicht</string>
   <string name="studyoptions_due_today">Vandaag te overhoren:</string>
   <string name="studyoptions_new_total">Aantal nieuwe kaarten:</string>
   <string name="studyoptions_total_cards">Totaal aantal kaarten:</string>
   <string name="studyoptions_eta">Geschatte tijd (min):</string>
   <string name="studyoptions_start">Studeer nu</string>
-  <string name="study_more">Study more</string>
+  <string name="study_more">Studeer meer</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d kaart te gaan (%2$s)</item>
     <item quantity="other">%1$d kaarten te gaan (%2$s)</item>
@@ -61,7 +61,7 @@
     <item quantity="other">%d minuten over</item>
   </plurals>
   <plurals name="studied_cards_today">
-    <item quantity="one">Studied %1$d card in %2$s today</item>
+    <item quantity="one">%1$d kaarten in %2$s gestudeerd vandaag</item>
     <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
   <string name="type_answer_hint">Antwoord schrijven</string>
@@ -81,7 +81,7 @@
   <string name="undo_action_delete">memo verwijderen</string>
   <string name="undo_action_mark">markeer memo</string>
   <string name="unbury">Niet langer verbergen</string>
-  <string name="rename_deck">Rename deck</string>
+  <string name="rename_deck">Setnaam wijzigen</string>
   <string name="menu_add">Toevoegen</string>
   <string name="menu_add_note">Memo toevoegen</string>
   <string name="menu_my_account">Account synchroniseren</string>
@@ -105,7 +105,7 @@
   <string name="time_quantity_minutes">%d min</string>
   <string name="time_quantity_hours">%d h</string>
   <string name="time_quantity_days">%d d</string>
-  <string name="time_quantity_months">%.1f mo</string>
+  <string name="time_quantity_months">%.1f ma</string>
   <string name="time_quantity_years">%.1f jr</string>
   <string name="later">Later</string>
   <string name="rebuild_cram_deck">Stampset wordt opnieuw opgebouwd.\nEven geduld...</string>
@@ -114,10 +114,10 @@
   <string name="empty_cram_deck">Set om te stampen aan het leegmaken.\n Even geduld alstublieft...</string>
   <string name="custom_study_deck_name">Aangepaste studiesessie</string>
   <string name="custom_study_deck_exists">Gelieve eerst de bestaande aangepaste studieset te hernoemen.</string>
-  <string name="empty_deck">This deck is empty</string>
-  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-  <string name="studyoptions_limit_reached">Daily study limit reached</string>
-  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+  <string name="empty_deck">Deze set is leeg</string>
+  <string name="studyoptions_empty">Deze set is leeg. Druk op de + knop om nieuwe inhoud toe te voegen.</string>
+  <string name="studyoptions_limit_reached">De dagelijkse studielimiet is bereikt</string>
+  <string name="studyoptions_empty_schedule">Er zijn geen kaarten gepland om te studeren</string>
   <string name="studyoptions_congrats_finished">Gefeliciteerd! Je bent nu klaar.</string>
   <string name="studyoptions_congrats_more_rev">Je hebt de overhoringslimiet bereikt, maar er wachten nog kaarten om overhoord te worden. Voor een optimale geheugentraining, overweeg om de dagelijkse limiet te verhogen bij instellingen.</string>
   <string name="studyoptions_congrats_more_new">Er zijn meer nieuwe kaarten beschikbaar, maar de dagelijkse limiet is bereikt. Je kunt de limiet verhogen in de instellingen, maar houd er rekening mee dat dit de werklast voor de korte termijn zal verhogen.</string>
@@ -125,14 +125,14 @@
   <string name="studyoptions_no_cards_due">Nog geen kaarten te doen.</string>
   <string name="sd_card_not_mounted">Apparaatopslag niet aangesloten</string>
   <string name="button_sync">Synchroniseer</string>
-  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-  <string name="continue_sync">Continue sync</string>
-  <string name="sync_cancelled">Sync cancelled</string>
+  <string name="cancel_sync_confirm">Wilt u de synchronisatie annuleren?</string>
+  <string name="continue_sync">Ga verder met synchronisatie</string>
+  <string name="sync_cancelled">Synchronisatie geannuleerd</string>
   <string name="export">Exporteren</string>
-  <string name="export_collection">Export collection</string>
-  <string name="export_deck">Export deck</string>
+  <string name="export_collection">Verzameling exporteren</string>
+  <string name="export_deck">Set exporteren</string>
   <string name="nothing">Niets</string>
-  <string name="title_activity_template_editor">Card types</string>
+  <string name="title_activity_template_editor">Kaartypes</string>
   <string name="card_template_editor_front">Sjabloon van de voorkant</string>
   <string name="card_template_editor_back">Sjabloon van de achterkant</string>
   <string name="card_template_editor_styling">Stijl</string>
@@ -142,8 +142,8 @@
     <item quantity="one">Verwijder het “%2$s” kaarttype, en zijn %1$d kaart?</item>
     <item quantity="other">Verwijder het “%2$s” kaarttype, en zijn %1$d kaarten?</item>
   </plurals>
-  <string name="invalid_template">A card could not be generated</string>
+  <string name="invalid_template">De kaart kon niet worden aangemaakt</string>
   <string name="card_template_editor_would_delete_note">Het verwijderen van dit kaarttype zou er mogelijk voor zorgen dat een of meer notities worden verwijderd. Gelieve een nieuw kaarttype eerst te maken.</string>
-  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="read_write_permission_label">Lees en schrijf naar de AnkiDroid database</string>
+  <string name="read_write_permission_description">Sta de app toe om bestaande notities, kaarten, kaartypes en sets te raadplegen alsook nieuwe te maken</string>
 </resources>
