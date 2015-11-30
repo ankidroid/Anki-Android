@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="decks">Sets</string>
+  <string name="decks">Leersets</string>
   <string name="card_browser">Kaartenoverzicht</string>
   <string name="statistics">Statistieken</string>
   <string name="settings">Instellingen</string>
@@ -61,8 +61,8 @@
     <item quantity="other">%d minuten over</item>
   </plurals>
   <plurals name="studied_cards_today">
-    <item quantity="one">%1$d kaarten in %2$s gestudeerd vandaag</item>
-    <item quantity="other">Studied %1$d cards in %2$s today</item>
+    <item quantity="one">%1$d kaart in %2$s gestudeerd vandaag</item>
+    <item quantity="other">%1$d kaarten in %2$s gestudeerd vandaag</item>
   </plurals>
   <string name="type_answer_hint">Antwoord schrijven</string>
   <string name="show_answer">Toon antwoord</string>
@@ -71,7 +71,7 @@
   <string name="ease_button_good">Goed</string>
   <string name="ease_button_easy">Makkelijk</string>
   <string name="studyoptions_congrats_undo">Maak %s ongedaan</string>
-  <string name="menu_import">Importeer</string>
+  <string name="menu_import">Kaarten importeren</string>
   <string name="undo">Ongedaan maken</string>
   <string name="undo_action_review">laatste overhoring</string>
   <string name="undo_action_edit">bewerk memo</string>
@@ -96,9 +96,9 @@
   <string name="menu_search">Opzoeken in %1$s</string>
   <string name="menu_mark_note">Markeer memo</string>
   <string name="menu_unmark_note">Markering van memo opheffen</string>
-  <string name="new_deck">Maak set</string>
+  <string name="new_deck">Maak leerset</string>
   <string name="create">Maak</string>
-  <string name="new_dynamic_deck">Gefilterde set maken</string>
+  <string name="new_dynamic_deck">Gefilterde leerset maken</string>
   <string name="night_mode">Nachtmodus</string>
   <string name="directory_inaccessible">AnkiDroidmap is ontoegankelijk</string>
   <string name="time_quantity_seconds">%d s</string>
@@ -114,8 +114,8 @@
   <string name="empty_cram_deck">Set om te stampen aan het leegmaken.\n Even geduld alstublieft...</string>
   <string name="custom_study_deck_name">Aangepaste studiesessie</string>
   <string name="custom_study_deck_exists">Gelieve eerst de bestaande aangepaste studieset te hernoemen.</string>
-  <string name="empty_deck">Deze set is leeg</string>
-  <string name="studyoptions_empty">Deze set is leeg. Druk op de + knop om nieuwe inhoud toe te voegen.</string>
+  <string name="empty_deck">Deze leerset is leeg</string>
+  <string name="studyoptions_empty">Deze leerset is leeg. Druk op de + knop om nieuwe inhoud toe te voegen.</string>
   <string name="studyoptions_limit_reached">De dagelijkse studielimiet is bereikt</string>
   <string name="studyoptions_empty_schedule">Er zijn geen kaarten gepland om te studeren</string>
   <string name="studyoptions_congrats_finished">Gefeliciteerd! Je bent nu klaar.</string>
@@ -130,7 +130,7 @@
   <string name="sync_cancelled">Synchronisatie geannuleerd</string>
   <string name="export">Exporteren</string>
   <string name="export_collection">Verzameling exporteren</string>
-  <string name="export_deck">Set exporteren</string>
+  <string name="export_deck">Leerset exporteren</string>
   <string name="nothing">Niets</string>
   <string name="title_activity_template_editor">Kaartypes</string>
   <string name="card_template_editor_front">Sjabloon van de voorkant</string>
@@ -145,5 +145,5 @@
   <string name="invalid_template">De kaart kon niet worden aangemaakt</string>
   <string name="card_template_editor_would_delete_note">Het verwijderen van dit kaarttype zou er mogelijk voor zorgen dat een of meer notities worden verwijderd. Gelieve een nieuw kaarttype eerst te maken.</string>
   <string name="read_write_permission_label">Lees en schrijf naar de AnkiDroid database</string>
-  <string name="read_write_permission_description">Sta de app toe om bestaande notities, kaarten, kaartypes en sets te raadplegen alsook nieuwe te maken</string>
+  <string name="read_write_permission_description">Sta de app toe om bestaande notities, kaarten, kaartypes en leersets te raadplegen alsook nieuwe te maken</string>
 </resources>
