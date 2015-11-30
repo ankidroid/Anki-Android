@@ -1,7 +1,0 @@
-{
-    "formFactor": "tablet",
-    "orientation": "landscape",
-    "needsClipboard": true,
-    "stderrLog": "V",
-    "enableAdb": true
-}
