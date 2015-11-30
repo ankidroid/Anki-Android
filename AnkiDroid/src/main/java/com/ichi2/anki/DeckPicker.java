@@ -884,6 +884,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         // TODO: remove this before v2.5 final release
                         showDialogFragment(dialog);
                     }
+                    // Remember that we asked this user to take the survey
+                    preferences.edit().putBoolean("askedBetaSurvey", true).apply();                    
                     // Don't show new features dialog for development builds
                     preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
                     String ver = getResources().getString(R.string.updated_version, VersionUtils.getPkgVersionName());
