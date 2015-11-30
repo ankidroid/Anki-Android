@@ -77,10 +77,10 @@
   <string name="card_browser_font_size">Ridimensionamento carattere nel browser</string>
   <string name="col_path">Percorso della collezione</string>
   <string name="fullscreen_review">Modalità a schermo intero</string>
-  <string name="full_screen_off">Off</string>
-  <string name="full_screen_system">Hide the system bars</string>
-  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
+  <string name="full_screen_off">Disabilitato</string>
+  <string name="full_screen_system">Nascondi le barre di sistema</string>
+  <string name="full_screen_complete">Nascondi le barre di sistema e i pulsanti di risposta</string>
+  <string name="full_screen_error_gestures">È necessario abilitare i gesti per nascondere i pulsanti di risposta</string>
   <string name="gestures">Attiva i gesti</string>
   <string name="gestures_summ">Assegna gesti alle azioni come rispondere e modificare carte.</string>
   <string name="gestures_swipe_up">Scorri su</string>

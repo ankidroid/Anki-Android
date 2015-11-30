@@ -47,7 +47,7 @@
   <string name="backup_del_collection">Eliminar a colección e crear unha nova</string>
   <string name="backup_del_collection_question">Eliminar a colección e crear unha nova? Isto eliminará todos os teus progresos e todos os cartóns.</string>
   <string name="backup_full_sync_from_server">Sincronización completa dende o servidor</string>
-  <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
+  <string name="backup_full_sync_from_server_question">Sobrescribir a túa colección coa de AnkiWeb? Eliminarase todo o teu progreso de aprendizaxe e a información engadida dende a última sincronización.</string>
   <string name="error_handling_title">Xestión dos erros</string>
   <string name="error_handling_options">Opcións</string>
   <string name="backup_retry_opening">Tentar abrir de novo</string>
@@ -58,9 +58,9 @@
   <string name="backup_invalid_file_error">A copia seleccionada non é válida</string>
   <string name="backup_restore_select_title">Seleccionar unha copia para restaurar</string>
   <string name="backup_restore_no_backups">Sen copias dispoñibles neste dispositivo. Se tes copias no teu computador, cópiaas manualmente no cartafol do AnkiDroid.</string>
-  <string name="open_collection_failed_title">Collection not opened</string>
+  <string name="open_collection_failed_title">Colección non aberta</string>
   <string name="open_collection_failed_message">Database couldn’t be opened. It’s either not a real Anki database or has been corrupted.\n\nTouch “options” for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
-  <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
+  <string name="corrupt_db_message">A túa colección corrompeuse.\n\nPreme en \"opcións\" para restaurar dende unha copia, ou se isto non funciona, segue as seguintes instrucións para reparar manualmente a base de datos:\n%1$s</string>
   <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
   <string name="deck_repair_error">A colección no se puido reparar</string>
 </resources>
