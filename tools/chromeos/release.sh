@@ -12,7 +12,7 @@ elif [ $# -eq 1 ]; then
     exit 1
 fi
 
-SCRIPT_PATH=`dirname $0`
+SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 SOURCE_PATH=${SCRIPT_PATH%/*/*}
 
 # Make sure cws directory exists
