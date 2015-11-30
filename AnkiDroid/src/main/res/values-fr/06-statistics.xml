@@ -58,7 +58,7 @@
   <string formatted="false" name="stats_cumulative_correct_percentage">Pourcentage correct cumulé</string>
   <string name="stats_answers">Réponses</string>
   <string name="stats_minutes">Minutes</string>
-  <string name="stats_hours">s</string>
+  <string name="stats_hours">Heures</string>
   <string name="stats_percentage">Pourcentage</string>
   <string name="stats_period_month">1 mois</string>
   <string name="stats_period_year">1 an</string>
