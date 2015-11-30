@@ -904,10 +904,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
             preferences.edit().remove("useBackup").commit();
             preferences.edit().remove("intentAdditionInstantAdd").commit();
         }
-        if (previousVersionCode < 20500219) {
+
+        if (preferences.contains("fullscreenReview")) {
             // clear fullscreen flag as we use a integer
-            boolean old =preferences.getBoolean("fullscreenReview", false);
-            preferences.edit().putString("fullscreenMode", old ? "1": "0").commit();
+            try {
+                boolean old = preferences.getBoolean("fullscreenReview", false);
+                preferences.edit().putString("fullscreenMode", old ? "1": "0").commit();
+            } catch (ClassCastException e) {
+                // TODO:  can remove this catch as it was only here to fix an error in the betas
+                preferences.edit().remove("fullscreenMode").commit();
+            }
+            preferences.edit().remove("fullscreenReview").commit();
         }
     }
 
