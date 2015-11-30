@@ -15,7 +15,7 @@ SOURCE_PATH=${SCRIPT_PATH%/*/*}
 mkdir -p cws
 
 # Use --for-webstore instead of --unpacked to remove potential debug stuff
-python $1 --metadata $SCRIPT_PATH/release.crx.json --for-webstore --output cws/ankidroid.zip --destructive $2
+python2 $1 --metadata $SCRIPT_PATH/release.crx.json --for-webstore --output cws/ankidroid.zip --destructive $2
 
 # Unzip CWS package
 rm -rf cws/unpacked
