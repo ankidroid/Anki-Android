@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# This script requires jq: http://stedolan.github.io/jq/
+# Check if jq exists
+command -v jq >/dev/null 2>&1 || { echo >&2 "This script requires jq (http://stedolan.github.io/jq/) but it's not installed. Aborting."; exit 1; }
 
 # Check for apk file
 if [ $# -lt 2 ]; then
