@@ -15,11 +15,12 @@ SOURCE_PATH=${SCRIPT_PATH%/*/*}
 mkdir -p cws
 
 # Use --for-webstore instead of --unpacked to remove potential debug stuff
-python2 $1 --metadata $SCRIPT_PATH/release.crx.json --for-webstore --output cws/ankidroid.zip --destructive $2
+python2 $1 --metadata $SCRIPT_PATH/release.crx.json --for-webstore --output cws/build.zip --destructive $2
 
 # Unzip CWS package
 rm -rf cws/unpacked
-unzip -q cws/ankidroid.zip -d cws/unpacked
+unzip -q cws/build.zip -d cws/unpacked
+rm cws/build.zip
 
 # Optimize image for CWS
 cp $SOURCE_PATH/docs/marketing/chrome-web-store/icon.png cws/unpacked/
