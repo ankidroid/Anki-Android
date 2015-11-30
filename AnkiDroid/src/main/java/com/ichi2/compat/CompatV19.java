@@ -21,7 +21,6 @@ import com.ichi2.anki.R;
 @TargetApi(19)
 public class CompatV19 extends CompatV16 implements Compat {
     private static final int ANIMATION_DURATION = 200;
-    private static final int FULLSCREEN_ALL_GONE = 2;
 
     @Override
     public void setFullScreen(final AbstractFlashcardViewer a) {
