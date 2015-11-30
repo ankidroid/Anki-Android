@@ -3,9 +3,12 @@
 # Check if jq exists
 command -v jq >/dev/null 2>&1 || { echo >&2 "This script requires jq (http://stedolan.github.io/jq/) but it's not installed. Aborting."; exit 1; }
 
-# Check for apk file
-if [ $# -lt 2 ]; then
-    echo "missing conversion script or apk file"
+# Check opts
+if [ $# -eq 0 ]; then
+    echo "missing path to apk_to_crx.py conversion script (get it from https://console.developers.google.com/storage/browser/arc-sdk/ for the current stable version of Chrome)"
+    exit 1
+elif [ $# -eq 1 ]; then
+    echo "missing path to apk file"
     exit 1
 fi
 
