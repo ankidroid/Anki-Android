@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d kaart getoont</item>
-    <item quantity="other">%d kaarten getoont</item>
+    <item quantity="one">%d kaart getoond</item>
+    <item quantity="other">%d kaarten getoond</item>
   </plurals>
   <string name="card_browser_all_decks">Alle leersets</string>
   <string name="card_browser_delete_card">Memo verwijderen</string>
@@ -51,8 +51,8 @@
   <string name="card_browser_unmark_card">markering verwijderen van memo</string>
   <string name="delete_card_title">Memo verwijderen</string>
   <string name="delete_card_message">Alle kaarten gemaakt met deze memo echt verwijderen?\nZoekveld: %s</string>
-  <string name="card_browser_show_marked">Filter gemarkeerd</string>
-  <string name="card_browser_show_suspended">Filter verwijderd</string>
+  <string name="card_browser_show_marked">Filter op gemarkeerd</string>
+  <string name="card_browser_show_suspended">Filteren op verwijderd</string>
   <string name="card_browser_search_by_tag">Filteren op tag</string>
   <string name="card_browser_tags_shown">Tags: %1$s</string>
   <string name="card_browser_list_my_searches">Mijn zoekopdrachten</string>
@@ -76,7 +76,7 @@
     <item>Op tijd aanmaak</item>
     <item>Op tijd laatst bewerkt</item>
     <item>Op gewijzigde tijd</item>
-    <item>Op voorziene tijd</item>
+    <item>Op geplande tijd</item>
     <item>Op interval</item>
     <item>Op gemakkelijkheid</item>
     <item>Op overhoring</item>

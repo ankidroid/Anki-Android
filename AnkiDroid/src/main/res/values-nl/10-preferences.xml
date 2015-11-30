@@ -42,7 +42,7 @@
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Algemene instellingen</string>
   <string name="pref_cat_reviewing">Overhoren</string>
-  <string name="pref_cat_reviewing_summ">Niet-set-specifieke instellingen voor herhaling</string>
+  <string name="pref_cat_reviewing_summ">Niet-set-specifieke instellingen voor overhoren</string>
   <string name="pref_cat_reviewer_behaviour">Gedrag</string>
   <string name="pref_cat_flashcard">Weergave</string>
   <string name="pref_cat_whiteboard">Schrijfbord</string>
@@ -52,7 +52,7 @@
   <string name="pref_cat_gestures">Gebaren</string>
   <string name="pref_cat_gestures_summ">Gebruik tikken en vegen in plaats van knoppen</string>
   <string name="pref_cat_actions">Acties</string>
-  <string name="pref_cat_advanced">Geadvanceerd</string>
+  <string name="pref_cat_advanced">Geavanceerd</string>
   <string name="pref_cat_advanced_summ">Optimalisatie en experimentele functies</string>
   <string name="pref_cat_performance">Prestaties</string>
   <string name="pref_cat_workarounds">Tijdelijke oplossingen</string>
@@ -68,13 +68,13 @@
   <string name="text_selection_click_summ">Zet dit aan als tekstselectie via met een lange klik niet werkt</string>
   <string name="dictionary">Opzoeken in woordenlijst</string>
   <string name="reset_languages">Reset talen</string>
-  <string name="reset_languages_summ">Reset taalopdrachten (voor tekst-naar-spraak en woordenboeken) voor alle leersets. Reset specifieke leerset-opdrachten op het leerset uitkiezer</string>
+  <string name="reset_languages_summ">Reset de taalaanduidingen (voor tekst-naar-spraak en woordenboeken) voor alle sets. Voor het resetten van specifieke sets selecteer de set.</string>
   <string name="reset_languages_question">Alle taalopdrachten terugzetten?</string>
   <string name="reset_confirmation">Alle staten opnieuw instellen</string>
   <string name="card_zoom">Kaart zoom</string>
   <string name="image_zoom">Afbeelding zoom</string>
   <string name="button_size">Grootte antwoordknop</string>
-  <string name="card_browser_font_size">Lettertype aanpassen van Kaart Verkenner</string>
+  <string name="card_browser_font_size">Lettertypegrootte aanpassen van kaartverkenner</string>
   <string name="col_path">Pad van collecties</string>
   <string name="fullscreen_review">Volledig schermmodus</string>
   <string name="full_screen_off">Uit</string>
@@ -98,7 +98,7 @@
   <string name="double_scrolling_gap_summ">Verdubbel de scroll-afstand voor eReader</string>
   <string name="swipe_sensitivity">Veeggevoeligheid</string>
   <string name="tts">Tekst-naar-spraak</string>
-  <string name="tts_summ">Vraag en antwoord oplezen als geen geluidsbestand is opgenomen</string>
+  <string name="tts_summ">Vraag en antwoord voorlezen als er geen geluidsbestand is opgenomen</string>
   <string name="sync_fetch_missing_media">Media downloaden</string>
   <string name="sync_fetch_missing_media_summ">Haal automatisch ontbrekende media op tijdens synchronisatie.</string>
   <string name="sync_account">AnkiWeb account</string>
@@ -121,11 +121,11 @@
   <string name="notification_minimum_cards_due">Meer dan %d kaarten te doen</string>
   <string name="notification_minimum_cards_due_vibrate">Trillen</string>
   <string name="notification_minimum_cards_due_blink">Licht knipperen</string>
-  <string name="timeout_answer_text">Vanzelf antwoord tonen</string>
+  <string name="timeout_answer_text">Automatisch het antwoord tonen</string>
   <string name="timeout_answer_summ">Toon het antwoord automatisch zonder tussenkomst van de gebruiker</string>
-  <string name="timeout_answer_seconds">Tijd om het antwoord te laten zien</string>
+  <string name="timeout_answer_seconds">Tijd om het antwoord te tonen</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
-  <string name="timeout_question_seconds">Tijd om de volgende vraag te laten zien</string>
+  <string name="timeout_question_seconds">Tijd om de volgende vraag te tonen</string>
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Taal selecteren</string>
   <string name="safe_display">Veilige weergavemodus</string>
@@ -151,7 +151,7 @@
   <string name="pref_keep_screen_on_summ">Schermtimeout uitschakelen</string>
   <string name="convert_fen_text">Schaaknotaties</string>
   <string name="filter_google_translate">Van Google Translate</string>
-  <string name="filter_google_translate_summ">Gewoon woord en vertaling opslaan</string>
+  <string name="filter_google_translate_summ">Gewoon het woord met de vertaling opslaan</string>
   <string name="convert_fen_text_summ">Teken schaakbord met de Forsyth-Edwards notering. Voor de notering gebruik de [fen][/fen] tags.</string>
   <string name="enable_api_title">AnkiDroid API inschakelen</string>
   <string name="enable_api_summary">Laat andere apps verbinding maken met AnkiDroid en gegevens zonder uw tussenkomst lezen/schrijven</string>
@@ -164,7 +164,7 @@
   </plurals>
   <string name="deck_conf_new_cards">Nieuwe kaarten</string>
   <string name="deck_conf_rev_cards">Overhoringen</string>
-  <string name="deck_conf_lps_cards">Ronden</string>
+  <string name="deck_conf_lps_cards">Missers</string>
   <string name="deck_conf_general">Algemeen</string>
   <string name="deck_conf_steps">Stappen (in minuten)</string>
   <string name="deck_conf_order">Volgorde</string>
@@ -178,14 +178,14 @@
   <string name="deck_conf_new_bury_summ">Gerelateerde nieuwe kaarten worden geblokkeerd tot de volgende dag</string>
   <string name="deck_conf_rev_bury">Blokkeer gerelateerde overhooropdracht</string>
   <string name="deck_conf_rev_bury_summ">Gerelateerde overhooropdrachten worden geblokkeerd tot de volgende dag</string>
-  <string name="deck_conf_easy_bonus">Gemakkelijk bonus</string>
+  <string name="deck_conf_easy_bonus">Bonus bij gemakkelijk</string>
   <string name="deck_conf_ivl_fct">Intervalsfactor</string>
   <string name="deck_conf_max_ivl">Grootste interval</string>
   <string name="deck_conf_new_lps_ivl">Nieuw interval</string>
   <string name="deck_conf_min_ivl">Kleinste interval</string>
-  <string name="deck_conf_leech_thres">Afneem drempel</string>
+  <string name="deck_conf_leech_thres">Drempel voor moeilijke kaart</string>
   <string name="deck_conf_fails">XXX mislukt</string>
-  <string name="deck_conf_leech_action">afneem actie</string>
+  <string name="deck_conf_leech_action">Actie bij moeilijke kaart</string>
   <string name="deck_conf_max_time">Maximale antwoordtijd</string>
   <string name="deck_conf_seconds">XXX seconden</string>
   <string name="deck_conf_timer">Toon stopwatch</string>
@@ -199,18 +199,18 @@
   <string name="deck_conf_reset_title">Standaardinstellingen herstellen</string>
   <string name="deck_conf_reset_message">Standaardwaarden instellen voor de huidige set aan instellingen?</string>
   <string name="deck_conf_add">Configuratie toevoegen</string>
-  <string name="deck_conf_add_summ">Maak een kopie van de huidige set aan instellingen</string>
+  <string name="deck_conf_add_summ">Maak een kopie van de huidige groep instellingen</string>
   <string name="deck_conf_remove">Verwijderen</string>
   <string name="deck_conf_remove_title">Verwijderen</string>
   <string name="deck_conf_remove_message">Huidige set aan instellingen verwijderen?</string>
   <string name="deck_conf_set_subdecks">Instellen voor alle subsets</string>
   <plurals name="deck_conf_set_subdecks_summ">
     <item quantity="one">%s subset zal gebruikmaken van deze groep</item>
-    <item quantity="other">%s subsets zal gebruikmaken van deze groep</item>
+    <item quantity="other">%s subsets zullen gebruikmaken van deze groep</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Instellen voor alle subsets</string>
   <string name="deck_conf_set_subdecks_message">Huidige set aan instellingen laten gelden voor alle subsets van deze set?</string>
-  <string name="pref_browser_editor_font">Letter browser/bewerker</string>
+  <string name="pref_browser_editor_font">Lettertype browser/bewerker</string>
   <string name="deck_conf_cram_filter">Filter</string>
   <string name="deck_conf_cram_options">Opties</string>
   <string name="deck_conf_cram_search">Zoeken</string>
