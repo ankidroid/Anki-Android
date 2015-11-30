@@ -59,7 +59,6 @@
   <string name="log_in">Iniciar sesión</string>
   <string name="sign_up_description">¿No tienes una cuenta de AnkiWeb? ¡Es gratis!</string>
   <string name="sign_up">Regístrate</string>
-  <string name="sign_up_terms">Al seleccionar <i>Regístrate</i>, confirmas que has leído y aceptas nuestros <a href="https://ankiweb.net/account/terms">términos de uso</a>.</string>
   <string name="logged_as">Conectado como</string>
   <string name="log_out">Cerrar sesión</string>
   <string name="alert_logging_message">Iniciando sesión&#8230;</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">La sincronización de los archivos multimedia se completó, pero el número de archivos no coincide con el del servidor. La próxima sincronización será completa para corregir cualquier error.</string>
   <string name="sync_media_error">Error al sincronizar datos multimedia</string>
   <string name="sync_media_error_check">Error al sincronizar datos multimedia. Se recomienda una comprobación de los archivos multimedia.</string>
-  <string name="register_error">Se ha producido un error. Inténtalo de nuevo más tarde.</string>
-  <string name="register_title">Registrar cuenta</string>
-  <string name="register_mismatch">El nombre de usuario/contraseña repetido no coincide o está vacío. Por favor, vuelve a introducirlo.</string>
-  <string name="registering_message">Creando cuenta.\nPor favor, espera...</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Remoto</string>
   <string name="force_full_sync_title">Forzar sincronización completa</string>

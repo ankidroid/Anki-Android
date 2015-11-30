@@ -44,7 +44,7 @@
   <string name="check_db_acknowledge">Cơ sở dữ liệu đã được kiểm tra</string>
   <string name="check_db_acknowledge_shrunk">Cơ sở dữ liệu đã được kiểm tra và tối ưu hóa. \nRút gọn bởi %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Xóa tập thẻ</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
   <string name="delete_deck_title">Xóa tập thẻ</string>
   <plurals name="delete_deck_message">
     <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>

@@ -190,6 +190,6 @@
   </plurals>
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">Bu deste zaten var.</string>
-  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks.</string>
+  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
   <string name="filtered_deck_name">Filtreli Deste</string>
 </resources>

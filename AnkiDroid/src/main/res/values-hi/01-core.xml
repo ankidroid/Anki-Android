@@ -122,7 +122,7 @@
   <string name="studyoptions_congrats_more_rev">आज की समीक्षा की सीमा तक पहुँच गया है, लेकिन वहाँ अभी भी कार्ड की समीक्षा की जा करने के लिए इंतज़ार कर रहे हैं। इष्टतम स्मृति के लिए, विकल्प में दैनिक सीमा बढ़ाने पर विचार करें।</string>
   <string name="studyoptions_congrats_more_new">वहाँ और अधिक नए कार्ड उपलब्ध हैं, लेकिन दैनिक सीमा तक पहुँच गया है। आप विकल्पों में सीमा में वृद्धि कर सकते हैं, लेकिन कि यह अपने अल्पकालिक समीक्षा काम का बोझ बढ़ जाएगा मन में भालू कृपया।</string>
   <string name="studyoptions_congrats_custom">सामान्य समय के बाहर का अध्ययन करने के लिए, कस्टम अध्ययन बटन नीचे क्लिक करें।</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet</string>
   <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">सिंक</string>
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
@@ -137,7 +137,7 @@
   <string name="card_template_editor_back">Back template</string>
   <string name="card_template_editor_styling">Styling</string>
   <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <string name="card_template_editor_cant_delete">At least one card type is required</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
     <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
@@ -145,6 +145,5 @@
   <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
-        models, and decks, as well as create new ones.</string>
+  <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

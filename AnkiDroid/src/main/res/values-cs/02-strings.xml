@@ -53,7 +53,7 @@
   <string name="add_tag">Add tag</string>
   <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">Filtrovat tagy</string>
-  <string name="no_tags">You haven’t added any tags yet.</string>
+  <string name="no_tags">You haven’t added any tags yet</string>
   <string name="sdcard_missing_message">SD karta je nedostupná, protože se používá jako úložiště USB. Odpojte USB pro přístup ke svým balíkům.</string>
   <string name="updated_version">Updated to version %s</string>
   <string name="enable_whiteboard">Povolit Tabuly</string>
@@ -162,7 +162,7 @@
   <string name="steps_error">Kroky musí být číslo větší než 0</string>
   <string name="steps_min_error">Je požadován alespoň jeden krok</string>
   <string name="sched_end">(konec)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
+  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
   <string name="sched_has_buried">Některé související nebo pozastavené karty byly odloženy do pozdější relace.</string>
   <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
@@ -198,7 +198,7 @@
     <item quantity="other">%s years</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
-  <string name="decks_rename_exists">That deck already exists.</string>
-  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks.</string>
+  <string name="decks_rename_exists">That deck already exists</string>
+  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
   <string name="filtered_deck_name">Filtered Deck</string>
 </resources>

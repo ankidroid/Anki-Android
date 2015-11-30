@@ -91,5 +91,5 @@
   <string name="title_activity_translation">Перевод</string>
   <string name="title_activity_load_pronounciation">Произношение</string>
   <string name="title_activity_search_image">Google Image Search</string>
-  <string name="network_no_connection">No connection.</string>
+  <string name="network_no_connection">No connection</string>
 </resources>

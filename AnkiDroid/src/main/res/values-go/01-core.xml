@@ -146,6 +146,5 @@
   <string name="card_template_editor_would_delete_note"> Usniman þis kartahaidaus tawidedi aina fawanda aiþþau 
         managizo fawandaizo meleine. Skapei þata frumist niujata kartahaidu.</string>
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
-        models, and decks, as well as create new ones.</string>
+  <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

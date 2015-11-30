@@ -149,6 +149,5 @@
   <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note">Usunięcie typu karty może spowodować usunięcie jednej lub większej ilości notatek. Proszę o utworzenie najpierw nowej karty.</string>
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">Allow the application to be able to access existing notes, cards,
-        models, and decks, as well as create new ones.</string>
+  <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

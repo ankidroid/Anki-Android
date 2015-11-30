@@ -59,7 +59,6 @@
   <string name="log_in">Đăng nhập</string>
   <string name="sign_up_description">Không có tài khoản AnkiWeb? Nó miễn phí!</string>
   <string name="sign_up">Đăng ký</string>
-  <string name="sign_up_terms">By touching <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
   <string name="logged_as">Đăng nhập như</string>
   <string name="log_out">Đăng xuất</string>
   <string name="alert_logging_message">Đăng nhập, xin vui lòng chờ...</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn’t agree with the server. The next media sync will be full to correct any error.</string>
   <string name="sync_media_error">Error syncing media data</string>
   <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
-  <string name="register_error">An error occurred. Try again later.</string>
-  <string name="register_title">Đăng ký tài khoản</string>
-  <string name="register_mismatch">Việc nhắc lại tên người dùng/mật khẩu không khớp hoặc đang để trống.</string>
-  <string name="registering_message">Đang tạo tài khoản&#8230;</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Remote</string>
   <string name="force_full_sync_title">Force full sync</string>

@@ -59,7 +59,6 @@
   <string name="log_in">Влизане</string>
   <string name="sign_up_description">Don’t have an AnkiWeb account? It’s free!</string>
   <string name="sign_up">Регистрирайте се</string>
-  <string name="sign_up_terms">By touching <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
   <string name="logged_as">Влез като</string>
   <string name="log_out">Изход</string>
   <string name="alert_logging_message">Регистриране, моля, изчакайте...</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn’t agree with the server. The next media sync will be full to correct any error.</string>
   <string name="sync_media_error">Error syncing media data</string>
   <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
-  <string name="register_error">An error occurred. Try again later.</string>
-  <string name="register_title">Register account</string>
-  <string name="register_mismatch">The username/password repetition doesn’t match or is empty.</string>
-  <string name="registering_message">Creating account&#8230;</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Remote</string>
   <string name="force_full_sync_title">Force full sync</string>

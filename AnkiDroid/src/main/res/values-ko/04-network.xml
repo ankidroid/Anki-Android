@@ -59,7 +59,6 @@
   <string name="log_in">로그인</string>
   <string name="sign_up_description">AnkiWeb 계정이 없으십니까? 무료입니다!</string>
   <string name="sign_up">가입</string>
-  <string name="sign_up_terms"><i>가입</i>을 선택하면 AnkiWeb의 <a href="https://ankiweb.net/account/terms">이용 약관</a>을 읽고 동의한 것으로 확인합니다.</string>
   <string name="logged_as">다음 사용자로 로그인 됨</string>
   <string name="log_out">로그아웃</string>
   <string name="alert_logging_message">로그인하는 중, 잠시 기다려 주십시오...</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">미디어 동기화는 마쳤지만, 미디어 갯수가 서버와 맞지 않습니다. 오류를 해결하기 위해 다음에는 미디어 완전 동기화가 필요합니다.</string>
   <string name="sync_media_error">미디어 데이터 동기화 에러.</string>
   <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
-  <string name="register_error">오류가 발생 했습니다. 나중에 다시 시도 하십시오.</string>
-  <string name="register_title">계정 등록</string>
-  <string name="register_mismatch">사용자 이름/암호 재입력이 일치하지 않거나 비어 있습니다. 다시 입력 하십시오.</string>
-  <string name="registering_message">계정 생성중. \n 잠시 기다리세요...</string>
   <string name="sync_sanity_local">장치</string>
   <string name="sync_sanity_remote">서버</string>
   <string name="force_full_sync_title">강제로 전체 동기화</string>

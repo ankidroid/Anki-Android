@@ -59,7 +59,6 @@
   <string name="log_in">Accedi</string>
   <string name="sign_up_description">Non hai un account AnkiWeb? È gratis!</string>
   <string name="sign_up">Registrati</string>
-  <string name="sign_up_terms">Toccando <i>Registrati</i>, confermi di avere letto e di accettare le nostre <a href="https://ankiweb.net/account/terms">condizioni d\'utilizzo</a>.</string>
   <string name="logged_as">Connesso come</string>
   <string name="log_out">Esci</string>
   <string name="alert_logging_message">Accesso in corso, attendi...</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">Sincronizzazione dei contenuti multimediali terminata, ma il conteggio dei media non corrisponde con il server. La prossima volta verrà eseguita una sincronizzazione completa per correggere eventuali errori.</string>
   <string name="sync_media_error">Errore di sincronizzazione dei dati multimediali.</string>
   <string name="sync_media_error_check">Errore durante la sincronizzazione di media. Si raccomanda un controllo del media.</string>
-  <string name="register_error">Si è verificato un errore. Riprova più tardi.</string>
-  <string name="register_title">Registra account</string>
-  <string name="register_mismatch">La ripetizione del nome utente/password non corrisponde o è vuota. Reinseriscili.</string>
-  <string name="registering_message">Creo account.\nAttendi...</string>
   <string name="sync_sanity_local">Locale</string>
   <string name="sync_sanity_remote">Remoto</string>
   <string name="force_full_sync_title">Forza sincronizzazione completa</string>

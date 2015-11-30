@@ -44,7 +44,7 @@
   <string name="check_db_acknowledge">Database checked</string>
   <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Изтрий колода</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
   <string name="delete_deck_title">Изтрий колода</string>
   <plurals name="delete_deck_message">
     <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
@@ -63,7 +63,7 @@
   </string-array>
   <string name="preview_title">Preview</string>
   <string name="reset_card_dialog_title">Начално състояние на прогреса на картата</string>
-  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
   <string name="reset_card_dialog_acknowledge">Card reset</string>
   <string name="reschedule_card_dialog_title">Reschedule card</string>
   <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>

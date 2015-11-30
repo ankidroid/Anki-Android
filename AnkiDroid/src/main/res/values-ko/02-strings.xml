@@ -156,7 +156,7 @@
   <string name="steps_error">단계는 0보다 큰 숫자여야 합니다.</string>
   <string name="steps_min_error">적어도 하나 이상의 단계가 필요합니다.</string>
   <string name="sched_end">(끝)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
+  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
   <string name="sched_has_buried">관련되거나 집어넣은 일부 카드가 내일까지 연기되었습니다.</string>
   <string name="tag_editor_add_feedback">\"%1$s\" 추가를 확인하려면 \"%2$s\" 누르세요</string>
   <string name="tag_editor_add_feedback_existing">기존 태그 \"%1$s\" 선택됨</string>
@@ -180,7 +180,7 @@
     <item quantity="other">%s years</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
-  <string name="decks_rename_exists">That deck already exists.</string>
-  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks.</string>
+  <string name="decks_rename_exists">That deck already exists</string>
+  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
   <string name="filtered_deck_name">Filtered Deck</string>
 </resources>

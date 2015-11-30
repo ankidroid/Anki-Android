@@ -44,7 +44,7 @@
   <string name="check_db_acknowledge">Tietokanta tarkistettu</string>
   <string name="check_db_acknowledge_shrunk">Tietokanta tarkistettu ja optimoitu.\nKoko pieneni %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Poista korttipakka</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted.</string>
+  <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
   <string name="delete_deck_title">Poista korttipakka?</string>
   <plurals name="delete_deck_message">
     <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>

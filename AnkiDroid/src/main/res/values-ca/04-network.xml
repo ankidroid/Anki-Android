@@ -59,7 +59,6 @@
   <string name="log_in">Inicia la sessió</string>
   <string name="sign_up_description">No teniu un compte d\'AnkiWeb? És gratuït!</string>
   <string name="sign_up">Registreu-vos</string>
-  <string name="sign_up_terms">Tocant a <i>inscriure\'s</i>, vostè confirma que ha llegit i accepta les <a href="https://ankiweb.net/account/terms"> condicions d\'ús</a>.</string>
   <string name="logged_as">Heu entrat com a</string>
   <string name="log_out">Desconnecta</string>
   <string name="alert_logging_message">S\'està iniciant la sessió, un moment...</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">S\'ha completat la sincronització dels media, però el nombre dels media no concorda amb el del servidor. La propera sincronització serà completa per tal de corregir qualsevol error.</string>
   <string name="sync_media_error">S\'ha produït un error en sincronitzar les dades dels media.</string>
   <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
-  <string name="register_error">S\'ha produït un error Si us plau proveu de nou més tard.</string>
-  <string name="register_title">Registreu el compte</string>
-  <string name="register_mismatch">Els noms d\'usuari o les contrasenyes no coincideixen o estàn buits. Torneu-ho a intentar.</string>
-  <string name="registering_message">S\'està creant el compte. \nEspereu...</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Remot</string>
   <string name="force_full_sync_title">Forçar sincronització completa</string>

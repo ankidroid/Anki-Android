@@ -59,7 +59,6 @@
   <string name="log_in">Logga in</string>
   <string name="sign_up_description">Har du inget AnkiWeb-konto? Det är gratis!</string>
   <string name="sign_up">Registrera dig</string>
-  <string name="sign_up_terms">Genom att klicka <i>Registrera dig</i>, bekräftar du att du läst och går med på vårt <a href="https://ankiweb.net/account/terms">användaravtal</a>.</string>
   <string name="logged_as">Inloggad som</string>
   <string name="log_out">Logga ut</string>
   <string name="alert_logging_message">Loggar in, var god vänta...</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">Mediasynkroniseringen slutfördes, men antalet mediafiler stämmer inte överens med antalet på servern. Nästa mediasynkronisering kommer bli en fullständig synkronisering för att rätta till det som är fel.</string>
   <string name="sync_media_error">Fel vid synkronisering av medieinformation.</string>
   <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
-  <string name="register_error">Ett fel har uppstått. Försök igen senare.</string>
-  <string name="register_title">Registrera konto</string>
-  <string name="register_mismatch">Repetitionen av användarnamn/lösenord matchar inte eller är tom. Försök igen.</string>
-  <string name="registering_message">Skapar konto.\nVar god vänta...</string>
   <string name="sync_sanity_local">Lokal</string>
   <string name="sync_sanity_remote">Server</string>
   <string name="force_full_sync_title">Framtvinga fullständig synkronisering</string>

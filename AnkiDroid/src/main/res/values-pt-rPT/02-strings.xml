@@ -159,7 +159,7 @@
   <string name="steps_error">Número de passos deve ser maior que 0</string>
   <string name="steps_min_error">É necessário pelo menos um passo</string>
   <string name="sched_end">(fim)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu.</string>
+  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
   <string name="sched_has_buried">Algumas fichas relacionadas ou enterradas foram adiadas para amanhã.</string>
   <string name="tag_editor_add_feedback">Toque em \"%2$s\" para confirmar a adição de \"%1$s\"</string>
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>

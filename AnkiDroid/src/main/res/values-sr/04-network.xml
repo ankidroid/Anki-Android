@@ -59,7 +59,6 @@
   <string name="log_in">Пријави се</string>
   <string name="sign_up_description">Немате AnkiWeb налог? Бесплатан је!</string>
   <string name="sign_up">Региструј</string>
-  <string name="sign_up_terms">Притиском <i>Региструј</i>, потврђујете да сте прочитали и да се слажете са нашим <a href="https://ankiweb.net/account/terms">условима коришћења</a>.</string>
   <string name="logged_as">Prijavljen kao</string>
   <string name="log_out">Odjavi se</string>
   <string name="alert_logging_message">Prijavljivanje u toku, molimo da sačekate...</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">Синхронизација медија датотека је завршена, али број медија датотека на вашем мобилном уређају се не слаже са бројем на серверу. При следећој синхронизацији ће бити уклоњене све грешке.</string>
   <string name="sync_media_error">Грешка у синхронизацији медија података.</string>
   <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
-  <string name="register_error">Дошло је до грешке. Покушајте касније.</string>
-  <string name="register_title">Регистровати</string>
-  <string name="register_mismatch">Име и/или лозинка не одговарају или су празни. Унесите их поново.</string>
-  <string name="registering_message">Креирање налога.\nМолим, сачекајте...</string>
   <string name="sync_sanity_local">Локално</string>
   <string name="sync_sanity_remote">Удаљени приступ</string>
   <string name="force_full_sync_title">Уради потпуну синхронизацију</string>

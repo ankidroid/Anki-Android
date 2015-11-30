@@ -59,7 +59,6 @@
   <string name="log_in">Atgagg</string>
   <string name="sign_up_description">Ni habaizu AnkiNati kawtsjon? Arwjo ist!</string>
   <string name="sign_up">Anamelei</string>
-  <string name="sign_up_terms">By touching <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
   <string name="logged_as">Atgaggans swe</string>
   <string name="log_out">Galeiþ</string>
   <string name="alert_logging_message">Atgaggand&#8230;</string>
@@ -115,10 +114,6 @@
   <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn’t agree with the server. The next media sync will be full to correct any error.</string>
   <string name="sync_media_error">Error syncing media data</string>
   <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
-  <string name="register_error">Airzei warþ. Gakiusei spediza aftra.</string>
-  <string name="register_title">Anamelei kawtsjon</string>
-  <string name="register_mismatch">Aftra meliþ tgagganamo/gamotawaurd galeik nist þau laus ist.</string>
-  <string name="registering_message">Skapjand kawtsjon&#8230;</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Fairra</string>
   <string name="force_full_sync_title">Force full sync</string>
