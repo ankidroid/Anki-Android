@@ -1969,6 +1969,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     }
                 }
                 CardBrowser.clearSelectedDeck();
+                // TODO: if we had "undo delete note" like desktop client then we won't need this.
+                getCol().clearUndo();
             }
 
 
