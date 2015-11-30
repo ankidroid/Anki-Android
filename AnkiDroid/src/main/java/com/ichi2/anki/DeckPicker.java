@@ -95,7 +95,6 @@ import net.i2p.android.ext.floatingactionbutton.FloatingActionButton;
 import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -158,9 +157,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // flag keeping track of when the app has been paused
     private boolean mActivityPaused = false;
-
-    // Flag keeping track of when congratulations was shown for showing the undo button
-    private boolean mCongratulationsShown = false;
 
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
@@ -455,6 +451,20 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Show / hide undo
+        if (mFragmented || !getCol().undoAvailable()) {
+            menu.findItem(R.id.action_undo).setVisible(false);
+        } else {
+            Resources res = getResources();
+            menu.findItem(R.id.action_undo).setVisible(true);
+            String undo = res.getString(R.string.studyoptions_congrats_undo, getCol().undoName(res));
+            menu.findItem(R.id.action_undo).setTitle(undo);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.deck_picker, menu);
         boolean sdCardAvailable = AnkiDroidApp.isSdCardMounted();
@@ -469,16 +479,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             menu.findItem(R.id.action_import).setVisible(false);
             menu.findItem(R.id.action_export).setVisible(false);
         }
-        // Show the undo button if the congratulations message was just shown and not tablet
-        if (mCongratulationsShown && !mFragmented) {
-            Resources res = getResources();
-            menu.findItem(R.id.action_undo).setVisible(true);
-            String undo = res.getString(R.string.studyoptions_congrats_undo, getCol().undoName(res));
-            menu.findItem(R.id.action_undo).setTitle(undo);
-        } else {
-            menu.findItem(R.id.action_undo).setVisible(false);
-        }
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -490,7 +490,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             case R.id.action_undo:
                 Timber.i("DeckPicker:: Undo button pressed");
-                undoLastReview();
+                undo();
                 return true;
 
             case R.id.action_sync:
@@ -605,7 +605,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             } else {
                 showSimpleSnackbar(R.string.studyoptions_no_cards_due, false);
             }
-            mCongratulationsShown = true;
         }
     }
 
@@ -932,23 +931,31 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    private void undoLastReview() {
-        mCongratulationsShown = false;
+    private void undo() {
+        String undoReviewString = getResources().getString(R.string.undo_action_review);
+        final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, new DeckTask.TaskListener() {
             @Override
-            public void onCancelled() {hideProgressBar();}
+            public void onCancelled() {
+                hideProgressBar();
+            }
 
             @Override
-            public void onPreExecute() {showProgressBar();}
+            public void onPreExecute() {
+                showProgressBar();
+            }
 
             @Override
             public void onPostExecute(TaskData result) {
                 hideProgressBar();
-                openReviewer();
+                if (isReview) {
+                    openReviewer();
+                }
             }
 
             @Override
-            public void onProgressUpdate(TaskData... values) {}
+            public void onProgressUpdate(TaskData... values) {
+            }
         });
     }
 
@@ -1641,7 +1648,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void openStudyOptions(boolean withDeckOptions) {
-        mCongratulationsShown = false;
         if (mFragmented) {
             // The fragment will show the study options screen instead of launching a new activity.
             loadStudyOptionsFragment(withDeckOptions);
@@ -1993,7 +1999,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void openReviewer() {
-        mCongratulationsShown = false;
         Intent reviewer = new Intent(this, Reviewer.class);
         startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, ActivityTransitionAnimation.LEFT);
         getCol().startTimebox();

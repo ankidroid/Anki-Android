@@ -310,6 +310,12 @@ public class Reviewer extends AbstractFlashcardViewer {
 	            playSounds(true);
 	            return true;
 	        }
+
+            // different from Anki Desktop
+            if (keyPressed == 'z') {
+                undo();
+                return true;
+            }
         }
         return super.onKeyUp(keyCode, event);
     }
