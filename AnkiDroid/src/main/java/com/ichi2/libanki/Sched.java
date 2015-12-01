@@ -2549,7 +2549,23 @@ public class Sched {
          */
         @Override
         public int compareTo(Object other) {
-            return this.names[0].compareTo(((DeckDueTreeNode)other).names[0]);
+            DeckDueTreeNode rhs = (DeckDueTreeNode) other;
+            // Consider each subdeck name in the ordering
+            for (int i = 0; i < names.length && i < rhs.names.length; i++) {
+                int cmp = names[i].compareTo(rhs.names[i]);
+                if (cmp == 0) {
+                    continue;
+                }
+                return cmp;
+            }
+            // If we made it this far then the arrays are of different length. The longer one should
+            // always come after since it contains all of the sections of the shorter one inside it
+            // (i.e., the short one is an ancestor of the longer one).
+            if (rhs.names.length > names.length) {
+                return -1;
+            } else {
+                return 1;
+            }
         }
 
         @Override
