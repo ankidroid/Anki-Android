@@ -597,7 +597,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public void onPreExecute() {
-            showProgressBar();
             blockControls();
         }
 
@@ -656,7 +655,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             if (mNoMoreCards) {
                 closeReviewer(RESULT_NO_MORE_CARDS, true);
             }
-            hideProgressBar();
             // set the correct mark/unmark icon on action bar
             refreshActionBar();
             findViewById(R.id.root_layout).requestFocus();
