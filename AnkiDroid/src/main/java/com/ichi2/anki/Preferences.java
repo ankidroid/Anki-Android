@@ -611,6 +611,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         PreferenceCategory workarounds = (PreferenceCategory) screen.findPreference("category_workarounds");
         if (workarounds != null) {
             CheckBoxPreference writeAnswersDisable = (CheckBoxPreference) screen.findPreference("writeAnswersDisable");
+            CheckBoxPreference useInputTag = (CheckBoxPreference) screen.findPreference("useInputTag");
             CheckBoxPreference inputWorkaround = (CheckBoxPreference) screen.findPreference("inputWorkaround");
             CheckBoxPreference longclickWorkaround =
                 (CheckBoxPreference) screen.findPreference("textSelectionLongclickWorkaround");
@@ -626,10 +627,12 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             if (CompatHelper.getSdkVersion() >= 15) {
                 workarounds.removePreference(writeAnswersDisable);
                 workarounds.removePreference(inputWorkaround);
+            } else {
+                // For older Androids we never use the input tag anyway.
+                workarounds.removePreference(useInputTag);
             }
             if (CompatHelper.getSdkVersion() >= 16) {
                 workarounds.removePreference(fixHebrewText);
-                screen.removePreference(workarounds);     // group itself can be hidden for API 16
             }
         }
     }
