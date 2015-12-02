@@ -127,6 +127,7 @@
     <string name="help_title">Help</string>
     <string name="check_db">Check database</string>
     <string name="check_media">Check media</string>
+    <string name="empty_cards">Empty cards</string>
     <string name="check_db_message">Checking database…</string>
     <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run “Tools&gt;Empty Cards...” on the desktop client.</string>
     <!-- The ... instead of … is cut-and-pasted from the desktop client, so keep that one. -->

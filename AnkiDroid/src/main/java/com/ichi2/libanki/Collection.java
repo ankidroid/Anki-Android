@@ -859,14 +859,33 @@ public class Collection {
 
 
     public List<Long> emptyCids() {
-		List<Long> rem = new ArrayList<Long>();
-		for (JSONObject m : getModels().all()) {
-			rem.addAll(genCards(getModels().nids(m)));
-		}
-	return rem;
+        List<Long> rem = new ArrayList<>();
+        for (JSONObject m : getModels().all()) {
+            rem.addAll(genCards(getModels().nids(m)));
+        }
+        return rem;
     }
 
-    // emptyCardReport
+
+    public String emptyCardReport(List<Long> cids) {
+        StringBuilder rep = new StringBuilder();
+        Cursor cur = null;
+        try {
+            cur = mDb.getDatabase().rawQuery("select group_concat(ord+1), count(), flds from cards c, notes n "
+                                           + "where c.nid = n.id and c.id in " + Utils.ids2str(cids) + " group by nid", null);
+            while (cur.moveToNext()) {
+                String ords = cur.getString(0);
+                int cnt = cur.getInt(1);
+                String flds = cur.getString(2);
+                rep.append(String.format("Empty card numbers: %s\nFields: %s\n\n", ords, flds.replace("\u001F", " / ")));
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+        return rep.toString();
+    }
 
     /**
      * Field checksums and sorting fields ***************************************
