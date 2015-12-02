@@ -58,12 +58,6 @@ See the FAQ on [how to sync Anki Desktop with AnkiDroid](FAQ#how-do-i-make-chang
 ### How can I add pictures and sounds to my deck?
 See the [Media section](FAQ#media) below.
 
-### How can I use custom fonts?
-See the [AnkiDroid manual](http://ankidroid.org/manual.html#customFonts) for the new method of adding fonts.
-
-The [[old method of using custom fonts|AnkiDroid-1.x-custom-fonts]] from AnkiDroid 1.x is no longer officially suppported because it is not robust, however it does generally still work, and users who wish to use it may continue to do so.
-
-
 ### How can I use selective study, e.g. to review certain chapters of a textbook?
 The easiest way is to organize your material into subdecks using the browser in [Anki Desktop](FAQ#do-i-need-anki-desktop-too). You can create a new subdeck in AnkiDroid by clicking "create deck" then using the syntax "PARENTDECKNAME::NEWSUBDECKNAME", or alternatively create the deck on Anki Desktop and drag and drop it onto an existing deck.
 
@@ -169,11 +163,34 @@ If you have verified that the media files are physically on your device, that th
 
 If you must use media references to fields, for example if you have a large number of notes and use a specific naming convention based on the content of certain fields, you should use the [search and replace feature](http://ankisrs.net/docs/manual.html#importing-media), or alternatively there is an [add-on available for Anki Desktop](https://github.com/timrae/anki-replaceall) which allows you to batch render an expression such as `[sound:{{Word}}.mp3]` into a new field. Be sure to backup before attempting to use this add-on.
 
-# Displaying special characters from other languages
+### How can I use custom fonts?
+See the [AnkiDroid manual](http://ankidroid.org/manual.html#customFonts) for the new method of adding fonts.
+
+The [[old method of using custom fonts|AnkiDroid-1.x-custom-fonts]] from AnkiDroid 1.x is no longer officially suppported because it is not robust, however it does generally still work, and users who wish to use it may continue to do so.
+
+### I followed the instructions in the manual but I still can't get my custom font to work
+Here are some tips for debugging your custom font issue.
+
+1. Use Android version 4.4+ without any custom ROM for best results
+1. Make sure that you are using the latest version of the [Android System Webview](https://play.google.com/store/apps/details?id=com.google.android.webview) (46.x at the time of writing)
+1. Use the method recommended in the manual (**not** the alternative method)
+1. Go to AnkiDroid settings > Fonts and ensure that "Default font" is set to "System default", and "Default font applicability" is set to "When no font specified on flashcard"
+1. Check that the font shows correctly on both Anki Desktop and AnkiWeb
+1. Check that the font file correctly exists in your AnkiDroid/collection.media folder and that it has the same name as the one in your collection.media folder in Anki Desktop
+1. Try uninstalling and reinstalling AnkiDroid
+1. Try using a different font for testing purposes, especially an official Google font like [Google Noto](https://www.google.com/get/noto/)
+1. If you can get Google Noto working, but not your custom font, then it means that your font is not supported by your device. You can try to edit your font to make it compatible using [this trick](https://groups.google.com/d/msg/anki-android/svgWDMukz1s/XQFk0057AFcJ). If that doesn't work, you probably need to use a [different font](https://github.com/ankidroid/Anki-Android/wiki/Freely-distributable-fonts).
+
+If you tried all of the above and still couldn't get it to work, then please post a new issue here or on the forum including the following information:
+
+0. Your AnkiDroid version, Android version, Android system webview version, phone model number, and details of any modifications that you have made to it
+0. A sample deck (.apkg file) exported from Anki Desktop including *one card* that reproduces the issue you're having
+0. The name and a link to the font that you are trying to use
+0. The result of each step in the above process, preferably with some screenshots
 
 ### Instead of the correct character to display, a square is shown. Why is that?
 
-Because, by default, Android does not have complete support of the full Unicode character set so it does not know how to display these characters. The part of Unicode that Android supports depends on the specific device and on where that device is distributed. If you would like to add support for some specific language, see the [custom fonts section of the user manual](https://ankidroid.org/docs/manual.html#customFonts).
+Because, by default, Android does not have complete support of the full Unicode character set so it does not know how to display these characters. The part of Unicode that Android supports depends on the specific device and on where that device is distributed. If you would like to add support for some specific language, see the custom fonts section above.
 
 # Advanced formatting tips
 The [formatting wiki page](https://github.com/ankidroid/Anki-Android/wiki/Advanced-formatting) gives examples of how to achieve advanced flashcard formatting such as:
