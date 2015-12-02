@@ -163,6 +163,10 @@ If you have verified that the media files are physically on your device, that th
 
 If you must use media references to fields, for example if you have a large number of notes and use a specific naming convention based on the content of certain fields, you should use the [search and replace feature](http://ankisrs.net/docs/manual.html#importing-media), or alternatively there is an [add-on available for Anki Desktop](https://github.com/timrae/anki-replaceall) which allows you to batch render an expression such as `[sound:{{Word}}.mp3]` into a new field. Be sure to backup before attempting to use this add-on.
 
+### Instead of the correct character to display, a square is shown. Why is that?
+
+Because, by default, Android does not have complete support of the full Unicode character set so it does not know how to display these characters. The part of Unicode that Android supports depends on the specific device and on where that device is distributed. If you would like to add support for some specific language, see the custom fonts section below.
+
 ### How can I use custom fonts?
 See the [AnkiDroid manual](http://ankidroid.org/manual.html#customFonts) for the new method of adding fonts.
 
@@ -187,10 +191,6 @@ If you tried all of the above and still couldn't get it to work, then please pos
 0. A sample deck (.apkg file) exported from Anki Desktop including *one card* that reproduces the issue you're having
 0. The name and a link to the font that you are trying to use
 0. The result of each step in the above process, preferably with some screenshots
-
-### Instead of the correct character to display, a square is shown. Why is that?
-
-Because, by default, Android does not have complete support of the full Unicode character set so it does not know how to display these characters. The part of Unicode that Android supports depends on the specific device and on where that device is distributed. If you would like to add support for some specific language, see the custom fonts section above.
 
 # Advanced formatting tips
 The [formatting wiki page](https://github.com/ankidroid/Anki-Android/wiki/Advanced-formatting) gives examples of how to achieve advanced flashcard formatting such as:
