@@ -145,9 +145,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public static final int EASE_3 = 3;
     public static final int EASE_4 = 4;
 
-    /** Use an input tag inside the card for newer Androids, the old-style text input line for older ones. */
-    protected static final boolean USE_INPUT_TAG = (CompatHelper.getSdkVersion() >= 15);
-
     /** Maximum time in milliseconds to wait before accepting answer button presses. */
     private static final int DOUBLE_TAP_IGNORE_THRESHOLD = 200;
 
@@ -182,7 +179,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mPrefHideDueCount;
     private boolean mShowTimer;
     protected boolean mPrefWhiteboard;
-    private boolean mPrefWriteAnswers;
+    private boolean mShowTypeAnswerField;
     private boolean mInputWorkaround;
     private boolean mLongClickWorkaround;
     private boolean mPrefFullscreenReview;
@@ -199,6 +196,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mPrefSafeDisplay;
     protected boolean mPrefUseTimer;
     private boolean mPrefCenterVertically;
+    protected boolean mUseInputTag;
 
     // Preferences from the collection
     private boolean mShowNextReviewTime;
@@ -266,6 +264,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * of this time to ignore accidental button presses.
      */
     private long mLastClickTime;
+
+
 
 
     /**
@@ -732,7 +732,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             return m.replaceFirst(mTypeWarning);
         }
         StringBuilder sb = new StringBuilder();
-        if (USE_INPUT_TAG) {
+        if (mUseInputTag) {
             // These functions are definde in the JavaScript file assets/scripts/card.js. We get the text back in
             // shouldOverrideUrlLoading() in createWebView() in this file.
             sb.append("<center>\n<input type=text name=typed id=typeans onfocus=\"taFocus();\" " +
@@ -746,7 +746,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             sb.append(">\n</center>\n");
         } else {
             sb.append("<span id=typeans class=\"typePrompt");
-            if (!mPrefWriteAnswers) {
+            if (!mShowTypeAnswerField) {
                 sb.append(" typeOff");
             }
             sb.append("\">........</span>");
@@ -768,7 +768,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         DiffEngine diffEngine = new DiffEngine();
         StringBuilder sb = new StringBuilder();
         sb.append("<div");
-        if (!USE_INPUT_TAG && !mPrefWriteAnswers) {
+        if (!mUseInputTag && !mShowTypeAnswerField) {
             sb.append(" class=\"typeOff\"");
         }
         sb.append("><code id=typeans>");
@@ -789,7 +789,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 sb.append(diffedStrings[1]);
             }
         } else {
-            if (mPrefWriteAnswers) {
+            if (mShowTypeAnswerField) {
                 sb.append(DiffEngine.wrapMissing(correctAnswer));
             } else {
                 sb.append(correctAnswer);
@@ -1460,7 +1460,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
         // Problems with focus and input tags is the reason we keep the old type answer mechanism for old Androids.
-        webView.setFocusableInTouchMode(USE_INPUT_TAG);
+        webView.setFocusableInTouchMode(mUseInputTag);
         webView.setScrollbarFadingEnabled(true);
         Timber.d("Focusable = %s, Focusable in touch mode = %s", webView.isFocusable(), webView.isFocusableInTouchMode());
 
@@ -1661,7 +1661,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
-        mPrefWriteAnswers = (!preferences.getBoolean("writeAnswersDisable", false)) && !USE_INPUT_TAG;
+        mUseInputTag = preferences.getBoolean("useInputTag", false) && (CompatHelper.getSdkVersion() >= 15);
+        mShowTypeAnswerField = (!preferences.getBoolean("writeAnswersDisable", false)) && !mUseInputTag;
         // On newer Androids, ignore this setting, which sholud be hidden in the prefs anyway.
         mDisableClipboard = preferences.getString("dictionary", "0").equals("0");
         mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
@@ -1947,7 +1948,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mAnswerField.setVisibility(View.GONE);
         // Clean up the user answer and the correct answer
         String userAnswer;
-        if (USE_INPUT_TAG) {
+        if (mUseInputTag) {
             userAnswer = cleanTypedAnswer(mTypeInput);
         } else {
             userAnswer = cleanTypedAnswer(mAnswerField.getText().toString());
@@ -2239,7 +2240,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      *         field to query
      */
     private final boolean typeAnswer() {
-        return mPrefWriteAnswers && null != mTypeCorrect;
+        return mShowTypeAnswerField && null != mTypeCorrect;
     }
 
 
