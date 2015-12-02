@@ -66,6 +66,11 @@
                 android:title="@string/input_workaround" />
             <CheckBoxPreference
                 android:defaultValue="false"
+                android:key="useInputTag"
+                android:summary="@string/use_input_tag_summ"
+                android:title="@string/use_input_tag" />
+            <CheckBoxPreference
+                android:defaultValue="false"
                 android:key="textSelectionLongclickWorkaround"
                 android:summary="@string/text_selection_click_summ"
                 android:title="@string/text_selection_click" />
