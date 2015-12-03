@@ -1758,11 +1758,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             @Override
             public void onPreExecute() {
+                showProgressBar();
                 Timber.d("Refreshing deck list");
             }
 
             @Override
             public void onPostExecute(TaskData result) {
+                hideProgressBar();
                 if (result == null) {
                     Timber.e("null result loading deck counts");
                     onCollectionLoadError();
