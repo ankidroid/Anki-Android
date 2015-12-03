@@ -27,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -60,6 +61,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     private View.OnClickListener mDeckClickListener;
     private View.OnClickListener mDeckExpanderClickListener;
     private View.OnLongClickListener mDeckLongClickListener;
+    private View.OnClickListener mCountsClickListener;
 
     private Collection mCol;
 
@@ -74,6 +76,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     // ViewHolder class to save inflated views for recycling
     public class ViewHolder extends RecyclerView.ViewHolder {
         public RelativeLayout deckLayout;
+        public LinearLayout countsLayout;
         public ImageButton deckExpander;
         public ImageButton indentView;
         public TextView deckName;
@@ -82,6 +85,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         public ViewHolder(View v) {
             super(v);
             deckLayout = (RelativeLayout) v.findViewById(R.id.DeckPickerHoriz);
+            countsLayout = (LinearLayout) v.findViewById(R.id.counts_layout);
             deckExpander = (ImageButton) v.findViewById(R.id.deckpicker_expander);
             indentView = (ImageButton) v.findViewById(R.id.deckpicker_indent);
             deckName = (TextView) v.findViewById(R.id.deckpicker_name);
@@ -121,6 +125,10 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
     public void setDeckClickListener(View.OnClickListener listener) {
         mDeckClickListener = listener;
+    }
+
+    public void setCountsClickListener(View.OnClickListener listener) {
+        mCountsClickListener = listener;
     }
 
     public void setDeckExpanderClickListener(View.OnClickListener listener) {
@@ -200,10 +208,12 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
         // Store deck ID in layout's tag for easy retrieval in our click listeners
         holder.deckLayout.setTag(node.did);
+        holder.countsLayout.setTag(node.did);
 
         // Set click listeners
         holder.deckLayout.setOnClickListener(mDeckClickListener);
         holder.deckLayout.setOnLongClickListener(mDeckLongClickListener);
+        holder.countsLayout.setOnClickListener(mCountsClickListener);
     }
 
     @Override
