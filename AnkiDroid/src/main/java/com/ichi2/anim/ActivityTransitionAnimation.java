@@ -27,7 +27,7 @@ public class ActivityTransitionAnimation {
         } else if (direction == UP) {
             activity.overridePendingTransition(R.anim.slide_up_in, R.anim.slide_up_out);
         } else if (direction == DOWN) {
-            activity.overridePendingTransition(R.anim.slide_down_in, R.anim.slide_down_out);
+            // this is the default animation, we shouldn't try to override it
         } else if (direction == DIALOG_EXIT) {
             activity.overridePendingTransition(R.anim.none, R.anim.dialog_exit);
         } else if (direction == NONE) {
