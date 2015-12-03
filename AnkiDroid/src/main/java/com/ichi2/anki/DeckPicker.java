@@ -756,6 +756,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     protected void onCollectionLoaded(Collection col) {
         // keep reference to collection in parent
         super.onCollectionLoaded(col);
+        // Since the deck list won't show until we get the deck counts, we show the progress bar again
+        showProgressBar();
         // create backup in background if needed
         Boolean started = BackupManager.performBackupInBackground(col.getPath());
         if (started) {
@@ -1761,7 +1763,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             @Override
             public void onPreExecute() {
-                showProgressBar();
+                if (!colIsOpen()) {
+                    showProgressBar();
+                }
                 Timber.d("Refreshing deck list");
             }
 
