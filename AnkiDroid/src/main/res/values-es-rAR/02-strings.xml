@@ -189,7 +189,7 @@
     <item quantity="other">%s años</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
-  <string name="decks_rename_exists">Ese mazo ya existe.</string>
-  <string name="decks_rename_filtered_nosubdecks">Un mazo filtrado no puede tener submazos.</string>
+  <string name="decks_rename_exists">El mazo ya existe</string>
+  <string name="decks_rename_filtered_nosubdecks">Un mazo filtrado no puede tener submazos</string>
   <string name="filtered_deck_name">Mazo filtrado</string>
 </resources>

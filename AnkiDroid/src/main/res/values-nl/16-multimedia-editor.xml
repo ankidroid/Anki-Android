@@ -36,7 +36,7 @@
 <resources>
   <string name="multimedia_editor_popup_image">Voeg afbeelding toe</string>
   <string name="multimedia_editor_popup_audio">Neem audio op</string>
-  <string name="multimedia_editor_popup_text">Geadvanceerde editor</string>
+  <string name="multimedia_editor_popup_text">Geavanceerde editor</string>
   <string name="multimedia_editor_trans_poweredglosbe">Aangedreven door glosbe.com</string>
   <string name="multimedia_editor_trans_from">Van</string>
   <string name="multimedia_editor_trans_to">Naar</string>
@@ -45,7 +45,7 @@
   <string name="multimedia_editor_trans_pick_translation">Kies vertaling</string>
   <string name="multimedia_editor_trans_translation_failed">Vertaling mislukt</string>
   <string name="multimedia_editor_trans_pick_translation_source">Kies woordenboek</string>
-  <string name="multimedia_editor_trans_install_color_dict">Installeer ColorDict eerst</string>
+  <string name="multimedia_editor_trans_install_color_dict">Installeer eerst ColorDict</string>
   <string name="multimedia_editor_pron_load">Laad</string>
   <string name="multimedia_editor_pron_looking_up">Opzoeken van uitspraak</string>
   <string name="multimedia_editor_pron_pronunciation_failed">Uitspraak mislukt</string>
@@ -65,7 +65,7 @@
   <string name="multimedia_editor_field_editing_image">Afbeelding</string>
   <string name="multimedia_editor_field_editing_audio">Audio</string>
   <string name="multimedia_editor_field_editing_done">Klaar</string>
-  <string name="multimedia_editor_text_field_editing_search_label">Zoek voor:</string>
+  <string name="multimedia_editor_text_field_editing_search_label">Zoek naar:</string>
   <string name="multimedia_editor_text_field_editing_show">Afbeelding</string>
   <string name="multimedia_editor_text_field_editing_say">Uitspraak</string>
   <string name="multimedia_editor_text_field_editing_clear">Wissen</string>
@@ -78,12 +78,12 @@
   <string name="multimedia_editor_image_field_editing_photo">Camera</string>
   <string name="multimedia_editor_general_downloading">Downloaden</string>
   <string name="multimedia_editor_general_done">Klaar</string>
-  <string name="multimedia_editor_error_word_not_found">Woord is niet gevonden</string>
+  <string name="multimedia_editor_error_word_not_found">Woord werd niet gevonden</string>
   <string name="multimedia_editor_trans_getting_failure">Vertaling verkrijgen mislukt</string>
   <string name="multimedia_editor_searching_word">Woord aan het zoeken</string>
   <string name="multimedia_editor_progress_wait_title">Wachten</string>
   <string name="multimedia_editor_something_wrong">Er is iets fout gegaan</string>
-  <string name="multimedia_editor_attach_mm_content">Voeg multi-media toe aan de notitie</string>
+  <string name="multimedia_editor_attach_mm_content">Voeg multimedia toe aan de notitie</string>
   <string name="multimedia_editor_attach_media">Voeg media toe</string>
   <string name="multimedia_editor_audio_view_recording_failed">Opname mislukt</string>
   <string name="multimedia_editor_audio_view_playing_failed">Afspelen mislukt</string>
@@ -91,5 +91,5 @@
   <string name="title_activity_translation">Vertaling</string>
   <string name="title_activity_load_pronounciation">Uitspraak</string>
   <string name="title_activity_search_image">Google Afbeeldingen</string>
-  <string name="network_no_connection">Geen verbinding.</string>
+  <string name="network_no_connection">Geen verbinding</string>
 </resources>

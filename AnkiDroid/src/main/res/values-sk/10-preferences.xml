@@ -42,7 +42,7 @@
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Všeobecné nastavenia</string>
   <string name="pref_cat_reviewing">Opakovanie</string>
-  <string name="pref_cat_reviewing_summ">Obecné nastavenia pre opakovania</string>
+  <string name="pref_cat_reviewing_summ">Všeobecné nastavenia pre opakovania</string>
   <string name="pref_cat_reviewer_behaviour">Správanie</string>
   <string name="pref_cat_flashcard">Zobrazenie</string>
   <string name="pref_cat_whiteboard">Tabuľa</string>
@@ -68,7 +68,7 @@
   <string name="text_selection_click_summ">Zapnite, ak nemôžete začať s voľbou textu cez dlhé kliknutie</string>
   <string name="dictionary">Slovník</string>
   <string name="reset_languages">Obnoviť jazyky</string>
-  <string name="reset_languages_summ">Obnoviť pôvodné nastavenie jazyka  (použitý pri prevode textu na reč a slovníkoch) vo všetkých balíčkoch. Obnovenie je možné aj priamo na kontréntom balíčku</string>
+  <string name="reset_languages_summ">Obnoviť pôvodné nastavenie jazyka (použitý pri prevode textu na reč a slovníkoch) vo všetkých balíčkoch. Obnovenie je možné aj priamo na kontréntom balíčku.</string>
   <string name="reset_languages_question">Obnoviť všetky priradenia jazykov?</string>
   <string name="reset_confirmation">Obnoviť všetky nastavenia</string>
   <string name="card_zoom">Priblíženie karty</string>
@@ -80,7 +80,7 @@
   <string name="full_screen_off">Off</string>
   <string name="full_screen_system">Hide the system bars</string>
   <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
+  <string name="full_screen_error_gestures">Ak chcete skryť tlačidlá s odpoveďami musíte povoliť gestá</string>
   <string name="gestures">Povoliť gestá</string>
   <string name="gestures_summ">Prideliť gestá k akciám ako sú odpoveď či editovanie kariet.</string>
   <string name="gestures_swipe_up">Posun hore</string>
@@ -109,7 +109,7 @@
         minútami.</string>
   <string name="fix_hebrew_text">Prispôsobiť hebrejským samohláskam</string>
   <string name="fix_hebrew_text_summ">Riešenie správneho zobrazovania Hebrejských samohlások.</string>
-  <string name="fix_hebrew_instructions">Toto nastavenie obchádza RTL algoritmus Androidu, aby sa správne zobrazil hebrejský text so samohláskami.\n\nAby to fungovalo musíte, stiahnuť font Tohu.ttf a manuálne ho skopírovať do\n“%s/fonts/”\n\nVaše karty nebudete musieť modifikovať.</string>
+  <string name="fix_hebrew_instructions">Toto nastavenie obchádza RTL algoritmus Androidu, aby sa správne zobrazil hebrejský text so samohláskami.\n\nAby to fungovalo, musíte stiahnuť font Tohu.ttf a manuálne ho skopírovať do\n“%s/fonts/”\n\nVaše karty nebudete musieť modifikovať.</string>
   <string name="fix_hebrew_download_font">Stiahnuť font</string>
   <string name="default_font">Predvolené písmo</string>
   <string name="override_font">Použitie východiskového písma</string>
@@ -147,7 +147,7 @@
   <string name="day_offset">Začiatok ďalšieho dňa</string>
   <string name="day_offset_summ">XXX hodín po polnoci</string>
   <string name="input_workaround">Riešenia zadávania</string>
-  <string name="input_workaround_summ">Riešenie problémov s vstupnými poliami HTLM. Spôsobuje problémy na niektorých zariadeniach.</string>
+  <string name="input_workaround_summ">Riešenie problémov so vstupnými poliami HTLM. Spôsobuje problémy na niektorých zariadeniach.</string>
   <string name="pref_keep_screen_on">Nevypínať obrazovku</string>
   <string name="pref_keep_screen_on_summ">Zakázať vypínanie obrazovky</string>
   <string name="convert_fen_text">Podpora šachového zápisu</string>
