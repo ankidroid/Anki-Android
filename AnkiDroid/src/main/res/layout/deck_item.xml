@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/deckpicker_indent"
-        android:layout_toLeftOf="@+id/deckpicker_new"
+        android:layout_toLeftOf="@+id/counts_layout"
         android:orientation="horizontal"
         android:gravity="center_vertical">
         <ImageButton
@@ -56,39 +56,40 @@
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
-    <TextView
-        android:id="@+id/deckpicker_new"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/deckpicker_lrn"
-        android:background="@color/transparent"
-        android:gravity="center"
-        android:paddingRight="5dip"
-        android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/deckpicker_lrn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:layout_toLeftOf="@+id/deckpicker_rev"
-        android:background="@color/transparent"
-        android:gravity="center"
-        android:paddingRight="5dip"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/deckpicker_rev"
+    <LinearLayout
+        android:id="@+id/counts_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:layout_marginRight="6dip"
-        android:background="@color/transparent"
-        android:gravity="center"
-        android:textSize="14sp" />
+        android:layout_centerVertical="true" >
+        <TextView
+            android:id="@+id/deckpicker_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:paddingRight="5dip"
+            android:textSize="14sp" />
 
+        <TextView
+            android:id="@+id/deckpicker_lrn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:paddingRight="5dip"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/deckpicker_rev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="6dip"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:textSize="14sp" />
+    </LinearLayout>
 </RelativeLayout>

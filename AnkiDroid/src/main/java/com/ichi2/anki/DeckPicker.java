@@ -196,7 +196,22 @@ public class DeckPicker extends NavigationDrawerActivity implements
             long deckId = (long) v.getTag();
             Timber.i("DeckPicker:: Selected deck with id %d", deckId);
             mActionsMenu.collapse();
-            handleDeckSelection(deckId);
+            handleDeckSelection(deckId, false);
+            if (mFragmented || !CompatHelper.isLollipop()) {
+                // Calling notifyDataSetChanged() will update the color of the selected deck.
+                // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
+                mDeckListAdapter.notifyDataSetChanged();
+            }
+        }
+    };
+
+    private final OnClickListener mCountsClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            long deckId = (long) v.getTag();
+            Timber.i("DeckPicker:: Selected deck with id %d", deckId);
+            mActionsMenu.collapse();
+            handleDeckSelection(deckId, true);
             if (mFragmented || !CompatHelper.isLollipop()) {
                 // Calling notifyDataSetChanged() will update the color of the selected deck.
                 // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
@@ -389,6 +404,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // create and set an adapter for the RecyclerView
         mDeckListAdapter = new DeckAdapter(getLayoutInflater(), this);
         mDeckListAdapter.setDeckClickListener(mDeckClickListener);
+        mDeckListAdapter.setCountsClickListener(mCountsClickListener);
         mDeckListAdapter.setDeckExpanderClickListener(mDeckExpanderClickListener);
         mDeckListAdapter.setDeckLongClickListener(mDeckLongClickListener);
         mRecyclerView.setAdapter(mDeckListAdapter);
@@ -1657,7 +1673,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private void handleDeckSelection(long did) {
+    private void handleDeckSelection(long did, boolean dontSkipStudyOptions) {
         // Forget what the last used deck was in the browser
         CardBrowser.clearSelectedDeck();
         // Clear the undo history when selecting a new deck
@@ -1674,7 +1690,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Sched.DeckDueTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
         int[] studyOptionsCounts = getCol().getSched().counts();
         // Figure out what action to take
-        if (getCol().getDecks().isDyn(did) || mFragmented) {
+        if (getCol().getDecks().isDyn(did) || mFragmented || dontSkipStudyOptions) {
             // Go to StudyOptions screen when using filtered decks so that it's clearer to the user that it's different
             openStudyOptions(false);
         } else if (deckDueTreeNode.newCount + deckDueTreeNode.lrnCount + deckDueTreeNode.revCount > 0) {
