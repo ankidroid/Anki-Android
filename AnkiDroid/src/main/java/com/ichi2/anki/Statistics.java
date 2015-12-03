@@ -694,18 +694,19 @@ public class Statistics extends NavigationDrawerActivity implements
 
     }
 
+
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Timber.i("Statistics:: Statistics - onBackPressed()");
+    public void onBackPressed() {
+        if (isDrawerOpen()) {
+            super.onBackPressed();
+        } else {
+            Timber.i("Back key pressed");
             Intent data = new Intent();
             if (getIntent().hasExtra("selectedDeck")) {
                 data.putExtra("originalDeck", getIntent().getLongExtra("selectedDeck", 0L));
             }
             setResult(RESULT_CANCELED, data);
             finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-            return true;
         }
-        return super.onKeyDown(keyCode, event);
     }
 }

@@ -974,39 +974,39 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     @Override
     public void onBackPressed() {
-        Timber.d("onBackPressed()");
-        closeReviewer(RESULT_DEFAULT, false);
+        if (isDrawerOpen()) {
+            super.onBackPressed();
+        } else {
+            Timber.i("Back key pressed");
+            closeReviewer(RESULT_DEFAULT, false);
+        }
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        /** Enhancement 722: Hardware buttons for scrolling, I.Z. */
-        if (keyCode == 92) {
-            // KeyEvent.KEYCODE_PAGE_UP (available from API 9)
+        // Hardware buttons for scrolling
+        if (keyCode == KeyEvent.KEYCODE_PAGE_UP) {
             mCard.pageUp(false);
             if (mDoubleScrolling) {
                 mCard.pageUp(false);
             }
             return true;
         }
-        if (keyCode == 93) {
-            // KeyEvent.KEYCODE_PAGE_DOWN (available from API 9)
+        if (keyCode == KeyEvent.KEYCODE_PAGE_DOWN) {
             mCard.pageDown(false);
             if (mDoubleScrolling) {
                 mCard.pageDown(false);
             }
             return true;
         }
-        if (mScrollingButtons && keyCode == 94) {
-            // KeyEvent.KEYCODE_PICTSYMBOLS (available from API 9)
+        if (mScrollingButtons && keyCode == KeyEvent.KEYCODE_PICTSYMBOLS) {
             mCard.pageUp(false);
             if (mDoubleScrolling) {
                 mCard.pageUp(false);
             }
             return true;
         }
-        if (mScrollingButtons && keyCode == 95) {
-            // KeyEvent.KEYCODE_SWITCH_CHARSET (available from API 9)
+        if (mScrollingButtons && keyCode == KeyEvent.KEYCODE_SWITCH_CHARSET) {
             mCard.pageDown(false);
             if (mDoubleScrolling) {
                 mCard.pageDown(false);

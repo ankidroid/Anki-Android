@@ -6,7 +6,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -14,7 +13,6 @@ import android.widget.RelativeLayout;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
 
 /** Implementation of {@link Compat} for SDK level 19 */

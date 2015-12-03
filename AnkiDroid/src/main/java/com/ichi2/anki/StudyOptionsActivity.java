@@ -107,13 +107,13 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Timber.i("StudyOptionsActivity:: onBackPressed()");
+    public void onBackPressed() {
+        if (isDrawerOpen()) {
+            super.onBackPressed();
+        } else {
+            Timber.i("Back key pressed");
             closeStudyOptions();
-            return true;
         }
-        return super.onKeyDown(keyCode, event);
     }
 
 
