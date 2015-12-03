@@ -180,12 +180,13 @@ Here are some tips for debugging your custom font issue.
 1. Use the method recommended in the manual (**not** the alternative method)
 1. Go to AnkiDroid settings > Fonts and ensure that "Default font" is set to "System default", and "Default font applicability" is set to "When no font specified on flashcard"
 1. Check that the font shows correctly on both Anki Desktop and AnkiWeb
-1. Check that the font file correctly exists in your AnkiDroid/collection.media folder and that it has the same name as the one in your collection.media folder in Anki Desktop
+1. Check that the font file correctly exists in your AnkiDroid/collection.media folder and that it has the same name as the one in your collection.media folder in Anki Desktop (if you have disabled "fetch media on sync" on either client then your font will *not* be automatically copied to AnkiDroid)
+1. Some fonts may have the extension .ttf, but are in fact in a different format such as .ttc, which has been found to not work on some devices. We recommend only using official open source fonts, such as Google Noto.
 1. Try uninstalling and reinstalling AnkiDroid
 1. Try using a different font for testing purposes, especially an official Google font like [Google Noto](https://www.google.com/get/noto/)
 1. If you can get Google Noto working, but not your custom font, then it means that your font is not supported by your device. You can try to edit your font to make it compatible using [this trick](https://groups.google.com/d/msg/anki-android/svgWDMukz1s/XQFk0057AFcJ). If that doesn't work, you probably need to use a [different font](https://github.com/ankidroid/Anki-Android/wiki/Freely-distributable-fonts).
 
-If you tried all of the above and still couldn't get it to work, then please post a new issue here or on the forum including the following information:
+If you tried all of the above and still couldn't get it to work, then please post a new issue here or on the [support forum](https://groups.google.com/forum/#!forum/anki-android) including the following information:
 
 0. Your AnkiDroid version, Android version, Android system webview version, phone model number, and details of any modifications that you have made to it
 0. A sample deck (.apkg file) exported from Anki Desktop including *one card* that reproduces the issue you're having
