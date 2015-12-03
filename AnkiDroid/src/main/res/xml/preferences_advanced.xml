@@ -110,11 +110,6 @@
                 android:title="@string/reset_languages" />
             <CheckBoxPreference
                 android:defaultValue="false"
-                android:key="com.ichi2.filters.GoogleTranslaterFilter"
-                android:summary="@string/filter_google_translate_summ"
-                android:title="@string/filter_google_translate" />
-            <CheckBoxPreference
-                android:defaultValue="false"
                 android:key="convertFenText"
                 android:summary="@string/convert_fen_text_summ"
                 android:title="@string/convert_fen_text" />
