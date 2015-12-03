@@ -24,9 +24,8 @@ import android.webkit.WebView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.ichi2.anki.NavigationDrawerActivity;
-import com.ichi2.anki.Statistics;
 import com.ichi2.anki.R;
+import com.ichi2.anki.Statistics;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
 import com.wildplot.android.rendering.PlotSheet;

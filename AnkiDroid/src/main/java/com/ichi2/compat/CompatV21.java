@@ -3,10 +3,7 @@ package com.ichi2.compat;
 
 import android.annotation.TargetApi;
 import android.content.res.TypedArray;
-import android.support.v4.widget.DrawerLayout;
 import android.view.View;
-
-import com.ichi2.anki.NavigationDrawerActivity;
 
 /** Implementation of {@link Compat} for SDK level 19 */
 @TargetApi(19)

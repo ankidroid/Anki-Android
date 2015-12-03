@@ -728,14 +728,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Timber.i("DeckPicker:: onBackPressed()");
-            automaticSync();
-            finishWithAnimation();
-            return true;
+    public void onBackPressed() {
+        if (isDrawerOpen()) {
+            super.onBackPressed();
         } else {
-            return super.onKeyDown(keyCode, event);
+            Timber.i("Back key pressed");
+            if (mActionsMenu.isExpanded()) {
+                mActionsMenu.collapse();
+            } else {
+                automaticSync();
+                finishWithAnimation();
+            }
         }
     }
 
