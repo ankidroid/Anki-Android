@@ -452,6 +452,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        // Null check to prevent crash on API23 when we don't have required permission to access db
+        if (getCol() == null) {
+            return false;
+        }
         // Show / hide undo
         if (mFragmented || !getCol().undoAvailable()) {
             menu.findItem(R.id.action_undo).setVisible(false);
