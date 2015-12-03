@@ -38,6 +38,7 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondarySwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import timber.log.Timber;
 
 
 public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnDrawerItemClickListener,
@@ -74,7 +75,12 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
         // Setup toolbar
         Toolbar toolbar = (Toolbar) mainView.findViewById(R.id.toolbar);
         if (toolbar != null) {
-            setSupportActionBar(toolbar);
+            try {
+                setSupportActionBar(toolbar);
+            } catch (RuntimeException e) {
+                Timber.e("Error setting toolbar as support actionbar");
+                AnkiDroidApp.sendExceptionReport(e, "Samsung device error using Toolbar");
+            }
         }
         // Create the items for the navigation drawer
         PrimaryDrawerItem deckListItem = new PrimaryDrawerItem().withName(R.string.decks)
