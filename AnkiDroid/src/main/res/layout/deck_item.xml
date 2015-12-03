@@ -59,14 +59,17 @@
 
     <LinearLayout
         android:id="@+id/counts_layout"
+        android:background="?attr/selectableItemBackground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minHeight="48dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true" >
         <TextView
             android:id="@+id/deckpicker_new"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:background="@color/transparent"
             android:gravity="center"
             android:paddingRight="5dip"
