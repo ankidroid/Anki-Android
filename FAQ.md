@@ -87,9 +87,9 @@ You can remove tags that are not currently in use by any card by running "check 
 This is an Android problem and AnkiDroid needs to be reset. Go to system preferences --> applications --> manager applications --> AnkiDroid and choose "delete data".
 
 ### How to use different Anki profiles
-If several people use the same device, they can use a different Anki profile, by installing parallel versions of AnkiDroid besides the normal AnkiDroid and setting a different collection path. Parallel versions of AnkiDroid are not officially maintained, but can be built manually by following the [instructions in the Development Wiki](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#making-parallel-builds). The settings, sync account, and decks will be kept separate.
+On Anki desktop, if several people want to use the same computer (or if one person wants to separate their collection into several groups), they can use a different profile. AnkiDroid doesn't currently officially support using Anki profiles (though it's a [commonly requested feature](https://github.com/ankidroid/Anki-Android/issues/2545)), however you can achieve a similar effect by installing several parallel versions of AnkiDroid besides the normal AnkiDroid and setting a different collection path in each one. 
 
-If you are unable to make your own builds, you can use the semi-official pre-built apks for [v2.5beta16](https://github.com/ankidroid/Anki-Android/releases/tag/v2.5beta16) in the releases section.
+Parallel versions of AnkiDroid are not officially maintained, but can be built manually by following the [instructions in the Development Wiki](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#making-parallel-builds). The settings, sync account, and decks will be kept separate in each build. If you are unable to make your own builds, you can use the semi-official pre-built apks for [v2.5beta16](https://github.com/ankidroid/Anki-Android/releases/tag/v2.5beta16) in the releases section.
 
 ### Lost my decks
 It appears like your decks have disappeared? Don't burn your phone yet: AnkiDroid does regular backups, so you will probably be able to recover your decks. See the [backups section of the manual](http://ankidroid.org/docs/manual.html#backups) for more info.
