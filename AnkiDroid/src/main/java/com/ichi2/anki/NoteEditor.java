@@ -66,7 +66,6 @@ import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.async.DeckTask;
-import com.ichi2.filters.FilterFacade;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
@@ -574,12 +573,9 @@ public class NoteEditor extends AnkiActivity {
             }
             Pair<String, String> messages = new Pair<String, String>(first, second);
 
-            /* Filter garbage information */
-            Pair<String, String> cleanMessages = new FilterFacade(getBaseContext()).filter(messages);
-
             mSourceText = new String[2];
-            mSourceText[0] = cleanMessages.first;
-            mSourceText[1] = cleanMessages.second;
+            mSourceText[0] = messages.first;
+            mSourceText[1] = messages.second;
         }
     }
 
