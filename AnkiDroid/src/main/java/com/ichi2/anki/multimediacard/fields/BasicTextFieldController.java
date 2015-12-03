@@ -37,7 +37,6 @@ import android.widget.Toast;
 import com.ichi2.anki.R;
 import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
 import com.ichi2.anki.multimediacard.activity.PickStringDialogFragment;
-import com.ichi2.anki.multimediacard.activity.SearchImageActivity;
 import com.ichi2.anki.multimediacard.activity.TranslationActivity;
 import com.ichi2.compat.CompatHelper;
 
@@ -92,8 +91,6 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         layout.addView(layoutTools2);
         createTranslateButton(layoutTools2, p);
         createPronounceButton(layoutTools2, p);
-        createSearchImageButton(layoutTools2, p);
-
     }
 
 
@@ -101,35 +98,6 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         return mActivity.getText(id).toString();
     }
 
-
-    /**
-     * Google Image Search
-     * 
-     * @param layoutTools
-     * @param p
-     */
-    private void createSearchImageButton(LinearLayout layoutTools, LayoutParams p) {
-        Button clearButton = new Button(mActivity);
-        clearButton.setText(gtxt(R.string.multimedia_editor_text_field_editing_show));
-        layoutTools.addView(clearButton, p);
-
-        clearButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                String source = mEditText.getText().toString();
-
-                if (source.length() == 0) {
-                    showToast(gtxt(R.string.multimedia_editor_text_field_editing_no_text));
-                    return;
-                }
-
-                Intent intent = new Intent(mActivity, SearchImageActivity.class);
-                intent.putExtra(SearchImageActivity.EXTRA_SOURCE, source);
-                mActivity.startActivityForResult(intent, REQUEST_CODE_IMAGE_SEARCH);
-            }
-        });
-    }
 
 
     private void createClearButton(LinearLayout layoutTools, LayoutParams p) {
@@ -346,17 +314,6 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
             mEditText.setText(text);
 
-        } else if (requestCode == REQUEST_CODE_IMAGE_SEARCH && resultCode == Activity.RESULT_OK) {
-            String imgPath = data.getExtras().get(SearchImageActivity.EXTRA_IMAGE_FILE_PATH).toString();
-            File f = new File(imgPath);
-            if (!f.exists()) {
-                showToast(gtxt(R.string.multimedia_editor_imgs_failed));
-            }
-
-            ImageField imgField = new ImageField();
-            imgField.setImagePath(imgPath);
-            imgField.setHasTemporaryMedia(true);
-            mActivity.handleFieldChanged(imgField);
         }
     }
 
