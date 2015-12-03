@@ -64,6 +64,8 @@
   <string name="whiteboard_black_summ">Utilizar menos memória, exceto no modo noturno</string>
   <string name="write_answers_disable">Desativar digitação em resposta</string>
   <string name="write_answers_disable_summ">Impede que o teclado apareça em cartões contendo campos \'escreva a resposta\'</string>
+  <string name="use_input_tag">Type answer into the card</string>
+  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
   <string name="text_selection_click">Solução alternativa de pressão longa</string>
   <string name="text_selection_click_summ">Ative isso se você não é capaz de iniciar a seleção de texto por meio de clique longo</string>
   <string name="dictionary">Dicionário de busca</string>

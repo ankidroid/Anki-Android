@@ -124,6 +124,7 @@
   <string name="help_title">Ayuda</string>
   <string name="check_db">Comprobar base de datos</string>
   <string name="check_media">Comprobar archivos multimedia</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Comprobando base de datos&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tarjeta vacía. Ejecute \"Herramientas&gt;Tarjetas vacías...\" en el cliente de escritorio.</string>
   <string name="unknown_type_field_warning">Escribir respuesta: campo %s desconocido</string>

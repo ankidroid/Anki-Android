@@ -124,6 +124,7 @@
   <string name="help_title">Yardım</string>
   <string name="check_db">Veritabanını denetle</string>
   <string name="check_media">Medyayı kontrol et</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Veritabanı denetleniyor.\nLütfen bekleyin...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Boş kart. Masaüstü istemcisinde \"Araçlar&gt;Boş Kartlar...\"ı kullanın.</string>
   <string name="unknown_type_field_warning">Yanıtı yazın: bilinmeyen alan %s</string>

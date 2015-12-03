@@ -121,6 +121,7 @@
   <string name="help_title">Trợ giúp</string>
   <string name="check_db">Kiểm tra cơ sở dữ liệu</string>
   <string name="check_media">Kiểm tra các phương tiện truyền thông</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Đang kiểm tra cơ sở dữ liệu. \n Xin đợi chút...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Thẻ rỗng. Chạy \"công cụ &gt; Làm trống các thẻ...\" trên máy tính để bàn.</string>
   <string name="unknown_type_field_warning">Nhập câu trả lời: không biết trường %s</string>

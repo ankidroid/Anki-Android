@@ -124,6 +124,7 @@
   <string name="help_title">Abi</string>
   <string name="check_db">Check database</string>
   <string name="check_media">Check media</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Checking database&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run “Tools&gt;Empty Cards...” on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>

@@ -121,6 +121,7 @@
   <string name="help_title">کمک</string>
   <string name="check_db">بررسی پایگاه داده</string>
   <string name="check_media">بررسی رسانه ها</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">بررسی پایگاه داده.\nلطفا صبر کنید...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">کارت خالی.\"ابزارها &gt; کارت های خالی...\" را در نسخه ی رومیزی اجرا کنید.</string>
   <string name="unknown_type_field_warning">پاسخ دهید:فیلد نامشخص %s</string>

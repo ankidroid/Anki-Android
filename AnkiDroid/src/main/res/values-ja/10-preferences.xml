@@ -64,6 +64,8 @@
   <string name="whiteboard_black_summ">カラーの線ではなく黒色の線を描き、メモリを節約します（ナイトモードでは白色の線になります）</string>
   <string name="write_answers_disable">タイピング解答設定を無効にする</string>
   <string name="write_answers_disable_summ">解答入力フィールドがある場合にカード上にキーボードを表示させなくします</string>
+  <string name="use_input_tag">Type answer into the card</string>
+  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
   <string name="text_selection_click">長押しの 回避策</string>
   <string name="text_selection_click_summ">もし、長押しタップでテキストの選択が出来ない場合、これを有効にしてください。</string>
   <string name="dictionary">検索辞書</string>

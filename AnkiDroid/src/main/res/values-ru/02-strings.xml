@@ -127,6 +127,7 @@
   <string name="help_title">Справка</string>
   <string name="check_db">Проверить базу данных</string>
   <string name="check_media">Проверить медиа</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Идет проверка базы данных&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Пустая карта. Запустите «Инструменты&gt;Пустые карты...» на настольном клиенте.</string>
   <string name="unknown_type_field_warning">Тип ответа: неизвестное поле %s</string>

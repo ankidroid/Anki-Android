@@ -124,6 +124,7 @@
   <string name="help_title">Help</string>
   <string name="check_db">Controleer database</string>
   <string name="check_media">Media controleren</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">De databank wordt gecontroleerd.\nEven geduld alstublieft...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Lege kaart. Kies “Gereedschap&gt;Lege kaarten...” op de desktop client.</string>
   <string name="unknown_type_field_warning">Type antwoord: onbekend veld %s</string>

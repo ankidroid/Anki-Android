@@ -124,6 +124,7 @@
   <string name="help_title">Hilfe</string>
   <string name="check_db">Datenbank überprüfen</string>
   <string name="check_media">Medien überprüfen</string>
+  <string name="empty_cards">Leere Karten</string>
   <string name="check_db_message">Prüfe Datenbank&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Leere Karte. Führen Sie »Werkzeuge&gt;Leere Karten...« mit dem Desktop-Programm aus.</string>
   <string name="unknown_type_field_warning">Antworteingabe: Unbekanntes Feld %s</string>

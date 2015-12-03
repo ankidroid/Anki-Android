@@ -124,6 +124,7 @@
   <string name="help_title">Help</string>
   <string name="check_db">Check database</string>
   <string name="check_media">Check media</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Checking database&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Lausa karta. Brukei \"Tols&gt;Lausos Kartos...\" ana daisktaup klient.</string>
   <string name="unknown_type_field_warning">Melei andahaft: unkunþs staþs %s</string>

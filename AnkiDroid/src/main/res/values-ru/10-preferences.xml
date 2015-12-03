@@ -64,6 +64,8 @@
   <string name="whiteboard_black_summ">Использует меньше памяти, если не в ночном режиме</string>
   <string name="write_answers_disable">Отключить ввод ответа</string>
   <string name="write_answers_disable_summ">Блокировать появление клавиатуры в картах, содержащих поле \"введите ответ\"</string>
+  <string name="use_input_tag">Type answer into the card</string>
+  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
   <string name="text_selection_click">Исправление ошибки долгого зажатия</string>
   <string name="text_selection_click_summ">Включите, если не удаётся начать выделение текста через длинное нажатие</string>
   <string name="dictionary">Посмотреть в словаре</string>

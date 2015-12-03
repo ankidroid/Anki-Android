@@ -124,6 +124,7 @@
   <string name="help_title">Hjelp</string>
   <string name="check_db">Kontroller database</string>
   <string name="check_media">Check media</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Undersøker database.\nVennligst vent...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tomt kort. Kjør \"Verktøy&gt;Tomme kort...\" på PC-versjonen.</string>
   <string name="unknown_type_field_warning">Angi svar: ukjent felt %s</string>

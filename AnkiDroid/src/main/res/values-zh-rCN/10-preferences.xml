@@ -64,6 +64,8 @@
   <string name="whiteboard_black_summ">在非夜间模式中占用更少内存</string>
   <string name="write_answers_disable">禁用键入答案</string>
   <string name="write_answers_disable_summ">在包括“输入答案”字段的卡片中，禁止弹出键盘</string>
+  <string name="use_input_tag">Type answer into the card</string>
+  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
   <string name="text_selection_click">长按解决方案</string>
   <string name="text_selection_click_summ">如果您不能够通过长点击选择文本，启用此选项。</string>
   <string name="dictionary">查找字典</string>

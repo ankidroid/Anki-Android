@@ -64,6 +64,8 @@
   <string name="whiteboard_black_summ">Oszczędzaj pamięć z wyjątkiem trybu nocnego</string>
   <string name="write_answers_disable">Zablokuj wpisywanie pełnej odpowiedzi</string>
   <string name="write_answers_disable_summ">Blokuje pokazywanie się klawiatury na kartach zawierających pola \"wpisz tekst w odpowiedzi\"</string>
+  <string name="use_input_tag">Type answer into the card</string>
+  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
   <string name="text_selection_click">Obejście problemu długiego przyciśnięcia</string>
   <string name="text_selection_click_summ">Wybierz, jeśli masz problemy z zaznaczaniem tekstu poprzez przytrzymanie.</string>
   <string name="dictionary">Słownik</string>

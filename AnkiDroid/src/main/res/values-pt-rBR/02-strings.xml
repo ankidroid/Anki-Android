@@ -124,6 +124,7 @@
   <string name="help_title">Ajuda</string>
   <string name="check_db">Verificar banco de dados</string>
   <string name="check_media">Ver média</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Verificando banco de dados.\nPor favor Aguarde...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Cartão vazio. Rode \"Ferramentas&gt;Cartões vazios...\" no cliente para desktop.</string>
   <string name="unknown_type_field_warning">Digite a resposta: campo desconhecido %s</string>

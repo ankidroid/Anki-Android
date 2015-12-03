@@ -64,6 +64,8 @@
   <string name="whiteboard_black_summ">Sử dụng ít bộ nhớ, trừ khi ở chế độ ban đêm</string>
   <string name="write_answers_disable">Tắt đánh máy trong câu trả lời</string>
   <string name="write_answers_disable_summ">Ngăn chặn bàn phím xuất hiện trên thẻ có chứa \'loại trong câu trả lời\' loại</string>
+  <string name="use_input_tag">Type answer into the card</string>
+  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
   <string name="text_selection_click">Bấm giữ workaround </string>
   <string name="text_selection_click_summ">Sử điều này nếu bạn không thể chọn văn bản với một cái bấm giữ</string>
   <string name="dictionary">Tra cứu từ điển</string>

@@ -124,6 +124,7 @@
   <string name="help_title">मदद</string>
   <string name="check_db">डेटाबेस की जाँच करें</string>
   <string name="check_media">Check media</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">जाँच डेटाबेस। \nPlease रुको...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run “Tools&gt;Empty Cards...” on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>

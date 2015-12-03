@@ -64,6 +64,8 @@
   <string name="whiteboard_black_summ">Využívá méně paměti, pokud je v nočním režimu</string>
   <string name="write_answers_disable">Zakázat psát odpovědi</string>
   <string name="write_answers_disable_summ">Zabránění zobrazení klávesnice na kartách, které obsahují pole pro zapsání odpovědi</string>
+  <string name="use_input_tag">Type answer into the card</string>
+  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
   <string name="text_selection_click">Řešení dlouhého stisku</string>
   <string name="text_selection_click_summ">Povolte, pokud nejste schopni spustit výběr textu přes dlouhý klik</string>
   <string name="dictionary">Slovník</string>

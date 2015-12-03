@@ -124,6 +124,7 @@
   <string name="help_title">Aide</string>
   <string name="check_db">Vérification de la base de données</string>
   <string name="check_media">Vérifier les médias</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Vérification de la base de données. \nVeuillez patienter&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Carte vide. Lancer « Outil&gt;Cartes vides... » sur le client PC.</string>
   <string name="unknown_type_field_warning">Taper la réponse : champ inconnu %s</string>

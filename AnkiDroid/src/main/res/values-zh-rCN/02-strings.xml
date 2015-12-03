@@ -121,6 +121,7 @@
   <string name="help_title">帮助</string>
   <string name="check_db">检查数据</string>
   <string name="check_media">检查媒体</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">正在检查数据库\n请等待...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">这是一张空白卡片。\n请在桌面客户端上运行”工具 &gt; 空卡片\"以删除。</string>
   <string name="unknown_type_field_warning">输入答案：未知字段 %s</string>

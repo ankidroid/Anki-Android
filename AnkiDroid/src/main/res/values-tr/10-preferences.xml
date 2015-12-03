@@ -64,6 +64,8 @@
   <string name="whiteboard_black_summ">Daha az hafıza kullanır, ama gece modunda çalışmaz</string>
   <string name="write_answers_disable">Cevabı yazmayı devredışı bırak</string>
   <string name="write_answers_disable_summ">\"Cevabı yaz\" alanları içeren kartlarda klavyenin çıkmasını engeller</string>
+  <string name="use_input_tag">Type answer into the card</string>
+  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
   <string name="text_selection_click">Uzun basma çözümü</string>
   <string name="text_selection_click_summ">Metin seçimini basılı tutarak başlatamıyorsanız bunu etkinleştirin</string>
   <string name="dictionary">Sözlüğe bak</string>
