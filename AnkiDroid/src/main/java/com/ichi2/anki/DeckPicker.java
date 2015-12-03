@@ -744,7 +744,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void finishWithAnimation() {
-        super.finishWithAnimation(ActivityTransitionAnimation.DIALOG_EXIT);
+        super.finishWithAnimation(ActivityTransitionAnimation.DOWN);
     }
 
 

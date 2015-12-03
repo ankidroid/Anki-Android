@@ -32,24 +32,25 @@
                 android:layout_height="fill_parent"
                 android:background="@drawable/shadow_left"
                 android:visibility="gone"/>
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                         android:layout_width="fill_parent"
-                         android:layout_height="fill_parent"
-                         android:id="@+id/studyoptions_mainframe"
-                         android:paddingBottom="32dp">
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/studyoptions_mainframe"
+                android:paddingBottom="32dp">
                 <ScrollView
                     android:id="@+id/studyoptions_scrollview"
+                    android:layout_above="@id/bottom_area_layout"
                     android:layout_alignParentTop="true"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/study_options_padding"
                     android:paddingRight="@dimen/study_options_padding"
                     android:paddingBottom="16dp"
                     android:fadeScrollbars="false"
                     android:fillViewport="true">
-
                     <LinearLayout
                         android:id="@+id/studyoptions_scrollcontainer"
+                        android:layout_alignParentTop="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -173,16 +174,12 @@
                                 </TableRow>
                             </TableLayout>
                         </LinearLayout>
-
                         <TextView
                             android:id="@+id/studyoptions_deck_description"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="32dp"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
                             android:gravity="center"/>
+
                     </LinearLayout>
                 </ScrollView>
                 <LinearLayout
@@ -203,7 +200,6 @@
                         android:id="@+id/studyoptions_start"
                         android:background="@color/fab_normal"
                         android:textColor="@color/white"
-                        android:layout_marginTop="16dp"
                         android:layout_width="200dip"
                         android:layout_height="wrap_content"
                         android:lines="2"
