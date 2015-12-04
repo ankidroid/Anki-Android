@@ -1273,13 +1273,20 @@ public class DeckPicker extends NavigationDrawerActivity implements
         public void onPreExecute() {
             countUp = 0;
             countDown = 0;
+            // Store the current time so that we don't bother the user with a sync prompt for another 10 minutes
+            // Note: getLs() in Libanki doesn't take into account the case when no changes were found, or sync cancelled
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+            final long syncStartTime = System.currentTimeMillis();
+            preferences.edit().putLong("lastSyncTime", syncStartTime).apply();
+
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog
                         .show(DeckPicker.this, getResources().getString(R.string.sync_title),
                                 getResources().getString(R.string.sync_title) + "\n"
                                         + getResources().getString(R.string.sync_up_down_size, countUp, countDown),
                                 false);
-                // Override the back key so that the user has to confirm before a sync is actually cancelled
+
+                // Override the back key so that the user can cancel a sync which is in progress
                 mProgressDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
                     @Override
                     public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
@@ -1287,9 +1294,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         if (event.getAction()!=KeyEvent.ACTION_DOWN) {
                             return true;
                         }
-                        // Show confirmation dialog
+
                         if (keyCode == KeyEvent.KEYCODE_BACK && Connection.isCancellable() &&
                                 !Connection.getIsCancelled()) {
+                            // If less than 2s has elapsed since sync started then don't ask for confirmation
+                            if (System.currentTimeMillis() - syncStartTime < 2000) {
+                                Connection.cancel();
+                                return true;
+                            }
+                            // Show confirmation dialog to check if the user wants to cancel the sync
                             MaterialDialog.Builder builder = new MaterialDialog.Builder(mProgressDialog.getContext());
                             builder.content(R.string.cancel_sync_confirm)
                                     .cancelable(false)
@@ -1497,14 +1510,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     }
                 }
             }
-
-            // Write the time last sync was carried out. Useful for automatic sync interval.
-            // Turns out getLs() query will get the same old value if the last sync didn't find any changes, thus is
-            // unsuitable.
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-            Editor editor = preferences.edit();
-            editor.putLong("lastSyncTime", System.currentTimeMillis());
-            editor.commit();
         }
     };
 
