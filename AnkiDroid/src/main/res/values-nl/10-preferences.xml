@@ -64,8 +64,8 @@
   <string name="whiteboard_black_summ">Gebruikt minder geheugen, tenzij in de nachtmodus</string>
   <string name="write_answers_disable">Uitschakelen antwoord typen</string>
   <string name="write_answers_disable_summ">Voorkomt de toetsenbordweergave op kaarten met type-het-antwoord velden</string>
-  <string name="use_input_tag">Type answer into the card</string>
-  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
+  <string name="use_input_tag">Typ het antwoord op de kaart</string>
+  <string name="use_input_tag_summ">Een tekstinvoervak gebruiken op de kaart om het antwoord te typen</string>
   <string name="text_selection_click">Alternatief lang drukken</string>
   <string name="text_selection_click_summ">Zet dit aan als tekstselectie via met een lange klik niet werkt</string>
   <string name="dictionary">Opzoeken in woordenlijst</string>

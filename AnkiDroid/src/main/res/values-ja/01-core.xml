@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="decks">デッキ</string>
+  <string name="decks">デッキリスト</string>
   <string name="card_browser">ブラウザ</string>
   <string name="statistics">統計</string>
   <string name="settings">設定</string>

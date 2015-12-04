@@ -121,6 +121,6 @@
   </string-array>
   <plurals name="stats_today_cards">
     <item quantity="one">Vandaag &lt;b&gt;%1$d kaart gestudeerd&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt;.</item>
-    <item quantity="other">Vandaag &lt;b&gt;%1$d kaart gestudeerd&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt;.</item>
+    <item quantity="other">Vandaag &lt;b&gt;%1$d kaarten gestudeerd&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt;.</item>
   </plurals>
 </resources>

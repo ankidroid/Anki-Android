@@ -124,7 +124,7 @@
   <string name="help_title">Aiuto</string>
   <string name="check_db">Controlla database</string>
   <string name="check_media">Controlla file multimediali</string>
-  <string name="empty_cards">Empty cards</string>
+  <string name="empty_cards">Carte vuote</string>
   <string name="check_db_message">Controllo database.\nAttendi...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Carta vuota. Esegui \"Strumenti&gt;Carte vuote...\" con la versione desktop.</string>
   <string name="unknown_type_field_warning">Digita la risposta: campo sconosciuto %s</string>
