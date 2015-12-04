@@ -195,7 +195,10 @@
                         android:layout_height="wrap_content"
                         android:minLines="2"
                         android:layout_gravity="center_horizontal"
-                        android:gravity="center"/>
+                        android:gravity="center"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:paddingBottom="8dp"/>
                     <Button
                         android:id="@+id/studyoptions_start"
                         android:background="@color/fab_normal"
