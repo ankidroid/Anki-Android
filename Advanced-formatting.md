@@ -1,4 +1,4 @@
-This page contains a collection of tips for formatting your cards on AnkiDroid. The document assumes that you know how to edit card templates using Anki Desktop. Please check [this tutorial video](https://www.youtube.com/watch?v=F1j1Zx0mXME) for an introduction.
+This page contains a collection of tips for formatting your cards on AnkiDroid. The document assumes that you know how to edit card templates. Please check [this tutorial video](https://www.youtube.com/watch?v=F1j1Zx0mXME) for an introduction to card editing on Anki Desktop.
 
 ### Make flashcards vertically center aligned
 The recommended way to center-align your cards is to add the following code to the `.card` class in the "Styling" section of you card templates
