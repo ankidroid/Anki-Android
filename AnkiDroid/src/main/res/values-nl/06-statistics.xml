@@ -49,10 +49,10 @@
   <string name="statistics_cram">Blokken</string>
   <string name="stats_cards">Kaarten</string>
   <string name="stats_cards_intervals">Kaarten met gegeven interval</string>
-  <string name="stats_cumulative_cards">Cumulatieve kaarten</string>
-  <string name="stats_cumulative_answers">Cumulatieve antwoorden</string>
-  <string name="stats_cumulative_time_minutes">Cumulatieve minuten</string>
-  <string name="stats_cumulative_time_hours">Cumulatieve uren</string>
+  <string name="stats_cumulative_cards">Cumulatief aantal kaarten</string>
+  <string name="stats_cumulative_answers">Cumulatief aantal antwoorden</string>
+  <string name="stats_cumulative_time_minutes">Cumulatief aantal minuten</string>
+  <string name="stats_cumulative_time_hours">Cumulatief aantal uren</string>
   <string name="stats_cumulative">Cumulatief</string>
   <string name="stats_cumulative_percentage">Cumulatief percentage</string>
   <string formatted="false" name="stats_cumulative_correct_percentage">Cumulatief % juist</string>

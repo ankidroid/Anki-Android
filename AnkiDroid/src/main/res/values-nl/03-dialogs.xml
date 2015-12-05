@@ -39,11 +39,11 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">Controleer database</string>
+  <string name="check_db_title">Database controleren?</string>
   <string name="check_db_warning">Dit kan een lange tijd duren</string>
   <string name="check_db_acknowledge">Database gecontroleerd</string>
   <string name="check_db_acknowledge_shrunk">Database gecontroleerd en geoptimaliseerd. \nVerkleind met %d kb.</string>
-  <string name="contextmenu_deckpicker_delete_deck">Verwijder set</string>
+  <string name="contextmenu_deckpicker_delete_deck">Set verwijderen</string>
   <string name="delete_deck_default_deck">De standaardset kan niet worden verwijderd</string>
   <string name="delete_deck_title">Verwijder set</string>
   <plurals name="delete_deck_message">

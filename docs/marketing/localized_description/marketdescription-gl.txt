@@ -1,6 +1,6 @@
 Memoriza calquera cousa con AkinDroid!
 
-AnkiDroid permíteche aprender tarxetas eficientemente amosándochas xusto antes de que as esquezas. É completamente compatible co software de repetición espaciada Anki (incluíndo a sincronización), dispoñible para Windows, Linux e MacOS.
+AnkiDroid permíteche aprender tarxetas eficientemente amosándochas xusto antes de que as esquezas. É completamente compatible co software de repetición espazada Anki (incluíndo a sincronización), dispoñible para Windows, Linux e MacOS.
 
 Aprende todo tipo de cousas onde e cando queiras. Aproveita os tempos mortos nas viaxes no bus, na quenda do supermercado ou en calquera outra situación!
 
@@ -21,7 +21,7 @@ Engade material a través da aplicación de escritorio Anki ou directamente dend
 ★ características adicionais:
 • escribir as respostas (opcional)
 • encerado
-• editor/creador de cartons
+• editor/creador de cartóns
 • explorador de cartóns
 • compatible con tabletas
 • importar ficheiros de coleccións existentes (vía Anki de escritorio)

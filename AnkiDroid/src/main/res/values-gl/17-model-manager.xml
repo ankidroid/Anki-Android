@@ -28,27 +28,27 @@
   <string name="toast_duplicate_field">O nome do campo xa está en uso</string>
   <string name="toast_out_of_range">Tes de inserir un valor válido</string>
   <plurals name="model_browser_types_available">
-    <item quantity="one">%d note type available</item>
-    <item quantity="other">%d note types available</item>
+    <item quantity="one">%d tipo de nota dispoñible</item>
+    <item quantity="other">%d tipos de notas dispoñibles</item>
   </plurals>
   <plurals name="model_browser_of_type">
-    <item quantity="one">%d note</item>
-    <item quantity="other">%d notes</item>
+    <item quantity="one">%d nota</item>
+    <item quantity="other">%d notas</item>
   </plurals>
-  <string name="model_editor_action_add_model">Add note type</string>
-  <string name="model_browser_delete">Delete note type</string>
+  <string name="model_editor_action_add_model">Engadir tipo de nota</string>
+  <string name="model_browser_delete">Eliminar tipo de nota</string>
   <string name="model_browser_rename">Renomear</string>
   <string name="model_browser_options">Opcións</string>
-  <string name="model_browser_template">Editar cartón</string>
-  <string name="model_browser_add">Add note type</string>
-  <string name="rename_model">Rename model</string>
+  <string name="model_browser_template">Editar cartóns</string>
+  <string name="model_browser_add">Engadir tipo de nota</string>
+  <string name="rename_model">Renomear o modelo</string>
   <string name="model_field_editor_title">Editar campos</string>
   <string name="model_field_editor_add">Engadir campo</string>
   <string name="model_field_editor_delete">Eliminar campo</string>
   <string name="model_field_editor_options">Opcións do campo</string>
   <string name="model_field_editor_rename">Renomear o campo</string>
-  <string name="model_field_editor_reposition_menu">Reposition field</string>
-  <string name="model_field_editor_reposition" formatted="false">Reposition field (enter a value %1$d–%2$d)</string>
+  <string name="model_field_editor_reposition_menu">Campo de reposición</string>
+  <string name="model_field_editor_reposition" formatted="false">Campo de reposición (insire un valor entre %1$d-%2$d)</string>
   <string name="model_field_editor_changing">Actualizando campos</string>
   <string name="model_field_editor_sort_field">Ordenar por este campo</string>
   <string name="model_clone_suffix">copiar</string>

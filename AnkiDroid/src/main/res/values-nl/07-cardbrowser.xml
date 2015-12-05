@@ -51,7 +51,7 @@
   <string name="card_browser_unmark_card">markering verwijderen van memo</string>
   <string name="delete_card_title">Memo verwijderen</string>
   <string name="delete_card_message">Alle kaarten gemaakt met deze memo echt verwijderen?\nZoekveld: %s</string>
-  <string name="card_browser_show_marked">Filter op gemarkeerd</string>
+  <string name="card_browser_show_marked">Filteren op gemarkeerd</string>
   <string name="card_browser_show_suspended">Filteren op verwijderd</string>
   <string name="card_browser_search_by_tag">Filteren op tag</string>
   <string name="card_browser_tags_shown">Tags: %1$s</string>
