@@ -1700,7 +1700,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Sched.DeckDueTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
         int[] studyOptionsCounts = getCol().getSched().counts();
         // Figure out what action to take
-        if (getCol().getDecks().isDyn(did) || mFragmented || dontSkipStudyOptions) {
+        if (mFragmented || dontSkipStudyOptions) {
             // Go to StudyOptions screen when using filtered decks so that it's clearer to the user that it's different
             openStudyOptions(false);
         } else if (deckDueTreeNode.newCount + deckDueTreeNode.lrnCount + deckDueTreeNode.revCount > 0) {
@@ -1720,6 +1720,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     showDialogFragment(d);
                 }
             }, findViewById(R.id.root_layout), mSnackbarShowHideCallback);
+        } else if (getCol().getDecks().isDyn(did)) {
+            // Go to the study options screen if filtered deck with no cards to study
+            openStudyOptions(false);
         } else if (deckDueTreeNode.children.size() == 0 && getCol().cardCount(new Long[]{did}) == 0) {
             // If the deck is empty and has no children then show a message saying it's empty
             final Uri helpUrl = Uri.parse(getResources().getString(R.string.link_manual_getting_started));
@@ -2010,6 +2013,47 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }, new TaskData(did));
     }
 
+    /**
+     * Show progress bars and rebuild deck list on completion
+     */
+    DeckTask.TaskListener mSimpleProgressListener = new DeckTask.TaskListener() {
+
+        @Override
+        public void onPreExecute() {
+            showProgressBar();
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            updateDeckList();
+            if (mFragmented) {
+                loadStudyOptionsFragment(false);
+            }
+        }
+
+
+        @Override
+        public void onProgressUpdate(TaskData... values) {
+        }
+
+
+        @Override
+        public void onCancelled() {
+        }
+    };
+
+    public void rebuildFiltered() {
+        getCol().getDecks().select(mContextMenuDid);
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mSimpleProgressListener,
+                new DeckTask.TaskData(mFragmented));
+    }
+
+    public void emptyFiltered() {
+        getCol().getDecks().select(mContextMenuDid);
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EMPTY_CRAM, mSimpleProgressListener,
+                new DeckTask.TaskData(mFragmented));
+    }
 
     @Override
     public void onAttachedToWindow() {

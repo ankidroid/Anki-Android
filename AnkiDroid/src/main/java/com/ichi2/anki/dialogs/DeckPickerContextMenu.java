@@ -27,6 +27,7 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.StudyOptionsFragment;
+import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ public class DeckPickerContextMenu extends DialogFragment {
     private static final int CONTEXT_MENU_DELETE_DECK = 3;
     private static final int CONTEXT_MENU_EXPORT_DECK = 4;
     private static final int CONTEXT_MENU_UNBURY = 5;
+    private static final int CONTEXT_MENU_CUSTOM_STUDY_REBUILD = 6;
+    private static final int CONTEXT_MENU_CUSTOM_STUDY_EMPTY = 7;
 
 
     public static DeckPickerContextMenu newInstance(long did) {
@@ -81,6 +84,8 @@ public class DeckPickerContextMenu extends DialogFragment {
         keyValueMap.put(CONTEXT_MENU_DELETE_DECK, res.getString(R.string.contextmenu_deckpicker_delete_deck));
         keyValueMap.put(CONTEXT_MENU_EXPORT_DECK, res.getString(R.string.export_deck));
         keyValueMap.put(CONTEXT_MENU_UNBURY, res.getString(R.string.unbury));
+        keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY_REBUILD, res.getString(R.string.rebuild_cram_label));
+        keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY_EMPTY, res.getString(R.string.empty_cram_label));
         return keyValueMap;
     }
 
@@ -92,6 +97,10 @@ public class DeckPickerContextMenu extends DialogFragment {
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         long did = getArguments().getLong("did");
         ArrayList<Integer> itemIds = new ArrayList<>();
+        if (col.getDecks().isDyn(did)) {
+            itemIds.add(CONTEXT_MENU_CUSTOM_STUDY_REBUILD);
+            itemIds.add(CONTEXT_MENU_CUSTOM_STUDY_EMPTY);
+        }
         itemIds.add(CONTEXT_MENU_RENAME_DECK);
         itemIds.add(CONTEXT_MENU_DECK_OPTIONS);
         if (!col.getDecks().isDyn(did)) {
@@ -144,6 +153,18 @@ public class DeckPickerContextMenu extends DialogFragment {
                     Collection col = CollectionHelper.getInstance().getCol(getContext());
                     col.getSched().unburyCardsForDeck(getArguments().getLong("did"));
                     ((StudyOptionsFragment.StudyOptionsListener) getActivity()).onRequireDeckListUpdate();
+                    ((AnkiActivity) getActivity()).dismissAllDialogFragments();
+                    break;
+                }
+                case CONTEXT_MENU_CUSTOM_STUDY_REBUILD: {
+                    Timber.i("Empty deck selected");
+                    ((DeckPicker) getActivity()).rebuildFiltered();
+                    ((AnkiActivity) getActivity()).dismissAllDialogFragments();
+                    break;
+                }
+                case CONTEXT_MENU_CUSTOM_STUDY_EMPTY: {
+                    Timber.i("Empty deck selected");
+                    ((DeckPicker) getActivity()).emptyFiltered();
                     ((AnkiActivity) getActivity()).dismissAllDialogFragments();
                     break;
                 }
