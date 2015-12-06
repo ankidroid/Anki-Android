@@ -270,7 +270,6 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
         if (bChangeToText) {
             mField = new TextField();
-            mField.setText(" - ");
         }
 
         resultData.putExtra(EXTRA_RESULT_FIELD, mField);

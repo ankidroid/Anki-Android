@@ -60,8 +60,10 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.fields.AudioField;
+import com.ichi2.anki.multimediacard.fields.EFieldType;
 import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.ImageField;
+import com.ichi2.anki.multimediacard.fields.TextField;
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.NoteService;
@@ -1034,7 +1036,21 @@ public class NoteEditor extends AnkiActivity {
                     IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
                     NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
                     mNote.setField(index, field);
-                    mEditFields.get(index).setText(field.getFormattedValue());
+                    FieldEditText fieldEditText = mEditFields.get(index);
+                    // Completely replace text for text fields (because current text was passed in)
+                    if (field.getType() == EFieldType.TEXT) {
+                        fieldEditText.setText(field.getFormattedValue());
+                    }
+                    // Insert text at cursor position if the field has focus
+                    else if (fieldEditText.hasFocus()) {
+                        fieldEditText.getText().replace(fieldEditText.getSelectionStart(),
+                                fieldEditText.getSelectionEnd(),
+                                field.getFormattedValue());
+                    }
+                    // Append text if the field doesn't have focus
+                    else {
+                        fieldEditText.getText().append(field.getFormattedValue());
+                    }
                     NoteService.saveMedia(col, (MultimediaEditableNote) mNote);
                     mChanged = true;
                 }
@@ -1134,7 +1150,7 @@ public class NoteEditor extends AnkiActivity {
                         public boolean onMenuItemClick(MenuItem item) {
                             IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
                             NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
-                            IField field = mNote.getField(index);
+                            IField field;
                             switch (item.getItemId()) {
                                 case R.id.menu_multimedia_audio:
                                     Timber.i("NoteEditor:: Record audio button pressed");
@@ -1150,6 +1166,9 @@ public class NoteEditor extends AnkiActivity {
                                     return true;
                                 case R.id.menu_multimedia_text:
                                     Timber.i("NoteEditor:: Advanced editor button pressed");
+                                    field = new TextField();
+                                    field.setText(mEditFields.get(index).getText().toString());
+                                    mNote.setField(index, field);
                                     startMultimediaFieldEditor(index, mNote, field);
                                     return true;
                                 default:
