@@ -152,8 +152,6 @@
   <string name="pref_keep_screen_on">スクリーンをオンのままにする</string>
   <string name="pref_keep_screen_on_summ">画面タイムアウトの無効化</string>
   <string name="convert_fen_text">チェス表記のサポート</string>
-  <string name="filter_google_translate">Google翻訳から</string>
-  <string name="filter_google_translate_summ">翻訳元と結果の保存</string>
   <string name="convert_fen_text_summ">Forsyth Edwards Notation 表記法を使いチェス盤を描画します。この表記は[fen][/fen] で囲む必要があります</string>
   <string name="enable_api_title">AnkiDroid API を有効にする</string>
   <string name="enable_api_summary">他のアプリがAnkiDroidに接続しデータを読み書きすることを許可します</string>

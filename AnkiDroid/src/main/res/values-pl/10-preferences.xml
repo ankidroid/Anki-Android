@@ -152,8 +152,6 @@
   <string name="pref_keep_screen_on">Utrzymuj włączony ekran</string>
   <string name="pref_keep_screen_on_summ">Zablokuj wyłącznik czasowy ekranu</string>
   <string name="convert_fen_text">Obsługa notacji szachowej</string>
-  <string name="filter_google_translate">Z Google Translate</string>
-  <string name="filter_google_translate_summ">Po prostu zapisz słowo źródłowe i tłumaczenie</string>
   <string name="convert_fen_text_summ">Rysuj szachownicę z notacji Forsytha-Edwardsa. Notacja musi być w znacznikach [fen][/fen].</string>
   <string name="enable_api_title">Zezwól na AnkiDroid API</string>
   <string name="enable_api_summary">Pozwól innym aplikacjom na podłączanie do AnkiDroid i zapisywanie i odczyt danych bez Twojej ingerencji</string>

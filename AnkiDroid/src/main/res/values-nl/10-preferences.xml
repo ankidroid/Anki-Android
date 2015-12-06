@@ -152,8 +152,6 @@
   <string name="pref_keep_screen_on">Scherm aanlaten</string>
   <string name="pref_keep_screen_on_summ">Schermtimeout uitschakelen</string>
   <string name="convert_fen_text">Schaaknotaties</string>
-  <string name="filter_google_translate">Van Google Translate</string>
-  <string name="filter_google_translate_summ">Gewoon het woord met de vertaling opslaan</string>
   <string name="convert_fen_text_summ">Teken schaakbord met de Forsyth-Edwards notering. Voor de notering gebruik de [fen][/fen] tags.</string>
   <string name="enable_api_title">AnkiDroid API inschakelen</string>
   <string name="enable_api_summary">Laat andere apps verbinding maken met AnkiDroid en gegevens zonder uw tussenkomst lezen/schrijven</string>

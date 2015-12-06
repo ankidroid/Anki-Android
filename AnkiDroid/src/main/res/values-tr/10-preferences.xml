@@ -152,8 +152,6 @@
   <string name="pref_keep_screen_on">Ekranı açık tut</string>
   <string name="pref_keep_screen_on_summ">Ekran zaman aşımını devredışı bırak</string>
   <string name="convert_fen_text">Satranç gösterimi desteği</string>
-  <string name="filter_google_translate">Google Çeviri\'den</string>
-  <string name="filter_google_translate_summ">Yalnızca kaynak sözcük ve çeviriyi kaydet</string>
   <string name="convert_fen_text_summ">Forsyth Edwards Notasyonundan satranç tahtası çiz. Notasyon [fen][/fen] etiketi içine alınmış olmalıdır.</string>
   <string name="enable_api_title">AnkiDroid API etkinleştir</string>
   <string name="enable_api_summary">Diğer uygulamaların AnkiDroid\'e bağlanmasına ve müdahaleniz olmadan veriyi okuyup / yazmasına izin verir</string>

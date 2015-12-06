@@ -153,8 +153,6 @@
   <string name="pref_keep_screen_on">Nevypínať obrazovku</string>
   <string name="pref_keep_screen_on_summ">Zakázať vypínanie obrazovky</string>
   <string name="convert_fen_text">Podpora šachového zápisu</string>
-  <string name="filter_google_translate">Z Google Translate</string>
-  <string name="filter_google_translate_summ">Uložiť iba kľúčové slovo a preklad</string>
   <string name="convert_fen_text_summ">Vykresliť šachovnicu zo systému zápisu Forsyth–Edwards. Zápis musí byť uzavretý medzi značkami [fen][/fen].</string>
   <string name="enable_api_title">Povoliť AnkiDroid API</string>
   <string name="enable_api_summary">Umožniť ostatným aplikáciám pripojiť sa k AnkiDroid a dovoliť čítať/zapisovať údaje bez vášho zásahu</string>

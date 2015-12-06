@@ -152,8 +152,6 @@
   <string name="pref_keep_screen_on">Manter tela ligada</string>
   <string name="pref_keep_screen_on_summ">Desativar tempo limite da tela</string>
   <string name="convert_fen_text">Suporte para notação de xadrez</string>
-  <string name="filter_google_translate">Do Google Translate</string>
-  <string name="filter_google_translate_summ">Salvar somente a palavra original e a tradução</string>
   <string name="convert_fen_text_summ">Desenhar tabuleiro de xadrez a partir da Notação Forsyth-Edwards. A notação deve estar delimitada pelas tags [fen][/fen].</string>
   <string name="enable_api_title">Habilitar o AnkiDroid API</string>
   <string name="enable_api_summary">Deixe outros apps se conectarem ao AnkiDroid e ler / escrever dados sem a sua intervenção</string>

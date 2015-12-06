@@ -153,8 +153,6 @@
   <string name="pref_keep_screen_on">Држи екран укљученим</string>
   <string name="pref_keep_screen_on_summ">Онемогући спавање екрана</string>
   <string name="convert_fen_text">Подршка шаховских бележака</string>
-  <string name="filter_google_translate">Из Google Преводиоца</string>
-  <string name="filter_google_translate_summ">Једноставно чување изворне речи и превода</string>
   <string name="convert_fen_text_summ">Цртај шаховску таблу са Форсит-Едвардс нотацијом. Нотација мора да буде ограђена [fen][/fen] таговима.</string>
   <string name="enable_api_title">Омогући AnkiDroid API</string>
   <string name="enable_api_summary">Нека се друге апликације повежу са AnkiDroid и читају/записују податке без ваше интервенције</string>
