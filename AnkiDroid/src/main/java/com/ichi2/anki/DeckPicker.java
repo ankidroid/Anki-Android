@@ -1304,6 +1304,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             // If less than 2s has elapsed since sync started then don't ask for confirmation
                             if (System.currentTimeMillis() - syncStartTime < 2000) {
                                 Connection.cancel();
+                                mProgressDialog.setContent(R.string.sync_cancel_message);
                                 return true;
                             }
                             // Show confirmation dialog to check if the user wants to cancel the sync
@@ -1315,6 +1316,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                                     .callback(new MaterialDialog.ButtonCallback() {
                                         @Override
                                         public void onPositive(MaterialDialog dialog) {
+                                            mProgressDialog.setContent(R.string.sync_cancel_message);
                                             Connection.cancel();
                                         }
                                     });
