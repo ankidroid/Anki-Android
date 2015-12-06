@@ -226,7 +226,14 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
     private void openReviewer() {
         Intent reviewer = new Intent(getActivity(), Reviewer.class);
-        startActivityForResult(reviewer, AnkiActivity.REQUEST_REVIEW);
+        if (mFragmented) {
+            startActivityForResult(reviewer, AnkiActivity.REQUEST_REVIEW);
+        } else {
+            // Go to DeckPicker after studying when not tablet
+            reviewer.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+            startActivity(reviewer);
+            getActivity().finish();
+        }
         animateLeft();
         getCol().startTimebox();
     }
