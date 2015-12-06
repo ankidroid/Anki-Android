@@ -52,7 +52,7 @@ import java.util.List;
 public class BasicTextFieldController extends FieldControllerBase implements IFieldController,
         DialogInterface.OnClickListener {
 
-    // Additional activities are started to perform translation/image search and
+    // Additional activities are started to perform translation/pronunciation search and
     // so on, here are their request codes, to differentiate, when they return.
     private static final int REQUEST_CODE_TRANSLATE_GLOSBE = 101;
     private static final int REQUEST_CODE_PRONOUNCIATION = 102;
