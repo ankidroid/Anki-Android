@@ -55,7 +55,7 @@ If you prefer to use the "replay audio" action in the menu, and have the play bu
 ```
 
 ### Customize night-mode colors
-AnkiDroid contains a very basic color inverter that e.g. changes white to black and black to white when night mode is enabled. If you prefer to disable the inverter and setup your own colors, you should include a `.night_mode` class in your styling. For example the following will use a dark grey background instead of black when night mode is enabled (note that [there is no space between](https://css-tricks.com/multiple-class-id-selectors/) the `.card` and `.night_mode` classes):
+AnkiDroid contains a very basic color inverter that e.g. changes white to black and black to white when night mode is enabled. If you prefer to disable the inverter and setup your own colors, you should include a `.night_mode` class in your styling. For example the following will use a dark grey background instead of black when night mode is enabled (note that contrary to the other examples on this page [there should *not* be a space between the `.card` and `.night_mode` classes](https://css-tricks.com/multiple-class-id-selectors/)):
 
 ```css
 .card.night_mode {
