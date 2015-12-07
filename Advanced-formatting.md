@@ -64,6 +64,21 @@ AnkiDroid contains a very basic color inverter that e.g. changes white to black 
 }
 ```
 
+### Invert color of images in night-mode
+If you would like the color of images to be inverted when using night mode, you can set the following CSS selectors in addition to the `.card.night_mode` styling mentioned above. Note that these filters will only work on Android 4.4+.
+
+```css
+.night_mode img {
+ filter: invert(1); -webkit-filter:invert(1);
+}
+
+If you just want images with a certain class to be inverted (e.g. LaTeX images), then you can specify that class instead of img. E.g.
+
+```css
+.night_mode .latex {
+ filter: invert(1); -webkit-filter:invert(1);
+}
+
 ### Hide the input box on cards using the "type in the answer" feature
 ```css
 .mobile input#typeans{
