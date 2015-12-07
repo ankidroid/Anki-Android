@@ -78,6 +78,7 @@ If you just want images with a certain class to be inverted (e.g. LaTeX images),
 .night_mode .latex {
  filter: invert(1); -webkit-filter:invert(1);
 }
+```
 
 ### Hide the input box on cards using the "type in the answer" feature
 ```css
