@@ -1285,8 +1285,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     public void onPositive(MaterialDialog dialog) {
                         Timber.i("AbstractFlashcardViewer:: Button pressed to discard edit undo records");
 			// Discard all edit undo records for this card
-			while (getCol().lastUndoIsEdit())
-			    getCol().discardEditUndo();
+			getCol().discardEditUndo();
 
 			if (getCol().undoAvailable())
 			    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mAnswerCardHandler);

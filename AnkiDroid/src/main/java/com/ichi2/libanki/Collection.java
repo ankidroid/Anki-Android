@@ -1179,7 +1179,7 @@ public class Collection {
 
 
     public void discardEditUndo() {
-	if (lastUndoIsEdit())
+	while (lastUndoIsEdit())
 	    mUndo.removeLast();
     }
 
@@ -1286,6 +1286,10 @@ public class Collection {
 
 
     public void markUndo(int type, Object[] o) {
+	if (type != UNDO_EDIT_NOTE && type != UNDO_MARK_NOTE) {
+	    // Moving to another card - discard all edit undo records
+	    discardEditUndo();
+	}
     	switch(type) {
     	case UNDO_REVIEW:
     		mUndo.add(new Object[]{type, ((Card)o[0]).clone(), o[1]});
