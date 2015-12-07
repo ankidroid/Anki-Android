@@ -1170,6 +1170,20 @@ public class Collection {
     }
 
 
+    public boolean lastUndoIsEdit() {
+	if (!undoAvailable())
+	    return false;
+        Object[] data = mUndo.getLast();
+	return (Integer)data[0] == UNDO_EDIT_NOTE;
+    }
+
+
+    public void discardEditUndo() {
+	while (lastUndoIsEdit())
+	    mUndo.removeLast();
+    }
+
+
     public boolean undoAvailable() {
         return mUndo.size() > 0;
     }
@@ -1272,6 +1286,10 @@ public class Collection {
 
 
     public void markUndo(int type, Object[] o) {
+	if (type != UNDO_EDIT_NOTE && type != UNDO_MARK_NOTE) {
+	    // Moving to another card - discard all edit undo records
+	    discardEditUndo();
+	}
     	switch(type) {
     	case UNDO_REVIEW:
     		mUndo.add(new Object[]{type, ((Card)o[0]).clone(), o[1]});
@@ -1292,7 +1310,8 @@ public class Collection {
     		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
     		break;
     	case UNDO_MARK_NOTE:
-    		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+		// There is no reason to ever undo this.
+    		//mUndo.add(new Object[]{type, o[0], o[1], o[2]});
     		break;
         case UNDO_BURY_CARD:
             mUndo.add(new Object[]{type, o[0], o[1], o[2]});

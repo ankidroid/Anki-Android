@@ -1178,6 +1178,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     protected void undo() {
         if (getCol().undoAvailable()) {
+	    if (getCol().lastUndoIsEdit()) {
+		showUndoEditDialog();
+		return;
+	    }
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mAnswerCardHandler);
         }
     }
@@ -1261,6 +1265,36 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler,
                                 new DeckTask.TaskData(mCurrentCard, 3));
                     }
+                })
+                .build().show();
+    }
+
+
+    protected void showUndoEditDialog() {
+        Resources res = getResources();
+        new MaterialDialog.Builder(this)
+                .title(res.getString(R.string.undo_edit_title))
+                .iconAttr(R.attr.dialogErrorIcon)
+                .content(String.format(res.getString(R.string.undo_edit_message),
+                        Utils.stripHTML(mCurrentCard.q(true))))
+                .positiveText(res.getString(R.string.undo_edit_new_version))
+                .negativeText(res.getString(R.string.undo_edit_old_version))
+                .neutralText(res.getString(R.string.undo_edit_cancel))
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        Timber.i("AbstractFlashcardViewer:: Button pressed to discard edit undo records");
+			// Discard all edit undo records for this card
+			getCol().discardEditUndo();
+
+			if (getCol().undoAvailable())
+			    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mAnswerCardHandler);
+                    }
+		    @Override
+		    public void onNegative(MaterialDialog dialog) {
+                        Timber.i("AbstractFlashcardViewer:: Button pressed to revert edit");
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mAnswerCardHandler);
+		    }
                 })
                 .build().show();
     }
