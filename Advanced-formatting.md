@@ -72,16 +72,9 @@ display: none;
 ```
 
 ### Remove the margin when displaying images
-You can adapt the [following CSS template](https://groups.google.com/d/topic/anki-android/TjakbVGJLmk/discussion) on AnkiDroid 2.5+
+Add the [following CSS](https://groups.google.com/d/topic/anki-android/TjakbVGJLmk/discussion) to your card template
+
 ```css
-.card {
-font-family: 'Linux Biolinum O';
-font-size: 24px;
-text-align: center;
-color: #657b83;
-background-color: #fdf6e3;
-margin: 1ex 0.5em;
-}
 .card img {max-width: 100%; max-height: none;}
 .mobile .card img {max-width: 100%; max-height: none;}
 .mobile .card {margin: 0.5ex 0em;}
