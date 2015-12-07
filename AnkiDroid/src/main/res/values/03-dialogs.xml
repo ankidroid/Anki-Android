@@ -106,6 +106,13 @@
     <string name="check_media_delete_unused">Delete unused</string>
     <string name="check_media_deleted">Files deleted: %d</string>
 
+    <!-- Undoing edits -->
+    <string name="undo_edit_title">Undo edit?</string>
+    <string name="undo_edit_message">Before you can undo any more actions, you must decide which version of this card to keep. Whichever version you choose to keep, the other version will be deleted.</string>
+    <string name="undo_edit_old_version">Keep old version</string>
+    <string name="undo_edit_new_version">Keep new version</string>
+    <string name="undo_edit_cancel">Do nothing</string>
+
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">All cards</string>
     <string name="tags_dialog_option_new_cards">New</string>

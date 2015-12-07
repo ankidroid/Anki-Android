@@ -1170,6 +1170,20 @@ public class Collection {
     }
 
 
+    public boolean lastUndoIsEdit() {
+	if (!undoAvailable())
+	    return false;
+        Object[] data = mUndo.getLast();
+	return (Integer)data[0] == UNDO_EDIT_NOTE;
+    }
+
+
+    public void discardEditUndo() {
+	if (lastUndoIsEdit())
+	    mUndo.removeLast();
+    }
+
+
     public boolean undoAvailable() {
         return mUndo.size() > 0;
     }
