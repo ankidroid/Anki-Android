@@ -71,8 +71,9 @@ If you would like the color of images to be inverted when using night mode, you 
 .night_mode img {
  filter: invert(1); -webkit-filter:invert(1);
 }
+```
 
-If you just want images with a certain class to be inverted (e.g. LaTeX images), then you can specify that class instead of img. E.g.
+If you just want images with a certain class to be inverted (e.g. LaTeX images), then you can specify that class instead of img:
 
 ```css
 .night_mode .latex {
