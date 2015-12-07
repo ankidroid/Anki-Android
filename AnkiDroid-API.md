@@ -2,8 +2,6 @@
 
 *Audience: This page is for Android app developers. AnkiDroid users can ignore it.*
 
-The API is currently in beta version; it requires AnkiDroid 2.5alpha56 or greater installed to run. Please report any bugs to the issue tracker.
-
 ## Instant-Add API (alpha version)
 Starting From AnkiDroid v2.5, notes can be added directly to AnkiDroid's database without sending any intents via a simple API library released on the LGPL license ([click here to read the javadoc](https://ankidroid.org/apidoc/com/ichi2/anki/api/AddContentApi.html)). This is advantageous for developers and end-users, as it allows quickly adding cards to AnkiDroid in bulk, without any user intervention. Additionally, an app-specific custom model can be used, so that developers can ensure that their content will be formatted into sensible and beautiful flashcards.
 
