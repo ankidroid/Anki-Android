@@ -1292,7 +1292,8 @@ public class Collection {
     		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
     		break;
     	case UNDO_MARK_NOTE:
-    		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+		// There is no reason to ever undo this.
+    		//mUndo.add(new Object[]{type, o[0], o[1], o[2]});
     		break;
         case UNDO_BURY_CARD:
             mUndo.add(new Object[]{type, o[0], o[1], o[2]});
