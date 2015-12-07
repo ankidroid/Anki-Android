@@ -65,7 +65,7 @@ AnkiDroid contains a very basic color inverter that e.g. changes white to black 
 ```
 
 ### Invert color of images in night-mode
-If you would like the color of images to be inverted when using night mode, you can set the following CSS selectors in addition to the `.card.night_mode` styling mentioned above. Note that these filters will only work on Android 4.4+.
+The default color inversion algorithm does not affect images, with the consequence that images which have a transparent background and black lines will end up appearing invisible when night-mode is enabled. If you would like the color of images to be inverted when using night mode, you can set the following CSS selectors in addition to the `.card.night_mode` styling mentioned above. Note that these filters will generally only work on Android 4.4+.
 
 ```css
 .night_mode img {
@@ -73,7 +73,7 @@ If you would like the color of images to be inverted when using night mode, you 
 }
 ```
 
-If you just want images with a certain class to be inverted (e.g. LaTeX images), then you can specify that class instead of img:
+Alternatively, if you only want images with a certain class to be inverted (for instance LaTeX images), then you can specify that class name instead of `img`:
 
 ```css
 .night_mode .latex {
