@@ -483,7 +483,9 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
                     .setSmallIcon(R.drawable.ic_stat_notify)
                     .setContentTitle(title)
                     .setContentText(message)
+                    .setColor(getResources().getColor(R.color.theme_primary))
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                     .setTicker(ticker);
             // Enable vibrate and blink if set in preferences
             if (prefs.getBoolean("widgetVibrate", false)) {
