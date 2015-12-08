@@ -590,8 +590,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             try {
                 if (card != null) {
                     Note note = card.note();
-                    col.markUndo(Collection.UNDO_MARK_NOTE,
-                            new Object[]{note.getId(), note.stringTags(), card.getId()});
                     if (note.hasTag("marked")) {
                         note.delTag("marked");
                     } else {
