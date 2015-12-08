@@ -123,6 +123,18 @@ Starting from AnkiDroid v2.2, it is also possible to add pictures and sounds to 
 
 Note that when you attach media to a card on Anki Desktop, the program puts the media files into the collection.media folder (see [Anki Desktop manual for more info](http://ankisrs.net/docs/manual.html#media)). It is therefore necessary to ensure the option "Synchronize audio and images too" is enabled in both Anki and AnkiDroid if using Anki Web.
 
+### How can I add pictures from Google Images?
+Since November 2015, Google have disabled their [free image search API](https://developers.google.com/web-search/?csw=1) that we were using. **There is no free replacement API** from Google that we could use, and the paid "custom search" API which they offer is not feasible for us to use in AnkiDroid. Unfortunately there's nothing that we can do about this.
+
+Until we find a better solution, you'll have to manually add the images as following:
+
+0. Open images.google.com in your browser
+0. Search for the image that you want to add and open it
+0. Long tap on the image and choose save
+0. From AnkiDroid add a new image from the gallery and select the image that you just downloaded
+
+Note: you may need to configure your gallery app to show images that you downloaded in addition to your photos.
+
 ### I have too many media files and can't copy them all to my device
 Unfortunately there is a limitation on the number of files which can be stored in one folder on the FAT filesystem used by default on most Android devices.
 
