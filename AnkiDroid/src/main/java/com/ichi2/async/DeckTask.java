@@ -404,10 +404,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Note editNote = editCard.note();
         boolean fromReviewer = params[0].getBoolean();
 
-        // mark undo
-        col.markUndo(Collection.UNDO_EDIT_NOTE, new Object[]{col.getNote(editNote.getId()), editCard.getId(),
-                fromReviewer});
-
         try {
             col.getDb().getDatabase().beginTransaction();
             try {
