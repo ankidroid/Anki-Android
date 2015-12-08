@@ -59,29 +59,29 @@
   <string name="stats_answers">Válaszok</string>
   <string name="stats_minutes">Perc</string>
   <string name="stats_hours">Óra</string>
-  <string name="stats_percentage">Percentage</string>
-  <string name="stats_period_month">1 month</string>
-  <string name="stats_period_year">1 year</string>
+  <string name="stats_percentage">Százalék</string>
+  <string name="stats_period_month">1 hónap</string>
+  <string name="stats_period_year">1 év</string>
   <string name="stats_period_lifetime">deck life</string>
-  <string name="stats_deck_collection">collection</string>
+  <string name="stats_deck_collection">gyűjtemény</string>
   <string name="stats_time_of_day">Time of day</string>
-  <string name="stats_day_of_week">Day of week</string>
-  <string formatted="false" name="stats_percentage_correct">% correct</string>
+  <string name="stats_day_of_week">A hét napja</string>
+  <string formatted="false" name="stats_percentage_correct">% helyes</string>
   <string name="stats_reviews">Reviews</string>
-  <string name="stats_answer_type">Answer type</string>
+  <string name="stats_answer_type">Válasz típusa</string>
   <string name="stats_today_again_count">Again count: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correct)</string>
   <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, review: &lt;b&gt;%2$s&lt;/b&gt;, relearn: &lt;b&gt;%3$s&lt;/b&gt;, filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Correct answers on mature cards: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">No mature cards were studied today</string>
   <string name="deck_summary_all_decks">Összes pakli</string>
-  <string name="stats_select_time_scale">Select timescale</string>
+  <string name="stats_select_time_scale">Időlépték kiválasztása</string>
   <string-array name="due_x_axis_title">
     <item>Nap</item>
     <item>Hetek</item>
     <item>Hónapok</item>
   </string-array>
-  <string name="stats_today">Today</string>
+  <string name="stats_today">Ma</string>
   <string name="stats_forecast">Előrejelzés</string>
   <string name="stats_review_count">Átnézés számláló</string>
   <string name="stats_review_time">Átnézési idő</string>
@@ -89,21 +89,21 @@
   <string name="stats_breakdown">Hourly breakdown</string>
   <string name="stats_weekly_breakdown">Weekly breakdown</string>
   <string name="stats_answer_buttons">Válasz gombok</string>
-  <string name="stats_cards_types">Card types</string>
+  <string name="stats_cards_types">Kártyatípusok</string>
   <string-array name="stats_day_time_strings">
-    <item>4AM</item>
-    <item>10AM</item>
-    <item>4PM</item>
-    <item>10PM</item>
-    <item>3AM</item>
+    <item>4.00</item>
+    <item>10.00</item>
+    <item>16.00</item>
+    <item>22.00</item>
+    <item>3.00</item>
   </string-array>
   <string-array name="stats_week_days">
-    <item>Sun</item>
-    <item>Mon</item>
-    <item>Tue</item>
-    <item>Wed</item>
-    <item>Thu</item>
-    <item>Fri</item>
+    <item>Vas</item>
+    <item>Hé</item>
+    <item>Ke</item>
+    <item>Sze</item>
+    <item>Csü</item>
+    <item>Pé</item>
     <item>Szombat</item>
   </string-array>
   <string-array name="stats_eases_ticks">

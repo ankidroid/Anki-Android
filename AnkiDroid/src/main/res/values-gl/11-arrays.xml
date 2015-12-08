@@ -52,12 +52,12 @@
     <item>Desfacer</item>
     <item>Editar nota</item>
     <item>Marcar a nota</item>
-    <item>Lookup expression</item>
+    <item>Buscar expresión</item>
     <item>Agochar cartón</item>
     <item>Suspender cartón</item>
     <item>Eliminar nota</item>
     <item>Reproducir medio</item>
-    <item>Abort learning</item>
+    <item>Abortar aprendizaxe</item>
     <item>Agochar nota</item>
     <item>Suspender nota</item>
   </string-array>
@@ -90,7 +90,7 @@
     <item>New cards before reviews</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
+    <item>Cando non se especificou unha fonte nos cartóns</item>
     <item>Sempre</item>
   </string-array>
 </resources>
