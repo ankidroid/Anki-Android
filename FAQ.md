@@ -72,7 +72,6 @@ We realize that this is quite unintuitive for new users, but unfortunately this 
 ### How do I type the answer, not type the answer, hide the correct answer?
 See the [AnkiDroid user manual](http://ankidroid.org/manual.html#typeInAnswer)
 
-
 ### My AnkiDroid files are stored on a SD card, how can I point AnkiDroid to them?
 External SD cards are not officially supported by AnkiDroid, and we highly recommend using the storage built into your device. If you really must use an external SD card, please see [this issue on github](https://github.com/ankidroid/Anki-Android/issues/3106).
 
@@ -138,7 +137,10 @@ The most likely reason is that the media files are not in the main AnkiDroid `co
 
 If that doesn't work then please check if the media works correctly on both AnkiWeb and Anki Desktop. If you synced correctly with media sync enabled, and the media does not play on either AnkiWeb or Anki Desktop, then there is probably a problem with the cards themselves. Please read the Anki Desktop manual, or ask on the [Anki Desktop support site](http://ankisrs.net/docs/help.html) for help resolving this problem.
 
-If you have checked that you have correctly done a media sync, and that the media is playing correctly on both Anki Desktop and AnkiWeb but not on AnkiDroid, then use a file manager like "[OI file manager](https://play.google.com/store/apps/details?id=org.openintents.filemanager)" to check that the media files exist in your `AnkiDroid/collection.media` folder. If the media files do not exist then obviously AnkiDroid cannot play them. You can try manually copying them from Anki Desktop as a last resort.
+If you have checked that you have correctly done a media sync, and that the media is playing correctly on both Anki Desktop and AnkiWeb but not on AnkiDroid, then use a file manager (see below) to check that the media files exist in your `AnkiDroid/collection.media` folder. If the media files do not exist then obviously AnkiDroid cannot play them. You can try manually copying them from Anki Desktop as a last resort.
+
+### What file manager should I use?
+You can use any file manager that you like, but we highly recommend using a free and open source (FOSS) file manager like [Simple Explorer](http://forum.xda-developers.com/showthread.php?t=2330864) (requires Android 4.1+), which has a beautiful interface and a lot of valuable features. Another good FOSS file explorer, which works even on Android 2.3 is [OI File Manager](https://play.google.com/store/apps/details?id=org.openintents.filemanager). We have found some other file managers to include spam, so recommend using only FOSS, especially if your device is rooted!
 
 ### But still AnkiDroid does not play my media!
 
