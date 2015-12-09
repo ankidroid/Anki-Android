@@ -64,7 +64,7 @@
   <string name="whiteboard_black_summ">Daha az hafıza kullanır, ama gece modunda çalışmaz</string>
   <string name="write_answers_disable">Cevabı yazmayı devredışı bırak</string>
   <string name="write_answers_disable_summ">\"Cevabı yaz\" alanları içeren kartlarda klavyenin çıkmasını engeller</string>
-  <string name="use_input_tag">Type answer into the card</string>
+  <string name="use_input_tag">Karta cevabı yazın</string>
   <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
   <string name="text_selection_click">Uzun basma çözümü</string>
   <string name="text_selection_click_summ">Metin seçimini basılı tutarak başlatamıyorsanız bunu etkinleştirin</string>
@@ -79,10 +79,10 @@
   <string name="card_browser_font_size">Kart tarayıcısı font ölçeği</string>
   <string name="col_path">Koleksiyon yolu</string>
   <string name="fullscreen_review">Tamekran modu</string>
-  <string name="full_screen_off">Off</string>
-  <string name="full_screen_system">Hide the system bars</string>
-  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
+  <string name="full_screen_off">Devre Dışı</string>
+  <string name="full_screen_system">Sistem çubuklarını gizle</string>
+  <string name="full_screen_complete">Sistem çubuklarını ve cevap butonlarını gizle</string>
+  <string name="full_screen_error_gestures">Cevap butonlarını devre dışı bırakmak için desenleri açmalısınız</string>
   <string name="gestures">Jestleri etkinleştir</string>
   <string name="gestures_summ">Cevap verme ve kart düzenleme gibi eylemlere jestler ata.</string>
   <string name="gestures_swipe_up">Yukarı sürükleme</string>

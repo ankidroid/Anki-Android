@@ -85,7 +85,7 @@
   <string name="menu_add">Toevoegen</string>
   <string name="menu_add_note">Memo toevoegen</string>
   <string name="menu_my_account">Account synchroniseren</string>
-  <string name="menu_dismiss_note">Verberg / Verwijder</string>
+  <string name="menu_dismiss_note">Verbergen / Verwijderen</string>
   <string name="menu_bury_card">Kaart verbergen</string>
   <string name="menu_bury_note">Memo verbergen</string>
   <string name="menu_suspend_card">Blokkeer kaart</string>

@@ -48,12 +48,12 @@
   <string name="CardEditorModel">Type:</string>
   <string name="CardEditorTags">Kenmerken: %1$s</string>
   <string name="CardEditorCards">Kaarten: %1$s</string>
-  <string name="tag_name">Kenmerknaam</string>
-  <string name="add_new_filter_tags">Kenmerken toevoegen/filteren</string>
-  <string name="add_tag">Kenmerk toevoegen</string>
-  <string name="check_all_tags">Alle kenmerken markeren/demarkeren</string>
-  <string name="filter_tags">Filter kenmerken</string>
-  <string name="no_tags">Je hebt nog geen kenmerken toegevoegd.</string>
+  <string name="tag_name">Labelnaam</string>
+  <string name="add_new_filter_tags">Labels toevoegen/filteren</string>
+  <string name="add_tag">Label toevoegen</string>
+  <string name="check_all_tags">Alle labels selecteren/deselecteren</string>
+  <string name="filter_tags">Op labels filteren</string>
+  <string name="no_tags">Je hebt nog geen labels toegevoegd.</string>
   <string name="sdcard_missing_message">De SD-kaart is niet beschikbaar omdat ze in gebruik is voor USB-opslag. Ontkoppel de USB om toegang te krijgen tot uw sets.</string>
   <string name="updated_version">Geüpdatet naar versie %s</string>
   <string name="enable_whiteboard">Whiteboard inschakelen</string>
@@ -122,7 +122,7 @@
     <item quantity="other">%d kaarten toegevoegd</item>
   </plurals>
   <string name="help_title">Help</string>
-  <string name="check_db">Controleer database</string>
+  <string name="check_db">Database controleren</string>
   <string name="check_media">Media controleren</string>
   <string name="empty_cards">Lege kaarten zoeken</string>
   <string name="check_db_message">De databank wordt gecontroleerd.\nEven geduld alstublieft...</string>
@@ -144,7 +144,7 @@
   <string name="import_error_content_provider">Het selecteerde bestand kon niet automatisch geïmporteerd worden door AnkiDroid. Bekijk de gebruikershandleiding om te zien hoe je anki bestanden handmatig importeert: \n%s</string>
   <string name="import_importing">Kaarten importeren.\n Even geduld alstublieft...</string>
   <string name="export_include_schedule">Inclusief de planning</string>
-  <string name="export_include_media">Media opnemen</string>
+  <string name="export_include_media">Inclusief media</string>
   <string name="confirm_apkg_export">Verzameling exporteren als apkg-bestand?</string>
   <string name="confirm_apkg_export_deck">\"%s\" als apkg-bestand exporteren?</string>
   <string name="export_in_progress">Apkg-bestand exporteren&#8230;</string>
@@ -163,7 +163,7 @@
   <string name="sched_unbury_action">Om ze nu te zien kies \"opgraven\" in het menu</string>
   <string name="sched_has_buried">Sommige gerelateerde of geblokkeerde kaarten zijn vertraagd tot een latere sessie.</string>
   <string name="tag_editor_add_feedback">Druk op  “%2$s” om het toevoegen van “%1$s” te bevestigen</string>
-  <string name="tag_editor_add_feedback_existing">Bestaand kenmerk “%1$s” geselecteerd</string>
+  <string name="tag_editor_add_feedback_existing">Bestaand label “%1$s” geselecteerd</string>
   <string name="lookup_hint">Nadat de teks is gekopieerd, tikt u waar dan ook op de flitskaart om het zoekicoon weer te geven</string>
   <plurals name="time_span_seconds">
     <item quantity="one">%s second</item>

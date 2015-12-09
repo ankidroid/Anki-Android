@@ -36,53 +36,53 @@
 -->
 <resources>
   <string-array name="error_reporting_choice_labels">
-    <item>Always report</item>
-    <item>Never report</item>
-    <item>Ask me</item>
+    <item>Informar sempre</item>
+    <item>Non informar nunca</item>
+    <item>Preguntarme</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>No action</item>
+    <item>Sen acción</item>
     <item>Amosar resposta</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
+    <item>Botón de resposta 1</item>
+    <item>Botón de resposta 2</item>
+    <item>Botón de resposta 3</item>
+    <item>Botón de resposta 4</item>
+    <item>Resposta recomendada (verde)</item>
+    <item>Resposta mellor ca recomendada</item>
     <item>Desfacer</item>
     <item>Editar nota</item>
-    <item>Mark note</item>
+    <item>Marcar a nota</item>
     <item>Lookup expression</item>
-    <item>Bury card</item>
-    <item>Suspend card</item>
-    <item>Delete note</item>
+    <item>Agochar cartón</item>
+    <item>Suspender cartón</item>
+    <item>Eliminar nota</item>
     <item>Reproducir medio</item>
     <item>Abort learning</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Agochar nota</item>
+    <item>Suspender nota</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Suspender cartón</item>
-    <item>Tag only</item>
+    <item>Só etiquetar</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Novos cartóns ordenados ao chou</item>
-    <item>New cards in order added</item>
+    <item>Cartóns novos na orde de adición</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
+    <item>Máis antigos primeiro</item>
     <item>Ao chou</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
+    <item>Intervalos crecentes</item>
+    <item>Intervalos decrecentes</item>
     <item>Most lapsed</item>
-    <item>Order added</item>
+    <item>Orde de adición</item>
     <item>Order due</item>
-    <item>Latest added first</item>
+    <item>Última engadida primeiro</item>
     <item>Relative overdueness</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
-    <item>Decide by note type</item>
+    <item>Empregar baralla actual</item>
+    <item>Decidir polo tipo de nota</item>
   </string-array>
   <string-array name="new_spread_labels">
     <item>Mix new cards and reviews</item>
