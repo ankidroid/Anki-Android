@@ -568,18 +568,23 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
+
     @Override
     public void onBackPressed() {
-        Timber.i("CardBrowser:: CardBrowser - onBackPressed()");
-        Intent data = new Intent();
-        if (getIntent().hasExtra("selectedDeck")) {
-            data.putExtra("originalDeck", getIntent().getLongExtra("selectedDeck", 0L));
+        if (isDrawerOpen()) {
+            super.onBackPressed();
+        } else {
+            Timber.i("Back key pressed");
+            Intent data = new Intent();
+            if (getIntent().hasExtra("selectedDeck")) {
+                data.putExtra("originalDeck", getIntent().getLongExtra("selectedDeck", 0L));
+            }
+            if (mReloadRequired) {
+                // Add reload flag to result intent so that schedule reset when returning to note editor
+                data.putExtra("reloadRequired", true);
+            }
+            closeCardBrowser(RESULT_OK, data);
         }
-        if (mReloadRequired) {
-            // Add reload flag to result intent so that schedule reset when returning to note editor
-            data.putExtra("reloadRequired", true);
-        }
-        closeCardBrowser(RESULT_OK, data);
     }
     
     @Override

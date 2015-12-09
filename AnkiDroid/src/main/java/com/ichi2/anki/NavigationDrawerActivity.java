@@ -38,6 +38,7 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondarySwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import timber.log.Timber;
 
 
 public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnDrawerItemClickListener,
@@ -228,6 +229,17 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
 
 
     @Override
+    public void onBackPressed() {
+        if (isDrawerOpen()) {
+            Timber.i("Back key pressed");
+            mDrawer.closeDrawer();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
+    @Override
     public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
         if (mSelectedItem == iDrawerItem.getIdentifier()) {
             mDrawer.closeDrawer();
@@ -289,5 +301,9 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
 
     protected void setCurrentCardId(long id) {
         mCurrentCardId = id;
+    }
+
+    public boolean isDrawerOpen() {
+        return mDrawer.isDrawerOpen();
     }
 }
