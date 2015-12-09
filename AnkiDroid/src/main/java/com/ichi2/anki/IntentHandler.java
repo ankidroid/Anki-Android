@@ -180,7 +180,7 @@ public class IntentHandler extends Activity {
     /** Finish Activity using FADE animation **/
     private void finishWithFade() {
     	finish();
-    	ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
+    	ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.UP);
     }
 
     /**
