@@ -726,7 +726,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
             Timber.i("CardBrowser:: CardBrowser: Saving card...");
-            onMark(sCardBrowserCard);
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
+                    new DeckTask.TaskData(sCardBrowserCard, false));
         } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
             if (mSearchView != null) {
                 mSearchTerms = mSearchView.getQuery().toString();
@@ -918,6 +919,33 @@ public class CardBrowser extends NavigationDrawerActivity implements
         updateList();
     }
 
+    private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+            showProgressBar();
+        }
+
+
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+            updateCardInList(values[0].getCard(), values[0].getString());
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            Timber.d("Card Browser - mUpdateCardHandler.onPostExecute()");
+            if (!result.getBoolean()) {
+                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
+            }
+            hideProgressBar();
+        }
+
+
+        @Override
+        public void onCancelled() {
+        }
+    };
 
     public static void updateSearchItemQA(HashMap<String, String> item, Card c) {
         // render question and answer
