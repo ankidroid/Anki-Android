@@ -121,6 +121,7 @@
   <string name="help_title">ヘルプ</string>
   <string name="check_db">データベースをチェック</string>
   <string name="check_media">メディアをチェック</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">データベースをチェックしています...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">空のカード。\"ツール &gt; 空のカード...\"をデスクトップ クライアントで実行。</string>
   <string name="unknown_type_field_warning">タイピングして答えを入力: 不明なフィールド %s</string>

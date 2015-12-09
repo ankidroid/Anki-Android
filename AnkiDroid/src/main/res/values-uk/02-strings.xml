@@ -127,6 +127,7 @@
   <string name="help_title">Допомога</string>
   <string name="check_db">Перевірити базу даних</string>
   <string name="check_media">Check media</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Перевірка бази даних.\n Будь ласка, зачекайте...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Порожня картка. Запустіть \"Інструменти &gt; порожні карти...\" на стільничному клієнті.</string>
   <string name="unknown_type_field_warning">Введіть відповідь: невідоме поле %s</string>

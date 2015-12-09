@@ -127,6 +127,7 @@
   <string name="help_title">Помоћ</string>
   <string name="check_db">Провера базе података</string>
   <string name="check_media">Провери медијске датотеке</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Провера базе података.\nМолим сачекајте...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Празна картица. Покрените \"Алати&gt;Празне картице...\" на радној површини.</string>
   <string name="unknown_type_field_warning">Врста одговора: непознато поље %s</string>

@@ -124,6 +124,7 @@
   <string name="help_title">Ajuda</string>
   <string name="check_db">Verificar base de dados</string>
   <string name="check_media">Verificar multimédia</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">A verificar a base de dados&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Ficha vazia. Execute \"Ferramentas&gt;Fichas Vazias...\" na aplicação para PC.</string>
   <string name="unknown_type_field_warning">Escrever resposta: campo desconhecido %s</string>

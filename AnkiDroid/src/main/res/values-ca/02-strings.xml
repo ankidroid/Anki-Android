@@ -124,6 +124,7 @@
   <string name="help_title">Ajuda</string>
   <string name="check_db">Comprova la base de dades</string>
   <string name="check_media">Comprovar la multimèdia</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">S\'està comprovant la base de dades.\nUn moment si us plau...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">La targeta és buida. Executa \"Eines &gt; targetes buides...\" en el client d\'escriptori.</string>
   <string name="unknown_type_field_warning">Tipus de resposta: camp desconegut %s</string>

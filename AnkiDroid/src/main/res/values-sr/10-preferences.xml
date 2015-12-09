@@ -64,6 +64,8 @@
   <string name="whiteboard_black_summ">Користи мање меморије, осим у ноћном режиму</string>
   <string name="write_answers_disable">Онемогући куцање одговора</string>
   <string name="write_answers_disable_summ">Спречава појаву тастатуре на картицама које садрже поље \"укуцајте одговор\"</string>
+  <string name="use_input_tag">Type answer into the card</string>
+  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
   <string name="text_selection_click">Исправљање грешке дугог притискања</string>
   <string name="text_selection_click_summ">Укључите, ако не успевате да почнете означавање текста преко дугог притиска</string>
   <string name="dictionary">Кориснички речник</string>

@@ -64,6 +64,8 @@
   <string name="whiteboard_black_summ">야간 모드가 아니라면 메모리를 적게 사용</string>
   <string name="write_answers_disable">정답 타이핑 사용 안함</string>
   <string name="write_answers_disable_summ">\'정답 입력\' 필드가 있는 카드에서 키보드가 나타나는 것을 방지</string>
+  <string name="use_input_tag">Type answer into the card</string>
+  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
   <string name="text_selection_click">길게 누름과 관련된 차선책</string>
   <string name="text_selection_click_summ">긴 클릭을 통해서 텍스트를 선택할 수 없는 경우 이 항목을 활성화</string>
   <string name="dictionary">색인 사전</string>

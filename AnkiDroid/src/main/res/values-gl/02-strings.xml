@@ -124,6 +124,7 @@
   <string name="help_title">Axuda</string>
   <string name="check_db">Verificar banco de datos</string>
   <string name="check_media">Verificar multimedia</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Verificando banco de datos.\nAgarda, por favor...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run “Tools&gt;Empty Cards...” on the desktop client.</string>
   <string name="unknown_type_field_warning">Escribe a resposta: campo descoñecido %s</string>

@@ -64,6 +64,8 @@
   <string name="whiteboard_black_summ">Använder mindre arbetsminne, men fungerar inte i nattläge</string>
   <string name="write_answers_disable">Stäng av att skriva in svar</string>
   <string name="write_answers_disable_summ">Stoppar tangentbord från att dyka upp på kort med \'skriv in svar\'-fält</string>
+  <string name="use_input_tag">Type answer into the card</string>
+  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
   <string name="text_selection_click">Långklicksfix</string>
   <string name="text_selection_click_summ">Aktivera detta om du inte kan påbörja textmarkering via långt klick</string>
   <string name="dictionary">Ordbok</string>

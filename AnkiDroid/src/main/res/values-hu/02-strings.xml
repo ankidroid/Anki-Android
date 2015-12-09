@@ -124,6 +124,7 @@
   <string name="help_title">Segítség</string>
   <string name="check_db">Adatbázis ellenőrzése</string>
   <string name="check_media">Média ellenőrzése</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Adatbázis ellenőrzése.\nKérlek, várj...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Üres kártya. Futtasd az \"eszközök &gt; üres kártyák...\"-at az asztalon.</string>
   <string name="unknown_type_field_warning">Válaszadás: ismeretlen mező: %s</string>

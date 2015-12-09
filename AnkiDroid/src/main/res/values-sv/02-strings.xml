@@ -124,6 +124,7 @@
   <string name="help_title">Hjälp</string>
   <string name="check_db">Kontrollera databas</string>
   <string name="check_media">Kontrollera media</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Kontrollerar databasen. \nVänligen vänta...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tomt kort. Kör \"Verktyg&gt;Tomma kort...\" i PC-versionen av Anki.</string>
   <string name="unknown_type_field_warning">Skriv svar: okänt fält %s</string>

@@ -64,6 +64,8 @@
   <string name="whiteboard_black_summ">Käyttää vähemmän muistia, mutta ei silloin, kun yötila on päällä</string>
   <string name="write_answers_disable">Ota vastauksen kirjoittaminen pois käytöstä</string>
   <string name="write_answers_disable_summ">Estää näppäimistöä tulemasta esille korteissa, joissa on \'kirjoita vastaus\'-kenttiä</string>
+  <string name="use_input_tag">Type answer into the card</string>
+  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
   <string name="text_selection_click">Korjaa pitkät painallukset</string>
   <string name="text_selection_click_summ">Ota käyttöön, jos et pysty aloittamaan tekstivalintaa pitkällä painalluksella</string>
   <string name="dictionary">Sanakirja</string>

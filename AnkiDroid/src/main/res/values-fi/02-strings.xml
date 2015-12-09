@@ -124,6 +124,7 @@
   <string name="help_title">Ohje</string>
   <string name="check_db">Tarkasta tietokanta</string>
   <string name="check_media">Tarkista media</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Tarkistetaan tietokantaa&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tyhjä kortti. Aja \"Työkalut&gt;Tyhjät kortit\" työpöytäsovelluksessa.</string>
   <string name="unknown_type_field_warning">Kirjoita vastaus: tuntematon kenttä %s</string>

@@ -121,6 +121,7 @@
   <string name="help_title">說明</string>
   <string name="check_db">檢查資料庫</string>
   <string name="check_media">檢查媒體</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">檢查資料庫。\n請稍後...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">空白卡片。請在桌面版軟體上執行 \"工具&gt;空白卡片...\"。</string>
   <string name="unknown_type_field_warning">輸入答案：未知的表格 %s</string>

@@ -64,6 +64,8 @@
   <string name="whiteboard_black_summ">Gunakan lebih sedikit memori, kecuali dalam modus malam</string>
   <string name="write_answers_disable">Menonaktifkan pengetikkan dalam jawaban</string>
   <string name="write_answers_disable_summ">Mencegah keyboard muncul pada kartu-kartu yang berisi kolom-kolom \'ketik jawaban\'</string>
+  <string name="use_input_tag">Type answer into the card</string>
+  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
   <string name="text_selection_click">Tekan lama solusi</string>
   <string name="text_selection_click_summ">Aktifkan ini jika anda tidak dapat memilih teks dengan klik panjang</string>
   <string name="dictionary">Kamus lookup</string>

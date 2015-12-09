@@ -127,6 +127,7 @@
   <string name="help_title">Pagalba</string>
   <string name="check_db">Patikrinti duomenų bazę</string>
   <string name="check_media">Check media</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Tikrinama duomenų bazė&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run “Tools&gt;Empty Cards...” on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>

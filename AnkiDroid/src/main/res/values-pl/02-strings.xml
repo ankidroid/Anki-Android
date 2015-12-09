@@ -127,6 +127,7 @@
   <string name="help_title">Pomoc</string>
   <string name="check_db">Sprawdź bazę danych</string>
   <string name="check_media">Sprawdź media</string>
+  <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Sprawdzanie bazy danych.\nProszę czekać...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Pusta karta. Uruchom \"Narzędzia &gt; puste karty...\" w programie w wersji na PC.</string>
   <string name="unknown_type_field_warning">Wpisz odpowiedź: nieznane pole %s</string>
