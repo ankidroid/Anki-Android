@@ -60,7 +60,7 @@
                 android:description="@string/read_write_permission_description"
                 android:protectionLevel="dangerous" />
     <!-- custom tabs library has minimum SDK of 16 -->
-    <uses-sdk tools:overrideLibrary="android.support.customtabs"/>
+    <uses-sdk tools:overrideLibrary="android.support.customtabs, com.getbase.floatingactionbutton"/>
 
     <supports-screens
         android:anyDensity="true"
