@@ -182,6 +182,8 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         if (node.children.size() > 0) {
             holder.deckExpander.setTag(node.did);
             holder.deckExpander.setOnClickListener(mDeckExpanderClickListener);
+        } else {
+            holder.deckExpander.setOnClickListener(null);
         }
         holder.deckLayout.setBackgroundResource(mRowCurrentDrawable);
         // Set background colour. The current deck has its own color
