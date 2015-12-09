@@ -44,13 +44,13 @@
     <item quantity="other">%d cartóns amosados</item>
   </plurals>
   <string name="card_browser_all_decks">Todas as barallas</string>
-  <string name="card_browser_delete_card">Eliminar notación</string>
+  <string name="card_browser_delete_card">Eliminar nota</string>
   <string name="card_browser_suspend_card">Suspender cartón</string>
   <string name="card_browser_unsuspend_card">Reactivar o cartón</string>
-  <string name="card_browser_mark_card">Marcar notación</string>
-  <string name="card_browser_unmark_card">Desmarcar notación</string>
-  <string name="delete_card_title">Eliminar notación?</string>
-  <string name="delete_card_message">Eliminar todos os cartóns desta notación?\nCampo de busca: %s</string>
+  <string name="card_browser_mark_card">Marcar a nota</string>
+  <string name="card_browser_unmark_card">Desmarcar nota</string>
+  <string name="delete_card_title">Eliminar nota?</string>
+  <string name="delete_card_message">Eliminar todos os cartóns desta nota?\nCampo de busca: %s</string>
   <string name="card_browser_show_marked">Filtrar as marcadas</string>
   <string name="card_browser_show_suspended">Filtrar as suspendidas</string>
   <string name="card_browser_search_by_tag">Filtrar por etiqueta</string>
@@ -59,12 +59,12 @@
   <string name="card_browser_list_my_searches_save">Gardar a busca</string>
   <string name="card_browser_list_my_searches_title">Seleccionar unha busca gardada</string>
   <string name="card_browser_list_my_searches_new_name">Nome para a busca actual</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">Non podes gardar unha busca se lle poñer un nome</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">Non podes gardar unha busca sen lle poñer un nome</string>
   <string name="card_browser_list_my_searches_new_search_error_dup">O nome xa existe</string>
   <string name="card_browser_list_my_searches_remove_content">Eliminar “%1$s”?</string>
   <string name="card_browser_change_display_order">Mudar a orde de presentación</string>
-  <string name="card_browser_change_display_order_title">Mudar a orde de presentación</string>
-  <string name="card_browser_change_display_order_reverse">Selecciona un campo dúas veces para reservalo</string>
+  <string name="card_browser_change_display_order_title">Seleccionar orde de presentación</string>
+  <string name="card_browser_change_display_order_reverse">Selecciona un campo dúas veces para invértelo</string>
   <string name="card_details_question">Pregunta</string>
   <string name="card_details_answer">Resposta</string>
   <string name="card_details_due">Pendentes</string>

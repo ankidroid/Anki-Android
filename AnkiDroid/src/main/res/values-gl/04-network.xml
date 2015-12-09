@@ -40,10 +40,10 @@
 
 -->
 <resources>
-  <string name="youre_offline">You are offline</string>
+  <string name="youre_offline">Non estás conectado</string>
   <string name="sync_error">Erro ao sincronizar</string>
   <string name="vague_error">Erro</string>
-  <string name="retry">Volver tentar</string>
+  <string name="retry">Tentar de novo</string>
   <string name="cancel">Cancelar</string>
   <string name="loading_shared_decks">Cargando as barallas compartidas dispoñibles&#8230;</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Termos e condicións</a></string>
@@ -51,7 +51,7 @@
   <string name="connection_error_message">Produciuse un erro de rede.</string>
   <string name="not_logged_in_title">Iniciar sesión no AnkiWeb</string>
   <string name="login_create_account_message">Tes de iniciar sesión cunha conta de AnkiWeb. Podes crear unha no vindeiro paso.</string>
-  <string name="no_email_client">No email client available</string>
+  <string name="no_email_client">Non hai dispoñible ningún cliente de correo</string>
   <string name="username">Enderezo de correo electrónico</string>
   <string name="username_repeat">Repetir correo electrónico</string>
   <string name="password">Contrasinal</string>
@@ -59,14 +59,14 @@
   <string name="log_in">Iniciar sesión</string>
   <string name="sign_up_description">Non tes unha conta de AnkiWeb? É de balde!</string>
   <string name="sign_up">Rexistrarse</string>
-  <string name="logged_as">Logged in as</string>
+  <string name="logged_as">Conectado como</string>
   <string name="log_out">Saír</string>
-  <string name="alert_logging_message">Logging in&#8230;</string>
-  <string name="invalid_username_password">Invalid email address or password</string>
+  <string name="alert_logging_message">Iniciando sesión&#8230;</string>
+  <string name="invalid_username_password">Enderezo de correo ou contrasinal non válidos</string>
   <string name="reset_password">Restablecer contrasinal</string>
-  <string name="downloaddeck_search">Search</string>
+  <string name="downloaddeck_search">Buscar</string>
   <string name="preferences_title">Preferencias</string>
-  <string name="deckpreferences_title">Options for XXX</string>
+  <string name="deckpreferences_title">Opcións para XXX</string>
   <string name="sync_conflict_message">You must either upload this collection or download it from Ankiweb, as they can’t be merged. The collection on one side will be overwritten.</string>
   <string name="sync_conflict_local">Cargar</string>
   <string name="sync_conflict_remote">Descargar</string>
@@ -78,8 +78,8 @@
   <string name="sync_downloading_message">A descargar&#8230;</string>
   <string name="sync_title">Sincronización</string>
   <string name="sync_downloading_media">Descargando multimedia %1$d/%2$d&#8230;</string>
-  <string name="sync_log_uploading_message">Full sync from local</string>
-  <string name="sync_log_downloading_message">Full sync from server</string>
+  <string name="sync_log_uploading_message">Sincronización completa dos datos locais</string>
+  <string name="sync_log_downloading_message">Sincronización completa no servidor</string>
   <string name="sync_log_clocks_unsynchronized">Your clock’s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, the time zone’s possibly wrong</string>
   <string name="sync_log_clocks_unsynchronized_date">, the date’s possibly wrong</string>

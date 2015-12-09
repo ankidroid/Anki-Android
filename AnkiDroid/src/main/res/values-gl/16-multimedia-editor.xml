@@ -37,7 +37,7 @@
   <string name="multimedia_editor_popup_image">Engadir imaxe</string>
   <string name="multimedia_editor_popup_audio">Gravar audio</string>
   <string name="multimedia_editor_popup_text">Editor avanzado</string>
-  <string name="multimedia_editor_trans_poweredglosbe">Con tecnoloxía de glosbe.com</string>
+  <string name="multimedia_editor_trans_poweredglosbe">Fornecido por glosbe.com</string>
   <string name="multimedia_editor_trans_from">Dende</string>
   <string name="multimedia_editor_trans_to">A</string>
   <string name="multimedia_editor_trans_translate">Traducir</string>
@@ -83,7 +83,7 @@
   <string name="multimedia_editor_searching_word">Buscando a palabra</string>
   <string name="multimedia_editor_progress_wait_title">Agarda</string>
   <string name="multimedia_editor_something_wrong">Algo foi mal</string>
-  <string name="multimedia_editor_attach_mm_content">Anxear contido multimedia á nota</string>
+  <string name="multimedia_editor_attach_mm_content">Anexar contido multimedia á nota</string>
   <string name="multimedia_editor_attach_media">Anexar multimedia</string>
   <string name="multimedia_editor_audio_view_recording_failed">A gravación fallou</string>
   <string name="multimedia_editor_audio_view_playing_failed">A reprodución fallou</string>
@@ -91,5 +91,5 @@
   <string name="title_activity_translation">Tradución</string>
   <string name="title_activity_load_pronounciation">Pronuncia</string>
   <string name="title_activity_search_image">Busca de imaxes de Google</string>
-  <string name="network_no_connection">Sen conexión.</string>
+  <string name="network_no_connection">Sen conexión</string>
 </resources>

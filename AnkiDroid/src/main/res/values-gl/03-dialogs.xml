@@ -58,7 +58,7 @@
     <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
     <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
     <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
-    <item><![CDATA[Os que non son desenvolvedores tamen poden axudar. Por exemplo, poden <a href=\"%1$s\">axudar a truducir</a> o AnkiDroid, actualizar o wiki, fornecer capturas, <a href=\"%2$s\">facer unha doazón</a> a Anki Desktop, ou blogar sobre AnkiDroid.]]></item>
+    <item><![CDATA[Os que non son desenvolvedores tamen poden axudar. Por exemplo, poden <a href=\"%1$s\">axudar a traducir</a> o AnkiDroid, actualizar o wiki, fornecer capturas, <a href=\"%2$s\">facer unha doazón</a> a Anki Desktop, ou blogar sobre AnkiDroid.]]></item>
     <item><![CDATA[Ankidroid distribúese baixo <a href=\"%1$s\">licenza GNU-GPL v3</a> e o código fonte está dispoñible <a href=\"%2$s\">no GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Vista previa</string>
@@ -66,24 +66,24 @@
   <string name="reset_card_dialog_message">Este cartón colocarase ao final da nova cola.</string>
   <string name="reset_card_dialog_acknowledge">Card reset</string>
   <string name="reschedule_card_dialog_title">Reschedule card</string>
-  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_message">Volver programar unha revisión en x días:</string>
   <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">Erro na base de datos</string>
   <string name="answering_error_message">Writing to the collection failed. The databese could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
   <string name="answering_error_report">Informar de erros</string>
   <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
-  <string name="intent_add_saved_information">Saved data</string>
+  <string name="intent_add_saved_information">Datos gardados</string>
   <string name="intent_add_clear_all">Clear all</string>
   <string name="intent_aedict_empty">A categoría \'predeterminado\' está baleira</string>
   <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
-  <string name="custom_study_new_total_new">New cards in deck: %s</string>
+  <string name="custom_study_new_total_new">Novos cartóns na baralla: %s</string>
   <string name="custom_study_rev_total_rev">Reviews due in deck: %s</string>
   <string name="custom_study_new_extend">Increase today’s new card limit by</string>
-  <string name="custom_study_rev_extend">Increase today’s review limit by</string>
-  <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
-  <string name="custom_study_ahead">Review ahead by x days:</string>
+  <string name="custom_study_rev_extend">Aumentar o límite de visións para hoxe en</string>
+  <string name="custom_study_forgotten">Revisar os cartóns esquecidos nos últimos x días:</string>
+  <string name="custom_study_ahead">Revisar con x días de adianto:</string>
   <string name="custom_study_random">Select x cards randomly from the deck:</string>
-  <string name="custom_study_preview">Preview new cards added in the last x days:</string>
+  <string name="custom_study_preview">Vista previa dos novos cartóns engadidos nos últimos x días:</string>
   <string name="rebuild_custom_study_deck">Rebuilding custom study deck&#8230;</string>
   <string name="import_unpacking">Descomprimindo arquivo&#8230;</string>
   <string name="importing_collection">Importando colección&#8230;</string>

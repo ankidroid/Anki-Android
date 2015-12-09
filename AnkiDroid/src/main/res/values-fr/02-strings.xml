@@ -153,7 +153,7 @@
   <string name="export_unsuccessful">Erreur pendant l’exportation de la collection</string>
   <string name="import_hint">Pour importer des cartes, placez le fichier apkg dans le répertoire « %s » et touchez « OK »</string>
   <string name="upgrade_import_no_file_found">Pas de fichier %1$s importable trouvé</string>
-  <string name="study_options">Option des paquets</string>
+  <string name="study_options">Options des paquets</string>
   <string name="custom_study">Étude personnalisée</string>
   <string name="more_options">Plus</string>
   <string name="dyn_deck_desc">Ceci est un paquet pour l\'étude en dehors des horaires normaux. Les cartes reviendront automatiquement à leur paquet d\'origine après leur révision. La suppression de ce paquet remettra toutes les cartes restantes dans leur paquet d\'origine.</string>
