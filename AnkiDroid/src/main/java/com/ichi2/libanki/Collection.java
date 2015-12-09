@@ -113,7 +113,6 @@ public class Collection {
     public static final int UNDO_SUSPEND_CARD = 3;
     public static final int UNDO_SUSPEND_NOTE = 4;
     public static final int UNDO_DELETE_NOTE = 5;
-    public static final int UNDO_MARK_NOTE = 6;
     public static final int UNDO_BURY_CARD = 7;
 
     private static final int[] fUndoNames = new int[]{
@@ -1273,12 +1272,6 @@ public class Collection {
     		mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
     		return (Long) data[3];
 
-    	case UNDO_MARK_NOTE:
-    		Note note3 = getNote((Long) data[1]);
-    		note3.setTagsFromStr((String) data[2]);
-    		note3.flush(note3.getMod(), false);
-    		return (Long) data[3];
-
         case UNDO_BURY_CARD:
             for (Card cc : (ArrayList<Card>)data[2]) {
                 cc.flush(false);
@@ -1308,9 +1301,6 @@ public class Collection {
             mUndo.add(new Object[]{type, o[0], o[1]});
             break;
     	case UNDO_DELETE_NOTE:
-    		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
-    		break;
-    	case UNDO_MARK_NOTE:
     		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
     		break;
         case UNDO_BURY_CARD:
