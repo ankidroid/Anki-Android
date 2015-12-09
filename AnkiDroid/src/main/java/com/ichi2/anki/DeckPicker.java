@@ -624,7 +624,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT, mImportAddListener, new TaskData(mImportPath, true));
                 mImportPath = null;
             }
-        } else if (requestCode == REQUEST_REVIEW && resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
+        } else if ((requestCode == REQUEST_REVIEW || requestCode == SHOW_STUDYOPTIONS)
+                && resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
             // Show a message when reviewing has finished
             int[] studyOptionsCounts = getCol().getSched().counts();
             if (studyOptionsCounts[0] + studyOptionsCounts[1] + studyOptionsCounts[2] == 0) {
