@@ -108,7 +108,6 @@ public class Collection {
             + "'sortBackwards': False, 'addToCur': True }"; // add new to currently selected deck?
 
     public static final int UNDO_REVIEW = 0;
-    public static final int UNDO_EDIT_NOTE = 1;
     public static final int UNDO_BURY_NOTE = 2;
     public static final int UNDO_SUSPEND_CARD = 3;
     public static final int UNDO_SUSPEND_NOTE = 4;
@@ -1219,30 +1218,6 @@ public class Collection {
             mSched.setReps(mSched.getReps() - 1);
             return c.getId();
 
-    	case UNDO_EDIT_NOTE:
-    		Note note = (Note) data[1];
-    		note.flush(note.getMod(), false);
-    		long cid = (Long) data[2];
-            Card card = null;
-            if ((Boolean) data[3]) {
-                Card newCard = getCard(cid);
-                if (getDecks().active().contains(newCard.getDid())) {
-                    card = newCard;
-                    card.load();
-                    // Reloads the QA-cache.
-                    // Requests the simple interface version, since the only difference
-                    // is whether the CSS is added and that's not cached.
-                    card.q(true, true);
-                }
-            }
-            if (card == null) {
-            	card = getSched().getCard();
-            }
-            if (card != null) {
-            	return card.getId();
-            }
-    		return 0;
-
     	case UNDO_BURY_NOTE:
     		for (Card cc : (ArrayList<Card>)data[2]) {
     			cc.flush(false);
@@ -1287,9 +1262,6 @@ public class Collection {
     	switch(type) {
     	case UNDO_REVIEW:
     		mUndo.add(new Object[]{type, ((Card)o[0]).clone(), o[1]});
-    		break;
-    	case UNDO_EDIT_NOTE:
-    		mUndo.add(new Object[]{type, ((Note)o[0]).clone(), o[1], o[2]});
     		break;
         case UNDO_BURY_NOTE:
             mUndo.add(new Object[]{type, o[0], o[1], o[2]});

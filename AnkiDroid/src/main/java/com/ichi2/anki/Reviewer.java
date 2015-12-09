@@ -117,7 +117,8 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             case R.id.action_mark_card:
                 Timber.i("Reviewer:: Mark button pressed");
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(mCurrentCard, 0));
+                onMark(mCurrentCard);
+                refreshActionBar();
                 break;
 
             case R.id.action_replay:
@@ -287,7 +288,8 @@ public class Reviewer extends AbstractFlashcardViewer {
 	            return true;
 	        }
 	        if (keyPressed == '*') {
-	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(mCurrentCard, 0));
+                onMark(mCurrentCard);
+                refreshActionBar();
 	            return true;
 	        }
 	        if (keyPressed == '-') {
