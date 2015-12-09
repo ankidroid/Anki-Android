@@ -63,6 +63,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
+        android:minWidth="70dp"
+        android:gravity="right"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true" >
         <TextView
