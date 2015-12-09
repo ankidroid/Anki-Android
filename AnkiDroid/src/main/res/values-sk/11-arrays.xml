@@ -36,8 +36,8 @@
 -->
 <resources>
   <string-array name="error_reporting_choice_labels">
-    <item>Vždy oznámiť</item>
-    <item>Nikdy neodosielať</item>
+    <item>Vždy ohlásiť</item>
+    <item>Nikdy nehlásiť</item>
     <item>Spýtať sa</item>
   </string-array>
   <string-array name="gestures_labels">
@@ -70,7 +70,7 @@
     <item>Nové karty v poradí, v akom boli pridané</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Od najdávnejšie zobrazených</item>
+    <item>Od najstarších</item>
     <item>Náhodne</item>
     <item>Rastúce intervaly</item>
     <item>Klesajúce intervaly</item>

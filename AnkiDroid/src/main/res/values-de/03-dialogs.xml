@@ -104,7 +104,7 @@
   <string name="dialog_positive_remove">Löschen</string>
   <string name="dialog_positive_repair">Reparieren</string>
   <string name="dialog_positive_replace">Ersetzen</string>
-  <string name="dialog_positive_restore">Zurücksetzen</string>
+  <string name="dialog_positive_restore">Wiederherstellen</string>
   <string name="dialog_positive_set">Anwenden</string>
   <string name="lookup_button_content">Nachschlagen</string>
   <string name="dialog_collection_path_not_dir">Der angegebene Pfad ist kein gültiges Verzeichnis</string>
