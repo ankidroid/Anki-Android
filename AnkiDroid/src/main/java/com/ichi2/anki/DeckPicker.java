@@ -59,6 +59,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
+import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.CustomStudyDialog;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
@@ -451,6 +452,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        // Null check to prevent crash on API23 when we don't have required permission to access db
+        if (getCol() == null) {
+            return false;
+        }
         // Show / hide undo
         if (mFragmented || !getCol().undoAvailable()) {
             menu.findItem(R.id.action_undo).setVisible(false);
@@ -471,6 +476,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         menu.findItem(R.id.action_new_filtered_deck).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_database).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
+        menu.findItem(R.id.action_empty_cards).setEnabled(sdCardAvailable);
+
         // Hide import, export, and restore backup on ChromeOS as users
         // don't have access to the file system.
         if (CompatHelper.isChromebook()) {
@@ -539,6 +546,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
             case R.id.action_check_media:
                 Timber.i("DeckPicker:: Check media button pressed");
                 showMediaCheckDialog(MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK);
+                return true;
+
+            case R.id.action_empty_cards:
+                Timber.i("DeckPicker:: Empty cards button pressed");
+                handleEmptyCards();
                 return true;
 
             case R.id.action_model_browser_open:
@@ -2025,4 +2037,48 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         }
     };
+
+    public void handleEmptyCards() {
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_FIND_EMPTY_CARDS, new DeckTask.Listener() {
+            @Override
+            public void onPreExecute(DeckTask task) {
+                mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
+                        getResources().getString(R.string.emtpy_cards_finding), false);
+            }
+
+            @Override
+            public void onPostExecute(DeckTask task, TaskData result) {
+                final List<Long> cids = (List<Long>) result.getObjArray()[0];
+                if (cids.size() == 0) {
+                    showSimpleMessageDialog(getResources().getString(R.string.empty_cards_none));
+                } else {
+                    String msg = String.format(getResources().getString(R.string.empty_cards_count), cids.size());
+                    ConfirmationDialog dialog = new ConfirmationDialog() {
+                        @Override
+                        public void confirm() {
+                            getCol().remCards(Utils.arrayList2array(cids));
+                            showSimpleSnackbar(String.format(
+                                    getResources().getString(R.string.empty_cards_deleted), cids.size()), false);
+                        }
+                    };
+                    dialog.setArgs(msg);
+                    showDialogFragment(dialog);
+                }
+
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onProgressUpdate(DeckTask task, TaskData... values) {
+
+            }
+
+            @Override
+            public void onCancelled() {
+
+            }
+        });
+    }
 }

@@ -99,6 +99,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_ADD_FIELD = 45;
     public static final int TASK_TYPE_CHANGE_SORT_FIELD = 46;
     public static final int TASK_TYPE_SAVE_MODEL = 47;
+    public static final int TASK_TYPE_FIND_EMPTY_CARDS = 48;
 
     /**
      * A reference to the application context to use to fetch the current Collection object.
@@ -332,6 +333,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_SAVE_MODEL:
                 return doInBackgroundSaveModel(params);
+            case TASK_TYPE_FIND_EMPTY_CARDS:
+                return doInBackGroundFindEmptyCards(params);
 
             default:
                 Timber.e("unknown task type: %d", mType);
@@ -1283,6 +1286,12 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             e.printStackTrace();
         }
         return new TaskData(true);
+    }
+
+    public TaskData doInBackGroundFindEmptyCards(TaskData... params) {
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        List<Long> cids = col.emptyCids();
+        return new TaskData(new Object[] { cids});
     }
 
     /**
