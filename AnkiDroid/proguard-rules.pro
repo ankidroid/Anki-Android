@@ -15,3 +15,13 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+# Samsung Android 4.2 bug workaround
+# https://code.google.com/p/android/issues/detail?id=78377
+-keepattributes **
+-keep class !android.support.v7.view.menu.**,!android.support.design.internal.NavigationMenu,!android.support.design.internal.NavigationMenuPresenter,!android.support.design.internal.NavigationSubMenu,** {*;}
+-dontpreverify
+-dontoptimize
+-dontshrink
+-dontwarn **
+-dontnote **
