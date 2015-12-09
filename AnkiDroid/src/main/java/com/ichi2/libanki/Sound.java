@@ -75,7 +75,7 @@ public class Sound {
     /**
      * OnCompletionListener so that external video player can notify to play next sound
      */
-    private OnCompletionListener mPlayAllListener;
+    private static OnCompletionListener mPlayAllListener;
 
     /**
      * Weak reference to the activity which is attempting to play the sound
