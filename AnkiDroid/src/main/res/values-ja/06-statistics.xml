@@ -42,7 +42,7 @@
   <string name="statistics_young">復習(未熟)</string>
   <string name="statistics_mature">復習(熟知)</string>
   <string name="statistics_young_and_learn">基本学習＋復習(未熟)</string>
-  <string name="statistics_unlearned">未学習（新規）</string>
+  <string name="statistics_unlearned">未学習(新規)</string>
   <string name="statistics_suspended">保留＋延期</string>
   <string name="statistics_relearn">再学習</string>
   <string name="statistics_learn">基本学習</string>
