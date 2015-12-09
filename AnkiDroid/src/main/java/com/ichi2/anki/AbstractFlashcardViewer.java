@@ -64,7 +64,6 @@ import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -79,11 +78,11 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.HtmlColors;
-import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.HtmlUtil;
@@ -470,33 +469,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
     };
 
-    public DeckTask.TaskListener mMarkCardHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            showProgressBar();
-        }
-
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-            hideProgressBar();
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            refreshActionBar();
-            if (!result.getBoolean()) {
-                // RuntimeException occured on marking cards
-                closeReviewer(DeckPicker.RESULT_DB_ERROR, true);
-            }
-        }
-
-
-        @Override
-        public void onCancelled() {
-        }
-    };
 
     protected DeckTask.TaskListener mDismissCardHandler = new DeckTask.TaskListener() {
         @Override
@@ -2463,8 +2435,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 editCard();
                 break;
             case GESTURE_MARK:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler,
-                        new DeckTask.TaskData(mCurrentCard, 0));
+                onMark(mCurrentCard);
                 break;
             case GESTURE_LOOKUP:
                 lookUpOrSelectText();
@@ -2725,5 +2696,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mReplayOnTtsInit) {
             playSounds(true);
         }
+    }
+
+    protected void onMark(Card card) {
+        Note note = card.note();
+        if (note.hasTag("marked")) {
+            note.delTag("marked");
+        } else {
+            note.addTag("marked");
+        }
+        note.flush();
     }
 }

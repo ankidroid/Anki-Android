@@ -175,10 +175,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             switch (which) {
                 case CardBrowserContextMenu.CONTEXT_MENU_MARK:
-                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD,
-                            mUpdateCardHandler,
-                            new DeckTask.TaskData(getCol().getCard(Long.parseLong(getCards().get(
-                                    mPositionInCardsList).get("id"))), 0));
+                    Card card = getCol().getCard(Long.parseLong(getCards().get(mPositionInCardsList).get("id")));
+                    onMark(card);
+                    updateCardInList(card, null);
                     return;
 
                 case CardBrowserContextMenu.CONTEXT_MENU_SUSPEND:
@@ -339,6 +338,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
         searchCards();
     }
 
+    private void onMark(Card card) {
+        Note note = card.note();
+        if (note.hasTag("marked")) {
+            note.delTag("marked");
+        } else {
+            note.addTag("marked");
+        }
+        note.flush();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -718,8 +726,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
             Timber.i("CardBrowser:: CardBrowser: Saving card...");
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
-                    new DeckTask.TaskData(sCardBrowserCard, false));
+            onMark(sCardBrowserCard);
         } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
             if (mSearchView != null) {
                 mSearchTerms = mSearchView.getQuery().toString();
@@ -983,33 +990,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         updateList();
     }
 
-    private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            showProgressBar();
-        }
-
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-            updateCardInList(values[0].getCard(), values[0].getString());
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            Timber.d("Card Browser - mUpdateCardHandler.onPostExecute()");
-            if (!result.getBoolean()) {
-                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
-            }
-            hideProgressBar();
-        }
-
-
-        @Override
-        public void onCancelled() {
-        }
-    };
 
     private DeckTask.TaskListener mSuspendCardHandler = new DeckTask.TaskListener() {
         @Override
