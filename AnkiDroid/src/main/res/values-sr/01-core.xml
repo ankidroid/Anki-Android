@@ -131,6 +131,7 @@
   <string name="cancel_sync_confirm">Желите ли да откажете синхронизацију?</string>
   <string name="continue_sync">Настави синхронизацију</string>
   <string name="sync_cancelled">Синхронизација отказана</string>
+  <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
   <string name="export">Извози</string>
   <string name="export_collection">Извози колекцију</string>
   <string name="export_deck">Извози шпил</string>

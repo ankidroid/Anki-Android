@@ -153,8 +153,6 @@
   <string name="pref_keep_screen_on">Manter a pantalla acesa</string>
   <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
   <string name="convert_fen_text">Chess notation support</string>
-  <string name="filter_google_translate">Dende Google Translate</string>
-  <string name="filter_google_translate_summ">Just save source word and translation</string>
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
   <string name="enable_api_title">Activar o API do AnkiDroid</string>
   <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>

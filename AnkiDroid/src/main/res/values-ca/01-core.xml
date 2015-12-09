@@ -128,6 +128,7 @@
   <string name="cancel_sync_confirm">Voleu cancel·lar la sincronització?</string>
   <string name="continue_sync">Continua la sincronització</string>
   <string name="sync_cancelled">Sincronització cancel·lada</string>
+  <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
   <string name="export">Exportar</string>
   <string name="export_collection">Exporta la col·lecció</string>
   <string name="export_deck">Exporta el paquet</string>

@@ -152,8 +152,6 @@
   <string name="pref_keep_screen_on">保持屏幕常亮</string>
   <string name="pref_keep_screen_on_summ">禁用屏幕超时</string>
   <string name="convert_fen_text">国际象棋标注支持</string>
-  <string name="filter_google_translate">从谷歌获取翻译</string>
-  <string name="filter_google_translate_summ">保存源词与翻译</string>
   <string name="convert_fen_text_summ">使用福斯夫－爱德华兹记号法来画棋盘。记号必须用[fen][/fen]标签括起来。</string>
   <string name="enable_api_title">启用AnkiDroid API</string>
   <string name="enable_api_summary">让其他的应用程序连接到AnkiDroid读写数据</string>

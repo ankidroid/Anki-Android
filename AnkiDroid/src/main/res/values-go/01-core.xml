@@ -128,6 +128,7 @@
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
   <string name="continue_sync">Continue sync</string>
   <string name="sync_cancelled">Sync cancelled</string>
+  <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
   <string name="export">Usbair</string>
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Export deck</string>

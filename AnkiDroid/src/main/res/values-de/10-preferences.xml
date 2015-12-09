@@ -152,8 +152,6 @@
   <string name="pref_keep_screen_on">Bildschirm nicht ausschalten</string>
   <string name="pref_keep_screen_on_summ">Bildschirm-Timeout deaktivieren</string>
   <string name="convert_fen_text">Unterstützung für Schach-Notation</string>
-  <string name="filter_google_translate">Aus Google-Translate</string>
-  <string name="filter_google_translate_summ">Nur das Ausgangswort und Übersetzung speichern</string>
   <string name="convert_fen_text_summ">Schachbrett aus Forsyth–Edwards-Notation erstellen. Die Position muss in  [fen][/fen]-Tags eingefasst sein.</string>
   <string name="enable_api_title">AnkiDroid-API aktivieren</string>
   <string name="enable_api_summary">Verbindungen anderer Apps mit AnkiDroid zulassen und sie ohne weitere Eingriffe Daten lesen und schreiben lassen</string>

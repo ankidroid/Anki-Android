@@ -153,8 +153,6 @@
   <string name="pref_keep_screen_on">Pidä näyttö päällä</string>
   <string name="pref_keep_screen_on_summ">Poista näytön aikakatkaisu</string>
   <string name="convert_fen_text">Tuki shakkinotaatiolle</string>
-  <string name="filter_google_translate">Google Translaten mukaan</string>
-  <string name="filter_google_translate_summ">Tallenna vain lähdesana ja käännös</string>
   <string name="convert_fen_text_summ">Piirrä shakkilauta Forsyth-Edwards-notaatiolla. Tekstin pitää olla ympäröity [fen][/fen] tunnisteilla.</string>
   <string name="enable_api_title">Enable AnkiDroid API</string>
   <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>

@@ -128,6 +128,7 @@
   <string name="cancel_sync_confirm">Wollen Sie die Synchronisation abbrechen?</string>
   <string name="continue_sync">Weiter synchronisieren</string>
   <string name="sync_cancelled">Synchronisation abgebrochen</string>
+  <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
   <string name="export">Exportieren</string>
   <string name="export_collection">Sammlung exportieren</string>
   <string name="export_deck">Stapel exportieren</string>

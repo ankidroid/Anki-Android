@@ -126,6 +126,7 @@
   <string name="cancel_sync_confirm">您要取消同步嗎？</string>
   <string name="continue_sync">繼續同步</string>
   <string name="sync_cancelled">同步已取消</string>
+  <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
   <string name="export">匯出</string>
   <string name="export_collection">匯出蒐藏集</string>
   <string name="export_deck">匯出牌組</string>
