@@ -205,7 +205,13 @@ class AnkiExporter extends Exporter {
                 for (File f : new File(mMediaDir).listFiles()) {
                     String fname = f.getName();
                     if (fname.startsWith("_")) {
-                        media.put(fname, true);
+                        // Loop through every model that will be exported, and check if it contains a reference to f
+                        for (int idx = 0; idx < mid.size(); idx++) {
+                            if (_modelHasMedia(mSrc.getModels().get(idx), fname)) {
+                                media.put(fname, true);
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -223,6 +229,31 @@ class AnkiExporter extends Exporter {
         dst.setMod();
         postExport();
         dst.close();
+    }
+
+    /**
+     * Returns whether or not the specified model contains a reference to the given media file.
+     * In order to ensure relatively fast operation we only check if the styling, front, back templates *contain* fname,
+     * and thus must allow for occasional false positives.
+     * @param model the model to scan
+     * @param fname the name of the media file to check for
+     * @return
+     * @throws JSONException
+     */
+    private boolean _modelHasMedia(JSONObject model, String fname) throws JSONException {
+        // First check the styling
+        if (model.getString("css").contains(fname)) {
+            return true;
+        }
+        // If not there then check the templates
+        JSONArray tmpls = model.getJSONArray("tmpls");
+        for (int idx = 0; idx < tmpls.length(); idx++) {
+            JSONObject tmpl = tmpls.getJSONObject(idx);
+            if (tmpl.getString("qfmt").contains(fname) || tmpl.getString("afmt").contains(fname)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
