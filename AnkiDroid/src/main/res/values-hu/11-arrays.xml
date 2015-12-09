@@ -81,7 +81,7 @@
     <item>Relative overdueness</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
+    <item>Jelenlegi pakli használata</item>
     <item>Decide by note type</item>
   </string-array>
   <string-array name="new_spread_labels">
@@ -91,6 +91,6 @@
   </string-array>
   <string-array name="override_font_labels">
     <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>Mindig</item>
   </string-array>
 </resources>

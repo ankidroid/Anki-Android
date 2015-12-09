@@ -136,7 +136,7 @@
   <string name="title_activity_template_editor">Tipo de cartóns</string>
   <string name="card_template_editor_front">Modelo frontal</string>
   <string name="card_template_editor_back">Back template</string>
-  <string name="card_template_editor_styling">Styling</string>
+  <string name="card_template_editor_styling">Estilo</string>
   <string name="card_template_editor_menu_delete">Eliminar</string>
   <string name="card_template_editor_cant_delete">Cando menos un tipo de cartón é obrigatorio.</string>
   <plurals name="card_template_editor_confirm_delete">

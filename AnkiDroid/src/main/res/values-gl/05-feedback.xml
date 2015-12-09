@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="error_reporting_choice">Error reporting mode</string>
+  <string name="error_reporting_choice">Modo de informe de erros</string>
   <string name="feedback_disclaimer">Aviso: Non recollemos información persoal como o enderezo de correo electrónico, teléfono, ou o IMEI do teléfono. Recollemos algunha información sobre o teu dispositivo como o fabricante, modelo e versión do Android, alén doutras informacións relacionadas coa natureza dos erros e dos pasos que levaron a eles.</string>
   <string name="feedback_title">Comentarios</string>
   <string name="feedback_default_text">Por favor, introduza os seus comentarios ou información sobre a natureza de calquera erro que esteas reportando.</string>
