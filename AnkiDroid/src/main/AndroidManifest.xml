@@ -302,11 +302,6 @@
             android:label="@string/title_activity_load_pronounciation" >
         </activity>
         <activity
-            android:name="com.ichi2.anki.multimediacard.activity.SearchImageActivity"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            android:label="@string/title_activity_search_image" >
-        </activity>
-        <activity
             android:name="com.ichi2.anki.CardTemplateEditor"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_template_editor"
