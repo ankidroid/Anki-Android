@@ -25,6 +25,7 @@ import android.widget.RemoteViews;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiActivity;
+import com.ichi2.anki.DeckPicker;
 
 /**
  * This interface defines a set of functions that are not available on all platforms.
@@ -57,5 +58,6 @@ public interface Compat {
     void setFullScreen(AbstractFlashcardViewer activity);
     void setSelectableBackground(View view);
     void openUrl(AnkiActivity activity, Uri uri);
+    void supportAddContentMenu(final DeckPicker a);
 }
 
