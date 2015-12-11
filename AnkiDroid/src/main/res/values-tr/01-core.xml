@@ -128,7 +128,7 @@
   <string name="cancel_sync_confirm">Senkronizasyonu iptâl etmek istiyor musunuz?</string>
   <string name="continue_sync">Senkronizasyona devam et</string>
   <string name="sync_cancelled">Senkronizasyon iptâl edildi</string>
-  <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
+  <string name="sync_cancel_message">İptâl ediliyor&#8230;\nBu biraz sürebilir.</string>
   <string name="export">Dışarı aktar</string>
   <string name="export_collection">Koleksiyonu dışarı aktar</string>
   <string name="export_deck">Desteyi dışarı aktar</string>

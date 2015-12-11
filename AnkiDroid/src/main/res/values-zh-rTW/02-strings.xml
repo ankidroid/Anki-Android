@@ -123,7 +123,7 @@
   <string name="check_media">檢查媒體</string>
   <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">檢查資料庫。\n請稍後...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">空白卡片。請在桌面版軟體上執行 \"工具&gt;空白卡片...\"。</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">輸入答案：未知的表格 %s</string>
   <string name="delete_deck">刪除牌組中...\n請稍候</string>
   <string name="show_hint">顯示%s</string>

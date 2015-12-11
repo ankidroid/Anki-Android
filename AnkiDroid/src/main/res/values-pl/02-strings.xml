@@ -129,7 +129,7 @@
   <string name="check_media">Sprawdź media</string>
   <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Sprawdzanie bazy danych.\nProszę czekać...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Pusta karta. Uruchom \"Narzędzia &gt; puste karty...\" w programie w wersji na PC.</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Wpisz odpowiedź: nieznane pole %s</string>
   <string name="delete_deck">Usuwanie talii...\nProszę czekać...</string>
   <string name="show_hint">Pokaż %s</string>

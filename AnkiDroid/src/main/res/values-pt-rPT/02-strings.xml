@@ -126,7 +126,7 @@
   <string name="check_media">Verificar multimédia</string>
   <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">A verificar a base de dados&#8230;</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Ficha vazia. Execute \"Ferramentas&gt;Fichas Vazias...\" na aplicação para PC.</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Escrever resposta: campo desconhecido %s</string>
   <string name="delete_deck">A eliminar o baralho&#8230;</string>
   <string name="show_hint">Mostrar %s</string>

@@ -126,7 +126,7 @@
   <string name="check_media">Ver média</string>
   <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Verificando banco de dados.\nPor favor Aguarde...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Cartão vazio. Rode \"Ferramentas&gt;Cartões vazios...\" no cliente para desktop.</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Digite a resposta: campo desconhecido %s</string>
   <string name="delete_deck">Excluindo baralho&#8230;</string>
   <string name="show_hint">Mostrar %s</string>

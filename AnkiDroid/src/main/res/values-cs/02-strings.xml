@@ -129,7 +129,7 @@
   <string name="check_media">Zkontrolovat multimédia</string>
   <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Kontrola databáze.\nProsím čekejte...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Prázdná karta. Spusťte \"Nástroje&gt;Prázdné karty...\" v klientovi pro PC.</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Zápis odpovědi: neznámé pole %s</string>
   <string name="delete_deck">Odstraňování balíčku...\nProsím čekejte.</string>
   <string name="show_hint">Zobrazit %s</string>

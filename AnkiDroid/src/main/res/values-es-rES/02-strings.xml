@@ -126,7 +126,7 @@
   <string name="check_media">Comprobar archivos multimedia</string>
   <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Comprobando base de datos&#8230;</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tarjeta vacía. Ejecute \"Herramientas&gt;Tarjetas vacías...\" en el cliente de escritorio.</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Escribir respuesta: campo %s desconocido</string>
   <string name="delete_deck">Eliminando mazo&#8230;</string>
   <string name="show_hint">Mostrar %s</string>

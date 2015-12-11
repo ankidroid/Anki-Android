@@ -126,7 +126,7 @@
   <string name="check_media">Comprovar la multimèdia</string>
   <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">S\'està comprovant la base de dades.\nUn moment si us plau...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">La targeta és buida. Executa \"Eines &gt; targetes buides...\" en el client d\'escriptori.</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Tipus de resposta: camp desconegut %s</string>
   <string name="delete_deck">S\'està suprimint el paquet...\nUn moment si us plau.</string>
   <string name="show_hint">Mostra %s</string>

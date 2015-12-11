@@ -123,7 +123,7 @@
   <string name="check_media">检查媒体</string>
   <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">正在检查数据库\n请等待...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">这是一张空白卡片。\n请在桌面客户端上运行”工具 &gt; 空卡片\"以删除。</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">输入答案：未知字段 %s</string>
   <string name="delete_deck">删除牌组\n请稍等&#8230;&#8230;</string>
   <string name="show_hint">显示%s</string>

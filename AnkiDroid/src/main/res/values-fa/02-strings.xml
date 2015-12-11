@@ -123,7 +123,7 @@
   <string name="check_media">بررسی رسانه ها</string>
   <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">بررسی پایگاه داده.\nلطفا صبر کنید...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">کارت خالی.\"ابزارها &gt; کارت های خالی...\" را در نسخه ی رومیزی اجرا کنید.</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">پاسخ دهید:فیلد نامشخص %s</string>
   <string name="delete_deck">حذف دسته کارت...\nلطفا صبر کنید.</string>
   <string name="show_hint">%s را نمایش بده</string>

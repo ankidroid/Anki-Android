@@ -123,7 +123,7 @@
   <string name="check_media">Kiểm tra các phương tiện truyền thông</string>
   <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Đang kiểm tra cơ sở dữ liệu. \n Xin đợi chút...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Thẻ rỗng. Chạy \"công cụ &gt; Làm trống các thẻ...\" trên máy tính để bàn.</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Nhập câu trả lời: không biết trường %s</string>
   <string name="delete_deck">Đang xóa Bài...\nĐợi chút nhé.</string>
   <string name="show_hint">Hiển thị %s</string>

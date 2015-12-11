@@ -123,7 +123,7 @@
   <string name="check_media">メディアをチェック</string>
   <string name="empty_cards">無効なカードをチェック</string>
   <string name="check_db_message">データベースをチェックしています...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">無効なカードです。\"ツール &gt; 空のカード...\"をデスクトップソフトAnkiで実行してください。</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">タイピングして答えを入力: 不明なフィールド %s</string>
   <string name="delete_deck">デッキを削除しています...</string>
   <string name="show_hint">%s を表示</string>

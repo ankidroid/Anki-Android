@@ -126,7 +126,7 @@
   <string name="check_media">Check media</string>
   <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Undersøker database.\nVennligst vent...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tomt kort. Kjør \"Verktøy&gt;Tomme kort...\" på PC-versjonen.</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Angi svar: ukjent felt %s</string>
   <string name="delete_deck">Sletter kortstokk...\nVennligst vent.</string>
   <string name="show_hint">Vis %s</string>
