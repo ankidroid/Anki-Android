@@ -2,7 +2,7 @@
 
 *Audience: This page is for Android app developers. AnkiDroid users can ignore it.*
 
-## Instant-Add API (alpha version)
+## Instant-Add API
 Starting From AnkiDroid v2.5, notes can be added directly to AnkiDroid's database without sending any intents via a simple API library released on the LGPL license ([click here to read the javadoc](https://ankidroid.org/apidoc/com/ichi2/anki/api/AddContentApi.html)). This is advantageous for developers and end-users, as it allows quickly adding cards to AnkiDroid in bulk, without any user intervention. Additionally, an app-specific custom model can be used, so that developers can ensure that their content will be formatted into sensible and beautiful flashcards.
 
 ### Gradle dependency
@@ -36,11 +36,53 @@ if (mid == null) {
 api.addNewNote(mid, did, new String[] {"日の出", "sunrise"}, "optional_tag");
 ```
 
+** Note: your app must check that the API is available before using it, and provide a fallback if not. See the testing section below. **
+
 ### Permissions
 The API requires the permission `com.ichi2.anki.permission.READ_WRITE_DATABASE` which is defined by the main AnkiDroid app. This permission will automatically be merged into your manifest if you included the Gradle dependency above. In order to support Android 6 and workaround [this Android limitation](https://code.google.com/p/android/issues/detail?id=25906) on older versions, you should always check that you have the required permission at runtime before using the API. See the sample app for more details on how to do this.
 
 ### Sample app
 A very simple example application is [available here](https://github.com/ankidroid/apisample), which gives an expected real-world implementation of the API in the form of a prototype Japanese-English dictionary. Long-press on an item in the list to send one or more cards to AnkiDroid via the share button on the contextual toolbar.
+
+### Testing
+Perform the following manual tests to check that your app is working correctly. If your app fails to pass any of these tests, please refer to the sample app again for a reference implementation that passes all of the below tests.
+
+**Test 1: Basic testing**
+
+0. Install the [latest version of AnkiDroid](https://github.com/ankidroid/Anki-Android/releases/latest)
+0. Send some flashcards from your app to AnkiDroid via the API using a deck "Your App Name"
+0. Open AnkiDroid, check that a deck called "Your App Name" is there, and click on it to start studying the cards.
+0. Flip through a few cards and check that they are formatted correctly
+0. Open the Card Browser and check that all of the cards which you sent are there
+0. Open the AnkiDroid settings, go to Advanced, and *uncheck* "Enable AnkiDroid API"
+0. Try to add a card from your app again. It should correctly detect that the API is unavailable (due to disabling it in the previous step), and fallback on an intent based approach (see section on intents below).
+0. Check that the front and back of the flashcard are sent to AnkiDroid in the correct order when using intents
+0. Uninstall AnkiDroid
+0. Check that your app does not give the user the option to send cards to AnkiDroid (since it's not installed)
+
+This is the minimum amount of testing you should do. We **strongly** recommend performing the following additional tests to check compliance with the `com.ichi2.anki.permission.READ_WRITE_DATABASE` permission. If you do not do this, your app will break with a future release of AnkiDroid.
+
+**Test 2: Permissions test with Android Lollipop**
+
+0. On a device or emulator running Android 5.1 or lower, make sure both your app and AnkiDroid have been **uninstalled**
+0. Install [this version of AnkiDroid](https://github.com/ankidroid/apisample/releases/download/v1/AnkiDroid-2.5.2apitest.apk) which requires the `READ_WRITE_DATABASE` permission in order to use the API
+0. Try to add cards to AnkiDroid from your app via the API
+0. Your app should detect that the API is unavailable (due to not having the permission) and fallback on the intent based approach
+0. Uninstall and reinstall your app
+0. Try to add cards to AnkiDroid from your app via the API again
+0. This time it should work since your app received the permission at install time
+
+**Test 3: Permissions test with Android Marshmallow**
+
+0. On a device or emulator running Android 6.0 or higher, make sure both your app and AnkiDroid have been **uninstalled**
+0. Install [this version of AnkiDroid](https://github.com/ankidroid/apisample/releases/download/v1/AnkiDroid-2.5.2apitest.apk) which has the permission enabled (same version as Lollipop tests above)
+0. Try to add cards to AnkiDroid from your app
+0. Android should prompt the user whether or not they want to grant your app the `READ_WRITE_DATABASE` permission
+0. Choose "deny"
+0. Your app should correctly fallback on adding via intents
+0. Try to add cards to AnkiDroid from your app again
+0. This time choose to grant the permission
+0. Check that the cards were added to AnkiDroid correctly as per previous tests
 
 ## Sending cards to AnkiDroid via intent
 While we strongly recommend using the Instant-Add API, if the user has a version of AnkiDroid that doesn't support the API, or if they've denied permission to your app to access it, you should fall back on an intent-based approach, which is supported by all versions of AnkiDroid. 
