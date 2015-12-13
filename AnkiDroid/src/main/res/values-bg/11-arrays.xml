@@ -42,46 +42,46 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>Няма действие</item>
-    <item>Show answer</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
+    <item>Показване на отговора</item>
+    <item>Бутон отговор 1</item>
+    <item>Бутон отговор 2</item>
+    <item>Бутон отговор 3</item>
+    <item>Бутон отговор 4</item>
+    <item>Препоръчителен отговор (зелен)</item>
     <item>Answer better than recommended</item>
-    <item>Undo</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Отмяна</item>
+    <item>Промяна на бележка</item>
+    <item>Маркирай бележка</item>
     <item>Израз за търсене</item>
     <item>Скрий картата</item>
     <item>Прекрати картата</item>
-    <item>Delete note</item>
+    <item>Изтриване на бележка</item>
     <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Прекъсване на обучението</item>
     <item>Bury note</item>
     <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Suspend card</item>
-    <item>Tag only</item>
+    <item>Отлагане на карта</item>
+    <item>Само етикети</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>New cards in random order</item>
+    <item>Нови карти в случаен ред</item>
     <item>New cards in order added</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
+    <item>Първо - по-старите</item>
+    <item>Случайно</item>
     <item>Increasing intervals</item>
     <item>Decreasing intervals</item>
     <item>Most lapsed</item>
     <item>Order added</item>
     <item>Order due</item>
-    <item>Latest added first</item>
+    <item>Първо - последно добавени</item>
     <item>Relative overdueness</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
+    <item>Използвайте текущото тесте</item>
     <item>Decide by note type</item>
   </string-array>
   <string-array name="new_spread_labels">
@@ -90,7 +90,7 @@
     <item>New cards before reviews</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>Когато не е определен шрифт на флашкартите</item>
+    <item>Винаги</item>
   </string-array>
 </resources>

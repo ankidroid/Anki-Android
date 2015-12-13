@@ -39,176 +39,176 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="preference_summary_percentage">XXX%</string>
-  <string name="drawer_open">Open drawer</string>
-  <string name="drawer_close">Close drawer</string>
+  <string name="preference_summary_percentage">XXX %</string>
+  <string name="drawer_open">Odpri predal</string>
+  <string name="drawer_close">Zapri predal</string>
   <string name="CardEditorLaterMessage">Informacija shranjena za pozneje</string>
-  <string name="CardEditorCardDeck">Card deck:</string>
-  <string name="CardEditorNoteDeck">Deck:</string>
-  <string name="CardEditorModel">Type:</string>
+  <string name="CardEditorCardDeck">Komplet kartic:</string>
+  <string name="CardEditorNoteDeck">Komplet:</string>
+  <string name="CardEditorModel">Vrsta:</string>
   <string name="CardEditorTags">Oznake: %1$s</string>
-  <string name="CardEditorCards">Cards: %1$s</string>
-  <string name="tag_name">Tag name</string>
-  <string name="add_new_filter_tags">Add/filter tags</string>
-  <string name="add_tag">Add tag</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
-  <string name="filter_tags">Filter tags</string>
-  <string name="no_tags">You haven’t added any tags yet</string>
+  <string name="CardEditorCards">Kartice: %1$s</string>
+  <string name="tag_name">Ime oznake</string>
+  <string name="add_new_filter_tags">Dodaj/Filtriraj oznake</string>
+  <string name="add_tag">Dodaj oznako</string>
+  <string name="check_all_tags">Označi/Odznači vse oznake</string>
+  <string name="filter_tags">Filtriraj oznake</string>
+  <string name="no_tags">Niste dodali še nobene oznake</string>
   <string name="sdcard_missing_message">Spominska SD kartica ni dostopna, ker se trenutno uporablja kot disk USB. Odstranite povezavo USB za dostop do vaših kompletov.</string>
-  <string name="updated_version">Updated to version %s</string>
-  <string name="enable_whiteboard">Enable whiteboard</string>
-  <string name="disable_whiteboard">Disable whiteboard</string>
+  <string name="updated_version">Posodobljen na različico %s</string>
+  <string name="enable_whiteboard">Omogoči beli tablo</string>
+  <string name="disable_whiteboard">Onemogoči belo tablo</string>
   <string name="show_whiteboard">Prikaži tablo</string>
   <string name="hide_whiteboard">Skrij tablo</string>
   <string name="clear_whiteboard">Počisti tablo</string>
-  <string name="replay_audio">Replay audio</string>
-  <string name="leech_suspend_notification">Card marked as leech and suspended</string>
-  <string name="leech_notification">Card marked as leech</string>
-  <string name="corrupt_font">Corrupt font file %s</string>
+  <string name="replay_audio">Ponovno predvajaj zvok</string>
+  <string name="leech_suspend_notification">Kartica označena kot napačna in je bila ukinjena</string>
+  <string name="leech_notification">Kartica označena kot napačna</string>
+  <string name="corrupt_font">Pokvarjena datoteka pisave %s</string>
   <string-array name="browser_column1_headings">
-    <item>Question</item>
-    <item>Sort field</item>
+    <item>Vprašanje</item>
+    <item>Polje za razvrščanje</item>
   </string-array>
   <string-array name="browser_column2_headings">
-    <item>Answer</item>
-    <item>Card</item>
-    <item>Deck</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
+    <item>Odgovor</item>
+    <item>Kartica</item>
+    <item>Komplet</item>
+    <item>Zapisek</item>
+    <item>Vprašanje</item>
+    <item>Oznake</item>
+    <item>Spodrsljaji</item>
+    <item>Pregledi</item>
   </string-array>
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
-  <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_increase_new_limit">Povečaj današnjo omejitev novih kartic</string>
+  <string name="custom_study_increase_review_limit">Povečaj današnjo omejitev kartic za pregled</string>
+  <string name="custom_study_review_forgotten">Preglej pozabljene kartice</string>
+  <string name="custom_study_review_ahead">Preglej vnaprej</string>
+  <string name="custom_study_random_selection">Preučite naključno izbiro kartic</string>
+  <string name="custom_study_preview_new">Predogled novih kartic</string>
+  <string name="custom_study_limit_tags">Omeji na določene oznake</string>
   <string name="cardeditor_title_add_note">Dodaj zapisek</string>
   <string name="cardeditor_title_edit_card">Uredi zapisek</string>
-  <string name="discard_unsaved_changes">Close and lose current input?</string>
+  <string name="discard_unsaved_changes">Zapri in izgubi trenutni vnos?</string>
   <string name="factadder_saving_error">Napaka pri shranjevanju zapiska</string>
   <string name="saving_facts">Shranjujem zapisek</string>
-  <string name="saving_model">Saving model</string>
+  <string name="saving_model">Shranjevanje modela</string>
   <string name="add">Dodaj</string>
   <string name="close">Zapri</string>
   <string name="select">Izberi</string>
   <string name="saving_changes">Shranjujem spremembe...</string>
-  <string name="reordering_cards">Reordering cards&#8230;</string>
-  <string name="field_remapping">%1$s (from “%2$s”)</string>
-  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+  <string name="reordering_cards">Prerazvrščanje kartic &#8230;</string>
+  <string name="field_remapping">%1$s (od \"%2$s\")</string>
+  <string name="confirm_map_cards_to_nothing">Vse kartice, ki so preslikane v nič, bodo izbrisane. Če zapisek nima preostalih kartic, bo izgubljen. Ali res želite nadaljevati?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
-    <item quantity="two">%1$d cards studied in %2$s</item>
-    <item quantity="few">%1$d cards studied in %2$s</item>
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="one">%1$d kartica preučena v %2$s</item>
+    <item quantity="two">%1$d kartici preučeni v %2$s</item>
+    <item quantity="few">%1$d kartice preučene v %2$s</item>
+    <item quantity="other">%1$d kartic preučenih v %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minute</item>
-    <item quantity="two">%1$d minutes</item>
-    <item quantity="few">%1$d minutes</item>
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="one">%1$d minuta</item>
+    <item quantity="two">%1$d minuti</item>
+    <item quantity="few">%1$d minute</item>
+    <item quantity="other">%1$d minut</item>
   </plurals>
   <string name="studyoptions_welcome_title">Dobrodošli v AnkiDroid</string>
-  <string name="fact_adder_intent_title">AnkiDroid card</string>
+  <string name="fact_adder_intent_title">Kartica AnkiDroid</string>
   <string name="card_editor_add_card">Dodaj zapisek</string>
   <string name="card_editor_copy_card">Kopiraj kartico</string>
   <string name="card_editor_reset_card">Ponastavi napredek</string>
-  <string name="card_editor_reschedule_card">Reschedule card</string>
-  <string name="card_editor_preview_card">Preview</string>
+  <string name="card_editor_reschedule_card">Spremni urnik za kartico</string>
+  <string name="card_editor_preview_card">Predogled</string>
   <string name="error_insufficient_memory">Opravila ni mogoče izvesti, ker je na napravi na voljo premalo pomnilnika</string>
   <string name="rename">Preimenuj</string>
-  <string name="default_conf_delete_error">The default options group can’t be removed</string>
+  <string name="default_conf_delete_error">Privzete skupine možnosti ni mogoče premakniti</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
-    <item quantity="two">%d cards added</item>
-    <item quantity="few">%d cards added</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="one">%d kartica dodana</item>
+    <item quantity="two">%d kartici dodani</item>
+    <item quantity="few">%d kartice dodane</item>
+    <item quantity="other">%d kartic dodanih</item>
   </plurals>
   <string name="help_title">Pomoč</string>
   <string name="check_db">Preveri podatkovno bazo</string>
-  <string name="check_media">Check media</string>
-  <string name="empty_cards">Empty cards</string>
+  <string name="check_media">Preveri predstavnost</string>
+  <string name="empty_cards">Prazne kartice</string>
   <string name="check_db_message">Preverjam podatkovno bazo.\nProsimo počakajte...</string>
-  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
-  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-  <string name="delete_deck">Deleting deck&#8230;</string>
-  <string name="show_hint">Show %s</string>
-  <string name="info_rate">Rate AnkiDroid</string>
-  <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
-  <string name="import_title">Import cards</string>
-  <string name="import_select_title">Choose a file to import</string>
-  <string name="import_message_add">Add</string>
-  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
-  <string name="import_message_add_confirm">Add “%s” to collection? This may take a long time</string>
-  <string name="import_log_success">Imported %d cards</string>
-  <string name="import_log_error">Import failed</string>
-  <string name="import_log_no_apkg">This isn’t a valid apkg file</string>
-  <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg extension</string>
-  <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
-  <string name="import_importing">Importing cards&#8230;</string>
-  <string name="export_include_schedule">Include scheduling</string>
-  <string name="export_include_media">Include media</string>
-  <string name="confirm_apkg_export">Export collection as apkg file?</string>
-  <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
-  <string name="export_in_progress">Exporting apkg file&#8230;</string>
-  <string name="export_successful_title">Email apkg?</string>
-  <string name="export_successful">File “%s” was exported. Do you want to email it?</string>
-  <string name="export_unsuccessful">Error exporting collection</string>
-  <string name="import_hint">Place the apkg file in directory “%s” and touch “OK” to import cards</string>
-  <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
-  <string name="study_options">Deck options</string>
+  <string name="empty_card_warning">Ta kartica je prazna. Uporabite možnost \"Prazne kartice\" iz menija seznama kompletov.</string>
+  <string name="unknown_type_field_warning">Vnos odgovora: neznano polje %s</string>
+  <string name="delete_deck">Brisanje kompleta &#8230;</string>
+  <string name="show_hint">Prikaži %s</string>
+  <string name="info_rate">Oceni AnkiDroid</string>
+  <string name="col_load_failed">Nalaganje zbirke je spodletelo\n Pritisnite Nazaj, da zaprete AnkiDroid.</string>
+  <string name="import_title">Uvozi kartice</string>
+  <string name="import_select_title">Izberite datoteko za uvoz</string>
+  <string name="import_message_add">Dodaj</string>
+  <string name="import_message_replace_confirm">To bo izbrisalo vašo obstoječo zbirko in jo nadomestilo s podatki datoteke %s</string>
+  <string name="import_message_add_confirm">Dodaj \"%s\" v zbirko? To lahko traja dolgo časa</string>
+  <string name="import_log_success">Uvoženih %d kartic</string>
+  <string name="import_log_error">Uvoz je spodletel</string>
+  <string name="import_log_no_apkg">To ni veljavna datoteka apkg</string>
+  <string name="import_error_not_apkg_extension">Ime datoteke \"%s\" nima končnice .apkg</string>
+  <string name="import_error_content_provider">Izbrane datoteke AnkiDroid ni mogel samodejno uvoziti. Oglejte si uporabniški priročnik o načinu ročnega uvoza datotek anki: \n%s</string>
+  <string name="import_importing">Uvažanje kartic &#8230;</string>
+  <string name="export_include_schedule">Vključi načrtovanje</string>
+  <string name="export_include_media">Vključi predstavnost</string>
+  <string name="confirm_apkg_export">Izvozi zbirko kot datoteko apkg?</string>
+  <string name="confirm_apkg_export_deck">Izvozi \"%s\" kot datoteko apkg?</string>
+  <string name="export_in_progress">Izvažanje datoteke apkg &#8230;</string>
+  <string name="export_successful_title">Pošlji apkg?</string>
+  <string name="export_successful">Datoteka \"%s\" je bila izvožena. Ali jo želite poslati?</string>
+  <string name="export_unsuccessful">Napaka pri izvažanju zbirke</string>
+  <string name="import_hint">Vstavite datoteko apkg v mapo \"%s\" in se pritisnite \"V redu\", da uvozite kartice</string>
+  <string name="upgrade_import_no_file_found">Nobene uvozljive datoteke %1$s ni bilo mogoče najti</string>
+  <string name="study_options">Možnosti kompleta</string>
   <string name="custom_study">Učenje po meri</string>
-  <string name="more_options">More</string>
-  <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
-  <string name="steps_error">Steps must be numbers greater than 0</string>
-  <string name="steps_min_error">At least one step is required</string>
-  <string name="sched_end">(end)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
-  <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow</string>
-  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
-  <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+  <string name="more_options">Več</string>
+  <string name="dyn_deck_desc">To je poseben komplet za učenje izven običajnega urnika. Kartice bodo samodejno vrnjene v izvirne komplete, ki jih pregledate. Izbris tega kompleta s seznama bo vrnil vse preostale kartice v izvirni komplet.</string>
+  <string name="steps_error">Koraki morajo biti številke večje od 0</string>
+  <string name="steps_min_error">Zahtevan je vsak en korak</string>
+  <string name="sched_end">(konec)</string>
+  <string name="sched_unbury_action">Da si jih ogledate zdaj, pritisnite na predmet \"Odkrij\" v meniju</string>
+  <string name="sched_has_buried">Nekatere povezane ali skrite kartice so bile odložene do jutri</string>
+  <string name="tag_editor_add_feedback">Pritisnite \"%2$s\", da potrdite dodajanje \"%1$s\"</string>
+  <string name="tag_editor_add_feedback_existing">Izbrana obstoječa oznaka \"%1$s\"</string>
+  <string name="lookup_hint">Po kopiranju besedila tapnite kjerkoli na pomnilno kartico, da prikažete iskalno ikono</string>
   <plurals name="time_span_seconds">
-    <item quantity="one">%s second</item>
-    <item quantity="two">%s seconds</item>
-    <item quantity="few">%s seconds</item>
-    <item quantity="other">%s seconds</item>
+    <item quantity="one">%s sekunda</item>
+    <item quantity="two">%s sekundi</item>
+    <item quantity="few">%s sekunde</item>
+    <item quantity="other">%s sekund</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="one">%s minute</item>
-    <item quantity="two">%s minutes</item>
-    <item quantity="few">%s minutes</item>
-    <item quantity="other">%s minutes</item>
+    <item quantity="one">%s minuta</item>
+    <item quantity="two">%s minuti</item>
+    <item quantity="few">%s minute</item>
+    <item quantity="other">%s minut</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="one">%s hour</item>
-    <item quantity="two">%s hours</item>
-    <item quantity="few">%s hours</item>
-    <item quantity="other">%s hours</item>
+    <item quantity="one">%s ura</item>
+    <item quantity="two">%s uri</item>
+    <item quantity="few">%s ure</item>
+    <item quantity="other">%s ur</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="one">%s day</item>
-    <item quantity="two">%s days</item>
-    <item quantity="few">%s days</item>
-    <item quantity="other">%s days</item>
+    <item quantity="one">%s dan</item>
+    <item quantity="two">%s dni</item>
+    <item quantity="few">%s dni</item>
+    <item quantity="other">%s dni</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="one">%s month</item>
-    <item quantity="two">%s months</item>
-    <item quantity="few">%s months</item>
-    <item quantity="other">%s months</item>
+    <item quantity="one">%s mesec</item>
+    <item quantity="two">%s meseca</item>
+    <item quantity="few">%s meseci</item>
+    <item quantity="other">%s mesecev</item>
   </plurals>
   <plurals name="time_span_years">
-    <item quantity="one">%s year</item>
-    <item quantity="two">%s years</item>
-    <item quantity="few">%s years</item>
-    <item quantity="other">%s years</item>
+    <item quantity="one">%s leto</item>
+    <item quantity="two">%s leti</item>
+    <item quantity="few">%s leta</item>
+    <item quantity="other">%s let</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
-  <string name="decks_rename_exists">That deck already exists</string>
-  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
-  <string name="filtered_deck_name">Filtered Deck</string>
+  <string name="decks_rename_exists">Ta komplet že obstaja</string>
+  <string name="decks_rename_filtered_nosubdecks">Filtriran komplet ne more imeti podkompletov</string>
+  <string name="filtered_deck_name">Filtriran komplet</string>
 </resources>

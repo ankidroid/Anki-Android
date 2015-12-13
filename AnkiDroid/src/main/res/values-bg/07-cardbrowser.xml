@@ -43,25 +43,25 @@
     <item quantity="one">%d card shown</item>
     <item quantity="other">%d cards shown</item>
   </plurals>
-  <string name="card_browser_all_decks">All decks</string>
-  <string name="card_browser_delete_card">Delete note</string>
+  <string name="card_browser_all_decks">Всички тестета</string>
+  <string name="card_browser_delete_card">Изтрий бележка</string>
   <string name="card_browser_suspend_card">Прекрати картата</string>
   <string name="card_browser_unsuspend_card">Отблокирам карта</string>
-  <string name="card_browser_mark_card">Mark note</string>
-  <string name="card_browser_unmark_card">Unmark note</string>
-  <string name="delete_card_title">Delete note?</string>
+  <string name="card_browser_mark_card">Маркирай бележка</string>
+  <string name="card_browser_unmark_card">Размаркирай бележка</string>
+  <string name="delete_card_title">Изтриване на бележка?</string>
   <string name="delete_card_message">Delete all cards of this note?\nSearch field: %s</string>
   <string name="card_browser_show_marked">Filter marked</string>
   <string name="card_browser_show_suspended">Filter suspended</string>
-  <string name="card_browser_search_by_tag">Filter by tag</string>
+  <string name="card_browser_search_by_tag">Филтриране по етикет</string>
   <string name="card_browser_tags_shown">Етикети:%1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
+  <string name="card_browser_list_my_searches">Моите търсения</string>
+  <string name="card_browser_list_my_searches_save">Съхраняване на търсене</string>
+  <string name="card_browser_list_my_searches_title">Избор от записани търсения</string>
+  <string name="card_browser_list_my_searches_new_name">Име за текущото търсене</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">Не можете да запишете търсене без име</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Името съществува</string>
+  <string name="card_browser_list_my_searches_remove_content">Изтриване на \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Промяна реда на показване</string>
   <string name="card_browser_change_display_order_title">Изберете ред на показване</string>
   <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
@@ -71,7 +71,7 @@
   <string name="card_details_tags">Таговете</string>
   <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string-array name="card_browser_order_labels">
-    <item>No sorting (faster)</item>
+    <item>Без сортиране (по-бързо)</item>
     <item>By sort field</item>
     <item>By created time</item>
     <item>By edited time</item>

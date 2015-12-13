@@ -71,7 +71,7 @@
   <string name="menu_import">インポート</string>
   <string name="undo">元に戻す</string>
   <string name="undo_action_review">最後の復習</string>
-  <string name="undo_action_edit">ノートの編集</string>
+  <string name="undo_action_edit">ノートを編集</string>
   <string name="undo_action_bury">ノートを延期</string>
   <string name="undo_action_suspend_card">カードを保留</string>
   <string name="undo_action_suspend_note">ノートを保留</string>

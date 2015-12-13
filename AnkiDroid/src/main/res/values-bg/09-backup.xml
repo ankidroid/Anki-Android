@@ -49,12 +49,12 @@
   <string name="backup_full_sync_from_server">Full sync from server</string>
   <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
   <string name="error_handling_title">Error handling</string>
-  <string name="error_handling_options">Options</string>
+  <string name="error_handling_options">Настройки</string>
   <string name="backup_retry_opening">Retry opening</string>
   <string name="backup_error_menu_repair">Repair database</string>
-  <string name="backup_repair_deck">Repair</string>
-  <string name="backup_repair_deck_progress">Repairing database&#8230;</string>
-  <string name="backup_error">Error</string>
+  <string name="backup_repair_deck">Поправяне</string>
+  <string name="backup_repair_deck_progress">Поправяне на базата данни&#8230;</string>
+  <string name="backup_error">Грешка</string>
   <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_select_title">Изберете резервно копиране за възстановяване</string>
   <string name="backup_restore_no_backups">No backups available on this device. If you have backups on your desktop computer, copy them manually into your AnkiDroid folder.</string>
@@ -62,5 +62,5 @@
   <string name="open_collection_failed_message">Database couldn’t be opened. It’s either not a real Anki database or has been corrupted.\n\nTouch “options” for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
   <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
   <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
-  <string name="deck_repair_error">Collection couldn’t be repaired</string>
+  <string name="deck_repair_error">Колекция не можа да бъде поправена</string>
 </resources>
