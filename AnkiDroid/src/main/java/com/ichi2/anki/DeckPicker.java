@@ -56,6 +56,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
@@ -90,9 +92,6 @@ import com.ichi2.themes.Themes;
 import com.ichi2.ui.DividerItemDecoration;
 import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
-
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import org.json.JSONException;
 
@@ -138,7 +137,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public static final long AUTOMATIC_SYNC_MIN_INTERVAL = 600000;
 
     private MaterialDialog mProgressDialog;
-
+    private View mStudyoptionsFrame;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mRecyclerViewLayoutManager;
     private DeckAdapter mDeckListAdapter;
@@ -381,16 +380,19 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
         Timber.d("onCreate()");
-        super.onCreate(savedInstanceState);
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        // Open Collection on UI thread while splash screen is showing
+        boolean colOpen = firstCollectionOpen();
 
+        // Then set theme and content view
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen);
         View mainView = findViewById(android.R.id.content);
 
         // check, if tablet layout
-        View studyoptionsFrame = findViewById(R.id.studyoptions_fragment);
+        mStudyoptionsFrame = findViewById(R.id.studyoptions_fragment);
         // set protected variable from NavigationDrawerActivity
-        mFragmented = studyoptionsFrame != null && studyoptionsFrame.getVisibility() == View.VISIBLE;
+        mFragmented = mStudyoptionsFrame != null && mStudyoptionsFrame.getVisibility() == View.VISIBLE;
 
         registerExternalStorageListener();
 
@@ -432,14 +434,43 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         mTodayTextView = (TextView) findViewById(R.id.today_stats_text_view);
 
-        mTodayTextView = (TextView) findViewById(R.id.today_stats_text_view);
-        if (! CollectionHelper.hasStorageAccessPermission(this)) {
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    REQUEST_STORAGE_PERMISSION);
-        } else {
-            // Show splash screen and load collection
+        // Hide the fragment until the counts have been loaded so that the Toolbar fills the whole screen on tablets
+        if (mFragmented) {
+            mStudyoptionsFrame.setVisibility(View.GONE);
+        }
+
+        // Show any necessary dialogs (e.g. changelog, special messages, etc)
+        if (colOpen) {
             showStartupScreensAndDialogs(preferences, 0);
         }
+    }
+
+    /**
+     * Try to open the Collection for the first time, and do some error handling if it wasn't successful
+     * @return whether or not we were successful
+     */
+    private boolean firstCollectionOpen() {
+        if (CollectionHelper.hasStorageAccessPermission(this)) {
+            // Try to open the collection
+            Collection col = null;
+            try {
+                col = getCol();
+            } catch (RuntimeException e) {
+                Timber.e(e, "RuntimeException opening collection");
+                AnkiDroidApp.sendExceptionReport(e, "DeckPicker.firstCollectionOpen");
+            }
+            // Show error dialog if collection could not be opened
+            if (col == null) {
+                showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
+                return false;
+            }
+        } else {
+            // Request storage permission if we don't have it (e.g. on Android 6.0+)
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_STORAGE_PERMISSION);
+            return false;
+        }
+        return true;
     }
 
     private void configureFloatingActionsMenu() {
@@ -677,14 +708,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.d("onResume()");
         super.onResume();
         mActivityPaused = false;
-        selectNavigationItem(DRAWER_DECK_PICKER);
         if (mSyncOnResume) {
             sync();
             mSyncOnResume = false;
         } else if (colIsOpen()) {
+            selectNavigationItem(DRAWER_DECK_PICKER);
             updateDeckList();
+            setTitle(getResources().getString(R.string.app_name));
         }
-        setTitle(getResources().getString(R.string.app_name));
     }
 
 
@@ -699,12 +730,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mContextMenuDid = savedInstanceState.getLong("mContextMenuDid");
-    }
-
-
-    protected void sendKey(int keycode) {
-        this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keycode));
-        this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keycode));
     }
 
 
@@ -777,24 +802,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
 
-    @Override
-    protected void onCollectionLoaded(Collection col) {
-        // keep reference to collection in parent
-        super.onCollectionLoaded(col);
-        onFinishedStartup();
-        // prepare deck counts and mini-today-statistic
-        updateDeckList();
-    }
-
 
     /**
-     * Do any work needed after DeckPicker starts. This method assumes that the collection has
-     * finished loading and is open.
+     * Perform the following tasks:
+     * Automatic backup
+     * loadStudyOptionsFragment() if tablet
+     * Automatic sync
      */
     private void onFinishedStartup() {
-        // Since the deck list won't show until we get the deck counts, we show the progress bar again
-        showProgressBar();
-
         // create backup in background if needed
         BackupManager.performBackupInBackground(getCol().getPath());
 
@@ -818,13 +833,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
         // Open StudyOptionsFragment if in fragmented mode
         if (mFragmented) {
-            // Create the fragment in a new handler since Android won't let you perform fragment
-            // transactions in a loader's onLoadFinished.
-            new Handler().post(new Runnable() {
-                public void run() {
-                    loadStudyOptionsFragment(false);
-                }
-            });
+            loadStudyOptionsFragment(false);
         }
         automaticSync();
     }
@@ -862,7 +871,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else if (preferences.getString("lastVersion", "").equals("")) {
             // Fresh install
             preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).commit();
-            startLoadingCollection();
+            onFinishedStartup();
         } else if (skip < 2 && !preferences.getString("lastVersion", "").equals(VersionUtils.getPkgVersionName())) {
             // AnkiDroid is being updated and a collection already exists. We check if we are upgrading
             // to a version that contains additions to the database integrity check routine that we would
@@ -943,11 +952,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         } else {
             // This is the main call when there is nothing special required
-            if (!colIsOpen()) {
-                startLoadingCollection();
-            } else {
-                onFinishedStartup();
-            }
+            onFinishedStartup();
         }
     }
 
@@ -1089,12 +1094,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
         showDialogFragment(newFragment);
     }
 
-
     public void onSdCardNotMounted() {
         Themes.showThemedToast(this, getResources().getString(R.string.sd_card_not_mounted), false);
         finishWithoutAnimation();
     }
-
 
     // Callback method to submit error report
     @Override
@@ -1120,9 +1123,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
-                if (result != null && result.getBoolean()) {
-                    startLoadingCollection();
-                } else {
+                if (result == null || !result.getBoolean()) {
                     Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.deck_repair_error), true);
                     onCollectionLoadError();
                 }
@@ -1676,7 +1677,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     if (intent.getAction().equals(SdCardReceiver.MEDIA_EJECT)) {
                         onSdCardNotMounted();
                     } else if (intent.getAction().equals(SdCardReceiver.MEDIA_MOUNT)) {
-                        startLoadingCollection();
+                        restartActivity();
                     }
                 }
             };
@@ -1685,21 +1686,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             iFilter.addAction(SdCardReceiver.MEDIA_MOUNT);
             registerReceiver(mUnmountReceiver, iFilter);
         }
-    }
-
-
-    /**
-     * Creates an intent to load a deck given the full pathname of it. The constructed intent is equivalent (modulo the
-     * extras) to the open used by the launcher shortcut, which means it will not open a new study options window but
-     * bring the existing one to the front.
-     */
-    public static Intent getLoadDeckIntent(Context context, long deckId) {
-        Intent loadDeckIntent = new Intent(context, DeckPicker.class);
-        loadDeckIntent.setAction(Intent.ACTION_MAIN);
-        loadDeckIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        loadDeckIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        loadDeckIntent.putExtra(EXTRA_DECK_ID, deckId);
-        return loadDeckIntent;
     }
 
 
@@ -1821,6 +1807,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
             @Override
             public void onPostExecute(TaskData result) {
                 hideProgressBar();
+                // Make sure the fragment is visible
+                if (mFragmented) {
+                    mStudyoptionsFrame.setVisibility(View.VISIBLE);
+                }
                 if (result == null) {
                     Timber.e("null result loading deck counts");
                     onCollectionLoadError();

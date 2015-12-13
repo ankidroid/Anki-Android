@@ -17,7 +17,6 @@ package com.ichi2.anki;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
 import android.net.Uri;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
@@ -27,6 +26,7 @@ import android.widget.CompoundButton;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.themes.Themes;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -104,11 +104,9 @@ public class NavigationDrawerActivity extends AnkiActivity implements Drawer.OnD
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
         if (dpHeight > 320 && dpWidth > 320) {
-            int[] attrs = new int[]{R.attr.navDrawerImage};
-            TypedArray ta = obtainStyledAttributes(attrs);
             mHeader = new AccountHeaderBuilder()
                     .withActivity(this)
-                    .withHeaderBackground(ta.getResourceId(0, R.drawable.nav_drawer_logo))
+                    .withHeaderBackground(Themes.getResFromAttr(this, R.attr.navDrawerImage))
                     .withDividerBelowHeader(false)
                     .build();
         }

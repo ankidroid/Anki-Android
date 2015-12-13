@@ -24,7 +24,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -1106,18 +1105,17 @@ public class NoteEditor extends AnkiActivity {
 
             ImageButton mediaButton = (ImageButton) editline_view.findViewById(R.id.id_media_button);
             // Load icons from attributes
-            int[] attrs = new int[] { R.attr.attachFileImage, R.attr.upDownImage};
-            TypedArray ta = obtainStyledAttributes(attrs);
+            int[] icons = Themes.getResFromAttr(this, new int[] { R.attr.attachFileImage, R.attr.upDownImage});
             // Make the icon change between media icon and switch field icon depending on whether editing note type
             if (editModelMode && allowFieldRemapping()) {
                 // Allow remapping if originally more than two fields
-                mediaButton.setBackgroundResource(ta.getResourceId(1, R.drawable.ic_import_export_black_24dp));
+                mediaButton.setBackgroundResource(icons[1]);
                 setRemapButtonListener(mediaButton, i);
             } else if (editModelMode && !allowFieldRemapping()) {
                 mediaButton.setBackgroundResource(0);
             } else {
                 // Use media editor button if not changing note type
-                mediaButton.setBackgroundResource(ta.getResourceId(0, R.drawable.ic_attachment_black_24dp));
+                mediaButton.setBackgroundResource(icons[0]);
                 setMMButtonListener(mediaButton, i);
             }
             mFieldsLayoutContainer.addView(label);

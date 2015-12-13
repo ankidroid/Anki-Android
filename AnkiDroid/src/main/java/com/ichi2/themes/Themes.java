@@ -1,5 +1,6 @@
 /***************************************************************************************
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -18,6 +19,8 @@ package com.ichi2.themes;
 
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.widget.Toast;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -47,4 +50,36 @@ public class Themes {
             context.setTheme(R.style.LegacyActionBarWhite);
         }
     }
+
+
+    public static int getResFromAttr(Context context, int resAttr) {
+        int[] attrs = new int[] {resAttr};
+        return getResFromAttr(context, attrs)[0];
+    }
+
+    public static int[] getResFromAttr(Context context, int[] attrs) {
+        TypedArray ta = context.obtainStyledAttributes(attrs);
+        for (int i = 0; i < attrs.length; i++) {
+            attrs[i] = ta.getResourceId(i, 0);
+        }
+        ta.recycle();
+        return attrs;
+    }
+
+    public static int getColorFromAttr(Context context, int colorAttr) {
+        int[] attrs = new int[] {colorAttr};
+        return getColorFromAttr(context, attrs)[0];
+    }
+
+
+    public static int[] getColorFromAttr(Context context, int[] attrs) {
+        TypedArray ta = context.obtainStyledAttributes(attrs);
+        Resources res = context.getResources();
+        for (int i = 0; i < attrs.length; i++) {
+            attrs[i] = ta.getColor(i, res.getColor(R.color.white));
+        }
+        ta.recycle();
+        return attrs;
+    }
+
 }

@@ -24,7 +24,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -1244,17 +1243,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // Draw the content in the columns
             View[] columns = (View[]) v.getTag();
             final Map<String, String> dataSet = mData.get(position);
-            final int color = getColor(dataSet.get(mColorFlagKey));
+            final int colorIdx = getColor(dataSet.get(mColorFlagKey));
+            int[] colors = Themes.getColorFromAttr(CardBrowser.this, new int[]{android.R.attr.colorBackground,
+                    R.attr.markedColor, R.attr.suspendedColor, R.attr.markedColor});
             for (int i = 0; i < mToIds.length; i++) {
                 TextView col = (TextView) columns[i];
                 // set font for column
                 setFont(col);
                 // set background color for column
-                int[] attrs = new int[] {android.R.attr.colorBackground, R.attr.markedColor, R.attr.suspendedColor,
-                        R.attr.markedColor};
-                TypedArray ta = obtainStyledAttributes(attrs);
-                col.setBackgroundColor(ta.getColor(color, getResources().getColor(R.color.material_grey_700)));
-                ta.recycle();
+                col.setBackgroundColor(colors[colorIdx]);
                 // set text for column
                 col.setText(dataSet.get(mFromKeys[i]));
             }
