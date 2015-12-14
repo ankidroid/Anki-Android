@@ -19,6 +19,7 @@
         <item name="actionModeBackground">@color/theme_accent</item>
         <item name="actionBarThemeRef">@style/ActionBar</item>
         <item name="popupTheme">@style/ActionBar.Popup</item>
+        <item name="actionBarPopupThemeRef">@style/ActionBar.Popup</item>
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
         <!-- Deck list colors and divider -->
