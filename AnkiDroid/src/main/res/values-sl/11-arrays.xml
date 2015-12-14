@@ -53,21 +53,21 @@
     <item>Uredi zapisek</item>
     <item>Označi zapisek</item>
     <item>Iskalni izraz</item>
-    <item>Skrij kartico</item>
+    <item>Prikrij kartico</item>
     <item>Pridrži kartico</item>
     <item>Izbriši zapisek</item>
     <item>Predvajaj predstavnost</item>
     <item>Prekini učenje</item>
-    <item>Skrij zapisek</item>
+    <item>Prikrij zapisek</item>
     <item>Pridrži zapisek</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Pridrži kartico</item>
-    <item>Samo oznake</item>
+    <item>Samo oznako</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Nove kartice v naključnem vrstnem redu</item>
-    <item>Nove kartice v dodanem vrstnem redu</item>
+    <item>Nove kartice v vrstnem redu dodajanja</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
     <item>Najprej videna najprej</item>
@@ -75,8 +75,8 @@
     <item>Naraščajoči razmiki</item>
     <item>Padajoči razmiki</item>
     <item>Z največ spodrsljaji</item>
-    <item>V vrstnem redu dodajanja</item>
-    <item>V vrs. red zapad.</item>
+    <item>Vrs. red dodajanja</item>
+    <item>Vrs. red zapad.</item>
     <item>Nazadnje dodana najprej</item>
     <item>Relativna zapadlost</item>
   </string-array>
@@ -86,11 +86,11 @@
   </string-array>
   <string-array name="new_spread_labels">
     <item>Premešaj nove kartice in preglede</item>
-    <item>Nove kartice po pregledih</item>
+    <item>Nove kartice za pregledi</item>
     <item>Nove kartice pred pregledi</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>Ko na pomnilnik karticah ni določena pisava</item>
+    <item>Ko na pomnilnih karticah ni določena pisava</item>
     <item>Vedno</item>
   </string-array>
 </resources>

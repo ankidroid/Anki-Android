@@ -62,7 +62,7 @@
   <string name="logged_as">Влез като</string>
   <string name="log_out">Изход</string>
   <string name="alert_logging_message">Регистриране, моля, изчакайте...</string>
-  <string name="invalid_username_password">Invalid email address or password</string>
+  <string name="invalid_username_password">Невалиден имейл или парола</string>
   <string name="reset_password">Нулиране на паролата</string>
   <string name="downloaddeck_search">Търсене</string>
   <string name="preferences_title">Предпочитания</string>
@@ -112,7 +112,7 @@
   <string name="sync_media_downloaded_count">%d media files downloaded</string>
   <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Choose which side you would like to keep.</string>
   <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn’t agree with the server. The next media sync will be full to correct any error.</string>
-  <string name="sync_media_error">Error syncing media data</string>
+  <string name="sync_media_error">Грешка при синхронизиране мултимедийни данни</string>
   <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Отдалечено</string>
@@ -120,5 +120,5 @@
   <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
   <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
   <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
-  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
+  <string name="sync_error_501_upgrade_required">Надстройте до последната версия на AnkiDroid</string>
 </resources>

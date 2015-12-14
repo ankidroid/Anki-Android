@@ -39,9 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_minimum_cards_due_notification_ticker_title">Kartice zapadejo</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Zapadlih kartic</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d kartic AnkiDroid zapadlo</string>
-  <string name="widget_no_cards_due">Nobena kartica ni zapadla</string>
+  <string name="widget_no_cards_due">Nobena kar. ni zapadla</string>
   <string name="widget_loading">Nalaganje pripomočka &#8230;</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">%1$d kartica zapade v %2$s</item>

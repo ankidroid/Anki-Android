@@ -57,8 +57,8 @@
   <string name="initializing_tts">Začenjanje TTS-a &#8230;</string>
   <string name="tts_no_tts">Bodite tiho</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Pomnilne kartice za Android</h2>AnkiDroid je program za pomnilne kartice, ki jev celoti združljiv z namiznim programom <a href=\"%2$s\">Anki</a>. Snov lahko ustvarjate, prejmete in se jo naučite tako v AnkiDroidu kot namiznem Ankiju in jo enostavno sinhronizirate z AnkiWebom.]]></item>
-    <item><![CDATA[Za ga nam pomagate izboljšati, prijavite hrošče v <a href=\"%1$s\">sledilniku težav</a>; nove zamisli o značilnostih so tudi dobrodošle. Odgovore poiščite v <a href=\"%2$s\">wikiju</a> ali začnite razpravo v <a href=\"%3$s\">forumu</a>.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Pomnilne kartice za Android</h2>AnkiDroid je program za pomnilne kartice, ki je v celoti združljiv z namiznim programom <a href=\"%2$s\">Anki</a>. Snov lahko ustvarjate, prejmete in se jo naučite tako v AnkiDroidu kot namiznem Ankiju in jo enostavno sinhronizirate z AnkiWebom.]]></item>
+    <item><![CDATA[Da ga nam pomagate izboljšati, prijavite hrošče v <a href=\"%1$s\">sledilniku težav</a>; nove zamisli o značilnostih so tudi dobrodošle. Odgovore poiščite v <a href=\"%2$s\">wikiju</a> ali začnite razpravo v <a href=\"%3$s\">forumu</a>.]]></item>
     <item><![CDATA[AnkiDroid je <a href=\"%1$s\">odprtokodna programska oprema<a/>, tako da spodbujamo vsakogar, ki želi <a href=\"%2$s\">prispevati</a> :-)]]></item>
     <item><![CDATA[Poleg razvijalcev lahko pomagajo tudi ostali. Na primer lahko ga <a href=\"%1$s\"> pomagate prevesti</a>, posodobiti wiki, priskrbeti zaslonske slike, <a href=\"%2$s\">darovati</a> za namizni Anki ali o njem blogati.]]></item>
     <item><![CDATA[AnkiDroid je izdan pod <a href=\"%1$s\">dovoljenjem GNU-GPL v3</a> in izvorna koda je na voljo <a href=\"%2$s\">na GitHubu</a>.]]></item>
@@ -67,11 +67,11 @@
   <string name="reset_card_dialog_title">Ponastavi napredek kartice</string>
   <string name="reset_card_dialog_message">Ta kartica bo postavljena na konec čakalne vrste novih kartic</string>
   <string name="reset_card_dialog_acknowledge">Ponastavitev kartice</string>
-  <string name="reschedule_card_dialog_title">Spremeni urnik</string>
-  <string name="reschedule_card_dialog_message">Načrtuj kartico za pregled v x dneh:</string>
+  <string name="reschedule_card_dialog_title">Spremeni urnik kartice</string>
+  <string name="reschedule_card_dialog_message">Načrtuj kartico za pregled čez x dni:</string>
   <string name="reschedule_card_dialog_acknowledge">Urnik za kartico spremenjen</string>
   <string name="answering_error_title">Napaka podatkovne zbirke</string>
-  <string name="answering_error_message">Pisanje v zbirko je spodletelo. Podatkovna zbirka je lahko pokvarjena ali pa na disku ni dovolj prostora.\n\nČe se to zgodi pogosto, poizkusite preveriti podatkovno zbirko, popraviti zbirko ali jo obnoviti iz varnostne kopije. Za to pritisnite na \"možnosti\".\nLahko je pa tudi hrošč v AnkiDroidu; prijavite napako, da jo lahko preverimo.</string>
+  <string name="answering_error_message">Pisanje v zbirko je spodletelo. Podatkovna zbirka je lahko pokvarjena ali pa na disku ni dovolj prostora.\n\nČe se to zgodi pogosto, poizkusite preveriti podatkovno zbirko, popraviti zbirko ali jo obnoviti iz varnostne kopije. Za to pritisnite \"možnosti\".\nLahko pa v AnkiDroidu obstaja hrošč; prijavite napako, da jo lahko preverimo.</string>
   <string name="answering_error_report">Prijavi napako</string>
   <string name="repair_deck_dialog">Ali res želite popraviti podatkovno zbirko?\n\nPred poizkusom bo v mapi \"%s\" ustvarjena kopija.</string>
   <string name="intent_add_saved_information">Shranjeni podatki</string>
@@ -86,7 +86,7 @@
   <string name="custom_study_ahead">Preglej vnaprej za x dni:</string>
   <string name="custom_study_random">Naključno izberite x kartic iz kompleta:</string>
   <string name="custom_study_preview">Preglej nove kartice dodane v zadnjih x-ih dneh:</string>
-  <string name="rebuild_custom_study_deck">Ponovno izgrajevanje kompleta za učenje po meri &#8230;</string>
+  <string name="rebuild_custom_study_deck">Izgrajevanje kompleta za učenje po meri &#8230;</string>
   <string name="import_unpacking">Odpakiranje arhiva &#8230;</string>
   <string name="importing_collection">Uvažanje zbirke &#8230;</string>
   <string name="import_media_count">Uvažanje datotek predstavnosti %1$d %% &#8230;</string>
@@ -116,15 +116,15 @@
   <string name="check_media_acknowledge">Predstavnost preverjena</string>
   <string name="check_media_failed">Preverjanje predstavnosti spodletelo</string>
   <string name="check_media_invalid">Datoteke z neveljavnim kodiranjem: %d</string>
-  <string name="check_media_unused">Datoteke so v mapi predstavnosti, vendar jih ne uporablja nobena kartica: %d</string>
-  <string name="check_media_nohave">Datoteke so uporabljene na karticah, vendar se ne nahajajo v mapi predstavnosti: %d</string>
+  <string name="check_media_unused">Datoteke v mapi predstavnosti, vendar jih ne uporablja nobena kartica: %d</string>
+  <string name="check_media_nohave">Datoteke uporabljene na karticah, vendar se ne nahajajo v mapi predstavnosti: %d</string>
   <string name="check_media_no_unused_missing">Neuporabljenih ali manjkajočih datotek ni bilo mogoče najti</string>
-  <string name="check_media_db_updated">Pod. zbirka predstavnosti ponovno izgrajena</string>
+  <string name="check_media_db_updated">Pod. zbirka predstavnosti izgrajena</string>
   <string name="check_media_delete_unused">Izbriši neuporabljeno</string>
   <string name="check_media_deleted">Izbrisane datoteke: %d</string>
   <string name="tags_dialog_option_all_cards">Vse kartice</string>
   <string name="tags_dialog_option_new_cards">Nove</string>
-  <string name="tags_dialog_option_due_cards">Zapadejo</string>
+  <string name="tags_dialog_option_due_cards">Zapadle</string>
   <string name="emtpy_cards_finding">Iskanje praznih kartic &#8230;</string>
   <string name="empty_cards_none">Ni praznih kartic</string>
   <string name="empty_cards_count">Kartice za izbris: %d</string>
