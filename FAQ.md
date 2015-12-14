@@ -13,6 +13,9 @@ No AnkiDroid is not restricted in any way, see the [[installation guide|Installa
 
 All versions are available as APK files, see the [[installation guide|Installation]]. Don't forget to [let us know](http://ankidroid.org/help.html) what bothers you, and we will try to fix it.
 
+### Is there a version for Android Wear?
+There is a 3rd party app which can connect to AnkiDroid from Wear devices. It's currently in alpha version, but you can try it out [here](https://github.com/wlky/AnkiDroid-Wear).
+
 ### How do I upgrade from version 1.x?
 If you wish to upgrade from an old (2012 and older) 1.x version of AnkiDroid, please read these [1.x upgrading instructions](http://android.stackexchange.com/questions/116414/how-to-upgrade-my-ankidroid-flashcards-from-1-x-to-2-0).
 
