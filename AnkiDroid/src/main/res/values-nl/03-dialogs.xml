@@ -43,14 +43,14 @@
   <string name="check_db_warning">Dit kan een lange tijd duren</string>
   <string name="check_db_acknowledge">Database gecontroleerd</string>
   <string name="check_db_acknowledge_shrunk">Database gecontroleerd en geoptimaliseerd. \nVerkleind met %d kb.</string>
-  <string name="contextmenu_deckpicker_delete_deck">Set verwijderen</string>
+  <string name="contextmenu_deckpicker_delete_deck">Leerset verwijderen</string>
   <string name="delete_deck_default_deck">De standaardset kan niet worden verwijderd</string>
   <string name="delete_deck_title">Verwijder set</string>
   <plurals name="delete_deck_message">
     <item quantity="one">Verwijder alle kaarten in %1$s? Het bevat %2$d kaart.</item>
     <item quantity="other">Verwijder alle kaarten in %1$s? Het bevat %2$d kaarten.</item>
   </plurals>
-  <string name="delete_cram_deck_message">Weet u zeker dat u alle kaarten in %s terug wenst te zenden naar hun oorspronkelijke sets?</string>
+  <string name="delete_cram_deck_message">Weet u zeker dat u alle kaarten in %s terug wenst te zenden naar hun oorspronkelijke leersets?</string>
   <string name="no_tts_available_message">Geen tekst-naar-spraak taal beschikbaar</string>
   <string name="initializing_tts">TTS initialiseren&#8230;</string>
   <string name="tts_no_tts">Niet spreken</string>
