@@ -435,7 +435,9 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
         // Tell the browser the current card ID so that it can tell us when we need to reload
-        setCurrentCardId(mCurrentCard.getId());
+        if (mCurrentCard != null) {
+            setCurrentCardId(mCurrentCard.getId());
+        }
         return super.onItemClick(view, i, iDrawerItem);
     }
 

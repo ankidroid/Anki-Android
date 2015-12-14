@@ -30,7 +30,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -1513,28 +1512,28 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         // Set correct label and background resource for each button
         // Note that it's necessary to set the resource dynamically as the ease2 / ease3 buttons
-        // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy -- depending on how many buttons are shown
-        final int[] ANSWER_BUTTON_DRAWABLES = {R.attr.againButtonRef, R.attr.hardButtonRef, R.attr.goodButtonRef, R.attr.easyButtonRef};
-        TypedArray ta = obtainStyledAttributes(ANSWER_BUTTON_DRAWABLES);
+        // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy - depending on num buttons shown
+        final int[] icons = Themes.getResFromAttr(this, new int [] {R.attr.againButtonRef, R.attr.hardButtonRef,
+                R.attr.goodButtonRef, R.attr.easyButtonRef});
         mEase1Layout.setVisibility(View.VISIBLE);
-        mEase1Layout.setBackgroundResource(ta.getResourceId(0, R.drawable.footer_button_again));
-        mEase4Layout.setBackgroundResource(ta.getResourceId(3, R.drawable.footer_button_easy));
+        mEase1Layout.setBackgroundResource(icons[0]);
+        mEase4Layout.setBackgroundResource(icons[3]);
         switch (buttonCount) {
             case 2:
                 // Ease 2 is "good"
                 mEase2Layout.setVisibility(View.VISIBLE);
-                mEase2Layout.setBackgroundResource(ta.getResourceId(2, R.drawable.footer_button_good));
+                mEase2Layout.setBackgroundResource(icons[2]);
                 mEase2.setText(R.string.ease_button_good);
                 mEase2Layout.requestFocus();
                 break;
             case 3:
                 // Ease 2 is good
                 mEase2Layout.setVisibility(View.VISIBLE);
-                mEase2Layout.setBackgroundResource(ta.getResourceId(2, R.drawable.footer_button_good));
+                mEase2Layout.setBackgroundResource(icons[2]);
                 mEase2.setText(R.string.ease_button_good);
                 // Ease 3 is easy
                 mEase3Layout.setVisibility(View.VISIBLE);
-                mEase3Layout.setBackgroundResource(ta.getResourceId(3, R.drawable.footer_button_easy));
+                mEase3Layout.setBackgroundResource(icons[3]);
                 mEase3.setText(R.string.ease_button_easy);
                 mEase2Layout.requestFocus();
                 break;
@@ -1542,17 +1541,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mEase2Layout.setVisibility(View.VISIBLE);
                 // Ease 2 is "hard"
                 mEase2Layout.setVisibility(View.VISIBLE);
-                mEase2Layout.setBackgroundResource(ta.getResourceId(1, R.drawable.footer_button_hard));
+                mEase2Layout.setBackgroundResource(icons[1]);
                 mEase2.setText(R.string.ease_button_hard);
                 mEase2Layout.requestFocus();
                 // Ease 3 is good
                 mEase3Layout.setVisibility(View.VISIBLE);
-                mEase3Layout.setBackgroundResource(ta.getResourceId(2, R.drawable.footer_button_good));
+                mEase3Layout.setBackgroundResource(icons[2]);
                 mEase3.setText(R.string.ease_button_good);
                 mEase4Layout.setVisibility(View.VISIBLE);
                 mEase3Layout.requestFocus();
         }
-        ta.recycle();
 
         // Show next review time
         if (mShowNextReviewTime) {

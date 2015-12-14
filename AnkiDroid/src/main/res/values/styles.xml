@@ -4,6 +4,9 @@
     <!-- App themes -->
     <style name="App_Theme_White" parent="Theme_White"/>
     <style name="App_Theme_Dark" parent="Theme_Dark"/>
+    <style name="App_Theme_Dark.Launcher">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
     <!-- Theme for crash report dialog -->
     <style name="Theme.CrashReportDialog" parent="@android:style/Theme.Dialog" />
 
