@@ -40,48 +40,48 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="two">%d cards shown</item>
-    <item quantity="few">%d cards shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">Prikazana %d kartica</item>
+    <item quantity="two">Prikazani %d kartici</item>
+    <item quantity="few">Prikazane %d kartice</item>
+    <item quantity="other">Prikazanih %d kartic</item>
   </plurals>
-  <string name="card_browser_all_decks">All decks</string>
-  <string name="card_browser_delete_card">Delete note</string>
-  <string name="card_browser_suspend_card">Suspend card</string>
-  <string name="card_browser_unsuspend_card">Unsuspend card</string>
-  <string name="card_browser_mark_card">Mark note</string>
-  <string name="card_browser_unmark_card">Unmark note</string>
-  <string name="delete_card_title">Delete note?</string>
-  <string name="delete_card_message">Delete all cards of this note?\nSearch field: %s</string>
-  <string name="card_browser_show_marked">Filter marked</string>
-  <string name="card_browser_show_suspended">Filter suspended</string>
-  <string name="card_browser_search_by_tag">Filter by tag</string>
-  <string name="card_browser_tags_shown">Tags: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
-  <string name="card_browser_change_display_order">Change display order</string>
-  <string name="card_browser_change_display_order_title">Choose display order</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
-  <string name="card_details_question">Question</string>
-  <string name="card_details_answer">Answer</string>
-  <string name="card_details_due">Due</string>
-  <string name="card_details_tags">Tags</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
+  <string name="card_browser_all_decks">Vsi kompleti</string>
+  <string name="card_browser_delete_card">Izbriši zapisek</string>
+  <string name="card_browser_suspend_card">Pridrži kartico</string>
+  <string name="card_browser_unsuspend_card">Sprosti kartico</string>
+  <string name="card_browser_mark_card">Označi zapisek</string>
+  <string name="card_browser_unmark_card">Odznači zapisek</string>
+  <string name="delete_card_title">Izbriši zapisek?</string>
+  <string name="delete_card_message">Izbriši vse kartice tega zapiska?\nIskalno polje: %s</string>
+  <string name="card_browser_show_marked">Filter označen</string>
+  <string name="card_browser_show_suspended">Filter pridržan</string>
+  <string name="card_browser_search_by_tag">Filtriraj po oznakah</string>
+  <string name="card_browser_tags_shown">Oznake: %1$s</string>
+  <string name="card_browser_list_my_searches">Moja iskanja</string>
+  <string name="card_browser_list_my_searches_save">Shrani iskanje</string>
+  <string name="card_browser_list_my_searches_title">Izberite shranjeno iskanje</string>
+  <string name="card_browser_list_my_searches_new_name">Ime trenutnega iskanja</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">Ne morete shraniti iskanja brez imena</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Ime obstaja</string>
+  <string name="card_browser_list_my_searches_remove_content">Izbriši \"%1$s\"?</string>
+  <string name="card_browser_change_display_order">Spremeni vrstni red prikaza</string>
+  <string name="card_browser_change_display_order_title">Izberite vrstni red prikaza</string>
+  <string name="card_browser_change_display_order_reverse">Dvakrat izberite polje, da obrnete</string>
+  <string name="card_details_question">Vprašanje</string>
+  <string name="card_details_answer">Odgovor</string>
+  <string name="card_details_due">Zapade</string>
+  <string name="card_details_tags">Oznake</string>
+  <string name="card_browser_filtering_cards">Filtriranje kartic &#8230; \nPritisnite na gumb Nazaj za preklic</string>
   <string-array name="card_browser_order_labels">
-    <item>No sorting (faster)</item>
-    <item>By sort field</item>
-    <item>By created time</item>
-    <item>By edited time</item>
-    <item>By changed time</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
-    <item>By reviews</item>
-    <item>By lapses</item>
+    <item>Brez razvrščanja (hitrejše)</item>
+    <item>Po polju za razvrščanje</item>
+    <item>Po času nastanka</item>
+    <item>Po času urejanja</item>
+    <item>Po času spremembe</item>
+    <item>Po času zapadlosti</item>
+    <item>Po razmiku</item>
+    <item>Po težavnosti</item>
+    <item>Po pregledih</item>
+    <item>Po spodrsljajih</item>
   </string-array>
 </resources>

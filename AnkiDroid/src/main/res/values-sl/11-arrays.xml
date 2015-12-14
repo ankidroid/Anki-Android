@@ -36,61 +36,61 @@
 -->
 <resources>
   <string-array name="error_reporting_choice_labels">
-    <item>Always report</item>
-    <item>Never report</item>
-    <item>Ask me</item>
+    <item>Vedno prijavi</item>
+    <item>Nikoli ne prijavi</item>
+    <item>Vprašaj me</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>No action</item>
-    <item>Show answer</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
-    <item>Lookup expression</item>
-    <item>Bury card</item>
-    <item>Suspend card</item>
-    <item>Delete note</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Brez dejanja</item>
+    <item>Prikaži odgovor</item>
+    <item>1. gumb za odgovor</item>
+    <item>2. gumb za odgovor</item>
+    <item>3. gumb za odgovor</item>
+    <item>4. gumb za odgovor</item>
+    <item>Priporočilo za odgovor (zeleno)</item>
+    <item>Odgovorite bolje kot priporočeno</item>
+    <item>Razveljavi</item>
+    <item>Uredi zapisek</item>
+    <item>Označi zapisek</item>
+    <item>Iskalni izraz</item>
+    <item>Skrij kartico</item>
+    <item>Pridrži kartico</item>
+    <item>Izbriši zapisek</item>
+    <item>Predvajaj predstavnost</item>
+    <item>Prekini učenje</item>
+    <item>Skrij zapisek</item>
+    <item>Pridrži zapisek</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Suspend card</item>
-    <item>Tag only</item>
+    <item>Pridrži kartico</item>
+    <item>Samo oznake</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
+    <item>Nove kartice v naključnem vrstnem redu</item>
+    <item>Nove kartice v dodanem vrstnem redu</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
-    <item>Order due</item>
-    <item>Latest added first</item>
-    <item>Relative overdueness</item>
+    <item>Najprej videna najprej</item>
+    <item>Nakjučno</item>
+    <item>Naraščajoči razmiki</item>
+    <item>Padajoči razmiki</item>
+    <item>Z največ spodrsljaji</item>
+    <item>V vrstnem redu dodajanja</item>
+    <item>V vrs. red zapad.</item>
+    <item>Nazadnje dodana najprej</item>
+    <item>Relativna zapadlost</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
-    <item>Decide by note type</item>
+    <item>Uporabi trenutni komplet</item>
+    <item>Odloči se po vrsti zapiska</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>Premešaj nove kartice in preglede</item>
+    <item>Nove kartice po pregledih</item>
+    <item>Nove kartice pred pregledi</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>Ko na pomnilnik karticah ni določena pisava</item>
+    <item>Vedno</item>
   </string-array>
 </resources>

@@ -123,7 +123,7 @@
   <string name="check_media">メディアをチェック</string>
   <string name="empty_cards">無効なカードをチェック</string>
   <string name="check_db_message">データベースをチェックしています...</string>
-  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
+  <string name="empty_card_warning">このカードは無効なカード（必要な情報を削除したことにより、表側が表示できないカード）です。このような無効なカードを一括削除するには、デッキリスト画面のメニューから「無効なカードをチェック」を選択してください。</string>
   <string name="unknown_type_field_warning">タイピングして答えを入力: 不明なフィールド %s</string>
   <string name="delete_deck">デッキを削除しています...</string>
   <string name="show_hint">%s を表示</string>

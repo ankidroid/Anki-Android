@@ -39,21 +39,21 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
-  <string name="widget_no_cards_due">No cards due</string>
-  <string name="widget_loading">Widget loading&#8230;</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Kartice zapadejo</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d kartic AnkiDroid zapadlo</string>
+  <string name="widget_no_cards_due">Nobena kartica ni zapadla</string>
+  <string name="widget_loading">Nalaganje pripomočka &#8230;</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d card due in %2$s</item>
-    <item quantity="two">%1$d cards due in %2$s</item>
-    <item quantity="few">%1$d cards due in %2$s</item>
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="one">%1$d kartica zapade v %2$s</item>
+    <item quantity="two">%1$d kartici zapadeta v %2$s</item>
+    <item quantity="few">%1$d kartice zapadejo v %2$s</item>
+    <item quantity="other">%1$d kartic zapade v %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
-    <item quantity="two">%1$d decks</item>
-    <item quantity="few">%1$d decks</item>
-    <item quantity="other">%1$d decks</item>
+    <item quantity="one">%1$d komplet</item>
+    <item quantity="two">%1$d kompleta</item>
+    <item quantity="few">%1$d kompleti</item>
+    <item quantity="other">%1$d kompletov</item>
   </plurals>
-  <string name="widget_small">AnkiDroid small</string>
+  <string name="widget_small">AnkiDroid - majhen</string>
 </resources>

@@ -39,17 +39,17 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_minimum_cards_due_notification_ticker_title">Карти поради</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid карти поради</string>
-  <string name="widget_no_cards_due">Няма дължими карти</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Карти остават</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid карти остават</string>
+  <string name="widget_no_cards_due">Няма оставащи карти</string>
   <string name="widget_loading">Зареждане на джаджа...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d card due in %2$s</item>
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="one">%1$d карта остава в %2$s</item>
+    <item quantity="other">%1$d карти остават в %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
-    <item quantity="other">%1$d decks</item>
+    <item quantity="one">%1$d тесте</item>
+    <item quantity="other">%1$d тестета</item>
   </plurals>
   <string name="widget_small">AnkiDroid малък</string>
 </resources>

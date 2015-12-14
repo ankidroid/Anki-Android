@@ -1,6 +1,6 @@
 AnkiDroid Flashcards
 ar: البطاقات التعليميةآنكيدرويد
-bg: AnkiDroid флашкарти
+bg: AnkiDroid Флашкарти
 ca: AnkiDroid fitxes per memoritzar
 cs: AnkiDroid kartičky
 de: AnkiDroid Karteikarten

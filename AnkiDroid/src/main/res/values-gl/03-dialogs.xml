@@ -50,14 +50,14 @@
     <item quantity="one">Eliminar todos os cartóns de %1$s? Contén %2$d cartón.</item>
     <item quantity="other">Eliminar todos os cartóns de %1$s? Contén %2$d cartóns.</item>
   </plurals>
-  <string name="delete_cram_deck_message">Send all cards in %s back to their original decks?</string>
-  <string name="no_tts_available_message">No text-to-speech language available</string>
+  <string name="delete_cram_deck_message">Enviar todos os cartóns de %s as súas barallas orixinais?</string>
+  <string name="no_tts_available_message">Ningún idioma de síntese de voz dispoñible</string>
   <string name="initializing_tts">Iniciando TTS&#8230;</string>
   <string name="tts_no_tts">Non fales</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
     <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
+    <item><![CDATA[AnkiDroid é <a href=\"%1$s\">software de código aberto<a/>, polo que é animado a <a href=\"%2$s\">colaborar</a> :-)]]></item>
     <item><![CDATA[Os que non son desenvolvedores tamen poden axudar. Por exemplo, poden <a href=\"%1$s\">axudar a traducir</a> o AnkiDroid, actualizar o wiki, fornecer capturas, <a href=\"%2$s\">facer unha doazón</a> a Anki Desktop, ou blogar sobre AnkiDroid.]]></item>
     <item><![CDATA[Ankidroid distribúese baixo <a href=\"%1$s\">licenza GNU-GPL v3</a> e o código fonte está dispoñible <a href=\"%2$s\">no GitHub</a>.]]></item>
   </string-array>
@@ -73,7 +73,7 @@
   <string name="answering_error_report">Informar de erros</string>
   <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
   <string name="intent_add_saved_information">Datos gardados</string>
-  <string name="intent_add_clear_all">Clear all</string>
+  <string name="intent_add_clear_all">Limpar todo</string>
   <string name="intent_aedict_empty">A categoría \'predeterminado\' está baleira</string>
   <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
   <string name="custom_study_new_total_new">Novos cartóns na baralla: %s</string>
@@ -82,14 +82,14 @@
   <string name="custom_study_rev_extend">Aumentar o límite de visións para hoxe en</string>
   <string name="custom_study_forgotten">Revisar os cartóns esquecidos nos últimos x días:</string>
   <string name="custom_study_ahead">Revisar con x días de adianto:</string>
-  <string name="custom_study_random">Select x cards randomly from the deck:</string>
+  <string name="custom_study_random">Seleccionar da baralla x cartóns ao chou:</string>
   <string name="custom_study_preview">Vista previa dos novos cartóns engadidos nos últimos x días:</string>
-  <string name="rebuild_custom_study_deck">Rebuilding custom study deck&#8230;</string>
+  <string name="rebuild_custom_study_deck">Reconstruíndo a baralla de estudo personalizado.\nPor favor, agarda&#8230;</string>
   <string name="import_unpacking">Descomprimindo arquivo&#8230;</string>
   <string name="importing_collection">Importando colección&#8230;</string>
-  <string name="import_media_count">Importing media files %1$d%%&#8230;</string>
+  <string name="import_media_count">Importando ficheiros de medios %1$d%%&#8230;</string>
   <string name="import_update_counts">Updating deck counts&#8230;</string>
-  <string name="import_add_progress">• Unpacking archive %1$s\n• Import of notes %2$d%%\n• Import of cards %3$d%%\n• Cleanup %4$s</string>
+  <string name="import_add_progress">• Descomprimindo o arquivo %1$s\n• Importación de notas %2$d%%\n• Importación de cartóns %3$d%%\n• Limpeza %4$s</string>
   <string name="sd_card_full_title">Cartón SD cheo</string>
   <string name="sd_card_almost_full_title">Cartón SD case cheo</string>
   <string name="restore_backup_title">Restaurar copia?</string>

@@ -44,11 +44,11 @@
   <string name="statistics_young_and_learn">Young and learn</string>
   <string name="statistics_unlearned">Unseen</string>
   <string name="statistics_suspended">Suspended</string>
-  <string name="statistics_relearn">Relearn</string>
-  <string name="statistics_learn">Learn</string>
-  <string name="statistics_cram">Cram</string>
-  <string name="stats_cards">Cards</string>
-  <string name="stats_cards_intervals">Cards with given interval</string>
+  <string name="statistics_relearn">Преговор</string>
+  <string name="statistics_learn">Учене</string>
+  <string name="statistics_cram">Зубрене</string>
+  <string name="stats_cards">Карти</string>
+  <string name="stats_cards_intervals">Карти с даден интервал</string>
   <string name="stats_cumulative_cards">Cumulative cards</string>
   <string name="stats_cumulative_answers">Cumulative answers</string>
   <string name="stats_cumulative_time_minutes">Cumulative minutes</string>
@@ -56,19 +56,19 @@
   <string name="stats_cumulative">Cumulative</string>
   <string name="stats_cumulative_percentage">Cumulative percentage</string>
   <string formatted="false" name="stats_cumulative_correct_percentage">Cumulative correct %</string>
-  <string name="stats_answers">Answers</string>
-  <string name="stats_minutes">Minutes</string>
-  <string name="stats_hours">Hours</string>
-  <string name="stats_percentage">Percentage</string>
-  <string name="stats_period_month">1 month</string>
-  <string name="stats_period_year">1 year</string>
+  <string name="stats_answers">Отговори</string>
+  <string name="stats_minutes">Минути</string>
+  <string name="stats_hours">Часове</string>
+  <string name="stats_percentage">Процент</string>
+  <string name="stats_period_month">1 месец</string>
+  <string name="stats_period_year">1 година</string>
   <string name="stats_period_lifetime">deck life</string>
-  <string name="stats_deck_collection">collection</string>
-  <string name="stats_time_of_day">Time of day</string>
-  <string name="stats_day_of_week">Day of week</string>
-  <string formatted="false" name="stats_percentage_correct">% correct</string>
-  <string name="stats_reviews">Reviews</string>
-  <string name="stats_answer_type">Answer type</string>
+  <string name="stats_deck_collection">колекция</string>
+  <string name="stats_time_of_day">Време от деня</string>
+  <string name="stats_day_of_week">Ден от седмицата</string>
+  <string formatted="false" name="stats_percentage_correct">% верни</string>
+  <string name="stats_reviews">Разглеждания</string>
+  <string name="stats_answer_type">Тип отговор</string>
   <string name="stats_today_again_count">Again count: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correct)</string>
   <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, review: &lt;b&gt;%2$s&lt;/b&gt;, relearn: &lt;b&gt;%3$s&lt;/b&gt;, filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
@@ -77,34 +77,34 @@
   <string name="deck_summary_all_decks">Всички колоди</string>
   <string name="stats_select_time_scale">Select timescale</string>
   <string-array name="due_x_axis_title">
-    <item>Days</item>
-    <item>Weeks</item>
-    <item>Months</item>
+    <item>Дни</item>
+    <item>Седмици</item>
+    <item>Месеци</item>
   </string-array>
-  <string name="stats_today">Today</string>
-  <string name="stats_forecast">Forecast</string>
+  <string name="stats_today">Днес</string>
+  <string name="stats_forecast">Прогноза</string>
   <string name="stats_review_count">Review count</string>
   <string name="stats_review_time">Review time</string>
-  <string name="stats_review_intervals">Intervals</string>
-  <string name="stats_breakdown">Hourly breakdown</string>
-  <string name="stats_weekly_breakdown">Weekly breakdown</string>
-  <string name="stats_answer_buttons">Answer buttons</string>
-  <string name="stats_cards_types">Card types</string>
+  <string name="stats_review_intervals">Интервали</string>
+  <string name="stats_breakdown">Почасова разбивка</string>
+  <string name="stats_weekly_breakdown">Седмична разбивка</string>
+  <string name="stats_answer_buttons">Бутони за отговор</string>
+  <string name="stats_cards_types">Тип на картата</string>
   <string-array name="stats_day_time_strings">
-    <item>4AM</item>
-    <item>10AM</item>
-    <item>4PM</item>
-    <item>10PM</item>
-    <item>3AM</item>
+    <item>4:00</item>
+    <item>10:00</item>
+    <item>16:00</item>
+    <item>20:00</item>
+    <item>3:00</item>
   </string-array>
   <string-array name="stats_week_days">
-    <item>Sun</item>
-    <item>Mon</item>
-    <item>Tue</item>
-    <item>Wed</item>
-    <item>Thu</item>
-    <item>Fri</item>
-    <item>Sat</item>
+    <item>Нд</item>
+    <item>Пн</item>
+    <item>Вт</item>
+    <item>Ср</item>
+    <item>Чт</item>
+    <item>Пт</item>
+    <item>Сб</item>
   </string-array>
   <string-array name="stats_eases_ticks">
     <item>1</item>
