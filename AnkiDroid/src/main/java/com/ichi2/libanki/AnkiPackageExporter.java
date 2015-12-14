@@ -241,6 +241,11 @@ class AnkiExporter extends Exporter {
      * @throws JSONException
      */
     private boolean _modelHasMedia(JSONObject model, String fname) throws JSONException {
+        // Don't crash if the model is null
+        if (model == null) {
+            Timber.w("_modelHasMedia given null model");
+            return true;
+        }
         // First check the styling
         if (model.getString("css").contains(fname)) {
             return true;
