@@ -1738,12 +1738,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Sched.DeckDueTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
         int[] studyOptionsCounts = getCol().getSched().counts();
         // Figure out what action to take
-        if (mFragmented || dontSkipStudyOptions) {
-            // Go to StudyOptions screen when using filtered decks so that it's clearer to the user that it's different
-            openStudyOptions(false);
-        } else if (deckDueTreeNode.newCount + deckDueTreeNode.lrnCount + deckDueTreeNode.revCount > 0) {
-            // If normal deck and there are cards to study then jump straight to the reviewer
-            openReviewer();
+        if (deckDueTreeNode.newCount + deckDueTreeNode.lrnCount + deckDueTreeNode.revCount > 0) {
+            // If there are cards to study then either go to Reviewer or StudyOptions
+            if (mFragmented || dontSkipStudyOptions) {
+                // Go to StudyOptions screen when tablet or deck counts area was clicked
+                openStudyOptions(false);
+            } else {
+                // Otherwise jump straight to the reviewer
+                openReviewer();
+            }
         } else if (studyOptionsCounts[0] + studyOptionsCounts[1] + studyOptionsCounts[2] > 0) {
             // If there are cards due that can't be studied yet (due to the learn ahead limit) then go to study options
             openStudyOptions(false);
