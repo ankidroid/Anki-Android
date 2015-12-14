@@ -18,7 +18,7 @@ nl: AnkiDroid flitskaarten
 pl: AnkiDroid - Fiszki
 ru: AnkiDroid флэш-карты
 sk: AnkiDroid kartičky
-sl: AnkiDroid pomnilne kartice
+sl: Pomnilne kartice AnkiDroid 
 sr: AnkiDroid флеш-картице
 sv-SE: AnkiDroid Flashkort
 th: บัตรคำ AnkiDroid
