@@ -126,7 +126,7 @@
   <string name="check_media">Media controleren</string>
   <string name="empty_cards">Lege kaarten zoeken</string>
   <string name="check_db_message">De databank wordt gecontroleerd.\nEven geduld alstublieft...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Lege kaart. Kies “Gereedschap&gt;Lege kaarten...” op de desktop client.</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Type antwoord: onbekend veld %s</string>
   <string name="delete_deck">Leerset verwijderen...\nEven wachten.</string>
   <string name="show_hint">Toon %s</string>

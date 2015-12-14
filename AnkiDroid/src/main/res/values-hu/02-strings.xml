@@ -126,7 +126,7 @@
   <string name="check_media">Média ellenőrzése</string>
   <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Adatbázis ellenőrzése.\nKérlek, várj...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Üres kártya. Futtasd az \"eszközök &gt; üres kártyák...\"-at az asztalon.</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Válaszadás: ismeretlen mező: %s</string>
   <string name="delete_deck">Pakli törlése...\nKérlek, várj...</string>
   <string name="show_hint">Mutass %s</string>

@@ -126,7 +126,7 @@
   <string name="check_media">Tarkista media</string>
   <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Tarkistetaan tietokantaa&#8230;</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tyhjä kortti. Aja \"Työkalut&gt;Tyhjät kortit\" työpöytäsovelluksessa.</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Kirjoita vastaus: tuntematon kenttä %s</string>
   <string name="delete_deck">Poistetaan pakkaa&#8230;</string>
   <string name="show_hint">Näytä %s</string>

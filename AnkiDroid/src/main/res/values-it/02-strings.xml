@@ -126,7 +126,7 @@
   <string name="check_media">Controlla file multimediali</string>
   <string name="empty_cards">Carte vuote</string>
   <string name="check_db_message">Controllo database.\nAttendi...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Carta vuota. Esegui \"Strumenti&gt;Carte vuote...\" con la versione desktop.</string>
+  <string name="empty_card_warning">Questa carta è vuota. Utilizza l\'opzione \"Carte vuote\" dal menu sulla schermata di elenco dei mazzi.</string>
   <string name="unknown_type_field_warning">Digita la risposta: campo sconosciuto %s</string>
   <string name="delete_deck">Eliminazione mazzo...\nAttendi.</string>
   <string name="show_hint">Mostra %s</string>

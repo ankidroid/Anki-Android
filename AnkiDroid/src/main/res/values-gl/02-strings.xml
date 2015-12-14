@@ -126,7 +126,7 @@
   <string name="check_media">Verificar multimedia</string>
   <string name="empty_cards">Cartóns baleiros</string>
   <string name="check_db_message">Verificando banco de datos.\nAgarda, por favor...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Cartón baleiro. Executa “Ferramentas&gt;Cartóns baleiros...” no cliente de escritorio.</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Escribe a resposta: campo descoñecido %s</string>
   <string name="delete_deck">Eliminando a baralla&#8230;</string>
   <string name="show_hint">Amosar %s</string>

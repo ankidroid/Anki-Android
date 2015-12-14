@@ -129,7 +129,7 @@
   <string name="check_media">Проверить медиа</string>
   <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Идет проверка базы данных&#8230;</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Пустая карта. Запустите «Инструменты&gt;Пустые карты...» на настольном клиенте.</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Тип ответа: неизвестное поле %s</string>
   <string name="delete_deck">Удаление колоды&#8230;</string>
   <string name="show_hint">Показать %s</string>

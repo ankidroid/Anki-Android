@@ -129,7 +129,7 @@
   <string name="check_media">Check media</string>
   <string name="empty_cards">Empty cards</string>
   <string name="check_db_message">Перевірка бази даних.\n Будь ласка, зачекайте...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Порожня картка. Запустіть \"Інструменти &gt; порожні карти...\" на стільничному клієнті.</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Введіть відповідь: невідоме поле %s</string>
   <string name="delete_deck">Видалення колоди...\n Будь ласка, зачекайте.</string>
   <string name="show_hint">Show %s</string>

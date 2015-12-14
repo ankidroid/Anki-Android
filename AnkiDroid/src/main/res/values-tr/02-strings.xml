@@ -126,7 +126,7 @@
   <string name="check_media">Medyayı kontrol et</string>
   <string name="empty_cards">Boş kartlar</string>
   <string name="check_db_message">Veritabanı denetleniyor.\nLütfen bekleyin...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Boş kart. Masaüstü istemcisinde \"Araçlar&gt;Boş Kartlar...\"ı kullanın.</string>
+  <string name="empty_card_warning">Bu kart boş. Deste listesi ekranındaki menüden \"Boş kartlar\" seçeneğini kullanın.</string>
   <string name="unknown_type_field_warning">Yanıtı yazın: bilinmeyen alan %s</string>
   <string name="delete_deck">Deste siliniyor...\nLütfen bekleyin.</string>
   <string name="show_hint">%s göster</string>
@@ -191,6 +191,6 @@
   </plurals>
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">Bu deste zaten var.</string>
-  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
+  <string name="decks_rename_filtered_nosubdecks">Filtreli destenin alt destesi olmaz</string>
   <string name="filtered_deck_name">Filtreli Deste</string>
 </resources>

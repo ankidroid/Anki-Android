@@ -126,7 +126,7 @@
   <string name="check_media">Medien überprüfen</string>
   <string name="empty_cards">Leere Karten</string>
   <string name="check_db_message">Prüfe Datenbank&#8230;</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Leere Karte. Führen Sie »Werkzeuge&gt;Leere Karten...« mit dem Desktop-Programm aus.</string>
+  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Antworteingabe: Unbekanntes Feld %s</string>
   <string name="delete_deck">Lösche Stapel&#8230;</string>
   <string name="show_hint">%s anzeigen</string>
