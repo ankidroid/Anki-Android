@@ -781,18 +781,28 @@ public class DeckPicker extends NavigationDrawerActivity implements
     protected void onCollectionLoaded(Collection col) {
         // keep reference to collection in parent
         super.onCollectionLoaded(col);
+        onFinishedStartup();
+        // prepare deck counts and mini-today-statistic
+        updateDeckList();
+    }
+
+
+    /**
+     * Do any work needed after DeckPicker starts. This method assumes that the collection has
+     * finished loading and is open.
+     */
+    private void onFinishedStartup() {
         // Since the deck list won't show until we get the deck counts, we show the progress bar again
         showProgressBar();
+
         // create backup in background if needed
-        Boolean started = BackupManager.performBackupInBackground(col.getPath());
-        if (started) {
-            // Themes.showThemedToast(this, getResources().getString(R.string.backup_collection), true);
-        }
+        BackupManager.performBackupInBackground(getCol().getPath());
+
         // Force a full sync if flag was set in upgrade path, asking the user to confirm if necessary
         if (mRecommendFullSync) {
             mRecommendFullSync = false;
             try {
-                col.modSchema();
+                getCol().modSchema();
             } catch (ConfirmModSchemaException e) {
                 // If libanki determines it's necessary to confirm the full sync then show a confirmation dialog
                 // We have to show the dialog via the DialogHandler since this method is called via a Loader
@@ -806,8 +816,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 getDialogHandler().sendMessage(handlerMessage);
             }
         }
-        // prepare deck counts and mini-today-statistic
-        updateDeckList();
         // Open StudyOptionsFragment if in fragmented mode
         if (mFragmented) {
             // Create the fragment in a new handler since Android won't let you perform fragment
@@ -820,7 +828,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
         automaticSync();
     }
-
 
     @Override
     protected void onCollectionLoadError() {
@@ -936,7 +943,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         } else {
             // This is the main call when there is nothing special required
-            startLoadingCollection();
+            if (!colIsOpen()) {
+                startLoadingCollection();
+            } else {
+                onFinishedStartup();
+            }
         }
     }
 
@@ -1831,8 +1842,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     }
                 } catch (RuntimeException e) {
                     Timber.e(e, "RuntimeException setting time remaining");
-                    onCollectionLoadError();
-                    return;
                 }
 
                 long current = getCol().getDecks().current().optLong("id");
@@ -1840,8 +1849,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     scrollDecklistToDeck(current);
                     mFocusedDeck = current;
                 }
-                // update options menu and clear welcome screen
-                supportInvalidateOptionsMenu();
+
                 // Update the mini statistics bar as well
                 AnkiStatsTaskHandler.createSmallTodayOverview(getCol(), mTodayTextView);
             }
