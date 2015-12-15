@@ -458,6 +458,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 case "reportErrorMode": {
                     String value = prefs.getString("reportErrorMode", "");
                     AnkiDroidApp.getInstance().setAcraReportingMode(value);
+                    AnkiDroidApp.getSharedPrefs(this).edit().remove("sentExceptionReports").apply();    // clear cache
                     break;
                 }
                 case "syncAccount": {
