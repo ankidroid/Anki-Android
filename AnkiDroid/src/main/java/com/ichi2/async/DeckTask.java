@@ -225,7 +225,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         mContext = AnkiDroidApp.getInstance().getApplicationContext();
 
         // Skip the task if the collection cannot be opened
-        if (mType != TASK_TYPE_REPAIR_DECK && CollectionHelper.getInstance().getCol(mContext) == null) {
+        if (mType != TASK_TYPE_REPAIR_DECK && CollectionHelper.getInstance().getColSafe(mContext) == null) {
             Timber.e("Aborting DeckTask %d as Collection could not be opened", mType);
             return null;
         }
