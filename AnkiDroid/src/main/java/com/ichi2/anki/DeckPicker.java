@@ -36,7 +36,6 @@ import android.database.SQLException;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -104,8 +103,7 @@ import java.util.TreeMap;
 import timber.log.Timber;
 
 public class DeckPicker extends NavigationDrawerActivity implements
-        StudyOptionsListener, DatabaseErrorDialog.DatabaseErrorDialogListener,
-        SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
+        StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
         MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener,
         ActivityCompat.OnRequestPermissionsResultCallback, CustomStudyDialog.CustomStudyListener {
 
@@ -451,16 +449,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
      */
     private boolean firstCollectionOpen() {
         if (CollectionHelper.hasStorageAccessPermission(this)) {
-            // Try to open the collection
-            Collection col = null;
-            try {
-                col = getCol();
-            } catch (RuntimeException e) {
-                Timber.e(e, "RuntimeException opening collection");
-                AnkiDroidApp.sendExceptionReport(e, "DeckPicker.firstCollectionOpen");
-            }
             // Show error dialog if collection could not be opened
-            if (col == null) {
+            if (CollectionHelper.getInstance().getColSafe(this) == null) {
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
                 return false;
             }
@@ -523,8 +513,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        // Null check to prevent crash on API23 when we don't have required permission to access db
-        if (getCol() == null) {
+        // Null check to prevent crash when col inaccessible
+        if (CollectionHelper.getInstance().getColSafe(this) == null) {
             return false;
         }
         // Show / hide undo
@@ -899,6 +889,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             }
             preferences.edit().putInt("lastUpgradeVersion", current).commit();
+            preferences.edit().remove("sentExceptionReports").commit();     // clear cache of sent exception reports
             // Delete the media database made by any version before 2.3 beta due to upgrade errors.
             // It is rebuilt on the next sync or media check
             if (previous < 20300200) {
@@ -1020,7 +1011,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     // Show dialogs to deal with database loading issues etc
-    @Override
     public void showDatabaseErrorDialog(int id) {
         AsyncDialogFragment newFragment = DatabaseErrorDialog.newInstance(id);
         showAsyncDialogFragment(newFragment);
@@ -1100,14 +1090,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     // Callback method to submit error report
-    @Override
     public void sendErrorReport() {
         AnkiDroidApp.sendExceptionReport(new RuntimeException(), "DeckPicker.sendErrorReport");
     }
 
 
     // Callback method to handle repairing deck
-    @Override
     public void repairDeck() {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, new DeckTask.TaskListener() {
 
@@ -1143,7 +1131,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     // Callback method to handle database integrity check
-    @Override
     public void integrityCheck() {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHECK_DATABASE, new DeckTask.TaskListener() {
             @Override
@@ -1234,7 +1221,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    @Override
     public void exit() {
         CollectionHelper.getInstance().closeCollection(false);
         finishWithoutAnimation();
@@ -1247,14 +1233,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    @Override
     public void restoreFromBackup(String path) {
         importReplace(path);
     }
 
 
     // Helper function to check if there are any saved stacktraces
-    @Override
     public boolean hasErrorFiles() {
         for (String file : this.fileList()) {
             if (file.endsWith(".stacktrace")) {

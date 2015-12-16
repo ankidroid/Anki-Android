@@ -530,7 +530,7 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
 
     // Restart the activity
     @SuppressLint("NewApi")
-    protected void restartActivity() {
+    public void restartActivity() {
         Timber.i("AnkiActivity -- restartActivity()");
         Intent intent = new Intent();
         intent.setClass(this, this.getClass());
