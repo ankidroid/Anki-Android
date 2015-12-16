@@ -153,7 +153,7 @@
   <string name="export_unsuccessful">Exporteren verzameling mislukt</string>
   <string name="import_hint">Om kaarten te importeren, plaats het apkg-bestand in map %s en klik ok</string>
   <string name="upgrade_import_no_file_found">Geen %1$s bestand gevonden om te importeren</string>
-  <string name="study_options">Set opties</string>
+  <string name="study_options">Leerset opties</string>
   <string name="custom_study">Aangepast studeren</string>
   <string name="more_options">Meer</string>
   <string name="dyn_deck_desc">Dit is een speciale set bedoeld om buiten het normale schema te studeren. Kaarten keren onmiddellijk terug naar hun oorspronkelijke set nadat u hen herhaald heeft. Als u deze set verwijdert, keren alle overgebleven kaarten onmiddellijk terug naar hun oorspronkelijke set.</string>
