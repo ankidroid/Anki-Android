@@ -843,9 +843,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // create inherited navigation drawer layout here so that it can be used by parent class
         setContentView(R.layout.flashcard);
         View mainView = findViewById(android.R.id.content);
-        initNavigationDrawer(mainView, mPrefFullscreenReview);
-        // Ensure software keyboard resizes the screen when used in typing fields
-        allowResizeForSoftKeyboard();
+        initNavigationDrawer(mainView);
         // Load the collection
         startLoadingCollection();
     }

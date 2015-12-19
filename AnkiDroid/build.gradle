@@ -50,10 +50,6 @@ dependencies {
         //exclude group: 'com.android.support'  // uncomment to force our local support lib version
         transitive = true
     }
-    compile('com.mikepenz:materialdrawer:4.4.9@aar') {
-        //exclude group: 'com.android.support' // uncomment to force our local support lib version
-        transitive = true
-    }
     compile 'com.getbase:floatingactionbutton:1.10.1'
     compile 'ch.acra:acra:4.6.2'
     compile 'com.jakewharton.timber:timber:2.7.1'

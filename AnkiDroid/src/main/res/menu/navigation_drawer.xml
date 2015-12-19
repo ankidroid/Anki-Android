@@ -1,0 +1,37 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:id="@+id/group1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_decks"
+            android:icon="@drawable/ic_list_black_24dp"
+            android:title="@string/decks" />
+        <item
+            android:id="@+id/nav_browser"
+            android:icon="@drawable/ic_search_black_24dp"
+            android:title="@string/card_browser"/>
+        <item
+            android:id="@+id/nav_stats"
+            android:icon="@drawable/ic_equalizer_black_24dp"
+            android:title="@string/statistics"/>
+    </group>
+    <group  android:id="@+id/group2">
+        <item
+            android:id="@+id/nav_night_mode"
+            android:icon="@drawable/ic_brightness_3_black_24dp"
+            app:actionLayout="@layout/night_mode_switch"
+            android:title="@string/night_mode"/>
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/settings"/>
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/ic_help_black_24dp"
+            android:title="@string/help"/>
+        <item
+            android:id="@+id/nav_feedback"
+            android:icon="@drawable/ic_feedback_black_24dp"
+            android:title="@string/send_feedback"/>
+    </group>
+</menu>

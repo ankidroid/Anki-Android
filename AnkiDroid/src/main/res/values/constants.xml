@@ -164,4 +164,14 @@
         <item>@string/full_screen_complete</item>
     </string-array>
 
+    <string-array name="navigation_titles">
+        <item>@string/decks</item>
+        <item>@string/card_browser</item>
+        <item>@string/statistics</item>
+        <item>@string/settings</item>
+        <item>@string/night_mode</item>
+        <item>@string/help</item>
+        <item>@string/send_feedback</item>
+    </string-array>
+
 </resources>

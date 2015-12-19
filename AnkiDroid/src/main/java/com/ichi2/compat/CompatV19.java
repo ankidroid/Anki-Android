@@ -31,15 +31,6 @@ public class CompatV19 extends CompatV16 implements Compat {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_LOW_PROFILE
                         | View.SYSTEM_UI_FLAG_IMMERSIVE);
-
-        // Hack required by MaterialDrawer library to get the Toolbar to display correctly in fullscreen mode
-        Resources res = a.getResources();
-        a.findViewById(R.id.main_layout).setFitsSystemWindows(true);
-        int topMargin = (int) res.getDimension(R.dimen.tool_bar_top_padding);
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)a.findViewById(R.id.toolbar).getLayoutParams();
-        lp.setMargins(0, topMargin, 0, 0);
-        a.findViewById(R.id.toolbar).setLayoutParams(lp);
-
         // Show / hide the Action bar together with the status bar
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(a);
         final int fullscreenMode = Integer.parseInt(prefs.getString("fullscreenMode", "0"));
@@ -52,12 +43,14 @@ public class CompatV19 extends CompatV16 implements Compat {
                         final LinearLayout answerButtons = (LinearLayout) a.findViewById(
                                 R.id.answer_options_layout);
                         final RelativeLayout topbar = (RelativeLayout) a.findViewById(R.id.top_bar);
+                        //final DrawerLayout drawerLayout = (DrawerLayout) a.findViewById(R.id.drawer_layout);
                         if (toolbar == null || topbar == null || answerButtons == null) {
                             return;
                         }
                         // Note that system bars will only be "visible" if none of the
                         // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
                         boolean visible = (flags & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
+                        //drawerLayout.setFitsSystemWindows(visible);
                         if (visible) {
                             toolbar.setAlpha(0.0f);
                             toolbar.setVisibility(View.VISIBLE);

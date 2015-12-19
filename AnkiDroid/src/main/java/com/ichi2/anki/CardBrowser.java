@@ -598,7 +598,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     protected void onResume() {
         Timber.d("onResume()");
         super.onResume();
-        selectNavigationItem(DRAWER_BROWSER);
+        selectNavigationItem(R.id.nav_browser);
     }
 
 
@@ -656,6 +656,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (getDrawerToggle().onOptionsItemSelected(item)) {
+            return true;
+        }
         switch (item.getItemId()) {
 
             case R.id.action_add_card_from_card_browser:

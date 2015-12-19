@@ -69,6 +69,9 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (getDrawerToggle().onOptionsItemSelected(item)) {
+            return true;
+        }
         switch (item.getItemId()) {
 
             case android.R.id.home:

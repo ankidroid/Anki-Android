@@ -52,16 +52,6 @@
         <item name="dialogErrorIcon">@drawable/ic_warning_black_36dp</item>
         <item name="dialogSyncErrorIcon">@drawable/ic_sync_problem_black_36dp</item>
         <item name="dialogSendIcon">@drawable/ic_send_black_36dp</item>
-        <!-- Navigation drawer colors -->
-        <item name="material_drawer_background">@color/material_drawer_background</item>
-        <item name="material_drawer_primary_text">@color/material_drawer_primary_text</item>
-        <item name="material_drawer_primary_icon">@color/material_drawer_primary_icon</item>
-        <item name="material_drawer_secondary_text">@color/material_drawer_secondary_text</item>
-        <item name="material_drawer_hint_text">@color/material_drawer_hint_text</item>
-        <item name="material_drawer_divider">@color/material_drawer_divider</item>
-        <item name="material_drawer_selected">@color/material_drawer_selected</item>
-        <item name="material_drawer_selected_text">@color/material_drawer_selected_text</item>
-        <item name="material_drawer_header_selection_text">@color/material_drawer_header_selection_text</item>
     </style>
 
     <style name="Theme_White_Statistics" parent="App_Theme_White">
@@ -69,7 +59,7 @@
     </style>
 
     <!-- Theme for showing legacy ActionBar without explicitly including a toolbar -->
-    <style name="LegacyActionBarWhite" parent="App_Theme_White">
+    <style name="LegacyActionBarWhite" parent="Theme_White">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
     </style>

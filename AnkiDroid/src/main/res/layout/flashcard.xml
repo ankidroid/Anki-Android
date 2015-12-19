@@ -19,260 +19,267 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<android.support.design.widget.CoordinatorLayout
-    android:id="@+id/root_layout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:focusableInTouchMode="true"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/main_layout"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground"
+    android:fitsSystemWindows="true">
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/root_layout"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-
-        <include layout="@layout/toolbar" />
-
-        <!-- Top bar -->
-
+        android:layout_height="fill_parent"
+        android:focusableInTouchMode="true">
         <RelativeLayout
-            android:id="@+id/top_bar"
+            android:id="@+id/main_layout"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="9dp"
-            android:paddingRight="10dp"
-            android:paddingTop="2dp"
-            android:paddingBottom="3dp"
-            android:gravity="center_vertical"
-            android:background="?attr/topBarColor"
-            android:layout_below="@+id/toolbar">
+            android:layout_height="fill_parent">
 
-            <TextView
-                android:id="@+id/new_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="?attr/newCountColor"
-                android:textSize="14sp" />
+            <include layout="@layout/toolbar" />
 
-            <TextView
-                android:id="@+id/learn_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/new_number"
-                android:paddingLeft="8dp"
-                android:text=""
-                android:textColor="?attr/learnCountColor"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/review_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/learn_number"
-                android:paddingLeft="8dp"
-                android:text=""
-                android:textColor="?attr/reviewCountColor"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/choosen_answer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:text=""
-                android:textSize="14sp" />
-
-            <Chronometer
-                android:id="@+id/card_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:gravity="center"
-                android:textSize="14sp"
-                android:visibility="invisible" />
-        </RelativeLayout>
-        <!-- Card and whiteboard -->
-
-        <FrameLayout
-            android:id="@+id/flashcard_frame"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_above="@+id/bottom_area_layout"
-            android:layout_below="@+id/top_bar"
-            android:layout_margin="0dip" >
-
-            <FrameLayout
-                android:id="@+id/flashcard"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
+            <!-- Top bar -->
 
             <RelativeLayout
+                android:id="@+id/top_bar"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
+                android:layout_height="wrap_content"
+                android:paddingLeft="9dp"
+                android:paddingRight="10dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="3dp"
+                android:gravity="center_vertical"
+                android:background="?attr/topBarColor"
+                android:layout_below="@+id/toolbar">
 
-                <FrameLayout
-                    android:id="@+id/touch_layer"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginBottom="20dip"
-                    android:layout_marginTop="20dip"
-                    android:longClickable="true" />
+                <TextView
+                    android:id="@+id/new_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="?attr/newCountColor"
+                    android:textSize="14sp" />
 
-                <ProgressBar
-                    android:id="@+id/flashcard_progressbar"
-                    style="@android:style/Widget.ProgressBar.Small"
+                <TextView
+                    android:id="@+id/learn_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/new_number"
+                    android:paddingLeft="8dp"
+                    android:text=""
+                    android:textColor="?attr/learnCountColor"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/review_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/learn_number"
+                    android:paddingLeft="8dp"
+                    android:text=""
+                    android:textColor="?attr/reviewCountColor"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/choosen_answer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text=""
+                    android:textSize="14sp" />
+
+                <Chronometer
+                    android:id="@+id/card_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_margin="9.3333dip"
-                    android:clickable="false"
-                    android:focusable="false"
-                    android:indeterminate="true"
+                    android:gravity="center"
+                    android:textSize="14sp"
                     android:visibility="invisible" />
             </RelativeLayout>
+            <!-- Card and whiteboard -->
 
             <FrameLayout
-                android:id="@+id/whiteboard"
+                android:id="@+id/flashcard_frame"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
+                android:layout_height="fill_parent"
+                android:layout_above="@+id/bottom_area_layout"
+                android:layout_below="@+id/top_bar"
+                android:layout_margin="0dip" >
 
-            <ImageView
-                android:id="@+id/lookup_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:clickable="true"
-                android:padding="5dip"
-                android:src="@drawable/ic_lookup"
-                android:visibility="gone"
-                android:contentDescription="@string/lookup_button_content" />
-        </FrameLayout>
-
-        <LinearLayout
-            android:id="@+id/bottom_area_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical" >
-
-            <!-- Answer bar -->
-
-            <EditText
-                android:id="@+id/answer_field"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/type_answer_hint"
-                android:imeOptions="actionDone"
-                android:inputType="text|textNoSuggestions" />
-            <!--
-                 Looks like setting android:imeActionLabel confuses the
-                 original AOSP soft keyboard, so don't.
-            -->
-
-            <LinearLayout
-                android:id="@+id/answer_options_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-                <LinearLayout
-                    android:id="@+id/flashcard_layout_flip"
+                <FrameLayout
+                    android:id="@+id/flashcard"
                     android:layout_width="fill_parent"
-                    android:layout_height="@dimen/touch_target"
-                    android:layout_weight="1"
-                    android:orientation="vertical" >
+                    android:layout_height="fill_parent" />
 
-                    <Button
-                        style="@style/FooterButtonLayout"
-                        android:background="?attr/hardButtonRef"
-                        android:id="@+id/flip_card"
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <FrameLayout
+                        android:id="@+id/touch_layer"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:layout_marginBottom="20dip"
+                        android:layout_marginTop="20dip"
+                        android:longClickable="true" />
+
+                    <ProgressBar
+                        android:id="@+id/flashcard_progressbar"
+                        style="@android:style/Widget.ProgressBar.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="9.3333dip"
                         android:clickable="false"
-                        android:text="@string/show_answer" />
-                </LinearLayout>
+                        android:focusable="false"
+                        android:indeterminate="true"
+                        android:visibility="invisible" />
+                </RelativeLayout>
+
+                <FrameLayout
+                    android:id="@+id/whiteboard"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+
+                <ImageView
+                    android:id="@+id/lookup_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:clickable="true"
+                    android:padding="5dip"
+                    android:src="@drawable/ic_lookup"
+                    android:visibility="gone"
+                    android:contentDescription="@string/lookup_button_content" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/bottom_area_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical" >
+
+                <!-- Answer bar -->
+
+                <EditText
+                    android:id="@+id/answer_field"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/type_answer_hint"
+                    android:imeOptions="actionDone"
+                    android:inputType="text|textNoSuggestions" />
+                <!--
+                     Looks like setting android:imeActionLabel confuses the
+                     original AOSP soft keyboard, so don't.
+                -->
 
                 <LinearLayout
-                    style="@style/FooterButtonLayout"
-                    android:background="?attr/againButtonRef"
-                    android:id="@+id/flashcard_layout_ease1"
-                    android:layout_width="0dip"
-                    android:layout_height="@dimen/touch_target"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:visibility="gone" >
+                    android:id="@+id/answer_options_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
 
-                    <TextView
-                            android:id="@+id/nextTime1"
-                            style="@style/FooterButtonNextTime" />
+                    <LinearLayout
+                        android:id="@+id/flashcard_layout_flip"
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/touch_target"
+                        android:layout_weight="1"
+                        android:orientation="vertical" >
 
-                    <TextView
-                            android:id="@+id/ease1"
-                            android:text="@string/ease_button_again"
-                            style="@style/FooterButtonEaseText"/>
-                </LinearLayout>
+                        <Button
+                            style="@style/FooterButtonLayout"
+                            android:background="?attr/hardButtonRef"
+                            android:id="@+id/flip_card"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:clickable="false"
+                            android:text="@string/show_answer" />
+                    </LinearLayout>
 
-                <LinearLayout
+                    <LinearLayout
                         style="@style/FooterButtonLayout"
-                        android:background="?attr/hardButtonRef"
-                        android:id="@+id/flashcard_layout_ease2"
+                        android:background="?attr/againButtonRef"
+                        android:id="@+id/flashcard_layout_ease1"
                         android:layout_width="0dip"
                         android:layout_height="@dimen/touch_target"
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:visibility="gone" >
 
-                    <TextView
-                            android:id="@+id/nextTime2"
-                            style="@style/FooterButtonNextTime" />
+                        <TextView
+                                android:id="@+id/nextTime1"
+                                style="@style/FooterButtonNextTime" />
 
-                    <TextView
-                            android:id="@+id/ease2"
-                            android:text="@string/ease_button_hard"
-                            style="@style/FooterButtonEaseText" />
-                </LinearLayout>
+                        <TextView
+                                android:id="@+id/ease1"
+                                android:text="@string/ease_button_again"
+                                style="@style/FooterButtonEaseText"/>
+                    </LinearLayout>
 
-                <LinearLayout
-                        style="@style/FooterButtonLayout"
-                        android:background="?attr/goodButtonRef"
-                        android:id="@+id/flashcard_layout_ease3"
-                        android:layout_width="0dip"
-                        android:layout_height="@dimen/touch_target"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:visibility="gone" >
+                    <LinearLayout
+                            style="@style/FooterButtonLayout"
+                            android:background="?attr/hardButtonRef"
+                            android:id="@+id/flashcard_layout_ease2"
+                            android:layout_width="0dip"
+                            android:layout_height="@dimen/touch_target"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:visibility="gone" >
 
-                    <TextView
-                            android:id="@+id/nextTime3"
-                            style="@style/FooterButtonNextTime" />
+                        <TextView
+                                android:id="@+id/nextTime2"
+                                style="@style/FooterButtonNextTime" />
 
-                    <TextView
-                            android:id="@+id/ease3"
-                            android:text="@string/ease_button_good"
-                            style="@style/FooterButtonEaseText"/>
-                </LinearLayout>
+                        <TextView
+                                android:id="@+id/ease2"
+                                android:text="@string/ease_button_hard"
+                                style="@style/FooterButtonEaseText" />
+                    </LinearLayout>
 
-                <LinearLayout
-                        style="@style/FooterButtonLayout"
-                        android:background="?attr/easyButtonRef"
-                        android:id="@+id/flashcard_layout_ease4"
-                        android:layout_width="0dip"
-                        android:layout_height="@dimen/touch_target"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:visibility="gone" >
+                    <LinearLayout
+                            style="@style/FooterButtonLayout"
+                            android:background="?attr/goodButtonRef"
+                            android:id="@+id/flashcard_layout_ease3"
+                            android:layout_width="0dip"
+                            android:layout_height="@dimen/touch_target"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:visibility="gone" >
 
-                    <TextView
-                            android:id="@+id/nextTime4"
-                            style="@style/FooterButtonNextTime" />
+                        <TextView
+                                android:id="@+id/nextTime3"
+                                style="@style/FooterButtonNextTime" />
 
-                    <TextView
-                            android:id="@+id/ease4"
-                            android:text="@string/ease_button_easy"
-                            style="@style/FooterButtonEaseText" />
+                        <TextView
+                                android:id="@+id/ease3"
+                                android:text="@string/ease_button_good"
+                                style="@style/FooterButtonEaseText"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                            style="@style/FooterButtonLayout"
+                            android:background="?attr/easyButtonRef"
+                            android:id="@+id/flashcard_layout_ease4"
+                            android:layout_width="0dip"
+                            android:layout_height="@dimen/touch_target"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:visibility="gone" >
+
+                        <TextView
+                                android:id="@+id/nextTime4"
+                                style="@style/FooterButtonNextTime" />
+
+                        <TextView
+                                android:id="@+id/ease4"
+                                android:text="@string/ease_button_easy"
+                                style="@style/FooterButtonEaseText" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </RelativeLayout>
-    <include layout="@layout/anki_progress"/>
-</android.support.design.widget.CoordinatorLayout>
+        </RelativeLayout>
+        <include layout="@layout/anki_progress"/>
+    </android.support.design.widget.CoordinatorLayout>
+    <include layout="@layout/navigation_drawer" />
+</android.support.v4.widget.DrawerLayout>
