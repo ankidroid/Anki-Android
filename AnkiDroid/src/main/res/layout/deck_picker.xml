@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root_layout"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="fill_parent">
     <RelativeLayout
         android:id="@+id/deckpicker_view"
         android:layout_width="fill_parent"
@@ -36,4 +35,3 @@
     <include layout="@layout/anki_progress"/>
     <include layout="@layout/floating_add_button"/>
 </android.support.design.widget.CoordinatorLayout>
-

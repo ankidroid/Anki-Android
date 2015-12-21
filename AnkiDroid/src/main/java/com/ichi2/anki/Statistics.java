@@ -169,7 +169,7 @@ public class Statistics extends NavigationDrawerActivity implements
     @Override
     protected void onResume() {
         Timber.d("onResume()");
-        selectNavigationItem(DRAWER_STATISTICS);
+        selectNavigationItem(R.id.nav_stats);
         super.onResume();
     }
 
@@ -211,6 +211,9 @@ public class Statistics extends NavigationDrawerActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (getDrawerToggle().onOptionsItemSelected(item)) {
+            return true;
+        }
         int itemId =item.getItemId();
         switch (itemId) {
             case R.id.item_time_month:

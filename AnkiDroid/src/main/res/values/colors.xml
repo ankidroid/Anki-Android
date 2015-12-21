@@ -167,53 +167,8 @@
 
     <color name="text_color_black">#de000000</color> <!-- 87% black -->
 
-    <!-- navdrawer colors -->
-    <!-- Material DEFAULT colors -->
-    <color name="material_drawer_primary">#2196F3</color>
-    <color name="material_drawer_primary_dark">#1976D2</color>
-    <color name="material_drawer_primary_light">#BBDEFB</color>
-    <color name="material_drawer_accent">#FF4081</color>
-
-    <!-- OVERWRITE THESE COLORS FOR A LIGHT THEME -->
-    <!-- MaterialDrawer DEFAULT colors -->
-    <color name="material_drawer_background">#FFFFFF</color>
-    <!-- Material DEFAULT text / items colors -->
-    <color name="material_drawer_primary_text">#DE000000</color>
-    <color name="material_drawer_primary_icon">#8A000000</color>
-    <color name="material_drawer_secondary_text">#8A000000</color>
-    <color name="material_drawer_hint_text">#42000000</color>
-    <color name="material_drawer_divider">#1F000000</color>
-    <!-- Material DEFAULT drawer colors -->
-    <color name="material_drawer_selected">#E8E8E8</color>
-    <color name="material_drawer_selected_text">#2196F3</color>
-    <color name="material_drawer_header_selection_text">#FFF</color>
-
-    <!-- OVERWRITE THESE COLORS FOR A DARK THEME -->
-    <!-- MaterialDrawer DEFAULT DARK colors -->
-    <color name="material_drawer_dark_background">#303030</color>
-    <!-- MaterialDrawer DEFAULT DARK text / items colors -->
-    <color name="material_drawer_dark_primary_text">#DEFFFFFF</color>
-    <color name="material_drawer_dark_primary_icon">#8AFFFFFF</color>
-    <color name="material_drawer_dark_secondary_text">#8AFFFFFF</color>
-    <color name="material_drawer_dark_hint_text">#42FFFFFF</color>
-    <color name="material_drawer_dark_divider">#1FFFFFFF</color>
-    <!-- MaterialDrawer DEFAULT DARK drawer colors -->
-    <color name="material_drawer_dark_selected">#202020</color>
-    <color name="material_drawer_dark_selected_text">@color/material_drawer_primary</color>
-    <color name="material_drawer_dark_header_selection_text">#FFF</color>
-
-
-
-
-    <color name="navdrawer_text_color">@color/text_color_black</color>
-    <color name="navdrawer_text_color_selected">@color/theme_primary</color>
-    <color name="navdrawer_icon_tint">#8a000000</color> <!-- 54% black -->
-    <color name="navdrawer_icon_tint_selected">@color/theme_primary</color>
-    <color name="navdrawer_background_selected">#33999999</color> <!-- 20% grey (#999999) -->
-    <color name="navdrawer_divider">#e5e5e5</color>
-
     <color name="half_black">#808080</color>
     <color name="white_pressed">#f1f1f1</color>
     <color name="black_semi_transparent">#B2000000</color>
-
+    <color name="material_theme_grey">#303030</color>
 </resources>
