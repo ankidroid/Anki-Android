@@ -37,7 +37,7 @@
   <string name="multimedia_editor_popup_image">Přidat obrázek</string>
   <string name="multimedia_editor_popup_audio">Pořídit zvukový záznam</string>
   <string name="multimedia_editor_popup_text">Pokročilý editor</string>
-  <string name="multimedia_editor_trans_poweredglosbe">Powered by glosbe.com</string>
+  <string name="multimedia_editor_trans_poweredglosbe">Běží na glosbe.com</string>
   <string name="multimedia_editor_trans_from">Od</string>
   <string name="multimedia_editor_trans_to">Do</string>
   <string name="multimedia_editor_trans_translate">Přeložit</string>
@@ -50,12 +50,12 @@
   <string name="multimedia_editor_pron_looking_up">Vyhledávání výslovnosti</string>
   <string name="multimedia_editor_pron_pronunciation_failed">Výslovnost selhala</string>
   <string name="multimedia_editor_word_search_try_lower_case">Zkuste použít pouze malá písmena</string>
-  <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
+  <string name="multimedia_editor_poweredbeolingus">Běží na Beolingus</string>
   <string name="multimedia_editor_imgs_saving_image">Ukládání obrázku</string>
   <string name="multimedia_editor_imgs_loading_image">Načítání obrázku</string>
   <string name="multimedia_editor_imgs_no_results">Hledání nevrátilo žádné výsledky</string>
   <string name="multimedia_editor_imgs_images_found">Obrázky nalezeny</string>
-  <string name="multimedia_editor_imgs_pow_by_google">Powered by Google Image Search</string>
+  <string name="multimedia_editor_imgs_pow_by_google">Běží na Google Image Search</string>
   <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
   <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
   <string name="multimedia_editor_imgs_pick">Vybrat</string>
@@ -83,13 +83,13 @@
   <string name="multimedia_editor_searching_word">Hledání slova</string>
   <string name="multimedia_editor_progress_wait_title">Počkejte</string>
   <string name="multimedia_editor_something_wrong">Něco se pokazilo</string>
-  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the note</string>
-  <string name="multimedia_editor_attach_media">Attach media</string>
+  <string name="multimedia_editor_attach_mm_content">Připojit multimediální obsah k poznámce</string>
+  <string name="multimedia_editor_attach_media">Připojit multimédia</string>
   <string name="multimedia_editor_audio_view_recording_failed">Nahrávání selhalo</string>
   <string name="multimedia_editor_audio_view_playing_failed">Přehrávání selhalo</string>
   <string name="title_activity_edit_text">Editační pole</string>
   <string name="title_activity_translation">Překlad</string>
   <string name="title_activity_load_pronounciation">Výslovnost</string>
-  <string name="title_activity_search_image">Google Image Search</string>
-  <string name="network_no_connection">No connection</string>
+  <string name="title_activity_search_image">Hledání obrázků Google</string>
+  <string name="network_no_connection">Žádné připojení</string>
 </resources>

@@ -45,12 +45,12 @@
   <string name="model_field_editor_title">Редактиране на полета</string>
   <string name="model_field_editor_add">Добавяне на поле</string>
   <string name="model_field_editor_delete">Изтриване на поле</string>
-  <string name="model_field_editor_options">Field options</string>
-  <string name="model_field_editor_rename">Rename field</string>
-  <string name="model_field_editor_reposition_menu">Reposition field</string>
-  <string name="model_field_editor_reposition" formatted="false">Reposition field (enter a value %1$d–%2$d)</string>
+  <string name="model_field_editor_options">Опции за поле</string>
+  <string name="model_field_editor_rename">Преименуване на поле</string>
+  <string name="model_field_editor_reposition_menu">Препозициониране на поле</string>
+  <string name="model_field_editor_reposition" formatted="false">Препозициониране на поле (въведете стойност %1$d-%2$d)</string>
   <string name="model_field_editor_changing">Актуализиране на полетата</string>
-  <string name="model_field_editor_sort_field">Sort by this field</string>
+  <string name="model_field_editor_sort_field">Сортиране по това поле</string>
   <string name="model_clone_suffix">копиране</string>
   <string name="model_delete_warning">Сигурни ли сте, че желаете изтриване на модела?</string>
   <string name="field_delete_warning">Сигурни ли сте, че желаете изтриване на модела?</string>

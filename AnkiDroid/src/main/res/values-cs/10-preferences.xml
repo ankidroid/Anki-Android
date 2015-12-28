@@ -64,8 +64,8 @@
   <string name="whiteboard_black_summ">Využívá méně paměti, pokud je v nočním režimu</string>
   <string name="write_answers_disable">Zakázat psát odpovědi</string>
   <string name="write_answers_disable_summ">Zabránění zobrazení klávesnice na kartách, které obsahují pole pro zapsání odpovědi</string>
-  <string name="use_input_tag">Type answer into the card</string>
-  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
+  <string name="use_input_tag">Napište odpověď do karty</string>
+  <string name="use_input_tag_summ">Odpověď vložte do textového pole na kartě</string>
   <string name="text_selection_click">Řešení dlouhého stisku</string>
   <string name="text_selection_click_summ">Povolte, pokud nejste schopni spustit výběr textu přes dlouhý klik</string>
   <string name="dictionary">Slovník</string>
@@ -73,16 +73,16 @@
   <string name="reset_languages_summ">Obnoví přiřazení jazyka (pro převod textu na řeč a slovníky) ve všech balíčcích. Obnovení pouze konkrétního balíčku lze přímo na balíčku.</string>
   <string name="reset_languages_question">Obnovit všechny přiřazení jazyka?</string>
   <string name="reset_confirmation">Obnovit všechny stavy</string>
-  <string name="card_zoom">Card zoom</string>
-  <string name="image_zoom">Image zoom</string>
+  <string name="card_zoom">Zvětšení karty</string>
+  <string name="image_zoom">Zvětšení obrázku</string>
   <string name="button_size">Velikost tlačítka pro odpověď</string>
   <string name="card_browser_font_size">Velikost písma v prohlížení</string>
-  <string name="col_path">Cesta ke kolekci</string>
+  <string name="col_path">AnkiDroid directory</string>
   <string name="fullscreen_review">Celoobrazovkový režim</string>
-  <string name="full_screen_off">Off</string>
-  <string name="full_screen_system">Hide the system bars</string>
-  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
+  <string name="full_screen_off">Vypnout</string>
+  <string name="full_screen_system">Skrýt panely systému</string>
+  <string name="full_screen_complete">Skrýt panely systému a tlačítka odpovědí</string>
+  <string name="full_screen_error_gestures">Musíte povolit gesta, aby byla tlačítka odpovědí skryta</string>
   <string name="gestures">Povolit gesta</string>
   <string name="gestures_summ">Přiřazení gest jednotlivým akcím.</string>
   <string name="gestures_swipe_up">Tažení nahoru</string>
@@ -106,9 +106,8 @@
   <string name="sync_account">AnkiWeb účet</string>
   <string name="sync_account_summ_logged_out">Nejste přihlášen</string>
   <string name="sync_account_summ_logged_in">%s</string>
-  <string name="automatic_sync_choice">Automatic synchronization</string>
-  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
+  <string name="automatic_sync_choice">Automatická synchronizace</string>
+  <string name="automatic_sync_choice_summ">Automaticky synchronizovat aplikaci při startu a při ukončení pokud od poslední synchronizace uplynulo více než 10 minut.</string>
   <string name="fix_hebrew_text">Oprava pro hebrejské samohlásky</string>
   <string name="fix_hebrew_text_summ">Úprava pro správné vykreslování hebrejských samohlásek </string>
   <string name="fix_hebrew_instructions">Toto nastavení obejde RTL algoritmus Androidu, aby ukázal správně hebrejský text s samohláskami.\n\nAby to fungovalo potřebujete stáhnout font Tohu.ttf a ručně ho zkopírovat do:\n%s/fonts/\n\nNemusíte upravovat vaše karty.</string>
@@ -154,8 +153,8 @@
   <string name="pref_keep_screen_on_summ">Nepovolit zhasnutí displeje</string>
   <string name="convert_fen_text">Podpora šachovnicového zápisu</string>
   <string name="convert_fen_text_summ">Vykreslení šachovnice z Forsyth Edwards Notation. Zápis musí být uzavřen mezi značky [fen][/fen].</string>
-  <string name="enable_api_title">Enable AnkiDroid API</string>
-  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+  <string name="enable_api_title">Povolit AnkiDroid API</string>
+  <string name="enable_api_summary">Umožnit ostatním aplikacím číst a zapisovat data AnkiDroid bez uživatelské intervence</string>
   <string name="studyoptions_limit_select_tags">Výběr štítků</string>
   <string name="deck_conf_deck_description">Popis balíčku</string>
   <string name="deck_conf_group">Skupina nastavení</string>
@@ -176,9 +175,9 @@
   <string name="deck_conf_easy_ivl">Snadný interval</string>
   <string name="deck_conf_start_ease">Počáteční \'snadnost\'</string>
   <string name="deck_conf_max_rev">Maximum opakovaných za den</string>
-  <string name="deck_conf_new_bury">Odložit související nové karty</string>
+  <string name="deck_conf_new_bury">Přeskočit související nové karty</string>
   <string name="deck_conf_new_bury_summ">Související nové karty jsou odloženy na další den</string>
-  <string name="deck_conf_rev_bury">Odložit související opakování</string>
+  <string name="deck_conf_rev_bury">Přeskočit související opakování</string>
   <string name="deck_conf_rev_bury_summ">Související opakování jsou odloženy na další den</string>
   <string name="deck_conf_easy_bonus">Bonus pro snadné</string>
   <string name="deck_conf_ivl_fct">Modifikátor intervalu</string>
@@ -207,9 +206,9 @@
   <string name="deck_conf_remove_message">Odstranit možnosti aktuální skupiny?</string>
   <string name="deck_conf_set_subdecks">Nastavit pro všechny podřízené balíčky</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s subdeck will use this group</item>
+    <item quantity="one">%s podřízený balíček bude používat tuto skupinu</item>
     <item quantity="few">%s subdecks will use this group</item>
-    <item quantity="other">%s subdecks will use this group</item>
+    <item quantity="other">%s podřízené(ých) balíčků bude používat tuto skupinu</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Nastavit pro všechny podřízené balíčky</string>
   <string name="deck_conf_set_subdecks_message">Použít aktuální nastavení pro všechny podbalíčky tohoto balíčku?</string>

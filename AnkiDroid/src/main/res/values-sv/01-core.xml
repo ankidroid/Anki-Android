@@ -45,13 +45,13 @@
   <string name="settings">Inställningar</string>
   <string name="help">Hjälp</string>
   <string name="send_feedback">Skicka feedback</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <string name="studyoptions_title">Leköversikt</string>
   <string name="studyoptions_due_today">Aktuella idag:</string>
   <string name="studyoptions_new_total">Nya kort totalt:</string>
   <string name="studyoptions_total_cards">Totalt antal kort:</string>
   <string name="studyoptions_eta">Uppskattad tid (min):</string>
   <string name="studyoptions_start">Plugga nu</string>
-  <string name="study_more">Study more</string>
+  <string name="study_more">Studera mer</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d kort i kö (%2$s)</item>
     <item quantity="other">%1$d kort i kö (%2$s)</item>
@@ -81,7 +81,7 @@
   <string name="undo_action_delete">ta bort not</string>
   <string name="undo_action_mark">markera not</string>
   <string name="unbury">Sluta dölja</string>
-  <string name="rename_deck">Rename deck</string>
+  <string name="rename_deck">Byt namn på lek</string>
   <string name="menu_add">Lägg till</string>
   <string name="menu_add_note">Lägg till not</string>
   <string name="menu_my_account">Synkronisera konto</string>
@@ -114,8 +114,8 @@
   <string name="empty_cram_deck">Tömmer kortleken för råplugg.\nVar god vänta...</string>
   <string name="custom_study_deck_name">Anpassad studiesession</string>
   <string name="custom_study_deck_exists">Var god döp om den existerande anpassade studiekortleken först.</string>
-  <string name="empty_deck">This deck is empty</string>
-  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="empty_deck">Den här leken är tom</string>
+  <string name="studyoptions_empty">Den här leken är tom. Använd +-knappen för att lägga till nytt innehåll.</string>
   <string name="studyoptions_limit_reached">Daily study limit reached</string>
   <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Grattis! Du är klar för stunden.</string>

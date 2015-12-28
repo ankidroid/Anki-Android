@@ -77,7 +77,7 @@
   <string name="image_zoom">Zoom immagini</string>
   <string name="button_size">Dimensione pulsante di risposta</string>
   <string name="card_browser_font_size">Ridimensionamento carattere nel browser</string>
-  <string name="col_path">Percorso della collezione</string>
+  <string name="col_path">AnkiDroid directory</string>
   <string name="fullscreen_review">Modalità a schermo intero</string>
   <string name="full_screen_off">Disabilitato</string>
   <string name="full_screen_system">Nascondi le barre di sistema</string>

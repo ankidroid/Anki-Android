@@ -44,7 +44,7 @@
   <string name="check_db_acknowledge">Datenbank überprüft</string>
   <string name="check_db_acknowledge_shrunk">Datenbank überprüft und optimiert.\nUm %d kB verkleinert.</string>
   <string name="contextmenu_deckpicker_delete_deck">Stapel löschen</string>
-  <string name="delete_deck_default_deck">Das Standarddeck kann nicht gelöscht werden.</string>
+  <string name="delete_deck_default_deck">Der Standardstapel kann nicht gelöscht werden</string>
   <string name="delete_deck_title">Stapel löschen?</string>
   <plurals name="delete_deck_message">
     <item quantity="one">Alle Karten in %1$s löschen? Er enthält %2$d Karte.</item>

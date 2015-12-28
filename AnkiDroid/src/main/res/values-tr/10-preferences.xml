@@ -77,7 +77,7 @@
   <string name="image_zoom">Görüntü yakınlaştırma</string>
   <string name="button_size">Cevap düğmesi büyüklüğü</string>
   <string name="card_browser_font_size">Kart tarayıcısı font ölçeği</string>
-  <string name="col_path">Koleksiyon yolu</string>
+  <string name="col_path">AnkiDroid directory</string>
   <string name="fullscreen_review">Tamekran modu</string>
   <string name="full_screen_off">Devre Dışı</string>
   <string name="full_screen_system">Sistem çubuklarını gizle</string>

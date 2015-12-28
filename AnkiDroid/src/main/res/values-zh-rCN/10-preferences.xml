@@ -77,7 +77,7 @@
   <string name="image_zoom">图片缩放</string>
   <string name="button_size">显示答案按钮大小</string>
   <string name="card_browser_font_size">卡片浏览器字体缩放</string>
-  <string name="col_path">集合的路径</string>
+  <string name="col_path">AnkiDroid directory</string>
   <string name="fullscreen_review">全屏显示</string>
   <string name="full_screen_off">Off</string>
   <string name="full_screen_system">Hide the system bars</string>

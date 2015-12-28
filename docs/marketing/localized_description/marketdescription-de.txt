@@ -12,7 +12,7 @@ Fügen Sie neues Material mit der Desktop-Applikation oder direkt mit AnkiDroid 
 • Unterstützte Karteikarten-Inhalte: Text, Bilder, Sounds, LaTeX
 • Spaced Repetition (SuperMemo 2 Algorithmus)
 • Text-In-Sprache-Integration
-• Mehr als 6000 vorgefertigte Decks
+• Mehr als 6000 vorgefertigte Stapel
 • Fortschritts-Widget
 • Detaillierte Statistiken
 • Synchronisation mit AnkiWeb

@@ -113,7 +113,7 @@
   <string name="sync_sanity_failed">Po synchronizaci byla kolekce v nekonzistentním stavu. Chcete-li tento problém vyřešit, AnkiDroid vynutí úplnou synchronizaci. Vyberte si, na které straně chcete ponechat kolekci. Zvolte Zrušit, pokud chcete synchronizovat později.</string>
   <string name="sync_media_sanity_failed">Synchronizace multimédií dokončena, ale počet multimédií nesouhlasí se serverem. Další synchronizace multimédií bude úplná pro opravu případné chyby.</string>
   <string name="sync_media_error">Chyba synchronizace multimediálních dat.</string>
-  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
+  <string name="sync_media_error_check">Chyba během synchronizace souborů médií. Doporučujeme provést kontrolu médií.</string>
   <string name="sync_sanity_local">Místní</string>
   <string name="sync_sanity_remote">Vzdálený</string>
   <string name="force_full_sync_title">Vynutit úplnou synchronizaci</string>

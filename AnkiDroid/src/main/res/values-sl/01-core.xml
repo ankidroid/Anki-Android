@@ -53,16 +53,16 @@
   <string name="studyoptions_start">Preuči</string>
   <string name="study_more">Preuči več</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">Zapadla %1$d kartica (%2$s)</item>
-    <item quantity="two">Zapadli %1$d kartici (%2$s)</item>
-    <item quantity="few">Zapadle %1$d kartice (%2$s)</item>
-    <item quantity="other">Zapadlih %1$d kartic (%2$s)</item>
+    <item quantity="one">Zap. %1$d kartica (%2$s)</item>
+    <item quantity="two">Zap. %1$d kartici (%2$s)</item>
+    <item quantity="few">Zap. %1$d kartice (%2$s)</item>
+    <item quantity="other">Zap. %1$d kartic (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">Preostala je še %d minuta</item>
-    <item quantity="two">Preostali sta še %d minuti</item>
-    <item quantity="few">Preostale so še %d minute</item>
-    <item quantity="other">Preostalih je še %d minut</item>
+    <item quantity="one">Še %d min.</item>
+    <item quantity="two">Še %d min.</item>
+    <item quantity="few">Še %d min.</item>
+    <item quantity="other">Še %d min.</item>
   </plurals>
   <plurals name="studied_cards_today">
     <item quantity="one">Danes preučena %1$d kartica v %2$s</item>

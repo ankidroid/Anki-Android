@@ -77,7 +77,7 @@
   <string name="image_zoom">Image zoom</string>
   <string name="button_size">Ukuran tombol jawaban</string>
   <string name="card_browser_font_size">Kartu browser penskalaan huruf</string>
-  <string name="col_path">Koleksi jalur</string>
+  <string name="col_path">AnkiDroid directory</string>
   <string name="fullscreen_review">Mode layar penuh</string>
   <string name="full_screen_off">Off</string>
   <string name="full_screen_system">Hide the system bars</string>

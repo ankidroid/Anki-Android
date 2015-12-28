@@ -77,7 +77,7 @@
   <string name="image_zoom">Image zoom</string>
   <string name="button_size">Kích thước nút trả lời </string>
   <string name="card_browser_font_size">Thẻ trình duyệt font rộng</string>
-  <string name="col_path">Đường dẫn cho bộ sưu tập</string>
+  <string name="col_path">AnkiDroid directory</string>
   <string name="fullscreen_review">Chế độ toàn màn hình</string>
   <string name="full_screen_off">Off</string>
   <string name="full_screen_system">Hide the system bars</string>

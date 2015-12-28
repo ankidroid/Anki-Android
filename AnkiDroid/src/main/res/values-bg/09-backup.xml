@@ -39,18 +39,18 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remone some other files.</string>
+  <string name="backup_deck_no_space_left">Архивирането не е извършено. Нямо достатъчно място на SD картата. Намалете дълбочината на архивирането или изтрийте някои файлове.</string>
   <string name="sd_space_warning">По-малко от %d мБ място остава на вашата sd карта. \n Освободете място, за да избегнете загуба на данни.</string>
   <string name="backup_delete">Изтриване на архивни копия. \n Моля изчакайте...</string>
   <string name="backup_restore">Възстановяване от Архив</string>
   <string name="backup_new_collection">Нова колекция</string>
   <string name="backup_del_collection">Изтриване на колекция и да създаване на нова</string>
-  <string name="backup_del_collection_question">Delete the collection and create a new one? This will drop all your learning progress and delete all cards.</string>
+  <string name="backup_del_collection_question">Искате да изтриете колекцията и да създадете нова? Така ще премахнете цялата информация за учебния прогрес и ще изтриете всички карти.</string>
   <string name="backup_full_sync_from_server">Пълно синхронизиране от сървър</string>
-  <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
-  <string name="error_handling_title">Error handling</string>
+  <string name="backup_full_sync_from_server_question">Действително ли искате да презапишете Ваша колекция, която е получено от AnkiWeb? Това може да изтрие целия Ви учебен процес и информацията, която е добавена след последната синхронизация.</string>
+  <string name="error_handling_title">Обработка на грешките</string>
   <string name="error_handling_options">Настройки</string>
-  <string name="backup_retry_opening">Retry opening</string>
+  <string name="backup_retry_opening">Повторно отваряне</string>
   <string name="backup_error_menu_repair">Поправка на базата данни</string>
   <string name="backup_repair_deck">Поправяне</string>
   <string name="backup_repair_deck_progress">Поправяне на базата данни&#8230;</string>
@@ -60,7 +60,7 @@
   <string name="backup_restore_no_backups">Няма архивни файлове на това устройство. Ако имате архиви на вашия настолен компютър, копирайте ги ръчно в папката AnkiDroid.</string>
   <string name="open_collection_failed_title">Колекцията не се отвори</string>
   <string name="open_collection_failed_message">Базата данни не можа да бъде отворена. Това или не реална Anki база данни или е била повредена.\n\nДокоснете \"Настройки\" за различни възможности за възстановяване на базата данни. З повече информация относно поправка на повредени колекции вж.: \n%1$s</string>
-  <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
-  <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
+  <string name="corrupt_db_message">Вашата колекция е повредена.\n\n Докоснете \"настройки\", за да я възстановите от архива или, ако това не помогне, вижте следните инструкции за ръчно поправяне на базата данни:\n%1$s</string>
+  <string name="access_collection_failed_message">Възникна грешка при достъпа до Вашата колекция. Това може да е безвредни грешка или може да е по-сериозен проблем. \n\nОпитайте да стартирате проверка на базата данни или да възстановите от архивно копие с натискане на бутона \"Настройки\". Ако продължавате да виждате това съобщение, моля докладвайте за грешката: \n%1$s</string>
   <string name="deck_repair_error">Колекция не можа да бъде поправена</string>
 </resources>

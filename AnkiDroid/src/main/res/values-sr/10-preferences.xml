@@ -77,7 +77,7 @@
   <string name="image_zoom">Зумирање слике</string>
   <string name="button_size">Величина дугмета за одговор</string>
   <string name="card_browser_font_size">Величина фонта прегледача картица</string>
-  <string name="col_path">Фасцикла са колекцијом</string>
+  <string name="col_path">AnkiDroid directory</string>
   <string name="fullscreen_review">Пуноекрански режим</string>
   <string name="full_screen_off">Off</string>
   <string name="full_screen_system">Hide the system bars</string>

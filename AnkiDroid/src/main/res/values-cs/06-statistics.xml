@@ -43,19 +43,19 @@
   <string name="statistics_mature">Zralé</string>
   <string name="statistics_young_and_learn">Mladé a nové</string>
   <string name="statistics_unlearned">Neučené</string>
-  <string name="statistics_suspended">Odložené</string>
+  <string name="statistics_suspended">Vyřazené</string>
   <string name="statistics_relearn">Znovu učit</string>
   <string name="statistics_learn">Učit se</string>
   <string name="statistics_cram">Šprtat</string>
   <string name="stats_cards">Karty</string>
-  <string name="stats_cards_intervals">Cards with given interval</string>
-  <string name="stats_cumulative_cards">Cumulative cards</string>
-  <string name="stats_cumulative_answers">Cumulative answers</string>
-  <string name="stats_cumulative_time_minutes">Cumulative minutes</string>
-  <string name="stats_cumulative_time_hours">Cumulative hours</string>
-  <string name="stats_cumulative">Cumulative</string>
-  <string name="stats_cumulative_percentage">Cumulative percentage</string>
-  <string formatted="false" name="stats_cumulative_correct_percentage">Cumulative correct %</string>
+  <string name="stats_cards_intervals">Karty s daným intervalem</string>
+  <string name="stats_cumulative_cards">Karet kumulativně</string>
+  <string name="stats_cumulative_answers">Odpovědí kumulativně</string>
+  <string name="stats_cumulative_time_minutes">Minut kumulativně</string>
+  <string name="stats_cumulative_time_hours">Hodin kumulativně</string>
+  <string name="stats_cumulative">Kumulativně</string>
+  <string name="stats_cumulative_percentage">Procent kumulativně</string>
+  <string formatted="false" name="stats_cumulative_correct_percentage">Správně % kumulativně</string>
   <string name="stats_answers">Odpovědi</string>
   <string name="stats_minutes">Minuty</string>
   <string name="stats_hours">Hodin</string>
@@ -70,7 +70,7 @@
   <string name="stats_reviews">Počet opakování</string>
   <string name="stats_answer_type">Typ odpovědi</string>
   <string name="stats_today_again_count">Počet Znovu: &lt;b&gt;%d&lt;/b&gt;</string>
-  <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correct)</string>
+  <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; správně)</string>
   <string name="stats_today_type_breakdown">Učit se nových: &lt;b&gt;%1$s&lt;/b&gt;, Opakovat: &lt;b&gt;%2$s&lt;/b&gt;, Přezkoušet: &lt;b&gt;%3$s&lt;/b&gt;, Filtrováno: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Správné odpovědi u zralých karet: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Žádné \"zralé\" karty dnes nebyly studovány.</string>

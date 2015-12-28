@@ -77,7 +77,7 @@
   <string name="image_zoom">이미지 확대</string>
   <string name="button_size">정답 버튼 크기</string>
   <string name="card_browser_font_size">카드 탐색기 글꼴 크기 조정</string>
-  <string name="col_path">컬렉션 저장 경로</string>
+  <string name="col_path">AnkiDroid directory</string>
   <string name="fullscreen_review">전체 화면 모드</string>
   <string name="full_screen_off">Off</string>
   <string name="full_screen_system">Hide the system bars</string>
