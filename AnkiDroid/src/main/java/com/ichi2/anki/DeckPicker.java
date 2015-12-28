@@ -1291,6 +1291,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         public void onCancelled() {
             mProgressDialog.dismiss();
             showSyncLogMessage(R.string.sync_cancelled);
+            // update deck list in case sync was cancelled during media sync and main sync was actually successful
+            updateDeckList();
         }
 
         @Override
