@@ -17,6 +17,7 @@
 package com.ichi2.compat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.speech.tts.TextToSpeech;
@@ -51,7 +52,6 @@ public interface Compat {
     String detagged(String txt);
     void setTtsOnUtteranceProgressListener(TextToSpeech tts);
     void disableDatabaseWriteAheadLogging(SQLiteDatabase db);
-    boolean isWriteAheadLoggingEnabled(SQLiteDatabase db);
     void enableCookiesForFileSchemePages();
     void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls);
     void restartActivityInvalidateBackstack(AnkiActivity activity);
@@ -59,5 +59,6 @@ public interface Compat {
     void setSelectableBackground(View view);
     void openUrl(AnkiActivity activity, Uri uri);
     void supportAddContentMenu(final DeckPicker a);
+    Intent getAdvancedPreferencesIntent(Context context);
 }
 
