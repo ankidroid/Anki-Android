@@ -24,6 +24,7 @@ import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.Preferences;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ReadText;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
@@ -62,13 +63,8 @@ public class CompatV10 implements Compat {
         });
     }
 
-    public boolean isWriteAheadLoggingEnabled(SQLiteDatabase db) {
-        // don't use WAL mode on Gingerbread
-        return false;
-    }
-
     public void disableDatabaseWriteAheadLogging(SQLiteDatabase db) {
-        // don't use WAL mode on Gingerbread
+        // We've never used WAL mode on Gingerbread so don't need to do anything here
     }
 
 
@@ -162,5 +158,13 @@ public class CompatV10 implements Compat {
                     }
                 })
                 .build().show();
+    }
+
+    @Override
+    public Intent getAdvancedPreferencesIntent(Context context) {
+        // We're using "legacy preference headers" below API 11
+        Intent i = new Intent(context, Preferences.class);
+        i.setAction("com.ichi2.anki.prefs.advanced");
+        return i;
     }
 }

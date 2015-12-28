@@ -60,7 +60,7 @@
     <string name="image_zoom">Image zoom</string>
     <string name="button_size">Answer button size</string>
     <string name="card_browser_font_size">Card browser font scaling</string>
-    <string name="col_path">Collection path</string>
+    <string name="col_path">AnkiDroid directory</string>
     <string name="fullscreen_review">Fullscreen mode</string>
     <string name="full_screen_off">Off</string>
     <string name="full_screen_system">Hide the system bars</string>
