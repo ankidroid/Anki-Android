@@ -82,7 +82,7 @@ External SD cards are not officially supported by AnkiDroid, and we highly recom
 See the [AnkiDroid user manual](http://ankidroid.org/manual.html#AnkiDesktop)
 
 ### How can I remove unwanted tags from AnkiDroid?
-You can remove tags that are not currently in use by any card by running "check collection" from the overflow menu in the AnkiDroid deck list. If you want to remove tags that are used by some cards, you'll need to remove the tags from those cards before running check collection. See [this forum thread](https://groups.google.com/d/topic/anki-android/Kuu2UFnKZNQ/discussion) for more information on doing that.
+You can remove tags that are not currently in use by any card by running "check database" from the overflow menu in the AnkiDroid deck list. If you want to remove tags that are used by some cards, you'll need to remove the tags from those cards before running check database. See [this forum thread](https://groups.google.com/d/topic/anki-android/Kuu2UFnKZNQ/discussion) for more information on doing that.
 
 ### I cannot change preferences / they get reset after some time
 
@@ -103,7 +103,7 @@ Database corruption can occasionally happen for a small minority of users for re
 
 1. Choose the "Restore from backup" option from the menu in the main deck list and select the newest backup which has a time stamp before the problem started occurring.
 
-1. If the restore completed successfully, run "check collection" and see if that also completes successfully. If so, you are done. If not, try restoring from an even older backup.
+1. If the restore completed successfully, run "check database" and see if that also completes successfully. If so, you are done. If not, try restoring from an even older backup.
 
 If restoring from a backup is not possible, you can try to manually "fix" the database by copying the collection.anki2 file in the AnkiDroid folder to your computer, and following the [instructions in the 
 main Anki documentation](http://ankisrs.net/docs/manual.html#_corrupt_collections).
