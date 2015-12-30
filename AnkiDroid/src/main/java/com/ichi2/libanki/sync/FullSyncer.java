@@ -18,7 +18,7 @@ package com.ichi2.libanki.sync;
 
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabaseCorruptException;
-
+import android.net.Uri;
 
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
@@ -65,8 +65,8 @@ public class FullSyncer extends HttpSyncer {
         // Allow user to specify custom sync server
         SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
         if (userPreferences!= null && userPreferences.getBoolean("useCustomSyncServer", false)) {
-            File syncBase = new File(userPreferences.getString("syncBaseUrl", Consts.SYNC_BASE));
-            return new File(syncBase, "/sync").toString() + "/";
+            Uri syncBase = Uri.parse(userPreferences.getString("syncBaseUrl", Consts.SYNC_BASE));
+            return syncBase.buildUpon().appendPath("sync").toString() + "/";
         }
         // Usual case
         return Consts.SYNC_BASE + "sync/";
