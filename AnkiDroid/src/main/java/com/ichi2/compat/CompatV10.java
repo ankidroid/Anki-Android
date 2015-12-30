@@ -161,10 +161,10 @@ public class CompatV10 implements Compat {
     }
 
     @Override
-    public Intent getAdvancedPreferencesIntent(Context context) {
+    public Intent getPreferenceSubscreenIntent(Context context, String subscreen) {
         // We're using "legacy preference headers" below API 11
         Intent i = new Intent(context, Preferences.class);
-        i.setAction("com.ichi2.anki.prefs.advanced");
+        i.setAction(subscreen);
         return i;
     }
 }
