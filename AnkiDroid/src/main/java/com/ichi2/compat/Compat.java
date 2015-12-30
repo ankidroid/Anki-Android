@@ -59,6 +59,6 @@ public interface Compat {
     void setSelectableBackground(View view);
     void openUrl(AnkiActivity activity, Uri uri);
     void supportAddContentMenu(final DeckPicker a);
-    Intent getAdvancedPreferencesIntent(Context context);
+    Intent getPreferenceSubscreenIntent(Context context, String subscreen);
 }
 

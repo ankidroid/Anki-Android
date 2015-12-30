@@ -17,8 +17,10 @@
 
 package com.ichi2.libanki.sync;
 
+import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.MediaSyncException;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
@@ -55,6 +57,13 @@ public class RemoteMediaServer extends HttpSyncer {
 
     @Override
     public String syncURL() {
+        // Allow user to specify custom sync server
+        SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
+        if (userPreferences!= null && userPreferences.getBoolean("useCustomSyncServer", false)) {
+            File mediaSyncBase = new File(userPreferences.getString("syncMediaUrl", Consts.SYNC_MEDIA_BASE));
+            return mediaSyncBase.toString() + "/";
+        }
+        // Usual case
         return Consts.SYNC_MEDIA_BASE;
     }
 

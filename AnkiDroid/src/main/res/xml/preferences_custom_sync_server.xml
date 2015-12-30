@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<!-- Advanced Preferences -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="useCustomSyncServer"
+        android:title="Use custom sync server"
+        android:summary="@string/custom_sync_server_enable_summary"
+        android:defaultValue="false"/>
+    <EditTextPreference
+        android:key="syncBaseUrl"
+        android:dependency="useCustomSyncServer"
+        android:title="@string/custom_sync_server_base_url_title"
+        android:defaultValue="https://ankiweb.net/"/>
+    <EditTextPreference
+        android:key="syncMediaUrl"
+        android:dependency="useCustomSyncServer"
+        android:title="@string/custom_sync_server_media_url_title"
+        android:defaultValue="https://msync.ankiweb.net/"/>
+</PreferenceScreen>

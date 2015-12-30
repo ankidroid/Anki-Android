@@ -108,8 +108,15 @@
                 android:text="@string/sign_up_description"
                 android:layout_gravity="center"
                 android:textSize="@dimen/abc_text_size_button_material"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/no_account_not_affiliated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_up_not_affiliated"
+                android:layout_gravity="center"
+                android:textSize="@dimen/abc_text_size_button_material"
+                android:textStyle="italic"/>
 
             <Button
                 android:id="@+id/sign_up_button"
