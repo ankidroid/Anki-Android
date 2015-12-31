@@ -108,7 +108,7 @@ Database corruption can occasionally happen for a small minority of users for re
 If restoring from a backup is not possible, you can try to manually "fix" the database by copying the collection.anki2 file in the AnkiDroid folder to your computer, and following the [instructions in the 
 main Anki documentation](http://ankisrs.net/docs/manual.html#_corrupt_collections).
 
-### How can I move my collection from my old device to a new device?
+### How can I copy my decks from an old device to a new device?
 **Method 1: Use AnkiWeb cloud sync (recommended)**
 
 Follow the [instructions in the manual](https://ankidroid.org/docs/manual.html#_via_cloud_sync) for syncing existing decks (on your old Android device) into a new AnkiDroid install.
