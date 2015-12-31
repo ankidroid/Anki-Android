@@ -108,6 +108,15 @@ Database corruption can occasionally happen for a small minority of users for re
 If restoring from a backup is not possible, you can try to manually "fix" the database by copying the collection.anki2 file in the AnkiDroid folder to your computer, and following the [instructions in the 
 main Anki documentation](http://ankisrs.net/docs/manual.html#_corrupt_collections).
 
+### How can I move my collection from my old device to a new device?
+**Method 1: Use AnkiWeb cloud sync (recommended)**
+
+Follow the [instructions in the manual](https://ankidroid.org/docs/manual.html#_via_cloud_sync) for syncing existing decks (on your old Android device) into a new AnkiDroid install.
+
+**Method 2: Export > Import**
+
+[Export your collection](https://ankidroid.org/docs/manual.html#exporting) as a .apkg file from your old device, copy it to your new device using any method you like, and then import this file into your new device according to the [importing instructions](https://ankidroid.org/docs/manual.html#importing) in the manual.
+
 ### How can I use Zeemote?
 While we do not officially support the [Zeemote JS1 Controller](http://zeemote.com/), some users have noted that they could successfully pair AnkiDroid with the Zeemote using a 3rd party app called  [Bluez IME](https://play.google.com/store/apps/details?id=com.hexad.bluezime).
 
