@@ -139,6 +139,10 @@
     <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
     <string name="enable_api_title">Enable AnkiDroid API</string>
     <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+    <string name="pref_cat_advanced_statistics">Advanced statistics</string>
+    <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
+    <string name="enable_advanced_statistics_summ">Display forecast statistics based on a simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
 
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Select tags</string>
