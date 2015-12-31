@@ -19,6 +19,7 @@ package com.ichi2.libanki;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
@@ -71,6 +72,12 @@ public class Stats {
     private String mLongest;
     private double mPeak;
     private double mMcount;
+
+    // JPR new
+    private Settings Settings = new Settings();
+    private ArrayUtils ArrayUtils = new ArrayUtils();
+    private Deck Deck = new Deck();
+    // JPR end
 
     public Stats(Collection col, boolean wholeCollection) {
         mCol = col;
@@ -181,9 +188,96 @@ public class Stats {
         mDynamicAxis = true;
         mBackwards = false;
         mTitle = R.string.stats_forecast;
-        mValueLabels = new int[] { R.string.statistics_young, R.string.statistics_mature };
-        mColors = new int[] { R.color.stats_young, R.color.stats_mature };
+
+        //JPR
+        //mValueLabels = new int[] { R.string.statistics_young, R.string.statistics_mature };
+        //mColors = new int[] { R.color.stats_young, R.color.stats_mature };
+
+        mValueLabels = new int[] { R.string.statistics_relearn,
+                                   R.string.statistics_mature,
+                                   R.string.statistics_young,
+                                   R.string.statistics_learn};
+        mColors = new int[] {      R.color.stats_relearn,
+                                   R.color.stats_mature,
+                                   R.color.stats_young,
+                                   R.color.stats_learn};
+        //JPR end
+
         mAxisTitles = new int[] { type, R.string.stats_cards, R.string.stats_cumulative_cards };
+
+        //JPR (moved to own method + replace with new method)
+        //ArrayList<int[]> dues = calculateDues(type);
+        ArrayList<int[]> dues = calculateDuesWithSimulation(type);
+
+        //mSeriesList = new double[3][dues.size()];
+        mSeriesList = new double[5][dues.size()];
+        //JPR end
+
+        for (int i = 0; i < dues.size(); i++) {
+            int[] data = dues.get(i);
+
+            //JPR
+            //if(data[1] > mMaxCards)
+            //    mMaxCards =data[1];                                           //Y-Axis: Max. value
+            if(data[1] + data[2] + data[3] + data[4] > mMaxCards)
+                mMaxCards = data[1] + data[2] + data[3] + data[4];
+
+            //mSeriesList[0][i] = data[0];                                      //X-Axis: Day / Week / Month
+            //mSeriesList[1][i] = data[1];                                      //Y-Axis: # Cards
+            //mSeriesList[2][i] = data[2];                                      //Y-Axis: # Mature cards
+
+            //   1 +
+            //   0 = Learn
+            //   1 = Young
+            //   2 = Mature
+            //   3 = Relearn
+            mSeriesList[0][i] = data[0];                                        //X-Axis: Day / Week / Month
+            mSeriesList[1][i] = data[1] + data[2] + data[3] + data[4];          //Y-Axis: # Cards
+            mSeriesList[2][i] = data[1] + data[2] + data[3];                    //Y-Axis: # Mature cards
+            mSeriesList[3][i] = data[1] + data[2];                              //Y-Axis: # Young
+            mSeriesList[4][i] = data[1];                                        //Y-Axis: # Learn
+
+            //JPR end
+
+            if(data[0] > mLastElement)
+                mLastElement = data[0];         //X-Axis: Max. value (only for TYPE_LIFE)
+            if(data[0] == 0){
+                mZeroIndex = i;                 //Because we retrieve dues in the past and we should not cumulate them
+            }
+        }
+        mMaxElements = dues.size()-1;           //# X values
+        switch (mType) {
+            case TYPE_MONTH:
+                mLastElement = 31;              //X-Axis: Max. value
+                break;
+            case TYPE_YEAR:
+                mLastElement = 52;              //X-Axis: Max. value
+                break;
+            default:
+        }
+        mFirstElement = 0;                      //X-Axis: Min. value
+
+        mHasColoredCumulative = false;
+        mCumulative = Stats.createCumulative(new double[][]{mSeriesList[0], mSeriesList[1]}, mZeroIndex);   //Day starting at mZeroIndex, Cumulative # cards
+        mMcount = mCumulative[1][mCumulative[1].length-1];                                                  //Y-Axis: Max. cumulative value
+        //some adjustments to not crash the chartbuilding with emtpy data
+        if(mMaxElements == 0){
+            mMaxElements = 10;
+        }
+        if(mMcount == 0){
+            mMcount = 10;
+        }
+        if(mFirstElement == mLastElement){
+            mFirstElement = 0;
+            mLastElement = 6;
+        }
+        if(mMaxCards == 0)
+            mMaxCards = 10;
+        return dues.size() > 0;
+    }
+
+    //30-12-2015 JPR new
+    private ArrayList<int[]> calculateDues(int type) {
         int end = 0;
         int chunk = 0;
         switch (type) {
@@ -243,53 +337,660 @@ public class Stats {
             dues.add(new int[] { Math.max(12, dues.get(dues.size() - 1)[0] + 1), 0, 0 });
         }
 
-        mSeriesList = new double[3][dues.size()];
-        for (int i = 0; i < dues.size(); i++) {
-            int[] data = dues.get(i);
-
-            if(data[1] > mMaxCards)
-                mMaxCards =data[1];
-
-            mSeriesList[0][i] = data[0];
-            mSeriesList[1][i] = data[1];
-            mSeriesList[2][i] = data[2];
-            if(data[0] > mLastElement)
-                mLastElement = data[0];
-            if(data[0] == 0){
-                mZeroIndex = i;
-            }
-        }
-        mMaxElements = dues.size()-1;
-        switch (mType) {
-            case TYPE_MONTH:
-                mLastElement = 31;
-                break;
-            case TYPE_YEAR:
-                mLastElement = 52;
-                break;
-            default:
-        }
-        mFirstElement = 0;
-
-        mHasColoredCumulative = false;
-        mCumulative = Stats.createCumulative(new double[][]{mSeriesList[0], mSeriesList[1]}, mZeroIndex);
-        mMcount = mCumulative[1][mCumulative[1].length-1];
-        //some adjustments to not crash the chartbuilding with emtpy data
-        if(mMaxElements == 0){
-            mMaxElements = 10;
-        }
-        if(mMcount == 0){
-            mMcount = 10;
-        }
-        if(mFirstElement == mLastElement){
-            mFirstElement = 0;
-            mLastElement = 6;
-        }
-        if(mMaxCards == 0)
-            mMaxCards = 10;
-        return dues.size() > 0;
+        return dues;
     }
 
+    private ArrayList<int[]> calculateDuesWithSimulation(int type) {
+        int end = 0;
+        int chunk = 0;
+        switch (type) {
+            case TYPE_MONTH:
+                end = 31;
+                chunk = 1;
+                break;
+            case TYPE_YEAR:
+                end = 52;
+                chunk = 7;
+                break;
+            case TYPE_LIFE:
+                end = -1;
+                chunk = 30;
+                break;
+        }
+
+        ArrayList<int[]> dues = new ArrayList<int[]>();
+
+        EaseClassifier classifier = new EaseClassifier(mCol.getDb().getDatabase());
+        ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb().getDatabase(), classifier);
+
+        SimulationResult simulationResult = reviewSimulator.sim_n_reviews();
+
+        int[][] n_reviews = ArrayUtils.transposeMatrix(simulationResult.getNReviews());
+        //int[][] n_in_state = simulationResult.getNInState();
+
+        // Forecasted number of reviews
+        //   0 = Learn
+        //   1 = Young
+        //   2 = Mature
+        //   3 = Relearn
+
+        for(int i = 0; i<n_reviews.length; i++) {
+            dues.add(new int[] { i,  n_reviews[i][0], n_reviews[i][1], n_reviews[i][2], n_reviews[i][3] });
+        }
+
+        // small adjustment for a proper chartbuilding with achartengine
+        if (dues.size() == 0 || dues.get(0)[0] > 0) {
+            dues.add(0, new int[] { 0, 0, 0, 0, 0 });
+        }
+        if (end == -1 && dues.size() < 2) {
+            end = 31;
+        }
+        if (type != TYPE_LIFE && dues.get(dues.size() - 1)[0] < end) {
+            dues.add(new int[] { end, 0, 0, 0, 0 });
+        } else if (type == TYPE_LIFE && dues.size() < 2) {
+            dues.add(new int[] { Math.max(12, dues.get(dues.size() - 1)[0] + 1), 0, 0, 0, 0 });
+        }
+
+        return dues;
+    }
+
+    private class Card {
+        int c_ivl;
+        double c_factor;
+        int c_due;
+        int correct;
+        long id;
+
+        @Override
+        public String toString() {
+            return "Card [c_ivl=" + c_ivl + ", c_factor=" + c_factor + ", c_due=" + c_due + ", correct=" + correct + ", id="
+                    + id + "]";
+        }
+
+        public Card(long id, int c_ivl, int c_factor, int c_due, int correct) {
+            super();
+            this.id = id;
+            this.c_ivl = c_ivl;
+            this.c_factor = c_factor / 1000.0;
+            this.c_due = c_due;
+            this.correct = correct;
+        }
+
+        public Card cloneShallow() {
+            return new Card(id, c_ivl, (int) (c_factor * 1000), c_due, correct);
+        }
+
+        public long getId() {
+            return id;
+        }
+
+        public int getC_ivl() {
+            return c_ivl;
+        }
+
+        public void setC_ivl(int c_ivl) {
+            this.c_ivl = c_ivl;
+        }
+
+        public double getC_factor() {
+            return c_factor;
+        }
+
+        public void setC_factor(double c_factor) {
+            this.c_factor = c_factor;
+        }
+
+        public int getC_due() {
+            return c_due;
+        }
+
+        public void setC_due(int c_due) {
+            this.c_due = c_due;
+        }
+
+        public int getC_type() {
+            //# 0=new, 1=Young, 2=mature
+            if(c_ivl == 0) {
+                return 0;
+            } else if (c_ivl >= 21) {
+                return 2;
+            } else {
+                return 1;
+            }
+        }
+
+        public int getCorrect() {
+            return correct;
+        }
+
+        public void setCorrect(int correct) {
+            this.correct = correct;
+        }
+    }
+
+    private class Deck {
+
+        public List<Card> deckFromDB(SQLiteDatabase db, int today) {
+            List<Card> deck = new ArrayList<Card>();
+
+            Cursor cur = null;
+            try {
+                String query;
+                query = "SELECT id, due, ivl, factor, type, reps " +
+                        "FROM cards " +
+                        "order by id;";
+                Timber.d("Forecast query: %s", query);
+                cur = db.rawQuery(query, null);
+                while (cur.moveToNext()) {
+
+                    Card card = new Card(cur.getLong(0),                                            //Id
+                                         cur.getInt(5) == 0 ? 0 : cur.getInt(2),  		            //reps = 0 ? 0 : card interval
+                                         cur.getInt(3) > 0 ? cur.getInt(3) :  2500,                 //factor
+                                         Math.max(cur.getInt(1) - today, 0),                        //due
+                                         1);                                                        //correct
+                    deck.add(card);
+                }
+            } finally {
+                if (cur != null && !cur.isClosed()) {
+                    cur.close();
+                }
+            }
+
+            return deck;
+        }
+    }
+
+    private class EaseClassifier {
+
+        Random random;
+
+        SQLiteDatabase db;
+        double[][] probabilitiesCumulative;
+
+        //# Prior that half of new cards are answered correctly
+        int[] prior_new = {5, 0, 5, 0};		//half of new cards are answered correctly
+        int[] prior_young = {1, 0, 9, 0};	//90% of young cards get "good" response
+        int[] prior_mature = {1, 0, 9, 0};	//90% of mature cards get "good" response
+
+        String query_base_new =
+                "select "
+                        +   "count() as N, "
+                        +   "sum(case when ease=1 then 1 else 0 end) as repeat, "
+                        +   "0 as hard, "	//Doesn't occur in query_new
+                        +	  "sum(case when ease=2 then 1 else 0 end) as good, "
+                        +	  "sum(case when ease=3 then 1 else 0 end) as easy "
+                        + "from revlog ";
+
+        String query_base_young_mature =
+                "select "
+                        +   "count() as N, "
+                        +   "sum(case when ease=1 then 1 else 0 end) as repeat, "
+                        +   "sum(case when ease=2 then 1 else 0 end) as hard, "	//Doesn't occur in query_new
+                        +	  "sum(case when ease=3 then 1 else 0 end) as good, "
+                        +	  "sum(case when ease=4 then 1 else 0 end) as easy "
+                        + "from revlog ";
+
+        String query_new =
+                query_base_new
+                        + "where type=0;";
+
+        String query_young =
+                query_base_young_mature
+                        + "where type=1 and lastIvl < 21;";
+
+        String query_mature =
+                query_base_young_mature
+                        + "where type=1 and lastIvl >= 21;";
+
+        public EaseClassifier(SQLiteDatabase db) {
+            this.db = db;
+            this.probabilitiesCumulative = calculateCumProbabilitiesForNewEasePerCurrentEase();
+
+            System.out.println("new\t" + Arrays.toString(this.probabilitiesCumulative[0]));
+            System.out.println("young\t" + Arrays.toString(this.probabilitiesCumulative[1]));
+            System.out.println("mature\t" + Arrays.toString(this.probabilitiesCumulative[2]));
+
+            random = new Random();
+        }
+
+        private double[] cumsum(double[] p) {
+
+            p[1] = p[0] + p[1];
+            p[2] = p[1] + p[2];
+            p[3] = p[2] + p[3];
+
+            return p;
+        }
+
+        private double[][] calculateCumProbabilitiesForNewEasePerCurrentEase() {
+            double[][] p = new double[3][];
+
+            p[0] = cumsum(calculateProbabilitiesForNewEaseForCurrentEase(query_new, prior_new));
+            p[1] = cumsum(calculateProbabilitiesForNewEaseForCurrentEase(query_young, prior_young));
+            p[2] = cumsum(calculateProbabilitiesForNewEaseForCurrentEase(query_mature, prior_mature));
+
+            return p;
+        }
+
+        private double[] calculateProbabilitiesForNewEaseForCurrentEase(String queryNewEaseCountForCurrentEase, int[] prior) {
+
+            Cursor cur = null;
+
+            int[] freqs = new int[] {
+                    prior[0],
+                    prior[1],
+                    prior[2],
+                    prior[3]
+            };
+
+            int n_prior = prior[0] + prior[1] + prior[2] + prior[3];
+
+            int n = n_prior;
+
+            try {
+                cur = db.rawQuery(queryNewEaseCountForCurrentEase, null);
+                cur.moveToNext();
+
+                freqs[0] += cur.getInt(1);          //Repeat
+                freqs[1] += cur.getInt(2);          //Hard
+                freqs[2] += cur.getInt(3);          //Good
+                freqs[3] += cur.getInt(4);          //Easy
+
+                int n_query = cur.getInt(0);        //N
+
+                n += n_query;
+
+            } finally {
+                if (cur != null && !cur.isClosed()) {
+                    cur.close();
+                }
+            }
+
+            double[] probs = new double[] {
+                    freqs[0] / (double) n,
+                    freqs[1] / (double) n,
+                    freqs[2] / (double) n,
+                    freqs[3] / (double) n
+            };
+
+            return probs;
+        }
+
+        private int draw(double[] p) {
+            return searchsorted(p, random.nextDouble());
+        }
+
+        private int searchsorted(double[] p, double random) {
+            if(random <= p[0]) return 0;
+            if(random <= p[1]) return 1;
+            if(random <= p[2]) return 2;
+            return 3;
+        }
+
+        public Card sim_single_review(Card c, boolean preserve_card) {
+            if(preserve_card)
+                c = c.cloneShallow();
+            return sim_single_review(c);
+        }
+
+        public Card sim_single_review(Card c){
+
+            int c_type = c.getC_type();
+
+            int outcome = draw(probabilitiesCumulative[c_type]);
+
+            applyOutcomeToCard(c, outcome);
+
+            return c;
+        }
+
+        private void applyOutcomeToCard(Card c, int outcome) {
+
+            int c_type = c.getC_type();
+            int c_ivl = c.getC_ivl();
+            double c_factor = c.getC_factor();
+
+            if(c_type == 0) {
+                if (outcome <= 2)
+                    c_ivl = 1;
+                else
+                    c_ivl = 4;
+            }
+            else {
+                switch(outcome) {
+                    case 0:
+                        c_ivl = 1;
+                        break;
+                    case 1:
+                        c_ivl *= 1.2;
+                        break;
+                    case 2:
+                        c_ivl *= 1.2 * c_factor;
+                        break;
+                    case 3:
+                    default:
+                        c_ivl *= 1.2 * 2. * c_factor;
+                        break;
+                }
+            }
+
+            c.setC_ivl(c_ivl);
+            c.setCorrect((outcome > 0) ? 1 : 0);
+            //c.setC_type(c_type);
+            //c.setC_ivl(60);
+            //c.setC_factor(c_factor);
+        }
+    }
+
+    public class NewCardSimulator {
+
+        int max_add_per_day=20;
+
+        int n_added_today = 0;
+        int t_add = 0;
+
+        public int simulateNewCard(Card card) {
+            n_added_today++;
+            int t_elapsed = t_add;	//differs from online
+            if (n_added_today >= max_add_per_day) {
+                t_add++;
+                n_added_today = 0;
+            }
+            return t_elapsed;
+        }
+    }
+
+    private class ReviewSimulator {
+
+        SQLiteDatabase db;
+        EaseClassifier classifier;
+
+        //TODO: also exists in Review
+        int n_time_bins = Settings.n_time_bins();
+        int time_bin_length = Settings.time_bin_length();
+
+        int t_max = n_time_bins * time_bin_length;
+
+        NewCardSimulator newCardSimulator = new NewCardSimulator();
+
+        public ReviewSimulator(SQLiteDatabase db, EaseClassifier classifier) {
+            this.db = db;
+            this.classifier = classifier;
+        }
+
+        public SimulationResult sim_n_reviews() {
+
+            SimulationResult simulationResult = new SimulationResult(n_time_bins);
+
+            //n_smooth=1
+
+            //TODO:
+            //Forecasted final state of deck
+            //final_ivl = np.empty((n_smooth, n_cards), dtype='f8')
+
+            int currentTime = (int) (System.currentTimeMillis() / 1000);
+
+            int today = (int) ((currentTime - Settings.deckCreationTimeStamp()) / Settings.secsPerDay());
+            int mDayCutoff = Settings.deckCreationTimeStamp() + ((today + 1) * Settings.secsPerDay());
+
+            System.out.println("today: " + today);
+            System.out.println("todayCutoff: " + mDayCutoff);
+
+            List<Card> deck = Deck.deckFromDB(db, today);
+
+            Stack<Review> reviews = new Stack<Review>();
+
+            //TODO: by having simulateReview add future reviews depending on which simulation of this card this is (the nth) we can:
+            //1. Do monte carlo simulation if we add k future reviews if n = 1
+            //2. Do a complete traversal of the future reviews tree if we add k future reviews for all n
+            //3. Do any combination of these
+            for (Card card : deck) {
+
+                Review review = new Review(card, simulationResult, newCardSimulator, classifier, reviews);
+
+                if (review.getT() < t_max)
+                    reviews.push(review);
+
+                while (!reviews.isEmpty()) {
+                    review = reviews.pop();
+                    review.simulateReview();
+                }
+
+            }
+
+            ArrayUtils.formatMatrix(simulationResult.getNReviews(), "%02d ");
+            ArrayUtils.formatMatrix(simulationResult.getNInState(), "%02d ");
+
+            return simulationResult;
+        }
+    }
+
+    private class Settings {
+        //TODO
+        public int deckCreationTimeStamp() {
+            return 1445619600;
+        }
+
+        public int n_time_bins() {
+            return 30;
+        }
+
+        public int time_bin_length() {
+            return 1;
+        }
+
+        public int max_reviews_per_day() {
+            return 10000;
+        }
+
+        public String db_location() {
+            return "d:\\collection_20151227.sqlite";
+        }
+
+        public long now() {
+            return 1451223980146L;
+            //return System.currentTimeMillis();
+        }
+
+        public int today() {
+            int currentTime = (int) (now() / 1000);
+            int today = (int) ((currentTime - deckCreationTimeStamp()) / secsPerDay());
+            return today;
+        }
+
+        public int secsPerDay() {
+            return 86400;
+        }
+
+        public int todayCutoffSecsFromDeckCreation() {
+            int mDayCutoff = deckCreationTimeStamp() + ((today() + 1) * secsPerDay());
+            return mDayCutoff;
+        }
+    }
+
+    private class ArrayUtils {
+        public int[][] createIntMatrix(int m, int n) {
+            int[][] matrix = new int[m][];
+            for(int i=0; i<m; i++) {
+                matrix[i] = new int[n];
+                for(int j=0; j<n; j++)
+                    matrix[i][j] = 0;
+            }
+
+            return matrix;
+        }
+
+        public int[][] transposeMatrix(int[][] matrix) {
+            if (matrix.length == 0)
+                return matrix;
+
+            int m = matrix.length;
+            int n = matrix[0].length;
+
+            int transpose[][] = new int[n][m];
+
+            int c, d;
+            for ( c = 0 ; c < m ; c++ )
+            {
+                for ( d = 0 ; d < n ; d++ )
+                    transpose[d][c] = matrix[c][d];
+            }
+
+            return transpose;
+        }
+
+        public void formatMatrix(int[][] matrix, String format) {
+            StringBuilder s = new StringBuilder();
+
+            for(int i=0; i<matrix.length; i++) {
+                for(int j=0; j<matrix[i].length; j++) {
+                    s.append(String.format(format, matrix[i][j]));
+                    s.append(System.getProperty("line.separator"));
+                }
+            }
+
+            Timber.d(s.toString());
+        }
+    }
+
+    private class SimulationResult {
+
+        int time_bin_length = Settings.time_bin_length();
+        int t_max;
+
+        // Forecasted number of reviews
+        //   0 = Learn
+        //   1 = Young
+        //   2 = Mature
+        //   3 = Relearn
+        int[][] n_reviews;
+
+        // Forecasted number of cards per state
+        //   0 = New
+        //   1 = Young
+        //   2 = Mature
+        int[][] n_in_state;
+
+        public SimulationResult(int n_time_bins) {
+            n_reviews = ArrayUtils.createIntMatrix(4, n_time_bins);
+            n_in_state = ArrayUtils.createIntMatrix(3, n_time_bins);
+
+            t_max = n_time_bins * time_bin_length;
+        }
+
+        public SimulationResult(int[][] n_reviews, int[][] n_in_state) {
+            this.n_reviews = n_reviews;
+            this.n_in_state = n_in_state;
+        }
+
+        public int[][] getNReviews() {
+            return n_reviews;
+        }
+
+        public int[][] getNInState() {
+            return n_in_state;
+        }
+
+        public int nReviewsDoneToday(int t_elapsed) {
+            //This excludes new cards and relearns
+            return n_reviews[1][t_elapsed / time_bin_length] +
+                    n_reviews[2][t_elapsed / time_bin_length];
+        }
+
+        public void incrementNInState(int cardType, int t) {
+            n_in_state[cardType][t]++;
+        }
+
+        public void incrementNReviews(int cardType, int t) {
+            n_reviews[cardType][t]++;
+        }
+
+        public void updateNInState(Card card, int t_from, int t_to) {
+            for(int t = t_from / time_bin_length; t < t_to / time_bin_length; t++)
+                if(t < t_max) {
+                    n_in_state[card.getC_type()][t]++;
+                }
+        }
+    }
+
+    private class Review {
+
+        int max_reviews_per_day = Settings.max_reviews_per_day();
+
+        int n_time_bins = Settings.n_time_bins();
+        int time_bin_length = Settings.time_bin_length();
+
+        int t_max = n_time_bins * time_bin_length;
+
+        int t_elapsed;
+        Card card;
+        SimulationResult simulationResult;
+        EaseClassifier classifier;
+        Stack<Review> reviews;
+
+        public Review (Card card, SimulationResult simulationResult, EaseClassifier classifier, Stack<Review> reviews, int t_elapsed) {
+            this.card = card;
+            this.simulationResult = simulationResult;
+            this.classifier = classifier;
+            this.reviews = reviews;
+
+            this.t_elapsed = t_elapsed;
+        }
+
+        public Review (Card card, SimulationResult simulationResult, NewCardSimulator newCardSimulator, EaseClassifier classifier, Stack<Review> reviews) {
+            this.card = card;
+            this.simulationResult = simulationResult;
+            this.classifier = classifier;
+            this.reviews = reviews;
+
+            //# Rate-limit new cards by shifting starting time
+            if (card.getC_type() == 0)
+                t_elapsed = newCardSimulator.simulateNewCard(card);
+            else
+                t_elapsed = card.getC_due();
+
+            // Set state of card between start and first review
+            this.simulationResult.updateNInState(card, 0, t_elapsed);
+        }
+
+        public void simulateReview() {
+            //Set state of card for current review
+            simulationResult.incrementNInState(card.getC_type(), t_elapsed / time_bin_length);
+
+            if(card.getC_type() == 0 || simulationResult.nReviewsDoneToday(t_elapsed) < max_reviews_per_day) {
+                // Update the forecasted number of reviews
+                simulationResult.incrementNReviews(card.getC_type(), t_elapsed / time_bin_length);
+
+                // Simulate response
+                card = classifier.sim_single_review(card, true);
+
+                // If card failed, update "relearn" count
+                if(card.getCorrect() == 0)
+                    simulationResult.incrementNReviews(3, t_elapsed / time_bin_length);
+
+                // Set state of card between current and next review
+                simulationResult.updateNInState(card, t_elapsed + 1, t_elapsed + card.getC_ivl());
+
+                // Advance time to next review
+                t_elapsed += card.getC_ivl();
+            }
+            else {
+                // Advance time to next review (max. #reviews reached for this day)
+                t_elapsed += 1;
+            }
+
+            if (t_elapsed < t_max) {
+                Review review = new Review(card, simulationResult, classifier, reviews, t_elapsed);
+                this.reviews.push(review);
+            }
+        }
+
+        public int getT() {
+            return t_elapsed;
+        }
+    }
+
+    //30-12-2015 JPR new end
 
     /* only needed for studyoptions small chart */
     public static double[][] getSmallDueStats(Collection col) {
