@@ -27,7 +27,6 @@ import com.ichi2.anki.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import timber.log.Timber;
@@ -363,10 +362,10 @@ public class Stats {
         EaseClassifier classifier = new EaseClassifier(mCol.getDb().getDatabase());
         ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb().getDatabase(), classifier);
 
-        SimulationResult simulationResult = reviewSimulator.sim_n_reviews();
+        SimulationResult simulationResult = reviewSimulator.simNreviews();
 
-        int[][] n_reviews = ArrayUtils.transposeMatrix(simulationResult.getNReviews());
-        //int[][] n_in_state = simulationResult.getNInState();
+        int[][] nReviews = ArrayUtils.transposeMatrix(simulationResult.getNReviews());
+        //int[][] nInState = simulationResult.getNInState();
 
         // Forecasted number of reviews
         //   0 = Learn
@@ -374,8 +373,8 @@ public class Stats {
         //   2 = Mature
         //   3 = Relearn
 
-        for(int i = 0; i<n_reviews.length; i++) {
-            dues.add(new int[] { i,  n_reviews[i][0], n_reviews[i][1], n_reviews[i][2], n_reviews[i][3] });
+        for(int i = 0; i<nReviews.length; i++) {
+            dues.add(new int[] { i,  nReviews[i][0], nReviews[i][1], nReviews[i][2], nReviews[i][3] });
         }
 
         // small adjustment for a proper chartbuilding with achartengine
@@ -395,64 +394,64 @@ public class Stats {
     }
 
     private class Card {
-        int c_ivl;
-        double c_factor;
-        int c_due;
-        int correct;
-        long id;
+        private int ivl;
+        private double factor;
+        private int due;
+        private int correct;
+        private long id;
 
         @Override
         public String toString() {
-            return "Card [c_ivl=" + c_ivl + ", c_factor=" + c_factor + ", c_due=" + c_due + ", correct=" + correct + ", id="
+            return "Card [ivl=" + ivl + ", factor=" + factor + ", due=" + due + ", correct=" + correct + ", id="
                     + id + "]";
         }
 
-        public Card(long id, int c_ivl, int c_factor, int c_due, int correct) {
+        public Card(long id, int ivl, int factor, int due, int correct) {
             super();
             this.id = id;
-            this.c_ivl = c_ivl;
-            this.c_factor = c_factor / 1000.0;
-            this.c_due = c_due;
+            this.ivl = ivl;
+            this.factor = factor / 1000.0;
+            this.due = due;
             this.correct = correct;
         }
 
-        public Card cloneShallow() {
-            return new Card(id, c_ivl, (int) (c_factor * 1000), c_due, correct);
+        public Card clone() {
+            return new Card(id, ivl, (int) (factor * 1000), due, correct);
         }
 
         public long getId() {
             return id;
         }
 
-        public int getC_ivl() {
-            return c_ivl;
+        public int getIvl() {
+            return ivl;
         }
 
-        public void setC_ivl(int c_ivl) {
-            this.c_ivl = c_ivl;
+        public void setIvl(int ivl) {
+            this.ivl = ivl;
         }
 
-        public double getC_factor() {
-            return c_factor;
+        public double getFactor() {
+            return factor;
         }
 
-        public void setC_factor(double c_factor) {
-            this.c_factor = c_factor;
+        public void setFactor(double factor) {
+            this.factor = factor;
         }
 
-        public int getC_due() {
-            return c_due;
+        public int getDue() {
+            return due;
         }
 
-        public void setC_due(int c_due) {
-            this.c_due = c_due;
+        public void setDue(int due) {
+            this.due = due;
         }
 
-        public int getC_type() {
+        public int getType() {
             //# 0=new, 1=Young, 2=mature
-            if(c_ivl == 0) {
+            if(ivl == 0) {
                 return 0;
-            } else if (c_ivl >= 21) {
+            } else if (ivl >= 21) {
                 return 2;
             } else {
                 return 1;
@@ -502,17 +501,17 @@ public class Stats {
 
     private class EaseClassifier {
 
-        Random random;
+        private Random random;
 
-        SQLiteDatabase db;
-        double[][] probabilitiesCumulative;
+        private SQLiteDatabase db;
+        private double[][] probabilitiesCumulative;
 
         //# Prior that half of new cards are answered correctly
-        int[] prior_new = {5, 0, 5, 0};		//half of new cards are answered correctly
-        int[] prior_young = {1, 0, 9, 0};	//90% of young cards get "good" response
-        int[] prior_mature = {1, 0, 9, 0};	//90% of mature cards get "good" response
+        private int[] priorNew = {5, 0, 5, 0};		//half of new cards are answered correctly
+        private int[] priorYoung = {1, 0, 9, 0};	//90% of young cards get "good" response
+        private int[] priorMature = {1, 0, 9, 0};	//90% of mature cards get "good" response
 
-        String query_base_new =
+        private String queryBaseNew =
                 "select "
                         +   "count() as N, "
                         +   "sum(case when ease=1 then 1 else 0 end) as repeat, "
@@ -521,7 +520,7 @@ public class Stats {
                         +	  "sum(case when ease=3 then 1 else 0 end) as easy "
                         + "from revlog ";
 
-        String query_base_young_mature =
+        private String queryBaseYoungMature =
                 "select "
                         +   "count() as N, "
                         +   "sum(case when ease=1 then 1 else 0 end) as repeat, "
@@ -530,16 +529,16 @@ public class Stats {
                         +	  "sum(case when ease=4 then 1 else 0 end) as easy "
                         + "from revlog ";
 
-        String query_new =
-                query_base_new
+        private String queryNew =
+                queryBaseNew
                         + "where type=0;";
 
-        String query_young =
-                query_base_young_mature
+        private String queryYoung =
+                queryBaseYoungMature
                         + "where type=1 and lastIvl < 21;";
 
-        String query_mature =
-                query_base_young_mature
+        private String queryMature =
+                queryBaseYoungMature
                         + "where type=1 and lastIvl >= 21;";
 
         public EaseClassifier(SQLiteDatabase db) {
@@ -565,9 +564,9 @@ public class Stats {
         private double[][] calculateCumProbabilitiesForNewEasePerCurrentEase() {
             double[][] p = new double[3][];
 
-            p[0] = cumsum(calculateProbabilitiesForNewEaseForCurrentEase(query_new, prior_new));
-            p[1] = cumsum(calculateProbabilitiesForNewEaseForCurrentEase(query_young, prior_young));
-            p[2] = cumsum(calculateProbabilitiesForNewEaseForCurrentEase(query_mature, prior_mature));
+            p[0] = cumsum(calculateProbabilitiesForNewEaseForCurrentEase(queryNew, priorNew));
+            p[1] = cumsum(calculateProbabilitiesForNewEaseForCurrentEase(queryYoung, priorYoung));
+            p[2] = cumsum(calculateProbabilitiesForNewEaseForCurrentEase(queryMature, priorMature));
 
             return p;
         }
@@ -583,9 +582,9 @@ public class Stats {
                     prior[3]
             };
 
-            int n_prior = prior[0] + prior[1] + prior[2] + prior[3];
+            int nPrior = prior[0] + prior[1] + prior[2] + prior[3];
 
-            int n = n_prior;
+            int n = nPrior;
 
             try {
                 cur = db.rawQuery(queryNewEaseCountForCurrentEase, null);
@@ -596,9 +595,9 @@ public class Stats {
                 freqs[2] += cur.getInt(3);          //Good
                 freqs[3] += cur.getInt(4);          //Easy
 
-                int n_query = cur.getInt(0);        //N
+                int nQuery = cur.getInt(0);        //N
 
-                n += n_query;
+                n += nQuery;
 
             } finally {
                 if (cur != null && !cur.isClosed()) {
@@ -627,17 +626,17 @@ public class Stats {
             return 3;
         }
 
-        public Card sim_single_review(Card c, boolean preserve_card) {
-            if(preserve_card)
-                c = c.cloneShallow();
-            return sim_single_review(c);
+        public Card simSingleReview(Card c, boolean preserveCard) {
+            if(preserveCard)
+                c = c.clone();
+            return simSingleReview(c);
         }
 
-        public Card sim_single_review(Card c){
+        public Card simSingleReview(Card c){
 
-            int c_type = c.getC_type();
+            int type = c.getType();
 
-            int outcome = draw(probabilitiesCumulative[c_type]);
+            int outcome = draw(probabilitiesCumulative[type]);
 
             applyOutcomeToCard(c, outcome);
 
@@ -646,92 +645,92 @@ public class Stats {
 
         private void applyOutcomeToCard(Card c, int outcome) {
 
-            int c_type = c.getC_type();
-            int c_ivl = c.getC_ivl();
-            double c_factor = c.getC_factor();
+            int type = c.getType();
+            int ivl = c.getIvl();
+            double factor = c.getFactor();
 
-            if(c_type == 0) {
+            if(type == 0) {
                 if (outcome <= 2)
-                    c_ivl = 1;
+                    ivl = 1;
                 else
-                    c_ivl = 4;
+                    ivl = 4;
             }
             else {
                 switch(outcome) {
                     case 0:
-                        c_ivl = 1;
+                        ivl = 1;
                         break;
                     case 1:
-                        c_ivl *= 1.2;
+                        ivl *= 1.2;
                         break;
                     case 2:
-                        c_ivl *= 1.2 * c_factor;
+                        ivl *= 1.2 * factor;
                         break;
                     case 3:
                     default:
-                        c_ivl *= 1.2 * 2. * c_factor;
+                        ivl *= 1.2 * 2. * factor;
                         break;
                 }
             }
 
-            c.setC_ivl(c_ivl);
+            c.setIvl(ivl);
             c.setCorrect((outcome > 0) ? 1 : 0);
-            //c.setC_type(c_type);
-            //c.setC_ivl(60);
-            //c.setC_factor(c_factor);
+            //c.setTypetype);
+            //c.setIvl(60);
+            //c.setFactor(factor);
         }
     }
 
     public class NewCardSimulator {
 
-        int max_add_per_day=20;
+        private int maxAddPerDay=20;
 
-        int n_added_today = 0;
-        int t_add = 0;
+        private int nAddedToday = 0;
+        private int tAdd = 0;
 
         public int simulateNewCard(Card card) {
-            n_added_today++;
-            int t_elapsed = t_add;	//differs from online
-            if (n_added_today >= max_add_per_day) {
-                t_add++;
-                n_added_today = 0;
+            nAddedToday++;
+            int tElapsed = tAdd;	//differs from online
+            if (nAddedToday >= maxAddPerDay) {
+                tAdd++;
+                nAddedToday = 0;
             }
-            return t_elapsed;
+            return tElapsed;
         }
     }
 
     private class ReviewSimulator {
 
-        SQLiteDatabase db;
-        EaseClassifier classifier;
+        private SQLiteDatabase db;
+        private EaseClassifier classifier;
 
         //TODO: also exists in Review
-        int n_time_bins = Settings.n_time_bins();
-        int time_bin_length = Settings.time_bin_length();
+        private int nTimeBins = Settings.getNTimeBins();
+        private int timeBinLength = Settings.getTimeBinLength();
 
-        int t_max = n_time_bins * time_bin_length;
+        private int tMax = nTimeBins * timeBinLength;
 
-        NewCardSimulator newCardSimulator = new NewCardSimulator();
+        private NewCardSimulator newCardSimulator = new NewCardSimulator();
 
         public ReviewSimulator(SQLiteDatabase db, EaseClassifier classifier) {
             this.db = db;
             this.classifier = classifier;
         }
 
-        public SimulationResult sim_n_reviews() {
+        public SimulationResult simNreviews() {
 
-            SimulationResult simulationResult = new SimulationResult(n_time_bins);
+            SimulationResult simulationResult = new SimulationResult(nTimeBins);
 
-            //n_smooth=1
+            //nSmooth=1
 
             //TODO:
             //Forecasted final state of deck
-            //final_ivl = np.empty((n_smooth, n_cards), dtype='f8')
+            //finalIvl = np.empty((nSmooth, nCards), dtype='f8')
 
             int currentTime = (int) (System.currentTimeMillis() / 1000);
 
-            int today = (int) ((currentTime - Settings.deckCreationTimeStamp()) / Settings.secsPerDay());
-            int mDayCutoff = Settings.deckCreationTimeStamp() + ((today + 1) * Settings.secsPerDay());
+            int today = (int) ((currentTime - Settings.getDeckCreationTimeStamp()) / Settings.getNSecsPerDay());
+            int mDayCutoff = Settings.getDeckCreationTimeStamp() + ((today + 1) * Settings.getNSecsPerDay());
 
             System.out.println("today: " + today);
             System.out.println("todayCutoff: " + mDayCutoff);
@@ -748,7 +747,7 @@ public class Stats {
 
                 Review review = new Review(card, simulationResult, newCardSimulator, classifier, reviews);
 
-                if (review.getT() < t_max)
+                if (review.getT() < tMax)
                     reviews.push(review);
 
                 while (!reviews.isEmpty()) {
@@ -767,43 +766,39 @@ public class Stats {
 
     private class Settings {
         //TODO
-        public int deckCreationTimeStamp() {
+        public int getDeckCreationTimeStamp() {
             return 1445619600;
         }
 
-        public int n_time_bins() {
+        public int getNTimeBins() {
             return 30;
         }
 
-        public int time_bin_length() {
+        public int getTimeBinLength() {
             return 1;
         }
 
-        public int max_reviews_per_day() {
+        public int getMaxReviewsPerDay() {
             return 10000;
         }
 
-        public String db_location() {
-            return "d:\\collection_20151227.sqlite";
-        }
-
-        public long now() {
+        public long getNow() {
             return 1451223980146L;
             //return System.currentTimeMillis();
         }
 
-        public int today() {
-            int currentTime = (int) (now() / 1000);
-            int today = (int) ((currentTime - deckCreationTimeStamp()) / secsPerDay());
+        public int getToday() {
+            int currentTime = (int) (getNow() / 1000);
+            int today = (int) ((currentTime - getDeckCreationTimeStamp()) / getNSecsPerDay());
             return today;
         }
 
-        public int secsPerDay() {
+        public int getNSecsPerDay() {
             return 86400;
         }
 
-        public int todayCutoffSecsFromDeckCreation() {
-            int mDayCutoff = deckCreationTimeStamp() + ((today() + 1) * secsPerDay());
+        public int getTodayCutoffSecsFromDeckCreation() {
+            int mDayCutoff = getDeckCreationTimeStamp() + ((getToday() + 1) * getNSecsPerDay());
             return mDayCutoff;
         }
     }
@@ -855,86 +850,86 @@ public class Stats {
 
     private class SimulationResult {
 
-        int time_bin_length = Settings.time_bin_length();
-        int t_max;
+        private int timeBinLength = Settings.getTimeBinLength();
+        private int tMax;
 
         // Forecasted number of reviews
         //   0 = Learn
         //   1 = Young
         //   2 = Mature
         //   3 = Relearn
-        int[][] n_reviews;
+        private int[][] nReviews;
 
         // Forecasted number of cards per state
         //   0 = New
         //   1 = Young
         //   2 = Mature
-        int[][] n_in_state;
+        private int[][] nInState;
 
-        public SimulationResult(int n_time_bins) {
-            n_reviews = ArrayUtils.createIntMatrix(4, n_time_bins);
-            n_in_state = ArrayUtils.createIntMatrix(3, n_time_bins);
+        public SimulationResult(int nTimeBins) {
+            nReviews = ArrayUtils.createIntMatrix(4, nTimeBins);
+            nInState = ArrayUtils.createIntMatrix(3, nTimeBins);
 
-            t_max = n_time_bins * time_bin_length;
+            tMax = nTimeBins * timeBinLength;
         }
 
-        public SimulationResult(int[][] n_reviews, int[][] n_in_state) {
-            this.n_reviews = n_reviews;
-            this.n_in_state = n_in_state;
+        public SimulationResult(int[][] nReviews, int[][] nInState) {
+            this.nReviews = nReviews;
+            this.nInState = nInState;
         }
 
         public int[][] getNReviews() {
-            return n_reviews;
+            return nReviews;
         }
 
         public int[][] getNInState() {
-            return n_in_state;
+            return nInState;
         }
 
-        public int nReviewsDoneToday(int t_elapsed) {
+        public int nReviewsDoneToday(int tElapsed) {
             //This excludes new cards and relearns
-            return n_reviews[1][t_elapsed / time_bin_length] +
-                    n_reviews[2][t_elapsed / time_bin_length];
+            return nReviews[1][tElapsed / timeBinLength] +
+                    nReviews[2][tElapsed / timeBinLength];
         }
 
         public void incrementNInState(int cardType, int t) {
-            n_in_state[cardType][t]++;
+            nInState[cardType][t]++;
         }
 
         public void incrementNReviews(int cardType, int t) {
-            n_reviews[cardType][t]++;
+            nReviews[cardType][t]++;
         }
 
-        public void updateNInState(Card card, int t_from, int t_to) {
-            for(int t = t_from / time_bin_length; t < t_to / time_bin_length; t++)
-                if(t < t_max) {
-                    n_in_state[card.getC_type()][t]++;
+        public void updateNInState(Card card, int tFrom, int tTo) {
+            for(int t = tFrom / timeBinLength; t < tTo / timeBinLength; t++)
+                if(t < tMax) {
+                    nInState[card.getType()][t]++;
                 }
         }
     }
 
     private class Review {
 
-        int max_reviews_per_day = Settings.max_reviews_per_day();
+        private int maxReviewsPerDay = Settings.getMaxReviewsPerDay();
 
-        int n_time_bins = Settings.n_time_bins();
-        int time_bin_length = Settings.time_bin_length();
+        private int nTimeBins = Settings.getNTimeBins();
+        private int timeBinLength = Settings.getTimeBinLength();
 
-        int t_max = n_time_bins * time_bin_length;
+        private int tMax = nTimeBins * timeBinLength;
 
-        int t_elapsed;
-        Card card;
-        SimulationResult simulationResult;
-        EaseClassifier classifier;
-        Stack<Review> reviews;
+        private int tElapsed;
+        private Card card;
+        private SimulationResult simulationResult;
+        private EaseClassifier classifier;
+        private Stack<Review> reviews;
 
-        public Review (Card card, SimulationResult simulationResult, EaseClassifier classifier, Stack<Review> reviews, int t_elapsed) {
+        private Review (Card card, SimulationResult simulationResult, EaseClassifier classifier, Stack<Review> reviews, int tElapsed) {
             this.card = card;
             this.simulationResult = simulationResult;
             this.classifier = classifier;
             this.reviews = reviews;
 
-            this.t_elapsed = t_elapsed;
+            this.tElapsed = tElapsed;
         }
 
         public Review (Card card, SimulationResult simulationResult, NewCardSimulator newCardSimulator, EaseClassifier classifier, Stack<Review> reviews) {
@@ -944,49 +939,49 @@ public class Stats {
             this.reviews = reviews;
 
             //# Rate-limit new cards by shifting starting time
-            if (card.getC_type() == 0)
-                t_elapsed = newCardSimulator.simulateNewCard(card);
+            if (card.getType() == 0)
+                tElapsed = newCardSimulator.simulateNewCard(card);
             else
-                t_elapsed = card.getC_due();
+                tElapsed = card.getDue();
 
             // Set state of card between start and first review
-            this.simulationResult.updateNInState(card, 0, t_elapsed);
+            this.simulationResult.updateNInState(card, 0, tElapsed);
         }
 
         public void simulateReview() {
             //Set state of card for current review
-            simulationResult.incrementNInState(card.getC_type(), t_elapsed / time_bin_length);
+            simulationResult.incrementNInState(card.getType(), tElapsed / timeBinLength);
 
-            if(card.getC_type() == 0 || simulationResult.nReviewsDoneToday(t_elapsed) < max_reviews_per_day) {
+            if(card.getType() == 0 || simulationResult.nReviewsDoneToday(tElapsed) < maxReviewsPerDay) {
                 // Update the forecasted number of reviews
-                simulationResult.incrementNReviews(card.getC_type(), t_elapsed / time_bin_length);
+                simulationResult.incrementNReviews(card.getType(), tElapsed / timeBinLength);
 
                 // Simulate response
-                card = classifier.sim_single_review(card, true);
+                card = classifier.simSingleReview(card, true);
 
                 // If card failed, update "relearn" count
                 if(card.getCorrect() == 0)
-                    simulationResult.incrementNReviews(3, t_elapsed / time_bin_length);
+                    simulationResult.incrementNReviews(3, tElapsed / timeBinLength);
 
                 // Set state of card between current and next review
-                simulationResult.updateNInState(card, t_elapsed + 1, t_elapsed + card.getC_ivl());
+                simulationResult.updateNInState(card, tElapsed + 1, tElapsed + card.getIvl());
 
                 // Advance time to next review
-                t_elapsed += card.getC_ivl();
+                tElapsed += card.getIvl();
             }
             else {
                 // Advance time to next review (max. #reviews reached for this day)
-                t_elapsed += 1;
+                tElapsed += 1;
             }
 
-            if (t_elapsed < t_max) {
-                Review review = new Review(card, simulationResult, classifier, reviews, t_elapsed);
+            if (tElapsed < tMax) {
+                Review review = new Review(card, simulationResult, classifier, reviews, tElapsed);
                 this.reviews.push(review);
             }
         }
 
         public int getT() {
-            return t_elapsed;
+            return tElapsed;
         }
     }
 
