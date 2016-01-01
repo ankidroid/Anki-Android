@@ -66,7 +66,10 @@ public class ChartBuilder {
         Stats stats = new Stats(mCollectionData, mIsWholeCollection);
         switch (mChartType){
             case FORECAST:
-                stats.calculateDue(mType);
+                //JPR
+                //stats.calculateDue(mType);
+                stats.calculateDue(mChartView.getContext(), mType);
+                //JPR end
                 break;
             case REVIEW_COUNT:
                 stats.calculateDone(mType, true);

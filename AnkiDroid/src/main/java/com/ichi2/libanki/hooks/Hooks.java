@@ -58,6 +58,11 @@ public class Hooks {
         if (prefs.getBoolean("convertFenText", false)) {
             ChessFilter.install(this);
         }
+        //JPR
+        if (prefs.getBoolean("advanced_statistics_enabled", false)) {
+            AdvancedStatistics.install(this);
+        }
+        //JPR end
     }
 
 

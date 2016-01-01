@@ -48,6 +48,7 @@ import android.view.WindowManager.BadTokenException;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.libanki.hooks.AdvancedStatistics;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
 import com.ichi2.ui.SeekBarPreference;
@@ -449,6 +450,15 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         HebrewFixFilter.uninstall(Hooks.getInstance(getApplicationContext()));
                     }
                     break;
+                //JPR
+                case "advanced_statistics_enabled":
+                    if (((CheckBoxPreference) pref).isChecked()) {
+                        AdvancedStatistics.install(Hooks.getInstance(getApplicationContext()));
+                    } else {
+                        AdvancedStatistics.uninstall(Hooks.getInstance(getApplicationContext()));
+                    }
+                    break;
+                //JPR end
                 case "showProgress":
                     getCol().getConf().put("dueCounts", ((CheckBoxPreference) pref).isChecked());
                     getCol().setMod();
