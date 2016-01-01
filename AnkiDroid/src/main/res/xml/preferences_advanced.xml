@@ -128,25 +128,12 @@
                 android:key="double_scrolling"
                 android:summary="@string/double_scrolling_gap_summ"
                 android:title="@string/double_scrolling_gap" />
+            <Preference
+                android:key="advanced_statistics_link"
+                android:title="@string/advanced_statistics_title"/>
         </PreferenceCategory>
-        <PreferenceCategory
-            android:key="category_advanced_statistics"
-            android:title="@string/pref_cat_advanced_statistics" >
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="advanced_statistics_enabled"
-                android:summary="@string/enable_advanced_statistics_summ"
-                android:title="@string/enable_advanced_statistics_title"/>
-            <com.ichi2.ui.SeekBarPreference
-                android:defaultValue="1"
-                android:dependency="advanced_statistics_enabled"
-                android:key="advanced_forecast_stats_mc_n_iterations"
-                android:max="20"
-                android:summary="@string/preference_summary_literal"
-                android:title="@string/advanced_forecast_stats_mc_n_iterations_title"
-                app:interval="1"
-                app:min="1" />
-        </PreferenceCategory>
+
+
     <Preference
         android:key="about_dialog_preference"
         android:title="@string/about_title">

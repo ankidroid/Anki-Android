@@ -20,6 +20,9 @@
 --><resources>
     <!-- generic strings -->
     <string name="disabled">Disabled</string>
+    <!-- JPR -->
+    <string name="enabled">Enabled</string>
+    <!-- JPR end -->
     <!-- preferences.xml categories-->
     <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">General settings</string>
@@ -141,7 +144,7 @@
     <string name="enable_api_title">Enable AnkiDroid API</string>
     <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
     <!-- Advanced statistics settings -->
-    <string name="pref_cat_advanced_statistics">Advanced statistics</string>
+    <string name="advanced_statistics_title">Advanced statistics</string>
     <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
     <string name="enable_advanced_statistics_summ">Display forecast statistics based on a simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
     <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
