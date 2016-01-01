@@ -20,6 +20,9 @@ package com.ichi2.libanki.sync;
 
 
 
+import android.content.SharedPreferences;
+import android.net.Uri;
+
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
@@ -448,6 +451,13 @@ public class HttpSyncer {
 
 
     public String syncURL() {
+        // Allow user to specify custom sync server
+        SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
+        if (userPreferences!= null && userPreferences.getBoolean("useCustomSyncServer", false)) {
+            Uri syncBase = Uri.parse(userPreferences.getString("syncBaseUrl", Consts.SYNC_BASE));
+            return syncBase.buildUpon().appendPath("sync").toString() + "/";
+        }
+        // Usual case
         return Consts.SYNC_BASE + "sync/";
     }
 }

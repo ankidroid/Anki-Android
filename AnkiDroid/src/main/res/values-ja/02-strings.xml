@@ -105,7 +105,7 @@
   <plurals name="timebox_reached_minutes">
     <item quantity="other">%1$d分</item>
   </plurals>
-  <string name="studyoptions_welcome_title">AnkiDroid へようこそ</string>
+  <string name="studyoptions_welcome_title">AnkiDroidへようこそ</string>
   <string name="fact_adder_intent_title">AnkiDroid カード</string>
   <string name="card_editor_add_card">ノートを追加</string>
   <string name="card_editor_copy_card">カードをコピー</string>

@@ -122,7 +122,7 @@
   <string name="studyoptions_no_cards_due">今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
   <string name="sd_card_not_mounted">デバイスストレージがマウントされていません</string>
   <string name="button_sync">同期</string>
-  <string name="cancel_sync_confirm">同期をキャンセルしますか？</string>
+  <string name="cancel_sync_confirm">同期をキャンセルしてもよろしいですか？</string>
   <string name="continue_sync">同期を続行</string>
   <string name="sync_cancelled">同期がキャンセルされました</string>
   <string name="sync_cancel_message">キャンセルしています&#8230;\nやや時間がかかることがあります</string>

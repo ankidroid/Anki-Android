@@ -35,6 +35,9 @@
             android:key="force_full_sync"
             android:title="@string/force_full_sync_title"
             android:summary="@string/force_full_sync_summary" />
+        <Preference
+            android:key="custom_sync_server_link"
+            android:title="@string/custom_sync_server_title"/>
         <PreferenceCategory android:title="@string/pref_cat_performance" >
             <com.ichi2.ui.SeekBarPreference
                 android:defaultValue="8"

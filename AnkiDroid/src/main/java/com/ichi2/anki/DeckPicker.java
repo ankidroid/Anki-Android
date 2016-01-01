@@ -439,8 +439,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 onSdCardNotMounted();
             } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(this)) {
                 // AnkiDroid directory inaccessible
-                Intent prefIntent = CompatHelper.getCompat().getAdvancedPreferencesIntent(this);
-                startActivityForResultWithoutAnimation(prefIntent, REQUEST_PATH_UPDATE);
+                Intent i = CompatHelper.getCompat().getPreferenceSubscreenIntent(this, "com.ichi2.anki.prefs.advanced");
+                startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE);
                 Toast.makeText(this, R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
             } else {
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);

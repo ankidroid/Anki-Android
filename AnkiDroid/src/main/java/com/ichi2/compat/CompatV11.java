@@ -38,12 +38,13 @@ public class CompatV11 extends CompatV10 implements Compat {
     }
 
     @Override
-    public Intent getAdvancedPreferencesIntent(Context context) {
+    public Intent getPreferenceSubscreenIntent(Context context, String subscreen) {
         Intent i = new Intent(context, Preferences.class);
         i.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, "com.ichi2.anki.Preferences$SettingsFragment");
         Bundle extras = new Bundle();
-        extras.putString("subscreen", "com.ichi2.anki.prefs.advanced");
+        extras.putString("subscreen", subscreen);
         i.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS, extras);
+        i.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
         return i;
     }
 }

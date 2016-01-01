@@ -181,6 +181,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             // syncAccount's summary can change while preferences are still open (user logs
             // in from preferences screen), so we need to update it here.
             updatePreference(prefs, "syncAccount", this);
+            updatePreference(prefs, "custom_sync_server_link", this);
         }
     }
 
@@ -282,6 +283,16 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         }
                     }
                 });
+                // Custom sync server option
+                Preference customSyncServerPreference = screen.findPreference("custom_sync_server_link");
+                customSyncServerPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                    public boolean onPreferenceClick(Preference preference) {
+                        Intent i = CompatHelper.getCompat().getPreferenceSubscreenIntent(Preferences.this,
+                                "com.ichi2.anki.prefs.custom_sync_server");
+                        startActivity(i);
+                        return true;
+                    }
+                });
                 // Force full sync option
                 Preference fullSyncPreference = screen.findPreference("force_full_sync");
                 fullSyncPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -295,6 +306,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 });
                 // Workaround preferences
                 removeUnnecessaryAdvancedPrefs(screen);
+                break;
+            case "com.ichi2.anki.prefs.custom_sync_server":
+                getSupportActionBar().setTitle(R.string.custom_sync_server_title);
+                listener.addPreferencesFromResource(R.xml.preferences_custom_sync_server);
                 break;
         }
     }
@@ -374,7 +389,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         CharSequence s = pref.getSummary();
         mOriginalSumarries.put(pref.getKey(), (s != null) ? s.toString() : "");
         // Update summary
-
         updateSummary(pref);
     }
 
@@ -515,8 +529,15 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         if (pref == null || pref.getKey() == null) {
             return;
         }
+        // Handle special cases
         if (pref.getKey().equals("about_dialog_preference")) {
             pref.setSummary(getResources().getString(R.string.about_version) + " " + VersionUtils.getPkgVersionName());
+        } else if (pref.getKey().equals("custom_sync_server_link")) {
+            if (!AnkiDroidApp.getSharedPrefs(this).getBoolean("useCustomSyncServer", false)) {
+                pref.setSummary(R.string.disabled);
+            } else {
+                pref.setSummary(AnkiDroidApp.getSharedPrefs(this).getString("syncBaseUrl", ""));
+            }
         }
         // Get value text
         String value;
@@ -709,6 +730,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             // syncAccount's summary can change while preferences are still open (user logs
             // in from preferences screen), so we need to update it here.
             ((Preferences) getActivity()).updatePreference(prefs, "syncAccount", this);
+            ((Preferences) getActivity()).updatePreference(prefs, "custom_sync_server_link", this);
         }
 
         @Override
