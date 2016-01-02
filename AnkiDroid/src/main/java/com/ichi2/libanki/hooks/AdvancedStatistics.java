@@ -190,7 +190,7 @@ public class AdvancedStatistics extends Hook  {
                 chunk = 7;
                 break;
             case Stats.TYPE_LIFE:
-                end = -1;
+                end = 24;
                 chunk = 30;
                 break;
         }
@@ -198,7 +198,7 @@ public class AdvancedStatistics extends Hook  {
         ArrayList<int[]> dues = new ArrayList<int[]>();
 
         EaseClassifier classifier = new EaseClassifier(mCol.getDb().getDatabase());
-        ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb().getDatabase(), classifier);
+        ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb().getDatabase(), classifier, end, chunk);
 
         SimulationResult simulationResult = reviewSimulator.simNreviews();
 
@@ -219,7 +219,7 @@ public class AdvancedStatistics extends Hook  {
         if (dues.size() == 0 || dues.get(0)[0] > 0) {
             dues.add(0, new int[] { 0, 0, 0, 0, 0 });
         }
-        if (end == -1 && dues.size() < 2) {
+        if (type == Stats.TYPE_LIFE && dues.size() < 2) {
             end = 31;
         }
         if (type != Stats.TYPE_LIFE && dues.get(dues.size() - 1)[0] < end) {
@@ -543,21 +543,26 @@ public class AdvancedStatistics extends Hook  {
         private EaseClassifier classifier;
 
         //TODO: also exists in Review
-        private int nTimeBins = Settings.getNTimeBins();
-        private int timeBinLength = Settings.getTimeBinLength();
+        private int nTimeBins;
+        private int timeBinLength;
 
-        private int tMax = nTimeBins * timeBinLength;
+        private int tMax;
 
         private NewCardSimulator newCardSimulator = new NewCardSimulator();
 
-        public ReviewSimulator(SQLiteDatabase db, EaseClassifier classifier) {
+        public ReviewSimulator(SQLiteDatabase db, EaseClassifier classifier, int nTimeBins, int timeBinLength) {
             this.db = db;
             this.classifier = classifier;
+
+            this.nTimeBins = nTimeBins;
+            this.timeBinLength = timeBinLength;
+
+            this.tMax = this.nTimeBins * this.timeBinLength;
         }
 
         public SimulationResult simNreviews() {
 
-            SimulationResult simulationResult = new SimulationResult(nTimeBins);
+            SimulationResult simulationResult = new SimulationResult(nTimeBins, timeBinLength);
 
             //nSmooth=1
 
@@ -583,7 +588,7 @@ public class AdvancedStatistics extends Hook  {
             //3. Do any combination of these
             for (Card card : deck) {
 
-                Review review = new Review(card, simulationResult, newCardSimulator, classifier, reviews);
+                Review review = new Review(card, simulationResult, newCardSimulator, classifier, reviews, nTimeBins, timeBinLength);
 
                 if (review.getT() < tMax)
                     reviews.push(review);
@@ -606,14 +611,6 @@ public class AdvancedStatistics extends Hook  {
         //TODO
         public int getDeckCreationTimeStamp() {
             return 1445619600;
-        }
-
-        public int getNTimeBins() {
-            return 30;
-        }
-
-        public int getTimeBinLength() {
-            return 1;
         }
 
         public int getMaxReviewsPerDay() {
@@ -688,7 +685,8 @@ public class AdvancedStatistics extends Hook  {
 
     private class SimulationResult {
 
-        private int timeBinLength = Settings.getTimeBinLength();
+        private int nTimeBins;
+        private int timeBinLength;
         private int tMax;
 
         // Forecasted number of reviews
@@ -704,16 +702,13 @@ public class AdvancedStatistics extends Hook  {
         //   2 = Mature
         private int[][] nInState;
 
-        public SimulationResult(int nTimeBins) {
+        public SimulationResult(int nTimeBins, int timeBinLength) {
             nReviews = ArrayUtils.createIntMatrix(4, nTimeBins);
             nInState = ArrayUtils.createIntMatrix(3, nTimeBins);
 
+            this.nTimeBins = nTimeBins;
+            this.timeBinLength = timeBinLength;
             tMax = nTimeBins * timeBinLength;
-        }
-
-        public SimulationResult(int[][] nReviews, int[][] nInState) {
-            this.nReviews = nReviews;
-            this.nInState = nInState;
         }
 
         public int[][] getNReviews() {
@@ -740,7 +735,7 @@ public class AdvancedStatistics extends Hook  {
 
         public void updateNInState(Card card, int tFrom, int tTo) {
             for(int t = tFrom / timeBinLength; t < tTo / timeBinLength; t++)
-                if(t < tMax) {
+                if(t < nTimeBins) {
                     nInState[card.getType()][t]++;
                 }
         }
@@ -750,10 +745,9 @@ public class AdvancedStatistics extends Hook  {
 
         private int maxReviewsPerDay = Settings.getMaxReviewsPerDay();
 
-        private int nTimeBins = Settings.getNTimeBins();
-        private int timeBinLength = Settings.getTimeBinLength();
-
-        private int tMax = nTimeBins * timeBinLength;
+        int nTimeBins;
+        int timeBinLength;
+        int tMax;
 
         private int tElapsed;
         private Card card;
@@ -761,20 +755,30 @@ public class AdvancedStatistics extends Hook  {
         private EaseClassifier classifier;
         private Stack<Review> reviews;
 
-        private Review (Card card, SimulationResult simulationResult, EaseClassifier classifier, Stack<Review> reviews, int tElapsed) {
+        private Review (Card card, SimulationResult simulationResult, EaseClassifier classifier, Stack<Review> reviews, int tElapsed, int nTimeBins, int timeBinLength) {
             this.card = card;
             this.simulationResult = simulationResult;
             this.classifier = classifier;
             this.reviews = reviews;
 
             this.tElapsed = tElapsed;
+
+            this.nTimeBins = nTimeBins;
+            this.timeBinLength = timeBinLength;
+
+            this.tMax = this.nTimeBins * this.timeBinLength;
         }
 
-        public Review (Card card, SimulationResult simulationResult, NewCardSimulator newCardSimulator, EaseClassifier classifier, Stack<Review> reviews) {
+        public Review (Card card, SimulationResult simulationResult, NewCardSimulator newCardSimulator, EaseClassifier classifier, Stack<Review> reviews, int nTimeBins, int timeBinLength) {
             this.card = card;
             this.simulationResult = simulationResult;
             this.classifier = classifier;
             this.reviews = reviews;
+
+            this.nTimeBins = nTimeBins;
+            this.timeBinLength = timeBinLength;
+
+            this.tMax = this.nTimeBins * this.timeBinLength;
 
             //# Rate-limit new cards by shifting starting time
             if (card.getType() == 0)
@@ -790,7 +794,7 @@ public class AdvancedStatistics extends Hook  {
             //Set state of card for current review
             simulationResult.incrementNInState(card.getType(), tElapsed / timeBinLength);
 
-            if(card.getType() == 0 || simulationResult.nReviewsDoneToday(tElapsed) < maxReviewsPerDay) {
+            if(card.getType() == 0 || simulationResult.nReviewsDoneToday(tElapsed) < maxReviewsPerDay * timeBinLength) {
                 // Update the forecasted number of reviews
                 simulationResult.incrementNReviews(card.getType(), tElapsed / timeBinLength);
 
@@ -813,7 +817,7 @@ public class AdvancedStatistics extends Hook  {
             }
 
             if (tElapsed < tMax) {
-                Review review = new Review(card, simulationResult, classifier, reviews, tElapsed);
+                Review review = new Review(card, simulationResult, classifier, reviews, tElapsed, nTimeBins, timeBinLength);
                 this.reviews.push(review);
             }
         }
