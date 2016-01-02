@@ -69,7 +69,7 @@
   <string name="card_details_answer">Antwort</string>
   <string name="card_details_due">Fällig</string>
   <string name="card_details_tags">Schlagworte</string>
-  <string name="card_browser_filtering_cards">Filtere Karten&#8230; \nAbbrechen mit \"Zurück\"</string>
+  <string name="card_browser_filtering_cards">Filtere Karten&#8230; \nAbbrechen mit »Zurück«</string>
   <string-array name="card_browser_order_labels">
     <item>Keine Sortierung (schneller)</item>
     <item>Nach Sortierfeld</item>

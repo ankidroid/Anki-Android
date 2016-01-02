@@ -77,7 +77,7 @@
   <string name="image_zoom">Image zoom</string>
   <string name="button_size">Розмір кнопки відповіді</string>
   <string name="card_browser_font_size">Card browser font scaling</string>
-  <string name="col_path">Шлях до колекції</string>
+  <string name="col_path">AnkiDroid directory</string>
   <string name="fullscreen_review">Повноекранний режим</string>
   <string name="full_screen_off">Off</string>
   <string name="full_screen_system">Hide the system bars</string>

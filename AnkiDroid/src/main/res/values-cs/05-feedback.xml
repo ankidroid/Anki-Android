@@ -46,6 +46,6 @@
   <string name="feedback_auto_toast_text">V AnkiDroid došlo k problému; zpráva je odesílána vývojářům...</string>
   <string name="feedback_manual_toast_text">V AnkiDroid došlo k problému. Probíhá generování zprávy...</string>
   <string name="feedback_copy_debug">Zkopírovat ladící informace</string>
-  <string name="feedback_report">Report</string>
+  <string name="feedback_report">Nahlásit</string>
   <string name="feedback_report_automatically">Automaticky odesílat zprávy o chybách</string>
 </resources>

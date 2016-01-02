@@ -3,7 +3,6 @@ package com.ichi2.compat;
 
 import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
-import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -17,7 +16,6 @@ import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
@@ -32,16 +30,6 @@ public class CompatV16 extends CompatV15 implements Compat {
         db.disableWriteAheadLogging();
     }
 
-    public boolean isWriteAheadLoggingEnabled(SQLiteDatabase db) {
-        return db.isWriteAheadLoggingEnabled();
-    }
-
-    /*
-     *  Return the input string in a form suitable for display on a HTML page.
-     *
-     * @param txt Text to be cleaned.
-     * @return The input text, HTML-escpaped
-    */
     @Override
     public String detagged(String txt) {
         return Html.escapeHtml(txt);

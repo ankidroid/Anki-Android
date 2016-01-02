@@ -178,10 +178,10 @@
     <item quantity="other">%s sekund</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="one">%s minuta</item>
-    <item quantity="two">%s minuti</item>
-    <item quantity="few">%s minute</item>
-    <item quantity="other">%s minut</item>
+    <item quantity="one">%s minuti</item>
+    <item quantity="two">%s-h minutah</item>
+    <item quantity="few">%s-h minutah</item>
+    <item quantity="other">%s-h minutah</item>
   </plurals>
   <plurals name="time_span_hours">
     <item quantity="one">%s ura</item>

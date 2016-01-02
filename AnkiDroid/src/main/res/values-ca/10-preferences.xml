@@ -77,7 +77,7 @@
   <string name="image_zoom">Zoom d\'imatge</string>
   <string name="button_size">Mida de botó de resposta</string>
   <string name="card_browser_font_size">Tamany de lletra al cercador de targetes</string>
-  <string name="col_path">Camí de la col·lecció</string>
+  <string name="col_path">AnkiDroid directory</string>
   <string name="fullscreen_review">Mode de pantalla completa</string>
   <string name="full_screen_off">Off</string>
   <string name="full_screen_system">Hide the system bars</string>

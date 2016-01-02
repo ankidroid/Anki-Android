@@ -77,7 +77,7 @@
   <string name="image_zoom">Afbeelding zoom</string>
   <string name="button_size">Grootte antwoordknop</string>
   <string name="card_browser_font_size">Lettertypegrootte aanpassen van kaartverkenner</string>
-  <string name="col_path">Pad van collecties</string>
+  <string name="col_path">AnkiDroid directory</string>
   <string name="fullscreen_review">Volledig schermmodus</string>
   <string name="full_screen_off">Uit</string>
   <string name="full_screen_system">De systeembalken verbergen</string>

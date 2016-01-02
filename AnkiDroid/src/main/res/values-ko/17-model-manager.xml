@@ -24,8 +24,8 @@
   <string name="model_editor_label">Manage fields</string>
   <string name="toast_last_model">You cannot delete your last model</string>
   <string name="toast_last_field">Note types must have at least one field</string>
-  <string name="toast_empty_name">You must enter a name</string>
-  <string name="toast_duplicate_field">Field name already used</string>
+  <string name="toast_empty_name">이름을 입력하셔야 합니다.</string>
+  <string name="toast_duplicate_field">필드 이름이 이미 사용 중 입니다.</string>
   <string name="toast_out_of_range">You must enter a valid value</string>
   <plurals name="model_browser_types_available">
     <item quantity="other">%d note types available</item>

@@ -2,14 +2,15 @@
 package com.ichi2.compat;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.support.v4.app.TaskStackBuilder;
 
 import com.ichi2.anki.AnkiActivity;
+import com.ichi2.anki.Preferences;
 
 import timber.log.Timber;
 
@@ -36,18 +37,14 @@ public class CompatV11 extends CompatV10 implements Compat {
         db.rawQuery("PRAGMA journal_mode = DELETE", null);
     }
 
-    public boolean isWriteAheadLoggingEnabled(SQLiteDatabase db) {
-        Cursor cursor = null;
-        try {
-            cursor = db.rawQuery("pragma journal_mode", null);
-            if (!cursor.moveToNext()) {
-                throw new SQLException("No result for query: pragma journal_mode");
-            }
-            return cursor.getString(0).toLowerCase().equals("wal");
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
+    @Override
+    public Intent getPreferenceSubscreenIntent(Context context, String subscreen) {
+        Intent i = new Intent(context, Preferences.class);
+        i.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, "com.ichi2.anki.Preferences$SettingsFragment");
+        Bundle extras = new Bundle();
+        extras.putString("subscreen", subscreen);
+        i.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS, extras);
+        i.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
+        return i;
     }
 }

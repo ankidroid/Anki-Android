@@ -57,7 +57,7 @@
   <string name="pref_cat_performance">パフォーマンス</string>
   <string name="pref_cat_workarounds">回避策</string>
   <string name="pref_cat_plugins">プラグイン</string>
-  <string name="about_title">AnkiDroid について</string>
+  <string name="about_title">AnkiDroidについて</string>
   <string name="about_version">バージョン：</string>
   <string name="whiteboard_stroke_width">描かれる線の太さ</string>
   <string name="whiteboard_black">黒色の線</string>
@@ -77,7 +77,7 @@
   <string name="image_zoom">画像の拡大・縮小</string>
   <string name="button_size">解答表示ボタン・回答ボタンのサイズ</string>
   <string name="card_browser_font_size">ブラウザ用フォントサイズ調整</string>
-  <string name="col_path">コレクションの保存先</string>
+  <string name="col_path">AnkiDroidディレクトリ</string>
   <string name="fullscreen_review">フルスクリーンモード</string>
   <string name="full_screen_off">オフ</string>
   <string name="full_screen_system">ステータスバー（通知バー）を隠す</string>
@@ -113,12 +113,12 @@
   <string name="fix_hebrew_instructions">この設定は、ヘブライ語を表示するために、AndroidのRTLアルゴリズムをバイパスします\n\nこのが機能を使うために、フォント（Tohu.ttf）をダウンロードして手動で:\n%s/fonts/\n\nへコピーする必要があります。カードを変更する必要はありません。</string>
   <string name="fix_hebrew_download_font">フォントをダウンロードします。</string>
   <string name="default_font">既定のフォント</string>
-  <string name="override_font">既定フォントの適用</string>
+  <string name="override_font">既定のフォントの適用範囲</string>
   <string name="language">言語</string>
   <string name="language_system">システム言語</string>
   <string name="notification_pref">通知</string>
   <string name="notification_pref_title">通知のタイミング</string>
-  <string name="never_notify">通知なし</string>
+  <string name="never_notify">通知しない</string>
   <string name="notify_when_pending">待受状態（AnkiDroidを表示していない間に進行していたデータ処理（例: 同期、バックアップ）が完了し、ユーザーが操作を再開できる状態）</string>
   <string name="notification_minimum_cards_due">待受状態の時と、 課題のカードが%d枚を超えている時</string>
   <string name="notification_minimum_cards_due_vibrate">振動で通知</string>
@@ -132,8 +132,8 @@
   <string name="select_locale_title">言語を選択</string>
   <string name="safe_display">安全表示モード</string>
   <string name="safe_display_summ">アニメーションを無効化し、より安全な方法で描画します。電子ペーパーや古い機器でカスタムフォントを使用する際にお試しください</string>
-  <string name="vertical_centering">中央揃え</string>
-  <string name="vertical_centering_summ">コンテンツを垂直方向に中段揃え</string>
+  <string name="vertical_centering">上下中央揃え</string>
+  <string name="vertical_centering_summ">コンテンツを垂直方向に中央揃えします</string>
   <string name="pref_backup_max">保管するバックアップの世代数</string>
   <string name="show_estimates">ボタン上に時間を表示</string>
   <string name="show_estimates_summ">回答ボタン上に、次の復習間隔を表示します</string>
@@ -208,7 +208,7 @@
   </plurals>
   <string name="deck_conf_set_subdecks_title">全てのサブデッキに適用</string>
   <string name="deck_conf_set_subdecks_message">現在のオプショングループをすべてのサブデッキに適用しますか？</string>
-  <string name="pref_browser_editor_font">閲覧時と編集時のフォント</string>
+  <string name="pref_browser_editor_font">ブラウザとノート編集のフォント</string>
   <string name="deck_conf_cram_filter">フィルター</string>
   <string name="deck_conf_cram_options">オプション</string>
   <string name="deck_conf_cram_search">フィルターの抽出条件</string>

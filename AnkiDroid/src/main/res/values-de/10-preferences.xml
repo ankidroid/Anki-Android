@@ -63,7 +63,7 @@
   <string name="whiteboard_black">Schwarzer Pinsel</string>
   <string name="whiteboard_black_summ">Spart Hauptspeicher, außer im Nachtmodus</string>
   <string name="write_answers_disable">Eingeben der Antwort ausschalten</string>
-  <string name="write_answers_disable_summ">Verhindert, dass die Tastatur bei Karten mit \"Antwort eingeben\" Feldern erscheint</string>
+  <string name="write_answers_disable_summ">Verhindert, dass die Tastatur bei Karten mit »Antwort eingeben« Feldern erscheint</string>
   <string name="use_input_tag">Antwort in Karte eintippen</string>
   <string name="use_input_tag_summ">Ein Texteingabefeld in der Karte benutzen, in das die Antwort getippt werden kann</string>
   <string name="text_selection_click">Abhilfe für langes Drücken</string>
@@ -77,7 +77,7 @@
   <string name="image_zoom">Bild-Zoom</string>
   <string name="button_size">Größe der Antwortschaltflächen</string>
   <string name="card_browser_font_size">Schriftskalierung in der Kartenübersicht</string>
-  <string name="col_path">Sammlungs-Pfad</string>
+  <string name="col_path">AnkiDroid directory</string>
   <string name="fullscreen_review">Vollbildmodus</string>
   <string name="full_screen_off">Aus</string>
   <string name="full_screen_system">Systemzeilen verbergen</string>

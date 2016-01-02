@@ -50,19 +50,19 @@
     <item>Doporučená odpověď (zelená)</item>
     <item>Odpovědět lépe, než bylo doporučeno</item>
     <item>Zpět</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Upravit poznámku</item>
+    <item>Označit poznámku</item>
     <item>Vyhledávání výrazu</item>
     <item>Přeskočit kartu</item>
-    <item>Odložit kartu</item>
-    <item>Delete note</item>
+    <item>Vyřadit kartu</item>
+    <item>Odstranit poznámku</item>
     <item>Přehrát multimédia</item>
     <item>Přerušit učení</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Přeskočit poznámku</item>
+    <item>Vyřadit poznámku</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Odložit kartu</item>
+    <item>Vyřadit kartu</item>
     <item>Pouze štítky</item>
   </string-array>
   <string-array name="new_order_labels">
@@ -78,7 +78,7 @@
     <item>V pořádí přidání</item>
     <item>Podle opakování</item>
     <item>Naposledy přidané první</item>
-    <item>Relative overdueness</item>
+    <item>Relativní opožděnost</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Použít aktuální balíček</item>

@@ -120,7 +120,6 @@ public class Reviewer extends AbstractFlashcardViewer {
             case R.id.action_mark_card:
                 Timber.i("Reviewer:: Mark button pressed");
                 onMark(mCurrentCard);
-                refreshActionBar();
                 break;
 
             case R.id.action_replay:
@@ -291,7 +290,6 @@ public class Reviewer extends AbstractFlashcardViewer {
 	        }
 	        if (keyPressed == '*') {
                 onMark(mCurrentCard);
-                refreshActionBar();
 	            return true;
 	        }
 	        if (keyPressed == '-') {

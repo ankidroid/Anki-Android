@@ -77,7 +77,7 @@
   <string name="image_zoom">Bild-zoom</string>
   <string name="button_size">Storlek på svarsknapp</string>
   <string name="card_browser_font_size">Typsnittsstorlek i kortbläddrare</string>
-  <string name="col_path">Sökväg för samling</string>
+  <string name="col_path">AnkiDroid directory</string>
   <string name="fullscreen_review">Fullskärmsläge</string>
   <string name="full_screen_off">Off</string>
   <string name="full_screen_system">Hide the system bars</string>

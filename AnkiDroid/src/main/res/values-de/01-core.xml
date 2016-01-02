@@ -113,7 +113,7 @@
   <string name="empty_cram_label">Leeren</string>
   <string name="empty_cram_deck">Leere dynamischen Stapel&#8230;</string>
   <string name="custom_study_deck_name">Benutzerdefinierte Sitzung</string>
-  <string name="custom_study_deck_exists">Bitte benennen Sie zunächst den existierenden Stapel \"Benutzerdefinierte Sitzung\" um.</string>
+  <string name="custom_study_deck_exists">Bitte benennen Sie zunächst den existierenden Stapel »Benutzerdefinierte Sitzung« um</string>
   <string name="empty_deck">Dieser Stapel ist leer</string>
   <string name="studyoptions_empty">Dieser Stapel ist leer. Berühren Sie die »+«-Schaltfläche, um neue Inhalte hinzuzufügen.</string>
   <string name="studyoptions_limit_reached">Tageslimit erreicht</string>
@@ -121,7 +121,7 @@
   <string name="studyoptions_congrats_finished">Herzlichen Glückwunsch! Sie sind für heute fertig.</string>
   <string name="studyoptions_congrats_more_rev">Ihr heutiges Limit ist erreicht, aber es sind noch Karten fällig. Sie können das Limit in den Stapeloptionen erhöhen.</string>
   <string name="studyoptions_congrats_more_new">Es sind noch neue Karten verfügbar, aber das tägliche Lernlimit wurde erreicht. Sie können das Limit in den Optionen erhöhen, bedenken Sie aber, dass dies Ihr kurzfristiges Arbeitspensum erhöht.</string>
-  <string name="studyoptions_congrats_custom">Tippen Sie unten auf »Benutzerdefiniertes Lernen«, um außerhalb des regulären Lehrplans zu lernen.</string>
+  <string name="studyoptions_congrats_custom">Tippen Sie unten auf »Benutzerdefiniertes Lernen«, um außerhalb des regulären Lehrplans zu lernen</string>
   <string name="studyoptions_no_cards_due">Es sind noch keine Karten fällig</string>
   <string name="sd_card_not_mounted">Gerätespeicher nicht eingebunden</string>
   <string name="button_sync">Synchronisieren</string>

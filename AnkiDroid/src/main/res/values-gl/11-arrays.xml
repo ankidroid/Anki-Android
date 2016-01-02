@@ -85,9 +85,9 @@
     <item>Decidir polo tipo de nota</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>Mesturar cartóns novos e revisións</item>
+    <item>Cartóns novos despois das revisións</item>
+    <item>Cartóns novos antes das revisóns</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>Cando non se especificou unha fonte nos cartóns</item>

@@ -58,8 +58,8 @@
     <item>Изтриване на бележка</item>
     <item>Play media</item>
     <item>Прекъсване на обучението</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Зарови бележка</item>
+    <item>Отлагане на бележка</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Отлагане на карта</item>
@@ -67,13 +67,13 @@
   </string-array>
   <string-array name="new_order_labels">
     <item>Нови карти в случаен ред</item>
-    <item>New cards in order added</item>
+    <item>Нови карти по ред на добавяне</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
     <item>Първо - по-старите</item>
     <item>Случайно</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
+    <item>Увеличаване на интервалите</item>
+    <item>намаляване на интервалите</item>
     <item>Most lapsed</item>
     <item>Order added</item>
     <item>Order due</item>
@@ -86,8 +86,8 @@
   </string-array>
   <string-array name="new_spread_labels">
     <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>Новите карти след повторените</item>
+    <item>Новите карти преди повторените</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>Когато не е определен шрифт на флашкартите</item>

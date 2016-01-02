@@ -64,8 +64,8 @@
   <string name="whiteboard_black_summ">Využije menej pamäte, ak nie je v nočnom režime</string>
   <string name="write_answers_disable">Zablokovať písanie odpovede</string>
   <string name="write_answers_disable_summ">Zabraňuje objavovaniu sa klávesnice na kartách, ktoré si vyžadujú napísanie odpovede do poľa</string>
-  <string name="use_input_tag">Type answer into the card</string>
-  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
+  <string name="use_input_tag">Sem napíšte odpoveď</string>
+  <string name="use_input_tag_summ">Napíšte odpoveď do boxu na kartičke</string>
   <string name="text_selection_click">Riešenie dlhého stisku</string>
   <string name="text_selection_click_summ">Zapnite, ak nemôžete začať s voľbou textu cez dlhé kliknutie</string>
   <string name="dictionary">Slovník</string>
@@ -77,9 +77,9 @@
   <string name="image_zoom">Priblíženie obrázka</string>
   <string name="button_size">Veľkosť tlačidla pre odpoveď</string>
   <string name="card_browser_font_size">Veľkosť písma v prehliadači kariet</string>
-  <string name="col_path">Umiestnenie zbierky</string>
+  <string name="col_path">AnkiDroid directory</string>
   <string name="fullscreen_review">Celoobrazovkový režim</string>
-  <string name="full_screen_off">Off</string>
+  <string name="full_screen_off">Ukončiť aplikáciu</string>
   <string name="full_screen_system">Hide the system bars</string>
   <string name="full_screen_complete">Hide the system bars and answer buttons</string>
   <string name="full_screen_error_gestures">Ak chcete skryť tlačidlá s odpoveďami musíte povoliť gestá</string>

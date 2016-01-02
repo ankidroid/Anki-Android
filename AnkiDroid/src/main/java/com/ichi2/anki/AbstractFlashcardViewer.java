@@ -2702,5 +2702,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             note.addTag("marked");
         }
         note.flush();
+        refreshActionBar();
     }
 }

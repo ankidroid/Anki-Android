@@ -44,23 +44,23 @@
   <string name="check_db_acknowledge">Databáze zkontrolována</string>
   <string name="check_db_acknowledge_shrunk">Databáze zkontrolována a optimalizována. \nZmenšena o %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Smazat balíček</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
+  <string name="delete_deck_default_deck">Nelze odstranit výchozí balíček</string>
   <string name="delete_deck_title">Smazat balíček</string>
   <plurals name="delete_deck_message">
-    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
+    <item quantity="one">Odstranit všechny karty v %1$s? Obsahuje %2$d kartu.</item>
     <item quantity="few">Delete all cards in %1$s? It contains %2$d cards.</item>
-    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="other">Odstranit všechny karty v %1$s? Obsahuje %2$d karet.</item>
   </plurals>
   <string name="delete_cram_deck_message">Jste si jistý, že si přejete poslat všechny karty z balíčku %s zpátky do původního balíčku?</string>
   <string name="no_tts_available_message">Žádný jazyk k předčítání není k dispozici</string>
   <string name="initializing_tts">Inicializuji TTS&#8230;</string>
   <string name="tts_no_tts">Nemluv</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
-    <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
-    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, <a href=\"%2$s\">donate</a> to Anki Desktop, or blog about AnkiDroid.]]></item>
-    <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Kartičky pro Android</h2>AnkiDroid je kartičková aplikace plně kompatibilní s desktopovou verzí <a href=\"%2$s\">Anki</a>. Můžete vytvářet, stahovat a učit se materiály jak v AnkiDroid tak Anki Desktop a velmi snadno je synchronizovat i s AnkiWeb.]]></item>
+    <item><![CDATA[Chcete-li nám pomoci vylepšit AnkiDroid prosím ohlaste chyby ve <a href=\"%1$s\">sledovači chyb</a>; nové myšlenky na funkce jsou také velmi vítány. Mnoho odpovědí naleznete ve <a href=\"%2$s\">wiki</a> nebo začněte diskutovat na <a href=\"%3$s\">foru</a>.]]></item>
+    <item><![CDATA[AnkiDroid je <a href=\"%1$s\">open source software<a/>, takže každý se může <a href=\"%2$s\">stát přispěvatelem</a> :-)]]></item>
+    <item><![CDATA[Nejenom vývojáři mohou pomoci. Například můžete <a href=\"%1$s\">pomoc s překladem</a> AnkiDroid, aktualizovat wiki, poskytnout náhledy obrazovky, <a href=\"%2$s\">poskytnout dar</a> Anki Desktop nebo blogovat o AnkiDroid.]]></item>
+    <item><![CDATA[AnkiDroid je vydán pod <a href=\"%1$s\">GNU-GPL v3 licencí</a> a zdrojový kód je dostupný <a href=\"%2$s\">na GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Náhled</string>
   <string name="reset_card_dialog_title">Obnovit pokrok v učení</string>
@@ -121,11 +121,11 @@
   <string name="check_media_db_updated">Multimediální databáze opravena.</string>
   <string name="check_media_delete_unused">Odstranit nepoužité</string>
   <string name="check_media_deleted">Odstraněny soubory: %d</string>
-  <string name="tags_dialog_option_all_cards">All cards</string>
-  <string name="tags_dialog_option_new_cards">New</string>
-  <string name="tags_dialog_option_due_cards">Due</string>
-  <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
-  <string name="empty_cards_none">No empty cards</string>
-  <string name="empty_cards_count">Cards to delete: %d</string>
-  <string name="empty_cards_deleted">Cards deleted: %d</string>
+  <string name="tags_dialog_option_all_cards">Všechny karty</string>
+  <string name="tags_dialog_option_new_cards">Nové</string>
+  <string name="tags_dialog_option_due_cards">Opakování</string>
+  <string name="emtpy_cards_finding">Nalezení prázdných karet&#8230;</string>
+  <string name="empty_cards_none">Žádné prázdné karty</string>
+  <string name="empty_cards_count">Karet k odstranění: %d</string>
+  <string name="empty_cards_deleted">Odstraněno karet: %d</string>
 </resources>

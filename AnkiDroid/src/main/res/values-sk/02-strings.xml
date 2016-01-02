@@ -127,7 +127,7 @@
   <string name="help_title">Pomocník</string>
   <string name="check_db">Skontrolovať databázu</string>
   <string name="check_media">Skontrolovať multimédia</string>
-  <string name="empty_cards">Empty cards</string>
+  <string name="empty_cards">Vymazať všetky karty</string>
   <string name="check_db_message">Kontroluje sa databáza&#8230;</string>
   <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Typ odpovede: neznáme pole %s</string>

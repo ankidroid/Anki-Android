@@ -77,7 +77,7 @@
   <string name="image_zoom">Zoom de la imagen</string>
   <string name="button_size">Tamaño del botón de respuesta</string>
   <string name="card_browser_font_size">Escalado de fuentes del explorador de tarjetas</string>
-  <string name="col_path">Directorio de la colección</string>
+  <string name="col_path">AnkiDroid directory</string>
   <string name="fullscreen_review">Pantalla completa</string>
   <string name="full_screen_off">Apagado</string>
   <string name="full_screen_system">Ocultar las barras del sistema</string>

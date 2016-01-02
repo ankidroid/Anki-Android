@@ -69,9 +69,9 @@
   <string formatted="false" name="stats_percentage_correct">% верни</string>
   <string name="stats_reviews">Разглеждания</string>
   <string name="stats_answer_type">Тип отговор</string>
-  <string name="stats_today_again_count">Again count: &lt;b&gt;%d&lt;/b&gt;</string>
-  <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correct)</string>
-  <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, review: &lt;b&gt;%2$s&lt;/b&gt;, relearn: &lt;b&gt;%3$s&lt;/b&gt;, filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
+  <string name="stats_today_again_count">Повторно прегледани: &lt;b&gt;%d&lt;/b&gt;</string>
+  <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; правилно)</string>
+  <string name="stats_today_type_breakdown">Изучени: &lt;b&gt;%1$s&lt;/b&gt;, Прегледани: &lt;b&gt;%2$s&lt;/b&gt;, Преговорени: &lt;b&gt;%3$s&lt;/b&gt;, Филтрирани: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Правилни отговори на зрели карти: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Днес не е научена нито една зряла карта</string>
   <string name="deck_summary_all_decks">Всички колоди</string>
@@ -83,7 +83,7 @@
   </string-array>
   <string name="stats_today">Днес</string>
   <string name="stats_forecast">Прогноза</string>
-  <string name="stats_review_count">Review count</string>
+  <string name="stats_review_count">Брой преглеждания</string>
   <string name="stats_review_time">Преглед на времето</string>
   <string name="stats_review_intervals">Интервали</string>
   <string name="stats_breakdown">Почасова разбивка</string>
@@ -120,7 +120,7 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today</item>
-    <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today</item>
+    <item quantity="one">Изучена &lt;b&gt;%1$d карта&lt;/b&gt; в &lt;b&gt;%2$s&lt;/b&gt; днес</item>
+    <item quantity="other">Изучени &lt;b&gt;%1$d карти&lt;/b&gt; в &lt;b&gt;%2$s&lt;/b&gt; днес</item>
   </plurals>
 </resources>

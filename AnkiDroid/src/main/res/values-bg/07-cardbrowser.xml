@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">Показана е %d карта</item>
+    <item quantity="other">Показани са %d карти</item>
   </plurals>
   <string name="card_browser_all_decks">Всички тестета</string>
   <string name="card_browser_delete_card">Изтрий бележка</string>
@@ -50,9 +50,9 @@
   <string name="card_browser_mark_card">Маркирай бележка</string>
   <string name="card_browser_unmark_card">Размаркирай бележка</string>
   <string name="delete_card_title">Изтриване на бележка?</string>
-  <string name="delete_card_message">Delete all cards of this note?\nSearch field: %s</string>
-  <string name="card_browser_show_marked">Filter marked</string>
-  <string name="card_browser_show_suspended">Filter suspended</string>
+  <string name="delete_card_message">Изтриване на всички карти от тази бележка? \nПоле за търсене: %s</string>
+  <string name="card_browser_show_marked">Филтриране на маркираните</string>
+  <string name="card_browser_show_suspended">Филтърът е спрян</string>
   <string name="card_browser_search_by_tag">Филтриране по етикет</string>
   <string name="card_browser_tags_shown">Етикети:%1$s</string>
   <string name="card_browser_list_my_searches">Моите търсения</string>
@@ -64,22 +64,22 @@
   <string name="card_browser_list_my_searches_remove_content">Изтриване на \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Промяна реда на показване</string>
   <string name="card_browser_change_display_order_title">Изберете ред на показване</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
+  <string name="card_browser_change_display_order_reverse">Изберете полето двукратно, за да промените</string>
   <string name="card_details_question">Въпрос</string>
   <string name="card_details_answer">Отговор</string>
   <string name="card_details_due">Поради</string>
   <string name="card_details_tags">Таговете</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
+  <string name="card_browser_filtering_cards">Филтриране на картите&#8230; \nЗа отказ натиснете бутона за връщане назад</string>
   <string-array name="card_browser_order_labels">
     <item>Без сортиране (по-бързо)</item>
-    <item>By sort field</item>
-    <item>By created time</item>
-    <item>By edited time</item>
-    <item>By changed time</item>
+    <item>По поле за сортиране</item>
+    <item>По време на създаване</item>
+    <item>По време на редактиране</item>
+    <item>По време на промяна</item>
     <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
-    <item>By reviews</item>
+    <item>По интервал</item>
+    <item>По сложност</item>
+    <item>По прегледи</item>
     <item>By lapses</item>
   </string-array>
 </resources>
