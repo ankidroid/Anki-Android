@@ -176,6 +176,7 @@ public class Stats {
 
     public boolean calculateDue(Context context, int type) {
 
+        // Not in libanki
         StatsMetaInfo metaInfo = new StatsMetaInfo();
 
         metaInfo = (StatsMetaInfo) Hooks.getInstance(context).runFilter("advancedStatistics", metaInfo, type, mCol);
@@ -211,7 +212,7 @@ public class Stats {
      * Due and cumulative due
      * ***********************************************************************************************
      */
-    public boolean calculateDue(int type) {
+    private boolean calculateDue(int type) {
         mHasColoredCumulative = false;
         mType = type;
         mDynamicAxis = true;
@@ -325,72 +326,6 @@ public class Stats {
             mMaxCards = 10;
         return dues.size() > 0;
     }
-
-    //30-12-2015 JPR new
-    private ArrayList<int[]> calculateDues(int type) {
-        int end = 0;
-        int chunk = 0;
-        switch (type) {
-            case TYPE_MONTH:
-                end = 31;
-                chunk = 1;
-                break;
-            case TYPE_YEAR:
-                end = 52;
-                chunk = 7;
-                break;
-            case TYPE_LIFE:
-                end = -1;
-                chunk = 30;
-                break;
-        }
-
-        String lim = "";// AND due - " + mCol.getSched().getToday() + " >= " + start; // leave this out in order to show
-        // card too which were due the days before
-        if (end != -1) {
-            lim += " AND day <= " + end;
-        }
-
-        ArrayList<int[]> dues = new ArrayList<int[]>();
-        Cursor cur = null;
-        try {
-            String query;
-            query = "SELECT (due - " + mCol.getSched().getToday() + ")/" + chunk
-                    + " AS day, " // day
-                    + "count(), " // all cards
-                    + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
-                    + "FROM cards WHERE did IN " + _limit() + " AND queue IN (2,3)" + lim
-                    + " GROUP BY day ORDER BY day";
-            Timber.d("Forecast query: %s", query);
-            cur = mCol
-                    .getDb()
-                    .getDatabase()
-                    .rawQuery(query, null);
-            while (cur.moveToNext()) {
-                dues.add(new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2) });
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
-        }
-        // small adjustment for a proper chartbuilding with achartengine
-        if (dues.size() == 0 || dues.get(0)[0] > 0) {
-            dues.add(0, new int[] { 0, 0, 0 });
-        }
-        if (end == -1 && dues.size() < 2) {
-            end = 31;
-        }
-        if (type != TYPE_LIFE && dues.get(dues.size() - 1)[0] < end) {
-            dues.add(new int[] { end, 0, 0 });
-        } else if (type == TYPE_LIFE && dues.size() < 2) {
-            dues.add(new int[] { Math.max(12, dues.get(dues.size() - 1)[0] + 1), 0, 0 });
-        }
-
-        return dues;
-    }
-
-    //30-12-2015 JPR new end
 
     /* only needed for studyoptions small chart */
     public static double[][] getSmallDueStats(Collection col) {
