@@ -154,9 +154,12 @@ public class Collection {
         mStartTime = 0;
         mSched = new Sched(this);
         if (!mConf.optBoolean("newBury", false)) {
-            boolean mod = mDb.getMod();
-            mSched.unburyCards();
-            mDb.setMod(mod);
+            try {
+                mConf.put("newBury", true);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            setMod();
         }
     }
 
@@ -294,11 +297,6 @@ public class Collection {
 
     public synchronized void close(boolean save) {
         if (mDb != null) {
-            if (!mConf.optBoolean("newBury", false)) {
-                boolean mod = mDb.getMod();
-                mSched.unburyCards();
-                mDb.setMod(mod);
-            }
             try {
                 SQLiteDatabase db = getDb().getDatabase();
                 if (save) {
@@ -313,7 +311,6 @@ public class Collection {
                     if (db.inTransaction()) {
                         db.endTransaction();
                     }
-                    lock();
                 }
             } catch (RuntimeException e) {
                 AnkiDroidApp.sendExceptionReport(e, "closeDB");
