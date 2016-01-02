@@ -98,7 +98,9 @@ public class AdvancedStatistics extends Hook  {
 
         //JPR (moved to own method + replace with new method)
         //ArrayList<int[]> dues = calculateDues(type);
-        ArrayList<int[]> dues = calculateDuesWithSimulation(type, mCol);
+        PlottableSimulationResult simuationResult = calculateDuesWithSimulation(type, mCol);
+
+        ArrayList<int[]> dues = simuationResult.getNReviews();
 
         //mSeriesList = new double[3][dues.size()];
         mSeriesList = new double[5][dues.size()];
@@ -148,8 +150,15 @@ public class AdvancedStatistics extends Hook  {
         }
         mFirstElement = 0;                      //X-Axis: Min. value
 
-        mCumulative = Stats.createCumulative(new double[][]{mSeriesList[0], mSeriesList[1]}, mZeroIndex);   //Day starting at mZeroIndex, Cumulative # cards
-        mMcount = mCumulative[1][mCumulative[1].length-1];                                                  //Y-Axis: Max. cumulative value
+        //mCumulative = Stats.createCumulative(new double[][]{mSeriesList[0], mSeriesList[1]}, mZeroIndex);   //Day starting at mZeroIndex, Cumulative # cards
+        mCumulative = simuationResult.getNInState();
+
+        //mMcount = mCumulative[1][mCumulative[1].length-1];                                                  //Y-Axis: Max. cumulative value
+        mMcount = mCumulative[1][mCumulative[1].length-1] +                                                   //Y-Axis: Max. cumulative value
+                  mCumulative[2][mCumulative[2].length-1] +
+                  mCumulative[3][mCumulative[3].length-1] +
+                  mCumulative[4][mCumulative[4].length-1];
+
         //some adjustments to not crash the chartbuilding with empty data
         if(mMaxElements == 0){
             mMaxElements = 10;
@@ -165,7 +174,7 @@ public class AdvancedStatistics extends Hook  {
             mMaxCards = 10;
 
         metaInfo.setmDynamicAxis(true);
-        metaInfo.setmHasColoredCumulative(false);
+        metaInfo.setmHasColoredCumulative(true);
         metaInfo.setmType(mType);
         metaInfo.setmTitle(mTitle);
         metaInfo.setmBackwards(false);
@@ -187,7 +196,7 @@ public class AdvancedStatistics extends Hook  {
         return metaInfo;
     }
 
-    private ArrayList<int[]> calculateDuesWithSimulation(int type, Collection mCol) {
+    private PlottableSimulationResult calculateDuesWithSimulation(int type, Collection mCol) {
         int end = 0;
         int chunk = 0;
         switch (type) {
@@ -213,7 +222,12 @@ public class AdvancedStatistics extends Hook  {
         SimulationResult simulationResult = reviewSimulator.simNreviews();
 
         int[][] nReviews = ArrayUtils.transposeMatrix(simulationResult.getNReviews());
+        int[][] nInState = ArrayUtils.transposeMatrix(simulationResult.getNInState());
+
+        //Append row with zeros and transpose to make it the same dimension as nReviews
         //int[][] nInState = simulationResult.getNInState();
+        //if(ArrayUtils.nCols(nInState) > 0)
+        //    nInState = ArrayUtils.append(nInState, new int[ArrayUtils.nCols(nInState)], 1);
 
         // Forecasted number of reviews
         //   0 = Learn
@@ -238,12 +252,45 @@ public class AdvancedStatistics extends Hook  {
             dues.add(new int[] { Math.max(12, dues.get(dues.size() - 1)[0] + 1), 0, 0, 0, 0 });
         }
 
-        return dues;
+        double[][] nInStateCum = new double[dues.size()][];
+
+        for(int i = 0; i<dues.size(); i++) {
+
+            if(i < nInState.length) {
+                nInStateCum[i] = new double[] {
+                        i,
+                        0,
+                        //nInState[i][0] + nInState[i][1] + nInState[i][2], //Y-Axis: New + Young + Mature
+                        //nInState[i][0] + nInState[i][1],                  //Y-Axis: New + Young
+                        //nInState[i][0],                                   //Y-Axis: New
+                        nInState[i][2],                                     //Y-Axis: New + Young + Mature
+                        nInState[i][1],                                     //Y-Axis: New + Young
+                        nInState[i][0],                                     //Y-Axis: New
+                };
+            }
+            else {
+                if(i==0)
+                    nInStateCum[i] = new double[] {
+                        i,
+                        0,0,0,0
+                    };
+                else
+                    nInStateCum[i] = nInStateCum[i-1];
+            }
+        }
+
+        //Append columns to make it the same dimension as dues
+        //if(dues.size() > nInState.length) {
+        //    nInState = ArrayUtils.append(nInState, nInState[nInState.length-1], dues.size() - nInState.length);
+        //}
+
+        return new PlottableSimulationResult(dues, ArrayUtils.transposeMatrix(nInStateCum));
     }
 
     private class Card {
         private int ivl;
         private double factor;
+        private int lastReview;
         private int due;
         private int correct;
         private final long id;
@@ -254,17 +301,18 @@ public class AdvancedStatistics extends Hook  {
                     + id + "]";
         }
 
-        public Card(long id, int ivl, int factor, int due, int correct) {
+        public Card(long id, int ivl, int factor, int due, int correct, int lastReview) {
             super();
             this.id = id;
             this.ivl = ivl;
             this.factor = factor / 1000.0;
             this.due = due;
             this.correct = correct;
+            this.lastReview = lastReview;
         }
 
         public Card clone() {
-            return new Card(id, ivl, (int) (factor * 1000), due, correct);
+            return new Card(id, ivl, (int) (factor * 1000), due, correct, lastReview);
         }
 
         public long getId() {
@@ -313,6 +361,14 @@ public class AdvancedStatistics extends Hook  {
         public void setCorrect(int correct) {
             this.correct = correct;
         }
+
+        public int getLastReview() {
+            return lastReview;
+        }
+
+        public void setLastReview(int lastReview) {
+            this.lastReview = lastReview;
+        }
     }
 
     private class Deck {
@@ -334,7 +390,8 @@ public class AdvancedStatistics extends Hook  {
                             cur.getInt(5) == 0 ? 0 : cur.getInt(2),  		            //reps = 0 ? 0 : card interval
                             cur.getInt(3) > 0 ? cur.getInt(3) :  2500,                 //factor
                             Math.max(cur.getInt(1) - today, 0),                        //due
-                            1);                                                        //correct
+                            1,                                                          //correct
+                            -1);                                                        //lastreview
                     deck.add(card);
                 }
             } finally {
@@ -645,6 +702,25 @@ public class AdvancedStatistics extends Hook  {
             return matrix;
         }
 
+        public<T> T[] append(T[] arr, T element, int n) {
+            final int N0 = arr.length;
+            final int N1 = N0 + n;
+            arr = Arrays.copyOf(arr, N1);
+            for(int N = N0; N < N1; N++)
+                arr[N] = element;
+            return arr;
+        }
+
+        public int nRows(int[][] matrix) {
+            return matrix.length;
+        }
+
+        public int nCols(int[][] matrix) {
+            if(matrix.length == 0)
+                return 0;
+            return matrix[0].length;
+        }
+
         public int[][] transposeMatrix(int[][] matrix) {
             if (matrix.length == 0)
                 return matrix;
@@ -653,6 +729,26 @@ public class AdvancedStatistics extends Hook  {
             int n = matrix[0].length;
 
             int transpose[][] = new int[n][m];
+
+            int c, d;
+            for ( c = 0 ; c < m ; c++ )
+            {
+                for ( d = 0 ; d < n ; d++ )
+                    transpose[d][c] = matrix[c][d];
+            }
+
+            return transpose;
+        }
+
+
+        public double[][] transposeMatrix(double[][] matrix) {
+            if (matrix.length == 0)
+                return matrix;
+
+            int m = matrix.length;
+            int n = matrix[0].length;
+
+            double transpose[][] = new double[n][m];
 
             int c, d;
             for ( c = 0 ; c < m ; c++ )
@@ -735,6 +831,58 @@ public class AdvancedStatistics extends Hook  {
                     nInState[card.getType()][t]++;
                 }
         }
+
+        public void updateNInState(Card prevCard, Card card, int tFrom, int tTo) {
+            int lastReview = prevCard.getLastReview();
+
+            //Replace state set during last review
+            for(int t = tFrom / timeBinLength; t < Math.min(lastReview, tTo) / timeBinLength; t++)
+                if(t < nTimeBins) {
+                    nInState[prevCard.getType()][t]--;
+                }
+
+            //With state set during new review
+            for(int t = tFrom / timeBinLength; t < tTo / timeBinLength; t++)
+                if(t < nTimeBins) {
+                    nInState[card.getType()][t]++;
+                }
+
+            //This is necessary because we want to display the state at the end of each time bin.
+            //So if two reviews occurred in one time bin, that time bin should display the
+            //last review which occurred in it.
+        }
+    }
+
+    private class PlottableSimulationResult {
+
+        // Forecasted number of reviews
+        //   0 = Time
+        //   1 = Learn
+        //   2 = Young
+        //   3 = Mature
+        //   4 = Relearn
+        private final ArrayList<int[]> nReviews;
+
+        // Forecasted number of cards per state
+        //   0 = Time
+        //   1 = New
+        //   2 = Young
+        //   3 = Mature
+        //   4 = Zeros (we can't say 'we know x relearn cards on day d')
+        private final double[][] nInState;
+
+        public PlottableSimulationResult(ArrayList<int[]> nReviews, double[][] nInState) {
+            this.nReviews = nReviews;
+            this.nInState = nInState;
+        }
+
+        public ArrayList<int[]> getNReviews() {
+            return nReviews;
+        }
+
+        public double[][] getNInState() {
+            return nInState;
+        }
     }
 
     private class Review {
@@ -787,22 +935,30 @@ public class AdvancedStatistics extends Hook  {
         }
 
         public void simulateReview() {
+            //int lastReview = card.getLastReview();
+
+            //In the current time bin, we want to display the state after review, so we cannot set it here,
+            //but we will do it after the review. Here the state after review is not known yet because we
+            //haven't simulated the review yet :).
             //Set state of card for current review
-            simulationResult.incrementNInState(card.getType(), tElapsed / timeBinLength);
+            //if(tElapsed / timeBinLength > lastReview / timeBinLength)
+            //    simulationResult.incrementNInState(card.getType(), tElapsed / timeBinLength);
 
             if(card.getType() == 0 || simulationResult.nReviewsDoneToday(tElapsed) < maxReviewsPerDay * timeBinLength) {
                 // Update the forecasted number of reviews
                 simulationResult.incrementNReviews(card.getType(), tElapsed / timeBinLength);
 
                 // Simulate response
+                Card prevCard = card.clone();
                 card = classifier.simSingleReview(card, true);
+                card.setLastReview(tElapsed);
 
                 // If card failed, update "relearn" count
                 if(card.getCorrect() == 0)
                     simulationResult.incrementNReviews(3, tElapsed / timeBinLength);
 
                 // Set state of card between current and next review
-                simulationResult.updateNInState(card, tElapsed + 1, tElapsed + card.getIvl());
+                simulationResult.updateNInState(prevCard, card, tElapsed, tElapsed + card.getIvl());
 
                 // Advance time to next review
                 tElapsed += card.getIvl();
