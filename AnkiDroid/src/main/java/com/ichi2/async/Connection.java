@@ -269,7 +269,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         String hkey = (String) data.data[0];
         boolean media = (Boolean) data.data[1];
         String conflictResolution = (String) data.data[2];
-        Collection col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance());
+        // Use safe version that catches exceptions so that full sync is still possible
+        Collection col = CollectionHelper.getInstance().getColSafe(AnkiDroidApp.getInstance());
 
         boolean colCorruptFullSync = false;
         if (!CollectionHelper.getInstance().colIsOpen() || !ok) {
@@ -454,9 +455,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             }
             return data;
         } finally {
-            // Close collection to roll back any sync failures and
-            Timber.d("doInBackgroundSync -- closing collection on outer finally statement");
-            col.close(false);
+            if (col != null) {
+                // Close collection to roll back any sync failures
+                Timber.d("doInBackgroundSync -- closing collection on outer finally statement");
+                col.close(false);
+            }
             CollectionHelper.getInstance().unlockCollection();
             Timber.d("doInBackgroundSync -- reopening collection on outer finally statement");
             CollectionHelper.getInstance().reopenCollection();

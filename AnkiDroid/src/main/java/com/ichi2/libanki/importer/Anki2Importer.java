@@ -20,7 +20,6 @@ import android.content.res.Resources;
 import android.database.Cursor;
 
 import com.google.gson.stream.JsonReader;
-import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.R;
 import com.ichi2.async.DeckTask;
@@ -137,9 +136,7 @@ public class Anki2Importer {
             try {
                 cnt = _import();
             } finally {
-                // do not close collection but close only db (in order not to confuse access counting in storage.java
-                // Note that the media database is still open and needs to be closed below.
-                AnkiDatabaseManager.closeDatabase(mSrc.getPath());
+                mSrc.close(false);
             }
             // import static media
             String mediaDir = mCol.getMedia().dir();

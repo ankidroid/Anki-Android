@@ -9,7 +9,6 @@ import android.view.View;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
@@ -34,6 +33,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
     public static final int DIALOG_CONFIRM_DATABASE_CHECK = 6;
     public static final int DIALOG_CONFIRM_RESTORE_BACKUP = 7;
     public static final int DIALOG_FULL_SYNC_FROM_SERVER = 8;
+    public static final int DIALOG_CURSOR_SIZE_LIMIT_EXCEEDED = 9;
 
     // public flag which lets us distinguish between inaccessible and corrupt database
     public static boolean databaseCorruptFlag = false;
@@ -72,6 +72,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
         }
 
         switch (mType) {
+            case DIALOG_CURSOR_SIZE_LIMIT_EXCEEDED:
             case DIALOG_LOAD_FAILED:
                 // Collection failed to load; give user the option of either choosing from repair options, or closing
                 // the activity
@@ -282,8 +283,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                             @Override
                             public void onPositive(MaterialDialog dialog) {
                                 CollectionHelper.getInstance().closeCollection(false);
-                                String path = CollectionHelper.getInstance().getCollectionPath(getActivity());
-                                AnkiDatabaseManager.closeDatabase(path);
+                                String path = CollectionHelper.getCollectionPath(getActivity());
                                 if (BackupManager.moveDatabaseToBrokenFolder(path, false)) {
                                     ((DeckPicker) getActivity()).restartActivity();
                                 } else {
@@ -357,7 +357,6 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                     // Generic message shown when a libanki task failed
                     return res().getString(R.string.access_collection_failed_message, res().getString(R.string.link_help));
                 }
-
             case DIALOG_DB_ERROR:
                 return res().getString(R.string.answering_error_message);
             case DIALOG_REPAIR_COLLECTION:
@@ -372,6 +371,8 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 return res().getString(R.string.restore_backup);
             case DIALOG_FULL_SYNC_FROM_SERVER:
                 return res().getString(R.string.backup_full_sync_from_server_question);
+            case DIALOG_CURSOR_SIZE_LIMIT_EXCEEDED:
+                return res().getString(R.string.cursor_size_limit_exceeded);
             default:
                 return getArguments().getString("dialogMessage");
         }
@@ -397,6 +398,8 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 return res().getString(R.string.restore_backup_title);
             case DIALOG_FULL_SYNC_FROM_SERVER:
                 return res().getString(R.string.backup_full_sync_from_server);
+            case DIALOG_CURSOR_SIZE_LIMIT_EXCEEDED:
+                return res().getString(R.string.open_collection_failed_title);
             default:
                 return res().getString(R.string.answering_error_title);
         }        

@@ -24,7 +24,6 @@ import android.text.TextUtils;
 
 import android.util.Pair;
 
-import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.utils.HtmlUtil;
@@ -142,7 +141,7 @@ public class Media {
         String path = dir() + ".ad.db2";
         File dbFile = new File(path);
         boolean create = !(dbFile.exists());
-        mDb = AnkiDatabaseManager.getDatabase(path);
+        mDb = new AnkiDb(path);
         if (create) {
             _initDB();
         }
@@ -199,7 +198,7 @@ public class Media {
         if (mCol.getServer()) {
             return;
         }
-        AnkiDatabaseManager.closeDatabase(mDb.getPath());
+        mDb.closeDatabase();
         mDb = null;
     }
 
