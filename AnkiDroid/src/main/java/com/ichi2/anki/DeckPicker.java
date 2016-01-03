@@ -442,6 +442,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 Intent i = CompatHelper.getCompat().getPreferenceSubscreenIntent(this, "com.ichi2.anki.prefs.advanced");
                 startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE);
                 Toast.makeText(this, R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
+            } else if (CollectionHelper.getInstance().exceededCursorSizeLimit(this)) {
+                showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CURSOR_SIZE_LIMIT_EXCEEDED);
             } else {
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
             }
