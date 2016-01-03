@@ -179,7 +179,7 @@ public class Stats {
         // Not in libanki
         StatsMetaInfo metaInfo = new StatsMetaInfo();
 
-        metaInfo = (StatsMetaInfo) Hooks.getInstance(context).runFilter("advancedStatistics", metaInfo, type, mCol);
+        metaInfo = (StatsMetaInfo) Hooks.getInstance(context).runFilter("advancedStatistics", metaInfo, type, context, _limit());
 
         if(metaInfo.isStatsCalculated()) {
 

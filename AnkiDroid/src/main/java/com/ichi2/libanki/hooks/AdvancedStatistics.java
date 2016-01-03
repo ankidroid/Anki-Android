@@ -16,17 +16,22 @@
 
 package com.ichi2.libanki.hooks;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.stats.StatsMetaInfo;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Stats;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 
@@ -34,17 +39,16 @@ import timber.log.Timber;
 
 /**
  * Display forecast statistics based on a simulation of future reviews.
- * Created by Jeffrey on 1-1-2016.
  */
 public class AdvancedStatistics extends Hook  {
 
     private final Settings Settings = new Settings();
     private final ArrayUtils ArrayUtils = new ArrayUtils();
-    private final Deck Deck = new Deck();
+    private final DeckFactory Decks = new DeckFactory();
 
     @Override
     public Object runFilter(Object arg, Object... args) {
-        return calculateDueOriginal((StatsMetaInfo) arg, (int) args[0], (Collection) args[1]);
+        return calculateDueOriginal((StatsMetaInfo) arg, (int) args[0], (Context) args[1], (String) args[2]);
     }
     public static void install(Hooks h) {
         h.addHook("advancedStatistics", new AdvancedStatistics());
@@ -58,9 +62,11 @@ public class AdvancedStatistics extends Hook  {
      * ***********************************************************************************************
      */
     //TODO: pass mCol?
-    private StatsMetaInfo calculateDueOriginal(StatsMetaInfo metaInfo, int type, Collection mCol) {
+    private StatsMetaInfo calculateDueOriginal(StatsMetaInfo metaInfo, int type, Context context, String dids) {
 
         metaInfo.setStatsCalculated(true);
+
+        Collection mCol = CollectionHelper.getInstance().getCol(context);
 
         double[][] mSeriesList;
 
@@ -98,7 +104,7 @@ public class AdvancedStatistics extends Hook  {
 
         //JPR (moved to own method + replace with new method)
         //ArrayList<int[]> dues = calculateDues(type);
-        PlottableSimulationResult simuationResult = calculateDuesWithSimulation(type, mCol);
+        PlottableSimulationResult simuationResult = calculateDuesWithSimulation(type, mCol, dids);
 
         ArrayList<int[]> dues = simuationResult.getNReviews();
 
@@ -196,7 +202,7 @@ public class AdvancedStatistics extends Hook  {
         return metaInfo;
     }
 
-    private PlottableSimulationResult calculateDuesWithSimulation(int type, Collection mCol) {
+    private PlottableSimulationResult calculateDuesWithSimulation(int type, Collection mCol, String dids) {
         int end = 0;
         int chunk = 0;
         switch (type) {
@@ -219,7 +225,18 @@ public class AdvancedStatistics extends Hook  {
         EaseClassifier classifier = new EaseClassifier(mCol.getDb().getDatabase());
         ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb().getDatabase(), classifier, end, chunk);
 
-        SimulationResult simulationResult = reviewSimulator.simNreviews();
+        Long[] allDecksIds = mCol.getDecks().allIds();
+        Timber.d("N Decks found: " + allDecksIds.length);
+        for(int i = 0; i < allDecksIds.length; i++)
+            Timber.d(i + " " + allDecksIds[i]);
+
+
+        ArrayList<JSONObject> allDecks = mCol.getDecks().all();
+        Timber.d("N Decks found: " + allDecks.size());
+        for(int i = 0; i < allDecks.size(); i++)
+            Timber.d(i + " " + allDecks.get(i).toString());
+
+        SimulationResult simulationResult = reviewSimulator.simNreviews(mCol.getDecks(), dids);
 
         int[][] nReviews = ArrayUtils.transposeMatrix(simulationResult.getNReviews());
         int[][] nInState = ArrayUtils.transposeMatrix(simulationResult.getNInState());
@@ -371,36 +388,100 @@ public class AdvancedStatistics extends Hook  {
         }
     }
 
-    private class Deck {
+    private class DeckFactory {
 
-        public List<Card> deckFromDB(SQLiteDatabase db, int today) {
-            List<Card> deck = new ArrayList<>();
+        public Deck createDeck(long did, Decks decks) {
 
-            Cursor cur = null;
+            Timber.d("Trying to get deck settings for deck with id=" + did);
+
+            JSONObject conf = decks.confForDid(did);
+
+            int newPerDay = Settings.getMaxNewPerDay();
+            int revPerDay = Settings.getMaxReviewsPerDay();
+
             try {
-                String query;
-                query = "SELECT id, due, ivl, factor, type, reps " +
-                        "FROM cards " +
-                        "order by id;";
-                Timber.d("Forecast query: %s", query);
-                cur = db.rawQuery(query, null);
-                while (cur.moveToNext()) {
+                if (conf.getInt("dyn") == 0) {
+                    revPerDay = conf.getJSONObject("rev").getInt("perDay");
+                    newPerDay = conf.getJSONObject("new").getInt("perDay");
 
-                    Card card = new Card(cur.getLong(0),                                            //Id
-                            cur.getInt(5) == 0 ? 0 : cur.getInt(2),  		            //reps = 0 ? 0 : card interval
-                            cur.getInt(3) > 0 ? cur.getInt(3) :  2500,                 //factor
-                            Math.max(cur.getInt(1) - today, 0),                        //due
-                            1,                                                          //correct
-                            -1);                                                        //lastreview
-                    deck.add(card);
+                    Timber.d("rev.perDay=" + revPerDay);
+                    Timber.d("new.perDay=" + newPerDay);
+                } else {
+                    Timber.d("dyn=" + conf.getInt("dyn"));
                 }
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
-                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
 
-            return deck;
+            return new Deck(did, newPerDay, revPerDay);
+        }
+    }
+
+    private class Deck {
+
+        private long did;
+
+        private int newPerDay;
+        private int revPerDay;
+
+        public Deck(long did, int newPerDay, int revPerDay) {
+            this.did = did;
+            this.newPerDay = newPerDay;
+            this.revPerDay = revPerDay;
+        }
+
+        public long getDid() {
+            return did;
+        }
+
+        public int getNewPerDay() {
+            return newPerDay;
+        }
+
+        public int getRevPerDay() {
+            return revPerDay;
+        }
+
+    }
+
+    private class CardIterator {
+
+        Cursor cur;
+
+        private final int today;
+
+        public CardIterator(SQLiteDatabase db, int today, Long did) {
+
+            this.today = today;
+
+            String query;
+            query = "SELECT id, due, ivl, factor, type, reps " +
+                    "FROM cards " +
+                    "WHERE did IN (" + did + ") " +
+                    "order by id;";
+            Timber.d("Forecast query: %s", query);
+            cur = db.rawQuery(query, null);
+
+        }
+
+        public boolean moveToNext() {
+            return cur.moveToNext();
+        }
+
+        public Card current() {
+
+            return new Card(cur.getLong(0),                                    //Id
+                    cur.getInt(5) == 0 ? 0 : cur.getInt(2),  		           //reps = 0 ? 0 : card interval
+                    cur.getInt(3) > 0 ? cur.getInt(3) :  2500,                 //factor
+                    Math.max(cur.getInt(1) - today, 0),                        //due
+                    1,                                                         //correct
+                    -1                                                         //lastreview
+                    );
+        }
+
+        public void close() {
+            if (cur != null && !cur.isClosed())
+                cur.close();
         }
     }
 
@@ -584,15 +665,13 @@ public class AdvancedStatistics extends Hook  {
 
     public class NewCardSimulator {
 
-        private final int maxAddPerDay=20;
-
         private int nAddedToday = 0;
         private int tAdd = 0;
 
-        public int simulateNewCard() {
+        public int simulateNewCard(Deck deck) {
             nAddedToday++;
             int tElapsed = tAdd;	//differs from online
-            if (nAddedToday >= maxAddPerDay) {
+            if (nAddedToday >= deck.getNewPerDay()) {
                 tAdd++;
                 nAddedToday = 0;
             }
@@ -623,7 +702,21 @@ public class AdvancedStatistics extends Hook  {
             this.tMax = this.nTimeBins * this.timeBinLength;
         }
 
-        public SimulationResult simNreviews() {
+        public SimulationResult simNreviews(Decks decks, String didsStr) {
+
+            SimulationResult simulationResultAggregated = new SimulationResult(nTimeBins, timeBinLength);
+
+            long[] dids = ArrayUtils.stringToLongArray(didsStr);
+
+            for(long did : dids) {
+                simulationResultAggregated.add(simNreviews(Decks.createDeck(did, decks)));
+            }
+
+            return simulationResultAggregated;
+
+        }
+
+        public SimulationResult simNreviews(Deck deck) {
 
             SimulationResult simulationResult = new SimulationResult(nTimeBins, timeBinLength);
 
@@ -636,28 +729,37 @@ public class AdvancedStatistics extends Hook  {
             int today = Settings.getToday();
             Timber.d("today: " + today);
 
-            List<Card> deck = Deck.deckFromDB(db, today);
-
             Stack<Review> reviews = new Stack<>();
 
             //TODO: by having simulateReview add future reviews depending on which simulation of this card this is (the nth) we can:
             //1. Do monte carlo simulation if we add k future reviews if n = 1
             //2. Do a complete traversal of the future reviews tree if we add k future reviews for all n
             //3. Do any combination of these
-            for (Card card : deck) {
 
-                Review review = new Review(card, simulationResult, newCardSimulator, classifier, reviews, nTimeBins, timeBinLength);
+            CardIterator cardIterator = null;
+            try {
+                cardIterator = new CardIterator(db, today, deck.getDid());
 
-                if (review.getT() < tMax)
-                    reviews.push(review);
+                while (cardIterator.moveToNext()) {
 
-                while (!reviews.isEmpty()) {
-                    review = reviews.pop();
-                    review.simulateReview();
+                    Card card = cardIterator.current();
+
+                    Review review = new Review(deck, card, simulationResult, newCardSimulator, classifier, reviews, nTimeBins, timeBinLength);
+
+                    if (review.getT() < tMax)
+                        reviews.push(review);
+
+                    while (!reviews.isEmpty()) {
+                        review = reviews.pop();
+                        review.simulateReview();
+                    }
+
                 }
-
             }
-
+            finally {
+                if(cardIterator != null)
+                    cardIterator.close();
+            }
             ArrayUtils.formatMatrix("nReviews", simulationResult.getNReviews(), "%04d ");
             ArrayUtils.formatMatrix("nInState", simulationResult.getNInState(), "%04d ");
 
@@ -669,6 +771,10 @@ public class AdvancedStatistics extends Hook  {
         //TODO
         public int getDeckCreationTimeStamp() {
             return 1445619600;
+        }
+
+        public int getMaxNewPerDay() {
+            return 20;
         }
 
         public int getMaxReviewsPerDay() {
@@ -719,6 +825,17 @@ public class AdvancedStatistics extends Hook  {
             if(matrix.length == 0)
                 return 0;
             return matrix[0].length;
+        }
+
+        public long[] stringToLongArray(String s) {
+
+            String[] split = s.substring(1, s.length() - 1).split(", ");
+
+            long[] arr = new long[split.length];
+            for(int i = 0; i<split.length; i++)
+                arr[i] = Long.parseLong(split[i]);
+
+            return arr;
         }
 
         public int[][] transposeMatrix(int[][] matrix) {
@@ -801,6 +918,20 @@ public class AdvancedStatistics extends Hook  {
 
             this.nTimeBins = nTimeBins;
             this.timeBinLength = timeBinLength;
+        }
+
+        public void add(SimulationResult res2Add) {
+
+            int[][] nReviews = res2Add.getNReviews();
+            int[][] nInState = res2Add.getNInState();
+
+            for(int i = 0; i < nReviews.length; i++)
+                for(int j = 0; j < nReviews[i].length; j++)
+                    this.nReviews[i][j] += nReviews[i][j];
+
+            for(int i = 0; i < nInState.length; i++)
+                for(int j = 0; j < nInState[i].length; j++)
+                    this.nInState[i][j] += nInState[i][j];
         }
 
         public int[][] getNReviews() {
@@ -887,19 +1018,21 @@ public class AdvancedStatistics extends Hook  {
 
     private class Review {
 
-        private final int maxReviewsPerDay = Settings.getMaxReviewsPerDay();
+        private final int maxReviewsPerDay;
 
         private final int nTimeBins;
         private final int timeBinLength;
         private final int tMax;
 
         private int tElapsed;
+        private Deck deck;
         private Card card;
         private final SimulationResult simulationResult;
         private final EaseClassifier classifier;
         private final Stack<Review> reviews;
 
-        private Review (Card card, SimulationResult simulationResult, EaseClassifier classifier, Stack<Review> reviews, int tElapsed, int nTimeBins, int timeBinLength) {
+        private Review (Deck deck, Card card, SimulationResult simulationResult, EaseClassifier classifier, Stack<Review> reviews, int tElapsed, int nTimeBins, int timeBinLength) {
+            this.deck = deck;
             this.card = card;
             this.simulationResult = simulationResult;
             this.classifier = classifier;
@@ -907,17 +1040,22 @@ public class AdvancedStatistics extends Hook  {
 
             this.tElapsed = tElapsed;
 
+            this.maxReviewsPerDay = deck.getRevPerDay();
+
             this.nTimeBins = nTimeBins;
             this.timeBinLength = timeBinLength;
 
             this.tMax = this.nTimeBins * this.timeBinLength;
         }
 
-        public Review (Card card, SimulationResult simulationResult, NewCardSimulator newCardSimulator, EaseClassifier classifier, Stack<Review> reviews, int nTimeBins, int timeBinLength) {
+        public Review (Deck deck, Card card, SimulationResult simulationResult, NewCardSimulator newCardSimulator, EaseClassifier classifier, Stack<Review> reviews, int nTimeBins, int timeBinLength) {
+            this.deck = deck;
             this.card = card;
             this.simulationResult = simulationResult;
             this.classifier = classifier;
             this.reviews = reviews;
+
+            this.maxReviewsPerDay = deck.getRevPerDay();
 
             this.nTimeBins = nTimeBins;
             this.timeBinLength = timeBinLength;
@@ -926,7 +1064,7 @@ public class AdvancedStatistics extends Hook  {
 
             //# Rate-limit new cards by shifting starting time
             if (card.getType() == 0)
-                tElapsed = newCardSimulator.simulateNewCard();
+                tElapsed = newCardSimulator.simulateNewCard(deck);
             else
                 tElapsed = card.getDue();
 
@@ -969,7 +1107,7 @@ public class AdvancedStatistics extends Hook  {
             }
 
             if (tElapsed < tMax) {
-                Review review = new Review(card, simulationResult, classifier, reviews, tElapsed, nTimeBins, timeBinLength);
+                Review review = new Review(deck, card, simulationResult, classifier, reviews, tElapsed, nTimeBins, timeBinLength);
                 this.reviews.push(review);
             }
         }
