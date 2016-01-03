@@ -59,8 +59,9 @@
   <string name="backup_restore_select_title">Seleccionar unha copia para restaurar</string>
   <string name="backup_restore_no_backups">Sen copias dispoñibles neste dispositivo. Se tes copias no teu computador, cópiaas manualmente no cartafol do AnkiDroid.</string>
   <string name="open_collection_failed_title">Colección non aberta</string>
-  <string name="open_collection_failed_message">Database couldn’t be opened. It’s either not a real Anki database or has been corrupted.\n\nTouch “options” for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
+  <string name="open_collection_failed_message">Non se puido abrir a base de datos. Ou non é unha base de datos de Anki ou está corrompida.\n\nPreme en \"opcións\" para ver varias formas de restaurar a base de datos, ou para saber máis sobre como reparar coleccións corrompidas consulta:\n%1$s</string>
   <string name="corrupt_db_message">A túa colección corrompeuse.\n\nPreme en \"opcións\" para restaurar dende unha copia, ou se isto non funciona, segue as seguintes instrucións para reparar manualmente a base de datos:\n%1$s</string>
-  <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
+  <string name="access_collection_failed_message">Produciuse un erro ao acceder á túa colección. Puido producirse por un erro inofensivo, ou pode que exista un problema nela.\n\nTenta facer unha comprobación da base de datos, ou restaurando dende una copia premendo no botón de \"opcións\". Se continuas a ver esta mensaxe, por favor envía un informe do erro:\n%1$s</string>
   <string name="deck_repair_error">A colección no se puido reparar</string>
+  <string name="cursor_size_limit_exceeded">The Android 1MB size limit for database cursors has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
 </resources>

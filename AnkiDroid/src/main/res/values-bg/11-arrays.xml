@@ -48,7 +48,7 @@
     <item>Бутон отговор 3</item>
     <item>Бутон отговор 4</item>
     <item>Препоръчителен отговор (зелен)</item>
-    <item>Answer better than recommended</item>
+    <item>Отговаря се по-добре, отколкото се препоръчва</item>
     <item>Отмяна</item>
     <item>Промяна на бележка</item>
     <item>Маркирай бележка</item>
@@ -56,7 +56,7 @@
     <item>Скрий картата</item>
     <item>Прекрати картата</item>
     <item>Изтриване на бележка</item>
-    <item>Play media</item>
+    <item>Пускане на медия</item>
     <item>Прекъсване на обучението</item>
     <item>Зарови бележка</item>
     <item>Отлагане на бележка</item>
@@ -74,8 +74,8 @@
     <item>Случайно</item>
     <item>Увеличаване на интервалите</item>
     <item>намаляване на интервалите</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
+    <item>Най-много пропуски</item>
+    <item>Ред на добавяне</item>
     <item>Order due</item>
     <item>Първо - последно добавени</item>
     <item>Relative overdueness</item>
@@ -85,7 +85,7 @@
     <item>Decide by note type</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
+    <item>Смесване на нови карти и преговор</item>
     <item>Новите карти след повторените</item>
     <item>Новите карти преди повторените</item>
   </string-array>

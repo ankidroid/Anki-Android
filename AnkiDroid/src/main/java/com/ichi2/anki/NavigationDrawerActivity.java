@@ -214,15 +214,6 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
     }
 
 
-    /**
-     * Get the drawer layout.
-     *
-     * The drawer layout is the parent layout for activities that use the Navigation Drawer.
-     */
-    public DrawerLayout getDrawerLayout() {
-        return mDrawerLayout;
-    }
-
     @Override
     public void onBackPressed() {
         if (isDrawerOpen()) {
@@ -271,12 +262,10 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
                 startActivityForResultWithAnimation(new Intent(this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.FADE);
                 break;
             case R.id.nav_help:
-                Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(AnkiDroidApp.getManualUrl()));
-                startActivityWithoutAnimation(helpIntent);
+                openUrl(Uri.parse(AnkiDroidApp.getManualUrl()));
                 break;
             case R.id.nav_feedback:
-                Intent feedbackIntent = new Intent("android.intent.action.VIEW", Uri.parse(AnkiDroidApp.getFeedbackUrl()));
-                startActivityWithoutAnimation(feedbackIntent);
+                openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()));
                 break;
             default:
                 return false;

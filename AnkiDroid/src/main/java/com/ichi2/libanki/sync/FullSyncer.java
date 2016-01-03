@@ -20,9 +20,9 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.net.Uri;
 
-import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
@@ -87,13 +87,17 @@ public class FullSyncer extends HttpSyncer {
         } catch (IOException e1) {
             return null;
         }
-        if (mCol == null) {
-            Timber.e("Collection was unexpectedly null");
-            return null;
+        String path;
+        if (mCol != null) {
+            // Usual case where collection is non-null
+            path = mCol.getPath();
+            mCol.close(false);
+            mCol = null;
+        } else {
+            // Allow for case where collection is completely unreadable
+            Timber.w("Collection was unexpectedly null when doing full sync download");
+            path = CollectionHelper.getCollectionPath(AnkiDroidApp.getInstance());
         }
-        String path = mCol.getPath();
-        mCol.close(false);
-        mCol = null;
         String tpath = path + ".tmp";
         try {
             super.writeToFile(cont, tpath);
@@ -112,9 +116,10 @@ public class FullSyncer extends HttpSyncer {
         }
         // check the received file is ok
         mCon.publishProgress(R.string.sync_check_download_file);
+        AnkiDb tempDb = null;
         try {
-            AnkiDb d = AnkiDatabaseManager.getDatabase(tpath);
-            if (!d.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
+            tempDb = new AnkiDb(tpath);
+            if (!tempDb.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
                 Timber.e("Full sync - downloaded file corrupt");
                 return new Object[] { "remoteDbError" };
             }
@@ -122,7 +127,9 @@ public class FullSyncer extends HttpSyncer {
             Timber.e("Full sync - downloaded file corrupt");
             return new Object[] { "remoteDbError" };
         } finally {
-            AnkiDatabaseManager.closeDatabase(tpath);
+            if (tempDb != null) {
+                tempDb.closeDatabase();
+            }
         }
         // overwrite existing collection
         File newFile = new File(tpath);

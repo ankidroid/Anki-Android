@@ -50,7 +50,7 @@
   <string name="menu_get_shared_decks">Paylaşılan desteler edin</string>
   <string name="connection_error_message">Bir ağ hatası meydana geldi.</string>
   <string name="not_logged_in_title">AnkiWeb\'e giriş yap</string>
-  <string name="login_create_account_message">Bir AnkiWeb hesabına giriş yapmanız gerekiyor. Sonraki adımda bir tane oluşturabilirsiniz.</string>
+  <string name="login_create_account_message">Bulut senkronizasyon hizmetini kullanmak için üçüncü parti bir hesaba giriş yapmanız gerekiyor. Hesabı bir sonraki adımda açabilirsiniz.</string>
   <string name="no_email_client">E-posta istemcisi yok</string>
   <string name="username">Eposta adresi</string>
   <string name="username_repeat">Tekrar eposta adresi</string>
@@ -58,6 +58,7 @@
   <string name="password_repeat">Şifre (tekrar)</string>
   <string name="log_in">Giriş yap</string>
   <string name="sign_up_description">AnkiWeb hesabınız yok mu? Ücretsiz edinin!</string>
+  <string name="sign_up_not_affiliated">Not: AnkiWeb, AnkiDroid\'le bağlı değildir</string>
   <string name="sign_up">Kaydol</string>
   <string name="logged_as">Şu adla giriş yapıldı:</string>
   <string name="log_out">Çıkış yap</string>

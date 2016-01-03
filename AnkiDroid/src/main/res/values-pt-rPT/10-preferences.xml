@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <string name="disabled">Disabled</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Definições gerais</string>
   <string name="pref_cat_reviewing">Em revisão</string>
@@ -156,6 +157,11 @@
   <string name="convert_fen_text_summ">Desenhar tabuleiro de xadrez a partir da Notação Forsyth–Edwards. A notação tem que estar entre os delimitadores [fen][/fen].</string>
   <string name="enable_api_title">Ativar API da AnkiDroid</string>
   <string name="enable_api_summary">Deixe as outras aplicações ligar à AnkiDroid e ler/gravar dados sem a sua intervenção</string>
+  <string name="custom_sync_server_title">Custom sync server</string>
+  <string name="custom_sync_server_enable_title">Use custom sync server</string>
+  <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
+  <string name="custom_sync_server_base_url_title">Sync url</string>
+  <string name="custom_sync_server_media_url_title">Media sync url</string>
   <string name="studyoptions_limit_select_tags">Selecione as etiquetas</string>
   <string name="deck_conf_deck_description">Descrição do baralho</string>
   <string name="deck_conf_group">Grupo de opções</string>

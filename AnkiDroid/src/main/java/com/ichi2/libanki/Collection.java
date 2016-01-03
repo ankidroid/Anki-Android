@@ -24,7 +24,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.util.Pair;
 
-import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
@@ -315,7 +314,7 @@ public class Collection {
             } catch (RuntimeException e) {
                 AnkiDroidApp.sendExceptionReport(e, "closeDB");
             }
-            AnkiDatabaseManager.closeDatabase(mPath);
+            mDb.closeDatabase();
             mDb = null;
             mMedia.close();
             _closeLog();
@@ -326,7 +325,7 @@ public class Collection {
 
     public void reopen() {
         if (mDb == null) {
-            mDb = AnkiDatabaseManager.getDatabase(mPath);
+            mDb = new AnkiDb(mPath);
             mMedia.connect();
             _openLog();
         }

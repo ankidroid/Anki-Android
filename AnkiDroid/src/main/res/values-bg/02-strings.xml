@@ -85,7 +85,7 @@
   <string name="custom_study_review_ahead">Преглед напред</string>
   <string name="custom_study_random_selection">Учи случаен подбор от карти</string>
   <string name="custom_study_preview_new">Преглед на нови карти</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_limit_tags">Ограничаване до определени тагове</string>
   <string name="cardeditor_title_add_note">Нова бележка</string>
   <string name="cardeditor_title_edit_card">Промяна на бележка</string>
   <string name="discard_unsaved_changes">Затворете и загубете текущите входни данни?</string>
@@ -98,7 +98,7 @@
   <string name="saving_changes">Записване на промените...</string>
   <string name="reordering_cards">Пренареждане на карти&#8230;</string>
   <string name="field_remapping">%1$s (от \"%2$s\")</string>
-  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+  <string name="confirm_map_cards_to_nothing">Несъпоставените карти ще бъдат отстранени. Бележки, останали без карти ще бъдат загубени. Продължавате ли?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d карта изучена за %2$s</item>
     <item quantity="other">%1$d карти изучени за %2$s</item>
@@ -116,7 +116,7 @@
   <string name="card_editor_preview_card">Преглед</string>
   <string name="error_insufficient_memory">Операцията е невъзможна поради недостатъчна памет на вашето устройство</string>
   <string name="rename">Преименуване</string>
-  <string name="default_conf_delete_error">The default options group can’t be removed</string>
+  <string name="default_conf_delete_error">Опциите по подразбиране на групата не могат да се махнат</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d карта добавена</item>
     <item quantity="other">%d карти добавени</item>
@@ -152,7 +152,7 @@
   <string name="export_successful">Файлът “%s” е изнесен- Искате ли да го изпратите по имейл?</string>
   <string name="export_unsuccessful">Грешка при експортиране на колекцията</string>
   <string name="import_hint">Поставете apkg файла в директорията \"%s\" и докоснете \"OK\", за да импортирате карти</string>
-  <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
+  <string name="upgrade_import_no_file_found">Открит е файл %1$s, който не може да се импортира</string>
   <string name="study_options">Опции за тестето</string>
   <string name="custom_study">Допълнително учене</string>
   <string name="more_options">Още</string>
@@ -161,9 +161,9 @@
   <string name="steps_min_error">Изисква се една стъпка</string>
   <string name="sched_end">(край)</string>
   <string name="sched_unbury_action">за да ги видите сега докосване \"Откопаване\" в менюто</string>
-  <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow</string>
+  <string name="sched_has_buried">Някои свързани или заровени карти са отложени до утре</string>
   <string name="tag_editor_add_feedback">Докоснете \"%2$s\", за да потвърдите добавянето на \"%1$s\"</string>
-  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+  <string name="tag_editor_add_feedback_existing">Избран е съществуващ етикет \"%1$s\"</string>
   <string name="lookup_hint">След като копирате текста, натиснете някъде във флашкартата, за да се покаже икона за търсене</string>
   <plurals name="time_span_seconds">
     <item quantity="one">%s секунда</item>
