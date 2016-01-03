@@ -19,7 +19,6 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.database.SQLException;
 
-import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 
@@ -30,6 +29,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import timber.log.Timber;
 
 public class Storage {
     String mPath;
@@ -47,36 +48,39 @@ public class Storage {
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
         // connect
-        AnkiDb db = AnkiDatabaseManager.getDatabase(path);
-        int ver;
-        if (create) {
-            ver = _createDB(db);
-        } else {
-            ver = _upgradeSchema(db);
-        }
-        db.execute("PRAGMA temp_store = memory");
-
-        // LIBANKI: sync, journal_mode --> in AnkiDroid done in AnkiDb
-
-        // add db to col and do any remaining upgrades
-        Collection col = new Collection(db, path, server, log);
-        if (ver < Consts.SCHEMA_VERSION) {
-            _upgrade(col, ver);
-        } else if (create) {
-            try {
-                // add in reverse order so basic is default
-                Models.addClozeModel(col);
-                Models.addForwardOptionalReverse(col);
-                Models.addForwardReverse(col);
-                Models.addBasicModel(col);
-            } catch (ConfirmModSchemaException e) {
-                // This should never reached as we've just created a new database 
-                throw new RuntimeException(e);
+        AnkiDb db = new AnkiDb(path);
+        try {
+            // initialize
+            int ver;
+            if (create) {
+                ver = _createDB(db);
+            } else {
+                ver = _upgradeSchema(db);
             }
-            col.save();
+            db.execute("PRAGMA temp_store = memory");
+            // add db to col and do any remaining upgrades
+            Collection col = new Collection(db, path, server, log);
+            if (ver < Consts.SCHEMA_VERSION) {
+                _upgrade(col, ver);
+            } else if (create) {
+                try {
+                    // add in reverse order so basic is default
+                    Models.addClozeModel(col);
+                    Models.addForwardOptionalReverse(col);
+                    Models.addForwardReverse(col);
+                    Models.addBasicModel(col);
+                } catch (ConfirmModSchemaException e) {
+                    // This should never reached as we've just created a new database
+                    throw new RuntimeException(e);
+                }
+                col.save();
+            }
+            return col;
+        } catch (Exception e) {
+            Timber.e(e, "Error opening collection; closing database");
+            db.closeDatabase();
+            throw e;
         }
-        return col;
-
     }
 
 
@@ -355,103 +359,6 @@ public class Storage {
 
     public static void addIndices(AnkiDb db) {
         _updateIndices(db);
-    }
-
-    /*
-     * Upgrading ************************************************************
-     */
-
-    // public void upgrade(String path) {
-    // // mPath = path;
-    // // _openDB(path);
-    // // upgradeSchema();
-    // // _openCol();
-    // // _upgradeRest();
-    // // return mCol;
-    // }
-
-    /*
-     * Integrity checking ************************************************************
-     */
-
-    public static boolean check(String path) {
-        AnkiDb db = AnkiDatabaseManager.getDatabase(path);
-        // corrupt?
-        try {
-            if (!db.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
-                return false;
-            }
-        } catch (SQLException ex) {
-            return false;
-        }
-        // old version?
-        if (db.queryScalar("SELECT version FROM decks") < 65) {
-            return false;
-        }
-        // ensure we have indices for checks below
-        db.execute("create index if not exists ix_cards_factId on cards (factId)");
-        db.execute("create index if not exists ix_fields_factId on fieldModels (factId)");
-        db.execute("analyze");
-        // fields missing a field model?
-        if (db.queryColumn(Integer.class,
-                "select id from fields where fieldModelId not in (" + "select distinct id from fieldModels)", 0).size() > 0) {
-            return false;
-        }
-        // facts missing a field?
-        if (db.queryColumn(
-                Integer.class,
-                "select distinct facts.id from facts, fieldModels where "
-                        + "facts.modelId = fieldModels.modelId and fieldModels.id not in "
-                        + "(select fieldModelId from fields where factId = facts.id)", 0).size() > 0) {
-            return false;
-        }
-        // cards missing a fact?
-        if (db.queryColumn(Integer.class, "select id from cards where factId not in (select id from facts)", 0).size() > 0) {
-            return false;
-        }
-        // cards missing a card model?
-        if (db.queryColumn(Integer.class, "select id from cards where cardModelId not in (select id from cardModels)",
-                0).size() > 0) {
-            return false;
-        }
-        // cards with a card model from the wrong model?
-        if (db.queryColumn(
-                Integer.class,
-                "select id from cards where cardModelId not in (select cm.id from "
-                        + "cardModels cm, facts f where cm.modelId = f.modelId and " + "f.id = cards.factId)", 0)
-                .size() > 0) {
-            return false;
-        }
-        // facts missing a card?
-        if (db.queryColumn(Integer.class,
-                "select facts.id from facts " + "where facts.id not in (select distinct factId from cards)", 0).size() > 0) {
-            return false;
-        }
-        // dangling fields?
-        if (db.queryColumn(Integer.class, "select id from fields where factId not in (select id from facts)", 0).size() > 0) {
-            return false;
-        }
-        // fields without matching interval
-        if (db.queryColumn(
-                Integer.class,
-                "select id from fields where ordinal != (select ordinal from fieldModels " + "where id = fieldModelId)",
-                0).size() > 0) {
-            return false;
-        }
-        // incorrect types
-        if (db.queryColumn(
-                Integer.class,
-                "select id from cards where relativeDelay != (case "
-                        + "when successive then 1 when reps then 0 else 2 end)", 0).size() > 0) {
-            return false;
-        }
-        if (db.queryColumn(
-                Integer.class,
-                "select id from cards where type != (case "
-                        + "when type >= 0 then relativeDelay else relativeDelay - 3 end)", 0).size() > 0) {
-            return false;
-        }
-        return true;
     }
 
 }

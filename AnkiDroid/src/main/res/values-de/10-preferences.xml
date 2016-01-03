@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <string name="disabled">Deaktiviert</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Allgemeine Einstellungen</string>
   <string name="pref_cat_reviewing">Lernen</string>
@@ -77,7 +78,7 @@
   <string name="image_zoom">Bild-Zoom</string>
   <string name="button_size">Größe der Antwortschaltflächen</string>
   <string name="card_browser_font_size">Schriftskalierung in der Kartenübersicht</string>
-  <string name="col_path">AnkiDroid directory</string>
+  <string name="col_path">AnkiDroid-Verzeichnis</string>
   <string name="fullscreen_review">Vollbildmodus</string>
   <string name="full_screen_off">Aus</string>
   <string name="full_screen_system">Systemzeilen verbergen</string>
@@ -155,6 +156,11 @@
   <string name="convert_fen_text_summ">Schachbrett aus Forsyth–Edwards-Notation erstellen. Die Position muss in  [fen][/fen]-Tags eingefasst sein.</string>
   <string name="enable_api_title">AnkiDroid-API aktivieren</string>
   <string name="enable_api_summary">Verbindungen anderer Apps mit AnkiDroid zulassen und sie ohne weitere Eingriffe Daten lesen und schreiben lassen</string>
+  <string name="custom_sync_server_title">Benutzerdefinierter Synchronisierungsserver</string>
+  <string name="custom_sync_server_enable_title">Benutzerdefinierten Synchronisierungsserver verwenden</string>
+  <string name="custom_sync_server_enable_summary">Wenn Sie nicht den proprietären AnkiWeb-Dienst verwenden möchten, können Sie hier einen alternativen Server angeben</string>
+  <string name="custom_sync_server_base_url_title">Sync-URL</string>
+  <string name="custom_sync_server_media_url_title">Medien-Sync-URL</string>
   <string name="studyoptions_limit_select_tags">Schlagworte wählen</string>
   <string name="deck_conf_deck_description">Stapelbeschreibung</string>
   <string name="deck_conf_group">Optionengruppe</string>

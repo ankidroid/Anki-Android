@@ -50,7 +50,7 @@
   <string name="menu_get_shared_decks">Λήψη κοινόχρηστων τραπουλών</string>
   <string name="connection_error_message">Παρουσιάστηκε σφάλμα δικτύου.</string>
   <string name="not_logged_in_title">Log in to AnkiWeb</string>
-  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
+  <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
   <string name="no_email_client">No email client available</string>
   <string name="username">Διεύθυνση email</string>
   <string name="username_repeat">Επαναλάβετε τη διεύθυνση email</string>
@@ -58,6 +58,7 @@
   <string name="password_repeat">Επανάληψη κωδικού</string>
   <string name="log_in">Σύνδεση</string>
   <string name="sign_up_description">Δεν έχετε λογαριασμό στο AnkiWeb; Είναι δωρεάν!</string>
+  <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
   <string name="sign_up">Εγγραφή</string>
   <string name="logged_as">Είστε συνδεδεμένοι ως</string>
   <string name="log_out">Αποσύνδεση</string>

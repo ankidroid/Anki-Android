@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <string name="disabled">無効</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">一般設定</string>
   <string name="pref_cat_reviewing">カードの学習</string>
@@ -59,7 +60,7 @@
   <string name="pref_cat_plugins">プラグイン</string>
   <string name="about_title">AnkiDroidについて</string>
   <string name="about_version">バージョン：</string>
-  <string name="whiteboard_stroke_width">描かれる線の太さ</string>
+  <string name="whiteboard_stroke_width">線の太さ</string>
   <string name="whiteboard_black">黒色の線</string>
   <string name="whiteboard_black_summ">カラーの線ではなく黒色の線を描き、メモリを節約します（ナイトモードでは白色の線になります）</string>
   <string name="write_answers_disable">タイピング解答設定を無効にする</string>
@@ -155,6 +156,11 @@
   <string name="convert_fen_text_summ">Forsyth Edwards Notation 表記法を使いチェス盤を描画します。この表記は[fen][/fen] で囲む必要があります</string>
   <string name="enable_api_title">AnkiDroid API を有効にする</string>
   <string name="enable_api_summary">他のアプリがAnkiDroidに接続しデータを読み書きすることを許可します</string>
+  <string name="custom_sync_server_title">カスタム同期サーバー</string>
+  <string name="custom_sync_server_enable_title">カスタム同期サーバーを使用する</string>
+  <string name="custom_sync_server_enable_summary">AnkiWebのサービスを使用せず、代替サーバーを指定します</string>
+  <string name="custom_sync_server_base_url_title">同期URL</string>
+  <string name="custom_sync_server_media_url_title">メディア同期URL</string>
   <string name="studyoptions_limit_select_tags">タグを選択</string>
   <string name="deck_conf_deck_description">デッキの説明</string>
   <string name="deck_conf_group">オプショングループ</string>

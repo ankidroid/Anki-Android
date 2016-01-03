@@ -50,7 +50,7 @@
   <string name="menu_get_shared_decks">공유된 카드 묶음 얻기</string>
   <string name="connection_error_message">네트워크 오류가 발생했습니다.</string>
   <string name="not_logged_in_title">AnkiWeb에 로그인</string>
-  <string name="login_create_account_message">AnkiWeb 계정으로 로그인 해야 합니다. 다음 단계에서 만들 수 있습니다.</string>
+  <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
   <string name="no_email_client">사용 가능한 이메일 클라이언트가 없습니다.</string>
   <string name="username">이메일 주소</string>
   <string name="username_repeat">이메일 주소 다시 입력</string>
@@ -58,6 +58,7 @@
   <string name="password_repeat">암호 다시 입력</string>
   <string name="log_in">로그인</string>
   <string name="sign_up_description">AnkiWeb 계정이 없으십니까? 무료입니다!</string>
+  <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
   <string name="sign_up">가입</string>
   <string name="logged_as">다음 사용자로 로그인 됨</string>
   <string name="log_out">로그아웃</string>

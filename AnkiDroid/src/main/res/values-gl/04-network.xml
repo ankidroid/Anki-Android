@@ -50,7 +50,7 @@
   <string name="menu_get_shared_decks">Obter barallas compartidas</string>
   <string name="connection_error_message">Produciuse un erro de rede.</string>
   <string name="not_logged_in_title">Iniciar sesión no AnkiWeb</string>
-  <string name="login_create_account_message">Tes de iniciar sesión cunha conta de AnkiWeb. Podes crear unha no vindeiro paso.</string>
+  <string name="login_create_account_message">Tes que iniciar sesión nunha conta de terceiros para empregar o servizo de sincronización na nube. Podes crear unha no seguinte paso.</string>
   <string name="no_email_client">Non hai dispoñible ningún cliente de correo</string>
   <string name="username">Enderezo de correo electrónico</string>
   <string name="username_repeat">Repetir correo electrónico</string>
@@ -58,6 +58,7 @@
   <string name="password_repeat">Repetir contrasinal</string>
   <string name="log_in">Iniciar sesión</string>
   <string name="sign_up_description">Non tes unha conta de AnkiWeb? É de balde!</string>
+  <string name="sign_up_not_affiliated">Nota: AnkiWeb non está afiliada a AnkiDroid</string>
   <string name="sign_up">Rexistrarse</string>
   <string name="logged_as">Conectado como</string>
   <string name="log_out">Saír</string>
@@ -80,7 +81,7 @@
   <string name="sync_downloading_media">Descargando multimedia %1$d/%2$d&#8230;</string>
   <string name="sync_log_uploading_message">Sincronización completa dos datos locais</string>
   <string name="sync_log_downloading_message">Sincronización completa no servidor</string>
-  <string name="sync_log_clocks_unsynchronized">Your clock’s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
+  <string name="sync_log_clocks_unsynchronized">A hora está desfasada en %1$d segundos%2$s. Verifica que a data, hora e o fuso horario do teu teléfono son correctos e sincroniza de novo.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, the time zone’s possibly wrong</string>
   <string name="sync_log_clocks_unsynchronized_date">, the date’s possibly wrong</string>
   <string name="sync_conflict_title">Conflito ao sincronizar</string>
@@ -92,12 +93,12 @@
   <string name="sync_remote_db_error">A base de datos descargada está corrompida. Por favor, téntao de novo.</string>
   <string name="sync_overwrite_error">A túa colección actual no se pode sobrescribir co ficheiro descargado</string>
   <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
-  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
-  <string name="sync_write_access_error">The downloaded file couldn’t be saved to the SD card. Either the card is mounted read-only or there isn’t enough space.</string>
+  <string name="sync_error_409">Só un cliente pode acceder a AnkiWeb á vez. Se a sincronización fallou, por favor téntao nuns minutos.</string>
+  <string name="sync_write_access_error">O ficheiro descargado non se puido gardar no cartón SD, ou está montado en modo só lectura ou non hai espazo abondo.</string>
   <string name="sync_deletions_message">Sincronizando as eliminacións&#8230;</string>
   <string name="sync_small_objects_message">Sincronizando obxectos pequenos&#8230;</string>
   <string name="sync_finish_message">Rematando a sincronización&#8230;</string>
-  <string name="sync_log_finish_error">Error while sending finish direction to server</string>
+  <string name="sync_log_finish_error">Produciuse un erro ao enviar o enderezo de destino ao servidor</string>
   <string name="sync_writing_db">Escribindo os cambios na base de datos&#8230;</string>
   <string name="sync_download_chunk">Descargando cambios&#8230;</string>
   <string name="sync_upload_chunk">Subindo cambios&#8230;</string>
@@ -108,8 +109,8 @@
   <string name="sync_media_find">Buscando medios modificados&#8230;</string>
   <string name="sync_media_no_changes">Sen cambios nos ficheiros de medios</string>
   <string name="sync_media_success">Medios sincronizados</string>
-  <string name="sync_media_changes_count">%d media changes to upload</string>
-  <string name="sync_media_downloaded_count">%d media files downloaded</string>
+  <string name="sync_media_changes_count">%d cambios nos medios para subir</string>
+  <string name="sync_media_downloaded_count">%d ficheiros de medios para descargar</string>
   <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Choose which side you would like to keep.</string>
   <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn’t agree with the server. The next media sync will be full to correct any error.</string>
   <string name="sync_media_error">Error syncing media data</string>
@@ -120,5 +121,5 @@
   <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
   <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
   <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
-  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
+  <string name="sync_error_501_upgrade_required">Por favor, actualiza á última versión do AnkiDroid</string>
 </resources>

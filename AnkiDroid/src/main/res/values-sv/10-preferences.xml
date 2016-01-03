@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <string name="disabled">Inaktiverad</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Allmäna inställningar</string>
   <string name="pref_cat_reviewing">Repetition</string>
@@ -64,8 +65,8 @@
   <string name="whiteboard_black_summ">Använder mindre arbetsminne, men fungerar inte i nattläge</string>
   <string name="write_answers_disable">Stäng av att skriva in svar</string>
   <string name="write_answers_disable_summ">Stoppar tangentbord från att dyka upp på kort med \'skriv in svar\'-fält</string>
-  <string name="use_input_tag">Type answer into the card</string>
-  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
+  <string name="use_input_tag">Skriv svar i kortet</string>
+  <string name="use_input_tag_summ">Använd en textinmatningsruta i kortet för att skriva in svaret</string>
   <string name="text_selection_click">Långklicksfix</string>
   <string name="text_selection_click_summ">Aktivera detta om du inte kan påbörja textmarkering via långt klick</string>
   <string name="dictionary">Ordbok</string>
@@ -77,12 +78,12 @@
   <string name="image_zoom">Bild-zoom</string>
   <string name="button_size">Storlek på svarsknapp</string>
   <string name="card_browser_font_size">Typsnittsstorlek i kortbläddrare</string>
-  <string name="col_path">AnkiDroid directory</string>
+  <string name="col_path">AnkiDroid sökväg</string>
   <string name="fullscreen_review">Fullskärmsläge</string>
-  <string name="full_screen_off">Off</string>
-  <string name="full_screen_system">Hide the system bars</string>
-  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
+  <string name="full_screen_off">Av</string>
+  <string name="full_screen_system">Dölj systemets statusfält</string>
+  <string name="full_screen_complete">Dölj systemets statusfält och svarsknapparna</string>
+  <string name="full_screen_error_gestures">Du måste aktivera gester för att dölja svarsknapparna</string>
   <string name="gestures">Aktivera gester</string>
   <string name="gestures_summ">Koppla gester till handlingar, som t ex att svara på eller redigera kort.</string>
   <string name="gestures_swipe_up">Svep uppåt</string>
@@ -153,8 +154,13 @@
   <string name="pref_keep_screen_on_summ">Inaktivera skärmtimeout</string>
   <string name="convert_fen_text">Stöd för schack-notation</string>
   <string name="convert_fen_text_summ">Rita ett schackbräde med Forsyth–Edwards Notation. Notationen måste använda [fen][/fen]-märkning</string>
-  <string name="enable_api_title">Enable AnkiDroid API</string>
-  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+  <string name="enable_api_title">Aktivera AnkiDroid API</string>
+  <string name="enable_api_summary">Låt andra appar ansluta till AnkiDroid och läsa / skriva data utan din medverkan</string>
+  <string name="custom_sync_server_title">Annan synkroniseringsserver</string>
+  <string name="custom_sync_server_enable_title">Använd annan synkroniseringsserver</string>
+  <string name="custom_sync_server_enable_summary">Om du inte vill använda den proprietära AnkiWeb-tjänsten kan du ange en alternativ server här</string>
+  <string name="custom_sync_server_base_url_title">Synkroniseringsurl</string>
+  <string name="custom_sync_server_media_url_title">Mediasynkroniseringsurl</string>
   <string name="studyoptions_limit_select_tags">Välj etiketter</string>
   <string name="deck_conf_deck_description">Kortleksbeskrivning</string>
   <string name="deck_conf_group">Konfigurationsgrupp</string>

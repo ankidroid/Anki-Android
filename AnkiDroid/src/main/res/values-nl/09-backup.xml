@@ -63,4 +63,5 @@
   <string name="corrupt_db_message">Je collectie bevat fouten.\n\nKlik op \"opties\" om te herstellen vanaf een back-up, of als dat niet werkt, lees de volgende instructie voor het handmatig repareren van de database:\n%1$s</string>
   <string name="access_collection_failed_message">Er is een fout opgetreden bij de toegang tot uw collectie. Dit kan worden veroorzaakt door een onschuldig bug of er is mogelijk een probleem met de collectie. \n\nU kunt via de knop \"opties\" een databasecontrole uitvoeren of een back-up terugzetten. Als dit bericht steeds opnieuw verschijnt, gelieve een bugrapport in te dienen: \n%1$s</string>
   <string name="deck_repair_error">Collectie kon niet worden hersteld</string>
+  <string name="cursor_size_limit_exceeded">The Android 1MB size limit for database cursors has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
 </resources>

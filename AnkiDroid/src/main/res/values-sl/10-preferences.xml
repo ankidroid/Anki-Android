@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <string name="disabled">Onemogočeno</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Splošne nastavitve</string>
   <string name="pref_cat_reviewing">Pregledovanje</string>
@@ -77,7 +78,7 @@
   <string name="image_zoom">Povečava slike</string>
   <string name="button_size">Velikost gumba za odgovor</string>
   <string name="card_browser_font_size">Umer. pisave brs. kartic</string>
-  <string name="col_path">AnkiDroid directory</string>
+  <string name="col_path">Mapa AnkiDroid</string>
   <string name="fullscreen_review">Celozaslonski način</string>
   <string name="full_screen_off">Izklopljen</string>
   <string name="full_screen_system">Skrij sistemske vrstice</string>
@@ -156,6 +157,11 @@
   <string name="convert_fen_text_summ">Nariši šahovnico iz zapisa Forsyth–Edwards. Zapis se mora nahajati znotraj oznak [fen][/fen].</string>
   <string name="enable_api_title">Omogoči API AnkiDroid</string>
   <string name="enable_api_summary">Omogoči drugim napravam povezavo z AnkiDroidom in branje/pisanje podatkov brez mojega posredovanja</string>
+  <string name="custom_sync_server_title">Strežnik za sinhronizacijo po meri</string>
+  <string name="custom_sync_server_enable_title">Uporabi strežnik za sinhronizacijo po meri</string>
+  <string name="custom_sync_server_enable_summary">Če ne želite uporabljati lastniške storitve AnkiWeb, lahko tu določite nadomestno storitev</string>
+  <string name="custom_sync_server_base_url_title">URL za sinhr.</string>
+  <string name="custom_sync_server_media_url_title">URL za sinhr. predstavnosti</string>
   <string name="studyoptions_limit_select_tags">Izberite oznake</string>
   <string name="deck_conf_deck_description">Opis kompleta</string>
   <string name="deck_conf_group">Skupina možnosti</string>

@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <string name="disabled">Изключен</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Общи настройки</string>
   <string name="pref_cat_reviewing">Преглед</string>
@@ -65,7 +66,7 @@
   <string name="write_answers_disable">Забраняване на въвеждане в отговора</string>
   <string name="write_answers_disable_summ">Предотвратява появяването на клавиатура за карти, съдържащи полета тип отговор</string>
   <string name="use_input_tag">Пиши отговорът в картата</string>
-  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
+  <string name="use_input_tag_summ">Използване на текстово поле за въвеждане на отговора в картата</string>
   <string name="text_selection_click">Заобикаляне на дългото натискане</string>
   <string name="text_selection_click_summ">Активирайте това, ако не сте в състояние да започне избора на текст чрез дълго кликане</string>
   <string name="dictionary">Речник за справка</string>
@@ -77,7 +78,7 @@
   <string name="image_zoom">Увеличение на изображение</string>
   <string name="button_size">Размер на бутона за отговор</string>
   <string name="card_browser_font_size">Мащабиране на шрифта при разглеждане на картите</string>
-  <string name="col_path">AnkiDroid directory</string>
+  <string name="col_path">Директория на AnkiDroid</string>
   <string name="fullscreen_review">Режим на цял екран</string>
   <string name="full_screen_off">Изкл.</string>
   <string name="full_screen_system">Скриване на системните ленти</string>
@@ -107,8 +108,7 @@
   <string name="sync_account_summ_logged_out">Не сте влезнали в профила</string>
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="automatic_sync_choice">Автоматична синхронизация</string>
-  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
+  <string name="automatic_sync_choice_summ">Автоматично синхронизиране пи стариране/изход от приложението, ако последното синхронизиране е от повече от 10        минути.</string>
   <string name="fix_hebrew_text">Поправка за гласните на иврит</string>
   <string name="fix_hebrew_text_summ">Позволява правилно показване гласните на иврит.</string>
   <string name="fix_hebrew_instructions">Тази настройка заобикаля алгоритъм RTL на Android, за да се покаже правилно гласните в текст на иврит. \n\nЗа да работи правилно, трябва да изтеглите шрифта Tohu.ttf и да го копирате ръчно в \n“%s/fonts/”\n\nНяма нужда да модифицирате картите.</string>
@@ -156,16 +156,21 @@
   <string name="convert_fen_text_summ">Начертайте шахматна дъска за нотация на Форсайт-Едуърдс. Нотацията трябва да е затворена в [fen] [/fen] тагове.</string>
   <string name="enable_api_title">Разрешаване на AnkiDroid API</string>
   <string name="enable_api_summary">Нека други приложения, се свържат с AnkiDroid и да четат / записват данни без Ваша намеса</string>
+  <string name="custom_sync_server_title">Синхрон на потребителски сървър</string>
+  <string name="custom_sync_server_enable_title">Използвайте потребителски сървър за синхрон</string>
+  <string name="custom_sync_server_enable_summary">Ако не искате да синхронизирате чрез сървър наAnkiWeb, можете тук да укажете алтернативен сървър</string>
+  <string name="custom_sync_server_base_url_title">URL за синхрон</string>
+  <string name="custom_sync_server_media_url_title">URL за синхрон на медии</string>
   <string name="studyoptions_limit_select_tags">Изберете етикети</string>
   <string name="deck_conf_deck_description">Описание на тестето</string>
-  <string name="deck_conf_group">Options group</string>
+  <string name="deck_conf_group">Опции на групата</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d deck uses this group</item>
-    <item quantity="other">%1$s\n%2$d decks use this group</item>
+    <item quantity="one">В тази група се използва %1$s\n%2$d тесте</item>
+    <item quantity="other">В тази група се използват %1$s\n%2$d тестета</item>
   </plurals>
   <string name="deck_conf_new_cards">Нови карти</string>
   <string name="deck_conf_rev_cards">Разглеждания</string>
-  <string name="deck_conf_lps_cards">Lapses</string>
+  <string name="deck_conf_lps_cards">Пропуски</string>
   <string name="deck_conf_general">General</string>
   <string name="deck_conf_steps">Стъпки (в минути)</string>
   <string name="deck_conf_order">Ред</string>
@@ -176,12 +181,12 @@
   <string name="deck_conf_start_ease">Starting ease</string>
   <string name="deck_conf_max_rev">Максимален брой разглеждания в ден</string>
   <string name="deck_conf_new_bury">Bury related new cards</string>
-  <string name="deck_conf_new_bury_summ">Related new cards are buried until the next day</string>
+  <string name="deck_conf_new_bury_summ">Свързани нови карти са скрити до следващия ден</string>
   <string name="deck_conf_rev_bury">Bury related reviews</string>
   <string name="deck_conf_rev_bury_summ">Related reviews are buried until the next day</string>
-  <string name="deck_conf_easy_bonus">Easy bonus</string>
-  <string name="deck_conf_ivl_fct">Interval modifier</string>
-  <string name="deck_conf_max_ivl">Maximum interval</string>
+  <string name="deck_conf_easy_bonus">Лесен бонус</string>
+  <string name="deck_conf_ivl_fct">Модифициране на интервал</string>
+  <string name="deck_conf_max_ivl">Максимален интервал</string>
   <string name="deck_conf_new_lps_ivl">Нов интервал</string>
   <string name="deck_conf_min_ivl">Минимален интервал</string>
   <string name="deck_conf_leech_thres">Leech threshold</string>
@@ -191,7 +196,7 @@
   <string name="deck_conf_seconds">ХХХ секунди</string>
   <string name="deck_conf_timer">Показване таймер за отговори</string>
   <string name="deck_conf_autoplay">Автоматично възпроизвеждане на аудио</string>
-  <string name="deck_conf_replayq">Replay question</string>
+  <string name="deck_conf_replayq">Повторение на въпроса</string>
   <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
   <string name="deck_conf_manage">Управление на група</string>
   <string name="deck_conf_current_group">Настояща група</string>
@@ -200,17 +205,17 @@
   <string name="deck_conf_reset_title">Възстанови по подразбиране</string>
   <string name="deck_conf_reset_message">Restore current options group to default values?</string>
   <string name="deck_conf_add">Нов</string>
-  <string name="deck_conf_add_summ">Create a copy of the current options group</string>
+  <string name="deck_conf_add_summ">Създаване копие на опциите за текущата група</string>
   <string name="deck_conf_remove">Премахване</string>
   <string name="deck_conf_remove_title">Премахване</string>
-  <string name="deck_conf_remove_message">Remove current options group?</string>
+  <string name="deck_conf_remove_message">Премахване опциите на текущата група?</string>
   <string name="deck_conf_set_subdecks">За всички подтестета</string>
   <plurals name="deck_conf_set_subdecks_summ">
     <item quantity="one">Тази група ще използва %s подтесте</item>
     <item quantity="other">Тази група ще използва %s подтестета</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">За всички подтестета</string>
-  <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
+  <string name="deck_conf_set_subdecks_message">Задаване текущите опции за всички подтестета в тестето?</string>
   <string name="pref_browser_editor_font">Шрифт при разглеждане и редактиране</string>
   <string name="deck_conf_cram_filter">Филтър</string>
   <string name="deck_conf_cram_options">Настройки</string>
