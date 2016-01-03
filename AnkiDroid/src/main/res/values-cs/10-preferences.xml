@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <string name="disabled">Disabled</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Obecné nastavení</string>
   <string name="pref_cat_reviewing">Opakování</string>
@@ -155,6 +156,11 @@
   <string name="convert_fen_text_summ">Vykreslení šachovnice z Forsyth Edwards Notation. Zápis musí být uzavřen mezi značky [fen][/fen].</string>
   <string name="enable_api_title">Povolit AnkiDroid API</string>
   <string name="enable_api_summary">Umožnit ostatním aplikacím číst a zapisovat data AnkiDroid bez uživatelské intervence</string>
+  <string name="custom_sync_server_title">Custom sync server</string>
+  <string name="custom_sync_server_enable_title">Use custom sync server</string>
+  <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
+  <string name="custom_sync_server_base_url_title">Sync url</string>
+  <string name="custom_sync_server_media_url_title">Media sync url</string>
   <string name="studyoptions_limit_select_tags">Výběr štítků</string>
   <string name="deck_conf_deck_description">Popis balíčku</string>
   <string name="deck_conf_group">Skupina nastavení</string>

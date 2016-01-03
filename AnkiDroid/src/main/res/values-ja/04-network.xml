@@ -50,7 +50,7 @@
   <string name="menu_get_shared_decks">共有デッキを取得</string>
   <string name="connection_error_message">ネットワークエラーが発生しました</string>
   <string name="not_logged_in_title">AnkiWebへのログイン</string>
-  <string name="login_create_account_message">AnkiWebにログインする必要があります。次の手順でアカウントを作成できます。</string>
+  <string name="login_create_account_message">このサードパーティーのクラウド同期サービスを使用するためには、そのサービスのアカウントへのログインが必要です。次の手順でアカウントを作成できます。</string>
   <string name="no_email_client">E-mailアドレスが無効です</string>
   <string name="username">メールアドレス</string>
   <string name="username_repeat">メールアドレス（確認）</string>
@@ -58,6 +58,7 @@
   <string name="password_repeat">パスワード（確認）</string>
   <string name="log_in">ログイン</string>
   <string name="sign_up_description">AnkiWebのアカウントを新規登録（無料）</string>
+  <string name="sign_up_not_affiliated">注: AnkiWebはAnkiのサービスであり、Ankiから独立して活動しているAnkiDroidプロジェクトが管理するものではありません</string>
   <string name="sign_up">サインアップ</string>
   <string name="logged_as">ログイン名</string>
   <string name="log_out">ログアウト</string>

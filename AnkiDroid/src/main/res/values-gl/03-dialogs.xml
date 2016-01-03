@@ -55,30 +55,30 @@
   <string name="initializing_tts">Iniciando TTS&#8230;</string>
   <string name="tts_no_tts">Non fales</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
-    <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Cartóns Android</h2>AnkiDroid é unha aplicación de cartóns compatible co software de escritorio <a href=\"%2$s\">Anki</a>. Podes crear, descargar e aprender materias en ámbolos dous programas, e sincronizalos dun xeito doado co AnkiWeb.]]></item>
+    <item><![CDATA[Para axudarnos a facer o AnkiDroid mellor, por favor informa dos erros no <a href=\"%1$s\">seguimento de problemas</a>; ideas sobre novas características son benvidas. Atopa respostas na <a href=\"%2$s\">wiki</a> ou comeza unha conversa no <a href=\"%3$s\">foro</a>.]]></item>
     <item><![CDATA[AnkiDroid é <a href=\"%1$s\">software de código aberto<a/>, polo que é animado a <a href=\"%2$s\">colaborar</a> :-)]]></item>
     <item><![CDATA[Os que non son desenvolvedores tamen poden axudar. Por exemplo, poden <a href=\"%1$s\">axudar a traducir</a> o AnkiDroid, actualizar o wiki, fornecer capturas, <a href=\"%2$s\">facer unha doazón</a> a Anki Desktop, ou blogar sobre AnkiDroid.]]></item>
     <item><![CDATA[Ankidroid distribúese baixo <a href=\"%1$s\">licenza GNU-GPL v3</a> e o código fonte está dispoñible <a href=\"%2$s\">no GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Vista previa</string>
-  <string name="reset_card_dialog_title">Reset card progress</string>
+  <string name="reset_card_dialog_title">Reiniciar o progreso do cartón</string>
   <string name="reset_card_dialog_message">Este cartón colocarase ao final da nova cola.</string>
-  <string name="reset_card_dialog_acknowledge">Card reset</string>
-  <string name="reschedule_card_dialog_title">Reschedule card</string>
-  <string name="reschedule_card_dialog_message">Volver programar unha revisión en x días:</string>
-  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
+  <string name="reset_card_dialog_acknowledge">Reiniciar cartón</string>
+  <string name="reschedule_card_dialog_title">Reprogramar cartón</string>
+  <string name="reschedule_card_dialog_message">Reprogramar unha revisión en x días:</string>
+  <string name="reschedule_card_dialog_acknowledge">Cartón reprogramado</string>
   <string name="answering_error_title">Erro na base de datos</string>
-  <string name="answering_error_message">Writing to the collection failed. The databese could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+  <string name="answering_error_message">Produciuse un erro ao escribir na colección. A base de datos pode estar corrompida ou non existir espazo abondo non disco.\n\nSe isto acontece con moi frecuencia, tenta verificar a base de datos, reparar a colección ou restaurar dende unha copia. Para iso preme en \"opcións\".\n\nTamén podería ser un erro do programa; por favor, envía un informe do erro para que o verifiquemos.</string>
   <string name="answering_error_report">Informar de erros</string>
-  <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
+  <string name="repair_deck_dialog">Tes a certeza de querer tentar reparar a base de datos?\n\nAntes de comezar, crearase unha copia no cartafol \"%s\".</string>
   <string name="intent_add_saved_information">Datos gardados</string>
   <string name="intent_add_clear_all">Limpar todo</string>
   <string name="intent_aedict_empty">A categoría \'predeterminado\' está baleira</string>
-  <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
+  <string name="intent_aedict_category">Para engadir cartóns ao AnkiDroid elimina todas as categorías do caderno de notas ou engade unha chamada \"predefinido\"</string>
   <string name="custom_study_new_total_new">Novos cartóns na baralla: %s</string>
   <string name="custom_study_rev_total_rev">Reviews due in deck: %s</string>
-  <string name="custom_study_new_extend">Increase today’s new card limit by</string>
+  <string name="custom_study_new_extend">Incrementar o límite de cartóns novos para hoxe</string>
   <string name="custom_study_rev_extend">Aumentar o límite de visións para hoxe en</string>
   <string name="custom_study_forgotten">Revisar os cartóns esquecidos nos últimos x días:</string>
   <string name="custom_study_ahead">Revisar con x días de adianto:</string>
@@ -88,7 +88,7 @@
   <string name="import_unpacking">Descomprimindo arquivo&#8230;</string>
   <string name="importing_collection">Importando colección&#8230;</string>
   <string name="import_media_count">Importando ficheiros de medios %1$d%%&#8230;</string>
-  <string name="import_update_counts">Updating deck counts&#8230;</string>
+  <string name="import_update_counts">Actualizando os contadores da baralla&#8230;</string>
   <string name="import_add_progress">• Descomprimindo o arquivo %1$s\n• Importación de notas %2$d%%\n• Importación de cartóns %3$d%%\n• Limpeza %4$s</string>
   <string name="sd_card_full_title">Cartón SD cheo</string>
   <string name="sd_card_almost_full_title">Cartón SD case cheo</string>
@@ -117,7 +117,7 @@
   <string name="check_media_unused">Ficheiros no cartafol de medios pero sen usar por calquera cartón: %d</string>
   <string name="check_media_nohave">Ficheiros usados nos cartóns pero non existen no cartafol de medios: %d</string>
   <string name="check_media_no_unused_missing">Non se atoparon ficheiros sen usar ou perdidos</string>
-  <string name="check_media_db_updated">Media database rebuilt</string>
+  <string name="check_media_db_updated">Reconstruída a base de datos de medios</string>
   <string name="check_media_delete_unused">Eliminar os non empregados</string>
   <string name="check_media_deleted">Ficheiros eliminados: %d</string>
   <string name="tags_dialog_option_all_cards">Todos os cartóns</string>

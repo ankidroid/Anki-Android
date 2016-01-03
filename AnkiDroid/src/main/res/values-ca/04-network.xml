@@ -50,7 +50,7 @@
   <string name="menu_get_shared_decks">Baixeu paquets compartits</string>
   <string name="connection_error_message">Hi ha hagut un error de la xarxa.</string>
   <string name="not_logged_in_title">Entra a AnkiWeb</string>
-  <string name="login_create_account_message">Cal estar registrat per a un compte de AnkiWeb. Podeu crear un en el pròxim pas.</string>
+  <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
   <string name="no_email_client">Cap client de correu electrònic disponible</string>
   <string name="username">Adreça de correu electrònic</string>
   <string name="username_repeat">Repeteix l\'adreça de correu electrònic</string>
@@ -58,6 +58,7 @@
   <string name="password_repeat">Repeteixi la contrasenya</string>
   <string name="log_in">Inicia la sessió</string>
   <string name="sign_up_description">No teniu un compte d\'AnkiWeb? És gratuït!</string>
+  <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
   <string name="sign_up">Registreu-vos</string>
   <string name="logged_as">Heu entrat com a</string>
   <string name="log_out">Desconnecta</string>

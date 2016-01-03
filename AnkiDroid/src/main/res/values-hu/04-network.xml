@@ -50,7 +50,7 @@
   <string name="menu_get_shared_decks">Megosztott paklik</string>
   <string name="connection_error_message">Hálózati hiba történt.</string>
   <string name="not_logged_in_title">Bejelentkezés az AnkiWebre</string>
-  <string name="login_create_account_message">Be kell jelentkezned egy AnkiWeb fiókba. A következő lépésben létrehozhatsz egyet.</string>
+  <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
   <string name="no_email_client">Nincs rendelkezésre álló email kliens</string>
   <string name="username">Email cím</string>
   <string name="username_repeat">Ismételje meg az e-mail címet</string>
@@ -58,6 +58,7 @@
   <string name="password_repeat">Jelszó mégegyszer</string>
   <string name="log_in">Bejelentkezés</string>
   <string name="sign_up_description">Nincs AnkiWeb fiókod? Ingyenes, meg minden!</string>
+  <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
   <string name="sign_up">Regisztráció</string>
   <string name="logged_as">Bejelentkezve mint</string>
   <string name="log_out">Kijelentkezés</string>

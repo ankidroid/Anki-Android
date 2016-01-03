@@ -116,8 +116,8 @@
   <string name="custom_study_deck_exists">Var god döp om den existerande anpassade studiekortleken först.</string>
   <string name="empty_deck">Den här leken är tom</string>
   <string name="studyoptions_empty">Den här leken är tom. Använd +-knappen för att lägga till nytt innehåll.</string>
-  <string name="studyoptions_limit_reached">Daily study limit reached</string>
-  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+  <string name="studyoptions_limit_reached">Den dagliga studiegränsen har nåtts</string>
+  <string name="studyoptions_empty_schedule">Inga kort finns schemalagda</string>
   <string name="studyoptions_congrats_finished">Grattis! Du är klar för stunden.</string>
   <string name="studyoptions_congrats_more_rev">Dagens gräns för antal repetitioner har uppnåtts, men det finns fortfarande kort kvar att repetera. För att optimera inlärningsprocessen, överväg att öka den dagliga gränsen för antal repetitioner i inställningarna.</string>
   <string name="studyoptions_congrats_more_new">Det finns fler nya kort, men den dagliga gränsen har uppnåtts. Du kan höja gränsen i inställningarna, men kom ihåg att detta också ökar antalet repetitioner på kort sikt.</string>
@@ -125,15 +125,15 @@
   <string name="studyoptions_no_cards_due">Inga kort i kö.</string>
   <string name="sd_card_not_mounted">Lagringsenheten inte monterad</string>
   <string name="button_sync">Synkronisera</string>
-  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-  <string name="continue_sync">Continue sync</string>
-  <string name="sync_cancelled">Sync cancelled</string>
-  <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
+  <string name="cancel_sync_confirm">Vill du avbryta synkroniseringen?</string>
+  <string name="continue_sync">Fortsätt synkronisering</string>
+  <string name="sync_cancelled">Synkronisering avbruten</string>
+  <string name="sync_cancel_message">Avbryter&#8230;\nDetta kan ta en stund.</string>
   <string name="export">Exportera</string>
-  <string name="export_collection">Export collection</string>
-  <string name="export_deck">Export deck</string>
+  <string name="export_collection">Exportera samling</string>
+  <string name="export_deck">Exportera kortlek</string>
   <string name="nothing">Inget</string>
-  <string name="title_activity_template_editor">Card types</string>
+  <string name="title_activity_template_editor">Korttyper</string>
   <string name="card_template_editor_front">Kortmall för framsida</string>
   <string name="card_template_editor_back">Kortmall för baksida</string>
   <string name="card_template_editor_styling">Formgivning</string>
@@ -143,8 +143,8 @@
     <item quantity="one">Ta bort korttypen \"%2$s\" och dess %1$d kort?</item>
     <item quantity="other">Ta bort korttypen \"%2$s\" och dess %1$d kort?</item>
   </plurals>
-  <string name="invalid_template">A card could not be generated</string>
-  <string name="card_template_editor_would_delete_note">Att ta bort det här kortet skulle göra att en eller flera noter tas bort. Vänligen skapa en ny korttyp först.</string>
-  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="invalid_template">Ett kort kunde inte genereras</string>
+  <string name="card_template_editor_would_delete_note">Att ta bort den här korttypen skulle göra att en eller flera noter tas bort. Vänligen skapa en ny korttyp först.</string>
+  <string name="read_write_permission_label">Läs och skriv till AnkiDroid-databasen</string>
+  <string name="read_write_permission_description">Tillåt appen att komma åt existerande noter, kort, nottyper och kortlekar, samt att skapa nya</string>
 </resources>

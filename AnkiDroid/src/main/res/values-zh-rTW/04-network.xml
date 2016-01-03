@@ -50,7 +50,7 @@
   <string name="menu_get_shared_decks">取得共享的牌組</string>
   <string name="connection_error_message">網路出了點問題。</string>
   <string name="not_logged_in_title">登入 AnkiWeb</string>
-  <string name="login_create_account_message">您必須登入 AnkiWeb 帳號。您可以在下一步驟新增一個。</string>
+  <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
   <string name="no_email_client">沒有可用的電子郵件應用程式</string>
   <string name="username">電子郵件地址</string>
   <string name="username_repeat">再次輸入電子郵件地址</string>
@@ -58,6 +58,7 @@
   <string name="password_repeat">再次輸入密碼</string>
   <string name="log_in">登入</string>
   <string name="sign_up_description">沒有 AnkiWeb 帳戶嗎？它是免費的！</string>
+  <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
   <string name="sign_up">註冊</string>
   <string name="logged_as">登入為</string>
   <string name="log_out">登出</string>

@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <string name="disabled">Disabled</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">常用设置</string>
   <string name="pref_cat_reviewing">复习</string>
@@ -155,6 +156,11 @@
   <string name="convert_fen_text_summ">使用福斯夫－爱德华兹记号法来画棋盘。记号必须用[fen][/fen]标签括起来。</string>
   <string name="enable_api_title">启用AnkiDroid API</string>
   <string name="enable_api_summary">让其他的应用程序连接到AnkiDroid读写数据</string>
+  <string name="custom_sync_server_title">Custom sync server</string>
+  <string name="custom_sync_server_enable_title">Use custom sync server</string>
+  <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
+  <string name="custom_sync_server_base_url_title">Sync url</string>
+  <string name="custom_sync_server_media_url_title">Media sync url</string>
   <string name="studyoptions_limit_select_tags">选择标签</string>
   <string name="deck_conf_deck_description">牌组说明</string>
   <string name="deck_conf_group">选项组</string>

@@ -50,7 +50,7 @@
   <string name="menu_get_shared_decks">Nhận xấp thẻ được chia sẻ</string>
   <string name="connection_error_message">Một lỗi mạng đã xảy ra.</string>
   <string name="not_logged_in_title">Đăng nhập vào AnkiWeb</string>
-  <string name="login_create_account_message">Bạn phải đăng nhập vào tài khoản AnkiWeb. Bạn có thể tạo ra một tài khoản trong bước tiếp theo.</string>
+  <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
   <string name="no_email_client">Không có ứng dụng email nào sẵn sàng</string>
   <string name="username">Tài khoản email</string>
   <string name="username_repeat">Nhập lại địa chỉ email</string>
@@ -58,6 +58,7 @@
   <string name="password_repeat">Nhập lại mật khẩu</string>
   <string name="log_in">Đăng nhập</string>
   <string name="sign_up_description">Không có tài khoản AnkiWeb? Nó miễn phí!</string>
+  <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
   <string name="sign_up">Đăng ký</string>
   <string name="logged_as">Đăng nhập như</string>
   <string name="log_out">Đăng xuất</string>
