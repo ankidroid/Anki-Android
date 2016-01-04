@@ -128,6 +128,11 @@ If someone would like to continue that work:
 [Here is the unmerged commit](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2Fankidroid%2FAnki-Android%2Fcommit%2Ff899cb98f6fb90c1b4d5d48aff786e813adcf237&sa=D&sntz=1&usg=AFQjCNGmi_WBEvhq55r7DGHEwwmTb-JaWA) for the plugin interface for controllers
 and [here is the plugin for the Zeemote controller](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2Finiju%2FAnkiDroid-Zeemote&sa=D&sntz=1&usg=AFQjCNF8ASmfUyI_oM-1mMq1lhBYbqGfRQ)
 
+### Why do I get an error message about the size limit for a String in a database?
+We recently discovered that Android puts a [2MB limit](http://stackoverflow.com/questions/21432556/android-java-lang-illegalstateexception-couldnt-read-row-0-col-0-from-cursorw) on the size that a String can take in an sqlite database (the format used to store Anki collections). The default limit on other platforms in 2GB so it's very much an Android specific issue. 
+
+Since all of the formatting for all of your note types are stored as one big string in the database, it's possible to exceed this limit if you have a large number of note types with a lot of formatting. The same limit applies to the deck descriptions, though this is far less likely to be the culprit. If you run into this limit, the solution is to delete some of the note types in your collection using Anki desktop, sync it with AnkiWeb, and then choose "full sync from server" in AnkiDroid, which should resolve the error.
+
 # Media
 
 ### How can I use media files on AnkiDroid?
