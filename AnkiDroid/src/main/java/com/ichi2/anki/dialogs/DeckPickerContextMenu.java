@@ -47,7 +47,7 @@ public class DeckPickerContextMenu extends DialogFragment {
     private static final int CONTEXT_MENU_UNBURY = 5;
     private static final int CONTEXT_MENU_CUSTOM_STUDY_REBUILD = 6;
     private static final int CONTEXT_MENU_CUSTOM_STUDY_EMPTY = 7;
-
+    private static final int CONTEXT_MENU_RESET_DECK_LANGUAGES = 8;
 
     public static DeckPickerContextMenu newInstance(long did) {
         DeckPickerContextMenu f = new DeckPickerContextMenu();
@@ -86,6 +86,7 @@ public class DeckPickerContextMenu extends DialogFragment {
         keyValueMap.put(CONTEXT_MENU_UNBURY, res.getString(R.string.unbury));
         keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY_REBUILD, res.getString(R.string.rebuild_cram_label));
         keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY_EMPTY, res.getString(R.string.empty_cram_label));
+        keyValueMap.put(CONTEXT_MENU_RESET_DECK_LANGUAGES, res.getString(R.string.contextmenu_deckpicker_reset_deck_languages));
         return keyValueMap;
     }
 
@@ -108,6 +109,7 @@ public class DeckPickerContextMenu extends DialogFragment {
         }
         itemIds.add(CONTEXT_MENU_DELETE_DECK);
         itemIds.add(CONTEXT_MENU_EXPORT_DECK);
+        itemIds.add(CONTEXT_MENU_RESET_DECK_LANGUAGES);
         if (col.getSched().haveBuried(did)) {
             itemIds.add(CONTEXT_MENU_UNBURY);
         }
@@ -165,6 +167,12 @@ public class DeckPickerContextMenu extends DialogFragment {
                 case CONTEXT_MENU_CUSTOM_STUDY_EMPTY: {
                     Timber.i("Empty deck selected");
                     ((DeckPicker) getActivity()).emptyFiltered();
+                    ((AnkiActivity) getActivity()).dismissAllDialogFragments();
+                    break;
+                }
+                case CONTEXT_MENU_RESET_DECK_LANGUAGES: {
+                    Timber.i("Reset deck languages selected");
+                    ((DeckPicker) getActivity()).resetDeckLanguages();
                     ((AnkiActivity) getActivity()).dismissAllDialogFragments();
                     break;
                 }
