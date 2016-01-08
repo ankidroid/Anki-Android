@@ -26,7 +26,7 @@ import android.database.MatrixCursor;
 import android.database.SQLException;
 import android.net.Uri;
 
-import com.ichi2.anki.AnkiDb;
+import com.ichi2.libanki.DB;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.FlashCardsContract;
@@ -879,8 +879,8 @@ public class CardContentProvider extends ContentProvider {
 
     private void answerCard(Collection col, Sched sched, Card cardToAnswer, int ease, long timeTaken) {
         try {
-            AnkiDb ankiDB = col.getDb();
-            ankiDB.getDatabase().beginTransaction();
+            DB db = col.getDb();
+            db.getDatabase().beginTransaction();
             try {
                 if (cardToAnswer != null) {
                     if(timeTaken != -1){
@@ -888,9 +888,9 @@ public class CardContentProvider extends ContentProvider {
                     }
                     sched.answerCard(cardToAnswer, ease);
                 }
-                ankiDB.getDatabase().setTransactionSuccessful();
+                db.getDatabase().setTransactionSuccessful();
             } finally {
-                ankiDB.getDatabase().endTransaction();
+                db.getDatabase().endTransaction();
             }
         } catch (RuntimeException e) {
             Timber.e(e, "answerCard - RuntimeException on answering card");

@@ -13,15 +13,16 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.anki.tests;
+package com.ichi2.anki.tests.libanki;
 
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.Suppress;
 
 import com.ichi2.anki.BackupManager;
+import com.ichi2.anki.tests.Shared;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Media;
+import com.ichi2.libanki.Note;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -122,13 +123,13 @@ public class MediaTest extends AndroidTestCase {
         d.getMedia().addFile(file);
         // add a note which references it
         Note f = d.newNote();
-        f.setitem("Front", "one");
-        f.setitem("Back", "<img src='fake.png'>");
+        f.setItem("Front", "one");
+        f.setItem("Back", "<img src='fake.png'>");
         d.addNote(f);
         // and one which references a non-existent file
         f = d.newNote();
-        f.setitem("Front", "one");
-        f.setitem("Back", "<img src='fake2.png'>");
+        f.setItem("Front", "one");
+        f.setItem("Back", "<img src='fake2.png'>");
         d.addNote(f);
         // and add another file which isn't used
         FileOutputStream os;

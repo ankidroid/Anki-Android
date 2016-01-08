@@ -1,5 +1,6 @@
 /***************************************************************************************
  * Copyright (c) 2012 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ * Copyright (c) 2016 Houssam Salem <houssam.salem.au@gmail.com>                        *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -16,17 +17,16 @@
 
 package com.ichi2.libanki.importer;
 
-import android.content.res.Resources;
 import android.database.Cursor;
+import android.text.TextUtils;
 
-import com.google.gson.stream.JsonReader;
-import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.R;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.HtmlUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,286 +36,244 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.ZipFile;
 
 import timber.log.Timber;
 
-public class Anki2Importer {
-
-    Collection mCol;
-    ZipFile mZip;
-    int mTotal;
-    ArrayList<String> mLog;
-    long mTs;
-    String mDeckPrefix = null;
-    DeckTask.ProgressCallback mProgress;
-    Resources mResources;
-
-    Collection mDst;
-    Collection mSrc;
-    String mDstMediaDir;
-
-    HashMap<String, Object[]> mNotes;
-    HashMap<String, HashMap<Integer, Long>> mCards;
-    HashMap<Long, Long> mDecks;
-    HashMap<Long, Long> mModelMap;
-    HashMap<String, String> mChangedGuids;
-    private HashMap<String, String> nameToNum;
+public class Anki2Importer extends Importer {
 
     private static final int GUID = 1;
     private static final int MID = 2;
+    private static final int MOD = 3;
 
     private static final int MEDIAPICKLIMIT = 1024;
 
-    private static final String CHECKMARK = "\u2714";
+    private String mDeckPrefix;
+    private boolean mAllowUpdate;
+    private boolean mDupeOnSchemaChange;
 
+    private Map<String, Object[]> mNotes;
 
-    public Anki2Importer(Collection col, String file, DeckTask.ProgressCallback progressCallback) throws IOException {
-        mCol = col;
-        mZip = new ZipFile(new File(file), ZipFile.OPEN_READ);
-        mTotal = 0;
-        mLog = new ArrayList<String>();
-        mProgress = progressCallback;
-        if (mProgress != null) {
-            mResources = mProgress.getResources();
-        }
-        nameToNum = new HashMap<String, String>();
+    /**
+     * Since we can't use a tuple as a key in Java, we resort to indexing twice with nested maps.
+     * Python: (guid, ord) -> cid
+     * Java: guid -> ord -> cid
+     */
+    private Map<String, Map<Integer, Long>> mCards;
+    private Map<Long, Long> mDecks;
+    private Map<Long, Long> mModelMap;
+    private Map<String, String> mChangedGuids;
+    private Map<String, Boolean> mIgnoredGuids;
+
+    private int mDupes;
+    private int mAdded;
+    private int mUpdated;
+
+    public Anki2Importer(Collection col, String file) {
+        super(col, file);
+        mNeedMapper = false;
+        mDeckPrefix = null;
+        mAllowUpdate = true;
+        mDupeOnSchemaChange = false;
     }
 
 
-    private void publishProgress(boolean unpacking, int notesDone, int cardsDone, boolean cleanup) {
-        if (mProgress != null && mResources != null) {
-            mProgress.publishProgress(new DeckTask.TaskData(mResources.getString(R.string.import_add_progress,
-                    (unpacking ? CHECKMARK : "-"), notesDone, cardsDone, (cleanup ? CHECKMARK : "-"))));
-        }
-    }
-
-
-    public int run() {
-        publishProgress(false, 0, 0, false);
+    @Override
+    public void run() {
+        publishProgress(0, 0, 0);
         try {
-            // extract the deck from the zip file
-            String tempDir = new File(new File(mCol.getPath()).getParentFile(), "tmpzip").getAbsolutePath();
-            // from anki2.py
-            String colFile = new File(tempDir, "collection.anki2").getAbsolutePath();
-            if (!Utils.unzipFiles(mZip, tempDir, new String[] { "collection.anki2", "media" }, null)
-                    || !(new File(colFile)).exists() || !Storage.Collection(colFile).validCollection()) {
-                return -2;
-            }
-
-            // we need the media dict in advance, and we'll need a map of fname number to use during the import
-            File mediaMapFile = new File(tempDir, "media");
-            HashMap<String, String> numToName = new HashMap<String, String>();
-            if (mediaMapFile.exists()) {
-                JsonReader jr = new JsonReader(new FileReader(mediaMapFile));
-                jr.beginObject();
-                String name;
-                String num;
-                while (jr.hasNext()) {
-                    num = jr.nextName();
-                    name = jr.nextString();
-                    nameToNum.put(name, num);
-                    numToName.put(num, name);
-                }
-                jr.endObject();
-                jr.close();
-            }
-
-            _prepareFiles(colFile);
-            publishProgress(true, 0, 0, false);
-            int cnt = -1;
+            _prepareFiles();
             try {
-                cnt = _import();
+                _import();
             } finally {
                 mSrc.close(false);
             }
-            // import static media
-            String mediaDir = mCol.getMedia().dir();
-            if (nameToNum.size() != 0) {
-                for (Map.Entry<String, String> entry : nameToNum.entrySet()) {
-                    String file = entry.getKey();
-                    String c = entry.getValue();
-                    if (!file.startsWith("_") && !file.startsWith("latex-")) {
-                        continue;
-                    }
-                    File of = new File(mediaDir, file);
-                    if (!of.exists()) {
-                        Utils.unzipFiles(mZip, mediaDir, new String[] { c }, numToName);
-                    }
-                }
-            }
-            mZip.close();
-            mSrc.getMedia().close();
-            // delete tmp dir
-            File dir = new File(tempDir);
-            BackupManager.removeDir(dir);
-            publishProgress(true, 100, 100, true);
-            return cnt;
         } catch (RuntimeException e) {
             Timber.e(e, "RuntimeException while importing");
-            return -1;
-        } catch (IOException e) {
-            Timber.e(e, "IOException while importing");
-            return -1;
         }
     }
 
 
-    private void _prepareFiles(String src) {
+    private void _prepareFiles() {
         mDst = mCol;
-        mDstMediaDir = mDst.getMedia().dir() + File.separator;
-        mSrc = Storage.Collection(src);
+        mSrc = Storage.Collection(mContext, mFile);
     }
 
 
-    private int _import() {
-        mDecks = new HashMap<Long, Long>();
-        if (mDeckPrefix != null) {
-            long id = mDst.getDecks().id(mDeckPrefix);
-            mDst.getDecks().select(id);
+    private void _import() {
+        mDecks = new HashMap<>();
+        try {
+            // Use transactions for performance and rollbacks in case of error
+            mDst.getDb().getDatabase().beginTransaction();
+            mDst.getMedia().getDb().getDatabase().beginTransaction();
+
+            if (!TextUtils.isEmpty(mDeckPrefix)) {
+                long id = mDst.getDecks().id(mDeckPrefix);
+                mDst.getDecks().select(id);
+            }
+            _prepareTS();
+            _prepareModels();
+            _importNotes();
+            _importCards();
+            _importStaticMedia();
+            publishProgress(100, 100, 25);
+            _postImport();
+            publishProgress(100, 100, 50);
+            mDst.getDb().getDatabase().setTransactionSuccessful();
+            mDst.getMedia().getDb().getDatabase().setTransactionSuccessful();
+        } finally {
+            mDst.getDb().getDatabase().endTransaction();
+            mDst.getMedia().getDb().getDatabase().endTransaction();
         }
-        Timber.i("Import - preparing");
-        _prepareTS();
-        _prepareModels();
-        Timber.i("Import - importing notes");
-        _importNotes();
-        Timber.i("Import - importing cards");
-        int cnt = _importCards();
-        // _importMedia();
-        Timber.i("Import - finishing");
-        publishProgress(true, 100, 100, false);
-        _postImport();
-        // LIBANKI: vacuum and analyze is done in DeckTask
-        return cnt;
+        mDst.getDb().execute("vacuum");
+        publishProgress(100, 100, 65);
+        mDst.getDb().execute("analyze");
+        publishProgress(100, 100, 75);
     }
 
 
-    /** timestamps */
-
-    private void _prepareTS() {
-        mTs = Utils.maxID(mDst.getDb());
-    }
-
-
-    private long ts() {
-        mTs++;
-        return mTs;
-    }
-
-
-    /** Notes */
-    // should note new for wizard
+    /**
+     * Notes
+     * ***********************************************************
+     */
 
     private void _importNotes() {
         // build guid -> (id,mod,mid) hash & map of existing note ids
-        mNotes = new HashMap<String, Object[]>();
-        HashMap<Long, Boolean> existing = new HashMap<Long, Boolean>();
-        Cursor cursor = null;
+        mNotes = new HashMap<>();
+        Map<Long, Boolean> existing = new HashMap<>();
+        Cursor cur = null;
         try {
-            // "SELECT id, guid, mod, mid FROM notes"
-            cursor = mDst.getDb().getDatabase()
-                    .query("notes", new String[] { "id", "guid", "mod", "mid" }, null, null, null, null, null);
-            while (cursor.moveToNext()) {
-                long id = cursor.getLong(0);
-                mNotes.put(cursor.getString(1), new Object[] { id, cursor.getLong(2), cursor.getLong(3) });
+            cur = mDst.getDb().getDatabase().rawQuery("select id, guid, mod, mid from notes", null);
+            while (cur.moveToNext()) {
+                long id = cur.getLong(0);
+                String guid = cur.getString(1);
+                long mod = cur.getLong(2);
+                long mid = cur.getLong(3);
+                mNotes.put(guid, new Object[] { id, mod, mid });
                 existing.put(id, true);
             }
         } finally {
-            if (cursor != null) {
-                cursor.close();
+            if (cur != null) {
+                cur.close();
             }
         }
         // we may need to rewrite the guid if the model schemas don't match,
         // so we need to keep track of the changes for the card import stage
-        mChangedGuids = new HashMap<String, String>();
+        mChangedGuids = new HashMap<>();
+        // apart from upgrading from anki1 decks, we ignore updates to changed
+        // schemas. we need to note the ignored guids, so we avoid importing
+        // invalid cards
+        mIgnoredGuids = new HashMap<>();
         // iterate over source collection
-        ArrayList<Object[]> add = new ArrayList<Object[]>();
-        ArrayList<Long> dirty = new ArrayList<Long>();
+        ArrayList<Object[]> add = new ArrayList<>();
+        ArrayList<Object[]> update = new ArrayList<>();
+        ArrayList<Long> dirty = new ArrayList<>();
         int usn = mDst.usn();
         int dupes = 0;
+        ArrayList<String> dupesIgnored = new ArrayList<>();
         try {
-            // "SELECT * FROM notes"
-            cursor = mSrc
-                    .getDb()
-                    .getDatabase()
-                    .query("notes",
-                            new String[] { "id", "guid", "mid", "mod", "usn", "tags", "flds", "sfld", "csum", "flags",
-                                    "data" }, null, null, null, null, null);
-            int total = cursor.getCount();
-            boolean largeCollection = total > 100;
+            cur = mSrc.getDb().getDatabase().rawQuery("select * from notes", null);
+
+            // Counters for progress updates
+            int total = cur.getCount();
+            boolean largeCollection = total > 200;
             int onePercent = total/100;
             int i = 0;
-            // Use transactions for media db to increase performance
-            mDst.getMedia().getDb().getDatabase().beginTransaction();
-            try {
-                while (cursor.moveToNext()) {
-                    Object[] note = new Object[]{cursor.getLong(0), cursor.getString(1), cursor.getLong(2),
-                            cursor.getLong(3), cursor.getInt(4), cursor.getString(5), cursor.getString(6),
-                            cursor.getString(7), cursor.getLong(8), cursor.getInt(9), cursor.getString(10)};
-                    boolean shouldAdd = _uniquifyNote(note);
-                    if (shouldAdd) {
-                        // ensure id is unique
-                        while (existing.containsKey(note[0])) {
-                            note[0] = ((Long) note[0]) + 999;
-                        }
-                        existing.put((Long) note[0], true);
-                        // bump usn
-                        note[4] = usn;
-                        // update media references in case of dupes
-                        note[6] = _mungeMedia((Long) note[MID], (String) note[6]);
-                        add.add(note);
-                        dirty.add((Long) note[0]);
-                        // note we have the added guid
-                        mNotes.put((String) note[GUID], new Object[]{note[0], note[3], note[MID]});
-                    } else {
-                        dupes += 1;
-                        // // update existing note - not yet tested; for post 2.0
-                        // boolean newer = note[3] > mod;
-                        // if (mAllowUpdate && _mid(mid) == mid && newer) {
-                        // note[0] = localNid;
-                        // note[4] = usn;
-                        // add.add(note);
-                        // dirty.add(note[0]);
-                        // }
+
+            while (cur.moveToNext()) {
+                // turn the db result into a mutable list
+                Object[] note = new Object[]{cur.getLong(0), cur.getString(1), cur.getLong(2),
+                        cur.getLong(3), cur.getInt(4), cur.getString(5), cur.getString(6),
+                        cur.getString(7), cur.getLong(8), cur.getInt(9), cur.getString(10)};
+                boolean shouldAdd = _uniquifyNote(note);
+                if (shouldAdd) {
+                    // ensure id is unique
+                    while (existing.containsKey(note[0])) {
+                        note[0] = ((Long) note[0]) + 999;
                     }
-                    ++i;
-                    if (!largeCollection || i%onePercent==0) {
-                        // Calls to publishProgress are reasonably expensive due to res.getString()
-                        publishProgress(true, i * 100 / total, 0, false);
+                    existing.put((Long) note[0], true);
+                    // bump usn
+                    note[4] = usn;
+                    // update media references in case of dupes
+                    note[6] = _mungeMedia((Long) note[MID], (String) note[6]);
+                    add.add(note);
+                    dirty.add((Long) note[0]);
+                    // note we have the added guid
+                    mNotes.put((String) note[GUID], new Object[]{note[0], note[3], note[MID]});
+                } else {
+                    // a duplicate or changed schema - safe to update?
+                    dupes += 1;
+                    if (mAllowUpdate) {
+                        Object[] n = mNotes.get(note[GUID]);
+                        long oldNid = (Long) n[0];
+                        long oldMod = (Long) n[1];
+                        long oldMid = (Long) n[2];
+                        // will update if incoming note more recent
+                        if (oldMod < (Long) note[MOD]) {
+                            // safe if note types identical
+                            if (oldMid == (Long) note[MID]) {
+                                // incoming note should use existing id
+                                note[0] = oldNid;
+                                note[4] = usn;
+                                note[6] = _mungeMedia((Long) note[MID], (String) note[6]);
+                                update.add(note);
+                                dirty.add((Long) note[0]);
+                            } else {
+                                dupesIgnored.add(String.format("%s: %s",
+                                        mCol.getModels().get(oldMid).getString("name"),
+                                        ((String) note[6]).replace("\u001f", ",")));
+                                mIgnoredGuids.put((String) note[GUID], true);
+                            }
+                        }
                     }
                 }
-                mDst.getMedia().getDb().getDatabase().setTransactionSuccessful();
-            } finally {
-                mDst.getMedia().getDb().getDatabase().endTransaction();
+                i++;
+                if (total != 0 && (!largeCollection || i % onePercent == 0)) {
+                    // Calls to publishProgress are reasonably expensive due to res.getString()
+                    publishProgress(i * 100 / total, 0, 0);
+                }
             }
+            publishProgress(100, 0, 0);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         } finally {
-            if (cursor != null) {
-                cursor.close();
+            if (cur != null) {
+                cur.close();
             }
         }
-        if (dupes != 0) {
-            // TODO: notify about dupes
+        if (dupes > 0) {
+            int up = update.size();
+            mLog.add(getRes().getString(R.string.import_update_details, update.size(), dupes));
+            if (dupesIgnored.size() > 0) {
+                mLog.add(getRes().getString(R.string.import_update_ignored));
+                // TODO: uncomment this and fix above string if we implement a detailed
+                // log viewer dialog type.
+                //mLog.addAll(dupesIgnored);
+            }
         }
+        // export info for calling code
+        mDupes = dupes;
+        mAdded = add.size();
+        mUpdated = update.size();
         // add to col
-        mDst.getDb().executeMany("INSERT OR REPLACE INTO NOTES VALUES (?,?,?,?,?,?,?,?,?,?,?)", add);
-        long[] dis = Utils.arrayList2array(dirty);
-        mDst.updateFieldCache(dis);
-        mDst.getTags().registerNotes(dis);
+        mDst.getDb().executeMany("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", add);
+        mDst.getDb().executeMany("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", update);
+        long[] das = Utils.arrayList2array(dirty);
+        mDst.updateFieldCache(das);
+        mDst.getTags().registerNotes(das);
     }
 
 
     // determine if note is a duplicate, and adjust mid and/or guid as required
     // returns true if note should be added
-
     private boolean _uniquifyNote(Object[] note) {
         String origGuid = (String) note[GUID];
         long srcMid = (Long) note[MID];
@@ -324,40 +282,47 @@ public class Anki2Importer {
         if (srcMid == dstMid) {
             return !mNotes.containsKey(origGuid);
         }
-        // differing schemas
+        // differing schemas and note doesn't exist?
         note[MID] = dstMid;
         if (!mNotes.containsKey(origGuid)) {
             return true;
         }
-        // as the schemas differ and we already have a note with a different note type, this note needs a new guid
+        // as the schemas differ and we already have a note with a different
+        // note type, this note needs a new guid
+        if (!mDupeOnSchemaChange) {
+            return false;
+        }
         while (true) {
             note[GUID] = Utils.incGuid((String) note[GUID]);
             mChangedGuids.put(origGuid, (String) note[GUID]);
             // if we don't have an existing guid, we can add
-            if (!mNotes.containsKey((String) note[GUID])) {
+            if (!mNotes.containsKey(note[GUID])) {
                 return true;
             }
             // if the existing guid shares the same mid, we can reuse
-            if (dstMid == (Long) mNotes.get((String) note[GUID])[MID]) {
+            if (dstMid == (Long) mNotes.get(note[GUID])[MID]) {
                 return false;
             }
         }
     }
 
 
-    /** Models */
-    // Models in the two decks may share an ID but not a schema, so we need to
-    // compare the field & template signature rather than just rely on ID. If
-    // the schemas don't match, we increment the mid and try again, creating a
-    // new model if necessary.
+    /**
+     * Models
+     * ***********************************************************
+     * Models in the two decks may share an ID but not a schema, so we need to
+     * compare the field & template signature rather than just rely on ID. If
+     * the schemas don't match, we increment the mid and try again, creating a
+     * new model if necessary.
+     */
 
-    /* Prepare index of schema hashes */
+    /** Prepare index of schema hashes. */
     private void _prepareModels() {
-        mModelMap = new HashMap<Long, Long>();
+        mModelMap = new HashMap<>();
     }
 
 
-    /* Return local id for remote MID */
+    /** Return local id for remote MID. */
     private long _mid(long srcMid) {
         try {
             // already processed this mid?
@@ -365,7 +330,7 @@ public class Anki2Importer {
                 return mModelMap.get(srcMid);
             }
             long mid = srcMid;
-            JSONObject srcModel = new JSONObject(Utils.jsonToString(mSrc.getModels().get(srcMid)));
+            JSONObject srcModel = mSrc.getModels().get(srcMid);
             String srcScm = mSrc.getModels().scmhash(srcModel);
             while (true) {
                 // missing from target col?
@@ -379,15 +344,21 @@ public class Anki2Importer {
                     break;
                 }
                 // there's an existing model; do the schemas match?
-                JSONObject dstModel = new JSONObject(Utils.jsonToString(mDst.getModels().get(mid)));
+                JSONObject dstModel = mDst.getModels().get(mid);
                 String dstScm = mDst.getModels().scmhash(dstModel);
                 if (srcScm.equals(dstScm)) {
                     // they do; we can reuse this mid
+                    JSONObject model = new JSONObject(Utils.jsonToString(srcModel));
+                    model.put("id", mid);
+                    model.put("mod", Utils.intNow());
+                    model.put("usn", mCol.usn());
+                    mDst.getModels().update(model);
                     break;
                 }
                 // as they don't match, try next id
                 mid += 1;
             }
+            // save map and return new mid
             mModelMap.put(srcMid, mid);
             return mid;
         } catch (JSONException e) {
@@ -396,9 +367,12 @@ public class Anki2Importer {
     }
 
 
-    /** Decks */
+    /**
+     * Decks
+     * ***********************************************************
+     */
 
-    /* Given did in src col, return local id */
+    /** Given did in src col, return local id. */
     private long _did(long did) {
         try {
             // already converted?
@@ -409,23 +383,22 @@ public class Anki2Importer {
             JSONObject g = mSrc.getDecks().get(did);
             String name = g.getString("name");
             // if there's a prefix, replace the top level deck
-            if (mDeckPrefix != null) {
-                String[] tmpname = name.split("::", -1);
+            if (!TextUtils.isEmpty(mDeckPrefix)) {
+                List<String> parts = Arrays.asList(name.split("::", -1));
+                String tmpname = TextUtils.join("::", parts.subList(1, parts.size()));
                 name = mDeckPrefix;
-                if (tmpname.length > 1) {
-                    for (int i = 0; i < tmpname.length - 2; i++) {
-                        name += "::" + tmpname[i + 1];
-                    }
+                if (!TextUtils.isEmpty(tmpname)) {
+                    name += "::" + tmpname;
                 }
             }
             // Manually create any parents so we can pull in descriptions
             String head = "";
-            String[] parents = name.split("::", -1);
-            for (int i = 0; i < parents.length - 1; ++i) {
-                if (head.length() > 0) {
-                    head = head.concat("::");
+            List<String> parents = Arrays.asList(name.split("::", -1));
+            for (String parent : parents.subList(0, parents.size() -1)) {
+                if (!TextUtils.isEmpty(head)) {
+                    head += "::";
                 }
-                head = head.concat(parents[i]);
+                head += parent;
                 long idInSrc = mSrc.getDecks().id(head);
                 _did(idInSrc);
             }
@@ -453,58 +426,67 @@ public class Anki2Importer {
     }
 
 
-    /** Cards */
+    /**
+     * Cards
+     * ***********************************************************
+     */
 
-    private int _importCards() {
-        // build map of (guid, ord) -> cid and used id cache
-        mCards = new HashMap<String, HashMap<Integer, Long>>();
-        HashMap<Long, Boolean> existing = new HashMap<Long, Boolean>();
-        Cursor cursor = null;
+    private void _importCards() {
+        // build map of guid -> (ord -> cid) and used id cache
+        mCards = new HashMap<>();
+        Map<Long, Boolean> existing = new HashMap<>();
+        Cursor cur = null;
         try {
-            // "SELECT f.guid, c.ord, c.id FROM cards c, notes f WHERE c.nid = f.id"
-            cursor = mDst
-                    .getDb()
-                    .getDatabase()
-                    .query("cards c, notes f", new String[] { "f.guid", "c.ord", "c.id" }, "c.nid = f.id", null, null,
-                            null, null);
-            while (cursor.moveToNext()) {
-                long cid = cursor.getLong(2);
+            cur = mDst.getDb().getDatabase().rawQuery(
+                    "select f.guid, c.ord, c.id from cards c, notes f " +
+                    "where c.nid = f.id", null);
+            while (cur.moveToNext()) {
+                String guid = cur.getString(0);
+                int ord = cur.getInt(1);
+                long cid = cur.getLong(2);
                 existing.put(cid, true);
-                String guid = cursor.getString(0);
-                int ord = cursor.getInt(1);
                 if (mCards.containsKey(guid)) {
                     mCards.get(guid).put(ord, cid);
                 } else {
-                    HashMap<Integer, Long> map = new HashMap<Integer, Long>();
+                    Map<Integer, Long> map = new HashMap<>();
                     map.put(ord, cid);
                     mCards.put(guid, map);
                 }
             }
         } finally {
-            if (cursor != null) {
-                cursor.close();
+            if (cur != null) {
+                cur.close();
             }
         }
         // loop through src
-        ArrayList<Object[]> cards = new ArrayList<Object[]>();
-        ArrayList<Object[]> revlog = new ArrayList<Object[]>();
+        List<Object[]> cards = new ArrayList<>();
+        List<Object[]> revlog = new ArrayList<>();
         int cnt = 0;
         int usn = mDst.usn();
         long aheadBy = mSrc.getSched().getToday() - mDst.getSched().getToday();
         try {
-            cursor = mSrc.getDb().getDatabase()
-                    .rawQuery("SELECT f.guid, f.mid, c.* FROM cards c, notes f WHERE c.nid = f.id", null);
-            int total = cursor.getCount();
-            int ci = 0;
-            while (cursor.moveToNext()) {
-                Object[] card = new Object[] { cursor.getString(0), cursor.getLong(1), cursor.getLong(2),
-                        cursor.getLong(3), cursor.getLong(4), cursor.getInt(5), cursor.getLong(6), cursor.getInt(7),
-                        cursor.getInt(8), cursor.getInt(9), cursor.getLong(10), cursor.getLong(11), cursor.getLong(12),
-                        cursor.getInt(13), cursor.getInt(14), cursor.getInt(15), cursor.getLong(16),
-                        cursor.getLong(17), cursor.getInt(18), cursor.getString(19) };
+            cur = mSrc.getDb().getDatabase().rawQuery(
+                    "select f.guid, f.mid, c.* from cards c, notes f " +
+                    "where c.nid = f.id", null);
+
+            // Counters for progress updates
+            int total = cur.getCount();
+            boolean largeCollection = total > 200;
+            int onePercent = total/100;
+            int i = 0;
+
+            while (cur.moveToNext()) {
+                Object[] card = new Object[] { cur.getString(0), cur.getLong(1), cur.getLong(2),
+                        cur.getLong(3), cur.getLong(4), cur.getInt(5), cur.getLong(6), cur.getInt(7),
+                        cur.getInt(8), cur.getInt(9), cur.getLong(10), cur.getLong(11), cur.getLong(12),
+                        cur.getInt(13), cur.getInt(14), cur.getInt(15), cur.getLong(16),
+                        cur.getLong(17), cur.getInt(18), cur.getString(19) };
                 String guid = (String) card[0];
                 if (mChangedGuids.containsKey(guid)) {
                     guid = mChangedGuids.get(guid);
+                }
+                if (mIgnoredGuids.containsKey(guid)) {
+                    continue;
                 }
                 // does the card's note exist in dst col?
                 if (!mNotes.containsKey(guid)) {
@@ -558,13 +540,7 @@ public class Anki2Importer {
                 // we need to import revlog, rewriting card ids and bumping usn
                 Cursor cur2 = null;
                 try {
-                    // "SELECT * FROM revlog WHERE cid = ?"
-                    cur2 = mDst
-                            .getDb()
-                            .getDatabase()
-                            .query("revlog",
-                                    new String[] { "id", "cid", "usn", "ease", "ivl", "lastIvl", "factor", "time",
-                                            "type" }, "cid = ?", new String[] { Long.toString(scid) }, null, null, null);
+                    cur2 = mSrc.getDb().getDatabase().rawQuery("select * from revlog where cid = " + scid, null);
                     while (cur2.moveToNext()) {
                         Object[] rev = new Object[] { cur2.getLong(0), cur2.getLong(1), cur2.getInt(2), cur2.getInt(3),
                                 cur2.getLong(4), cur2.getLong(5), cur2.getLong(6), cur2.getLong(7), cur2.getInt(8) };
@@ -578,70 +554,160 @@ public class Anki2Importer {
                     }
                 }
                 cnt += 1;
-                ++ci;
-                publishProgress(true, 100, ci * 100 / total, false);
+                i++;
+                if (total != 0 && (!largeCollection || i % onePercent == 0)) {
+                    publishProgress(100, i * 100 / total, 0);
+                }
             }
+            publishProgress(100, 100, 0);
         } finally {
-            if (cursor != null) {
-                cursor.close();
+            if (cur != null) {
+                cur.close();
             }
         }
         // apply
-        mDst.getDb().executeMany("INSERT OR IGNORE INTO cards VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", cards);
-        mDst.getDb().executeMany("INSERT OR IGNORE INTO revlog VALUES (?,?,?,?,?,?,?,?,?)", revlog);
-        return cnt;
+        mDst.getDb().executeMany("insert or ignore into cards values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", cards);
+        mDst.getDb().executeMany("insert or ignore into revlog values (?,?,?,?,?,?,?,?,?)", revlog);
+        mLog.add(getRes().getString(R.string.import_complete_count, cnt));
     }
 
 
-    private String _mungeMedia(long mid, String fields) {
-        // running splitFields() on every note is fairly expensive and actually not necessary
-        //String[] fs = Utils.splitFields(fields);
-        //for (int i = 0; i < fs.length; ++i) {
+    /**
+     * Media
+     * ***********************************************************
+     */
 
-            for (Pattern p : Media.mRegexps) {
-                //Matcher m = p.matcher(fs[i]);
-                Matcher m = p.matcher(fields);
-                StringBuffer sb = new StringBuffer();
-                int fnameIdx = Media.indexOfFname(p);
-                while (m.find()) {
-                    String fname = m.group(fnameIdx);
-                    BufferedInputStream srcData = _srcMediaData(fname);
-                    BufferedInputStream dstData = _dstMediaData(fname);
-                    if (srcData == null) {
-                        // file was not in source, ignore
-                        m.appendReplacement(sb, m.group(0));
-                        continue;
-                    }
-                    // if model-local file exists from a previous import, use that
-                    int extPos = fname.lastIndexOf(".");
-                    if (extPos <= 0) {
-                        extPos = fname.length();
-                    }
-                    String lname = String.format(Locale.US, "%s_%d%s", fname.substring(0, extPos), mid,
-                            fname.substring(extPos));
-                    if (mDst.getMedia().have(lname)) {
-                        m.appendReplacement(sb, m.group(0).replace(fname, lname));
-                        continue;
-                    } else if (dstData == null || compareMedia(srcData, dstData)) { // if missing or the same, pass
-                                                                                    // unmodified
-                        // need to copy?
-                        if (dstData == null) {
-                            _writeDstMedia(fname, srcData);
-                        }
-                        m.appendReplacement(sb, m.group(0));
-                        continue;
-                    }
-                    // exists but does not match, so we need to dedupe
-                    _writeDstMedia(lname, srcData);
-                    m.appendReplacement(sb, m.group(0).replace(fname, lname));
-                }
-                m.appendTail(sb);
-                //fs[i] = sb.toString();
-                fields = sb.toString();
+    // note: this func only applies to imports of .anki2. For .apkg files, the
+    // apkg importer does the copying
+    private void _importStaticMedia() {
+        // Import any '_foo' prefixed media files regardless of whether
+        // they're used on notes or not
+        String dir = mSrc.getMedia().dir();
+        if (!new File(dir).exists()) {
+            return;
+        }
+        for (File f : new File(dir).listFiles()) {
+            String fname = f.getName();
+            if (fname.startsWith("_") && ! mDst.getMedia().have(fname)) {
+                _writeDstMedia(fname, _srcMediaData(fname));
             }
-        //}
+        }
+    }
+
+
+    private BufferedInputStream _mediaData(String fname) {
+        return  _mediaData(fname, null);
+    }
+
+
+    private BufferedInputStream _mediaData(String fname, String dir) {
+        if (dir == null) {
+            dir = mSrc.getMedia().dir();
+        }
+        String path = new File(dir, fname).getAbsolutePath();
+        try {
+            return new BufferedInputStream(new FileInputStream(path), MEDIAPICKLIMIT * 2);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+
+    /**
+     * Data for FNAME in src collection.
+     */
+    protected BufferedInputStream _srcMediaData(String fname) {
+        return _mediaData(fname, mSrc.getMedia().dir());
+    }
+
+
+    /**
+     * Data for FNAME in dst collection.
+     */
+    private BufferedInputStream _dstMediaData(String fname) {
+        return _mediaData(fname, mDst.getMedia().dir());
+    }
+
+
+    private void _writeDstMedia(String fname, BufferedInputStream data) {
+        try {
+            String path = new File(mDst.getMedia().dir(), HtmlUtil.nfcNormalized(fname)).getAbsolutePath();
+            Utils.writeToFile(data, path);
+            // Mark file addition to media db (see note in Media.java)
+            mDst.getMedia().markFileAdd(fname);
+        } catch (IOException e) {
+            // the user likely used subdirectories
+            Timber.e(e, "Error copying file %s.", fname);
+        }
+    }
+
+
+    // running splitFields() on every note is fairly expensive and actually not necessary
+    private String _mungeMedia(long mid, String fields) {
+        for (Pattern p : Media.mRegexps) {
+            Matcher m = p.matcher(fields);
+            StringBuffer sb = new StringBuffer();
+            int fnameIdx = Media.indexOfFname(p);
+            while (m.find()) {
+                String fname = m.group(fnameIdx);
+                BufferedInputStream srcData = _srcMediaData(fname);
+                BufferedInputStream dstData = _dstMediaData(fname);
+                if (srcData == null) {
+                    // file was not in source, ignore
+                    m.appendReplacement(sb, m.group(0));
+                    continue;
+                }
+                // if model-local file exists from a previous import, use that
+                String name = Utils.removeFileExtension(fname);
+                String ext = Utils.getFileExtension(fname);
+
+                String lname = String.format(Locale.US, "%s_%s%s", name, mid, ext);
+                if (mDst.getMedia().have(lname)) {
+                    m.appendReplacement(sb, m.group(0).replace(fname, lname));
+                    continue;
+                } else if (dstData == null || compareMedia(srcData, dstData)) { // if missing or the same, pass unmodified
+                    // need to copy?
+                    if (dstData == null) {
+                        _writeDstMedia(fname, srcData);
+                    }
+                    m.appendReplacement(sb, m.group(0));
+                    continue;
+                }
+                // exists but does not match, so we need to dedupe
+                _writeDstMedia(lname, srcData);
+                m.appendReplacement(sb, m.group(0).replace(fname, lname));
+            }
+            m.appendTail(sb);
+            fields = sb.toString();
+        }
         return fields;
     }
+
+
+    /**
+     * Post-import cleanup
+     * ***********************************************************
+     */
+
+    private void _postImport() {
+        try {
+            for (long did : mDecks.values()) {
+                mCol.getSched().maybeRandomizeDeck(did);
+            }
+            // make sure new position is correct
+            mDst.getConf().put("nextPos", mDst.getDb().queryLongScalar(
+                    "select max(due)+1 from cards where type = 0"));
+            mDst.save();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    /**
+     * The methods below are not in LibAnki.
+     * ***********************************************************
+     */
 
 
     private boolean compareMedia(BufferedInputStream lhis, BufferedInputStream rhis) {
@@ -685,64 +751,38 @@ public class Anki2Importer {
     }
 
 
-    private BufferedInputStream _mediaData(String fname, String dir) {
-        try {
-            return new BufferedInputStream(new FileInputStream(new File(dir, fname)), MEDIAPICKLIMIT * 2);
-        } catch (FileNotFoundException e) {
-            return null;
-        }
-    }
-
-
     /**
-     * Data for FNAME in src collection.
-     *
-     * @return A string containing the contents of fname, limited to Anki2Importer.MEDIAPICKLIMIT bytes
+     * @param notesDone Percentage of notes complete.
+     * @param cardsDone Percentage of cards complete.
+     * @param postProcess Percentage of remaining tasks complete.
      */
-    private BufferedInputStream _srcMediaData(String fname) {
-        if (nameToNum.containsKey(fname)) {
-            try {
-                return new BufferedInputStream(mZip.getInputStream(mZip.getEntry(nameToNum.get(fname))));
-            } catch (IOException e) {
-                Timber.e("Could not extract media file " + fname + "from mZip file.");
-            }
-        }
-        return null;
-    }
-
-
-    /**
-     * Data for FNAME in src collection.
-     *
-     * @return A string containing the contents of fname, limited to Anki2Importer.MEDIAPICKLIMIT bytes
-     */
-    private BufferedInputStream _dstMediaData(String fname) {
-        return _mediaData(fname, mDst.getMedia().dir());
-    }
-
-
-    private void _writeDstMedia(String fname, BufferedInputStream is) {
-        try {
-            Utils.writeToFile(is, mDstMediaDir + fname);
-            // Also mark file addition to media db
-            mDst.getMedia().markFileAdd(fname);
-        } catch (IOException e) {
-            // the user likely used subdirectories
-            Timber.e(e, "Anki2Importer._writeDstMedia: error copying file to %s, ignoring and continuing.", fname);
+    protected void publishProgress(int notesDone, int cardsDone, int postProcess) {
+        String checkmark = "\u2714";
+        if (mProgress != null) {
+            mProgress.publishProgress(new DeckTask.TaskData(getRes().getString(R.string.import_progress,
+                    notesDone, cardsDone, postProcess)));
         }
     }
 
 
-    /** post-import cleanup */
+    /* The methods below are only used for testing. */
 
-    private void _postImport() {
-        try {
-            // make sure new position is correct
-            mDst.getConf().put("nextPos",
-                    mDst.getDb().queryLongScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
-            mDst.save();
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+    public void setDupeOnSchemaChange(boolean b) {
+        mDupeOnSchemaChange = b;
+    }
+
+
+    public int getDupes() {
+        return mDupes;
+    }
+
+
+    public int getAdded() {
+        return mAdded;
+    }
+
+
+    public int getUpdated() {
+        return mUpdated;
     }
 }

@@ -77,13 +77,15 @@ public class CollectionHelper {
         return LazyHolder.INSTANCE;
     }
 
+
     /**
-     * Get the {@link Collection} instance, creating it if it doesn't exist, or if the database is closed.
-     *
-     * @param path path to the AnkiDroid file
+     * Get the single instance of the {@link Collection}, creating it if necessary  (lazy initialization).
+     * @param context context which can be used to get the setting for the path to the Collection
      * @return instance of the Collection
      */
-    private synchronized Collection getCol(String path) {
+    public synchronized Collection getCol(Context context) {
+        // Open collection
+        String path = getCollectionPath(context);
         if (!colIsOpen()) {
             // Check that the directory has been created and initialized
             try {
@@ -95,24 +97,9 @@ public class CollectionHelper {
             }
             // Open the database
             Timber.i("openCollection: %s", path);
-            mCollection = Storage.Collection(path, false, true);
+            mCollection = Storage.Collection(context, path, false, true);
         }
         return mCollection;
-    }
-
-
-    /**
-     * Get the single instance of the {@link Collection}, creating it if necessary  (lazy initialization)
-     * and also initialize the global Hooks object for which the Collection is dependent.
-     * @param context context which can be used to get the setting for the path to the Collection
-     * @return instance of the Collection
-     */
-    public synchronized Collection getCol(Context context) {
-        // Initialize hooks
-        Hooks.getInstance(context);
-        // Open collection
-        String path = getCollectionPath(context);
-        return getCol(path);
     }
 
     /**
@@ -144,22 +131,6 @@ public class CollectionHelper {
         return false;
     }
 
-
-    /**
-     * Reopen the {@link Collection} after it's been opened at least once, and subsequently closed. If the
-     * Collection is in the open state then a warning is logged, and the existing instance is returned.
-     * This method is typically used when no Context is available to access the setting for the col path.
-     * @throws java.lang.IllegalStateException if it's the first time opening the collection
-     */
-    public synchronized Collection reopenCollection() {
-        if (colIsOpen()) {
-            Timber.w("Reopening of collection requested while existing still instance open");
-        }
-        if (mPath == null) {
-            throw new IllegalStateException("Attempted to reopen collection before it has been initialized");
-        }
-        return getCol(mPath);
-    }
 
     /**
      * Close the {@link Collection}, optionally saving
