@@ -85,11 +85,12 @@
   <string name="custom_study_random">Kies willekeurig x kaarten uit de set:</string>
   <string name="custom_study_preview">Voorbeschouw nieuwe kaarten toegevoegd in de laatste x dagen:</string>
   <string name="rebuild_custom_study_deck">Bezig de aangepaste studieset te maken.\nEven geduld...</string>
-  <string name="import_unpacking">Archief aan het uitpakken.\nGelieve even te wachten&#8230;</string>
   <string name="importing_collection">Collectie aan het importeren.\nGelieve even te wachten&#8230;</string>
   <string name="import_media_count">Mediabestanden aan het importeren %1$d%%\nGelieve even te wachten&#8230;</string>
-  <string name="import_update_counts">Bezig met het aanpassen van uw setaantallen.\nEen ogenblik geduld...</string>
-  <string name="import_add_progress">• Archief uitpakken %1$s\n• Memos importeren %2$d%%\n• Kaarten importeren %3$d%%\n• Opruimen %4$s</string>
+  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
+  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
+  <string name="import_update_ignored">Some updates were ignored because note type has changed.</string>
+  <string name="import_complete_count">Cards imported: %d</string>
   <string name="sd_card_full_title">SD-kaart vol</string>
   <string name="sd_card_almost_full_title">SD-kaart bijna vol</string>
   <string name="restore_backup_title">Back-up herstellen?</string>

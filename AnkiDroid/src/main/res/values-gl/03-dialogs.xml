@@ -85,11 +85,12 @@
   <string name="custom_study_random">Seleccionar da baralla x cartóns ao chou:</string>
   <string name="custom_study_preview">Vista previa dos novos cartóns engadidos nos últimos x días:</string>
   <string name="rebuild_custom_study_deck">Reconstruíndo a baralla de estudo personalizado.\nPor favor, agarda&#8230;</string>
-  <string name="import_unpacking">Descomprimindo arquivo&#8230;</string>
   <string name="importing_collection">Importando colección&#8230;</string>
   <string name="import_media_count">Importando ficheiros de medios %1$d%%&#8230;</string>
-  <string name="import_update_counts">Actualizando os contadores da baralla&#8230;</string>
-  <string name="import_add_progress">• Descomprimindo o arquivo %1$s\n• Importación de notas %2$d%%\n• Importación de cartóns %3$d%%\n• Limpeza %4$s</string>
+  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
+  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
+  <string name="import_update_ignored">Some updates were ignored because note type has changed.</string>
+  <string name="import_complete_count">Cards imported: %d</string>
   <string name="sd_card_full_title">Cartón SD cheo</string>
   <string name="sd_card_almost_full_title">Cartón SD case cheo</string>
   <string name="restore_backup_title">Restaurar copia?</string>

@@ -86,11 +86,12 @@
   <string name="custom_study_random">Выбрать х случайных карт из колоды:</string>
   <string name="custom_study_preview">Новые карты, добавленные за последние х дней:</string>
   <string name="rebuild_custom_study_deck">Пересборка специальной колоды.\nПожалуйста, подождите...</string>
-  <string name="import_unpacking">Распаковка архива.\nПожалуйста подождите&#8230;</string>
   <string name="importing_collection">Импортирование коллекции.\nПожалуйста подождите&#8230;</string>
   <string name="import_media_count">Импорт медиа файлов %1$d%%\nПожалуйста подождите&#8230;</string>
-  <string name="import_update_counts">Вычисление результатов обновления.\nПожалуйста подождите&#8230;</string>
-  <string name="import_add_progress">• Распакованный архив %1$s\n• Импортировано заметок %2$d%%\n• Импортировано карт %3$d%%\n• Очищено %4$s</string>
+  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
+  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
+  <string name="import_update_ignored">Some updates were ignored because note type has changed.</string>
+  <string name="import_complete_count">Cards imported: %d</string>
   <string name="sd_card_full_title">SD карта переполнена</string>
   <string name="sd_card_almost_full_title">SD карта почти заполнена</string>
   <string name="restore_backup_title">Восстановить резервную копию?</string>
