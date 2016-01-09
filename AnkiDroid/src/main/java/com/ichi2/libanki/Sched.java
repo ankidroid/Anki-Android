@@ -2123,7 +2123,7 @@ public class Sched {
         try {
             cur = mCol.getDb().getDatabase().rawQuery(String.format(Locale.US,
                     "select id, queue from cards where nid=%d and id!=%d "+
-                    "and (queue=0 or (queue=2 and due<=%d))", new Object[]{card.getNid(), card.getId(), mToday}), null);
+                    "and (queue=0 or (queue=2 and due<=%d))", card.getNid(), card.getId(), mToday), null);
             while (cur.moveToNext()) {
                 long cid = cur.getLong(0);
                 int queue = cur.getInt(1);

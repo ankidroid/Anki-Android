@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <string name="disabled">Disabled</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Algemene instellingen</string>
   <string name="pref_cat_reviewing">Overhoren</string>
@@ -155,6 +156,11 @@
   <string name="convert_fen_text_summ">Teken schaakbord met de Forsyth-Edwards notering. Voor de notering gebruik de [fen][/fen] tags.</string>
   <string name="enable_api_title">AnkiDroid API inschakelen</string>
   <string name="enable_api_summary">Laat andere apps verbinding maken met AnkiDroid en gegevens zonder uw tussenkomst lezen/schrijven</string>
+  <string name="custom_sync_server_title">Custom sync server</string>
+  <string name="custom_sync_server_enable_title">Use custom sync server</string>
+  <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
+  <string name="custom_sync_server_base_url_title">Sync url</string>
+  <string name="custom_sync_server_media_url_title">Media sync url</string>
   <string name="studyoptions_limit_select_tags">Selecteer Tags</string>
   <string name="deck_conf_deck_description">Omschrijving van de leerset</string>
   <string name="deck_conf_group">Optiesgroep</string>

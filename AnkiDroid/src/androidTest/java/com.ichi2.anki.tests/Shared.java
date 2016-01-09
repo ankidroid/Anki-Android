@@ -17,13 +17,17 @@
 package com.ichi2.anki.tests;
 
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.text.TextUtils;
 
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
+import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.hooks.Hooks;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Shared methods for unit tests.
@@ -36,22 +40,49 @@ public class Shared {
         // if the file already exists (it assumes it's an existing DB).
         String path = f.getAbsolutePath();
         f.delete();
-        Hooks.getInstance(context);    // libanki doesn't have an internal context so initialize here
-        return Storage.Collection(path);
+        return Storage.Collection(context, path);
     }
 
-    
+
     /**
      * @return A File object pointing to a directory in which temporary test files can be placed. The directory is
      *         emptied on every invocation of this method so it is suitable to use at the start of each test.
      *         Only add files (and not subdirectories) to this directory.
      */
     public static File getTestDir(Context context) {
-        File dir = new File(context.getCacheDir(), "testfiles");
+        return getTestDir(context, "");
+    }
+
+
+
+    /**
+     * @param name An additional suffix to ensure the test directory is only used by a particular resource.
+     * @return See getTestDir.
+     */
+    public static File getTestDir(Context context, String name) {
+        if (!TextUtils.isEmpty(name)) {
+            name = "-" + name;
+        }
+        File dir = new File(context.getCacheDir(), "testfiles" + name);
         dir.mkdir();
         for (File f : dir.listFiles()) {
             f.delete();
         }
         return dir;
+    }
+
+
+    /**
+     * Copy a file from the application's assets directory and return the absolute path of that
+     * copy.
+     *
+     * Files located inside the application's assets collection are not stored on the file
+     * system and can not return a usable path, so copying them to disk is a requirement.
+     */
+    public static String getTestFilePath(Context context, String name) throws IOException {
+        InputStream is = context.getClassLoader().getResourceAsStream("assets/"+name);
+        String dst = new File(getTestDir(context, name), name).getAbsolutePath();
+        Utils.writeToFile(is, dst);
+        return dst;
     }
 }

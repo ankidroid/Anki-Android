@@ -63,4 +63,5 @@
   <string name="corrupt_db_message">您的集合已损坏。\n\n请点击\"选项\"从备份还原，如果依然无法正常工作，请参阅手动修复数据库: \n%1$s</string>
   <string name="access_collection_failed_message">访问您的集合时出现错误。它可能由无害的 bug或其他问题造成。\n\n尝试点击\"选项\"按钮运行检查数据库，或从备份还原。如果您仍然看到此消息，请提交bug报告: \n%1$s</string>
   <string name="deck_repair_error">集合无法修复</string>
+  <string name="cursor_size_limit_exceeded">The Android size limit for a String in a database has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
 </resources>

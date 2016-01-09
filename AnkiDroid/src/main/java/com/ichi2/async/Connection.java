@@ -51,7 +51,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     public static final int TASK_TYPE_LOGIN = 0;
     public static final int TASK_TYPE_SYNC = 1;
-    public static final int TASK_TYPE_UPGRADE_DECKS = 7;
     public static final int CONN_TIMEOUT = 30000;
 
 
@@ -188,9 +187,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             case TASK_TYPE_SYNC:
                 return doInBackgroundSync(data);
 
-            case TASK_TYPE_UPGRADE_DECKS:
-                throw new RuntimeException("Upgrade decks no longer supported");
-
             default:
                 return null;
         }
@@ -260,7 +256,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
 
     private Payload doInBackgroundSync(Payload data) {
-        // for for doInBackgroundLoadDeckCounts if any
         sIsCancellable = true;
         Timber.d("doInBackgroundSync()");
         // Block execution until any previous background task finishes, or timeout after 5s
@@ -269,7 +264,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         String hkey = (String) data.data[0];
         boolean media = (Boolean) data.data[1];
         String conflictResolution = (String) data.data[2];
-        Collection col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance());
+        // Use safe version that catches exceptions so that full sync is still possible
+        Collection col = CollectionHelper.getInstance().getColSafe(AnkiDroidApp.getInstance());
 
         boolean colCorruptFullSync = false;
         if (!CollectionHelper.getInstance().colIsOpen() || !ok) {
@@ -326,16 +322,15 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         Timber.i("Sync - fullsync - upload collection");
                         publishProgress(R.string.sync_preparing_full_sync_message);
                         Object[] ret = server.upload();
+                        col.reopen();
                         if (ret == null) {
                             data.success = false;
                             data.result = new Object[] { "genericError" };
-                            CollectionHelper.getInstance().reopenCollection();   // TODO: is this needed?
                             return data;
                         }
                         if (!ret[0].equals(HttpSyncer.ANKIWEB_STATUS_OK)) {
                             data.success = false;
                             data.result = ret;
-                            CollectionHelper.getInstance().reopenCollection();   // TODO: is this needed?
                             return data;
                         }
                     } else if (conflictResolution.equals("download")) {
@@ -345,19 +340,21 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         if (ret == null) {
                             data.success = false;
                             data.result = new Object[] { "genericError" };
-                            CollectionHelper.getInstance().reopenCollection();   // TODO: is this needed?
                             return data;
+                        }
+                        if (ret[0].equals("success")) {
+                            data.success = true;
+                            col.reopen();
                         }
                         if (!ret[0].equals("success")) {
                             data.success = false;
                             data.result = ret;
                             if (!colCorruptFullSync) {
-                                CollectionHelper.getInstance().reopenCollection();   // TODO: is this needed?
+                                col.reopen();
                             }
                             return data;
                         }
                     }
-                    col = CollectionHelper.getInstance().reopenCollection();   // TODO: is this needed?
                 } catch (OutOfMemoryError e) {
                     AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
                     data.success = false;
@@ -454,12 +451,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             }
             return data;
         } finally {
-            // Close collection to roll back any sync failures and
-            Timber.d("doInBackgroundSync -- closing collection on outer finally statement");
-            col.close(false);
+            // don't bump mod time unless we explicitly save
+            if (col != null) {
+                col.close(false);
+            }
             CollectionHelper.getInstance().unlockCollection();
-            Timber.d("doInBackgroundSync -- reopening collection on outer finally statement");
-            CollectionHelper.getInstance().reopenCollection();
         }
     }
 

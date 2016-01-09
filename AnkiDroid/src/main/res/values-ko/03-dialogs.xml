@@ -84,11 +84,12 @@
   <string name="custom_study_random">카드 묶음으로부터 x개의 카드를 무작위로 고르기:</string>
   <string name="custom_study_preview">최근 x일 내에 추가된 카드를 미리 학습하기:</string>
   <string name="rebuild_custom_study_deck">맞춤 학습 카드 묶음을 다시 섞는 중입니다.\n잠시만 기다려 주세요...</string>
-  <string name="import_unpacking">압축 푸는 중.\n잠시만 기다려 주세요...</string>
   <string name="importing_collection">컬렉션 가져오는 중.\n잠시만 기다려 주세요...</string>
   <string name="import_media_count">미디어 파일 불러오는 중 %1$d%%\n잠시만 기다려 주세요...</string>
-  <string name="import_update_counts">카드 묶음 갯수를 업데이트 중.\n잠시만 기다려 주세요...</string>
-  <string name="import_add_progress">• 압축 푸는 중 %1$s\n• 노트 가져오기 %2$d%%\n• 카드 가져오기 %3$d%%\n• 청소 %4$s</string>
+  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
+  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
+  <string name="import_update_ignored">Some updates were ignored because note type has changed.</string>
+  <string name="import_complete_count">Cards imported: %d</string>
   <string name="sd_card_full_title">SD 카드 꽉 참</string>
   <string name="sd_card_almost_full_title">SD 카드 거의 꽉 참</string>
   <string name="restore_backup_title">백업을 복원할까요?</string>

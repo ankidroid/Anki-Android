@@ -24,8 +24,6 @@ import android.text.TextUtils;
 
 import android.util.Pair;
 
-import com.ichi2.anki.AnkiDatabaseManager;
-import com.ichi2.anki.AnkiDb;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.utils.HtmlUtil;
 
@@ -111,7 +109,7 @@ public class Media {
 
     private Collection mCol;
     private String mDir;
-    private AnkiDb mDb;
+    private DB mDb;
 
 
     public Media(Collection col, boolean server) {
@@ -142,7 +140,7 @@ public class Media {
         String path = dir() + ".ad.db2";
         File dbFile = new File(path);
         boolean create = !(dbFile.exists());
-        mDb = AnkiDatabaseManager.getDatabase(path);
+        mDb = new DB(path);
         if (create) {
             _initDB();
         }
@@ -199,7 +197,7 @@ public class Media {
         if (mCol.getServer()) {
             return;
         }
-        AnkiDatabaseManager.closeDatabase(mDb.getPath());
+        mDb.close();
         mDb = null;
     }
 
@@ -238,7 +236,7 @@ public class Media {
         fname = HtmlUtil.nfcNormalized(fname);
         // remove any dangerous characters
         String base = stripIllegal(fname);
-        String root = Utils.removeExtension(base);
+        String root = Utils.removeFileExtension(base);
         String ext = Utils.getFileExtension(base);
         // find the first available name
         String csum = Utils.fileChecksum(ofile);
@@ -921,7 +919,7 @@ public class Media {
     /**
      * Used by unit tests only.
      */
-    public AnkiDb getDb() {
+    public DB getDb() {
         return mDb;
     }
 

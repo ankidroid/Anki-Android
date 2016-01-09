@@ -50,7 +50,7 @@
   <string name="menu_get_shared_decks">Dobi deljene komplete</string>
   <string name="connection_error_message">Pojavila se je omrežna napaka</string>
   <string name="not_logged_in_title">Prijavite se v AnkiWeb</string>
-  <string name="login_create_account_message">Prijaviti se morate v račun AnkiWeb. Ustvarite ga lahko v naslednjem koraku.</string>
+  <string name="login_create_account_message">Za uporabo storitve sinhronizacije v oblaku se morate prijaviti v račun tretje osebe. Enega lahko ustvarite v naslednjem koraku.</string>
   <string name="no_email_client">Noben e-poštni odjemalec ni na voljo</string>
   <string name="username">E-poštni naslov</string>
   <string name="username_repeat">Ponovite e-poštni naslov</string>
@@ -58,6 +58,7 @@
   <string name="password_repeat">Ponovite geslo</string>
   <string name="log_in">Prijava</string>
   <string name="sign_up_description">Še nimate računa AnkiWeb? Je brezplačen!</string>
+  <string name="sign_up_not_affiliated">Opomba: AnkiWeb ni povezan z AnkiDroidom</string>
   <string name="sign_up">Registracija</string>
   <string name="logged_as">Prijavljeni kot</string>
   <string name="log_out">Odjava</string>

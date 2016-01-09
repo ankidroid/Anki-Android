@@ -18,14 +18,13 @@
 package com.ichi2.libanki;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.util.Pair;
 
-import com.ichi2.anki.AnkiDatabaseManager;
-import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
@@ -63,7 +62,9 @@ import timber.log.Timber;
 
 public class Collection {
 
-    private AnkiDb mDb;
+    private Context mContext;
+
+    private DB mDb;
     private boolean mServer;
     private double mLastSave;
     private Media mMedia;
@@ -125,15 +126,16 @@ public class Collection {
 
     private static final int UNDO_SIZE_MAX = 20;
 
-    public Collection(AnkiDb db, String path) {
-        this(db, path, false);
+    public Collection(Context context, DB db, String path) {
+        this(context, db, path, false);
     }
 
-    public Collection(AnkiDb db, String path, boolean server) {
-        this(db, path, false, false);
+    public Collection(Context context, DB db, String path, boolean server) {
+        this(context, db, path, false, false);
     }
 
-    public Collection(AnkiDb db, String path, boolean server, boolean log) {
+    public Collection(Context context, DB db, String path, boolean server, boolean log) {
+        mContext = context;
         mDebugLog = log;
         mDb = db;
         mPath = path;
@@ -154,9 +156,12 @@ public class Collection {
         mStartTime = 0;
         mSched = new Sched(this);
         if (!mConf.optBoolean("newBury", false)) {
-            boolean mod = mDb.getMod();
-            mSched.unburyCards();
-            mDb.setMod(mod);
+            try {
+                mConf.put("newBury", true);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            setMod();
         }
     }
 
@@ -265,15 +270,7 @@ public class Collection {
 //        _markOp(name);
         mLastSave = Utils.now();
     }
-
-
-    /** Save if 5 minutes has passed since last save. */
-    public void autosave() {
-        if ((Utils.now() - mLastSave) > 300) {
-            save();
-        }
-    }
-
+    
 
     /** make sure we don't accidentally bump mod time */
     public void lock() {
@@ -294,13 +291,8 @@ public class Collection {
 
     public synchronized void close(boolean save) {
         if (mDb != null) {
-            if (!mConf.optBoolean("newBury", false)) {
-                boolean mod = mDb.getMod();
-                mSched.unburyCards();
-                mDb.setMod(mod);
-            }
             try {
-                SQLiteDatabase db = getDb().getDatabase();
+                SQLiteDatabase db = mDb.getDatabase();
                 if (save) {
                     db.beginTransaction();
                     try {
@@ -313,12 +305,11 @@ public class Collection {
                     if (db.inTransaction()) {
                         db.endTransaction();
                     }
-                    lock();
                 }
             } catch (RuntimeException e) {
                 AnkiDroidApp.sendExceptionReport(e, "closeDB");
             }
-            AnkiDatabaseManager.closeDatabase(mPath);
+            mDb.close();
             mDb = null;
             mMedia.close();
             _closeLog();
@@ -329,7 +320,7 @@ public class Collection {
 
     public void reopen() {
         if (mDb == null) {
-            mDb = AnkiDatabaseManager.getDatabase(mPath);
+            mDb = new DB(mPath);
             mMedia.connect();
             _openLog();
         }
@@ -569,7 +560,7 @@ public class Collection {
     /**
      * @return (active), non-empty templates.
      */
-    private ArrayList<JSONObject> findTemplates(Note note) {
+    public ArrayList<JSONObject> findTemplates(Note note) {
         JSONObject model = note.model();
         ArrayList<Integer> avail = mModels.availOrds(model, Utils.joinFields(note.getFields()));
         return _tmplsFromOrds(model, avail);
@@ -1548,7 +1539,7 @@ public class Collection {
      * Getters/Setters ********************************************************** *************************************
      */
 
-    public AnkiDb getDb() {
+    public DB getDb() {
         return mDb;
     }
 
@@ -1588,11 +1579,6 @@ public class Collection {
     }
 
 
-    public void setScm(long scm) {
-        mScm = scm;
-    }
-
-
     public boolean getServer() {
         return mServer;
     }
@@ -1600,11 +1586,6 @@ public class Collection {
 
     public void setLs(long ls) {
         mLs = ls;
-    }
-
-
-    public long getLs() {
-        return mLs;
     }
 
 
@@ -1655,6 +1636,13 @@ public class Collection {
 
     public boolean getDirty() {
         return mDty;
+    }
+
+    /**
+     * @return The context that created this Collection.
+     */
+    public Context getContext() {
+        return mContext;
     }
 
 }

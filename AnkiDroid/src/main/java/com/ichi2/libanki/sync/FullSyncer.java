@@ -20,14 +20,14 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.net.Uri;
 
-import com.ichi2.anki.AnkiDatabaseManager;
-import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.VersionUtils;
 
@@ -87,34 +87,38 @@ public class FullSyncer extends HttpSyncer {
         } catch (IOException e1) {
             return null;
         }
-        if (mCol == null) {
-            Timber.e("Collection was unexpectedly null");
-            return null;
+        String path;
+        if (mCol != null) {
+            // Usual case where collection is non-null
+            path = mCol.getPath();
+            mCol.close();
+            mCol = null;
+        } else {
+            // Allow for case where collection is completely unreadable
+            Timber.w("Collection was unexpectedly null when doing full sync download");
+            path = CollectionHelper.getCollectionPath(AnkiDroidApp.getInstance());
         }
-        String path = mCol.getPath();
-        mCol.close(false);
-        mCol = null;
         String tpath = path + ".tmp";
         try {
             super.writeToFile(cont, tpath);
+            FileInputStream fis = new FileInputStream(tpath);
+            if (super.stream2String(fis, 15).equals("upgradeRequired")) {
+                return new Object[]{"upgradeRequired"};
+            }
+        } catch (FileNotFoundException e) {
+            Timber.e(e, "Failed to create temp file when downloading collection.");
+            throw new RuntimeException(e);
         } catch (IOException e) {
             Timber.e(e, "Full sync failed to download collection.");
             return new Object[] { "sdAccessError" };
         }
-        // first check, if account needs upgrade (from 1.2)
-        try {
-            FileInputStream fis = new FileInputStream(tpath);
-            if (super.stream2String(fis, 15).equals("upgradeRequired")) {
-                return new Object[] { "upgradeRequired" };
-            }
-        } catch (FileNotFoundException e1) {
-            throw new RuntimeException(e1);
-        }
+
         // check the received file is ok
         mCon.publishProgress(R.string.sync_check_download_file);
+        DB tempDb = null;
         try {
-            AnkiDb d = AnkiDatabaseManager.getDatabase(tpath);
-            if (!d.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
+            tempDb = new DB(tpath);
+            if (!tempDb.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
                 Timber.e("Full sync - downloaded file corrupt");
                 return new Object[] { "remoteDbError" };
             }
@@ -122,7 +126,9 @@ public class FullSyncer extends HttpSyncer {
             Timber.e("Full sync - downloaded file corrupt");
             return new Object[] { "remoteDbError" };
         } finally {
-            AnkiDatabaseManager.closeDatabase(tpath);
+            if (tempDb != null) {
+                tempDb.close();
+            }
         }
         // overwrite existing collection
         File newFile = new File(tpath);
@@ -147,7 +153,6 @@ public class FullSyncer extends HttpSyncer {
         // apply some adjustments, then upload
         mCol.beforeUpload();
         String filePath = mCol.getPath();
-        mCol.close();
         HttpResponse ret;
         mCon.publishProgress(R.string.sync_uploading_message);
         try {

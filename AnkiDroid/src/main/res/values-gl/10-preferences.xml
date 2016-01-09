@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <string name="disabled">Desactivado</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Axustes xerais</string>
   <string name="pref_cat_reviewing">Avaliación</string>
@@ -55,18 +56,18 @@
   <string name="pref_cat_advanced">Avanzado</string>
   <string name="pref_cat_advanced_summ">Optimización e características experimentais</string>
   <string name="pref_cat_performance">Rendemento</string>
-  <string name="pref_cat_workarounds">Workarounds</string>
+  <string name="pref_cat_workarounds">Solucións</string>
   <string name="pref_cat_plugins">Engadidos</string>
   <string name="about_title">Sobre AnkiDroid</string>
   <string name="about_version">Versión: </string>
-  <string name="whiteboard_stroke_width">Stroke width</string>
-  <string name="whiteboard_black">Black strokes</string>
+  <string name="whiteboard_stroke_width">Largura do trazo</string>
+  <string name="whiteboard_black">Trazos negros</string>
   <string name="whiteboard_black_summ">Empregar menos memoria agás no modo noite</string>
-  <string name="write_answers_disable">Disable typing in answer</string>
-  <string name="write_answers_disable_summ">Prevents keyboard from appearing on cards containing type-the-answer fields</string>
+  <string name="write_answers_disable">Desactivar escritura nas respostas</string>
+  <string name="write_answers_disable_summ">Evitar a aparición do teclado nos cartóns con campos para escribir a resposta</string>
   <string name="use_input_tag">Escribir resposta no cartón</string>
   <string name="use_input_tag_summ">Empregar unha caixa de texto dentro do cartón para escribir a resposta</string>
-  <string name="text_selection_click">Long press workaround</string>
+  <string name="text_selection_click">Solución no premido longo</string>
   <string name="text_selection_click_summ">Activar no caso de que non podas seleccionar texto cun toque longo</string>
   <string name="dictionary">Dicionario de busca</string>
   <string name="reset_languages">Restabelecer idiomas</string>
@@ -96,25 +97,25 @@
   <string name="gestures_tap_right">Tocar á dereita</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Tamén podes empregar os botóns kanji/katakana e emoji/kao-moji para desprazamento</string>
-  <string name="double_scrolling_gap">Double scrolling</string>
-  <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
+  <string name="double_scrolling_gap">Desprazamento duplo</string>
+  <string name="double_scrolling_gap_summ">Duplicar a distancia de desprazamento co eReader</string>
   <string name="swipe_sensitivity">Sensibilidade do esvarado</string>
   <string name="tts">Texto a voz</string>
-  <string name="tts_summ">Reads out question and answer if no sound file is included</string>
+  <string name="tts_summ">Ler en voz alta as preguntas e respostas se non existe ficheiro de son</string>
   <string name="sync_fetch_missing_media">Obter multimedia ao sincronizar</string>
   <string name="sync_fetch_missing_media_summ">Obter automaticamente os medios que faltan ao sincronizar</string>
   <string name="sync_account">Conta AnkiWeb</string>
   <string name="sync_account_summ_logged_out">Sen sesión iniciada</string>
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="automatic_sync_choice">Sincronización automática</string>
-  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
-  <string name="fix_hebrew_text">Fix for Hebrew vowels</string>
-  <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
+  <string name="automatic_sync_choice_summ">Sincronizar autom. ao iniciar/saír da aplicación se pasaron máis de 10
+        minutos dende a última sincronización.</string>
+  <string name="fix_hebrew_text">Corrección para vogais hebraicas</string>
+  <string name="fix_hebrew_text_summ">Solución para amosar as vogais hebraicas correctamente.</string>
   <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to\n“%s/fonts/”\n\nYou won’t have to modify your cards.</string>
   <string name="fix_hebrew_download_font">Descargar fonte</string>
   <string name="default_font">Fonte por defecto</string>
-  <string name="override_font">Default font applicability</string>
+  <string name="override_font">Aplicabilidade da fonte predefinida</string>
   <string name="language">Idioma</string>
   <string name="language_system">Idioma do sistema</string>
   <string name="notification_pref">Notificacións</string>
@@ -126,9 +127,9 @@
   <string name="notification_minimum_cards_due_blink">Pestanexar luz</string>
   <string name="timeout_answer_text">Amosar a resposta automaticamente</string>
   <string name="timeout_answer_summ">Amosar a resposta automaticamente sen acción do usuario</string>
-  <string name="timeout_answer_seconds">Time to show answer</string>
+  <string name="timeout_answer_seconds">Tempo para amosar a resposta</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
-  <string name="timeout_question_seconds">Time to show next question</string>
+  <string name="timeout_question_seconds">Tempo para amosar a seguinte pregunta</string>
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Seleccionar idioma</string>
   <string name="safe_display">Safe display mode</string>
@@ -156,6 +157,11 @@
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
   <string name="enable_api_title">Activar o API do AnkiDroid</string>
   <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+  <string name="custom_sync_server_title">Custom sync server</string>
+  <string name="custom_sync_server_enable_title">Use custom sync server</string>
+  <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
+  <string name="custom_sync_server_base_url_title">Sync url</string>
+  <string name="custom_sync_server_media_url_title">Media sync url</string>
   <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>
   <string name="deck_conf_deck_description">Descrición da baralla</string>
   <string name="deck_conf_group">Grupo de opcións</string>
@@ -211,7 +217,7 @@
   </plurals>
   <string name="deck_conf_set_subdecks_title">Set for all subdecks</string>
   <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
-  <string name="pref_browser_editor_font">Browser and editor font</string>
+  <string name="pref_browser_editor_font">Fonte do explorador e editor</string>
   <string name="deck_conf_cram_filter">Filtrar</string>
   <string name="deck_conf_cram_options">Opcións</string>
   <string name="deck_conf_cram_search">Buscar</string>
@@ -219,6 +225,6 @@
   <string name="deck_conf_cram_order">cartóns seleccionados por</string>
   <string name="deck_conf_cram_reschedule">Reschedule</string>
   <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
-  <string name="deck_conf_cram_steps">Custom steps</string>
-  <string name="deck_conf_cram_steps_summ">Define custom steps</string>
+  <string name="deck_conf_cram_steps">Pasos personalizados</string>
+  <string name="deck_conf_cram_steps_summ">Definir pasos personalizados</string>
 </resources>

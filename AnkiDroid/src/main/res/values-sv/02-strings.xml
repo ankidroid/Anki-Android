@@ -55,7 +55,7 @@
   <string name="filter_tags">Filtrera etiketter</string>
   <string name="no_tags">Du har inte lagt till några etiketter än.</string>
   <string name="sdcard_missing_message">SD-kortet är inte tillgängligt eftersom det används som USB-minne. Koppla ur USB:n för att komma åt din kortlek.</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="updated_version">Uppdaterad till version %s</string>
   <string name="enable_whiteboard">Aktivera whiteboard</string>
   <string name="disable_whiteboard">Avaktivera whiteboard</string>
   <string name="show_whiteboard">Aktivera whiteboard</string>
@@ -66,8 +66,8 @@
   <string name="leech_notification">Markerat som utsugarkort</string>
   <string name="corrupt_font">Felaktig teckensnittsfil %s</string>
   <string-array name="browser_column1_headings">
-    <item>Question</item>
-    <item>Sort field</item>
+    <item>Fråga</item>
+    <item>Sortera fält</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Svar</item>
@@ -79,13 +79,13 @@
     <item>Felsvar</item>
     <item>Repetitioner</item>
   </string-array>
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
-  <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_increase_new_limit">Öka gränsen för nya kort för idag</string>
+  <string name="custom_study_increase_review_limit">Öka gränsen för kortrepetitioner för idag</string>
+  <string name="custom_study_review_forgotten">Repetera glömda kort</string>
+  <string name="custom_study_review_ahead">Repetera i förväg</string>
+  <string name="custom_study_random_selection">Studera ett slumpmässigt urval av kort</string>
+  <string name="custom_study_preview_new">Förhandsgranska nya kort</string>
+  <string name="custom_study_limit_tags">Begränsa till vissa etiketter</string>
   <string name="cardeditor_title_add_note">Lägg till not</string>
   <string name="cardeditor_title_edit_card">Redigera not</string>
   <string name="discard_unsaved_changes">Vill du stänga och förlora nuvarande inmatning?</string>
@@ -124,25 +124,23 @@
   <string name="help_title">Hjälp</string>
   <string name="check_db">Kontrollera databas</string>
   <string name="check_media">Kontrollera media</string>
-  <string name="empty_cards">Empty cards</string>
+  <string name="empty_cards">Tomma kort</string>
   <string name="check_db_message">Kontrollerar databasen. \nVänligen vänta...</string>
-  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
+  <string name="empty_card_warning">Detta kort är tomt. Använd alternativet \"Tomma kort\" i menyn på kortleksväljaren.</string>
   <string name="unknown_type_field_warning">Skriv svar: okänt fält %s</string>
   <string name="delete_deck">Tar bort kortlek...\nVänligen vänta.</string>
   <string name="show_hint">Visa %s</string>
   <string name="info_rate">Betygsätt AnkiDroid</string>
   <string name="col_load_failed">Fel vid inläsning av samling.\nTryck bakåt för att stänga AnkiDroid.</string>
-  <string name="import_title">Importera kort</string>
+  <string name="import_title">Importing</string>
   <string name="import_select_title">Välj fil att importera</string>
   <string name="import_message_add">Lägg till</string>
   <string name="import_message_replace_confirm">Detta kommer att ta bort din befintliga samling och ersätta den med datat i filen %s. Är du säker?</string>
   <string name="import_message_add_confirm">Vill du lägga till \"%s\" till samling? Det här kan ta lång tid</string>
-  <string name="import_log_success">Importerade %d kort</string>
-  <string name="import_log_error">Importen misslyckades</string>
   <string name="import_log_no_apkg">Detta är inte en giltig apkg-fil</string>
   <string name="import_error_not_apkg_extension">Filnamnet %s har inget .apkg-suffix</string>
   <string name="import_error_content_provider">Den valda filen kunde inte importeras automatiskt av AnkiDroid. Vänligen se användarmanualen för information om manuell import av Anki-filer: \n %s</string>
-  <string name="import_importing">Importerar kort.\nVar god vänta...</string>
+  <string name="import_replacing">Replacing collection...</string>
   <string name="export_include_schedule">Inkludera schemaläggning</string>
   <string name="export_include_media">Inkludera media</string>
   <string name="confirm_apkg_export">Exportera samling som APKG-fil?</string>
@@ -155,12 +153,12 @@
   <string name="upgrade_import_no_file_found">Ingen importerbar %1$s fil hittad</string>
   <string name="study_options">Kortleksalternativ</string>
   <string name="custom_study">Anpassade studier</string>
-  <string name="more_options">More</string>
+  <string name="more_options">Mer</string>
   <string name="dyn_deck_desc">Det här är en specialkortlek för studier utanför det normala schemat. Kort återförs automatiskt till sina ursprungliga kortlekar efter att du repeterat dem. Om du tar bort denna kortlek återförs alla återstående kort till sina ursprungliga kortlekar.</string>
   <string name="steps_error">Steg måste definieras som siffror högre än 0</string>
   <string name="steps_min_error">Du måste ha minst ett steg</string>
   <string name="sched_end">(slut)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
+  <string name="sched_unbury_action">För att se dem nu klicka på \"Sluta dölja\" i menyn</string>
   <string name="sched_has_buried">En del relaterade eller dolda kort undanhålls till en senare session.</string>
   <string name="tag_editor_add_feedback">Tryck på “%2$s” för att bekräfta att lägga till “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Befintlig etikett “%1$s” vald</string>
@@ -190,7 +188,7 @@
     <item quantity="other">%s år</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
-  <string name="decks_rename_exists">That deck already exists</string>
-  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
-  <string name="filtered_deck_name">Filtered Deck</string>
+  <string name="decks_rename_exists">Den kortleken existerar redan</string>
+  <string name="decks_rename_filtered_nosubdecks">En filtrerad kortlek kan inte ha underkortlekar</string>
+  <string name="filtered_deck_name">Filtrerad Kortlek</string>
 </resources>

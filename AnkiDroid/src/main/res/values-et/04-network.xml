@@ -50,7 +50,7 @@
   <string name="menu_get_shared_decks">Get shared decks</string>
   <string name="connection_error_message">Ilmnest võrgutõrge.</string>
   <string name="not_logged_in_title">Log in to AnkiWeb</string>
-  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
+  <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
   <string name="no_email_client">No email client available</string>
   <string name="username">E-posti aadress</string>
   <string name="username_repeat">Koorake e-posti aadressi</string>
@@ -58,6 +58,7 @@
   <string name="password_repeat">Korrake parooli</string>
   <string name="log_in">Logi sisse</string>
   <string name="sign_up_description">Don’t have an AnkiWeb account? It’s free!</string>
+  <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
   <string name="sign_up">Sign up</string>
   <string name="logged_as">Logged in as</string>
   <string name="log_out">Logi välja</string>

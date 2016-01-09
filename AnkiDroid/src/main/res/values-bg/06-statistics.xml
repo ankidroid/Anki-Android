@@ -62,7 +62,7 @@
   <string name="stats_percentage">Процент</string>
   <string name="stats_period_month">1 месец</string>
   <string name="stats_period_year">1 година</string>
-  <string name="stats_period_lifetime">deck life</string>
+  <string name="stats_period_lifetime">живот на тестето</string>
   <string name="stats_deck_collection">колекция</string>
   <string name="stats_time_of_day">Време от деня</string>
   <string name="stats_day_of_week">Ден от седмицата</string>

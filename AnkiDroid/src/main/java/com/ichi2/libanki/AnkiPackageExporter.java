@@ -16,6 +16,8 @@
 
 package com.ichi2.libanki;
 
+import android.content.Context;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -82,10 +84,10 @@ class AnkiExporter extends Exporter {
      * @throws IOException
      */
 
-    public void exportInto(String path) throws JSONException, IOException {
+    public void exportInto(String path, Context context) throws JSONException, IOException {
         // create a new collection at the target
         new File(path).delete();
-        Collection dst = Storage.Collection(path);
+        Collection dst = Storage.Collection(context, path);
         mSrc = mCol;
         // find cards
         Long[] cids;
@@ -299,7 +301,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
 
 
     @Override
-    public void exportInto(String path) throws IOException, JSONException {
+    public void exportInto(String path, Context context) throws IOException, JSONException {
         // open a zip file
         ZipFile z = new ZipFile(path);
         // if all decks and scheduling included, full export
@@ -308,7 +310,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
             media = exportVerbatim(z);
         } else {
             // otherwise, filter
-            media = exportFiltered(z, path);
+            media = exportFiltered(z, path, context);
         }
         // media map
         z.writeStr("media", Utils.jsonToString(media));
@@ -345,10 +347,10 @@ public final class AnkiPackageExporter extends AnkiExporter {
     }
 
 
-    private JSONObject exportFiltered(ZipFile z, String path) throws IOException, JSONException {
+    private JSONObject exportFiltered(ZipFile z, String path, Context context) throws IOException, JSONException {
         // export into the anki2 file
         String colfile = path.replace(".apkg", ".anki2");
-        super.exportInto(colfile);
+        super.exportInto(colfile, context);
         z.write(colfile, "collection.anki2");
         // and media
         prepareMedia();
