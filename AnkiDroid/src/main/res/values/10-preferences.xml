@@ -146,7 +146,9 @@
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Advanced statistics</string>
     <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
-    <string name="enable_advanced_statistics_summ">Display forecast statistics based on a simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
+    <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
+    <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
+    <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
     <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title">Custom sync server</string>
