@@ -34,6 +34,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 
@@ -310,7 +311,7 @@ public class AdvancedStatistics extends Hook  {
         private int lastReview;
         private int due;
         private int correct;
-        private final long id;
+        private long id;
 
         @Override
         public String toString() {
@@ -330,6 +331,24 @@ public class AdvancedStatistics extends Hook  {
 
         public Card clone() {
             return new Card(id, ivl, (int) (factor * 1000), due, correct, lastReview);
+        }
+
+        public void setAll(long id, int ivl, int factor, int due, int correct, int lastReview) {
+            this.id = id;
+            this.ivl = ivl;
+            this.factor = factor / 1000.0;
+            this.due = due;
+            this.correct = correct;
+            this.lastReview = lastReview;
+        }
+
+        public void setAll(Card card) {
+            this.id = card.id;
+            this.ivl = card.ivl;
+            this.factor = card.factor;
+            this.due = card.due;
+            this.correct = card.correct;
+            this.lastReview = card.lastReview;
         }
 
         public long getId() {
@@ -468,9 +487,8 @@ public class AdvancedStatistics extends Hook  {
             return cur.moveToNext();
         }
 
-        public Card current() {
-
-            return new Card(cur.getLong(0),                                    //Id
+        public void current(Card card) {
+            card.setAll(cur.getLong(0),                                        //Id
                     cur.getInt(5) == 0 ? 0 : cur.getInt(2),  		           //reps = 0 ? 0 : card interval
                     cur.getInt(3) > 0 ? cur.getInt(3) :  2500,                 //factor
                     Math.max(cur.getInt(1) - today, 0),                        //due
@@ -534,6 +552,13 @@ public class AdvancedStatistics extends Hook  {
 
         public EaseClassifier(SQLiteDatabase db) {
             this.db = db;
+
+            singleReviewOutcome[0] = new ReviewOutcome(null, 0);
+
+            multipleReviewOutcomes[0] = new ReviewOutcome(null, 0);
+            multipleReviewOutcomes[1] = new ReviewOutcome(null, 0);
+            multipleReviewOutcomes[2] = new ReviewOutcome(null, 0);
+            multipleReviewOutcomes[3] = new ReviewOutcome(null, 0);
 
             long t0 = System.currentTimeMillis();
             calculateCumProbabilitiesForNewEasePerCurrentEase();
@@ -639,12 +664,14 @@ public class AdvancedStatistics extends Hook  {
 
             applyOutcomeToCard(c, outcome);
 
-            singleReviewOutcome[0] = new ReviewOutcome(c, 1);
+            singleReviewOutcome[0].setAll(c, 1);
             return singleReviewOutcome;
         }
 
         private Card cardOriginal;
         private ReviewOutcome[] multipleReviewOutcomes = new ReviewOutcome[4];
+
+
         public ReviewOutcome[] simSingleReviewProbs(Card c) {
 
             int c_type = c.getType();
@@ -653,19 +680,19 @@ public class AdvancedStatistics extends Hook  {
 
             c = cardOriginal.clone();
             applyOutcomeToCard(c, 0);
-            multipleReviewOutcomes[0] = new ReviewOutcome(c, probabilities[c_type][0]);
+            multipleReviewOutcomes[0].setAll(c, probabilities[c_type][0]);
 
             c = cardOriginal.clone();
             applyOutcomeToCard(c, 1);
-            multipleReviewOutcomes[1] = new ReviewOutcome(c, probabilities[c_type][1]);
+            multipleReviewOutcomes[1].setAll(c, probabilities[c_type][1]);
 
             c = cardOriginal.clone();
             applyOutcomeToCard(c, 2);
-            multipleReviewOutcomes[2] = new ReviewOutcome(c, probabilities[c_type][2]);
+            multipleReviewOutcomes[2].setAll(c, probabilities[c_type][2]);
 
             //For first review, re-use current card to prevent creating too many objects
             applyOutcomeToCard(cardOriginal, 3);
-            multipleReviewOutcomes[3] = new ReviewOutcome(cardOriginal, probabilities[c_type][3]);
+            multipleReviewOutcomes[3].setAll(cardOriginal, probabilities[c_type][3]);
 
             return multipleReviewOutcomes;
         }
@@ -798,21 +825,25 @@ public class AdvancedStatistics extends Hook  {
             Timber.d("today: " + today);
 
             Stack<Review> reviews = new Stack<>();
+            ArrayList<Review> reviewList = new ArrayList<Review>();
 
             //TODO: by having simulateReview add future reviews depending on which simulation of this card this is (the nth) we can:
             //1. Do monte carlo simulation if we add k future reviews if n = 1
             //2. Do a complete traversal of the future reviews tree if we add k future reviews for all n
             //3. Do any combination of these
 
+            Card card = new Card(0, 0, 0, 0, 0, 0);
             CardIterator cardIterator = null;
+            Review review = new Review(deck, simulationResult, classifier, reviews, reviewList);
+
             try {
                 cardIterator = new CardIterator(db, today, deck.getDid());
 
                 while (cardIterator.moveToNext()) {
 
-                    Card card = cardIterator.current();
+                    cardIterator.current(card);
 
-                    Review review = new Review(deck, card, simulationResult, newCardSimulator, classifier, reviews);
+                    review.newCard(card, newCardSimulator);
 
                     if (review.getT() < tMax)
                         reviews.push(review);
@@ -1159,9 +1190,16 @@ public class AdvancedStatistics extends Hook  {
          * @param tTo The day after the last day for which to update the state.
          */
         public void updateNInState(Card card, int tFrom, int tTo, double prob) {
-            for(int t = tFrom / timeBinLength; t < tTo / timeBinLength; t++)
+            int cardType = card.getType();
+
+            int t0 = tFrom / timeBinLength;
+            int t1 = tTo / timeBinLength;
+
+            for(int t = t0; t < t1; t++)
                 if(t < nTimeBins) {
-                    nInState[card.getType()][t]+= prob;
+                    nInState[cardType][t]+= prob;
+                } else {
+                    return;
                 }
         }
 
@@ -1178,16 +1216,28 @@ public class AdvancedStatistics extends Hook  {
         public void updateNInState(Card prevCard, Card card, int tFrom, int tTo, double prob) {
             int lastReview = prevCard.getLastReview();
 
+            int prevCardType = prevCard.getType();
+            int cardType = card.getType();
+
+            int t0 = tFrom / timeBinLength;
+            int t1 = Math.min(lastReview, tTo) / timeBinLength;
+
             //Replace state set during last review
-            for(int t = tFrom / timeBinLength; t < Math.min(lastReview, tTo) / timeBinLength; t++)
+            for(int t = t0; t < t1; t++)
                 if(t < nTimeBins) {
-                    nInState[prevCard.getType()][t]-= prob;
+                    nInState[prevCardType][t]-= prob;
+                } else {
+                    continue;
                 }
 
+            t1 = tTo / timeBinLength;
+
             //With state set during new review
-            for(int t = tFrom / timeBinLength; t < tTo / timeBinLength; t++)
+            for(int t = t0; t < t1; t++)
                 if(t < nTimeBins) {
-                    nInState[card.getType()][t]+=prob;
+                    nInState[cardType][t]+=prob;
+                } else {
+                    return;
                 }
 
             //Alternative solution would be to keep this count for each day instead of keeping it for each bin and aggregate in the end
@@ -1237,6 +1287,11 @@ public class AdvancedStatistics extends Hook  {
             this.prob = prob;
         }
 
+        public void setAll(Card card, double prob) {
+            this.card = card;
+            this.prob = prob;
+        }
+
         public Card getCard() {
             return card;
         }
@@ -1275,20 +1330,23 @@ public class AdvancedStatistics extends Hook  {
         private int tElapsed;
         private Deck deck;
         private Card card;
+        private Card prevCard = new Card(0, 0, 0, 0, 0, 0);
         private final SimulationResult simulationResult;
         private final EaseClassifier classifier;
         private final Stack<Review> reviews;
+        private final List<Review> reviewList;
 
         /**
          * For creating future reviews which are to be scheduled as a result of the current review.
          * @see Review(Deck, Card, SimulationResult, NewCardSimulator, EaseClassifier, Stack<Review>, int, int)
          */
-        private Review (Deck deck, Card card, SimulationResult simulationResult, EaseClassifier classifier, Stack<Review> reviews, int nPrevRevs, int tElapsed, double prob) {
+        private Review (Deck deck, Card card, SimulationResult simulationResult, EaseClassifier classifier, Stack<Review> reviews, List<Review> reviewList, int nPrevRevs, int tElapsed, double prob) {
             this.deck = deck;
             this.card = card;
             this.simulationResult = simulationResult;
             this.classifier = classifier;
             this.reviews = reviews;
+            this.reviewList = reviewList;
 
             this.nPrevRevs = nPrevRevs;
             this.tElapsed = tElapsed;
@@ -1300,23 +1358,28 @@ public class AdvancedStatistics extends Hook  {
         /**
          * For creating a review which is to be scheduled.
          * @param deck Information needed to simulate a review: deck settings.
-         * @param card Information needed to simulate a review: card due date, type and factor.
+
          *             Will be affected by the review. After the review it will contain the card type etc. after the review.
          * @param simulationResult Will be affected by the review. After the review it will contain updated statistics.
-         * @param newCardSimulator Information needed to simulate a review: The next day new cards will be added and the number of cards already added on that day.
-         *                         Will be affected by the review. After the review of a new card, the number of cards added on that day will be updated.
-         *                         Next day new cards will be added might be updated if new card limit has been reached.
          * @param classifier Information needed to simulate a review: transition probabilities to new card state for each possible current card state.
          * @param reviews Will be affected by the review. Scheduled future reviews of this card will be added.
          */
-        public Review (Deck deck, Card card, SimulationResult simulationResult, NewCardSimulator newCardSimulator, EaseClassifier classifier, Stack<Review> reviews) {
+        public Review(Deck deck, SimulationResult simulationResult, EaseClassifier classifier, Stack<Review> reviews, List<Review> reviewList) {
             this.deck = deck;
-            this.card = card;
             this.simulationResult = simulationResult;
             this.classifier = classifier;
             this.reviews = reviews;
+            this.reviewList = reviewList;
 
             this.maxReviewsPerDay = deck.getRevPerDay();
+        }
+
+        //* @param card Information needed to simulate a review: card due date, type and factor.
+        //* @param newCardSimulator Information needed to simulate a review: The next day new cards will be added and the number of cards already added on that day.
+        //        *                         Will be affected by the review. After the review of a new card, the number of cards added on that day will be updated.
+        //*                         Next day new cards will be added might be updated if new card limit has been reached.
+        public void newCard(Card card, NewCardSimulator newCardSimulator) {
+            this.card = card;
 
             this.nPrevRevs = 0;
             this.prob = 1;
@@ -1330,6 +1393,14 @@ public class AdvancedStatistics extends Hook  {
             // Set state of card between start and first review
             // New reviews happen with probability 1
             this.simulationResult.updateNInState(card, 0, tElapsed, 1);
+        }
+
+        private void existingCard(Card card, int nPrevRevs, int tElapsed, double prob) {
+            this.card = card;
+
+            this.nPrevRevs = nPrevRevs;
+            this.tElapsed = tElapsed;
+            this.prob = prob;
         }
 
         /**
@@ -1346,7 +1417,7 @@ public class AdvancedStatistics extends Hook  {
                 simulationResult.incrementNReviews(card.getType(), tElapsed, prob);
 
                 // Simulate response
-                Card prevCard = card.clone();
+                prevCard.setAll(card);
 
                 ReviewOutcome[] reviewOutcomes;
                 if(tElapsed >= Settings.getComputeNDays() || prob < Settings.getComputeMaxError())
@@ -1387,7 +1458,23 @@ public class AdvancedStatistics extends Hook  {
         private void scheduleNextReview(Card newCard, int newTElapsed, double newProb) {
             //Schedule next review(s) if they are within the time window of the simulation
             if (newTElapsed < simulationResult.getnDays()) {
-                Review review = new Review(deck, newCard, simulationResult, classifier, reviews, nPrevRevs + 1, newTElapsed, newProb);
+                Review review;
+                //Re-use existing instance of the review object (to limit memory usage and prevent time taken by garbage collector)
+                //This is possible since reviews with nPrevRevs > nPrevRevs of the current review which were already scheduled have all already been processed before we do the current review.
+                if(reviewList.size() > nPrevRevs) {
+                    review = reviewList.get(nPrevRevs);
+                    review.existingCard(newCard, nPrevRevs + 1, newTElapsed, newProb);
+                }
+                else {
+                    if(reviewList.size() == nPrevRevs) {
+                        review = new Review(deck, newCard, simulationResult, classifier, reviews, reviewList, nPrevRevs + 1, newTElapsed, newProb);
+                        reviewList.add(review);
+                    }
+                    else {
+                        throw new IllegalStateException("State of previous reviews of this card should have been saved for determining possible future reviews other than the current one.");
+                    }
+                }
+
                 this.reviews.push(review);
             }
         }
