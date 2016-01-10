@@ -84,11 +84,12 @@
   <string name="custom_study_random">隨機選擇 x 張卡片，從牌組:</string>
   <string name="custom_study_preview">預覽過去 x 天新增的卡片:</string>
   <string name="rebuild_custom_study_deck">重建自訂學習的牌組。\n請稍後...</string>
-  <string name="import_unpacking">解壓縮檔案。 \n請稍後......</string>
   <string name="importing_collection">匯入收藏中\n請稍後...</string>
   <string name="import_media_count">匯入媒體檔案 %1$d%%\n 請稍後......</string>
-  <string name="import_update_counts">更新牌組數值\n請稍後...</string>
-  <string name="import_add_progress">• 解壓縮檔案 %1$s\n• 匯入筆記 %2$d%%\n• 匯入卡片 %3$d%%\n• 清理 %4$s</string>
+  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
+  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
+  <string name="import_update_ignored">Some updates were ignored because note type has changed.</string>
+  <string name="import_complete_count">Cards imported: %d</string>
   <string name="sd_card_full_title">SD 卡空間已滿</string>
   <string name="sd_card_almost_full_title">SD 卡空間快滿</string>
   <string name="restore_backup_title">回復備份嗎？</string>

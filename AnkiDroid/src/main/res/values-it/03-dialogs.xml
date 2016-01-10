@@ -85,11 +85,12 @@
   <string name="custom_study_random">Seleziona x carte casualmente dal mazzo:</string>
   <string name="custom_study_preview">Anteprima carte nuove aggiunte negli ultimi x giorni:</string>
   <string name="rebuild_custom_study_deck">Ricreo il mazzo di studio personalizzato.\nAttendi...</string>
-  <string name="import_unpacking">Estrazione archivio.\nAttendi&#8230;</string>
   <string name="importing_collection">Importazione collezione.\nAttendi&#8230;</string>
   <string name="import_media_count">Importazione file multimediali %1$d%%\nAttendi&#8230;</string>
-  <string name="import_update_counts">Aggiornamento conteggio mazzi.\nAttendi&#8230;</string>
-  <string name="import_add_progress">• Estrazione archivio %1$s\n• Importazione note %2$d%%\n• Importazione carte %3$d%%\n• Pulizia %4$s</string>
+  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
+  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
+  <string name="import_update_ignored">Some updates were ignored because note type has changed.</string>
+  <string name="import_complete_count">Cards imported: %d</string>
   <string name="sd_card_full_title">Scheda SD piena</string>
   <string name="sd_card_almost_full_title">Scheda SD quasi piena</string>
   <string name="restore_backup_title">Ripristinare il backup?</string>

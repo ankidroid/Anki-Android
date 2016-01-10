@@ -63,5 +63,5 @@
   <string name="corrupt_db_message">На жалост, ваша колекција је оштећена.\n\nИзаберите у менију \'Обнови из резервне копије\'. Ако то не помогне, погледајте следеће упутство за ручно обнављање:\n%1$s</string>
   <string name="access_collection_failed_message">Десила се грешка при приступу вашој колекцији. \n\nПокушајте да покренете проверу базе података или обнављање из резервне копије. Ако то не помогне, пошаљите извештај о грешци: \n%1$s</string>
   <string name="deck_repair_error">Колекција не може бити исправљена</string>
-  <string name="cursor_size_limit_exceeded">The Android 1MB size limit for database cursors has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
+  <string name="cursor_size_limit_exceeded">The Android size limit for a String in a database has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
 </resources>

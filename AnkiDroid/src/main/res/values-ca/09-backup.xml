@@ -63,5 +63,5 @@
   <string name="corrupt_db_message">La col·lecció s\'ha danyat.\n\nApreti \"Opcions\" per restaurar des d\'una còpia de seguretat, o si això no funciona, vegeu les instruccions següents per a reparar manualment la base de dades: \n%1$s</string>
   <string name="access_collection_failed_message">S\'ha produït un error al accedir a la seva col·lecció. Això pot haver estat causat per un error inofensiu, o hi pot haver un problema amb això. \n\nProvi fent una comprovació de base de dades, o restaurar des de un backup prement el botó \"Opcions\". Si continueu veient aquest missatge, si us plau creeu un informe d\'error: \n%1$s</string>
   <string name="deck_repair_error">No ha estat possible reparar la col·lecció</string>
-  <string name="cursor_size_limit_exceeded">The Android 1MB size limit for database cursors has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
+  <string name="cursor_size_limit_exceeded">The Android size limit for a String in a database has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
 </resources>

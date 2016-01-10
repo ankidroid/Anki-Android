@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="disabled">Disabled</string>
+  <string name="disabled">Deshabilitado</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Ajustes generales</string>
   <string name="pref_cat_reviewing">Revisión</string>
@@ -65,8 +65,8 @@
   <string name="whiteboard_black_summ">Utiliza menos memoria, excepto en modo nocturno</string>
   <string name="write_answers_disable">Desactivar el tipeo de la respuesta</string>
   <string name="write_answers_disable_summ">Impide que el teclado aparezca en tarjetas que contengan el campo \'tipear la respuesta\'</string>
-  <string name="use_input_tag">Type answer into the card</string>
-  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
+  <string name="use_input_tag">Escribir respuesta en la tarjeta</string>
+  <string name="use_input_tag_summ">Usa una caja de texto dentro de la tarjeta para escribir una respuesta</string>
   <string name="text_selection_click">Solución para pulsación larga</string>
   <string name="text_selection_click_summ">Activar esta opción si no puede comenzar la selección de texto mediante un click prolongado</string>
   <string name="dictionary">Diccionario de búsqueda</string>
@@ -78,7 +78,7 @@
   <string name="image_zoom">Zoom de la imagen</string>
   <string name="button_size">Tamaño del botón de respuesta</string>
   <string name="card_browser_font_size">Escalado de fuentes del explorador de tarjetas</string>
-  <string name="col_path">AnkiDroid directory</string>
+  <string name="col_path">Carpeta de AnkiDroid</string>
   <string name="fullscreen_review">Pantalla completa</string>
   <string name="full_screen_off">Apagado</string>
   <string name="full_screen_system">Ocultar las barras del sistema</string>
@@ -156,11 +156,11 @@
   <string name="convert_fen_text_summ">Dibujar un tablero de ajedrez a partir de la notación de Edward Forsyth. La notación debe estar enmarcada en una etiqueta que contenga [fen][/fen].</string>
   <string name="enable_api_title">Habilitar API de AnkiDroid</string>
   <string name="enable_api_summary">Permitir que otras aplicaciones se conecten a AnkiDroid y lean / escriban datos sin tu intervención</string>
-  <string name="custom_sync_server_title">Custom sync server</string>
-  <string name="custom_sync_server_enable_title">Use custom sync server</string>
-  <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
-  <string name="custom_sync_server_base_url_title">Sync url</string>
-  <string name="custom_sync_server_media_url_title">Media sync url</string>
+  <string name="custom_sync_server_title">Servidor de sincronización personalizado</string>
+  <string name="custom_sync_server_enable_title">Usar servidor de sincronización personalizado</string>
+  <string name="custom_sync_server_enable_summary">Si no quieres usar el servicio propio de AnkiWeb, puedes especificar un servidor alternativo aquí</string>
+  <string name="custom_sync_server_base_url_title">Url de sincronización</string>
+  <string name="custom_sync_server_media_url_title">Url de sincronización multimedia</string>
   <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>
   <string name="deck_conf_deck_description">Descripción del mazo</string>
   <string name="deck_conf_group">Grupo de opciones</string>

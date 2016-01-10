@@ -17,10 +17,10 @@
 package com.ichi2.libanki;
 
 import android.content.ContentValues;
-import android.database.SQLException;
+import android.content.Context;
 
-import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.libanki.hooks.Hooks;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,18 +37,19 @@ public class Storage {
 
 
     /* Open a new or existing collection. Path must be unicode */
-    public static Collection Collection(String path) {
-        return Collection(path, false, false);
+    public static Collection Collection(Context context, String path) {
+        return Collection(context, path, false, false);
     }
 
 
-    public static Collection Collection(String path, boolean server, boolean log) {
+    public static Collection Collection(Context context, String path, boolean server, boolean log) {
         assert path.endsWith(".anki2");
-
+        // Since this is the entry point into libanki, initialize the hooks here.
+        Hooks.getInstance(context);
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
         // connect
-        AnkiDb db = new AnkiDb(path);
+        DB db = new DB(path);
         try {
             // initialize
             int ver;
@@ -59,7 +60,7 @@ public class Storage {
             }
             db.execute("PRAGMA temp_store = memory");
             // add db to col and do any remaining upgrades
-            Collection col = new Collection(db, path, server, log);
+        Collection col = new Collection(context, db, path, server, log);
             if (ver < Consts.SCHEMA_VERSION) {
                 _upgrade(col, ver);
             } else if (create) {
@@ -78,13 +79,13 @@ public class Storage {
             return col;
         } catch (Exception e) {
             Timber.e(e, "Error opening collection; closing database");
-            db.closeDatabase();
+            db.close();
             throw e;
         }
     }
 
 
-    private static int _upgradeSchema(AnkiDb db) {
+    private static int _upgradeSchema(DB db) {
         int ver = db.queryScalar("SELECT ver FROM col");
         if (ver == Consts.SCHEMA_VERSION) {
             return ver;
@@ -266,7 +267,7 @@ public class Storage {
     }
 
 
-    private static int _createDB(AnkiDb db) {
+    private static int _createDB(DB db) {
         db.execute("PRAGMA page_size = 4096");
         db.execute("PRAGMA legacy_file_format = 0");
         db.execute("VACUUM");
@@ -277,12 +278,12 @@ public class Storage {
     }
 
 
-    private static void _addSchema(AnkiDb db) {
+    private static void _addSchema(DB db) {
         _addSchema(db, true);
     }
 
 
-    private static void _addSchema(AnkiDb db, boolean setColConf) {
+    private static void _addSchema(DB db, boolean setColConf) {
         db.execute("create table if not exists col ( " + "id              integer primary key, "
                 + "crt             integer not null," + "mod             integer not null,"
                 + "scm             integer not null," + "ver             integer not null,"
@@ -322,7 +323,7 @@ public class Storage {
     }
 
 
-    private static void _setColVars(AnkiDb db) {
+    private static void _setColVars(DB db) {
         try {
             JSONObject g = new JSONObject(Decks.defaultDeck);
             g.put("id", 1);
@@ -346,7 +347,7 @@ public class Storage {
     }
 
 
-    private static void _updateIndices(AnkiDb db) {
+    private static void _updateIndices(DB db) {
         db.execute("create index if not exists ix_notes_usn on notes (usn);");
         db.execute("create index if not exists ix_cards_usn on cards (usn);");
         db.execute("create index if not exists ix_revlog_usn on revlog (usn);");
@@ -357,7 +358,7 @@ public class Storage {
     }
 
 
-    public static void addIndices(AnkiDb db) {
+    public static void addIndices(DB db) {
         _updateIndices(db);
     }
 

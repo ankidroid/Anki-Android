@@ -63,5 +63,5 @@
   <string name="corrupt_db_message">Ihre Sammlung ist beschädigt.\n\nBerühren Sie »Optionen«, um eine Sammlung aus einer Sicherung wiederherzustellen. Wenn das nicht funktioniert, finden Sie weitere Informationen zum Reparieren der Datenbank von Hand unter: \n%1$s</string>
   <string name="access_collection_failed_message">Fehler beim Zugriff auf Ihre Sammlung. Es kann ein harmloser Fehler sein, oder es gibt ein Problem mit Ihrer Sammlung. \n\nVersuchen Sie es mit  »Datenbank prüfen« oder stellen Sie sie durch Berühren der »Optionen«-Schaltfläche aus einer Sicherung wieder her. Wenn Sie diese Meldung weiterhin sehen, senden Sie bitte einen Fehlerbericht: \n%1$s</string>
   <string name="deck_repair_error">Sammlung konnte nicht repariert werden</string>
-  <string name="cursor_size_limit_exceeded">The Android 1MB size limit for database cursors has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
+  <string name="cursor_size_limit_exceeded">The Android size limit for a String in a database has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
 </resources>

@@ -88,6 +88,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.DividerItemDecoration;
@@ -233,31 +234,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
     };
 
     DeckTask.TaskListener mImportAddListener = new DeckTask.TaskListener() {
-        @SuppressWarnings("unchecked")
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            String message = "";
-            Resources res = getResources();
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
-            if (result != null && result.getBoolean()) {
-                int count = result.getInt();
-                if (count < 0) {
-                    if (count == -2) {
-                        message = res.getString(R.string.import_log_no_apkg);
-                    } else {
-                        message = res.getString(R.string.import_log_error);
-                    }
-                    showSimpleMessageDialog(message, true);
-                } else {
-                    message = res.getString(R.string.import_log_success, count);
-                    showSimpleMessageDialog(message);
-                    updateDeckList();
-                }
-            } else {
-                showSimpleMessageDialog(res.getString(R.string.import_log_error));
-            }
+            AnkiPackageImporter imp = (AnkiPackageImporter) result.getObjArray()[0];
+            showSimpleMessageDialog(TextUtils.join("\n", imp.getLog()));
+            updateDeckList();
         }
 
 
@@ -265,8 +249,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         public void onPreExecute() {
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this,
-                        getResources().getString(R.string.import_title),
-                        getResources().getString(R.string.import_importing), false);
+                        getResources().getString(R.string.import_title), null, false);
             }
         }
 
@@ -308,7 +291,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this,
                         getResources().getString(R.string.import_title),
-                        getResources().getString(R.string.import_importing), false);
+                        getResources().getString(R.string.import_replacing), false);
             }
         }
 

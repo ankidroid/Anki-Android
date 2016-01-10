@@ -663,7 +663,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             for (int i = 0; i < ja.length(); i++) {
                 String name = (String) (ja.getJSONObject(i).get("name"));
                 if (name.equals(fld)) {
-                    mTypeCorrect = mCurrentCard.note().getitem(name);
+                    mTypeCorrect = mCurrentCard.note().getItem(name);
                     if (clozeIdx != 0) {
                         // narrow to cloze
                         mTypeCorrect = contentForCloze(mTypeCorrect, clozeIdx);
