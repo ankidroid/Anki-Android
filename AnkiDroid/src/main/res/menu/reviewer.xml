@@ -65,4 +65,8 @@
     <item
         android:id="@+id/action_open_deck_options"
         android:title="@string/study_options" />
+    <item
+        android:id="@+id/action_select_tts"
+        android:title="@string/select_tts"
+        android:visible="false" />
 </menu>
