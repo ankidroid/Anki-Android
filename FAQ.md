@@ -39,6 +39,9 @@ From the Anki website:
 
 [Read more here](https://anki.tenderapp.com/kb/anki-ecosystem/can-i-disable-the-scheduling-algorithm)
 
+### Is there an auto-sync feature?
+Yes, it's disabled by default though so please see the [section in the manual](https://ankidroid.org/docs/manual.html#_ankidroid) about the automatic synchronization preference.
+
 ### Why do I get an error about the timezone when I try to sync?
 AnkiWeb requires both the time and the timezone to be set correctly in order to synchronize properly. For most users, enabling "Automatic date & time" and "Automatic time zone" in the main Android date & time settings is enough to ensure that sync works correctly.
 
