@@ -87,11 +87,12 @@
   <string name="custom_study_random">Naključno izberite x kartic iz kompleta:</string>
   <string name="custom_study_preview">Preglej nove kartice dodane v zadnjih x-ih dneh:</string>
   <string name="rebuild_custom_study_deck">Izgrajevanje kompleta za učenje po meri &#8230;</string>
-  <string name="import_unpacking">Odpakiranje arhiva &#8230;</string>
   <string name="importing_collection">Uvažanje zbirke &#8230;</string>
   <string name="import_media_count">Uvažanje datotek predstavnosti %1$d %% &#8230;</string>
-  <string name="import_update_counts">Posodabljanje števcev kompletov &#8230;</string>
-  <string name="import_add_progress">• Odpakiranje arhiva %1$s\n• Uvažanje zapiskov %2$d %%\n• Uvažanje kartic %3$d %%\n• Čiščenje %4$s</string>
+  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
+  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
+  <string name="import_update_ignored">Some updates were ignored because note type has changed.</string>
+  <string name="import_complete_count">Cards imported: %d</string>
   <string name="sd_card_full_title">Kartica SD polna</string>
   <string name="sd_card_almost_full_title">Kartica SD skoraj polna</string>
   <string name="restore_backup_title">Obnovi varnostno kopijo?</string>

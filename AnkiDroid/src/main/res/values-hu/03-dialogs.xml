@@ -85,11 +85,12 @@
   <string name="custom_study_random">A pakliból x kártya véletlen kiválasztása:</string>
   <string name="custom_study_preview">Az elmúlt x nap új kártyáinak előre átnézése:</string>
   <string name="rebuild_custom_study_deck">Egyéni gyakorlópakli újraépítése.\nKérlek, várj...</string>
-  <string name="import_unpacking">Csomag kitömörítése.\nKérlek, várj&#8230;</string>
   <string name="importing_collection">Gyűjtemény importálása.\nKérlek, várj&#8230;</string>
   <string name="import_media_count">Média fájlok importálása %1$d%%\nKérlek, várj&#8230;</string>
-  <string name="import_update_counts">Pakli méretek számlálása.\nKérlek, várj&#8230;</string>
-  <string name="import_add_progress">• Kitömörítés %1$s\n• Jegyzetek importálása %2$d%%\n• Kártyák importálása %3$d%%\n• Takarítás %4$s</string>
+  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
+  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
+  <string name="import_update_ignored">Some updates were ignored because note type has changed.</string>
+  <string name="import_complete_count">Cards imported: %d</string>
   <string name="sd_card_full_title">SD kártya tele</string>
   <string name="sd_card_almost_full_title">SD kártya közel tele</string>
   <string name="restore_backup_title">Visszaállítás?</string>

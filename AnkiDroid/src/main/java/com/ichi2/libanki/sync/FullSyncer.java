@@ -20,7 +20,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.net.Uri;
 
-import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
@@ -28,6 +27,7 @@ import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.VersionUtils;
 
@@ -91,7 +91,7 @@ public class FullSyncer extends HttpSyncer {
         if (mCol != null) {
             // Usual case where collection is non-null
             path = mCol.getPath();
-            mCol.close(false);
+            mCol.close();
             mCol = null;
         } else {
             // Allow for case where collection is completely unreadable
@@ -101,24 +101,23 @@ public class FullSyncer extends HttpSyncer {
         String tpath = path + ".tmp";
         try {
             super.writeToFile(cont, tpath);
+            FileInputStream fis = new FileInputStream(tpath);
+            if (super.stream2String(fis, 15).equals("upgradeRequired")) {
+                return new Object[]{"upgradeRequired"};
+            }
+        } catch (FileNotFoundException e) {
+            Timber.e(e, "Failed to create temp file when downloading collection.");
+            throw new RuntimeException(e);
         } catch (IOException e) {
             Timber.e(e, "Full sync failed to download collection.");
             return new Object[] { "sdAccessError" };
         }
-        // first check, if account needs upgrade (from 1.2)
-        try {
-            FileInputStream fis = new FileInputStream(tpath);
-            if (super.stream2String(fis, 15).equals("upgradeRequired")) {
-                return new Object[] { "upgradeRequired" };
-            }
-        } catch (FileNotFoundException e1) {
-            throw new RuntimeException(e1);
-        }
+
         // check the received file is ok
         mCon.publishProgress(R.string.sync_check_download_file);
-        AnkiDb tempDb = null;
+        DB tempDb = null;
         try {
-            tempDb = new AnkiDb(tpath);
+            tempDb = new DB(tpath);
             if (!tempDb.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
                 Timber.e("Full sync - downloaded file corrupt");
                 return new Object[] { "remoteDbError" };
@@ -128,7 +127,7 @@ public class FullSyncer extends HttpSyncer {
             return new Object[] { "remoteDbError" };
         } finally {
             if (tempDb != null) {
-                tempDb.closeDatabase();
+                tempDb.close();
             }
         }
         // overwrite existing collection
@@ -154,7 +153,6 @@ public class FullSyncer extends HttpSyncer {
         // apply some adjustments, then upload
         mCol.beforeUpload();
         String filePath = mCol.getPath();
-        mCol.close();
         HttpResponse ret;
         mCon.publishProgress(R.string.sync_uploading_message);
         try {

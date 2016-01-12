@@ -63,5 +63,5 @@
   <string name="corrupt_db_message">Vaša zbirka je postala pokvarjena.\n\nDotaknite se \"možnosti\", da jo obnovite iz varnostne kopije ali, če to ne deluje, za ročno popravljanje podatkovne zbirke glejte naslednja navodila:\n%1$s</string>
   <string name="access_collection_failed_message">Pri dostopu do zbirke se je pojavila napaka. Morda jo je povzročil neškodljiv hrošč ali pa je pokvarjena.\n\nPoizkusite zagnati popravljanje podatkovne zbirke ali jo obnoviti iz varnostne kopije s pritiskom na gumb \"možnosti\". Če se to sporočilo še naprej pojavlja, prijavite hrošča:\n%1$s</string>
   <string name="deck_repair_error">Zbirke ni bilo mogoče popraviti</string>
-  <string name="cursor_size_limit_exceeded">The Android 1MB size limit for database cursors has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
+  <string name="cursor_size_limit_exceeded">Omejitev velikosti niza v podatkovni zbirki je bila presežena. Izbrišite neuporabljene vrste zapiskov z uporabo namiznega Ankija in potem naredite polno sinhronizacijo.</string>
 </resources>

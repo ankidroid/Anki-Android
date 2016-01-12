@@ -63,5 +63,5 @@
   <string name="corrupt_db_message">Bohužel váš balíček se porušil.\n\nKlokněte na \'Možnosti\' pro obnovení ze zálohy. Pokud se obnova nepovede, viz následující pokyny k ruční opravě databáze: \n%1$s</string>
   <string name="access_collection_failed_message">Došlo k chybě při přístupu k vašemu balíčku. To může být způsobeno chybou v aplikaci, nebo může být problém s balíčkem. \n\nZkuste spustit kontrolu databáze nebo obnovení ze zálohy stisknutím tlačítka \'Možnosti\'. Objeví-li se znovu tato zpráva, zašlete nám zprávu: \n%1$s</string>
   <string name="deck_repair_error">Kolekci nelze opravit</string>
-  <string name="cursor_size_limit_exceeded">The Android 1MB size limit for database cursors has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
+  <string name="cursor_size_limit_exceeded">The Android size limit for a String in a database has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
 </resources>

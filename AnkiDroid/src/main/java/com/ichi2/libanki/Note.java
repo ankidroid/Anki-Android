@@ -209,12 +209,12 @@ public class Note implements Cloneable {
     }
 
 
-    public String getitem(String key) {
+    public String getItem(String key) {
         return mFields[_fieldOrd(key)];
     }
 
 
-    public void setitem(String key, String value) {
+    public void setItem(String key, String value) {
         mFields[_fieldOrd(key)] = value;
     }
     

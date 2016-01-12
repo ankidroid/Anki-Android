@@ -27,13 +27,10 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.text.Html;
-
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.ichi2.anki.AnkiDb;
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
@@ -75,6 +72,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 import java.util.TimeZone;
 import java.util.TreeSet;
@@ -393,7 +391,7 @@ public class Utils {
     }
 
     /** Return a non-conflicting timestamp for table. */
-    public static long timestampID(AnkiDb db, String table) {
+    public static long timestampID(DB db, String table) {
         // be careful not to create multiple objects without flushing them, or they
         // may share an ID.
         long t = intNow(1000);
@@ -405,7 +403,7 @@ public class Utils {
 
 
     /** Return the first safe ID to use. */
-    public static long maxID(AnkiDb db) {
+    public static long maxID(DB db) {
         long now = intNow(1000);
         now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"));
         now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"));
@@ -681,15 +679,15 @@ public class Utils {
     }
 
 
-    public static boolean unzipFiles(ZipFile zipFile, String targetDirectory, String[] zipEntries, HashMap<String, String> zipEntryToFilenameMap) {
+    public static void unzipFiles(ZipFile zipFile, String targetDirectory, String[] zipEntries,
+                                  Map<String, String> zipEntryToFilenameMap) throws IOException {
         byte[] buf = new byte[FILE_COPY_BUFFER_SIZE];
         File dir = new File(targetDirectory);
         if (!dir.exists() && !dir.mkdirs()) {
-            Timber.e("Utils.unzipFiles: Could not create target directory: " + targetDirectory);
-            return false;
+            throw new IOException("Failed to create target directory: " + targetDirectory);
         }
         if (zipEntryToFilenameMap == null) {
-            zipEntryToFilenameMap = new HashMap<String, String>();
+            zipEntryToFilenameMap = new HashMap<>();
         }
         BufferedInputStream zis = null;
         BufferedOutputStream bos = null;
@@ -702,10 +700,6 @@ public class Utils {
                         name = zipEntryToFilenameMap.get(name);
                     }
                     File destFile = new File(dir, name);
-                    File parentDir = destFile.getParentFile();
-                    if (!parentDir.exists() && !parentDir.mkdirs()) {
-                        return false;
-                    }
                     if (!ze.isDirectory()) {
                         Timber.i("uncompress %s", name);
                         zis = new BufferedInputStream(zipFile.getInputStream(ze));
@@ -720,26 +714,14 @@ public class Utils {
                     }
                 }
             }
-        } catch (IOException e) {
-            Timber.e(e, "Utils.unzipFiles: Error while unzipping archive.");
-            return false;
         } finally {
-            try {
-                if (bos != null) {
-                    bos.close();
-                }
-            } catch (IOException e) {
-                Timber.e(e, "Utils.unzipFiles: Error while closing output stream.");
+            if (bos != null) {
+                bos.close();
             }
-            try {
-                if (zis != null) {
-                    zis.close();
-                }
-            } catch (IOException e) {
-                Timber.e(e, "Utils.unzipFiles: Error while closing zip input stream.");
+            if (zis != null) {
+                zis.close();
             }
         }
-        return true;
     }
 
     /**
@@ -1020,7 +1002,7 @@ public class Utils {
     }
 
     /** Returns the filename without the extension. */
-    public static String removeExtension(String filename) {
+    public static String removeFileExtension(String filename) {
       int dotPosition = filename.lastIndexOf('.');
       if (dotPosition == -1) {
         return filename;
