@@ -7,6 +7,9 @@
             android:id="@+id/menu_multimedia_photo"
             android:title="@string/multimedia_editor_popup_image"/>
         <item
+            android:id="@+id/menu_multimedia_audio_clip"
+            android:title="@string/multimedia_editor_popup_audio_clip"/>
+        <item
             android:id="@+id/menu_multimedia_audio"
             android:title="@string/multimedia_editor_popup_audio"/>
         <item

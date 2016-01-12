@@ -58,6 +58,7 @@ import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
+import com.ichi2.anki.multimediacard.fields.AudioClipField;
 import com.ichi2.anki.multimediacard.fields.AudioField;
 import com.ichi2.anki.multimediacard.fields.EFieldType;
 import com.ichi2.anki.multimediacard.fields.IField;
@@ -1166,6 +1167,12 @@ public class NoteEditor extends AnkiActivity {
                                     Timber.i("NoteEditor:: Advanced editor button pressed");
                                     field = new TextField();
                                     field.setText(mEditFields.get(index).getText().toString());
+                                    mNote.setField(index, field);
+                                    startMultimediaFieldEditor(index, mNote, field);
+                                    return true;
+                                case R.id.menu_multimedia_audio_clip:
+                                    Timber.i("NoteEditor:: Add audio clip button pressed");
+                                    field = new AudioClipField();
                                     mNote.setField(index, field);
                                     startMultimediaFieldEditor(index, mNote, field);
                                     return true;
