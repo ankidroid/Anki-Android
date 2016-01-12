@@ -35,6 +35,7 @@ import android.widget.LinearLayout;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.R;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
+import com.ichi2.anki.multimediacard.fields.AudioClipField;
 import com.ichi2.anki.multimediacard.fields.AudioField;
 import com.ichi2.anki.multimediacard.fields.BasicControllerFactory;
 import com.ichi2.anki.multimediacard.fields.EFieldType;
@@ -153,6 +154,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         getMenuInflater().inflate(R.menu.activity_edit_text, menu);
         menu.findItem(R.id.multimedia_edit_field_to_text).setVisible(mField.getType() != EFieldType.TEXT);
         menu.findItem(R.id.multimedia_edit_field_to_audio).setVisible(mField.getType() != EFieldType.AUDIO);
+        menu.findItem(R.id.multimedia_edit_field_to_audio_clip).setVisible(mField.getType() != EFieldType.AUDIO_CLIP);
         menu.findItem(R.id.multimedia_edit_field_to_image).setVisible(mField.getType() != EFieldType.IMAGE);
         return true;
     }
@@ -179,6 +181,12 @@ public class MultimediaEditFieldActivity extends AnkiActivity
                 Timber.i("To audio button pressed");
                 mFieldController.onFocusLost();
                 toAudioField();
+                supportInvalidateOptionsMenu();
+                return true;
+
+            case R.id.multimedia_edit_field_to_audio_clip:
+                Timber.i("To audio clip button pressed");
+                toAudioClipField();
                 supportInvalidateOptionsMenu();
                 return true;
 
@@ -241,6 +249,13 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     protected void toAudioField() {
         if (mField.getType() != EFieldType.AUDIO) {
             mField = new AudioField();
+            recreateEditingUi();
+        }
+    }
+
+    protected void toAudioClipField() {
+        if (mField.getType() != EFieldType.AUDIO_CLIP) {
+            mField = new AudioClipField();
             recreateEditingUi();
         }
     }

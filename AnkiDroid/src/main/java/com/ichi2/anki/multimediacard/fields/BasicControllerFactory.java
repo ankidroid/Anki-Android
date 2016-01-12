@@ -44,6 +44,9 @@ public class BasicControllerFactory implements IControllerFactory {
             case AUDIO:
                 return new BasicAudioFieldController();
 
+            case AUDIO_CLIP:
+                return new BasicAudioClipFieldController();
+
             default:
 
                 break;
