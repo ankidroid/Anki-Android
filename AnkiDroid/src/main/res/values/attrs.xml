@@ -34,6 +34,7 @@
     </declare-styleable>
     <!-- Deck list colors, divider, and expander -->
     <attr name="currentDeckBackground" format="reference"/>
+    <attr name="currentDeckBackgroundColor" format="color"/>
     <attr name="dynDeckColor" format="color"/>
     <attr name="deckDivider" format="reference"/>
     <attr name="expandRef" format="reference"/>
@@ -48,6 +49,11 @@
     <attr name="hardButtonRef" format= "reference"/>
     <attr name="goodButtonRef" format= "reference"/>
     <attr name="easyButtonRef" format= "reference"/>
+    <attr name="answerButtonTextColor" format="color"/>
+    <attr name="againButtonTextColor" format="color"/>
+    <attr name="hardButtonTextColor" format="color"/>
+    <attr name="goodButtonTextColor" format="color"/>
+    <attr name="easyButtonTextColor" format="color"/>
     <!-- Reviewer other colors -->
     <attr name="topBarColor" format="color"/>
     <attr name="maxTimerColor" format="color"/>
@@ -61,4 +67,12 @@
     <attr name="dialogErrorIcon" format="integer"/>
     <attr name="dialogSyncErrorIcon" format="integer"/>
     <attr name="dialogSendIcon" format="integer"/>
+    <!-- FAB -->
+    <attr name="fab_normal" format="color"/> <!-- Also color of the Study button in StudyOptions -->
+    <attr name="fab_pressed" format="color"/>
+    <attr name="fab_labelsTextColor" format="color"/>
+    <attr name="fab_background" format="color"/>
+    <attr name="fab_item_background" format="reference"/>
+    <!-- StudyOptions fragment -->
+    <attr name="study_start_textColor" format="color"/>
 </resources>

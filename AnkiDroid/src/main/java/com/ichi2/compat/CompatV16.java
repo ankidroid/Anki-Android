@@ -76,7 +76,7 @@ public class CompatV16 extends CompatV15 implements Compat {
     public void openUrl(AnkiActivity activity, Uri uri) {
         CustomTabActivityHelper helper = activity.getCustomTabActivityHelper();
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder(helper.getSession());
-        builder.setToolbarColor(activity.getResources().getColor(R.color.theme_primary)).setShowTitle(true);
+        builder.setToolbarColor(activity.getResources().getColor(R.color.material_light_blue_500)).setShowTitle(true);
         builder.setStartAnimations(activity, R.anim.slide_right_in, R.anim.slide_left_out);
         builder.setExitAnimations(activity, R.anim.slide_left_in, R.anim.slide_right_out);
         builder.setCloseButtonIcon(BitmapFactory.decodeResource(activity.getResources(), R.drawable.ic_arrow_back_white_24dp));

@@ -30,8 +30,8 @@
     <string name="pref_cat_flashcard">Display</string>
     <string name="pref_cat_whiteboard">Whiteboard</string>
     <string name="pref_cat_automatic_display">Automatic display answer</string>
-    <string name="pref_cat_fonts">Fonts</string>
-    <string name="pref_cat_fonts_summ">Change default font and size</string>
+    <string name="pref_cat_appearance">Appearance</string>
+    <string name="pref_cat_appearance_summ">Change themes and default font</string>
     <string name="pref_cat_gestures">Gestures</string>
     <string name="pref_cat_gestures_summ">Use taps and swipes instead of buttons</string>
     <string name="pref_cat_actions">Actions</string>

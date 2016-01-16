@@ -18,6 +18,7 @@ package com.ichi2.anki;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -34,6 +35,7 @@ import android.widget.CompoundButton;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.themes.Themes;
 
 import timber.log.Timber;
 
@@ -45,6 +47,7 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
     protected Boolean mFragmented = false;
     // Other members
     private String mOldColPath;
+    private int mOldTheme;
     // Navigation drawer list item entries
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
@@ -203,6 +206,9 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
                     // Workaround to kick user back to StudyOptions after opening settings from Reviewer
                     // because onDestroy() of old Activity interferes with TTS in new Activity
                     finishWithoutAnimation();
+                } else if (mOldTheme != Themes.getCurrentTheme(getApplicationContext())) {
+                    // The current theme was changed, so need to reload the stack with the new theme
+                    CompatHelper.getCompat().restartActivityInvalidateBackstack(NavigationDrawerActivity.this);
                 } else {
                     restartActivity();
                 }
@@ -253,6 +259,8 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
                 return true;
             case R.id.nav_settings:
                 mOldColPath = CollectionHelper.getCurrentAnkiDroidDirectory(this);
+                // Remember the theme we started with so we can restart the Activity if it changes
+                mOldTheme = Themes.getCurrentTheme(getApplicationContext());
                 startActivityForResultWithAnimation(new Intent(this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.FADE);
                 break;
             case R.id.nav_help:

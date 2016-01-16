@@ -130,7 +130,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:theme="@style/App_Theme_Dark.Launcher"
+            android:theme="@style/Theme_Dark_Compat.Launcher"
             android:name="com.ichi2.anki.DeckPicker"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:label="@string/app_name">
@@ -185,17 +185,17 @@
             android:name="com.ichi2.anki.Preferences"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/preferences_title"
-            android:theme="@style/LegacyActionBarWhite"/>
+            android:theme="@style/LegacyActionBarLight"/>
         <activity
             android:name="com.ichi2.anki.DeckOptions"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/deckpreferences_title"
-            android:theme="@style/LegacyActionBarWhite"/>
+            android:theme="@style/LegacyActionBarLight"/>
         <activity
             android:name=".FilteredDeckOptions"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/deckpreferences_title"
-            android:theme="@style/LegacyActionBarWhite"/>
+            android:theme="@style/LegacyActionBarLight"/>
         <activity
             android:name="com.ichi2.anki.Info"
             android:configChanges="locale"
@@ -224,7 +224,7 @@
             android:finishOnTaskLaunch="true" />
         <activity
             android:name="com.ichi2.anki.Statistics"
-            android:theme="@style/Theme_White_Statistics"
+            android:theme="@style/Theme_Light_Statistics"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:parentActivityName=".DeckPicker">
             <!-- The meta-data element is needed for versions lower than 4.1 -->

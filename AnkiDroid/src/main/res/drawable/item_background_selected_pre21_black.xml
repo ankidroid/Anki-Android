@@ -22,5 +22,5 @@
     <item android:state_focused="true"                                android:state_pressed="true" android:drawable="@drawable/list_selector_background_transition_holo_dark" />
     <item android:state_focused="false"                               android:state_pressed="true" android:drawable="@drawable/list_selector_background_transition_holo_dark" />
     <item android:state_focused="true"                                                             android:drawable="@drawable/list_focused_holo" />-->
-    <item android:drawable="@color/theme_light_row_current" />
+    <item android:drawable="@color/theme_black_currentDeckBackground" />
 </selector>

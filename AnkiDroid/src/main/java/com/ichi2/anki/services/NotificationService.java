@@ -62,7 +62,7 @@ public class NotificationService extends Service {
             String cardsDueText = getString(R.string.widget_minimum_cards_due_notification_ticker_text, dueCardsCount);
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                     .setSmallIcon(R.drawable.ic_stat_notify)
-                    .setColor(getResources().getColor(R.color.theme_primary_dark))
+                    .setColor(getResources().getColor(R.color.material_light_blue_700))
                     .setContentTitle(cardsDueText)
                     .setTicker(cardsDueText);
             // Enable vibrate and blink if set in preferences

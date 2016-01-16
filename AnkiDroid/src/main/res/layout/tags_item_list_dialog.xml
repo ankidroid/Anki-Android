@@ -10,6 +10,6 @@
     android:gravity="center_vertical"
     android:background="?attr/selectableItemBackground"
     android:textSize="16sp"
-    android:checkMark="@drawable/abc_btn_check_material"
+    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
     android:focusable="true"
     android:clickable="true"/>

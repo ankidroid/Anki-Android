@@ -40,15 +40,15 @@
             android:value="com.ichi2.anki.prefs.reviewing" />
     </header>
 
-    <!-- Fonts & Style Prefrences -->
+    <!-- Appearance Prefrences  -->
     <header
         android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
-        android:key="font_preference_group"
-        android:summary="@string/pref_cat_fonts_summ"
-        android:title="@string/pref_cat_fonts">
+        android:key="appearance_preference_group"
+        android:summary="@string/pref_cat_appearance_summ"
+        android:title="@string/pref_cat_appearance">
         <extra
             android:name="subscreen"
-            android:value="com.ichi2.anki.prefs.fonts" />
+            android:value="com.ichi2.anki.prefs.appearance" />
     </header>
 
     <!-- Navigation Prefrences -->
