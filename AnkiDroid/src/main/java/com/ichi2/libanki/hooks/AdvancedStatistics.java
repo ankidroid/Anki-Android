@@ -807,7 +807,7 @@ public class AdvancedStatistics extends Hook  {
 
         public SimulationResult simNreviews(int today, Decks decks, String didsStr) {
 
-            SimulationResult simulationResultAggregated = new SimulationResult(nTimeBins, timeBinLength);
+            SimulationResult simulationResultAggregated = new SimulationResult(nTimeBins, timeBinLength, SimulationResult.DOUBLE_TO_INT_MODE_ROUND);
 
             long[] dids = ArrayUtils.stringToLongArray(didsStr);
             int nIterations = Settings.getSimulateNIterations();
@@ -826,7 +826,17 @@ public class AdvancedStatistics extends Hook  {
 
         private SimulationResult simNreviews(int today, Deck deck) {
 
-            SimulationResult simulationResult = new SimulationResult(nTimeBins, timeBinLength);
+            SimulationResult simulationResult;
+
+            //we schedule a review if the number of reviews has not yet reached the maximum # reviews per day
+            //If we compute the simulationresult, we keep track of the average number of reviews
+            //Since it's the average, it can be a non-integer
+            //Adding a review to a non-integer can make it exceed the maximum # reviews per day, but not by 1 or more
+            //So if we take the floor when displaying it, we will display the maximum # reviews
+            if(Settings.getComputeNDays() > 0)
+                simulationResult = new SimulationResult(nTimeBins, timeBinLength, SimulationResult.DOUBLE_TO_INT_MODE_FLOOR);
+            else
+                simulationResult = new SimulationResult(nTimeBins, timeBinLength, SimulationResult.DOUBLE_TO_INT_MODE_ROUND);
 
             //nSmooth=1
 
@@ -969,7 +979,7 @@ public class AdvancedStatistics extends Hook  {
             return matrix;
         }
 
-        public int[][] toIntMatrix(double[][] doubleMatrix) {
+        public int[][] toIntMatrix(double[][] doubleMatrix, int doubleToIntMode) {
             int m = doubleMatrix.length;
             if(m == 0)
                 return new int[0][];
@@ -978,8 +988,12 @@ public class AdvancedStatistics extends Hook  {
             int[][] intMatrix = new int[m][];
             for(int i=0; i<m; i++) {
                 intMatrix[i] = new int[n];
-                for(int j=0; j<n; j++)
-                    intMatrix[i][j] = (int)Math.round(doubleMatrix[i][j]);
+                for(int j=0; j<n; j++) {
+                    if (doubleToIntMode == SimulationResult.DOUBLE_TO_INT_MODE_ROUND)
+                        intMatrix[i][j] = (int) Math.round(doubleMatrix[i][j]);
+                    else
+                        intMatrix[i][j] = (int) doubleMatrix[i][j];
+                }
             }
 
             return intMatrix;
@@ -1087,6 +1101,11 @@ public class AdvancedStatistics extends Hook  {
      */
     private class SimulationResult {
 
+        public static final int DOUBLE_TO_INT_MODE_FLOOR = 0;
+        public static final int DOUBLE_TO_INT_MODE_ROUND = 1;
+
+        private final int doubleToIntMode;
+
         private final int nTimeBins;
         private final int timeBinLength;
 
@@ -1120,7 +1139,7 @@ public class AdvancedStatistics extends Hook  {
          * @param nTimeBins Number of time bins.
          * @param timeBinLength Length of 1 time bin in days.
          */
-        public SimulationResult(int nTimeBins, int timeBinLength) {
+        public SimulationResult(int nTimeBins, int timeBinLength, int doubleToIntMode) {
             nReviews = ArrayUtils.createDoubleMatrix(4, nTimeBins);
             nReviewsPerDay = ArrayUtils.createDoubleMatrix(4, nTimeBins * timeBinLength);
             nInState = ArrayUtils.createDoubleMatrix(3, nTimeBins);
@@ -1128,6 +1147,8 @@ public class AdvancedStatistics extends Hook  {
             this.nTimeBins = nTimeBins;
             this.timeBinLength = timeBinLength;
             this.nDays = nTimeBins * timeBinLength;
+
+            this.doubleToIntMode = doubleToIntMode;
         }
 
         public int getnTimeBins() {
@@ -1165,11 +1186,11 @@ public class AdvancedStatistics extends Hook  {
         }
 
         public int[][] getNReviews() {
-            return ArrayUtils.toIntMatrix(nReviews);
+            return ArrayUtils.toIntMatrix(nReviews, doubleToIntMode);
         }
 
         public int[][] getNInState() {
-            return ArrayUtils.toIntMatrix(nInState);
+            return ArrayUtils.toIntMatrix(nInState, doubleToIntMode);
         }
 
         /**
