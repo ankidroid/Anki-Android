@@ -697,6 +697,17 @@ public class AdvancedStatistics extends Hook  {
             return multipleReviewOutcomes;
         }
 
+        public ReviewOutcome[] simSingleReview(Card c, int outcome) {
+
+            int c_type = c.getType();
+
+            //For first review, re-use current card to prevent creating too many objects
+            applyOutcomeToCard(c, outcome);
+            singleReviewOutcome[0].setAll(c, probabilities[c_type][outcome]);
+
+            return singleReviewOutcome;
+        }
+
         private void applyOutcomeToCard(Card c, int outcome) {
 
             int type = c.getType();
@@ -839,6 +850,8 @@ public class AdvancedStatistics extends Hook  {
             try {
                 cardIterator = new CardIterator(db, today, deck.getDid());
 
+                int cardN = 0;
+
                 while (cardIterator.moveToNext()) {
 
                     cardIterator.current(card);
@@ -848,10 +861,14 @@ public class AdvancedStatistics extends Hook  {
                     if (review.getT() < tMax)
                         reviews.push(review);
 
+                    Timber.d("Card started: " + cardN);
+
                     while (!reviews.isEmpty()) {
                         review = reviews.pop();
                         review.simulateReview();
                     }
+
+                    Timber.d("Card done: " + cardN++);
 
                 }
             }
@@ -1327,7 +1344,19 @@ public class AdvancedStatistics extends Hook  {
          */
         private double prob;
 
+        /**
+         * The time instant at which the review takes place.
+         */
         private int tElapsed;
+
+        /**
+         * The outcome of the review.
+         * We still have to do the review if the outcome has already been specified
+         * (to update statistics, deterime probability of specified outcome, and to schedule subsequent reviews)
+         * Only relevant if we are computing (all possible review outcomes), not if simulating (only one possible outcome)
+         */
+        private int outcome;
+
         private Deck deck;
         private Card card;
         private Card prevCard = new Card(0, 0, 0, 0, 0, 0);
@@ -1340,13 +1369,13 @@ public class AdvancedStatistics extends Hook  {
          * For creating future reviews which are to be scheduled as a result of the current review.
          * @see Review(Deck, Card, SimulationResult, NewCardSimulator, EaseClassifier, Stack<Review>, int, int)
          */
-        private Review (Deck deck, Card card, SimulationResult simulationResult, EaseClassifier classifier, Stack<Review> reviews, List<Review> reviewList, int nPrevRevs, int tElapsed, double prob) {
-            this.deck = deck;
+        private Review (Review prevReview, Card card, int nPrevRevs, int tElapsed, double prob) {
+            this.deck = prevReview.deck;
             this.card = card;
-            this.simulationResult = simulationResult;
-            this.classifier = classifier;
-            this.reviews = reviews;
-            this.reviewList = reviewList;
+            this.simulationResult = prevReview.simulationResult;
+            this.classifier = prevReview.classifier;
+            this.reviews = prevReview.reviews;
+            this.reviewList = prevReview.reviewList;
 
             this.nPrevRevs = nPrevRevs;
             this.tElapsed = tElapsed;
@@ -1383,6 +1412,7 @@ public class AdvancedStatistics extends Hook  {
 
             this.nPrevRevs = 0;
             this.prob = 1;
+            this.outcome = 0;
 
             //# Rate-limit new cards by shifting starting time
             if (card.getType() == 0)
@@ -1401,6 +1431,7 @@ public class AdvancedStatistics extends Hook  {
             this.nPrevRevs = nPrevRevs;
             this.tElapsed = tElapsed;
             this.prob = prob;
+            this.outcome = 0;
         }
 
         /**
@@ -1412,9 +1443,10 @@ public class AdvancedStatistics extends Hook  {
          */
         public void simulateReview() {
 
-            if(card.getType() == 0 || simulationResult.nReviewsDoneToday(tElapsed) < maxReviewsPerDay) {
+            if(card.getType() == 0 || simulationResult.nReviewsDoneToday(tElapsed) < maxReviewsPerDay || outcome > 0) {
                 // Update the forecasted number of reviews
-                simulationResult.incrementNReviews(card.getType(), tElapsed, prob);
+                if(outcome == 0)
+                    simulationResult.incrementNReviews(card.getType(), tElapsed, prob);
 
                 // Simulate response
                 prevCard.setAll(card);
@@ -1423,36 +1455,49 @@ public class AdvancedStatistics extends Hook  {
                 if(tElapsed >= Settings.getComputeNDays() || prob < Settings.getComputeMaxError())
                     reviewOutcomes = classifier.simSingleReview(card);
                 else
-                    reviewOutcomes = classifier.simSingleReviewProbs(card);
+                    reviewOutcomes = classifier.simSingleReview(card, outcome);
 
-                //Timber.d("Simulation at t=" + tElapsed + ": p= " + prob + ": " + reviewOutcomes.length + " outcomes.");
+                ReviewOutcome reviewOutcome = reviewOutcomes[0];
 
-                for(int outcomeIdx = 0; outcomeIdx < reviewOutcomes.length; outcomeIdx++) {
+                //Timber.d("Simulation at t=" + tElapsed + ": outcome " + outcomeIdx + ": " + reviewOutcome.toString() );
 
-                    ReviewOutcome reviewOutcome = reviewOutcomes[outcomeIdx];
+                Card newCard = reviewOutcome.getCard();
+                double outcomeProb = reviewOutcome.getProb();
 
-                    //Timber.d("Simulation at t=" + tElapsed + ": outcome " + outcomeIdx + ": " + reviewOutcome.toString() );
+                newCard.setLastReview(tElapsed);
 
-                    Card newCard = reviewOutcome.getCard();
-                    double outcomeProb = reviewOutcome.getProb();
+                // If card failed, update "relearn" count
+                if(newCard.getCorrect() == 0)
+                    simulationResult.incrementNReviews(3, tElapsed, prob * outcomeProb);
 
-                    newCard.setLastReview(tElapsed);
+                // Set state of card between current and next review
+                simulationResult.updateNInState(prevCard, newCard, tElapsed, tElapsed + newCard.getIvl(), prob * outcomeProb);
 
-                    // If card failed, update "relearn" count
-                    if(newCard.getCorrect() == 0)
-                        simulationResult.incrementNReviews(3, tElapsed, prob * outcomeProb);
+                // Schedule current review, but with other outcome
+                if(outcomeProb < 1.0 && outcome < 3)
+                    scheduleCurrentReview(prevCard);
 
-                    // Set state of card between current and next review
-                    simulationResult.updateNInState(prevCard, newCard, tElapsed, tElapsed + newCard.getIvl(), prob * outcomeProb);
-
-                    // Advance time to next review
-                    scheduleNextReview(newCard, tElapsed + newCard.getIvl(), prob * outcomeProb);
-                }
+                // Advance time to next review
+                scheduleNextReview(newCard, tElapsed + newCard.getIvl(), prob * outcomeProb);
             }
             else {
                 // Advance time to next review (max. #reviews reached for this day)
-                scheduleNextReview(card, tElapsed + 1, prob);
+                //scheduleNextReview(card, tElapsed + 1, prob);   //TODO: current review can be re-used
+                rescheduleCurrentReview(tElapsed + 1);
             }
+        }
+
+        private void rescheduleCurrentReview(int newTElapsed) {
+            if (newTElapsed < simulationResult.getnDays()) {
+                this.tElapsed = newTElapsed;
+                this.reviews.push(this);
+            }
+        }
+
+        private void scheduleCurrentReview(Card newCard) {
+            this.card = newCard;
+            this.outcome++;
+            this.reviews.push(this);
         }
 
         private void scheduleNextReview(Card newCard, int newTElapsed, double newProb) {
@@ -1467,7 +1512,7 @@ public class AdvancedStatistics extends Hook  {
                 }
                 else {
                     if(reviewList.size() == nPrevRevs) {
-                        review = new Review(deck, newCard, simulationResult, classifier, reviews, reviewList, nPrevRevs + 1, newTElapsed, newProb);
+                        review = new Review(this, newCard, nPrevRevs + 1, newTElapsed, newProb);
                         reviewList.add(review);
                     }
                     else {
@@ -1485,6 +1530,3 @@ public class AdvancedStatistics extends Hook  {
     }
 
 }
-
-//WaitForGcToComplete takes long --> cleanup and re-use objects!
-//Why does simulating month take longer than simulating year?
