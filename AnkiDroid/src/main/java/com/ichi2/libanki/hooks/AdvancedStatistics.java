@@ -1,4 +1,5 @@
 /****************************************************************************************
+/****************************************************************************************
  * Copyright (c) 2016 Jeffrey van Prehn <jvanprehn@gmail.com>                           *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
@@ -586,7 +587,7 @@ public class AdvancedStatistics extends Hook  {
             q[2] = q[1] + p[2];
             q[3] = q[2] + p[3];
 
-            return p;
+            return q;
         }
 
         private void calculateCumProbabilitiesForNewEasePerCurrentEase() {
@@ -850,7 +851,7 @@ public class AdvancedStatistics extends Hook  {
             try {
                 cardIterator = new CardIterator(db, today, deck.getDid());
 
-                int cardN = 0;
+                //int cardN = 0;
 
                 while (cardIterator.moveToNext()) {
 
@@ -861,14 +862,13 @@ public class AdvancedStatistics extends Hook  {
                     if (review.getT() < tMax)
                         reviews.push(review);
 
-                    Timber.d("Card started: " + cardN);
+                    //Timber.d("Card started: " + cardN);
 
                     while (!reviews.isEmpty()) {
-                        review = reviews.pop();
-                        review.simulateReview();
+                        reviews.pop().simulateReview();
                     }
 
-                    Timber.d("Card done: " + cardN++);
+                    //Timber.d("Card done: " + cardN++);
 
                 }
             }
@@ -979,7 +979,7 @@ public class AdvancedStatistics extends Hook  {
             for(int i=0; i<m; i++) {
                 intMatrix[i] = new int[n];
                 for(int j=0; j<n; j++)
-                    intMatrix[i][j] = (int)doubleMatrix[i][j];
+                    intMatrix[i][j] = (int)Math.round(doubleMatrix[i][j]);
             }
 
             return intMatrix;
@@ -1358,8 +1358,9 @@ public class AdvancedStatistics extends Hook  {
         private int outcome;
 
         private Deck deck;
-        private Card card;
+        private Card card = new Card(0, 0, 0, 0, 0, 0);
         private Card prevCard = new Card(0, 0, 0, 0, 0, 0);
+        private Card newCard = new Card(0, 0, 0, 0, 0, 0);
         private final SimulationResult simulationResult;
         private final EaseClassifier classifier;
         private final Stack<Review> reviews;
@@ -1371,7 +1372,7 @@ public class AdvancedStatistics extends Hook  {
          */
         private Review (Review prevReview, Card card, int nPrevRevs, int tElapsed, double prob) {
             this.deck = prevReview.deck;
-            this.card = card;
+            this.card.setAll(card);
             this.simulationResult = prevReview.simulationResult;
             this.classifier = prevReview.classifier;
             this.reviews = prevReview.reviews;
@@ -1426,7 +1427,7 @@ public class AdvancedStatistics extends Hook  {
         }
 
         private void existingCard(Card card, int nPrevRevs, int tElapsed, double prob) {
-            this.card = card;
+            this.card.setAll(card);
 
             this.nPrevRevs = nPrevRevs;
             this.tElapsed = tElapsed;
@@ -1450,19 +1451,22 @@ public class AdvancedStatistics extends Hook  {
 
                 // Simulate response
                 prevCard.setAll(card);
+                newCard.setAll(card);
 
                 ReviewOutcome[] reviewOutcomes;
                 if(tElapsed >= Settings.getComputeNDays() || prob < Settings.getComputeMaxError())
-                    reviewOutcomes = classifier.simSingleReview(card);
+                    reviewOutcomes = classifier.simSingleReview(newCard);
                 else
-                    reviewOutcomes = classifier.simSingleReview(card, outcome);
+                    reviewOutcomes = classifier.simSingleReview(newCard, outcome);
 
                 ReviewOutcome reviewOutcome = reviewOutcomes[0];
 
                 //Timber.d("Simulation at t=" + tElapsed + ": outcome " + outcomeIdx + ": " + reviewOutcome.toString() );
 
-                Card newCard = reviewOutcome.getCard();
+                newCard = reviewOutcome.getCard();
                 double outcomeProb = reviewOutcome.getProb();
+
+                //writeLog(newCard, outcomeProb);
 
                 newCard.setLastReview(tElapsed);
 
@@ -1483,8 +1487,18 @@ public class AdvancedStatistics extends Hook  {
             else {
                 // Advance time to next review (max. #reviews reached for this day)
                 //scheduleNextReview(card, tElapsed + 1, prob);   //TODO: current review can be re-used
+                simulationResult.updateNInState(card, card, tElapsed, tElapsed + 1, prob);
                 rescheduleCurrentReview(tElapsed + 1);
             }
+        }
+
+        private void writeLog(Card newCard, double outcomeProb) {
+            String tabs = "";
+            for(int d = 0; d<nPrevRevs; d++)
+                tabs += "\t";
+            Timber.d(tabs + "t=" + tElapsed + " p=" + prob + " * " + outcomeProb);
+            Timber.d(tabs + prevCard);
+            Timber.d(tabs + newCard);
         }
 
         private void rescheduleCurrentReview(int newTElapsed) {
@@ -1495,7 +1509,7 @@ public class AdvancedStatistics extends Hook  {
         }
 
         private void scheduleCurrentReview(Card newCard) {
-            this.card = newCard;
+            this.card.setAll(newCard);
             this.outcome++;
             this.reviews.push(this);
         }
