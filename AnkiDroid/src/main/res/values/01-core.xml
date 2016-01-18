@@ -78,6 +78,8 @@
     <string name="menu_bury_note">Bury note</string>
     <string name="menu_suspend_card">Suspend card</string>
     <string name="menu_suspend_note">Suspend note</string>
+    <string name="menu_bury">Bury</string>
+    <string name="menu_suspend">Suspend</string>
     <string name="menu_delete_note">Delete note</string>
     <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
     <string name="menu_select">Select text</string>

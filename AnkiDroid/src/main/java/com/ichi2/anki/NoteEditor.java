@@ -119,6 +119,7 @@ public class NoteEditor extends AnkiActivity {
     public static final int CALLER_REVIEWER = 1;
     public static final int CALLER_STUDYOPTIONS = 2;
     public static final int CALLER_DECKPICKER = 3;
+    public static final int CALLER_REVIEWER_ADD = 11;
 
     public static final int CALLER_CARDBROWSER_EDIT = 6;
     public static final int CALLER_CARDBROWSER_ADD = 7;
@@ -356,7 +357,6 @@ public class NoteEditor extends AnkiActivity {
             }
         });
 
-        Preferences.COMING_FROM_ADD = false;
 
         mAedictIntent = false;
 
@@ -378,6 +378,7 @@ public class NoteEditor extends AnkiActivity {
 
             case CALLER_STUDYOPTIONS:
             case CALLER_DECKPICKER:
+            case CALLER_REVIEWER_ADD:
                 mAddNote = true;
                 break;
 

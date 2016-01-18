@@ -25,26 +25,26 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.MenuItemCompat;
-import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.widget.FrameLayout;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Note;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
 import timber.log.Timber;
 
@@ -53,6 +53,10 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mShowWhiteboard = true;
     private boolean mBlackWhiteboard = true;
     private boolean mPrefFullscreenReview = false;
+    private Menu mMenu;
+    private boolean mShowBuryActionbarOnlySubmenu = false;
+    private boolean mShowSuspendActionbarOnlySubmenu = false;
+    private static final int ADD_NOTE = 12;
     private Long mLastSelectedBrowserDid = null;
 
     @Override
@@ -132,6 +136,18 @@ public class Reviewer extends AbstractFlashcardViewer {
                 Timber.i("Reviewer:: Edit note button pressed");
                 return editCard();
 
+            case R.id.action_bury_actionbar_only:
+                Timber.i("Reviewer:: Bury button pressed");
+                if(!mShowBuryActionbarOnlySubmenu) {
+                    // Don't show submenu, just bury the current card
+                    mMenu.findItem(R.id.action_bury_actionbar_only).getSubMenu().setGroupVisible(R.id.group_menu_bury_actionbar_only, false);
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 4));
+                }
+                else {
+                    mMenu.findItem(R.id.action_bury_actionbar_only).getSubMenu().setGroupVisible(R.id.group_menu_bury_actionbar_only, true);
+                }
+                break;
+
             case R.id.action_bury_card:
                 Timber.i("Reviewer:: Bury card button pressed");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 4));
@@ -152,7 +168,20 @@ public class Reviewer extends AbstractFlashcardViewer {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 2));
                 break;
 
+            case R.id.action_suspend_actionbar_only:
+                Timber.i("Reviewer:: Suspend button pressed");
+                if(!mShowSuspendActionbarOnlySubmenu) {
+                    // Don't show submenu, just suspend the current card
+                    mMenu.findItem(R.id.action_suspend_actionbar_only).getSubMenu().setGroupVisible(R.id.group_menu_suspend_actionbar_only, false);
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 1));
+                }
+                else {
+                    mMenu.findItem(R.id.action_suspend_actionbar_only).getSubMenu().setGroupVisible(R.id.group_menu_suspend_actionbar_only, true);
+                }
+                break;
+
             case R.id.action_delete:
+            case R.id.action_delete_actionbar_only:
                 Timber.i("Reviewer:: Delete note button pressed");
                 showDeleteNoteDialog();
                 break;
@@ -195,6 +224,11 @@ public class Reviewer extends AbstractFlashcardViewer {
                 showSelectTtsDialogue();
                 break;
 
+            case R.id.action_add_note_reviewer:
+                Timber.i("Reviewer:: Add note button pressed");
+                addNote();
+                break;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -202,11 +236,58 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
 
+    private void addNote() {
+        Intent intent = new Intent(this, NoteEditor.class);
+        intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD);
+        startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
+    }
+
+
+    private void setCustomButtons(Menu menu) {
+        for(int itemId : mCustomButtons.keySet()) {
+            if(mCustomButtons.get(itemId) != MENU_DISABLED) {
+                MenuItemCompat.setShowAsAction(menu.findItem(itemId), mCustomButtons.get(itemId));
+            }
+            else {
+                menu.findItem(itemId).setVisible(false);
+            }
+        }
+        // Workaround for submenu items "If room".
+        int relatedGroupId;
+        for(int itemId : mCustomButtons_submenu_items.keySet()) {
+            relatedGroupId = mCustomButtons_submenu_items_related.get(itemId);
+            switch (mCustomButtons_submenu_items.get(itemId)) {
+                case MENU_DISABLED:
+                    menu.findItem(itemId).setVisible(false);
+                    menu.findItem(R.id.action_dismiss).getSubMenu().setGroupVisible(relatedGroupId, false);
+                    break;
+                case MenuItemCompat.SHOW_AS_ACTION_ALWAYS:
+                case MenuItemCompat.SHOW_AS_ACTION_IF_ROOM:
+                    menu.findItem(R.id.action_dismiss).getSubMenu().setGroupVisible(relatedGroupId, false);
+                    break;
+                case MenuItemCompat.SHOW_AS_ACTION_NEVER:
+                    menu.findItem(itemId).setVisible(false);
+                    menu.findItem(R.id.action_dismiss).getSubMenu().setGroupVisible(relatedGroupId, true);
+                    break;
+            }
+        }
+        // If submenu is empty, hide it.
+        if(!menu.findItem(R.id.action_dismiss).getSubMenu().hasVisibleItems()) {
+            menu.findItem(R.id.action_dismiss).setVisible(false);
+        }
+        else {
+            menu.findItem(R.id.action_dismiss).setVisible(true);
+        }
+    }
+
+
     @SuppressLint("NewApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        mMenu = menu;
         getMenuInflater().inflate(R.menu.reviewer, menu);
         Resources res = getResources();
+        setCustomButtons(menu);
         if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
             menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white_24dp);
         } else {
@@ -219,26 +300,12 @@ public class Reviewer extends AbstractFlashcardViewer {
                     Themes.ALPHA_ICON_DISABLED_LIGHT);
         }
         if (mPrefWhiteboard) {
-            // Don't force showing mark icon when whiteboard enabled
-            // TODO: allow user to customize which icons are force-shown
-            MenuItemCompat.setShowAsAction(menu.findItem(R.id.action_mark_card), MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
-            // Check if we can forceably squeeze in 3 items into the action bar, if not hide "show whiteboard"
-            if (CompatHelper.getSdkVersion() >= 14 &&  !ViewConfiguration.get(this).hasPermanentMenuKey()) {
-                // Android 4.x device with overflow menu in the action bar and small screen can't
-                // support forcing 2 extra items into the action bar
-                Display display = getWindowManager().getDefaultDisplay();
-                DisplayMetrics outMetrics = new DisplayMetrics ();
-                display.getMetrics(outMetrics);
-                float density  = getResources().getDisplayMetrics().density;
-                float dpWidth  = outMetrics.widthPixels / density;
-                if (dpWidth < 360) {
-                    menu.findItem(R.id.action_hide_whiteboard).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-                }
-            }
             // Configure the whiteboard related items in the action bar
             menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.disable_whiteboard);
-            menu.findItem(R.id.action_hide_whiteboard).setVisible(true);
-            menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
+            if(mCustomButtons.get(R.id.action_hide_whiteboard) != MENU_DISABLED)
+                menu.findItem(R.id.action_hide_whiteboard).setVisible(true);
+            if(mCustomButtons.get(R.id.action_clear_whiteboard) != MENU_DISABLED)
+                menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
 
             Drawable whiteboardIcon = getResources().getDrawable(R.drawable.ic_gesture_white_24dp);
             if (mShowWhiteboard) {
@@ -261,7 +328,8 @@ public class Reviewer extends AbstractFlashcardViewer {
             menu.findItem(R.id.action_open_deck_options).setVisible(false);
         }
         if(mSpeakText){
-            menu.findItem(R.id.action_select_tts).setVisible(true);
+            if(mCustomButtons.get(R.id.action_select_tts) != MENU_DISABLED)
+                menu.findItem(R.id.action_select_tts).setVisible(true);
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -351,12 +419,29 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
+    private void checkActionbarSuspendBurySubmenu() {
+        // Check if action bar suspend and bury submenu should be shown for current card (custom buttons)
+        Note note = mCurrentCard.note();
+        mShowBuryActionbarOnlySubmenu = false;
+        mShowSuspendActionbarOnlySubmenu = false;
+        if(note.cards().size() > 1) {
+            ArrayList<Card> cards = note.cards();
+            for(Card card : cards) {
+                if(card.getQueue() != Card.QUEUE_SUSP && card.getQueue() != Card.QUEUE_USER_BRD && card.getQueue() != Card.QUEUE_SCHED_BRD && card.getId() != mCurrentCard.getId())
+                    mShowBuryActionbarOnlySubmenu = true;
+                if(card.getQueue() != Card.QUEUE_SUSP && card.getId() != mCurrentCard.getId())
+                    mShowSuspendActionbarOnlySubmenu = true;
+            }
+        }
+    }
 
     @Override
     public void displayCardQuestion() {
         // show timer, if activated in the deck's preferences
         initTimer();
         super.displayCardQuestion();
+        if(mMenu.findItem(R.id.action_bury_actionbar_only).isVisible() || mMenu.findItem(R.id.action_suspend_actionbar_only).isVisible())
+            checkActionbarSuspendBurySubmenu();
     }
 
     @Override
