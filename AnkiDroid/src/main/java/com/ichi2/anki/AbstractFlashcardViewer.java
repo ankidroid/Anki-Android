@@ -188,7 +188,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mScrollingButtons;
     private boolean mGesturesEnabled;
     // Android WebView
-    private boolean mSpeakText;
+    protected boolean mSpeakText;
     protected boolean mDisableClipboard = false;
     protected boolean mNightMode = false;
     private boolean mPrefSafeDisplay;
@@ -2125,6 +2125,23 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         } else if (Sound.SOUNDS_ANSWER == cardSide) {
             ReadText.textToSpeech(Utils.stripHTML(card.getPureAnswer()), getDeckIdForCard(card),
                     card.getOrd(), Sound.SOUNDS_ANSWER);
+        }
+    }
+
+
+    /**
+     * Shows the dialogue for selecting TTS for the current card and cardside.
+     */
+    protected void showSelectTtsDialogue() {
+        if (mTtsInitialized) {
+            if (!sDisplayAnswer) {
+                ReadText.selectTts(Utils.stripHTML(mCurrentCard.q(true)), getDeckIdForCard(mCurrentCard), mCurrentCard.getOrd(),
+                        Sound.SOUNDS_QUESTION);
+            }
+            else {
+                ReadText.selectTts(Utils.stripHTML(mCurrentCard.getPureAnswer()), getDeckIdForCard(mCurrentCard),
+                        mCurrentCard.getOrd(), Sound.SOUNDS_ANSWER);
+            }
         }
     }
 

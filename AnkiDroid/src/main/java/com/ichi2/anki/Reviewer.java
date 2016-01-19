@@ -189,6 +189,11 @@ public class Reviewer extends AbstractFlashcardViewer {
                 startActivityForResultWithAnimation(i, DECK_OPTIONS, ActivityTransitionAnimation.FADE);
                 break;
 
+            case R.id.action_select_tts:
+                Timber.i("Reviewer:: Select TTS button pressed");
+                showSelectTtsDialogue();
+                break;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -253,6 +258,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         if (getCol().getDecks().isDyn(getParentDid())) {
             menu.findItem(R.id.action_open_deck_options).setVisible(false);
+        }
+        if(mSpeakText){
+            menu.findItem(R.id.action_select_tts).setVisible(true);
         }
         return super.onCreateOptionsMenu(menu);
     }
