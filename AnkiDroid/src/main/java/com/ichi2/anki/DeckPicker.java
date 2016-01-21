@@ -1875,6 +1875,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mDialogEditText.setSingleLine();
         final String currentName = getCol().getDecks().name(did);
         mDialogEditText.setText(currentName);
+        mDialogEditText.setSelection(mDialogEditText.getText().length());
         new MaterialDialog.Builder(DeckPicker.this)
                 .title(res.getString(R.string.rename_deck))
                 .customView(mDialogEditText, true)
