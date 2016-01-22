@@ -169,7 +169,7 @@ Found m Image Occlusion files
 Fixed n files
 ```
 
-If m and n are both greater than 0 then the script has worked, and it's just a matter of [copying the files to your Android device](https://github.com/ankidroid/Anki-Android/wiki/FAQ#why-doesnt-my-sound-or-image-work-on-ankidroid). Please kindly understand that we cannot directly provide support on this issue, as it's not an AnkiDroid issue.
+If m and n are both greater than 0 then the script has worked, and it's just a matter of [copying the files to your Android device](https://github.com/ankidroid/Anki-Android/wiki/FAQ#why-doesnt-my-sound-or-image-work-on-ankidroid). Please kindly understand that we cannot directly provide support on the image occlusion add-on or fixing broken svg images.
 
 ### I have too many media files and can't copy them all to my device
 Unfortunately there is a limitation on the number of files which can be stored in one folder on the FAT filesystem used by default on most Android devices.
