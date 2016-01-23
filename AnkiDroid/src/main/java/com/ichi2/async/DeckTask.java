@@ -588,6 +588,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 if (cid != 0) {
                     // a review was undone,
                     newCard = col.getCard(cid);
+                    newCard.startTimer();
                     col.reset();
                     col.getSched().decrementCounts(newCard);
                     sHadCardQueue = true;
