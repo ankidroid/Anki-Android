@@ -297,7 +297,7 @@ public class ModelFieldEditor extends AnkiActivity {
         mFieldNameInput.setSelection(mFieldNameInput.getText().length());
         new MaterialDialog.Builder(this)
                 .title(R.string.rename_model)
-                .positiveText(R.string.dialog_ok)
+                .positiveText(R.string.rename)
                 .customView(mFieldNameInput, true)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override

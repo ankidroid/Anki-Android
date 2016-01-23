@@ -7,8 +7,8 @@ Install
 Install directly from [here on github](https://github.com/ankidroid/Anki-Android/releases/latest) or stay up-to-date
 automatically by installing via an app store:
 
-[![Google Play Store](https://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.ichi2.anki)
-[![F-Droid](https://guardianproject.info/wp-content/uploads/2014/07/logo-fdroid.png)](https://f-droid.org/repository/browse/?fdid=com.ichi2.anki)
+<a href="https://play.google.com/store/apps/details?id=com.ichi2.anki&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="50px"/></a>
+<a href="https://f-droid.org/repository/browse/?fdid=com.ichi2.anki"><img alt="F-Droid" src="https://guardianproject.info/wp-content/uploads/2014/07/logo-fdroid.png" height="50px"/></a>
 
 Help
 ----

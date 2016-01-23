@@ -67,7 +67,7 @@ public class Models {
             + Consts.MODEL_STD
             + ", "
             + "'css': \".card {\\n"
-            + " font-familiy: arial;\\n"
+            + " font-family: arial;\\n"
             + " font-size: 20px;\\n"
             + " text-align: center;\\n"
             + " color: black;\\n"
