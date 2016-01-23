@@ -43,6 +43,31 @@ import timber.log.Timber;
 
 /**
  * Display forecast statistics based on a simulation of future reviews.
+ *
+ * Sequence diagram (https://www.websequencediagrams.com/):
+ * Stats->+AdvancedStatistics: runFilter
+ * AdvancedStatistics->+ReviewSimulator: simNreviews
+ * loop dids
+ *   loop nIterations
+ *       loop cards
+ *           ReviewSimulator->+Review: newCard
+ *           Review->+NewCardSimulator: simulateNewCard
+ *           NewCardSimulator->-Review: tElapsed:int
+ *           Review-->-ReviewSimulator: SimulationResult, Review
+ *
+ *           loop reviews
+ *               ReviewSimulator->+Review: simulateReview
+ *               Review->+EaseClassifier: simSingleReview
+ *               EaseClassifier->+Card:getType
+ *               Card-->-EaseClassifier:cardType:int
+ *               EaseClassifier-->-Review: ReviewOutcome
+ *               Review-->-ReviewSimulator: SimulationResult, Review[]
+ *           end
+ *        end
+ *   end
+ * end
+ * ReviewSimulator-->-AdvancedStatistics: SimulationResult
+ * AdvancedStatistics-->-Stats: StatsMetaInfo
  */
 public class AdvancedStatistics extends Hook  {
 
@@ -65,17 +90,28 @@ public class AdvancedStatistics extends Hook  {
     }
 
     /**
-     * Due and cumulative due
-     * ***********************************************************************************************
+     * Determine forecast statistics based on a computation or simulation of future reviews.
+     * Returns all information required by stats.java to plot the 'forecast' chart based on these statistics.
+     * The chart will display:
+     * - The forecasted number of reviews per review type (relearn, mature, young, learn) as bars
+     * - The forecasted number of cards in each state (new, young, mature) as lines
+     * @param metaInfo Object which will be filled with all information required by stats.java to plot the 'forecast' chart and returned by this method.
+     * @param type Type of 'forecast' chart for which to determine forecast statistics. Accepted values:
+     *             Stats.TYPE_MONTH: Determine forecast statistics for next 30 days with 1-day chunks
+     *             Stats.TYPE_YEAR:  Determine forecast statistics for next year with 7-day chunks
+     *             Stats.TYPE_LIFE:  Determine forecast statistics for next 2 years with 30-day chunks
+     * @param context Contains The collection which contains the decks to be simulated.
+     *             Also used for access to the database and access to the creation time of the collection.
+     *             The creation time of the collection is needed since due times of cards are relative to the creation time of the collection.
+     *             So we could pass mCol here.
+     * @param dids Deck id's
+     * @return @see #metaInfo
      */
-    //TODO: pass mCol?
     private StatsMetaInfo calculateDueOriginal(StatsMetaInfo metaInfo, int type, Context context, String dids) {
 
         metaInfo.setStatsCalculated(true);
 
         Collection mCol = CollectionHelper.getInstance().getCol(context);
-
-
 
         double[][] mSeriesList;
 
@@ -211,6 +247,15 @@ public class AdvancedStatistics extends Hook  {
         return metaInfo;
     }
 
+    /**
+     * Determine forecast statistics based on a computation or simulation of future reviews and returns the results of the simulation.
+     * @param type @see #calculateDueOriginal(StatsMetaInfo, int, Context, String)
+     * @param mCol @see #calculateDueOriginal(StatsMetaInfo, int, Context, String)
+     * @param dids @see #calculateDueOriginal(StatsMetaInfo, int, Context, String)
+     * @return An object containing the results of the simulation:
+     *        - The forecasted number of reviews per review type (relearn, mature, young, learn)
+     *        - The forecasted number of cards in each state (new, young, mature)
+     */
     private PlottableSimulationResult calculateDuesWithSimulation(int type, Collection mCol, String dids) {
         int end = 0;
         int chunk = 0;
@@ -307,6 +352,11 @@ public class AdvancedStatistics extends Hook  {
     }
 
     private class Card {
+
+        public final int CARD_TYPE_NEW = 0;
+        public final int CARD_TYPE_YOUNG = 1;
+        public final int CARD_TYPE_MATURE = 2;
+
         private int ivl;
         private double factor;
         private int lastReview;
@@ -328,10 +378,6 @@ public class AdvancedStatistics extends Hook  {
             this.due = due;
             this.correct = correct;
             this.lastReview = lastReview;
-        }
-
-        public Card clone() {
-            return new Card(id, ivl, (int) (factor * 1000), due, correct, lastReview);
         }
 
         public void setAll(long id, int ivl, int factor, int due, int correct, int lastReview) {
@@ -380,14 +426,17 @@ public class AdvancedStatistics extends Hook  {
             this.due = due;
         }
 
+        /**
+         * Type of the card, based on the interval.
+         * @return CARD_TYPE_NEW if interval = 0, CARD_TYPE_YOUNG if interval 1-20, CARD_TYPE_MATURE if interval >= 20
+         */
         public int getType() {
-            //# 0=new, 1=Young, 2=mature
             if(ivl == 0) {
-                return 0;
+                return CARD_TYPE_NEW;
             } else if (ivl >= 21) {
-                return 2;
+                return CARD_TYPE_MATURE;
             } else {
-                return 1;
+                return CARD_TYPE_YOUNG;
             }
         }
 
@@ -437,6 +486,9 @@ public class AdvancedStatistics extends Hook  {
         }
     }
 
+    /**
+     * Stores settings that are deck-specific.
+     */
     private class Deck {
 
         private long did;
@@ -504,7 +556,27 @@ public class AdvancedStatistics extends Hook  {
         }
     }
 
+    /**
+     * Based on the current type of the card (@see Card#getType()), determines the interval of the card after review and the probability of the card having that interval after review.
+     * This is done using a discrete probability distribution, which is built on construction.
+     * For each possible current type of the card, it gives the probability of each possible review outcome (repeat, hard, good, easy).
+     * The review outcome determines the next interval of the card.
+     *
+     * If the review outcome is specified by the caller, the next interval of the card will be determined based on the review outcome
+     * and the probability will be fetched from the probability distribution.
+     * If the review outcome is not specified by the caller, the review outcome will be sampled randomly from the probability distribution
+     * and the probability will be 1.
+     */
     private class EaseClassifier {
+
+        public final int CARD_TYPE_NEW = 0;
+        public final int CARD_TYPE_YOUNG = 1;
+        public final int CARD_TYPE_MATURE = 2;
+
+        public final int REVIEW_OUTCOME_REPEAT = 0;
+        public final int REVIEW_OUTCOME_HARD = 1;
+        public final int REVIEW_OUTCOME_GOOD = 2;
+        public final int REVIEW_OUTCOME_EASY = 3;
 
         private final Random random;
 
@@ -554,12 +626,7 @@ public class AdvancedStatistics extends Hook  {
         public EaseClassifier(SQLiteDatabase db) {
             this.db = db;
 
-            singleReviewOutcome[0] = new ReviewOutcome(null, 0);
-
-            multipleReviewOutcomes[0] = new ReviewOutcome(null, 0);
-            multipleReviewOutcomes[1] = new ReviewOutcome(null, 0);
-            multipleReviewOutcomes[2] = new ReviewOutcome(null, 0);
-            multipleReviewOutcomes[3] = new ReviewOutcome(null, 0);
+            singleReviewOutcome = new ReviewOutcome(null, 0);
 
             long t0 = System.currentTimeMillis();
             calculateCumProbabilitiesForNewEasePerCurrentEase();
@@ -594,38 +661,46 @@ public class AdvancedStatistics extends Hook  {
             this.probabilities = new double[3][];
             this.probabilitiesCumulative = new double[3][];
 
-            this.probabilities[0] = calculateProbabilitiesForNewEaseForCurrentEase(queryNew, priorNew);
-            this.probabilities[1] = calculateProbabilitiesForNewEaseForCurrentEase(queryYoung, priorYoung);
-            this.probabilities[2] = calculateProbabilitiesForNewEaseForCurrentEase(queryMature, priorMature);
+            this.probabilities[CARD_TYPE_NEW] = calculateProbabilitiesForNewEaseForCurrentEase(queryNew, priorNew);
+            this.probabilities[CARD_TYPE_YOUNG] = calculateProbabilitiesForNewEaseForCurrentEase(queryYoung, priorYoung);
+            this.probabilities[CARD_TYPE_MATURE] = calculateProbabilitiesForNewEaseForCurrentEase(queryMature, priorMature);
 
-            this.probabilitiesCumulative[0] = cumsum(this.probabilities[0]);
-            this.probabilitiesCumulative[1] = cumsum(this.probabilities[1]);
-            this.probabilitiesCumulative[2] = cumsum(this.probabilities[2]);
+            this.probabilitiesCumulative[CARD_TYPE_NEW] = cumsum(this.probabilities[CARD_TYPE_NEW]);
+            this.probabilitiesCumulative[CARD_TYPE_YOUNG] = cumsum(this.probabilities[CARD_TYPE_YOUNG]);
+            this.probabilitiesCumulative[CARD_TYPE_MATURE] = cumsum(this.probabilities[CARD_TYPE_MATURE]);
         }
 
+        /**
+         * Given a query which selects the frequency of each review outcome for the current type of the card,
+         * and an array containing the prior frequency of each review outcome for the current type of the card,
+         * it gives the probability of each possible review outcome (repeat, hard, good, easy).
+         * @param queryNewEaseCountForCurrentEase Query which selects the frequency of each review outcome for the current type of the card.
+         * @param prior Array containing the prior frequency of each review outcome for the current type of the card.
+         * @return The probability of each possible review outcome (repeat, hard, good, easy).
+         */
         private double[] calculateProbabilitiesForNewEaseForCurrentEase(String queryNewEaseCountForCurrentEase, int[] prior) {
 
             Cursor cur = null;
 
             int[] freqs = new int[] {
-                    prior[0],
-                    prior[1],
-                    prior[2],
-                    prior[3]
+                    prior[REVIEW_OUTCOME_REPEAT],
+                    prior[REVIEW_OUTCOME_HARD],
+                    prior[REVIEW_OUTCOME_GOOD],
+                    prior[REVIEW_OUTCOME_EASY]
             };
 
-            int n = prior[0] + prior[1] + prior[2] + prior[3];
+            int n = prior[REVIEW_OUTCOME_REPEAT] + prior[REVIEW_OUTCOME_HARD] + prior[REVIEW_OUTCOME_GOOD] + prior[REVIEW_OUTCOME_EASY];
 
             try {
                 cur = db.rawQuery(queryNewEaseCountForCurrentEase, null);
                 cur.moveToNext();
 
-                freqs[0] += cur.getInt(1);          //Repeat
-                freqs[1] += cur.getInt(2);          //Hard
-                freqs[2] += cur.getInt(3);          //Good
-                freqs[3] += cur.getInt(4);          //Easy
+                freqs[REVIEW_OUTCOME_REPEAT]    += cur.getInt(1);          //Repeat
+                freqs[REVIEW_OUTCOME_HARD]      += cur.getInt(2);          //Hard
+                freqs[REVIEW_OUTCOME_GOOD]      += cur.getInt(3);          //Good
+                freqs[REVIEW_OUTCOME_EASY]      += cur.getInt(4);          //Easy
 
-                int nQuery = cur.getInt(0);        //N
+                int nQuery = cur.getInt(0);         //N
 
                 n += nQuery;
 
@@ -636,10 +711,10 @@ public class AdvancedStatistics extends Hook  {
             }
 
             return new double[] {
-                    freqs[0] / (double) n,
-                    freqs[1] / (double) n,
-                    freqs[2] / (double) n,
-                    freqs[3] / (double) n
+                    freqs[REVIEW_OUTCOME_REPEAT] / (double) n,
+                    freqs[REVIEW_OUTCOME_HARD]   / (double) n,
+                    freqs[REVIEW_OUTCOME_GOOD]   / (double) n,
+                    freqs[REVIEW_OUTCOME_EASY]   / (double) n
             };
         }
 
@@ -654,10 +729,8 @@ public class AdvancedStatistics extends Hook  {
             return 3;
         }
 
-        private ReviewOutcome[] singleReviewOutcome = new ReviewOutcome[1];
-        public ReviewOutcome[] simSingleReview(Card c){
-
-            //c = c.clone();
+        private ReviewOutcome singleReviewOutcome;
+        public ReviewOutcome simSingleReview(Card c){
 
             int type = c.getType();
 
@@ -665,46 +738,17 @@ public class AdvancedStatistics extends Hook  {
 
             applyOutcomeToCard(c, outcome);
 
-            singleReviewOutcome[0].setAll(c, 1);
+            singleReviewOutcome.setAll(c, 1);
             return singleReviewOutcome;
         }
 
-        private Card cardOriginal;
-        private ReviewOutcome[] multipleReviewOutcomes = new ReviewOutcome[4];
-
-
-        public ReviewOutcome[] simSingleReviewProbs(Card c) {
-
-            int c_type = c.getType();
-
-            cardOriginal = c;
-
-            c = cardOriginal.clone();
-            applyOutcomeToCard(c, 0);
-            multipleReviewOutcomes[0].setAll(c, probabilities[c_type][0]);
-
-            c = cardOriginal.clone();
-            applyOutcomeToCard(c, 1);
-            multipleReviewOutcomes[1].setAll(c, probabilities[c_type][1]);
-
-            c = cardOriginal.clone();
-            applyOutcomeToCard(c, 2);
-            multipleReviewOutcomes[2].setAll(c, probabilities[c_type][2]);
-
-            //For first review, re-use current card to prevent creating too many objects
-            applyOutcomeToCard(cardOriginal, 3);
-            multipleReviewOutcomes[3].setAll(cardOriginal, probabilities[c_type][3]);
-
-            return multipleReviewOutcomes;
-        }
-
-        public ReviewOutcome[] simSingleReview(Card c, int outcome) {
+        public ReviewOutcome simSingleReview(Card c, int outcome) {
 
             int c_type = c.getType();
 
             //For first review, re-use current card to prevent creating too many objects
             applyOutcomeToCard(c, outcome);
-            singleReviewOutcome[0].setAll(c, probabilities[c_type][outcome]);
+            singleReviewOutcome.setAll(c, probabilities[c_type][outcome]);
 
             return singleReviewOutcome;
         }
@@ -723,16 +767,16 @@ public class AdvancedStatistics extends Hook  {
             }
             else {
                 switch(outcome) {
-                    case 0:
+                    case REVIEW_OUTCOME_REPEAT:
                         ivl = 1;
                         break;
-                    case 1:
+                    case REVIEW_OUTCOME_HARD:
                         ivl *= 1.2;
                         break;
-                    case 2:
+                    case REVIEW_OUTCOME_GOOD:
                         ivl *= 1.2 * factor;
                         break;
-                    case 3:
+                    case REVIEW_OUTCOME_EASY:
                     default:
                         ivl *= 1.2 * 2. * factor;
                         break;
@@ -893,6 +937,9 @@ public class AdvancedStatistics extends Hook  {
         }
     }
 
+    /**
+     * Stores global settings.
+     */
     private class Settings {
 
         private final int computeNDays;
@@ -923,11 +970,6 @@ public class AdvancedStatistics extends Hook  {
 
         public int getSimulateNIterations() {
             return simulateNIterations;
-        }
-
-        //TODO
-        public int getDeckCreationTimeStamp() {
-            return 1445619600;
         }
 
         /**
@@ -1082,7 +1124,8 @@ public class AdvancedStatistics extends Hook  {
         public void formatMatrix(String matrixName, int[][] matrix, String format) {
             StringBuilder s = new StringBuilder();
 
-            s.append(matrixName + ":");
+            s.append(matrixName);
+            s.append(":");
             s.append(System.getProperty("line.separator"));
 
             for(int i=0; i<matrix.length; i++) {
@@ -1149,14 +1192,6 @@ public class AdvancedStatistics extends Hook  {
             this.nDays = nTimeBins * timeBinLength;
 
             this.doubleToIntMode = doubleToIntMode;
-        }
-
-        public int getnTimeBins() {
-            return nTimeBins;
-        }
-
-        public int getTimeBinLength() {
-            return timeBinLength;
         }
 
         public int getnDays() {
@@ -1265,7 +1300,7 @@ public class AdvancedStatistics extends Hook  {
                 if(t < nTimeBins) {
                     nInState[prevCardType][t]-= prob;
                 } else {
-                    continue;
+                    break;
                 }
 
             t1 = tTo / timeBinLength;
@@ -1474,13 +1509,11 @@ public class AdvancedStatistics extends Hook  {
                 prevCard.setAll(card);
                 newCard.setAll(card);
 
-                ReviewOutcome[] reviewOutcomes;
+                ReviewOutcome reviewOutcome;
                 if(tElapsed >= Settings.getComputeNDays() || prob < Settings.getComputeMaxError())
-                    reviewOutcomes = classifier.simSingleReview(newCard);
+                    reviewOutcome = classifier.simSingleReview(newCard);
                 else
-                    reviewOutcomes = classifier.simSingleReview(newCard, outcome);
-
-                ReviewOutcome reviewOutcome = reviewOutcomes[0];
+                    reviewOutcome = classifier.simSingleReview(newCard, outcome);
 
                 //Timber.d("Simulation at t=" + tElapsed + ": outcome " + outcomeIdx + ": " + reviewOutcome.toString() );
 
