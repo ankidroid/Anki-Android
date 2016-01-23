@@ -538,6 +538,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     updateTypeAnswerInfo();
                 }
                 displayCardQuestion();
+                mCurrentCard.startTimer();
                 initTimer();
             }
             hideProgressBar();
@@ -1846,8 +1847,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         updateCard(displayString);
         hideEaseButtons();
 
-        // If the user want to show answer automatically
-        if (mPrefUseTimer) {
+        // If the user wants to show the answer automatically
+        if (mPrefUseTimer && mWaitAnswerSecond > 0) {
             mTimeoutHandler.removeCallbacks(mShowAnswerTask);
             mTimeoutHandler.postDelayed(mShowAnswerTask, mWaitAnswerSecond * 1000);
         }
@@ -1930,8 +1931,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mIsSelecting = false;
         updateCard(enrichWithQADiv(answer, true));
         showEaseButtons();
-        // If the user want to show next question automatically
-        if (mPrefUseTimer) {
+        // If the user wants to show the next question automatically
+        if (mPrefUseTimer && mWaitQuestionSecond > 0) {
             mTimeoutHandler.removeCallbacks(mShowQuestionTask);
             mTimeoutHandler.postDelayed(mShowQuestionTask, mWaitQuestionSecond * 1000);
         }
