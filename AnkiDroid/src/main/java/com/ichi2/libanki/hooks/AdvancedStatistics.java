@@ -68,8 +68,68 @@ import timber.log.Timber;
  * end
  * ReviewSimulator-->-AdvancedStatistics: SimulationResult
  * AdvancedStatistics-->-Stats: StatsMetaInfo
+ *
+ * %2F%2F Class diagram (http://yuml.me/diagram/scruffy/class/draw; http://yuml.me/edit/e0ad47bf):
+ * [AdvancedStatistics]
+ * [ReviewSimulator]
+ * [StatsMetaInfo|mTitle:int;mType:int;mAxisTitles:int［］;mValueLabels:int［］;mColors:int［］;]
+ * [Settings|computeNDays:int;computeMaxError:double;simulateNIterations:int]
+ * [Deck|-did:long;newPerDay:int;revPerDay:int]
+ * [Card|-id:long;ivl:int;factor:double;lastReview:int;due:int;correct:int|setAll();getType()]
+ * [Review|prob:double;tElapsed:int]
+ * [SimulationResult|nReviews［CARD_TYPE］［t］;nInState［CARD_TYPE］［t］]
+ * [ReviewOutcome|prob:double]
+ * [ReviewSimulator]uses -.->[CardIterator]
+ * [ReviewSimulator]uses -.->[DeckFactory]
+ * [ReviewSimulator]creates -.->[SimulationResult]
+ * [ReviewSimulator]creates -.->[Review]
+ * [Card]belongs to-.->[Deck]
+ * [Review]updates -.->[SimulationResult]
+ * [Review]]++-1>[Card]
+ * [Review]creates -.->[Review]
+ * [AdvancedStatistics]uses -.->[ReviewSimulator]
+ * [Review]uses -.->[NewCardSimulator|nAddedToday:int;tAdd:int]
+ * [Review]uses -.->[EaseClassifier|probabilities:double［CARD_TYPE］［REVIEW_OUTCOME］]
+ * [EaseClassifier]creates -.->[ReviewOutcome]
+ * [ReviewOutcome]++-1>[Card]
+ * [AdvancedStatistics]creates -.-> [StatsMetaInfo]
  */
 public class AdvancedStatistics extends Hook  {
+
+    private static final int TIME = 0;
+
+    //For indexing arrays. We have *_PLUS_1 because we often add
+    //the time dimension at index 0.
+    private static final int CARD_TYPE_COUNT = 3;
+    private static final int CARD_TYPE_NEW = 0;
+    private static final int CARD_TYPE_YOUNG = 1;
+    private static final int CARD_TYPE_MATURE = 2;
+
+    private static final int CARD_TYPE_NEW_PLUS_1 = 1;
+    private static final int CARD_TYPE_YOUNG_PLUS_1 = 2;
+    private static final int CARD_TYPE_MATURE_PLUS_1 = 3;
+
+    private static final int REVIEW_TYPE_COUNT = 4;
+    private static final int REVIEW_TYPE_LEARN = 0;
+    private static final int REVIEW_TYPE_YOUNG = 1;
+    private static final int REVIEW_TYPE_MATURE = 2;
+    private static final int REVIEW_TYPE_RELEARN = 3;
+
+    private static final int REVIEW_TYPE_COUNT_PLUS_1 = 5;
+    private static final int REVIEW_TYPE_LEARN_PLUS_1 = 1;
+    private static final int REVIEW_TYPE_YOUNG_PLUS_1 = 2;
+    private static final int REVIEW_TYPE_MATURE_PLUS_1 = 3;
+    private static final int REVIEW_TYPE_RELEARN_PLUS_1 = 4;
+
+    private static final int REVIEW_OUTCOME_REPEAT = 0;
+    private static final int REVIEW_OUTCOME_HARD = 1;
+    private static final int REVIEW_OUTCOME_GOOD = 2;
+    private static final int REVIEW_OUTCOME_EASY = 3;
+
+    private static final int REVIEW_OUTCOME_REPEAT_PLUS_1 = 1;
+    private static final int REVIEW_OUTCOME_HARD_PLUS_1 = 2;
+    private static final int REVIEW_OUTCOME_GOOD_PLUS_1 = 3;
+    private static final int REVIEW_OUTCOME_EASY_PLUS_1 = 4;
 
     private final ArrayUtils ArrayUtils = new ArrayUtils();
     private final DeckFactory Decks = new DeckFactory();
@@ -80,7 +140,7 @@ public class AdvancedStatistics extends Hook  {
         Context context = (Context) args[1];
 
         Settings = new Settings(context);
-        return calculateDueOriginal((StatsMetaInfo) arg, (int) args[0], context, (String) args[2]);
+        return calculateDueAsMetaInfo((StatsMetaInfo) arg, (int) args[0], context, (String) args[2]);
     }
     public static void install(Hooks h) {
         h.addHook("advancedStatistics", new AdvancedStatistics());
@@ -107,16 +167,15 @@ public class AdvancedStatistics extends Hook  {
      * @param dids Deck id's
      * @return @see #metaInfo
      */
-    private StatsMetaInfo calculateDueOriginal(StatsMetaInfo metaInfo, int type, Context context, String dids) {
+    private StatsMetaInfo calculateDueAsMetaInfo(StatsMetaInfo metaInfo, int type, Context context, String dids) {
 
+        //To indicate that we calculated the statistics so that Stats.java knows that it shouldn't display the standard Forecast chart.
         metaInfo.setStatsCalculated(true);
 
         Collection mCol = CollectionHelper.getInstance().getCol(context);
 
         double[][] mSeriesList;
 
-        int mType;
-        int mTitle;
         int[] mValueLabels;
         int[] mColors;
         int[] mAxisTitles;
@@ -128,69 +187,56 @@ public class AdvancedStatistics extends Hook  {
         double[][] mCumulative;
         double mMcount;
 
-        mType = type;
-        mTitle = R.string.stats_forecast;
-
-        //JPR
-        //mValueLabels = new int[] { R.string.statistics_young, R.string.statistics_mature };
-        //mColors = new int[] { R.color.stats_young, R.color.stats_mature };
-
         mValueLabels = new int[] { R.string.statistics_relearn,
-                R.string.statistics_mature,
-                R.string.statistics_young,
-                R.string.statistics_learn};
+                                   R.string.statistics_mature,
+                                   R.string.statistics_young,
+                                   R.string.statistics_learn};
         mColors = new int[] {      R.color.stats_relearn,
-                R.color.stats_mature,
-                R.color.stats_young,
-                R.color.stats_learn};
-        //JPR end
+                                   R.color.stats_mature,
+                                   R.color.stats_young,
+                                   R.color.stats_learn};
 
         mAxisTitles = new int[] { type, R.string.stats_cards, R.string.stats_cumulative_cards };
 
-        //JPR (moved to own method + replace with new method)
-        //ArrayList<int[]> dues = calculateDues(type);
-        PlottableSimulationResult simuationResult = calculateDuesWithSimulation(type, mCol, dids);
+        PlottableSimulationResult simuationResult = calculateDueAsPlottableSimulationResult(type, mCol, dids);
 
         ArrayList<int[]> dues = simuationResult.getNReviews();
 
-        //mSeriesList = new double[3][dues.size()];
-        mSeriesList = new double[5][dues.size()];
-        //JPR end
+        mSeriesList = new double[REVIEW_TYPE_COUNT_PLUS_1][dues.size()];
 
-        for (int i = 0; i < dues.size(); i++) {
-            int[] data = dues.get(i);
+        for (int t = 0;t < dues.size(); t++) {
+            int[] data = dues.get(t);
+            int nReviews = data[REVIEW_TYPE_LEARN_PLUS_1] +
+                           data[REVIEW_TYPE_YOUNG_PLUS_1] +
+                           data[REVIEW_TYPE_MATURE_PLUS_1] +
+                           data[REVIEW_TYPE_RELEARN_PLUS_1];
 
-            //JPR
-            //if(data[1] > mMaxCards)
-            //    mMaxCards =data[1];                                           //Y-Axis: Max. value
-            if(data[1] + data[2] + data[3] + data[4] > mMaxCards)
-                mMaxCards = data[1] + data[2] + data[3] + data[4];
+            if(nReviews > mMaxCards)
+                mMaxCards = nReviews;                                                                     //Y-Axis: Max. value
 
-            //mSeriesList[0][i] = data[0];                                      //X-Axis: Day / Week / Month
-            //mSeriesList[1][i] = data[1];                                      //Y-Axis: # Cards
-            //mSeriesList[2][i] = data[2];                                      //Y-Axis: # Mature cards
+            //In the bar-chart, the bars will be stacked on top of each other.
+            //For the i^{th} bar counting from the bottom we therefore have to
+            //provide the sum of the heights of the i^{th} bar and all bars below it.
+            mSeriesList[TIME][t]                        = data[TIME];                                     //X-Axis: Day / Week / Month
+            mSeriesList[REVIEW_TYPE_LEARN_PLUS_1][t]    = data[REVIEW_TYPE_LEARN_PLUS_1] +
+                                                          data[REVIEW_TYPE_YOUNG_PLUS_1] +
+                                                          data[REVIEW_TYPE_MATURE_PLUS_1] +
+                                                          data[REVIEW_TYPE_RELEARN_PLUS_1];               //Y-Axis: # Cards
+            mSeriesList[REVIEW_TYPE_YOUNG_PLUS_1][t]    = data[REVIEW_TYPE_LEARN_PLUS_1] +
+                                                          data[REVIEW_TYPE_YOUNG_PLUS_1] +
+                                                          data[REVIEW_TYPE_MATURE_PLUS_1];                //Y-Axis: # Mature cards
+            mSeriesList[REVIEW_TYPE_MATURE_PLUS_1][t]   = data[REVIEW_TYPE_LEARN_PLUS_1] +
+                                                          data[REVIEW_TYPE_YOUNG_PLUS_1];                 //Y-Axis: # Young
+            mSeriesList[REVIEW_TYPE_RELEARN_PLUS_1][t]  = data[REVIEW_TYPE_LEARN_PLUS_1];                 //Y-Axis: # Learn
 
-            //   1 +
-            //   0 = Learn
-            //   1 = Young
-            //   2 = Mature
-            //   3 = Relearn
-            mSeriesList[0][i] = data[0];                                        //X-Axis: Day / Week / Month
-            mSeriesList[1][i] = data[1] + data[2] + data[3] + data[4];          //Y-Axis: # Cards
-            mSeriesList[2][i] = data[1] + data[2] + data[3];                    //Y-Axis: # Mature cards
-            mSeriesList[3][i] = data[1] + data[2];                              //Y-Axis: # Young
-            mSeriesList[4][i] = data[1];                                        //Y-Axis: # Learn
-
-            //JPR end
-
-            if(data[0] > mLastElement)
-                mLastElement = data[0];         //X-Axis: Max. value (only for TYPE_LIFE)
-            if(data[0] == 0){
-                mZeroIndex = i;                 //Because we retrieve dues in the past and we should not cumulate them
+            if(data[TIME] > mLastElement)
+                mLastElement = data[TIME];          //X-Axis: Max. value (only for TYPE_LIFE)
+            if(data[TIME] == 0){
+                mZeroIndex = t;                     //Because we retrieve dues in the past and we should not cumulate them
             }
         }
         mMaxElements = dues.size()-1;           //# X values
-        switch (mType) {
+        switch (type) {
             case Stats.TYPE_MONTH:
                 mLastElement = 31;              //X-Axis: Max. value
                 break;
@@ -201,14 +247,11 @@ public class AdvancedStatistics extends Hook  {
         }
         mFirstElement = 0;                      //X-Axis: Min. value
 
-        //mCumulative = Stats.createCumulative(new double[][]{mSeriesList[0], mSeriesList[1]}, mZeroIndex);   //Day starting at mZeroIndex, Cumulative # cards
-        mCumulative = simuationResult.getNInState();
+        mCumulative = simuationResult.getNInState();                                                          //Day starting at mZeroIndex, Cumulative # cards
 
-        //mMcount = mCumulative[1][mCumulative[1].length-1];                                                  //Y-Axis: Max. cumulative value
-        mMcount = mCumulative[1][mCumulative[1].length-1] +                                                   //Y-Axis: Max. cumulative value
-                  mCumulative[2][mCumulative[2].length-1] +
-                  mCumulative[3][mCumulative[3].length-1] +
-                  mCumulative[4][mCumulative[4].length-1];
+        mMcount = mCumulative[CARD_TYPE_NEW_PLUS_1][mCumulative[CARD_TYPE_NEW_PLUS_1].length-1] +             //Y-Axis: Max. cumulative value
+                  mCumulative[CARD_TYPE_YOUNG_PLUS_1][mCumulative[CARD_TYPE_YOUNG_PLUS_1].length-1] +
+                  mCumulative[CARD_TYPE_MATURE_PLUS_1][mCumulative[CARD_TYPE_MATURE_PLUS_1].length-1];
 
         //some adjustments to not crash the chartbuilding with empty data
         if(mMaxElements == 0){
@@ -226,8 +269,8 @@ public class AdvancedStatistics extends Hook  {
 
         metaInfo.setmDynamicAxis(true);
         metaInfo.setmHasColoredCumulative(true);
-        metaInfo.setmType(mType);
-        metaInfo.setmTitle(mTitle);
+        metaInfo.setmType(type);
+        metaInfo.setmTitle(R.string.stats_forecast);
         metaInfo.setmBackwards(false);
         metaInfo.setmValueLabels(mValueLabels);
         metaInfo.setmColors(mColors);
@@ -256,7 +299,7 @@ public class AdvancedStatistics extends Hook  {
      *        - The forecasted number of reviews per review type (relearn, mature, young, learn)
      *        - The forecasted number of cards in each state (new, young, mature)
      */
-    private PlottableSimulationResult calculateDuesWithSimulation(int type, Collection mCol, String dids) {
+    private PlottableSimulationResult calculateDueAsPlottableSimulationResult(int type, Collection mCol, String dids) {
         int end = 0;
         int chunk = 0;
         switch (type) {
@@ -294,16 +337,15 @@ public class AdvancedStatistics extends Hook  {
         //    nInState = ArrayUtils.append(nInState, new int[ArrayUtils.nCols(nInState)], 1);
 
         // Forecasted number of reviews
-        //   0 = Learn
-        //   1 = Young
-        //   2 = Mature
-        //   3 = Relearn
-
         for(int i = 0; i<nReviews.length; i++) {
-            dues.add(new int[] { i,  nReviews[i][0], nReviews[i][1], nReviews[i][2], nReviews[i][3] });
+            dues.add(new int[] { i,                                         //Time
+                                 nReviews[i][REVIEW_TYPE_LEARN],
+                                 nReviews[i][REVIEW_TYPE_YOUNG],
+                                 nReviews[i][REVIEW_TYPE_MATURE],
+                                 nReviews[i][REVIEW_TYPE_RELEARN] });
         }
 
-        // small adjustment for a proper chartbuilding with achartengine
+        // small adjustment for a proper chartbuilding
         if (dues.size() == 0 || dues.get(0)[0] > 0) {
             dues.add(0, new int[] { 0, 0, 0, 0, 0 });
         }
@@ -323,13 +365,13 @@ public class AdvancedStatistics extends Hook  {
             if(i < nInState.length) {
                 nInStateCum[i] = new double[] {
                         i,
-                        0,
+                        0,                                                  //Y-Axis: Relearn = 0 (we can't say 'we know x relearn cards on day d')
                         //nInState[i][0] + nInState[i][1] + nInState[i][2], //Y-Axis: New + Young + Mature
                         //nInState[i][0] + nInState[i][1],                  //Y-Axis: New + Young
                         //nInState[i][0],                                   //Y-Axis: New
-                        nInState[i][2],                                     //Y-Axis: New + Young + Mature
-                        nInState[i][1],                                     //Y-Axis: New + Young
-                        nInState[i][0],                                     //Y-Axis: New
+                        nInState[i][CARD_TYPE_MATURE],                      //Y-Axis: Mature
+                        nInState[i][CARD_TYPE_YOUNG],                       //Y-Axis: Young
+                        nInState[i][CARD_TYPE_NEW],                         //Y-Axis: New
                 };
             }
             else {
@@ -352,10 +394,6 @@ public class AdvancedStatistics extends Hook  {
     }
 
     private class Card {
-
-        public final int CARD_TYPE_NEW = 0;
-        public final int CARD_TYPE_YOUNG = 1;
-        public final int CARD_TYPE_MATURE = 2;
 
         private int ivl;
         private double factor;
@@ -467,14 +505,17 @@ public class AdvancedStatistics extends Hook  {
 
             int newPerDay = Settings.getMaxNewPerDay();
             int revPerDay = Settings.getMaxReviewsPerDay();
+            int initialFactor = Settings.getInitialFactor();
 
             try {
                 if (conf.getInt("dyn") == 0) {
                     revPerDay = conf.getJSONObject("rev").getInt("perDay");
                     newPerDay = conf.getJSONObject("new").getInt("perDay");
+                    initialFactor = conf.getJSONObject("new").getInt("initialFactor");
 
                     Timber.d("rev.perDay=" + revPerDay);
                     Timber.d("new.perDay=" + newPerDay);
+                    Timber.d("new.initialFactor=" + initialFactor);
                 } else {
                     Timber.d("dyn=" + conf.getInt("dyn"));
                 }
@@ -482,7 +523,7 @@ public class AdvancedStatistics extends Hook  {
                 throw new RuntimeException(e);
             }
 
-            return new Deck(did, newPerDay, revPerDay);
+            return new Deck(did, newPerDay, revPerDay, initialFactor);
         }
     }
 
@@ -495,11 +536,13 @@ public class AdvancedStatistics extends Hook  {
 
         private int newPerDay;
         private int revPerDay;
+        private int initialFactor;
 
-        public Deck(long did, int newPerDay, int revPerDay) {
+        public Deck(long did, int newPerDay, int revPerDay, int initialFactor) {
             this.did = did;
             this.newPerDay = newPerDay;
             this.revPerDay = revPerDay;
+            this.initialFactor = initialFactor;
         }
 
         public long getDid() {
@@ -514,6 +557,10 @@ public class AdvancedStatistics extends Hook  {
             return revPerDay;
         }
 
+        public int getInitialFactor() {
+            return initialFactor;
+        }
+
     }
 
     private class CardIterator {
@@ -521,10 +568,14 @@ public class AdvancedStatistics extends Hook  {
         Cursor cur;
 
         private final int today;
+        private Deck deck;
 
-        public CardIterator(SQLiteDatabase db, int today, Long did) {
+        public CardIterator(SQLiteDatabase db, int today, Deck deck) {
 
             this.today = today;
+            this.deck = deck;
+
+            long did = deck.getDid();
 
             String query;
             query = "SELECT id, due, ivl, factor, type, reps " +
@@ -541,12 +592,12 @@ public class AdvancedStatistics extends Hook  {
         }
 
         public void current(Card card) {
-            card.setAll(cur.getLong(0),                                        //Id
-                    cur.getInt(5) == 0 ? 0 : cur.getInt(2),  		           //reps = 0 ? 0 : card interval
-                    cur.getInt(3) > 0 ? cur.getInt(3) :  2500,                 //factor
-                    Math.max(cur.getInt(1) - today, 0),                        //due
-                    1,                                                         //correct
-                    -1                                                         //lastreview
+            card.setAll(cur.getLong(0),                                             //Id
+                    cur.getInt(5) == 0 ? 0 : cur.getInt(2),  		                //reps = 0 ? 0 : card interval
+                    cur.getInt(3) > 0 ? cur.getInt(3) :  deck.getInitialFactor(),   //factor
+                    Math.max(cur.getInt(1) - today, 0),                             //due
+                    1,                                                              //correct
+                    -1                                                              //lastreview
                     );
         }
 
@@ -568,15 +619,6 @@ public class AdvancedStatistics extends Hook  {
      * and the probability will be 1.
      */
     private class EaseClassifier {
-
-        public final int CARD_TYPE_NEW = 0;
-        public final int CARD_TYPE_YOUNG = 1;
-        public final int CARD_TYPE_MATURE = 2;
-
-        public final int REVIEW_OUTCOME_REPEAT = 0;
-        public final int REVIEW_OUTCOME_HARD = 1;
-        public final int REVIEW_OUTCOME_GOOD = 2;
-        public final int REVIEW_OUTCOME_EASY = 3;
 
         private final Random random;
 
@@ -695,10 +737,10 @@ public class AdvancedStatistics extends Hook  {
                 cur = db.rawQuery(queryNewEaseCountForCurrentEase, null);
                 cur.moveToNext();
 
-                freqs[REVIEW_OUTCOME_REPEAT]    += cur.getInt(1);          //Repeat
-                freqs[REVIEW_OUTCOME_HARD]      += cur.getInt(2);          //Hard
-                freqs[REVIEW_OUTCOME_GOOD]      += cur.getInt(3);          //Good
-                freqs[REVIEW_OUTCOME_EASY]      += cur.getInt(4);          //Easy
+                freqs[REVIEW_OUTCOME_REPEAT]    += cur.getInt(REVIEW_OUTCOME_REPEAT_PLUS_1);        //Repeat
+                freqs[REVIEW_OUTCOME_HARD]      += cur.getInt(REVIEW_OUTCOME_HARD_PLUS_1);          //Hard
+                freqs[REVIEW_OUTCOME_GOOD]      += cur.getInt(REVIEW_OUTCOME_GOOD_PLUS_1);          //Good
+                freqs[REVIEW_OUTCOME_EASY]      += cur.getInt(REVIEW_OUTCOME_EASY_PLUS_1);          //Easy
 
                 int nQuery = cur.getInt(0);         //N
 
@@ -769,6 +811,7 @@ public class AdvancedStatistics extends Hook  {
                 switch(outcome) {
                     case REVIEW_OUTCOME_REPEAT:
                         ivl = 1;
+                        //factor = Math.max(1300, factor - 200);
                         break;
                     case REVIEW_OUTCOME_HARD:
                         ivl *= 1.2;
@@ -893,17 +936,24 @@ public class AdvancedStatistics extends Hook  {
             Stack<Review> reviews = new Stack<>();
             ArrayList<Review> reviewList = new ArrayList<Review>();
 
-            //TODO: by having simulateReview add future reviews depending on which simulation of this card this is (the nth) we can:
-            //1. Do monte carlo simulation if we add k future reviews if n = 1
+            //By having simulateReview add future reviews depending on which simulation of this card this is (the nth) we can:
+            //1. Do monte carlo simulation if we add nIterations future reviews if n = 1
+            //   We don't do it this way. Instead we do this by having tis method [simNreviews] called nIterations times.
+            //   The reason is that in that way we take into account the dependency between cards correctly, since we do
+            //   for each iteration... for each card
+            //   If we would do for each card... for each iteration... we would not take it into account correctly.
+            //   We would not schedule new cards on a particular day if on average the new card limit would have been exceeded
+            //   in simulations of previous cards.
             //2. Do a complete traversal of the future reviews tree if we add k future reviews for all n
-            //3. Do any combination of these
+            //   We accept the drawback as mentioned in (1).
+            //3. Do any combination of these (controlled by computeNDays and computeMaxError)
 
             Card card = new Card(0, 0, 0, 0, 0, 0);
             CardIterator cardIterator = null;
             Review review = new Review(deck, simulationResult, classifier, reviews, reviewList);
 
             try {
-                cardIterator = new CardIterator(db, today, deck.getDid());
+                cardIterator = new CardIterator(db, today, deck);
 
                 //int cardN = 0;
 
@@ -984,6 +1034,14 @@ public class AdvancedStatistics extends Hook  {
          */
         public int getMaxReviewsPerDay() {
             return 10000;
+        }
+
+        /**
+         *
+         * @return Factor which will be used if it cannot be read from Deck settings.
+         */
+        public int getInitialFactor() {
+            return 2500;
         }
 
         public long getNow() {
@@ -1156,10 +1214,12 @@ public class AdvancedStatistics extends Hook  {
 
         /**
          * Forecasted number of reviews per time bin (a time bin contains statistics for 1 or a multiple of days)
+         * First dimension:
          * 0 = Learn
          * 1 = Young
          * 2 = Mature
          * 3 = Relearn
+         * Second dimension: time
          */
         private final double[][] nReviews;
 
@@ -1171,9 +1231,11 @@ public class AdvancedStatistics extends Hook  {
 
         /**
          * Forecasted number of cards per state
+         * First dimension:
          * 0 = New
          * 1 = Young
          * 2 = Mature
+         * Second dimension: time
          */
         private final double[][] nInState;
 
@@ -1183,9 +1245,9 @@ public class AdvancedStatistics extends Hook  {
          * @param timeBinLength Length of 1 time bin in days.
          */
         public SimulationResult(int nTimeBins, int timeBinLength, int doubleToIntMode) {
-            nReviews = ArrayUtils.createDoubleMatrix(4, nTimeBins);
-            nReviewsPerDay = ArrayUtils.createDoubleMatrix(4, nTimeBins * timeBinLength);
-            nInState = ArrayUtils.createDoubleMatrix(3, nTimeBins);
+            nReviews = ArrayUtils.createDoubleMatrix(REVIEW_TYPE_COUNT, nTimeBins);
+            nReviewsPerDay = ArrayUtils.createDoubleMatrix(REVIEW_TYPE_COUNT, nTimeBins * timeBinLength);
+            nInState = ArrayUtils.createDoubleMatrix(CARD_TYPE_COUNT, nTimeBins);
 
             this.nTimeBins = nTimeBins;
             this.timeBinLength = timeBinLength;
@@ -1242,8 +1304,8 @@ public class AdvancedStatistics extends Hook  {
          * This excludes new cards and relearns as they don't count towards the limit.
          */
         public int nReviewsDoneToday(int tElapsed) {
-            return (int)(nReviewsPerDay[1][tElapsed] +
-                    nReviewsPerDay[2][tElapsed]);
+            return (int)(nReviewsPerDay[REVIEW_TYPE_YOUNG][tElapsed] +
+                         nReviewsPerDay[REVIEW_TYPE_MATURE][tElapsed]);
         }
 
         /**
@@ -1322,6 +1384,8 @@ public class AdvancedStatistics extends Hook  {
     private class PlottableSimulationResult {
 
         // Forecasted number of reviews
+        // ArrayList: time
+        // int[]:
         //   0 = Time
         //   1 = Learn
         //   2 = Young
@@ -1330,11 +1394,13 @@ public class AdvancedStatistics extends Hook  {
         private final ArrayList<int[]> nReviews;
 
         // Forecasted number of cards per state
+        // First dimension:
         //   0 = Time
-        //   1 = New
-        //   2 = Young
-        //   3 = Mature
-        //   4 = Zeros (we can't say 'we know x relearn cards on day d')
+        //   4 = New
+        //   3 = Young
+        //   2 = Mature
+        //   1 = Zeros (we can't say 'we know x relearn cards on day d')
+        // Second dimension: time
         private final double[][] nInState;
 
         public PlottableSimulationResult(ArrayList<int[]> nReviews, double[][] nInState) {
@@ -1351,6 +1417,11 @@ public class AdvancedStatistics extends Hook  {
         }
     }
 
+    /**
+     * A review has a particular outcome with a particular probability.
+     * A review results in the state of the card (card interval) being changed.
+     * A ReviewOutcome bundles the probability of the outcome and the card with changed state.
+     */
     private class ReviewOutcome {
         private Card card;
         private double prob;
@@ -1387,6 +1458,9 @@ public class AdvancedStatistics extends Hook  {
      */
     private class Review {
 
+        /**
+         * Deck-specific setting stored separately to save a method call on the deck object)
+         */
         private final int maxReviewsPerDay;
 
         /**
@@ -1413,18 +1487,50 @@ public class AdvancedStatistics extends Hook  {
          */
         private int outcome;
 
+        /**
+         * Deck-specific settings
+         */
         private Deck deck;
+
+        /**
+         * State of the card before current review.
+         * Needed to schedule current review but with different outcome and to update statistics.
+         */
         private Card card = new Card(0, 0, 0, 0, 0, 0);
         private Card prevCard = new Card(0, 0, 0, 0, 0, 0);
+
+        /**
+         * State of the card after current review.
+         * Needed to schedule future review.
+         */
         private Card newCard = new Card(0, 0, 0, 0, 0, 0);
+
+        /**
+         * Statistics
+         */
         private final SimulationResult simulationResult;
+
+        /**
+         * Classifier which uses probability distribution from review log to predict outcome of review.
+         */
         private final EaseClassifier classifier;
+
+        /**
+         * Reviews which are scheduled to be simulated.
+         * For adding current review with other outcome and future review.
+         */
         private final Stack<Review> reviews;
+
+        /**
+         * Review objects to be re-used so that we don't have to create new Review objects all the time.
+         * Be careful: it also contains Review objects which are still in use.
+         * So the algorithm using this list has to make sure that it only re-uses Review objects which are not in use anymore.
+         */
         private final List<Review> reviewList;
 
         /**
          * For creating future reviews which are to be scheduled as a result of the current review.
-         * @see Review(Deck, Card, SimulationResult, NewCardSimulator, EaseClassifier, Stack<Review>, int, int)
+         * @see Review(Deck, SimulationResult, EaseClassifier, Stack<Review>)
          */
         private Review (Review prevReview, Card card, int nPrevRevs, int tElapsed, double prob) {
             this.deck = prevReview.deck;
@@ -1443,8 +1549,8 @@ public class AdvancedStatistics extends Hook  {
 
         /**
          * For creating a review which is to be scheduled.
+         * After this constructor, either @see newCard(Card, NewCardSimulator) or existingCard(Card, int, int, double) has to be called.
          * @param deck Information needed to simulate a review: deck settings.
-
          *             Will be affected by the review. After the review it will contain the card type etc. after the review.
          * @param simulationResult Will be affected by the review. After the review it will contain updated statistics.
          * @param classifier Information needed to simulate a review: transition probabilities to new card state for each possible current card state.
@@ -1460,10 +1566,13 @@ public class AdvancedStatistics extends Hook  {
             this.maxReviewsPerDay = deck.getRevPerDay();
         }
 
-        //* @param card Information needed to simulate a review: card due date, type and factor.
-        //* @param newCardSimulator Information needed to simulate a review: The next day new cards will be added and the number of cards already added on that day.
-        //        *                         Will be affected by the review. After the review of a new card, the number of cards added on that day will be updated.
-        //*                         Next day new cards will be added might be updated if new card limit has been reached.
+        /**
+         * Re-use the current review object to schedule a new card. A new card here means that it has not been reviewed yet.
+         * @param card Information needed to simulate a review: card due date, type and factor.
+         * @param newCardSimulator Information needed to simulate a review: The next day new cards will be added and the number of cards already added on that day.
+         *                         Will be affected by the review. After the review of a new card, the number of cards added on that day will be updated.
+         *                         Next day new cards will be added might be updated if new card limit has been reached.
+         */
         public void newCard(Card card, NewCardSimulator newCardSimulator) {
             this.card = card;
 
@@ -1482,6 +1591,10 @@ public class AdvancedStatistics extends Hook  {
             this.simulationResult.updateNInState(card, 0, tElapsed, 1);
         }
 
+        /**
+         * Re-use the current review object to schedule an existing card. An existing card here means that it has been reviewed before (either by the user or by the simulation)
+         * and hence the due date is known.
+         */
         private void existingCard(Card card, int nPrevRevs, int tElapsed, double prob) {
             this.card.setAll(card);
 
@@ -1493,7 +1606,7 @@ public class AdvancedStatistics extends Hook  {
 
         /**
          * Simulates one review of the card. The review results in:
-         * - The card being updated
+         * - The card (prevCard and newCard) being updated
          * - New card simulator (when to schedule next new card) being updated if the card was new
          * - The simulationResult being updated.
          * - New review(s) being scheduled.
@@ -1540,7 +1653,6 @@ public class AdvancedStatistics extends Hook  {
             }
             else {
                 // Advance time to next review (max. #reviews reached for this day)
-                //scheduleNextReview(card, tElapsed + 1, prob);   //TODO: current review can be re-used
                 simulationResult.updateNInState(card, card, tElapsed, tElapsed + 1, prob);
                 rescheduleCurrentReview(tElapsed + 1);
             }
@@ -1555,6 +1667,9 @@ public class AdvancedStatistics extends Hook  {
             Timber.d(tabs + newCard);
         }
 
+        /**
+         * Schedule the current review at another time (will re-use current Review).
+         */
         private void rescheduleCurrentReview(int newTElapsed) {
             if (newTElapsed < simulationResult.getnDays()) {
                 this.tElapsed = newTElapsed;
@@ -1562,12 +1677,19 @@ public class AdvancedStatistics extends Hook  {
             }
         }
 
+        /**
+         * Schedule the current review at the current time, but with another outcome (will re-use current Review).
+         * @param newCard
+         */
         private void scheduleCurrentReview(Card newCard) {
             this.card.setAll(newCard);
             this.outcome++;
             this.reviews.push(this);
         }
 
+        /**
+         * Schedule next review (will not re-use current Review).
+         */
         private void scheduleNextReview(Card newCard, int newTElapsed, double newProb) {
             //Schedule next review(s) if they are within the time window of the simulation
             if (newTElapsed < simulationResult.getnDays()) {
