@@ -183,9 +183,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             // in from preferences screen), so we need to update it here.
             updatePreference(prefs, "syncAccount", this);
             updatePreference(prefs, "custom_sync_server_link", this);
-            //JPR
             updatePreference(prefs, "advanced_statistics_link", this);
-            //JPR end
         }
     }
 
@@ -297,7 +295,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         return true;
                     }
                 });
-                //JPR
                 // Advanced statistics option
                 Preference advancedStatisticsPreference = screen.findPreference("advanced_statistics_link");
                 advancedStatisticsPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -308,7 +305,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         return true;
                     }
                 });
-                //JPR end
                 // Force full sync option
                 Preference fullSyncPreference = screen.findPreference("force_full_sync");
                 fullSyncPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -327,12 +323,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 getSupportActionBar().setTitle(R.string.custom_sync_server_title);
                 listener.addPreferencesFromResource(R.xml.preferences_custom_sync_server);
                 break;
-            //JPR
             case "com.ichi2.anki.prefs.advanced_statistics":
                 getSupportActionBar().setTitle(R.string.advanced_statistics_title);
                 listener.addPreferencesFromResource(R.xml.preferences_advanced_statistics);
                 break;
-            //JPR end
         }
     }
 
@@ -450,7 +444,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         HebrewFixFilter.uninstall(Hooks.getInstance(getApplicationContext()));
                     }
                     break;
-                //JPR
                 case "advanced_statistics_enabled":
                     if (((CheckBoxPreference) pref).isChecked()) {
                         AdvancedStatistics.install(Hooks.getInstance(getApplicationContext()));
@@ -458,7 +451,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         AdvancedStatistics.uninstall(Hooks.getInstance(getApplicationContext()));
                     }
                     break;
-                //JPR end
                 case "showProgress":
                     getCol().getConf().put("dueCounts", ((CheckBoxPreference) pref).isChecked());
                     getCol().setMod();
@@ -570,7 +562,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 pref.setSummary(AnkiDroidApp.getSharedPrefs(this).getString("syncBaseUrl", ""));
             }
         }
-        //JPR
           else if (pref.getKey().equals("advanced_statistics_link")) {
             if (!AnkiDroidApp.getSharedPrefs(this).getBoolean("advanced_statistics_enabled", false)) {
                 pref.setSummary(R.string.disabled);
@@ -578,7 +569,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 pref.setSummary(R.string.enabled);
             }
         }
-        //JPR end
         // Get value text
         String value;
         try {
@@ -771,9 +761,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             // in from preferences screen), so we need to update it here.
             ((Preferences) getActivity()).updatePreference(prefs, "syncAccount", this);
             ((Preferences) getActivity()).updatePreference(prefs, "custom_sync_server_link", this);
-            //JPR
             ((Preferences) getActivity()).updatePreference(prefs, "advanced_statistics_link", this);
-            //JPR end
         }
 
         @Override

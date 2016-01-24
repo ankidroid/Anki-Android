@@ -20,9 +20,7 @@
 --><resources>
     <!-- generic strings -->
     <string name="disabled">Disabled</string>
-    <!-- JPR -->
     <string name="enabled">Enabled</string>
-    <!-- JPR end -->
     <!-- preferences.xml categories-->
     <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">General settings</string>

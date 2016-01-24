@@ -172,8 +172,6 @@ public class Stats {
         return new int[]{cards, thetime, failed, lrn, rev, relrn, filt, mcnt, msum};
     }
 
-    //JPR
-
     public boolean calculateDue(Context context, int type) {
 
         // Not in libanki
