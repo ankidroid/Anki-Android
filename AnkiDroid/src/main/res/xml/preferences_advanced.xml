@@ -128,7 +128,11 @@
                 android:key="double_scrolling"
                 android:summary="@string/double_scrolling_gap_summ"
                 android:title="@string/double_scrolling_gap" />
+            <Preference
+                android:key="advanced_statistics_link"
+                android:title="@string/advanced_statistics_title"/>
         </PreferenceCategory>
+
 
     <Preference
         android:key="about_dialog_preference"
