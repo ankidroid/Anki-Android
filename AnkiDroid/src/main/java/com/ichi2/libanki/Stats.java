@@ -22,11 +22,12 @@ import android.database.Cursor;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.anki.stats.StatsMetaInfo;
+import com.ichi2.libanki.hooks.Hooks;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import timber.log.Timber;
@@ -77,7 +78,6 @@ public class Stats {
         mWholeCollection = wholeCollection;
         sCurrentInstance = this;
     }
-
 
     public static Stats currentStats() {
         return sCurrentInstance;
@@ -171,11 +171,46 @@ public class Stats {
 
         return new int[]{cards, thetime, failed, lrn, rev, relrn, filt, mcnt, msum};
     }
+
+    public boolean calculateDue(Context context, int type) {
+
+        // Not in libanki
+        StatsMetaInfo metaInfo = new StatsMetaInfo();
+
+        metaInfo = (StatsMetaInfo) Hooks.getInstance(context).runFilter("advancedStatistics", metaInfo, type, context, _limit());
+
+        if(metaInfo.isStatsCalculated()) {
+
+            mDynamicAxis = metaInfo.ismDynamicAxis();
+            mHasColoredCumulative = metaInfo.ismHasColoredCumulative();
+            mType = metaInfo.getmType();
+            mTitle = metaInfo.getmTitle();
+            mBackwards = metaInfo.ismBackwards();
+            mValueLabels = metaInfo.getmValueLabels();
+            mColors = metaInfo.getmColors();
+            mAxisTitles = metaInfo.getmAxisTitles();
+            mMaxCards = metaInfo.getmMaxCards();
+            mMaxElements = metaInfo.getmMaxElements();
+            mFirstElement = metaInfo.getmFirstElement();
+            mLastElement = metaInfo.getmLastElement();
+            mZeroIndex = metaInfo.getmZeroIndex();
+            mCumulative = metaInfo.getmCumulative();
+            mMcount = metaInfo.getmMcount();
+
+            mSeriesList = metaInfo.getmSeriesList();
+
+            return metaInfo.isDataAvailable();
+        }
+        else {
+            return calculateDue(type);
+        }
+    }
+
     /**
      * Due and cumulative due
      * ***********************************************************************************************
      */
-    public boolean calculateDue(int type) {
+    private boolean calculateDue(int type) {
         mHasColoredCumulative = false;
         mType = type;
         mDynamicAxis = true;
@@ -289,7 +324,6 @@ public class Stats {
             mMaxCards = 10;
         return dues.size() > 0;
     }
-
 
     /* only needed for studyoptions small chart */
     public static double[][] getSmallDueStats(Collection col) {
