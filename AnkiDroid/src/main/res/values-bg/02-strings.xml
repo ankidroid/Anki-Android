@@ -93,6 +93,7 @@
   <string name="saving_facts">Записване на бележка</string>
   <string name="saving_model">Записване на модел</string>
   <string name="add">Добавяне на</string>
+  <string name="save">Save</string>
   <string name="close">Затвори</string>
   <string name="select">Изберете</string>
   <string name="saving_changes">Записване на промените...</string>
@@ -140,7 +141,7 @@
   <string name="import_log_no_apkg">Това не е валиден apkg файл</string>
   <string name="import_error_not_apkg_extension">Файлът \"%s\" не е с .apkg разширение</string>
   <string name="import_error_content_provider">Избраният файл не можа да бъде импортиран автоматично от AnkiDroid. Моля, вижте ръководството на потребителя за как да ръчно да импортирате anki файлове: \n%s</string>
-  <string name="import_replacing">Replacing collection...</string>
+  <string name="import_replacing">Replacing collection&#8230;</string>
   <string name="export_include_schedule">Включване на планирането</string>
   <string name="export_include_media">Включване на медия</string>
   <string name="confirm_apkg_export">Експорт на колекцията като apkg файл?</string>
@@ -152,6 +153,7 @@
   <string name="import_hint">Поставете apkg файла в директорията \"%s\" и докоснете \"OK\", за да импортирате карти</string>
   <string name="upgrade_import_no_file_found">Открит е файл %1$s, който не може да се импортира</string>
   <string name="study_options">Опции за тестето</string>
+  <string name="select_tts">Set TTS language</string>
   <string name="custom_study">Допълнително учене</string>
   <string name="more_options">Още</string>
   <string name="dyn_deck_desc">Това е специално тесте за учене извън нормалния график. Картите автоматично ще бъдат върнати в техните първоначални тестета след като бъдат разгледани. Изтриването на това тесте от списъка с тестета ще върне всички останали карти в тестетата, където са били първоначално.</string>

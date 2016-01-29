@@ -93,6 +93,7 @@
   <string name="saving_facts">ذخیره یادداشت</string>
   <string name="saving_model">Saving model</string>
   <string name="add">اضافه کردن</string>
+  <string name="save">Save</string>
   <string name="close">بستن</string>
   <string name="select">انتخاب</string>
   <string name="saving_changes">ذخیره تغییرات</string>
@@ -137,7 +138,7 @@
   <string name="import_log_no_apkg">این فایل، یک فایل معتبر apkg نیست.</string>
   <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg extension</string>
   <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
-  <string name="import_replacing">Replacing collection...</string>
+  <string name="import_replacing">Replacing collection&#8230;</string>
   <string name="export_include_schedule">Include scheduling</string>
   <string name="export_include_media">Include media</string>
   <string name="confirm_apkg_export">Export collection as apkg file?</string>
@@ -149,6 +150,7 @@
   <string name="import_hint">برای وارد کردن کارتها,  apkg فایلهای در پوشه %s قرار داده و دکمه خب را فشار دهید</string>
   <string name="upgrade_import_no_file_found">غیر وارد کردنی %1$s فایل یافت شد</string>
   <string name="study_options">Deck options</string>
+  <string name="select_tts">Set TTS language</string>
   <string name="custom_study">مطالعه بر اساس تنظیمات دلخواه</string>
   <string name="more_options">More</string>
   <string name="dyn_deck_desc">این یک دسته ویژه برای مطالعه در خارج از زمان بندی عادی می باشد.بعد از مرور کارتها آنها بطور خودکار به دسته های اصلی برگردانده خواهد شد.حذف کردن این دسته از لیست دسته ها سبب می شود که همه کارتهای باقیمانده نیز به دسته اصلی برگردانده شود.</string>

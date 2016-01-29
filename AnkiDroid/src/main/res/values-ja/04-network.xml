@@ -58,8 +58,8 @@
   <string name="password_repeat">パスワード（確認）</string>
   <string name="log_in">ログイン</string>
   <string name="sign_up_description">AnkiWebのアカウントを新規登録（無料）</string>
-  <string name="sign_up_not_affiliated">注: AnkiWebはAnkiのサービスであり、Ankiから独立して活動しているAnkiDroidプロジェクトが管理するものではありません</string>
-  <string name="sign_up">サインアップ</string>
+  <string name="sign_up_not_affiliated">注意: AnkiWebはAnkiのサービスであり、Ankiから独立して活動しているAnkiDroid開発グループが管理するものではありません。</string>
+  <string name="sign_up">新規登録用ページに進む</string>
   <string name="logged_as">ログイン名</string>
   <string name="log_out">ログアウト</string>
   <string name="alert_logging_message">ログインしています&#8230;</string>

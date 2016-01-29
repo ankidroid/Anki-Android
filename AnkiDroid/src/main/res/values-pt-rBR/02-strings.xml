@@ -93,6 +93,7 @@
   <string name="saving_facts">Salvando nota</string>
   <string name="saving_model">Salvando modelo</string>
   <string name="add">Adicionar</string>
+  <string name="save">Save</string>
   <string name="close">Fechar</string>
   <string name="select">Selecione</string>
   <string name="saving_changes">Salvando alterações&#8230;</string>
@@ -124,9 +125,9 @@
   <string name="help_title">Ajuda</string>
   <string name="check_db">Verificar banco de dados</string>
   <string name="check_media">Ver média</string>
-  <string name="empty_cards">Empty cards</string>
+  <string name="empty_cards">Cartões vazios</string>
   <string name="check_db_message">Verificando banco de dados.\nPor favor Aguarde...</string>
-  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
+  <string name="empty_card_warning">Este cartão está vazio. Use a opção \"Cartões vazios\" do menu na tela de listagem de baralhos.</string>
   <string name="unknown_type_field_warning">Digite a resposta: campo desconhecido %s</string>
   <string name="delete_deck">Excluindo baralho&#8230;</string>
   <string name="show_hint">Mostrar %s</string>
@@ -140,7 +141,7 @@
   <string name="import_log_no_apkg">Este não é um arquivo apkg válido</string>
   <string name="import_error_not_apkg_extension">O arquivo %s não possui uma extensão .apkg</string>
   <string name="import_error_content_provider">O arquivo selecionado não pôde ser importado automaticamente pelo AnkiDroid. Por favor veja o manual do usuário para aprender a importar manualmente arquivos do anki: \n %s</string>
-  <string name="import_replacing">Replacing collection...</string>
+  <string name="import_replacing">Replacing collection&#8230;</string>
   <string name="export_include_schedule">Incluir agendamento</string>
   <string name="export_include_media">Incluir a média</string>
   <string name="confirm_apkg_export">Exportar a coleção como arquivo apkg?</string>
@@ -152,6 +153,7 @@
   <string name="import_hint">Para importar cartões, coloque o arquivo apkg no diretório %s e pressione ok</string>
   <string name="upgrade_import_no_file_found">Nenhum arquivo %1$s importável encontrado</string>
   <string name="study_options">Opções de baralho</string>
+  <string name="select_tts">Set TTS language</string>
   <string name="custom_study">Estudo personalizado</string>
   <string name="more_options">Mais</string>
   <string name="dyn_deck_desc">Esse é um baralho especial para estudar fora do planejamento normal. Os cartões serão retornados automaticamente para os baralhos originais após revisá-los. Ao apagar esse baralho da lista de baralhos os cartões restantes serão retornados para os baralhos originais.</string>

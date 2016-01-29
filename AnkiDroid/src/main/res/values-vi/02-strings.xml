@@ -48,14 +48,14 @@
   <string name="CardEditorModel">Loại:</string>
   <string name="CardEditorTags">Từ khóa: %1$s</string>
   <string name="CardEditorCards">Thẻ: %1$s</string>
-  <string name="tag_name">Tag name</string>
+  <string name="tag_name">Tên thẻ</string>
   <string name="add_new_filter_tags">Thêm/ Loại bỏ các Tag đánh dấu</string>
-  <string name="add_tag">Add tag</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
+  <string name="add_tag">Thêm thẻ</string>
+  <string name="check_all_tags">Chọn/bỏ chọn tất cả các thẻ</string>
   <string name="filter_tags">các bộ lọc đánh dấu</string>
-  <string name="no_tags">You haven’t added any tags yet</string>
+  <string name="no_tags">Bạn chưa thêm bất kỳ thẻ nào</string>
   <string name="sdcard_missing_message">Thẻ SD hiện đang được sử dụng như một ổ lưu trữ USB. Hãy ngắt kết nối USB để có thể truy cập được vào các tập thẻ của bạn.</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="updated_version">Đã cập nhật lên phiên bản %s</string>
   <string name="enable_whiteboard">Bật  bảng whiteboard</string>
   <string name="disable_whiteboard">Tắt bảng whiteboard</string>
   <string name="show_whiteboard">Hiện Bảng viết</string>
@@ -66,7 +66,7 @@
   <string name="leech_notification">Bài được đánh dấu như đã tải về</string>
   <string name="corrupt_font">Lỗi font dữ liệu %s</string>
   <string-array name="browser_column1_headings">
-    <item>Question</item>
+    <item>Câu hỏi</item>
     <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
@@ -79,13 +79,13 @@
     <item>Sai sót</item>
     <item>Đánh giá</item>
   </string-array>
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
-  <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_increase_new_limit">Tăng giới hạn thẻ mới của ngày hôm nay</string>
+  <string name="custom_study_increase_review_limit">Tăng giới hạn ôn lại thẻ của ngày hôm nay</string>
+  <string name="custom_study_review_forgotten">Ôn lại thẻ đã quên</string>
+  <string name="custom_study_review_ahead">Duyệt lại trước</string>
+  <string name="custom_study_random_selection">Học theo thẻ được lựa chọn ngẫu nhiên</string>
+  <string name="custom_study_preview_new">Xem trước thẻ mới</string>
+  <string name="custom_study_limit_tags">Giới hạn cho thẻ đặc biệt</string>
   <string name="cardeditor_title_add_note">Thêm ghi chú</string>
   <string name="cardeditor_title_edit_card">Sửa ghi chú</string>
   <string name="discard_unsaved_changes">Đóng lại và mất đầu vào hiện tại?</string>
@@ -93,6 +93,7 @@
   <string name="saving_facts">Lưu ghi chú</string>
   <string name="saving_model">Tiết kiệm các mô hình</string>
   <string name="add">Thêm</string>
+  <string name="save">Save</string>
   <string name="close">Đóng</string>
   <string name="select">Chọn</string>
   <string name="saving_changes">Đang lưu các sửa đồi...</string>
@@ -100,10 +101,10 @@
   <string name="field_remapping">%1$s (từ \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Bất kỳ thẻ để không có gì sẽ bị xóa. Nếu một chú thích đã không lưu giữ trong các thẻ, nó sẽ bị mất. Bạn có chắc bạn muốn tiếp tục không?</string>
   <plurals name="timebox_reached">
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="other">%1$d thẻ đã được học trong %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="other">%1$d phút</item>
   </plurals>
   <string name="studyoptions_welcome_title">Chào mừng đến với AnkiDroid</string>
   <string name="fact_adder_intent_title">Thẻ AnkiDroid</string>
@@ -116,12 +117,12 @@
   <string name="rename">Đổi tên</string>
   <string name="default_conf_delete_error">Nhóm tùy chọn mặc định không thể được gỡ bỏ</string>
   <plurals name="factadder_cards_added">
-    <item quantity="other">%d cards added</item>
+    <item quantity="other">%d thẻ đã thêm</item>
   </plurals>
   <string name="help_title">Trợ giúp</string>
   <string name="check_db">Kiểm tra cơ sở dữ liệu</string>
   <string name="check_media">Kiểm tra các phương tiện truyền thông</string>
-  <string name="empty_cards">Empty cards</string>
+  <string name="empty_cards">Thẻ trống</string>
   <string name="check_db_message">Đang kiểm tra cơ sở dữ liệu. \n Xin đợi chút...</string>
   <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Nhập câu trả lời: không biết trường %s</string>
@@ -137,7 +138,7 @@
   <string name="import_log_no_apkg">Đây không phải tập tin apkg hợp lệ</string>
   <string name="import_error_not_apkg_extension">Tên tập tin %s không có phần mở rộng .apkg</string>
   <string name="import_error_content_provider">Tệp đã chọn không có thể được nhập khẩu tự động bởi AnkiDroid. Xin vui lòng xem hướng dẫn sử dụng để làm thế nào để chuyển nhập thủ công anki tập tin: \n %s</string>
-  <string name="import_replacing">Replacing collection...</string>
+  <string name="import_replacing">Replacing collection&#8230;</string>
   <string name="export_include_schedule">Bao gồm việc lập kế hoạch</string>
   <string name="export_include_media">Bao gồm các phương tiện truyền thông</string>
   <string name="confirm_apkg_export">Xuất khẩu các bộ sưu tập dưới dạng tệp apkg?</string>
@@ -149,8 +150,9 @@
   <string name="import_hint">Để nhập thẻ, đặt tập tin apkg vào đường dẫn %s và bấm ok</string>
   <string name="upgrade_import_no_file_found">Không tìm thấy %1$s tập tin có thể nhập</string>
   <string name="study_options">Tùy chọn Bài</string>
+  <string name="select_tts">Set TTS language</string>
   <string name="custom_study">Sửa cách học</string>
-  <string name="more_options">More</string>
+  <string name="more_options">Hiển thị thêm</string>
   <string name="dyn_deck_desc">Đây là một bộ Bài đặc biệt phục vụ cho học ngoài lịch. Các thẻ sẽ tự động quay lại sau khi bại xem lại chúng. Việc xóa các bộ bài từ danh sách sẽ đưa tất cả các Thẻ về Bộ bài nguyên gốc.</string>
   <string name="steps_error">Các bước phải là số lớn hơn 0</string>
   <string name="steps_min_error">Yêu cầu ít nhất một bước</string>

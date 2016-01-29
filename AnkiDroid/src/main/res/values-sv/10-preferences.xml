@@ -40,6 +40,7 @@
 -->
 <resources>
   <string name="disabled">Inaktiverad</string>
+  <string name="enabled">Enabled</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Allmäna inställningar</string>
   <string name="pref_cat_reviewing">Repetition</string>
@@ -71,7 +72,7 @@
   <string name="text_selection_click_summ">Aktivera detta om du inte kan påbörja textmarkering via långt klick</string>
   <string name="dictionary">Ordbok</string>
   <string name="reset_languages">Nollställ språk</string>
-  <string name="reset_languages_summ">Återställ språktilldelningar (för text till tal och ordböcker) för alla kortlekar. Återställ specifika kortlekstilldelningar i kortleksväljaren</string>
+  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
   <string name="reset_languages_question">Återställ alla språktilldelningar?</string>
   <string name="reset_confirmation">Alla lägen nollställda</string>
   <string name="card_zoom">Kort-zoom</string>
@@ -156,6 +157,12 @@
   <string name="convert_fen_text_summ">Rita ett schackbräde med Forsyth–Edwards Notation. Notationen måste använda [fen][/fen]-märkning</string>
   <string name="enable_api_title">Aktivera AnkiDroid API</string>
   <string name="enable_api_summary">Låt andra appar ansluta till AnkiDroid och läsa / skriva data utan din medverkan</string>
+  <string name="advanced_statistics_title">Advanced statistics</string>
+  <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
+  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
   <string name="custom_sync_server_title">Annan synkroniseringsserver</string>
   <string name="custom_sync_server_enable_title">Använd annan synkroniseringsserver</string>
   <string name="custom_sync_server_enable_summary">Om du inte vill använda den proprietära AnkiWeb-tjänsten kan du ange en alternativ server här</string>

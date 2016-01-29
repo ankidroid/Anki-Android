@@ -39,7 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="disabled">Disabled</string>
+  <string name="disabled">Desativado</string>
+  <string name="enabled">Enabled</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Configurações gerais</string>
   <string name="pref_cat_reviewing">Revisando</string>
@@ -65,25 +66,25 @@
   <string name="whiteboard_black_summ">Utilizar menos memória, exceto no modo noturno</string>
   <string name="write_answers_disable">Desativar digitação em resposta</string>
   <string name="write_answers_disable_summ">Impede que o teclado apareça em cartões contendo campos \'escreva a resposta\'</string>
-  <string name="use_input_tag">Type answer into the card</string>
-  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
+  <string name="use_input_tag">Digite a resposta no cartão</string>
+  <string name="use_input_tag_summ">Digite o campo de entrada no cartão para digitar a resposta</string>
   <string name="text_selection_click">Solução alternativa de pressão longa</string>
   <string name="text_selection_click_summ">Ative isso se você não é capaz de iniciar a seleção de texto por meio de clique longo</string>
   <string name="dictionary">Dicionário de busca</string>
   <string name="reset_languages">Redefinir línguas</string>
-  <string name="reset_languages_summ">Redefina as atribuições de idioma (de conversão de texto em fala e dicionários) para todos os baralhos. Redefinir as atribuições específicas de baralho no selecionador de baralhos.</string>
+  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
   <string name="reset_languages_question">Redefinir todas as atribuições de idioma?</string>
   <string name="reset_confirmation">Redefinir todos os estados</string>
   <string name="card_zoom">Zoom do cartão</string>
   <string name="image_zoom">Zoom da imagem</string>
   <string name="button_size">Tamanho do botão de resposta</string>
   <string name="card_browser_font_size">Dimensionamento de fonte do navegador de cartões</string>
-  <string name="col_path">AnkiDroid directory</string>
+  <string name="col_path">Diretório do AnkiDroid</string>
   <string name="fullscreen_review">Modo tela cheia</string>
-  <string name="full_screen_off">Off</string>
-  <string name="full_screen_system">Hide the system bars</string>
-  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
+  <string name="full_screen_off">Desligar</string>
+  <string name="full_screen_system">Ocultar barras de sistema</string>
+  <string name="full_screen_complete">Ocultar barras de sistema e botões de resposta</string>
+  <string name="full_screen_error_gestures">Você precisa habilitar os gestos para esconder os botões de resposta</string>
   <string name="gestures">Habilitar gestos</string>
   <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar cartões.</string>
   <string name="gestures_swipe_up">Deslizar para cima</string>
@@ -156,11 +157,17 @@
   <string name="convert_fen_text_summ">Desenhar tabuleiro de xadrez a partir da Notação Forsyth-Edwards. A notação deve estar delimitada pelas tags [fen][/fen].</string>
   <string name="enable_api_title">Habilitar o AnkiDroid API</string>
   <string name="enable_api_summary">Deixe outros apps se conectarem ao AnkiDroid e ler / escrever dados sem a sua intervenção</string>
-  <string name="custom_sync_server_title">Custom sync server</string>
-  <string name="custom_sync_server_enable_title">Use custom sync server</string>
-  <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
-  <string name="custom_sync_server_base_url_title">Sync url</string>
-  <string name="custom_sync_server_media_url_title">Media sync url</string>
+  <string name="advanced_statistics_title">Advanced statistics</string>
+  <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
+  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+  <string name="custom_sync_server_title">Servidos de sincronização personalizado</string>
+  <string name="custom_sync_server_enable_title">Utilizar servidor de sincronização personalizado</string>
+  <string name="custom_sync_server_enable_summary">Se você não deseja utilizar o serviço proprietário do AnkiWeb você pode especificar um servidor alternativo aqui</string>
+  <string name="custom_sync_server_base_url_title">Url de sincronismo</string>
+  <string name="custom_sync_server_media_url_title">Url de sincronismo de mídia</string>
   <string name="studyoptions_limit_select_tags">Selecione Tags</string>
   <string name="deck_conf_deck_description">Descrição do deck</string>
   <string name="deck_conf_group">Grupo de opções</string>

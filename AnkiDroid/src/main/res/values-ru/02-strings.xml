@@ -48,14 +48,14 @@
   <string name="CardEditorModel">Тип:</string>
   <string name="CardEditorTags">Теги: %1$s</string>
   <string name="CardEditorCards">Карты: %1$s</string>
-  <string name="tag_name">Tag name</string>
+  <string name="tag_name">Название метки</string>
   <string name="add_new_filter_tags">Добавить/отфильтровать метки</string>
-  <string name="add_tag">Add tag</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
+  <string name="add_tag">Добавить метку</string>
+  <string name="check_all_tags">Выбрать/снять все метки</string>
   <string name="filter_tags">Отфильтровать метки</string>
-  <string name="no_tags">You haven’t added any tags yet</string>
+  <string name="no_tags">Вы пока не добавили ни одной метки</string>
   <string name="sdcard_missing_message">SD-карта недоступна, т.к. она (и ваш аппарат) используется как USB-хранилище. Отключите режим USB-хранилище вашего аппарата для доступа к колоде.</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="updated_version">Обновлено до версии %s</string>
   <string name="enable_whiteboard">Включить доску</string>
   <string name="disable_whiteboard">Отключить доску</string>
   <string name="show_whiteboard">Показать доску</string>
@@ -66,8 +66,8 @@
   <string name="leech_notification">Карта помечена как \"приставучая\"</string>
   <string name="corrupt_font">Повреждённый файл шрифта %s</string>
   <string-array name="browser_column1_headings">
-    <item>Question</item>
-    <item>Sort field</item>
+    <item>Вопрос</item>
+    <item>Поле сортировки</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Ответ</item>
@@ -79,13 +79,13 @@
     <item>Неудачные попытки</item>
     <item>Пересмотры</item>
   </string-array>
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
-  <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_increase_new_limit">Увеличить сегодняшний лимит новых карт</string>
+  <string name="custom_study_increase_review_limit">Увеличить сегодняшний лимит старых карт</string>
+  <string name="custom_study_review_forgotten">Обзор забытых карт</string>
+  <string name="custom_study_review_ahead">Обзор наперёд</string>
+  <string name="custom_study_random_selection">Учить случайную группу карт</string>
+  <string name="custom_study_preview_new">Новые карты в колоде</string>
+  <string name="custom_study_limit_tags">Установить ограничение по тегам</string>
   <string name="cardeditor_title_add_note">Добавить заметку</string>
   <string name="cardeditor_title_edit_card">Изменить заметку</string>
   <string name="discard_unsaved_changes">Закрыть и отказаться от изменений?</string>
@@ -93,6 +93,7 @@
   <string name="saving_facts">Сохранение заметки</string>
   <string name="saving_model">Сохранение модели</string>
   <string name="add">Добавить</string>
+  <string name="save">Save</string>
   <string name="close">Закрыть</string>
   <string name="select">Выбрать</string>
   <string name="saving_changes">Сохранение изменений...</string>
@@ -127,9 +128,9 @@
   <string name="help_title">Справка</string>
   <string name="check_db">Проверить базу данных</string>
   <string name="check_media">Проверить медиа</string>
-  <string name="empty_cards">Empty cards</string>
+  <string name="empty_cards">Пустые карты</string>
   <string name="check_db_message">Идет проверка базы данных&#8230;</string>
-  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
+  <string name="empty_card_warning">Эта карта пуста. Используйте опцию \"Пустые карты\" из меню на экране списка колод.</string>
   <string name="unknown_type_field_warning">Тип ответа: неизвестное поле %s</string>
   <string name="delete_deck">Удаление колоды&#8230;</string>
   <string name="show_hint">Показать %s</string>
@@ -143,7 +144,7 @@
   <string name="import_log_no_apkg">Это негодный apkg-файл</string>
   <string name="import_error_not_apkg_extension">У файла %s должно быть расширение .apkg</string>
   <string name="import_error_content_provider">Это файл невозможно импортировать автоматически. Пожалуйста, посмотрите в руководстве пользователя, как импортировать anki-файлы вручную: \n %s</string>
-  <string name="import_replacing">Replacing collection...</string>
+  <string name="import_replacing">Replacing collection&#8230;</string>
   <string name="export_include_schedule">Включить планирование</string>
   <string name="export_include_media">Включить медиа</string>
   <string name="confirm_apkg_export">Экспортировать коллекцию в apkg файл?</string>
@@ -155,8 +156,9 @@
   <string name="import_hint">Чтобы импортировать карты, поместите файл apkg в каталог %s и нажмите «ОК»</string>
   <string name="upgrade_import_no_file_found">Найден неимпортируемый файл %1$s</string>
   <string name="study_options">Опции колоды</string>
+  <string name="select_tts">Set TTS language</string>
   <string name="custom_study">Дополнительное обучение</string>
-  <string name="more_options">More</string>
+  <string name="more_options">Еще</string>
   <string name="dyn_deck_desc">Это специальная колода для изучения вне нормального расписания. Карты будут автоматически возвращены в их изначальную колоду после их просмотра. Удаление этой колоды из списка колод возвратит все оставшиеся карты в их изначальную колоду.</string>
   <string name="steps_error">Шаги должны быть числами больше 0</string>
   <string name="steps_min_error">Требуется по крайней мере один шаг</string>
@@ -167,9 +169,9 @@
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">Скопировав текст, нажмите где-нибудь на карте, чтобы показать иконку поиска</string>
   <plurals name="time_span_seconds">
-    <item quantity="one">%s second</item>
-    <item quantity="few">%s seconds</item>
-    <item quantity="other">%s seconds</item>
+    <item quantity="one">%s секунда</item>
+    <item quantity="few">%s секунды</item>
+    <item quantity="other">%s секунд</item>
   </plurals>
   <plurals name="time_span_minutes">
     <item quantity="one">%s minute</item>
@@ -197,7 +199,7 @@
     <item quantity="other">%s years</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
-  <string name="decks_rename_exists">That deck already exists</string>
+  <string name="decks_rename_exists">Эта колода уже существует</string>
   <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
   <string name="filtered_deck_name">Filtered Deck</string>
 </resources>

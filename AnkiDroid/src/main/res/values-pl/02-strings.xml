@@ -93,6 +93,7 @@
   <string name="saving_facts">Zapisywanie notatki</string>
   <string name="saving_model">Saving model</string>
   <string name="add">Dodaj</string>
+  <string name="save">Save</string>
   <string name="close">Zamknij</string>
   <string name="select">Wybierz</string>
   <string name="saving_changes">Trwa zapisywanie zmian...</string>
@@ -143,7 +144,7 @@
   <string name="import_log_no_apkg">To nie jst prawidłowy plik apkg</string>
   <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg extension</string>
   <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
-  <string name="import_replacing">Replacing collection...</string>
+  <string name="import_replacing">Replacing collection&#8230;</string>
   <string name="export_include_schedule">Włącznie z zaplanowanymi powtórkami</string>
   <string name="export_include_media">Włącznie z plikami mediów</string>
   <string name="confirm_apkg_export">Wyeksportować kolekcję jako plik .apkg?</string>
@@ -155,6 +156,7 @@
   <string name="import_hint">Aby zaimportować karty, umieść plik apkg w katalogu %s i naciśnij ok</string>
   <string name="upgrade_import_no_file_found">Nie znaleziono żadnych plików do zaimportowania (%1$s)</string>
   <string name="study_options">Opcje talii</string>
+  <string name="select_tts">Set TTS language</string>
   <string name="custom_study">Nauka niestandardowa</string>
   <string name="more_options">More</string>
   <string name="dyn_deck_desc">To jest specjalna talia do nauki poza normalnym trybem. Karty automatycznie powrócą do oryginalnych talii po ich przejrzeniu. Usunięcie tej talii z listy spowoduje przywrócenie pozostałych w niej kart do oryginalnych talii.</string>

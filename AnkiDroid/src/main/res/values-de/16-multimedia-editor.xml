@@ -71,7 +71,7 @@
   <string name="multimedia_editor_text_field_editing_clear">Zurücksetzen</string>
   <string name="multimedia_editor_text_field_editing_clone">Kopieren von</string>
   <string name="multimedia_editor_text_field_editing_translate">Übersetzung</string>
-  <string name="multimedia_editor_text_field_editing_no_text">Geben Sie zuerst Text ein</string>
+  <string name="multimedia_editor_text_field_editing_no_text">Zuerst etwas Text eingeben</string>
   <string name="multimedia_editor_text_field_editing_many_words">Wörterbücher erwarten normalerweise ein einzelnes Wort</string>
   <string name="multimedia_editor_text_field_editing_clone_source">Übernehme von</string>
   <string name="multimedia_editor_image_field_editing_galery">Galerie</string>

@@ -40,6 +40,7 @@
 -->
 <resources>
   <string name="disabled">Deaktiviert</string>
+  <string name="enabled">Enabled</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Allgemeine Einstellungen</string>
   <string name="pref_cat_reviewing">Lernen</string>
@@ -71,7 +72,7 @@
   <string name="text_selection_click_summ">Falls der Langklick zum Textauswählen nicht funktioniert</string>
   <string name="dictionary">Nachschlagen in Wörterbuch</string>
   <string name="reset_languages">Sprachen zurücksetzen</string>
-  <string name="reset_languages_summ">Setzt die Sprachzuordnungen (für Vorlesen und Wörterbücher) für alle Stapel zurück. Für einzelne Stapel: siehe Stapelauswahl.</string>
+  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
   <string name="reset_languages_question">Sämtliche Sprachzuordnungen zurücksetzen?</string>
   <string name="reset_confirmation">Alles zurückgesetzt</string>
   <string name="card_zoom">Karten-Zoom</string>
@@ -156,6 +157,12 @@
   <string name="convert_fen_text_summ">Schachbrett aus Forsyth–Edwards-Notation erstellen. Die Position muss in  [fen][/fen]-Tags eingefasst sein.</string>
   <string name="enable_api_title">AnkiDroid-API aktivieren</string>
   <string name="enable_api_summary">Verbindungen anderer Apps mit AnkiDroid zulassen und sie ohne weitere Eingriffe Daten lesen und schreiben lassen</string>
+  <string name="advanced_statistics_title">Advanced statistics</string>
+  <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
+  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
   <string name="custom_sync_server_title">Benutzerdefinierter Synchronisierungsserver</string>
   <string name="custom_sync_server_enable_title">Benutzerdefinierten Synchronisierungsserver verwenden</string>
   <string name="custom_sync_server_enable_summary">Wenn Sie nicht den proprietären AnkiWeb-Dienst verwenden möchten, können Sie hier einen alternativen Server angeben</string>

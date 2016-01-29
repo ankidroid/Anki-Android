@@ -93,6 +93,7 @@
   <string name="saving_facts">Ukládání poznámky</string>
   <string name="saving_model">Ukládání modelu</string>
   <string name="add">Přidat</string>
+  <string name="save">Save</string>
   <string name="close">Zavřít</string>
   <string name="select">Vybrat</string>
   <string name="saving_changes">Ukládání změn ...</string>
@@ -143,7 +144,7 @@
   <string name="import_log_no_apkg">Toto není platný apkg soubor</string>
   <string name="import_error_not_apkg_extension">Souboru %s nemá příponu .apkg</string>
   <string name="import_error_content_provider">Vybraný soubor nelze automaticky importovat pomocí AnkiDroid. V uživatelské příručce naleznete, jak provést ruční import souborů anki: \n %s</string>
-  <string name="import_replacing">Replacing collection...</string>
+  <string name="import_replacing">Replacing collection&#8230;</string>
   <string name="export_include_schedule">Zahrnout plánování</string>
   <string name="export_include_media">Zahrnout multimédia</string>
   <string name="confirm_apkg_export">Export kolekce jako apkg soubor?</string>
@@ -155,6 +156,7 @@
   <string name="import_hint">Pro import karet umístěte soubor apkg do adresáře %s a stiskněte ok</string>
   <string name="upgrade_import_no_file_found">Iportvatelný soubor %1$s nebyl nenalezen</string>
   <string name="study_options">Nastavení balíčku</string>
+  <string name="select_tts">Set TTS language</string>
   <string name="custom_study">Vlastní učení</string>
   <string name="more_options">Více</string>
   <string name="dyn_deck_desc">Toto je speciální balíček pro studium mimo normální plán. Karty se automaticky po opakování vrátí do svého původního balíčku. Odstraněním tohoto balíčku ze seznamu se všechny zbývající karty vrátí to jejich původního balíčku.</string>
