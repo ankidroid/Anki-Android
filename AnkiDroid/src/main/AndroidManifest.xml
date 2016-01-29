@@ -87,20 +87,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
             </intent-filter>
+            <!-- *.apkg matcher. NOTE: when pathPattern is used, host and scheme must also be specified -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="com.ankidroid.category.DECK" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="application/vnd.anki" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data
                     android:host="*"
                     android:mimeType="*/*"
@@ -122,29 +113,17 @@
                     android:pathPattern=".*\\.apkg"
                     android:scheme="file" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data
-                    android:pathPattern=".*\\.apkg"
-                    android:scheme="file" />
-            </intent-filter>
+            <!-- MIME type matcher for .apkg files coming from providers like gmail which hide the file extension -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="application/apkg"/>
-                <data android:mimeType="application/octet-stream"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="application/x-apkg"/>
+                <data android:mimeType="application/octet-stream" android:scheme="content"/>
+                <data android:mimeType="application/zip" android:scheme="content"/>
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="application/zip"/>
-            </intent-filter>
+
+            <!-- Tasker DO_SYNC intent -->
             <intent-filter>
                 <action android:name="com.ichi2.anki.DO_SYNC" />
                 <category android:name="android.intent.category.DEFAULT" />
