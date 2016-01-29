@@ -55,7 +55,7 @@
     <string name="text_selection_click_summ">Enable this if you are not able to select text with a long press</string>
     <string name="dictionary">Lookup dictionary</string>
     <string name="reset_languages">Reset languages</string>
-    <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks.</string>
+    <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
     <string name="reset_languages_question">Reset all language assignments?</string>
     <string name="reset_confirmation">All states reset</string>
     <string name="card_zoom">Card zoom</string>
