@@ -27,7 +27,7 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v4.app.DialogFragment;
+import android.support.annotation.NonNull;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
@@ -50,6 +50,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.CardBrowserContextMenu;
@@ -89,9 +90,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private HashMap<String, String> mDeckNames;
     private ArrayList<JSONObject> mDropDownDecks;
     private SearchView mSearchView;
-    private ListView mCardsListView;
-    private Spinner mCardsColumn1Spinner;
-    private Spinner mCardsColumn2Spinner;
     private MultiColumnListAdapter mCardsAdapter;
     private String mSearchTerms;
     private String mRestrictOnDeck;
@@ -109,8 +107,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private boolean mOrderAsc;
     private int mColumn1Index;
     private int mColumn2Index;
-
-    private static final int DIALOG_TAGS = 3;
 
     private static final int BACKGROUND_NORMAL = 0;
     private static final int BACKGROUND_MARKED = 1;
@@ -153,7 +149,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         "edited",
         "interval"};
     private long mLastRenderStart = 0;
-    private ActionBar mActionBar;
     private DeckDropDownAdapter mDropDownAdapter;
     private Spinner mActionBarSpinner;
     private boolean mReloadRequired = false;
@@ -199,13 +194,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
                                     .get("sfld")))
                             .positiveText(res.getString(R.string.dialog_positive_delete))
                             .negativeText(res.getString(R.string.dialog_cancel))
-                            .callback(new MaterialDialog.ButtonCallback() {
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
                                 @Override
-                                public void onPositive(MaterialDialog dialog) {
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                     Card card = getCol().getCard(Long.parseLong(getCards().get(mPositionInCardsList).get("id")));
                                     deleteNote(card);
                                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDeleteNoteHandler,
-                                                            new DeckTask.TaskData(card, 3));
+                                            new DeckTask.TaskData(card, 3));
                                 }
                             })
                             .build().show();
@@ -351,10 +346,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Timber.d("onCreate()");
-        View mainView = getLayoutInflater().inflate(R.layout.card_browser, null);
-        setContentView(mainView);
-
-        initNavigationDrawer(mainView);
+        setContentView(R.layout.card_browser);
+        initNavigationDrawer(findViewById(android.R.id.content));
         startLoadingCollection();
     }
 
@@ -364,7 +357,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         Timber.d("onCollectionLoaded()");
-        mDeckNames = new HashMap<String, String>();
+        mDeckNames = new HashMap<>();
         for (long did : getCol().getDecks().allIds()) {
             mDeckNames.put(String.valueOf(did), getCol().getDecks().name(did));
         }
@@ -375,8 +368,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // Add drop-down menu to select deck to action bar.
         mDropDownDecks = getCol().getDecks().allSorted();
         mDropDownAdapter = new DeckDropDownAdapter(this, mDropDownDecks);
-        mActionBar = getSupportActionBar();
-        mActionBar.setDisplayShowTitleEnabled(false);
+        ActionBar mActionBar = getSupportActionBar();
+        if (mActionBar != null) {
+            mActionBar.setDisplayShowTitleEnabled(false);
+        }
         mActionBarSpinner = (Spinner) findViewById(R.id.toolbar_spinner);
         mActionBarSpinner.setAdapter(mDropDownAdapter);
         mActionBarSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -414,15 +409,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         
         mCards = new ArrayList<>();
-        mCardsListView = (ListView) findViewById(R.id.card_browser_list);
+        ListView cardsListView = (ListView) findViewById(R.id.card_browser_list);
         // Create a spinner for column1
-        mCardsColumn1Spinner = (Spinner) findViewById(R.id.browser_column1_spinner);
+        Spinner cardsColumn1Spinner = (Spinner) findViewById(R.id.browser_column1_spinner);
         ArrayAdapter<CharSequence> column1Adapter = ArrayAdapter.createFromResource(this,
                 R.array.browser_column1_headings, android.R.layout.simple_spinner_item);
         column1Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mCardsColumn1Spinner.setAdapter(column1Adapter);
+        cardsColumn1Spinner.setAdapter(column1Adapter);
         mColumn1Index = AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserColumn1", 0);
-        mCardsColumn1Spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+        cardsColumn1Spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 // If a new column was selected then change the key used to map from mCards to the column TextView
@@ -444,13 +439,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // Load default value for column2 selection
         mColumn2Index = AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserColumn2", 0);
         // Setup the column 2 heading as a spinner so that users can easily change the column type
-        mCardsColumn2Spinner = (Spinner) findViewById(R.id.browser_column2_spinner);
+        Spinner cardsColumn2Spinner = (Spinner) findViewById(R.id.browser_column2_spinner);
         ArrayAdapter<CharSequence> column2Adapter = ArrayAdapter.createFromResource(this,
                 R.array.browser_column2_headings, android.R.layout.simple_spinner_item);
         column2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mCardsColumn2Spinner.setAdapter(column2Adapter);
+        cardsColumn2Spinner.setAdapter(column2Adapter);
         // Create a new list adapter with updated column map any time the user changes the column
-        mCardsColumn2Spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+        cardsColumn2Spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 // If a new column was selected then change the key used to map from mCards to the column TextView
@@ -482,16 +477,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 "flags",
                 sflRelativeFontSize,
                 sflCustomFont);
-        // link the adapter to the main mCardsListView
-        mCardsListView.setAdapter(mCardsAdapter);
+        // link the adapter to the main cardsListView
+        cardsListView.setAdapter(mCardsAdapter);
         // make the second column load dynamically when scrolling
-        mCardsListView.setOnScrollListener(new RenderOnScroll());
+        cardsListView.setOnScrollListener(new RenderOnScroll());
         // set the spinner index
-        mCardsColumn1Spinner.setSelection(mColumn1Index);
-        mCardsColumn2Spinner.setSelection(mColumn2Index);
+        cardsColumn1Spinner.setSelection(mColumn1Index);
+        cardsColumn2Spinner.setSelection(mColumn2Index);
 
 
-        mCardsListView.setOnItemClickListener(new OnItemClickListener() {
+        cardsListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // load up the card selected on the list
@@ -505,7 +500,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 startActivityForResultWithAnimation(editCard, EDIT_CARD, ActivityTransitionAnimation.LEFT);
             }
         });
-        mCardsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+        cardsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 mPositionInCardsList = position;
@@ -675,7 +670,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             case R.id.action_list_my_searches:
                 JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
-                HashMap<String, String> savedFilters = new HashMap<String, String>();
+                HashMap<String, String> savedFilters = new HashMap<>();
                 if (savedFiltersObj != null) {
                     Iterator<String> it = savedFiltersObj.keys();
                     while (it.hasNext()) {
@@ -706,7 +701,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
 
             case R.id.action_search_by_tag:
-                showDialogFragment(DIALOG_TAGS);
+                showTagsDialog();
                 return true;
 
             default:
@@ -755,67 +750,51 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 && getCards().get(mPositionInCardsList) != null) {
             long reviewerCard = getIntent().getExtras().getLong("currentCard");
             long selectedCard = Long.parseLong(getCards().get(mPositionInCardsList).get("id"));
-            if (selectedCard == reviewerCard) {
-                return true;
-            } else {
-                return false;
-            }
+            return selectedCard == reviewerCard;
         }
         return false;
     }
 
-    private DialogFragment showDialogFragment(int id) {
-        DialogFragment dialogFragment = null;
-        String tag = null;
-        switch(id) {
-            case DIALOG_TAGS:
-                TagsDialog dialog = com.ichi2.anki.dialogs.TagsDialog.newInstance(
-                    TagsDialog.TYPE_FILTER_BY_TAG, new ArrayList<String>(), new ArrayList<String>(getCol().getTags().all()));
-                dialog.setTagsDialogListener(new TagsDialogListener() {                    
-                    @Override
-                    public void onPositive(List<String> selectedTags, int option) {
-                        mSearchView.setQuery("", false);
-                        String tags = selectedTags.toString();
-                        mSearchView.setQueryHint(getResources().getString(R.string.card_browser_tags_shown,
-                                tags.substring(1, tags.length() - 1)));
-                        StringBuilder sb = new StringBuilder();
-                        switch (option) {
-                            case 1:
-                                sb.append("is:new ");
-                                break;
-                            case 2:
-                                sb.append("is:due ");
-                                break;
-                            default:
-                                // Logging here might be appropriate : )
-                                break;
-                        }
-                        int i = 0;
-                        for (String tag : selectedTags) {
-                            if (i != 0) {
-                                sb.append("or ");
-                            } else {
-                                sb.append("("); // Only if we really have selected tags
-                            }
-                            sb.append("tag:").append(tag).append(" ");
-                            i++;
-                        }
-                        if (i > 0) {
-                            sb.append(")"); // Only if we added anything to the tag list
-                        }
-                        mSearchTerms = sb.toString();
-                        searchCards();
+    private void showTagsDialog() {
+        TagsDialog dialog = com.ichi2.anki.dialogs.TagsDialog.newInstance(
+            TagsDialog.TYPE_FILTER_BY_TAG, new ArrayList<String>(), new ArrayList<>(getCol().getTags().all()));
+        dialog.setTagsDialogListener(new TagsDialogListener() {
+            @Override
+            public void onPositive(List<String> selectedTags, int option) {
+                mSearchView.setQuery("", false);
+                String tags = selectedTags.toString();
+                mSearchView.setQueryHint(getResources().getString(R.string.card_browser_tags_shown,
+                        tags.substring(1, tags.length() - 1)));
+                StringBuilder sb = new StringBuilder();
+                switch (option) {
+                    case 1:
+                        sb.append("is:new ");
+                        break;
+                    case 2:
+                        sb.append("is:due ");
+                        break;
+                    default:
+                        // Logging here might be appropriate : )
+                        break;
+                }
+                int i = 0;
+                for (String tag : selectedTags) {
+                    if (i != 0) {
+                        sb.append("or ");
+                    } else {
+                        sb.append("("); // Only if we really have selected tags
                     }
-                });
-                dialogFragment = dialog;
-                break;
-            default:
-                break;
-        }
-        
-
-        dialogFragment.show(getSupportFragmentManager(), tag);
-        return dialogFragment;
+                    sb.append("tag:").append(tag).append(" ");
+                    i++;
+                }
+                if (i > 0) {
+                    sb.append(")"); // Only if we added anything to the tag list
+                }
+                mSearchTerms = sb.toString();
+                searchCards();
+            }
+        });
+        showDialogFragment(dialog);
     }
 
 
@@ -1277,19 +1256,25 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         }
 
-
+        /**
+         * Get the index that specifies the background color of items in the card list based on the String tag
+         * @param flag a string flag
+         * @return index into TypedArray specifying the background color
+         */
         private int getColor(String flag) {
-            int which = BACKGROUND_NORMAL;
             if (flag == null) {
-                // use BACKGROUND_NORMAL
-            } else if (flag.equals("1")) {
-                which = BACKGROUND_SUSPENDED;
-            } else if (flag.equals("2")) {
-                which = BACKGROUND_MARKED;
-            } else if (flag.equals("3")) {
-                which = BACKGROUND_MARKED_SUSPENDED;
+                return BACKGROUND_NORMAL;
             }
-            return which;
+            switch (flag) {
+                case "1":
+                    return BACKGROUND_SUSPENDED;
+                case "2":
+                    return  BACKGROUND_MARKED;
+                case "3":
+                    return  BACKGROUND_MARKED_SUSPENDED;
+                default:
+                    return BACKGROUND_NORMAL;
+            }
         }
 
 
