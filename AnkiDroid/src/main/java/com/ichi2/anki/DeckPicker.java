@@ -491,7 +491,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                                 String deckName = mDialogEditText.getText().toString();
                                 Timber.i("DeckPicker:: Creating new deck...");
                                 getCol().getDecks().id(deckName, true);
-                                CardBrowser.clearSelectedDeck();
                                 updateDeckList();
                             }
                         })
@@ -665,7 +664,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             } else {
                 finishWithAnimation();
             }
-        } else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
         } else if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
             mSyncOnResume = true;
         } else if ((requestCode == REQUEST_REVIEW || requestCode == SHOW_STUDYOPTIONS)
@@ -676,6 +674,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 showSimpleSnackbar(R.string.studyoptions_congrats_finished, false);
             } else {
                 showSimpleSnackbar(R.string.studyoptions_no_cards_due, false);
+            }
+        } else if (requestCode == REQUEST_BROWSE_CARDS) {
+            // Store the selected deck after opening browser
+            if (intent != null && intent.getBooleanExtra("allDecksSelected", false)) {
+                AnkiDroidApp.getSharedPrefs(this).edit().putLong("browserDeckIdFromDeckPicker", -1L).apply();
+            } else {
+                long selectedDeck = getCol().getDecks().selected();
+                AnkiDroidApp.getSharedPrefs(this).edit().putLong("browserDeckIdFromDeckPicker", selectedDeck).apply();
             }
         } else if (requestCode == REQUEST_PATH_UPDATE) {
             // The collection path was inaccessible on startup so just close the activity and let user restart
@@ -1694,10 +1700,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
+    @Override
+    protected void openCardBrowser() {
+        Intent cardBrowser = new Intent(this, CardBrowser.class);
+        cardBrowser.putExtra("selectedDeck", getCol().getDecks().selected());
+        long lastDeckId = AnkiDroidApp.getSharedPrefs(this).getLong("browserDeckIdFromDeckPicker", -1L);
+        cardBrowser.putExtra("defaultDeckId", lastDeckId);
+        startActivityForResultWithAnimation(cardBrowser, REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
+    }
+
 
     private void handleDeckSelection(long did, boolean dontSkipStudyOptions) {
-        // Forget what the last used deck was in the browser
-        CardBrowser.clearSelectedDeck();
         // Clear the undo history when selecting a new deck
         if (getCol().getDecks().selected() != did) {
             getCol().clearUndo();
@@ -2012,7 +2025,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         Timber.e(e, "onPostExecute - Exception dismissing dialog");
                     }
                 }
-                CardBrowser.clearSelectedDeck();
                 // TODO: if we had "undo delete note" like desktop client then we won't need this.
                 getCol().clearUndo();
             }

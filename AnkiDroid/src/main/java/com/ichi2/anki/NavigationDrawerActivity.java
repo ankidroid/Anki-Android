@@ -54,9 +54,6 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
     public static final int REQUEST_PREFERENCES_UPDATE = 100;
     public static final int REQUEST_BROWSE_CARDS = 101;
     public static final int REQUEST_STATISTICS = 102;
-
-    private long mCurrentCardId = -1L;
-
     // Navigation drawer initialisation
     protected void initNavigationDrawer(View mainView){
         // Create inherited navigation drawer layout here so that it can be used by parent class
@@ -119,11 +116,17 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
             return;
         }
         Menu menu = mNavigationView.getMenu();
-        MenuItem item = menu.findItem(itemId);
-        if (item != null) {
-            item.setChecked(true);
+        if (itemId == -1) {
+            for (int i = 0; i < menu.size(); i++) {
+                menu.getItem(i).setChecked(false);
+            }
         } else {
-            Timber.e("Could not find item %d", itemId);
+            MenuItem item = menu.findItem(itemId);
+            if (item != null) {
+                item.setChecked(true);
+            } else {
+                Timber.e("Could not find item %d", itemId);
+            }
         }
     }
 
@@ -233,10 +236,6 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
         }
     }
 
-    protected void setCurrentCardId(long id) {
-        mCurrentCardId = id;
-    }
-
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Don't do anything if user selects already selected position
@@ -251,12 +250,7 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
                 startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.RIGHT);
                 break;
             case R.id.nav_browser:
-                Intent cardBrowser = new Intent(this, CardBrowser.class);
-                cardBrowser.putExtra("selectedDeck", getCol().getDecks().selected());
-                if (mCurrentCardId >= 0) {
-                    cardBrowser.putExtra("currentCard", mCurrentCardId);
-                }                
-                startActivityForResultWithAnimation(cardBrowser, REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
+                openCardBrowser();
                 break;
             case R.id.nav_stats:
                 Intent intent = new Intent(this, Statistics.class);
@@ -283,6 +277,15 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
         }
         mDrawerLayout.closeDrawers();
         return true;
+    }
+
+    /**
+     * Open the card browser. Override this method to pass it custom arguments
+     */
+    protected void openCardBrowser() {
+        Intent cardBrowser = new Intent(this, CardBrowser.class);
+        cardBrowser.putExtra("selectedDeck", getCol().getDecks().selected());
+        startActivityForResultWithAnimation(cardBrowser, REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
     }
 
     protected void showBackIcon() {

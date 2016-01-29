@@ -99,7 +99,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private MenuItem mMySearchesItem;
 
     public static Card sCardBrowserCard;
-    private static int sLastSelectedDeckIndex = -1;
 
     private int mPositionInCardsList;
 
@@ -407,7 +406,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        
+
         mCards = new ArrayList<>();
         ListView cardsListView = (ListView) findViewById(R.id.card_browser_list);
         // Create a spinner for column1
@@ -521,29 +520,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mSearchTerms = "";
 
         // set the currently selected deck
-        if (sLastSelectedDeckIndex == -1) {
-            String currentDeckName;
-            try {
-                currentDeckName = getCol().getDecks().current().getString("name");
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-            for (int dropDownDeckIdx = 0; dropDownDeckIdx < mDropDownDecks.size(); dropDownDeckIdx++) {
-                JSONObject deck = mDropDownDecks.get(dropDownDeckIdx);
-                String deckName;
-                try {
-                    deckName = deck.getString("name");
-                } catch (JSONException e) {
-                    throw new RuntimeException();
-                }
-                if (deckName.equals(currentDeckName)) {
-                    selectDropDownItem(dropDownDeckIdx + 1);
-                    break;
-                }
-            }
-        } else if (sLastSelectedDeckIndex > 0 && sLastSelectedDeckIndex < mDropDownDecks.size()) {
-            selectDropDownItem(sLastSelectedDeckIndex);
-        }
+        selectDropDownItem(getDeckPositionFromDeckId(getIntent().getLongExtra("defaultDeckId", -1)));
     }
 
 
@@ -578,9 +555,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         } else {
             Timber.i("Back key pressed");
             Intent data = new Intent();
-            if (getIntent().hasExtra("selectedDeck")) {
-                data.putExtra("originalDeck", getIntent().getLongExtra("selectedDeck", 0L));
-            }
             if (mReloadRequired) {
                 // Add reload flag to result intent so that schedule reset when returning to note editor
                 data.putExtra("reloadRequired", true);
@@ -800,7 +774,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     public void selectDropDownItem(int position) {
         mActionBarSpinner.setSelection(position);
-        sLastSelectedDeckIndex = position;
         if (position == 0) {
             mRestrictOnDeck = "";
         } else {
@@ -864,6 +837,30 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         }
         return -1;
+    }
+
+
+    /**
+     * Get the index in the deck spinner for a given deck ID
+     * @param did the id of a deck
+     * @return the corresponding index in the deck spinner, or 0 if not found
+     */
+    private int getDeckPositionFromDeckId(long did) {
+        for (int dropDownDeckIdx = 0; dropDownDeckIdx < mDropDownDecks.size(); dropDownDeckIdx++) {
+            JSONObject deck = mDropDownDecks.get(dropDownDeckIdx);
+            long cdid;
+            try {
+                cdid = deck.getLong("id");
+            } catch (JSONException e) {
+                throw new RuntimeException();
+            }
+            if (cdid == did) {
+                // NOTE: mDropDownDecks.get(0) is the first deck, whereas index 0 in mActionBarSpinner is "All Decks"
+                return dropDownDeckIdx + 1;
+            }
+        }
+        // Fall back on "All Decks" if did wasn't found
+        return 0;
     }
 
 
@@ -1127,12 +1124,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private void closeCardBrowser(int result, Intent data) {
+        // Pass the originally selected deck back so that the calling Activity can switch back to it
+        if (getIntent().hasExtra("selectedDeck")) {
+            data.putExtra("originalDeck", getIntent().getLongExtra("selectedDeck", 0L));
+        }
+        // Pass a flag to say whether "All Decks" was selected so that the calling Activity can remember it
+        data.putExtra("allDecksSelected", mActionBarSpinner.getSelectedItemPosition() == 0);
+        // Set result and finish
         setResult(result, data);
         finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-    }
-
-    public static void clearSelectedDeck() {
-        sLastSelectedDeckIndex = -1;
     }
 
     /**
