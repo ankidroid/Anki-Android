@@ -148,7 +148,6 @@ public class CompatV10 implements Compat {
                                                 Timber.i("DeckPicker:: Creating new deck...");
                                                 String deckName = mDialogEditText.getText().toString();
                                                 activity.getCol().getDecks().id(deckName, true);
-                                                CardBrowser.clearSelectedDeck();
                                                 activity.onRequireDeckListUpdate();
                                             }
                                         })
