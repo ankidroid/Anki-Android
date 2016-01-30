@@ -93,6 +93,7 @@
   <string name="saving_facts">Enregistrer la note</string>
   <string name="saving_model">Sauvegarde du modèle</string>
   <string name="add">Ajouter</string>
+  <string name="save">Save</string>
   <string name="close">Fermer</string>
   <string name="select">Sélectionner</string>
   <string name="saving_changes">Enregistrement des modifications&#8230;</string>
@@ -140,7 +141,7 @@
   <string name="import_log_no_apkg">Ce n\'est pas un fichier apkg valide</string>
   <string name="import_error_not_apkg_extension">Le nom de fichier %s n’a pas l’extension .apkg</string>
   <string name="import_error_content_provider">Le fichier sélectionné n’a pas pu être importé automatiquement par AnkiDroid. Veuillez consulter le manuel de l’utilisateur pour savoir comment importer manuellement des fichiers de Anki : \n %s</string>
-  <string name="import_replacing">Replacing collection...</string>
+  <string name="import_replacing">Replacing collection&#8230;</string>
   <string name="export_include_schedule">Inclure la planification</string>
   <string name="export_include_media">Inclure les médias</string>
   <string name="confirm_apkg_export">Exporter la collection au format apkg ?</string>
@@ -152,6 +153,7 @@
   <string name="import_hint">Pour importer des cartes, placez le fichier apkg dans le répertoire « %s » et touchez « OK »</string>
   <string name="upgrade_import_no_file_found">Pas de fichier %1$s importable trouvé</string>
   <string name="study_options">Options des paquets</string>
+  <string name="select_tts">Set TTS language</string>
   <string name="custom_study">Étude personnalisée</string>
   <string name="more_options">Plus</string>
   <string name="dyn_deck_desc">Ceci est un paquet pour l\'étude en dehors des horaires normaux. Les cartes reviendront automatiquement à leur paquet d\'origine après leur révision. La suppression de ce paquet remettra toutes les cartes restantes dans leur paquet d\'origine.</string>

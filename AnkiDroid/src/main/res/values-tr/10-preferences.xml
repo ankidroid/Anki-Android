@@ -40,6 +40,7 @@
 -->
 <resources>
   <string name="disabled">Devredışı</string>
+  <string name="enabled">Enabled</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Genel ayarlar</string>
   <string name="pref_cat_reviewing">Çalışma</string>
@@ -48,8 +49,8 @@
   <string name="pref_cat_flashcard">Ekran</string>
   <string name="pref_cat_whiteboard">Yazı tahtası</string>
   <string name="pref_cat_automatic_display">Cevabı otomatik göster</string>
-  <string name="pref_cat_fonts">Fontlar</string>
-  <string name="pref_cat_fonts_summ">Varsayılan fontu değiştir</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Jestler</string>
   <string name="pref_cat_gestures_summ">Düğmeler yerine dokunma ve kaydırma kullan</string>
   <string name="pref_cat_actions">Eylemler</string>
@@ -71,7 +72,7 @@
   <string name="text_selection_click_summ">Uzun basarak yazı seçemiyorsanız bunu etkinleştirin</string>
   <string name="dictionary">Sözlüğe bak</string>
   <string name="reset_languages">Dilleri sıfırla</string>
-  <string name="reset_languages_summ">Tüm destelerdeki dil atamalarını sıfırla (metin okuma ve sözlükler için). Belirli deste atamalarını sıfırlamak için deste seçiciyi kullanın.</string>
+  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
   <string name="reset_languages_question">Tüm dil atamaları sıfırlansın mı?</string>
   <string name="reset_confirmation">Bütün durumlar sıfırlandı</string>
   <string name="card_zoom">Kart yakınlaştırma</string>
@@ -156,6 +157,12 @@
   <string name="convert_fen_text_summ">Forsyth Edwards Notasyonundan satranç tahtası çiz. Notasyon [fen][/fen] etiketi içine alınmış olmalıdır.</string>
   <string name="enable_api_title">AnkiDroid API etkinleştir</string>
   <string name="enable_api_summary">Diğer uygulamaların AnkiDroid\'e bağlanmasına ve müdahaleniz olmadan veriyi okuyup / yazmasına izin verir</string>
+  <string name="advanced_statistics_title">Advanced statistics</string>
+  <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
+  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
   <string name="custom_sync_server_title">Özel senkronizasyon sunucusu</string>
   <string name="custom_sync_server_enable_title">Özel senkronizasyon sunucusu kullan</string>
   <string name="custom_sync_server_enable_summary">Özel AnkiWeb hizmetini kullanmak istemiyorsanız burada alternatif bir sunucu belirtebilirsiniz</string>

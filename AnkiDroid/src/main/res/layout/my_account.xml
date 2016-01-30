@@ -62,7 +62,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/colorPrimary"
-                    android:textColor="?attr/actionBarTextColor"
+                    android:textColor="@color/white"
                     android:singleLine="true"
                     android:textSize="@dimen/md_title_textsize"
                     android:layout_gravity="center"

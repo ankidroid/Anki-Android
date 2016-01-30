@@ -40,6 +40,7 @@
 -->
 <resources>
   <string name="disabled">Disabled</string>
+  <string name="enabled">Enabled</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Obecné nastavení</string>
   <string name="pref_cat_reviewing">Opakování</string>
@@ -48,8 +49,8 @@
   <string name="pref_cat_flashcard">Zobrazení</string>
   <string name="pref_cat_whiteboard">Tabule</string>
   <string name="pref_cat_automatic_display">Automaticky zobrazovat odpověď</string>
-  <string name="pref_cat_fonts">Písmo</string>
-  <string name="pref_cat_fonts_summ">Změna výchozího písma a velikosti</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Gesta</string>
   <string name="pref_cat_gestures_summ">Použití poklepání a gest místo tlačítek</string>
   <string name="pref_cat_actions">Akce</string>
@@ -71,7 +72,7 @@
   <string name="text_selection_click_summ">Povolte, pokud nejste schopni spustit výběr textu přes dlouhý klik</string>
   <string name="dictionary">Slovník</string>
   <string name="reset_languages">Obnovit jazyky</string>
-  <string name="reset_languages_summ">Obnoví přiřazení jazyka (pro převod textu na řeč a slovníky) ve všech balíčcích. Obnovení pouze konkrétního balíčku lze přímo na balíčku.</string>
+  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
   <string name="reset_languages_question">Obnovit všechny přiřazení jazyka?</string>
   <string name="reset_confirmation">Obnovit všechny stavy</string>
   <string name="card_zoom">Zvětšení karty</string>
@@ -156,6 +157,12 @@
   <string name="convert_fen_text_summ">Vykreslení šachovnice z Forsyth Edwards Notation. Zápis musí být uzavřen mezi značky [fen][/fen].</string>
   <string name="enable_api_title">Povolit AnkiDroid API</string>
   <string name="enable_api_summary">Umožnit ostatním aplikacím číst a zapisovat data AnkiDroid bez uživatelské intervence</string>
+  <string name="advanced_statistics_title">Advanced statistics</string>
+  <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
+  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
   <string name="custom_sync_server_title">Custom sync server</string>
   <string name="custom_sync_server_enable_title">Use custom sync server</string>
   <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>

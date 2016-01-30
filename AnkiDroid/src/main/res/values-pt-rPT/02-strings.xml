@@ -93,6 +93,7 @@
   <string name="saving_facts">A guardar nota</string>
   <string name="saving_model">Guardar modelo</string>
   <string name="add">Adicionar</string>
+  <string name="save">Save</string>
   <string name="close">Fechar</string>
   <string name="select">Selecionar</string>
   <string name="saving_changes">A guardar as  alterações...</string>
@@ -124,7 +125,7 @@
   <string name="help_title">Ajuda</string>
   <string name="check_db">Verificar base de dados</string>
   <string name="check_media">Verificar multimédia</string>
-  <string name="empty_cards">Empty cards</string>
+  <string name="empty_cards">Fichas vazias</string>
   <string name="check_db_message">A verificar a base de dados&#8230;</string>
   <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Escrever resposta: campo desconhecido %s</string>
@@ -140,7 +141,7 @@
   <string name="import_log_no_apkg">Este não é um ficheiro apkg válido</string>
   <string name="import_error_not_apkg_extension">O arquivo \"%s\" não tem a extensão .apkg</string>
   <string name="import_error_content_provider">Não foi possível importar automaticamente o ficheiro selecionado com AnkiDroid. Por favor, consulte o manual do utilizador para saber como importar manualmente os ficheiros anki: \n%s</string>
-  <string name="import_replacing">Replacing collection...</string>
+  <string name="import_replacing">Replacing collection&#8230;</string>
   <string name="export_include_schedule">Incluir agendamento</string>
   <string name="export_include_media">Incluir multimédia</string>
   <string name="confirm_apkg_export">Exportar coleção como ficheiro apkg?</string>
@@ -152,6 +153,7 @@
   <string name="import_hint">Coloque o ficheiro apkg na diretoria %s e toque em \"ACEITAR\" para importar as fichas</string>
   <string name="upgrade_import_no_file_found">Não foi encontrado ficheiro %1$s para importar</string>
   <string name="study_options">Opções de baralho</string>
+  <string name="select_tts">Set TTS language</string>
   <string name="custom_study">Estudo personalizado</string>
   <string name="more_options">Mais</string>
   <string name="dyn_deck_desc">Este é um baralho especial para estudar fora do horário normal. As fichas serão automaticamente devolvidas para os seus baralhos originais depois de os rever. Ao eliminar este baralho da lista de baralhos irá enviar devolver todas as fichas restantes para o seu baralho original.</string>

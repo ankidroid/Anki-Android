@@ -93,4 +93,12 @@
     <item>Quan cap font està especificada en les flashcards</item>
     <item>Sempre</item>
   </string-array>
+  <string-array name="day_theme_labels">
+    <item>Default</item>
+    <item>Plain</item>
+  </string-array>
+  <string-array name="night_theme_labels">
+    <item>Default</item>
+    <item>Black</item>
+  </string-array>
 </resources>

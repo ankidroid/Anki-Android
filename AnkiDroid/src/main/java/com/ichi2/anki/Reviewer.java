@@ -53,6 +53,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mShowWhiteboard = true;
     private boolean mBlackWhiteboard = true;
     private boolean mPrefFullscreenReview = false;
+    private Long mLastSelectedBrowserDid = null;
 
     @Override
     protected void setTitle() {
@@ -440,14 +441,20 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
+
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Tell the browser the current card ID so that it can tell us when we need to reload
-        if (mCurrentCard != null) {
-            setCurrentCardId(mCurrentCard.getId());
+    protected void openCardBrowser() {
+        Intent cardBrowser = new Intent(this, CardBrowser.class);
+        cardBrowser.putExtra("selectedDeck", getCol().getDecks().selected());
+        if (mLastSelectedBrowserDid != null) {
+            cardBrowser.putExtra("defaultDeckId", mLastSelectedBrowserDid);
+        } else {
+            cardBrowser.putExtra("defaultDeckId", getCol().getDecks().selected());
         }
-        return super.onNavigationItemSelected(item);
+        cardBrowser.putExtra("currentCard", mCurrentCard.getId());
+        startActivityForResultWithAnimation(cardBrowser, REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
     }
+
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -463,8 +470,13 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_STATISTICS || requestCode == REQUEST_BROWSE_CARDS) {
-            // select original deck if the statistics or card browser were opened,
-            // which can change the selected deck
+            // Store the selected deck
+            if (data != null && data.getBooleanExtra("allDecksSelected", false)) {
+                mLastSelectedBrowserDid = -1L;
+            } else {
+                mLastSelectedBrowserDid = getCol().getDecks().selected();
+            }
+            // select original deck if the statistics or card browser were opened, which can change the selected deck
             if (data != null && data.hasExtra("originalDeck")) {
                 getCol().getDecks().select(data.getLongExtra("originalDeck", 0L));
             }

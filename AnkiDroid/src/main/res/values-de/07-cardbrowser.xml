@@ -64,7 +64,7 @@
   <string name="card_browser_list_my_searches_remove_content">»%1$s« löschen?</string>
   <string name="card_browser_change_display_order">Anzeigereihenfolge ändern</string>
   <string name="card_browser_change_display_order_title">Anzeigereihenfolge auswählen</string>
-  <string name="card_browser_change_display_order_reverse">Zum Umkehren ein Feld zweimal wählen.</string>
+  <string name="card_browser_change_display_order_reverse">Zum Umkehren ein Feld zweimal wählen</string>
   <string name="card_details_question">Frage</string>
   <string name="card_details_answer">Antwort</string>
   <string name="card_details_due">Fällig</string>
@@ -80,6 +80,6 @@
     <item>Nach Intervall</item>
     <item>Nach Leichtigkeit</item>
     <item>Nach Wiederholungen</item>
-    <item>Nach Anzahl Fehlschläge</item>
+    <item>Nach Anzahl falscher Antworten</item>
   </string-array>
 </resources>

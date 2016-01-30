@@ -93,6 +93,7 @@
   <string name="saving_facts">Notiz speichern</string>
   <string name="saving_model">Speichere Notiztyp</string>
   <string name="add">Hinzufügen</string>
+  <string name="save">Speichern</string>
   <string name="close">Schließen</string>
   <string name="select">Auswählen</string>
   <string name="saving_changes">Änderungen werden gespeichert&#8230;</string>
@@ -140,7 +141,7 @@
   <string name="import_log_no_apkg">Dies ist keine gültige apgk-Datei</string>
   <string name="import_error_not_apkg_extension">Dateiname »%s« hat keine .apkg-Endung</string>
   <string name="import_error_content_provider">Die ausgewählte Datei konnte nicht automatisch importiert werden. Lesen Sie im Handbuch, wie Sie Anki-Dateien manuell importieren können: \n %s</string>
-  <string name="import_replacing">Replacing collection...</string>
+  <string name="import_replacing">Replacing collection&#8230;</string>
   <string name="export_include_schedule">Zeitabstände einbeziehen</string>
   <string name="export_include_media">Medien einbeziehen</string>
   <string name="confirm_apkg_export">Sammlung als apkg-Datei exportieren?</string>
@@ -152,6 +153,7 @@
   <string name="import_hint">Kopieren Sie die apkg-Datei ins Verzeichnis »%s« und berühren Sie »OK«, um Karten zu importieren</string>
   <string name="upgrade_import_no_file_found">Keine importierbare Datei %1$s gefunden</string>
   <string name="study_options">Stapeloptionen</string>
+  <string name="select_tts">Set TTS language</string>
   <string name="custom_study">Benutzerdefiniertes Lernen</string>
   <string name="more_options">Mehr</string>
   <string name="dyn_deck_desc">Dies ist ein besonderer Stapel, um außerhalb des normalen Lehrplans zu lernen. Karten werden nach dem Lernen automatisch in ihren ursprünglichen Stapel zurückgeschickt. Beim Löschen dieses Stapels werden alle verbleibenden Karten in ihren ursprünglichen Stapel zurückgeschickt.</string>

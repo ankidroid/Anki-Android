@@ -40,6 +40,7 @@
 -->
 <resources>
   <string name="disabled">無効</string>
+  <string name="enabled">有効</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">一般設定</string>
   <string name="pref_cat_reviewing">カードの学習</string>
@@ -48,8 +49,8 @@
   <string name="pref_cat_flashcard">画面表示</string>
   <string name="pref_cat_whiteboard">ホワイトボード機能</string>
   <string name="pref_cat_automatic_display">解答の自動表示</string>
-  <string name="pref_cat_fonts">フォント</string>
-  <string name="pref_cat_fonts_summ">既定フォントとサイズの変更</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">ジェスチャー</string>
   <string name="pref_cat_gestures_summ">よく使うボタン操作をタップやスワイプにも割り当てます</string>
   <string name="pref_cat_actions">アクション</string>
@@ -71,7 +72,7 @@
   <string name="text_selection_click_summ">もし、長押しタップでテキストの選択が出来ない場合、これを有効にしてください。</string>
   <string name="dictionary">検索辞書</string>
   <string name="reset_languages">言語設定のリセット</string>
-  <string name="reset_languages_summ">すべてのデッキの言語の設定（音声合成、辞書）をリセットします。デッキ選択で選択したデッキの設定をリセットします</string>
+  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
   <string name="reset_languages_question">言語の割り当てをリセットしますか？</string>
   <string name="reset_confirmation">すべての状態をリセット</string>
   <string name="card_zoom">カードの拡大・縮小</string>
@@ -156,6 +157,12 @@
   <string name="convert_fen_text_summ">Forsyth Edwards Notation 表記法を使いチェス盤を描画します。この表記は[fen][/fen] で囲む必要があります</string>
   <string name="enable_api_title">AnkiDroid API を有効にする</string>
   <string name="enable_api_summary">他のアプリがAnkiDroidに接続しデータを読み書きすることを許可します</string>
+  <string name="advanced_statistics_title">高度な統計</string>
+  <string name="enable_advanced_statistics_title">高度な統計を有効にする</string>
+  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
   <string name="custom_sync_server_title">カスタム同期サーバー</string>
   <string name="custom_sync_server_enable_title">カスタム同期サーバーを使用する</string>
   <string name="custom_sync_server_enable_summary">AnkiWebのサービスを使用せず、代替サーバーを指定します</string>

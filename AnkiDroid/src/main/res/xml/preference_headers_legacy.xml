@@ -35,14 +35,14 @@
             android:action="com.ichi2.anki.prefs.reviewing" />        
     </PreferenceScreen>
 
-    <!-- Fonts & Style Prefrences -->
-    <PreferenceScreen android:title="@string/pref_cat_fonts"
-        android:key="font_preference_group"
-        android:summary="@string/pref_cat_fonts_summ">
+    <!-- Appearance Prefrences -->
+    <PreferenceScreen android:title="@string/pref_cat_appearance"
+        android:key="appearance_preference_group"
+        android:summary="@string/pref_cat_appearance_summ">
           <intent 
             android:targetPackage="com.ichi2.anki"
             android:targetClass="com.ichi2.anki.Preferences"
-            android:action="com.ichi2.anki.prefs.fonts" />        
+            android:action="com.ichi2.anki.prefs.appearance" />
     </PreferenceScreen>
 
     <!-- Navigation Prefrences -->

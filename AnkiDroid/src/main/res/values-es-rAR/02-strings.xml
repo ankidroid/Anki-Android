@@ -93,6 +93,7 @@
   <string name="saving_facts">Guardando nota</string>
   <string name="saving_model">Salvando modelo</string>
   <string name="add">Añadir</string>
+  <string name="save">Save</string>
   <string name="close">Cerrar</string>
   <string name="select">Seleccionar</string>
   <string name="saving_changes">Guardando modificaciones...</string>
@@ -140,7 +141,7 @@
   <string name="import_log_no_apkg">Este no es un archivo apkg válido</string>
   <string name="import_error_not_apkg_extension">El nombre de archivo %s no posee extensión .apkg</string>
   <string name="import_error_content_provider">El archivo seleccionado no puede ser importado automáticamente por AnkiDroid. Por favor, revise el manual de usuario para cómo importar manualmente archivos de anki: \n %s</string>
-  <string name="import_replacing">Replacing collection...</string>
+  <string name="import_replacing">Replacing collection&#8230;</string>
   <string name="export_include_schedule">Incluir programación</string>
   <string name="export_include_media">Incluir multimedia</string>
   <string name="confirm_apkg_export">¿Exportar colección como archivo apkg?</string>
@@ -152,6 +153,7 @@
   <string name="import_hint">Para importar tarjetas coloque el archivo apkg en el directorio %s y presione OK</string>
   <string name="upgrade_import_no_file_found">No se ha hallado archivos %1$s para importar</string>
   <string name="study_options">Opciones de mazo</string>
+  <string name="select_tts">Set TTS language</string>
   <string name="custom_study">Estudio personalizado</string>
   <string name="more_options">Más</string>
   <string name="dyn_deck_desc">Este es un mazo especial para estudiar por fuera del cronograma normal. Las tarjetas serán automáticamente devueltas a sus mazos originales luego de que las haya repasado. Borrar este mazo de la lista de mazos devolverá todas las tarjetas restantes a sus mazos originales.</string>

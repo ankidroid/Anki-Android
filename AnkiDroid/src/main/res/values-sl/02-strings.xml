@@ -93,6 +93,7 @@
   <string name="saving_facts">Shranjevanje zapiska</string>
   <string name="saving_model">Shranjevanje modela</string>
   <string name="add">Dodaj</string>
+  <string name="save">Shrani</string>
   <string name="close">Zapri</string>
   <string name="select">Izberi</string>
   <string name="saving_changes">Shranjevanje sprememb &#8230;</string>
@@ -138,7 +139,7 @@
   <string name="show_hint">Prikaži %s</string>
   <string name="info_rate">Oceni AnkiDroid</string>
   <string name="col_load_failed">Nalaganje zbirke je spodletelo\n Pritisnite Nazaj, da zaprete AnkiDroid.</string>
-  <string name="import_title">Importing</string>
+  <string name="import_title">Uvažanje</string>
   <string name="import_select_title">Izberite datoteko za uvoz</string>
   <string name="import_message_add">Dodaj</string>
   <string name="import_message_replace_confirm">To bo izbrisalo vašo obstoječo zbirko in jo nadomestilo s podatki datoteke %s</string>
@@ -146,7 +147,7 @@
   <string name="import_log_no_apkg">To ni veljavna datoteka apkg</string>
   <string name="import_error_not_apkg_extension">Ime datoteke \"%s\" nima končnice .apkg</string>
   <string name="import_error_content_provider">Izbrane datoteke AnkiDroid ni mogel samodejno uvoziti. Oglejte si uporabniški priročnik o načinu ročnega uvoza datotek anki: \n%s</string>
-  <string name="import_replacing">Replacing collection...</string>
+  <string name="import_replacing">Nadomeščanje zbirke &#8230;</string>
   <string name="export_include_schedule">Vključi urnik</string>
   <string name="export_include_media">Vključi predstavnost</string>
   <string name="confirm_apkg_export">Izvozi zbirko kot datoteko apkg?</string>
@@ -158,6 +159,7 @@
   <string name="import_hint">Vstavite datoteko apkg v mapo \"%s\" in pritisnite \"V redu\", da uvozite kartice</string>
   <string name="upgrade_import_no_file_found">Nobene uvozljive datoteke %1$s ni bilo mogoče najti</string>
   <string name="study_options">Možnosti kompleta</string>
+  <string name="select_tts">Nastavi jezik TTS</string>
   <string name="custom_study">Učenje po meri</string>
   <string name="more_options">Več</string>
   <string name="dyn_deck_desc">To je poseben komplet za učenje izven običajnega urnika. Kartice bodo samodejno vrnjene v izvirne komplete, ko jih pregledate. Izbris tega kompleta s seznama bo vrnil vse preostale kartice v izvirni komplet.</string>

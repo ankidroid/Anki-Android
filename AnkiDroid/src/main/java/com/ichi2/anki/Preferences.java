@@ -48,6 +48,7 @@ import android.view.WindowManager.BadTokenException;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.libanki.hooks.AdvancedStatistics;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
 import com.ichi2.ui.SeekBarPreference;
@@ -182,6 +183,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             // in from preferences screen), so we need to update it here.
             updatePreference(prefs, "syncAccount", this);
             updatePreference(prefs, "custom_sync_server_link", this);
+            updatePreference(prefs, "advanced_statistics_link", this);
         }
     }
 
@@ -257,8 +259,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     }
                 });
                 break;
-            case "com.ichi2.anki.prefs.fonts":
-                listener.addPreferencesFromResource(R.xml.preferences_fonts);
+            case "com.ichi2.anki.prefs.appearance":
+                listener.addPreferencesFromResource(R.xml.preferences_appearance);
                 screen = listener.getPreferenceScreen();
                 initializeCustomFontsDialog(screen);
                 break;
@@ -293,6 +295,16 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         return true;
                     }
                 });
+                // Advanced statistics option
+                Preference advancedStatisticsPreference = screen.findPreference("advanced_statistics_link");
+                advancedStatisticsPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                    public boolean onPreferenceClick(Preference preference) {
+                        Intent i = CompatHelper.getCompat().getPreferenceSubscreenIntent(Preferences.this,
+                                "com.ichi2.anki.prefs.advanced_statistics");
+                        startActivity(i);
+                        return true;
+                    }
+                });
                 // Force full sync option
                 Preference fullSyncPreference = screen.findPreference("force_full_sync");
                 fullSyncPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -310,6 +322,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             case "com.ichi2.anki.prefs.custom_sync_server":
                 getSupportActionBar().setTitle(R.string.custom_sync_server_title);
                 listener.addPreferencesFromResource(R.xml.preferences_custom_sync_server);
+                break;
+            case "com.ichi2.anki.prefs.advanced_statistics":
+                getSupportActionBar().setTitle(R.string.advanced_statistics_title);
+                listener.addPreferencesFromResource(R.xml.preferences_advanced_statistics);
                 break;
         }
     }
@@ -428,6 +444,13 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         HebrewFixFilter.uninstall(Hooks.getInstance(getApplicationContext()));
                     }
                     break;
+                case "advanced_statistics_enabled":
+                    if (((CheckBoxPreference) pref).isChecked()) {
+                        AdvancedStatistics.install(Hooks.getInstance(getApplicationContext()));
+                    } else {
+                        AdvancedStatistics.uninstall(Hooks.getInstance(getApplicationContext()));
+                    }
+                    break;
                 case "showProgress":
                     getCol().getConf().put("dueCounts", ((CheckBoxPreference) pref).isChecked());
                     getCol().setMod();
@@ -537,6 +560,13 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 pref.setSummary(R.string.disabled);
             } else {
                 pref.setSummary(AnkiDroidApp.getSharedPrefs(this).getString("syncBaseUrl", ""));
+            }
+        }
+          else if (pref.getKey().equals("advanced_statistics_link")) {
+            if (!AnkiDroidApp.getSharedPrefs(this).getBoolean("advanced_statistics_enabled", false)) {
+                pref.setSummary(R.string.disabled);
+            } else {
+                pref.setSummary(R.string.enabled);
             }
         }
         // Get value text
@@ -731,6 +761,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             // in from preferences screen), so we need to update it here.
             ((Preferences) getActivity()).updatePreference(prefs, "syncAccount", this);
             ((Preferences) getActivity()).updatePreference(prefs, "custom_sync_server_link", this);
+            ((Preferences) getActivity()).updatePreference(prefs, "advanced_statistics_link", this);
         }
 
         @Override

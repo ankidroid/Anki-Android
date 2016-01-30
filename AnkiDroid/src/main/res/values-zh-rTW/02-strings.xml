@@ -93,6 +93,7 @@
   <string name="saving_facts">儲存筆記中</string>
   <string name="saving_model">儲存模組</string>
   <string name="add">新增</string>
+  <string name="save">Save</string>
   <string name="close">關閉</string>
   <string name="select">選擇</string>
   <string name="saving_changes">正在儲存設定&#8230;</string>
@@ -137,7 +138,7 @@
   <string name="import_log_no_apkg">請不是有效的apkg檔</string>
   <string name="import_error_not_apkg_extension">檔案 \"%s\" 的副檔名不是 .apkg</string>
   <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考使用者手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
-  <string name="import_replacing">Replacing collection...</string>
+  <string name="import_replacing">Replacing collection&#8230;</string>
   <string name="export_include_schedule">包含進度</string>
   <string name="export_include_media">包含媒體</string>
   <string name="confirm_apkg_export">將蒐藏匯出成 apkg 檔案嗎？</string>
@@ -149,6 +150,7 @@
   <string name="import_hint">若您要匯入卡片，請將 apkg 檔案放在 %s 目錄下，然後按OK</string>
   <string name="upgrade_import_no_file_found">找不到可匯入的%1$s檔案</string>
   <string name="study_options">牌組選項</string>
+  <string name="select_tts">Set TTS language</string>
   <string name="custom_study">自訂學習</string>
   <string name="more_options">更多</string>
   <string name="dyn_deck_desc">這是專門用來進行額外學習進度的牌組。卡片在您複習完以後會自動回歸原本的牌組。如果在牌組列表中刪除這個牌組，其他剩下的卡片也會回歸它們原本的牌組。</string>

@@ -76,13 +76,13 @@
     <item>намаляване на интервалите</item>
     <item>Най-много пропуски</item>
     <item>Ред на добавяне</item>
-    <item>Order due</item>
+    <item>По ред на разглеждане</item>
     <item>Първо - последно добавени</item>
-    <item>Relative overdueness</item>
+    <item>Относителна закъснение</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Използвайте текущото тесте</item>
-    <item>Decide by note type</item>
+    <item>Избор по тип на бележката</item>
   </string-array>
   <string-array name="new_spread_labels">
     <item>Смесване на нови карти и преговор</item>
@@ -92,5 +92,13 @@
   <string-array name="override_font_labels">
     <item>Когато не е определен шрифт на флашкартите</item>
     <item>Винаги</item>
+  </string-array>
+  <string-array name="day_theme_labels">
+    <item>Default</item>
+    <item>Plain</item>
+  </string-array>
+  <string-array name="night_theme_labels">
+    <item>Default</item>
+    <item>Black</item>
   </string-array>
 </resources>

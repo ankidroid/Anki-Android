@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="theme_black_primary">#070707</color>
+    <color name="theme_black_primary_dark">#000000</color>
+    <color name="theme_black_primary_light">#151515</color>
+    <color name="theme_black_accent">#303030</color>
+    <color name="theme_black_primary_text">#808080</color>
+    <color name="theme_black_secondary_text">#a0a0a0</color>
+    <color name="theme_black_dynDeck">#305683</color>
+    <color name="theme_black_new_count">#337</color>
+    <color name="theme_black_learn_count">#733</color>
+    <color name="theme_black_review_count">#373</color>
+    <color name="theme_black_currentDeckBackground">#0c0c0c</color>
+    <color name="theme_black_browser_suspended">#3ce6e181</color>
+    <color name="theme_black_browser_marked">#230b2e</color>
+
+    <style name="Theme_Dark.Black">
+        <!-- Android colors -->
+        <item name="colorPrimary">@color/theme_black_primary</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/theme_black_accent</item>
+        <item name="android:textColor">@color/theme_black_primary_text</item>
+        <!-- Action bar styles -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionBarTextColor">@color/white</item>
+        <item name="actionBarThemeRef">@style/ActionBarBlack</item>
+        <item name="actionBarPopupThemeRef">@style/ActionBar.Popup.Black</item>
+        <!-- Deck list colors and divider -->
+        <item name="currentDeckBackground">@drawable/item_background_selected_pre21_black</item>
+        <item name="currentDeckBackgroundColor">@color/theme_black_currentDeckBackground</item>
+        <item name="dynDeckColor">@color/theme_black_dynDeck</item>
+        <item name="deckDivider">@drawable/divider_black</item>
+        <item name="expandRef">@drawable/ic_chevron_right_white_24dp</item>
+        <item name="collapseRef">@drawable/ic_expand_more_white_24dp</item>
+        <!-- Reviewer colors -->
+        <item name="topBarColor">@color/theme_black_primary</item>
+        <item name="newCountColor">@color/theme_black_new_count</item>
+        <item name="learnCountColor">@color/theme_black_learn_count</item>
+        <item name="reviewCountColor">@color/theme_black_review_count</item>
+        <item name="answerButtonTextColor">@color/theme_black_primary_text</item>
+        <item name="againButtonTextColor">@color/theme_black_primary_text</item>
+        <item name="hardButtonTextColor">@color/theme_black_primary_text</item>
+        <item name="goodButtonTextColor">@color/theme_black_primary_text</item>
+        <item name="easyButtonTextColor">@color/theme_black_primary_text</item>
+        <!-- Reviewer button drawables -->
+        <item name="againButtonRef">@drawable/footer_button_all_black</item>
+        <item name="hardButtonRef">@drawable/footer_button_all_black</item>
+        <item name="goodButtonRef">@drawable/footer_button_all_black</item>
+        <item name="easyButtonRef">@drawable/footer_button_all_black</item>
+        <!-- Browser colors -->
+        <item name="suspendedColor">@color/theme_black_browser_suspended</item>
+        <item name="markedColor">@color/theme_black_browser_marked</item>
+        <!-- FAB -->
+        <item name="fab_normal">@color/theme_black_accent</item>
+        <item name="fab_pressed">#c8333333</item> <!-- 55 less opacity than fab_normal -->
+        <item name="fab_labelsTextColor">@color/theme_black_primary_text</item>
+        <item name="fab_background">@color/theme_black_primary_light</item>
+        <item name="fab_item_background">@drawable/fab_label_background_black_pre21</item>
+        <!-- StudyOptions fragment -->
+        <item name="study_start_textColor">@color/theme_black_primary_text</item>
+
+        <!--Below are additions to the base theme -->
+
+        <!-- textColorPrimary changes: navdraw text, edittext text -->
+        <item name="android:textColorPrimary">@color/theme_black_primary_text</item>
+        <!-- textColorSecondary changes: navdraw icon shading, edittext underline, scroll bar -->
+        <item name="android:textColorSecondary">@color/theme_black_secondary_text</item>
+        <item name="android:colorBackground">@color/theme_black_primary</item>
+        <!-- windowBackground seems to do what colorBackground does, but on older APIs-->
+        <item name="android:windowBackground">@color/theme_black_primary</item>
+        <item name="colorButtonNormal">@color/theme_black_primary_light</item>
+        <!-- Dialogs -->
+        <item name="md_dark_theme">true</item>
+        <item name="md_positive_color">@color/theme_black_primary_text</item>
+        <item name="md_background_color">@color/theme_black_primary_light</item>
+    </style>
+
+    <!-- ActionBar -->
+    <style name="ActionBarBlack" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!-- Determines color of text and system icons (overflow etc.) in the action bar -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:background">@color/black</item>
+        <item name="popupMenuStyle">@style/ActionBar.Popup.Black</item>
+    </style>
+
+    <!-- Preferences screens -->
+    <style name="LegacyActionBarBlack" parent="Theme_Dark.Black">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+        <item name="android:background">@color/theme_black_primary_dark</item>
+        <item name="android:colorBackground">@color/theme_black_primary_dark</item>
+        <item name="popupMenuStyle">@style/ActionBar.Popup.Black</item>
+    </style>
+
+    <style name="ActionBar.Popup.Black" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:drawSelectorOnTop">true</item>
+        <item name="android:background">@color/theme_black_primary_light</item>
+        <item name="android:textColorPrimary">@color/theme_black_primary_text</item>
+        <item name="android:textColorSecondary">@color/theme_black_secondary_text</item>
+    </style>
+</resources>

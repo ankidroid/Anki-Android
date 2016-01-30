@@ -39,8 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_young">Jovens</string>
-  <string name="statistics_mature">Maduras</string>
+  <string name="statistics_young">Nova</string>
+  <string name="statistics_mature">Antiga</string>
   <string name="statistics_young_and_learn">Jovens + Em aprendizagem</string>
   <string name="statistics_unlearned">Não vistas</string>
   <string name="statistics_suspended">Suspensas</string>

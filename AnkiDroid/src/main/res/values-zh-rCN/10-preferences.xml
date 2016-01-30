@@ -40,6 +40,7 @@
 -->
 <resources>
   <string name="disabled">Disabled</string>
+  <string name="enabled">Enabled</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">常用设置</string>
   <string name="pref_cat_reviewing">复习</string>
@@ -48,8 +49,8 @@
   <string name="pref_cat_flashcard">显示</string>
   <string name="pref_cat_whiteboard">白板</string>
   <string name="pref_cat_automatic_display">自动显示答案</string>
-  <string name="pref_cat_fonts">字体</string>
-  <string name="pref_cat_fonts_summ">设置默认字体和大小</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">手势</string>
   <string name="pref_cat_gestures_summ">使用点击和滑动代替按钮</string>
   <string name="pref_cat_actions">动作</string>
@@ -71,7 +72,7 @@
   <string name="text_selection_click_summ">如果您不能够通过长点击选择文本，启用此选项。</string>
   <string name="dictionary">查找字典</string>
   <string name="reset_languages">重设语言</string>
-  <string name="reset_languages_summ">重置所有牌组指定的语言(用于文字转语音和词典)。请在牌组选择界面重置特定牌组的语言。</string>
+  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
   <string name="reset_languages_question">要重置所有牌组指定的语言吗？</string>
   <string name="reset_confirmation">重置所有状态</string>
   <string name="card_zoom">卡片缩放</string>
@@ -156,6 +157,12 @@
   <string name="convert_fen_text_summ">使用福斯夫－爱德华兹记号法来画棋盘。记号必须用[fen][/fen]标签括起来。</string>
   <string name="enable_api_title">启用AnkiDroid API</string>
   <string name="enable_api_summary">让其他的应用程序连接到AnkiDroid读写数据</string>
+  <string name="advanced_statistics_title">Advanced statistics</string>
+  <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
+  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
   <string name="custom_sync_server_title">Custom sync server</string>
   <string name="custom_sync_server_enable_title">Use custom sync server</string>
   <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>

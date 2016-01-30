@@ -89,7 +89,7 @@
   <string name="import_media_count">Importation des fichiers médias %1$d%%\nVeuillez patienter&#8230;</string>
   <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
   <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
-  <string name="import_update_ignored">Some updates were ignored because note type has changed.</string>
+  <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
   <string name="import_complete_count">Cards imported: %d</string>
   <string name="sd_card_full_title">Carte SD pleine</string>
   <string name="sd_card_almost_full_title">Carte SD presque pleine</string>

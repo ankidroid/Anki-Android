@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">Controlla database</string>
+  <string name="check_db_title">Controllare il database?</string>
   <string name="check_db_warning">Può richiedere molto tempo</string>
   <string name="check_db_acknowledge">Database controllato</string>
   <string name="check_db_acknowledge_shrunk">Database controllato ed ottimizzato.\nRidotto di %d kB.</string>
@@ -87,10 +87,10 @@
   <string name="rebuild_custom_study_deck">Ricreo il mazzo di studio personalizzato.\nAttendi...</string>
   <string name="importing_collection">Importazione collezione.\nAttendi&#8230;</string>
   <string name="import_media_count">Importazione file multimediali %1$d%%\nAttendi&#8230;</string>
-  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
-  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
-  <string name="import_update_ignored">Some updates were ignored because note type has changed.</string>
-  <string name="import_complete_count">Cards imported: %d</string>
+  <string name="import_progress">• Importazione note: %1$d%%\n• Importazione carte: %2$d%%\n• Post-elaborazione: %3$d%%</string>
+  <string name="import_update_details">Aggiornate %1$d di %2$d note esistenti.</string>
+  <string name="import_update_ignored">Alcuni aggiornamenti sono stati ignorati perché il tipo di nota è cambiato</string>
+  <string name="import_complete_count">Carte importate: %d</string>
   <string name="sd_card_full_title">Scheda SD piena</string>
   <string name="sd_card_almost_full_title">Scheda SD quasi piena</string>
   <string name="restore_backup_title">Ripristinare il backup?</string>

@@ -40,6 +40,7 @@
 -->
 <resources>
   <string name="disabled">Disabled</string>
+  <string name="enabled">Enabled</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Општа подешавања</string>
   <string name="pref_cat_reviewing">Обука</string>
@@ -48,8 +49,8 @@
   <string name="pref_cat_flashcard">Приказ</string>
   <string name="pref_cat_whiteboard">Бела табла</string>
   <string name="pref_cat_automatic_display">Аутоматски приказуј одговор</string>
-  <string name="pref_cat_fonts">фонтови</string>
-  <string name="pref_cat_fonts_summ">Промени уобичајени фонт и величину</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Гестови</string>
   <string name="pref_cat_gestures_summ">Користи тапкање и пребацивања уместо дугмиће</string>
   <string name="pref_cat_actions">Дејство</string>
@@ -71,7 +72,7 @@
   <string name="text_selection_click_summ">Укључите, ако не успевате да почнете означавање текста преко дугог притиска</string>
   <string name="dictionary">Кориснички речник</string>
   <string name="reset_languages">Ресетуј језике</string>
-  <string name="reset_languages_summ">Ресетуј језике (за претварање текста у звук и речнике) за све шпилове. Ресетуј за конкретне шпилове - у садржају шпилова</string>
+  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
   <string name="reset_languages_question">Да ресетујем све језичке поставке?</string>
   <string name="reset_confirmation">Ресетована сва подешавања</string>
   <string name="card_zoom">Зумирање картице</string>
@@ -157,6 +158,12 @@
   <string name="convert_fen_text_summ">Цртај шаховску таблу са Форсит-Едвардс нотацијом. Нотација мора да буде ограђена [fen][/fen] таговима.</string>
   <string name="enable_api_title">Омогући AnkiDroid API</string>
   <string name="enable_api_summary">Нека се друге апликације повежу са AnkiDroid и читају/записују податке без ваше интервенције</string>
+  <string name="advanced_statistics_title">Advanced statistics</string>
+  <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
+  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
   <string name="custom_sync_server_title">Custom sync server</string>
   <string name="custom_sync_server_enable_title">Use custom sync server</string>
   <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>

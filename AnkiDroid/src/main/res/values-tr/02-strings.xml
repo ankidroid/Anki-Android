@@ -93,6 +93,7 @@
   <string name="saving_facts">Not kaydediliyor</string>
   <string name="saving_model">Modeli kaydet</string>
   <string name="add">Ekle</string>
+  <string name="save">Save</string>
   <string name="close">Kapat</string>
   <string name="select">Seç</string>
   <string name="saving_changes">Değişiklikler kaydediliyor...</string>
@@ -140,7 +141,7 @@
   <string name="import_log_no_apkg">Bu geçerli bir apkg dosyası değil</string>
   <string name="import_error_not_apkg_extension">%s dosyasının .apkg uzantısı yok</string>
   <string name="import_error_content_provider">Seçilen dosya AnkiDroid tarafından otomatik olarak aktarılamadı. Lütfen anki dosyalarının nasıl elle içeri aktarıldığı hakkında kullanıcı kılavuzuna bakın:\n %s</string>
-  <string name="import_replacing">Replacing collection...</string>
+  <string name="import_replacing">Replacing collection&#8230;</string>
   <string name="export_include_schedule">Zamanlama dâhil</string>
   <string name="export_include_media">Medya dâhil</string>
   <string name="confirm_apkg_export">Koleksiyon apkg dosyası olarak kaydedilsin mi?</string>
@@ -152,6 +153,7 @@
   <string name="import_hint">İçeri kart aktarmak için, apkg dosyasını %s dizinine yerleştirip Tamam\'a basın</string>
   <string name="upgrade_import_no_file_found">İçeri aktarılabilir %1$s dosyası bulunmuyor</string>
   <string name="study_options">Deste seçenekleri</string>
+  <string name="select_tts">Set TTS language</string>
   <string name="custom_study">Kişisel Çalışma</string>
   <string name="more_options">Daha fazlası</string>
   <string name="dyn_deck_desc">Bu normal programın dışında çalışmak için özel bir deste. Kartlar çalışıldıktan sonra otomatik olarak kendi destelerine geri dönecekler. Bu desteyi deste listesinden silmek kalan bütün kartları kendi destelerine geri döndürecek.</string>

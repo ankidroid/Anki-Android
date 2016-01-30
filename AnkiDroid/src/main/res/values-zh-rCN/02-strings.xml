@@ -93,6 +93,7 @@
   <string name="saving_facts">保存卡牌记录</string>
   <string name="saving_model">正在保存</string>
   <string name="add">添加</string>
+  <string name="save">Save</string>
   <string name="close">关闭</string>
   <string name="select">选择</string>
   <string name="saving_changes">正在保存设置&#8230;</string>
@@ -137,7 +138,7 @@
   <string name="import_log_no_apkg">这不是一个有效的 apkg 文件</string>
   <string name="import_error_not_apkg_extension">\"%s\"并不是具有 .apkg 扩展名的文件</string>
   <string name="import_error_content_provider">AnkiDroid 不能导入所选择的文件。请参阅用户手册以查看如何导入Anki记忆库：\n%s</string>
-  <string name="import_replacing">Replacing collection...</string>
+  <string name="import_replacing">Replacing collection&#8230;</string>
   <string name="export_include_schedule">包括学习进度</string>
   <string name="export_include_media">包括媒体文件</string>
   <string name="confirm_apkg_export">要将记忆库集合导出为apkg文件吗？</string>
@@ -149,6 +150,7 @@
   <string name="import_hint">请把apkg文件放在%s目录中，然后按确定。</string>
   <string name="upgrade_import_no_file_found">没有找到可导入的 %1$s 文件</string>
   <string name="study_options">牌组选项</string>
+  <string name="select_tts">Set TTS language</string>
   <string name="custom_study">自定义学习</string>
   <string name="more_options">更多</string>
   <string name="dyn_deck_desc">这是一个在计划外学习的特殊牌组，卡片在复习后会自动返回原来的牌组。\n在牌组列表中删除此牌组也将会把所有卡片都移回原来的牌组。</string>

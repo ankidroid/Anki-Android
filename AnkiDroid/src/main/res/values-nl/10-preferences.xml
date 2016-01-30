@@ -40,6 +40,7 @@
 -->
 <resources>
   <string name="disabled">Disabled</string>
+  <string name="enabled">Enabled</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Algemene instellingen</string>
   <string name="pref_cat_reviewing">Overhoren</string>
@@ -48,8 +49,8 @@
   <string name="pref_cat_flashcard">Weergave</string>
   <string name="pref_cat_whiteboard">Schrijfbord</string>
   <string name="pref_cat_automatic_display">Automatische weergave antwoord</string>
-  <string name="pref_cat_fonts">Lettertypes</string>
-  <string name="pref_cat_fonts_summ">Wijzig standaardlettertype en de tekengrootte</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Gebaren</string>
   <string name="pref_cat_gestures_summ">Gebruik tikken en vegen in plaats van knoppen</string>
   <string name="pref_cat_actions">Acties</string>
@@ -71,7 +72,7 @@
   <string name="text_selection_click_summ">Zet dit aan als tekstselectie via met een lange klik niet werkt</string>
   <string name="dictionary">Opzoeken in woordenlijst</string>
   <string name="reset_languages">Reset talen</string>
-  <string name="reset_languages_summ">Reset de taalaanduidingen (voor tekst-naar-spraak en woordenboeken) voor alle sets. Voor het resetten van specifieke sets selecteer de set.</string>
+  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
   <string name="reset_languages_question">Alle taalopdrachten terugzetten?</string>
   <string name="reset_confirmation">Alle staten opnieuw instellen</string>
   <string name="card_zoom">Kaart zoom</string>
@@ -156,6 +157,12 @@
   <string name="convert_fen_text_summ">Teken schaakbord met de Forsyth-Edwards notering. Voor de notering gebruik de [fen][/fen] tags.</string>
   <string name="enable_api_title">AnkiDroid API inschakelen</string>
   <string name="enable_api_summary">Laat andere apps verbinding maken met AnkiDroid en gegevens zonder uw tussenkomst lezen/schrijven</string>
+  <string name="advanced_statistics_title">Advanced statistics</string>
+  <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
+  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
   <string name="custom_sync_server_title">Custom sync server</string>
   <string name="custom_sync_server_enable_title">Use custom sync server</string>
   <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>

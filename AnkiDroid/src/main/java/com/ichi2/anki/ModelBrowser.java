@@ -492,7 +492,7 @@ public class ModelBrowser extends AnkiActivity {
     }
 
     /*
-     * Displays a confirmation box asking if you want to delete the note type and then deletes it if confirmed
+     * Displays a confirmation box asking if you want to rename the note type and then renames it if confirmed
      */
     private void renameModelDialog() {
         try {
@@ -502,7 +502,8 @@ public class ModelBrowser extends AnkiActivity {
             mModelNameInput.setSelection(mModelNameInput.getText().length());
             new MaterialDialog.Builder(this)
                                 .title(R.string.rename_model)
-                                .positiveText(R.string.dialog_ok)
+                                .positiveText(R.string.rename)
+                                .negativeText(R.string.dialog_cancel)
                                 .customView(mModelNameInput, true)
                                 .callback(new MaterialDialog.ButtonCallback() {
                                     @Override

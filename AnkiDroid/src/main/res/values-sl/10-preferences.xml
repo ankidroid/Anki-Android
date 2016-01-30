@@ -40,6 +40,7 @@
 -->
 <resources>
   <string name="disabled">Onemogočeno</string>
+  <string name="enabled">Omogočeno</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Splošne nastavitve</string>
   <string name="pref_cat_reviewing">Pregledovanje</string>
@@ -48,8 +49,8 @@
   <string name="pref_cat_flashcard">Prikaz</string>
   <string name="pref_cat_whiteboard">Bela tabla</string>
   <string name="pref_cat_automatic_display">Samodejno prikaži odgovor</string>
-  <string name="pref_cat_fonts">Pisave</string>
-  <string name="pref_cat_fonts_summ">Spremeni privzeto pisavo in velikost</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Poteze</string>
   <string name="pref_cat_gestures_summ">Uporabi tape in potege namesto gumbov</string>
   <string name="pref_cat_actions">Dejanja</string>
@@ -71,7 +72,7 @@
   <string name="text_selection_click_summ">Omogočite to, če z dolgim pritiskom ne morete izbrati besedila</string>
   <string name="dictionary">Slovar za iskanje</string>
   <string name="reset_languages">Ponastavi jezike</string>
-  <string name="reset_languages_summ">Ponastavi dodelitve jezikov (za pretvorbo besedila v govor in slovarje) za vse komplete. Ponastavi določene dodelitve kompletov na izbirniku.</string>
+  <string name="reset_languages_summ">Ponastavi jezikovne dodelitve (za slovarje pretvorbe besedila v govor) za vse komplete</string>
   <string name="reset_languages_question">Ponastavi vse dodelitve jezikov?</string>
   <string name="reset_confirmation">Vsa stanja ponastavljena</string>
   <string name="card_zoom">Povečava kartice</string>
@@ -157,6 +158,12 @@
   <string name="convert_fen_text_summ">Nariši šahovnico iz zapisa Forsyth–Edwards. Zapis se mora nahajati znotraj oznak [fen][/fen].</string>
   <string name="enable_api_title">Omogoči API AnkiDroid</string>
   <string name="enable_api_summary">Omogoči drugim napravam povezavo z AnkiDroidom in branje/pisanje podatkov brez mojega posredovanja</string>
+  <string name="advanced_statistics_title">Napredna statistika</string>
+  <string name="enable_advanced_statistics_title">Omogoči napredno statistiko</string>
+  <string name="enable_advanced_statistics_summ">Prikaži napovedno statistiko glede na izračun ali simulacijo prihodnjih pregledov (omogočeno), ali že načrtovane prihodnje preglede (onemogočeno).</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Izračunaj prvih n dni, simuliraj preostanek</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Natančnost izračuna</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">Število ponovitev simulacije</string>
   <string name="custom_sync_server_title">Strežnik za sinhronizacijo po meri</string>
   <string name="custom_sync_server_enable_title">Uporabi strežnik za sinhronizacijo po meri</string>
   <string name="custom_sync_server_enable_summary">Če ne želite uporabljati lastniške storitve AnkiWeb, lahko tu določite nadomestno storitev</string>

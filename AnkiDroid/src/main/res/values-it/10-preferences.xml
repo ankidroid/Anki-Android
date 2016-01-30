@@ -39,7 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="disabled">Disabled</string>
+  <string name="disabled">Disattivato</string>
+  <string name="enabled">Abilitato</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Impostazioni generali</string>
   <string name="pref_cat_reviewing">Ripetizioni</string>
@@ -48,8 +49,8 @@
   <string name="pref_cat_flashcard">Visualizzazione</string>
   <string name="pref_cat_whiteboard">Lavagna</string>
   <string name="pref_cat_automatic_display">Visualizzazione automatica risposta</string>
-  <string name="pref_cat_fonts">Caratteri</string>
-  <string name="pref_cat_fonts_summ">Cambia carattere e dimensione di default</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Gesti</string>
   <string name="pref_cat_gestures_summ">Usa tocchi e scorrimento al posto dei pulsanti</string>
   <string name="pref_cat_actions">Azioni</string>
@@ -71,14 +72,14 @@
   <string name="text_selection_click_summ">Attiva questo se non sei in grado di iniziare la selezione di testo con un clic lungo</string>
   <string name="dictionary">Ricerca nel dizionario</string>
   <string name="reset_languages">Reimposta le lingue</string>
-  <string name="reset_languages_summ">Ripristina le assegnazioni della lingua (per sintesi vocale e dizionari) per tutti i corsi. Ripristina le assegnazioni di corsi specifici sul selettore di corsi</string>
+  <string name="reset_languages_summ">Reimposta le assegnazioni di lingua (per text to speech e dizionari) per tutti i mazzi</string>
   <string name="reset_languages_question">Reimpostare tutte le assegnazioni di lingua?</string>
   <string name="reset_confirmation">Reimpostato tutti gli stati</string>
   <string name="card_zoom">Zoom carte</string>
   <string name="image_zoom">Zoom immagini</string>
   <string name="button_size">Dimensione pulsante di risposta</string>
   <string name="card_browser_font_size">Ridimensionamento carattere nel browser</string>
-  <string name="col_path">AnkiDroid directory</string>
+  <string name="col_path">Cartella AnkiDroid</string>
   <string name="fullscreen_review">Modalità a schermo intero</string>
   <string name="full_screen_off">Disabilitato</string>
   <string name="full_screen_system">Nascondi le barre di sistema</string>
@@ -156,11 +157,17 @@
   <string name="convert_fen_text_summ">Disegna la scacchiera dalla notazione Forsyth-Edwards. La notazione deve essere racchiusa nelle etichette [fen] [/fen].</string>
   <string name="enable_api_title">Attiva API AnkiDroid</string>
   <string name="enable_api_summary">Permetti ad altre applicazioni di connettersi ad AnkiDroid e di leggere / scrivere dati senza il tuo intervento</string>
-  <string name="custom_sync_server_title">Custom sync server</string>
-  <string name="custom_sync_server_enable_title">Use custom sync server</string>
-  <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
-  <string name="custom_sync_server_base_url_title">Sync url</string>
-  <string name="custom_sync_server_media_url_title">Media sync url</string>
+  <string name="advanced_statistics_title">Statistiche avanzate</string>
+  <string name="enable_advanced_statistics_title">Attiva le statistiche avanzate</string>
+  <string name="enable_advanced_statistics_summ">Visualizzazione previsioni statistiche basate su un calcolo o la simulazione delle future ripetizioni (abilitato) o le future ripetizioni già pianificate (disabilitato).</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Calcola i primi n giorni, simula il resto</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Precisione di calcolo</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">Numero di iterazioni della simulazione</string>
+  <string name="custom_sync_server_title">Server di sincronizzazione personalizzato</string>
+  <string name="custom_sync_server_enable_title">Utilizza server di sincronizzazione personalizzato</string>
+  <string name="custom_sync_server_enable_summary">Se non desideri utilizzare il servizio proprietario AnkiWeb puoi specificare un server alternativo qui</string>
+  <string name="custom_sync_server_base_url_title">Url di sincronizzazione</string>
+  <string name="custom_sync_server_media_url_title">Url di sincronizzazione del contenuto multimediale</string>
   <string name="studyoptions_limit_select_tags">Seleziona etichette</string>
   <string name="deck_conf_deck_description">Descrizione del mazzo</string>
   <string name="deck_conf_group">Gruppo di opzioni</string>

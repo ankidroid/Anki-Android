@@ -93,4 +93,12 @@
     <item>Kun korteille ei ole määritelty kirjasintyyppiä</item>
     <item>Aina</item>
   </string-array>
+  <string-array name="day_theme_labels">
+    <item>Default</item>
+    <item>Plain</item>
+  </string-array>
+  <string-array name="night_theme_labels">
+    <item>Default</item>
+    <item>Black</item>
+  </string-array>
 </resources>

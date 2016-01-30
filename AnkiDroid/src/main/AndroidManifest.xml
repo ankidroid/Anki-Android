@@ -22,8 +22,8 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.ichi2.anki"
           android:installLocation="auto"
-          android:versionCode="20600105"
-          android:versionName="2.6alpha5">
+          android:versionCode="20600108"
+          android:versionName="2.6alpha8">
 
     <!--
         The version number is of the form:
@@ -87,20 +87,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
             </intent-filter>
+            <!-- *.apkg matcher. NOTE: when pathPattern is used, host and scheme must also be specified -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="com.ankidroid.category.DECK" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="application/vnd.anki" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data
                     android:host="*"
                     android:mimeType="*/*"
@@ -122,36 +113,24 @@
                     android:pathPattern=".*\\.apkg"
                     android:scheme="file" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data
-                    android:pathPattern=".*\\.apkg"
-                    android:scheme="file" />
-            </intent-filter>
+            <!-- MIME type matcher for .apkg files coming from providers like gmail which hide the file extension -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="application/apkg"/>
-                <data android:mimeType="application/octet-stream"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="application/x-apkg"/>
+                <data android:mimeType="application/octet-stream" android:scheme="content"/>
+                <data android:mimeType="application/zip" android:scheme="content"/>
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="application/zip"/>
-            </intent-filter>
+
+            <!-- Tasker DO_SYNC intent -->
             <intent-filter>
                 <action android:name="com.ichi2.anki.DO_SYNC" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:theme="@style/App_Theme_Dark.Launcher"
+            android:theme="@style/Theme_Dark_Compat.Launcher"
             android:name="com.ichi2.anki.DeckPicker"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:label="@string/app_name">
@@ -206,17 +185,17 @@
             android:name="com.ichi2.anki.Preferences"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/preferences_title"
-            android:theme="@style/LegacyActionBarWhite"/>
+            android:theme="@style/LegacyActionBarLight"/>
         <activity
             android:name="com.ichi2.anki.DeckOptions"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/deckpreferences_title"
-            android:theme="@style/LegacyActionBarWhite"/>
+            android:theme="@style/LegacyActionBarLight"/>
         <activity
             android:name=".FilteredDeckOptions"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/deckpreferences_title"
-            android:theme="@style/LegacyActionBarWhite"/>
+            android:theme="@style/LegacyActionBarLight"/>
         <activity
             android:name="com.ichi2.anki.Info"
             android:configChanges="locale"
@@ -245,7 +224,7 @@
             android:finishOnTaskLaunch="true" />
         <activity
             android:name="com.ichi2.anki.Statistics"
-            android:theme="@style/Theme_White_Statistics"
+            android:theme="@style/Theme_Light_Statistics"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:parentActivityName=".DeckPicker">
             <!-- The meta-data element is needed for versions lower than 4.1 -->
