@@ -18,7 +18,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
             android:theme="?attr/actionBarThemeRef"
             android:layout_alignParentTop="true"
             app:popupTheme="?attr/actionBarPopupThemeRef"/>
@@ -202,8 +201,8 @@
                         android:paddingBottom="8dp"/>
                     <Button
                         android:id="@+id/studyoptions_start"
-                        android:background="@color/fab_normal"
-                        android:textColor="@color/white"
+                        android:background="?attr/fab_normal"
+                        android:textColor="?attr/study_start_textColor"
                         android:layout_width="200dip"
                         android:layout_height="wrap_content"
                         android:lines="2"

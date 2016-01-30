@@ -259,8 +259,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     }
                 });
                 break;
-            case "com.ichi2.anki.prefs.fonts":
-                listener.addPreferencesFromResource(R.xml.preferences_fonts);
+            case "com.ichi2.anki.prefs.appearance":
+                listener.addPreferencesFromResource(R.xml.preferences_appearance);
                 screen = listener.getPreferenceScreen();
                 initializeCustomFontsDialog(screen);
                 break;

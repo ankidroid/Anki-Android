@@ -32,7 +32,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ichi2.anki.R;
-import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Sched;
@@ -111,13 +110,13 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
                 R.attr.collapseRef };
         TypedArray ta = context.obtainStyledAttributes(attrs);
         Resources res = context.getResources();
-        mZeroCountColor = ta.getColor(0, res.getColor(R.color.zero_count));
-        mNewCountColor = ta.getColor(1, res.getColor(R.color.new_count));
-        mLearnCountColor = ta.getColor(2, res.getColor(R.color.learn_count));
-        mReviewCountColor = ta.getColor(3, res.getColor(R.color.review_count));
+        mZeroCountColor = ta.getColor(0, res.getColor(R.color.theme_light_zero_count));
+        mNewCountColor = ta.getColor(1, res.getColor(R.color.theme_light_new_count));
+        mLearnCountColor = ta.getColor(2, res.getColor(R.color.theme_light_learn_count));
+        mReviewCountColor = ta.getColor(3, res.getColor(R.color.theme_light_review_count));
         mRowCurrentDrawable = ta.getResourceId(4, 0);
         mDeckNameDefaultColor = ta.getColor(5, res.getColor(R.color.black));
-        mDeckNameDynColor = ta.getColor(6, res.getColor(R.color.deckadapter_deck_name_dyn));
+        mDeckNameDynColor = ta.getColor(6, res.getColor(R.color.material_blue_A700));
         mExpandImage = ta.getDrawable(7);
         mCollapseImage = ta.getDrawable(8);
         ta.recycle();

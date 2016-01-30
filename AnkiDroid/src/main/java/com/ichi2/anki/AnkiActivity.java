@@ -443,7 +443,7 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
         TextView action = (TextView) view.findViewById(android.support.design.R.id.snackbar_action);
         if (tv != null && action != null) {
             tv.setTextColor(Color.WHITE);
-            action.setTextColor(getResources().getColor(R.color.theme_primary));
+            action.setTextColor(getResources().getColor(R.color.material_light_blue_500));
             tv.setMaxLines(2);  // prevent tablets from truncating to 1 line
         }
         sb.show();
@@ -483,7 +483,7 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
                     .setSmallIcon(R.drawable.ic_stat_notify)
                     .setContentTitle(title)
                     .setContentText(message)
-                    .setColor(getResources().getColor(R.color.theme_primary))
+                    .setColor(getResources().getColor(R.color.material_light_blue_500))
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                     .setTicker(ticker);

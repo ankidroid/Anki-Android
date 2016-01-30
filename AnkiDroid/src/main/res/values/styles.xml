@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- App themes -->
-    <style name="App_Theme_White" parent="Theme_White"/>
-    <style name="App_Theme_Dark" parent="Theme_Dark"/>
-    <style name="App_Theme_Dark.Launcher">
+    <!-- App themes
+        These compat themes are just copies of the parent themes here, but some attributes are
+        overridden as necessary in the API specific versions, for example in values-v21/styles.xml.
+        -->
+    <style name="Theme_Light_Compat" parent="Theme_Light"/>
+    <style name="Theme_Dark_Compat" parent="Theme_Dark"/>
+    <style name="Theme_Plain_Compat" parent="Theme_Light.Plain"/>
+    <style name="Theme_Black_Compat" parent="Theme_Dark.Black"/>
+
+
+    <style name="Theme_Dark_Compat.Launcher">
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
     <!-- Theme for crash report dialog -->
@@ -26,10 +33,9 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <!--  Material Design-style persistant footer button -->
+    <!--  Material Design-style persistent footer button -->
     <style name="FooterButtonLayout">
         <item name="android:layout_height">48dp</item>
-        <item name="android:textColor">@color/white</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@string/font_fontFamily_medium</item>
@@ -44,7 +50,6 @@
         <item name="android:ellipsize">marquee</item>
         <item name="android:gravity">bottom|center_horizontal</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">12.5sp</item>
     </style>
     <style name="FooterButtonEaseText" parent="FooterButtonNextTime">
@@ -52,8 +57,38 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:fontFamily">@string/font_fontFamily_medium</item>
     </style>
+
+    <!-- Styles for each of the 4 answer buttons -->
+    <!-- Ease text -->
+    <style name="AgainButtonEaseStyle" parent="FooterButtonEaseText">
+        <item name="android:textColor">?attr/againButtonTextColor</item>
+    </style>
+    <style name="HardButtonEaseStyle" parent="FooterButtonEaseText">
+        <item name="android:textColor">?attr/hardButtonTextColor</item>
+    </style>
+    <style name="GoodButtonEaseStyle" parent="FooterButtonEaseText">
+        <item name="android:textColor">?attr/goodButtonTextColor</item>
+    </style>
+    <style name="EasyButtonEaseStyle" parent="FooterButtonEaseText">
+        <item name="android:textColor">?attr/easyButtonTextColor</item>
+    </style>
+    <!-- Next time text. Use the same color as the ease text. -->
+    <style name="AgainButtonTimeStyle" parent="FooterButtonNextTime">
+        <item name="android:textColor">?attr/againButtonTextColor</item>
+    </style>
+    <style name="HardButtonTimeStyle" parent="FooterButtonNextTime">
+        <item name="android:textColor">?attr/hardButtonTextColor</item>
+    </style>
+    <style name="GoodButtonTimeStyle" parent="FooterButtonNextTime">
+        <item name="android:textColor">?attr/goodButtonTextColor</item>
+    </style>
+    <style name="EasyButtonTimeStyle" parent="FooterButtonNextTime">
+        <item name="android:textColor">?attr/easyButtonTextColor</item>
+    </style>
+
+    <!-- FAB menu items -->
     <style name="menu_labels_style">
-        <item name="android:background">@drawable/fab_label_background</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:background">?attr/fab_item_background</item>
+        <item name="android:textColor">?attr/fab_labelsTextColor</item>
     </style>
 </resources>

@@ -23,7 +23,6 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
     android:fitsSystemWindows="true">
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/root_layout"
@@ -194,7 +193,8 @@
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:clickable="false"
-                            android:text="@string/show_answer" />
+                            android:text="@string/show_answer"
+                            android:textColor="?attr/answerButtonTextColor"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -209,12 +209,12 @@
 
                         <TextView
                                 android:id="@+id/nextTime1"
-                                style="@style/FooterButtonNextTime" />
+                                style="@style/AgainButtonTimeStyle" />
 
                         <TextView
                                 android:id="@+id/ease1"
                                 android:text="@string/ease_button_again"
-                                style="@style/FooterButtonEaseText"/>
+                                style="@style/AgainButtonEaseStyle"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -229,12 +229,12 @@
 
                         <TextView
                                 android:id="@+id/nextTime2"
-                                style="@style/FooterButtonNextTime" />
+                                style="@style/HardButtonTimeStyle" />
 
                         <TextView
                                 android:id="@+id/ease2"
                                 android:text="@string/ease_button_hard"
-                                style="@style/FooterButtonEaseText" />
+                                style="@style/HardButtonEaseStyle" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -249,12 +249,12 @@
 
                         <TextView
                                 android:id="@+id/nextTime3"
-                                style="@style/FooterButtonNextTime" />
+                                style="@style/GoodButtonTimeStyle" />
 
                         <TextView
                                 android:id="@+id/ease3"
                                 android:text="@string/ease_button_good"
-                                style="@style/FooterButtonEaseText"/>
+                                style="@style/GoodButtonEaseStyle"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -269,12 +269,12 @@
 
                         <TextView
                                 android:id="@+id/nextTime4"
-                                style="@style/FooterButtonNextTime" />
+                                style="@style/EasyButtonTimeStyle" />
 
                         <TextView
                                 android:id="@+id/ease4"
                                 android:text="@string/ease_button_easy"
-                                style="@style/FooterButtonEaseText" />
+                                style="@style/EasyButtonEaseStyle" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

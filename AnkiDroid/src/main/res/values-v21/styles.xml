@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="App_Theme_White" parent="Theme_White">
+    <style name="Theme_Light_Compat" parent="Theme_Light">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
     </style>
-    <style name="App_Theme_Dark" parent="Theme_Dark">
+    <style name="Theme_Plain_Compat" parent="Theme_Light.Plain">
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="currentDeckBackground">@drawable/item_background_selected_night</item>
+        <item name="currentDeckBackground">@drawable/item_background_selected</item>
+    </style>
+    <style name="Theme_Dark_Compat" parent="Theme_Dark">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="currentDeckBackground">@drawable/item_background_selected</item>
+    </style>
+    <style name="Theme_Black_Compat" parent="Theme_Dark.Black">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="currentDeckBackground">@drawable/item_background_selected</item>
+    </style>
+
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">?attr/fab_labelsTextColor</item>
     </style>
 </resources>

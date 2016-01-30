@@ -16,16 +16,6 @@
 
     <color name="wb_fg_color">#B00000FF</color>
     <color name="wb_fg_color_inv">#0099FF</color>
-    <color name="next_time_usual_color">#000000</color>
-    <color name="next_time_failed_color">#990000</color>
-    <color name="next_time_recommended_color">#007700</color>
-    <color name="next_time_usual_color_inv">#FFFFFF</color>
-    <color name="next_time_recommended_color_inv">#4AA02C</color>
-    <color name="foreground_color_inv">#FFFFFF</color>
-    <color name="card_browser_marked">#D9B2E9</color>
-    <color name="card_browser_suspended">#FFFFB2</color>
-    <color name="statistics_due_young_cards">#7c7</color>
-    <color name="statistics_due_mature_cards">#070</color>
     <color name="stats_young">#7c7</color>
     <color name="stats_mature">#070</color>
     <color name="stats_learn">#00F</color>
@@ -36,62 +26,11 @@
     <color name="stats_counts">#E6000000</color>
     <color name="stats_unseen">#000</color>
     <color name="stats_suspended">#ff0</color>
-    <color name="progressbar_2">#ff9100</color>
-    <color name="progressbar_3">#ffbe00</color>
-    <color name="progressbar_4">#4aa02c</color>
-    <color name="progressbar_border_inverted">#989898</color>
-    <color name="progressbar_background_inverted">#484848</color>
-    <color name="studyoptions_foreground">#FFFF</color>
-    <color name="studyoptions_foreground_deactivated">#484848</color>
-    <color name="background">#FFFF</color>
-    <color name="studyoptions_progressbar_mature_default">#CDCDCD</color>
-    <color name="studyoptions_progressbar_young_default">#8d8d8d</color>
-    <color name="studyoptions_progressbar_frame_default">#989898</color>
-    <color name="studyoptions_progressbar_background_default">#484848</color>
-    <color name="studyoptions_progressbar_mature_light">#323232</color>
-    <color name="studyoptions_progressbar_young_light">#B0B0B0</color>
-    <color name="studyoptions_progressbar_frame_light">#000000</color>
-    <color name="studyoptions_progressbar_background_light">#FFFF</color>
-    <color name="studyoptions_progressbar_background_nightmode">#d7d7d7</color>
-    <color name="deckpicker_progressbar_young_light">#999999</color>
-    <color name="deckpicker_progressbar_young_dark">#B0B0B0</color>
-    <color name="reviewer_background">#c6cfd6</color>
-    <color name="reviewer_background_night">#19242e</color>
-    <color name="reviewer_night_card_background">#0c1217</color>
     <color name="transparent">#00000000</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="widget_progressbar_empty">#000000</color>
-    <color name="widget_big_font_color">#343634</color>
-    <color name="widget_big_font_color_red">#cd5554</color>
-    <color name="widget_big_font_color_blue">#1a1ac3</color>
-    <color name="widget_big_font_color_green">#217721</color>
 
-    <!-- colors for white theme -->
-    <color name="white_background">#ffffff</color>
-    <color name="white_background_night">#3d3d3d</color>
-    <color name="white_buttontext">#10171d</color>
-    <color name="studyoptions_progressbar_background_blue">#cecfd6</color>
-    <color name="studyoptions_progressbar_young_blue">#8a8a8a</color>
-    <color name="background_dark_blue">#10171d</color>
-    <color name="reviewer_progressbar_session_blue">#a9a9a9</color>
-    <color name="deckadapter_row_current">#ececec</color>
-    <color name="deckadapter_row_current_night">#393939</color>
-    <color name="deckadapter_deck_name_dyn">#2222bb</color>
-    <color name="deckadapter_deck_name_dyn_night">#6699d6</color>
-
-    <!-- Colors for the card counts, in the top bar, deck picker etc. -->
-    <color name="new_count">@color/material_indigo_700</color>
-    <color name="learn_count">@color/material_red_700</color>
-    <color name="review_count">@color/material_green_700</color>
-    <color name="zero_count">#1f000000</color>
-    <color name="new_count_night">@color/material_indigo_200</color>
-    <color name="learn_count_night">@color/material_red_200</color>
-    <color name="review_count_night">@color/material_green_200</color>
-    <color name="zero_count_night">#202020</color>
-    <color name="actionbar_background">#f5f5f5</color>
-    <color name="max_timer">@color/material_red_500</color>
-    <color name="max_timer_night">@color/material_red_300</color>
 
     <!-- Material Design: http://www.google.com/design/spec/style/color.html#color-color-palette -->
     <!-- Can eventually be shortened once settled on a color scheme -->
@@ -153,22 +92,5 @@
 
     <color name="material_deep_purple_400">#ff7E57C2</color>
 
-
-
-
-    <color name="theme_primary">@color/material_light_blue_500</color>
-    <color name="theme_primary_dark">@color/material_light_blue_700</color>
-    <color name="theme_primary_light">@color/material_light_blue_100</color>
-    <color name="theme_primary_light_inv">@color/material_grey_800</color>
-    <color name="theme_accent">@color/material_blue_grey_700</color>
-
-    <color name="fab_normal">@color/material_light_blue_500</color>
-    <color name="fab_pressed">@color/material_light_blue_700</color>
-
-    <color name="text_color_black">#de000000</color> <!-- 87% black -->
-
-    <color name="half_black">#808080</color>
-    <color name="white_pressed">#f1f1f1</color>
-    <color name="black_semi_transparent">#B2000000</color>
     <color name="material_theme_grey">#303030</color>
 </resources>
