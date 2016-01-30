@@ -300,7 +300,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                     showToast(gtxt(R.string.multimedia_editor_pron_pronunciation_failed));
                 }
 
-                AudioField af = new AudioField();
+                AudioField af = new AudioRecordingField();
                 af.setAudioPath(pronuncPath);
                 // This is done to delete the file later.
                 af.setHasTemporaryMedia(true);

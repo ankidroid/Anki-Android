@@ -35,7 +35,7 @@ import java.io.IOException;
 
 import timber.log.Timber;
 
-public class BasicAudioFieldController extends FieldControllerBase implements IFieldController {
+public class BasicAudioRecordingFieldController extends FieldControllerBase implements IFieldController {
 
     protected static final int ACTIVITY_RECORD_AUDIO = 1;
 

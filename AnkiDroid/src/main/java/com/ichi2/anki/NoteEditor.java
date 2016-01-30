@@ -59,7 +59,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.fields.AudioClipField;
-import com.ichi2.anki.multimediacard.fields.AudioField;
+import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
 import com.ichi2.anki.multimediacard.fields.EFieldType;
 import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.ImageField;
@@ -1153,7 +1153,7 @@ public class NoteEditor extends AnkiActivity {
                             switch (item.getItemId()) {
                                 case R.id.menu_multimedia_audio:
                                     Timber.i("NoteEditor:: Record audio button pressed");
-                                    field = new AudioField();
+                                    field = new AudioRecordingField();
                                     mNote.setField(index, field);
                                     startMultimediaFieldEditor(index, mNote, field);
                                     return true;

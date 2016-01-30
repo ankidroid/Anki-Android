@@ -8,15 +8,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Implementation of Audio Clip field type
+ * Implementation of Audio Recording field type
  */
-public class AudioClipField extends AudioField {
-    private static final long serialVersionUID = 2937641017832762987L;
+public class AudioRecordingField extends AudioField {
+    private static final long serialVersionUID = 5033819217738174719L;
 
 
     @Override
     public EFieldType getType() {
-        return EFieldType.AUDIO_CLIP;
+        return EFieldType.AUDIO_RECORDING;
     }
 
 
@@ -28,7 +28,7 @@ public class AudioClipField extends AudioField {
 
     @Override
     public boolean isModified() {
-        return false;
+        return getThisModified();
     }
 
 
@@ -84,25 +84,25 @@ public class AudioClipField extends AudioField {
 
     @Override
     public void setHasTemporaryMedia(boolean hasTemporaryMedia) {
-
+        mHasTemporaryMedia = hasTemporaryMedia;
     }
 
 
     @Override
     public boolean hasTemporaryMedia() {
-        return false;
+        return mHasTemporaryMedia;
     }
 
 
     @Override
     public String getName() {
-        return null;
+        return mName;
     }
 
 
     @Override
     public void setName(String name) {
-
+        mName = name;
     }
 
 
@@ -129,3 +129,4 @@ public class AudioClipField extends AudioField {
 //        setAudioPath(mediaDir + res);
 //    }
 }
+

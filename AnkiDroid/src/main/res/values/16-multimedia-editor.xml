@@ -66,7 +66,7 @@
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text">Text</string>
     <string name="multimedia_editor_field_editing_image">Image</string>
-    <string name="multimedia_editor_field_editing_audio">Audio</string>
+    <string name="multimedia_editor_field_editing_audio">Audio recording</string>
     <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
     <string name="multimedia_editor_field_editing_done">Done</string>
 

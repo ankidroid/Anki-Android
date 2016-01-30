@@ -27,21 +27,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Implementation of Audio field type
+ * Implementation of Audio field types
  */
-public class AudioField extends FieldBase implements IField {
-    private static final long serialVersionUID = 5033819217738174719L;
-    private String mAudioPath;
-    private String mName;
-    private boolean mHasTemporaryMedia = false;
+public abstract class AudioField extends FieldBase implements IField {
+    protected String mAudioPath;
+    protected String mName;
+    protected boolean mHasTemporaryMedia = false;
 
-    private static final String PATH_REGEX = "\\[sound:(.*)\\]";
+    protected static final String PATH_REGEX = "\\[sound:(.*)\\]";
 
 
     @Override
-    public EFieldType getType() {
-        return EFieldType.AUDIO;
-    }
+    public abstract EFieldType getType();
 
 
     @Override
@@ -51,9 +48,7 @@ public class AudioField extends FieldBase implements IField {
 
 
     @Override
-    public boolean isModified() {
-        return getThisModified();
-    }
+    public abstract boolean isModified();
 
 
     @Override
@@ -107,27 +102,19 @@ public class AudioField extends FieldBase implements IField {
 
 
     @Override
-    public void setHasTemporaryMedia(boolean hasTemporaryMedia) {
-        mHasTemporaryMedia = hasTemporaryMedia;
-    }
+    public abstract void setHasTemporaryMedia(boolean hasTemporaryMedia);
 
 
     @Override
-    public boolean hasTemporaryMedia() {
-        return mHasTemporaryMedia;
-    }
+    public abstract boolean hasTemporaryMedia();
 
 
     @Override
-    public String getName() {
-        return mName;
-    }
+    public abstract String getName();
 
 
     @Override
-    public void setName(String name) {
-        mName = name;
-    }
+    public abstract void setName(String name);
 
 
     @Override
