@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Відображення</string>
   <string name="pref_cat_whiteboard">Дошка</string>
   <string name="pref_cat_automatic_display">Автоматично відображати відповідь</string>
-  <string name="pref_cat_fonts">Шрифти</string>
-  <string name="pref_cat_fonts_summ">Змінити типовий шрифт і розмір</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Жести</string>
   <string name="pref_cat_gestures_summ">Використовуйте дотики і проведення пальцем замість кнопок</string>
   <string name="pref_cat_actions">Дії</string>

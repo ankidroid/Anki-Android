@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">顯示</string>
   <string name="pref_cat_whiteboard">白板</string>
   <string name="pref_cat_automatic_display">自動顯示答案</string>
-  <string name="pref_cat_fonts">字體</string>
-  <string name="pref_cat_fonts_summ">改變預設字體和大小</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">手勢</string>
   <string name="pref_cat_gestures_summ">使用點擊和滑動來取代按鈕</string>
   <string name="pref_cat_actions">動作</string>

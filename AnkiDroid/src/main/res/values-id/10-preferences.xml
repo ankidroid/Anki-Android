@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Tampilan</string>
   <string name="pref_cat_whiteboard">Papan tulis</string>
   <string name="pref_cat_automatic_display">Otomatis tampilkan jawaban</string>
-  <string name="pref_cat_fonts">Huruf-huruf</string>
-  <string name="pref_cat_fonts_summ">Ubah huruft standar dan ukuran</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Gerakan</string>
   <string name="pref_cat_gestures_summ">Gunakan ketukan dan gesekan pengganti tombol</string>
   <string name="pref_cat_actions">Tindakan</string>

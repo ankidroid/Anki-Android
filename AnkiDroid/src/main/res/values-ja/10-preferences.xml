@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">画面表示</string>
   <string name="pref_cat_whiteboard">ホワイトボード機能</string>
   <string name="pref_cat_automatic_display">解答の自動表示</string>
-  <string name="pref_cat_fonts">フォント</string>
-  <string name="pref_cat_fonts_summ">既定フォントとサイズの変更</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">ジェスチャー</string>
   <string name="pref_cat_gestures_summ">よく使うボタン操作をタップやスワイプにも割り当てます</string>
   <string name="pref_cat_actions">アクション</string>

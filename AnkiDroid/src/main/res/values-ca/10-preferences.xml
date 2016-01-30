@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Pantalla</string>
   <string name="pref_cat_whiteboard">Pissarra</string>
   <string name="pref_cat_automatic_display">Mostra la resposta automàticament</string>
-  <string name="pref_cat_fonts">Tipus de lletra</string>
-  <string name="pref_cat_fonts_summ">Canviar el tamany i tipus de lletra per defecte</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Gestos</string>
   <string name="pref_cat_gestures_summ">Utilitzar lliscades i tocs en lloc de botons</string>
   <string name="pref_cat_actions">Accions</string>

@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Pantalla</string>
   <string name="pref_cat_whiteboard">Pizarra</string>
   <string name="pref_cat_automatic_display">Mostrar automáticamente la respuesta</string>
-  <string name="pref_cat_fonts">Fuentes</string>
-  <string name="pref_cat_fonts_summ">Cambiar la fuente y el tamaño predeterminados</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Gestos</string>
   <string name="pref_cat_gestures_summ">Usar toques y deslizamientos en lugar de botones</string>
   <string name="pref_cat_actions">Acciones</string>

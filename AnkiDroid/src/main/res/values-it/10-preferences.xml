@@ -40,7 +40,7 @@
 -->
 <resources>
   <string name="disabled">Disattivato</string>
-  <string name="enabled">Enabled</string>
+  <string name="enabled">Abilitato</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Impostazioni generali</string>
   <string name="pref_cat_reviewing">Ripetizioni</string>
@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Visualizzazione</string>
   <string name="pref_cat_whiteboard">Lavagna</string>
   <string name="pref_cat_automatic_display">Visualizzazione automatica risposta</string>
-  <string name="pref_cat_fonts">Caratteri</string>
-  <string name="pref_cat_fonts_summ">Cambia carattere e dimensione di default</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Gesti</string>
   <string name="pref_cat_gestures_summ">Usa tocchi e scorrimento al posto dei pulsanti</string>
   <string name="pref_cat_actions">Azioni</string>
@@ -72,7 +72,7 @@
   <string name="text_selection_click_summ">Attiva questo se non sei in grado di iniziare la selezione di testo con un clic lungo</string>
   <string name="dictionary">Ricerca nel dizionario</string>
   <string name="reset_languages">Reimposta le lingue</string>
-  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
+  <string name="reset_languages_summ">Reimposta le assegnazioni di lingua (per text to speech e dizionari) per tutti i mazzi</string>
   <string name="reset_languages_question">Reimpostare tutte le assegnazioni di lingua?</string>
   <string name="reset_confirmation">Reimpostato tutti gli stati</string>
   <string name="card_zoom">Zoom carte</string>
@@ -157,12 +157,12 @@
   <string name="convert_fen_text_summ">Disegna la scacchiera dalla notazione Forsyth-Edwards. La notazione deve essere racchiusa nelle etichette [fen] [/fen].</string>
   <string name="enable_api_title">Attiva API AnkiDroid</string>
   <string name="enable_api_summary">Permetti ad altre applicazioni di connettersi ad AnkiDroid e di leggere / scrivere dati senza il tuo intervento</string>
-  <string name="advanced_statistics_title">Advanced statistics</string>
-  <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
-  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
-  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
-  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
-  <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+  <string name="advanced_statistics_title">Statistiche avanzate</string>
+  <string name="enable_advanced_statistics_title">Attiva le statistiche avanzate</string>
+  <string name="enable_advanced_statistics_summ">Visualizzazione previsioni statistiche basate su un calcolo o la simulazione delle future ripetizioni (abilitato) o le future ripetizioni già pianificate (disabilitato).</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Calcola i primi n giorni, simula il resto</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Precisione di calcolo</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">Numero di iterazioni della simulazione</string>
   <string name="custom_sync_server_title">Server di sincronizzazione personalizzato</string>
   <string name="custom_sync_server_enable_title">Utilizza server di sincronizzazione personalizzato</string>
   <string name="custom_sync_server_enable_summary">Se non desideri utilizzare il servizio proprietario AnkiWeb puoi specificare un server alternativo qui</string>

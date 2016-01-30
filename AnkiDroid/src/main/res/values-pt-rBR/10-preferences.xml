@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Exibição</string>
   <string name="pref_cat_whiteboard">Quadro</string>
   <string name="pref_cat_automatic_display">Mostrar resposta automaticamente</string>
-  <string name="pref_cat_fonts">Fontes</string>
-  <string name="pref_cat_fonts_summ">Alterar o tipo e o tamanho da fonte padrão</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Gestos</string>
   <string name="pref_cat_gestures_summ">Usar gestos em vez de botões</string>
   <string name="pref_cat_actions">Ações</string>

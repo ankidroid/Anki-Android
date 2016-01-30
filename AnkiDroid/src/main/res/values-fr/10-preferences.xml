@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Afficher</string>
   <string name="pref_cat_whiteboard">Tableau blanc</string>
   <string name="pref_cat_automatic_display">Affichage automatique de la réponse</string>
-  <string name="pref_cat_fonts">Polices</string>
-  <string name="pref_cat_fonts_summ">Modifier la police et taille par défaut</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Gestes</string>
   <string name="pref_cat_gestures_summ">Utiliser les gestes et mouvements au lieu des boutons</string>
   <string name="pref_cat_actions">Actions</string>

@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Приказ</string>
   <string name="pref_cat_whiteboard">Бела табла</string>
   <string name="pref_cat_automatic_display">Аутоматски приказуј одговор</string>
-  <string name="pref_cat_fonts">фонтови</string>
-  <string name="pref_cat_fonts_summ">Промени уобичајени фонт и величину</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Гестови</string>
   <string name="pref_cat_gestures_summ">Користи тапкање и пребацивања уместо дугмиће</string>
   <string name="pref_cat_actions">Дејство</string>

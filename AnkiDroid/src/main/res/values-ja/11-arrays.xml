@@ -93,4 +93,12 @@
     <item>フォントが指定されていない場合</item>
     <item>全て</item>
   </string-array>
+  <string-array name="day_theme_labels">
+    <item>Default</item>
+    <item>Plain</item>
+  </string-array>
+  <string-array name="night_theme_labels">
+    <item>Default</item>
+    <item>Black</item>
+  </string-array>
 </resources>

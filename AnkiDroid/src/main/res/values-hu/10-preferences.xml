@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Kijelző</string>
   <string name="pref_cat_whiteboard">Tábla</string>
   <string name="pref_cat_automatic_display">Válasz automatikus mutatása</string>
-  <string name="pref_cat_fonts">Betűtípusok</string>
-  <string name="pref_cat_fonts_summ">Alap betűtípus és méret választás</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Gesztusok</string>
   <string name="pref_cat_gestures_summ">Use taps and swipes instead of buttons</string>
   <string name="pref_cat_actions">Műveletek</string>

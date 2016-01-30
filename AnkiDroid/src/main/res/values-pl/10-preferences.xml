@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Wyświetlanie</string>
   <string name="pref_cat_whiteboard">Tablica</string>
   <string name="pref_cat_automatic_display">Automatyczne wyświetlanie odpowiedzi</string>
-  <string name="pref_cat_fonts">Fonty</string>
-  <string name="pref_cat_fonts_summ">Zmień domyślną czcionkę i jej rozmiar</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Gesty</string>
   <string name="pref_cat_gestures_summ">Użyj gestów zamiast przycisków</string>
   <string name="pref_cat_actions">Czynności</string>

@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Visualización</string>
   <string name="pref_cat_whiteboard">Encerado</string>
   <string name="pref_cat_automatic_display">Amosar a resposta automaticamente</string>
-  <string name="pref_cat_fonts">Tipos de letra</string>
-  <string name="pref_cat_fonts_summ">Mudar a fonte e tamaño predefinidos</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Xestos</string>
   <string name="pref_cat_gestures_summ">Empregar esvarar e tocar no canto dos botóns</string>
   <string name="pref_cat_actions">Accións</string>

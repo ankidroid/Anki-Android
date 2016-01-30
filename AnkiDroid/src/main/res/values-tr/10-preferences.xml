@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Ekran</string>
   <string name="pref_cat_whiteboard">Yazı tahtası</string>
   <string name="pref_cat_automatic_display">Cevabı otomatik göster</string>
-  <string name="pref_cat_fonts">Fontlar</string>
-  <string name="pref_cat_fonts_summ">Varsayılan fontu değiştir</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Jestler</string>
   <string name="pref_cat_gestures_summ">Düğmeler yerine dokunma ve kaydırma kullan</string>
   <string name="pref_cat_actions">Eylemler</string>

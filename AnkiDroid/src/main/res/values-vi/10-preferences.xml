@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Hiển thị</string>
   <string name="pref_cat_whiteboard">Bảng viết</string>
   <string name="pref_cat_automatic_display">Tự động hiển thị trả lời</string>
-  <string name="pref_cat_fonts">Phông chữ</string>
-  <string name="pref_cat_fonts_summ">Thay đổi mặc định phông chữ và kích thước</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Cử Chỉ/ Điều Hướng</string>
   <string name="pref_cat_gestures_summ">Sử dụng taps và swipes thay vì các nút bấm</string>
   <string name="pref_cat_actions">Tác vụ</string>

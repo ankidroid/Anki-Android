@@ -93,4 +93,12 @@
     <item>플래시카드에 특정 글꼴이 지정되지 않은 경우</item>
     <item>항상</item>
   </string-array>
+  <string-array name="day_theme_labels">
+    <item>Default</item>
+    <item>Plain</item>
+  </string-array>
+  <string-array name="night_theme_labels">
+    <item>Default</item>
+    <item>Black</item>
+  </string-array>
 </resources>

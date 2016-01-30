@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Weergave</string>
   <string name="pref_cat_whiteboard">Schrijfbord</string>
   <string name="pref_cat_automatic_display">Automatische weergave antwoord</string>
-  <string name="pref_cat_fonts">Lettertypes</string>
-  <string name="pref_cat_fonts_summ">Wijzig standaardlettertype en de tekengrootte</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Gebaren</string>
   <string name="pref_cat_gestures_summ">Gebruik tikken en vegen in plaats van knoppen</string>
   <string name="pref_cat_actions">Acties</string>

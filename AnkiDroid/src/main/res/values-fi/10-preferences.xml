@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Näyttö</string>
   <string name="pref_cat_whiteboard">Valkotaulu</string>
   <string name="pref_cat_automatic_display">Näytä vastaukset automaattisesti</string>
-  <string name="pref_cat_fonts">Kirjasintyypit</string>
-  <string name="pref_cat_fonts_summ">Vaihda oletuskirjasintyyppiä ja kokoa</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Eleet</string>
   <string name="pref_cat_gestures_summ">Käytä napautuksia ja pyyhkäisyjä painikkeiden sijaan</string>
   <string name="pref_cat_actions">Toiminnot</string>

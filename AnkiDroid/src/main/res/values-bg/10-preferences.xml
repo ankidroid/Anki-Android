@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Екран</string>
   <string name="pref_cat_whiteboard">Бяла дъска</string>
   <string name="pref_cat_automatic_display">Автоматично показване отговор</string>
-  <string name="pref_cat_fonts">Шрифтове</string>
-  <string name="pref_cat_fonts_summ">Промяна на шрифта и размера по подразбиране</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Жестове</string>
   <string name="pref_cat_gestures_summ">Използване на докосване и плъзване вместо бутони</string>
   <string name="pref_cat_actions">Действия</string>

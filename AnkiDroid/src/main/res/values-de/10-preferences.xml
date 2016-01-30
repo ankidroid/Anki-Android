@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Anzeige</string>
   <string name="pref_cat_whiteboard">Whiteboard</string>
   <string name="pref_cat_automatic_display">Antworten automatisch zeigen</string>
-  <string name="pref_cat_fonts">Schriftarten</string>
-  <string name="pref_cat_fonts_summ">Standardschriftart und -größe ändern</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Gesten</string>
   <string name="pref_cat_gestures_summ">Berühren und Wischen statt Schaltflächen verwenden</string>
   <string name="pref_cat_actions">Aktionen</string>

@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">디스플레이</string>
   <string name="pref_cat_whiteboard">칠판</string>
   <string name="pref_cat_automatic_display">자동 디스플레이 대답</string>
-  <string name="pref_cat_fonts">글꼴</string>
-  <string name="pref_cat_fonts_summ">기본 글꼴 및 크기 변경</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">제스쳐</string>
   <string name="pref_cat_gestures_summ">버튼 대신 밀기와 두드리기 사용</string>
   <string name="pref_cat_actions">작업</string>

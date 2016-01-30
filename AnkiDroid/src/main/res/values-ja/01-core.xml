@@ -107,7 +107,7 @@
   <string name="later">後で</string>
   <string name="rebuild_cram_deck">フィルターデッキを再構築しています...</string>
   <string name="rebuild_cram_label">再構築</string>
-  <string name="empty_cram_label">全て戻す</string>
+  <string name="empty_cram_label">空にする</string>
   <string name="empty_cram_deck">カードを元のデッキへ戻しています...</string>
   <string name="custom_study_deck_name">カスタム学習セッション</string>
   <string name="custom_study_deck_exists">最初に、既存のカスタム学習デッキの名前を変更してください</string>

@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Visning</string>
   <string name="pref_cat_whiteboard">Whiteboard</string>
   <string name="pref_cat_automatic_display">VIsa svar automatiskt</string>
-  <string name="pref_cat_fonts">Typsnitt</string>
-  <string name="pref_cat_fonts_summ">Ändra standardteckensnitt och storlek</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Gester</string>
   <string name="pref_cat_gestures_summ">Använd klickningar och svepningar istället för knappar</string>
   <string name="pref_cat_actions">Handlingar</string>

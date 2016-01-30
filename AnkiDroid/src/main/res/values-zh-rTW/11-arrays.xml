@@ -93,4 +93,12 @@
     <item>當 flashcard 沒有指定字體時</item>
     <item>總是</item>
   </string-array>
+  <string-array name="day_theme_labels">
+    <item>Default</item>
+    <item>Plain</item>
+  </string-array>
+  <string-array name="night_theme_labels">
+    <item>Default</item>
+    <item>Black</item>
+  </string-array>
 </resources>

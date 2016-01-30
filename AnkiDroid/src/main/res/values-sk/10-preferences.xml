@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">Zobrazenie</string>
   <string name="pref_cat_whiteboard">Tabuľa</string>
   <string name="pref_cat_automatic_display">Automaticky zobrazovat odpoveď</string>
-  <string name="pref_cat_fonts">Písmo</string>
-  <string name="pref_cat_fonts_summ">Zmena predvoleného písma a veľkosti</string>
+  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance_summ">Change themes and default font</string>
   <string name="pref_cat_gestures">Gestá</string>
   <string name="pref_cat_gestures_summ">Ovládanie gestami namiesto tlačidiel</string>
   <string name="pref_cat_actions">Akcie</string>
