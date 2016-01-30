@@ -34,7 +34,7 @@ import java.io.IOException;
 
 import timber.log.Timber;
 
-public class BasicAudioFieldController extends FieldControllerBase implements IFieldController {
+public class BasicAudioRecordingFieldController extends FieldControllerBase implements IFieldController {
 
     /**
      * This controller always return a temporary path where it writes the audio

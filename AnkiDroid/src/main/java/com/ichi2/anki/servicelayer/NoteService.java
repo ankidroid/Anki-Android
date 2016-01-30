@@ -21,7 +21,7 @@ package com.ichi2.anki.servicelayer;
 
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.fields.AudioClipField;
-import com.ichi2.anki.multimediacard.fields.AudioField;
+import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
 import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.ImageField;
 import com.ichi2.anki.multimediacard.fields.TextField;
@@ -79,7 +79,7 @@ public class NoteService {
                 if (value.startsWith("<img")) {
                     field = new ImageField();
                 } else if (value.startsWith("[sound:") && value.contains("rec")) {
-                    field = new AudioField();
+                    field = new AudioRecordingField();
                 } else if (value.startsWith("[sound:")) {
                     field = new AudioClipField();
                 } else {
@@ -159,16 +159,13 @@ public class NoteService {
     private static void importMediaToDirectory(Collection col, IField field) {
         String tmpMediaPath = null;
         switch (field.getType()) {
-            case AUDIO:
+            case AUDIO_RECORDING:
+            case AUDIO_CLIP:
                 tmpMediaPath = field.getAudioPath();
                 break;
 
             case IMAGE:
                 tmpMediaPath = field.getImagePath();
-                break;
-
-            case AUDIO_CLIP:
-                tmpMediaPath = field.getAudioPath();
                 break;
 
             case TEXT:
@@ -186,7 +183,8 @@ public class NoteService {
                         inFile.delete();
                     }
                     switch (field.getType()) {
-                        case AUDIO:
+                        case AUDIO_RECORDING:
+                        case AUDIO_CLIP:
                             field.setAudioPath(outFile.getAbsolutePath());
                             break;
                         case IMAGE:
