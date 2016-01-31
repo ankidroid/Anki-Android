@@ -131,6 +131,9 @@ If someone would like to continue that work:
 [Here is the unmerged commit](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2Fankidroid%2FAnki-Android%2Fcommit%2Ff899cb98f6fb90c1b4d5d48aff786e813adcf237&sa=D&sntz=1&usg=AFQjCNGmi_WBEvhq55r7DGHEwwmTb-JaWA) for the plugin interface for controllers
 and [here is the plugin for the Zeemote controller](https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2Finiju%2FAnkiDroid-Zeemote&sa=D&sntz=1&usg=AFQjCNF8ASmfUyI_oM-1mMq1lhBYbqGfRQ)
 
+### Can I use a hardware controller?
+Basic keyboard shortcuts that exist on Anki Desktop should already work with a bluetooth keyboard. It should be possible to use other controllers by using a third party app to remap the controller buttons to keyboard events. See [here](https://github.com/ankidroid/Anki-Android/issues/3600) and [here](https://github.com/ankidroid/Anki-Android/issues/3021#issuecomment-160243369) for more information.
+
 ### Why do I get an error message about the size limit for a String in a database?
 Unfortunately Android puts a [2MB limit](http://stackoverflow.com/questions/21432556/android-java-lang-illegalstateexception-couldnt-read-row-0-col-0-from-cursorw) on the size that a String can take in an sqlite database (the format used to store Anki collections). On AnkiDroid version 2.6+ we detect when this limit is exceeded and show an error message. The default limit on other platforms in 2GB, so it's very much an Android specific issue. 
 
