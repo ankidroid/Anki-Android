@@ -40,10 +40,10 @@
         <item name="learnCountColor">@color/theme_black_learn_count</item>
         <item name="reviewCountColor">@color/theme_black_review_count</item>
         <item name="answerButtonTextColor">@color/theme_black_primary_text</item>
-        <item name="againButtonTextColor">@color/theme_black_primary_text</item>
-        <item name="hardButtonTextColor">@color/theme_black_primary_text</item>
-        <item name="goodButtonTextColor">@color/theme_black_primary_text</item>
-        <item name="easyButtonTextColor">@color/theme_black_primary_text</item>
+        <item name="againButtonTextColor">@color/material_red_400</item>
+        <item name="hardButtonTextColor">@color/white</item>
+        <item name="goodButtonTextColor">@color/material_green_400</item>
+        <item name="easyButtonTextColor">@color/material_light_blue_400</item>
         <!-- Reviewer button drawables -->
         <item name="againButtonRef">@drawable/footer_button_all_black</item>
         <item name="hardButtonRef">@drawable/footer_button_all_black</item>
