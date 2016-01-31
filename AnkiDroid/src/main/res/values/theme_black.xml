@@ -4,12 +4,9 @@
     <color name="theme_black_primary_dark">#000000</color>
     <color name="theme_black_primary_light">#151515</color>
     <color name="theme_black_accent">#303030</color>
-    <color name="theme_black_primary_text">#808080</color>
+    <color name="theme_black_primary_text">#fff</color> <!-- Alternative: #808080 -->
     <color name="theme_black_secondary_text">#a0a0a0</color>
     <color name="theme_black_dynDeck">#305683</color>
-    <color name="theme_black_new_count">#337</color>
-    <color name="theme_black_learn_count">#733</color>
-    <color name="theme_black_review_count">#373</color>
     <color name="theme_black_currentDeckBackground">#0c0c0c</color>
     <color name="theme_black_browser_suspended">#3ce6e181</color>
     <color name="theme_black_browser_marked">#230b2e</color>
@@ -36,14 +33,14 @@
         <item name="collapseRef">@drawable/ic_expand_more_white_24dp</item>
         <!-- Reviewer colors -->
         <item name="topBarColor">@color/theme_black_primary</item>
-        <item name="newCountColor">@color/theme_black_new_count</item>
-        <item name="learnCountColor">@color/theme_black_learn_count</item>
-        <item name="reviewCountColor">@color/theme_black_review_count</item>
+        <item name="newCountColor">@color/material_blue_700</item>
+        <item name="learnCountColor">@color/material_red_400</item>
+        <item name="reviewCountColor">@color/material_green_400</item>
         <item name="answerButtonTextColor">@color/theme_black_primary_text</item>
         <item name="againButtonTextColor">@color/material_red_400</item>
         <item name="hardButtonTextColor">@color/white</item>
         <item name="goodButtonTextColor">@color/material_green_400</item>
-        <item name="easyButtonTextColor">@color/material_light_blue_400</item>
+        <item name="easyButtonTextColor">@color/material_blue_700</item>
         <!-- Reviewer button drawables -->
         <item name="againButtonRef">@drawable/footer_button_all_black</item>
         <item name="hardButtonRef">@drawable/footer_button_all_black</item>
