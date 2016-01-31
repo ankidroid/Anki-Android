@@ -66,6 +66,8 @@
     <color name="material_indigo_200">#9fa8da</color>
     <color name="material_indigo_700">#ff303f9f</color>
     <color name="material_indigo_A700">#ff304ffe</color>
+    <color name="material_blue_600">#ff1e88e5</color>
+    <color name="material_blue_700">#ff1976d2</color>
     <color name="material_blue_A700">#ff2962ff</color>
     <color name="material_light_blue_100">#ffB3E5FC</color>
     <color name="material_light_blue_200">#ff81D4FA</color>
