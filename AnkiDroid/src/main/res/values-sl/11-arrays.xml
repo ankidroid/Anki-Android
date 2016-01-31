@@ -94,11 +94,11 @@
     <item>Vedno</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Default</item>
-    <item>Plain</item>
+    <item>Privzeta</item>
+    <item>Gola</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Default</item>
-    <item>Black</item>
+    <item>Privzeta</item>
+    <item>Črna</item>
   </string-array>
 </resources>
