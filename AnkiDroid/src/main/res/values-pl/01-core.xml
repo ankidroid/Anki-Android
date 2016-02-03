@@ -45,13 +45,13 @@
   <string name="settings">Ustawienia</string>
   <string name="help">Pomoc</string>
   <string name="send_feedback">Prześlij opinię</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <string name="studyoptions_title">Przegląd talii</string>
   <string name="studyoptions_due_today">Na dziś:</string>
   <string name="studyoptions_new_total">Łącznie nowych kart:</string>
   <string name="studyoptions_total_cards">Łącznie kart:</string>
   <string name="studyoptions_eta">Szacowany czas (min):</string>
   <string name="studyoptions_start">Ucz się teraz</string>
-  <string name="study_more">Study more</string>
+  <string name="study_more">Studiuj więcej</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
     <item quantity="few">%1$d cards due (%2$s)</item>
@@ -97,8 +97,8 @@
   <string name="delete_note_message">Jesteś pewny, że chcesz usunąć tę notatkę i wszystkie jej karty?\n%s</string>
   <string name="menu_select">Zaznacz tekst</string>
   <string name="menu_search">Wyszukiwanie w %1$s</string>
-  <string name="menu_mark_note">Mark note</string>
-  <string name="menu_unmark_note">Unmark note</string>
+  <string name="menu_mark_note">Wyróżnij notatkę</string>
+  <string name="menu_unmark_note">Cofnij wyróżnienie notatki</string>
   <string name="new_deck">Stwórz talię</string>
   <string name="create">Utwórz</string>
   <string name="new_dynamic_deck">Stwórz filtrowaną talię</string>
@@ -129,9 +129,9 @@
   <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Synchronizuj</string>
   <string name="cancel_sync_confirm">Chcesz przerwać synchronizację?</string>
-  <string name="continue_sync">Continue sync</string>
+  <string name="continue_sync">Kontynuuj synchronizację</string>
   <string name="sync_cancelled">Synchronizacja przerwana</string>
-  <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
+  <string name="sync_cancel_message">Anulowanie...\nTo może zająć troszkę czasu.</string>
   <string name="export">Eksportuj</string>
   <string name="export_collection">Eksportuj kolekcję</string>
   <string name="export_deck">Eksportuj talię</string>
@@ -143,11 +143,11 @@
   <string name="card_template_editor_menu_delete">Usuń</string>
   <string name="card_template_editor_cant_delete">Wymagany jest przynajmniej jeden typ karty.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
+    <item quantity="one">Czy usunąć typ kart “%2$s” oraz jego %1$d kartę?</item>
     <item quantity="few">Delete the “%2$s” card type, and its %1$d cards?</item>
-    <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+    <item quantity="other">Czy usunąć typ kart “%2$s” oraz jego %1$d karty?</item>
   </plurals>
-  <string name="invalid_template">A card could not be generated</string>
+  <string name="invalid_template">Karta nie mogła zostać wygenerowana</string>
   <string name="card_template_editor_would_delete_note">Usunięcie typu karty może spowodować usunięcie jednej lub większej ilości notatek. Proszę o utworzenie najpierw nowej karty.</string>
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
   <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>

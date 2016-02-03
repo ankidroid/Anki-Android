@@ -87,10 +87,10 @@
   <string name="rebuild_custom_study_deck">Erstelle neuen Stapel für eine benutzerdefinierte Sitzung&#8230;</string>
   <string name="importing_collection">Importiere Sammlung&#8230;</string>
   <string name="import_media_count">Importiere Mediendateien %1$d%%&#8230;</string>
-  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
-  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
-  <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
-  <string name="import_complete_count">Cards imported: %d</string>
+  <string name="import_progress">• Importiere Notizen: %1$d%%\n• Importiere Karten: %2$d%%\n• Nachbearbeitung: %3$d%%</string>
+  <string name="import_update_details">%1$d von %2$d bestehenden Notizen aktualisiert.</string>
+  <string name="import_update_ignored">Mache Aktualisierungen wurden ignoriert, da der Notiztyp verändert wurde</string>
+  <string name="import_complete_count">Karten importiert: %d</string>
   <string name="sd_card_full_title">SD-Karte voll</string>
   <string name="sd_card_almost_full_title">SD-Karte fast voll</string>
   <string name="restore_backup_title">Sicherung wiederherstellen?</string>

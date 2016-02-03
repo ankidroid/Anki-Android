@@ -47,15 +47,15 @@
   <string name="CardEditorNoteDeck">Talia:</string>
   <string name="CardEditorModel">Typ:</string>
   <string name="CardEditorTags">Etykiety: %1$s</string>
-  <string name="CardEditorCards">Cards: %1$s</string>
-  <string name="tag_name">Tag name</string>
+  <string name="CardEditorCards">Karty: %1$s</string>
+  <string name="tag_name">Nazwa tagu</string>
   <string name="add_new_filter_tags">Dodaj/filtruj tagi</string>
-  <string name="add_tag">Add tag</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
+  <string name="add_tag">Dodaj tag</string>
+  <string name="check_all_tags">Zaznacz/odznacz wszystkie tagi</string>
   <string name="filter_tags">Filtruj tagi</string>
-  <string name="no_tags">You haven’t added any tags yet</string>
+  <string name="no_tags">Nie dodałeś jeszcze żadnych tagów</string>
   <string name="sdcard_missing_message">Karta SD jest niedostępna, ponieważ jest ona używana jako pamięć masowa USB. Odłącz USB, aby uzyskać dostęp do Twoich talii.</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="updated_version">Zaktualizowano do wersji %s</string>
   <string name="enable_whiteboard">Włącz tablicę</string>
   <string name="disable_whiteboard">Wyłącz tablicę</string>
   <string name="show_whiteboard">Pokaż tablicę</string>
@@ -66,8 +66,8 @@
   <string name="leech_notification">Karta oznaczona jako pijawka</string>
   <string name="corrupt_font">Uszkodzony plik czcionki %s</string>
   <string-array name="browser_column1_headings">
-    <item>Question</item>
-    <item>Sort field</item>
+    <item>Pytanie</item>
+    <item>Sortowanie według pola</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Odpowiedź</item>
@@ -79,13 +79,13 @@
     <item>Pomyłki</item>
     <item>Powtórki</item>
   </string-array>
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
-  <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_increase_new_limit">Zwiększ dzisiejszy limit nowych kart</string>
+  <string name="custom_study_increase_review_limit">Zwiększ dzisiejszy limit przeglądanych kart</string>
+  <string name="custom_study_review_forgotten">Przejrzyj zapomniane karty</string>
+  <string name="custom_study_review_ahead">Przejrzyj z wyprzedzeniem</string>
+  <string name="custom_study_random_selection">Ucz się losowo wybranych kart</string>
+  <string name="custom_study_preview_new">Podejrzyj nowe karty</string>
+  <string name="custom_study_limit_tags">Ogranicz do poszczególnych tagów</string>
   <string name="cardeditor_title_add_note">Dodaj notatkę</string>
   <string name="cardeditor_title_edit_card">Edytuj notatkę</string>
   <string name="discard_unsaved_changes">Zamknąć i utracić bieżący wkład?</string>
@@ -93,7 +93,7 @@
   <string name="saving_facts">Zapisywanie notatki</string>
   <string name="saving_model">Saving model</string>
   <string name="add">Dodaj</string>
-  <string name="save">Save</string>
+  <string name="save">Zapisz</string>
   <string name="close">Zamknij</string>
   <string name="select">Wybierz</string>
   <string name="saving_changes">Trwa zapisywanie zmian...</string>
@@ -103,12 +103,12 @@
   <plurals name="timebox_reached">
     <item quantity="one">%1$d card studied in %2$s</item>
     <item quantity="few">%1$d cards studied in %2$s</item>
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="other">%1$d kart, uczonych w %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minute</item>
-    <item quantity="few">%1$d minutes</item>
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="one">%1$d minutę</item>
+    <item quantity="few">%1$d minut</item>
+    <item quantity="other">%1$d minut</item>
   </plurals>
   <string name="studyoptions_welcome_title">Witamy w AnkiDroidzie</string>
   <string name="fact_adder_intent_title">Karta AnkiDroida</string>
@@ -121,29 +121,29 @@
   <string name="rename">Zmień nazwę</string>
   <string name="default_conf_delete_error">Nie można usunąć domyślnej grupy ustawień</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
+    <item quantity="one">%d karta dodana</item>
     <item quantity="few">%d cards added</item>
     <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">Pomoc</string>
   <string name="check_db">Sprawdź bazę danych</string>
   <string name="check_media">Sprawdź media</string>
-  <string name="empty_cards">Empty cards</string>
+  <string name="empty_cards">Puste karty</string>
   <string name="check_db_message">Sprawdzanie bazy danych.\nProszę czekać...</string>
-  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
+  <string name="empty_card_warning">Ta karta jest pusta. Użyj opcji \"Puste karty\" z menu na ekranie z listą talii.</string>
   <string name="unknown_type_field_warning">Wpisz odpowiedź: nieznane pole %s</string>
   <string name="delete_deck">Usuwanie talii...\nProszę czekać...</string>
   <string name="show_hint">Pokaż %s</string>
   <string name="info_rate">Oceń AnkiDroid</string>
   <string name="col_load_failed">Ładowanie kolekcji nie powiodło się.\nNaciśnij \"Back\" aby zamknąć AnkiDroid.</string>
-  <string name="import_title">Importing</string>
+  <string name="import_title">Importowanie</string>
   <string name="import_select_title">Wybierz plik do importu</string>
   <string name="import_message_add">Dodaj</string>
   <string name="import_message_replace_confirm">Istniejąca kolekcja zostanie usunięta i zastąpiona danymi z pliku %s. Czy na pewno?</string>
   <string name="import_message_add_confirm">Dodać \"%s\" do kolekcji? To może trwać bardzo długo</string>
   <string name="import_log_no_apkg">To nie jst prawidłowy plik apkg</string>
-  <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg extension</string>
-  <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
+  <string name="import_error_not_apkg_extension">Nazwa pliku \"%s\" nie ma rozszerzenia .apkg</string>
+  <string name="import_error_content_provider">Wybrany plik nie mógł zostać automatycznie zaimportowany przez AnkiDroid. Zapoznaj się z podręcznikiem użytkownika na temat ręcznego importowania plików anki: \n%s</string>
   <string name="import_replacing">Replacing collection&#8230;</string>
   <string name="export_include_schedule">Włącznie z zaplanowanymi powtórkami</string>
   <string name="export_include_media">Włącznie z plikami mediów</string>
@@ -156,14 +156,14 @@
   <string name="import_hint">Aby zaimportować karty, umieść plik apkg w katalogu %s i naciśnij ok</string>
   <string name="upgrade_import_no_file_found">Nie znaleziono żadnych plików do zaimportowania (%1$s)</string>
   <string name="study_options">Opcje talii</string>
-  <string name="select_tts">Set TTS language</string>
+  <string name="select_tts">Ustaw język TTS</string>
   <string name="custom_study">Nauka niestandardowa</string>
-  <string name="more_options">More</string>
+  <string name="more_options">Więcej</string>
   <string name="dyn_deck_desc">To jest specjalna talia do nauki poza normalnym trybem. Karty automatycznie powrócą do oryginalnych talii po ich przejrzeniu. Usunięcie tej talii z listy spowoduje przywrócenie pozostałych w niej kart do oryginalnych talii.</string>
   <string name="steps_error">Kroki muszą być liczbą większą niż 0</string>
   <string name="steps_min_error">Przynajmniej jeden krok jest wymagany</string>
   <string name="sched_end">(koniec)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
+  <string name="sched_unbury_action">Żeby zobaczyć je teraz, dotknij elementu \"Odkop\" w menu</string>
   <string name="sched_has_buried">Niektóre związane lub zakopane karty zostały odroczone do następnej sesji.</string>
   <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
@@ -184,9 +184,9 @@
     <item quantity="other">%s hours</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="one">%s day</item>
-    <item quantity="few">%s days</item>
-    <item quantity="other">%s days</item>
+    <item quantity="one">%s dzień</item>
+    <item quantity="few">%s dni</item>
+    <item quantity="other">%s dni</item>
   </plurals>
   <plurals name="time_span_months">
     <item quantity="one">%s month</item>
@@ -194,12 +194,12 @@
     <item quantity="other">%s months</item>
   </plurals>
   <plurals name="time_span_years">
-    <item quantity="one">%s year</item>
-    <item quantity="few">%s years</item>
-    <item quantity="other">%s years</item>
+    <item quantity="one">%s rok</item>
+    <item quantity="few">%s lat</item>
+    <item quantity="other">%s lat</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
-  <string name="decks_rename_exists">That deck already exists</string>
+  <string name="decks_rename_exists">Ta talia już istnieje</string>
   <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
-  <string name="filtered_deck_name">Filtered Deck</string>
+  <string name="filtered_deck_name">Talia filtrowana</string>
 </resources>

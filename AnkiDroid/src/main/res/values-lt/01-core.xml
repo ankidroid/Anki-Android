@@ -39,28 +39,28 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="decks">Decks</string>
-  <string name="card_browser">Card browser</string>
-  <string name="statistics">Statistics</string>
-  <string name="settings">Settings</string>
-  <string name="help">Help</string>
-  <string name="send_feedback">Send feedback</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <string name="decks">Kaladė</string>
+  <string name="card_browser">Kortelių naršyklė</string>
+  <string name="statistics">Statistika</string>
+  <string name="settings">Nustatymai</string>
+  <string name="help">Pagalba</string>
+  <string name="send_feedback">Siųsti atsiliepimą</string>
+  <string name="studyoptions_title">Kaladės apžvalga</string>
   <string name="studyoptions_due_today">Šiandien laukia:</string>
   <string name="studyoptions_new_total">Viso naujų kortelių:</string>
   <string name="studyoptions_total_cards">Iš viso kortų:</string>
   <string name="studyoptions_eta">Apskaičiuotas laikas (min):</string>
   <string name="studyoptions_start">Pradėti mokytis</string>
-  <string name="study_more">Study more</string>
+  <string name="study_more">Studijuoti daugiau</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
     <item quantity="few">%1$d cards due (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
-    <item quantity="few">%d minutes left</item>
-    <item quantity="other">%d minutes left</item>
+    <item quantity="one">%d minutė liko</item>
+    <item quantity="few">%d minutės liko</item>
+    <item quantity="other">%d minutės liko</item>
   </plurals>
   <plurals name="studied_cards_today">
     <item quantity="one">Studied %1$d card in %2$s today</item>
@@ -84,7 +84,7 @@
   <string name="undo_action_delete">pastabos pašalinimą</string>
   <string name="undo_action_mark">pastabos pažimėjimą</string>
   <string name="unbury">Ištraukti</string>
-  <string name="rename_deck">Rename deck</string>
+  <string name="rename_deck">Pervadinti kaladę</string>
   <string name="menu_add">Pridėti</string>
   <string name="menu_add_note">Pridėti pastabą</string>
   <string name="menu_my_account">Sinchronizacijos paskyra</string>
@@ -97,8 +97,8 @@
   <string name="delete_note_message">Tikrai šalinti šią pastabą ir visas jos korteles?\n%s</string>
   <string name="menu_select">Žymėti tekstą</string>
   <string name="menu_search">Ieškoti čia: %1$s</string>
-  <string name="menu_mark_note">Mark note</string>
-  <string name="menu_unmark_note">Unmark note</string>
+  <string name="menu_mark_note">Pažymėti pastabą</string>
+  <string name="menu_unmark_note">Atžymėti pastabą</string>
   <string name="new_deck">Sukurti malką</string>
   <string name="create">Sukurti</string>
   <string name="new_dynamic_deck">Sukurti malką su filtrais</string>
@@ -108,8 +108,8 @@
   <string name="time_quantity_minutes">%d min</string>
   <string name="time_quantity_hours">%d h</string>
   <string name="time_quantity_days">%d d</string>
-  <string name="time_quantity_months">%.1f mo</string>
-  <string name="time_quantity_years">%.1f yr</string>
+  <string name="time_quantity_months">%.1f mėn</string>
+  <string name="time_quantity_years">%.1f metai</string>
   <string name="later">Vėliau</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck&#8230;</string>
   <string name="rebuild_cram_label">Atstatyti</string>
@@ -117,8 +117,8 @@
   <string name="empty_cram_deck">Emptying cram deck&#8230;</string>
   <string name="custom_study_deck_name">Individualizuota studijų sesija</string>
   <string name="custom_study_deck_exists">Prašome pirma pervardyti esamą Individualizuotą studijų malką.</string>
-  <string name="empty_deck">This deck is empty</string>
-  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+  <string name="empty_deck">Ši malka yra tuščia</string>
+  <string name="studyoptions_empty">Ši malka yra tuščia. Spauskite mygtuką + pridėti naujam turiniui.</string>
   <string name="studyoptions_limit_reached">Daily study limit reached</string>
   <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Sveikinimai! Kol kas peržiūra pasibaigė.</string>
@@ -128,26 +128,26 @@
   <string name="studyoptions_no_cards_due">No cards are due yet</string>
   <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Sinchronizuoti</string>
-  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-  <string name="continue_sync">Continue sync</string>
-  <string name="sync_cancelled">Sync cancelled</string>
+  <string name="cancel_sync_confirm">Ar norite atšaukti sinchronizaciją?</string>
+  <string name="continue_sync">Tęsti sinchronizavimą</string>
+  <string name="sync_cancelled">Sinchronizavimas atšauktas</string>
   <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
   <string name="export">Eksportuoti</string>
-  <string name="export_collection">Export collection</string>
-  <string name="export_deck">Export deck</string>
+  <string name="export_collection">Eksportuoti koleciją</string>
+  <string name="export_deck">Eksportuoti kaladę</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_template_editor">Card types</string>
-  <string name="card_template_editor_front">Front template</string>
-  <string name="card_template_editor_back">Back template</string>
-  <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required</string>
+  <string name="title_activity_template_editor">Kortelių tipai</string>
+  <string name="card_template_editor_front">Priekinis šablonas</string>
+  <string name="card_template_editor_back">Galinis šablonas</string>
+  <string name="card_template_editor_styling">Stilius</string>
+  <string name="card_template_editor_menu_delete">Ištrinti</string>
+  <string name="card_template_editor_cant_delete">Reikalingas bent vienas kortelės tipas</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
     <item quantity="few">Delete the “%2$s” card type, and its %1$d cards?</item>
     <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
   </plurals>
-  <string name="invalid_template">A card could not be generated</string>
+  <string name="invalid_template">Kortelės nepavyko sugeneruoti</string>
   <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
   <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>

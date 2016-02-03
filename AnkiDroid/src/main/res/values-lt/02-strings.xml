@@ -48,9 +48,9 @@
   <string name="CardEditorModel">Tipas:</string>
   <string name="CardEditorTags">Žymos: %1$s</string>
   <string name="CardEditorCards">Cards: %1$s</string>
-  <string name="tag_name">Tag name</string>
+  <string name="tag_name">Etiketės pavadinimas</string>
   <string name="add_new_filter_tags">Pridėti/filtruoti žymas</string>
-  <string name="add_tag">Add tag</string>
+  <string name="add_tag">Pridėti etiketę</string>
   <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">Filtruoti žymas</string>
   <string name="no_tags">You haven’t added any tags yet</string>
@@ -66,7 +66,7 @@
   <string name="leech_notification">Card marked as leech</string>
   <string name="corrupt_font">Corrupt font file %s</string>
   <string-array name="browser_column1_headings">
-    <item>Question</item>
+    <item>Klausimas</item>
     <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
@@ -77,12 +77,12 @@
     <item>Klausimas</item>
     <item>Žymos</item>
     <item>Lapses</item>
-    <item>Reviews</item>
+    <item>Kartojimai</item>
   </string-array>
   <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
   <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
   <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
+  <string name="custom_study_review_ahead">Peržiūrėti į priekį</string>
   <string name="custom_study_random_selection">Study a random selection of cards</string>
   <string name="custom_study_preview_new">Preview new cards</string>
   <string name="custom_study_limit_tags">Limit to particular tags</string>
@@ -93,7 +93,7 @@
   <string name="saving_facts">Įrašoma pastaba</string>
   <string name="saving_model">Saving model</string>
   <string name="add">Pridėti</string>
-  <string name="save">Save</string>
+  <string name="save">Išsaugoti</string>
   <string name="close">Užverti</string>
   <string name="select">Pasirinkti</string>
   <string name="saving_changes">Išsaugomi pakeitimai&#8230;</string>
@@ -116,7 +116,7 @@
   <string name="card_editor_copy_card">Kopijuoti kortelę</string>
   <string name="card_editor_reset_card">Atkurti pažangą</string>
   <string name="card_editor_reschedule_card">Reschedule card</string>
-  <string name="card_editor_preview_card">Preview</string>
+  <string name="card_editor_preview_card">Peržiūra</string>
   <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
   <string name="rename">Pervadinti</string>
   <string name="default_conf_delete_error">The default options group can’t be removed</string>

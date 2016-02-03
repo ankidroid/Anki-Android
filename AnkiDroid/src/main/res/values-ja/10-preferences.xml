@@ -49,8 +49,8 @@
   <string name="pref_cat_flashcard">画面表示</string>
   <string name="pref_cat_whiteboard">ホワイトボード機能</string>
   <string name="pref_cat_automatic_display">解答の自動表示</string>
-  <string name="pref_cat_appearance">Appearance</string>
-  <string name="pref_cat_appearance_summ">Change themes and default font</string>
+  <string name="pref_cat_appearance">デザイン</string>
+  <string name="pref_cat_appearance_summ">テーマと標準フォントの変更</string>
   <string name="pref_cat_gestures">ジェスチャー</string>
   <string name="pref_cat_gestures_summ">よく使うボタン操作をタップやスワイプにも割り当てます</string>
   <string name="pref_cat_actions">アクション</string>
@@ -114,7 +114,7 @@
   <string name="fix_hebrew_text_summ">ヘブライ語の母音を適切に描画するための回避策です</string>
   <string name="fix_hebrew_instructions">この設定は、ヘブライ語を表示するために、AndroidのRTLアルゴリズムをバイパスします\n\nこのが機能を使うために、フォント（Tohu.ttf）をダウンロードして手動で:\n%s/fonts/\n\nへコピーする必要があります。カードを変更する必要はありません。</string>
   <string name="fix_hebrew_download_font">フォントをダウンロードします。</string>
-  <string name="default_font">既定のフォント</string>
+  <string name="default_font">標準フォント</string>
   <string name="override_font">既定のフォントの適用範囲</string>
   <string name="language">言語</string>
   <string name="language_system">システム言語</string>

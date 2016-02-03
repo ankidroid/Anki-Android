@@ -57,7 +57,7 @@
   <string name="card_browser_search_by_tag">Filtruoti pagal žymą</string>
   <string name="card_browser_tags_shown">Žymos: %1$s</string>
   <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
+  <string name="card_browser_list_my_searches_save">Išsaugoti paieška</string>
   <string name="card_browser_list_my_searches_title">Choose a saved search</string>
   <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
   <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
@@ -68,7 +68,7 @@
   <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
   <string name="card_details_question">Klausimas</string>
   <string name="card_details_answer">Atsakymas</string>
-  <string name="card_details_due">Due</string>
+  <string name="card_details_due">Iki</string>
   <string name="card_details_tags">Žymos</string>
   <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string-array name="card_browser_order_labels">

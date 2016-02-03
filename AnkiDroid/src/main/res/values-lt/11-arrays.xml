@@ -38,10 +38,10 @@
   <string-array name="error_reporting_choice_labels">
     <item>Always report</item>
     <item>Never report</item>
-    <item>Ask me</item>
+    <item>Paklausti</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>No action</item>
+    <item>Nieko nedaryti</item>
     <item>Parodyti atsakymą</item>
     <item>Atsakymo mygtukas 1</item>
     <item>Atsakymo mygtukas 2</item>
@@ -50,16 +50,16 @@
     <item>Answer recommended (green)</item>
     <item>Answer better than recommended</item>
     <item>Atšaukti</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Redaguoti pastabą</item>
+    <item>Pažymėti pastabą</item>
     <item>Lookup expression</item>
     <item>Paslėpti kortelę</item>
     <item>Sustabdyti kortelę</item>
     <item>Delete note</item>
     <item>Play media</item>
-    <item>Abort learning</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Nutraukti mokymąsį</item>
+    <item>Palaidoti pastabą</item>
+    <item>Sustabdyti pastabą</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Sustabdyti kortelę</item>
@@ -70,7 +70,7 @@
     <item>Naujos kortelės pridėjimo tvarka</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
+    <item>Pirmiau senesnės</item>
     <item>Atsitiktinai</item>
     <item>Increasing intervals</item>
     <item>Decreasing intervals</item>
@@ -86,19 +86,19 @@
   </string-array>
   <string-array name="new_spread_labels">
     <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
+    <item>Naujos kortelės po peržiūros</item>
     <item>New cards before reviews</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>Visada</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Default</item>
+    <item>Numatytas</item>
     <item>Plain</item>
   </string-array>
   <string-array name="night_theme_labels">
     <item>Default</item>
-    <item>Black</item>
+    <item>Juodas</item>
   </string-array>
 </resources>

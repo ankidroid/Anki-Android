@@ -50,16 +50,16 @@
     <item>Zalecana odpowiedź (zielony)</item>
     <item>Odpowiedź lepsza niż zalecana</item>
     <item>Cofnij</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Edytuj notatkę</item>
+    <item>Wyróżnij notatkę</item>
     <item>Wyszukaj wyrażenie</item>
     <item>Ukryj kartę</item>
     <item>Wstrzymaj kartę</item>
-    <item>Delete note</item>
+    <item>Usuń notatkę</item>
     <item>Odtwórz plik multimedialny</item>
     <item>Przerwij naukę</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Zakop notatkę</item>
+    <item>Zawieś notatkę</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Zawieś kartę</item>
@@ -94,11 +94,11 @@
     <item>Zawsze</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Default</item>
-    <item>Plain</item>
+    <item>Domyślny</item>
+    <item>Zwykły</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Default</item>
-    <item>Black</item>
+    <item>Domyślny</item>
+    <item>Czarny</item>
   </string-array>
 </resources>

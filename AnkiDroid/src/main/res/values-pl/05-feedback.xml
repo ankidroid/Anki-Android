@@ -47,5 +47,5 @@
   <string name="feedback_manual_toast_text">AnkiDroid napotkał problem; trwa generowanie raportu&#8230;</string>
   <string name="feedback_copy_debug">Copy debug info</string>
   <string name="feedback_report">Zgłoś</string>
-  <string name="feedback_report_automatically">Send error reports automatically</string>
+  <string name="feedback_report_automatically">Automatycznie wysyłaj raporty o błędach</string>
 </resources>
