@@ -46,7 +46,7 @@
                         android:id="@+id/note_type_spinner"
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/touch_target"
-                        app:popupTheme="?attr/actionBarPopupThemeRef"/>
+                        app:popupTheme="@style/ActionBar.Popup"/>
                 </LinearLayout>
 
                 <!-- Deck selector -->
@@ -69,7 +69,7 @@
                         android:id="@+id/note_deck_spinner"
                         android:layout_width="fill_parent"
                         android:layout_height="@dimen/touch_target"
-                        app:popupTheme="?attr/actionBarPopupThemeRef"/>
+                        app:popupTheme="@style/ActionBar.Popup"/>
                 </LinearLayout>
 
                 <LinearLayout

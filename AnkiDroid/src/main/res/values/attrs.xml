@@ -21,8 +21,8 @@
      specifically for action bar text color isn't necessary, but it simplifies the color setting
      while making it accessible everywhere and eases the use of themes -->
     <attr name="actionBarTextColor" format="color"/> <!-- For title and subtitle, and any other text that may appear in action bar-->
-    <attr name="actionBarThemeRef" format="reference"/>
-    <attr name="actionBarPopupThemeRef" format="reference"/>
+    <attr name="actionBarPopupBackgroundColor" format="color"/>
+    <attr name="actionBarPopupTextColor" format="color"/>
 
     <!-- Custom preferences -->
     <attr name="min" format="integer" />

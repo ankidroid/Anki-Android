@@ -18,9 +18,10 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarThemeRef"
+            android:theme="@style/ActionBarStyle"
             android:layout_alignParentTop="true"
-            app:popupTheme="?attr/actionBarPopupThemeRef"/>
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/ActionBar.Popup"/>
         <LinearLayout
             android:layout_below="@id/studyOptionsToolbar"
             android:layout_width="fill_parent"

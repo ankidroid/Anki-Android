@@ -110,10 +110,10 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
                 R.attr.collapseRef };
         TypedArray ta = context.obtainStyledAttributes(attrs);
         Resources res = context.getResources();
-        mZeroCountColor = ta.getColor(0, res.getColor(R.color.theme_light_zero_count));
-        mNewCountColor = ta.getColor(1, res.getColor(R.color.theme_light_new_count));
-        mLearnCountColor = ta.getColor(2, res.getColor(R.color.theme_light_learn_count));
-        mReviewCountColor = ta.getColor(3, res.getColor(R.color.theme_light_review_count));
+        mZeroCountColor = ta.getColor(0, res.getColor(R.color.black));
+        mNewCountColor = ta.getColor(1, res.getColor(R.color.black));
+        mLearnCountColor = ta.getColor(2, res.getColor(R.color.black));
+        mReviewCountColor = ta.getColor(3, res.getColor(R.color.black));
         mRowCurrentDrawable = ta.getResourceId(4, 0);
         mDeckNameDefaultColor = ta.getColor(5, res.getColor(R.color.black));
         mDeckNameDynColor = ta.getColor(6, res.getColor(R.color.material_blue_A700));
