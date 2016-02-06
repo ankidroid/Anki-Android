@@ -43,7 +43,7 @@ There is a convenient bash script that automates this process, which you can run
 
 `./tools/parallel-package-name.sh com.ichi2.anki.a AnkiDroid.A`
 
-After running the script you need to compile the source code to a .apk file as explained elsewhere in this guide. Note that these alternate builds will not work with the API.
+After running the script you need to compile the source code to a .apk file as explained elsewhere in this guide. Note that these alternate builds will not work with the [AnkiDroid API](https://github.com/ankidroid/Anki-Android/wiki/AnkiDroid-API) as the API expects the standard ID.
 
 ## Issues to get started with
 If you are a new developer looking to contribute something to AnkiDroid, but you don't know what work to get started with, please take a look and see if there's anything that you'd like to work on in the issue tracker. In particular, [issues with the label "HelpWanted"](https://github.com/ankidroid/Anki-Android/labels/HelpWanted) are tasks that have been specially highlighted as work that we'd really like to have done, but don't have time to do ourselves. 
