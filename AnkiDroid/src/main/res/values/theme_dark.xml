@@ -1,59 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="theme_dark_primary">#3d3d3d</color>
+    <color name="theme_dark_primary_dark">@color/black</color>
+    <color name="theme_dark_primary_light">@color/material_grey_800</color>
     <color name="theme_dark_accent">@color/material_light_blue_700</color>
+    <color name="theme_dark_primary_text">@color/white</color>
+    <color name="theme_dark_secondary_text">#b2ffffff</color>
     <color name="theme_dark_row_current">#393939</color>
-    <color name="theme_dark_dynDeck">#6699d6</color>
-    <color name="theme_dark_browser_marked">@color/material_deep_purple_400</color>
-    <color name="theme_dark_browser_suspended">@color/material_grey_700</color>
-    <color name="theme_dark_new_count">@color/material_indigo_200</color>
-    <color name="theme_dark_learn_count">@color/material_red_200</color>
-    <color name="theme_dark_review_count">@color/material_green_200</color>
-    <color name="theme_dark_zero_count">#202020</color>
-    <color name="theme_dark_max_timer">@color/material_red_300</color>
 
     <style name="Theme_Dark" parent="@style/Theme.AppCompat">
+        <!-- Android colors -->
         <item name="colorPrimary">@color/theme_dark_primary</item>
-        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorPrimaryDark">@color/theme_dark_primary_dark</item>
         <item name="colorAccent">@color/theme_dark_accent</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/theme_dark_primary_text</item>
+        <item name="android:textColorPrimary">@color/theme_dark_primary_text</item>
+        <item name="android:textColorSecondary">@color/theme_dark_secondary_text</item>
+        <item name="android:colorBackground">@color/material_theme_grey</item>
+        <item name="android:windowBackground">@color/material_theme_grey</item>
         <!-- Action bar styles -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="actionBarTextColor">@color/white</item>
-        <item name="actionBarThemeRef">@style/ActionBarDark</item>
-        <item name="actionBarPopupThemeRef">@style/ActionBar.Popup.Dark</item>
+        <item name="actionBarPopupBackgroundColor">@color/theme_dark_primary</item>
+        <item name="actionBarPopupTextColor">@color/theme_dark_primary_text</item>
+        <item name="actionModeBackground">@color/theme_dark_primary</item>
         <!-- Deck list colors and divider -->
         <item name="currentDeckBackground">@drawable/item_background_selected_pre21_dark</item>
         <item name="currentDeckBackgroundColor">@color/theme_dark_row_current</item>
-        <item name="dynDeckColor">@color/theme_dark_dynDeck</item>
+        <item name="dynDeckColor">#6699d6</item>
         <item name="deckDivider">@drawable/divider_dark</item>
         <item name="expandRef">@drawable/ic_chevron_right_white_24dp</item>
         <item name="collapseRef">@drawable/ic_expand_more_white_24dp</item>
+        <!-- Count colors -->
+        <item name="newCountColor">@color/material_indigo_200</item>
+        <item name="learnCountColor">@color/material_red_200</item>
+        <item name="reviewCountColor">@color/material_green_200</item>
+        <item name="zeroCountColor">#202020</item>
         <!-- Reviewer colors -->
-        <item name="topBarColor">@color/material_grey_800</item>
-        <item name="maxTimerColor">@color/theme_dark_max_timer</item>
-        <item name="newCountColor">@color/theme_dark_new_count</item>
-        <item name="learnCountColor">@color/theme_dark_learn_count</item>
-        <item name="reviewCountColor">@color/theme_dark_review_count</item>
-        <item name="zeroCountColor">@color/theme_dark_zero_count</item>
+        <item name="topBarColor">@color/theme_dark_primary_light</item>
+        <item name="maxTimerColor">@color/material_red_300</item>
         <item name="answerButtonTextColor">@color/white</item>
         <item name="againButtonTextColor">@color/white</item>
         <item name="hardButtonTextColor">@color/white</item>
         <item name="goodButtonTextColor">@color/white</item>
         <item name="easyButtonTextColor">@color/white</item>
-        <!-- Reviewer button drawables
-            Note: We can't use attributes inside a drawable, so necessary to have separate drawable for
-            each theme. See Android bug https://code.google.com/p/android/issues/detail?id=26251 -->
-        <!-- Hard button also serves as the style for the Show Answer button -->
+        <!-- Reviewer button drawables -->
         <item name="againButtonRef">@drawable/footer_button_again_dark</item>
         <item name="hardButtonRef">@drawable/footer_button_hard_dark</item>
         <item name="goodButtonRef">@drawable/footer_button_good_dark</item>
         <item name="easyButtonRef">@drawable/footer_button_easy_dark</item>
         <!-- Browser colors -->
-        <item name="suspendedColor">@color/theme_dark_browser_suspended</item>
-        <item name="markedColor">@color/theme_dark_browser_marked</item>
+        <item name="suspendedColor">@color/material_grey_700</item>
+        <item name="markedColor">@color/material_deep_purple_400</item>
+        <!-- FAB -->
+        <item name="fab_normal">@color/material_light_blue_700</item>
+        <item name="fab_pressed">@color/material_light_blue_900</item>
+        <item name="fab_labelsTextColor">@color/white</item>
+        <item name="fab_background">@color/material_grey_700</item>
+        <item name="fab_item_background">@drawable/fab_label_background_pre21</item>
+        <!-- StudyOptions fragment -->
+        <item name="study_start_textColor">@color/white</item>
         <!-- Images -->
         <item name="navDrawerImage">@drawable/nav_drawer_logo_dark_theme</item>
         <item name="attachFileImage">@drawable/ic_attachment_white_24dp</item>
@@ -61,32 +69,15 @@
         <item name="dialogErrorIcon">@drawable/ic_warning_white_36dp</item>
         <item name="dialogSyncErrorIcon">@drawable/ic_sync_problem_white_36dp</item>
         <item name="dialogSendIcon">@drawable/ic_send_white_36dp</item>
-        <!-- FAB -->
-        <item name="fab_normal">@color/material_light_blue_500</item>
-        <item name="fab_pressed">@color/material_light_blue_700</item>
-        <item name="fab_labelsTextColor">@color/white</item>
-        <item name="fab_background">@color/material_grey_700</item>
-        <item name="fab_item_background">@drawable/fab_label_background_pre21</item>
-        <!-- StudyOptions fragment -->
-        <item name="study_start_textColor">@color/white</item>
+        <!-- Dialog styles -->
+        <item name="android:listPreferredItemHeight">56dip</item>
+        <item name="md_dark_theme">true</item>
     </style>
 
+    <!-- Preferences screens -->
     <!-- Legacy action bar  (used in Preferences with no explicit Toolbar) -->
     <style name="LegacyActionBarDark" parent="Theme_Dark">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
-    </style>
-
-    <!-- ActionBar -->
-    <style name="ActionBarDark" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar">
-        <!-- Determines color of text and system icons (overflow etc.) in the action bar -->
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/white</item>
-        <item name="android:background">@color/theme_dark_primary</item>
-    </style>
-
-    <!-- For all other action bar popups (except spinner dropdown in Lollipop) -->
-    <style name="ActionBar.Popup.Dark" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:drawSelectorOnTop">true</item>
     </style>
 </resources>

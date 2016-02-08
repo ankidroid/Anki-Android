@@ -9,14 +9,14 @@
         android:layout_alignParentTop="true"
         app:navigationContentDescription="@string/abc_action_bar_up_description"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        android:theme="?attr/actionBarThemeRef"
-        app:popupTheme="?attr/actionBarPopupThemeRef">
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ActionBarStyle">
         <Spinner
             android:id="@+id/toolbar_spinner"
             android:background="?attr/selectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:popupTheme="?attr/actionBarPopupThemeRef"/>
+            app:popupTheme="@style/ActionBar.Popup"/>
     </android.support.v7.widget.Toolbar>
 </merge>

@@ -1,65 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Notes about themes:
+
+- We can't use attributes inside a drawable, so it is necessary to have separate drawables
+(where themed colors are defined inside) for each theme.
+See Android bug https://code.google.com/p/android/issues/detail?id=26251
+- Reviewer hard button also serves as the style for the Show Answer button
+- textColorPrimary changes: navdraw text, edittext text
+- textColorSecondary changes: navdraw icon shading, edittext underline, scroll bar
+- windowBackground colors the area under the decklist (and possibly other things) on older
+APIs. It's visible when there aren't enough decks to fill the screen.
+-->
 <resources>
     <color name="theme_light_primary">@color/material_light_blue_500</color>
+    <color name="theme_light_primary_dark">@color/material_light_blue_700</color>
+    <color name="theme_light_primary_light">@color/material_light_blue_100</color>
     <color name="theme_light_accent">@color/material_blue_grey_700</color>
+    <color name="theme_light_primary_text">@color/black</color>
+    <color name="theme_light_secondary_text">#de000000</color>  <!-- 87% black -->
     <color name="theme_light_row_current">#ececec</color>
-    <color name="theme_light_dynDeck">#2222bb</color>
-    <color name="theme_light_browser_marked">#D9B2E9</color>
-    <color name="theme_light_browser_suspended">#FFFFB2</color>
-    <color name="theme_light_new_count">@color/material_indigo_700</color>
-    <color name="theme_light_learn_count">@color/material_red_700</color>
-    <color name="theme_light_review_count">@color/material_green_700</color>
-    <color name="theme_light_zero_count">#1f000000</color>
-    <color name="theme_light_max_timer">@color/material_red_500</color>
-    <color name="theme_light_popup_text">#de000000</color> <!-- 87% black -->
 
-    <style name="Theme_Light" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme_Light" parent="@style/Theme.AppCompat.Light">
+        <!-- Android colors -->
         <item name="colorPrimary">@color/theme_light_primary</item>
-        <item name="colorPrimaryDark">@color/material_light_blue_700</item>
+        <item name="colorPrimaryDark">@color/theme_light_primary_dark</item>
         <item name="colorAccent">@color/theme_light_accent</item>
-        <item name="android:colorBackground">@android:color/white</item>
-        <!-- Use black on white text for higher contrast than standard light theme -->
         <item name="android:textColor">@color/black</item>
+        <item name="android:textColorPrimary">@color/theme_light_primary_text</item>
+        <item name="android:textColorSecondary">@color/theme_light_secondary_text</item>
+        <item name="android:colorBackground">@android:color/white</item>
+        <item name="android:windowBackground">@android:color/white</item>
         <!-- Action bar styles -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="actionBarTextColor">@color/white</item>
-        <item name="actionModeBackground">@color/theme_light_accent</item>
-        <item name="actionBarThemeRef">@style/ActionBarLight</item>
-        <item name="popupTheme">@style/ActionBar.Popup.Light</item>
-        <item name="actionBarPopupThemeRef">@style/ActionBar.Popup.Light</item>
-        <!-- Dialog styles -->
-        <item name="android:listPreferredItemHeight">56dip</item>
+        <item name="actionBarPopupBackgroundColor">@color/white</item>
+        <item name="actionBarPopupTextColor">@color/theme_light_primary_text</item>
+        <item name="actionModeBackground">@color/theme_light_primary</item>
         <!-- Deck list colors and divider -->
         <item name="currentDeckBackground">@drawable/item_background_selected_pre21</item>
         <item name="currentDeckBackgroundColor">@color/theme_light_row_current</item>
-        <item name="dynDeckColor">@color/theme_light_dynDeck</item>
+        <item name="dynDeckColor">#2222bb</item>
         <item name="deckDivider">@drawable/divider</item>
         <item name="expandRef">@drawable/ic_chevron_right_black_24dp</item>
         <item name="collapseRef">@drawable/ic_expand_more_black_24dp</item>
+        <!-- Count colors -->
+        <item name="newCountColor">@color/material_indigo_700</item>
+        <item name="learnCountColor">@color/material_red_700</item>
+        <item name="reviewCountColor">@color/material_green_700</item>
+        <item name="zeroCountColor">#1f000000</item>
         <!-- Reviewer colors -->
-        <item name="topBarColor">@color/material_light_blue_100</item>
-        <item name="maxTimerColor">@color/theme_light_max_timer</item>
-        <item name="newCountColor">@color/theme_light_new_count</item>
-        <item name="learnCountColor">@color/theme_light_learn_count</item>
-        <item name="reviewCountColor">@color/theme_light_review_count</item>
-        <item name="zeroCountColor">@color/theme_light_zero_count</item>
+        <item name="topBarColor">@color/theme_light_primary_light</item>
+        <item name="maxTimerColor">@color/material_red_500</item>
         <item name="answerButtonTextColor">@color/white</item>
         <item name="againButtonTextColor">@color/white</item>
         <item name="hardButtonTextColor">@color/white</item>
         <item name="goodButtonTextColor">@color/white</item>
         <item name="easyButtonTextColor">@color/white</item>
-        <!-- Reviewer button drawables
-            Note: We can't use attributes inside a drawable, so necessary to have separate drawable for
-            each theme. See Android bug https://code.google.com/p/android/issues/detail?id=26251 -->
+        <!-- Reviewer button drawables -->
         <item name="againButtonRef">@drawable/footer_button_again</item>
         <item name="hardButtonRef">@drawable/footer_button_hard</item>
         <item name="goodButtonRef">@drawable/footer_button_good</item>
         <item name="easyButtonRef">@drawable/footer_button_easy</item>
         <!-- Browser colors -->
-        <item name="suspendedColor">@color/theme_light_browser_suspended</item>
-        <item name="markedColor">@color/theme_light_browser_marked</item>
+        <item name="suspendedColor">#FFFFB2</item>
+        <item name="markedColor">#D9B2E9</item>
+        <!-- FAB -->
+        <item name="fab_normal">@color/material_light_blue_700</item>
+        <item name="fab_pressed">@color/material_light_blue_900</item>
+        <item name="fab_labelsTextColor">@color/white</item>
+        <item name="fab_background">@color/material_grey_700</item>
+        <item name="fab_item_background">@drawable/fab_label_background_pre21</item>
+        <!-- StudyOptions fragment -->
+        <item name="study_start_textColor">@color/white</item>
         <!-- Images -->
         <item name="navDrawerImage">@drawable/nav_drawer_logo</item>
         <item name="attachFileImage">@drawable/ic_attachment_black_24dp</item>
@@ -67,40 +81,15 @@
         <item name="dialogErrorIcon">@drawable/ic_warning_black_36dp</item>
         <item name="dialogSyncErrorIcon">@drawable/ic_sync_problem_black_36dp</item>
         <item name="dialogSendIcon">@drawable/ic_send_black_36dp</item>
-        <!-- FAB -->
-        <item name="fab_normal">@color/material_light_blue_500</item>
-        <item name="fab_pressed">@color/material_light_blue_700</item>
-        <item name="fab_labelsTextColor">@color/white</item>
-        <item name="fab_background">@color/material_grey_700</item>
-        <item name="fab_item_background">@drawable/fab_label_background_pre21</item>
-        <!-- StudyOptions fragment -->
-        <item name="study_start_textColor">@color/white</item>
+        <!-- Dialog styles -->
+        <item name="android:listPreferredItemHeight">56dip</item>
+        <item name="md_dark_theme">false</item>
     </style>
 
-    <style name="Theme_Light_Statistics" parent="Theme_Light_Compat">
-        <item name="android:radioButtonStyle">@android:style/Widget.CompoundButton.RadioButton
-        </item>
-    </style>
-
+    <!-- Preferences screens -->
     <!-- Theme for showing legacy ActionBar without explicitly including a toolbar -->
     <style name="LegacyActionBarLight" parent="Theme_Light">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
-    </style>
-
-    <!-- ActionBar -->
-    <!-- Inheriting from light theme necessary to get light spinner dropdown background in Lollipop -->
-    <style name="ActionBarLight" parent="Base.ThemeOverlay.AppCompat.ActionBar">
-        <!-- Determines color of text and system icons (overflow etc.) in the action bar -->
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/white</item>
-        <item name="android:background">@color/theme_light_primary</item>
-    </style>
-
-    <!-- For all other action bar popups (except spinner dropdown in Lollipop) -->
-    <style name="ActionBar.Popup.Light" parent="Base.ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:drawSelectorOnTop">true</item>
-        <item name="android:textColorPrimary">@color/theme_light_popup_text</item>
-        <item name="android:background">@color/white</item>
     </style>
 </resources>
