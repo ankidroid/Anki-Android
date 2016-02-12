@@ -30,6 +30,7 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="android:textColorSecondary">@color/theme_light_secondary_text</item>
         <item name="android:colorBackground">@android:color/white</item>
         <item name="android:windowBackground">@android:color/white</item>
+        <item name="colorButtonNormal">@color/material_light_blue_700</item>
         <!-- Action bar styles -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
