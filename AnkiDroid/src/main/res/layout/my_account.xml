@@ -61,7 +61,6 @@
                     android:id="@+id/login_button"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="?attr/colorPrimary"
                     android:textColor="@color/white"
                     android:singleLine="true"
                     android:textSize="@dimen/md_title_textsize"

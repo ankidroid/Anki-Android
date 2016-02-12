@@ -15,6 +15,7 @@
         <item name="android:textColor">@color/theme_plain_primary_text</item>
         <item name="android:textColorPrimary">@color/theme_plain_primary_text</item>
         <item name="android:textColorSecondary">@color/theme_plain_secondary_text</item>
+        <item name="colorButtonNormal">@color/theme_plain_accent</item>
         <!-- Action bar styles -->
         <item name="actionBarPopupBackgroundColor">@color/theme_plain_primary_light</item>
         <item name="actionBarPopupTextColor">@color/theme_plain_primary_text</item>

@@ -18,6 +18,7 @@
         <item name="android:textColorSecondary">@color/theme_dark_secondary_text</item>
         <item name="android:colorBackground">@color/material_theme_grey</item>
         <item name="android:windowBackground">@color/material_theme_grey</item>
+        <item name="colorButtonNormal">@color/material_light_blue_700</item>
         <!-- Action bar styles -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
