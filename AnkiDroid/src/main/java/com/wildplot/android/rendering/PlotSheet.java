@@ -43,7 +43,10 @@ public class PlotSheet implements Drawable {
 
     protected float fontSize = 10f;
     protected boolean fontSizeSet = false;
-    
+
+    protected ColorWrap backgroundColor = ColorWrap.white;
+    protected ColorWrap textColor = ColorWrap.black;
+
     /**
      * title of plotSheet
      */
@@ -331,7 +334,7 @@ public class PlotSheet implements Drawable {
 
 
         g.setTypeface(typeface);
-        g.setColor(ColorWrap.white);
+        g.setColor(backgroundColor);
         g.fillRect(0, 0, field.width, field.height);
         g.setColor(ColorWrap.BLACK);
 
@@ -360,7 +363,7 @@ public class PlotSheet implements Drawable {
         //paint white frame to over paint everything that was drawn over the border 
         ColorWrap oldColor = g.getColor();
         if(leftFrameThickness>0 || rightFrameThickness > 0 || upperFrameThickness > 0 || bottomFrameThickness > 0){
-            g.setColor(ColorWrap.white);
+            g.setColor(backgroundColor);
             //upper frame
             g.fillRect(0, 0, field.width, upperFrameThickness);
 
@@ -441,14 +444,16 @@ public class PlotSheet implements Drawable {
                     ySpacer += rectangleSize + spacerValue;
                 }
                 g.fillRect(xPointer, ySpacer, rectangleSize, rectangleSize);
-                g.setColor(ColorWrap.BLACK);
+                g.setColor(textColor);
+
                 g.drawString(" : "+legendName, xPointer + rectangleSize , ySpacer+rectangleSize);
                 xPointer += rectangleSize*1.3f + stringWidth;
                 Timber.d("drawing a legend Item: (%s) %d, x: %,.2f , y: %,.2f", legendName, legendCnt, xPointer + rectangleSize, ySpacer+rectangleSize);
 
             }
             g.setFontSize(oldFontSize);
-            g.setColor(ColorWrap.BLACK);
+            //g.setColor(ColorWrap.BLACK);
+            g.setColor(textColor);
 //          gFrame.setFont(oldFont);
         }
 
@@ -718,5 +723,13 @@ public class PlotSheet implements Drawable {
     public void setFontSize(float fontSize) {
         fontSizeSet = true;
         this.fontSize = fontSize;
+    }
+
+    public void setBackgroundColor(ColorWrap backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public void setTextColor(ColorWrap textColor) {
+        this.textColor = textColor;
     }
 }

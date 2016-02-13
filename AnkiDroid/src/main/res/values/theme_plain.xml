@@ -27,6 +27,17 @@
         <item name="hardButtonRef">@drawable/footer_button_all_plain</item>
         <item name="goodButtonRef">@drawable/footer_button_all_plain</item>
         <item name="easyButtonRef">@drawable/footer_button_all_plain</item>
+        <!-- Stats colors -->
+        <item name="stats_young">#7c7</item>
+        <item name="stats_mature">#070</item>
+        <item name="stats_learn">#00F</item>
+        <item name="stats_relearn">#c00</item>
+        <item name="stats_cram">#ff0</item>
+        <item name="stats_interval">#077</item>
+        <item name="stats_hours">#ccc</item>
+        <item name="stats_counts">#E6000000</item>
+        <item name="stats_unseen">#000</item>
+        <item name="stats_suspended">#ff0</item>
         <!-- FAB -->
         <item name="fab_normal">@color/theme_plain_accent</item>
         <item name="fab_pressed">#c8607d8b</item> <!-- 55 less opacity than fab_normal -->

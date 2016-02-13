@@ -15,12 +15,18 @@
  ****************************************************************************************/
 package com.ichi2.anki.stats;
 
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Paint;
 
 import android.widget.TextView;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
+import com.ichi2.themes.Themes;
 import com.wildplot.android.rendering.*;
 import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
 import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
@@ -131,8 +137,12 @@ public class ChartBuilder {
         //System.out.println("frame thickness: " + mFrameThickness);
 
         PlotSheet plotSheet = new PlotSheet(mFirstElement-0.5, mLastElement + 0.5, 0, mMaxCards*yAxisStretchFactor);
-        plotSheet.setFrameThickness(mFrameThickness*0.66f, mFrameThickness*0.66f, mFrameThickness, mFrameThickness*0.9f);
+        plotSheet.setFrameThickness(mFrameThickness * 0.66f, mFrameThickness * 0.66f, mFrameThickness, mFrameThickness*0.9f);
         plotSheet.setFontSize(textSize);
+        int backgroundColor = Themes.getColorFromAttr(mChartView.getContext(), android.R.attr.colorBackground);
+        plotSheet.setBackgroundColor(new ColorWrap(backgroundColor));
+        int textColor = Themes.getColorFromAttr(mChartView.getContext(), android.R.attr.textColor);
+        plotSheet.setTextColor(new ColorWrap(textColor));
 
         if(mChartType == Stats.ChartType.CARDS_TYPES){
             return createPieChart(plotSheet);
@@ -159,18 +169,18 @@ public class ChartBuilder {
     private PlotSheet createPieChart(PlotSheet plotSheet){
         PieChart pieChart = new PieChart(plotSheet, mSeriesList[0]);
 
-        ColorWrap[] colors = {new ColorWrap(mChartView.getResources().getColor(mColors[0])),
-                new ColorWrap(mChartView.getResources().getColor(mColors[1])),
-                new ColorWrap(mChartView.getResources().getColor(mColors[2])),
-                new ColorWrap(mChartView.getResources().getColor(mColors[3]))};
+        ColorWrap[] colors = {new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[0])),
+                              new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[1])),
+                              new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[2])),
+                              new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[3]))};
         pieChart.setColors(colors);
         pieChart.setName(mChartView.getResources().getString(mValueLabels[0]) + ": " + (int)mSeriesList[0][0]);
         LegendDrawable legendDrawable1 = new LegendDrawable();
         LegendDrawable legendDrawable2 = new LegendDrawable();
         LegendDrawable legendDrawable3 = new LegendDrawable();
-        legendDrawable1.setColor(new ColorWrap(mChartView.getResources().getColor(mColors[1])));
-        legendDrawable2.setColor(new ColorWrap(mChartView.getResources().getColor(mColors[2])));
-        legendDrawable3.setColor(new ColorWrap(mChartView.getResources().getColor(mColors[3])));
+        legendDrawable1.setColor(new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[1])));
+        legendDrawable2.setColor(new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[2])));
+        legendDrawable3.setColor(new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[3])));
 
         legendDrawable1.setName(mChartView.getResources().getString(mValueLabels[1]) + ": " + (int)mSeriesList[0][1]);
         legendDrawable2.setName(mChartView.getResources().getString(mValueLabels[2]) + ": " + (int)mSeriesList[0][2]);
@@ -211,17 +221,17 @@ public class ChartBuilder {
                 case HOURLY_BREAKDOWN:
                 case WEEKLY_BREAKDOWN:
                 case INTERVALS:
-                    color =new ColorWrap(mChartView.getResources().getColor(mColors[i-1]), barOpacity);
+                    color =new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[i-1]), barOpacity);
                     break;
                 case REVIEW_COUNT:
                 case REVIEW_TIME:
                 case FORECAST:
                     if(i == 1){
-                        color =new ColorWrap(mChartView.getResources().getColor(mColors[i-1]), barOpacity);
+                        color =new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[i-1]), barOpacity);
                         break;
                     }
                 default:
-                    color =new ColorWrap(mChartView.getResources().getColor(mColors[i-1]));
+                    color =new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[i-1]));
             }
 
             BarGraph barGraph = new BarGraph(usedPlotSheet, barThickness, bars, color);
@@ -242,10 +252,9 @@ public class ChartBuilder {
             ColorWrap usedColor = ColorWrap.BLACK;
             String name = mChartView.getResources().getString(R.string.stats_cumulative);
             if(mHasColoredCumulative){      //also non colored Cumulatives have names!
-                usedColor = new ColorWrap(mChartView.getResources().getColor(mColors[i-1]));
+                usedColor = new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[i - 1]));
 
-            } else {
-                if(mChartType == Stats.ChartType.INTERVALS){
+            } else {if(mChartType == Stats.ChartType.INTERVALS){
                     name = mChartView.getResources().getString(R.string.stats_cumulative_percentage);
                 }
             }
@@ -374,15 +383,16 @@ public class ChartBuilder {
         plotSheet.setFontSize(textSize);
 
         BarGraph barGraphYoung = new BarGraph(plotSheet, mBarThickness, new double[][]{serieslist[0], serieslist[1]},
-                new ColorWrap(mChartView.getResources().getColor(R.color.stats_young)));
+                new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), R.attr.stats_young)));
+
         barGraphYoung.setFilling(true);
         //barGraphYoung.setFillColor(Color.GREEN.darker());
-        barGraphYoung.setFillColor(new ColorWrap(mChartView.getResources().getColor(R.color.stats_young)));
+        barGraphYoung.setFillColor(new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), R.attr.stats_young)));
 
         BarGraph barGraphMature = new BarGraph(plotSheet, mBarThickness, new double[][]{serieslist[0], serieslist[2]},
-                new ColorWrap(mChartView.getResources().getColor(R.color.stats_mature)));
+                new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), R.attr.stats_mature)));
         barGraphMature.setFilling(true);
-        barGraphMature.setFillColor(new ColorWrap(mChartView.getResources().getColor(R.color.stats_mature)));
+        barGraphMature.setFillColor(new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), R.attr.stats_mature)));
 
         plotSheet.addDrawable(barGraphYoung);
         plotSheet.addDrawable(barGraphMature);

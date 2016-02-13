@@ -217,7 +217,7 @@ public class Stats {
         mBackwards = false;
         mTitle = R.string.stats_forecast;
         mValueLabels = new int[] { R.string.statistics_young, R.string.statistics_mature };
-        mColors = new int[] { R.color.stats_young, R.color.stats_mature };
+        mColors = new int[] { R.attr.stats_young, R.attr.stats_mature };
         mAxisTitles = new int[] { type, R.string.stats_cards, R.string.stats_cumulative_cards };
         int end = 0;
         int chunk = 0;
@@ -378,8 +378,8 @@ public class Stats {
         }
         mValueLabels = new int[] { R.string.statistics_learn, R.string.statistics_relearn, R.string.statistics_young,
                 R.string.statistics_mature, R.string.statistics_cram };
-        mColors = new int[] { R.color.stats_learn, R.color.stats_relearn, R.color.stats_young, R.color.stats_mature,
-                R.color.stats_cram };
+        mColors = new int[] { R.attr.stats_learn, R.attr.stats_relearn, R.attr.stats_young, R.attr.stats_mature,
+                R.attr.stats_cram };
         int num = 0;
         int chunk = 0;
         switch (type) {
@@ -566,7 +566,7 @@ public class Stats {
         mAxisTitles = new int[] { type, R.string.stats_cards, R.string.stats_percentage };
 
         mValueLabels = new int[] { R.string.stats_cards_intervals};
-        mColors = new int[] { R.color.stats_interval};
+        mColors = new int[] { R.attr.stats_interval};
         int num = 0;
         String lim = "";
         int chunk = 0;
@@ -692,7 +692,7 @@ public class Stats {
         mAxisTitles = new int[] { R.string.stats_time_of_day, R.string.stats_percentage_correct, R.string.stats_reviews };
 
         mValueLabels = new int[] { R.string.stats_percentage_correct, R.string.stats_answers};
-        mColors = new int[] { R.color.stats_counts, R.color.stats_hours};
+        mColors = new int[] { R.attr.stats_counts, R.attr.stats_hours};
 
         mType = type;
         String lim = _revlogLimit().replaceAll("[\\[\\]]", "");
@@ -830,7 +830,7 @@ public class Stats {
         mAxisTitles = new int[] { R.string.stats_day_of_week, R.string.stats_percentage_correct, R.string.stats_reviews };
 
         mValueLabels = new int[] { R.string.stats_percentage_correct, R.string.stats_answers};
-        mColors = new int[] { R.color.stats_counts, R.color.stats_hours};
+        mColors = new int[] { R.attr.stats_counts, R.attr.stats_hours};
 
         mType = type;
         String lim = _revlogLimit().replaceAll("[\\[\\]]", "");
@@ -958,7 +958,7 @@ public class Stats {
         mAxisTitles = new int[] { R.string.stats_answer_type, R.string.stats_answers, R.string.stats_cumulative_correct_percentage };
 
         mValueLabels = new int[] { R.string.statistics_learn, R.string.statistics_young, R.string.statistics_mature};
-        mColors = new int[] { R.color.stats_learn, R.color.stats_young, R.color.stats_mature};
+        mColors = new int[] { R.attr.stats_learn, R.attr.stats_young, R.attr.stats_mature};
 
         mType = type;
         String lim = _revlogLimit().replaceAll("[\\[\\]]", "");
@@ -1089,7 +1089,7 @@ public class Stats {
         mAxisTitles = new int[] { R.string.stats_answer_type, R.string.stats_answers, R.string.stats_cumulative_correct_percentage };
 
         mValueLabels = new int[] {R.string.statistics_mature, R.string.statistics_young_and_learn, R.string.statistics_unlearned, R.string.statistics_suspended};
-        mColors = new int[] { R.color.stats_mature, R.color.stats_young, R.color.stats_unseen, R.color.stats_suspended };
+        mColors = new int[] { R.attr.stats_mature, R.attr.stats_young, R.attr.stats_unseen, R.attr.stats_suspended };
 
 
 

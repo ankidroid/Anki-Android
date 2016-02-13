@@ -22,6 +22,7 @@ import android.webkit.WebView;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
+import com.ichi2.themes.Themes;
 
 public class InfoStatsBuilder {
     private final int CARDS_INDEX = 0;
@@ -46,10 +47,13 @@ public class InfoStatsBuilder {
 
     public String createInfoHtmlString(){
 
+        int textColorInt = Themes.getColorFromAttr(mWebView.getContext(), android.R.attr.textColor);
+        String textColor = String.format("#%06X", (0xFFFFFF & textColorInt)); // Color to hex string
+
         String css = "<style>\n" +
                 "h1 { margin-bottom: 0; margin-top: 1em; }\n" +
                 ".pielabel { text-align:center; padding:0px; color:white; }\n" +
-                "body {}\n" +
+                "body {color:"+textColor+";}\n" +
                 "</style>";
 
         StringBuilder stringBuilder = new StringBuilder();

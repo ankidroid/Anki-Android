@@ -64,6 +64,17 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="hardButtonRef">@drawable/footer_button_hard</item>
         <item name="goodButtonRef">@drawable/footer_button_good</item>
         <item name="easyButtonRef">@drawable/footer_button_easy</item>
+        <!-- Stats colors -->
+        <item name="stats_young">#7c7</item>
+        <item name="stats_mature">#070</item>
+        <item name="stats_learn">#00F</item>
+        <item name="stats_relearn">#c00</item>
+        <item name="stats_cram">#ff0</item>
+        <item name="stats_interval">#077</item>
+        <item name="stats_hours">#ccc</item>
+        <item name="stats_counts">#E6000000</item>
+        <item name="stats_unseen">#000</item>
+        <item name="stats_suspended">#ff0</item>
         <!-- Browser colors -->
         <item name="suspendedColor">#FFFFB2</item>
         <item name="markedColor">#D9B2E9</item>
