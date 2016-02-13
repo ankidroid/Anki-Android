@@ -28,6 +28,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.Statistics;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
+import com.ichi2.themes.Themes;
 import com.wildplot.android.rendering.PlotSheet;
 
 import java.io.UnsupportedEncodingException;
@@ -184,6 +185,8 @@ public class AnkiStatsTaskHandler {
                     e.printStackTrace();
                 }
                 mProgressBar.setVisibility(View.GONE);
+                int backgroundColor = Themes.getColorFromAttr(mWebView.getContext(), android.R.attr.colorBackground);
+                mWebView.setBackgroundColor(backgroundColor);
                 mWebView.setVisibility(View.VISIBLE);
                 mWebView.invalidate();
 

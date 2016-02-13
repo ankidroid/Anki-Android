@@ -191,10 +191,10 @@ public class AdvancedStatistics extends Hook  {
                                    R.string.statistics_mature,
                                    R.string.statistics_young,
                                    R.string.statistics_learn};
-        mColors = new int[] {      R.color.stats_relearn,
-                                   R.color.stats_mature,
-                                   R.color.stats_young,
-                                   R.color.stats_learn};
+        mColors = new int[] {      R.attr.stats_relearn,
+                                   R.attr.stats_mature,
+                                   R.attr.stats_young,
+                                   R.attr.stats_learn};
 
         mAxisTitles = new int[] { type, R.string.stats_cards, R.string.stats_cumulative_cards };
 
