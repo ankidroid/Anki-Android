@@ -93,7 +93,7 @@
   <string name="saving_facts">Guardando nota</string>
   <string name="saving_model">Guardando el modelo</string>
   <string name="add">Añadir</string>
-  <string name="save">Save</string>
+  <string name="save">Guardar</string>
   <string name="close">Cerrar</string>
   <string name="select">Seleccionar</string>
   <string name="saving_changes">Guardando cambios&#8230;</string>
@@ -133,7 +133,7 @@
   <string name="show_hint">Mostrar %s</string>
   <string name="info_rate">Puntúa AnkiDroid</string>
   <string name="col_load_failed">Error al cargar la colección.\nPulsa el botón volver para cerrar AnkiDroid.</string>
-  <string name="import_title">Importing</string>
+  <string name="import_title">Importando</string>
   <string name="import_select_title">Elija un archivo para importar</string>
   <string name="import_message_add">Añadir</string>
   <string name="import_message_replace_confirm">Esto eliminará tu colección actual y la reemplazará con los datos del archivo %s</string>
@@ -141,7 +141,7 @@
   <string name="import_log_no_apkg">Éste no es un archivo apkg válido</string>
   <string name="import_error_not_apkg_extension">El nombre de archivo %s no tiene la extensión .apkg</string>
   <string name="import_error_content_provider">AnkiDroid no ha podido importar automáticamente el archivo seleccionado. Por favor, lee el manual de usuario sobre como importar manualmente anki files:  \n %s</string>
-  <string name="import_replacing">Replacing collection&#8230;</string>
+  <string name="import_replacing">Remplazando colección&#8230;</string>
   <string name="export_include_schedule">Incluir programación</string>
   <string name="export_include_media">Incluir multimedia</string>
   <string name="confirm_apkg_export">¿Exportar colección como archivo apkg?</string>

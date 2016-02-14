@@ -76,7 +76,7 @@
     <item>Notiz</item>
     <item>Frage</item>
     <item>Schlagworte</item>
-    <item>Fehler</item>
+    <item>Fehlschläge</item>
     <item>Wiederholungen</item>
   </string-array>
   <string name="custom_study_increase_new_limit">Limit für neue Karten für heute erhöhen</string>
@@ -99,7 +99,7 @@
   <string name="saving_changes">Änderungen werden gespeichert&#8230;</string>
   <string name="reordering_cards">Sortiere Karten&#8230;</string>
   <string name="field_remapping">%1$s (von »%2$s«)</string>
-  <string name="confirm_map_cards_to_nothing">Alle Karten, die auf keine abgebildet werden, werden gelöscht. Notizen, bei denen keine Karten übrig bleiben, gehen verloren. Fortfahren?</string>
+  <string name="confirm_map_cards_to_nothing">Alle leeren Karten werden gelöscht. Sind sämtliche Karten einer Notiz gelöscht, wird diese ebenfalls entfernt. Fortfahren?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d Karte gelernt in %2$s</item>
     <item quantity="other">%1$d Karten gelernt in %2$s</item>
@@ -141,13 +141,13 @@
   <string name="import_log_no_apkg">Dies ist keine gültige apgk-Datei</string>
   <string name="import_error_not_apkg_extension">Dateiname »%s« hat keine .apkg-Endung</string>
   <string name="import_error_content_provider">Die ausgewählte Datei konnte nicht automatisch importiert werden. Lesen Sie im Handbuch, wie Sie Anki-Dateien manuell importieren können: \n %s</string>
-  <string name="import_replacing">Ersetzen Sammlung&#8230;</string>
+  <string name="import_replacing">Ersetze Sammlung&#8230;</string>
   <string name="export_include_schedule">Zeitabstände einbeziehen</string>
   <string name="export_include_media">Medien einbeziehen</string>
   <string name="confirm_apkg_export">Sammlung als apkg-Datei exportieren?</string>
   <string name="confirm_apkg_export_deck">»%s« als apkg-Datei exportieren?</string>
   <string name="export_in_progress">Exportiere apkg-Datei&#8230;</string>
-  <string name="export_successful_title">Apkg-Datei e-mailen?</string>
+  <string name="export_successful_title">Apkg-Datei per E-Mail senden?</string>
   <string name="export_successful">Datei »%s« wurde exportiert. Wollen Sie sie e-mailen?</string>
   <string name="export_unsuccessful">Fehler beim Exportieren der Sammlung</string>
   <string name="import_hint">Kopieren Sie die apkg-Datei ins Verzeichnis »%s« und berühren Sie »OK«, um Karten zu importieren</string>
@@ -160,7 +160,7 @@
   <string name="steps_error">Die Schrittanzahl muss größer als 0 sein</string>
   <string name="steps_min_error">Mindestens ein Schritt ist erforderlich</string>
   <string name="sched_end">(Ende)</string>
-  <string name="sched_unbury_action">Um sie jetzt zu sehen, berühren Sie »Zurückstellen aufheben« im Menü.</string>
+  <string name="sched_unbury_action">Um sie jetzt zu sehen berühren Sie »Zurückstellen aufheben« im Menü.</string>
   <string name="sched_has_buried">Einige verwandte oder zurückgestellte Karten wurden auf morgen verschoben.</string>
   <string name="tag_editor_add_feedback">Berühren Sie »%2$s«, um »%1$s« hinzuzufügen</string>
   <string name="tag_editor_add_feedback_existing">Existierendes Schlagwort »%1$s« ausgewählt</string>

@@ -104,7 +104,7 @@
   <string name="time_quantity_seconds">%d s</string>
   <string name="time_quantity_minutes">%d min</string>
   <string name="time_quantity_hours">%d h</string>
-  <string name="time_quantity_days">%d d</string>
+  <string name="time_quantity_days">%d T</string>
   <string name="time_quantity_months">%.1f Mo</string>
   <string name="time_quantity_years">%.1f Jr</string>
   <string name="later">Später</string>
@@ -126,7 +126,7 @@
   <string name="sd_card_not_mounted">Gerätespeicher nicht eingebunden</string>
   <string name="button_sync">Synchronisieren</string>
   <string name="cancel_sync_confirm">Wollen Sie die Synchronisation abbrechen?</string>
-  <string name="continue_sync">Weiter synchronisieren</string>
+  <string name="continue_sync">Synchronisierung fortsetzen</string>
   <string name="sync_cancelled">Synchronisation abgebrochen</string>
   <string name="sync_cancel_message">Breche ab...\nDies kann einige Zeit dauern.</string>
   <string name="export">Exportieren</string>
