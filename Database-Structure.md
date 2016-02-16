@@ -202,7 +202,7 @@ Here is an annotated description of the JSONObjects in the models field of the `
                           used for displaying answer in browser",
                 bqfmt : "browser question format: 
                           used for displaying question in browser",
-                did : "null",
+                did : "deck override (null by default)",
                 name : "template name",
                 ord : "template number, see flds",
                 qfmt : "question format string"
