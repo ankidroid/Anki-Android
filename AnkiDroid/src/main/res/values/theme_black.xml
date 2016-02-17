@@ -18,7 +18,9 @@
         <item name="android:textColorSecondary">@color/theme_black_secondary_text</item>
         <item name="android:colorBackground">@color/theme_black_primary</item>
         <item name="android:windowBackground">@color/theme_black_primary</item>
-        <item name="colorButtonNormal">#ff303030</item>
+        <!-- App buttons -->
+        <item name="largeButtonBackgroundColor">#ff303030</item>
+        <item name="largeButtonTextColor">@color/theme_black_primary_text</item>
         <!-- Action bar styles -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -72,8 +74,6 @@
         <item name="fab_labelsTextColor">@color/theme_black_primary_text</item>
         <item name="fab_background">@color/theme_black_primary_light</item>
         <item name="fab_item_background">@drawable/fab_label_background_black_pre21</item>
-        <!-- StudyOptions fragment -->
-        <item name="study_start_textColor">@color/theme_black_primary_text</item>
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="md_dark_theme">true</item>

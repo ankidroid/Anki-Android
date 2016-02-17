@@ -202,7 +202,7 @@
                         android:paddingBottom="8dp"/>
                     <Button
                         android:id="@+id/studyoptions_start"
-                        android:textColor="?attr/study_start_textColor"
+                        android:theme="@style/LargeButtonStyle"
                         android:layout_width="200dip"
                         android:layout_height="wrap_content"
                         android:lines="2"

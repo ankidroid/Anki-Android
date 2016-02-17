@@ -32,6 +32,9 @@
     <declare-styleable name="SeekBarPreference">
         <attr name="interval" format="integer" />
     </declare-styleable>
+    <!-- App buttons -->
+    <attr name="largeButtonBackgroundColor" format="color"/>
+    <attr name="largeButtonTextColor" format="color"/>
     <!-- Deck list colors, divider, and expander -->
     <attr name="currentDeckBackground" format="reference"/>
     <attr name="currentDeckBackgroundColor" format="color"/>
@@ -84,6 +87,4 @@
     <attr name="fab_labelsTextColor" format="color"/>
     <attr name="fab_background" format="color"/>
     <attr name="fab_item_background" format="reference"/>
-    <!-- StudyOptions fragment -->
-    <attr name="study_start_textColor" format="color"/>
 </resources>

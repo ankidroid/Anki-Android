@@ -61,7 +61,7 @@
                     android:id="@+id/login_button"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
+                    android:theme="@style/LargeButtonStyle"
                     android:singleLine="true"
                     android:textSize="@dimen/md_title_textsize"
                     android:layout_gravity="center"
