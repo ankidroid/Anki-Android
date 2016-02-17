@@ -110,8 +110,8 @@
         <item name="android:textColorSecondary">?attr/actionBarPopupTextColor</item>
     </style>
 
-    <style name="Theme_Light_Statistics" parent="Theme_Light_Compat">
-        <item name="android:radioButtonStyle">@android:style/Widget.CompoundButton.RadioButton
-        </item>
+    <style name="LargeButtonStyle">
+        <item name="colorButtonNormal">?attr/largeButtonBackgroundColor</item>
+        <item name="android:textColor">?attr/largeButtonTextColor</item>
     </style>
 </resources>

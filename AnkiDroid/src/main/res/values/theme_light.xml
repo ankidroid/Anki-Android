@@ -20,7 +20,8 @@ APIs. It's visible when there aren't enough decks to fill the screen.
     <color name="theme_light_secondary_text">#de000000</color>  <!-- 87% black -->
     <color name="theme_light_row_current">#ececec</color>
 
-    <style name="Theme_Light" parent="@style/Theme.AppCompat.Light">
+    <!-- DarkActionBar needed for readable text in the menu opened by the hardware menu button -->
+    <style name="Theme_Light" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <!-- Android colors -->
         <item name="colorPrimary">@color/theme_light_primary</item>
         <item name="colorPrimaryDark">@color/theme_light_primary_dark</item>
@@ -30,7 +31,9 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="android:textColorSecondary">@color/theme_light_secondary_text</item>
         <item name="android:colorBackground">@android:color/white</item>
         <item name="android:windowBackground">@android:color/white</item>
-        <item name="colorButtonNormal">@color/material_light_blue_700</item>
+        <!-- App buttons -->
+        <item name="largeButtonBackgroundColor">@color/material_light_blue_700</item>
+        <item name="largeButtonTextColor">@color/white</item>
         <!-- Action bar styles -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -84,8 +87,6 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="fab_labelsTextColor">@color/white</item>
         <item name="fab_background">@color/material_grey_700</item>
         <item name="fab_item_background">@drawable/fab_label_background_pre21</item>
-        <!-- StudyOptions fragment -->
-        <item name="study_start_textColor">@color/white</item>
         <!-- Images -->
         <item name="navDrawerImage">@drawable/nav_drawer_logo</item>
         <item name="attachFileImage">@drawable/ic_attachment_black_24dp</item>

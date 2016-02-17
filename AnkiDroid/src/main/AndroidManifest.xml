@@ -224,7 +224,6 @@
             android:finishOnTaskLaunch="true" />
         <activity
             android:name="com.ichi2.anki.Statistics"
-            android:theme="@style/Theme_Light_Statistics"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:parentActivityName=".DeckPicker">
             <!-- The meta-data element is needed for versions lower than 4.1 -->

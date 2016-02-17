@@ -18,7 +18,9 @@
         <item name="android:textColorSecondary">@color/theme_dark_secondary_text</item>
         <item name="android:colorBackground">@color/material_theme_grey</item>
         <item name="android:windowBackground">@color/material_theme_grey</item>
-        <item name="colorButtonNormal">@color/material_light_blue_700</item>
+        <!-- App buttons -->
+        <item name="largeButtonBackgroundColor">@color/material_light_blue_700</item>
+        <item name="largeButtonTextColor">@color/white</item>
         <!-- Action bar styles -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -72,8 +74,6 @@
         <item name="fab_labelsTextColor">@color/white</item>
         <item name="fab_background">@color/material_grey_700</item>
         <item name="fab_item_background">@drawable/fab_label_background_pre21</item>
-        <!-- StudyOptions fragment -->
-        <item name="study_start_textColor">@color/white</item>
         <!-- Images -->
         <item name="navDrawerImage">@drawable/nav_drawer_logo_dark_theme</item>
         <item name="attachFileImage">@drawable/ic_attachment_white_24dp</item>

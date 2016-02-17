@@ -15,7 +15,8 @@
         <item name="android:textColor">@color/theme_plain_primary_text</item>
         <item name="android:textColorPrimary">@color/theme_plain_primary_text</item>
         <item name="android:textColorSecondary">@color/theme_plain_secondary_text</item>
-        <item name="colorButtonNormal">@color/theme_plain_accent</item>
+        <!-- App buttons -->
+        <item name="largeButtonBackgroundColor">@color/theme_plain_accent</item>
         <!-- Action bar styles -->
         <item name="actionBarPopupBackgroundColor">@color/theme_plain_primary_light</item>
         <item name="actionBarPopupTextColor">@color/theme_plain_primary_text</item>
@@ -27,17 +28,6 @@
         <item name="hardButtonRef">@drawable/footer_button_all_plain</item>
         <item name="goodButtonRef">@drawable/footer_button_all_plain</item>
         <item name="easyButtonRef">@drawable/footer_button_all_plain</item>
-        <!-- Stats colors -->
-        <item name="stats_young">#7c7</item>
-        <item name="stats_mature">#070</item>
-        <item name="stats_learn">#00F</item>
-        <item name="stats_relearn">#c00</item>
-        <item name="stats_cram">#ff0</item>
-        <item name="stats_interval">#077</item>
-        <item name="stats_hours">#ccc</item>
-        <item name="stats_counts">#E6000000</item>
-        <item name="stats_unseen">#000</item>
-        <item name="stats_suspended">#ff0</item>
         <!-- FAB -->
         <item name="fab_normal">@color/theme_plain_accent</item>
         <item name="fab_pressed">#c8607d8b</item> <!-- 55 less opacity than fab_normal -->
