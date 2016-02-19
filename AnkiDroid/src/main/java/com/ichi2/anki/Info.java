@@ -85,13 +85,8 @@ public class Info extends AnkiActivity {
             }
         });
 
-
-
-
-        TextView termsAndConditionsView = (TextView) findViewById(R.id.info_terms_and_conditions);
-        termsAndConditionsView.setMovementMethod(LinkMovementMethod.getInstance());
-        Button continueButton = (Button) findViewById(R.id.info_continue);
-        continueButton.setOnClickListener(new OnClickListener() {
+        Button marketButton = (Button) findViewById(R.id.market);
+        marketButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 if (mType == TYPE_ABOUT) {
@@ -148,8 +143,8 @@ public class Info extends AnkiActivity {
                                 res.getString(R.string.link_source))).append("<br/><br/>");
                 sb.append("</body></html>");
                 webView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
-                ((Button) findViewById(R.id.info_continue)).setText(res.getString(R.string.info_rate));
-                Button debugCopy = ((Button) findViewById(R.id.info_later));
+                ((Button) findViewById(R.id.market)).setText(res.getString(R.string.info_rate));
+                Button debugCopy = ((Button) findViewById(R.id.debug_info));
                 debugCopy.setText(res.getString(R.string.feedback_copy_debug));
                 debugCopy.setVisibility(View.VISIBLE);
                 debugCopy.setOnClickListener(new OnClickListener() {

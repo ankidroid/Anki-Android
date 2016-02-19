@@ -1,8 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    tools:context=".AnkiStatsActivity$ChartFragment">
+    android:layout_height="fill_parent">
 
     <com.ichi2.anki.stats.ChartView
         android:layout_width="fill_parent"

@@ -1,10 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/MainLayoutInImageSearchActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".SearchImageActivity" >
+    android:orientation="vertical" >
 
     <WebView
         android:id="@+id/ImageSearchWebView"
