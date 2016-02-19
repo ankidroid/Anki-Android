@@ -29,7 +29,6 @@
     <color name="transparent">#00000000</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
-    <color name="widget_progressbar_empty">#000000</color>
 
 
     <!-- Material Design: http://www.google.com/design/spec/style/color.html#color-color-palette -->

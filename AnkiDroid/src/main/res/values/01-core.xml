@@ -102,7 +102,6 @@
     <string name="time_quantity_days">%d d</string>
     <string name="time_quantity_months">%.1f mo</string>
     <string name="time_quantity_years">%.1f yr</string><!-- or "%.1f a" -->
-    <string name="later">Later</string>
     <string name="rebuild_cram_deck">Rebuilding cram deck…</string>
     <string name="rebuild_cram_label">Rebuild</string>
     <string name="empty_cram_label">Empty</string>

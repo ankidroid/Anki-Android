@@ -26,7 +26,6 @@
     <string name="retry">Retry</string>
     <string name="cancel">Cancel</string>
 
-    <string name="loading_shared_decks">Loading available shared decks…</string>
     <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
     <string name="menu_get_shared_decks">Get shared decks</string>
     <string name="connection_error_message">A network error has occurred</string>
