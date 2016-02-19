@@ -712,8 +712,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             // We have to watch out. For the preview we don’t know the font or font size. Skip those there. (Anki
             // desktop just doesn’t show the input tag there. Do it with standard values here instead.)
             if (mTypeFont != null && !TextUtils.isEmpty(mTypeFont) && mTypeSize > 0) {
-                sb.append("style=\"font-family: '" + mTypeFont + "'; font-size: " + Integer.toString(mTypeSize) +
-                    "px;\" ");
+                sb.append("style=\"font-family: '").append(mTypeFont).append("'; font-size: ")
+                        .append(Integer.toString(mTypeSize)).append("px;\" ");
             }
             sb.append(">\n</center>\n");
         } else {
@@ -786,7 +786,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Set<String> matches = new LinkedHashSet<>();
         // LinkedHashSet: make entries appear only once, like Anki desktop (see also issue #2208), and keep the order
         // they appear in.
-        String groupOne = new String();
+        String groupOne;
         int colonColonIndex = -1;
         while (m.find()) {
             groupOne = m.group(1);
@@ -2240,7 +2240,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * @return true if the AnkiDroid preference for writing answer is true and if the Anki Deck CardLayout specifies a
      *         field to query
      */
-    private final boolean typeAnswer() {
+    private boolean typeAnswer() {
         return mShowTypeAnswerField && null != mTypeCorrect;
     }
 

@@ -1961,7 +1961,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         String deckName = "\'" + getCol().getDecks().name(did) + "\'";
         boolean isDyn = getCol().getDecks().isDyn(did);
         if (isDyn) {
-            msg = String.format(res.getString(R.string.delete_cram_deck_message), deckName);
+            msg = res.getString(R.string.delete_cram_deck_message, deckName);
         } else {
             msg = res.getQuantityString(R.plurals.delete_deck_message, cnt, deckName, cnt);
         }

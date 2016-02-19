@@ -215,7 +215,6 @@ public class DB {
                             Toast.makeText(AnkiDroidApp.getInstance().getBaseContext(),
                                     "Error report pending: unexpected null in database.", Toast.LENGTH_LONG).show();
                         }
-                        continue; // attempt to skip this null record
                     } else {
                         throw new RuntimeException(e);
                     }

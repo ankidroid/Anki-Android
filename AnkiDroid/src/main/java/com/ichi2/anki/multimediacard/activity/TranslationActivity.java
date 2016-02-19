@@ -102,7 +102,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         setContentView(R.layout.activity_translation);
 
         try {
-            mSource = getIntent().getExtras().getString(EXTRA_SOURCE).toString();
+            mSource = getIntent().getExtras().getString(EXTRA_SOURCE);
         } catch (Exception e) {
             mSource = "";
         }

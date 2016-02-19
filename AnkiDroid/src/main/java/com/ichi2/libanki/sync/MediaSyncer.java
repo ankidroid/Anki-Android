@@ -36,6 +36,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.zip.ZipFile;
 
@@ -138,7 +139,7 @@ public class MediaSyncer {
                         } else {
                             mCol.log("have same already");
                         }
-                        mCol.getMedia().markClean(Arrays.asList(fname));
+                        mCol.getMedia().markClean(Collections.singletonList(fname));
                         
                     } else if (!TextUtils.isEmpty(lsum)) {
                         // deleted remotely
@@ -152,7 +153,7 @@ public class MediaSyncer {
                     } else {
                         // deleted both sides
                         mCol.log("both sides deleted");
-                        mCol.getMedia().markClean(Arrays.asList(fname));
+                        mCol.getMedia().markClean(Collections.singletonList(fname));
                     }
                 }
                 _downloadFiles(need);

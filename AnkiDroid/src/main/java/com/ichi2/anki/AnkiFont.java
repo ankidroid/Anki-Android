@@ -109,9 +109,7 @@ public class AnkiFont {
 
 
     public String getDeclaration() {
-        StringBuilder sb = new StringBuilder("@font-face {");
-        sb.append(getCSS(false)).append(" src: url(\"file://").append(mPath).append("\");}");
-        return sb.toString();
+        return "@font-face {" + getCSS(false) + " src: url(\"file://" + mPath + "\");}";
     }
 
 

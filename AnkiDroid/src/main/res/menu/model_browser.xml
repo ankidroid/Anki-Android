@@ -6,12 +6,4 @@
         android:title="@string/model_editor_action_add_model"
         android:icon="@drawable/ic_add_white_24dp"
         app:showAsAction="always"/>
-
-    <Spinner
-        android:id="@+id/toolbar_spinner"
-        android:background="?attr/selectableItemBackground"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" 
-        app:popupTheme="@style/ActionBar.Popup"/>
 </menu>

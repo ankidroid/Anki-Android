@@ -412,7 +412,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             }
         }
         if (requestCode == DECK_OPTIONS) {
-            if (mLoadWithDeckOptions == true) {
+            if (mLoadWithDeckOptions) {
                 mLoadWithDeckOptions = false;
                 try {
                     JSONObject deck = getCol().getDecks().current();
@@ -555,7 +555,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                     }
 
                     // open cram deck option if deck is opened for the first time
-                    if (mLoadWithDeckOptions == true) {
+                    if (mLoadWithDeckOptions) {
                         openFilteredDeckOptions(mLoadWithDeckOptions);
                         return;
                     }
