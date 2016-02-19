@@ -29,7 +29,7 @@ public class LanguagesLister {
 
 
     LanguagesLister() {
-        mLanguageMap = new HashMap<String, String>();
+        mLanguageMap = new HashMap<>();
 
         mLanguageMap.put("Mandarin", "cmn");
         mLanguageMap.put("Spanish", "spa");
@@ -52,7 +52,7 @@ public class LanguagesLister {
 
 
     public ArrayList<String> getLanguages() {
-        ArrayList<String> res = new ArrayList<String>();
+        ArrayList<String> res = new ArrayList<>();
         res.addAll(mLanguageMap.keySet());
         Collections.sort(res, new Comparator<String>() {
             @Override

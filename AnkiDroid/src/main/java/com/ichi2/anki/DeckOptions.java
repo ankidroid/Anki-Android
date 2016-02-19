@@ -79,8 +79,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
     public class DeckPreferenceHack implements SharedPreferences {
 
-        private Map<String, String> mValues = new HashMap<String, String>();
-        private Map<String, String> mSummaries = new HashMap<String, String>();
+        private Map<String, String> mValues = new HashMap<>();
+        private Map<String, String> mSummaries = new HashMap<>();
         private MaterialDialog mProgressDialog;
 
 
@@ -158,7 +158,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                         Timber.i("Change value for key '" + key + "': " + value);
 
                         if (key.equals("maxAnswerTime")) {
-                            mOptions.put("maxTaken", (Integer) value);
+                            mOptions.put("maxTaken", value);
                         } else if (key.equals("newFactor")) {
                             mOptions.getJSONObject("new").put("initialFactor", (Integer) value * 10);
                         } else if (key.equals("newOrder")) {
@@ -172,33 +172,33 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             }
                             mOptions.getJSONObject("new").put("order", Integer.parseInt((String) value));
                         } else if (key.equals("newPerDay")) {
-                            mOptions.getJSONObject("new").put("perDay", (Integer) value);
+                            mOptions.getJSONObject("new").put("perDay", value);
                         } else if (key.equals("newGradIvl")) {
                             JSONArray ja = new JSONArray(); // [graduating, easy]
-                            ja.put((Integer) value);
+                            ja.put(value);
                             ja.put(mOptions.getJSONObject("new").getJSONArray("ints").get(1));
                             mOptions.getJSONObject("new").put("ints", ja);
                         } else if (key.equals("newEasy")) {
                             JSONArray ja = new JSONArray(); // [graduating, easy]
                             ja.put(mOptions.getJSONObject("new").getJSONArray("ints").get(0));
-                            ja.put((Integer) value);
+                            ja.put(value);
                             mOptions.getJSONObject("new").put("ints", ja);
                         } else if (key.equals("newBury")) {
-                            mOptions.getJSONObject("new").put("bury", (Boolean) value);
+                            mOptions.getJSONObject("new").put("bury", value);
                         } else if (key.equals("revPerDay")) {
-                            mOptions.getJSONObject("rev").put("perDay", (Integer) value);
+                            mOptions.getJSONObject("rev").put("perDay", value);
                         } else if (key.equals("easyBonus")) {
                             mOptions.getJSONObject("rev").put("ease4", (Integer) value / 100.0f);
                         } else if (key.equals("revIvlFct")) {
                             mOptions.getJSONObject("rev").put("ivlFct", (Integer) value / 100.0f);
                         } else if (key.equals("revMaxIvl")) {
-                            mOptions.getJSONObject("rev").put("maxIvl", (Integer) value);
+                            mOptions.getJSONObject("rev").put("maxIvl", value);
                         } else if (key.equals("revBury")) {
-                            mOptions.getJSONObject("rev").put("bury", (Boolean) value);
+                            mOptions.getJSONObject("rev").put("bury", value);
                         } else if (key.equals("lapMinIvl")) {
-                            mOptions.getJSONObject("lapse").put("minInt", (Integer) value);
+                            mOptions.getJSONObject("lapse").put("minInt", value);
                         } else if (key.equals("lapLeechThres")) {
-                            mOptions.getJSONObject("lapse").put("leechFails", (Integer) value);
+                            mOptions.getJSONObject("lapse").put("leechFails", value);
                         } else if (key.equals("lapLeechAct")) {
                             mOptions.getJSONObject("lapse").put("leechAction", Integer.parseInt((String) value));
                         } else if (key.equals("lapNewIvl")) {
@@ -206,11 +206,11 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                         } else if (key.equals("showAnswerTimer")) {
                             mOptions.put("timer", (Boolean) value ? 1 : 0);
                         } else if (key.equals("autoPlayAudio")) {
-                            mOptions.put("autoplay", (Boolean) value);
+                            mOptions.put("autoplay", value);
                         } else if (key.equals("replayQuestion")) {
-                            mOptions.put("replayq", (Boolean) value);
+                            mOptions.put("replayq", value);
                         } else if (key.equals("desc")) {
-                            mDeck.put("desc", (String) value);
+                            mDeck.put("desc", value);
                             mCol.getDecks().save(mDeck);
                         } else if (key.equals("newSteps")) {
                             mOptions.getJSONObject("new").put("delays", StepsPreference.convertToJSON((String) value));
@@ -462,7 +462,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             return mValues.get(key);
         }
 
-        public List<OnSharedPreferenceChangeListener> listeners = new LinkedList<OnSharedPreferenceChangeListener>();
+        public List<OnSharedPreferenceChangeListener> listeners = new LinkedList<>();
 
 
         @Override

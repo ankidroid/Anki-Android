@@ -77,8 +77,8 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
     public class DeckPreferenceHack implements SharedPreferences {
 
-        private Map<String, String> mValues = new HashMap<String, String>();
-        private Map<String, String> mSummaries = new HashMap<String, String>();
+        private Map<String, String> mValues = new HashMap<>();
+        private Map<String, String> mSummaries = new HashMap<>();
 
 
         public DeckPreferenceHack() {
@@ -130,22 +130,22 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                         Timber.i("Change value for key '" + entry.getKey() + "': " + entry.getValue());
                         if (entry.getKey().equals("search")) {
                             JSONArray ar = mDeck.getJSONArray("terms");
-                            ar.getJSONArray(0).put(0, (String) entry.getValue());
+                            ar.getJSONArray(0).put(0, entry.getValue());
                             mDeck.put("terms", ar);
                         } else if (entry.getKey().equals("limit")) {
                             JSONArray ar = mDeck.getJSONArray("terms");
-                            ar.getJSONArray(0).put(1, (Integer) entry.getValue());
+                            ar.getJSONArray(0).put(1, entry.getValue());
                             mDeck.put("terms", ar);
                         } else if (entry.getKey().equals("order")) {
                             JSONArray ar = mDeck.getJSONArray("terms");
                             ar.getJSONArray(0).put(2, Integer.parseInt((String) entry.getValue()));
                             mDeck.put("terms", ar);
                         } else if (entry.getKey().equals("resched")) {
-                            mDeck.put("resched", (Boolean) entry.getValue());
+                            mDeck.put("resched", entry.getValue());
                         } else if (entry.getKey().equals("stepsOn")) {
                             boolean on = (Boolean) entry.getValue();
                             if (on) {
-                                JSONArray steps =  StepsPreference.convertToJSON((String) mValues.get("steps"));
+                                JSONArray steps =  StepsPreference.convertToJSON(mValues.get("steps"));
                                 if (steps.length() > 0) {
                                     mDeck.put("delays", steps);
                                 }
@@ -314,7 +314,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             return mValues.get(key);
         }
 
-        public List<OnSharedPreferenceChangeListener> listeners = new LinkedList<OnSharedPreferenceChangeListener>();
+        public List<OnSharedPreferenceChangeListener> listeners = new LinkedList<>();
 
 
         @Override

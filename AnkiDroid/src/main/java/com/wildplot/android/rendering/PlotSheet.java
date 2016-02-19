@@ -18,7 +18,6 @@ package com.wildplot.android.rendering;
 
 import android.graphics.Typeface;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.wildplot.android.rendering.graphics.wrapper.*;
 import com.wildplot.android.rendering.interfaces.Drawable;
 import com.wildplot.android.rendering.interfaces.Legendable;
@@ -90,8 +89,8 @@ public class PlotSheet implements Drawable {
     /**
      * the ploting screens, screen 0 is the only one in single mode
      */
-    Vector<MultiScreenPart> screenParts = new Vector<MultiScreenPart>();
-    private HashMap<String, ColorWrap> mLegendMap = new HashMap<String, ColorWrap>();
+    Vector<MultiScreenPart> screenParts = new Vector<>();
+    private HashMap<String, ColorWrap> mLegendMap = new HashMap<>();
     private boolean mDrawablesPrepared = false;
 
     /**
@@ -329,8 +328,8 @@ public class PlotSheet implements Drawable {
         RectangleWrap field = g.getClipBounds();
         this.currentScreen = screenNr;
         prepareDrawables();
-        Vector<Drawable> offFrameDrawables = new Vector<Drawable>();
-        Vector<Drawable> onFrameDrawables = new Vector<Drawable>();
+        Vector<Drawable> offFrameDrawables = new Vector<>();
+        Vector<Drawable> onFrameDrawables = new Vector<>();
 
 
         g.setTypeface(typeface);
@@ -472,8 +471,8 @@ public class PlotSheet implements Drawable {
         if(!mDrawablesPrepared) {
             mDrawablesPrepared = true;
             Vector<Drawable> drawables = this.screenParts.get(0).getDrawables();
-            Vector<Drawable> onFrameDrawables = new Vector<Drawable>();
-            Vector<Drawable> offFrameDrawables = new Vector<Drawable>();
+            Vector<Drawable> onFrameDrawables = new Vector<>();
+            Vector<Drawable> offFrameDrawables = new Vector<>();
 
             DrawableContainer onFrameContainer = new DrawableContainer(true, false);
 

@@ -165,7 +165,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                 // Pick from two translation sources
                 PickStringDialogFragment fragment = new PickStringDialogFragment();
 
-                final ArrayList<String> translationSources = new ArrayList<String>();
+                final ArrayList<String> translationSources = new ArrayList<>();
                 translationSources.add("Glosbe.com");
                 // Chromebooks do not support dependent apps yet.
                 if (!CompatHelper.isChromebook()) {
@@ -210,7 +210,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
             // Should be more than one text not empty fields for clone to make
             // sense
 
-            mPossibleClones = new ArrayList<String>();
+            mPossibleClones = new ArrayList<>();
 
             int numTextFields = 0;
             for (int i = 0; i < mNote.getNumberOfFields(); ++i) {

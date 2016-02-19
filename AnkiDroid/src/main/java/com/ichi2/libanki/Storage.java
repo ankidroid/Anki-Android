@@ -124,7 +124,7 @@ public class Storage {
             }
             if (ver < 4) {
                 col.modSchemaNoCheck();
-                ArrayList<JSONObject> clozes = new ArrayList<JSONObject>();
+                ArrayList<JSONObject> clozes = new ArrayList<>();
                 for (JSONObject m : col.getModels().all()) {
                     if (!m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt").contains("{{cloze:")) {
                         m.put("type", Consts.MODEL_STD);
@@ -245,7 +245,7 @@ public class Storage {
             t.put("name", "Cloze");
             // delete non-cloze cards for the model
             JSONArray ja = m.getJSONArray("tmpls");
-            ArrayList<JSONObject> rem = new ArrayList<JSONObject>();
+            ArrayList<JSONObject> rem = new ArrayList<>();
             for (int i = 1; i < ja.length(); i++) {
                 JSONObject ta = ja.getJSONObject(i);
                 if (!ta.getString("afmt").contains("{{cloze:")) {

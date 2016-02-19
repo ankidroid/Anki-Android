@@ -19,7 +19,6 @@
 
 package com.ichi2.anki.multimediacard.fields;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.libanki.Collection;
 
 import java.io.File;

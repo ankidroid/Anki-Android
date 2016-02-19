@@ -18,8 +18,6 @@ package com.ichi2.libanki.hooks;
 
 
 
-import com.ichi2.anki.AnkiDroidApp;
-
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

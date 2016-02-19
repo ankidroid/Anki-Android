@@ -47,7 +47,7 @@ public class MultimediaEditableNote implements IMultimediaEditableNote {
             return;
         }
 
-        ArrayList<IField> newFields = new ArrayList<IField>();
+        ArrayList<IField> newFields = new ArrayList<>();
         newFields.add(mFields.get(mFields.size() - 1));
         newFields.addAll(mFields);
         newFields.remove(mFields.size());
@@ -78,7 +78,7 @@ public class MultimediaEditableNote implements IMultimediaEditableNote {
 
     private ArrayList<IField> getFieldsPrivate() {
         if (mFields == null) {
-            mFields = new ArrayList<IField>();
+            mFields = new ArrayList<>();
         }
 
         return mFields;

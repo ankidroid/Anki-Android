@@ -98,8 +98,8 @@ public class Lookup {
                 final CharSequence[] itemValues = { "en", "fr", "es", "it", "ch", "ru" };
                 String language = getLanguage(MetaDB.LANGUAGES_QA_UNDEFINED);
                 if (language.length() > 0) {
-                    for (int i = 0; i < itemValues.length; i++) {
-                        if (language.equals(itemValues[i])) {
+                    for (CharSequence itemValue : itemValues) {
+                        if (language.equals(itemValue)) {
                             lookupLeo(language, mLookupText);
                             mLookupText = "";
                             return true;

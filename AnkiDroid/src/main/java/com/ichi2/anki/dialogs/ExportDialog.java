@@ -80,8 +80,8 @@ public class ExportDialog extends DialogFragment {
                                                        Integer[] integers, CharSequence[] charSequences) {
                                 mIncludeMedia = false;
                                 mIncludeSched = false;
-                                for (int i = 0; i < integers.length; i++) {
-                                    switch (integers[i]) {
+                                for (Integer integer : integers) {
+                                    switch (integer) {
                                         case INCLUDE_SCHED:
                                             mIncludeSched = true;
                                             break;

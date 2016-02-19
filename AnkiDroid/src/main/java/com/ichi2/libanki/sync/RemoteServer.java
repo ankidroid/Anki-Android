@@ -28,8 +28,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -45,7 +43,7 @@ public class RemoteServer extends HttpSyncer {
     @Override
     public HttpResponse hostKey(String user, String pw) throws UnknownHttpResponseException {
         try {
-            mPostVars = new HashMap<String, Object>();
+            mPostVars = new HashMap<>();
             JSONObject jo = new JSONObject();
             jo.put("u", user);
             jo.put("p", pw);
@@ -59,7 +57,7 @@ public class RemoteServer extends HttpSyncer {
     @Override
     public HttpResponse meta() throws UnknownHttpResponseException {
         try {
-            mPostVars = new HashMap<String, Object>();
+            mPostVars = new HashMap<>();
             mPostVars.put("k", mHKey);
             mPostVars.put("s", mSKey);
             JSONObject jo = new JSONObject();
@@ -112,9 +110,7 @@ public class RemoteServer extends HttpSyncer {
             return Long.parseLong(s);
         } catch (NumberFormatException e) {
             return 0;
-        } catch (IllegalStateException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (IllegalStateException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -129,11 +125,7 @@ public class RemoteServer extends HttpSyncer {
             } else {
                 return new JSONObject();
             }
-        } catch (IllegalStateException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (JSONException e) {
+        } catch (IllegalStateException | JSONException | IOException e) {
             throw new RuntimeException(e);
         }
     }

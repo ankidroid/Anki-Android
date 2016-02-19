@@ -23,7 +23,6 @@ import android.text.TextUtils;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiFont;
 import com.ichi2.libanki.Utils;
-import com.ichi2.themes.Themes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -164,7 +163,7 @@ public class CustomFontsReviewerExt implements ReviewerExt {
      */
     private static Map<String, AnkiFont> getCustomFontsMap(Context context) {
         List<AnkiFont> fonts = Utils.getCustomFonts(context);
-        Map<String, AnkiFont> customFontsMap = new HashMap<String, AnkiFont>();
+        Map<String, AnkiFont> customFontsMap = new HashMap<>();
         for (AnkiFont f : fonts) {
             customFontsMap.put(f.getName(), f);
         }

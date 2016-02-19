@@ -123,7 +123,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         mLanguageLister = new LanguagesListerGlosbe(this);
 
         mSpinnerFrom = new Spinner(this);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
                 mLanguageLister.getLanguages());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerFrom.setAdapter(adapter);
@@ -134,7 +134,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         linearLayout.addView(tvTo);
 
         mSpinnerTo = new Spinner(this);
-        ArrayAdapter<String> adapterTo = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+        ArrayAdapter<String> adapterTo = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
                 mLanguageLister.getLanguages());
         adapterTo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerTo.setAdapter(adapterTo);
@@ -300,7 +300,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
 
     private static ArrayList<String> parseJson(Response resp, String languageCodeTo) {
-        ArrayList<String> res = new ArrayList<String>();
+        ArrayList<String> res = new ArrayList<>();
 
         /*
          * The algorithm below includes the parsing of glosbe results. Glosbe.com returns a list of different phrases in

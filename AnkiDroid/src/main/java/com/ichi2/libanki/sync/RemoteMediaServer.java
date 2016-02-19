@@ -71,7 +71,7 @@ public class RemoteMediaServer extends HttpSyncer {
 
     public JSONObject begin() throws UnknownHttpResponseException, MediaSyncException {
         try {
-            mPostVars = new HashMap<String, Object>();
+            mPostVars = new HashMap<>();
             mPostVars.put("k", mHKey);
             mPostVars.put("v",
                     String.format(Locale.US, "ankidroid,%s,%s", VersionUtils.getPkgVersionName(), Utils.platDesc()));
@@ -81,9 +81,7 @@ public class RemoteMediaServer extends HttpSyncer {
             JSONObject ret = _dataOnly(jresp, JSONObject.class);
             mSKey = ret.getString("sk");
             return ret;
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (JSONException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -92,16 +90,14 @@ public class RemoteMediaServer extends HttpSyncer {
     // args: lastUsn
     public JSONArray mediaChanges(int lastUsn) throws UnknownHttpResponseException, MediaSyncException {
         try {
-            mPostVars = new HashMap<String, Object>();
+            mPostVars = new HashMap<>();
             mPostVars.put("sk", mSKey);
 
             HttpResponse resp = super.req("mediaChanges",
                     super.getInputStream(Utils.jsonToString(new JSONObject().put("lastUsn", lastUsn))));
             JSONObject jresp = new JSONObject(super.stream2String(resp.getEntity().getContent()));
             return _dataOnly(jresp, JSONArray.class);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (JSONException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -137,9 +133,7 @@ public class RemoteMediaServer extends HttpSyncer {
             HttpResponse resp = super.req("uploadChanges", new FileInputStream(zip), 0);
             JSONObject jresp = new JSONObject(super.stream2String(resp.getEntity().getContent()));
             return _dataOnly(jresp, JSONArray.class);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (JSONException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -152,9 +146,7 @@ public class RemoteMediaServer extends HttpSyncer {
                     super.getInputStream(Utils.jsonToString(new JSONObject().put("local", lcnt))));
             JSONObject jresp = new JSONObject(super.stream2String(resp.getEntity().getContent()));
             return _dataOnly(jresp, String.class);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (JSONException | IOException e) {
             throw new RuntimeException(e);
         }
     }

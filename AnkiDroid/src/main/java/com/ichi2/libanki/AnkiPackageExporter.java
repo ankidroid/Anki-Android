@@ -64,7 +64,7 @@ class AnkiExporter extends Exporter {
     Collection mSrc;
     String mMediaDir;
     int mCount;
-    ArrayList<String> mMediaFiles = new ArrayList<String>();
+    ArrayList<String> mMediaFiles = new ArrayList<>();
 
 
     public AnkiExporter(Collection col) {
@@ -105,11 +105,11 @@ class AnkiExporter extends Exporter {
         Timber.d("Copy cards");
         mSrc.getDb().getDatabase()
                 .execSQL("INSERT INTO DST_DB.cards select * from cards where id in " + Utils.ids2str(cids));
-        Set<Long> nids = new HashSet<Long>(mSrc.getDb().queryColumn(Long.class,
+        Set<Long> nids = new HashSet<>(mSrc.getDb().queryColumn(Long.class,
                 "select nid from cards where id in " + Utils.ids2str(cids), 0));
         // notes
         Timber.d("Copy notes");
-        ArrayList<Long> uniqueNids = new ArrayList<Long>(nids);
+        ArrayList<Long> uniqueNids = new ArrayList<>(nids);
         String strnids = Utils.ids2str(uniqueNids);
         mSrc.getDb().getDatabase().execSQL("INSERT INTO DST_DB.notes select * from notes where id in " + strnids);
         // remove system tags if not exporting scheduling info
@@ -117,7 +117,7 @@ class AnkiExporter extends Exporter {
             Timber.d("Stripping system tags from list");
             ArrayList<String> srcTags = mSrc.getDb().queryColumn(String.class,
                     "select tags from notes where id in " + strnids, 0);
-            ArrayList<Object[]> args = new ArrayList<Object[]>(srcTags.size());
+            ArrayList<Object[]> args = new ArrayList<>(srcTags.size());
             Object [] arg = new Object[2];
             for (int row = 0; row < srcTags.size(); row++) {
                 arg[0]=removeSystemTags(srcTags.get(row));
@@ -156,7 +156,7 @@ class AnkiExporter extends Exporter {
         }
         // decks
         Timber.d("Copy decks");
-        ArrayList<Long> dids = new ArrayList<Long>();
+        ArrayList<Long> dids = new ArrayList<>();
         if (mDid != null) {
             dids.add(mDid);
             for (Long x : mSrc.getDecks().children(mDid).values()) {

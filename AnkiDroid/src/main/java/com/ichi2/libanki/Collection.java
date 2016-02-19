@@ -473,7 +473,7 @@ public class Collection {
      */
 
     public int noteCount() {
-        return (int) mDb.queryScalar("SELECT count() FROM notes");
+        return mDb.queryScalar("SELECT count() FROM notes");
     }
 
     /**
@@ -568,7 +568,7 @@ public class Collection {
 
 
     private ArrayList<JSONObject> _tmplsFromOrds(JSONObject model, ArrayList<Integer> avail) {
-        ArrayList<JSONObject> ok = new ArrayList<JSONObject>();
+        ArrayList<JSONObject> ok = new ArrayList<>();
         JSONArray tmpls;
         try {
             if (model.getInt("type") == Consts.MODEL_STD) {
@@ -603,8 +603,8 @@ public class Collection {
     public ArrayList<Long> genCards(long[] nids) {
         // build map of (nid,ord) so we don't create dupes
         String snids = Utils.ids2str(nids);
-        HashMap<Long, HashMap<Integer, Long>> have = new HashMap<Long, HashMap<Integer, Long>>();
-        HashMap<Long, Long> dids = new HashMap<Long, Long>();
+        HashMap<Long, HashMap<Integer, Long>> have = new HashMap<>();
+        HashMap<Long, Long> dids = new HashMap<>();
         Cursor cur = null;
         try {
             cur = mDb.getDatabase().rawQuery("SELECT id, nid, ord, did FROM cards WHERE nid IN " + snids, null);
@@ -620,7 +620,7 @@ public class Collection {
                 if (dids.containsKey(nid)) {
                     if (dids.get(nid) != 0 && dids.get(nid) != did) {
                         // cards are in two or more different decks; revert to model default
-                        dids.put(nid, 0l);
+                        dids.put(nid, 0L);
                     }
                 } else {
                     // first card or multiple cards in same deck
@@ -633,10 +633,10 @@ public class Collection {
             }
         }
         // build cards for each note
-        ArrayList<Object[]> data = new ArrayList<Object[]>();
+        ArrayList<Object[]> data = new ArrayList<>();
         long ts = Utils.maxID(mDb);
         long now = Utils.intNow();
-        ArrayList<Long> rem = new ArrayList<Long>();
+        ArrayList<Long> rem = new ArrayList<>();
         int usn = usn();
         cur = null;
         try {
@@ -710,12 +710,12 @@ public class Collection {
 	    if (type == 0) {
 	        cms = findTemplates(note);
 	    } else if (type == 1) {
-	        cms = new ArrayList<JSONObject>();
+	        cms = new ArrayList<>();
 	        for (Card c : note.cards()) {
 	            cms.add(c.template());
 	        }
 	    } else {
-	        cms = new ArrayList<JSONObject>();
+	        cms = new ArrayList<>();
 	        try {
                 JSONArray ja = note.model().getJSONArray("tmpls");
                 for (int i = 0; i < ja.length(); ++i) {
@@ -726,9 +726,9 @@ public class Collection {
             }
 	    }
 	    if (cms.isEmpty()) {
-	        return new ArrayList<Card>();
+	        return new ArrayList<>();
 	    }
-	    List<Card> cards = new ArrayList<Card>();
+	    List<Card> cards = new ArrayList<>();
 	    for (JSONObject template : cms) {
 	        cards.add(_newCard(note, template, 1, false));
 	    }
@@ -882,7 +882,7 @@ public class Collection {
      */
 
     private ArrayList<Object[]> _fieldData(String snids) {
-        ArrayList<Object[]> result = new ArrayList<Object[]>();
+        ArrayList<Object[]> result = new ArrayList<>();
         Cursor cur = null;
         try {
             cur = mDb.getDatabase().rawQuery("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null);
@@ -901,7 +901,7 @@ public class Collection {
     /** Update field checksums and sort cache, after find&replace, etc. */
     public void updateFieldCache(long[] nids) {
         String snids = Utils.ids2str(nids);
-        ArrayList<Object[]> r = new ArrayList<Object[]>();
+        ArrayList<Object[]> r = new ArrayList<>();
         for (Object[] o : _fieldData(snids)) {
             String[] fields = Utils.splitFields((String) o[2]);
             JSONObject model = mModels.get((Long) o[1]);
@@ -938,7 +938,7 @@ public class Collection {
         } else {
             throw new RuntimeException();
         }
-        ArrayList<HashMap<String, String>> result = new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String, String>> result = new ArrayList<>();
         for (Object[] row : _qaData(where)) {
             result.add(_renderQA(row));
         }
@@ -958,7 +958,7 @@ public class Collection {
         // data is [cid, nid, mid, did, ord, tags, flds]
         // unpack fields and create dict
         String[] flist = Utils.splitFields((String) data[6]);
-        Map<String, String> fields = new HashMap<String, String>();
+        Map<String, String> fields = new HashMap<>();
         JSONObject model = mModels.get((Long) data[2]);
         Map<String, Pair<Integer, JSONObject>> fmap = mModels.fieldMap(model);
         for (String name : fmap.keySet()) {
@@ -980,11 +980,11 @@ public class Collection {
             fields.put("Card", template.getString("name"));
             fields.put(String.format(Locale.US, "c%d", cardNum), "1");
             // render q & a
-            HashMap<String, String> d = new HashMap<String, String>();
+            HashMap<String, String> d = new HashMap<>();
             d.put("id", Long.toString((Long) data[0]));
             qfmt = TextUtils.isEmpty(qfmt) ? template.getString("qfmt") : qfmt;
             afmt = TextUtils.isEmpty(afmt) ? template.getString("afmt") : afmt;
-            for (Pair<String, String> p : new Pair[]{new Pair<String, String>("q", qfmt), new Pair<String, String>("a", afmt)}) {
+            for (Pair<String, String> p : new Pair[]{new Pair<>("q", qfmt), new Pair<>("a", afmt)}) {
                 String type = p.first;
                 String format = p.second;
                 if (type.equals("q")) {
@@ -1023,7 +1023,7 @@ public class Collection {
 
 
     public ArrayList<Object[]> _qaData(String where) {
-        ArrayList<Object[]> data = new ArrayList<Object[]>();
+        ArrayList<Object[]> data = new ArrayList<>();
         Cursor cur = null;
         try {
             cur = mDb.getDatabase().rawQuery(
@@ -1162,7 +1162,7 @@ public class Collection {
      * [type, undoName, data] type 1 = review; type 2 =
      */
     public void clearUndo() {
-        mUndo = new LinkedList<Object[]>();
+        mUndo = new LinkedList<>();
     }
 
 
@@ -1227,7 +1227,7 @@ public class Collection {
     		return (Long) data[2];
 
     	case UNDO_DELETE_NOTE:
-    		ArrayList<Long> ids = new ArrayList<Long>();
+    		ArrayList<Long> ids = new ArrayList<>();
     		Note note2 = (Note)data[1];
     		note2.flush(note2.getMod(), false);
     		ids.add(note2.getId());
@@ -1332,7 +1332,7 @@ public class Collection {
     /** Fix possible problems and rebuild caches. */
     public long fixIntegrity() {
         File file = new File(mPath);
-        ArrayList<String> problems = new ArrayList<String>();
+        ArrayList<String> problems = new ArrayList<>();
         long oldSize = file.length();
         try {
             mDb.getDatabase().beginTransaction();
@@ -1352,7 +1352,7 @@ public class Collection {
                 for (JSONObject m : mModels.all()) {
                     // cards with invalid ordinal
                     if (m.getInt("type") == Consts.MODEL_STD) {
-                        ArrayList<Integer> ords = new ArrayList<Integer>();
+                        ArrayList<Integer> ords = new ArrayList<>();
                         JSONArray tmpls = m.getJSONArray("tmpls");
                         for (int t = 0; t < tmpls.length(); t++) {
                             ords.add(tmpls.getJSONObject(t).getInt("ord"));
@@ -1366,7 +1366,7 @@ public class Collection {
                         }
                     }
                     // notes with invalid field counts
-                    ids = new ArrayList<Long>();
+                    ids = new ArrayList<>();
                     Cursor cur = null;
                     try {
                         cur = mDb.getDatabase().rawQuery("select id, flds from notes where mid = " + m.getLong("id"), null);
@@ -1415,7 +1415,7 @@ public class Collection {
                     mDb.execute("update cards set odue=0 where id in " + Utils.ids2str(ids));
                 }
                 // cards with odid set when not in a dyn deck
-                ArrayList<Long> dids = new ArrayList<Long>();
+                ArrayList<Long> dids = new ArrayList<>();
                 for (long id : mDecks.allIds()) {
                     if (!mDecks.isDyn(id)) {
                         dids.add(id);
@@ -1471,7 +1471,7 @@ public class Collection {
             modSchemaNoCheck();
         }
         // TODO: report problems
-        return (long) ((oldSize - newSize) / 1024);
+        return (oldSize - newSize) / 1024;
     }
 
 

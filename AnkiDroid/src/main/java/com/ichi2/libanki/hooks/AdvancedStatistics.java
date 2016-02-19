@@ -934,7 +934,7 @@ public class AdvancedStatistics extends Hook  {
             Timber.d("today: " + today);
 
             Stack<Review> reviews = new Stack<>();
-            ArrayList<Review> reviewList = new ArrayList<Review>();
+            ArrayList<Review> reviewList = new ArrayList<>();
 
             //By having simulateReview add future reviews depending on which simulation of this card this is (the nth) we can:
             //1. Do monte carlo simulation if we add nIterations future reviews if n = 1
@@ -1186,9 +1186,9 @@ public class AdvancedStatistics extends Hook  {
             s.append(":");
             s.append(System.getProperty("line.separator"));
 
-            for(int i=0; i<matrix.length; i++) {
-                for(int j=0; j<matrix[i].length; j++) {
-                    s.append(String.format(format, matrix[i][j]));
+            for (int[] aMatrix : matrix) {
+                for (int j = 0; j < aMatrix.length; j++) {
+                    s.append(String.format(format, aMatrix[j]));
                 }
                 s.append(System.getProperty("line.separator"));
             }

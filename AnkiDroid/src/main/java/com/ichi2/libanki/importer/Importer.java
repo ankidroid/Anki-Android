@@ -20,7 +20,6 @@ package com.ichi2.libanki.importer;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.ichi2.anki.R;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;

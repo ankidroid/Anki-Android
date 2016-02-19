@@ -446,7 +446,7 @@ public class Decks {
         if (mDecks.containsKey(did)) {
             return mDecks.get(did);
         } else if (_default) {
-            return mDecks.get(1l);
+            return mDecks.get(1L);
         } else {
             return null;
         }

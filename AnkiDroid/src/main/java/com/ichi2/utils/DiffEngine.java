@@ -114,7 +114,7 @@ public class DiffEngine {
         // Check for equality (speedup)
         LinkedList<DiffAction> diffs;
         if (text1.equals(text2)) {
-            diffs = new LinkedList<DiffAction>();
+            diffs = new LinkedList<>();
             diffs.add(new DiffAction(Operation.EQUAL, text1));
             return diffs;
         }
@@ -157,7 +157,7 @@ public class DiffEngine {
      * @return Linked List of Diff objects.
      */
     protected LinkedList<DiffAction> diff_compute(String text1, String text2, boolean checklines) {
-        LinkedList<DiffAction> diffs = new LinkedList<DiffAction>();
+        LinkedList<DiffAction> diffs = new LinkedList<>();
 
         if (text1.length() == 0) {
             // Just add some text (speedup)
@@ -219,7 +219,7 @@ public class DiffEngine {
         diffs = diff_map(text1, text2);
         if (diffs == null) {
             // No acceptable result.
-            diffs = new LinkedList<DiffAction>();
+            diffs = new LinkedList<>();
             diffs.add(new DiffAction(Operation.DELETE, text1));
             diffs.add(new DiffAction(Operation.INSERT, text2));
         }
@@ -286,8 +286,8 @@ public class DiffEngine {
      *         element of the List of unique strings is intentionally blank.
      */
     protected LinesToCharsResult diff_linesToChars(String text1, String text2) {
-        List<String> lineArray = new ArrayList<String>();
-        Map<String, Integer> lineHash = new HashMap<String, Integer>();
+        List<String> lineArray = new ArrayList<>();
+        Map<String, Integer> lineHash = new HashMap<>();
         // e.g. linearray[4] == "Hello\n"
         // e.g. linehash.get("Hello\n") == 4
 
@@ -370,15 +370,15 @@ public class DiffEngine {
         int text2_length = text2.length();
         int max_d = text1_length + text2_length - 1;
         boolean doubleEnd = Diff_DualThreshold * 2 < max_d;
-        List<Set<Long>> v_map1 = new ArrayList<Set<Long>>();
-        List<Set<Long>> v_map2 = new ArrayList<Set<Long>>();
-        Map<Integer, Integer> v1 = new HashMap<Integer, Integer>();
-        Map<Integer, Integer> v2 = new HashMap<Integer, Integer>();
+        List<Set<Long>> v_map1 = new ArrayList<>();
+        List<Set<Long>> v_map2 = new ArrayList<>();
+        Map<Integer, Integer> v1 = new HashMap<>();
+        Map<Integer, Integer> v2 = new HashMap<>();
         v1.put(1, 0);
         v2.put(1, 0);
         int x, y;
         Long footstep = 0L; // Used to track overlapping paths.
-        Map<Long, Integer> footsteps = new HashMap<Long, Integer>();
+        Map<Long, Integer> footsteps = new HashMap<>();
         boolean done = false;
         // If the total number of characters is odd, then the front path will
         // collide with the reverse path.
@@ -491,7 +491,7 @@ public class DiffEngine {
      * @return LinkedList of Diff objects.
      */
     protected LinkedList<DiffAction> diff_path1(List<Set<Long>> v_map, String text1, String text2) {
-        LinkedList<DiffAction> path = new LinkedList<DiffAction>();
+        LinkedList<DiffAction> path = new LinkedList<>();
         int x = text1.length();
         int y = text2.length();
         Operation last_op = null;
@@ -541,7 +541,7 @@ public class DiffEngine {
      * @return LinkedList of Diff objects.
      */
     protected LinkedList<DiffAction> diff_path2(List<Set<Long>> v_map, String text1, String text2) {
-        LinkedList<DiffAction> path = new LinkedList<DiffAction>();
+        LinkedList<DiffAction> path = new LinkedList<>();
         int x = text1.length();
         int y = text2.length();
         Operation last_op = null;
@@ -730,7 +730,7 @@ public class DiffEngine {
             return;
         }
         boolean changes = false;
-        Stack<DiffAction> equalities = new Stack<DiffAction>(); // Stack of qualities.
+        Stack<DiffAction> equalities = new Stack<>(); // Stack of qualities.
         String lastequality = null; // Always equal to equalities.lastElement().text
         ListIterator<DiffAction> pointer = diffs.listIterator();
         // Number of characters that changed prior to the equality.

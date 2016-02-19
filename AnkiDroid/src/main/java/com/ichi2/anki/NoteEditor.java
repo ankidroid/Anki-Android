@@ -415,8 +415,8 @@ public class NoteEditor extends AnkiActivity {
 
         // Note type Selector
         mNoteTypeSpinner = (Spinner) findViewById(R.id.note_type_spinner);
-        mAllModelIds = new ArrayList<Long>();
-        final ArrayList<String> modelNames = new ArrayList<String>();
+        mAllModelIds = new ArrayList<>();
+        final ArrayList<String> modelNames = new ArrayList<>();
         ArrayList<JSONObject> models = getCol().getModels().all();
         Collections.sort(models, new JSONNameComparator());
         for (JSONObject m : models) {
@@ -428,7 +428,7 @@ public class NoteEditor extends AnkiActivity {
             }
         }
 
-        ArrayAdapter<String> noteTypeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, modelNames);
+        ArrayAdapter<String> noteTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, modelNames);
         mNoteTypeSpinner.setAdapter(noteTypeAdapter);
         noteTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -444,8 +444,8 @@ public class NoteEditor extends AnkiActivity {
             throw new RuntimeException();
         }
         mNoteDeckSpinner = (Spinner) findViewById(R.id.note_deck_spinner);
-        mAllDeckIds = new ArrayList<Long>();
-        final ArrayList<String> deckNames = new ArrayList<String>();
+        mAllDeckIds = new ArrayList<>();
+        final ArrayList<String> deckNames = new ArrayList<>();
 
         ArrayList<JSONObject> decks = getCol().getDecks().all();
         Collections.sort(decks, new JSONNameComparator());
@@ -463,7 +463,7 @@ public class NoteEditor extends AnkiActivity {
             }
         }
 
-        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, deckNames);
+        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, deckNames);
         mNoteDeckSpinner.setAdapter(noteDeckAdapter);
         noteDeckAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mNoteDeckSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -521,7 +521,7 @@ public class NoteEditor extends AnkiActivity {
         }
 
 
-        ((LinearLayout) findViewById(R.id.CardEditorTagButton)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.CardEditorTagButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Timber.i("NoteEditor:: Tags button pressed... opening tags editor");
@@ -572,7 +572,7 @@ public class NoteEditor extends AnkiActivity {
                 first = second;
                 second = "";
             }
-            Pair<String, String> messages = new Pair<String, String>(first, second);
+            Pair<String, String> messages = new Pair<>(first, second);
 
             mSourceText = new String[2];
             mSourceText[0] = messages.first;
@@ -654,7 +654,7 @@ public class NoteEditor extends AnkiActivity {
     private void saveNote() {
         final Resources res = getResources();
         if (mSelectedTags == null) {
-            mSelectedTags = new ArrayList<String>();
+            mSelectedTags = new ArrayList<>();
         }
         // treat add new note and edit existing note independently
         if (mAddNote) {
@@ -980,10 +980,10 @@ public class NoteEditor extends AnkiActivity {
 
     private void showTagsDialog() {
         if (mSelectedTags == null) {
-            mSelectedTags = new ArrayList<String>();
+            mSelectedTags = new ArrayList<>();
         }
-        ArrayList<String> tags = new ArrayList<String>(getCol().getTags().all());
-        ArrayList<String> selTags = new ArrayList<String>(mSelectedTags);
+        ArrayList<String> tags = new ArrayList<>(getCol().getTags().all());
+        ArrayList<String> selTags = new ArrayList<>(mSelectedTags);
         TagsDialog dialog = com.ichi2.anki.dialogs.TagsDialog.newInstance(TagsDialog.TYPE_ADD_TAG, selTags,
                 tags);
         dialog.setTagsDialogListener(new TagsDialogListener() {
@@ -1083,7 +1083,7 @@ public class NoteEditor extends AnkiActivity {
 
     private void populateEditFields(String[][] fields, boolean editModelMode) {
         mFieldsLayoutContainer.removeAllViews();
-        mEditFields = new LinkedList<FieldEditText>();
+        mEditFields = new LinkedList<>();
 
         // Use custom font if selected from preferences
         Typeface mCustomTypeface = null;
@@ -1391,7 +1391,7 @@ public class NoteEditor extends AnkiActivity {
 
     private void updateTags() {
         if (mSelectedTags == null) {
-            mSelectedTags = new ArrayList<String>();
+            mSelectedTags = new ArrayList<>();
         }
         mTagsButton.setText(getResources().getString(R.string.CardEditorTags,
                 getCol().getTags().join(getCol().getTags().canonify(mSelectedTags)).trim().replace(" ", ", ")));
@@ -1602,12 +1602,12 @@ public class NoteEditor extends AnkiActivity {
             // Configure the interface according to whether note type is getting changed or not
             if (mAllModelIds.get(pos) != noteModelId) {
                 // Initialize mapping between fields of old model -> new model
-                mModelChangeFieldMap = new HashMap<Integer, Integer>();
+                mModelChangeFieldMap = new HashMap<>();
                 for (int i=0; i < mEditorNote.items().length; i++) {
                     mModelChangeFieldMap.put(i, i);
                 }
                 // Initialize mapping between cards new model -> old model
-                mModelChangeCardMap = new HashMap<Integer, Integer>();
+                mModelChangeCardMap = new HashMap<>();
                 try {
                     for (int i=0; i < newModel.getJSONArray("tmpls").length() ; i++) {
                         if (i < mEditorNote.cards().size()) {
@@ -1624,7 +1624,7 @@ public class NoteEditor extends AnkiActivity {
                 // Don't let the user change any other values at the same time as changing note type
                 mSelectedTags = mEditorNote.getTags();
                 updateTags();
-                ((LinearLayout) findViewById(R.id.CardEditorTagButton)).setEnabled(false);
+                findViewById(R.id.CardEditorTagButton).setEnabled(false);
                 //((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
                 mNoteDeckSpinner.setEnabled(false);
                 int position = mAllDeckIds.indexOf(mCurrentEditedCard.getDid());
@@ -1634,7 +1634,7 @@ public class NoteEditor extends AnkiActivity {
             } else {
                 populateEditFields();
                 updateCards(mCurrentEditedCard.model());
-                ((LinearLayout) findViewById(R.id.CardEditorTagButton)).setEnabled(true);
+                findViewById(R.id.CardEditorTagButton).setEnabled(true);
                 //((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
                 mNoteDeckSpinner.setEnabled(true);
             }

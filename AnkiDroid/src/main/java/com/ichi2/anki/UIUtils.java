@@ -2,9 +2,6 @@
 package com.ichi2.anki;
 
 import android.content.Context;
-import android.os.Build;
-import android.view.View;
-import android.view.WindowManager;
 
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;

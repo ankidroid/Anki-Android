@@ -24,8 +24,6 @@ import android.text.TextUtils;
 
 import android.util.Pair;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.CardBrowser;
 import com.ichi2.async.DeckTask;
 
 import org.json.JSONArray;
@@ -89,7 +87,7 @@ public class Finder {
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
         String[] args = res1.second;
-        List<Long> res = new ArrayList<Long>();
+        List<Long> res = new ArrayList<>();
         if (preds == null) {
             return res;
         }
@@ -105,7 +103,7 @@ public class Finder {
             }
         } catch (SQLException e) {
             // invalid grouping
-            return new ArrayList<Long>();
+            return new ArrayList<>();
         } finally {
             if (cur != null) {
                 cur.close();
@@ -123,7 +121,7 @@ public class Finder {
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
         String[] args = res1.second;
-        List<Long> res = new ArrayList<Long>();
+        List<Long> res = new ArrayList<>();
         if (preds == null) {
             return res;
         }
@@ -141,7 +139,7 @@ public class Finder {
             }
         } catch (SQLException e) {
             // invalid grouping
-            return new ArrayList<Long>();
+            return new ArrayList<>();
         } finally {
             if (cur != null) {
                 cur.close();
@@ -158,7 +156,7 @@ public class Finder {
 
     public String[] _tokenize(String query) {
         char inQuote = 0;
-        List<String> tokens = new ArrayList<String>();
+        List<String> tokens = new ArrayList<>();
         String token = "";
         for (int i = 0; i < query.length(); ++i) {
             // quoted text
@@ -279,10 +277,10 @@ public class Finder {
     public Pair<String, String[]> _where(String[] tokens) {
         // state and query
         SearchState s = new SearchState();
-        List<String> args = new ArrayList<String>();
+        List<String> args = new ArrayList<>();
         for (String token : tokens) {
             if (s.bad) {
-                return new Pair<String, String[]>(null, null);
+                return new Pair<>(null, null);
             }
             // special tokens
             if (token.equals("-")) {
@@ -333,9 +331,9 @@ public class Finder {
             }
         }
         if (s.bad) {
-            return new Pair<String, String[]>(null, null);
+            return new Pair<>(null, null);
         }
-        return new Pair<String, String[]>(s.q, args.toArray(new String[args.size()]));
+        return new Pair<>(s.q, args.toArray(new String[args.size()]));
     }
 
 
@@ -381,13 +379,13 @@ public class Finder {
             return _order(false);
         } else {
             // custom order string provided
-            return new Pair<String, Boolean>(" order by " + order, false);
+            return new Pair<>(" order by " + order, false);
         }
     }
     
     private Pair<String, Boolean> _order(Boolean order) {
         if (!order) {
-            return new Pair<String, Boolean>("", false);
+            return new Pair<>("", false);
         }
         try {
             // use deck default
@@ -421,7 +419,7 @@ public class Finder {
             	sort = "n.id, c.ord";
             }
             boolean sortBackwards = mCol.getConf().getBoolean("sortBackwards");
-            return new Pair<String, Boolean>(" ORDER BY " + sort, sortBackwards);
+            return new Pair<>(" ORDER BY " + sort, sortBackwards);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -581,7 +579,7 @@ public class Finder {
 
 
     private String _findModel(String val) {
-        LinkedList<Long> ids = new LinkedList<Long>();
+        LinkedList<Long> ids = new LinkedList<>();
         try {
             for (JSONObject m : mCol.getModels().all()) {
                 if (m.getString("name").equalsIgnoreCase(val)) {
@@ -600,7 +598,7 @@ public class Finder {
             return null;
         }
         TreeMap<String, Long> children = mCol.getDecks().children(did);
-        List<Long> res = new ArrayList<Long>();
+        List<Long> res = new ArrayList<>();
         res.add(did);
         res.addAll(children.values());
         return res;
@@ -625,7 +623,7 @@ public class Finder {
                 ids = dids(mCol.getDecks().id(val, false));
             } else {
                 // wildcard
-                ids = new ArrayList<Long>();
+                ids = new ArrayList<>();
                 val = val.replace("*", ".*");
                 val = val.replace("+", "\\+");
                 for (JSONObject d : mCol.getDecks().all()) {
@@ -661,7 +659,7 @@ public class Finder {
             return "c.ord = " + num;
         }
         // search for template names
-        List<String> lims = new ArrayList<String>();
+        List<String> lims = new ArrayList<>();
         try {
             for (JSONObject m : mCol.getModels().all()) {
                 JSONArray tmpls = m.getJSONArray("tmpls");
@@ -710,7 +708,7 @@ public class Finder {
         Pattern pattern = Pattern.compile("\\Q" + javaVal + "\\E", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
         // find models that have that field
-        Map<Long, Object[]> mods = new HashMap<Long, Object[]>();
+        Map<Long, Object[]> mods = new HashMap<>();
         try {
             for (JSONObject m : mCol.getModels().all()) {
                 JSONArray flds = m.getJSONArray("flds");
@@ -728,7 +726,7 @@ public class Finder {
             // nothing has that field
             return null;
         }
-        LinkedList<Long> nids = new LinkedList<Long>();
+        LinkedList<Long> nids = new LinkedList<>();
         Cursor cur = null;
         try {
             /*
@@ -738,7 +736,7 @@ public class Finder {
              */
             cur = mCol.getDb().getDatabase().rawQuery(
                     "select id, mid, flds from notes where mid in " +
-                            Utils.ids2str(new LinkedList<Long>(mods.keySet())) +
+                            Utils.ids2str(new LinkedList<>(mods.keySet())) +
                             " and flds like ? escape '\\'", new String[] { "%" + sqlVal + "%" });
 
             while (cur.moveToNext()) {
@@ -770,7 +768,7 @@ public class Finder {
         String mid = split[0];
         val = split[1];
         String csum = Long.toString(Utils.fieldChecksum(val));
-        List<Long> nids = new ArrayList<Long>();
+        List<Long> nids = new ArrayList<>();
         Cursor cur = null;
         try {
             cur = mCol.getDb().getDatabase().rawQuery(
@@ -824,7 +822,7 @@ public class Finder {
 
     public static int findReplace(Collection col, List<Long> nids, String src, String dst, boolean isRegex,
             String field, boolean fold) {
-        Map<Long, Integer> mmap = new HashMap<Long, Integer>();
+        Map<Long, Integer> mmap = new HashMap<>();
         if (field != null) {
             try {
                 for (JSONObject m : col.getModels().all()) {
@@ -852,9 +850,9 @@ public class Finder {
         }
         Pattern regex = Pattern.compile(src);
 
-        ArrayList<Object[]> d = new ArrayList<Object[]>();
+        ArrayList<Object[]> d = new ArrayList<>();
         String snids = Utils.ids2str(nids);
-        nids = new ArrayList<Long>();
+        nids = new ArrayList<>();
         Cursor cur = null;
         try {
             cur = col.getDb().getDatabase().rawQuery(
@@ -906,8 +904,8 @@ public class Finder {
     }
 
     public List<String> fieldNames(Collection col, boolean downcase) {
-        Set<String> fields = new HashSet<String>();
-        List<String> names = new ArrayList<String>();
+        Set<String> fields = new HashSet<>();
+        List<String> names = new ArrayList<>();
         try {
             for (JSONObject m : col.getModels().all()) {
                 JSONArray flds = m.getJSONArray("flds");
@@ -923,7 +921,7 @@ public class Finder {
             throw new RuntimeException(e);
         }
         if (downcase) {
-            return new ArrayList<String>(fields);
+            return new ArrayList<>(fields);
         }
         return names;
     }
@@ -969,9 +967,9 @@ public class Finder {
     	}
         search += "'" + fieldName + ":*'";
         // go through notes
-        Map<String, List<Long>> vals = new HashMap<String, List<Long>>();
-        List<Pair<String, List<Long>>> dupes = new ArrayList<Pair<String, List<Long>>>();
-        Map<Long, Integer> fields = new HashMap<Long, Integer>();
+        Map<String, List<Long>> vals = new HashMap<>();
+        List<Pair<String, List<Long>>> dupes = new ArrayList<>();
+        Map<Long, Integer> fields = new HashMap<>();
         Cursor cur = null;
         try {
             cur = col.getDb().getDatabase().rawQuery(
@@ -995,7 +993,7 @@ public class Finder {
                 }
                 vals.get(val).add(nid);
                 if (vals.get(val).size() == 2) {
-                    dupes.add(new Pair<String, List<Long>>(val, vals.get(val)));
+                    dupes.add(new Pair<>(val, vals.get(val)));
                 }
             }
         } finally {
@@ -1031,7 +1029,7 @@ public class Finder {
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
         String[] args = res1.second;
-        ArrayList<HashMap<String, String>> res = new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String, String>> res = new ArrayList<>();
         if (preds == null) {
             return res;
         }
@@ -1049,7 +1047,7 @@ public class Finder {
                     Timber.i("_findCardsForCardBrowser() cancelled...");
                     return null;
                 }                
-                HashMap<String, String> map = new HashMap<String, String>();
+                HashMap<String, String> map = new HashMap<>();
                 map.put("id", cur.getString(0));
                 map.put("sfld", cur.getString(1));
                 map.put("deck", deckNames.get(cur.getString(2)));
@@ -1065,7 +1063,7 @@ public class Finder {
         } catch (SQLException e) {
             // invalid grouping
             Timber.e("Invalid grouping, sql: " + sql);
-            return new ArrayList<HashMap<String, String>>();
+            return new ArrayList<>();
         } finally {
             if (cur != null) {
                 cur.close();

@@ -27,7 +27,7 @@ import java.util.Vector;
 public class MultiScreenPart {
 	private double[] xRange = {-15,15};
 	private double[] yRange = {-10,10};
-	private Vector<Drawable> drawables = new Vector<Drawable>();
+	private Vector<Drawable> drawables = new Vector<>();
 	
 	
 	

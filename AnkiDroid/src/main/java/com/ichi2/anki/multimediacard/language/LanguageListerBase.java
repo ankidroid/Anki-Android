@@ -36,7 +36,7 @@ public class LanguageListerBase {
 
 
     public LanguageListerBase() {
-        mLanguageMap = new HashMap<String, String>();
+        mLanguageMap = new HashMap<>();
     }
 
 
@@ -59,7 +59,7 @@ public class LanguageListerBase {
 
 
     public ArrayList<String> getLanguages() {
-        ArrayList<String> res = new ArrayList<String>();
+        ArrayList<String> res = new ArrayList<>();
         res.addAll(mLanguageMap.keySet());
         Collections.sort(res, new Comparator<String>() {
             @Override

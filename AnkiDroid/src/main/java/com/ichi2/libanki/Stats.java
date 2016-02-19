@@ -242,7 +242,7 @@ public class Stats {
             lim += " AND day <= " + end;
         }
 
-        ArrayList<int[]> dues = new ArrayList<int[]>();
+        ArrayList<int[]> dues = new ArrayList<>();
         Cursor cur = null;
         try {
             String query;
@@ -327,7 +327,7 @@ public class Stats {
 
     /* only needed for studyoptions small chart */
     public static double[][] getSmallDueStats(Collection col) {
-        ArrayList<int[]> dues = new ArrayList<int[]>();
+        ArrayList<int[]> dues = new ArrayList<>();
         Cursor cur = null;
         try {
             cur = col
@@ -396,7 +396,7 @@ public class Stats {
                 chunk = 30;
                 break;
         }
-        ArrayList<String> lims = new ArrayList<String>();
+        ArrayList<String> lims = new ArrayList<>();
         if (num != -1) {
             lims.add("id > " + ((mCol.getSched().getDayCutoff() - ((num + 1) * chunk * 86400)) * 1000));
         }
@@ -428,7 +428,7 @@ public class Stats {
             ti = "1";
             tf = "";
         }
-        ArrayList<double[]> list = new ArrayList<double[]>();
+        ArrayList<double[]> list = new ArrayList<>();
         Cursor cur = null;
         String query = "SELECT (cast((id/1000 - " + mCol.getSched().getDayCutoff() + ") / 86400.0 AS INT))/"
                 + chunk + " AS day, " + "sum(CASE WHEN type = 0 THEN " + ti + " ELSE 0 END)"
@@ -588,7 +588,7 @@ public class Stats {
                 break;
         }
 
-        ArrayList<double[]> list = new ArrayList<double[]>();
+        ArrayList<double[]> list = new ArrayList<>();
         Cursor cur = null;
         try {
             cur = mCol
@@ -711,7 +711,7 @@ public class Stats {
         long cutoff = mCol.getSched().getDayCutoff();
         long cut = cutoff  - sd.get(Calendar.HOUR_OF_DAY)*3600;
 
-        ArrayList<double[]> list = new ArrayList<double[]>();
+        ArrayList<double[]> list = new ArrayList<>();
         Cursor cur = null;
         String query = "select " +
                 "23 - ((cast((" + cut + " - id/1000) / 3600.0 as int)) % 24) as hour, " +
@@ -853,7 +853,7 @@ public class Stats {
 
 
 
-        ArrayList<double[]> list = new ArrayList<double[]>();
+        ArrayList<double[]> list = new ArrayList<>();
         Cursor cur = null;
         String query = "SELECT strftime('%w',datetime( cast(id/ 1000  -" + sd.get(Calendar.HOUR_OF_DAY)*3600 +
                 " as int), 'unixepoch')) as wd, " +
@@ -963,7 +963,7 @@ public class Stats {
         mType = type;
         String lim = _revlogLimit().replaceAll("[\\[\\]]", "");
 
-        Vector<String> lims = new Vector<String>();
+        Vector<String> lims = new Vector<>();
         int days = 0;
 
         if (lim.length() > 0)
@@ -986,7 +986,7 @@ public class Stats {
         else
             lim = "";
 
-        ArrayList<double[]> list = new ArrayList<double[]>();
+        ArrayList<double[]> list = new ArrayList<>();
         Cursor cur = null;
         String query = "select (case " +
                 "                when type in (0,2) then 0 " +
@@ -1096,7 +1096,7 @@ public class Stats {
         mType = type;
 
 
-        ArrayList<double[]> list = new ArrayList<double[]>();
+        ArrayList<double[]> list = new ArrayList<>();
         double[] pieData;
         Cursor cur = null;
         String query = "select " +
@@ -1154,7 +1154,7 @@ public class Stats {
 
     private String _limit() {
         if (mWholeCollection) {
-            ArrayList<Long> ids = new ArrayList<Long>();
+            ArrayList<Long> ids = new ArrayList<>();
             for (JSONObject d : mCol.getDecks().all()) {
                 try {
                     ids.add(d.getLong("id"));
