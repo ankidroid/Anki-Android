@@ -35,8 +35,6 @@ public class HttpUtility {
                     Timber.e("%d: %s", response.getStatusLine().getStatusCode(), response.getStatusLine().getReasonPhrase());
                     break;
             }
-        } catch (ClientProtocolException ex) {
-            Timber.e(ex.toString());
         } catch (IOException ex) {
             Timber.e(ex.toString());
         }

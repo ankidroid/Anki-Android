@@ -1,14 +1,11 @@
 package com.ichi2.anki.dialogs;
 
 import android.app.Dialog;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
-import com.ichi2.themes.Themes;
 
 public class ModelBrowserContextMenu extends DialogFragment {
 

@@ -107,7 +107,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
         mLanguageLister = new LanguageListerBeolingus(this);
 
         mSpinnerFrom = new Spinner(this);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
                 mLanguageLister.getLanguages());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerFrom.setAdapter(adapter);

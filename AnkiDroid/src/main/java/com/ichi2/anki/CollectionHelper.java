@@ -27,7 +27,6 @@ import android.support.v4.content.ContextCompat;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
-import com.ichi2.libanki.hooks.Hooks;
 
 import java.io.File;
 import java.io.IOException;

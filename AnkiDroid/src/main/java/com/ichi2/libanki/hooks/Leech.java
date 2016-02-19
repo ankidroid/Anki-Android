@@ -21,7 +21,6 @@ import android.content.res.Resources;
 
 import android.widget.Toast;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Card;
 

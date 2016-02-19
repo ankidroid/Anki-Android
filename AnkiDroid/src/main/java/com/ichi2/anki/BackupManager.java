@@ -195,8 +195,6 @@ public class BackupManager {
                     // set timestamp of file in order to avoid creating a new backup unless its changed
                     backupFile.setLastModified(colFile.lastModified());
                     Timber.i("Backup created succesfully");
-                } catch (FileNotFoundException e1) {
-                    e1.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -268,10 +266,8 @@ public class BackupManager {
             Timber.i("repairCollection - moved corrupt file to broken folder");
             File repairedFile = new File(deckPath + ".tmp");
             return repairedFile.renameTo(deckFile);
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             Timber.e("repairCollection - error: " + e.getMessage());
-        } catch (InterruptedException e) {
-            Timber.e("repairCollection - error: " +  e.getMessage());
         }
         return false;
     }
@@ -318,7 +314,7 @@ public class BackupManager {
         if (files == null) {
             files = new File[0];
         }
-        ArrayList<File> deckBackups = new ArrayList<File>();
+        ArrayList<File> deckBackups = new ArrayList<>();
         for (File aktFile : files) {
             if (aktFile.getName().replaceAll("^(.*)-\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}.apkg$", "$1.apkg")
                     .equals(colFile.getName().replace(".anki2",".apkg"))) {

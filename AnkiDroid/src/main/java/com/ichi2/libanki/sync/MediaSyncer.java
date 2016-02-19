@@ -114,7 +114,7 @@ public class MediaSyncer {
                     break;
                 }
 
-                List<String> need = new ArrayList<String>();
+                List<String> need = new ArrayList<>();
                 lastUsn = data.getJSONArray(data.length()-1).getInt(1);
                 for (int i = 0; i < data.length(); i++) {
                     String fname = data.getJSONArray(i).getString(0);
@@ -241,10 +241,7 @@ public class MediaSyncer {
                 }
                 mCon.publishProgress(String.format(
                         AnkiDroidApp.getAppResources().getString(R.string.sync_media_downloaded_count), mDownloadCount));
-            } catch (IOException e) {
-                Timber.e(e, "Error downloading media files");
-                throw new RuntimeException(e);
-            } catch (UnknownHttpResponseException e) {
+            } catch (IOException | UnknownHttpResponseException e) {
                 Timber.e(e, "Error downloading media files");
                 throw new RuntimeException(e);
             }

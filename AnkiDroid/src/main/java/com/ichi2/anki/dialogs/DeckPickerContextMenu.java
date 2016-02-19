@@ -27,7 +27,6 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.StudyOptionsFragment;
-import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 
 import java.util.ArrayList;

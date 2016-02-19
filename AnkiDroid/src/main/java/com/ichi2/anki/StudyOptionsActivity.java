@@ -18,18 +18,13 @@ package com.ichi2.anki;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.dialogs.CustomStudyDialog;
-import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
-
-import org.json.JSONArray;
 
 import timber.log.Timber;
 

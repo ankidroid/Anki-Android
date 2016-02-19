@@ -65,9 +65,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
         boolean sqliteInstalled = false;
         try {
             sqliteInstalled = Runtime.getRuntime().exec("sqlite3 --version").waitFor() == 0;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
 
@@ -131,8 +129,8 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
             case DIALOG_ERROR_HANDLING:
                 // The user has asked to see repair options; allow them to choose one of the repair options or go back
                 // to the previous dialog
-                ArrayList<String> options = new ArrayList<String>();
-                ArrayList<Integer> values = new ArrayList<Integer>();
+                ArrayList<String> options = new ArrayList<>();
+                ArrayList<Integer> values = new ArrayList<>();
                 if (!((AnkiActivity)getActivity()).colIsOpen()) {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening));

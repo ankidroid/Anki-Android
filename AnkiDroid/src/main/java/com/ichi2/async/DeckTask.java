@@ -824,8 +824,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             // data and rely on them running a media db check to get rid of any
             // unwanted media. in the future we might also want to duplicate this step
             // import media
-            HashMap<String, String> nameToNum = new HashMap<String, String>();
-            HashMap<String, String> numToName = new HashMap<String, String>();
+            HashMap<String, String> nameToNum = new HashMap<>();
+            HashMap<String, String> numToName = new HashMap<>();
             File mediaMapFile = new File(dir.getAbsolutePath(), "media");
             if (mediaMapFile.exists()) {
                 JsonReader jr = new JsonReader(new FileReader(mediaMapFile));
@@ -1080,8 +1080,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Timber.d("doInBackgroundLoadModels");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
 
-        ArrayList<JSONObject> models = (ArrayList<JSONObject>) col.getModels().all();
-        ArrayList<Integer> cardCount = new ArrayList<Integer>();
+        ArrayList<JSONObject> models = col.getModels().all();
+        ArrayList<Integer> cardCount = new ArrayList<>();
         Collections.sort(models, new Comparator<JSONObject>() {
             @Override
             public int compare(JSONObject a, JSONObject b) {

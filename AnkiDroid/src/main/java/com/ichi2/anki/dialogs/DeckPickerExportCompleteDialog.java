@@ -1,15 +1,12 @@
 
 package com.ichi2.anki.dialogs;
 
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Message;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
-import com.ichi2.themes.Themes;
 
 public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
     

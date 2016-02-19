@@ -92,7 +92,7 @@ public class Sound {
     /**
      * Stores sounds for the current card, key is one of the subset flags. It is intended that it not contain empty lists, and code assumes this will be true.
      */
-    private HashMap<Integer, ArrayList<String>> mSoundPaths = new HashMap<Integer, ArrayList<String>>();
+    private HashMap<Integer, ArrayList<String>> mSoundPaths = new HashMap<>();
 
 
     /**

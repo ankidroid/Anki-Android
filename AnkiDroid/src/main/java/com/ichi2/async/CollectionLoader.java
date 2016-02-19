@@ -3,7 +3,6 @@ package com.ichi2.async;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
-import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.libanki.Collection;

@@ -818,16 +818,13 @@ public class Utils {
 
     private static void printJSONObject(JSONObject jsonObject, String indentation, BufferedWriter buff) {
         try {
-            @SuppressWarnings("unchecked") Iterator<String> keys = (Iterator<String>) jsonObject.keys();
-            TreeSet<String> orderedKeysSet = new TreeSet<String>();
+            @SuppressWarnings("unchecked") Iterator<String> keys = jsonObject.keys();
+            TreeSet<String> orderedKeysSet = new TreeSet<>();
             while (keys.hasNext()) {
                 orderedKeysSet.add(keys.next());
             }
 
-            Iterator<String> orderedKeys = orderedKeysSet.iterator();
-            while (orderedKeys.hasNext()) {
-                String key = orderedKeys.next();
-
+            for (String key : orderedKeysSet) {
                 try {
                     Object value = jsonObject.get(key);
                     if (value instanceof JSONObject) {
@@ -890,7 +887,7 @@ public class Utils {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         df.setTimeZone(TimeZone.getTimeZone("GMT"));
         Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
-        cal.setTimeInMillis(System.currentTimeMillis() - (long) utcOffset * 1000l);
+        cal.setTimeInMillis(System.currentTimeMillis() - (long) utcOffset * 1000L);
         return Date.valueOf(df.format(cal.getTime()));
     }
 
@@ -1047,7 +1044,7 @@ public class Utils {
         } catch (IOException e) {
             Timber.e(e, "Error on retrieving ankidroid fonts");
         }
-        List<AnkiFont> fonts = new ArrayList<AnkiFont>();
+        List<AnkiFont> fonts = new ArrayList<>();
         for (int i = 0; i < fontsCount; i++) {
             String filePath = fontsList[i].getAbsolutePath();
             String filePathExtension = getFileExtension(filePath);
@@ -1064,9 +1061,9 @@ public class Utils {
             }
         }
         if (ankiDroidFonts != null) {
-            for (int i = 0; i < ankiDroidFonts.length; i++) {
+            for (String ankiDroidFont : ankiDroidFonts) {
                 // Assume all files in the assets directory are actually fonts.
-                AnkiFont font = AnkiFont.createAnkiFont(context, ankiDroidFonts[i], true);
+                AnkiFont font = AnkiFont.createAnkiFont(context, ankiDroidFont, true);
                 if (font != null) {
                     fonts.add(font);
                 }
@@ -1092,7 +1089,7 @@ public class Utils {
             });
             deckCount = deckList.length;
         }
-        List<File> decks = new ArrayList<File>();
+        List<File> decks = new ArrayList<>();
         decks.addAll(Arrays.asList(deckList).subList(0, deckCount));
         return decks;
     }

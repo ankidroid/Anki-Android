@@ -43,7 +43,7 @@ public class PickStringDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(mTitle);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(),
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(),
                 android.R.layout.simple_list_item_1, mPossibleChoices);
 
         builder.setAdapter(adapter, mListener);

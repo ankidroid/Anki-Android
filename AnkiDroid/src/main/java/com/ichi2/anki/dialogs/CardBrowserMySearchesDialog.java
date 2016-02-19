@@ -61,7 +61,7 @@ public class CardBrowserMySearchesDialog extends DialogFragment {
         int type = getArguments().getInt("type");
         if (type == CARD_BROWSER_MY_SEARCHES_TYPE_LIST) {
             mSavedFilters = (HashMap<String, String>) getArguments().getSerializable("savedFilters");
-            mSearchesAdapter = new MySearchesArrayAdapter(getActivity(), new ArrayList<String>(mSavedFilters.keySet()));
+            mSearchesAdapter = new MySearchesArrayAdapter(getActivity(), new ArrayList<>(mSavedFilters.keySet()));
             mSearchesAdapter.notifyDataSetChanged(); //so the values are sorted.
             builder.title(res.getString(R.string.card_browser_list_my_searches_title))
                     .adapter(mSearchesAdapter, new MaterialDialog.ListCallback() {

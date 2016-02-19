@@ -15,11 +15,6 @@
  ****************************************************************************************/
 package com.ichi2.anki.stats;
 
-import android.content.Context;
-import android.content.res.ColorStateList;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Paint;
 
 import android.widget.TextView;
@@ -418,9 +413,9 @@ public class ChartBuilder {
     }
     private double maxValue(double[] array){
         double max = Double.NEGATIVE_INFINITY;
-        for(int i = 0; i<array.length; i++){
-            if(array[i]>max)
-                max = array[i];
+        for (double anArray : array) {
+            if (anArray > max)
+                max = anArray;
         }
 
         return max;

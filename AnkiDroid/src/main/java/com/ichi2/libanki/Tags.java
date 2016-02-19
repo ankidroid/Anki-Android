@@ -53,7 +53,7 @@ public class Tags {
     private static final Pattern sCanonify = Pattern.compile("[\"']");
 
     private Collection mCol;
-    private TreeMap<String, Integer> mTags = new TreeMap<String, Integer>();
+    private TreeMap<String, Integer> mTags = new TreeMap<>();
     private boolean mChanged;
 
 
@@ -127,7 +127,7 @@ public class Tags {
 
 
     public List<String> all() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         list.addAll(mTags.keySet());
         return list;
     }
@@ -149,7 +149,7 @@ public class Tags {
             mTags.clear();
             mChanged = true;
         }
-        List<String> tags = new ArrayList<String>();
+        List<String> tags = new ArrayList<>();
         Cursor cursor = null;
         try {
             cursor = mCol.getDb().getDatabase().rawQuery("SELECT DISTINCT tags FROM notes"+lim, null);
@@ -161,7 +161,7 @@ public class Tags {
                 cursor.close();
             }
         }
-        HashSet<String> tagSet = new HashSet<String>();
+        HashSet<String> tagSet = new HashSet<>();
         for (String s : split(TextUtils.join(" ", tags))) {
             tagSet.add(s);
         }
@@ -188,7 +188,7 @@ public class Tags {
     public ArrayList<String> byDeck(long did, boolean children) {
         String sql;
         if (children) {
-            ArrayList<Long> dids = new ArrayList<Long>();
+            ArrayList<Long> dids = new ArrayList<>();
             dids.add(did);
             for (long id : mCol.getDecks().children(did).values()) {
                 dids.add(id);
@@ -200,7 +200,7 @@ public class Tags {
         List<String> tags = mCol.getDb().queryColumn(String.class, sql, 0);
         // Cast to set to remove duplicates
         // Use methods used to get all tags to parse tags here as well.
-        return new ArrayList<String>(new HashSet<String>(split(TextUtils.join(" ", tags))));
+        return new ArrayList<>(new HashSet<>(split(TextUtils.join(" ", tags))));
     }
 
 
@@ -248,8 +248,8 @@ public class Tags {
             lim.append(l).append("like '% ").append(t).append(" %'");
         }
         Cursor cur = null;
-        List<Long> nids = new ArrayList<Long>();
-        ArrayList<Object[]> res = new ArrayList<Object[]>();
+        List<Long> nids = new ArrayList<>();
+        ArrayList<Object[]> res = new ArrayList<>();
         try {
             cur = mCol
                     .getDb()
@@ -290,7 +290,7 @@ public class Tags {
 
     /** Parse a string and return a list of tags. */
     public List<String> split(String tags) {
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         for (String s : tags.replace('\u3000', ' ').split("\\s")) {
             if (s.length() > 0) {
                 list.add(s);
@@ -327,7 +327,7 @@ public class Tags {
     public String remFromStr(String deltags, String tags) {
         List<String> currentTags = split(tags);
         for (String tag : split(deltags)) {
-            List<String> remove = new ArrayList<String>();
+            List<String> remove = new ArrayList<>();
             for (String tx: currentTags) {
                 if (tag.equalsIgnoreCase(tx)) {
                     remove.add(tx);
@@ -351,7 +351,7 @@ public class Tags {
     public TreeSet<String> canonify(List<String> tagList) {
         // NOTE: The python version creates a list of tags, puts them into a set, then sorts them. The TreeSet
         // used here already guarantees uniqueness and sort order, so we return it as-is without those steps.
-        TreeSet<String> strippedTags = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+        TreeSet<String> strippedTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
         for (String t : tagList) {
             String s = sCanonify.matcher(t).replaceAll("");
             for (String existingTag : mTags.keySet()) {

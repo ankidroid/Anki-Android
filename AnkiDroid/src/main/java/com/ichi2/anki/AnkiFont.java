@@ -27,7 +27,7 @@ public class AnkiFont {
     private Boolean mIsDefault;
     private Boolean mIsOverride;
     private static final String fAssetPathPrefix = "/android_asset/fonts/";
-    private static Set<String> corruptFonts = new HashSet<String>();
+    private static Set<String> corruptFonts = new HashSet<>();
 
 
     private AnkiFont(String name, String family, List<String> attributes, String path) {
@@ -52,7 +52,7 @@ public class AnkiFont {
         File fontfile = new File(path);
         String name = Utils.removeFileExtension(fontfile.getName());
         String family = name;
-        List<String> attributes = new ArrayList<String>();
+        List<String> attributes = new ArrayList<>();
 
         if (fromAssets) {
             path = fAssetPathPrefix.concat(fontfile.getName());

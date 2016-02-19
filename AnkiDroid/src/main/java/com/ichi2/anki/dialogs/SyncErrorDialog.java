@@ -1,14 +1,12 @@
 
 package com.ichi2.anki.dialogs;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Message;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
-import com.ichi2.themes.Themes;
 
 public class SyncErrorDialog extends AsyncDialogFragment {
     public static final int DIALOG_USER_NOT_LOGGED_IN_SYNC = 0;

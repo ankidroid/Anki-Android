@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 public class TopLevelParser implements Function2D, Function3D, Cloneable{
     Random random = new Random();
     private HashMap<String, TopLevelParser> parserRegister;
-    private HashMap<String, Double> varMap = new HashMap<String, Double>();
+    private HashMap<String, Double> varMap = new HashMap<>();
     private double x = 0.0, y = 0.0;
     private Expression expression = null;
     private boolean isValid = false;
@@ -153,7 +153,7 @@ public class TopLevelParser implements Function2D, Function3D, Cloneable{
 
 
     public TopLevelParser createCopy(){
-		HashMap<String, TopLevelParser> newParserRegister = new HashMap<String, TopLevelParser>();
+		HashMap<String, TopLevelParser> newParserRegister = new HashMap<>();
 		for(String key : parserRegister.keySet()){
 			newParserRegister.put(key, parserRegister.get(key).createCopy(newParserRegister));
 		}

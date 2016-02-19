@@ -73,7 +73,7 @@ public class Note implements Cloneable {
             mModel = model;
             try {
                 mMid = model.getLong("id");
-                mTags = new ArrayList<String>();
+                mTags = new ArrayList<>();
                 mFields = new String[model.getJSONArray("flds").length()];
                 Arrays.fill(mFields, "");
             } catch (JSONException e) {
@@ -154,7 +154,7 @@ public class Note implements Cloneable {
 
 
     public ArrayList<Card> cards() {
-        ArrayList<Card> cards = new ArrayList<Card>();
+        ArrayList<Card> cards = new ArrayList<>();
         Cursor cur = null;
         try {
             cur = mCol.getDb().getDatabase()
@@ -244,7 +244,7 @@ public class Note implements Cloneable {
 
 
     public void delTag(String tag) {
-        List<String> rem = new LinkedList<String>();
+        List<String> rem = new LinkedList<>();
         for (String t : mTags) {
             if (t.equalsIgnoreCase(tag)) {
                 rem.add(t);

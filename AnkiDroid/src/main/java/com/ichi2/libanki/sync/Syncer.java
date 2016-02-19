@@ -222,9 +222,7 @@ public class Syncer {
             } finally {
                 mCol.getDb().getDatabase().endTransaction();
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalStateException e) {
+        } catch (JSONException | IllegalStateException e) {
             throw new RuntimeException(e);
         } catch (OutOfMemoryError e) {
             AnkiDroidApp.sendExceptionReport(e, "Syncer-sync");
@@ -442,7 +440,7 @@ public class Syncer {
      */
 
     private void prepareToChunk() {
-        mTablesLeft = new LinkedList<String>();
+        mTablesLeft = new LinkedList<>();
         mTablesLeft.add("revlog");
         mTablesLeft.add("cards");
         mTablesLeft.add("notes");
@@ -800,7 +798,7 @@ public class Syncer {
 
 
     private void mergeTags(JSONArray tags) {
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         for (int i = 0; i < tags.length(); i++) {
             try {
                 list.add(tags.getString(i));
@@ -821,9 +819,7 @@ public class Syncer {
             try {
                 mCol.getDb().execute("INSERT OR IGNORE INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
                         ConvUtils.jsonArray2Objects(logs.getJSONArray(i)));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (JSONException e) {
+            } catch (SQLException | JSONException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -837,7 +833,7 @@ public class Syncer {
             for (int i = 0; i < data.length(); i++) {
                 ids[i] = data.getJSONArray(i).getLong(0);
             }
-            HashMap<Long, Long> lmods = new HashMap<Long, Long>();
+            HashMap<Long, Long> lmods = new HashMap<>();
             Cursor cur = null;
             try {
                 cur = mCol
@@ -854,7 +850,7 @@ public class Syncer {
                     cur.close();
                 }
             }
-            ArrayList<Object[]> update = new ArrayList<Object[]>();
+            ArrayList<Object[]> update = new ArrayList<>();
             for (int i = 0; i < data.length(); i++) {
                 JSONArray r = data.getJSONArray(i);
                 if (!lmods.containsKey(r.getLong(0)) || lmods.get(r.getLong(0)) < r.getLong(modIdx)) {

@@ -21,7 +21,6 @@ package com.ichi2.anki.multimediacard.language;
 
 import android.content.Context;
 
-import com.ichi2.anki.R;
 import java.util.Locale;
 
 /**

@@ -42,7 +42,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
     private Context mCurContext;
     // private Random randomGenerator = new Random();
 
-    private HashMap<String, String> mInformation = new HashMap<String, String>(20);
+    private HashMap<String, String> mInformation = new HashMap<>(20);
 
 
     static CustomExceptionHandler getInstance() {

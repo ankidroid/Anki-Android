@@ -25,7 +25,6 @@ import android.view.WindowManager.BadTokenException;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.R;
 
 import timber.log.Timber;
 

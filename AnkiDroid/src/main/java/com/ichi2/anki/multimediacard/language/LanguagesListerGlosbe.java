@@ -25,8 +25,6 @@ import java.util.Locale;
 
 import android.content.Context;
 
-import com.ichi2.anki.R;
-
 /**
  * This language lister is used to call glosbe.com translation services.
  * <p>
@@ -57,7 +55,7 @@ public class LanguagesListerGlosbe extends LanguageListerBase {
     public static String requestToResponseLangCode(String req) {
         if (locale_map == null) {
             String[] languages = Locale.getISOLanguages();
-            locale_map = new HashMap<String, Locale>(languages.length);
+            locale_map = new HashMap<>(languages.length);
             for (String language : languages) {
                 Locale locale = new Locale(language);
                 locale_map.put(locale.getISO3Language(), locale);

@@ -197,7 +197,7 @@ public class DB {
     public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column) {
         int nullExceptionCount = 0;
         InvocationTargetException nullException = null; // to catch the null exception for reporting
-        ArrayList<T> results = new ArrayList<T>();
+        ArrayList<T> results = new ArrayList<>();
         Cursor cursor = null;
 
         try {
@@ -221,13 +221,7 @@ public class DB {
                     }
                 }
             }
-        } catch (NoSuchMethodException e) {
-            // This is really coding error, so it should be revealed if it ever happens
-            throw new RuntimeException(e);
-        } catch (IllegalArgumentException e) {
-            // This is really coding error, so it should be revealed if it ever happens
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
+        } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException e) {
             // This is really coding error, so it should be revealed if it ever happens
             throw new RuntimeException(e);
         } finally {

@@ -283,9 +283,9 @@ public class Media {
      * @return A list containing all the sound and image filenames found in the input string.
      */
     public List<String> filesInStr(Long mid, String string, boolean includeRemote) {
-        List<String> l = new ArrayList<String>();
+        List<String> l = new ArrayList<>();
         JSONObject model = mCol.getModels().get(mid);
-        List<String> strings = new ArrayList<String>();
+        List<String> strings = new ArrayList<>();
         try {
             if (model.getInt("type") == Consts.MODEL_CLOZE && string.contains("{{c")) {
                 // if the field has clozes in it, we'll need to expand the
@@ -322,12 +322,12 @@ public class Media {
 
 
     private List<String> _expandClozes(String string) {
-        Set<String> ords = new TreeSet<String>();
+        Set<String> ords = new TreeSet<>();
         Matcher m = Pattern.compile("\\{\\{c(\\d+)::.+?\\}\\}").matcher(string);
         while (m.find()) {
             ords.add(m.group(1));
         }
-        ArrayList<String> strings = new ArrayList<String>();
+        ArrayList<String> strings = new ArrayList<>();
         String clozeReg = Template.clozeReg;
         
         for (String ord : ords) {
@@ -415,7 +415,7 @@ public class Media {
     private List<List<String>> check(File[] local) {
         File mdir = new File(dir());
         // gather all media references in NFC form
-        Set<String> allRefs = new HashSet<String>();
+        Set<String> allRefs = new HashSet<>();
         Cursor cur = null;
         try {
             cur = mCol.getDb().getDatabase().rawQuery("select id, mid, flds from notes", null);
@@ -441,8 +441,8 @@ public class Media {
             }
         }
         // loop through media folder
-        List<String> unused = new ArrayList<String>();
-        List<String> invalid = new ArrayList<String>();
+        List<String> unused = new ArrayList<>();
+        List<String> invalid = new ArrayList<>();
         File[] files;
         if (local == null) {
             files = mdir.listFiles();
@@ -488,13 +488,13 @@ public class Media {
         if (renamedFiles) {
             return check(local);
         }
-        List<String> nohave = new ArrayList<String>();
+        List<String> nohave = new ArrayList<>();
         for (String x : allRefs) {
             if (!x.startsWith("_")) {
                 nohave.add(x);
             }
         }
-        List<List<String>> result = new ArrayList<List<String>>();
+        List<List<String>> result = new ArrayList<>();
         result.add(nohave);
         result.add(unused);
         result.add(invalid);
@@ -610,7 +610,7 @@ public class Media {
         Pair<List<String>, List<String>> result = _changes();
         List<String> added = result.first;
         List<String> removed = result.second;
-        ArrayList<Object[]> media = new ArrayList<Object[]>();
+        ArrayList<Object[]> media = new ArrayList<>();
         for (String f : added) {
             String path = new File(dir(), f).getAbsolutePath();
             long mt = _mtime(path);
@@ -627,7 +627,7 @@ public class Media {
 
 
     private Pair<List<String>, List<String>> _changes() {
-        Map<String, Object[]> cache = new HashMap<String, Object[]>();
+        Map<String, Object[]> cache = new HashMap<>();
         Cursor cur = null;
         try {
             cur = mDb.getDatabase().rawQuery("select fname, csum, mtime from media where csum is not null", null);
@@ -644,8 +644,8 @@ public class Media {
                 cur.close();
             }
         }
-        List<String> added = new ArrayList<String>();
-        List<String> removed = new ArrayList<String>();
+        List<String> added = new ArrayList<>();
+        List<String> removed = new ArrayList<>();
         // loop through on-disk files
         for (File f : new File(dir()).listFiles()) {
             // ignore folders and thumbs.db
@@ -702,7 +702,7 @@ public class Media {
                 removed.add(fname);
             }
         }
-        return new Pair<List<String>, List<String>>(added, removed);
+        return new Pair<>(added, removed);
     }
 
 
@@ -729,9 +729,9 @@ public class Media {
             if (cur.moveToNext()) {
                 String csum = cur.getString(0);
                 int dirty = cur.getInt(1);
-                return new Pair<String, Integer>(csum, dirty);
+                return new Pair<>(csum, dirty);
             } else {
-                return new Pair<String, Integer>(null, 0);
+                return new Pair<>(null, 0);
             }
         } finally {
             if (cur != null) {
@@ -804,7 +804,7 @@ public class Media {
             ZipOutputStream z = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
             z.setMethod(ZipOutputStream.DEFLATED);
 
-            List<String> fnames = new ArrayList<String>();
+            List<String> fnames = new ArrayList<>();
             // meta is a list of (fname, zipname), where zipname of null is a deleted file
             // NOTE: In python, meta is a list of tuples that then gets serialized into json and added
             // to the zip as a string. In our version, we use JSON objects from the start to avoid the
@@ -855,7 +855,7 @@ public class Media {
             z.close();
             // Don't leave lingering temp files if the VM terminates.
             f.deleteOnExit();
-            return new Pair<File, List<String>>(f, fnames);
+            return new Pair<>(f, fnames);
         } catch (IOException e) {
             Timber.e("Failed to create media changes zip", e);
             throw new RuntimeException(e);
@@ -876,7 +876,7 @@ public class Media {
      */
     public int addFilesFromZip(ZipFile z) throws IOException {
         try {
-            List<Object[]> media = new ArrayList<Object[]>();
+            List<Object[]> media = new ArrayList<>();
             // get meta info first
             JSONObject meta = new JSONObject(Utils.convertStreamToString(z.getInputStream(z.getEntry("_meta"))));
             // then loop through all files

@@ -76,7 +76,7 @@ public class DialogHandler extends Handler {
             // Media check results
             int id = msgData.getInt("dialogType");
             if (id!=MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK) {
-                List<List<String>> checkList = new ArrayList<List<String>>();
+                List<List<String>> checkList = new ArrayList<>();
                 checkList.add(msgData.getStringArrayList("nohave"));
                 checkList.add(msgData.getStringArrayList("unused"));
                 checkList.add(msgData.getStringArrayList("invalid"));

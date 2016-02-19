@@ -128,7 +128,7 @@ public class ReliefDrawer implements Drawable {
 			if(this.gradientColors.length >= heightRegionCount){
 				this.heightRegionCount = this.gradientColors.length;
 			} else {
-				Vector<ColorWrap> colorVector = new Vector<ColorWrap>(Arrays.asList(this.gradientColors));
+				Vector<ColorWrap> colorVector = new Vector<>(Arrays.asList(this.gradientColors));
 				this.gradientColors = RelativeColorGradient.makeGradient(colorVector, this.heightRegionCount);
 				this.heightRegionCount = this.gradientColors.length;
 			}
@@ -175,7 +175,7 @@ public class ReliefDrawer implements Drawable {
 			if(this.gradientColors.length >= heightRegionCount){
 				this.heightRegionCount = this.gradientColors.length;
 			} else {
-				Vector<ColorWrap> colorVector = new Vector<ColorWrap>(Arrays.asList(this.gradientColors));
+				Vector<ColorWrap> colorVector = new Vector<>(Arrays.asList(this.gradientColors));
 				this.gradientColors = RelativeColorGradient.makeGradient(colorVector, this.heightRegionCount);
 				this.heightRegionCount = this.gradientColors.length;
 			}

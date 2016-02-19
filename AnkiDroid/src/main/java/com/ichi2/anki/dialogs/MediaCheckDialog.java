@@ -43,9 +43,9 @@ public class MediaCheckDialog extends AsyncDialogFragment {
     public static MediaCheckDialog newInstance(int dialogType, List<List<String>> checkList) {
         MediaCheckDialog f = new MediaCheckDialog();
         Bundle args = new Bundle();
-        args.putStringArrayList("nohave", new ArrayList<String>(checkList.get(0)));
-        args.putStringArrayList("unused", new ArrayList<String>(checkList.get(1)));
-        args.putStringArrayList("invalid", new ArrayList<String>(checkList.get(2)));
+        args.putStringArrayList("nohave", new ArrayList<>(checkList.get(0)));
+        args.putStringArrayList("unused", new ArrayList<>(checkList.get(1)));
+        args.putStringArrayList("invalid", new ArrayList<>(checkList.get(2)));
         args.putInt("dialogType", dialogType);
         f.setArguments(args);
         return f;

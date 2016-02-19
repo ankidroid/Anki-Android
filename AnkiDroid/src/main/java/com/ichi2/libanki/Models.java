@@ -109,7 +109,7 @@ public class Models {
     // private DB mDb;
     //
     /** Map for compiled Mustache Templates */
-    private Map<String, Template> mCmpldTemplateMap = new HashMap<String, Template>();
+    private Map<String, Template> mCmpldTemplateMap = new HashMap<>();
 
 
     //
@@ -145,7 +145,7 @@ public class Models {
      */
     public void load(String json) {
         mChanged = false;
-        mModels = new HashMap<Long, JSONObject>();
+        mModels = new HashMap<>();
         try {
             JSONObject modelarray = new JSONObject(json);
             JSONArray ids = modelarray.names();
@@ -280,10 +280,9 @@ public class Models {
 
     /** get all models */
     public ArrayList<JSONObject> all() {
-        ArrayList<JSONObject> models = new ArrayList<JSONObject>();
-        Iterator<JSONObject> it = mModels.values().iterator();
-        while (it.hasNext()) {
-            models.add(it.next());
+        ArrayList<JSONObject> models = new ArrayList<>();
+        for (JSONObject jsonObject : mModels.values()) {
+            models.add(jsonObject);
         }
         return models;
     }
@@ -476,10 +475,10 @@ public class Models {
         try {
             ja = m.getJSONArray("flds");
             // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
-            Map<String, Pair<Integer, JSONObject>> result = new HashMap<String, Pair<Integer, JSONObject>>();
+            Map<String, Pair<Integer, JSONObject>> result = new HashMap<>();
             for (int i = 0; i < ja.length(); i++) {
                 JSONObject f = ja.getJSONObject(i);
-                result.put(f.getString("name"), new Pair<Integer, JSONObject>(f.getInt("ord"), f));
+                result.put(f.getString("name"), new Pair<>(f.getInt("ord"), f));
             }
             return result;
         } catch (JSONException e) {
@@ -492,7 +491,7 @@ public class Models {
         JSONArray ja;
         try {
             ja = m.getJSONArray("flds");
-            ArrayList<String> names = new ArrayList<String>();
+            ArrayList<String> names = new ArrayList<>();
             for (int i = 0; i < ja.length(); i++) {
                 names.add(ja.getJSONObject(i).getString("name"));
             }
@@ -596,7 +595,7 @@ public class Models {
 
         @Override
         public String[] transform(String[] fields) {
-            ArrayList<String> fl = new ArrayList<String>(Arrays.asList(fields));
+            ArrayList<String> fl = new ArrayList<>(Arrays.asList(fields));
             fl.remove(idx);
             return fl.toArray(new String[fl.size()]);
         }
@@ -607,7 +606,7 @@ public class Models {
         mCol.modSchema(true);
         try {
             JSONArray ja = m.getJSONArray("flds");
-            ArrayList<JSONObject> l = new ArrayList<JSONObject>();
+            ArrayList<JSONObject> l = new ArrayList<>();
             int oldidx = -1;
             for (int i = 0; i < ja.length(); ++i) {
                 l.add(ja.getJSONObject(i));
@@ -655,7 +654,7 @@ public class Models {
         @Override
         public String[] transform(String[] fields) {
             String val = fields[oldidx];
-            ArrayList<String> fl = new ArrayList<String>(Arrays.asList(fields));
+            ArrayList<String> fl = new ArrayList<>(Arrays.asList(fields));
             fl.remove(oldidx);
             fl.add(idx, val);
             return fl.toArray(new String[fl.size()]);
@@ -716,7 +715,7 @@ public class Models {
             if (m.getLong("id") == 0) {
                 return;
             }
-            ArrayList<Object[]> r = new ArrayList<Object[]>();
+            ArrayList<Object[]> r = new ArrayList<>();
             Cursor cur = null;
 
             try {
@@ -724,7 +723,7 @@ public class Models {
                         .rawQuery("select id, flds from notes where mid = " + m.getLong("id"), null);
                 while (cur.moveToNext()) {
                     r.add(new Object[] {
-                            Utils.joinFields((String[]) fn.transform(Utils.splitFields(cur.getString(1)))),
+                            Utils.joinFields(fn.transform(Utils.splitFields(cur.getString(1)))),
                             Utils.intNow(), mCol.usn(), cur.getLong(0) });
                 }
             } finally {
@@ -844,8 +843,8 @@ public class Models {
         try {
             JSONArray ja = m.getJSONArray("tmpls");
             int oldidx = -1;
-            ArrayList<JSONObject> l = new ArrayList<JSONObject>();
-            HashMap<Integer, Integer> oldidxs = new HashMap<Integer, Integer>();
+            ArrayList<JSONObject> l = new ArrayList<>();
+            HashMap<Integer, Integer> oldidxs = new HashMap<>();
             for (int i = 0; i < ja.length(); ++i) {
                 if (ja.get(i).equals(template)) {
                     oldidx = i;
@@ -917,7 +916,7 @@ public class Models {
     }
 
     private void _changeNotes(long[] nids, JSONObject newModel, Map<Integer, Integer> map) {
-        List<Object[]> d = new ArrayList<Object[]>();
+        List<Object[]> d = new ArrayList<>();
         int nfields;
         long mid;
         try {
@@ -933,12 +932,12 @@ public class Models {
             while (cur.moveToNext()) {
                 long nid = cur.getLong(0);
                 String[] flds = Utils.splitFields(cur.getString(1));
-                Map<Integer, String> newflds = new HashMap<Integer, String>();
+                Map<Integer, String> newflds = new HashMap<>();
 
                 for (Integer old : map.keySet()) {
                     newflds.put(map.get(old), flds[old]);
                 }
-                List<String> flds2 = new ArrayList<String>();
+                List<String> flds2 = new ArrayList<>();
                 for (int c = 0; c < nfields; ++c) {
                     if (newflds.containsKey(c)) {
                         flds2.add(newflds.get(c));
@@ -959,8 +958,8 @@ public class Models {
     }
 
     private void _changeCards(long[] nids, JSONObject oldModel, JSONObject newModel, Map<Integer, Integer> map) {
-        List<Object[]> d = new ArrayList<Object[]>();
-        List<Long> deleted = new ArrayList<Long>();
+        List<Object[]> d = new ArrayList<>();
+        List<Long> deleted = new ArrayList<>();
         Cursor cur = null;
         int omType;
         int nmType;
@@ -1045,7 +1044,7 @@ public class Models {
                 return;
             }
             JSONArray req = new JSONArray();
-            ArrayList<String> flds = new ArrayList<String>();
+            ArrayList<String> flds = new ArrayList<>();
             JSONArray fields;
             fields = m.getJSONArray("flds");
             for (int i = 0; i < fields.length(); i++) {
@@ -1070,17 +1069,17 @@ public class Models {
 
     private Object[] _reqForTemplate(JSONObject m, ArrayList<String> flds, JSONObject t) {
         try {
-            ArrayList<String> a = new ArrayList<String>();
-            ArrayList<String> b = new ArrayList<String>();
+            ArrayList<String> a = new ArrayList<>();
+            ArrayList<String> b = new ArrayList<>();
             for (String f : flds) {
                 a.add("ankiflag");
                 b.add("");
             }
             Object[] data;
-            data = new Object[] { 1l, 1l, m.getLong("id"), 1l, t.getInt("ord"), "",
+            data = new Object[] {1L, 1L, m.getLong("id"), 1L, t.getInt("ord"), "",
                     Utils.joinFields(a.toArray(new String[a.size()])) };
             String full = mCol._renderQA(data).get("q");
-            data = new Object[] { 1l, 1l, m.getLong("id"), 1l, t.getInt("ord"), "",
+            data = new Object[] {1L, 1L, m.getLong("id"), 1L, t.getInt("ord"), "",
                     Utils.joinFields(b.toArray(new String[b.size()])) };
             String empty = mCol._renderQA(data).get("q");
             // if full and empty are the same, the template is invalid and there is no way to satisfy it
@@ -1089,7 +1088,7 @@ public class Models {
             }
             String type = "all";
             JSONArray req = new JSONArray();
-            ArrayList<String> tmp = new ArrayList<String>();
+            ArrayList<String> tmp = new ArrayList<>();
             for (int i = 0; i < flds.size(); i++) {
                 tmp.clear();
                 tmp.addAll(a);
@@ -1133,7 +1132,7 @@ public class Models {
             for (String f : fields) {
                 f = f.trim();
             }
-            ArrayList<Integer> avail = new ArrayList<Integer>();
+            ArrayList<Integer> avail = new ArrayList<>();
             JSONArray reqArray = m.getJSONArray("req");
             for (int i = 0; i < reqArray.length(); i++) {
                 JSONArray sr = reqArray.getJSONArray(i);
@@ -1191,8 +1190,8 @@ public class Models {
     public ArrayList<Integer> _availClozeOrds(JSONObject m, String flds, boolean allowEmpty) {
         String[] sflds = Utils.splitFields(flds);
         Map<String, Pair<Integer, JSONObject>> map = fieldMap(m);
-        Set<Integer> ords = new HashSet<Integer>();
-        List<String> matches = new ArrayList<String>();
+        Set<Integer> ords = new HashSet<>();
+        List<String> matches = new ArrayList<>();
         Matcher mm;
         try {
             mm = fClozePattern1.matcher(m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"));
@@ -1221,9 +1220,9 @@ public class Models {
         }
         if (ords.isEmpty() && allowEmpty) {
             // empty clozes use first ord
-            return new ArrayList<Integer>(Arrays.asList(new Integer[] { 0 }));
+            return new ArrayList<>(Arrays.asList(new Integer[]{0}));
         }
-        return new ArrayList<Integer>(ords);
+        return new ArrayList<>(ords);
     }
 
 
@@ -1348,12 +1347,12 @@ public class Models {
 
 
     public HashMap<Long, HashMap<Integer, String>> getTemplateNames() {
-        HashMap<Long, HashMap<Integer, String>> result = new HashMap<Long, HashMap<Integer, String>>();
+        HashMap<Long, HashMap<Integer, String>> result = new HashMap<>();
         for (JSONObject m : mModels.values()) {
             JSONArray templates;
             try {
                 templates = m.getJSONArray("tmpls");
-                HashMap<Integer, String> names = new HashMap<Integer, String>();
+                HashMap<Integer, String> names = new HashMap<>();
                 for (int i = 0; i < templates.length(); i++) {
                     JSONObject t = templates.getJSONObject(i);
                     names.put(t.getInt("ord"), t.getString("name"));
@@ -1389,12 +1388,11 @@ public class Models {
 
     /** Validate model entries. */
 	public boolean validateModel() {
-		Iterator<Entry<Long, JSONObject>> iterator = mModels.entrySet().iterator();
-		while (iterator.hasNext()) {
-			if (!validateBrackets(iterator.next().getValue())) {
-				return false;
-			}
-		}
+        for (Entry<Long, JSONObject> longJSONObjectEntry : mModels.entrySet()) {
+            if (!validateBrackets(longJSONObjectEntry.getValue())) {
+                return false;
+            }
+        }
 		return true;
 	}
 

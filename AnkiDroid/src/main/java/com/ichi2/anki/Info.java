@@ -26,7 +26,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.ClipboardManager;
-import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
@@ -34,7 +33,6 @@ import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.compat.CompatHelper;

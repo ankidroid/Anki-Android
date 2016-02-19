@@ -192,10 +192,9 @@ public class YGrid implements Drawable {
     private void drawExplicitLines(GraphicsWrap g){
         RectangleWrap field = g.getClipBounds();
 
-        for(int i = 0; i< mTickPositions.length; i++) {
-            double currentX = mTickPositions[i];
-            drawGridLine(currentX, g, field);
-        }
+		for (double currentX : mTickPositions) {
+			drawGridLine(currentX, g, field);
+		}
     }
 	
 	/**

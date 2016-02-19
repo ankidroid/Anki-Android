@@ -51,7 +51,7 @@ public class FullSyncer extends HttpSyncer {
 
     public FullSyncer(Collection col, String hkey, Connection con) {
         super(hkey, con);
-        mPostVars = new HashMap<String, Object>();
+        mPostVars = new HashMap<>();
         mPostVars.put("k", hkey);
         mPostVars.put("v",
                 String.format(Locale.US, "ankidroid,%s,%s", VersionUtils.getPkgVersionName(), Utils.platDesc()));
@@ -167,11 +167,7 @@ public class FullSyncer extends HttpSyncer {
             } else {
                 return new Object[] { super.stream2String(ret.getEntity().getContent()) };
             }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalStateException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (IllegalStateException | IOException e) {
             throw new RuntimeException(e);
         }
     }

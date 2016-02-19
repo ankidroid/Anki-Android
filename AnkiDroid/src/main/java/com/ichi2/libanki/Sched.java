@@ -81,10 +81,10 @@ public class Sched {
     private double[] mEtaCache = new double[] { -1, -1, -1, -1 };
 
     // Queues
-    private final LinkedList<Long> mNewQueue = new LinkedList<Long>();
-    private final LinkedList<long[]> mLrnQueue = new LinkedList<long[]>();
-    private final LinkedList<Long> mLrnDayQueue = new LinkedList<Long>();
-    private final LinkedList<Long> mRevQueue = new LinkedList<Long>();
+    private final LinkedList<Long> mNewQueue = new LinkedList<>();
+    private final LinkedList<long[]> mLrnQueue = new LinkedList<>();
+    private final LinkedList<Long> mLrnDayQueue = new LinkedList<>();
+    private final LinkedList<Long> mRevQueue = new LinkedList<>();
 
     private LinkedList<Long> mNewDids;
     private LinkedList<Long> mLrnDids;
@@ -304,7 +304,7 @@ public class Sched {
 
     public void extendLimits(int newc, int rev) {
         JSONObject cur = mCol.getDecks().current();
-        ArrayList<JSONObject> decks = new ArrayList<JSONObject>();
+        ArrayList<JSONObject> decks = new ArrayList<>();
         decks.add(cur);
         try {
             decks.addAll(mCol.getDecks().parents(cur.getLong("id")));
@@ -329,7 +329,7 @@ public class Sched {
 
     private int _walkingCount(Method limFn, Method cntFn) {
         int tot = 0;
-        HashMap<Long, Integer> pcounts = new HashMap<Long, Integer>();
+        HashMap<Long, Integer> pcounts = new HashMap<>();
         // for each of the active decks
         try {
             for (long did : mCol.getDecks().active()) {
@@ -361,11 +361,7 @@ public class Sched {
                 // and add to running total
                 tot += cnt;
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
+        } catch (JSONException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
         return tot;
@@ -384,8 +380,8 @@ public class Sched {
         _checkDay();
         mCol.getDecks().recoverOrphans();
         ArrayList<JSONObject> decks = mCol.getDecks().allSorted();
-        HashMap<String, Integer[]> lims = new HashMap<String, Integer[]>();
-        ArrayList<DeckDueTreeNode> data = new ArrayList<DeckDueTreeNode>();
+        HashMap<String, Integer[]> lims = new HashMap<>();
+        ArrayList<DeckDueTreeNode> data = new ArrayList<>();
         try {
             for (JSONObject deck : decks) {
                 // if we've already seen the exact same deck name, remove the
@@ -451,7 +447,7 @@ public class Sched {
 
 
     private List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps) {
-        List<DeckDueTreeNode> tree = new ArrayList<DeckDueTreeNode>();
+        List<DeckDueTreeNode> tree = new ArrayList<>();
         // group and recurse
         ListIterator<DeckDueTreeNode> it = grps.listIterator();
         while (it.hasNext()) {
@@ -460,7 +456,7 @@ public class Sched {
             // Compose the "tail" node list. The tail is a list of all the nodes that proceed
             // the current one that contain the same name[0]. I.e., they are subdecks that stem
             // from this node. This is our version of python's itertools.groupby.
-            List<DeckDueTreeNode> tail  = new ArrayList<DeckDueTreeNode>();
+            List<DeckDueTreeNode> tail  = new ArrayList<>();
             tail.add(node);
             while (it.hasNext()) {
                 DeckDueTreeNode next = it.next();
@@ -478,7 +474,7 @@ public class Sched {
             int rev = 0;
             int _new = 0;
             int lrn = 0;
-            List<DeckDueTreeNode> children = new ArrayList<DeckDueTreeNode>();
+            List<DeckDueTreeNode> children = new ArrayList<>();
             for (DeckDueTreeNode c : tail) {
                 if (c.names.length == 1) {
                     // current node
@@ -583,7 +579,7 @@ public class Sched {
 
     private void _resetNew() {
         _resetNewCount();
-        mNewDids = new LinkedList<Long>(mCol.getDecks().active());
+        mNewDids = new LinkedList<>(mCol.getDecks().active());
         mNewQueue.clear();
         _updateNewCardRatio();
     }
@@ -715,13 +711,7 @@ public class Sched {
                 }
             }
             return lim;
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchMethodException e) {
+        } catch (IllegalArgumentException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }
@@ -1192,9 +1182,7 @@ public class Sched {
                     "SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did
                             + " AND queue = 3 AND due <= " + mToday
                             + " LIMIT " + mReportLimit + ")");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (JSONException e) {
+        } catch (SQLException | JSONException e) {
             throw new RuntimeException(e);
         }
     }
@@ -1664,7 +1652,7 @@ public class Sched {
 
 
     private void _moveToDyn(long did, List<Long> ids) {
-        ArrayList<Object[]> data = new ArrayList<Object[]>();
+        ArrayList<Object[]> data = new ArrayList<>();
         long t = Utils.intNow();
         int u = mCol.usn();
         for (long c = 0; c < ids.size(); c++) {
@@ -2113,7 +2101,7 @@ public class Sched {
      */
 
     private void _burySiblings(Card card) {
-        LinkedList<Long> toBury = new LinkedList<Long>();
+        LinkedList<Long> toBury = new LinkedList<>();
         JSONObject nconf = _newConf(card);
         boolean buryNew = nconf.optBoolean("bury", true);
         JSONObject rconf = _revConf(card);
@@ -2179,7 +2167,7 @@ public class Sched {
      * @param imax The maximum interval (inclusive)
      */
     public void reschedCards(long[] ids, int imin, int imax) {
-        ArrayList<Object[]> d = new ArrayList<Object[]>();
+        ArrayList<Object[]> d = new ArrayList<>();
         int t = mToday;
         long mod = Utils.intNow();
         Random rnd = new Random();
@@ -2220,7 +2208,7 @@ public class Sched {
     public void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift) {
         String scids = Utils.ids2str(cids);
         long now = Utils.intNow();
-        ArrayList<Long> nids = new ArrayList<Long>();
+        ArrayList<Long> nids = new ArrayList<>();
         for (long id : cids) {
         	long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = " + id);
         	if (!nids.contains(nid)) {
@@ -2232,7 +2220,7 @@ public class Sched {
             return;
         }
         // determine nid ordering
-        HashMap<Long, Long> due = new HashMap<Long, Long>();
+        HashMap<Long, Long> due = new HashMap<>();
         if (shuffle) {
             Collections.shuffle(nids);
         }
@@ -2252,7 +2240,7 @@ public class Sched {
             }
         }
         // reorder cards
-        ArrayList<Object[]> d = new ArrayList<Object[]>();
+        ArrayList<Object[]> d = new ArrayList<>();
         Cursor cur = null;
         try {
             cur = mCol.getDb().getDatabase()
@@ -2524,7 +2512,7 @@ public class Sched {
         public int revCount;
         public int lrnCount;
         public int newCount;
-        public List<DeckDueTreeNode> children = new ArrayList<DeckDueTreeNode>();
+        public List<DeckDueTreeNode> children = new ArrayList<>();
 
         public DeckDueTreeNode(String[] names, long did, int revCount, int lrnCount, int newCount) {
             this.names = names;

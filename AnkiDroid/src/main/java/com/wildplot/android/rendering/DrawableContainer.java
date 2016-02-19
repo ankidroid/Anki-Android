@@ -22,7 +22,7 @@ import java.util.Vector;
 
 
 public class DrawableContainer implements Drawable {
-    Vector<Drawable> drawableVector = new Vector<Drawable>();
+    Vector<Drawable> drawableVector = new Vector<>();
     private boolean isOnFrame = false;
     private boolean isOnAbort = false;
     private boolean isCritical = false;

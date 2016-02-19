@@ -18,7 +18,6 @@ package com.ichi2.anki;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
@@ -26,7 +25,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.themes.Themes;
 import com.ichi2.compat.CompatHelper;
 
 import java.lang.ref.WeakReference;
@@ -38,14 +36,14 @@ import timber.log.Timber;
 
 public class ReadText {
     private static TextToSpeech mTts;
-    private static ArrayList<Locale> availableTtsLocales = new ArrayList<Locale>();
+    private static ArrayList<Locale> availableTtsLocales = new ArrayList<>();
     private static String mTextToSpeak;
     private static WeakReference<Context> mReviewer;
     private static long mDid;
     private static int mOrd;
     private static int mQuestionAnswer;
     public static final String NO_TTS = "0";
-    public static ArrayList<String[]> sTextQueue = new ArrayList<String[]>();
+    public static ArrayList<String[]> sTextQueue = new ArrayList<>();
     public static HashMap<String, String> mTtsParams;
 
 
@@ -99,8 +97,8 @@ public class ReadText {
                     .iconAttr(R.attr.dialogErrorIcon)
                     .positiveText(res.getString(R.string.dialog_ok));
         } else {
-            ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();
-            final ArrayList<String> dialogIds = new ArrayList<String>();
+            ArrayList<CharSequence> dialogItems = new ArrayList<>();
+            final ArrayList<String> dialogIds = new ArrayList<>();
             // Add option: "no tts"
             dialogItems.add(res.getString(R.string.tts_no_tts));
             dialogIds.add(NO_TTS);
@@ -175,7 +173,7 @@ public class ReadText {
 
     public static void initializeTts(Context context) {
         // Store weak reference to Activity to prevent memory leak
-        mReviewer = new WeakReference<Context>(context);
+        mReviewer = new WeakReference<>(context);
         // Create new TTS object and setup its onInit Listener
         mTts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
@@ -197,7 +195,7 @@ public class ReadText {
                 CompatHelper.getCompat().setTtsOnUtteranceProgressListener(mTts);
             }
         });
-        mTtsParams = new HashMap<String, String>();
+        mTtsParams = new HashMap<>();
         mTtsParams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "stringId");
         // Show toast that it's getting initialized, as it can take a while before the sound plays the first time
         Toast.makeText(context, context.getString(R.string.initializing_tts), Toast.LENGTH_LONG).show();

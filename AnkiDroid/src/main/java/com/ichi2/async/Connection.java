@@ -225,9 +225,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     valid = (hostkey != null) && (hostkey.length() > 0);
                 } catch (JSONException e) {
                     valid = false;
-                } catch (IllegalStateException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
+                } catch (IllegalStateException | IOException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -553,7 +551,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
 
         public void setConnectionManager(ThreadSafeClientConnManager connectionManager) {
-            mConnectionManager = new WeakReference<ThreadSafeClientConnManager>(connectionManager);
+            mConnectionManager = new WeakReference<>(connectionManager);
         }
 
 

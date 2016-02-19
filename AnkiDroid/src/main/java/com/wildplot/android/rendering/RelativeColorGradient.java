@@ -24,7 +24,7 @@ import java.util.Vector;
 public class RelativeColorGradient {
 	public static ColorWrap[] makeGradient(Vector<ColorWrap> colorVector, int numberOfColorsInGradient) {
 		if(colorVector == null) {
-			colorVector = new Vector<ColorWrap>();
+			colorVector = new Vector<>();
 		}
 		
 		if(colorVector.size() < 2) {

@@ -21,8 +21,6 @@ package com.ichi2.anki;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Environment;
@@ -380,7 +378,7 @@ public class AnkiDroidApp extends Application {
 
     /** A tree which logs necessary data for crash reporting. */
     public static class ProductionCrashReportingTree extends Timber.HollowTree {
-        private static final ThreadLocal<String> NEXT_TAG = new ThreadLocal<String>();
+        private static final ThreadLocal<String> NEXT_TAG = new ThreadLocal<>();
         private static final Pattern ANONYMOUS_CLASS = Pattern.compile("\\$\\d+$");
 
         @Override public void e(String message, Object... args) {

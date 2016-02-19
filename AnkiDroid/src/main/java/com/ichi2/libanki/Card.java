@@ -287,7 +287,7 @@ public class Card implements Cloneable {
             JSONObject t = template();
             Object[] data;
             try {
-                data = new Object[] { mId, f.getId(), m.getLong("id"), mODid != 0l ? mODid : mDid, mOrd,
+                data = new Object[] { mId, f.getId(), m.getLong("id"), mODid != 0L ? mODid : mDid, mOrd,
                         f.stringTags(), f.joinedFields() };
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -625,11 +625,11 @@ public class Card implements Cloneable {
 
 
     // A list of class members to skip in the toString() representation
-    public static final Set<String> SKIP_PRINT = new HashSet<String>(Arrays.asList("SKIP_PRINT", "$assertionsDisabled", "TYPE_LRN",
+    public static final Set<String> SKIP_PRINT = new HashSet<>(Arrays.asList("SKIP_PRINT", "$assertionsDisabled", "TYPE_LRN",
             "TYPE_NEW", "TYPE_REV", "mNote", "mQA", "mCol", "mTimerStarted", "mTimerStopped"));
 
     public String toString() {
-        List<String> members = new ArrayList<String>();
+        List<String> members = new ArrayList<>();
         for (Field f : this.getClass().getDeclaredFields()) {
             try {
                 // skip non-useful elements
@@ -637,9 +637,7 @@ public class Card implements Cloneable {
                     continue;
                 }
                 members.add(String.format("'%s': %s", f.getName(), f.get(this)));
-            } catch (IllegalAccessException e) {
-                members.add(String.format("'%s': %s", f.getName(), "N/A"));
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalAccessException | IllegalArgumentException e) {
                 members.add(String.format("'%s': %s", f.getName(), "N/A"));
             }
         }

@@ -107,7 +107,7 @@ public class HttpSyncer {
         mHKey = hkey;
         mSKey = Utils.checksum(Float.toString(new Random().nextFloat())).substring(0, 8);
         mCon = con;
-        mPostVars = new HashMap<String, Object>();
+        mPostVars = new HashMap<>();
     }
 
 
@@ -242,12 +242,10 @@ public class HttpSyncer {
                 Timber.e(e, "SSLException while building HttpClient");
                 throw new RuntimeException("SSLException while building HttpClient");
             }
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException | JSONException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             Timber.e(e, "BasicHttpSyncer.sync: IOException");
-            throw new RuntimeException(e);
-        } catch (JSONException e) {
             throw new RuntimeException(e);
         } finally {
             if (tmpFileBuffer != null && tmpFileBuffer.exists()) {
@@ -304,8 +302,6 @@ public class HttpSyncer {
             }
             rd.close();
             return sb.toString();
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

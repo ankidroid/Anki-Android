@@ -783,7 +783,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private String contentForCloze(String txt, int idx) {
         Pattern re = Pattern.compile("\\{\\{c" + idx + "::(.+?)\\}\\}");
         Matcher m = re.matcher(txt);
-        Set<String> matches = new LinkedHashSet<String>();
+        Set<String> matches = new LinkedHashSet<>();
         // LinkedHashSet: make entries appear only once, like Anki desktop (see also issue #2208), and keep the order
         // they appear in.
         String groupOne = new String();
