@@ -16,8 +16,6 @@
 
 package com.ichi2.anki.reviewer;
 
-import android.webkit.WebView;
-
 /**
  * An extension to the reviewer class.
  * <p>
@@ -33,12 +31,5 @@ public interface ReviewerExt {
      * @param cssStyle containing current style
      */
     void updateCssStyle(StringBuilder cssStyle);
-
-
-    /**
-     * Returns true if the extensions supports updating the content of a single {@link WebView} (called quick update)
-     * instead of switch between two instances.
-     */
-    boolean supportsQuickUpdate();
 
 }

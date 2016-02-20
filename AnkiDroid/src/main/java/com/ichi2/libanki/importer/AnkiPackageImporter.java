@@ -23,7 +23,6 @@ import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
-import com.ichi2.utils.HtmlUtil;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -105,7 +104,7 @@ public class AnkiPackageImporter extends Anki2Importer {
                 if (!file.startsWith("_") && !file.startsWith("latex-")) {
                     continue;
                 }
-                File path = new File(mCol.getMedia().dir(), HtmlUtil.nfcNormalized(file));
+                File path = new File(mCol.getMedia().dir(), Utils.nfcNormalized(file));
                 if (!path.exists()) {
                     try {
                         Utils.unzipFiles(mZip, mCol.getMedia().dir(), new String[]{c}, numToName);

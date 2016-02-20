@@ -26,7 +26,6 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
-import com.ichi2.utils.HtmlUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -631,7 +630,7 @@ public class Anki2Importer extends Importer {
 
     private void _writeDstMedia(String fname, BufferedInputStream data) {
         try {
-            String path = new File(mDst.getMedia().dir(), HtmlUtil.nfcNormalized(fname)).getAbsolutePath();
+            String path = new File(mDst.getMedia().dir(), Utils.nfcNormalized(fname)).getAbsolutePath();
             Utils.writeToFile(data, path);
             // Mark file addition to media db (see note in Media.java)
             mDst.getMedia().markFileAdd(fname);
@@ -658,8 +657,9 @@ public class Anki2Importer extends Importer {
                     continue;
                 }
                 // if model-local file exists from a previous import, use that
-                String name = Utils.removeFileExtension(fname);
-                String ext = Utils.getFileExtension(fname);
+                String[] split = Utils.splitFilename(fname);
+                String name = split[0];
+                String ext = split[1];
 
                 String lname = String.format(Locale.US, "%s_%s%s", name, mid, ext);
                 if (mDst.getMedia().have(lname)) {

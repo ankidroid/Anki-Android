@@ -25,7 +25,6 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import com.ichi2.libanki.template.Template;
-import com.ichi2.utils.HtmlUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -233,11 +232,12 @@ public class Media {
         // get the file name
         String fname = ofile.getName();
         // make sure we write it in NFC form and return an NFC-encoded reference
-        fname = HtmlUtil.nfcNormalized(fname);
+        fname = Utils.nfcNormalized(fname);
         // remove any dangerous characters
         String base = stripIllegal(fname);
-        String root = Utils.removeFileExtension(base);
-        String ext = Utils.getFileExtension(base);
+        String[] split = Utils.splitFilename(base);
+        String root = split[0];
+        String ext = split[1];
         // find the first available name
         String csum = Utils.fileChecksum(ofile);
         while (true) {
@@ -427,7 +427,7 @@ public class Media {
                 // check the refs are in NFC
                 for (String f : noteRefs) {
                     // if they're not, we'll need to fix them first
-                    if (!f.equals(HtmlUtil.nfcNormalized(f))) {
+                    if (!f.equals(Utils.nfcNormalized(f))) {
                         _normalizeNoteRefs(nid);
                         noteRefs = filesInStr(mid, flds);
                         break;
@@ -461,7 +461,7 @@ public class Media {
                 // leading _ says to ignore file
                 continue;
             }
-            File nfcFile = new File(dir(), HtmlUtil.nfcNormalized(file.getName()));
+            File nfcFile = new File(dir(), Utils.nfcNormalized(file.getName()));
             // we enforce NFC fs encoding
             if (local == null) {
                 if (!file.getName().equals(nfcFile.getName())) {
@@ -507,7 +507,7 @@ public class Media {
         String[] flds = note.getFields();
         for (int c = 0; c < flds.length; c++) {
             String fld = flds[c];
-            String nfc = HtmlUtil.nfcNormalized(fld);
+            String nfc = Utils.nfcNormalized(fld);
             if (!nfc.equals(fld)) {
                 note.setField(c, nfc);
             }
@@ -671,7 +671,7 @@ public class Media {
                 continue;
             }
             // check encoding
-            String normf = HtmlUtil.nfcNormalized(fname);
+            String normf = Utils.nfcNormalized(fname);
             if (!fname.equals(normf)) {
                 // wrong filename encoding which will cause sync errors
                 File nf = new File(dir(), normf);
@@ -819,7 +819,7 @@ public class Media {
                 String fname = cur.getString(0);
                 String csum = cur.getString(1);
                 fnames.add(fname);
-                String normname = HtmlUtil.nfcNormalized(fname);
+                String normname = Utils.nfcNormalized(fname);
 
                 if (!TextUtils.isEmpty(csum)) {
                     try {
@@ -888,7 +888,7 @@ public class Media {
                 } else {
                     String name = meta.getString(i.getName());
                     // normalize name for platform
-                    name = HtmlUtil.nfcNormalized(name);
+                    name = Utils.nfcNormalized(name);
                     // save file
                     String destPath = dir().concat(File.separator).concat(name);
                     Utils.writeToFile(z.getInputStream(i), destPath);

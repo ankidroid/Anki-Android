@@ -84,7 +84,6 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
-import com.ichi2.utils.HtmlUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1889,7 +1888,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         answerText = matcher.replaceAll("\n");
         matcher = Sound.sSoundPattern.matcher(answerText);
         answerText = matcher.replaceAll("");
-        return HtmlUtil.nfcNormalized(answerText);
+        return Utils.nfcNormalized(answerText);
     }
 
 
@@ -1903,7 +1902,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (answer == null || answer.equals("")) {
             return "";
         }
-        return HtmlUtil.nfcNormalized(answer.trim());
+        return Utils.nfcNormalized(answer.trim());
     }
 
 

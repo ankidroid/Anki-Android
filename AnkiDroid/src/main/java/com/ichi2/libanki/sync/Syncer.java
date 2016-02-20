@@ -28,7 +28,6 @@ import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
-import com.ichi2.utils.ConvUtils;
 
 import org.apache.http.HttpResponse;
 import org.json.JSONArray;
@@ -818,7 +817,7 @@ public class Syncer {
         for (int i = 0; i < logs.length(); i++) {
             try {
                 mCol.getDb().execute("INSERT OR IGNORE INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
-                        ConvUtils.jsonArray2Objects(logs.getJSONArray(i)));
+                        Utils.jsonArray2Objects(logs.getJSONArray(i)));
             } catch (SQLException | JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -854,7 +853,7 @@ public class Syncer {
             for (int i = 0; i < data.length(); i++) {
                 JSONArray r = data.getJSONArray(i);
                 if (!lmods.containsKey(r.getLong(0)) || lmods.get(r.getLong(0)) < r.getLong(modIdx)) {
-                    update.add(ConvUtils.jsonArray2Objects(r));
+                    update.add(Utils.jsonArray2Objects(r));
                 }
             }
             mCol.log(table, data);
