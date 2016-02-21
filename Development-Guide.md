@@ -56,6 +56,49 @@ Once you have improved the code, commit it and send a pull request to [AnkiDroid
 
 If you have trouble with Git, you can paste the changed files as text to the [forum](http://groups.google.com/group/anki-android) or github issue tracker.
 
+## Git workflow
+Git can be a bit complicated to use in the beginning. This section describes the workflow that we recommend for regular contributors. The following assumes that you're [using SSH to authenticate with github](https://help.github.com/articles/generating-a-new-ssh-key/) (highly recommended) and that you've forked the AnkiDroid repository.
+
+### Inital setup (one time)
+First let's set up our local repository
+
+```
+git clone git@github.com:GITHUB_USERNAME/Anki-Android.git AnkiDroid
+cd AnkiDroid
+git remote add upstream https://github.com/ankidroid/Anki-Android.git
+```
+
+### Making a new pull request
+Now if want to make a new change to the code base, we create a new 'feature branch' based off the latest version of the develop branch:
+
+```
+git checkout develop
+git pull upstream develop
+git checkout -b my-feature-branch
+```
+
+Now you will be on a new branch called `my-feature-branch` which contains the latest AnkiDroid code. Make your changes to the code, then do a `git push`. On navigating to the [main AnkiDroid repository](https://github.com/ankidroid/Anki-Android), github will pop up a message asking you if you want to create a new pull request based on the branch that you just pushed.
+
+
+### Dealing with merge conflicts
+If changes are made to the AnkiDroid repository that conflict with the changes in your pull request in-between creating the feature branch and your changes getting merged into the main repository, it may be necessary to rebase your code:
+
+```
+git checkout develop
+git pull upstream develop
+git checkout my-feature-branch
+git rebase develop
+# it may be necessary to resolve merge conflicts here
+# if you need to update the existing pull request, you should do a 'force' push
+git push origin my-feature-branch -f
+```
+
+### Squashing a series of commits down to one
+In general, we ask contributors to ensure that pull requests only contain one commit per major 'task', to make it easier for other developers to understand the commit history. If you have made multiple commits in your feature branch during the development process, you can easily squash it down to one using the `rebase` command in interactive mode.
+
+If you made N commits then usually you would execute the command `git rebase -i HEAD~N` and replace "pick" on the second and subsequent commits with "squash" or "fixup" depending on whether or not you want the commit message to be included, as described in the [git manual](http://git-scm.com/docs/git-rebase#_interactive_mode). If you want to update an existing pull request do a push using the -f flag.
+
+
 ## Running unit tests
 Several unit tests are defined in the `AnkiDroid/androidTest` folder. You can run the tests from within Android Studio by simply right clicking on the test and running it (be sure to choose the icon with the Android symbol if there are multiple options shown), or from the command line using
 ```
