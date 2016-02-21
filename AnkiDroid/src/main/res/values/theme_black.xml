@@ -61,10 +61,11 @@
         <item name="stats_relearn">#c00</item>
         <item name="stats_cram">#ff0</item>
         <item name="stats_interval">#077</item>
-        <item name="stats_hours">#ccc</item>
-        <item name="stats_counts">#E6000000</item>
-        <item name="stats_unseen">#000</item>
+        <item name="stats_hours">@color/material_grey_500</item>
+        <item name="stats_counts">@color/material_grey_800</item>
+        <item name="stats_unseen">@color/material_grey_800</item>
         <item name="stats_suspended">#ff0</item>
+        <item name="stats_cumulative">@color/material_grey_800</item>
         <!-- Browser colors -->
         <item name="suspendedColor">#A8A634</item>
         <item name="markedColor">#391080</item>

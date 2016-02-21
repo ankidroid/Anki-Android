@@ -78,6 +78,7 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="stats_counts">#E6000000</item>
         <item name="stats_unseen">#000</item>
         <item name="stats_suspended">#ff0</item>
+        <item name="stats_cumulative">@color/stats_cumulative</item>
         <!-- Browser colors -->
         <item name="suspendedColor">#FFFFB2</item>
         <item name="markedColor">#D9B2E9</item>

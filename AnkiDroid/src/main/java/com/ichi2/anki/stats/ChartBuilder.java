@@ -244,7 +244,7 @@ public class ChartBuilder {
         for(int i = 1; i< mCumulative.length; i++){
             double[][] cumulative = {mCumulative[0], mCumulative[i]};
 
-            ColorWrap usedColor = ColorWrap.BLACK;
+            ColorWrap usedColor = new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), R.attr.stats_cumulative));
             String name = mChartView.getResources().getString(R.string.stats_cumulative);
             if(mHasColoredCumulative){      //also non colored Cumulatives have names!
                 usedColor = new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[i - 1]));

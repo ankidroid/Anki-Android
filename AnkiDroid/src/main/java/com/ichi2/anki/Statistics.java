@@ -16,6 +16,7 @@
 package com.ichi2.anki;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -613,8 +614,11 @@ public class Statistics extends NavigationDrawerActivity implements
             mWebView = (WebView) rootView.findViewById(R.id.web_view_stats);
             if(mWebView == null)
                 Timber.d("mChart null!!!");
-            else
+            else {
                 Timber.d("mChart is not null!");
+                // Set transparent color to prevent flashing white when night mode enabled
+                mWebView.setBackgroundColor(Color.argb(1, 0, 0, 0));
+            }
 
             //mChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
