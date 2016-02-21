@@ -38,7 +38,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="preference_summary_percentage">XXX%</string>
   <string name="drawer_open">Abrir cajón</string>
   <string name="drawer_close">Cerrar cajón</string>
@@ -127,7 +127,7 @@
   <string name="check_media">Comprobar archivo multimedia</string>
   <string name="empty_cards">Tarjetas vacías</string>
   <string name="check_db_message">Comprobando base de datos.\nPor favor aguarde...</string>
-  <string name="empty_card_warning">Esta tarjeta está vacía. Utiliza la opción \"Tarjetas vacías\" del menú en la pantalla de la lista de mazos.</string>
+  <string name="empty_card_warning">Esta tarjeta está vacía. Utilice la opción \"Tarjetas vacías\" del menú en la pantalla de la lista de mazos.</string>
   <string name="unknown_type_field_warning">Tipear respuesta: campo desconocido %s</string>
   <string name="delete_deck">Eliminando mazo...\nPor favor aguarde.</string>
   <string name="show_hint">Mostrar %s</string>
@@ -141,7 +141,7 @@
   <string name="import_log_no_apkg">Este no es un archivo apkg válido</string>
   <string name="import_error_not_apkg_extension">El nombre de archivo %s no posee extensión .apkg</string>
   <string name="import_error_content_provider">El archivo seleccionado no puede ser importado automáticamente por AnkiDroid. Por favor, revise el manual de usuario para cómo importar manualmente archivos de anki: \n %s</string>
-  <string name="import_replacing">Remplazando colección&#8230;</string>
+  <string name="import_replacing">Reemplazando colección&#8230;</string>
   <string name="export_include_schedule">Incluir programación</string>
   <string name="export_include_media">Incluir multimedia</string>
   <string name="confirm_apkg_export">¿Exportar colección como archivo apkg?</string>
@@ -153,7 +153,7 @@
   <string name="import_hint">Para importar tarjetas coloque el archivo apkg en el directorio %s y presione OK</string>
   <string name="upgrade_import_no_file_found">No se ha hallado archivos %1$s para importar</string>
   <string name="study_options">Opciones de mazo</string>
-  <string name="select_tts">Set TTS language</string>
+  <string name="select_tts">Setear lenguaje TTS</string>
   <string name="custom_study">Estudio personalizado</string>
   <string name="more_options">Más</string>
   <string name="dyn_deck_desc">Este es un mazo especial para estudiar por fuera del cronograma normal. Las tarjetas serán automáticamente devueltas a sus mazos originales luego de que las haya repasado. Borrar este mazo de la lista de mazos devolverá todas las tarjetas restantes a sus mazos originales.</string>

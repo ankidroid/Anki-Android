@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="disabled">Deshabilitado</string>
+  <string name="disabled">Desactivado</string>
   <string name="enabled">Activado</string>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Ajustes generales</string>
@@ -50,7 +50,7 @@
   <string name="pref_cat_whiteboard">Pizarra</string>
   <string name="pref_cat_automatic_display">Mostrar automáticamente la respuesta</string>
   <string name="pref_cat_appearance">Apariencia</string>
-  <string name="pref_cat_appearance_summ">Cambiar temas y fuente predeterminada</string>
+  <string name="pref_cat_appearance_summ">Cambia los temas y la fuente por defecto</string>
   <string name="pref_cat_gestures">Gestos</string>
   <string name="pref_cat_gestures_summ">Usar toques y deslizamientos en lugar de botones</string>
   <string name="pref_cat_actions">Acciones</string>
@@ -66,20 +66,20 @@
   <string name="whiteboard_black_summ">Utiliza menos memoria, excepto en modo nocturno</string>
   <string name="write_answers_disable">Desactivar el tipeo de la respuesta</string>
   <string name="write_answers_disable_summ">Impide que el teclado aparezca en tarjetas que contengan el campo \'tipear la respuesta\'</string>
-  <string name="use_input_tag">Escribir respuesta en la tarjeta</string>
-  <string name="use_input_tag_summ">Usa una caja de texto dentro de la tarjeta para escribir una respuesta</string>
+  <string name="use_input_tag">Tipear la respuesta en la tarjeta</string>
+  <string name="use_input_tag_summ">Utilice un cuadro de ingreso de texto dentro de la tarjeta para tipear la respuesta</string>
   <string name="text_selection_click">Solución para pulsación larga</string>
   <string name="text_selection_click_summ">Activar esta opción si no puede comenzar la selección de texto mediante un click prolongado</string>
   <string name="dictionary">Diccionario de búsqueda</string>
   <string name="reset_languages">Restablecer idiomas</string>
-  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
+  <string name="reset_languages_summ">Resetear disposiciones de idioma (para texto a voz y diccionarios) para todos los mazos</string>
   <string name="reset_languages_question">¿Restablecer todas las tareas de idioma?</string>
   <string name="reset_confirmation">Restablecer todos los estados</string>
   <string name="card_zoom">Zoom de la tarjeta</string>
   <string name="image_zoom">Zoom de la imagen</string>
   <string name="button_size">Tamaño del botón de respuesta</string>
   <string name="card_browser_font_size">Escalado de fuentes del explorador de tarjetas</string>
-  <string name="col_path">Carpeta de AnkiDroid</string>
+  <string name="col_path">Directorio de AnkiDroid</string>
   <string name="fullscreen_review">Pantalla completa</string>
   <string name="full_screen_off">Apagado</string>
   <string name="full_screen_system">Ocultar las barras del sistema</string>
@@ -159,15 +159,15 @@
   <string name="enable_api_summary">Permitir que otras aplicaciones se conecten a AnkiDroid y lean / escriban datos sin tu intervención</string>
   <string name="advanced_statistics_title">Estadísticas avanzadas</string>
   <string name="enable_advanced_statistics_title">Activar estadísticas avanzadas</string>
-  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
-  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
-  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
-  <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+  <string name="enable_advanced_statistics_summ">Despliega estadísticas de pronóstico basadas en un cálculo o simulación de futuros repasos (activado) o de repasos futuros ya programados (desactivado).</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Calcular los primeros n días, simular los recordatorios</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Precisión del cálculo</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">Número de repeticiones del cálculo</string>
   <string name="custom_sync_server_title">Servidor de sincronización personalizado</string>
-  <string name="custom_sync_server_enable_title">Usar servidor de sincronización personalizado</string>
-  <string name="custom_sync_server_enable_summary">Si no quieres usar el servicio propio de AnkiWeb, puedes especificar un servidor alternativo aquí</string>
-  <string name="custom_sync_server_base_url_title">Url de sincronización</string>
-  <string name="custom_sync_server_media_url_title">Url de sincronización multimedia</string>
+  <string name="custom_sync_server_enable_title">Utilizar el servidor de sincronización personalizado</string>
+  <string name="custom_sync_server_enable_summary">Si no quieres utilizar el servicio propietario de AnkiWeb, puedes especificar un servidor alternativo aquí</string>
+  <string name="custom_sync_server_base_url_title">Sincronizar url</string>
+  <string name="custom_sync_server_media_url_title">Sincronizar media url</string>
   <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>
   <string name="deck_conf_deck_description">Descripción del mazo</string>
   <string name="deck_conf_group">Grupo de opciones</string>

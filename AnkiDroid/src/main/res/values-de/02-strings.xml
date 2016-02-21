@@ -38,7 +38,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="preference_summary_percentage">XXX %</string>
   <string name="drawer_open">Navigationsleiste öffnen</string>
   <string name="drawer_close">Navigationsleiste schließen</string>
@@ -127,7 +127,7 @@
   <string name="check_media">Medien überprüfen</string>
   <string name="empty_cards">Leere Karten</string>
   <string name="check_db_message">Prüfe Datenbank&#8230;</string>
-  <string name="empty_card_warning">Diese Karte ist leer. Rufen Sie die »Leere Karten«-Funktion aus dem Menü der Stapelübersicht aus.</string>
+  <string name="empty_card_warning">Diese Karte ist leer. Rufen Sie die »Leere Karten«-Funktion aus dem Menü der Stapelübersicht auf.</string>
   <string name="unknown_type_field_warning">Antworteingabe: Unbekanntes Feld %s</string>
   <string name="delete_deck">Lösche Stapel&#8230;</string>
   <string name="show_hint">%s anzeigen</string>

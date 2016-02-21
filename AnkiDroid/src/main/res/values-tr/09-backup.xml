@@ -63,5 +63,5 @@
   <string name="corrupt_db_message">Ne yazık ki koleksiyonunuz bozulmuş.\n\nBir yedekten geri yüklemek için \"seçenekler\"e dokunun, veya o çalışmazsa, veritabanını elle tamir etmek için şu yönergelere bakın:\n%1$s</string>
   <string name="access_collection_failed_message">Koleksiyonunuza erişirken bir hata meydana geldi. Buna zararsız bir bug neden olmuş olabilir, veya bir koleksiyonunuzda bir sorun olabilir.\n\nVeritabanı kontrolünü çalıştırmayı, veya \"seçenekler\" düğmesine basarak yedekten geri yüklemeyi deneyin. Eğer bu mesajı görmeye devam ederseniz, lutfen bir bug bildirisinde bulunun:\n%1$s</string>
   <string name="deck_repair_error">Koleksiyon onarılamadı</string>
-  <string name="cursor_size_limit_exceeded">The Android size limit for a String in a database has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
+  <string name="cursor_size_limit_exceeded">Android\'in, veritabanındaki bir String için boyut sınırı aşıldı. Anki masaüstü kullanarak kullanılmayan not türlerini silin, sonra da bir tam senkronizasyon yapın.</string>
 </resources>

@@ -58,7 +58,7 @@
   <string name="pref_cat_advanced_summ">Optimierung und experimentelle Funktionen</string>
   <string name="pref_cat_performance">Leistung</string>
   <string name="pref_cat_workarounds">Workarounds</string>
-  <string name="pref_cat_plugins">Zusatzprogramme/ Plug-Ins</string>
+  <string name="pref_cat_plugins">Plug-Ins</string>
   <string name="about_title">Über AnkiDroid</string>
   <string name="about_version">Version: </string>
   <string name="whiteboard_stroke_width">Pinselbreite</string>

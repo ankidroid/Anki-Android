@@ -69,7 +69,7 @@
   <string name="reschedule_card_dialog_message">Neues Intervall: In x Tagen Lernen:</string>
   <string name="reschedule_card_dialog_acknowledge">Karte neu geplant</string>
   <string name="answering_error_title">Datenbankfehler</string>
-  <string name="answering_error_message">Beim Zugriff auf die Datenbank ist ein Fehler aufgetreten. Dies kann entweder mit einer defekten Datenbank zusammenhängen oder an unzureichendem Speicherplatz liegen.\n\nWenn dies öfter vorkommt, versuchen Sie bitte, die Sammlung zu reparieren oder von einem Backup wiederherzustellen. Klicken Sie dafür auf »Optionen«.\n\nOder es könnte ein  AnkiDroid-Fehler sein; bitte melden Sie den Fehler deshalb, damit wir das überprüfen können.</string>
+  <string name="answering_error_message">Beim Zugriff auf die Datenbank ist ein Fehler aufgetreten. Dies kann an einer defekten Datenbank oder an unzureichendem Speicherplatz liegen.\n\nWenn dies öfter vorkommt, versuchen Sie bitte, die Sammlung zu reparieren oder von einem Backup wiederherzustellen. Klicken Sie dafür auf »Optionen«.\n\nEs könnte aber auch ein AnkiDroid-Fehler sein; bitte melden Sie den Fehler deshalb, damit wir das überprüfen können.</string>
   <string name="answering_error_report">Fehler melden</string>
   <string name="repair_deck_dialog">Möchten Sie wirklich versuchen, die Datenbank zu reparieren?\n\nBevor der Versuch startet, wird eine Kopie im Unterordner »%s« angelegt.</string>
   <string name="intent_add_saved_information">Gespeicherte Daten</string>

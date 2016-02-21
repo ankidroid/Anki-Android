@@ -38,7 +38,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="preference_summary_percentage">XXX%</string>
   <string name="drawer_open">Abrir cajón</string>
   <string name="drawer_close">Cerrar cajón</string>
@@ -153,7 +153,7 @@
   <string name="import_hint">Para importar tarjetas, coloca el archivo apkg en el directorio %s y presiona ok</string>
   <string name="upgrade_import_no_file_found">No se encontró archivo importable %1$s</string>
   <string name="study_options">Opciones de mazo</string>
-  <string name="select_tts">Set TTS language</string>
+  <string name="select_tts">Establecer idioma TTS</string>
   <string name="custom_study">Estudio personalizado</string>
   <string name="more_options">Más</string>
   <string name="dyn_deck_desc">Este es un mazo especial para estudiar fuera del programa normal. Las tarjetas serán devueltas automáticamente a sus mazos originales después de que las repases. Borrar este mazo de la lista de mazos devolverá todas las tarjetas restantes a su mazo original.</string>

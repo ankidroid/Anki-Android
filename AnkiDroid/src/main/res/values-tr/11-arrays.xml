@@ -94,11 +94,11 @@
     <item>Her zaman</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Default</item>
-    <item>Plain</item>
+    <item>Varsayılan</item>
+    <item>Düz</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Default</item>
-    <item>Black</item>
+    <item>Varsayılan</item>
+    <item>Siyah</item>
   </string-array>
 </resources>

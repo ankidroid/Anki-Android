@@ -58,8 +58,8 @@
     <item>Notiz löschen</item>
     <item>Medien abspielen</item>
     <item>Lernen beenden</item>
-    <item>Notiz zurückstellen</item>
-    <item>Notiz aussetzen</item>
+    <item>Notiz vorläufig aussetzen</item>
+    <item>Notiz dauerhaft aussetzen</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Karte dauerhaft aussetzen</item>
@@ -75,8 +75,8 @@
     <item>Steigende Intervalle</item>
     <item>Sinkende Intervalle</item>
     <item>Meiste Fehlschläge</item>
-    <item>Hinzufügungsreihenfolge</item>
-    <item>Fälligkeitsreihenfolge</item>
+    <item>In Reihenfolge des Hinzufügens</item>
+    <item>Nach Fälligkeit</item>
     <item>Zuletzt hinzugefügte zuerst</item>
     <item>Relative Überfälligkeit</item>
   </string-array>
@@ -90,7 +90,7 @@
     <item>Neue Karten vor Wiederholungen</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>Wenn keine Schriftart auf Karte angegeben</item>
+    <item>Wenn keine Schriftart für Karte angegeben</item>
     <item>Immer</item>
   </string-array>
   <string-array name="day_theme_labels">

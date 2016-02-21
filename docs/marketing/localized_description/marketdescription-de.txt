@@ -21,17 +21,17 @@ Fügen Sie neues Material mit der Desktop-Applikation oder direkt mit AnkiDroid 
 ★ Zusätzliche Merkmale:
 • Antworten schreiben (optional)
 • Whiteboard
-• Karteneditor/ Hinzufügen von neuen Karteikarten
+• Karten hinzufügen und bearbeiten
 • Kartenübersicht
 • Tablet-Layout
 • Importieren von bestehenden Sammlungen (über Anki Desktop)
 • Wörterbuch-Integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse Web-Wörterbücher)
-• Fügen Sie Karten über Intents von anderen Programmen (wie z.B. Wörterbüchern) hinzu
+• Fügen Sie Karten von anderen Programmen (wie z.B. Wörterbüchern) hinzu
 • Unterstützung für andere Schriftarten
 • Ausgebautes Sicherungssystem
-• Navigation durch wischen und berühren
+• Navigation durch Gesten
 • Anpassbar
 • Dynamische Stapel
 • Nacht-Modus
-• in 27 Sprachen übersetzt
+• In 27 Sprachen übersetzt
 • Alle vorherigen AnkiDroid-Version können von der Website heruntergeladen werden

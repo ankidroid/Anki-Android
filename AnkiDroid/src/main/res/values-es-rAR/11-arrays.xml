@@ -94,11 +94,11 @@
     <item>Siempre</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Default</item>
-    <item>Plain</item>
+    <item>Por defecto</item>
+    <item>Plano</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Default</item>
-    <item>Oscuro</item>
+    <item>Por defecto</item>
+    <item>Negro</item>
   </string-array>
 </resources>
