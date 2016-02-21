@@ -179,7 +179,7 @@ Here is an annotated description of the JSONObjects in the models field of the `
            ],
     id : "model ID, matches cards.mid",
     latexPost : "String added to end of LaTeX expressions (usually \\end{document})",
-    latexPre : "preample for LaTeX expressions",
+    latexPre : "preamble for LaTeX expressions",
     mod : "modification time in milliseconds",
     name : "model name",
     req : [
