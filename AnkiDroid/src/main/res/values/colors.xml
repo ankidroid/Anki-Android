@@ -26,6 +26,7 @@
     <color name="stats_counts">#E6000000</color>
     <color name="stats_unseen">#000</color>
     <color name="stats_suspended">#ff0</color>
+    <color name="stats_cumulative">#000000</color>
     <color name="transparent">#00000000</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>

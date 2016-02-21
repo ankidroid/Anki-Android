@@ -65,6 +65,7 @@
         <item name="stats_counts">#E6000000</item>
         <item name="stats_unseen">#000</item>
         <item name="stats_suspended">#ff0</item>
+        <item name="stats_cumulative">@color/stats_cumulative</item>
         <!-- Browser colors -->
         <item name="suspendedColor">@color/material_grey_700</item>
         <item name="markedColor">@color/material_deep_purple_400</item>
