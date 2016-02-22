@@ -754,14 +754,14 @@ public class Collection {
         } catch (JSONException e) {
             new RuntimeException(e);
         }
-        long did;
-        try {
-            did = template.getLong("did");
-        } catch (JSONException e) {
-            did = 0;
+        // Use template did (deck override) if valid, otherwise model did
+        long did = template.optLong("did", 0);
+        if (did > 0 && mDecks.getDecks().containsKey(did)) {
+            card.setDid(did);
+        } else {
+            card.setDid(note.model().optLong("did", 0));
         }
         try {
-            card.setDid(did != 0 ? did : note.model().getLong("did"));
             // if invalid did, use default instead
             JSONObject deck = mDecks.get(card.getDid());
             if (deck.getInt("dyn") == 1) {
