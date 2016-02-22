@@ -36,7 +36,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.zip.ZipFile;
 
 import timber.log.Timber;
@@ -123,7 +125,8 @@ public class MediaSyncer {
                     Pair<String, Integer> info = mCol.getMedia().syncInfo(fname);
                     String lsum = info.first;
                     int ldirty = info.second;
-                    mCol.log(String.format("check: lsum=%s rsum=%s ldirty=%d rusn=%d fname=%s",
+                    mCol.log(String.format(Locale.US,
+                            "check: lsum=%s rsum=%s ldirty=%d rusn=%d fname=%s",
                             TextUtils.isEmpty(lsum) ? "" : lsum.subSequence(0, 4),
                             TextUtils.isEmpty(rsum) ? "" : rsum.subSequence(0, 4),
                             ldirty,
@@ -138,7 +141,7 @@ public class MediaSyncer {
                         } else {
                             mCol.log("have same already");
                         }
-                        mCol.getMedia().markClean(Arrays.asList(fname));
+                        mCol.getMedia().markClean(Collections.singletonList(fname));
                         
                     } else if (!TextUtils.isEmpty(lsum)) {
                         // deleted remotely
@@ -152,7 +155,7 @@ public class MediaSyncer {
                     } else {
                         // deleted both sides
                         mCol.log("both sides deleted");
-                        mCol.getMedia().markClean(Arrays.asList(fname));
+                        mCol.getMedia().markClean(Collections.singletonList(fname));
                     }
                 }
                 _downloadFiles(need);
@@ -183,7 +186,8 @@ public class MediaSyncer {
                     int serverLastUsn = changes.getInt(1);
                     mCol.getMedia().markClean(fnames.subList(0, processedCnt));
 
-                    mCol.log(String.format("processed %d, serverUsn %d, clientUsn %d",
+                    mCol.log(String.format(Locale.US,
+                            "processed %d, serverUsn %d, clientUsn %d",
                             processedCnt, serverLastUsn, lastUsn));
 
                     if (serverLastUsn - processedCnt == lastUsn) {

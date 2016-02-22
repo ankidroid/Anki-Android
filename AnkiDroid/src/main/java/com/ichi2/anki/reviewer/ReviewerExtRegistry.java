@@ -46,15 +46,4 @@ public class ReviewerExtRegistry implements ReviewerExt {
         }
     }
 
-
-    @Override
-    public boolean supportsQuickUpdate() {
-        for (ReviewerExt ext : mReviewerExts) {
-            if (!ext.supportsQuickUpdate()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
 }

@@ -84,7 +84,6 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
-import com.ichi2.utils.HtmlUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -712,8 +711,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             // We have to watch out. For the preview we don’t know the font or font size. Skip those there. (Anki
             // desktop just doesn’t show the input tag there. Do it with standard values here instead.)
             if (mTypeFont != null && !TextUtils.isEmpty(mTypeFont) && mTypeSize > 0) {
-                sb.append("style=\"font-family: '" + mTypeFont + "'; font-size: " + Integer.toString(mTypeSize) +
-                    "px;\" ");
+                sb.append("style=\"font-family: '").append(mTypeFont).append("'; font-size: ")
+                        .append(Integer.toString(mTypeSize)).append("px;\" ");
             }
             sb.append(">\n</center>\n");
         } else {
@@ -786,7 +785,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Set<String> matches = new LinkedHashSet<>();
         // LinkedHashSet: make entries appear only once, like Anki desktop (see also issue #2208), and keep the order
         // they appear in.
-        String groupOne = new String();
+        String groupOne;
         int colonColonIndex = -1;
         while (m.find()) {
             groupOne = m.group(1);
@@ -1889,7 +1888,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         answerText = matcher.replaceAll("\n");
         matcher = Sound.sSoundPattern.matcher(answerText);
         answerText = matcher.replaceAll("");
-        return HtmlUtil.nfcNormalized(answerText);
+        return Utils.nfcNormalized(answerText);
     }
 
 
@@ -1903,7 +1902,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (answer == null || answer.equals("")) {
             return "";
         }
-        return HtmlUtil.nfcNormalized(answer.trim());
+        return Utils.nfcNormalized(answer.trim());
     }
 
 
@@ -2240,7 +2239,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * @return true if the AnkiDroid preference for writing answer is true and if the Anki Deck CardLayout specifies a
      *         field to query
      */
-    private final boolean typeAnswer() {
+    private boolean typeAnswer() {
         return mShowTypeAnswerField && null != mTypeCorrect;
     }
 

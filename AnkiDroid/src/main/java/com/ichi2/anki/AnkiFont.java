@@ -50,7 +50,7 @@ public class AnkiFont {
      */
     public static AnkiFont createAnkiFont(Context ctx, String path, boolean fromAssets) {
         File fontfile = new File(path);
-        String name = Utils.removeFileExtension(fontfile.getName());
+        String name = Utils.splitFilename(fontfile.getName())[0];
         String family = name;
         List<String> attributes = new ArrayList<>();
 
@@ -109,9 +109,7 @@ public class AnkiFont {
 
 
     public String getDeclaration() {
-        StringBuilder sb = new StringBuilder("@font-face {");
-        sb.append(getCSS(false)).append(" src: url(\"file://").append(mPath).append("\");}");
-        return sb.toString();
+        return "@font-face {" + getCSS(false) + " src: url(\"file://" + mPath + "\");}";
     }
 
 

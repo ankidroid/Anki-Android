@@ -35,25 +35,16 @@ public class CustomFontsReviewerExt implements ReviewerExt {
     private String mOverrideFontStyle;
     private String mThemeFontStyle;
     private String mDominantFontStyle;
-    private final boolean mSupportsQuickUpdate;
-
 
     public CustomFontsReviewerExt(Context context) {
         Map<String, AnkiFont> customFontsMap = getCustomFontsMap(context);
         mCustomStyle = getCustomFontsStyle(customFontsMap) + getDominantFontStyle(context, customFontsMap);
-        mSupportsQuickUpdate = customFontsMap.size() == 0;
     }
 
 
     @Override
     public void updateCssStyle(StringBuilder cssStyle) {
         cssStyle.append(mCustomStyle);
-    }
-
-
-    @Override
-    public boolean supportsQuickUpdate() {
-        return mSupportsQuickUpdate;
     }
 
 

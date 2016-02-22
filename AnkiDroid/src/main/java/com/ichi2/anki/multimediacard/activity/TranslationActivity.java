@@ -48,7 +48,7 @@ import com.ichi2.anki.multimediacard.language.LanguagesListerGlosbe;
 import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.web.HttpFetcher;
 import com.ichi2.async.Connection;
-import com.ichi2.utils.HtmlUtil;
+import com.ichi2.libanki.Utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -102,7 +102,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         setContentView(R.layout.activity_translation);
 
         try {
-            mSource = getIntent().getExtras().getString(EXTRA_SOURCE).toString();
+            mSource = getIntent().getExtras().getString(EXTRA_SOURCE);
         } catch (Exception e) {
             mSource = "";
         }
@@ -330,7 +330,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
                         continue;
                     }
                     if (meaning.getLanguage().contentEquals(desiredLang)) {
-                        String unescappedString = HtmlUtil.unescape(meaning.getText());
+                        String unescappedString = Utils.unescape(meaning.getText());
                         res.add(unescappedString);
                     }
                 }
@@ -342,7 +342,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
                     continue;
                 }
                 if (phrase.getLanguage().contentEquals(desiredLang)) {
-                    String unescappedString = HtmlUtil.unescape(phrase.getText());
+                    String unescappedString = Utils.unescape(phrase.getText());
                     res.add(unescappedString);
                 }
             }
