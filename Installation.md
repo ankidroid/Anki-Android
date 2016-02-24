@@ -7,7 +7,7 @@ The easiest way to install AnkiDroid is via your favorite app-store:
 
 If these links don't work, open the Google Play application on your device, search for "anki", then in the results click on "AnkiDroid", and then on "Install". 
 
-You can also <a href='https://ankidroid.org/docs/manual.html#betaTesting'>access the latest beta version on Google Play</a> (registration on forum required).<br>
+You can also <a href='https://ankidroid.org/docs/manual.html#betaTesting'>access the latest beta version on Google Play</a>
 <br>
 <h1>APK</h1>
 
