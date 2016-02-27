@@ -3,13 +3,20 @@ apply plugin: 'com.github.triplet.play'
 def homePath = System.properties['user.home']
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.ichi2.anki"
         minSdkVersion 10
         targetSdkVersion 23
         testApplicationId "com.ichi2.anki.tests"
+        // Stops the Gradle’s automatic rasterization of vectors
+        generatedDensities = [] // remove when moving to gradle 2.0
+    }
+    // Flag that tells aapt to keep the attribute ids
+    aaptOptions {
+        // replace with vectorDrawables.useSupportLibrary = true when moving to gradle 2.0
+        additionalParameters "--no-version-vectors"
     }
     lintOptions {
         abortOnError false
@@ -41,12 +48,12 @@ play {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.2.0'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
-    compile 'com.android.support:design:23.1.1'
-    compile 'com.android.support:customtabs:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile('com.afollestad.material-dialogs:core:0.8.5.1@aar') {
+    compile 'com.android.support:design:23.2.0'
+    compile 'com.android.support:customtabs:23.2.0'
+    compile 'com.android.support:recyclerview-v7:23.2.0'
+    compile('com.afollestad.material-dialogs:core:0.8.5.5@aar') {
         //exclude group: 'com.android.support'  // uncomment to force our local support lib version
         transitive = true
     }
