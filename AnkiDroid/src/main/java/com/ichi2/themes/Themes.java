@@ -33,11 +33,12 @@ public class Themes {
     public final static int ALPHA_ICON_ENABLED_DARK = 138; // 54%
 
     // Day themes
-    private final static int THEME_DAY_DEFAULT = 0;
+    private final static int THEME_DAY_LIGHT = 0;
     private final static int THEME_DAY_PLAIN = 1;
     // Night themes
-    private final static int THEME_NIGHT_DEFAULT = 0;
-    private final static int THEME_NIGHT_BLACK = 1;
+    private final static int THEME_NIGHT_BLACK = 0;
+    private final static int THEME_NIGHT_DARK = 1;
+
 
     public static void showThemedToast(Context context, String text, boolean shortLength) {
         Toast.makeText(context, text, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
@@ -48,7 +49,7 @@ public class Themes {
         if (prefs.getBoolean("invertedColors", false)) {
             int theme = Integer.parseInt(prefs.getString("nightTheme", "0"));
             switch (theme) {
-                case THEME_NIGHT_DEFAULT:
+                case THEME_NIGHT_DARK:
                     context.setTheme(R.style.Theme_Dark_Compat);
                     break;
                 case THEME_NIGHT_BLACK:
@@ -58,7 +59,7 @@ public class Themes {
         } else {
             int theme = Integer.parseInt(prefs.getString("dayTheme", "0"));
             switch (theme) {
-                case THEME_DAY_DEFAULT:
+                case THEME_DAY_LIGHT:
                     context.setTheme(R.style.Theme_Light_Compat);
                     break;
                 case THEME_DAY_PLAIN:
@@ -73,7 +74,7 @@ public class Themes {
         if (prefs.getBoolean("invertedColors", false)) {
             int theme = Integer.parseInt(prefs.getString("nightTheme", "0"));
             switch (theme) {
-                case THEME_NIGHT_DEFAULT:
+                case THEME_NIGHT_DARK:
                     context.setTheme(R.style.LegacyActionBarDark);
                     break;
                 case THEME_NIGHT_BLACK:
@@ -83,7 +84,7 @@ public class Themes {
         } else {
             int theme = Integer.parseInt(prefs.getString("dayTheme", "0"));
             switch (theme) {
-                case THEME_DAY_DEFAULT:
+                case THEME_DAY_LIGHT:
                     context.setTheme(R.style.LegacyActionBarLight);
                     break;
                 case THEME_DAY_PLAIN:

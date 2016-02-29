@@ -3,7 +3,7 @@
     <color name="theme_black_primary">#070707</color>
     <color name="theme_black_primary_dark">#000000</color>
     <color name="theme_black_primary_light">#151515</color>
-    <color name="theme_black_accent">#808080</color>
+    <color name="theme_black_accent">#1565C0</color>
     <color name="theme_black_primary_text">#fff</color> <!-- Alternative: #808080 -->
     <color name="theme_black_secondary_text">#a0a0a0</color>
     <color name="theme_black_row_current">#0c0c0c</color>
