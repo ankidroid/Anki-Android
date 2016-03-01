@@ -25,6 +25,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import com.ichi2.anki.FlashCardsContract;
 
@@ -503,14 +504,8 @@ public final class AddContentApi {
 
 
     private static String joinFields(String[] list) {
-        StringBuilder result = new StringBuilder(128);
-        for (int i = 0; i < list.length - 1; i++) {
-            result.append(list[i]).append("\u001f");
-        }
-        if (list.length > 0) {
-            result.append(list[list.length - 1]);
-        }
-        return result.toString();
+        // note: since list is very unlikely to be length <2, any optimizations for those lengths are irrelevant
+        return TextUtils.join("\u001f", list);
     }
 
 
