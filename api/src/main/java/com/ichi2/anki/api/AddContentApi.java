@@ -20,6 +20,7 @@ package com.ichi2.anki.api;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
@@ -48,6 +49,56 @@ public final class AddContentApi {
     }
 
     /**
+     * In some situations an activity Intent needs to be launched before the API can be used.
+     * One such example is on Android 6.0 where the user must first run AnkiDroid in order to grant storage permission.
+     *
+     * @return the intent for the activity that needs to be started. null if the API is already available
+     */
+    public Intent getMandatoryIntentPrecedingApiUse() {
+        if (checkContentProviderOkay()) {
+            return null;
+        }
+        // we cannot even run a query, so take the user to the AnkiDroid app to make sure everything is okay
+        // note: this should only happen on Android 6+ (because user may not yet have granted storage permission to AnkiDroid app)
+        String packageName = getAnkiDroidPackageName(mContext);
+        // Note: this intent could be replaced with a specific AnkiDroid intent designed for new users (i.e. explaining why AnkiDroid needs storage permission)
+        // or simply the same launcher intent (as below) could do this
+        Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(packageName);
+        if (intent == null) {
+            // not even installed (so use market intent)
+            // some app stores (e.g. Amazon) don't like this URI, in which case caller should detect whether app installed before calling this method
+            Uri marketURI = Uri.parse("market://details?id=" + packageName);
+            intent = new Intent(Intent.ACTION_VIEW, marketURI);
+        }
+        return intent;
+    }
+
+    /**
+     * On Android 6.0+, the ContentResolver#query method returns null if the user has not yet granted storage permission
+     */
+    private boolean checkContentProviderOkay() {
+        Cursor allModelsCursor = null;
+        try {
+            allModelsCursor = mResolver.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null);
+            if (allModelsCursor == null) {
+                // ankidroid not yet granted storage permission
+                //Log.e(TAG, "allModelsCursor null");
+                return false;
+            }
+            return true;
+        }
+        catch (Exception e) {
+            //Log.e(TAG, "unable to query flashcards", e);
+            return false;
+        }
+        finally {
+            if (allModelsCursor != null) {
+                allModelsCursor.close();
+            }
+        }
+    }
+
+    /**
      * Create a new note with specified fields, tags, model, and deck
      * @param mid ID for the model used to add the notes
      * @param did ID for the deck the cards should be stored in (use 1 for default deck)
@@ -57,29 +108,94 @@ public final class AddContentApi {
      */
     public Uri addNewNote(long mid, long did, String[] fields, String tags) {
         // Create a new note
-        ContentValues values = new ContentValues();
-        values.put(FlashCardsContract.Note.MID, mid);
-        values.put(FlashCardsContract.Note.FLDS, AddContentApi.joinFields(fields));
-        values.put(FlashCardsContract.Note.TAGS, tags);
-        Uri newNoteUri = mResolver.insert(FlashCardsContract.Note.CONTENT_URI, values);
-        if (newNoteUri == null) {
-            return null;
+        ContentValues noteValues = new ContentValues();
+        noteValues.put(FlashCardsContract.Note.MID, mid);
+        noteValues.put(FlashCardsContract.Note.FLDS, joinFields(fields));
+        noteValues.put(FlashCardsContract.Note.TAGS, tags);
+        Uri newNoteUri;
+        if (getProviderSpecVersionCode() >= FAST_ADD_MIN_SPEC_VERSION_CODE) {
+            noteValues.put(FlashCardsContract.Card.DECK_ID, did);
+            newNoteUri = mResolver.insert(FlashCardsContract.Note.CONTENT_URI, noteValues);
         }
-        // Move cards to specified deck
-        Uri cardsUri = Uri.withAppendedPath(newNoteUri, "cards");
-        final Cursor cardsCursor = mResolver.query(cardsUri, null, null, null, null);
-        try {
-            while (cardsCursor.moveToNext()) {
-                String ord = cardsCursor.getString(cardsCursor.getColumnIndex(FlashCardsContract.Card.CARD_ORD));
+        else {
+            newNoteUri = mResolver.insert(FlashCardsContract.Note.CONTENT_URI, noteValues);
+            if (newNoteUri == null) {
+                return null;
+            }
+            // Move cards to specified deck
+            Uri cardsUri = Uri.withAppendedPath(newNoteUri, "cards");
+            final Cursor cardsCursor = mResolver.query(cardsUri, null, null, null, null);
+            try {
                 ContentValues cardValues = new ContentValues();
                 cardValues.put(FlashCardsContract.Card.DECK_ID, did);
-                Uri cardUri = Uri.withAppendedPath(Uri.withAppendedPath(newNoteUri,"cards"), ord);
-                mResolver.update(cardUri, cardValues, null, null);
+                while (cardsCursor.moveToNext()) {
+                    String ord = cardsCursor.getString(cardsCursor.getColumnIndex(FlashCardsContract.Card.CARD_ORD));
+                    Uri cardUri = Uri.withAppendedPath(cardsUri, ord);
+                    mResolver.update(cardUri, cardValues, null, null);
+                }
             }
-        } finally {
-            cardsCursor.close();
+            finally {
+                cardsCursor.close();
+            }
         }
         return newNoteUri;
+    }
+
+    public enum DuplicateStrategy {
+        /**
+         * (fastest) add the note no matter what #checkForDuplicates returns
+         *
+         * this is the default
+         */
+        ADD,
+        /**
+         * do not add the note if #checkForDuplicates returns true
+         */
+        IGNORE
+        //, UPDATE // if #checkForDuplicates returns false, then add note, otherwise update existing note
+    }
+
+    public int addNewNotes(long mid, long did, String[][] fieldsArr, String[] tagsArr, DuplicateStrategy duplicateStrategy) {
+        if (tagsArr != null && fieldsArr.length != tagsArr.length) {
+            throw new IllegalArgumentException("fieldsArr and tagsArr different length");
+        }
+        if (getProviderSpecVersionCode() >= BULK_INSERT_MIN_SPEC_VERSION_CODE) {
+            ContentValues[] valuesArr = new ContentValues[fieldsArr.length];
+            for (int i = 0; i < fieldsArr.length; i++) {
+                String[] fields = fieldsArr[i];
+                if (fields == null) {
+                    continue;
+                }
+                ContentValues values = new ContentValues();
+                values.put(FlashCardsContract.Note.MID, mid);
+                values.put(FlashCardsContract.Note.FLDS, joinFields(fields));
+                if (tagsArr != null) {
+                    values.put(FlashCardsContract.Note.TAGS, tagsArr[i]);
+                }
+                values.put(FlashCardsContract.Card.DECK_ID, did);
+                valuesArr[i] = values;
+            }
+            Uri uri = FlashCardsContract.Note.CONTENT_URI;
+            if (duplicateStrategy != null && duplicateStrategy != DuplicateStrategy.ADD) {
+                uri = uri.buildUpon().appendQueryParameter("duplicateStrategy", duplicateStrategy.name()).build();
+            }
+            return mResolver.bulkInsert(uri, valuesArr);
+        }
+        else {
+            // bulkInsert not available, so iterate over the notes and use #addNewNote instead
+            int result = 0;
+            for (int i = 0; i < fieldsArr.length; i++) {
+                String[] fields = fieldsArr[i];
+                if (fields == null) {
+                    continue;
+                }
+                Uri noteUri = addNewNote(mid, did, fields, tagsArr[i]);
+                if (noteUri != null) {
+                    result++;
+                }
+            }
+            return result;
+        }
     }
 
     /**
@@ -182,7 +298,7 @@ public final class AddContentApi {
         // Create the model using dummy templates
         ContentValues values = new ContentValues();
         values.put(FlashCardsContract.Model.NAME, name);
-        values.put(FlashCardsContract.Model.FIELD_NAMES, AddContentApi.joinFields(fields));
+        values.put(FlashCardsContract.Model.FIELD_NAMES, joinFields(fields));
         values.put(FlashCardsContract.Model.NUM_CARDS, cards.length);
         values.put(FlashCardsContract.Model.CSS, css);
         values.put(FlashCardsContract.Model.DECK_ID, did);
@@ -513,8 +629,36 @@ public final class AddContentApi {
         return result.toString();
     }
 
-
     private static String[] splitFields(String fields) {
         return fields.split("\\x1f", -1);
+    }
+
+    private static final String PROVIDER_SPEC_META_DATA_KEY = "com.ichi2.anki.provider.spec";
+    private static final int DEFAULT_PROVIDER_SPEC_VERSION = 1; // for when meta-data key does not exist
+
+    private static final int FAST_ADD_MIN_SPEC_VERSION_CODE = 2; // client does not really need to know about this (so private)
+    public static final int BULK_INSERT_MIN_SPEC_VERSION_CODE = 2;
+
+    public int getProviderSpecVersionCode() {
+        return getProviderMetaDataAsInt(PROVIDER_SPEC_META_DATA_KEY, mContext);
+    }
+
+    private static int getProviderMetaDataAsInt(String key, Context context) {
+        try {
+            // the Android documentation for PackageManager#resolveContentProvider suggests flags should be 0, but GET_META_DATA seems to work anyway
+            ProviderInfo info = context.getPackageManager().resolveContentProvider(FlashCardsContract.AUTHORITY, PackageManager.GET_META_DATA);
+            if (info == null) {
+                return DEFAULT_PROVIDER_SPEC_VERSION;
+            }
+            Object obj = info.metaData.get(key);
+            if (obj == null) {
+                return DEFAULT_PROVIDER_SPEC_VERSION;
+            }
+            return Integer.valueOf(obj.toString());
+        }
+        catch (Throwable t) {
+            //Timber.w("metaDataKeyError: " + key, t);
+            return DEFAULT_PROVIDER_SPEC_VERSION;
+        }
     }
 }
