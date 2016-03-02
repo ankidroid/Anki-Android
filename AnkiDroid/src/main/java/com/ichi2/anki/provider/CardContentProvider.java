@@ -24,6 +24,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 import com.ichi2.libanki.DB;
@@ -631,6 +632,154 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
+    /**
+     * @param values for notes uris, it is acceptable for values to contain null items. Such items will be skipped
+     */
+    @Override
+    public int bulkInsert (Uri uri, ContentValues[] values) {
+        Timber.d("CardContentProvider.bulkInsert");
+        int match = sUriMatcher.match(uri);
+        if (match == NOTES) {
+            String duplicateStrategy = uri.getQueryParameter("duplicateStrategy");
+            boolean ignoreDuplicates = "ignore".equalsIgnoreCase(duplicateStrategy);
+            return bulkInsertNotes(values, ignoreDuplicates);
+        }
+        return super.bulkInsert(uri, values);
+    }
+
+    /**
+     * IMPORTANT: presumes all values have the same modelId and deckId
+     *
+     * @return -1 iff there was some problem
+     */
+    private int bulkInsertNotes(ContentValues[] valuesArr, boolean ignoreDuplicates) {
+        if (valuesArr == null || valuesArr.length == 0) {
+            return 0;
+        }
+        Collection col = CollectionHelper.getInstance().getCol(getContext());
+        if (col == null) {
+            return 0;
+        }
+
+        // attempt to cache the model
+        long modelId = -1L;
+        JSONObject model = null;
+        String modelName = null; // lazily instantiate this (because not always needed)
+        String fld0Name = null; // lazily instantiate this (because not always needed)
+
+        Timber.d("performing bulkInsertNotes for " + valuesArr.length + " items");
+        col.getDecks().flush(); // is it okay to move this outside the for-loop? Is it needed at all?
+        int result = 0;
+        SQLiteDatabase sqldb = col.getDb().getDatabase();
+        try {
+            sqldb.beginTransaction();
+            for (int i = 0; i < valuesArr.length; i++) {
+                ContentValues values = valuesArr[i];
+                if (values == null) {
+                    continue;
+                }
+                String flds = values.getAsString(FlashCardsContract.Note.FLDS);
+                if (flds == null) {
+                    continue;
+                }
+                Long thisModelId = values.getAsLong(FlashCardsContract.Note.MID);
+                if (thisModelId == null || thisModelId < 0) {
+                    Timber.d("Unable to get model at index: " + i);
+                    continue;
+                }
+                if (model == null || thisModelId != modelId) {
+                    model = col.getModels().get(thisModelId);
+                    modelId = thisModelId;
+                    modelName = null; // lazily instantiated because might not be needed
+                    fld0Name = null; // lazily instantiated because might not be needed
+                }
+                Long deckId = values.getAsLong(FlashCardsContract.Card.DECK_ID);
+                if (deckId == null || deckId < 0) {
+                    Timber.d("Unable to get deck at index: " + i);
+                    continue;
+                }
+                String[] fldsArray = Utils.splitFields(flds);
+
+                if (ignoreDuplicates) {
+                    // we need to check if it already exists
+                    String deckName = col.getDecks().name(deckId);
+                    if (modelName == null) {
+                        modelName = getModelName(model);
+                    }
+                    if (fld0Name == null) {
+                        fld0Name = getFieldName(model, 0);
+                    }
+                    String fld0 = fldsArray[0];
+
+                    String query = String.format("%s:\"%s\" deck:\"%s\" note:\"%s\"", fld0Name, fld0, deckName, modelName);
+                    List<Long> noteIds = col.findNotes(query);
+                    if (!noteIds.isEmpty()) {
+                        Timber.d("ignoring duplicate note: " + fld0);
+                        continue;
+                    }
+                }
+
+                // Create empty note
+                com.ichi2.libanki.Note newNote = new com.ichi2.libanki.Note(col, model); // for some reason we cannot pass modelId in here
+                // Set fields
+                // Check that correct number of flds specified
+                if (fldsArray.length != newNote.getFields().length) {
+                    throw new IllegalArgumentException("Incorrect flds argument : " + flds);
+                }
+                for (int idx = 0; idx < fldsArray.length; idx++) {
+                    newNote.setField(idx, fldsArray[idx]);
+                }
+                // Set tags
+                String tags = values.getAsString(FlashCardsContract.Note.TAGS);
+                if (tags != null) {
+                    newNote.setTagsFromStr(tags);
+                }
+                // Add to collection
+                col.addNote(newNote);
+                // maybe it's a fast-add in which case we should add a card to the deck
+                for (Card card : newNote.cards()) {
+                    card.setDid(deckId);
+                    card.flush();
+                }
+                result++;
+            }
+            sqldb.setTransactionSuccessful();
+        }
+        finally {
+            sqldb.endTransaction();
+        }
+        return result;
+    }
+
+    private static String getModelName(JSONObject model) {
+        try {
+            Object result = model.get("name");
+            if (result == null) {
+                return null;
+            }
+            return String.valueOf(result);
+        }
+        catch (JSONException e) {
+            Timber.e("Unable to get name from model: " + model, e);
+            return null;
+        }
+    }
+
+    private static String getFieldName(JSONObject model, int index) {
+        try {
+            JSONArray flds = model.getJSONArray("flds");
+            JSONObject fld = flds.getJSONObject(index);
+            if (fld == null) {
+                return null;
+            }
+            return fld.optString("name", "");
+        }
+        catch (JSONException e) {
+            Timber.e("Unable to get field name from model: " + model + " at index: " + index, e);
+            return null;
+        }
+    }
+
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         Timber.d("CardContentProvider.insert");
@@ -666,7 +815,18 @@ public class CardContentProvider extends ContentProvider {
                 }
                 // Add to collection
                 col.addNote(newNote);
-                return Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(newNote.getId()));
+                // maybe it's a fast-add in which case we should add a card to the deck
+                Long deckId = values.getAsLong(FlashCardsContract.Card.DECK_ID);
+                if (deckId != null && deckId >= 0) {
+                    // Move cards to specified deck
+                    col.getDecks().flush(); // is it okay to move this outside the for-loop? Is it needed at all?
+                    for (Card card : newNote.cards()) {
+                        card.setDid(deckId);
+                        card.flush();
+                    }
+                }
+                Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(newNote.getId()));
+                return noteUri;
             }
             case NOTES_ID:
                 // Note ID is generated automatically by libanki

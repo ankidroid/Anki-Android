@@ -311,6 +311,7 @@
             android:authorities="com.ichi2.anki.flashcards"
             android:enabled="true"
             android:exported="true" >
+            <meta-data android:name="com.ichi2.anki.provider.spec" android:value="2" />
         </provider>
     </application>
 
