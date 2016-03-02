@@ -311,6 +311,11 @@ public class FlashCardsContract {
          * MIME type used for notes.
          */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.ichi2.anki.note";
+
+        /**
+         * Used only by bulkInsert() to specify which deck the notes should be placed in
+         */
+        public static final String DECK_ID_QUERY_PARAM = "deckId";
     }
 
 

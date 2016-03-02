@@ -24,6 +24,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 import com.ichi2.libanki.DB;
@@ -419,6 +420,7 @@ public class CardContentProvider extends ContentProvider {
                 Set<Map.Entry<String, Object>> valueSet = values.valueSet();
                 for (Map.Entry<String, Object> entry : valueSet) {
                     String key = entry.getKey();
+                    // when the client does not specify FLDS, then don't update the FLDS
                     if (key.equals(FlashCardsContract.Note.FLDS)) {
                         // Update FLDS
                         Timber.d("CardContentProvider: flds update...");
@@ -436,7 +438,10 @@ public class CardContentProvider extends ContentProvider {
                     } else if (key.equals(FlashCardsContract.Note.TAGS)) {
                         // Update tags
                         Timber.d("CardContentProvider: tags update...");
-                        currentNote.setTagsFromStr((String) entry.getValue());
+                        Object tags = entry.getValue();
+                        if (tags != null) {
+                            currentNote.setTagsFromStr(String.valueOf(tags));
+                        }
                         updated++;
                     } else {
                         // Unsupported column
@@ -631,6 +636,112 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
+    /**
+     * This can be used to insert multiple notes into a single deck. The deck is specified as a query parameter.
+     *
+     * For example: content://com.ichi2.anki.flashcards/notes?deckId=1234567890123
+     *
+     * @param uri content Uri
+     * @param values for notes uri, it is acceptable for values to contain null items. Such items will be skipped
+     * @return number of notes added (does not include existing notes that were updated)
+     */
+    @Override
+    public int bulkInsert(Uri uri, ContentValues[] values) {
+        Timber.d("CardContentProvider.bulkInsert");
+        // by default, #bulkInsert simply calls insert for each item in #values
+        // but in some cases, we want to override this behavior
+        int match = sUriMatcher.match(uri);
+        if (match == NOTES) {
+            String deckIdStr = uri.getQueryParameter(FlashCardsContract.Note.DECK_ID_QUERY_PARAM);
+            if (deckIdStr != null) {
+                try {
+                    long deckId = Long.valueOf(deckIdStr);
+                    return bulkInsertNotes(values, deckId);
+                } catch (NumberFormatException e) {
+                    Timber.d("Invalid %s: %s", FlashCardsContract.Note.DECK_ID_QUERY_PARAM, deckIdStr);
+                }
+            }
+            // deckId not specified, so default to #super implementation (as in spec version 1)
+        }
+        return super.bulkInsert(uri, values);
+    }
+
+    /**
+     * This implementation optimizes for when the notes are grouped according to model
+     */
+    private int bulkInsertNotes(ContentValues[] valuesArr, long deckId) {
+        if (valuesArr == null || valuesArr.length == 0) {
+            return 0;
+        }
+        Collection col = CollectionHelper.getInstance().getCol(getContext());
+        if (col == null) {
+            return 0;
+        }
+
+        Timber.d("performing bulkInsertNotes for " + valuesArr.length + " items");
+
+        // for caching model information (so we don't have to query for each note)
+        long modelId = -1L;
+        JSONObject model = null;
+
+        col.getDecks().flush(); // is it okay to move this outside the for-loop? Is it needed at all?
+        SQLiteDatabase sqldb = col.getDb().getDatabase();
+        try {
+            int result = 0;
+            sqldb.beginTransaction();
+            for (int i = 0; i < valuesArr.length; i++) {
+                ContentValues values = valuesArr[i];
+                if (values == null) {
+                    continue;
+                }
+                String flds = values.getAsString(FlashCardsContract.Note.FLDS);
+                if (flds == null) {
+                    continue;
+                }
+                Long thisModelId = values.getAsLong(FlashCardsContract.Note.MID);
+                if (thisModelId == null || thisModelId < 0) {
+                    Timber.d("Unable to get model at index: " + i);
+                    continue;
+                }
+                String[] fldsArray = Utils.splitFields(flds);
+
+                if (model == null || thisModelId != modelId) {
+                    // new modelId so need to recalculate model, modelId and invalidate duplicateChecker (which is based on previous model)
+                    model = col.getModels().get(thisModelId);
+                    modelId = thisModelId;
+                }
+
+                // Create empty note
+                com.ichi2.libanki.Note newNote = new com.ichi2.libanki.Note(col, model); // for some reason we cannot pass modelId in here
+                // Set fields
+                // Check that correct number of flds specified
+                if (fldsArray.length != newNote.getFields().length) {
+                    throw new IllegalArgumentException("Incorrect flds argument : " + flds);
+                }
+                for (int idx = 0; idx < fldsArray.length; idx++) {
+                    newNote.setField(idx, fldsArray[idx]);
+                }
+                // Set tags
+                String tags = values.getAsString(FlashCardsContract.Note.TAGS);
+                if (tags != null) {
+                    newNote.setTagsFromStr(tags);
+                }
+                // Add to collection
+                col.addNote(newNote);
+                for (Card card : newNote.cards()) {
+                    card.setDid(deckId);
+                    card.flush();
+                }
+                result++;
+            }
+            col.flush(); // TODO is this necessary? Probably better to be safe than sorry
+            sqldb.setTransactionSuccessful();
+            return result;
+        } finally {
+            sqldb.endTransaction();
+        }
+    }
+
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         Timber.d("CardContentProvider.insert");
@@ -719,6 +830,7 @@ public class CardContentProvider extends ContentProvider {
                     // Add the model to collection (from this point on edits will require a full-sync)
                     mm.add(newModel);
                     mm.save(newModel);  // TODO: is this necessary?
+                    mm.flush();
                     // Get the mid and return a URI
                     String mid = Long.toString(newModel.getLong("id"));
                     return Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, mid);
@@ -746,6 +858,7 @@ public class CardContentProvider extends ContentProvider {
                 // Insert new deck with specified name
                 String deckName = values.getAsString(FlashCardsContract.Deck.DECK_NAME);
                 did = col.getDecks().id(deckName);
+                //col.getDecks().flush(); // have not found a situation where flush() is necessary (so not adding it, yet)
                 return Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(did));
             case DECK_SELECTED:
                 // Can't have more than one selected deck
