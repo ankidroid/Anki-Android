@@ -63,9 +63,9 @@
     <item quantity="other">%d минут остались</item>
   </plurals>
   <plurals name="studied_cards_today">
-    <item quantity="one">Studied %1$d card in %2$s today</item>
-    <item quantity="few">Studied %1$d cards in %2$s today</item>
-    <item quantity="other">Studied %1$d cards in %2$s today</item>
+    <item quantity="one">Изучено %1$d карта %2$s сегодня</item>
+    <item quantity="few">Изучено %1$d карты %2$s сегодня</item>
+    <item quantity="other">Изучено %1$d карт %2$s сегодня</item>
   </plurals>
   <string name="type_answer_hint">Напечатайте ответ</string>
   <string name="show_answer">Показать ответ</string>
@@ -97,19 +97,19 @@
   <string name="delete_note_message">Действительно удалить эту заметку и все связанные карты?\n%s</string>
   <string name="menu_select">Выделить текст</string>
   <string name="menu_search">Поиск в %1$s</string>
-  <string name="menu_mark_note">Mark note</string>
-  <string name="menu_unmark_note">Unmark note</string>
+  <string name="menu_mark_note">Пометить заметку</string>
+  <string name="menu_unmark_note">Снять отметку с заметки</string>
   <string name="new_deck">Создать колоду</string>
   <string name="create">Создать</string>
   <string name="new_dynamic_deck">Создать фильтрованную колоду</string>
   <string name="night_mode">Ночной режим</string>
   <string name="directory_inaccessible">Недоступен каталог AnkiDroid</string>
-  <string name="time_quantity_seconds">%d s</string>
-  <string name="time_quantity_minutes">%d min</string>
-  <string name="time_quantity_hours">%d h</string>
-  <string name="time_quantity_days">%d d</string>
-  <string name="time_quantity_months">%.1f mo</string>
-  <string name="time_quantity_years">%.1f yr</string>
+  <string name="time_quantity_seconds">%d сек</string>
+  <string name="time_quantity_minutes">%d мин</string>
+  <string name="time_quantity_hours">%d ч</string>
+  <string name="time_quantity_days">%d д</string>
+  <string name="time_quantity_months">%.1f мес</string>
+  <string name="time_quantity_years">%.1f г</string>
   <string name="later">Позже</string>
   <string name="rebuild_cram_deck">Перестроение колоды для зубрёжки.\nПожалуйста, подождите...</string>
   <string name="rebuild_cram_label">Перестроить</string>
@@ -120,7 +120,7 @@
   <string name="empty_deck">Эта колода пуста</string>
   <string name="studyoptions_empty">Эта колода пуста. Нажмите кнопку +, чтобы добавить новое содержимое.</string>
   <string name="studyoptions_limit_reached">Дневной лимит обучения достигнут</string>
-  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+  <string name="studyoptions_empty_schedule">Не запланировано карт для изучения</string>
   <string name="studyoptions_congrats_finished">Поздравляем! На сегодня задание выполнено.</string>
   <string name="studyoptions_congrats_more_rev">Достигнут ограничитель количества просмотров на сегодня, но всё ещё есть карты ожидающие просмотра. Для оптимального запоминания рекомендуется увеличить ежедневный лимит в параметрах.</string>
   <string name="studyoptions_congrats_more_new">Есть ещё новые карты, но дневной лимит карт был уже выучен. Вы можете увеличить лимит, но учтите, что это увеличит и объёмы повторений в следующие дни.</string>
@@ -128,12 +128,12 @@
   <string name="studyoptions_no_cards_due">Нет карт в очереди.</string>
   <string name="sd_card_not_mounted">Карта памяти не примонтирована</string>
   <string name="button_sync">Синхронизация</string>
-  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
+  <string name="cancel_sync_confirm">Отменить синхронизацию?</string>
   <string name="continue_sync">Продолжить синхронизацию</string>
-  <string name="sync_cancelled">Sync cancelled</string>
-  <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
+  <string name="sync_cancelled">Синхронизация отменена</string>
+  <string name="sync_cancel_message">Отмена&#8230;\nЭто пожет занять некоторое время.</string>
   <string name="export">Экспорт</string>
-  <string name="export_collection">Export collection</string>
+  <string name="export_collection">Экспортировать коллекцию</string>
   <string name="export_deck">Экспортировать колоду</string>
   <string name="nothing">Ничего</string>
   <string name="title_activity_template_editor">Типы карт</string>
@@ -147,9 +147,9 @@
     <item quantity="few">Удалить  тип карты \'%2$s\' и %1$d карты этого типа?</item>
     <item quantity="other">Удалить  тип карты \'%2$s\' и %1$d карт этого типа?</item>
   </plurals>
-  <string name="invalid_template">A card could not be generated</string>
+  <string name="invalid_template">Карта не может быть сгенерированна</string>
   <string name="card_template_editor_would_delete_note"> Удаление этого типа карт приведет к удалению одного
         или нескольких примечаний, создайте сначала новый тип карт.</string>
-  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="read_write_permission_label">Писать и читать базу данных AnkiDroid</string>
+  <string name="read_write_permission_description">Позволяет приложению создавать и читать существующие заметки, карты и колоды</string>
 </resources>

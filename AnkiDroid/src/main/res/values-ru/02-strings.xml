@@ -93,7 +93,7 @@
   <string name="saving_facts">Сохранение заметки</string>
   <string name="saving_model">Сохранение модели</string>
   <string name="add">Добавить</string>
-  <string name="save">Save</string>
+  <string name="save">Сохранить</string>
   <string name="close">Закрыть</string>
   <string name="select">Выбрать</string>
   <string name="saving_changes">Сохранение изменений...</string>
@@ -136,7 +136,7 @@
   <string name="show_hint">Показать %s</string>
   <string name="info_rate">Оценить AnkiDroid</string>
   <string name="col_load_failed">Сбой загрузки коллекции.\nНажмите кнопку назад, чтобы закрыть AnkiDroid.</string>
-  <string name="import_title">Importing</string>
+  <string name="import_title">Испортировать</string>
   <string name="import_select_title">Выбрать файл для импорта</string>
   <string name="import_message_add">Добавить</string>
   <string name="import_message_replace_confirm">Удалить Вашу существующую коллекцию и заменить её данными файла %s. Вы уверены?</string>
@@ -156,7 +156,7 @@
   <string name="import_hint">Чтобы импортировать карты, поместите файл apkg в каталог %s и нажмите «ОК»</string>
   <string name="upgrade_import_no_file_found">Найден неимпортируемый файл %1$s</string>
   <string name="study_options">Опции колоды</string>
-  <string name="select_tts">Set TTS language</string>
+  <string name="select_tts">Установить язык произношения</string>
   <string name="custom_study">Дополнительное обучение</string>
   <string name="more_options">Еще</string>
   <string name="dyn_deck_desc">Это специальная колода для изучения вне нормального расписания. Карты будут автоматически возвращены в их изначальную колоду после их просмотра. Удаление этой колоды из списка колод возвратит все оставшиеся карты в их изначальную колоду.</string>
@@ -165,8 +165,8 @@
   <string name="sched_end">(конец)</string>
   <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
   <string name="sched_has_buried">Некоторые связанные или скрытые карты были отложены до следующей сессии.</string>
-  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+  <string name="tag_editor_add_feedback">Нажмите “%2$s” чтобы подтвердить добавление “%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">Существующий тэг “%1$s” выбран</string>
   <string name="lookup_hint">Скопировав текст, нажмите где-нибудь на карте, чтобы показать иконку поиска</string>
   <plurals name="time_span_seconds">
     <item quantity="one">%s секунда</item>
@@ -174,29 +174,29 @@
     <item quantity="other">%s секунд</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="one">%s minute</item>
-    <item quantity="few">%s minutes</item>
-    <item quantity="other">%s minutes</item>
+    <item quantity="one">%s минута</item>
+    <item quantity="few">%s минут</item>
+    <item quantity="other">%s минут</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="one">%s hour</item>
-    <item quantity="few">%s hours</item>
-    <item quantity="other">%s hours</item>
+    <item quantity="one">%s час</item>
+    <item quantity="few">%s часов</item>
+    <item quantity="other">%s часа</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="one">%s day</item>
-    <item quantity="few">%s days</item>
-    <item quantity="other">%s days</item>
+    <item quantity="one">%s день</item>
+    <item quantity="few">%s дней</item>
+    <item quantity="other">%s дней</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="one">%s month</item>
-    <item quantity="few">%s months</item>
-    <item quantity="other">%s months</item>
+    <item quantity="one">%s месяц</item>
+    <item quantity="few">%s месяцев</item>
+    <item quantity="other">%s месяцев</item>
   </plurals>
   <plurals name="time_span_years">
-    <item quantity="one">%s year</item>
-    <item quantity="few">%s years</item>
-    <item quantity="other">%s years</item>
+    <item quantity="one">%s год</item>
+    <item quantity="few">%s лет</item>
+    <item quantity="other">%s года</item>
   </plurals>
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">Эта колода уже существует</string>
