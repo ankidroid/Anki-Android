@@ -41,7 +41,7 @@ public class ChartBuilder {
     private int mFrameThickness = 60;
 
     int mMaxCards = 0;
-    private int mType;
+    private Stats.AxisType mType;
     private int[] mValueLabels;
     private int[] mColors;
     private int[] mAxisTitles;
@@ -62,7 +62,7 @@ public class ChartBuilder {
         mChartType = chartType;
     }
 
-    private void calcStats(int type){
+    private void calcStats(Stats.AxisType type){
         mType = type;
         Stats stats = new Stats(mCollectionData, mIsWholeCollection);
         switch (mChartType){
@@ -70,10 +70,10 @@ public class ChartBuilder {
                 stats.calculateDue(mChartView.getContext(), mType);
                 break;
             case REVIEW_COUNT:
-                stats.calculateDone(mType, true);
+                stats.calculateReviewCount(mType);
                 break;
             case REVIEW_TIME:
-                stats.calculateDone(mType, false);
+                stats.calculateReviewTime(mType);
                 break;
             case INTERVALS:
                 stats.calculateIntervals(mChartView.getContext(), mType);
@@ -106,7 +106,7 @@ public class ChartBuilder {
         mDynamicAxis = (Boolean) metaData[20];
     }
 
-    public PlotSheet renderChart(int type){
+    public PlotSheet renderChart(Stats.AxisType type){
         calcStats(type);
         Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.STROKE);

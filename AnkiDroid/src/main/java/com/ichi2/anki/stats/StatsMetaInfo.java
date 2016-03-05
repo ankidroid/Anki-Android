@@ -16,13 +16,15 @@
 
 package com.ichi2.anki.stats;
 
+import com.ichi2.libanki.Stats;
+
 /**
  * Interface between Stats.java and AdvancedStatistics.java
  */
 public class StatsMetaInfo {
     boolean mDynamicAxis = false;
     boolean mHasColoredCumulative = false;
-    int mType;
+    Stats.AxisType mType;
     int mTitle;
     boolean mBackwards;
     int[] mValueLabels;
@@ -81,11 +83,11 @@ public class StatsMetaInfo {
         this.mHasColoredCumulative = mHasColoredCumulative;
     }
 
-    public int getmType() {
+    public Stats.AxisType getmType() {
         return mType;
     }
 
-    public void setmType(int mType) {
+    public void setmType(Stats.AxisType mType) {
         this.mType = mType;
     }
 
