@@ -27,12 +27,12 @@ CREATE TABLE cards (
     queue           integer not null,
       -- Same as type, but -1=suspended, -2=user buried, -3=sched buried
     due             integer not null,
-     -- Due is used differently for different queues: 
-     --   new queue: note id or random int
-     --   rev queue: integer day
-     --   lrn queue: integer timestamp
+     -- Due is used differently for different card types: 
+     --   new: note id or random int
+     --   due: integer day, relative to the collection's creation time
+     --   learning: integer timestamp
     ivl             integer not null,
-      -- interval (used in SRS algorithm)
+      -- interval (used in SRS algorithm). Negative = seconds, possitive = days
     factor          integer not null,
       -- factor (used in SRS algorithm)
     reps            integer not null,
