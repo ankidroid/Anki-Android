@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -240,7 +241,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             menu.findItem(R.id.action_hide_whiteboard).setVisible(true);
             menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
 
-            Drawable whiteboardIcon = getResources().getDrawable(R.drawable.ic_gesture_white_24dp);
+            Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white_24dp);
             if (mShowWhiteboard) {
                 whiteboardIcon.setAlpha(255);
                 menu.findItem(R.id.action_hide_whiteboard).setIcon(whiteboardIcon);
