@@ -20,8 +20,8 @@ package com.ichi2.themes;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -116,9 +116,8 @@ public class Themes {
 
     public static int[] getColorFromAttr(Context context, int[] attrs) {
         TypedArray ta = context.obtainStyledAttributes(attrs);
-        Resources res = context.getResources();
         for (int i = 0; i < attrs.length; i++) {
-            attrs[i] = ta.getColor(i, res.getColor(R.color.white));
+            attrs[i] = ta.getColor(i, ContextCompat.getColor(context, R.color.white));
         }
         ta.recycle();
         return attrs;

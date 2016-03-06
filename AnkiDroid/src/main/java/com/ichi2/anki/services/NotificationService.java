@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.IntentCompat;
 
 
@@ -62,7 +63,7 @@ public class NotificationService extends Service {
             String cardsDueText = getString(R.string.widget_minimum_cards_due_notification_ticker_text, dueCardsCount);
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                     .setSmallIcon(R.drawable.ic_stat_notify)
-                    .setColor(getResources().getColor(R.color.material_light_blue_700))
+                    .setColor(ContextCompat.getColor(context, R.color.material_light_blue_700))
                     .setContentTitle(cardsDueText)
                     .setTicker(cardsDueText);
             // Enable vibrate and blink if set in preferences

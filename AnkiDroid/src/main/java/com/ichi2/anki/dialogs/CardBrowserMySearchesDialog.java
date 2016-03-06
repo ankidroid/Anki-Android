@@ -1,11 +1,13 @@
 package com.ichi2.anki.dialogs;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,12 +58,13 @@ public class CardBrowserMySearchesDialog extends DialogFragment {
         super.onCreate(savedInstanceState);
         final Resources res = getResources();
 
-        final MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
+        Activity activity = getActivity();
+        final MaterialDialog.Builder builder = new MaterialDialog.Builder(activity);
 
         int type = getArguments().getInt("type");
         if (type == CARD_BROWSER_MY_SEARCHES_TYPE_LIST) {
             mSavedFilters = (HashMap<String, String>) getArguments().getSerializable("savedFilters");
-            mSearchesAdapter = new MySearchesArrayAdapter(getActivity(), new ArrayList<>(mSavedFilters.keySet()));
+            mSearchesAdapter = new MySearchesArrayAdapter(activity, new ArrayList<>(mSavedFilters.keySet()));
             mSearchesAdapter.notifyDataSetChanged(); //so the values are sorted.
             builder.title(res.getString(R.string.card_browser_list_my_searches_title))
                     .adapter(mSearchesAdapter, new MaterialDialog.ListCallback() {
@@ -85,7 +88,7 @@ public class CardBrowserMySearchesDialog extends DialogFragment {
         }
         MaterialDialog dialog = builder.build();
         if (dialog.getListView() != null) {
-            dialog.getListView().setDivider(new ColorDrawable(res.getColor(R.color.material_grey_600)));
+            dialog.getListView().setDivider(new ColorDrawable(ContextCompat.getColor(activity, R.color.material_grey_600)));
             dialog.getListView().setDividerHeight(1);
             //adjust padding to use dp as seen here: http://stackoverflow.com/a/9685690/1332026
             float scale = res.getDisplayMetrics().density;

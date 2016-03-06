@@ -17,11 +17,11 @@
 package com.ichi2.anki.widgets;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -109,14 +109,13 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
                 R.attr.expandRef,
                 R.attr.collapseRef };
         TypedArray ta = context.obtainStyledAttributes(attrs);
-        Resources res = context.getResources();
-        mZeroCountColor = ta.getColor(0, res.getColor(R.color.black));
-        mNewCountColor = ta.getColor(1, res.getColor(R.color.black));
-        mLearnCountColor = ta.getColor(2, res.getColor(R.color.black));
-        mReviewCountColor = ta.getColor(3, res.getColor(R.color.black));
+        mZeroCountColor = ta.getColor(0, ContextCompat.getColor(context, R.color.black));
+        mNewCountColor = ta.getColor(1, ContextCompat.getColor(context, R.color.black));
+        mLearnCountColor = ta.getColor(2, ContextCompat.getColor(context, R.color.black));
+        mReviewCountColor = ta.getColor(3, ContextCompat.getColor(context, R.color.black));
         mRowCurrentDrawable = ta.getResourceId(4, 0);
-        mDeckNameDefaultColor = ta.getColor(5, res.getColor(R.color.black));
-        mDeckNameDynColor = ta.getColor(6, res.getColor(R.color.material_blue_A700));
+        mDeckNameDefaultColor = ta.getColor(5, ContextCompat.getColor(context, R.color.black));
+        mDeckNameDynColor = ta.getColor(6, ContextCompat.getColor(context, R.color.material_blue_A700));
         mExpandImage = ta.getDrawable(7);
         mCollapseImage = ta.getDrawable(8);
         ta.recycle();

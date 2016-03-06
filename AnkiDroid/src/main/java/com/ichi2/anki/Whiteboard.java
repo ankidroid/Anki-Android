@@ -24,6 +24,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.support.v4.content.ContextCompat;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -65,13 +66,13 @@ public class Whiteboard extends View {
             if (mMonochrome) {
                 mForegroundColor = Color.BLACK;
             } else {
-                mForegroundColor = context.getResources().getColor(R.color.wb_fg_color);
+                mForegroundColor = ContextCompat.getColor(context, R.color.wb_fg_color);
             }
         } else {
             if (mMonochrome) {
                 mForegroundColor = Color.WHITE;
             } else {
-                mForegroundColor = context.getResources().getColor(R.color.wb_fg_color_inv);
+                mForegroundColor = ContextCompat.getColor(context, R.color.wb_fg_color_inv);
             }
         }
 
