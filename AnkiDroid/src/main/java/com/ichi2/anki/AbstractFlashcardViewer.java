@@ -37,6 +37,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
+import android.support.v4.content.ContextCompat;
 import android.text.ClipboardManager;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -1270,23 +1271,23 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         switch (ease) {
             case EASE_1:
                 mChosenAnswer.setText("\u2022");
-                mChosenAnswer.setTextColor(getResources().getColor(R.color.material_red_500));
+                mChosenAnswer.setTextColor(ContextCompat.getColor(this, R.color.material_red_500));
                 break;
             case EASE_2:
                 mChosenAnswer.setText("\u2022\u2022");
-                mChosenAnswer.setTextColor(getResources().getColor(buttonNumber == 4 ?
+                mChosenAnswer.setTextColor(ContextCompat.getColor(this, buttonNumber == 4 ?
                         R.color.material_blue_grey_600:
                         R.color.material_green_500));
                 break;
             case EASE_3:
                 mChosenAnswer.setText("\u2022\u2022\u2022");
-                mChosenAnswer.setTextColor(getResources().getColor(buttonNumber == 4 ?
+                mChosenAnswer.setTextColor(ContextCompat.getColor(this, buttonNumber == 4 ?
                         R.color.material_green_500 :
                         R.color.material_light_blue_500));
                 break;
             case EASE_4:
                 mChosenAnswer.setText("\u2022\u2022\u2022\u2022");
-                mChosenAnswer.setTextColor(getResources().getColor(R.color.material_light_blue_500));
+                mChosenAnswer.setTextColor(ContextCompat.getColor(this, R.color.material_light_blue_500));
                 break;
         }
 

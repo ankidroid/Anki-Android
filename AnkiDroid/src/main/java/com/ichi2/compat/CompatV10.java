@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -101,10 +102,10 @@ public class CompatV10 implements Compat {
 
     public void setSelectableBackground(View view) {
         // NOTE: we can't use android.R.attr.selectableItemBackground until API 11
-        Resources res = view.getContext().getResources();
+        Context context = view.getContext();
         int[] attrs = new int[] {android.R.attr.colorBackground};
-        TypedArray ta = view.getContext().obtainStyledAttributes(attrs);
-        view.setBackgroundColor(ta.getColor(0, res.getColor(R.color.white)));
+        TypedArray ta = context.obtainStyledAttributes(attrs);
+        view.setBackgroundColor(ta.getColor(0, ContextCompat.getColor(context, R.color.white)));
         ta.recycle();
     }
 

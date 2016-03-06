@@ -27,6 +27,7 @@ import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.support.v7.widget.Toolbar;
@@ -1301,7 +1302,7 @@ public class NoteEditor extends AnkiActivity {
         Integer dupeCode = mEditorNote.dupeOrEmpty();
         // Change bottom line color of text field
         if (dupeCode != null && dupeCode == 2) {
-            field.getBackground().setColorFilter(getResources().getColor(R.color.material_red_500),
+            field.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.material_red_500),
                     PorterDuff.Mode.SRC_ATOP);
             isDupe = true;
         } else {
