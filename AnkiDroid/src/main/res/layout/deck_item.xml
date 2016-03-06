@@ -15,6 +15,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/DeckPickerHoriz"
     android:background="?attr/selectableItemBackground"
     android:layout_width="fill_parent"
@@ -22,7 +23,9 @@
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/deck_picker_left_padding"
-    android:paddingRight="@dimen/deck_picker_right_padding">
+    android:paddingRight="@dimen/deck_picker_right_padding"
+    tools:background="@android:color/holo_orange_light">
+
     <ImageButton
         android:id="@+id/deckpicker_indent"
         android:minWidth="0dp"
@@ -54,7 +57,8 @@
             android:maxLines="2"
             android:textColor="?android:textColorPrimary"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="Deck name" />
     </LinearLayout>
 
     <LinearLayout
@@ -75,7 +79,8 @@
             android:background="@color/transparent"
             android:gravity="center"
             android:paddingRight="5dip"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="10" />
 
         <TextView
             android:id="@+id/deckpicker_lrn"
@@ -85,7 +90,8 @@
             android:background="@color/transparent"
             android:gravity="center"
             android:paddingRight="5dip"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="42" />
 
         <TextView
             android:id="@+id/deckpicker_rev"
@@ -95,6 +101,7 @@
             android:layout_marginRight="6dip"
             android:background="@color/transparent"
             android:gravity="center"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="13" />
     </LinearLayout>
 </RelativeLayout>

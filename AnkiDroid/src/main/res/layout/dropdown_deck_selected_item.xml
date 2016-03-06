@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:orientation="vertical"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    tools:background="@android:color/holo_orange_light"
+    tools:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/dropdown_deck_name"
         android:layout_width="wrap_content"
@@ -12,7 +16,9 @@
         android:drawablePadding="16dp"
         android:drawableRight="@drawable/spinner_triangle"
         android:textColor="?attr/actionBarTextColor"
-        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+        tools:text="@string/deck_summary_all_decks" />
+
     <TextView
         android:id="@+id/dropdown_deck_counts"
         android:layout_width="wrap_content"
@@ -20,5 +26,7 @@
         android:layout_marginTop="@dimen/action_bar_subtitle_top_margin"
         android:singleLine="true"
         android:textColor="?attr/actionBarTextColor"
-        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle" />
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+        tools:text="42 cards shown" />
+
 </LinearLayout>
