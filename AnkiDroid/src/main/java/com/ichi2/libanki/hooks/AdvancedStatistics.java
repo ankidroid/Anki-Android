@@ -140,7 +140,7 @@ public class AdvancedStatistics extends Hook  {
         Context context = (Context) args[1];
 
         Settings = new Settings(context);
-        return calculateDueAsMetaInfo((StatsMetaInfo) arg, (int) args[0], context, (String) args[2]);
+        return calculateDueAsMetaInfo((StatsMetaInfo) arg, (Stats.AxisType) args[0], context, (String) args[2]);
     }
     public static void install(Hooks h) {
         h.addHook("advancedStatistics", new AdvancedStatistics());
@@ -167,7 +167,7 @@ public class AdvancedStatistics extends Hook  {
      * @param dids Deck id's
      * @return @see #metaInfo
      */
-    private StatsMetaInfo calculateDueAsMetaInfo(StatsMetaInfo metaInfo, int type, Context context, String dids) {
+    private StatsMetaInfo calculateDueAsMetaInfo(StatsMetaInfo metaInfo, Stats.AxisType type, Context context, String dids) {
 
         //To indicate that we calculated the statistics so that Stats.java knows that it shouldn't display the standard Forecast chart.
         metaInfo.setStatsCalculated(true);
@@ -196,7 +196,7 @@ public class AdvancedStatistics extends Hook  {
                                    R.attr.stats_young,
                                    R.attr.stats_learn};
 
-        mAxisTitles = new int[] { type, R.string.stats_cards, R.string.stats_cumulative_cards };
+        mAxisTitles = new int[] { type.ordinal(), R.string.stats_cards, R.string.stats_cumulative_cards };
 
         PlottableSimulationResult simuationResult = calculateDueAsPlottableSimulationResult(type, mCol, dids);
 
@@ -237,10 +237,10 @@ public class AdvancedStatistics extends Hook  {
         }
         mMaxElements = dues.size()-1;           //# X values
         switch (type) {
-            case Stats.TYPE_MONTH:
+            case TYPE_MONTH:
                 mLastElement = 31;              //X-Axis: Max. value
                 break;
-            case Stats.TYPE_YEAR:
+            case TYPE_YEAR:
                 mLastElement = 52;              //X-Axis: Max. value
                 break;
             default:
@@ -299,19 +299,19 @@ public class AdvancedStatistics extends Hook  {
      *        - The forecasted number of reviews per review type (relearn, mature, young, learn)
      *        - The forecasted number of cards in each state (new, young, mature)
      */
-    private PlottableSimulationResult calculateDueAsPlottableSimulationResult(int type, Collection mCol, String dids) {
+    private PlottableSimulationResult calculateDueAsPlottableSimulationResult(Stats.AxisType type, Collection mCol, String dids) {
         int end = 0;
         int chunk = 0;
         switch (type) {
-            case Stats.TYPE_MONTH:
+            case TYPE_MONTH:
                 end = 31;
                 chunk = 1;
                 break;
-            case Stats.TYPE_YEAR:
+            case TYPE_YEAR:
                 end = 52;
                 chunk = 7;
                 break;
-            case Stats.TYPE_LIFE:
+            case TYPE_LIFE:
                 end = 24;
                 chunk = 30;
                 break;
@@ -349,12 +349,12 @@ public class AdvancedStatistics extends Hook  {
         if (dues.size() == 0 || dues.get(0)[0] > 0) {
             dues.add(0, new int[] { 0, 0, 0, 0, 0 });
         }
-        if (type == Stats.TYPE_LIFE && dues.size() < 2) {
+        if (type == Stats.AxisType.TYPE_LIFE && dues.size() < 2) {
             end = 31;
         }
-        if (type != Stats.TYPE_LIFE && dues.get(dues.size() - 1)[0] < end) {
+        if (type != Stats.AxisType.TYPE_LIFE && dues.get(dues.size() - 1)[0] < end) {
             dues.add(new int[] { end, 0, 0, 0, 0 });
-        } else if (type == Stats.TYPE_LIFE && dues.size() < 2) {
+        } else if (type == Stats.AxisType.TYPE_LIFE && dues.size() < 2) {
             dues.add(new int[] { Math.max(12, dues.get(dues.size() - 1)[0] + 1), 0, 0, 0, 0 });
         }
 

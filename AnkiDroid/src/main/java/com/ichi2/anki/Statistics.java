@@ -191,15 +191,15 @@ public class Statistics extends NavigationDrawerActivity implements
             return true;
         }
         switch (mTaskHandler.getStatType()){
-            case Stats.TYPE_MONTH:
+            case TYPE_MONTH:
                 MenuItem monthItem = menu.findItem(R.id.item_time_month);
                 monthItem.setChecked(true);
                 break;
-            case Stats.TYPE_YEAR:
+            case TYPE_YEAR:
                 MenuItem yearItem = menu.findItem(R.id.item_time_year);
                 yearItem.setChecked(true);
                 break;
-            case Stats.TYPE_LIFE:
+            case TYPE_LIFE:
                 MenuItem lifeItem = menu.findItem(R.id.item_time_all);
                 lifeItem.setChecked(true);
                 break;
@@ -219,24 +219,24 @@ public class Statistics extends NavigationDrawerActivity implements
             case R.id.item_time_month:
                 if (item.isChecked()) item.setChecked(false);
                 else item.setChecked(true);
-                if (mTaskHandler.getStatType() != Stats.TYPE_MONTH) {
-                    mTaskHandler.setStatType(Stats.TYPE_MONTH);
+                if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_MONTH) {
+                    mTaskHandler.setStatType(Stats.AxisType.TYPE_MONTH);
                     mSectionsPagerAdapter.notifyDataSetChanged();
                 }
                 return true;
             case R.id.item_time_year:
                 if (item.isChecked()) item.setChecked(false);
                 else item.setChecked(true);
-                if (mTaskHandler.getStatType() != Stats.TYPE_YEAR) {
-                    mTaskHandler.setStatType(Stats.TYPE_YEAR);
+                if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_YEAR) {
+                    mTaskHandler.setStatType(Stats.AxisType.TYPE_YEAR);
                     mSectionsPagerAdapter.notifyDataSetChanged();
                 }
                 return true;
             case R.id.item_time_all:
                 if (item.isChecked()) item.setChecked(false);
                 else item.setChecked(true);
-                if (mTaskHandler.getStatType() != Stats.TYPE_LIFE) {
-                    mTaskHandler.setStatType(Stats.TYPE_LIFE);
+                if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_LIFE) {
+                    mTaskHandler.setStatType(Stats.AxisType.TYPE_LIFE);
                     mSectionsPagerAdapter.notifyDataSetChanged();
                 }
                 return true;
@@ -419,7 +419,7 @@ public class Statistics extends NavigationDrawerActivity implements
         private int mWidth = 0;
         private int mSectionNumber;
 
-        private int mType  = Stats.TYPE_MONTH;
+        private Stats.AxisType mType  = Stats.AxisType.TYPE_MONTH;
         private boolean mIsCreated = false;
 
         private AsyncTask mCreateChartTask;
@@ -588,7 +588,7 @@ public class Statistics extends NavigationDrawerActivity implements
 
         private WebView mWebView;
         private ProgressBar mProgressBar;
-        private int mType  = Stats.TYPE_MONTH;
+        private Stats.AxisType mType  = Stats.AxisType.TYPE_MONTH;
         private boolean mIsCreated = false;
         private AsyncTask mCreateStatisticsOverviewTask;
 

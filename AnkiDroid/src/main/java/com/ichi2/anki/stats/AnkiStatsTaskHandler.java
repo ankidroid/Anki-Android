@@ -44,7 +44,7 @@ public class AnkiStatsTaskHandler {
 
     private Collection mCollectionData;
     private float mStandardTextSize = 10f;
-    private int mStatType = Stats.TYPE_MONTH;
+    private Stats.AxisType mStatType = Stats.AxisType.TYPE_MONTH;
     private boolean mIsWholeCollection = false;
     private static Lock sLock = new ReentrantLock();
 
@@ -340,11 +340,11 @@ public class AnkiStatsTaskHandler {
         this.mStandardTextSize = mStandardTextSize;
     }
 
-    public int getStatType() {
+    public Stats.AxisType getStatType() {
         return mStatType;
     }
 
-    public void setStatType(int mStatType) {
+    public void setStatType(Stats.AxisType mStatType) {
         this.mStatType = mStatType;
     }
 
