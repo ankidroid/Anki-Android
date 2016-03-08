@@ -30,7 +30,9 @@ import android.text.TextUtils;
 import com.ichi2.anki.FlashCardsContract;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,6 +44,11 @@ public final class AddContentApi {
     private static final String TEST_TAG = "PREVIEW_NOTE";
     private static final String DECK_REF_DB = "com.ichi2.anki.api.decks";
     private static final String MODEL_REF_DB = "com.ichi2.anki.api.models";
+
+    private static final String PROVIDER_SPEC_META_DATA_KEY = "com.ichi2.anki.provider.spec";
+    private static final int DEFAULT_PROVIDER_SPEC_VALUE = 1; // for when meta-data key does not exist
+
+    private static final int BULK_INSERT_MIN_SPEC_VERSION = 2;
 
     public AddContentApi(Context context) {
         mContext = context.getApplicationContext();
@@ -62,6 +69,10 @@ public final class AddContentApi {
         values.put(FlashCardsContract.Note.MID, mid);
         values.put(FlashCardsContract.Note.FLDS, AddContentApi.joinFields(fields));
         values.put(FlashCardsContract.Note.TAGS, tags);
+        return addNewNote(did, values);
+    }
+
+    private Uri addNewNote(long did, ContentValues values) {
         Uri newNoteUri = mResolver.insert(FlashCardsContract.Note.CONTENT_URI, values);
         if (newNoteUri == null) {
             return null;
@@ -84,6 +95,62 @@ public final class AddContentApi {
     }
 
     /**
+     * Add multiple notes to the same deck. Each note has the same model.  If the note already exists, it is ignored.
+     *
+     * @return number of notes added (does not include existing notes that were changed or unchanged)
+     */
+    public int addNotes(long mid, long did, String[][] fieldsArr, String[] tagsArr) {
+        if (tagsArr != null && fieldsArr.length != tagsArr.length) {
+            throw new IllegalArgumentException("fieldsArr and tagsArr different length");
+        }
+        Map<String, Note> existingNotesMap = createNotesMap(mid, did);
+
+        List<ContentValues> newNoteValuesList = new ArrayList<>();
+
+        for (int i = 0; i < fieldsArr.length; i++) {
+            String[] fields = fieldsArr[i];
+            if (fields == null) {
+                continue;
+            }
+            String tags = tagsArr[i];
+            if (fields.length >= 1) { // probably don't need to check, but just to be safe
+                String key = fields[0];
+                // we need to check whether it already exists
+                if (existingNotesMap.containsKey(key)) {
+                    // already exists - but does it need to be updated?
+	                Note note = existingNotesMap.get(key);
+                    if (note == null) {
+                        // we are trying to add a note that is a duplicate of an earlier note we just added
+                    }
+                    else if (note.equals(fields, tags)) {
+                        // the existing note is the same so does not need to be updated
+                    }
+                    else {
+                        // TODO add update note support
+                    }
+                    continue;
+                }
+                existingNotesMap.put(key, null);
+            }
+            ContentValues values = new ContentValues();
+            values.put(FlashCardsContract.Note.MID, mid);
+            values.put(FlashCardsContract.Note.FLDS, joinFields(fields));
+            if (tags != null) {
+                values.put(FlashCardsContract.Note.TAGS, tags);
+            }
+            newNoteValuesList.add(values);
+        }
+
+        if (newNoteValuesList.isEmpty()) {
+            return 0;
+        }
+
+        ContentValues[] newNoteValues = newNoteValuesList.toArray(new ContentValues[newNoteValuesList.size()]);
+
+        return getCompat().addNewNotes(did, newNoteValues);
+    }
+
+    /**
      * Check if the note which is about to be added is a duplicate
      * @param mid model id
      * @param did deck id
@@ -98,15 +165,25 @@ public final class AddContentApi {
             return false;
         }
         String[] fieldNames = getFieldList(mid);
-        String query = String.format("%s:\"%s\" deck:\"%s\" note:\"%s\"", fieldNames[0], fields[0], deckName,modelName);
+        return findNoteId(modelName, deckName, fieldNames, fields) != null;
+    }
+
+    private Long findNoteId(String modelName, String deckName, String[] fieldNames, String[] fields) {
+        String query = String.format("%s:\"%s\" deck:\"%s\" note:\"%s\"", fieldNames[0], fields[0], deckName, modelName);
         Cursor notesTableCursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI,
                 FlashCardsContract.Note.DEFAULT_PROJECTION, query, null, null);
-        if (notesTableCursor != null) {
-            int count = notesTableCursor.getCount();
-            notesTableCursor.close();
-            return count > 0;
+        if (notesTableCursor == null) {
+            return null;
         }
-        return false;
+        try {
+            if (!notesTableCursor.moveToFirst()) {
+                return null;
+            }
+            int idIndex = notesTableCursor.getColumnIndexOrThrow(FlashCardsContract.Note._ID);
+            return notesTableCursor.getLong(idIndex);
+        } finally {
+            notesTableCursor.close();
+        }
     }
 
     /**
@@ -183,7 +260,7 @@ public final class AddContentApi {
         // Create the model using dummy templates
         ContentValues values = new ContentValues();
         values.put(FlashCardsContract.Model.NAME, name);
-        values.put(FlashCardsContract.Model.FIELD_NAMES, AddContentApi.joinFields(fields));
+        values.put(FlashCardsContract.Model.FIELD_NAMES, joinFields(fields));
         values.put(FlashCardsContract.Model.NUM_CARDS, cards.length);
         values.put(FlashCardsContract.Model.CSS, css);
         values.put(FlashCardsContract.Model.DECK_ID, did);
@@ -511,5 +588,152 @@ public final class AddContentApi {
 
     private static String[] splitFields(String fields) {
         return fields.split("\\x1f", -1);
+    }
+
+    /**
+     * Old versions of AnkiDroid are very slow at adding multiple notes at once (maybe a couple of minutes for 1000 notes).
+     * Newer versions are about 20 times faster.
+     *
+     * @return true iff #addNotes performs quickly
+     */
+    public boolean supportsFastAddNotes() {
+        return getProviderSpecVersionCode() >= BULK_INSERT_MIN_SPEC_VERSION;
+    }
+
+    private int getProviderSpecVersionCode() {
+        // PackageManager#resolveContentProvider docs suggest flags should be 0 (but that gives null metadata)
+        // GET_META_DATA seems to work anyway
+        ProviderInfo info = mContext.getPackageManager().resolveContentProvider(FlashCardsContract.AUTHORITY, PackageManager.GET_META_DATA);
+        if (info == null) {
+            return -1;
+        }
+        if (info.metaData != null && info.metaData.containsKey(PROVIDER_SPEC_META_DATA_KEY)) {
+            return info.metaData.getInt(PROVIDER_SPEC_META_DATA_KEY);
+        }
+        else {
+            return DEFAULT_PROVIDER_SPEC_VALUE;
+        }
+    }
+
+    public int getNoteCount(long mid, long did) {
+        Cursor cursor = createNotesForModelDeckCursor(mid, did);
+        if (cursor == null) {
+            // this happens when the deck is empty (not sure why)
+            return 0;
+        }
+        try {
+            return cursor.getCount();
+        } finally {
+            cursor.close();
+        }
+    }
+
+    private static class Note {
+        final long mId;
+        final String[] mFields;
+        final String mTags;
+
+        private Note(long id, String[] fields, String tags) {
+            mId = id;
+            mFields = fields;
+            mTags = tags == null ? null : tags.trim();
+        }
+
+        public boolean equals(String[] fields, String tags) {
+            if (!Arrays.equals(mFields, fields)) {
+                return false;
+            }
+            if (!TextUtils.equals(mTags, tags)) {
+                return false;
+            }
+            return true;
+        }
+    }
+
+    /**
+     * @return mutable map
+     */
+    private Map<String, Note> createNotesMap(long mid, long did) {
+        Cursor cursor = createNotesForModelDeckCursor(mid, did);
+        Map<String, Note> result = new HashMap<>();
+        if (cursor == null) {
+            // this can happen when the deck is empty (not sure why)
+            return result;
+        }
+        try {
+            int idIndex = cursor.getColumnIndexOrThrow(FlashCardsContract.Note._ID);
+            int fldsIndex = cursor.getColumnIndexOrThrow(FlashCardsContract.Note.FLDS);
+            int tagsIndex = cursor.getColumnIndexOrThrow(FlashCardsContract.Note.TAGS);
+            while (cursor.moveToNext()) {
+                long id = cursor.getLong(idIndex);
+                String fldsStr = cursor.getString(fldsIndex);
+                if (fldsStr == null) {
+                    continue;
+                }
+                String[] flds = splitFields(fldsStr);
+                if (flds.length < 1) { // pretty sure this can never happen
+                    continue;
+                }
+                String tags = cursor.getString(tagsIndex);
+                Note note = new Note(id, flds, tags);
+                result.put(flds[0], note);
+            }
+        } finally {
+            cursor.close();
+        }
+        return result;
+    }
+
+    private Cursor createNotesForModelDeckCursor(long mid, long did) {
+        String modelName = getModelName(mid);
+        String deckName = getDeckName(did);
+        if (modelName == null || deckName == null) {
+            return null;
+        }
+        String query = String.format("deck:\"%s\" note:\"%s\"", deckName, modelName);
+        Cursor cursor = null;
+        cursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI, FlashCardsContract.Note.DEFAULT_PROJECTION, query, null, null);
+        if (cursor == null) {
+            // this can happen when the deck is empty (not sure why)
+            return null;
+        }
+        return cursor;
+    }
+
+    /**
+     * Best not to store this in case the user updates AnkiDroid app while client app is staying alive
+     */
+    private Compat getCompat() {
+        return getProviderSpecVersionCode() < BULK_INSERT_MIN_SPEC_VERSION ? new CompatV1() : new CompatV2();
+    }
+
+    private interface Compat {
+        int addNewNotes(long did, ContentValues[] valuesArr);
+    }
+
+    private class CompatV1 implements Compat {
+        @Override
+        public int addNewNotes(long did, ContentValues[] valuesArr) {
+            int result = 0;
+            for (ContentValues values : valuesArr) {
+                if (values == null) {
+                    continue;
+                }
+                Uri noteUri = addNewNote(did, values);
+                if (noteUri != null) {
+                    result++;
+                }
+            }
+            return result;
+       }
+    }
+
+    private class CompatV2 implements Compat {
+        @Override
+        public int addNewNotes(long did, ContentValues[] valuesArr) {
+            Uri.Builder builder = FlashCardsContract.Note.CONTENT_URI.buildUpon();
+            builder.appendQueryParameter(FlashCardsContract.Note.DECK_ID_QUERY_PARAM, String.valueOf(did));
+            return mResolver.bulkInsert(builder.build(), valuesArr);
+        }
     }
 }
