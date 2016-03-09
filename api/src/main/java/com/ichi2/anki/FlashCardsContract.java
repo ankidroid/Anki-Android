@@ -125,8 +125,9 @@ public class FlashCardsContract {
      * note can be directly accessed. If no ID is appended the content provides functions return
      * all the notes that match the query as defined in {@code selection} argument in the
      * {@code query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)} call.
-     * The {@code selectionArgs} parameter is always ignored. The query syntax that must go in the
-     * {@code selection} argument is described
+     * For queries, the {@code selectionArgs} parameter can contain an optional selection statement for the notes table
+     * in the sql database. E.g. "mid = 12345678" could be used to limit to a particular model ID.
+     * The {@code selection} parameter is an optional search string for the Anki browser. The syntax is described
      * <a href="http://ankisrs.net/docs/manual.html#searching">in the search section of the Anki manual</a>.
      * <p/>
      * <p>

@@ -26,6 +26,7 @@ import android.database.MatrixCursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import com.ichi2.libanki.DB;
 import com.ichi2.anki.AnkiDroidApp;
@@ -190,20 +191,31 @@ public class CardContentProvider extends ContentProvider {
                 // TODO: Allow sort order, then also update description in FlashCardContract
                 String columnsStr = proj2str(projection);
                 String query = (selection != null) ? selection : "";
-                List<Long> noteIds = col.findNotes(query);
-                if ((noteIds != null) && (!noteIds.isEmpty())) {
-                    String selectedIds = "id in " + Utils.ids2str(noteIds);
-                    Cursor cur;
-                    try {
-                        cur = col.getDb().getDatabase().rawQuery("select " + columnsStr + " from notes where " + selectedIds, null);
-                    } catch (SQLException e) {
-                        throw new IllegalArgumentException("Not possible to query for data for IDs " +
-                                selectedIds, e);
-                    }
-                    return cur;
-                } else {
-                    return null;
+                String sqlSelection = (selectionArgs == null && selection == null) ? "" : " where ";
+                // Add optional sql query selection: e.g. {"mid = 12345678"}
+                if (selectionArgs != null) {
+                    sqlSelection += TextUtils.join(" and ", selectionArgs);
                 }
+                // Add optional nid selection based on anki browser search: e.g. "deck:'My Awesome Deck'"
+                if (selection != null) {
+                    List<Long> noteIds = col.findNotes(query);
+                    if ((noteIds != null) && (!noteIds.isEmpty())) {
+                        if (selectionArgs != null) {
+                            sqlSelection += " and ";
+                        }
+                        sqlSelection += "id in " + Utils.ids2str(noteIds);
+                    } else {
+                        return null;
+                    }
+                }
+                // Make the main SQL query and return the cursor
+                Cursor cur;
+                try {
+                    cur = col.getDb().getDatabase().rawQuery("select " + columnsStr + " from notes" + sqlSelection, null);
+                } catch (SQLException e) {
+                    throw new IllegalArgumentException("Not possible to query for data " + sqlSelection, e);
+                }
+                return cur;
             }
             case NOTES_ID: {
                 /* Direct access note

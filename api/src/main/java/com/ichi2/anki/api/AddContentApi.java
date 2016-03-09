@@ -50,6 +50,8 @@ public final class AddContentApi {
 
     private static final int BULK_INSERT_MIN_SPEC_VERSION = 2;
 
+
+
     public AddContentApi(Context context) {
         mContext = context.getApplicationContext();
         mResolver = mContext.getContentResolver();
@@ -67,7 +69,7 @@ public final class AddContentApi {
         // Create a new note
         ContentValues values = new ContentValues();
         values.put(FlashCardsContract.Note.MID, mid);
-        values.put(FlashCardsContract.Note.FLDS, AddContentApi.joinFields(fields));
+        values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fields));
         values.put(FlashCardsContract.Note.TAGS, tags);
         return addNewNote(did, values);
     }
@@ -134,7 +136,7 @@ public final class AddContentApi {
             }
             ContentValues values = new ContentValues();
             values.put(FlashCardsContract.Note.MID, mid);
-            values.put(FlashCardsContract.Note.FLDS, joinFields(fields));
+            values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fields));
             if (tags != null) {
                 values.put(FlashCardsContract.Note.TAGS, tags);
             }
@@ -151,40 +153,52 @@ public final class AddContentApi {
     }
 
     /**
-     * Check if the note which is about to be added is a duplicate
+     * Check if the note (according to the first field) already exists.
+     * Deprecated from API v2, as duplicates are handled automatically.
      * @param mid model id
-     * @param did deck id
+     * @param did deck id (ignored in API v2)
      * @param fields list of fields
      * @return whether there already exists a card with the same model ID and content in the first field
      */
+    @Deprecated
     public boolean checkForDuplicates(long mid, long did, String[] fields) {
-        // TODO: investigate performance optimization using csum if necessary
-        String modelName = getModelName(mid);
-        String deckName = getDeckName(did);
-        if (modelName == null || deckName == null) {
-            return false;
-        }
-        String[] fieldNames = getFieldList(mid);
-        return findNoteId(modelName, deckName, fieldNames, fields) != null;
+        return findDuplicateNoteId(mid, fields) != null;
     }
 
-    private Long findNoteId(String modelName, String deckName, String[] fieldNames, String[] fields) {
-        String query = String.format("%s:\"%s\" deck:\"%s\" note:\"%s\"", fieldNames[0], fields[0], deckName, modelName);
-        Cursor notesTableCursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI,
-                FlashCardsContract.Note.DEFAULT_PROJECTION, query, null, null);
+
+    /**
+     * Find the note id of any existing notes which have mid and has identical first field as the input list of fields.
+     * If multiple notes exist with the same first field, then the first such note is returned.
+     * @param mid model id
+     * @param fields list of fields
+     * @return the note id or null if the note does not exist
+     */
+    public Long findDuplicateNoteId(long mid, String[] fields) {
+        // Select id and flds from the notes table in the DB where mid and csum are matches. selArgs ignored in spec v1
+        final String[] proj = {FlashCardsContract.Note._ID, FlashCardsContract.Note.FLDS};
+        final String[] selArgs = {String.format("%s=%d and %s=%d",
+                FlashCardsContract.Note.MID, mid, FlashCardsContract.Note.CSUM, Utils.fieldChecksum(fields[0]))};
+        final String selection = getCompat().getDuplicateSelectionArgument(mid, fields);    // returns null for spec v2+
+        // Query for notes that have specified model and checksum of first field matches
+        Cursor notesTableCursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI, proj, selection, selArgs, null);
         if (notesTableCursor == null) {
             return null;
         }
+        // Loop through each result, returning the note ID if the first field is truly a match, otherwise return null
         try {
-            if (!notesTableCursor.moveToFirst()) {
-                return null;
-            }
             int idIndex = notesTableCursor.getColumnIndexOrThrow(FlashCardsContract.Note._ID);
-            return notesTableCursor.getLong(idIndex);
+            int fldsIndex = notesTableCursor.getColumnIndexOrThrow(FlashCardsContract.Note.FLDS);
+            while (notesTableCursor.moveToNext()) {
+                if (Utils.splitFields(notesTableCursor.getString(fldsIndex))[0].equals(fields[0])) {
+                    return notesTableCursor.getLong(idIndex);
+                }
+            }
         } finally {
             notesTableCursor.close();
         }
+        return null;
     }
+
 
     /**
      * Get the html that would be generated for the specified note type and field list
@@ -260,7 +274,7 @@ public final class AddContentApi {
         // Create the model using dummy templates
         ContentValues values = new ContentValues();
         values.put(FlashCardsContract.Model.NAME, name);
-        values.put(FlashCardsContract.Model.FIELD_NAMES, joinFields(fields));
+        values.put(FlashCardsContract.Model.FIELD_NAMES, Utils.joinFields(fields));
         values.put(FlashCardsContract.Model.NUM_CARDS, cards.length);
         values.put(FlashCardsContract.Model.CSS, css);
         values.put(FlashCardsContract.Model.DECK_ID, did);
@@ -359,7 +373,7 @@ public final class AddContentApi {
         try {
             if (modelCursor.moveToNext()) {
                 String flds = modelCursor.getString(modelCursor.getColumnIndex(FlashCardsContract.Model.FIELD_NAMES));
-                splitFlds = splitFields(flds);
+                splitFlds = Utils.splitFields(flds);
             }
         } finally {
             modelCursor.close();
@@ -390,7 +404,7 @@ public final class AddContentApi {
                 String name = allModelsCursor.getString(allModelsCursor.getColumnIndex(FlashCardsContract.Model.NAME));
                 String flds = allModelsCursor.getString(
                         allModelsCursor.getColumnIndex(FlashCardsContract.Model.FIELD_NAMES));
-                int numFlds = splitFields(flds).length;
+                int numFlds = Utils.splitFields(flds).length;
                 if (numFlds >= minNumFields) {
                     models.put(modelId, name);
                 }
@@ -558,11 +572,6 @@ public final class AddContentApi {
         }
     }
 
-    /**
-     * Private methods
-     * ***********************************************************************************************
-     */
-
 
     /**
      * Get the ID of the deck which matches the name
@@ -579,16 +588,6 @@ public final class AddContentApi {
         return null;
     }
 
-
-    private static String joinFields(String[] list) {
-        // note: since list is very unlikely to be length <2, any optimizations for those lengths are irrelevant
-        return TextUtils.join("\u001f", list);
-    }
-
-
-    private static String[] splitFields(String fields) {
-        return fields.split("\\x1f", -1);
-    }
 
     /**
      * Old versions of AnkiDroid are very slow at adding multiple notes at once (maybe a couple of minutes for 1000 notes).
@@ -670,7 +669,7 @@ public final class AddContentApi {
                 if (fldsStr == null) {
                     continue;
                 }
-                String[] flds = splitFields(fldsStr);
+                String[] flds = Utils.splitFields(fldsStr);
                 if (flds.length < 1) { // pretty sure this can never happen
                     continue;
                 }
@@ -700,6 +699,7 @@ public final class AddContentApi {
         return cursor;
     }
 
+
     /**
      * Best not to store this in case the user updates AnkiDroid app while client app is staying alive
      */
@@ -709,6 +709,7 @@ public final class AddContentApi {
 
     private interface Compat {
         int addNewNotes(long did, ContentValues[] valuesArr);
+        String getDuplicateSelectionArgument(long mid, String[] flds);
     }
 
     private class CompatV1 implements Compat {
@@ -726,6 +727,17 @@ public final class AddContentApi {
             }
             return result;
        }
+
+        @Override
+        public String getDuplicateSelectionArgument(long mid, String[] fields) {
+            // Content provider spec v1 does not support direct querying of the notes table, so use Anki browser syntax
+            String modelName = getModelName(mid);
+            if (modelName == null) {
+                modelName = ""; // empty model name will result in no query results
+            }
+            String[] fieldNames = getFieldList(mid);
+            return String.format("%s:\"%s\" note:\"%s\"", fieldNames[0], fields[0], modelName);
+        }
     }
 
     private class CompatV2 implements Compat {
@@ -734,6 +746,12 @@ public final class AddContentApi {
             Uri.Builder builder = FlashCardsContract.Note.CONTENT_URI.buildUpon();
             builder.appendQueryParameter(FlashCardsContract.Note.DECK_ID_QUERY_PARAM, String.valueOf(did));
             return mResolver.bulkInsert(builder.build(), valuesArr);
+        }
+
+        @Override
+        public String getDuplicateSelectionArgument(long mid, String[] flds) {
+            // Content provider spec v2 supports direct querying of the notes table so we don't need any browser syntax
+            return null;
         }
     }
 }
