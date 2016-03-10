@@ -17,19 +17,20 @@
 
 package com.ichi2.anki.api;
 
-
 import android.text.Html;
 import android.text.TextUtils;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * Utilities class for the API
  */
-public class Utils {
+class Utils {
     // Regex pattern used in removing tags from text before checksum
     private static final Pattern stylePattern = Pattern.compile("(?s)<style.*?>.*?</style>");
     private static final Pattern scriptPattern = Pattern.compile("(?s)<script.*?>.*?</script>");
@@ -46,6 +47,17 @@ public class Utils {
 
     static String[] splitFields(String fields) {
         return fields.split("\\x1f", -1);
+    }
+
+    static String joinTags(Set<String> tags) {
+        for (String t : tags) {
+            t.replaceAll(" ", "_");
+        }
+        return TextUtils.join(" ", tags);
+    }
+
+    static String[] splitTags(String tags) {
+        return tags.trim().split("\\s+");
     }
 
     static Long fieldChecksum(String data) {
@@ -98,6 +110,23 @@ public class Utils {
             htmlEntities.appendReplacement(sb, Html.fromHtml(htmlEntities.group()).toString());
         }
         htmlEntities.appendTail(sb);
+        return sb.toString();
+    }
+
+    /** Given a list of integers, return a string '(int1,int2,...)'. */
+    static <T> String ids2str(List<T> ids) {
+        StringBuilder sb = new StringBuilder(512);
+        sb.append("(");
+        boolean isNotFirst = false;
+        for (T id : ids) {
+            if (isNotFirst) {
+                sb.append(", ");
+            } else {
+                isNotFirst = true;
+            }
+            sb.append(id);
+        }
+        sb.append(")");
         return sb.toString();
     }
 
