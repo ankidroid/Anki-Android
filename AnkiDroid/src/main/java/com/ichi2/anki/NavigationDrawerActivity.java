@@ -27,6 +27,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,6 +71,16 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
             // enable ActionBar app icon to behave as action to toggle nav drawer
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
+
+            // Open the nav drawer when the navigation button is tapped. We need to explicitly
+            // define this because locking the nav drawer (when gestures are enabled) prevents
+            // the nav drawer from opening even when tapping the navigation button.
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mDrawerLayout.openDrawer(Gravity.LEFT);
+                }
+            });
         }
         // Configure night-mode switch
         final SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(NavigationDrawerActivity.this);
@@ -106,7 +117,7 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
             }
         };
 
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
     }
 
 
