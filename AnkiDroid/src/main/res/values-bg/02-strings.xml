@@ -39,7 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX%</string>
+  <!-- Navigation drawer strings -->
   <string name="drawer_open">Отвори чекмеджето</string>
   <string name="drawer_close">Затвори чекмеджето</string>
   <string name="CardEditorLaterMessage">Записване на информация за по-късно</string>
@@ -56,6 +58,7 @@
   <string name="no_tags">Все още не сте добавили етикети</string>
   <string name="sdcard_missing_message">SD карта не е достъпна, защото се използва като USB за съхранение на данни. Изключете USB за достъп до вашите колоди.</string>
   <string name="updated_version">Обновено до версия %s</string>
+  <!-- Reviewer.java -->
   <string name="enable_whiteboard">Разрешаване на бяла дъска</string>
   <string name="disable_whiteboard">Забраняване на бяла дъска</string>
   <string name="show_whiteboard">Покажи бялатадъска</string>
@@ -65,6 +68,7 @@
   <string name="leech_suspend_notification">Карта, маркирана като залепена и спряна</string>
   <string name="leech_notification">Карта, маркирана като залепена</string>
   <string name="corrupt_font">Повреден шрифт %s</string>
+  <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>Въпрос</item>
     <item>Поле за сортиране</item>
@@ -78,7 +82,16 @@
     <item>Етикети</item>
     <item>Пропуски</item>
     <item>Разглеждания</item>
+    <!--
+    <item>Changed</item>
+    <item>Created</item>
+    <item>Due</item>
+    <item>Ease</item>
+    <item>Edited</item>
+    <item>Interval</item>
+        -->
   </string-array>
+  <!-- Custom study options -->
   <string name="custom_study_increase_new_limit">Увеличаване на днешното ограничение за нови карти</string>
   <string name="custom_study_increase_review_limit">Увеличаване на днешния лимит за преглед карти</string>
   <string name="custom_study_review_forgotten">Преглед забравени карти</string>
@@ -86,6 +99,7 @@
   <string name="custom_study_random_selection">Учи случаен подбор от карти</string>
   <string name="custom_study_preview_new">Преглед на нови карти</string>
   <string name="custom_study_limit_tags">Ограничаване до определени тагове</string>
+  <!-- Card editor -->
   <string name="cardeditor_title_add_note">Нова бележка</string>
   <string name="cardeditor_title_edit_card">Промяна на бележка</string>
   <string name="discard_unsaved_changes">Затворете и загубете текущите входни данни?</string>
@@ -165,6 +179,7 @@
   <string name="tag_editor_add_feedback">Докоснете \"%2$s\", за да потвърдите добавянето на \"%1$s\"</string>
   <string name="tag_editor_add_feedback_existing">Избран е съществуващ етикет \"%1$s\"</string>
   <string name="lookup_hint">След като копирате текста, натиснете някъде във флашкартата, за да се покаже икона за търсене</string>
+  <!-- Time spans -->
   <plurals name="time_span_seconds">
     <item quantity="one">%s секунда</item>
     <item quantity="other">%s секунди</item>
@@ -189,6 +204,9 @@
     <item quantity="one">%s година</item>
     <item quantity="other">%s години</item>
   </plurals>
+  <!-- The reason for making a simple “< x” translatable are RTL
+         languages which apparently use the other symbol to mean less
+         than. -->
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">Това тесте вече съществува</string>
   <string name="decks_rename_filtered_nosubdecks">Филтрирано тесте не може да има подтестета</string>

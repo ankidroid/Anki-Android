@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Feedback.java -->
   <string name="error_reporting_choice">Fehlermeldungs-Modus</string>
   <string name="feedback_disclaimer">Hinweis: Es werden keine persönlichen Daten wie Ihre E-Mail-Adresse, Telefonnummer oder IMEI übertragen. Gesendet werden lediglich einige Informationen über Ihr Gerät wie Hersteller, Modell und Android-Version sowie Näheres über die aufgetretenen Fehler selbst.</string>
   <string name="feedback_title">Rückmeldung</string>

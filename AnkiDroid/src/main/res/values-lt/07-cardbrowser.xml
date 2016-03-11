@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- CardBrowser -->
   <plurals name="card_browser_subtitle">
     <item quantity="one">%d card shown</item>
     <item quantity="few">%d cards shown</item>

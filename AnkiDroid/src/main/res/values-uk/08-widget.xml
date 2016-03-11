@@ -39,19 +39,20 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Widget -->
   <string name="widget_minimum_cards_due_notification_ticker_title">Карток до перегляду</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid карток до перегляду</string>
   <string name="widget_no_cards_due">Картки до перегляду відсутні</string>
   <string name="widget_loading">Завантаження віджета...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d card due in %2$s</item>
-    <item quantity="few">%1$d cards due in %2$s</item>
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="one">%1$d картка до %2$s</item>
+    <item quantity="few">%1$d карток до %2$s</item>
+    <item quantity="other">%1$d карток до %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
-    <item quantity="few">%1$d decks</item>
-    <item quantity="other">%1$d decks</item>
+    <item quantity="one">%1$d колода</item>
+    <item quantity="few">%1$d колоди</item>
+    <item quantity="other">%1$d колод</item>
   </plurals>
   <string name="widget_small">Малий AnkiDroid</string>
 </resources>

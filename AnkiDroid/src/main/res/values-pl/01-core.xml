@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Navigation drawer items-->
   <string name="decks">Talie</string>
   <string name="card_browser">Przeglądanie kart</string>
   <string name="statistics">Statystyki</string>
@@ -51,22 +52,25 @@
   <string name="studyoptions_total_cards">Łącznie kart:</string>
   <string name="studyoptions_eta">Szacowany czas (min):</string>
   <string name="studyoptions_start">Ucz się teraz</string>
+  <!-- DeckPicker.java -->
   <string name="study_more">Studiuj więcej</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="few">%1$d cards due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">Oczekuje %1$d karta z (%2$s)</item>
+    <item quantity="few">Oczekuje %1$d z (%2$s) kart</item>
+    <item quantity="other">Oczekuje %1$d kart z (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">Została %d minuta</item>
     <item quantity="few">Zostało minut: %d</item>
     <item quantity="other">Zostało %d minut</item>
   </plurals>
+  <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
-    <item quantity="one">Studied %1$d card in %2$s today</item>
-    <item quantity="few">Studied %1$d cards in %2$s today</item>
-    <item quantity="other">Studied %1$d cards in %2$s today</item>
+    <item quantity="one">Przestudiowano dziś %1$d kartę z %2$s</item>
+    <item quantity="few">Przestudiowano dziś %1$d z %2$s kart</item>
+    <item quantity="other">Przestudiowano dziś %1$d kart z %2$s</item>
   </plurals>
+  <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">Podaj odpowiedź</string>
   <string name="show_answer">Pokaż odpowiedź</string>
   <string name="ease_button_again">Powtórz</string>
@@ -104,12 +108,20 @@
   <string name="new_dynamic_deck">Stwórz filtrowaną talię</string>
   <string name="night_mode">Tryb nocny</string>
   <string name="directory_inaccessible">Katalog AnkiDroid jest niedostępny</string>
+  <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
   <string name="time_quantity_seconds">%d s</string>
-  <string name="time_quantity_minutes">%d min</string>
-  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_minutes">%d minut</string>
+  <string name="time_quantity_hours">%d g</string>
   <string name="time_quantity_days">%d d</string>
-  <string name="time_quantity_months">%.1f mo</string>
-  <string name="time_quantity_years">%.1f yr</string>
+  <string name="time_quantity_months">%.1f m</string>
+  <string name="time_quantity_years">%.1f r</string>
+  <!-- or "%.1f a" -->
   <string name="later">Później</string>
   <string name="rebuild_cram_deck">Przebudowywanie talii.\nProszę czekać...</string>
   <string name="rebuild_cram_label">Odbuduj</string>
@@ -126,7 +138,7 @@
   <string name="studyoptions_congrats_more_new">Pozostało więcej kart do przejrzenia, ale dzienny limit został osiągnięty. Możesz zwiększyć limit w opcjach, ale miej na uwadze, że zwiększy to ilość powtórzeń w najbliższych dniach.</string>
   <string name="studyoptions_congrats_custom">Aby kontynuować naukę poza zwykłym schematem kliknij przycisk Nauki Niestandardowej poniżej.</string>
   <string name="studyoptions_no_cards_due">Nie ma żadnych kart do przejrzenia.</string>
-  <string name="sd_card_not_mounted">Device storage not mounted</string>
+  <string name="sd_card_not_mounted">Urządzenie pamięci masowej nie zostało zamontowane</string>
   <string name="button_sync">Synchronizuj</string>
   <string name="cancel_sync_confirm">Chcesz przerwać synchronizację?</string>
   <string name="continue_sync">Kontynuuj synchronizację</string>
@@ -136,6 +148,7 @@
   <string name="export_collection">Eksportuj kolekcję</string>
   <string name="export_deck">Eksportuj talię</string>
   <string name="nothing">Nic</string>
+  <!-- Card template editor -->
   <string name="title_activity_template_editor">Typ karty</string>
   <string name="card_template_editor_front">Szablon przodu</string>
   <string name="card_template_editor_back">Szablon tyłu</string>
@@ -149,6 +162,7 @@
   </plurals>
   <string name="invalid_template">Karta nie mogła zostać wygenerowana</string>
   <string name="card_template_editor_would_delete_note">Usunięcie typu karty może spowodować usunięcie jednej lub większej ilości notatek. Proszę o utworzenie najpierw nowej karty.</string>
-  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <!-- Permissions -->
+  <string name="read_write_permission_label">Odczyt i zapis do bazy danych AnkiDroid</string>
+  <string name="read_write_permission_description">Zezwól na dostęp do istniejących notatek, kart, typów notatek i tali, a także tworzenie nowych</string>
 </resources>

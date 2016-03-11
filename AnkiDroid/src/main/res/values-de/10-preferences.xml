@@ -39,8 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- generic strings -->
   <string name="disabled">Deaktiviert</string>
   <string name="enabled">Aktiviert</string>
+  <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Allgemeine Einstellungen</string>
   <string name="pref_cat_reviewing">Lernen</string>
@@ -61,6 +63,7 @@
   <string name="pref_cat_plugins">Plug-Ins</string>
   <string name="about_title">Über AnkiDroid</string>
   <string name="about_version">Version: </string>
+  <!-- preferences.xml entries-->
   <string name="whiteboard_stroke_width">Pinselbreite</string>
   <string name="whiteboard_black">Schwarzer Pinsel</string>
   <string name="whiteboard_black_summ">Spart Hauptspeicher, außer im Nachtmodus</string>
@@ -157,18 +160,22 @@
   <string name="convert_fen_text_summ">Schachbrett aus Forsyth–Edwards-Notation erstellen. Die Position muss in  [fen][/fen]-Tags eingefasst sein.</string>
   <string name="enable_api_title">AnkiDroid-API aktivieren</string>
   <string name="enable_api_summary">Verbindungen anderer Apps mit AnkiDroid zulassen und sie ohne weitere Eingriffe Daten lesen und schreiben lassen</string>
+  <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Erweiterte Statistik</string>
   <string name="enable_advanced_statistics_title">Erweiterte Statistik aktivieren</string>
   <string name="enable_advanced_statistics_summ">Für die Prognose in der Statistik-Ansicht zukünftige Wiederholungen simulieren (aktiviert) oder nur schon geplante Wiederholungen benutzen (deaktiviert).</string>
   <string name="advanced_forecast_stats_compute_n_days_title">Die ersten n Tage berechnen, den Rest simulieren</string>
   <string name="advanced_forecast_stats_compute_precision_title">Genauigkeit der Berechnung</string>
   <string name="advanced_forecast_stats_mc_n_iterations_title">Zahl der Iterationen der Simulation</string>
+  <!-- Custom sync server settings -->
   <string name="custom_sync_server_title">Benutzerdefinierter Synchronisierungsserver</string>
   <string name="custom_sync_server_enable_title">Benutzerdefinierten Synchronisierungsserver verwenden</string>
   <string name="custom_sync_server_enable_summary">Wenn Sie nicht den proprietären AnkiWeb-Dienst verwenden möchten, können Sie hier einen alternativen Server angeben</string>
   <string name="custom_sync_server_base_url_title">Sync-URL</string>
   <string name="custom_sync_server_media_url_title">Medien-Sync-URL</string>
+  <!-- studyoptions -->
   <string name="studyoptions_limit_select_tags">Schlagworte wählen</string>
+  <!-- Deck configurations -->
   <string name="deck_conf_deck_description">Stapelbeschreibung</string>
   <string name="deck_conf_group">Optionengruppe</string>
   <plurals name="deck_conf_group_summ">

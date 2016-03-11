@@ -52,6 +52,7 @@
   <string name="not_logged_in_title">Zaloguj się do AnkiWeb</string>
   <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
   <string name="no_email_client">Brak dostępnego klienta poczty</string>
+  <!-- MyAccount.java -->
   <string name="username">Adres e-mail</string>
   <string name="username_repeat">Powtórz adres e-mail</string>
   <string name="password">Hasło</string>
@@ -65,6 +66,7 @@
   <string name="alert_logging_message">Logowanie, proszę czekać...</string>
   <string name="invalid_username_password">Nieprawidłowy adres e-mail lub hasło.</string>
   <string name="reset_password">Resetuj hasło</string>
+  <!-- AndroidManifest.xml -->
   <string name="downloaddeck_search">Szukaj</string>
   <string name="preferences_title">Ustawienia</string>
   <string name="deckpreferences_title">Opcje dla XXX</string>

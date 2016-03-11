@@ -34,62 +34,101 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Main editor popup menu items -->
   <string name="multimedia_editor_popup_image">Ново изображение</string>
   <string name="multimedia_editor_popup_audio">Аудиозапис</string>
   <string name="multimedia_editor_popup_text">Разширен редактор</string>
+  <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">С помощта на glosbe.com</string>
+  <!-- these are like translate f r o m  and t o  some othe languages -->
   <string name="multimedia_editor_trans_from">От</string>
   <string name="multimedia_editor_trans_to">До</string>
+  <!-- imperative for the button title -->
   <string name="multimedia_editor_trans_translate">Превод</string>
+  <!-- waiting message -->
   <string name="multimedia_editor_trans_translating_online">Онлайн превод</string>
+  <!-- pick the right translation imperative -->
   <string name="multimedia_editor_trans_pick_translation">Изберете превод</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_trans_translation_failed">Преводът е неуспешен</string>
+  <!-- from controller -->
+  <!-- dialog title to ask for translation source -->
   <string name="multimedia_editor_trans_pick_translation_source">Изберете речник</string>
+  <!-- dialog asking to install ColorDict -->
   <string name="multimedia_editor_trans_install_color_dict">Първо инсталирайте ColorDict</string>
+  <!-- Pronunciation activity (Beolingus) -->
   <string name="multimedia_editor_pron_load">Зареди</string>
   <string name="multimedia_editor_pron_looking_up">Търси произношение</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_pron_pronunciation_failed">Произношение е неуспешно</string>
   <string name="multimedia_editor_word_search_try_lower_case">Опитайте се да използвате само малки букви</string>
   <string name="multimedia_editor_poweredbeolingus">Осъществено чрез Beolingus</string>
+  <!-- Image search activity -->
+  <!-- in progress dialog when loading the image -->
   <string name="multimedia_editor_imgs_saving_image">Записване на изображение</string>
   <string name="multimedia_editor_imgs_loading_image">Записване на изображение</string>
   <string name="multimedia_editor_imgs_no_results">Търсенето не даде резултати</string>
   <string name="multimedia_editor_imgs_images_found">Намерени снимки</string>
   <string name="multimedia_editor_imgs_pow_by_google">Осъществява се чрез Google изображения</string>
+  <!-- buttons -->
   <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
   <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
   <string name="multimedia_editor_imgs_pick">Избор</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_imgs_failed">Неуспешно търсене на изображения</string>
+  <!-- while searching -->
   <string name="multimedia_editor_imgs_searching_for_images">Търсене на изображения</string>
+  <!-- Field editing general -->
+  <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">Текст</string>
   <string name="multimedia_editor_field_editing_image">Снимка</string>
   <string name="multimedia_editor_field_editing_audio">Аудио</string>
   <string name="multimedia_editor_field_editing_done">Готово</string>
+  <!-- Text field editing -->
+  <!-- buttons -->
   <string name="multimedia_editor_text_field_editing_search_label">Търсене за:</string>
   <string name="multimedia_editor_text_field_editing_show">Снимка</string>
   <string name="multimedia_editor_text_field_editing_say">Произношение</string>
   <string name="multimedia_editor_text_field_editing_clear">Изчистване</string>
   <string name="multimedia_editor_text_field_editing_clone">Клониране от</string>
   <string name="multimedia_editor_text_field_editing_translate">Превод</string>
+  <!-- message to user, when there is no text or many words, but the user tries something -->
   <string name="multimedia_editor_text_field_editing_no_text">Първо въведете текст</string>
   <string name="multimedia_editor_text_field_editing_many_words">Речник обикновено очаква една дума</string>
+  <!-- message when cloning -->
   <string name="multimedia_editor_text_field_editing_clone_source">Вземете от</string>
+  <!-- Multimedia card editor activity -->
+  <!-- for buttons -->
+  <!-- delete confirmation -->
+  <!-- Image editing -->
+  <!-- for buttons -->
   <string name="multimedia_editor_image_field_editing_galery">Галерия</string>
   <string name="multimedia_editor_image_field_editing_photo">Камера</string>
+  <!-- General -->
+  <!-- message on the progress dialog for the user to wait, means process -->
   <string name="multimedia_editor_general_downloading">Изтегляне</string>
+  <!-- when process finishes -->
   <string name="multimedia_editor_general_done">Готово</string>
+  <!-- General word search and failures -->
   <string name="multimedia_editor_error_word_not_found">Думата не е намерена</string>
+  <!-- failure when contacting glosbe or similar -->
   <string name="multimedia_editor_trans_getting_failure">Преводът не е направен</string>
   <string name="multimedia_editor_searching_word">Търсене на думата</string>
+  <!-- General -->
   <string name="multimedia_editor_progress_wait_title">Чакане</string>
+  <!-- not a good message, when an unexpected error happens -->
   <string name="multimedia_editor_something_wrong">Нещо се обърка</string>
   <string name="multimedia_editor_attach_mm_content">добавяне на мултимедийно съдържание към бележката</string>
   <string name="multimedia_editor_attach_media">Добавяне на медия</string>
+  <!-- Audio view -->
+  <!-- Message when recording fails -->
   <string name="multimedia_editor_audio_view_recording_failed">Записът неуспешен</string>
   <string name="multimedia_editor_audio_view_playing_failed">Неуспешно възпроизвеждане</string>
+  <!-- Activity titles -->
   <string name="title_activity_edit_text">Редактиране на поле</string>
   <string name="title_activity_translation">Превод</string>
   <string name="title_activity_load_pronounciation">Произношение</string>
   <string name="title_activity_search_image">Google Image Search</string>
+  <!-- Network failure -->
   <string name="network_no_connection">Няма връзка</string>
 </resources>

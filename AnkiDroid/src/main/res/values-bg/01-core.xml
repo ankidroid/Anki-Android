@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Navigation drawer items-->
   <string name="decks">Тестета</string>
   <string name="card_browser">Разглеждане на картите</string>
   <string name="statistics">Статистика</string>
@@ -51,6 +52,7 @@
   <string name="studyoptions_total_cards">Общо карти:</string>
   <string name="studyoptions_eta">Очаквано време (мин.):</string>
   <string name="studyoptions_start">Учене</string>
+  <!-- DeckPicker.java -->
   <string name="study_more">Учи повече</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d карта остава (%2$s)</item>
@@ -60,10 +62,12 @@
     <item quantity="one">%d минута остава</item>
     <item quantity="other">%d минути остава</item>
   </plurals>
+  <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
     <item quantity="one">Научена %1$d карта в %2$s днес</item>
     <item quantity="other">Научени %1$d карти в %2$s днес</item>
   </plurals>
+  <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">Напиши отговор</string>
   <string name="show_answer">Покажи отговора</string>
   <string name="ease_button_again">Отново</string>
@@ -101,12 +105,20 @@
   <string name="new_dynamic_deck">Създайте филтрирано тесте</string>
   <string name="night_mode">Нощен режим</string>
   <string name="directory_inaccessible">AnkiDroid директорията е недостъпна</string>
+  <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
   <string name="time_quantity_seconds">%d сек</string>
   <string name="time_quantity_minutes">%d мин</string>
   <string name="time_quantity_hours">%d ч</string>
   <string name="time_quantity_days">%d д</string>
   <string name="time_quantity_months">%.1f мес</string>
   <string name="time_quantity_years">%.1f г</string>
+  <!-- or "%.1f a" -->
   <string name="later">По-късно</string>
   <string name="rebuild_cram_deck">Пренареждане тестето за зубрене&#8230;</string>
   <string name="rebuild_cram_label">Възстанови</string>
@@ -133,6 +145,7 @@
   <string name="export_collection">Изнасяне на колекцията</string>
   <string name="export_deck">Експортиране на тесте</string>
   <string name="nothing">Нищо</string>
+  <!-- Card template editor -->
   <string name="title_activity_template_editor">Тип на картата</string>
   <string name="card_template_editor_front">Шаблон лицева страна</string>
   <string name="card_template_editor_back">Шаблон обратна страна</string>
@@ -145,6 +158,7 @@
   </plurals>
   <string name="invalid_template">Картата не може да се генерира</string>
   <string name="card_template_editor_would_delete_note">Изтриването на този тип карти ще доведе до премахване на една или няколко бележки. Моля, първо създайте нов тип карти.</string>
+  <!-- Permissions -->
   <string name="read_write_permission_label">Четене и записване в базата данни AnkiDroid</string>
   <string name="read_write_permission_description">Позволете на приложението достъп до съществувани бележки, карти, типове бележки и тестета, както и създаване на нови</string>
 </resources>

@@ -63,5 +63,5 @@
   <string name="corrupt_db_message">A túa colección corrompeuse.\n\nPreme en \"opcións\" para restaurar dende unha copia, ou se isto non funciona, segue as seguintes instrucións para reparar manualmente a base de datos:\n%1$s</string>
   <string name="access_collection_failed_message">Produciuse un erro ao acceder á túa colección. Puido producirse por un erro inofensivo, ou pode que exista un problema nela.\n\nTenta facer unha comprobación da base de datos, ou restaurando dende una copia premendo no botón de \"opcións\". Se continuas a ver esta mensaxe, por favor envía un informe do erro:\n%1$s</string>
   <string name="deck_repair_error">A colección no se puido reparar</string>
-  <string name="cursor_size_limit_exceeded">The Android size limit for a String in a database has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
+  <string name="cursor_size_limit_exceeded">Excedeuse a lonxitude máxima para unha cadea do Android na base de datos. Elimina calquera tipo de nota que non estea en uso empregando a aplicación de escritorio Anki, e volve sincronizar.</string>
 </resources>

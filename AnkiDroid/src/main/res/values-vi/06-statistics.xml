@@ -39,72 +39,72 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_young">Trẻ</string>
+  <string name="statistics_young">Non trẻ</string>
   <string name="statistics_mature">Trưởng thành</string>
-  <string name="statistics_young_and_learn">Nhỏ + tìm hiểu</string>
+  <string name="statistics_young_and_learn">Non trẻ và cần học</string>
   <string name="statistics_unlearned">Chưa xem</string>
-  <string name="statistics_suspended">Tạm dừng</string>
+  <string name="statistics_suspended">Đã tạm dừng</string>
   <string name="statistics_relearn">Học lại</string>
-  <string name="statistics_learn">Học</string>
-  <string name="statistics_cram">Ôn luyện</string>
-  <string name="stats_cards">Thẻ</string>
-  <string name="stats_cards_intervals">Thẻ với khoảng thời gian cho trước</string>
-  <string name="stats_cumulative_cards">Tích lũy thẻ</string>
-  <string name="stats_cumulative_answers">Tích lũy đáp án </string>
-  <string name="stats_cumulative_time_minutes">Tích lũy phút</string>
-  <string name="stats_cumulative_time_hours">Tích lũy giờ</string>
-  <string name="stats_cumulative">Tích lũy</string>
-  <string name="stats_cumulative_percentage">Tỷ lệ phần tram tích lũy</string>
-  <string formatted="false" name="stats_cumulative_correct_percentage">Tích lũy chính xác  %</string>
+  <string name="statistics_learn">Cần học</string>
+  <string name="statistics_cram">Ôn thi</string>
+  <string name="stats_cards">Các thẻ</string>
+  <string name="stats_cards_intervals">Các thẻ với khoảng thời gian cho trước</string>
+  <string name="stats_cumulative_cards">Các thẻ tích luỹ</string>
+  <string name="stats_cumulative_answers">Các đáp án tích luỹ</string>
+  <string name="stats_cumulative_time_minutes">Số phút tích luỹ</string>
+  <string name="stats_cumulative_time_hours">Số giờ tích luỹ</string>
+  <string name="stats_cumulative">Tích luỹ</string>
+  <string name="stats_cumulative_percentage">Số phần trăm tích luỹ</string>
+  <string formatted="false" name="stats_cumulative_correct_percentage">% chính xác tích luỹ</string>
   <string name="stats_answers">Đáp án</string>
-  <string name="stats_minutes">Phút</string>
-  <string name="stats_hours">Giờ</string>
+  <string name="stats_minutes">Số phút</string>
+  <string name="stats_hours">Số giờ</string>
   <string name="stats_percentage">Phần trăm</string>
   <string name="stats_period_month">1 tháng</string>
   <string name="stats_period_year">1 năm</string>
   <string name="stats_period_lifetime">Thời gian hoạt động của chủ đề (lifetime)</string>
-  <string name="stats_deck_collection">Bộ sưu tập</string>
+  <string name="stats_deck_collection">bộ sưu tập</string>
   <string name="stats_time_of_day">Thời gian trong ngày</string>
   <string name="stats_day_of_week">Ngày trong tuần</string>
-  <string formatted="false" name="stats_percentage_correct">% Chính xác</string>
-  <string name="stats_reviews">Ôn tập</string>
-  <string name="stats_answer_type">Dạng câu trả lời</string>
-  <string name="stats_today_again_count">Tính lại một lần nữa: &lt;b&gt;%d&lt;/b&gt;</string>
+  <string formatted="false" name="stats_percentage_correct">% chính xác</string>
+  <string name="stats_reviews">Lần ôn tập</string>
+  <string name="stats_answer_type">Dạng đáp án</string>
+  <string name="stats_today_again_count">Số lần học lại: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; chính xác)</string>
-  <string name="stats_today_type_breakdown">Tìm hiểu: &lt;b&gt;%1$s&lt;/b&gt;, ôn tập: &lt;b&gt;%2$s&lt;/b&gt;, học lại: &lt;b&gt;%3$s&lt;/b&gt;, lọc: &lt;b&gt;%4$s&lt;/b&gt;</string>
-  <string name="stats_today_mature_cards">Các câu trả lời chính xác về các thẻ trưởng thành: %1$d/%2$d (%3$.1f%%)</string>
-  <string name="stats_today_no_mature_cards">Không có thẻ trưởng thành nào được học tập ngày hôm nay.</string>
-  <string name="deck_summary_all_decks">Tất cả các bài</string>
-  <string name="stats_select_time_scale">Chọn mở rộng thời gian</string>
+  <string name="stats_today_type_breakdown">Thẻ cần học: &lt;b&gt;%1$s&lt;/b&gt;, ôn tập: &lt;b&gt;%2$s&lt;/b&gt;, học lại: &lt;b&gt;%3$s&lt;/b&gt;, đã lọc: &lt;b&gt;%4$s&lt;/b&gt;</string>
+  <string name="stats_today_mature_cards">Trả lời chính xác các thẻ trưởng thành: %1$d/%2$d (%3$.1f%%)</string>
+  <string name="stats_today_no_mature_cards">Chưa học thẻ trưởng thành nào hôm nay</string>
+  <string name="deck_summary_all_decks">Tất cả bộ thẻ</string>
+  <string name="stats_select_time_scale">Chọn khung thời gian</string>
   <string-array name="due_x_axis_title">
     <item>Ngày</item>
     <item>Tuần</item>
     <item>Tháng</item>
   </string-array>
   <string name="stats_today">Hôm nay</string>
-  <string name="stats_forecast">Bảng thời tiết</string>
+  <string name="stats_forecast">Dự báo</string>
   <string name="stats_review_count">Số lượng ôn tập</string>
   <string name="stats_review_time">Thời gian ôn tập</string>
   <string name="stats_review_intervals">Khoảng thời gian</string>
-  <string name="stats_breakdown">Hourly breakdown</string>
-  <string name="stats_weekly_breakdown">Weekly breakdown</string>
-  <string name="stats_answer_buttons">Nút trả lời </string>
+  <string name="stats_breakdown">Phân tích theo giờ</string>
+  <string name="stats_weekly_breakdown">Phân tích theo tuần</string>
+  <string name="stats_answer_buttons">Các nút đáp án</string>
   <string name="stats_cards_types">Các loại thẻ</string>
   <string-array name="stats_day_time_strings">
-    <item>04: 00 AM</item>
-    <item>10: 00 AM</item>
-    <item>4:00 PM</item>
-    <item>10: 00 PM</item>
-    <item>03: 00 AM</item>
+    <item>4g SA</item>
+    <item>10g SA</item>
+    <item>4g CH</item>
+    <item>10g T</item>
+    <item>3g SA</item>
   </string-array>
   <string-array name="stats_week_days">
-    <item>Chủ Nhật</item>
-    <item>Thứ Hai</item>
-    <item>Thứ Ba</item>
-    <item>Thứ tư</item>
-    <item>Thứ Năm</item>
-    <item>Thứ Sáu</item>
-    <item>Thứ Bảy</item>
+    <item>CN</item>
+    <item>T2</item>
+    <item>T3</item>
+    <item>T4</item>
+    <item>T5</item>
+    <item>T6</item>
+    <item>T7</item>
   </string-array>
   <string-array name="stats_eases_ticks">
     <item>1</item>
@@ -120,6 +120,6 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today</item>
+    <item quantity="other">Đã học &lt;b&gt;%1$d thẻ&lt;/b&gt; trong &lt;b&gt;%2$s&lt;/b&gt; hôm nay</item>
   </plurals>
 </resources>

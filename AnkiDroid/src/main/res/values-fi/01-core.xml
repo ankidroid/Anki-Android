@@ -39,31 +39,35 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="decks">Decks</string>
-  <string name="card_browser">Card browser</string>
-  <string name="statistics">Statistics</string>
-  <string name="settings">Settings</string>
-  <string name="help">Help</string>
-  <string name="send_feedback">Send feedback</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <!-- Navigation drawer items-->
+  <string name="decks">Pakat</string>
+  <string name="card_browser">Korttiselain</string>
+  <string name="statistics">Tilastot</string>
+  <string name="settings">Asetukset</string>
+  <string name="help">Ohje</string>
+  <string name="send_feedback">Anna palautetta</string>
+  <string name="studyoptions_title">Pakan yleiskatsaus</string>
   <string name="studyoptions_due_today">Tälle päivälle:</string>
   <string name="studyoptions_new_total">Uusia kortteja yhteensä:</string>
   <string name="studyoptions_total_cards">Kortteja yhteensä:</string>
   <string name="studyoptions_eta">Arvioitu aika (min):</string>
   <string name="studyoptions_start">Opiskele nyt</string>
-  <string name="study_more">Study more</string>
+  <!-- DeckPicker.java -->
+  <string name="study_more">Opiskele lisää</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">%1$d kortti kerrattavissa (%2$s)</item>
+    <item quantity="other">%1$d korttia kerrattavissa (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
-    <item quantity="other">%d minutes left</item>
+    <item quantity="one">%d minuutti jäljellä</item>
+    <item quantity="other">%d minuuttia jäljellä</item>
   </plurals>
+  <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
-    <item quantity="one">Studied %1$d card in %2$s today</item>
-    <item quantity="other">Studied %1$d cards in %2$s today</item>
+    <item quantity="one">Opiskelit tänään %1$d kortin ajassa %2$s</item>
+    <item quantity="other">Opiskelit tänään %1$d korttia ajassa %2$s</item>
   </plurals>
+  <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">Kirjoita vastaus</string>
   <string name="show_answer">Näytä vastaus</string>
   <string name="ease_button_again">Uudestaan</string>
@@ -81,7 +85,7 @@
   <string name="undo_action_delete">poista merkintä</string>
   <string name="undo_action_mark">merkitse merkintä</string>
   <string name="unbury">Paljasta</string>
-  <string name="rename_deck">Rename deck</string>
+  <string name="rename_deck">Nimeä pakka uudelleen</string>
   <string name="menu_add">Lisää</string>
   <string name="menu_add_note">Lisää merkintä</string>
   <string name="menu_my_account">Synkronoi tili</string>
@@ -94,19 +98,27 @@
   <string name="delete_note_message">Haluatko varmasti poistaa tämän merkinnän ja kaikki sen kortit?\n%s</string>
   <string name="menu_select">Valitse teksti</string>
   <string name="menu_search">Haku %1$s</string>
-  <string name="menu_mark_note">Mark note</string>
-  <string name="menu_unmark_note">Unmark note</string>
+  <string name="menu_mark_note">Merkitse merkintä</string>
+  <string name="menu_unmark_note">Poista merkintä</string>
   <string name="new_deck">Uusi pakka</string>
   <string name="create">Luo</string>
   <string name="new_dynamic_deck">Uusi suodatettu pakka</string>
   <string name="night_mode">Yötila</string>
-  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <string name="directory_inaccessible">AnkiDroidin hakemisto ei ole käytettävissä</string>
+  <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
   <string name="time_quantity_seconds">%d s</string>
   <string name="time_quantity_minutes">%d min</string>
   <string name="time_quantity_hours">%d h</string>
-  <string name="time_quantity_days">%d d</string>
-  <string name="time_quantity_months">%.1f mo</string>
-  <string name="time_quantity_years">%.1f yr</string>
+  <string name="time_quantity_days">%d pv</string>
+  <string name="time_quantity_months">%.1f kk</string>
+  <string name="time_quantity_years">%.1f v</string>
+  <!-- or "%.1f a" -->
   <string name="later">Myöhemmin</string>
   <string name="rebuild_cram_deck">Kasataan pänttäyspakkaa&#8230;</string>
   <string name="rebuild_cram_label">Rakenna uudelleen</string>
@@ -114,37 +126,39 @@
   <string name="empty_cram_deck">Tyhjennetään pänttäyspakkaa&#8230;</string>
   <string name="custom_study_deck_name">Mukautettu istunto</string>
   <string name="custom_study_deck_exists">Nimeä olemassa oleva mukautettu pakka ensin</string>
-  <string name="empty_deck">This deck is empty</string>
-  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-  <string name="studyoptions_limit_reached">Daily study limit reached</string>
-  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+  <string name="empty_deck">Tämä pakka on tyhjä</string>
+  <string name="studyoptions_empty">Tämä pakka on tyhjä. Paina + painiketta lisätäksesi uutta sisältöä.</string>
+  <string name="studyoptions_limit_reached">Päivittäinen opiskeluraja saavutettu</string>
+  <string name="studyoptions_empty_schedule">Ei opeteltavaksi ajoitettuja kortteja</string>
   <string name="studyoptions_congrats_finished">Onnittelut! Olet nyt valmis hetkeksi.</string>
   <string name="studyoptions_congrats_more_rev">Tämän päivän kertauskiintiö on täynnä, mutta pakassa on vielä läpikäyntiä odottavia kortteja. Voit nostaa kiintiötä asetuksista.</string>
   <string name="studyoptions_congrats_more_new">Pakassa on lisää uusia kortteja, mutta päivittäinen raja on täyttynyt. Voit korottaa rajaa asetuksista, mutta huomioi, että tämä lisää lyhytaikaisen läpikäynnin työmäärää.</string>
   <string name="studyoptions_congrats_custom">Opiskellaksesi normaalin aikataulun ulkopuolella, napsauta alapuolella olevaa Mukautettu opiskelu -painiketta.</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet</string>
-  <string name="sd_card_not_mounted">Device storage not mounted</string>
+  <string name="studyoptions_no_cards_due">Kortteja ei tarvitse vielä kerrata</string>
+  <string name="sd_card_not_mounted">Laitteen muistia ei ole asennettu</string>
   <string name="button_sync">Synkronoi</string>
-  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-  <string name="continue_sync">Continue sync</string>
-  <string name="sync_cancelled">Sync cancelled</string>
-  <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
+  <string name="cancel_sync_confirm">Haluatko peruuttaa synkronoinnin?</string>
+  <string name="continue_sync">Jatka synkronointia</string>
+  <string name="sync_cancelled">Synkronointi peruutettu</string>
+  <string name="sync_cancel_message">Peruutetaan&#8230;\nTämä voi kestää jonkin aikaa.</string>
   <string name="export">Vie</string>
-  <string name="export_collection">Export collection</string>
-  <string name="export_deck">Export deck</string>
-  <string name="nothing">Nothing</string>
-  <string name="title_activity_template_editor">Card types</string>
-  <string name="card_template_editor_front">Front template</string>
-  <string name="card_template_editor_back">Back template</string>
-  <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required</string>
+  <string name="export_collection">Vie kokoelma</string>
+  <string name="export_deck">Vie pakka</string>
+  <string name="nothing">Ei mitään</string>
+  <!-- Card template editor -->
+  <string name="title_activity_template_editor">Korttityyppi</string>
+  <string name="card_template_editor_front">Etumalli</string>
+  <string name="card_template_editor_back">Takamalli</string>
+  <string name="card_template_editor_styling">Muotoilu</string>
+  <string name="card_template_editor_menu_delete">Poista</string>
+  <string name="card_template_editor_cant_delete">Valitse ainakin yksi korttityyppi</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
-    <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+    <item quantity="one">Poista \"%2$s\" korttityyppi ja sen %1$d. kortti?</item>
+    <item quantity="other">Poista \"%2$s\" korttityyppi ja sen %1$d. kortit?</item>
   </plurals>
-  <string name="invalid_template">A card could not be generated</string>
-  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
-  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="invalid_template">Korttia ei voitu luoda</string>
+  <string name="card_template_editor_would_delete_note">Korttityypin poistaminen aiheuttaisi yhden tai useamman kortin poistamisen. Luo uusi korttityyppi.</string>
+  <!-- Permissions -->
+  <string name="read_write_permission_label">Lue ja kirjoita AnkiDroidi-tietokantaan</string>
+  <string name="read_write_permission_description">Anna sovellukselle lupa päästä aiemmin luotuihin muistiinpanoihin, kortteihin, korttityyppeihin ja pakkoihin käsiksi ja luoda myöskin uusia</string>
 </resources>

@@ -34,62 +34,101 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Main editor popup menu items -->
   <string name="multimedia_editor_popup_image">Lisää kuva</string>
   <string name="multimedia_editor_popup_audio">Tallenna ääntä</string>
   <string name="multimedia_editor_popup_text">Kehittyneempi editori</string>
+  <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">Käyttää glosbe.com:ia</string>
+  <!-- these are like translate f r o m  and t o  some othe languages -->
   <string name="multimedia_editor_trans_from">Käännä kielestä</string>
   <string name="multimedia_editor_trans_to">Käännä kieleen</string>
+  <!-- imperative for the button title -->
   <string name="multimedia_editor_trans_translate">Käännä</string>
+  <!-- waiting message -->
   <string name="multimedia_editor_trans_translating_online">Käännä verkossa</string>
+  <!-- pick the right translation imperative -->
   <string name="multimedia_editor_trans_pick_translation">Valitse käännös</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_trans_translation_failed">Käännös epäonnistui</string>
+  <!-- from controller -->
+  <!-- dialog title to ask for translation source -->
   <string name="multimedia_editor_trans_pick_translation_source">Valitse sanakirja</string>
+  <!-- dialog asking to install ColorDict -->
   <string name="multimedia_editor_trans_install_color_dict">Asenna ensin ColorDict</string>
+  <!-- Pronunciation activity (Beolingus) -->
   <string name="multimedia_editor_pron_load">Lataa</string>
   <string name="multimedia_editor_pron_looking_up">Etsi ääntämys</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_pron_pronunciation_failed">Ääntäminen epäonnistui</string>
   <string name="multimedia_editor_word_search_try_lower_case">Yritä käyttää vain pieniä kirjaimia</string>
   <string name="multimedia_editor_poweredbeolingus">Käyttää Beolingusta</string>
+  <!-- Image search activity -->
+  <!-- in progress dialog when loading the image -->
   <string name="multimedia_editor_imgs_saving_image">Tallennetaan kuvaa</string>
   <string name="multimedia_editor_imgs_loading_image">Ladataan kuvaa</string>
   <string name="multimedia_editor_imgs_no_results">Haku ei palauttanut tuloksia</string>
   <string name="multimedia_editor_imgs_images_found">Kuvia löytyi</string>
   <string name="multimedia_editor_imgs_pow_by_google">Käyttää Googlen kuvahakua</string>
+  <!-- buttons -->
   <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
   <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
   <string name="multimedia_editor_imgs_pick">Valitse</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_imgs_failed">Kuvan haku epäonnistui</string>
+  <!-- while searching -->
   <string name="multimedia_editor_imgs_searching_for_images">Etsitään kuvia</string>
+  <!-- Field editing general -->
+  <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">Teksti</string>
   <string name="multimedia_editor_field_editing_image">Kuva</string>
   <string name="multimedia_editor_field_editing_audio">Ääni</string>
   <string name="multimedia_editor_field_editing_done">Valmis</string>
+  <!-- Text field editing -->
+  <!-- buttons -->
   <string name="multimedia_editor_text_field_editing_search_label">Hae:</string>
   <string name="multimedia_editor_text_field_editing_show">Kuva</string>
   <string name="multimedia_editor_text_field_editing_say">Ääntäminen</string>
   <string name="multimedia_editor_text_field_editing_clear">Tyhjennä</string>
   <string name="multimedia_editor_text_field_editing_clone">Kopioi täältä:</string>
   <string name="multimedia_editor_text_field_editing_translate">Käännös</string>
+  <!-- message to user, when there is no text or many words, but the user tries something -->
   <string name="multimedia_editor_text_field_editing_no_text">Kirjoita hieman tekstiä ensin</string>
   <string name="multimedia_editor_text_field_editing_many_words">Sanakirjat yleensä odottavat yhtä sanaa</string>
+  <!-- message when cloning -->
   <string name="multimedia_editor_text_field_editing_clone_source">Ota täältä:</string>
+  <!-- Multimedia card editor activity -->
+  <!-- for buttons -->
+  <!-- delete confirmation -->
+  <!-- Image editing -->
+  <!-- for buttons -->
   <string name="multimedia_editor_image_field_editing_galery">Galleria</string>
   <string name="multimedia_editor_image_field_editing_photo">Kamera</string>
+  <!-- General -->
+  <!-- message on the progress dialog for the user to wait, means process -->
   <string name="multimedia_editor_general_downloading">Ladataan</string>
+  <!-- when process finishes -->
   <string name="multimedia_editor_general_done">Valmis</string>
+  <!-- General word search and failures -->
   <string name="multimedia_editor_error_word_not_found">Sanaa ei löytynyt</string>
+  <!-- failure when contacting glosbe or similar -->
   <string name="multimedia_editor_trans_getting_failure">Käännöksen noutaminen epäonnistui</string>
   <string name="multimedia_editor_searching_word">Etsitään sanaa</string>
+  <!-- General -->
   <string name="multimedia_editor_progress_wait_title">Odota</string>
+  <!-- not a good message, when an unexpected error happens -->
   <string name="multimedia_editor_something_wrong">Jokin meni pieleen</string>
-  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the note</string>
-  <string name="multimedia_editor_attach_media">Attach media</string>
+  <string name="multimedia_editor_attach_mm_content">Liitä multimediasisältöä muistiinpanoon</string>
+  <string name="multimedia_editor_attach_media">Liitä mediaa</string>
+  <!-- Audio view -->
+  <!-- Message when recording fails -->
   <string name="multimedia_editor_audio_view_recording_failed">Äänittäminen epäonnistui</string>
   <string name="multimedia_editor_audio_view_playing_failed">Toisto epäonnistui</string>
+  <!-- Activity titles -->
   <string name="title_activity_edit_text">Muokkauskenttä</string>
   <string name="title_activity_translation">Käännös</string>
   <string name="title_activity_load_pronounciation">Ääntäminen</string>
   <string name="title_activity_search_image">Googlen kuvahaku</string>
-  <string name="network_no_connection">No connection</string>
+  <!-- Network failure -->
+  <string name="network_no_connection">Ei yhteyttä</string>
 </resources>

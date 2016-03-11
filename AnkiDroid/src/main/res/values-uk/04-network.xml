@@ -41,7 +41,7 @@
 -->
 <resources>
   <string name="youre_offline">Ви поза мережею</string>
-  <string name="sync_error">Sync error</string>
+  <string name="sync_error">Помилка синхронізації</string>
   <string name="vague_error">Помилка</string>
   <string name="retry">Повторити спробу</string>
   <string name="cancel">Відміна</string>
@@ -50,21 +50,23 @@
   <string name="menu_get_shared_decks">Отримати відкриті колоди</string>
   <string name="connection_error_message">Виникла помилка мережі.</string>
   <string name="not_logged_in_title">Увійдіть у AnkiWeb</string>
-  <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
-  <string name="no_email_client">No email client available</string>
+  <string name="login_create_account_message">Ви повинні увійти до стороннього профілю щоб використовувати хмарну синхронізацію. Ви можете створити профіль на наступному кроці.</string>
+  <string name="no_email_client">Жодної адреси електронної пошти не знайдено</string>
+  <!-- MyAccount.java -->
   <string name="username">Електронна адреса</string>
   <string name="username_repeat">Ще раз електронна адреса</string>
   <string name="password">Пароль</string>
   <string name="password_repeat">Повторити пароль</string>
   <string name="log_in">Ввійти</string>
   <string name="sign_up_description">Не маєте облікового запису AnkiWeb? Це безкоштовно!</string>
-  <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
+  <string name="sign_up_not_affiliated">Примітка: AnkiWeb не є афілійованим з AnkiDroid</string>
   <string name="sign_up">Створити обліковий запис</string>
   <string name="logged_as">Ви ввійшли як</string>
   <string name="log_out">Вийти</string>
   <string name="alert_logging_message">Здійснення входу, зачекайте, будь ласка...</string>
   <string name="invalid_username_password">Некоректна електронна адреса або пароль.</string>
   <string name="reset_password">Відновити пароль</string>
+  <!-- AndroidManifest.xml -->
   <string name="downloaddeck_search">Пошук</string>
   <string name="preferences_title">Налаштування</string>
   <string name="deckpreferences_title">Параметри для XXX</string>
@@ -92,8 +94,8 @@
   <string name="sync_too_busy">Сервер перевантажений. Спробуйте знову пізніше.</string>
   <string name="sync_remote_db_error">Завантажена база даних була пошкоджена. Будь ласка, спробуйте знову.</string>
   <string name="sync_overwrite_error">Ваша поточна колекція не може бути заміщена завантаженим файлом.</string>
-  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
-  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
+  <string name="sync_connection_error">Вичерпано час підключення. Або у вас є проблема з підключенням до Інтернету, або у вас дуже великий файл у папці медіа.</string>
+  <string name="sync_error_409">Лише один клієнт може мати доступ до AnkiWeb в один і той самий час. Якщо попередня синхронізація не вдалася, будь-ласка, спробуйте знову за кілька хвилин.</string>
   <string name="sync_write_access_error">Не можливо зберегти завантажений файл на карту пам’яті. Вона встановлена лише для читання або на ній мало місця.</string>
   <string name="sync_deletions_message">Синхронізація видаленого...</string>
   <string name="sync_small_objects_message">Синхронізація малих об’єктів...</string>
@@ -109,17 +111,17 @@
   <string name="sync_media_find">Пошук змінених медіа...</string>
   <string name="sync_media_no_changes">Жодних змін в медіа файлах.</string>
   <string name="sync_media_success">Медіа успішно синхронізовано.</string>
-  <string name="sync_media_changes_count">%d media changes to upload</string>
-  <string name="sync_media_downloaded_count">%d media files downloaded</string>
+  <string name="sync_media_changes_count">%d змін медіа потрібно завантажити</string>
+  <string name="sync_media_downloaded_count">%d завантажені медіа файли</string>
   <string name="sync_sanity_failed">Після синхронізації, деякі дані вашої колекції виявилися в суперечливому стані. Щоб усунути цю проблему, AnkiDroid виконає повну синхронізацію. Будь ласка, виберіть яку версію Ви хочете залишити, або скасуйте, якщо ви хочете синхронізувати пізніше.</string>
   <string name="sync_media_sanity_failed">Синхронізацію медіа завершено, але кількість медіа файлів не співпала з кількістю файлів на сервері. Наступна синхронізація буде повною, щоб виправити будь-які помилки.</string>
   <string name="sync_media_error">Помилка синхронізації даних медіа.</string>
-  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
+  <string name="sync_media_error_check">Помилка під час синхронізації медіа. Рекомендується перевірка медіа.</string>
   <string name="sync_sanity_local">Локально</string>
   <string name="sync_sanity_remote">Віддалено</string>
-  <string name="force_full_sync_title">Force full sync</string>
-  <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
-  <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
-  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
+  <string name="force_full_sync_title">Змусити повню синхронізацію</string>
+  <string name="force_full_sync_summary">Під час наступної синхронізації примусити зміни лише в одному напрямку</string>
+  <string name="full_sync_confirmation">Обрана зміна потребує повного перезавантаження бази давних під час наступної синхронізації ваших колекцій. Якщо ви мали перегляди або інші ще не синхронізвані зміни у черзі на інших пристроях, їх буде втрачено. Продовжити?</string>
+  <string name="full_sync_confirmation_upgrade">Через помилку у попередній версії, AnkiDroid рекомендовано примусово синхронізувати.</string>
+  <string name="sync_error_501_upgrade_required">Будь ласка, оновіться до останньої версії AnkiDroid</string>
 </resources>

@@ -52,6 +52,7 @@
   <string name="not_logged_in_title">Bei AnkiWeb einloggen</string>
   <string name="login_create_account_message">Sie müssen sich mit einem Anbieterkonto anmelden, um die Cloud-Synchronisierung verwenden zu können. Im nächsten Schritt können Sie ein Konto einrichten.</string>
   <string name="no_email_client">Kein Email-Client verfügbar</string>
+  <!-- MyAccount.java -->
   <string name="username">E-Mail-Adresse</string>
   <string name="username_repeat">E-Mail-Adresse wiederholen</string>
   <string name="password">Passwort</string>
@@ -65,6 +66,7 @@
   <string name="alert_logging_message">Einloggen&#8230;</string>
   <string name="invalid_username_password">E-Mail-Adresse oder Passwort ungültig.</string>
   <string name="reset_password">Passwort zurücksetzen</string>
+  <!-- AndroidManifest.xml -->
   <string name="downloaddeck_search">Suchen</string>
   <string name="preferences_title">Einstellungen</string>
   <string name="deckpreferences_title">Optionen für XXX</string>

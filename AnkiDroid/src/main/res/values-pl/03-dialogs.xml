@@ -110,6 +110,7 @@
   <string name="dialog_positive_set">Ustaw</string>
   <string name="lookup_button_content">Wyszukaj</string>
   <string name="dialog_collection_path_not_dir">Wybrana ścieżka nie wskazuje prawidłowo katalogu</string>
+  <!-- Media checking -->
   <string name="check_media_title">Sprawdzić media?</string>
   <string name="check_media_warning">To może trwać bardzo długo przy dużych kolekcjach</string>
   <string name="check_media_message">Sprawdzanie mediów&#8230;</string>
@@ -122,9 +123,11 @@
   <string name="check_media_db_updated">Baza mediów przebudowana.</string>
   <string name="check_media_delete_unused">Usuń nieużywane</string>
   <string name="check_media_deleted">Plików usuniętych: %d</string>
+  <!-- Tags Dialog Options -->
   <string name="tags_dialog_option_all_cards">Wszystkie karty</string>
   <string name="tags_dialog_option_new_cards">Nowe</string>
   <string name="tags_dialog_option_due_cards">Do przejrzenia</string>
+  <!-- Empty cards -->
   <string name="emtpy_cards_finding">Wyszukiwanie pustych kart&#8230;</string>
   <string name="empty_cards_none">Brak pustych kart</string>
   <string name="empty_cards_count">Kart do usunięcia: %d</string>

@@ -47,15 +47,15 @@
     <item>Atsakymo mygtukas 2</item>
     <item>Atsakymo mygtukas 3</item>
     <item>Atsakymo mygtukas 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
+    <item>Atsakymas rekomenduojamas (žalias)</item>
+    <item>Atsakyti geriau nei rekomenduojama</item>
     <item>Atšaukti</item>
     <item>Redaguoti pastabą</item>
     <item>Pažymėti pastabą</item>
     <item>Lookup expression</item>
     <item>Paslėpti kortelę</item>
     <item>Sustabdyti kortelę</item>
-    <item>Delete note</item>
+    <item>Šalinti pastabą</item>
     <item>Play media</item>
     <item>Nutraukti mokymąsį</item>
     <item>Palaidoti pastabą</item>
@@ -72,8 +72,8 @@
   <string-array name="cram_deck_conf_order_labels">
     <item>Pirmiau senesnės</item>
     <item>Atsitiktinai</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
+    <item>Didėjantys intervalai</item>
+    <item>Mažėjantys intervalai</item>
     <item>Most lapsed</item>
     <item>Order added</item>
     <item>Order due</item>
@@ -81,7 +81,7 @@
     <item>Relative overdueness</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
+    <item>Naudoti dabartinę malką</item>
     <item>Decide by note type</item>
   </string-array>
   <string-array name="new_spread_labels">

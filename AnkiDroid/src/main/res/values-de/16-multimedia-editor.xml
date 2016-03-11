@@ -34,62 +34,101 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Main editor popup menu items -->
   <string name="multimedia_editor_popup_image">Bild hinzufügen</string>
   <string name="multimedia_editor_popup_audio">Ton aufnehmen</string>
   <string name="multimedia_editor_popup_text">Erweiterter Editor</string>
+  <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">Powered by glosbe.com</string>
+  <!-- these are like translate f r o m  and t o  some othe languages -->
   <string name="multimedia_editor_trans_from">Von</string>
   <string name="multimedia_editor_trans_to">Nach</string>
+  <!-- imperative for the button title -->
   <string name="multimedia_editor_trans_translate">Übersetzen</string>
+  <!-- waiting message -->
   <string name="multimedia_editor_trans_translating_online">Online übersetzen</string>
+  <!-- pick the right translation imperative -->
   <string name="multimedia_editor_trans_pick_translation">Übersetzung auswählen</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_trans_translation_failed">Übersetzung fehlgeschlagen</string>
+  <!-- from controller -->
+  <!-- dialog title to ask for translation source -->
   <string name="multimedia_editor_trans_pick_translation_source">Wörterbuch auswählen</string>
+  <!-- dialog asking to install ColorDict -->
   <string name="multimedia_editor_trans_install_color_dict">Installieren Sie zuerst ColorDict</string>
+  <!-- Pronunciation activity (Beolingus) -->
   <string name="multimedia_editor_pron_load">Laden</string>
   <string name="multimedia_editor_pron_looking_up">Schlage Aussprache nach</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_pron_pronunciation_failed">Aussprache fehlgeschlagen</string>
   <string name="multimedia_editor_word_search_try_lower_case">Versuchen Sie es nur mit Kleinbuchstaben</string>
   <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
+  <!-- Image search activity -->
+  <!-- in progress dialog when loading the image -->
   <string name="multimedia_editor_imgs_saving_image">Speichere Bild</string>
   <string name="multimedia_editor_imgs_loading_image">Lade Bild</string>
   <string name="multimedia_editor_imgs_no_results">Suche lieferte keine Ergebnisse</string>
   <string name="multimedia_editor_imgs_images_found">Bilder gefunden</string>
   <string name="multimedia_editor_imgs_pow_by_google">Powered by Google-Bildersuche</string>
+  <!-- buttons -->
   <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
   <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
   <string name="multimedia_editor_imgs_pick">Auswählen</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_imgs_failed">Bildersuche fehlgeschlagen</string>
+  <!-- while searching -->
   <string name="multimedia_editor_imgs_searching_for_images">Suche nach Bildern</string>
+  <!-- Field editing general -->
+  <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">Text</string>
   <string name="multimedia_editor_field_editing_image">Bild</string>
   <string name="multimedia_editor_field_editing_audio">Audio</string>
   <string name="multimedia_editor_field_editing_done">Fertig</string>
+  <!-- Text field editing -->
+  <!-- buttons -->
   <string name="multimedia_editor_text_field_editing_search_label">Suche nach:</string>
   <string name="multimedia_editor_text_field_editing_show">Bild</string>
   <string name="multimedia_editor_text_field_editing_say">Aussprache</string>
   <string name="multimedia_editor_text_field_editing_clear">Zurücksetzen</string>
   <string name="multimedia_editor_text_field_editing_clone">Kopieren von</string>
   <string name="multimedia_editor_text_field_editing_translate">Übersetzung</string>
+  <!-- message to user, when there is no text or many words, but the user tries something -->
   <string name="multimedia_editor_text_field_editing_no_text">Zuerst etwas Text eingeben</string>
   <string name="multimedia_editor_text_field_editing_many_words">Wörterbücher erwarten normalerweise ein einzelnes Wort</string>
+  <!-- message when cloning -->
   <string name="multimedia_editor_text_field_editing_clone_source">Übernehme von</string>
+  <!-- Multimedia card editor activity -->
+  <!-- for buttons -->
+  <!-- delete confirmation -->
+  <!-- Image editing -->
+  <!-- for buttons -->
   <string name="multimedia_editor_image_field_editing_galery">Galerie</string>
   <string name="multimedia_editor_image_field_editing_photo">Kamera</string>
+  <!-- General -->
+  <!-- message on the progress dialog for the user to wait, means process -->
   <string name="multimedia_editor_general_downloading">Lade herunter</string>
+  <!-- when process finishes -->
   <string name="multimedia_editor_general_done">Fertig</string>
+  <!-- General word search and failures -->
   <string name="multimedia_editor_error_word_not_found">Das Wort wurde nicht gefunden</string>
+  <!-- failure when contacting glosbe or similar -->
   <string name="multimedia_editor_trans_getting_failure">Übersetzung konnte nicht geholt werden</string>
   <string name="multimedia_editor_searching_word">Suche nach dem Wort</string>
+  <!-- General -->
   <string name="multimedia_editor_progress_wait_title">Warten</string>
+  <!-- not a good message, when an unexpected error happens -->
   <string name="multimedia_editor_something_wrong">Etwas ist schiefgelaufen</string>
   <string name="multimedia_editor_attach_mm_content">Multimediainhalt zur Notiz hinzufügen</string>
   <string name="multimedia_editor_attach_media">Medien anhängen</string>
+  <!-- Audio view -->
+  <!-- Message when recording fails -->
   <string name="multimedia_editor_audio_view_recording_failed">Aufnahme fehlgeschlagen</string>
   <string name="multimedia_editor_audio_view_playing_failed">Abspielen fehlgeschlagen</string>
+  <!-- Activity titles -->
   <string name="title_activity_edit_text">Bearbeite Feld</string>
   <string name="title_activity_translation">Übersetzung</string>
   <string name="title_activity_load_pronounciation">Aussprache</string>
   <string name="title_activity_search_image">Google-Bildersuche</string>
+  <!-- Network failure -->
   <string name="network_no_connection">Keine Verbindung.</string>
 </resources>

@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Navigation drawer items-->
   <string name="decks">Kaladė</string>
   <string name="card_browser">Kortelių naršyklė</string>
   <string name="statistics">Statistika</string>
@@ -51,6 +52,7 @@
   <string name="studyoptions_total_cards">Iš viso kortų:</string>
   <string name="studyoptions_eta">Apskaičiuotas laikas (min):</string>
   <string name="studyoptions_start">Pradėti mokytis</string>
+  <!-- DeckPicker.java -->
   <string name="study_more">Studijuoti daugiau</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
@@ -62,12 +64,14 @@
     <item quantity="few">%d minutės liko</item>
     <item quantity="other">%d minutės liko</item>
   </plurals>
+  <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
-    <item quantity="one">Studied %1$d card in %2$s today</item>
+    <item quantity="one">Studijuota %1$d kortelė per %2$s šiandien</item>
     <item quantity="few">Studied %1$d cards in %2$s today</item>
-    <item quantity="other">Studied %1$d cards in %2$s today</item>
+    <item quantity="other">Studijuotos %1$d kortelės per %2$s šiandien</item>
   </plurals>
-  <string name="type_answer_hint">Type answer</string>
+  <!-- flashcard_portrait.xml -->
+  <string name="type_answer_hint">Įvesti atsakymą</string>
   <string name="show_answer">Parodyti atsakymą</string>
   <string name="ease_button_again">Dar kartą</string>
   <string name="ease_button_hard">Sunku</string>
@@ -104,12 +108,20 @@
   <string name="new_dynamic_deck">Sukurti malką su filtrais</string>
   <string name="night_mode">Naktinis režimas</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
   <string name="time_quantity_seconds">%d s</string>
   <string name="time_quantity_minutes">%d min</string>
   <string name="time_quantity_hours">%d h</string>
   <string name="time_quantity_days">%d d</string>
   <string name="time_quantity_months">%.1f mėn</string>
   <string name="time_quantity_years">%.1f metai</string>
+  <!-- or "%.1f a" -->
   <string name="later">Vėliau</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck&#8230;</string>
   <string name="rebuild_cram_label">Atstatyti</string>
@@ -136,6 +148,7 @@
   <string name="export_collection">Eksportuoti koleciją</string>
   <string name="export_deck">Eksportuoti kaladę</string>
   <string name="nothing">Nothing</string>
+  <!-- Card template editor -->
   <string name="title_activity_template_editor">Kortelių tipai</string>
   <string name="card_template_editor_front">Priekinis šablonas</string>
   <string name="card_template_editor_back">Galinis šablonas</string>
@@ -149,6 +162,7 @@
   </plurals>
   <string name="invalid_template">Kortelės nepavyko sugeneruoti</string>
   <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
+  <!-- Permissions -->
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
   <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

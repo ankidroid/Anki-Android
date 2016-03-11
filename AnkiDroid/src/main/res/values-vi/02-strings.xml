@@ -39,69 +39,83 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX%</string>
+  <!-- Navigation drawer strings -->
   <string name="drawer_open">Mở ngăn kéo</string>
   <string name="drawer_close">Đóng ngăn kéo</string>
-  <string name="CardEditorLaterMessage">Lưu thông tin cho sau này</string>
-  <string name="CardEditorCardDeck">Chủ đề thẻ:</string>
-  <string name="CardEditorNoteDeck">Chủ đề:</string>
+  <string name="CardEditorLaterMessage">Đã lưu thông tin cho sau này</string>
+  <string name="CardEditorCardDeck">Bộ thẻ:</string>
+  <string name="CardEditorNoteDeck">Bộ:</string>
   <string name="CardEditorModel">Loại:</string>
-  <string name="CardEditorTags">Từ khóa: %1$s</string>
-  <string name="CardEditorCards">Thẻ: %1$s</string>
-  <string name="tag_name">Tên thẻ</string>
-  <string name="add_new_filter_tags">Thêm/ Loại bỏ các Tag đánh dấu</string>
-  <string name="add_tag">Thêm thẻ</string>
-  <string name="check_all_tags">Chọn/bỏ chọn tất cả các thẻ</string>
-  <string name="filter_tags">các bộ lọc đánh dấu</string>
-  <string name="no_tags">Bạn chưa thêm bất kỳ thẻ nào</string>
-  <string name="sdcard_missing_message">Thẻ SD hiện đang được sử dụng như một ổ lưu trữ USB. Hãy ngắt kết nối USB để có thể truy cập được vào các tập thẻ của bạn.</string>
+  <string name="CardEditorTags">Các đuôi: %1$s</string>
+  <string name="CardEditorCards">Các thẻ: %1$s</string>
+  <string name="tag_name">Tên đuôi</string>
+  <string name="add_new_filter_tags">Thêm/lọc các đuôi</string>
+  <string name="add_tag">Thêm đuôi</string>
+  <string name="check_all_tags">Chọn/bỏ chọn toàn bộ đuôi</string>
+  <string name="filter_tags">Lọc các đuôi</string>
+  <string name="no_tags">Bạn chưa thêm bất kỳ đuôi nào</string>
+  <string name="sdcard_missing_message">Ngắt ổ lưu trữ USB để truy cập các bộ thẻ</string>
   <string name="updated_version">Đã cập nhật lên phiên bản %s</string>
-  <string name="enable_whiteboard">Bật  bảng whiteboard</string>
-  <string name="disable_whiteboard">Tắt bảng whiteboard</string>
-  <string name="show_whiteboard">Hiện Bảng viết</string>
+  <!-- Reviewer.java -->
+  <string name="enable_whiteboard">Bật bảng viết</string>
+  <string name="disable_whiteboard">Tắt bảng viết</string>
+  <string name="show_whiteboard">Hiện bảng viết</string>
   <string name="hide_whiteboard">Ẩn bảng viết</string>
-  <string name="clear_whiteboard">Xóa bảng viết</string>
-  <string name="replay_audio">Nghe lại âm thanh</string>
-  <string name="leech_suspend_notification">Bài được đánh dấu như đã tải về và bị dừng</string>
-  <string name="leech_notification">Bài được đánh dấu như đã tải về</string>
-  <string name="corrupt_font">Lỗi font dữ liệu %s</string>
+  <string name="clear_whiteboard">Xoá bảng viết</string>
+  <string name="replay_audio">Phát lại âm thanh</string>
+  <string name="leech_suspend_notification">Thẻ được đánh dấu là thẻ khó và đã tạm dừng</string>
+  <string name="leech_notification">Thẻ được đánh dấu là thẻ khó</string>
+  <string name="corrupt_font">Lỗi tệp phông chữ %s</string>
+  <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>Câu hỏi</item>
-    <item>Sort field</item>
+    <item>Sắp xếp trường</item>
   </string-array>
   <string-array name="browser_column2_headings">
-    <item>Trả lời</item>
+    <item>Đáp án</item>
     <item>Thẻ</item>
-    <item>Bài</item>
-    <item>Lưu ý</item>
+    <item>Bộ thẻ</item>
+    <item>Ghi chú</item>
     <item>Câu hỏi</item>
-    <item>Các đánh dấu</item>
-    <item>Sai sót</item>
-    <item>Đánh giá</item>
+    <item>Các đuôi</item>
+    <item>Lần sai</item>
+    <item>Lần ôn tập</item>
+    <!--
+    <item>Changed</item>
+    <item>Created</item>
+    <item>Due</item>
+    <item>Ease</item>
+    <item>Edited</item>
+    <item>Interval</item>
+        -->
   </string-array>
-  <string name="custom_study_increase_new_limit">Tăng giới hạn thẻ mới của ngày hôm nay</string>
-  <string name="custom_study_increase_review_limit">Tăng giới hạn ôn lại thẻ của ngày hôm nay</string>
-  <string name="custom_study_review_forgotten">Ôn lại thẻ đã quên</string>
-  <string name="custom_study_review_ahead">Duyệt lại trước</string>
-  <string name="custom_study_random_selection">Học theo thẻ được lựa chọn ngẫu nhiên</string>
+  <!-- Custom study options -->
+  <string name="custom_study_increase_new_limit">Tăng giới hạn thẻ mới cho hôm nay</string>
+  <string name="custom_study_increase_review_limit">Tăng giới hạn thẻ ôn tập cho hôm nay</string>
+  <string name="custom_study_review_forgotten">Ôn tập các thẻ đã quên</string>
+  <string name="custom_study_review_ahead">Ôn tập trước kỳ hạn</string>
+  <string name="custom_study_random_selection">Học các thẻ được chọn ngẫu nhiên</string>
   <string name="custom_study_preview_new">Xem trước thẻ mới</string>
-  <string name="custom_study_limit_tags">Giới hạn cho thẻ đặc biệt</string>
+  <string name="custom_study_limit_tags">Giới hạn cho các đuôi cụ thể</string>
+  <!-- Card editor -->
   <string name="cardeditor_title_add_note">Thêm ghi chú</string>
   <string name="cardeditor_title_edit_card">Sửa ghi chú</string>
-  <string name="discard_unsaved_changes">Đóng lại và mất đầu vào hiện tại?</string>
-  <string name="factadder_saving_error">Lỗi khi lưu lưu ý</string>
-  <string name="saving_facts">Lưu ghi chú</string>
-  <string name="saving_model">Tiết kiệm các mô hình</string>
+  <string name="discard_unsaved_changes">Đóng và mất thông tin đang nhập?</string>
+  <string name="factadder_saving_error">Lỗi khi lưu ghi chú</string>
+  <string name="saving_facts">Đang lưu ghi chú</string>
+  <string name="saving_model">Đang lưu mô hình</string>
   <string name="add">Thêm</string>
-  <string name="save">Save</string>
+  <string name="save">Lưu</string>
   <string name="close">Đóng</string>
   <string name="select">Chọn</string>
-  <string name="saving_changes">Đang lưu các sửa đồi...</string>
+  <string name="saving_changes">Đang lưu các thay đổi&#8230;</string>
   <string name="reordering_cards">Đang sắp sếp lại các thẻ...</string>
-  <string name="field_remapping">%1$s (từ \'%2$s\')</string>
-  <string name="confirm_map_cards_to_nothing">Bất kỳ thẻ để không có gì sẽ bị xóa. Nếu một chú thích đã không lưu giữ trong các thẻ, nó sẽ bị mất. Bạn có chắc bạn muốn tiếp tục không?</string>
+  <string name="field_remapping">%1$s (từ \"%2$s\")</string>
+  <string name="confirm_map_cards_to_nothing">Bất kỳ thẻ nào không được gán sẽ bị xoá. Nếu một ghi chú không có thẻ nào kèm theo, nó sẽ bị mất. Có chắc là bạn muốn tiếp tục?</string>
   <plurals name="timebox_reached">
-    <item quantity="other">%1$d thẻ đã được học trong %2$s</item>
+    <item quantity="other">Đã học %1$d thẻ trong %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
     <item quantity="other">%1$d phút</item>
@@ -111,77 +125,81 @@
   <string name="card_editor_add_card">Thêm ghi chú</string>
   <string name="card_editor_copy_card">Sao chép thẻ</string>
   <string name="card_editor_reset_card">Thiết lập lại quá trình học</string>
-  <string name="card_editor_reschedule_card">Lên lịch lại với thẻ</string>
-  <string name="card_editor_preview_card">Xem lại</string>
-  <string name="error_insufficient_memory">Không thể thao tác vì không đủ bộ nhớ trên thiết bị của bạn</string>
+  <string name="card_editor_reschedule_card">Lên lịch lại cho thẻ</string>
+  <string name="card_editor_preview_card">Xem trước</string>
+  <string name="error_insufficient_memory">Không thể tiến hành vì không đủ bộ nhớ trên thiết bị</string>
   <string name="rename">Đổi tên</string>
-  <string name="default_conf_delete_error">Nhóm tùy chọn mặc định không thể được gỡ bỏ</string>
+  <string name="default_conf_delete_error">Không thể gỡ bỏ nhóm tuỳ chọn mặc định</string>
   <plurals name="factadder_cards_added">
-    <item quantity="other">%d thẻ đã thêm</item>
+    <item quantity="other">Đã thêm %d thẻ</item>
   </plurals>
   <string name="help_title">Trợ giúp</string>
-  <string name="check_db">Kiểm tra cơ sở dữ liệu</string>
-  <string name="check_media">Kiểm tra các phương tiện truyền thông</string>
-  <string name="empty_cards">Thẻ trống</string>
-  <string name="check_db_message">Đang kiểm tra cơ sở dữ liệu. \n Xin đợi chút...</string>
-  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
-  <string name="unknown_type_field_warning">Nhập câu trả lời: không biết trường %s</string>
-  <string name="delete_deck">Đang xóa Bài...\nĐợi chút nhé.</string>
-  <string name="show_hint">Hiển thị %s</string>
-  <string name="info_rate">Đánh giá AnkiDroid, Yêu bạn quá đê!</string>
-  <string name="col_load_failed">Tải dữ liệu bị lỗi.\nẤn quay lại để đóng AnkiDroid</string>
-  <string name="import_title">Importing</string>
-  <string name="import_select_title">Chọn một tệp để chuyển nhập</string>
+  <string name="check_db">Kiểm tra CSDL</string>
+  <string name="check_media">Kiểm tra các tệp đa phương tiện</string>
+  <string name="empty_cards">Các thẻ rỗng</string>
+  <string name="check_db_message">Đang kiểm tra CSDL&#8230;</string>
+  <string name="empty_card_warning">Thẻ này rỗng. Dùng tuỳ chọn \"Các thẻ rỗng\" từ trình đơn trên màn hình danh sách bộ thẻ.</string>
+  <string name="unknown_type_field_warning">Gõ đáp án: trường lạ %s</string>
+  <string name="delete_deck">Đang xoá bộ thẻ&#8230;</string>
+  <string name="show_hint">Hiện %s</string>
+  <string name="info_rate">Đánh giá AnkiDroid</string>
+  <string name="col_load_failed">Lỗi nạp bộ sưu tập.\nẤn quay lại để đóng AnkiDroid.</string>
+  <string name="import_title">Đang nhập</string>
+  <string name="import_select_title">Chọn một tệp để nhập</string>
   <string name="import_message_add">Thêm</string>
-  <string name="import_message_replace_confirm">Bạn có chắc không. ĐIều này sẽ xóa toàn bộ dữ liệu hiện có, và thay thế bằng dữ liệu của file %s.</string>
-  <string name="import_message_add_confirm">Thêm \"%s\" vào bộ sưu tập? Điều này có thể mất một một khoảng thời gian </string>
+  <string name="import_message_replace_confirm">Thao tác này sẽ xoá tất cả bộ sưu tập hiện hữu và thay nó bằng dữ liệu của tệp %s</string>
+  <string name="import_message_add_confirm">Thêm \"%s\" vào bộ sưu tập? Có thể hơi lâu</string>
   <string name="import_log_no_apkg">Đây không phải tập tin apkg hợp lệ</string>
-  <string name="import_error_not_apkg_extension">Tên tập tin %s không có phần mở rộng .apkg</string>
-  <string name="import_error_content_provider">Tệp đã chọn không có thể được nhập khẩu tự động bởi AnkiDroid. Xin vui lòng xem hướng dẫn sử dụng để làm thế nào để chuyển nhập thủ công anki tập tin: \n %s</string>
-  <string name="import_replacing">Replacing collection&#8230;</string>
-  <string name="export_include_schedule">Bao gồm việc lập kế hoạch</string>
-  <string name="export_include_media">Bao gồm các phương tiện truyền thông</string>
-  <string name="confirm_apkg_export">Xuất khẩu các bộ sưu tập dưới dạng tệp apkg?</string>
-  <string name="confirm_apkg_export_deck">Xuất khẩu \"%s\" dưới dạng tệp apkg?</string>
-  <string name="export_in_progress">Xuất khẩu tập tin apkg...</string>
-  <string name="export_successful_title">Gửi email cho apkg?</string>
-  <string name="export_successful">Tập tin \"%s\" đã được xuất khẩu. Bạn có muốn gửi email cho nó?</string>
-  <string name="export_unsuccessful">Lỗi xuất chuyển bộ sưu tập</string>
-  <string name="import_hint">Để nhập thẻ, đặt tập tin apkg vào đường dẫn %s và bấm ok</string>
-  <string name="upgrade_import_no_file_found">Không tìm thấy %1$s tập tin có thể nhập</string>
-  <string name="study_options">Tùy chọn Bài</string>
-  <string name="select_tts">Set TTS language</string>
-  <string name="custom_study">Sửa cách học</string>
-  <string name="more_options">Hiển thị thêm</string>
-  <string name="dyn_deck_desc">Đây là một bộ Bài đặc biệt phục vụ cho học ngoài lịch. Các thẻ sẽ tự động quay lại sau khi bại xem lại chúng. Việc xóa các bộ bài từ danh sách sẽ đưa tất cả các Thẻ về Bộ bài nguyên gốc.</string>
+  <string name="import_error_not_apkg_extension">Tên tệp \"%s\" không có phần mở rộng .apkg</string>
+  <string name="import_error_content_provider">Tệp đã chọn không thể được nhập tự động bởi AnkiDroid. Xin xem hướng dẫn sử dụng để biết cách nhập thủ công tệp anki: \n%s</string>
+  <string name="import_replacing">Đang thay thế bộ sưu tập&#8230;</string>
+  <string name="export_include_schedule">Gồm cả việc lên lịch</string>
+  <string name="export_include_media">Gồm cả các tệp đa phương tiện</string>
+  <string name="confirm_apkg_export">Xuất bộ sưu tập dưới dạng tệp apkg?</string>
+  <string name="confirm_apkg_export_deck">Xuất \"%s\" dưới dạng tệp apkg?</string>
+  <string name="export_in_progress">Đang xuất tệp apkg&#8230;</string>
+  <string name="export_successful_title">Email tệp apkg?</string>
+  <string name="export_successful">Đã xuất tệp \"%s\". Bạn có muốn email nó?</string>
+  <string name="export_unsuccessful">Lỗi khi xuất bộ sưu tập</string>
+  <string name="import_hint">Đưa tệp apkg vào thư mục \"%s\" và bấm \"OK\" để nhập thẻ</string>
+  <string name="upgrade_import_no_file_found">Không tìm thấy %1$s tệp có thể nhập</string>
+  <string name="study_options">Tuỳ chọn bộ thẻ</string>
+  <string name="select_tts">Thiết lập ngôn ngữ TTS</string>
+  <string name="custom_study">Học theo tuỳ chọn</string>
+  <string name="more_options">Xem thêm</string>
+  <string name="dyn_deck_desc">Đây là bộ thẻ đặc biệt phục vụ cho việc học ngoài lịch trình thông thường. Các thẻ sẽ tự động quay lại bộ thẻ ban đầu của chúng sau khi ôn tập. Xoá bộ thẻ này khỏi danh sách sẽ chuyển toàn bộ thẻ còn lại về bộ thẻ ban đầu của chúng.</string>
   <string name="steps_error">Các bước phải là số lớn hơn 0</string>
-  <string name="steps_min_error">Yêu cầu ít nhất một bước</string>
+  <string name="steps_min_error">Yêu cầu phải có ít nhất một bước</string>
   <string name="sched_end">(kết thúc)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
-  <string name="sched_has_buried">Một số Thẻ liên quan hoặc bị chôn vùi bị trì hoãn cho đến ngày mai.</string>
-  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
-  <string name="lookup_hint">Sau khi sao chép văn bản, bấm vào bất cứ nơi nào trên flashcard để hiển thị biểu tượng tìm kiếm</string>
+  <string name="sched_unbury_action">Để xem chúng ngay, hãy bấm \"Bỏ tạm ẩn\" trong trình đơn</string>
+  <string name="sched_has_buried">Một số thẻ liên quan hoặc tạm ẩn đã được hoãn đến ngày mai</string>
+  <string name="tag_editor_add_feedback">Bấm \"%2$s\" để xác nhận thêm \"%1$s\"</string>
+  <string name="tag_editor_add_feedback_existing">Đã chọn đuôi hiện hữu \"%1$s\"</string>
+  <string name="lookup_hint">Sau khi sao chép văn bản, bấm vào bất cứ đâu trên thẻ ghi nhớ để hiện biểu tượng tìm kiếm</string>
+  <!-- Time spans -->
   <plurals name="time_span_seconds">
-    <item quantity="other">%s seconds</item>
+    <item quantity="other">%s giây</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="other">%s minutes</item>
+    <item quantity="other">%s phút</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="other">%s hours</item>
+    <item quantity="other">%s giờ</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="other">%s days</item>
+    <item quantity="other">%s ngày</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="other">%s months</item>
+    <item quantity="other">%s tháng</item>
   </plurals>
   <plurals name="time_span_years">
-    <item quantity="other">%s years</item>
+    <item quantity="other">%s năm</item>
   </plurals>
+  <!-- The reason for making a simple “< x” translatable are RTL
+         languages which apparently use the other symbol to mean less
+         than. -->
   <string name="less_than_time">&lt; %s</string>
-  <string name="decks_rename_exists">That deck already exists</string>
-  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
-  <string name="filtered_deck_name">Filtered Deck</string>
+  <string name="decks_rename_exists">Đã có bộ thẻ này rồi</string>
+  <string name="decks_rename_filtered_nosubdecks">Một bộ thẻ đã lọc không thể có bộ thẻ phụ</string>
+  <string name="filtered_deck_name">Bộ thẻ đã lọc</string>
 </resources>

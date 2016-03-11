@@ -39,7 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="error_reporting_choice">Chế độ báo lỗi</string>
+  <!-- Feedback.java -->
+  <string name="error_reporting_choice">Chế độ báo cáo lỗi</string>
   <string name="feedback_disclaimer">Miễn trừ trách nhiệm: Chúng tôi không thu thập bất kỳ thông tin cá nhân nào như địa chỉ email, số điện thoại hoặc số IMEI. Chúng tôi chỉ thu thập một số thông tin về thiết bị của bạn chẳng hạn như nhà sản xuất, đời máy và phiên bản Android cũng như nguyên bản báo cáo lỗi và từng bước xảy ra lỗi.</string>
   <string name="feedback_title">Phản hồi</string>
   <string name="feedback_default_text">Nhập phản hồi hoặc thông tin nguyên bản về các lỗi bạn đang báo cáo.</string>

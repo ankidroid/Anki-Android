@@ -39,17 +39,18 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Widget -->
   <string name="widget_minimum_cards_due_notification_ticker_title">Korttien määrä</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid korttien määrä</string>
   <string name="widget_no_cards_due">Ei ole tiedossa korttien määrää</string>
   <string name="widget_loading">Ladataan widgettiä...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d card due in %2$s</item>
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="one">%1$d kortti jäljellä %2$s:ssä</item>
+    <item quantity="other">%1$d korttia jäljellä %2$s:ssä</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
-    <item quantity="other">%1$d decks</item>
+    <item quantity="one">%1$d pakka</item>
+    <item quantity="other">%1$d pakkaa</item>
   </plurals>
   <string name="widget_small">Android pieni</string>
 </resources>

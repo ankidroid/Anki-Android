@@ -39,34 +39,38 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="decks">Decks</string>
-  <string name="card_browser">Card browser</string>
-  <string name="statistics">Statistics</string>
-  <string name="settings">Settings</string>
-  <string name="help">Help</string>
-  <string name="send_feedback">Send feedback</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <!-- Navigation drawer items-->
+  <string name="decks">Колоди</string>
+  <string name="card_browser">Переглядач карток</string>
+  <string name="statistics">Статистика</string>
+  <string name="settings">Налаштування</string>
+  <string name="help">Допомога</string>
+  <string name="send_feedback">Надіслати відгук</string>
+  <string name="studyoptions_title">Огляд колоди</string>
   <string name="studyoptions_due_today">На сьогодні:</string>
   <string name="studyoptions_new_total">Всього нових карток:</string>
   <string name="studyoptions_total_cards">Всього карток:</string>
   <string name="studyoptions_eta">Оцінка часу (хв.):</string>
   <string name="studyoptions_start">Почати вивчення</string>
-  <string name="study_more">Study more</string>
+  <!-- DeckPicker.java -->
+  <string name="study_more">Вивчати ще</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="few">%1$d cards due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">%1$d картка до (%2$s)</item>
+    <item quantity="few">%1$d карток до (%2$s)</item>
+    <item quantity="other">%1$d карток до (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
-    <item quantity="few">%d minutes left</item>
-    <item quantity="other">%d minutes left</item>
+    <item quantity="one">Залишилася %d хвилина</item>
+    <item quantity="few">Залишилося %d хвилин</item>
+    <item quantity="other">Залишилося %d хвилин</item>
   </plurals>
+  <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
-    <item quantity="one">Studied %1$d card in %2$s today</item>
-    <item quantity="few">Studied %1$d cards in %2$s today</item>
-    <item quantity="other">Studied %1$d cards in %2$s today</item>
+    <item quantity="one">Вивчена %1$d карта з %2$s сьогодні</item>
+    <item quantity="few">Вивчено %1$d карт з %2$s сьогодні</item>
+    <item quantity="other">Вивчено %1$d карт з %2$s сьогодні</item>
   </plurals>
+  <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">Введіть відповідь</string>
   <string name="show_answer">Показати відповідь</string>
   <string name="ease_button_again">Знову</string>
@@ -74,9 +78,9 @@
   <string name="ease_button_good">Добре</string>
   <string name="ease_button_easy">Легко</string>
   <string name="studyoptions_congrats_undo">Відмінити %s</string>
-  <string name="menu_import">Import</string>
+  <string name="menu_import">Імпортувати</string>
   <string name="undo">Відмінити</string>
-  <string name="undo_action_review">last review</string>
+  <string name="undo_action_review">Останній відгук</string>
   <string name="undo_action_edit">Редагувати примітку</string>
   <string name="undo_action_bury">Сховати примітку</string>
   <string name="undo_action_suspend_card">Відкласти картку</string>
@@ -84,11 +88,11 @@
   <string name="undo_action_delete">Видалити примітку</string>
   <string name="undo_action_mark">Відмітити примітку</string>
   <string name="unbury">Скасувати зрушення</string>
-  <string name="rename_deck">Rename deck</string>
+  <string name="rename_deck">Переназвати колоду</string>
   <string name="menu_add">Додати</string>
   <string name="menu_add_note">Додати примітку</string>
   <string name="menu_my_account">Змінити обліковий запис</string>
-  <string name="menu_dismiss_note">Hide / delete</string>
+  <string name="menu_dismiss_note">Сховати / видалити</string>
   <string name="menu_bury_card">Поховати картку</string>
   <string name="menu_bury_note">Сховати Примітку</string>
   <string name="menu_suspend_card">Відкласти картку</string>
@@ -97,19 +101,27 @@
   <string name="delete_note_message">Дійсно видалити цю примітку і усі зв\'язані з нею картки?\n%s</string>
   <string name="menu_select">Виділити текст</string>
   <string name="menu_search">Пошук у %1$s</string>
-  <string name="menu_mark_note">Mark note</string>
-  <string name="menu_unmark_note">Unmark note</string>
+  <string name="menu_mark_note">Поставити позначку</string>
+  <string name="menu_unmark_note">Зняти позначку</string>
   <string name="new_deck">Створити колоду</string>
   <string name="create">Створити</string>
   <string name="new_dynamic_deck">Створити фільтровану колоду</string>
   <string name="night_mode">Нічний режим</string>
-  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
-  <string name="time_quantity_seconds">%d s</string>
-  <string name="time_quantity_minutes">%d min</string>
-  <string name="time_quantity_hours">%d h</string>
-  <string name="time_quantity_days">%d d</string>
-  <string name="time_quantity_months">%.1f mo</string>
-  <string name="time_quantity_years">%.1f yr</string>
+  <string name="directory_inaccessible">AnkiDroid каталог не доступний</string>
+  <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
+  <string name="time_quantity_seconds">%d сек</string>
+  <string name="time_quantity_minutes">%d хв</string>
+  <string name="time_quantity_hours">%d год</string>
+  <string name="time_quantity_days">%d дн</string>
+  <string name="time_quantity_months">%.1f міс</string>
+  <string name="time_quantity_years">%.1f р</string>
+  <!-- or "%.1f a" -->
   <string name="later">Пізніше</string>
   <string name="rebuild_cram_deck">Перебудова колоди для Зубріння.\n Будь ласка, зачекайте...</string>
   <string name="rebuild_cram_label">Перебудувати</string>
@@ -117,38 +129,40 @@
   <string name="empty_cram_deck">Очищення колоди для Зубріння.\n Будь ласка, зачекайте...</string>
   <string name="custom_study_deck_name">Додатковий тренінг</string>
   <string name="custom_study_deck_exists">Спочатку перейменуйте існуючу колоду для тренінгу.</string>
-  <string name="empty_deck">This deck is empty</string>
-  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-  <string name="studyoptions_limit_reached">Daily study limit reached</string>
-  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+  <string name="empty_deck">Порожня колода</string>
+  <string name="studyoptions_empty">Порожня колода. Натисніть на кнопку +, щоб додати новий вміст.</string>
+  <string name="studyoptions_limit_reached">Досягнуто денної межи навчання</string>
+  <string name="studyoptions_empty_schedule">Жодної картки не заплановано до вивчення</string>
   <string name="studyoptions_congrats_finished">Вітаємо! На разі це все.</string>
   <string name="studyoptions_congrats_more_rev">Ви вичерпали ліміт повторювання на сьогодні, але досі є картки, які чекають на перегляд. Для оптимального запам\'ятовування можна збільшити щоденнній лиміт у налаштуваннях.</string>
   <string name="studyoptions_congrats_more_new">Доступно більше нових карток але денний ліміт вичерпано. Ви можете збільшити ліміт в налаштуваннях, але, будь-ласка, зверніть увагу що це збільшить навантаження.</string>
   <string name="studyoptions_congrats_custom">Для навчання за межами нормального разкладу клацніть на \"Додатковий Трейнінг\" внизу.</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet</string>
-  <string name="sd_card_not_mounted">Device storage not mounted</string>
+  <string name="studyoptions_no_cards_due">Жодній картці ще не час</string>
+  <string name="sd_card_not_mounted">Пристрій зберігання не підключено</string>
   <string name="button_sync">Синхронізувати</string>
-  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-  <string name="continue_sync">Continue sync</string>
-  <string name="sync_cancelled">Sync cancelled</string>
-  <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
-  <string name="export">Export</string>
-  <string name="export_collection">Export collection</string>
-  <string name="export_deck">Export deck</string>
-  <string name="nothing">Nothing</string>
-  <string name="title_activity_template_editor">Card types</string>
-  <string name="card_template_editor_front">Front template</string>
-  <string name="card_template_editor_back">Back template</string>
-  <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required</string>
+  <string name="cancel_sync_confirm">Ви хочете скасувати синхронізацію?</string>
+  <string name="continue_sync">Продовжити синхронізацію</string>
+  <string name="sync_cancelled">Синхронізацію скасовано</string>
+  <string name="sync_cancel_message">Скасування&#8230;\nПроцес може зайняти деякий час.</string>
+  <string name="export">Експортувати</string>
+  <string name="export_collection">Експортувати колекцію</string>
+  <string name="export_deck">Експортувати колоду</string>
+  <string name="nothing">Нічого</string>
+  <!-- Card template editor -->
+  <string name="title_activity_template_editor">Типи карток</string>
+  <string name="card_template_editor_front">Шаблон передньої сторони</string>
+  <string name="card_template_editor_back">Шаблон задньої сторони</string>
+  <string name="card_template_editor_styling">Стайлінг</string>
+  <string name="card_template_editor_menu_delete">Видалити</string>
+  <string name="card_template_editor_cant_delete">Необхідна хоча б один тип карток</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
-    <item quantity="few">Delete the “%2$s” card type, and its %1$d cards?</item>
-    <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+    <item quantity="one">Видалити “%2$s” тип картки та %1$d картку, що належить до нього?</item>
+    <item quantity="few">Видалити “%2$s” тип картки та %1$d картку, що належить до нього?</item>
+    <item quantity="other">Видалити “%2$s” тип картки та %1$d карток, що належать до нього?</item>
   </plurals>
-  <string name="invalid_template">A card could not be generated</string>
-  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
-  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="invalid_template">Картка не може бути створена</string>
+  <string name="card_template_editor_would_delete_note">Видалення цього типу картки зумовить знищення однієї чи декількох приміток. Будь ласка, створіть спочатку новий тип карток.</string>
+  <!-- Permissions -->
+  <string name="read_write_permission_label">Читати і записувати в базу даних AnkiDroid</string>
+  <string name="read_write_permission_description">Дозволити застосунку доступ до існуючих приміток, карток, типів приміток, та колод, а також створення нових</string>
 </resources>

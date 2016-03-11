@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Navigation drawer items-->
   <string name="decks">Các bộ thẻ</string>
   <string name="card_browser">Trình duyệt thẻ</string>
   <string name="statistics">Thống kê</string>
@@ -51,6 +52,7 @@
   <string name="studyoptions_total_cards">Tổng số thẻ:</string>
   <string name="studyoptions_eta">Thời gian ước tính (phút):</string>
   <string name="studyoptions_start">Bắt đầu học</string>
+  <!-- DeckPicker.java -->
   <string name="study_more">Học thêm</string>
   <plurals name="deckpicker_title">
     <item quantity="other">%1$d thẻ tới hạn (%2$s)</item>
@@ -58,9 +60,11 @@
   <plurals name="reviewer_window_title">
     <item quantity="other">còn %d phút</item>
   </plurals>
+  <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
     <item quantity="other">Đã học %1$d thẻ trong %2$s hôm nay</item>
   </plurals>
+  <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">Gõ đáp án</string>
   <string name="show_answer">Hiện đáp án</string>
   <string name="ease_button_again">Học lại</string>
@@ -72,54 +76,62 @@
   <string name="undo">Hoàn tác</string>
   <string name="undo_action_review">lần ôn tập trước</string>
   <string name="undo_action_edit">sửa ghi chú</string>
-  <string name="undo_action_bury">Ghi chú bị quên</string>
+  <string name="undo_action_bury">tạm ẩn ghi chú</string>
   <string name="undo_action_suspend_card">tạm dừng thẻ</string>
   <string name="undo_action_suspend_note">tạm dừng ghi chú</string>
-  <string name="undo_action_delete">xóa ghi chú</string>
+  <string name="undo_action_delete">xoá ghi chú</string>
   <string name="undo_action_mark">đánh dấu ghi chú</string>
-  <string name="unbury">Sửa lại</string>
+  <string name="unbury">Bỏ tạm ẩn</string>
   <string name="rename_deck">Đổi tên bộ thẻ</string>
   <string name="menu_add">Thêm</string>
   <string name="menu_add_note">Thêm ghi chú</string>
   <string name="menu_my_account">Tài khoản đồng bộ</string>
-  <string name="menu_dismiss_note">ẩn/xóa</string>
-  <string name="menu_bury_card">Ẩn Thẻ</string>
-  <string name="menu_bury_note">Ẩn ghi chú</string>
+  <string name="menu_dismiss_note">Ẩn / xoá</string>
+  <string name="menu_bury_card">Tạm ẩn thẻ</string>
+  <string name="menu_bury_note">Tạm ẩn ghi chú</string>
   <string name="menu_suspend_card">Tạm dừng thẻ</string>
-  <string name="menu_suspend_note">Tạm Dừng Ghi Chú</string>
-  <string name="menu_delete_note">Xóa Ghi Chú</string>
-  <string name="delete_note_message">Bạn thực sự muốn xóa bỏ ghi chú này cùng toàn bộ thẻ của nó?\n%s</string>
+  <string name="menu_suspend_note">Tạm dừng ghi chú</string>
+  <string name="menu_delete_note">Xoá ghi chú</string>
+  <string name="delete_note_message">Bạn thực sự muốn xoá ghi chú này cùng toàn bộ thẻ của nó?\n%s</string>
   <string name="menu_select">Chọn văn bản</string>
   <string name="menu_search">Tra cứu trong %1$s</string>
   <string name="menu_mark_note">Đánh dấu ghi chú</string>
-  <string name="menu_unmark_note">Gỡ dấu ghi chú</string>
-  <string name="new_deck">Tạo tập Bài</string>
+  <string name="menu_unmark_note">Bỏ đánh dấu ghi chú</string>
+  <string name="new_deck">Tạo bộ thẻ</string>
   <string name="create">Tạo</string>
   <string name="new_dynamic_deck">Tạo bộ thẻ đã lọc</string>
   <string name="night_mode">Chế độ ban đêm</string>
   <string name="directory_inaccessible">Không thể truy cập thư mục AnkiDroid</string>
+  <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
   <string name="time_quantity_seconds">%d giây</string>
   <string name="time_quantity_minutes">%d phút</string>
   <string name="time_quantity_hours">%d giờ</string>
   <string name="time_quantity_days">%d ngày</string>
   <string name="time_quantity_months">%.1f tháng</string>
   <string name="time_quantity_years">%.1f năm</string>
+  <!-- or "%.1f a" -->
   <string name="later">Để sau</string>
   <string name="rebuild_cram_deck">Đang dựng lại bộ thẻ ôn thi&#8230;</string>
   <string name="rebuild_cram_label">Dựng lại</string>
-  <string name="empty_cram_label">Rỗng</string>
+  <string name="empty_cram_label">Dọn trống</string>
   <string name="empty_cram_deck">Đang dọn trống bộ thẻ ôn thi&#8230;</string>
-  <string name="custom_study_deck_name">Phiên học tự chọn</string>
-  <string name="custom_study_deck_exists">Đổi tên bộ thẻ học tự chọn hiện hữu trước nhất</string>
+  <string name="custom_study_deck_name">Phiên học tuỳ chọn</string>
+  <string name="custom_study_deck_exists">Đổi tên bộ thẻ học tuỳ chọn hiện hữu trước nhất</string>
   <string name="empty_deck">Bộ thẻ này rỗng</string>
-  <string name="studyoptions_empty">Bộ thẻ này rỗng. Nhấn bút + để thêm nội dung mới.</string>
+  <string name="studyoptions_empty">Bộ thẻ này rỗng. Bấm bút + để thêm nội dung mới.</string>
   <string name="studyoptions_limit_reached">Đã đạt giới hạn học hằng ngày</string>
   <string name="studyoptions_empty_schedule">Không có thẻ nào được lên lịch học</string>
   <string name="studyoptions_congrats_finished">Chúc mừng! Bạn đã tạm thời hoàn thành.</string>
-  <string name="studyoptions_congrats_more_rev">Đã tới giới hạn ôn tập của ngày hôm nay, nhưng vẫn còn có thẻ đợi được ôn tập. Để tối ưu sự ghi nhớ, cân nhắc tùy chọn tăng giới hạn hàng ngày.</string>
-  <string name="studyoptions_congrats_more_new">Không có thẻ mới, nhưng bạn đã đạt giới hạn hàng ngày. Bạn có thể tăng giới hạn trong các tùy chọn, nhưng vui lòng nhớ rằng điều này sẽ làm tăng khối lượng  công việc của bạn.</string>
-  <string name="studyoptions_congrats_custom">Để học bên ngoài thời gian biểu, hãy chọn vào nút Lựa chọn việc học.</string>
-  <string name="studyoptions_no_cards_due">Không có thẻ nào do chưa tạo đúng.</string>
+  <string name="studyoptions_congrats_more_rev">Đã đạt giới hạn của ngày hôm nay, nhưng vẫn còn thẻ cần ôn tập. Bạn có thể tăng giới hạn này trong mục tuỳ chọn.</string>
+  <string name="studyoptions_congrats_more_new">Đã đạt giới hạn của ngày hôm nay. Vẫn còn nhiều thẻ mới chưa được học; bạn có thể tăng giới hạn này trong mục tuỳ chọn, nhưng nó sẽ làm tăng khối lượng ôn tập trong thời gian ngắn.</string>
+  <string name="studyoptions_congrats_custom">Để học ngoài lịch trình thông thường, hãy bấm nút \"Học theo tuỳ chọn\"</string>
+  <string name="studyoptions_no_cards_due">Chưa có thẻ nào tới hạn</string>
   <string name="sd_card_not_mounted">Chưa gắn ổ lưu trữ thiết bị</string>
   <string name="button_sync">Đồng bộ</string>
   <string name="cancel_sync_confirm">Bạn có muốn huỷ đồng bộ?</string>
@@ -129,18 +141,20 @@
   <string name="export">Xuất</string>
   <string name="export_collection">Xuất bộ sưu tập</string>
   <string name="export_deck">Xuất bộ thẻ</string>
-  <string name="nothing">không có gì</string>
+  <string name="nothing">Không có gì</string>
+  <!-- Card template editor -->
   <string name="title_activity_template_editor">Các loại thẻ</string>
-  <string name="card_template_editor_front">Nền mặt trước của thẻ</string>
-  <string name="card_template_editor_back">Nền mặt sau của thẻ</string>
+  <string name="card_template_editor_front">Mẫu định dạng mặt trước</string>
+  <string name="card_template_editor_back">Mẫu định dạng mặt sau</string>
   <string name="card_template_editor_styling">Phong cách</string>
-  <string name="card_template_editor_menu_delete">Xóa</string>
-  <string name="card_template_editor_cant_delete">Tối thiểu cần có một loại thẻ.</string>
+  <string name="card_template_editor_menu_delete">Xoá</string>
+  <string name="card_template_editor_cant_delete">Cần tối thiểu một loại thẻ</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="other">Xoá loại thẻ \"%2$s\" và các thẻ %1$d?</item>
+    <item quantity="other">Xoá loại thẻ \"%2$s\" và (các) thẻ %1$d của nó?</item>
   </plurals>
   <string name="invalid_template">Không thể tạo thẻ</string>
-  <string name="card_template_editor_would_delete_note">Việc xóa bỏ loại thẻ này có thể dẫn tới một hay nhiều ghi chú sẽ bị xóa. Trước tiên xin vui lòng tạo một loại thẻ mới.</string>
+  <string name="card_template_editor_would_delete_note">Xoá bỏ loại thẻ này có thể dẫn đến việc một hay nhiều ghi chú bị xoá. Xin tạo loại thẻ mới trước đã.</string>
+  <!-- Permissions -->
   <string name="read_write_permission_label">Đọc và ghi vào cơ sở dữ liệu AnkiDroid</string>
   <string name="read_write_permission_description">Cho phép ứng dụng truy cập các ghi chú, thẻ, loại ghi chú và bộ thẻ hiện hữu cũng như tạo mới</string>
 </resources>

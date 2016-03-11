@@ -39,7 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX%</string>
+  <!-- Navigation drawer strings -->
   <string name="drawer_open">Abrir a gabeta</string>
   <string name="drawer_close">Pechar a gabeta</string>
   <string name="CardEditorLaterMessage">Información gardada para máis tarde</string>
@@ -56,6 +58,7 @@
   <string name="no_tags">Aínda non engadiches ningunha etiqueta.</string>
   <string name="sdcard_missing_message">A tarxeta SD non está dispoñible porque está a ser utilizada como almacenamento USB. Desconecta o cable USB para acceder ás túas barallas.</string>
   <string name="updated_version">Actualizado á versión %s</string>
+  <!-- Reviewer.java -->
   <string name="enable_whiteboard">Activar encerado</string>
   <string name="disable_whiteboard">Desactivar encerado</string>
   <string name="show_whiteboard">Amosar encerado</string>
@@ -65,6 +68,7 @@
   <string name="leech_suspend_notification">Cartón marcado como sambesuga e suspendido</string>
   <string name="leech_notification">Cartón marcado como sambesuga</string>
   <string name="corrupt_font">Arquivo de fonte corrupto %s</string>
+  <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>Pregunta</item>
     <item>Campo de ordenación</item>
@@ -78,7 +82,16 @@
     <item>Etiquetas</item>
     <item>Erros</item>
     <item>Revisións</item>
+    <!--
+    <item>Changed</item>
+    <item>Created</item>
+    <item>Due</item>
+    <item>Ease</item>
+    <item>Edited</item>
+    <item>Interval</item>
+        -->
   </string-array>
+  <!-- Custom study options -->
   <string name="custom_study_increase_new_limit">Incrementar o límite de cartóns novos para hoxe</string>
   <string name="custom_study_increase_review_limit">Incrementar o límite de revisións para hoxe</string>
   <string name="custom_study_review_forgotten">Revisar os cartóns esquecidos</string>
@@ -86,6 +99,7 @@
   <string name="custom_study_random_selection">Estudar unha selección de cartóns ao chou</string>
   <string name="custom_study_preview_new">Vista previa dos cartóns novos</string>
   <string name="custom_study_limit_tags">Limitar a certas etiquetas</string>
+  <!-- Card editor -->
   <string name="cardeditor_title_add_note">Engadir nota</string>
   <string name="cardeditor_title_edit_card">Editar nota</string>
   <string name="discard_unsaved_changes">Pechar e perder a entrada actual?</string>
@@ -93,7 +107,7 @@
   <string name="saving_facts">Gardando a nota</string>
   <string name="saving_model">Gardando o modelo</string>
   <string name="add">Engadir</string>
-  <string name="save">Save</string>
+  <string name="save">Gardar</string>
   <string name="close">Pechar</string>
   <string name="select">Seleccionar</string>
   <string name="saving_changes">Gardando cambios...</string>
@@ -133,7 +147,7 @@
   <string name="show_hint">Amosar %s</string>
   <string name="info_rate">Valora AnkiDroid</string>
   <string name="col_load_failed">Produciuse un erro ao cargar a colección.\nPreme en volver para pechar AnkiDroid.</string>
-  <string name="import_title">Importing</string>
+  <string name="import_title">Importando</string>
   <string name="import_select_title">Selecciona un ficheiro para importar</string>
   <string name="import_message_add">Engadir</string>
   <string name="import_message_replace_confirm">Isto eliminará a túa colección actual e a substituirá cos datos do ficheiro %s</string>
@@ -141,7 +155,7 @@
   <string name="import_log_no_apkg">Non é un ficheiro apkg válido</string>
   <string name="import_error_not_apkg_extension">O ficheiro \"%s\" non ten a extensión .apkg</string>
   <string name="import_error_content_provider">O ficheiro seleccionado non se puido importar automaticamente. Por favor, revisa o manual do usuario para saber como importar manualmente ficheiros anki: \n%s</string>
-  <string name="import_replacing">Replacing collection&#8230;</string>
+  <string name="import_replacing">Substituíndo colección&#8230;</string>
   <string name="export_include_schedule">Incluír programación</string>
   <string name="export_include_media">Incluír multimedia</string>
   <string name="confirm_apkg_export">Exportar a colección como ficheiro apkg?</string>
@@ -153,7 +167,7 @@
   <string name="import_hint">Coloca o ficheiro apkg no cartafol \"%s\" e preme \"Aceptar\" para importa cartóns</string>
   <string name="upgrade_import_no_file_found">Non se atopou ningún ficheiro %1$s para importar</string>
   <string name="study_options">Opcións da baralla</string>
-  <string name="select_tts">Set TTS language</string>
+  <string name="select_tts">Definir idioma TTS</string>
   <string name="custom_study">Estudo personalizado</string>
   <string name="more_options">Máis</string>
   <string name="dyn_deck_desc">Esta é unha baralla especial para estudar fora da programación normal. Os cartóns devolveranse ás súas barallas despois de revisalos. Eliminando esta baralla da listaxe devólvense os cartóns restantes á súa baralla orixinal.</string>
@@ -165,6 +179,7 @@
   <string name="tag_editor_add_feedback">Toca sobre \"%2$s\" para confirmar a adición de \"%1$s\"</string>
   <string name="tag_editor_add_feedback_existing">Etiqueta existente \"%1$s\" seleccionada</string>
   <string name="lookup_hint">Despois de copiar o texto, toca en calquera parte do cartón para amosar a icona de busca</string>
+  <!-- Time spans -->
   <plurals name="time_span_seconds">
     <item quantity="one">%s segundo</item>
     <item quantity="other">%s segundos</item>
@@ -189,6 +204,9 @@
     <item quantity="one">%s ano</item>
     <item quantity="other">%s anos</item>
   </plurals>
+  <!-- The reason for making a simple “< x” translatable are RTL
+         languages which apparently use the other symbol to mean less
+         than. -->
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">Esa baralla xa existe</string>
   <string name="decks_rename_filtered_nosubdecks">Unha baralla filtrada non pode ter subbarallas</string>

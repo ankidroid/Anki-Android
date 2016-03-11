@@ -39,8 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- generic strings -->
   <string name="disabled">Изключен</string>
   <string name="enabled">Enabled</string>
+  <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Общи настройки</string>
   <string name="pref_cat_reviewing">Преглед</string>
@@ -50,7 +52,7 @@
   <string name="pref_cat_whiteboard">Бяла дъска</string>
   <string name="pref_cat_automatic_display">Автоматично показване отговор</string>
   <string name="pref_cat_appearance">Appearance</string>
-  <string name="pref_cat_appearance_summ">Change themes and default font</string>
+  <string name="pref_cat_appearance_summ">Промяна теми и шрифт по подразбиране</string>
   <string name="pref_cat_gestures">Жестове</string>
   <string name="pref_cat_gestures_summ">Използване на докосване и плъзване вместо бутони</string>
   <string name="pref_cat_actions">Действия</string>
@@ -61,6 +63,7 @@
   <string name="pref_cat_plugins">Приложения</string>
   <string name="about_title">Относно AnkiDroid</string>
   <string name="about_version">Версия: </string>
+  <!-- preferences.xml entries-->
   <string name="whiteboard_stroke_width">Ширина на щриха</string>
   <string name="whiteboard_black">Черни щрихи</string>
   <string name="whiteboard_black_summ">Използва по-малко памет, освен в нощен режим</string>
@@ -72,7 +75,7 @@
   <string name="text_selection_click_summ">Активирайте това, ако не сте в състояние да започне избора на текст чрез дълго кликане</string>
   <string name="dictionary">Речник за справка</string>
   <string name="reset_languages">Нулиране на езици</string>
-  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
+  <string name="reset_languages_summ">Начално състояние на езикови задачи (за текст в реч и речници) за всички колоди</string>
   <string name="reset_languages_question">Начално състояние на всички езикови задачи?</string>
   <string name="reset_confirmation">Нулиране на всички състояния</string>
   <string name="card_zoom">Увеличение на карта</string>
@@ -157,18 +160,22 @@
   <string name="convert_fen_text_summ">Начертайте шахматна дъска за нотация на Форсайт-Едуърдс. Нотацията трябва да е затворена в [fen] [/fen] тагове.</string>
   <string name="enable_api_title">Разрешаване на AnkiDroid API</string>
   <string name="enable_api_summary">Нека други приложения, се свържат с AnkiDroid и да четат / записват данни без Ваша намеса</string>
-  <string name="advanced_statistics_title">Advanced statistics</string>
+  <!-- Advanced statistics settings -->
+  <string name="advanced_statistics_title">Разширена статистика</string>
   <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
   <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
   <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
   <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
   <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+  <!-- Custom sync server settings -->
   <string name="custom_sync_server_title">Синхрон на потребителски сървър</string>
   <string name="custom_sync_server_enable_title">Използвайте потребителски сървър за синхрон</string>
   <string name="custom_sync_server_enable_summary">Ако не искате да синхронизирате чрез сървър наAnkiWeb, можете тук да укажете алтернативен сървър</string>
   <string name="custom_sync_server_base_url_title">URL за синхрон</string>
   <string name="custom_sync_server_media_url_title">URL за синхрон на медии</string>
+  <!-- studyoptions -->
   <string name="studyoptions_limit_select_tags">Изберете етикети</string>
+  <!-- Deck configurations -->
   <string name="deck_conf_deck_description">Описание на тестето</string>
   <string name="deck_conf_group">Опции на групата</string>
   <plurals name="deck_conf_group_summ">

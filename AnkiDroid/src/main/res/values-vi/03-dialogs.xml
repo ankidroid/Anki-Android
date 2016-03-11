@@ -39,92 +39,95 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">Kiểm tra Cơ sở dữ liệu?</string>
-  <string name="check_db_warning">Điều này có thể mất thời gian lâu đấy</string>
-  <string name="check_db_acknowledge">Cơ sở dữ liệu đã được kiểm tra</string>
-  <string name="check_db_acknowledge_shrunk">Cơ sở dữ liệu đã được kiểm tra và tối ưu hóa. \nRút gọn bởi %d kB.</string>
-  <string name="contextmenu_deckpicker_delete_deck">Xóa tập thẻ</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
-  <string name="delete_deck_title">Xóa tập thẻ</string>
+  <string name="check_db_title">Kiểm tra CSDL?</string>
+  <string name="check_db_warning">Có thể hơi lâu</string>
+  <string name="check_db_acknowledge">Đã kiểm tra CSDL</string>
+  <string name="check_db_acknowledge_shrunk">Đã kiểm tra và tối ưu CSDL.\nRút gọn được %d kB.</string>
+  <string name="contextmenu_deckpicker_delete_deck">Xoá bộ thẻ</string>
+  <string name="delete_deck_default_deck">Không thể xoá bộ thẻ mặc định</string>
+  <string name="delete_deck_title">Xoá bộ thẻ?</string>
   <plurals name="delete_deck_message">
-    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="other">Xoá toàn bộ thẻ trong %1$s? Nó có chứa %2$d thẻ.</item>
   </plurals>
-  <string name="delete_cram_deck_message">Gửi tất cả các thẻ trong %s quay lại bài ban đầu?</string>
-  <string name="no_tts_available_message">Không có chức năng chuyển chữ - thành - lời thoại</string>
-  <string name="initializing_tts">Khởi tạo TTS&#8230;</string>
-  <string name="tts_no_tts">Không phát âm</string>
+  <string name="delete_cram_deck_message">Chuyển toàn bộ thẻ trong %s về bộ thẻ ban đầu?</string>
+  <string name="no_tts_available_message">Không có ngôn ngữ chuyển-văn-bản-thành-lời</string>
+  <string name="initializing_tts">Đang khởi chạy TTS&#8230;</string>
+  <string name="tts_no_tts">Đừng phát âm</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
-    <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
-    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, <a href=\"%2$s\">donate</a> to Anki Desktop, or blog about AnkiDroid.]]></item>
-    <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Thẻ ghi nhớ cho Android</h2>AnkiDroid là ứng dụng thẻ ghi nhớ hoàn toàn tương thích với phần mềm cho máy bàn <a href=\"%2$s\">Anki</a>. Bạn có thể tạo, tải xuống và học các tài liệu trên cả AnkiDroid hoặc Anki cho máy bàn và dễ dàng đồng bộ chúng với AnkiWeb.]]></item>
+    <item><![CDATA[Để giúp chúng tôi hoàn thiện AnkiDroid, xin báo cáo lỗi đến <a href=\"%1$s\">trình theo dõi lỗi</a>; các ý tưởng tính năng mới đều được hoan nghênh. Hãy tìm câu trả lời trên <a href=\"%2$s\">wiki</a> hoặc mở đầu cuộc thảo luận trên <a href=\"%3$s\">diễn đàn</a>.]]></item>
+    <item><![CDATA[AnkiDroid là <a href=\"%1$s\">phần mềm nguồn mở<a/>, do đó mọi người đều được khuyến khích <a href=\"%2$s\">trở thành người cộng tác</a> :-)]]></item>
+    <item><![CDATA[Bạn vẫn có thể giúp dù không phải là nhà phát triển. VD: bạn có thể <a href=\"%1$s\">giúp dịch thuật</a> AnkiDroid, cập nhật wiki, cung cấp ảnh chụp màn hình, <a href=\"%2$s\">ủng hộ</a> Anki cho máy bàn hoặc viết blog về AnkiDroid.]]></item>
+    <item><![CDATA[AnkiDroid được phát hành theo <a href=\"%1$s\">Giấy phép GNU-GPL v3</a> và mã nguồn có <a href=\"%2$s\">trên GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Xem trước</string>
-  <string name="reset_card_dialog_title">Đặt lại thẻ</string>
-  <string name="reset_card_dialog_message">Thẻ này sẽ được đặt ở cuối hàng đợi của thẻ mới.</string>
+  <string name="reset_card_dialog_title">Đặt lại tiến trình thẻ</string>
+  <string name="reset_card_dialog_message">Thẻ này sẽ được đặt ở cuối hàng đợi thẻ mới</string>
   <string name="reset_card_dialog_acknowledge">Thiết lập lại thẻ</string>
-  <string name="reschedule_card_dialog_title">Lên lịch lại với thẻ</string>
-  <string name="reschedule_card_dialog_message">Lên lịch lại để ôn tập trong vòng x ngày:</string>
-  <string name="reschedule_card_dialog_acknowledge">Thẻ đã đặt lại lịch</string>
-  <string name="answering_error_title">Cơ sở dữ liệu bị lỗi</string>
-  <string name="answering_error_message">Ghi lại bộ sưu tập thất bại, Cơ sở dữ liệu có thể bị hỏng hoặc có thể do không dủ dung lượng trống trên đĩa.\n\n Nếu điều này xảy ra thường xuyên, hay kiểm tra lại cơ sở dữ lieu, chỉnh sửa lại bộ sưu tập hoặc là khôi phục từ bản sao lưu trước đây.  Bấm vào \'tùy chọn\' để làm việc đó.\n Hoặc nó có thể là một lỗi chưa đc nhận biết của AnkiDroid; Xin vui lòng thông báo lại lỗi này để chúng tôi có thể kiểm tra và khắc phục.</string>
+  <string name="reschedule_card_dialog_title">Lên lịch lại cho thẻ</string>
+  <string name="reschedule_card_dialog_message">Lên lịch lại để ôn tập trong x ngày:</string>
+  <string name="reschedule_card_dialog_acknowledge">Đã lên lại lịch cho thẻ</string>
+  <string name="answering_error_title">Lỗi cơ sở dữ liệu</string>
+  <string name="answering_error_message">Thất bại khi chép vào bộ sưu tập. CSDL có thể bị hỏng hoặc không đủ dung lượng trống trên đĩa.\n\nNếu lỗi này xảy ra thường xuyên, hãy thử kiểm tra CSDL, sửa lại bộ sưu tập hoặc khôi phục từ bản sao lưu. Bấm \"tùy chọn\" để làm việc đó.\n\Hoặc nó cũng có thể là lỗi của AnkiDroid; xin thông báo lỗi này để chúng tôi có thể kiểm tra lại.</string>
   <string name="answering_error_report">Báo cáo lỗi</string>
-  <string name="repair_deck_dialog">Bạn thực sự muốn sửa chữa lại cơ sở dữ liệu? \n\nTrước khi bắt đầu thực thi, một bản sao sẽ được tạo trong thư mục con \'%s\'.</string>
-  <string name="intent_add_saved_information">Dữ liệu đã được lưu</string>
-  <string name="intent_add_clear_all">Xóa tất cả</string>
-  <string name="intent_aedict_empty">Dạng loại \'mặc định\' trống</string>
-  <string name="intent_aedict_category">Để thêm các thẻ vào AnkiDroid hay loại bỏ tất cả các loại bản ghi chú thích \'Notepad\' hoặc thêm một tên \'mặc định\'</string>
-  <string name="custom_study_new_total_new">Các thẻ mới trong chủ đề: %s</string>
-  <string name="custom_study_rev_total_rev">ôn tập lại theo như chủ đề: %s</string>
-  <string name="custom_study_new_extend">Tăng giới hạn thẻ mới trong ngày hôm nay bằng</string>
-  <string name="custom_study_rev_extend">Tăng giới hạn ôn tập của hôm nay bằng</string>
-  <string name="custom_study_forgotten">Ôn tập lại các thẻ đã quên trong khoảng \'x\' ngày qua:</string>
-  <string name="custom_study_ahead">ôn tập lại đầu mục trong vòng x ngày:</string>
-  <string name="custom_study_random">Chọn x ngẫu nhiên thẻ từ chủ đề:</string>
-  <string name="custom_study_preview">Xem trước thẻ mới được thêm vào trong x ngày vừa qua:</string>
-  <string name="rebuild_custom_study_deck">Xây dựng lại tuỳ chỉnh chủ đề học tập&#8230;</string>
-  <string name="importing_collection">Đang chuyển nhập bộ sưu tập...</string>
-  <string name="import_media_count">Đang chuyển nhập các tập tin media %1$d%%...</string>
-  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
-  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
-  <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
-  <string name="import_complete_count">Cards imported: %d</string>
-  <string name="sd_card_full_title">thẻ SD đã đầy</string>
-  <string name="sd_card_almost_full_title">thẻ SD gần như đầy </string>
-  <string name="restore_backup_title">Khôi phục lại sao lưu?</string>
-  <string name="restore_backup">Bộ sưu tập của bạn sẽ được thay thế bằng một bản sao cũ hơn. Bất kỳ bước nào chưa được lưu sẽ bị mất.</string>
-  <string name="dialog_cancel">Hủy bỏ</string>
-  <string name="dialog_ok">ĐỒNG Ý</string>
+  <string name="repair_deck_dialog">Bạn có thực sự muốn sửa chữa cơ sở dữ liệu? \n\nTrước khi bắt đầu, một bản sao sẽ được tạo trong thư mục con \"%s\".</string>
+  <string name="intent_add_saved_information">Dữ liệu đã lưu</string>
+  <string name="intent_add_clear_all">Xoá toàn bộ</string>
+  <string name="intent_aedict_empty">Danh mục \"mặc định\" rỗng</string>
+  <string name="intent_aedict_category">Để thêm thẻ vào AnkiDroid, hãy xoá toàn bộ danh mục Notepad hoặc thêm danh mục tên \"mặc định\"</string>
+  <string name="custom_study_new_total_new">Các thẻ mới trong bộ: %s</string>
+  <string name="custom_study_rev_total_rev">Ôn tập đã tới hạn trong bộ thẻ: %s</string>
+  <string name="custom_study_new_extend">Tăng giới hạn thẻ mới hôm nay lên</string>
+  <string name="custom_study_rev_extend">Tăng giới hạn ôn tập hôm nay lên</string>
+  <string name="custom_study_forgotten">Ôn lại các thẻ đã quên trong x ngày trước:</string>
+  <string name="custom_study_ahead">Ôn tập trước x ngày:</string>
+  <string name="custom_study_random">Chọn ngẫu nhiên x thẻ từ bộ:</string>
+  <string name="custom_study_preview">Xem trước thẻ mới được thêm vào x ngày trước:</string>
+  <string name="rebuild_custom_study_deck">Đang dựng lại bộ thẻ học tuỳ chọn&#8230;</string>
+  <string name="importing_collection">Đang nhập bộ sưu tập&#8230;</string>
+  <string name="import_media_count">Đang nhập các tệp đa phương tiện %1$d%%&#8230;</string>
+  <string name="import_progress">• Đang nhập các ghi chú: %1$d%%\n• Đang nhập các thẻ: %2$d%%\n• Đang hậu xử lý: %3$d%%</string>
+  <string name="import_update_details">Đã cập nhật %1$d trên %2$d ghi chú hiện hữu.</string>
+  <string name="import_update_ignored">Đã bỏ qua một số cập nhật vì loại ghi chú đã thay đổi</string>
+  <string name="import_complete_count">Đã nhập các thẻ: %d</string>
+  <string name="sd_card_full_title">Thẻ SD đã đầy</string>
+  <string name="sd_card_almost_full_title">Thẻ SD gần đầy</string>
+  <string name="restore_backup_title">Khôi phục sao lưu?</string>
+  <string name="restore_backup">Bộ sưu tập sẽ được thay bằng bản sao cũ hơn. Bất kỳ tiến trình nào chưa lưu sẽ bị mất.</string>
+  <string name="dialog_cancel">Huỷ</string>
+  <string name="dialog_ok">OK</string>
   <string name="dialog_continue">Tiếp tục</string>
   <string name="dialog_positive_create">Tạo</string>
-  <string name="dialog_positive_delete">Xóa</string>
+  <string name="dialog_positive_delete">Xoá</string>
   <string name="dialog_positive_disable">Tắt</string>
   <string name="dialog_positive_overwrite">Ghi đè</string>
-  <string name="dialog_positive_remove">Gỡ bỏ</string>
+  <string name="dialog_positive_remove">Xoá</string>
   <string name="dialog_positive_repair">Sửa chữa</string>
   <string name="dialog_positive_replace">Thay thế</string>
-  <string name="dialog_positive_restore">Phục hồi</string>
+  <string name="dialog_positive_restore">Khôi phục</string>
   <string name="dialog_positive_set">Thiết lập</string>
   <string name="lookup_button_content">Tìm kiếm</string>
-  <string name="dialog_collection_path_not_dir">Đường dẫn đã chỉ định không phải là một thư mục hợp lệ</string>
-  <string name="check_media_title">Kiểm tra các phương tiện truyền thông?</string>
-  <string name="check_media_warning">Điều này có thể mất một thời gian dài với các bộ sưu tập đa phương tiện kích thước lớn </string>
-  <string name="check_media_message">Đang kiểm tra các phương tiện truyền thông...</string>
-  <string name="check_media_acknowledge">Phương tiện truyền thông đã kiểm tra</string>
-  <string name="check_media_failed">Kiểm tra phương tiện truyền thông thất bại</string>
-  <string name="check_media_invalid">Các tập tin với mã hóa không hợp lệ: %d</string>
-  <string name="check_media_unused">Tập tin đã có trong thư mục phương tiện truyền thông, nhưng không được sử dụng bởi bất kỳ loại thẻ: %d</string>
-  <string name="check_media_nohave">Các tập tin được sử dung trên các thẻ mà không có trong thư mục truyền thông (media): %d</string>
-  <string name="check_media_no_unused_missing">Không có tập tin không sử dụng hoặc không tìm thấy các tập tin cần thiết.</string>
-  <string name="check_media_db_updated">Phương tiện truyền thông cơ sở dữ liệu được xây dựng lại.</string>
-  <string name="check_media_delete_unused">Xoá cái không sử dụng</string>
-  <string name="check_media_deleted">Các tập tin đã xóa: %d</string>
-  <string name="tags_dialog_option_all_cards">All cards</string>
-  <string name="tags_dialog_option_new_cards">New</string>
-  <string name="tags_dialog_option_due_cards">Due</string>
-  <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
-  <string name="empty_cards_none">No empty cards</string>
-  <string name="empty_cards_count">Cards to delete: %d</string>
-  <string name="empty_cards_deleted">Cards deleted: %d</string>
+  <string name="dialog_collection_path_not_dir">Đường dẫn đã chỉ định không phải thư mục hợp lệ</string>
+  <!-- Media checking -->
+  <string name="check_media_title">Kiểm tra tệp đa phương tiện?</string>
+  <string name="check_media_warning">Có thể hơi lâu với các bộ sưu tập đa phương tiện lớn</string>
+  <string name="check_media_message">Đang kiểm tra tệp đa phương tiện&#8230;</string>
+  <string name="check_media_acknowledge">Đã kiểm tệp đa phương tiện</string>
+  <string name="check_media_failed">Kiểm tra tệp đa phương tiện thất bại</string>
+  <string name="check_media_invalid">Các tệp với mã hoá không hợp lệ: %d</string>
+  <string name="check_media_unused">Tệp trong thư mục đa phương tiện nhưng không được dùng bởi thẻ nào: %d</string>
+  <string name="check_media_nohave">Các tệp dùng trong thẻ mà không có trong thư mục đa phương tiện: %d</string>
+  <string name="check_media_no_unused_missing">Không thấy tệp chưa dùng hoặc thất lạc nào</string>
+  <string name="check_media_db_updated">Đã dựng lại CSDL đa phương tiện</string>
+  <string name="check_media_delete_unused">Xoá tệp chưa dùng</string>
+  <string name="check_media_deleted">Đã xoá các tệp: %d</string>
+  <!-- Tags Dialog Options -->
+  <string name="tags_dialog_option_all_cards">Toàn bộ thẻ</string>
+  <string name="tags_dialog_option_new_cards">Mới</string>
+  <string name="tags_dialog_option_due_cards">Tới hạn</string>
+  <!-- Empty cards -->
+  <string name="emtpy_cards_finding">Đang tìm thẻ rỗng&#8230;</string>
+  <string name="empty_cards_none">Không có thẻ rỗng</string>
+  <string name="empty_cards_count">Thẻ sẽ được xóa: %d</string>
+  <string name="empty_cards_deleted">Đã xoá các thẻ: %d</string>
 </resources>

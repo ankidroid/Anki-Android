@@ -39,8 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- generic strings -->
   <string name="disabled">Desactivado</string>
   <string name="enabled">Enabled</string>
+  <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Axustes xerais</string>
   <string name="pref_cat_reviewing">Avaliación</string>
@@ -61,6 +63,7 @@
   <string name="pref_cat_plugins">Engadidos</string>
   <string name="about_title">Sobre AnkiDroid</string>
   <string name="about_version">Versión: </string>
+  <!-- preferences.xml entries-->
   <string name="whiteboard_stroke_width">Largura do trazo</string>
   <string name="whiteboard_black">Trazos negros</string>
   <string name="whiteboard_black_summ">Empregar menos memoria agás no modo noite</string>
@@ -158,18 +161,22 @@
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
   <string name="enable_api_title">Activar o API do AnkiDroid</string>
   <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+  <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Advanced statistics</string>
   <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
   <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
   <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
   <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
   <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+  <!-- Custom sync server settings -->
   <string name="custom_sync_server_title">Custom sync server</string>
   <string name="custom_sync_server_enable_title">Use custom sync server</string>
   <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
   <string name="custom_sync_server_base_url_title">Sync url</string>
   <string name="custom_sync_server_media_url_title">Media sync url</string>
+  <!-- studyoptions -->
   <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>
+  <!-- Deck configurations -->
   <string name="deck_conf_deck_description">Descrición da baralla</string>
   <string name="deck_conf_group">Grupo de opcións</string>
   <plurals name="deck_conf_group_summ">

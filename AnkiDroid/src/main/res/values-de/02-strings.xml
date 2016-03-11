@@ -39,7 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX %</string>
+  <!-- Navigation drawer strings -->
   <string name="drawer_open">Navigationsleiste öffnen</string>
   <string name="drawer_close">Navigationsleiste schließen</string>
   <string name="CardEditorLaterMessage">Information für später gespeichert</string>
@@ -56,6 +58,7 @@
   <string name="no_tags">Sie haben noch keine Schlagworte hinzugefügt.</string>
   <string name="sdcard_missing_message">Deaktivieren Sie den  USB-Speicher um auf Ihre Stapel zuzugreifen</string>
   <string name="updated_version">Aktualisiert auf Version %s</string>
+  <!-- Reviewer.java -->
   <string name="enable_whiteboard">Whiteboard aktivieren</string>
   <string name="disable_whiteboard">Whiteboard ausschalten</string>
   <string name="show_whiteboard">Whiteboard anzeigen</string>
@@ -65,6 +68,7 @@
   <string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgesetzt</string>
   <string name="leech_notification">Karte als Lernbremse markiert</string>
   <string name="corrupt_font">Fehlerhafte Schriftartdatei %s</string>
+  <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>Frage</item>
     <item>Sortierfeld</item>
@@ -78,7 +82,16 @@
     <item>Schlagworte</item>
     <item>Fehlschläge</item>
     <item>Wiederholungen</item>
+    <!--
+    <item>Changed</item>
+    <item>Created</item>
+    <item>Due</item>
+    <item>Ease</item>
+    <item>Edited</item>
+    <item>Interval</item>
+        -->
   </string-array>
+  <!-- Custom study options -->
   <string name="custom_study_increase_new_limit">Limit für neue Karten für heute erhöhen</string>
   <string name="custom_study_increase_review_limit">Limit für Wiederholungen für heute erhöhen</string>
   <string name="custom_study_review_forgotten">Vergessene Karten nochmal lernen</string>
@@ -86,6 +99,7 @@
   <string name="custom_study_random_selection">Zufällige Kartenauswahl lernen</string>
   <string name="custom_study_preview_new">Zeige Vorschau von neuen Karten</string>
   <string name="custom_study_limit_tags">Auf bestimmte Schlagworte beschränken</string>
+  <!-- Card editor -->
   <string name="cardeditor_title_add_note">Notiz hinzufügen</string>
   <string name="cardeditor_title_edit_card">Notiz bearbeiten</string>
   <string name="discard_unsaved_changes">Schließen und Eingaben verwerfen?</string>
@@ -165,6 +179,7 @@
   <string name="tag_editor_add_feedback">Berühren Sie »%2$s«, um »%1$s« hinzuzufügen</string>
   <string name="tag_editor_add_feedback_existing">Existierendes Schlagwort »%1$s« ausgewählt</string>
   <string name="lookup_hint">Nach dem Kopieren des Textes, tippen Sie irgendwo auf der Karteikarte um das Suchsymbol anzuzeigen</string>
+  <!-- Time spans -->
   <plurals name="time_span_seconds">
     <item quantity="one">%s Sekunde</item>
     <item quantity="other">%s Sekunden</item>
@@ -189,6 +204,9 @@
     <item quantity="one">%s Jahr</item>
     <item quantity="other">%s Jahre</item>
   </plurals>
+  <!-- The reason for making a simple “< x” translatable are RTL
+         languages which apparently use the other symbol to mean less
+         than. -->
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">Diesen Stapel gibt es schon</string>
   <string name="decks_rename_filtered_nosubdecks">Ein gefilterter Stapel kann keine Unterstapel enthalten.</string>
