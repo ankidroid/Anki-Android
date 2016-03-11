@@ -1,5 +1,9 @@
 language: android
 sudo: false
+env:
+  global:
+    - ADB_INSTALL_TIMEOUT=8
+
 android:
   components:
     - tools
@@ -9,17 +13,26 @@ android:
     - extra-android-support
     - extra-android-m2repository
     - sys-img-armeabi-v7a-android-21
+
 branches:
   except:
     - master
 
-# Emulator Management: Create, Start and Wait 
+# Emulator Management: Create, Start and Wait
 before_script:
   - echo no | android create avd --force -n test -t android-21 --sdcard 10M --abi armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
-  
+
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
 script: ./gradlew :AnkiDroid:connectedCheck
 
 notifications:
