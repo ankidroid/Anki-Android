@@ -29,7 +29,6 @@ import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.FlashCardsContract;
-import com.ichi2.anki.api.AddContentApi;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -44,7 +43,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -90,25 +88,28 @@ public class ContentProviderTest extends AndroidTestCase {
         // Use the names of the fields as test values for the notes which will be added
         mDummyFields = flds.toArray(new String[flds.size()]);
         // create test decks and add one note for every deck
-        final AddContentApi api = new AddContentApi(getContext());
-        HashMap<Long, String> deckList = api.getDeckList();
-        mNumDecksBeforeTest = deckList.size();
-        // TODO: add the notes directly with libanki
+        mNumDecksBeforeTest = col.getDecks().count();
         for(int i = 0; i < TEST_DECKS.length; i++) {
-            mTestDeckIds[i] = api.addNewDeck(TEST_DECKS[i]);
-            Uri newNoteUri = api.addNewNote(mModelId, mTestDeckIds[i], mDummyFields, TEST_TAG);
-            assertNotNull(newNoteUri);
-            mCreatedNotes.add(newNoteUri);
-            // Check that the flds data was set correctly
-            long nid = Long.parseLong(newNoteUri.getLastPathSegment());
-            Note addedNote = col.getNote(nid);
-            assertTrue("Check that the flds data was set correctly", Arrays.equals(addedNote.getFields(), mDummyFields));
-            assertTrue("Check that there was at least one card generated", addedNote.cards().size() > 0);
+            long did = col.getDecks().id(TEST_DECKS[i]);
+            mTestDeckIds[i] = did;
+            mCreatedNotes.add(setupNewNote(col, mModelId, did, mDummyFields, TEST_TAG));
         }
         // Add a note to the default deck as well so that testQueryNextCard() works
-        Uri newNoteUri = api.addNewNote(mModelId, 1, mDummyFields, TEST_TAG);
-        assertNotNull(newNoteUri);
-        mCreatedNotes.add(newNoteUri);
+        mCreatedNotes.add(setupNewNote(col, mModelId, 1, mDummyFields, TEST_TAG));
+    }
+
+    private static Uri setupNewNote(Collection col, long mid, long did, String[] flds, String tag) {
+        Note newNote = new Note(col, col.getModels().get(mid));
+        for (int idx=0; idx < flds.length; idx++) {
+            newNote.setField(idx, flds[idx]);
+        }
+        newNote.addTag(tag);
+        assertTrue("At least one card added for note", col.addNote(newNote) >= 1);
+        for (Card c: newNote.cards()) {
+            c.setDid(did);
+            c.flush();
+        }
+        return Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(newNote.getId()));
     }
 
     /**
@@ -149,9 +150,12 @@ public class ContentProviderTest extends AndroidTestCase {
         // Get required objects for test
         final ContentResolver cr = getContext().getContentResolver();
         final Collection col = CollectionHelper.getInstance().getCol(getContext());
-        final AddContentApi api = new AddContentApi(getContext());
         // Add the note
-        Uri newNoteUri = api.addNewNote(mModelId, 1, TEST_NOTE_FIELDS, TEST_TAG);
+        ContentValues values = new ContentValues();
+        values.put(FlashCardsContract.Note.MID, mModelId);
+        values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(TEST_NOTE_FIELDS));
+        values.put(FlashCardsContract.Note.TAGS, TEST_TAG);
+        Uri newNoteUri = cr.insert(FlashCardsContract.Note.CONTENT_URI, values);
         assertNotNull("Check that URI returned from addNewNote is not null", newNoteUri);
         // Check that it looks as expected
         Note addedNote = new Note(col, Long.parseLong(newNoteUri.getLastPathSegment()));
