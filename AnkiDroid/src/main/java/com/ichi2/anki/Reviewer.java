@@ -133,6 +133,11 @@ public class Reviewer extends AbstractFlashcardViewer {
                 Timber.i("Reviewer:: Edit note button pressed");
                 return editCard();
 
+            case R.id.action_share:
+                Timber.i("Reviewer:: share note button pressed");
+                shareText(getCurrentQuestion());
+                break;
+
             case R.id.action_bury_card:
                 Timber.i("Reviewer:: Bury card button pressed");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 4));

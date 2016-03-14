@@ -70,6 +70,7 @@
   <string name="studyoptions_congrats_undo">%s を元に戻す</string>
   <string name="menu_import">インポート</string>
   <string name="undo">元に戻す</string>
+  <string name="share_question">質問を共有</string>
   <string name="undo_action_review">最後の復習</string>
   <string name="undo_action_edit">ノートを編集</string>
   <string name="undo_action_bury">ノートを延期</string>

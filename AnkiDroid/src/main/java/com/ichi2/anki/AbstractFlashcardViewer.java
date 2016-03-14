@@ -2737,4 +2737,26 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         note.flush();
         refreshActionBar();
     }
+
+    /**
+     *
+     * @return question as a simple text String from the currently displayed card
+     */
+    public String getCurrentQuestion(){
+        Note note = mCurrentCard.note();
+        String[] fields = note.getFields();
+        return fields[0];
+    }
+    /**
+     * shares text context to other installed apps. This uses a default chooser for the intent, so
+     * that the user can decide whether to use selected app just once, or use it always.
+     * @param text String to share
+     */
+    public void shareText(String text) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, text);
+        sendIntent.setType("text/plain");
+        startActivityWithoutAnimation(sendIntent);
+    }
 }

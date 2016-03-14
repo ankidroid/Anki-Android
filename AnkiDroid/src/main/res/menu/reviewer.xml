@@ -30,6 +30,12 @@
         android:title="@string/cardeditor_title_edit_card"
         ankidroid:showAsAction="ifRoom"/>
     <item
+        android:id="@+id/action_share"
+        android:title="@string/share_question"
+        android:icon="@drawable/ic_share_white_24dp"
+        ankidroid:showAsAction="ifRoom"
+        />
+    <item
         android:id="@+id/action_replay"
         android:title="@string/replay_audio"
         android:icon="@drawable/ic_replay_white_24dp"
