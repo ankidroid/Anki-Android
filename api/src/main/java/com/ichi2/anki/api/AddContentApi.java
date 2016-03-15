@@ -1,6 +1,7 @@
 /***************************************************************************************
  *                                                                                      *
  * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
+ * Copyright (c) 2016 Mark Carter <mark@marcardar.com>                                  *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU Lesser General Public License as published by the Free Software *
@@ -435,45 +436,33 @@ public final class AddContentApi {
 
 
     /**
-     * Try to find the given model by name, accounting for renaming of the model, and duplicate models as follows:
-     * If there's a model with modelName and required number of fields then return it's ID
-     * If not, but a ref to modelName is stored in SharedPreferences, and that model exists, and has correct number of
-     * fields, (i.e. it was renamed), then use that model.Note: this model will not be found if your app is re-installed
-     * If there's no reference to modelName anywhere then return null
+     * Try to find the given model by name, accounting for renaming of the model:
+     * If there's a model with this modelName that is known to have previously been created (by this app)
+     *   and the corresponding model ID exists and has the required number of fields
+     *   then return that ID (even though it may have since been renamed)
+     * If there's a model from #getModelList with modelName and required number of fields then return its ID
+     * Otherwise return null
      * @param modelName the name of the model to find
      * @param numFields the minimum number of fields the model is required to have
-     * @return the mid of the model in Anki
+     * @return the model ID
      */
     public Long findModelIdByName(String modelName, int numFields) {
-        // Build list of all models with modelName and at least numFields
+        SharedPreferences modelsDb = mContext.getSharedPreferences(MODEL_REF_DB, Context.MODE_PRIVATE);
+        long prefsModelId = modelsDb.getLong(modelName, -1L);
+        // if we have a reference saved to modelName and it exists and has at least numFields then return it
+        if (prefsModelId != -1L && getModelName(prefsModelId) != null
+                && getFieldList(prefsModelId).length >= numFields) { // could potentially have been renamed
+            return prefsModelId;
+        }
         Map<Long, String> modelList = getModelList(numFields);
-        ArrayList<Long> foundModels = new ArrayList<>();
         for (Map.Entry<Long, String> entry : modelList.entrySet()) {
             if (entry.getValue().equals(modelName)) {
-                foundModels.add(entry.getKey());
+                return entry.getKey(); // first model wins
             }
         }
-        // Try to find the most suitable model
-        SharedPreferences modelsDb = mContext.getSharedPreferences(MODEL_REF_DB, Context.MODE_PRIVATE);
-        Long mid = modelsDb.getLong(modelName, -1);
-        if (mid == -1 && foundModels.size() == 0) {
-            // return null if completely no reference to modelName
-            return null;
-        } else if (mid == -1 && foundModels.size() > 0) {
-            // if we have no reference saved to modelName then return the first model with modelName and numFields
-            return foundModels.get(0);
-        } else {
-            // if we have a reference saved to modelName and it exists and has at least numFields then return it
-            if (getModelName(mid) != null && getFieldList(mid).length >= numFields) {
-                // model was renamed
-                return mid;
-            } else {
-                // model no longer exists or the number of fields was reduced
-                return null;
-            }
-        }
+        // model no longer exists (by name nor old id) or the number of fields was reduced
+        return null;
     }
-
 
     /**
      * Get the field names belonging to specified model
