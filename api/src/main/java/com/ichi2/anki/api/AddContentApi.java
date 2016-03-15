@@ -25,14 +25,19 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
+import android.database.MatrixCursor;
+import android.database.MergeCursor;
 import android.net.Uri;
 import android.os.Build;
+import android.text.TextUtils;
 
 import com.ichi2.anki.FlashCardsContract;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -164,46 +169,84 @@ public final class AddContentApi {
      */
     @Deprecated
     public boolean checkForDuplicates(long mid, long did, String[] fields) {
-        return findExistingNoteId(mid, fields) != null;
+        List<NoteInfo> notes = findNotesByKeys(mid, Collections.singleton(fields[0]));
+        return notes != null && !notes.isEmpty();
     }
-
 
     /**
-     * Find the note id of any existing notes which have mid and has identical first field as the input list of fields.
-     * If multiple notes exist with the same first field, then the first such note is returned.
-     * @param mid model id
-     * @param fields list of fields
-     * @return the note id or null if the note does not exist
+     * Return all notes for the specified model that match at least one of the specified keys.
+     * If keys is null or empty then all notes for the model are returned.
+     *
+     * @param modelId model id
+     * @param keys the keys
+     * @return the matched notes or null if model does not exist or there was some other problem
      */
-    public Long findExistingNoteId(long mid, String[] fields) {
-        NoteInfo note = findExistingNote(mid, fields);
-        if (note == null) {
+    public List<NoteInfo> findNotesByKeys(long modelId, Collection<String> keys) {
+        Cursor cursor;
+        if (keys == null || keys.isEmpty()) {
+            cursor = queryNotes(modelId);
+        }
+        else {
+            cursor = getCompat().queryNotes(modelId, keys);
+        }
+        if (cursor == null) {
             return null;
         }
-        return note.getId();
-    }
-
-
-    private NoteInfo findExistingNote(long mid, String[] fields) {
-        String[][] fieldsArray = {fields};
-        NoteInfo[] notes = getCompat().findExistingNotes(mid, fieldsArray);
-        if (notes == null) {
-            return null;
+        List<NoteInfo> result = new ArrayList<>();
+        try {
+            while (cursor.moveToNext()) {
+                NoteInfo note = NoteInfo.buildFromCursor(cursor);
+                if (note == null) {
+                    return null;
+                }
+                if (keys != null && !keys.contains(note.getFields()[0])) {
+                    continue;
+                }
+                result.add(note);
+            }
         }
-        return notes[0];
+        finally {
+            cursor.close();
+        }
+        return result;
     }
 
+    /** null means problem or model id does not exist */
+    private Cursor queryNotes(long modelId) {
+        String[] selectionArgs = {String.format("%s=%d", FlashCardsContract.Note.MID, modelId)};
+        Cursor cursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, null, selectionArgs, null);
+        return ensureNotesCursorAccordingToModelExistence(cursor, modelId);
+    }
+
+    private Cursor ensureNotesCursorAccordingToModelExistence(Cursor cursor, long modelId) {
+        // make sure we get the null-ness of the cursor right - provider specs behave differently
+        // now and probably in future, so good to check here
+        if (cursor != null && cursor.getCount() > 0) {
+            return cursor;
+        }
+        if (getModelName(modelId) == null) {
+            if (cursor != null) {
+                cursor.close();
+                cursor = null;
+            }
+        }
+        else {
+            if (cursor == null) {
+                cursor = new MatrixCursor(PROJECTION);
+            }
+        }
+        return cursor;
+    }
 
     /**
      * Get the number of notes that exist for the specified model ID
-     * @param mid id of the model to be used
-     * @return number of notes that exist with that model ID
+     * @param modelId id of the model to be used
+     * @return number of notes that exist with that model id. <0 means model does not exist or some other problem
      */
-    public int getNoteCount(long mid) {
-        String[] selectionArgs = {String.format("%s=%d", FlashCardsContract.Note.MID, mid)};
-        Cursor cursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, null, selectionArgs, null);
+    public int getNoteCount(long modelId) {
+        Cursor cursor = queryNotes(modelId);
         if (cursor == null) {
-            return 0;
+            return -1;
         }
         try {
             return cursor.getCount();
@@ -650,7 +693,8 @@ public final class AddContentApi {
     public int getApiHostSpecVersion() {
         // PackageManager#resolveContentProvider docs suggest flags should be 0 (but that gives null metadata)
         // GET_META_DATA seems to work anyway
-        ProviderInfo info = mContext.getPackageManager().resolveContentProvider(FlashCardsContract.AUTHORITY, PackageManager.GET_META_DATA);
+        ProviderInfo info = mContext.getPackageManager().resolveContentProvider(
+                FlashCardsContract.AUTHORITY, PackageManager.GET_META_DATA);
         if (info == null) {
             return -1;
         }
@@ -677,13 +721,8 @@ public final class AddContentApi {
          */
         int insertNotes(long deckId, ContentValues[] valuesArr);
 
-        /**
-         * For each item in fieldsArray, look for an existing note that has matching first field
-         * @param mid the model ID to limit the search to
-         * @param fieldsArray  array containing a set of fields for each note
-         * @return array of NoteInfo objects
-         */
-        NoteInfo[] findExistingNotes(long mid, String[][] fieldsArray);
+        /* it's okay to return a superset of notes because the cursor is filtered accordingly afterwards */
+        Cursor queryNotes(long modelId, Collection<String> keys);
     }
 
     private class CompatV1 implements Compat {
@@ -700,27 +739,45 @@ public final class AddContentApi {
         }
 
         @Override
-        public NoteInfo[] findExistingNotes(long mid, String[][] fieldsArray) {
-            // Content provider spec v1 does not support direct querying of the notes table, so use Anki browser syntax
-            String modelName = getModelName(mid);
+        public Cursor queryNotes(long modelId, Collection<String> keys) {
+            // Content provider spec v1 does not support direct querying of the notes table using csums, so must iterate
+            String modelName = getModelName(modelId);
             if (modelName == null) {
-                modelName = ""; // empty model name will result in no query results
+                return null;
             }
-            final String[] fieldNames = getFieldList(mid);
-            NoteInfo[] result = new NoteInfo[fieldsArray.length];
-            // Loop through each item in fieldsArray looking for an existing note
-            for (int i = 0; i < fieldsArray.length; i++) {
-                String sel = String.format("%s:\"%s\" note:\"%s\"", fieldNames[0], fieldsArray[i][0], modelName);
-                Cursor cursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, sel, null, null);
-                try {
-                    if (cursor != null && cursor.moveToFirst()) {
-                        result[i] = NoteInfo.buildFromCursor(cursor);
+            String queryFormat = String.format("%s:\"%%s\" note:\"%s\"", getFieldList(modelId)[0], modelName);
+            List<Cursor> cursors = new ArrayList<>();
+            try {
+                int i = 0;
+                for (String key : keys) {
+                    Cursor cursor = mResolver.query(
+                          FlashCardsContract.Note.CONTENT_URI, PROJECTION, String.format(queryFormat, key), null, null);
+                    // cursor will be null if there are no matches (even when model exists) so we need to correct that
+                    // but it's overkill to check for model existence every time, so just assume null means no matches
+                    if (cursor == null) {
+                        continue;
                     }
-                } finally {
-                    cursor.close();
+                    if (cursor.getCount() == 0) {
+                        cursor.close();
+                        continue;
+                    }
+                    cursors.add(cursor);
                 }
             }
-            return result;
+            catch (Throwable t) {
+                for (Cursor cursor : cursors) {
+                    cursor.close();
+                }
+                throw t;
+            }
+            switch (cursors.size()) {
+                case 0:
+                    return new MatrixCursor(PROJECTION); // we know the model exists, so not null
+                case 1:
+                    return cursors.get(0);
+                default:
+                    return new MergeCursor(cursors.toArray(new Cursor[cursors.size()]));
+            }
         }
     }
 
@@ -733,38 +790,15 @@ public final class AddContentApi {
         }
 
         @Override
-        public NoteInfo[] findExistingNotes(long mid, String[][] fieldsArray) {
-            // Build list of checksums
-            List<Long> csums = new ArrayList<>(fieldsArray.length);
-            for (String[] aFieldsArray : fieldsArray) {
-                csums.add(Utils.fieldChecksum(aFieldsArray[0]));
+        public Cursor queryNotes(long modelId, Collection<String> keys) {
+            Set<Long> checksums = new HashSet<>(keys.size());
+            for (String key : keys) {
+                checksums.add(Utils.fieldChecksum(key));
             }
-            // Query for notes that have specified model and checksum of first field matches
-            String sel = String.format("%s=%d and %s in ", FlashCardsContract.Note.MID, mid, FlashCardsContract.Note.CSUM);
-            String[] selArgs = {sel + Utils.ids2str(csums)};
-            Cursor notesTableCursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, null, selArgs, null);
-            if (notesTableCursor == null) {
-                return null;
-            }
-            // Loop through each result, building a hash-map of first field to note ID
-            Map<String, NoteInfo> idMap = new HashMap<>();
-            try {
-                while (notesTableCursor.moveToNext()) {
-                    NoteInfo note = NoteInfo.buildFromCursor(notesTableCursor);
-                    String key = note.getFields()[0];
-                    if (!idMap.containsKey(key)) {
-                        idMap.put(key, note);
-                    }
-                }
-            } finally {
-                notesTableCursor.close();
-            }
-            // Build the result array containing the note ID corresponding to each fieldsArray element, or null
-            NoteInfo[] result = new NoteInfo[fieldsArray.length];
-            for (int i = 0; i < fieldsArray.length; i++) {
-                result[i] = idMap.get(fieldsArray[i][0]);
-            }
-            return result;
+            String[] selArgs = new String[] {String.format("%s=%d and %s in (%s)",
+                   FlashCardsContract.Note.MID, modelId, FlashCardsContract.Note.CSUM, TextUtils.join(",", checksums))};
+            Cursor cursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, null, selArgs, null);
+            return ensureNotesCursorAccordingToModelExistence(cursor, modelId);
         }
     }
 }
