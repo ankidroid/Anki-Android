@@ -2,6 +2,7 @@
  *                                                                                      *
  * Copyright (c) 2015 Frank Oltmanns <frank.oltmanns@gmail.com>                         *
  * Copyright (c) 2015 Timothy Rae <timothy.rae@gmail.com>                               *
+ * Copyright (c) 2016 Mark Carter <mark@marcardar.com>                                  *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -21,11 +22,13 @@ package com.ichi2.anki.provider;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Build;
 import android.text.TextUtils;
 
 import com.ichi2.libanki.DB;
@@ -410,10 +413,14 @@ public class CardContentProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
-        Timber.d("CardContentProvider.update");
+        logProviderCall("update", uri);
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
             return 0;
+        }
+
+        if (getContext().checkCallingPermission(FlashCardsContract.READ_WRITE_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+            throw new IllegalStateException("Update permission not granted for: " + uri);
         }
 
         // Find out what data the user is requesting
@@ -634,11 +641,15 @@ public class CardContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        Timber.d("CardContentProvider.delete");
+        logProviderCall("delete", uri);
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
             return 0;
         }
+        if (getContext().checkCallingPermission(FlashCardsContract.READ_WRITE_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+            throw new IllegalStateException("Delete permission not granted for: " + uri);
+        }
+
         switch (sUriMatcher.match(uri)) {
             case NOTES_ID:
                 col.remNotes(new long[]{Long.parseLong(uri.getPathSegments().get(1))});
@@ -659,7 +670,7 @@ public class CardContentProvider extends ContentProvider {
      */
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
-        Timber.d("CardContentProvider.bulkInsert");
+        logProviderCall("bulkInsert", uri);
         // by default, #bulkInsert simply calls insert for each item in #values
         // but in some cases, we want to override this behavior
         int match = sUriMatcher.match(uri);
@@ -756,7 +767,7 @@ public class CardContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        Timber.d("CardContentProvider.insert");
+        logProviderCall("insert", uri);
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
             return null;
@@ -1131,5 +1142,21 @@ public class CardContentProvider extends ContentProvider {
         JSONObject model = col.getModels().get(getModelIdFromUri(uri, col));
         Integer ord = Integer.parseInt(uri.getLastPathSegment());
         return model.getJSONArray("tmpls").getJSONObject(ord);
+    }
+
+    private void logProviderCall(String methodName, Uri uri) {
+        String format = "%s.%s %s";
+        String path = uri == null ? null : uri.getPath();
+        String msg;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            msg = String.format(format, CardContentProvider.class.getSimpleName(), methodName, path);
+        } else {
+            msg = String.format(format + " (%s)", CardContentProvider.class.getSimpleName(), methodName, path, getCallingPackage());
+        }
+        Timber.i(msg);
+        Collection col = CollectionHelper.getInstance().getCol(getContext());
+        if (col != null) {
+            col.log(msg);
+        }
     }
 }
