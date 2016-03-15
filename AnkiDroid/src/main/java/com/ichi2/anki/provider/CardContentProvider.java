@@ -419,7 +419,7 @@ public class CardContentProvider extends ContentProvider {
             return 0;
         }
 
-        if (getContext().checkCallingPermission(FlashCardsContract.READ_WRITE_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+        if (getContext().checkCallingOrSelfPermission(FlashCardsContract.READ_WRITE_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
             throw new IllegalStateException("Update permission not granted for: " + uri);
         }
 
@@ -646,7 +646,7 @@ public class CardContentProvider extends ContentProvider {
         if (col == null) {
             return 0;
         }
-        if (getContext().checkCallingPermission(FlashCardsContract.READ_WRITE_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+        if (getContext().checkCallingOrSelfPermission(FlashCardsContract.READ_WRITE_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
             throw new IllegalStateException("Delete permission not granted for: " + uri);
         }
 
