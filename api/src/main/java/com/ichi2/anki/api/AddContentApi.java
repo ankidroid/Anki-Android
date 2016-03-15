@@ -193,15 +193,13 @@ public final class AddContentApi {
         return notes[0];
     }
 
-
     /**
      * Get the number of notes that exist for the specified model ID
      * @param mid id of the model to be used
      * @return number of notes that exist with that model ID
      */
     public int getNoteCount(long mid) {
-        String[] selectionArgs = {String.format("%s=%d", FlashCardsContract.Note.MID, mid)};
-        Cursor cursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, null, selectionArgs, null);
+        Cursor cursor = getCompat().queryNotes(mid);
         if (cursor == null) {
             return 0;
         }
@@ -669,6 +667,8 @@ public final class AddContentApi {
     }
 
     private interface Compat {
+        Cursor queryNotes(long mid);
+
         /**
          * Add new notes to the AnkiDroid content provider in bulk.
          * @param deckId the deck ID to put the cards in
@@ -687,6 +687,16 @@ public final class AddContentApi {
     }
 
     private class CompatV1 implements Compat {
+        @Override
+        public Cursor queryNotes(long mid) {
+            String modelName = getModelName(mid);
+            if (modelName == null) {
+                return null;
+            }
+            String queryFormat = String.format("note:\"%s\"", modelName);
+            return mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, queryFormat, null, null);
+        }
+
         @Override
         public int insertNotes(long deckId, ContentValues[] valuesArr) {
             int result = 0;
@@ -725,6 +735,12 @@ public final class AddContentApi {
     }
 
     private class CompatV2 implements Compat {
+        @Override
+        public Cursor queryNotes(long mid) {
+            String[] selectionArgs = {String.format("%s=%d", FlashCardsContract.Note.MID, mid)};
+            return mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, null, selectionArgs, null);
+        }
+
         @Override
         public int insertNotes(long deckId, ContentValues[] valuesArr) {
             Uri.Builder builder = FlashCardsContract.Note.CONTENT_URI.buildUpon();
