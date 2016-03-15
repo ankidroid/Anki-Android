@@ -179,16 +179,10 @@ public final class AddContentApi {
      *
      * @param modelId model id
      * @param keys the keys
-     * @return the matched notes or null if model does not exist or there was some other problem
+     * @return the matched notes or null if there was some other problem
      */
     public List<NoteInfo> findNotesByKeys(long modelId, Collection<String> keys) {
-        Cursor cursor;
-        if (keys == null || keys.isEmpty()) {
-            cursor = queryNotes(modelId);
-        }
-        else {
-            cursor = getCompat().queryNotes(modelId, keys);
-        }
+        Cursor cursor = getCompat().queryNotes(modelId, keys);
         if (cursor == null) {
             return null;
         }
@@ -211,40 +205,13 @@ public final class AddContentApi {
         return result;
     }
 
-    /** null means problem or model id does not exist */
-    private Cursor queryNotes(long modelId) {
-        String[] selectionArgs = {String.format("%s=%d", FlashCardsContract.Note.MID, modelId)};
-        Cursor cursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, null, selectionArgs, null);
-        return ensureNotesCursorAccordingToModelExistence(cursor, modelId);
-    }
-
-    private Cursor ensureNotesCursorAccordingToModelExistence(Cursor cursor, long modelId) {
-        // make sure we get the null-ness of the cursor right - provider specs behave differently
-        // now and probably in future, so good to check here
-        if (cursor != null && cursor.getCount() > 0) {
-            return cursor;
-        }
-        if (getModelName(modelId) == null) {
-            if (cursor != null) {
-                cursor.close();
-                cursor = null;
-            }
-        }
-        else {
-            if (cursor == null) {
-                cursor = new MatrixCursor(PROJECTION);
-            }
-        }
-        return cursor;
-    }
-
     /**
      * Get the number of notes that exist for the specified model ID
      * @param modelId id of the model to be used
-     * @return number of notes that exist with that model id. <0 means model does not exist or some other problem
+     * @return number of notes that exist with that model id. <0 means there was a problem
      */
     public int getNoteCount(long modelId) {
-        Cursor cursor = queryNotes(modelId);
+        Cursor cursor = getCompat().queryNotes(modelId, null);
         if (cursor == null) {
             return -1;
         }
@@ -720,7 +687,6 @@ public final class AddContentApi {
          * @return the number of successful entries
          */
         int insertNotes(long deckId, ContentValues[] valuesArr);
-
         /* it's okay to return a superset of notes because the cursor is filtered accordingly afterwards */
         Cursor queryNotes(long modelId, Collection<String> keys);
     }
@@ -743,7 +709,15 @@ public final class AddContentApi {
             // Content provider spec v1 does not support direct querying of the notes table using csums, so must iterate
             String modelName = getModelName(modelId);
             if (modelName == null) {
-                return null;
+                return new MatrixCursor(PROJECTION);
+            }
+            if (keys == null || keys.isEmpty()) {
+                String queryFormat = String.format("note:\"%s\"", modelName);
+                Cursor cursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, queryFormat, null, null);
+                if (cursor == null) {
+                    cursor = new MatrixCursor(PROJECTION);
+                }
+                return cursor;
             }
             String queryFormat = String.format("%s:\"%%s\" note:\"%s\"", getFieldList(modelId)[0], modelName);
             List<Cursor> cursors = new ArrayList<>();
@@ -752,8 +726,7 @@ public final class AddContentApi {
                 for (String key : keys) {
                     Cursor cursor = mResolver.query(
                           FlashCardsContract.Note.CONTENT_URI, PROJECTION, String.format(queryFormat, key), null, null);
-                    // cursor will be null if there are no matches (even when model exists) so we need to correct that
-                    // but it's overkill to check for model existence every time, so just assume null means no matches
+                    // cursor will be null if there are no matches (even when model exists) so just skip
                     if (cursor == null) {
                         continue;
                     }
@@ -772,7 +745,7 @@ public final class AddContentApi {
             }
             switch (cursors.size()) {
                 case 0:
-                    return new MatrixCursor(PROJECTION); // we know the model exists, so not null
+                    return new MatrixCursor(PROJECTION);
                 case 1:
                     return cursors.get(0);
                 default:
@@ -795,10 +768,11 @@ public final class AddContentApi {
             for (String key : keys) {
                 checksums.add(Utils.fieldChecksum(key));
             }
-            String[] selArgs = new String[] {String.format("%s=%d and %s in (%s)",
-                   FlashCardsContract.Note.MID, modelId, FlashCardsContract.Note.CSUM, TextUtils.join(",", checksums))};
-            Cursor cursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, null, selArgs, null);
-            return ensureNotesCursorAccordingToModelExistence(cursor, modelId);
+            String selArg = String.format("%s=%d", FlashCardsContract.Note.MID, modelId);
+            if (keys != null && !keys.isEmpty()) {
+                selArg += String.format(" and %s in (%s)", FlashCardsContract.Note.CSUM,TextUtils.join(",", checksums));
+            }
+            return mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, null, new String[]{selArg}, null);
         }
     }
 }
