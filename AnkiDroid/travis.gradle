@@ -1,0 +1,15 @@
+def adb = android.getAdbExe().toString()
+
+task setStoragePermission(type: Exec, dependsOn: 'installDebug') {
+    commandLine "$adb shell pm grant com.ichi2.anki android.permission.WRITE_EXTERNAL_STORAGE".split(' ')
+}
+task setProviderPermission(type: Exec, dependsOn: 'installDebug') {
+    commandLine "$adb shell pm grant com.ichi2.anki com.ichi2.anki.permission.READ_WRITE_DATABASE".split(' ')
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name.startsWith('connectedDebugAndroidTest')) {
+        task.dependsOn setStoragePermission
+        task.dependsOn setProviderPermission
+    }
+}
