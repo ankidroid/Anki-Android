@@ -30,9 +30,7 @@ import android.net.Uri;
 import com.ichi2.anki.FlashCardsContract;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -83,7 +81,6 @@ public final class AddContentApi {
         addNote(did, values);
         NoteInfo newNote = findExistingNote(mid, fields);
         if (newNote != null) {
-            newNote.newlyAdded = true;
             return newNote;
         }
         return null;
@@ -95,7 +92,7 @@ public final class AddContentApi {
         if (result == null) {
             return null;
         }
-        return Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(result.id));
+        return Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(result.getId()));
     }
 
     private Uri addNote(long did, ContentValues values) {
@@ -147,7 +144,6 @@ public final class AddContentApi {
             if (fields == null || resultsMap.containsKey(fields[0]) || (existingNotes != null && existingNotes[i] != null)) {
                 if (existingNotes != null && existingNotes[i] != null) {
                     result[i] = existingNotes[i];
-                    result[i].newlyAdded = false;
                 }
                 continue;   // skip null entries and duplicates
             }
@@ -167,7 +163,6 @@ public final class AddContentApi {
             for (String key: resultsMap.keySet()) {
                 int originalIndex = resultsMap.get(key);
                 result[originalIndex] = newNotes[originalIndex];
-                result[originalIndex].newlyAdded = true;
             }
         }
         return result;
@@ -199,7 +194,7 @@ public final class AddContentApi {
         if (note == null) {
             return null;
         }
-        return note.id;
+        return note.getId();
     }
 
 
@@ -237,11 +232,11 @@ public final class AddContentApi {
      * @return set of tags, or null if the note could not be found
      */
     public Set<String> getTags(long noteId) {
-        Map<String, String> note = getNote(noteId);
-        if (note != null) {
-            return new HashSet<>(Arrays.asList(Utils.splitTags(note.get("tags"))));
+        NoteInfo note = getNote(noteId);
+        if (note == null) {
+            return null;
         }
-        return null;
+        return note.getTags();
     }
 
     /**
@@ -260,13 +255,12 @@ public final class AddContentApi {
      * @return array of fields for the given note
      */
     public String[] getFields(long noteId) {
-        Map<String, String> note = getNote(noteId);
-        if (note != null) {
-            return Utils.splitFields(note.get("fields"));
+        NoteInfo note = getNote(noteId);
+        if (note == null) {
+            return null;
         }
-        return null;
+        return note.getFields();
     }
-
 
     /**
      * Set the fields for a given note
@@ -278,23 +272,17 @@ public final class AddContentApi {
         return updateNote(noteId, fields, null);
     }
 
-
-    private Map getNote(long noteId) {
+    private NoteInfo getNote(long noteId) {
         String[] selectionArgs = {String.format("%s=%d", FlashCardsContract.Note._ID, noteId)};
         Cursor cursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, null, selectionArgs, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            try {
-                String tags = cursor.getString(cursor.getColumnIndex(FlashCardsContract.Note.TAGS));
-                String fields = cursor.getString(cursor.getColumnIndex(FlashCardsContract.Note.FLDS));
-                Map<String, String> result = new HashMap<>();
-                result.put("tags", tags);
-                result.put("fields", fields);
-                return result;
-            } finally {
-                cursor.close();
-            }
+        if (cursor == null) {
+            return null;
         }
-        return null;
+        try {
+            return NoteInfo.buildFromCursor(cursor);
+        } finally {
+            cursor.close();
+        }
     }
 
 
@@ -809,8 +797,9 @@ public final class AddContentApi {
             try {
                 while (notesTableCursor.moveToNext()) {
                     NoteInfo note = NoteInfo.buildFromCursor(notesTableCursor);
-                    if (!idMap.containsKey(note.key)) {
-                        idMap.put(note.key, note);
+                    String key = note.getFields()[0];
+                    if (!idMap.containsKey(key)) {
+                        idMap.put(key, note);
                     }
                 }
             } finally {

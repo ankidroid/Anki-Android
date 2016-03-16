@@ -24,33 +24,33 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-/**  Container class containing the following public fields to share data with client applications
- *   id:      note ID (if skipped true and valid note exists, then it's the note ID of the existing note)
- *   flds:    The array of fields corresponding to note with given id
- *   key:     The very first field (used as a key for duplicate checking)*
- *   tags:    The array of tags
- *
- *  It may also contain a boolean 'newlyAdded' which is true if the note was newly added to the database
- **/
-
+/**
+ * Representation of an existing note in AnkiDroid.
+ */
 public class NoteInfo {
-    /** note ID */
-    public Long id;
-    /** The array of fields */
-    public String[] fields;
-    /** The very first field (used as a key for duplicate checking) */
-    public String key;
-    /** The array of tags */
-    public Set<String> tags;
-    /** Whether or not the note was newly added to the database */
-    public boolean newlyAdded = false;
-
+    private final long mId;
+    private final String[] mFields;
+    private final Set<String> mTags;
 
     public NoteInfo(long id, String[] fields, Set<String> tags) {
-        this.id = id;
-        this.fields = fields;
-        this.key = fields[0];
-        this.tags = tags;
+        mId = id;
+        mFields = fields;
+        mTags = tags;
+    }
+
+    /** note ID */
+    public long getId() {
+        return mId;
+    }
+
+    /** The array of fields */
+    public String[] getFields() {
+        return mFields;
+    }
+
+    /** The array of tags */
+    public Set<String> getTags() {
+        return mTags;
     }
 
     /**
