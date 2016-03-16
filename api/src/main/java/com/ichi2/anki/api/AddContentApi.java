@@ -50,8 +50,6 @@ public final class AddContentApi {
     private static final String PROVIDER_SPEC_META_DATA_KEY = "com.ichi2.anki.provider.spec";
     private static final int DEFAULT_PROVIDER_SPEC_VALUE = 1; // for when meta-data key does not exist
 
-    private static final int BULK_INSERT_MIN_SPEC_VERSION = 2;
-
     private static final String[] PROJECTION = {FlashCardsContract.Note._ID,
             FlashCardsContract.Note.FLDS, FlashCardsContract.Note.TAGS};
 
@@ -692,18 +690,19 @@ public final class AddContentApi {
         return null;
     }
 
-
     /**
-     * Old versions of AnkiDroid are very slow at adding multiple notes at once (maybe a couple of minutes for 1000 notes).
-     * Newer versions are about 20 times faster.
+     * The API spec version of the installed AnkiDroid app. This is not the same as the AnkiDroid app version code.
      *
-     * @return true iff #addNotes performs quickly
+     * SPEC VERSION 1: (AnkiDroid 2.5)
+     * #addNotes is very slow for large numbers of notes
+     * #findNotes is very slow for large numbers of keys
+     * #addNewCustomModel is not persisted properly
+     *
+     * SPEC VERSION 2: (AnkiDroid 2.6)
+     *
+     * @return the spec version number or -1 if AnkiDroid is not installed.
      */
-    public boolean supportsFastAddNotes() {
-        return getProviderSpecVersionCode() >= BULK_INSERT_MIN_SPEC_VERSION;
-    }
-
-    private int getProviderSpecVersionCode() {
+    public int getApiHostSpecVersion() {
         // PackageManager#resolveContentProvider docs suggest flags should be 0 (but that gives null metadata)
         // GET_META_DATA seems to work anyway
         ProviderInfo info = mContext.getPackageManager().resolveContentProvider(FlashCardsContract.AUTHORITY, PackageManager.GET_META_DATA);
@@ -712,19 +711,16 @@ public final class AddContentApi {
         }
         if (info.metaData != null && info.metaData.containsKey(PROVIDER_SPEC_META_DATA_KEY)) {
             return info.metaData.getInt(PROVIDER_SPEC_META_DATA_KEY);
-        }
-        else {
+        } else {
             return DEFAULT_PROVIDER_SPEC_VALUE;
         }
     }
-
-
 
     /**
      * Best not to store this in case the user updates AnkiDroid app while client app is staying alive
      */
     private Compat getCompat() {
-        return getProviderSpecVersionCode() < BULK_INSERT_MIN_SPEC_VERSION ? new CompatV1() : new CompatV2();
+        return getApiHostSpecVersion() < 2 ? new CompatV1() : new CompatV2();
     }
 
     private interface Compat {
