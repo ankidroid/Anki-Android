@@ -419,7 +419,7 @@ public class CardContentProvider extends ContentProvider {
             return 0;
         }
 
-        if (getContext().checkCallingPermission(FlashCardsContract.READ_WRITE_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+        if (!isUpdateDeleteAllowed()) {
             throw new IllegalStateException("Update permission not granted for: " + uri);
         }
 
@@ -646,7 +646,7 @@ public class CardContentProvider extends ContentProvider {
         if (col == null) {
             return 0;
         }
-        if (getContext().checkCallingPermission(FlashCardsContract.READ_WRITE_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+        if (!isUpdateDeleteAllowed()) {
             throw new IllegalStateException("Delete permission not granted for: " + uri);
         }
 
@@ -1157,6 +1157,18 @@ public class CardContentProvider extends ContentProvider {
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col != null) {
             col.log(msg);
+        }
+    }
+
+    private boolean isUpdateDeleteAllowed() {
+        if (getContext().checkCallingPermission(FlashCardsContract.READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+        // also allow if anki is calling (for example in tests!)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            return false; // we can't know if it's this app or not
+        } else {
+            return getContext().getPackageName().equals(getCallingPackage());
         }
     }
 }
