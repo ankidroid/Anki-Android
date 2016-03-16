@@ -227,39 +227,13 @@ public final class AddContentApi {
     }
 
     /**
-     * Get the tags for a given note
-     * @param noteId
-     * @return set of tags, or null if the note could not be found
-     */
-    public Set<String> getTags(long noteId) {
-        NoteInfo note = getNote(noteId);
-        if (note == null) {
-            return null;
-        }
-        return note.getTags();
-    }
-
-    /**
      * Set the tags for a given note
      * @param noteId
      * @param tags set of tags
      * @return true if noteId was found, otherwise false
      */
-    public Boolean setTags(long noteId, Set<String> tags) {
+    public boolean updateNoteTags(long noteId, Set<String> tags) {
         return updateNote(noteId, null, tags);
-    }
-
-    /**
-     * Get the fields for a given note
-     * @param noteId
-     * @return array of fields for the given note
-     */
-    public String[] getFields(long noteId) {
-        NoteInfo note = getNote(noteId);
-        if (note == null) {
-            return null;
-        }
-        return note.getFields();
     }
 
     /**
@@ -268,11 +242,11 @@ public final class AddContentApi {
      * @param fields array of fields
      * @return true if noteId was found, otherwise false
      */
-    public Boolean setFields(long noteId, String[] fields) {
+    public boolean updateNoteFields(long noteId, String[] fields) {
         return updateNote(noteId, fields, null);
     }
 
-    private NoteInfo getNote(long noteId) {
+    public NoteInfo getNote(long noteId) {
         String[] selectionArgs = {String.format("%s=%d", FlashCardsContract.Note._ID, noteId)};
         Cursor cursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, null, selectionArgs, null);
         if (cursor == null) {
@@ -284,7 +258,6 @@ public final class AddContentApi {
             cursor.close();
         }
     }
-
 
     private boolean updateNote(long noteId, String[] fields, Set<String> tags) {
         Uri.Builder builder = FlashCardsContract.Note.CONTENT_URI.buildUpon();
@@ -300,7 +273,6 @@ public final class AddContentApi {
         // provider doesn't check whether fields actually changed, so just returns number of notes with id == noteId
         return numRowsUpdated > 0;
     }
-
 
     /**
      * Get the html that would be generated for the specified note type and field list
