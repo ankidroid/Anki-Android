@@ -306,8 +306,18 @@
             android:name="com.sec.minimode.icon.landscape.normal"
             android:resource="@drawable/anki" />
 
+        <!-- ContentProvider for external applications to access the AnkiDroid DB (SDK 23+ version) -->
         <provider
-            android:name=".provider.CardContentProvider"
+            android:name=".provider.CardContentProvider2"
+            android:authorities="com.ichi2.anki.flashcards.v2"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="com.ichi2.anki.permission.READ_WRITE_DATABASE">
+            <meta-data android:name="com.ichi2.anki.provider.spec" android:value="2" />
+        </provider>
+        <!-- Legacy version of provider with dynamic permissions. Disabled on Android M and above -->
+        <provider
+            android:name=".provider.legacy.CardContentProvider"
             android:authorities="com.ichi2.anki.flashcards"
             android:enabled="true"
             android:exported="true" >

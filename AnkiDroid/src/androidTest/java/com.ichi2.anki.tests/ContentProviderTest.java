@@ -46,12 +46,12 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Test cases for {@link com.ichi2.anki.provider.CardContentProvider}.
+ * Test cases for {@link com.ichi2.anki.provider.CardContentProvider2}.
  * <p/>
  * These tests should cover all supported operations for each URI.
  */
 public class ContentProviderTest extends AndroidTestCase {
-
+    private static final int PROVIDER_VERSION = 2;      // Version of the provider to use for testing
     private static final String BASIC_MODEL_NAME = "com.ichi2.anki.provider.test.basic.x94oa3F";
     private static final String TEST_FIELD_VALUE = "test field value";
     private static final String TEST_TAG = "aldskfhewjklhfczmxkjshf";
@@ -109,7 +109,7 @@ public class ContentProviderTest extends AndroidTestCase {
             c.setDid(did);
             c.flush();
         }
-        return Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(newNote.getId()));
+        return Uri.withAppendedPath(FlashCardsContract.Note.getUri(PROVIDER_VERSION), Long.toString(newNote.getId()));
     }
 
     /**
@@ -155,7 +155,7 @@ public class ContentProviderTest extends AndroidTestCase {
         values.put(FlashCardsContract.Note.MID, mModelId);
         values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(TEST_NOTE_FIELDS));
         values.put(FlashCardsContract.Note.TAGS, TEST_TAG);
-        Uri newNoteUri = cr.insert(FlashCardsContract.Note.CONTENT_URI, values);
+        Uri newNoteUri = cr.insert(FlashCardsContract.Note.getUri(PROVIDER_VERSION), values);
         assertNotNull("Check that URI returned from addNewNote is not null", newNoteUri);
         // Check that it looks as expected
         Note addedNote = new Note(col, Long.parseLong(newNoteUri.getLastPathSegment()));
@@ -181,7 +181,7 @@ public class ContentProviderTest extends AndroidTestCase {
         // search for correct mid
         final ContentResolver cr = getContext().getContentResolver();
         String[] selectionArgs = {String.format("mid=%d", mModelId)};
-        Cursor cursor = cr.query(FlashCardsContract.Note.CONTENT_URI, null, null, selectionArgs, null);
+        Cursor cursor = cr.query(FlashCardsContract.Note.getUri(PROVIDER_VERSION), null, null, selectionArgs, null);
         assertNotNull(cursor);
         try {
             assertEquals("Check number of results", mCreatedNotes.size(), cursor.getCount());
@@ -189,7 +189,7 @@ public class ContentProviderTest extends AndroidTestCase {
             cursor.close();
         }
         // search for correct mid and also correct tag
-        cursor = cr.query(FlashCardsContract.Note.CONTENT_URI, null, "tag:" + TEST_TAG, selectionArgs, null);
+        cursor = cr.query(FlashCardsContract.Note.getUri(PROVIDER_VERSION), null, "tag:" + TEST_TAG, selectionArgs, null);
         assertNotNull(cursor);
         try {
             assertEquals("Check number of results", mCreatedNotes.size(), cursor.getCount());
@@ -198,7 +198,7 @@ public class ContentProviderTest extends AndroidTestCase {
         }
         // search for bogus mid
         selectionArgs[0] = String.format("mid=%d", 0);
-        cursor = cr.query(FlashCardsContract.Note.CONTENT_URI, null, null, selectionArgs, null);
+        cursor = cr.query(FlashCardsContract.Note.getUri(PROVIDER_VERSION), null, null, selectionArgs, null);
         assertNotNull(cursor);
         try {
             assertEquals("Check number of results", 0, cursor.getCount());
@@ -213,7 +213,7 @@ public class ContentProviderTest extends AndroidTestCase {
     public void testQueryNoteIds() {
         final ContentResolver cr = getContext().getContentResolver();
         // Query all available notes
-        final Cursor allNotesCursor = cr.query(FlashCardsContract.Note.CONTENT_URI, null, "tag:" + TEST_TAG, null, null);
+        final Cursor allNotesCursor = cr.query(FlashCardsContract.Note.getUri(PROVIDER_VERSION), null, "tag:" + TEST_TAG, null, null);
         assertNotNull(allNotesCursor);
         try {
             assertEquals("Check number of results", mCreatedNotes.size(), allNotesCursor.getCount());
@@ -222,7 +222,7 @@ public class ContentProviderTest extends AndroidTestCase {
                 for (int i = 0; i < FlashCardsContract.Note.DEFAULT_PROJECTION.length; i++) {
                     String[] projection = removeFromProjection(FlashCardsContract.Note.DEFAULT_PROJECTION, i);
                     String noteId = allNotesCursor.getString(allNotesCursor.getColumnIndex(FlashCardsContract.Note._ID));
-                    Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, noteId);
+                    Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.getUri(PROVIDER_VERSION), noteId);
                     final Cursor singleNoteCursor = cr.query(noteUri, projection, null, null, null);
                     assertNotNull("Check that there is a valid cursor for detail data", singleNoteCursor);
                     try {
@@ -251,7 +251,7 @@ public class ContentProviderTest extends AndroidTestCase {
         // Query all available notes
         for (int i = 0; i < FlashCardsContract.Note.DEFAULT_PROJECTION.length; i++) {
             String[] projection = removeFromProjection(FlashCardsContract.Note.DEFAULT_PROJECTION, i);
-            final Cursor allNotesCursor = cr.query(FlashCardsContract.Note.CONTENT_URI, projection, "tag:" + TEST_TAG, null, null);
+            final Cursor allNotesCursor = cr.query(FlashCardsContract.Note.getUri(PROVIDER_VERSION), projection, "tag:" + TEST_TAG, null, null);
             assertNotNull("Check that there is a valid cursor", allNotesCursor);
             try {
                 assertEquals("Check number of results", mCreatedNotes.size(), allNotesCursor.getCount());
@@ -318,7 +318,7 @@ public class ContentProviderTest extends AndroidTestCase {
         cv.put(FlashCardsContract.Model.FIELD_NAMES, Utils.joinFields(TEST_MODEL_FIELDS));
         cv.put(FlashCardsContract.Model.NUM_CARDS, TEST_MODEL_CARDS.length);
         cv.put(FlashCardsContract.Model.CSS, TEST_MODEL_CSS);
-        Uri modelUri = cr.insert(FlashCardsContract.Model.CONTENT_URI, cv);
+        Uri modelUri = cr.insert(FlashCardsContract.Model.getUri(PROVIDER_VERSION), cv);
         assertNotNull("Check inserted model isn't null", modelUri);
         long mid = Long.parseLong(modelUri.getLastPathSegment());
         final Collection col = CollectionHelper.getInstance().getCol(getContext());
@@ -367,13 +367,13 @@ public class ContentProviderTest extends AndroidTestCase {
     public void testQueryAllModels() {
         final ContentResolver cr = getContext().getContentResolver();
         // Query all available models
-        final Cursor allModels = cr.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null);
+        final Cursor allModels = cr.query(FlashCardsContract.Model.getUri(PROVIDER_VERSION), null, null, null, null);
         assertNotNull(allModels);
         try {
             assertTrue("Check that there is at least one result", allModels.getCount() > 0);
             while (allModels.moveToNext()) {
                 long modelId = allModels.getLong(allModels.getColumnIndex(FlashCardsContract.Model._ID));
-                Uri modelUri = Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, Long.toString(modelId));
+                Uri modelUri = Uri.withAppendedPath(FlashCardsContract.Model.getUri(PROVIDER_VERSION), Long.toString(modelId));
                 final Cursor singleModel = cr.query(modelUri, null, null, null, null);
                 assertNotNull(singleModel);
                 try {
@@ -401,13 +401,13 @@ public class ContentProviderTest extends AndroidTestCase {
     public void testMoveCardsToOtherDeck() {
         final ContentResolver cr = getContext().getContentResolver();
         // Query all available notes
-        final Cursor allNotesCursor = cr.query(FlashCardsContract.Note.CONTENT_URI, null, "tag:" + TEST_TAG, null, null);
+        final Cursor allNotesCursor = cr.query(FlashCardsContract.Note.getUri(PROVIDER_VERSION), null, "tag:" + TEST_TAG, null, null);
         assertNotNull(allNotesCursor);
         try {
             assertEquals("Check number of results", mCreatedNotes.size(), allNotesCursor.getCount());
             while (allNotesCursor.moveToNext()) {
                 // Now iterate over all cursors
-                Uri cardsUri = Uri.withAppendedPath(Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI,
+                Uri cardsUri = Uri.withAppendedPath(Uri.withAppendedPath(FlashCardsContract.Note.getUri(PROVIDER_VERSION),
                         allNotesCursor.getString(allNotesCursor.getColumnIndex(FlashCardsContract.Note._ID))), "cards");
                 final Cursor cardsCursor = cr.query(cardsUri, null, null, null, null);
                 assertNotNull("Check that there is a valid cursor after query for cards", cardsCursor);
@@ -441,7 +441,7 @@ public class ContentProviderTest extends AndroidTestCase {
      */
     public void testQueryCurrentModel() {
         final ContentResolver cr = getContext().getContentResolver();
-        Uri uri = Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, FlashCardsContract.Model.CURRENT_MODEL_ID);
+        Uri uri = Uri.withAppendedPath(FlashCardsContract.Model.getUri(PROVIDER_VERSION), FlashCardsContract.Model.CURRENT_MODEL_ID);
         final Cursor modelCursor = cr.query(uri, null, null, null, null);
         assertNotNull(modelCursor);
         try {
@@ -464,10 +464,10 @@ public class ContentProviderTest extends AndroidTestCase {
         ContentValues dummyValues = new ContentValues();
         Uri[] updateUris = {
                 // Can't update most tables in bulk -- only via ID
-                FlashCardsContract.Note.CONTENT_URI,
-                FlashCardsContract.Model.CONTENT_URI,
-                FlashCardsContract.Deck.CONTENT_ALL_URI,
-                FlashCardsContract.Note.CONTENT_URI.buildUpon()
+                FlashCardsContract.Note.getUri(PROVIDER_VERSION),
+                FlashCardsContract.Model.getUri(PROVIDER_VERSION),
+                FlashCardsContract.Deck.getUri(PROVIDER_VERSION),
+                FlashCardsContract.Note.getUri(PROVIDER_VERSION).buildUpon()
                         .appendPath("1234")
                         .appendPath("cards")
                         .build(),
@@ -483,19 +483,19 @@ public class ContentProviderTest extends AndroidTestCase {
             }
         }
         Uri[] deleteUris = {
-                FlashCardsContract.Note.CONTENT_URI,
+                FlashCardsContract.Note.getUri(PROVIDER_VERSION),
                 // Only note/<id> is supported
-                FlashCardsContract.Note.CONTENT_URI.buildUpon()
+                FlashCardsContract.Note.getUri(PROVIDER_VERSION).buildUpon()
                         .appendPath("1234")
                         .appendPath("cards")
                         .build(),
-                FlashCardsContract.Note.CONTENT_URI.buildUpon()
+                FlashCardsContract.Note.getUri(PROVIDER_VERSION).buildUpon()
                         .appendPath("1234")
                         .appendPath("cards")
                         .appendPath("2345")
                         .build(),
-                FlashCardsContract.Model.CONTENT_URI,
-                FlashCardsContract.Model.CONTENT_URI.buildUpon()
+                FlashCardsContract.Model.getUri(PROVIDER_VERSION),
+                FlashCardsContract.Model.getUri(PROVIDER_VERSION).buildUpon()
                         .appendPath("1234")
                         .build(),
         };
@@ -509,19 +509,19 @@ public class ContentProviderTest extends AndroidTestCase {
         }
         Uri[] insertUris = {
                 // Can't do an insert with specific ID on the following tables
-                FlashCardsContract.Note.CONTENT_URI.buildUpon()
+                FlashCardsContract.Note.getUri(PROVIDER_VERSION).buildUpon()
                         .appendPath("1234")
                         .build(),
-                FlashCardsContract.Note.CONTENT_URI.buildUpon()
+                FlashCardsContract.Note.getUri(PROVIDER_VERSION).buildUpon()
                         .appendPath("1234")
                         .appendPath("cards")
                         .build(),
-                FlashCardsContract.Note.CONTENT_URI.buildUpon()
+                FlashCardsContract.Note.getUri(PROVIDER_VERSION).buildUpon()
                         .appendPath("1234")
                         .appendPath("cards")
                         .appendPath("2345")
                         .build(),
-                FlashCardsContract.Model.CONTENT_URI.buildUpon()
+                FlashCardsContract.Model.getUri(PROVIDER_VERSION).buildUpon()
                         .appendPath("1234")
                         .build(),
         };
@@ -547,7 +547,7 @@ public class ContentProviderTest extends AndroidTestCase {
         Decks decks = col.getDecks();
 
         Cursor decksCursor = getContext().getContentResolver()
-                .query(FlashCardsContract.Deck.CONTENT_ALL_URI, FlashCardsContract.Deck.DEFAULT_PROJECTION, null, null, null);
+                .query(FlashCardsContract.Deck.getUri(PROVIDER_VERSION), FlashCardsContract.Deck.DEFAULT_PROJECTION, null, null, null);
 
         assertNotNull(decksCursor);
         try {
@@ -574,7 +574,7 @@ public class ContentProviderTest extends AndroidTestCase {
         col = CollectionHelper.getInstance().getCol(getContext());
 
         long deckId = mTestDeckIds[0];
-        Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(deckId));
+        Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.getUri(PROVIDER_VERSION), Long.toString(deckId));
         Cursor decksCursor = getContext().getContentResolver().query(deckUri, null, null, null, null);
         try {
             if (decksCursor == null || !decksCursor.moveToFirst()) {
@@ -601,7 +601,7 @@ public class ContentProviderTest extends AndroidTestCase {
         Sched sched = col.getSched();
 
         Cursor reviewInfoCursor = getContext().getContentResolver().query(
-                FlashCardsContract.ReviewInfo.CONTENT_URI, null, null, null, null);
+                FlashCardsContract.ReviewInfo.getUri(PROVIDER_VERSION), null, null, null, null);
         assertNotNull(reviewInfoCursor);
         assertEquals("Check that we actually received one card", 1, reviewInfoCursor.getCount());
 
@@ -636,7 +636,7 @@ public class ContentProviderTest extends AndroidTestCase {
         col.getDecks().select(1); //select Default deck
 
         Cursor reviewInfoCursor = getContext().getContentResolver().query(
-                FlashCardsContract.ReviewInfo.CONTENT_URI, null, deckSelector, deckArguments, null);
+                FlashCardsContract.ReviewInfo.getUri(PROVIDER_VERSION), null, deckSelector, deckArguments, null);
         assertNotNull(reviewInfoCursor);
         assertEquals("Check that we actually received one card", 1, reviewInfoCursor.getCount());
         try {
@@ -668,7 +668,7 @@ public class ContentProviderTest extends AndroidTestCase {
     public void testSetSelectedDeck(){
         long deckId = mTestDeckIds[0];
         ContentResolver cr = getContext().getContentResolver();
-        Uri selectDeckUri = FlashCardsContract.Deck.CONTENT_SELECTED_URI;
+        Uri selectDeckUri = FlashCardsContract.Deck.getSelectedUri(PROVIDER_VERSION);
         ContentValues values = new ContentValues();
         values.put(FlashCardsContract.Deck.DECK_ID, deckId);
         cr.update(selectDeckUri, values, null, null);
@@ -690,7 +690,7 @@ public class ContentProviderTest extends AndroidTestCase {
         Card card = sched.getCard();
 
         ContentResolver cr = getContext().getContentResolver();
-        Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
+        Uri reviewInfoUri = FlashCardsContract.ReviewInfo.getUri(PROVIDER_VERSION);
         ContentValues values = new ContentValues();
         long noteId = card.note().getId();
         int cardOrd = card.getOrd();

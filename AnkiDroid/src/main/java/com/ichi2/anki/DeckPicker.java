@@ -35,6 +35,7 @@ import android.content.res.Resources;
 import android.database.SQLException;
 import android.graphics.PixelFormat;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.Settings;
@@ -77,6 +78,7 @@ import com.ichi2.anki.dialogs.MediaCheckDialog;
 import com.ichi2.anki.dialogs.SyncErrorDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.DeckRenameException;
+import com.ichi2.anki.provider.legacy.CardContentProvider;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.widgets.DeckAdapter;
@@ -854,6 +856,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else if (preferences.getString("lastVersion", "").equals("")) {
             // Fresh install
             preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).commit();
+            // Disable the legacy ContentProvider on Android M and above
+            if (CompatHelper.getSdkVersion() >= Build.VERSION_CODES.M) {
+                CardContentProvider.setEnabledState(this, false);
+            }
             onFinishedStartup();
         } else if (skip < 2 && !preferences.getString("lastVersion", "").equals(VersionUtils.getPkgVersionName())) {
             // AnkiDroid is being updated and a collection already exists. We check if we are upgrading
@@ -894,6 +900,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // Recommend the user to do a full-sync if they're upgrading from before 2.3.1beta8
             if (previous < 20301208) {
                 mRecommendFullSync = true;
+            }
+            // Make sure the legacy ContentProvider is disabled on Android M and above
+            if (CompatHelper.getSdkVersion() >= Build.VERSION_CODES.M) {
+                CardContentProvider.setEnabledState(this, false);
             }
             // Check if preference upgrade or database check required, otherwise go to new feature screen
             int upgradePrefsVersion = AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION;
