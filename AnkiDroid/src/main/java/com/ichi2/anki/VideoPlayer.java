@@ -40,6 +40,7 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
         mPath = getIntent().getStringExtra("path");
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);        
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mVideoView = (VideoView) findViewById(R.id.video_surface);
         mVideoView.getHolder().addCallback(this);
         mSoundPlayer = new Sound();
