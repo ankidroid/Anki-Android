@@ -764,12 +764,12 @@ public final class AddContentApi {
 
         @Override
         public Cursor queryNotes(long modelId, Collection<String> keys) {
-            Set<Long> checksums = new HashSet<>(keys.size());
-            for (String key : keys) {
-                checksums.add(Utils.fieldChecksum(key));
-            }
             String selArg = String.format("%s=%d", FlashCardsContract.Note.MID, modelId);
             if (keys != null && !keys.isEmpty()) {
+                Set<Long> checksums = new HashSet<>(keys.size());
+                for (String key : keys) {
+                    checksums.add(Utils.fieldChecksum(key));
+                }
                 selArg += String.format(" and %s in (%s)", FlashCardsContract.Note.CSUM,TextUtils.join(",", checksums));
             }
             return mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, null, new String[]{selArg}, null);
