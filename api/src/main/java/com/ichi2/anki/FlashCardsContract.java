@@ -107,16 +107,37 @@ import android.net.Uri;
  * </table>
  */
 public class FlashCardsContract {
-    public static final String AUTHORITY = "com.ichi2.anki.flashcards";
+    private static final String AUTHORITY_V2 =  "com.ichi2.anki.flashcards.v2";
+    private static final String AUTHORITY_LEGACY =  "com.ichi2.anki.flashcards";
     public static final String READ_WRITE_PERMISSION = "com.ichi2.anki.permission.READ_WRITE_DATABASE";
 
-    /**
-     * A content:// style uri to the authority for the flash card provider
-     */
-    public static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
+    /** Legacy fields that used to be public **/
+    private static final String URI_FORMAT = "content://%s";
+    private static final Uri AUTHORITY_URI_LEGACY = Uri.parse(String.format(URI_FORMAT, AUTHORITY_LEGACY));
+    /** Deprecated since API v2. Use getAuthority() instead **/
+    @Deprecated
+    public static final String AUTHORITY = AUTHORITY_LEGACY;
+
+    /** Deprecated since API v2. Use getAuthority() instead **/
+    @Deprecated
+    public static final Uri AUTHORITY_URI = AUTHORITY_URI_LEGACY;
+
 
     /* Don't create instances of this class. */
     private FlashCardsContract() {
+    }
+
+    /**
+     * A content:// style uri to the authority for the flash card provider
+     * @param version The version of the provider to use. Currently 2 or higher gives the current provider,
+     *                while 1 gives the legacy provider for use with Android SDK 22 and below.
+     */
+    public static String getAuthority(int version) {
+        if (version > 1) {
+            return AUTHORITY_V2;
+        } else {
+            return AUTHORITY_LEGACY;
+        }
     }
 
 
@@ -250,6 +271,8 @@ public class FlashCardsContract {
      * </table>
      */
     public static class Note {
+        private static final String URI_SUBPATH = "notes";
+
         /**
          * The content:// style URI for notes. If the it is appended by the note's ID, this
          * note can be directly accessed, e.g.
@@ -272,7 +295,13 @@ public class FlashCardsContract {
          *
          * For examples on how to use the URI for queries see class description.
          */
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "notes");
+        public static Uri getUri(int version) {
+            return Uri.withAppendedPath(Uri.parse(String.format(URI_FORMAT, getAuthority(version))), URI_SUBPATH);
+        }
+
+        /** Deprecated from v2: Use getUri() instead **/
+        @Deprecated
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI_LEGACY, URI_SUBPATH);
 
         /**
          * This is the ID of the note. It is the same as the note ID in Anki. This ID can be
@@ -402,11 +431,20 @@ public class FlashCardsContract {
      * </p>
      */
     public static class Model {
+        private static final String URI_SUBPATH = "models";
+
         /**
          * The content:// style URI for model. If the it is appended by the model's ID, this
          * note can be directly accessed. See class description above for further details.
          */
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "models");
+        public static Uri getUri(int version) {
+            return Uri.withAppendedPath(Uri.parse(String.format(URI_FORMAT, getAuthority(version))), URI_SUBPATH);
+        }
+
+        /** Deprecated from v2: Use getUri() instead **/
+        @Deprecated
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI_LEGACY, URI_SUBPATH);
+
         public static final String CURRENT_MODEL_ID = "current";
 
         /**
@@ -453,6 +491,8 @@ public class FlashCardsContract {
      * be generated for each active CardTemplate which is defined.
      */
     public static class CardTemplate {
+        public static final String URI_SUBPATH = "templates";
+
 
         /**
          * MIME type used for data.
@@ -659,6 +699,8 @@ public class FlashCardsContract {
      * </pre>
      */
     public static class Card {
+        public static final String URI_SUBPATH = "cards";
+
         /**
          * This is the ID of the note that this card belongs to (i.e. {@link Note#_ID}).
          */
@@ -850,8 +892,15 @@ public class FlashCardsContract {
      * </pre>
      */
     public static class ReviewInfo {
+        private static final String URI_SUBPATH = "schedule";
 
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "schedule");
+        public static Uri getUri(int version) {
+            return Uri.withAppendedPath(Uri.parse(String.format(URI_FORMAT, getAuthority(version))), URI_SUBPATH);
+        }
+
+        /** Deprecated from v2: Use getUri() instead **/
+        @Deprecated
+        public static Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI_LEGACY, URI_SUBPATH);
 
         /**
          * This is the ID of the note that this card belongs to (i.e. {@link Note#_ID}).
@@ -1019,9 +1068,23 @@ public class FlashCardsContract {
      */
 
     public static class Deck {
+        private static final String URI_SUBPATH = "decks";
 
-        public static final Uri CONTENT_ALL_URI = Uri.withAppendedPath(AUTHORITY_URI, "decks");
-        public static final Uri CONTENT_SELECTED_URI = Uri.withAppendedPath(AUTHORITY_URI, "selected_deck");
+        public static Uri getUri(int version) {
+            return Uri.withAppendedPath(Uri.parse(String.format(URI_FORMAT, getAuthority(version))), URI_SUBPATH);
+        }
+
+        /** Deprecated from v2: Use getUri() instead **/
+        @Deprecated
+        public static final Uri CONTENT_ALL_URI = Uri.withAppendedPath(AUTHORITY_URI_LEGACY, URI_SUBPATH);
+
+        public static Uri getSelectedUri(int version) {
+            return Uri.withAppendedPath(Uri.parse(String.format(URI_FORMAT, getAuthority(version))), "selected_deck");
+        }
+
+        /** Deprecated from v2: Use getSelectedUri() instead **/
+        @Deprecated
+        public static final Uri CONTENT_SELECTED_URI = Uri.withAppendedPath(AUTHORITY_URI_LEGACY, "selected_deck");
         /**
          * The name of the Deck
          */
