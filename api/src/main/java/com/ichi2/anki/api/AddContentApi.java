@@ -31,6 +31,7 @@ import android.os.Build;
 import com.ichi2.anki.FlashCardsContract;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,11 +75,7 @@ public final class AddContentApi {
      * @return note id or null if the note could not be added
      */
     public Long addNote(long modelId, long deckId, String[] fields, Set<String> tags) {
-        ContentValues values = new ContentValues();
-        values.put(FlashCardsContract.Note.MID, modelId);
-        values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fields));
-        values.put(FlashCardsContract.Note.TAGS, Utils.joinTags(tags));
-        Uri noteUri = addNote(deckId, values);
+        Uri noteUri = addNoteInternal(modelId, deckId, fields, tags);
         if (noteUri == null) {
             return null;
         }
@@ -94,10 +91,18 @@ public final class AddContentApi {
         values.put(FlashCardsContract.Note.MID, modelId);
         values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fields));
         values.put(FlashCardsContract.Note.TAGS, tags);
-        return addNote(deckId, values);
+        return addNoteForContentValues(deckId, values);
     }
 
-    private Uri addNote(long deckId, ContentValues values) {
+    private Uri addNoteInternal(long modelId, long deckId, String[] fields, Set<String> tags) {
+        ContentValues values = new ContentValues();
+        values.put(FlashCardsContract.Note.MID, modelId);
+        values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fields));
+        values.put(FlashCardsContract.Note.TAGS, Utils.joinTags(tags));
+        return addNoteForContentValues(deckId, values);
+    }
+
+    private Uri addNoteForContentValues(long deckId, ContentValues values) {
         Uri newNoteUri = mResolver.insert(FlashCardsContract.Note.CONTENT_URI, values);
         if (newNoteUri == null) {
             return null;
@@ -262,7 +267,7 @@ public final class AddContentApi {
      * @return list of front & back pairs for each card which contain the card HTML
      */
     public Map<String, Map<String, String>> previewNewNote(long mid, String[] flds) {
-        Uri newNoteUri = addNewNote(mid, 1, flds, TEST_TAG);
+        Uri newNoteUri = addNoteInternal(mid, 1, flds, Collections.singleton(TEST_TAG));
         // Build map of HTML for each generated card
         Map<String, Map<String, String>> cards = new HashMap<>();
         Uri cardsUri = Uri.withAppendedPath(newNoteUri, "cards");
@@ -683,7 +688,7 @@ public final class AddContentApi {
         public int insertNotes(long deckId, ContentValues[] valuesArr) {
             int result = 0;
             for (ContentValues values : valuesArr) {
-                Uri noteUri = addNote(deckId, values);
+                Uri noteUri = addNoteForContentValues(deckId, values);
                 if (noteUri != null) {
                     result++;
                 }
