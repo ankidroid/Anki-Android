@@ -26,6 +26,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 
 import com.ichi2.anki.FlashCardsContract;
 
@@ -37,10 +38,15 @@ import java.util.Set;
 
 /**
  * API which can be used to add and query notes,cards,decks, and models to AnkiDroid
+ *
+ * On Android M (and higher) the #READ_WRITE_PERMISSION is required for all read/write operations.
+ * On earlier SDK levels, the #READ_WRITE_PERMISSION is currently only required for update/delete operations but
+ * this may be extended to all operations at a later date.
  */
 public final class AddContentApi {
     private final ContentResolver mResolver;
     private final Context mContext;
+    public static final String READ_WRITE_PERMISSION = FlashCardsContract.READ_WRITE_PERMISSION;
     private static final String TEST_TAG = "PREVIEW_NOTE";
     private static final String DECK_REF_DB = "com.ichi2.anki.api.decks";
     private static final String MODEL_REF_DB = "com.ichi2.anki.api.models";
@@ -623,15 +629,11 @@ public final class AddContentApi {
      * Get the ID for any permission which is required to use the API
      * @param context a Context that can be used to get the PackageManager
      * @return id of a permission required to access the API or null if no permission is required
+     * @deprecated use {@link #READ_WRITE_PERMISSION} instead and see class-level docs
      */
+    @Deprecated
     public static String checkRequiredPermission(Context context) {
-        PackageManager manager = context.getPackageManager();
-        ProviderInfo pi = manager.resolveContentProvider(FlashCardsContract.AUTHORITY, 0);
-        if (pi != null) {
-            return pi.writePermission;
-        } else {
-            return null;
-        }
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? READ_WRITE_PERMISSION : null;
     }
 
 
