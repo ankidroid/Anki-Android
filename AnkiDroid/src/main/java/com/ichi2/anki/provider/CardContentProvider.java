@@ -19,9 +19,11 @@
 
 package com.ichi2.anki.provider;
 
+import android.annotation.TargetApi;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.MatrixCursor;
@@ -180,8 +182,7 @@ public class CardContentProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
-        // Throw exception if no permission on M
-        if (!hasReadWritePermission() && CompatHelper.isMarshmallow()) {
+        if (!allowQueryInsert()) {
             throw new SecurityException("Query permission not granted for: " + uri);
         }
 
@@ -431,7 +432,7 @@ public class CardContentProvider extends ContentProvider {
 
         // Throw exception if no permission with SDK23+, or if the current URI is not on the whitelist for pre-M devices
         List<Integer> ok = Arrays.asList(NOTES_ID_CARDS_ORD, MODELS_ID, MODELS_ID_TEMPLATES_ID, SCHEDULE, DECK_SELECTED);
-        if (!hasReadWritePermission() && (CompatHelper.isMarshmallow() || !ok.contains(match))) {
+        if (ok.contains(match) ? !allowQueryInsert() : !allowUpdateDelete()) {
             throw new SecurityException("Update permission not granted for: " + uri);
         }
 
@@ -651,7 +652,7 @@ public class CardContentProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         // Throw exception if no permission
-        if (!hasReadWritePermission()) {
+        if (!allowUpdateDelete()) {
             throw new SecurityException("Delete permission not granted for: " + uri);
         }
 
@@ -681,8 +682,7 @@ public class CardContentProvider extends ContentProvider {
      */
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
-        // Throw exception if no permission with SDK23+
-        if (!hasReadWritePermission() && CompatHelper.isMarshmallow()) {
+        if (!allowQueryInsert()) {
             throw new SecurityException("bulk insert permission not granted for: " + uri);
         }
 
@@ -783,8 +783,7 @@ public class CardContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        // Throw exception if no permission with SDK23+
-        if (!hasReadWritePermission() && CompatHelper.isMarshmallow()) {
+        if (!allowQueryInsert()) {
             throw new SecurityException("Insert permission not granted for: " + uri);
         }
 
@@ -1181,12 +1180,48 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private boolean hasReadWritePermission() {
+    /**
+     * Provide minimal protection for query/insert because these cannot result in the loss of user data
+     */
+    private boolean allowQueryInsert() {
+        if (hasReadWritePermissionOrCalledByUnitTests()) {
+            return true;
+        }
+        if (CompatHelper.isMarshmallow()) {
+            return false; // no excuses not having permission on marshmallow
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            return true; // we cannot check the calling package requested permissions, but allow anyway
+        }
+        return hasRequestedReadWritePermission();
+    }
+
+    /**
+     * Provide more protection for update/delete because these can result in the loss of user data
+     */
+    private boolean allowUpdateDelete() {
+        return hasReadWritePermissionOrCalledByUnitTests();
+    }
+
+    private boolean hasReadWritePermissionOrCalledByUnitTests() {
         if (getContext().checkCallingPermission(READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED) {
             return true;
         }
         // Allow self-calling to make unit tests pass, since checkCallingPermission() returns -1 if not doing IPC
         return BuildConfig.DEBUG && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
                 && getContext().getPackageName().equals(getCallingPackage());
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private boolean hasRequestedReadWritePermission() {
+        PackageManager pm = getContext().getPackageManager();
+        try {
+            PackageInfo callingPi = pm.getPackageInfo(getCallingPackage(), PackageManager.GET_PERMISSIONS);
+            return callingPi != null && callingPi.requestedPermissions != null
+                    && Arrays.asList(callingPi.requestedPermissions).contains(READ_WRITE_PERMISSION);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
