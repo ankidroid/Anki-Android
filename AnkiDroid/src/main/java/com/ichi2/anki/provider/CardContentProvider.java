@@ -179,6 +179,9 @@ public class CardContentProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
         Timber.d("CardContentProvider.query");
+
+        checkAllowedOrThrow(uri, false);
+
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
             return null;
@@ -411,20 +414,19 @@ public class CardContentProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, String selection,
-                      String[] selectionArgs) {
+    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         logProviderCall("update", uri);
+
+        // Find out what data the user is requesting
+        int match = sUriMatcher.match(uri);
+
+        // permissions for a couple of updates are relaxed (for when adding notes and models)
+        checkAllowedOrThrow(uri, match != NOTES_ID_CARDS_ORD && match != MODELS_ID_TEMPLATES_ID);
+
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
             return 0;
         }
-
-        if (getContext().checkCallingPermission(FlashCardsContract.READ_WRITE_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
-            throw new IllegalStateException("Update permission not granted for: " + uri);
-        }
-
-        // Find out what data the user is requesting
-        int match = sUriMatcher.match(uri);
 
         int updated = 0; // Number of updated entries (return value)
         switch (match) {
@@ -642,14 +644,12 @@ public class CardContentProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         logProviderCall("delete", uri);
+        checkAllowedOrThrow(uri, true);
+
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
             return 0;
         }
-        if (getContext().checkCallingPermission(FlashCardsContract.READ_WRITE_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
-            throw new IllegalStateException("Delete permission not granted for: " + uri);
-        }
-
         switch (sUriMatcher.match(uri)) {
             case NOTES_ID:
                 col.remNotes(new long[]{Long.parseLong(uri.getPathSegments().get(1))});
@@ -671,6 +671,8 @@ public class CardContentProvider extends ContentProvider {
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
         logProviderCall("bulkInsert", uri);
+        checkAllowedOrThrow(uri, false);
+
         // by default, #bulkInsert simply calls insert for each item in #values
         // but in some cases, we want to override this behavior
         int match = sUriMatcher.match(uri);
@@ -768,6 +770,8 @@ public class CardContentProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         logProviderCall("insert", uri);
+        checkAllowedOrThrow(uri, false);
+
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
             return null;
@@ -1158,5 +1162,33 @@ public class CardContentProvider extends ContentProvider {
         if (col != null) {
             col.log(msg);
         }
+    }
+
+    /**
+     * Check whether the specified uri is allowed. Two checks:
+     *
+     * 1. 23+: Everything protected by permission
+     * 2. <23: update/delete protected by permission, everything else unprotected
+     *
+     * @param contentUri the uri
+     * @param updateDelete true iff this is an update or delete; false iff query/insert/bulkInsert
+     * @return true iff the caller holds the READ_WRITE permission. False iff uri is allowed, but permission is not granted
+     * @throws SecurityException if the specified uri is not allowed
+     */
+    private boolean checkAllowedOrThrow(Uri contentUri, boolean updateDelete) {
+        if (getContext().checkCallingPermission(FlashCardsContract.READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED) {
+            return true; // permission granted, and so allowed
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (getContext().getPackageName().equals(getCallingPackage())) {
+                // it's okay for AnkiDroid to access its own provider (e.g. in tests)
+                return false; // permission not granted, but allowed anyway
+            }
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M && !updateDelete) {
+            Timber.w("Client does not hold AnkiDroid read/write permission: " + contentUri);
+            return false; // permission not granted, but not update/delete so allowed on <23
+        }
+        throw new SecurityException("Permission not granted for: " + contentUri);
     }
 }
