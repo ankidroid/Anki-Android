@@ -144,7 +144,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private DeckAdapter mDeckListAdapter;
     private FloatingActionsMenu mActionsMenu;   // Note this will be null below SDK 14
 
-    private TextView mTodayTextView;
+    private TextView mReviewSummaryTextView;
 
     private BroadcastReceiver mUnmountReceiver = null;
 
@@ -404,7 +404,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             });
         }
 
-        mTodayTextView = (TextView) findViewById(R.id.today_stats_text_view);
+        mReviewSummaryTextView = (TextView) findViewById(R.id.today_stats_text_view);
 
         // Hide the fragment until the counts have been loaded so that the Toolbar fills the whole screen on tablets
         if (mFragmented) {
@@ -1849,7 +1849,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
 
                 // Update the mini statistics bar as well
-                AnkiStatsTaskHandler.createSmallTodayOverview(getCol(), mTodayTextView);
+                AnkiStatsTaskHandler.createReviewSummaryStatistics(getCol(), mReviewSummaryTextView);
             }
 
             @Override

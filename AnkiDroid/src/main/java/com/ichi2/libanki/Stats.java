@@ -19,9 +19,11 @@ package com.ichi2.libanki;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.text.TextUtils;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.anki.stats.OverviewStatsBuilder;
 import com.ichi2.anki.stats.StatsMetaInfo;
 import com.ichi2.libanki.hooks.Hooks;
 
@@ -37,10 +39,19 @@ import timber.log.Timber;
  */
 public class Stats {
 
+
+
     public static enum AxisType{
-        TYPE_MONTH,
-        TYPE_YEAR,
-        TYPE_LIFE
+        TYPE_MONTH(30, R.string.stats_period_month),
+        TYPE_YEAR(365, R.string.stats_period_year),
+        TYPE_LIFE(-1, R.string.stats_period_lifetime);
+
+        public int days;
+        public int descriptionId;
+        AxisType(int dayss, int descriptionId) {
+            this.days = dayss;
+            this.descriptionId = descriptionId;
+        }
     }
 
     public static enum ChartType {FORECAST, REVIEW_COUNT, REVIEW_TIME,
@@ -74,6 +85,9 @@ public class Stats {
     private String mLongest;
     private double mPeak;
     private double mMcount;
+
+
+    public static double SECONDS_PER_DAY = 86400.0;
 
     public Stats(Collection col, boolean wholeCollection) {
         mCol = col;
@@ -116,7 +130,7 @@ public class Stats {
      * Todays statistics
      */
     public int[] calculateTodayStats(){
-        String lim = _revlogLimit();
+        String lim = _getDeckFilter();
         if (lim.length() > 0)
             lim = " and " + lim;
 
@@ -127,7 +141,7 @@ public class Stats {
                 "sum(case when type = 1 then 1 else 0 end), "+ /* review */
                 "sum(case when type = 2 then 1 else 0 end), "+ /* relearn */
                 "sum(case when type = 3 then 1 else 0 end) "+ /* filter */
-                "from revlog where id > " + ((mCol.getSched().getDayCutoff()-86400)*1000) + " " +  lim;
+                "from revlog where id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
         Timber.d("todays statistics query: %s", query);
 
         int cards, thetime, failed, lrn, rev, relrn, filt;
@@ -153,7 +167,7 @@ public class Stats {
             }
         }
         query = "select count(), sum(case when ease = 1 then 0 else 1 end) from revlog " +
-        "where lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff()-86400)*1000) + " " +  lim;
+        "where lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
         Timber.d("todays statistics query 2: %s", query);
 
         int mcnt, msum;
@@ -172,6 +186,128 @@ public class Stats {
         }
 
         return new int[]{cards, thetime, failed, lrn, rev, relrn, filt, mcnt, msum};
+    }
+
+    private String getRevlogTimeFilter(AxisType timespan, boolean inverse){
+        if (timespan == AxisType.TYPE_LIFE){
+            return "";
+        }
+        else {
+            String operator = null;
+            if (inverse){
+                operator = "<= ";
+            }else{
+                operator = "> ";
+            }
+            return "id "+ operator + ((mCol.getSched().getDayCutoff() - (timespan.days * SECONDS_PER_DAY)) * 1000);
+        }
+    }
+
+    public int getNewCards(AxisType timespan){
+
+        String filter = getRevlogFilter(timespan,false);
+
+        String queryNeg = "";
+        if (timespan != AxisType.TYPE_LIFE){
+            String invfilter = getRevlogFilter(timespan,true);
+            queryNeg = " EXCEPT SELECT distinct cid FROM revlog " + invfilter;
+        }
+
+        String query = "SELECT COUNT(*) FROM(\n" +
+                "            SELECT distinct cid\n" +
+                "            FROM revlog \n" +
+                             filter+
+                             queryNeg+
+                "        )";
+        Timber.d("New cards query: %s", query);
+        Cursor cur = null;
+        int res = 0;
+        try {
+            cur = mCol.getDb().getDatabase().rawQuery(query, null);
+            while (cur.moveToNext()) {
+                res = cur.getInt(0);
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+
+        return res;
+    }
+
+    String getRevlogFilter(AxisType timespan,boolean inverseTimeSpan){
+        ArrayList<String> lims = new ArrayList<>();
+        String dayFilter = getRevlogTimeFilter(timespan, inverseTimeSpan);
+        if (dayFilter != "") lims.add(dayFilter);
+        String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
+        if (lim.length() > 0){
+            lims.add(lim);
+        }
+
+        if (!lims.isEmpty()) {
+            lim = "WHERE ";
+            lim += TextUtils.join(" AND ",lims.toArray());
+        }
+
+        return lim;
+    }
+
+    public void calculateOverviewStatistics(AxisType timespan, OverviewStatsBuilder.OverviewStats oStats, Context context) {
+        oStats.allDays = timespan.days;
+
+        String lim = getRevlogFilter(timespan,false);
+        Cursor cur = null;
+
+        try {
+            cur = mCol.getDb().getDatabase().rawQuery( "SELECT COUNT(*) as num_reviews, sum(case when type = 0 then 1 else 0 end) as new_cards FROM revlog "+ lim, null);
+            while (cur.moveToNext()) {
+                oStats.totalReviews = cur.getInt(0);
+            }
+        } finally {
+            if (cur != null && !cur.isClosed())
+                cur.close();
+        }
+
+        String cntquery = "SELECT  COUNT(*) numDays, MIN(day) firstDay, SUM(time_per_day) sum_time  from (" +
+                " SELECT (cast((id/1000 - " + mCol.getSched().getDayCutoff() + ") / "+SECONDS_PER_DAY+" AS INT)) AS day,  sum(time/1000.0/60.0) AS time_per_day"
+                + " FROM revlog " + lim + " GROUP BY day ORDER BY day)";
+        Timber.d("Count cntquery: %s", cntquery);
+        try {
+            cur = mCol.getDb().getDatabase().rawQuery(cntquery, null);
+            while (cur.moveToNext()) {
+                oStats.daysStudied = cur.getInt(0);
+                oStats.totalTime = cur.getDouble(2);
+                if (timespan == AxisType.TYPE_LIFE)
+                    oStats.allDays = Math.abs(cur.getInt(1))+1; // +1 for today
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+
+        try {
+            cur = mCol.getDb().getDatabase().rawQuery("select avg(ivl), max(ivl) from cards where did in " +_limit() +
+                    " and queue = 2", null);
+
+            cur.moveToFirst();
+            oStats.averageInterval = cur.getDouble(0);
+            oStats.longestInterval = cur.getDouble(1);
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+        oStats.reviewsPerDayOnAll = (double)oStats.totalReviews / oStats.allDays;
+        oStats.reviewsPerDayOnStudyDays = (double)oStats.totalReviews / oStats.daysStudied;
+
+        oStats.timePerDayOnAll = oStats.totalTime / oStats.allDays;
+        oStats.timePerDayOnStudyDays = oStats.totalTime / oStats.daysStudied;
+
+        oStats.totalNewCards = getNewCards(timespan);
+        oStats.newCardsPerDay = (double)oStats.totalNewCards/(double) oStats.allDays;
+
     }
 
     public boolean calculateDue(Context context, AxisType type) {
@@ -414,9 +550,9 @@ public class Stats {
         }
         ArrayList<String> lims = new ArrayList<>();
         if (num != -1) {
-            lims.add("id > " + ((mCol.getSched().getDayCutoff() - ((num + 1) * chunk * 86400)) * 1000));
+            lims.add("id > " + ((mCol.getSched().getDayCutoff() - ((num + 1) * chunk * SECONDS_PER_DAY)) * 1000));
         }
-        String lim = _revlogLimit().replaceAll("[\\[\\]]", "");
+        String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
         if (lim.length() > 0) {
             lims.add(lim);
         }
@@ -432,7 +568,7 @@ public class Stats {
         String ti;
         String tf;
         if (charType == ChartType.REVIEW_TIME) {
-            ti = "time/1000";
+            ti = "time/1000.0";
             if (mType == AxisType.TYPE_MONTH) {
                 tf = "/60.0"; // minutes
                 mAxisTitles = new int[] { type.ordinal(), R.string.stats_minutes, R.string.stats_cumulative_time_minutes };
@@ -446,7 +582,7 @@ public class Stats {
         }
         ArrayList<double[]> list = new ArrayList<>();
         Cursor cur = null;
-        String query = "SELECT (cast((id/1000 - " + mCol.getSched().getDayCutoff() + ") / 86400.0 AS INT))/"
+        String query = "SELECT (cast((id/1000 - " + mCol.getSched().getDayCutoff() + ") / "+SECONDS_PER_DAY+" AS INT))/"
                 + chunk + " AS day, " + "sum(CASE WHEN type = 0 THEN " + ti + " ELSE 0 END)"
                 + tf
                 + ", " // lrn
@@ -475,6 +611,7 @@ public class Stats {
                 cur.close();
             }
         }
+
 
         // small adjustment for a proper chartbuilding with achartengine
         if (type != AxisType.TYPE_LIFE && (list.size() == 0 || list.get(0)[0] > -num)) {
@@ -681,8 +818,8 @@ public class Stats {
         mFirstElement = 0;
 
         mMaxElements = list.size()-1;
-        mAverage = Utils.timeSpan(context, (int)Math.round(avg*86400));
-        mLongest = Utils.timeSpan(context, (int)Math.round(max_*86400));
+        mAverage = Utils.timeSpan(context, (int)Math.round(avg*SECONDS_PER_DAY));
+        mLongest = Utils.timeSpan(context, (int)Math.round(max_*SECONDS_PER_DAY));
 
         //some adjustments to not crash the chartbuilding with emtpy data
         if(mMaxElements == 0){
@@ -711,7 +848,7 @@ public class Stats {
         mColors = new int[] { R.attr.stats_counts, R.attr.stats_hours};
 
         mType = type;
-        String lim = _revlogLimit().replaceAll("[\\[\\]]", "");
+        String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
 
         if (lim.length() > 0) {
             lim = " and " + lim;
@@ -722,7 +859,7 @@ public class Stats {
 
         int pd = _periodDays();
         if(pd > 0){
-            lim += " and id > "+ ((mCol.getSched().getDayCutoff()-(86400*pd))*1000);
+            lim += " and id > "+ ((mCol.getSched().getDayCutoff()-(SECONDS_PER_DAY*pd))*1000);
         }
         long cutoff = mCol.getSched().getDayCutoff();
         long cut = cutoff  - sd.get(Calendar.HOUR_OF_DAY)*3600;
@@ -849,7 +986,7 @@ public class Stats {
         mColors = new int[] { R.attr.stats_counts, R.attr.stats_hours};
 
         mType = type;
-        String lim = _revlogLimit().replaceAll("[\\[\\]]", "");
+        String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
 
         if (lim.length() > 0) {
             lim = " and " + lim;
@@ -861,7 +998,7 @@ public class Stats {
 
         int pd = _periodDays();
         if(pd > 0){
-            lim += " and id > "+ ((mCol.getSched().getDayCutoff()-(86400*pd))*1000);
+            lim += " and id > "+ ((mCol.getSched().getDayCutoff()-(SECONDS_PER_DAY*pd))*1000);
         }
 
         long cutoff = mCol.getSched().getDayCutoff();
@@ -977,7 +1114,7 @@ public class Stats {
         mColors = new int[] { R.attr.stats_learn, R.attr.stats_young, R.attr.stats_mature};
 
         mType = type;
-        String lim = _revlogLimit().replaceAll("[\\[\\]]", "");
+        String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
 
         Vector<String> lims = new Vector<>();
         int days = 0;
@@ -993,7 +1130,7 @@ public class Stats {
             days = -1;
 
         if (days > 0)
-            lims.add("id > " + ((mCol.getSched().getDayCutoff()-(days*86400))*1000));
+            lims.add("id > " + ((mCol.getSched().getDayCutoff()-(days*SECONDS_PER_DAY))*1000));
         if (lims.size() > 0) {
             lim = "where " + lims.get(0);
             for(int i=1; i<lims.size(); i++)
@@ -1185,7 +1322,7 @@ public class Stats {
     }
 
 
-    private String _revlogLimit() {
+    private String _getDeckFilter() {
         if (mWholeCollection) {
             return "";
         } else {

@@ -17,14 +17,20 @@ package com.ichi2.anki.stats;
 
 
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.webkit.WebView;
 
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
+import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
 
-public class InfoStatsBuilder {
+import java.util.ArrayList;
+
+import timber.log.Timber;
+
+public class OverviewStatsBuilder {
     private final int CARDS_INDEX = 0;
     private final int THETIME_INDEX = 1;
     private final int FAILED_INDEX = 2;
@@ -37,12 +43,30 @@ public class InfoStatsBuilder {
             ;
     private final WebView mWebView; //for resources access
     private final Collection mCollectionData;
-    private final boolean mIsWholeCollection;
+    private final boolean mWholeCollection;
+    private final Stats.AxisType mType;
 
-    public InfoStatsBuilder(WebView chartView, Collection collectionData, boolean isWholeCollection){
+
+    public class OverviewStats {
+        public double reviewsPerDayOnAll;
+        public double reviewsPerDayOnStudyDays;
+        public int allDays;
+        public int daysStudied;
+        public double timePerDayOnAll;
+        public double timePerDayOnStudyDays;
+        public double totalTime;
+        public int totalReviews;
+        public double newCardsPerDay;
+        public int totalNewCards;
+        public double averageInterval;
+        public double longestInterval;
+    }
+
+    public OverviewStatsBuilder(WebView chartView, Collection collectionData, boolean isWholeCollection, Stats.AxisType mStatType){
         mWebView = chartView;
         mCollectionData = collectionData;
-        mIsWholeCollection = isWholeCollection;
+        mWholeCollection = isWholeCollection;
+        mType = mStatType;
     }
 
     public String createInfoHtmlString(){
@@ -61,12 +85,61 @@ public class InfoStatsBuilder {
         stringBuilder.append(css);
         appendTodaysStats(stringBuilder);
 
+        appendOverViewStats(stringBuilder);
+
         stringBuilder.append("</center>");
         return stringBuilder.toString();
     }
 
+    private void appendOverViewStats(StringBuilder stringBuilder) {
+        Stats stats = new Stats(mCollectionData, mWholeCollection);
+
+        OverviewStats oStats = new OverviewStats();
+        stats.calculateOverviewStatistics(mType, oStats, mWebView.getContext());
+        Resources res = mWebView.getResources();
+
+        stringBuilder.append(_title(res.getString(mType.descriptionId)));
+
+
+        boolean allDaysStudied = oStats.daysStudied == oStats.allDays;
+
+        stringBuilder.append(_subtitle(res.getString(R.string.stats_review_count).toUpperCase()));
+        stringBuilder.append(res.getString(R.string.stats_overview_days_studied,(int)((float)oStats.daysStudied/(float)oStats.allDays*100), oStats.daysStudied, oStats.allDays));
+        stringBuilder.append(res.getString(R.string.stats_overview_total_reviews,oStats.totalReviews));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_reviews_per_day_studydays,oStats.reviewsPerDayOnStudyDays));
+        if (!allDaysStudied){
+            stringBuilder.append("<br>");
+            stringBuilder.append(res.getString(R.string.stats_overview_reviews_per_day_all,oStats.reviewsPerDayOnAll));
+        }
+
+        stringBuilder.append("<br><br>");
+        stringBuilder.append(_subtitle(res.getString(R.string.stats_review_time).toUpperCase()));
+        stringBuilder.append(res.getString(R.string.stats_overview_time_per_day_studydays,oStats.timePerDayOnStudyDays));
+        if (!allDaysStudied){
+            stringBuilder.append("<br>");
+            stringBuilder.append(res.getString(R.string.stats_overview_time_per_day_all,oStats.timePerDayOnAll));
+        }
+
+        stringBuilder.append("<br><br>");
+        stringBuilder.append(_subtitle(res.getString(R.string.stats_progress).toUpperCase()));
+        stringBuilder.append(res.getString(R.string.stats_overview_total_new_cards,oStats.totalNewCards));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_new_cards_per_day,oStats.newCardsPerDay));
+
+        stringBuilder.append("<br><br>");
+        stringBuilder.append(_subtitle(res.getString(R.string.stats_review_intervals).toUpperCase()));
+        stringBuilder.append(res.getString(R.string.stats_overview_average_interval));
+
+        stringBuilder.append(Utils.roundedTimeSpan(mWebView.getContext(), (int)Math.round(oStats.averageInterval*Stats.SECONDS_PER_DAY)));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_longest_interval));
+        stringBuilder.append(Utils.roundedTimeSpan(mWebView.getContext(), (int)Math.round(oStats.longestInterval*Stats.SECONDS_PER_DAY)));
+
+    }
+
     private void appendTodaysStats(StringBuilder stringBuilder){
-        Stats stats = new Stats(mCollectionData, mIsWholeCollection);
+        Stats stats = new Stats(mCollectionData, mWholeCollection);
         int[] todayStats = stats.calculateTodayStats();
         stringBuilder.append(_title(mWebView.getResources().getString(R.string.stats_today)));
         Resources res = mWebView.getResources();
@@ -88,15 +161,17 @@ public class InfoStatsBuilder {
         } else {
             stringBuilder.append(res.getString(R.string.stats_today_no_mature_cards));
         }
+
+
     }
 
 
     private String _title(String title){
-        return _title(title, "");
+        return "<h1>" + title + "</h1>";
     }
 
-    private String _title(String title, String subtitle){
-        return "<h1>" + title + "</h1>" + subtitle;
+    private String _subtitle(String title){
+        return "<h3>" + title + "</h3>";
     }
 
     private String  bold(String s) {

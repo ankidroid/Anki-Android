@@ -193,6 +193,24 @@ public class Utils {
         }
     }
 
+    /**
+     * Return a proper string for a time value in seconds
+     *
+     * @param context The application's environment.
+     * @param time_s The time to format, in seconds
+     * @return The formatted, localized time string. The time is always a float.
+     */
+    public static String roundedTimeSpan(Context context, int time_s) {
+        if (Math.abs(time_s) < TIME_DAY) {
+            return context.getResources().getString(R.string.stats_overview_hours, time_s/TIME_HOUR);
+        } else if (Math.abs(time_s) < TIME_MONTH) {
+            return context.getResources().getString(R.string.stats_overview_days, time_s/TIME_DAY);
+        } else if (Math.abs(time_s) < TIME_YEAR) {
+            return context.getResources().getString(R.string.stats_overview_months,time_s/TIME_MONTH);
+        } else {
+            return context.getResources().getString(R.string.stats_overview_years, time_s/TIME_YEAR);
+        }
+    }
 
     /**
      * Locale
