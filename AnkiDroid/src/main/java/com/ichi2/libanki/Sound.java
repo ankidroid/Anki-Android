@@ -208,10 +208,10 @@ public class Sound {
             // beginning of the sound marker
             // and then appending the html code to add the play button
             String button;
-            if (CompatHelper.getSdkVersion() >= Build.VERSION_CODES.GINGERBREAD_MR1) {
-                button = "<img src='file:///android_res/drawable/inline_play_button.png' width='32' height='32' />";
+            if (CompatHelper.getSdkVersion() >= Build.VERSION_CODES.HONEYCOMB) {
+                button = "<svg width=\"32\" height=\"32\"><polygon points=\"11,25 25,16 11,7\"/>Replay</svg>";
             } else {
-                button = "<img src='file:///android_asset/media_playback_start2.png' />";
+                button = "<img src='file:///android_asset/inline_play_button.png' />";
             }
             String soundMarker = matcher.group();
             int markerStart = contentLeft.indexOf(soundMarker);
