@@ -193,7 +193,7 @@ public final class AddContentApi {
                 if (note == null) {
                     return null;
                 }
-                if (keys != null && !keys.contains(note.getFields()[0])) {
+                if (keys != null && !keys.isEmpty() && !keys.contains(note.getFields()[0])) {
                     continue;
                 }
                 result.add(note);
