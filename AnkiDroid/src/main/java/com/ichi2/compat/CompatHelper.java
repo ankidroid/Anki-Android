@@ -63,6 +63,10 @@ public class CompatHelper {
     public static boolean isLollipop() {
         return getSdkVersion() >= Build.VERSION_CODES.LOLLIPOP;
     }
+    /** Determine if the device is running API level 23 or higher. */
+    public static boolean isMarshmallow() {
+        return getSdkVersion() >= Build.VERSION_CODES.M;
+    }
 
     /**
      * Main public method to get the compatibility class
