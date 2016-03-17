@@ -48,10 +48,10 @@ public final class AddContentApi {
     private final ContentResolver mResolver;
     private final Context mContext;
     public static final String READ_WRITE_PERMISSION = FlashCardsContract.READ_WRITE_PERMISSION;
+    public static final long DEFAULT_DECK_ID = 1L;
     private static final String TEST_TAG = "PREVIEW_NOTE";
     private static final String DECK_REF_DB = "com.ichi2.anki.api.decks";
     private static final String MODEL_REF_DB = "com.ichi2.anki.api.models";
-
     private static final String PROVIDER_SPEC_META_DATA_KEY = "com.ichi2.anki.provider.spec";
     private static final int DEFAULT_PROVIDER_SPEC_VALUE = 1; // for when meta-data key does not exist
 
@@ -69,7 +69,7 @@ public final class AddContentApi {
      * Create a new note with specified fields, tags, and model and place it in the specified deck.
      * No duplicate checking is performed - so the note should be checked beforehand using #findNotesByKeys
      * @param modelId ID for the model used to add the notes
-     * @param deckId ID for the deck the cards should be stored in (use 1 for default deck)
+     * @param deckId ID for the deck the cards should be stored in (use #DEFAULT_DECK_ID for default deck)
      * @param fields fields to add to the note. Length should be the same as number of fields in model
      * @param tags tags to include in the new note
      * @return note id or null if the note could not be added
@@ -128,7 +128,7 @@ public final class AddContentApi {
      * Create new notes with specified fields, tags and model and place them in the specified deck.
      * No duplicate checking is performed - so all notes should be checked beforehand using #findNotesByKeys
      * @param modelId id for the model used to add the notes
-     * @param deckId id for the deck the cards should be stored in (use 1 for default deck)
+     * @param deckId id for the deck the cards should be stored in (use #DEFAULT_DECK_ID for default deck)
      * @param fieldsList List of fields arrays (one per note). Array lengths should be same as number of fields in model
      * @param tagsList List of tags (one per note) (may be null)
      * @return The number of notes added (<0 means there was a problem)
@@ -267,7 +267,7 @@ public final class AddContentApi {
      * @return list of front & back pairs for each card which contain the card HTML
      */
     public Map<String, Map<String, String>> previewNewNote(long mid, String[] flds) {
-        Uri newNoteUri = addNoteInternal(mid, 1, flds, Collections.singleton(TEST_TAG));
+        Uri newNoteUri = addNoteInternal(mid, DEFAULT_DECK_ID, flds, Collections.singleton(TEST_TAG));
         // Build map of HTML for each generated card
         Map<String, Map<String, String>> cards = new HashMap<>();
         Uri cardsUri = Uri.withAppendedPath(newNoteUri, "cards");
@@ -322,7 +322,7 @@ public final class AddContentApi {
      * @param qfmt: array of formatting strings for the question side of each template in cards
      * @param afmt: array of formatting strings for the answer side of each template in cards
      * @param css: css styling information to be shared across all of the templates. Use null for default CSS.
-     * @param did: default deck to add cards to when using this model. Use null or 1 for the default deck.
+     * @param did: default deck to add cards to when using this model. Use null or #DEFAULT_DECK_ID for default deck.
      * @return the mid of the model which was created, or null if it could not be created
      */
     public Long addNewCustomModel(String name, String[] fields, String[] cards, String[] qfmt,
