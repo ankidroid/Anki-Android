@@ -64,44 +64,40 @@ public final class AddContentApi {
         mResolver = mContext.getContentResolver();
     }
 
-
     /**
-     * Create a new note with specified fields, tags, model, and deck
-     * @param mid ID for the model used to add the notes
-     * @param did ID for the deck the cards should be stored in (use 1 for default deck)
-     * @param fields List of fields to add to the note. Length should be the same as num. fields in mid.
-     * @param tags Space separated list of tags to include in the new note
-     * @return A NoteInfo object:
-     * If the boolean flag member variable newlyAdded is false then the object was not added due to a previous
-     * duplicate existing in the database. If the object is null then the note was skipped due to being invalid.*
+     * Create a new note with specified fields, tags, and model and place it in the specified deck.
+     * No duplicate checking is performed - so the note should be checked beforehand using #findNotesByKeys
+     * @param modelId ID for the model used to add the notes
+     * @param deckId ID for the deck the cards should be stored in (use 1 for default deck)
+     * @param fields fields to add to the note. Length should be the same as number of fields in model
+     * @param tags tags to include in the new note
+     * @return note id or null if the note could not be added
      */
-    public NoteInfo addNote(long mid, long did, String[] fields, String tags) {
-        NoteInfo existing = findExistingNote(mid, fields);
-        if (existing != null) {
-            return existing;
-        }
+    public Long addNote(long modelId, long deckId, String[] fields, Set<String> tags) {
         ContentValues values = new ContentValues();
-        values.put(FlashCardsContract.Note.MID, mid);
+        values.put(FlashCardsContract.Note.MID, modelId);
         values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fields));
-        values.put(FlashCardsContract.Note.TAGS, tags);
-        addNote(did, values);
-        NoteInfo newNote = findExistingNote(mid, fields);
-        if (newNote != null) {
-            return newNote;
-        }
-        return null;
-    }
-
-    @Deprecated
-    public Uri addNewNote(long mid, long did, String[] fields, String tags) {
-        NoteInfo result = addNote(mid, did, fields, tags);
-        if (result == null) {
+        values.put(FlashCardsContract.Note.TAGS, Utils.joinTags(tags));
+        Uri noteUri = addNote(deckId, values);
+        if (noteUri == null) {
             return null;
         }
-        return Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(result.getId()));
+        return Long.parseLong(noteUri.getLastPathSegment());
     }
 
-    private Uri addNote(long did, ContentValues values) {
+    /**
+     * @deprecated As of API v2 use {@link #addNote(long, long, String[], Set)} instead.
+     */
+    @Deprecated
+    public Uri addNewNote(long modelId, long deckId, String[] fields, String tags) {
+        ContentValues values = new ContentValues();
+        values.put(FlashCardsContract.Note.MID, modelId);
+        values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fields));
+        values.put(FlashCardsContract.Note.TAGS, tags);
+        return addNote(deckId, values);
+    }
+
+    private Uri addNote(long deckId, ContentValues values) {
         Uri newNoteUri = mResolver.insert(FlashCardsContract.Note.CONTENT_URI, values);
         if (newNoteUri == null) {
             return null;
@@ -113,8 +109,8 @@ public final class AddContentApi {
             while (cardsCursor.moveToNext()) {
                 String ord = cardsCursor.getString(cardsCursor.getColumnIndex(FlashCardsContract.Card.CARD_ORD));
                 ContentValues cardValues = new ContentValues();
-                cardValues.put(FlashCardsContract.Card.DECK_ID, did);
-                Uri cardUri = Uri.withAppendedPath(Uri.withAppendedPath(newNoteUri,"cards"), ord);
+                cardValues.put(FlashCardsContract.Card.DECK_ID, deckId);
+                Uri cardUri = Uri.withAppendedPath(Uri.withAppendedPath(newNoteUri, "cards"), ord);
                 mResolver.update(cardUri, cardValues, null, null);
             }
         } finally {
@@ -124,54 +120,33 @@ public final class AddContentApi {
     }
 
     /**
-     * Create a number of new notes with specified fields, tags, model, and deck.
-     * Duplicates are not allowed and will be skipped.
-     * @param mid ID for the model used to add the notes
-     * @param did ID for the deck the cards should be stored in (use 1 for default deck)
-     * @param fieldsArr Array with a list of fields for each note. Length should be the same as num. fields in model.
-     * @param tagsArr Array of space separated list of tags to include on each new note
-     * @return Array of NoteInfo objects. If the boolean flag member variable newlyAdded is false then the object was
-     * not added due to a previous duplicate existing in the database. If the object is null then the item was skipped
-     * due to being invalid.
+     * Create new notes with specified fields, tags and model and place them in the specified deck.
+     * No duplicate checking is performed - so all notes should be checked beforehand using #findNotesByKeys
+     * @param modelId id for the model used to add the notes
+     * @param deckId id for the deck the cards should be stored in (use 1 for default deck)
+     * @param fieldsList List of fields arrays (one per note). Array lengths should be same as number of fields in model
+     * @param tagsList List of tags (one per note) (may be null)
+     * @return The number of notes added (<0 means there was a problem)
      */
-    public NoteInfo[] addNotes(long mid, long did, String[][] fieldsArr, String[] tagsArr) {
-        if (tagsArr != null && fieldsArr.length != tagsArr.length) {
-            throw new IllegalArgumentException("fieldsArr and tagsArr different length");
+    public int addNotes(long modelId, long deckId, List<String[]> fieldsList, List<Set<String>> tagsList) {
+        if (tagsList != null && fieldsList.size() != tagsList.size()) {
+            throw new IllegalArgumentException("fieldsList and tagsList different length");
         }
-        // Look for existing duplicate entries
-        NoteInfo[] existingNotes = getCompat().findExistingNotes(mid, fieldsArr);
-        // Build an array of content values to send to the provider (skipping duplicates),
-        // and a map from this new array back to the original fieldsArr array
         List<ContentValues> newNoteValuesList = new ArrayList<>();
-        NoteInfo[] result = new NoteInfo[fieldsArr.length];
-        Map<String, Integer> resultsMap = new HashMap<>();
-        for (int i = 0; i < fieldsArr.length; i++) {
-            String[] fields = fieldsArr[i];
-            if (fields == null || resultsMap.containsKey(fields[0]) || (existingNotes != null && existingNotes[i] != null)) {
-                if (existingNotes != null && existingNotes[i] != null) {
-                    result[i] = existingNotes[i];
-                }
-                continue;   // skip null entries and duplicates
-            }
+        for (int i = 0; i < fieldsList.size(); i++) {
             ContentValues values = new ContentValues();
-            values.put(FlashCardsContract.Note.MID, mid);
-            values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fields));
-            if (tagsArr != null && tagsArr[i] != null) {
-                values.put(FlashCardsContract.Note.TAGS, tagsArr[i]);
+            values.put(FlashCardsContract.Note.MID, modelId);
+            values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fieldsList.get(i)));
+            if (tagsList != null && tagsList.get(i) != null) {
+                values.put(FlashCardsContract.Note.TAGS, Utils.joinTags(tagsList.get(i)));
             }
             newNoteValuesList.add(values);
-            resultsMap.put(fields[0], i);
         }
         // Add the notes to the content provider and put the new note ids into the result array
-        if (!newNoteValuesList.isEmpty()) {
-            getCompat().addNewNotes(did, newNoteValuesList.toArray(new ContentValues[newNoteValuesList.size()]));
-            NoteInfo[] newNotes = getCompat().findExistingNotes(mid, fieldsArr);
-            for (String key: resultsMap.keySet()) {
-                int originalIndex = resultsMap.get(key);
-                result[originalIndex] = newNotes[originalIndex];
-            }
+        if (newNoteValuesList.isEmpty()) {
+            return 0;
         }
-        return result;
+        return getCompat().insertNotes(deckId, newNoteValuesList.toArray(new ContentValues[newNoteValuesList.size()]));
     }
 
     /**
@@ -688,11 +663,11 @@ public final class AddContentApi {
     private interface Compat {
         /**
          * Add new notes to the AnkiDroid content provider in bulk.
-         * @param did the deck ID to put the cards in
+         * @param deckId the deck ID to put the cards in
          * @param valuesArr the content values ready for bulk insertion into the content provider
          * @return the number of successful entries
          */
-        int addNewNotes(long did, ContentValues[] valuesArr);
+        int insertNotes(long deckId, ContentValues[] valuesArr);
 
         /**
          * For each item in fieldsArray, look for an existing note that has matching first field
@@ -705,19 +680,16 @@ public final class AddContentApi {
 
     private class CompatV1 implements Compat {
         @Override
-        public int addNewNotes(long did, ContentValues[] valuesArr) {
+        public int insertNotes(long deckId, ContentValues[] valuesArr) {
             int result = 0;
             for (ContentValues values : valuesArr) {
-                if (values == null) {
-                    continue;
-                }
-                Uri noteUri = addNote(did, values);
+                Uri noteUri = addNote(deckId, values);
                 if (noteUri != null) {
                     result++;
                 }
             }
             return result;
-       }
+        }
 
         @Override
         public NoteInfo[] findExistingNotes(long mid, String[][] fieldsArray) {
@@ -746,9 +718,9 @@ public final class AddContentApi {
 
     private class CompatV2 implements Compat {
         @Override
-        public int addNewNotes(long did, ContentValues[] valuesArr) {
+        public int insertNotes(long deckId, ContentValues[] valuesArr) {
             Uri.Builder builder = FlashCardsContract.Note.CONTENT_URI.buildUpon();
-            builder.appendQueryParameter(FlashCardsContract.Note.DECK_ID_QUERY_PARAM, String.valueOf(did));
+            builder.appendQueryParameter(FlashCardsContract.Note.DECK_ID_QUERY_PARAM, String.valueOf(deckId));
             return mResolver.bulkInsert(builder.build(), valuesArr);
         }
 
