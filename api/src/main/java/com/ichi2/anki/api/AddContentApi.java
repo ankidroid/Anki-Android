@@ -1,6 +1,7 @@
 /***************************************************************************************
  *                                                                                      *
  * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
+ * Copyright (c) 2016 Mark Carter <mark@marcardar.com>                                  *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU Lesser General Public License as published by the Free Software *
@@ -25,31 +26,34 @@ import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 
 import com.ichi2.anki.FlashCardsContract;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 /**
  * API which can be used to add and query notes,cards,decks, and models to AnkiDroid
+ *
+ * On Android M (and higher) the #READ_WRITE_PERMISSION is required for all read/write operations.
+ * On earlier SDK levels, the #READ_WRITE_PERMISSION is currently only required for update/delete operations but
+ * this may be extended to all operations at a later date.
  */
 public final class AddContentApi {
     private final ContentResolver mResolver;
     private final Context mContext;
+    public static final String READ_WRITE_PERMISSION = FlashCardsContract.READ_WRITE_PERMISSION;
+    public static final long DEFAULT_DECK_ID = 1L;
     private static final String TEST_TAG = "PREVIEW_NOTE";
     private static final String DECK_REF_DB = "com.ichi2.anki.api.decks";
     private static final String MODEL_REF_DB = "com.ichi2.anki.api.models";
-
     private static final String PROVIDER_SPEC_META_DATA_KEY = "com.ichi2.anki.provider.spec";
     private static final int DEFAULT_PROVIDER_SPEC_VALUE = 1; // for when meta-data key does not exist
-
-    private static final int BULK_INSERT_MIN_SPEC_VERSION = 2;
 
     private static final String[] PROJECTION = {FlashCardsContract.Note._ID,
             FlashCardsContract.Note.FLDS, FlashCardsContract.Note.TAGS};
@@ -61,45 +65,44 @@ public final class AddContentApi {
         mResolver = mContext.getContentResolver();
     }
 
-
     /**
-     * Create a new note with specified fields, tags, model, and deck
-     * @param mid ID for the model used to add the notes
-     * @param did ID for the deck the cards should be stored in (use 1 for default deck)
-     * @param fields List of fields to add to the note. Length should be the same as num. fields in mid.
-     * @param tags Space separated list of tags to include in the new note
-     * @return A NoteInfo object:
-     * If the boolean flag member variable newlyAdded is false then the object was not added due to a previous
-     * duplicate existing in the database. If the object is null then the note was skipped due to being invalid.*
+     * Create a new note with specified fields, tags, and model and place it in the specified deck.
+     * No duplicate checking is performed - so the note should be checked beforehand using #findNotesByKeys
+     * @param modelId ID for the model used to add the notes
+     * @param deckId ID for the deck the cards should be stored in (use #DEFAULT_DECK_ID for default deck)
+     * @param fields fields to add to the note. Length should be the same as number of fields in model
+     * @param tags tags to include in the new note
+     * @return note id or null if the note could not be added
      */
-    public NoteInfo addNote(long mid, long did, String[] fields, String tags) {
-        NoteInfo existing = findExistingNote(mid, fields);
-        if (existing != null) {
-            return existing;
-        }
-        ContentValues values = new ContentValues();
-        values.put(FlashCardsContract.Note.MID, mid);
-        values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fields));
-        values.put(FlashCardsContract.Note.TAGS, tags);
-        addNote(did, values);
-        NoteInfo newNote = findExistingNote(mid, fields);
-        if (newNote != null) {
-            newNote.newlyAdded = true;
-            return newNote;
-        }
-        return null;
-    }
-
-    @Deprecated
-    public Uri addNewNote(long mid, long did, String[] fields, String tags) {
-        NoteInfo result = addNote(mid, did, fields, tags);
-        if (result == null) {
+    public Long addNote(long modelId, long deckId, String[] fields, Set<String> tags) {
+        Uri noteUri = addNoteInternal(modelId, deckId, fields, tags);
+        if (noteUri == null) {
             return null;
         }
-        return Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(result.id));
+        return Long.parseLong(noteUri.getLastPathSegment());
     }
 
-    private Uri addNote(long did, ContentValues values) {
+    /**
+     * @deprecated As of API v2 use {@link #addNote(long, long, String[], Set)} instead.
+     */
+    @Deprecated
+    public Uri addNewNote(long modelId, long deckId, String[] fields, String tags) {
+        ContentValues values = new ContentValues();
+        values.put(FlashCardsContract.Note.MID, modelId);
+        values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fields));
+        values.put(FlashCardsContract.Note.TAGS, tags);
+        return addNoteForContentValues(deckId, values);
+    }
+
+    private Uri addNoteInternal(long modelId, long deckId, String[] fields, Set<String> tags) {
+        ContentValues values = new ContentValues();
+        values.put(FlashCardsContract.Note.MID, modelId);
+        values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fields));
+        values.put(FlashCardsContract.Note.TAGS, Utils.joinTags(tags));
+        return addNoteForContentValues(deckId, values);
+    }
+
+    private Uri addNoteForContentValues(long deckId, ContentValues values) {
         Uri newNoteUri = mResolver.insert(FlashCardsContract.Note.CONTENT_URI, values);
         if (newNoteUri == null) {
             return null;
@@ -111,8 +114,8 @@ public final class AddContentApi {
             while (cardsCursor.moveToNext()) {
                 String ord = cardsCursor.getString(cardsCursor.getColumnIndex(FlashCardsContract.Card.CARD_ORD));
                 ContentValues cardValues = new ContentValues();
-                cardValues.put(FlashCardsContract.Card.DECK_ID, did);
-                Uri cardUri = Uri.withAppendedPath(Uri.withAppendedPath(newNoteUri,"cards"), ord);
+                cardValues.put(FlashCardsContract.Card.DECK_ID, deckId);
+                Uri cardUri = Uri.withAppendedPath(Uri.withAppendedPath(newNoteUri, "cards"), ord);
                 mResolver.update(cardUri, cardValues, null, null);
             }
         } finally {
@@ -122,56 +125,33 @@ public final class AddContentApi {
     }
 
     /**
-     * Create a number of new notes with specified fields, tags, model, and deck.
-     * Duplicates are not allowed and will be skipped.
-     * @param mid ID for the model used to add the notes
-     * @param did ID for the deck the cards should be stored in (use 1 for default deck)
-     * @param fieldsArr Array with a list of fields for each note. Length should be the same as num. fields in model.
-     * @param tagsArr Array of space separated list of tags to include on each new note
-     * @return Array of NoteInfo objects. If the boolean flag member variable newlyAdded is false then the object was
-     * not added due to a previous duplicate existing in the database. If the object is null then the item was skipped
-     * due to being invalid.
+     * Create new notes with specified fields, tags and model and place them in the specified deck.
+     * No duplicate checking is performed - so all notes should be checked beforehand using #findNotesByKeys
+     * @param modelId id for the model used to add the notes
+     * @param deckId id for the deck the cards should be stored in (use #DEFAULT_DECK_ID for default deck)
+     * @param fieldsList List of fields arrays (one per note). Array lengths should be same as number of fields in model
+     * @param tagsList List of tags (one per note) (may be null)
+     * @return The number of notes added (<0 means there was a problem)
      */
-    public NoteInfo[] addNotes(long mid, long did, String[][] fieldsArr, String[] tagsArr) {
-        if (tagsArr != null && fieldsArr.length != tagsArr.length) {
-            throw new IllegalArgumentException("fieldsArr and tagsArr different length");
+    public int addNotes(long modelId, long deckId, List<String[]> fieldsList, List<Set<String>> tagsList) {
+        if (tagsList != null && fieldsList.size() != tagsList.size()) {
+            throw new IllegalArgumentException("fieldsList and tagsList different length");
         }
-        // Look for existing duplicate entries
-        NoteInfo[] existingNotes = getCompat().findExistingNotes(mid, fieldsArr);
-        // Build an array of content values to send to the provider (skipping duplicates),
-        // and a map from this new array back to the original fieldsArr array
         List<ContentValues> newNoteValuesList = new ArrayList<>();
-        NoteInfo[] result = new NoteInfo[fieldsArr.length];
-        Map<String, Integer> resultsMap = new HashMap<>();
-        for (int i = 0; i < fieldsArr.length; i++) {
-            String[] fields = fieldsArr[i];
-            if (fields == null || resultsMap.containsKey(fields[0]) || (existingNotes != null && existingNotes[i] != null)) {
-                if (existingNotes != null && existingNotes[i] != null) {
-                    result[i] = existingNotes[i];
-                    result[i].newlyAdded = false;
-                }
-                continue;   // skip null entries and duplicates
-            }
+        for (int i = 0; i < fieldsList.size(); i++) {
             ContentValues values = new ContentValues();
-            values.put(FlashCardsContract.Note.MID, mid);
-            values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fields));
-            if (tagsArr != null && tagsArr[i] != null) {
-                values.put(FlashCardsContract.Note.TAGS, tagsArr[i]);
+            values.put(FlashCardsContract.Note.MID, modelId);
+            values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fieldsList.get(i)));
+            if (tagsList != null && tagsList.get(i) != null) {
+                values.put(FlashCardsContract.Note.TAGS, Utils.joinTags(tagsList.get(i)));
             }
             newNoteValuesList.add(values);
-            resultsMap.put(fields[0], i);
         }
         // Add the notes to the content provider and put the new note ids into the result array
-        if (!newNoteValuesList.isEmpty()) {
-            getCompat().addNewNotes(did, newNoteValuesList.toArray(new ContentValues[newNoteValuesList.size()]));
-            NoteInfo[] newNotes = getCompat().findExistingNotes(mid, fieldsArr);
-            for (String key: resultsMap.keySet()) {
-                int originalIndex = resultsMap.get(key);
-                result[originalIndex] = newNotes[originalIndex];
-                result[originalIndex].newlyAdded = true;
-            }
+        if (newNoteValuesList.isEmpty()) {
+            return 0;
         }
-        return result;
+        return getCompat().insertNotes(deckId, newNoteValuesList.toArray(new ContentValues[newNoteValuesList.size()]));
     }
 
     /**
@@ -200,7 +180,7 @@ public final class AddContentApi {
         if (note == null) {
             return null;
         }
-        return note.id;
+        return note.getId();
     }
 
 
@@ -233,41 +213,14 @@ public final class AddContentApi {
     }
 
     /**
-     * Get the tags for a given note
-     * @param noteId
-     * @return set of tags, or null if the note could not be found
-     */
-    public Set<String> getTags(long noteId) {
-        Map<String, String> note = getNote(noteId);
-        if (note != null) {
-            return new HashSet<>(Arrays.asList(Utils.splitTags(note.get("tags"))));
-        }
-        return null;
-    }
-
-    /**
      * Set the tags for a given note
      * @param noteId
      * @param tags set of tags
      * @return true if noteId was found, otherwise false
      */
-    public Boolean setTags(long noteId, Set<String> tags) {
+    public boolean updateNoteTags(long noteId, Set<String> tags) {
         return updateNote(noteId, null, tags);
     }
-
-    /**
-     * Get the fields for a given note
-     * @param noteId
-     * @return array of fields for the given note
-     */
-    public String[] getFields(long noteId) {
-        Map<String, String> note = getNote(noteId);
-        if (note != null) {
-            return Utils.splitFields(note.get("fields"));
-        }
-        return null;
-    }
-
 
     /**
      * Set the fields for a given note
@@ -275,29 +228,22 @@ public final class AddContentApi {
      * @param fields array of fields
      * @return true if noteId was found, otherwise false
      */
-    public Boolean setFields(long noteId, String[] fields) {
+    public boolean updateNoteFields(long noteId, String[] fields) {
         return updateNote(noteId, fields, null);
     }
 
-
-    private Map getNote(long noteId) {
+    public NoteInfo getNote(long noteId) {
         String[] selectionArgs = {String.format("%s=%d", FlashCardsContract.Note._ID, noteId)};
         Cursor cursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, null, selectionArgs, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            try {
-                String tags = cursor.getString(cursor.getColumnIndex(FlashCardsContract.Note.TAGS));
-                String fields = cursor.getString(cursor.getColumnIndex(FlashCardsContract.Note.FLDS));
-                Map<String, String> result = new HashMap<>();
-                result.put("tags", tags);
-                result.put("fields", fields);
-                return result;
-            } finally {
-                cursor.close();
-            }
+        if (cursor == null) {
+            return null;
         }
-        return null;
+        try {
+            return NoteInfo.buildFromCursor(cursor);
+        } finally {
+            cursor.close();
+        }
     }
-
 
     private boolean updateNote(long noteId, String[] fields, Set<String> tags) {
         Uri.Builder builder = FlashCardsContract.Note.CONTENT_URI.buildUpon();
@@ -314,7 +260,6 @@ public final class AddContentApi {
         return numRowsUpdated > 0;
     }
 
-
     /**
      * Get the html that would be generated for the specified note type and field list
      * @param flds array of field values for the note. Length must be the same as num. fields in mid.
@@ -322,7 +267,7 @@ public final class AddContentApi {
      * @return list of front & back pairs for each card which contain the card HTML
      */
     public Map<String, Map<String, String>> previewNewNote(long mid, String[] flds) {
-        Uri newNoteUri = addNewNote(mid, 1, flds, TEST_TAG);
+        Uri newNoteUri = addNoteInternal(mid, DEFAULT_DECK_ID, flds, Collections.singleton(TEST_TAG));
         // Build map of HTML for each generated card
         Map<String, Map<String, String>> cards = new HashMap<>();
         Uri cardsUri = Uri.withAppendedPath(newNoteUri, "cards");
@@ -377,7 +322,7 @@ public final class AddContentApi {
      * @param qfmt: array of formatting strings for the question side of each template in cards
      * @param afmt: array of formatting strings for the answer side of each template in cards
      * @param css: css styling information to be shared across all of the templates. Use null for default CSS.
-     * @param did: default deck to add cards to when using this model. Use null or 1 for the default deck.
+     * @param did: default deck to add cards to when using this model. Use null or #DEFAULT_DECK_ID for default deck.
      * @return the mid of the model which was created, or null if it could not be created
      */
     public Long addNewCustomModel(String name, String[] fields, String[] cards, String[] qfmt,
@@ -435,45 +380,33 @@ public final class AddContentApi {
 
 
     /**
-     * Try to find the given model by name, accounting for renaming of the model, and duplicate models as follows:
-     * If there's a model with modelName and required number of fields then return it's ID
-     * If not, but a ref to modelName is stored in SharedPreferences, and that model exists, and has correct number of
-     * fields, (i.e. it was renamed), then use that model.Note: this model will not be found if your app is re-installed
-     * If there's no reference to modelName anywhere then return null
+     * Try to find the given model by name, accounting for renaming of the model:
+     * If there's a model with this modelName that is known to have previously been created (by this app)
+     *   and the corresponding model ID exists and has the required number of fields
+     *   then return that ID (even though it may have since been renamed)
+     * If there's a model from #getModelList with modelName and required number of fields then return its ID
+     * Otherwise return null
      * @param modelName the name of the model to find
      * @param numFields the minimum number of fields the model is required to have
-     * @return the mid of the model in Anki
+     * @return the model ID
      */
     public Long findModelIdByName(String modelName, int numFields) {
-        // Build list of all models with modelName and at least numFields
+        SharedPreferences modelsDb = mContext.getSharedPreferences(MODEL_REF_DB, Context.MODE_PRIVATE);
+        long prefsModelId = modelsDb.getLong(modelName, -1L);
+        // if we have a reference saved to modelName and it exists and has at least numFields then return it
+        if (prefsModelId != -1L && getModelName(prefsModelId) != null
+                && getFieldList(prefsModelId).length >= numFields) { // could potentially have been renamed
+            return prefsModelId;
+        }
         Map<Long, String> modelList = getModelList(numFields);
-        ArrayList<Long> foundModels = new ArrayList<>();
         for (Map.Entry<Long, String> entry : modelList.entrySet()) {
             if (entry.getValue().equals(modelName)) {
-                foundModels.add(entry.getKey());
+                return entry.getKey(); // first model wins
             }
         }
-        // Try to find the most suitable model
-        SharedPreferences modelsDb = mContext.getSharedPreferences(MODEL_REF_DB, Context.MODE_PRIVATE);
-        Long mid = modelsDb.getLong(modelName, -1);
-        if (mid == -1 && foundModels.size() == 0) {
-            // return null if completely no reference to modelName
-            return null;
-        } else if (mid == -1 && foundModels.size() > 0) {
-            // if we have no reference saved to modelName then return the first model with modelName and numFields
-            return foundModels.get(0);
-        } else {
-            // if we have a reference saved to modelName and it exists and has at least numFields then return it
-            if (getModelName(mid) != null && getFieldList(mid).length >= numFields) {
-                // model was renamed
-                return mid;
-            } else {
-                // model no longer exists or the number of fields was reduced
-                return null;
-            }
-        }
+        // model no longer exists (by name nor old id) or the number of fields was reduced
+        return null;
     }
-
 
     /**
      * Get the field names belonging to specified model
@@ -676,15 +609,11 @@ public final class AddContentApi {
      * Get the ID for any permission which is required to use the API
      * @param context a Context that can be used to get the PackageManager
      * @return id of a permission required to access the API or null if no permission is required
+     * @deprecated use {@link #READ_WRITE_PERMISSION} instead and see class-level docs
      */
+    @Deprecated
     public static String checkRequiredPermission(Context context) {
-        PackageManager manager = context.getPackageManager();
-        ProviderInfo pi = manager.resolveContentProvider(FlashCardsContract.AUTHORITY, 0);
-        if (pi != null) {
-            return pi.writePermission;
-        } else {
-            return null;
-        }
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? READ_WRITE_PERMISSION : null;
     }
 
 
@@ -703,18 +632,19 @@ public final class AddContentApi {
         return null;
     }
 
-
     /**
-     * Old versions of AnkiDroid are very slow at adding multiple notes at once (maybe a couple of minutes for 1000 notes).
-     * Newer versions are about 20 times faster.
+     * The API spec version of the installed AnkiDroid app. This is not the same as the AnkiDroid app version code.
      *
-     * @return true iff #addNotes performs quickly
+     * SPEC VERSION 1: (AnkiDroid 2.5)
+     * #addNotes is very slow for large numbers of notes
+     * #findNotes is very slow for large numbers of keys
+     * #addNewCustomModel is not persisted properly
+     *
+     * SPEC VERSION 2: (AnkiDroid 2.6)
+     *
+     * @return the spec version number or -1 if AnkiDroid is not installed.
      */
-    public boolean supportsFastAddNotes() {
-        return getProviderSpecVersionCode() >= BULK_INSERT_MIN_SPEC_VERSION;
-    }
-
-    private int getProviderSpecVersionCode() {
+    public int getApiHostSpecVersion() {
         // PackageManager#resolveContentProvider docs suggest flags should be 0 (but that gives null metadata)
         // GET_META_DATA seems to work anyway
         ProviderInfo info = mContext.getPackageManager().resolveContentProvider(FlashCardsContract.AUTHORITY, PackageManager.GET_META_DATA);
@@ -723,29 +653,26 @@ public final class AddContentApi {
         }
         if (info.metaData != null && info.metaData.containsKey(PROVIDER_SPEC_META_DATA_KEY)) {
             return info.metaData.getInt(PROVIDER_SPEC_META_DATA_KEY);
-        }
-        else {
+        } else {
             return DEFAULT_PROVIDER_SPEC_VALUE;
         }
     }
-
-
 
     /**
      * Best not to store this in case the user updates AnkiDroid app while client app is staying alive
      */
     private Compat getCompat() {
-        return getProviderSpecVersionCode() < BULK_INSERT_MIN_SPEC_VERSION ? new CompatV1() : new CompatV2();
+        return getApiHostSpecVersion() < 2 ? new CompatV1() : new CompatV2();
     }
 
     private interface Compat {
         /**
          * Add new notes to the AnkiDroid content provider in bulk.
-         * @param did the deck ID to put the cards in
+         * @param deckId the deck ID to put the cards in
          * @param valuesArr the content values ready for bulk insertion into the content provider
          * @return the number of successful entries
          */
-        int addNewNotes(long did, ContentValues[] valuesArr);
+        int insertNotes(long deckId, ContentValues[] valuesArr);
 
         /**
          * For each item in fieldsArray, look for an existing note that has matching first field
@@ -758,19 +685,16 @@ public final class AddContentApi {
 
     private class CompatV1 implements Compat {
         @Override
-        public int addNewNotes(long did, ContentValues[] valuesArr) {
+        public int insertNotes(long deckId, ContentValues[] valuesArr) {
             int result = 0;
             for (ContentValues values : valuesArr) {
-                if (values == null) {
-                    continue;
-                }
-                Uri noteUri = addNote(did, values);
+                Uri noteUri = addNoteForContentValues(deckId, values);
                 if (noteUri != null) {
                     result++;
                 }
             }
             return result;
-       }
+        }
 
         @Override
         public NoteInfo[] findExistingNotes(long mid, String[][] fieldsArray) {
@@ -799,9 +723,9 @@ public final class AddContentApi {
 
     private class CompatV2 implements Compat {
         @Override
-        public int addNewNotes(long did, ContentValues[] valuesArr) {
+        public int insertNotes(long deckId, ContentValues[] valuesArr) {
             Uri.Builder builder = FlashCardsContract.Note.CONTENT_URI.buildUpon();
-            builder.appendQueryParameter(FlashCardsContract.Note.DECK_ID_QUERY_PARAM, String.valueOf(did));
+            builder.appendQueryParameter(FlashCardsContract.Note.DECK_ID_QUERY_PARAM, String.valueOf(deckId));
             return mResolver.bulkInsert(builder.build(), valuesArr);
         }
 
@@ -824,8 +748,9 @@ public final class AddContentApi {
             try {
                 while (notesTableCursor.moveToNext()) {
                     NoteInfo note = NoteInfo.buildFromCursor(notesTableCursor);
-                    if (!idMap.containsKey(note.key)) {
-                        idMap.put(note.key, note);
+                    String key = note.getFields()[0];
+                    if (!idMap.containsKey(key)) {
+                        idMap.put(key, note);
                     }
                 }
             } finally {
