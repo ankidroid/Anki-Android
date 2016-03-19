@@ -98,6 +98,9 @@ public class CardContentProvider extends ContentProvider {
     private static final int DECK_SELECTED = 4001;
     private static final int DECKS_ID = 4002;
 
+    private static final List<Integer> UPDATES_NOT_REQUIRING_READ_WRITE_PERMISSION
+            = Arrays.asList(NOTES_ID_CARDS_ORD, MODELS_ID, MODELS_ID_TEMPLATES_ID, SCHEDULE, DECK_SELECTED);
+
     private static final UriMatcher sUriMatcher =
             new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -182,11 +185,9 @@ public class CardContentProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
-        if (!allowQueryInsert()) {
-            throw new SecurityException("Query permission not granted for: " + uri);
-        }
-
+        checkQueryAllowedOrThrow(uri);
         Timber.d("CardContentProvider.query");
+
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
             return null;
@@ -421,7 +422,9 @@ public class CardContentProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
+        checkUpdateAllowedOrThrow(uri);
         logProviderCall("update", uri);
+
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
             return 0;
@@ -429,12 +432,6 @@ public class CardContentProvider extends ContentProvider {
 
         // Find out what data the user is requesting
         int match = sUriMatcher.match(uri);
-
-        // Throw exception if no permission with SDK23+, or if the current URI is not on the whitelist for pre-M devices
-        List<Integer> ok = Arrays.asList(NOTES_ID_CARDS_ORD, MODELS_ID, MODELS_ID_TEMPLATES_ID, SCHEDULE, DECK_SELECTED);
-        if (ok.contains(match) ? !allowQueryInsert() : !allowUpdateDelete()) {
-            throw new SecurityException("Update permission not granted for: " + uri);
-        }
 
         int updated = 0; // Number of updated entries (return value)
         switch (match) {
@@ -651,12 +648,9 @@ public class CardContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        // Throw exception if no permission
-        if (!allowUpdateDelete()) {
-            throw new SecurityException("Delete permission not granted for: " + uri);
-        }
-
+        checkDeleteAllowedOrThrow(uri);
         logProviderCall("delete", uri);
+
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
             return 0;
@@ -682,11 +676,9 @@ public class CardContentProvider extends ContentProvider {
      */
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
-        if (!allowQueryInsert()) {
-            throw new SecurityException("bulk insert permission not granted for: " + uri);
-        }
-
+        checkInsertAllowedOrThrow(uri);
         logProviderCall("bulkInsert", uri);
+
         // by default, #bulkInsert simply calls insert for each item in #values
         // but in some cases, we want to override this behavior
         int match = sUriMatcher.match(uri);
@@ -783,11 +775,9 @@ public class CardContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        if (!allowQueryInsert()) {
-            throw new SecurityException("Insert permission not granted for: " + uri);
-        }
-
+        checkInsertAllowedOrThrow(uri);
         logProviderCall("insert", uri);
+
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
             return null;
@@ -1167,12 +1157,7 @@ public class CardContentProvider extends ContentProvider {
     private void logProviderCall(String methodName, Uri uri) {
         String format = "%s.%s %s";
         String path = uri == null ? null : uri.getPath();
-        String msg;
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            msg = String.format(format, CardContentProvider.class.getSimpleName(), methodName, path);
-        } else {
-            msg = String.format(format + " (%s)", CardContentProvider.class.getSimpleName(), methodName, path, getCallingPackage());
-        }
+        String msg = String.format(format, getClass().getSimpleName(), methodName, path, getCallingPackageSafely());
         Timber.i(msg);
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col != null) {
@@ -1180,30 +1165,72 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
+    private void checkQueryAllowedOrThrow(Uri uri) {
+        checkNonDestructiveAllowedOrThrow(uri);
+    }
+
+    private void checkInsertAllowedOrThrow(Uri uri) {
+        checkNonDestructiveAllowedOrThrow(uri);
+    }
+
+    private void checkUpdateAllowedOrThrow(Uri uri) {
+        if (UPDATES_NOT_REQUIRING_READ_WRITE_PERMISSION.contains(sUriMatcher.match(uri))) {
+            checkNonDestructiveAllowedOrThrow(uri);
+        }
+        else {
+            checkDestructiveAllowedOrThrow(uri);
+        }
+    }
+
+    private void checkDeleteAllowedOrThrow(Uri uri) {
+        checkDestructiveAllowedOrThrow(uri);
+    }
+
     /**
      * Provide minimal protection for query/insert because these cannot result in the loss of user data
      */
-    private boolean allowQueryInsert() {
-        if (hasReadWritePermissionOrCalledByUnitTests()) {
-            return true;
+    private void checkNonDestructiveAllowedOrThrow(Uri uri) {
+        if (hasReadWritePermission()) {
+            return;
         }
         if (CompatHelper.isMarshmallow()) {
-            return false; // no excuses not having permission on marshmallow
+            // no excuses not having permission on marshmallow
         }
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            return true; // we cannot check the calling package requested permissions, but allow anyway
+        else {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+                return; // we cannot check the calling package requested permissions, but allow anyway
+            }
+            if (hasRequestedReadWritePermission()) {
+                return; // declared permissions in manifest so probably an app-install-order issue - allow for now...
+            }
         }
-        return hasRequestedReadWritePermission();
+        throwSecurityException(uri);
     }
 
     /**
      * Provide more protection for update/delete because these can result in the loss of user data
      */
-    private boolean allowUpdateDelete() {
-        return hasReadWritePermissionOrCalledByUnitTests();
+    private void checkDestructiveAllowedOrThrow(Uri uri) {
+        if (hasReadWritePermission()) {
+            return;
+        }
+        throwSecurityException(uri);
     }
 
-    private boolean hasReadWritePermissionOrCalledByUnitTests() {
+    private void throwSecurityException(Uri uri) {
+        throw new SecurityException("Insufficient permissions for: " + uri + " (" + getCallingPackageSafely() + ")");
+    }
+
+    private String getCallingPackageSafely() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            return null;
+        }
+        else {
+            return super.getCallingPackage();
+        }
+    }
+
+    private boolean hasReadWritePermission() {
         if (getContext().checkCallingPermission(READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED) {
             return true;
         }
