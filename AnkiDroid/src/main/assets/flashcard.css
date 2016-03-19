@@ -78,3 +78,14 @@ preferred over using JavaScript.
   -webkit-box-pack: center;
   -webkit-box-orient: vertical;
 }
+
+
+/* Make sure the replay buttons look black or white unless explicitly changed. */
+.replaybutton svg {
+    stroke: none;
+    fill: black;
+}
+
+.night_mode .replaybutton svg {
+    fill: white;
+}
