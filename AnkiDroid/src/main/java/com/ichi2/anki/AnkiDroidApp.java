@@ -176,6 +176,9 @@ public class AnkiDroidApp extends Application {
         // Configure WebView to allow file scheme pages to access cookies.
         CompatHelper.getCompat().enableCookiesForFileSchemePages();
 
+        // Prepare Cookies to be synchronized between RAM and permanent storage.
+        CompatHelper.getCompat().prepareWebViewCookies(this.getApplicationContext());
+
         // Set good default values for swipe detection
         final ViewConfiguration vc = ViewConfiguration.get(this);
         DEFAULT_SWIPE_MIN_DISTANCE = vc.getScaledPagingTouchSlop();

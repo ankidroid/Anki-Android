@@ -913,6 +913,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         pauseTimer();
         mSoundPlayer.stopSounds();
+
+        // Prevent loss of data in Cookies
+        CompatHelper.getCompat().flushWebViewCookies();
     }
 
 
@@ -939,6 +942,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
+        // WebView.destroy() should be called after the end of use
+        // http://developer.android.com/reference/android/webkit/WebView.html#destroy()
+        mCardFrame.removeAllViews();
+        destroyWebView(mCard);
+        destroyWebView(mNextCard);
     }
 
 
@@ -1488,6 +1496,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // Set transparent color to prevent flashing white when night mode enabled
         webView.setBackgroundColor(Color.argb(1, 0, 0, 0));
         return webView;
+    }
+
+
+    private void destroyWebView(WebView webView) {
+        if (webView != null) {
+            webView.stopLoading();
+            webView.setWebChromeClient(null);
+            webView.setWebViewClient(null);
+            webView.destroy();
+        }
     }
 
 
@@ -2192,7 +2210,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mNextCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
             mNextCard.setVisibility(View.VISIBLE);
             mCardFrame.removeView(mCard);
-            mCard.destroy();
+            destroyWebView(mCard);
             mCard = mNextCard;
             mNextCard = createWebView();
             mNextCard.setVisibility(View.GONE);

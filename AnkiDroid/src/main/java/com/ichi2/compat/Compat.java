@@ -60,5 +60,7 @@ public interface Compat {
     void openUrl(AnkiActivity activity, Uri uri);
     void supportAddContentMenu(final DeckPicker a);
     Intent getPreferenceSubscreenIntent(Context context, String subscreen);
+    void prepareWebViewCookies(Context context);
+    void flushWebViewCookies();
 }
 
