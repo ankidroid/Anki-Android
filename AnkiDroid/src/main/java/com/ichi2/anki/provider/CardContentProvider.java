@@ -98,9 +98,6 @@ public class CardContentProvider extends ContentProvider {
     private static final int DECK_SELECTED = 4001;
     private static final int DECKS_ID = 4002;
 
-    private static final List<Integer> UPDATES_NOT_REQUIRING_READ_WRITE_PERMISSION
-            = Arrays.asList(NOTES_ID_CARDS_ORD, MODELS_ID, MODELS_ID_TEMPLATES_ID, SCHEDULE, DECK_SELECTED);
-
     private static final UriMatcher sUriMatcher =
             new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -185,7 +182,7 @@ public class CardContentProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
-        checkQueryAllowedOrThrow(uri);
+        checkNonDestructiveAllowedOrThrow(uri);
         Timber.d("CardContentProvider.query");
 
         Collection col = CollectionHelper.getInstance().getCol(getContext());
@@ -422,7 +419,13 @@ public class CardContentProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
-        checkUpdateAllowedOrThrow(uri);
+        List<Integer> ok =Arrays.asList(NOTES_ID_CARDS_ORD, MODELS_ID, MODELS_ID_TEMPLATES_ID, SCHEDULE, DECK_SELECTED);
+        if (ok.contains(sUriMatcher.match(uri))) {
+            checkNonDestructiveAllowedOrThrow(uri);
+        }
+        else {
+            checkDestructiveAllowedOrThrow(uri);
+        }
         logProviderCall("update", uri);
 
         Collection col = CollectionHelper.getInstance().getCol(getContext());
@@ -648,7 +651,7 @@ public class CardContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        checkDeleteAllowedOrThrow(uri);
+        checkDestructiveAllowedOrThrow(uri);
         logProviderCall("delete", uri);
 
         Collection col = CollectionHelper.getInstance().getCol(getContext());
@@ -676,7 +679,7 @@ public class CardContentProvider extends ContentProvider {
      */
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
-        checkInsertAllowedOrThrow(uri);
+        checkNonDestructiveAllowedOrThrow(uri);
         logProviderCall("bulkInsert", uri);
 
         // by default, #bulkInsert simply calls insert for each item in #values
@@ -775,7 +778,7 @@ public class CardContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        checkInsertAllowedOrThrow(uri);
+        checkNonDestructiveAllowedOrThrow(uri);
         logProviderCall("insert", uri);
 
         Collection col = CollectionHelper.getInstance().getCol(getContext());
@@ -1165,27 +1168,6 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private void checkQueryAllowedOrThrow(Uri uri) {
-        checkNonDestructiveAllowedOrThrow(uri);
-    }
-
-    private void checkInsertAllowedOrThrow(Uri uri) {
-        checkNonDestructiveAllowedOrThrow(uri);
-    }
-
-    private void checkUpdateAllowedOrThrow(Uri uri) {
-        if (UPDATES_NOT_REQUIRING_READ_WRITE_PERMISSION.contains(sUriMatcher.match(uri))) {
-            checkNonDestructiveAllowedOrThrow(uri);
-        }
-        else {
-            checkDestructiveAllowedOrThrow(uri);
-        }
-    }
-
-    private void checkDeleteAllowedOrThrow(Uri uri) {
-        checkDestructiveAllowedOrThrow(uri);
-    }
-
     /**
      * Provide minimal protection for query/insert because these cannot result in the loss of user data
      */
@@ -1193,16 +1175,14 @@ public class CardContentProvider extends ContentProvider {
         if (hasReadWritePermission()) {
             return;
         }
-        if (CompatHelper.isMarshmallow()) {
+        else if (CompatHelper.isMarshmallow()) {
             // no excuses not having permission on marshmallow
         }
-        else {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                return; // we cannot check the calling package requested permissions, but allow anyway
-            }
-            if (hasRequestedReadWritePermission()) {
-                return; // declared permissions in manifest so probably an app-install-order issue - allow for now...
-            }
+        else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            return; // we cannot check the calling package requested permissions, but allow anyway
+        }
+        else if (hasRequestedReadWritePermission()) {
+            return; // declared permissions in manifest so probably an app-install-order issue - allow for now...
         }
         throwSecurityException(uri);
     }
@@ -1235,8 +1215,7 @@ public class CardContentProvider extends ContentProvider {
             return true;
         }
         // Allow self-calling to make unit tests pass, since checkCallingPermission() returns -1 if not doing IPC
-        return BuildConfig.DEBUG && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-                && getContext().getPackageName().equals(getCallingPackage());
+        return BuildConfig.DEBUG && getContext().getPackageName().equals(getCallingPackageSafely());
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
