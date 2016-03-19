@@ -233,12 +233,15 @@ public final class AddContentApi {
     }
 
     public NoteInfo getNote(long noteId) {
-        String[] selectionArgs = {String.format("%s=%d", FlashCardsContract.Note._ID, noteId)};
-        Cursor cursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, null, selectionArgs, null);
+        Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
+        Cursor cursor = mResolver.query(noteUri, PROJECTION, null, null, null);
         if (cursor == null) {
             return null;
         }
         try {
+            if (!cursor.moveToNext()) {
+                return null;
+            }
             return NoteInfo.buildFromCursor(cursor);
         } finally {
             cursor.close();
