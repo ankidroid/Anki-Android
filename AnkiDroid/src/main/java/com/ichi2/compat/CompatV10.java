@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.CookieSyncManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RemoteViews;
@@ -73,6 +74,18 @@ public class CompatV10 implements Compat {
         Timber.w("Cookies not supported in API version %d", CompatHelper.getSdkVersion());
     }
 
+    // CookieSyncManager is need to be initialized before use.
+    // Note: CookieSyncManager is deprecated since API level 21, but still need to be used here.
+    public void prepareWebViewCookies(Context context) {
+        CookieSyncManager.createInstance(context);
+    }
+
+    // A data of cookies may be lost when an application exists just after it was written.
+    // Below API level 21, this problem can be solved by using CookieSyncManager.sync().
+    // Note: CookieSyncManager is deprecated since API level 21, but still need to be used here.
+    public void flushWebViewCookies() {
+        CookieSyncManager.getInstance().sync();
+    }
 
     // Below API level 16, widget dimensions cannot be adjusted
     public void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls) {
