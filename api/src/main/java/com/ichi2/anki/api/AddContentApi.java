@@ -34,7 +34,6 @@ import android.text.TextUtils;
 import com.ichi2.anki.FlashCardsContract;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -169,7 +168,7 @@ public final class AddContentApi {
      */
     @Deprecated
     public boolean checkForDuplicates(long mid, long did, String[] fields) {
-        List<NoteInfo> notes = findNotesByKeys(mid, Collections.singleton(fields[0]));
+        List<NoteInfo> notes = findNotesByKeys(mid, fields[0]);
         return notes != null && !notes.isEmpty();
     }
 
@@ -181,10 +180,18 @@ public final class AddContentApi {
      * @param keys the keys
      * @return the matched notes or null if there was some other problem
      */
-    public List<NoteInfo> findNotesByKeys(long modelId, Collection<String> keys) {
+    public List<NoteInfo> findNotesByKeys(long modelId, String... keys) {
         Cursor cursor = getCompat().queryNotes(modelId, keys);
         if (cursor == null) {
             return null;
+        }
+        Set<String> keysSet;
+        if (keys == null) {
+            keysSet = null;
+        }
+        else {
+            keysSet = new HashSet<>();
+            Collections.addAll(keysSet, keys);
         }
         List<NoteInfo> result = new ArrayList<>();
         try {
@@ -193,10 +200,9 @@ public final class AddContentApi {
                 if (note == null) {
                     return null;
                 }
-                if (keys != null && !keys.isEmpty() && !keys.contains(note.getFields()[0])) {
-                    continue;
+                if (keysSet == null || keysSet.isEmpty() || keysSet.contains(note.getFields()[0])) {
+                    result.add(note);
                 }
-                result.add(note);
             }
         }
         finally {
@@ -211,7 +217,7 @@ public final class AddContentApi {
      * @return number of notes that exist with that model id. <0 means there was a problem
      */
     public int getNoteCount(long modelId) {
-        Cursor cursor = getCompat().queryNotes(modelId, null);
+        Cursor cursor = getCompat().queryNotes(modelId);
         if (cursor == null) {
             return -1;
         }
@@ -688,7 +694,7 @@ public final class AddContentApi {
          */
         int insertNotes(long deckId, ContentValues[] valuesArr);
         /* it's okay to return a superset of notes because the cursor is filtered accordingly afterwards */
-        Cursor queryNotes(long modelId, Collection<String> keys);
+        Cursor queryNotes(long modelId, String... keys);
     }
 
     private class CompatV1 implements Compat {
@@ -705,13 +711,13 @@ public final class AddContentApi {
         }
 
         @Override
-        public Cursor queryNotes(long modelId, Collection<String> keys) {
+        public Cursor queryNotes(long modelId, String... keys) {
             // Content provider spec v1 does not support direct querying of the notes table using csums, so must iterate
             String modelName = getModelName(modelId);
             if (modelName == null) {
                 return new MatrixCursor(PROJECTION);
             }
-            if (keys == null || keys.isEmpty()) {
+            if (keys == null || keys.length == 0) {
                 String queryFormat = String.format("note:\"%s\"", modelName);
                 Cursor cursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, queryFormat, null, null);
                 if (cursor == null) {
@@ -763,10 +769,10 @@ public final class AddContentApi {
         }
 
         @Override
-        public Cursor queryNotes(long modelId, Collection<String> keys) {
+        public Cursor queryNotes(long modelId, String... keys) {
             String selArg = String.format("%s=%d", FlashCardsContract.Note.MID, modelId);
-            if (keys != null && !keys.isEmpty()) {
-                Set<Long> checksums = new HashSet<>(keys.size());
+            if (keys != null && keys.length > 0) {
+                Set<Long> checksums = new HashSet<>(keys.length);
                 for (String key : keys) {
                     checksums.add(Utils.fieldChecksum(key));
                 }
