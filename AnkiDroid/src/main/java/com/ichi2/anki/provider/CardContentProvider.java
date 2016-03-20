@@ -22,6 +22,7 @@ package com.ichi2.anki.provider;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.MatrixCursor;
@@ -177,19 +178,27 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
+    /** Only enforce permissions for queries and inserts on Android M and above, or if its a 'rogue client' **/
+    private boolean shouldEnforceQueryOrInsertSecurity() {
+        return CompatHelper.isMarshmallow() || knownRogueClient();
+    }
+    /** Enforce permissions for all updates on Android M and above. Otherwise block depending on URI and client app **/
+    private boolean shouldEnforceUpdateSecurity(Uri uri) {
+        final List<Integer> WHITELIST = Arrays.asList(NOTES_ID_CARDS_ORD, MODELS_ID, MODELS_ID_TEMPLATES_ID, SCHEDULE, DECK_SELECTED);
+        return CompatHelper.isMarshmallow() || !WHITELIST.contains(sUriMatcher.match(uri)) || knownRogueClient();
+    }
+
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection,
-                        String[] selectionArgs, String sortOrder) {
-        // Throw exception if no permission on M
-        if (!hasReadWritePermission() && CompatHelper.isMarshmallow()) {
-            throw new SecurityException("Query permission not granted for: " + uri);
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
+            throwSecurityException("query", uri);
         }
 
-        Timber.d("CardContentProvider.query");
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
-            return null;
+            throw new IllegalStateException("AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong.");
         }
+        Timber.d(getLogMessage("query", uri));
 
         // Find out what data the user is requesting
         int match = sUriMatcher.match(uri);
@@ -418,23 +427,18 @@ public class CardContentProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, String selection,
-                      String[] selectionArgs) {
-        logProviderCall("update", uri);
+    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        if (!hasReadWritePermission() && shouldEnforceUpdateSecurity(uri)) {
+            throwSecurityException("update", uri);
+        }
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
-            return 0;
+            throw new IllegalStateException("AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong.");
         }
+        col.log(getLogMessage("update", uri));
 
         // Find out what data the user is requesting
         int match = sUriMatcher.match(uri);
-
-        // Throw exception if no permission with SDK23+, or if the current URI is not on the whitelist for pre-M devices
-        List<Integer> ok = Arrays.asList(NOTES_ID_CARDS_ORD, MODELS_ID, MODELS_ID_TEMPLATES_ID, SCHEDULE, DECK_SELECTED);
-        if (!hasReadWritePermission() && (CompatHelper.isMarshmallow() || !ok.contains(match))) {
-            throw new SecurityException("Update permission not granted for: " + uri);
-        }
-
         int updated = 0; // Number of updated entries (return value)
         switch (match) {
             case NOTES:
@@ -650,16 +654,14 @@ public class CardContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        // Throw exception if no permission
         if (!hasReadWritePermission()) {
-            throw new SecurityException("Delete permission not granted for: " + uri);
+            throwSecurityException("delete", uri);
         }
-
-        logProviderCall("delete", uri);
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
-            return 0;
+            throw new IllegalStateException("AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong.");
         }
+        col.log(getLogMessage("delete", uri));
 
         switch (sUriMatcher.match(uri)) {
             case NOTES_ID:
@@ -681,12 +683,10 @@ public class CardContentProvider extends ContentProvider {
      */
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
-        // Throw exception if no permission with SDK23+
-        if (!hasReadWritePermission() && CompatHelper.isMarshmallow()) {
-            throw new SecurityException("bulk insert permission not granted for: " + uri);
+        if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
+            throwSecurityException("bulkInsert", uri);
         }
 
-        logProviderCall("bulkInsert", uri);
         // by default, #bulkInsert simply calls insert for each item in #values
         // but in some cases, we want to override this behavior
         int match = sUriMatcher.match(uri);
@@ -714,10 +714,9 @@ public class CardContentProvider extends ContentProvider {
         }
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
-            return 0;
+            throw new IllegalStateException("AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong.");
         }
-
-        Timber.d("performing bulkInsertNotes for " + valuesArr.length + " items");
+        col.log(String.format("bulkInsertNotes: %d items.\n%s", valuesArr.length, getLogMessage("bulkInsert", null)));
 
         // for caching model information (so we don't have to query for each note)
         long modelId = -1L;
@@ -783,16 +782,14 @@ public class CardContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        // Throw exception if no permission with SDK23+
-        if (!hasReadWritePermission() && CompatHelper.isMarshmallow()) {
-            throw new SecurityException("Insert permission not granted for: " + uri);
+        if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
+            throwSecurityException("insert", uri);
         }
-
-        logProviderCall("insert", uri);
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
-            return null;
+            throw new IllegalStateException("AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong.");
         }
+        col.log(getLogMessage("insert", uri));
 
         // Find out what data the user is requesting
         int match = sUriMatcher.match(uri);
@@ -1165,19 +1162,19 @@ public class CardContentProvider extends ContentProvider {
         return model.getJSONArray("tmpls").getJSONObject(ord);
     }
 
-    private void logProviderCall(String methodName, Uri uri) {
+    private void throwSecurityException(String methodName, Uri uri) {
+        String msg = String.format("Permission not granted for: %s", getLogMessage(methodName, uri));
+        Timber.e(msg);
+        throw new SecurityException(msg);
+    }
+
+    private String getLogMessage(String methodName, Uri uri) {
         String format = "%s.%s %s";
         String path = uri == null ? null : uri.getPath();
-        String msg;
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            msg = String.format(format, CardContentProvider.class.getSimpleName(), methodName, path);
+            return String.format(format, getClass().getSimpleName(), methodName, path);
         } else {
-            msg = String.format(format + " (%s)", CardContentProvider.class.getSimpleName(), methodName, path, getCallingPackage());
-        }
-        Timber.i(msg);
-        Collection col = CollectionHelper.getInstance().getCol(getContext());
-        if (col != null) {
-            col.log(msg);
+            return String.format(format + " (%s)", getClass().getSimpleName(), methodName, path, getCallingPackage());
         }
     }
 
@@ -1188,5 +1185,23 @@ public class CardContentProvider extends ContentProvider {
         // Allow self-calling to make unit tests pass, since checkCallingPermission() returns -1 if not doing IPC
         return BuildConfig.DEBUG && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
                 && getContext().getPackageName().equals(getCallingPackage());
+    }
+
+    /** Returns true if the calling package is known to be "rogue" and should be blocked.
+     Calling package might be rogue if it has not declared #READ_WRITE_PERMISSION in its manifest, or if blacklisted **/
+    private boolean knownRogueClient() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            return false;    // no way to ascertain whether rogue client app
+        }
+        final PackageManager pm = getContext().getPackageManager();
+        try {
+            PackageInfo callingPi = pm.getPackageInfo(getCallingPackage(), PackageManager.GET_PERMISSIONS);
+             if (callingPi == null || callingPi.requestedPermissions == null) {
+                 return false;
+             }
+             return !Arrays.asList(callingPi.requestedPermissions).contains(READ_WRITE_PERMISSION);
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
     }
 }
