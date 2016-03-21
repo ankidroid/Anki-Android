@@ -22,7 +22,6 @@ import android.text.TextUtils;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
-import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -112,22 +111,4 @@ class Utils {
         htmlEntities.appendTail(sb);
         return sb.toString();
     }
-
-    /** Given a list of integers, return a string '(int1,int2,...)'. */
-    static <T> String ids2str(List<T> ids) {
-        StringBuilder sb = new StringBuilder(512);
-        sb.append("(");
-        boolean isNotFirst = false;
-        for (T id : ids) {
-            if (isNotFirst) {
-                sb.append(", ");
-            } else {
-                isNotFirst = true;
-            }
-            sb.append(id);
-        }
-        sb.append(")");
-        return sb.toString();
-    }
-
 }
