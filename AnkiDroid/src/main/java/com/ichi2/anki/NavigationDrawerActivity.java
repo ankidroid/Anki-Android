@@ -45,6 +45,7 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
     /** Navigation Drawer */
     protected CharSequence mTitle;
     protected Boolean mFragmented = false;
+    private boolean mNavButtonGoesBack = false;
     // Other members
     private String mOldColPath;
     private int mOldTheme;
@@ -72,13 +73,15 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
 
-            // Open the nav drawer when the navigation button is tapped. We need to explicitly
-            // define this because locking the nav drawer (when gestures are enabled) prevents
-            // the nav drawer from opening even when tapping the navigation button.
+            // Decide which action to take when the navigation button is tapped.
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mDrawerLayout.openDrawer(Gravity.LEFT);
+                    if (mNavButtonGoesBack) {
+                        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+                    } else {
+                        mDrawerLayout.openDrawer(Gravity.LEFT);
+                    }
                 }
             });
         }
@@ -302,6 +305,7 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        mNavButtonGoesBack = true;
     }
 
     public boolean isDrawerOpen() {
