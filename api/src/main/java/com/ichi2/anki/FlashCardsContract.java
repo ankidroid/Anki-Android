@@ -419,6 +419,11 @@ public class FlashCardsContract {
         public static final String FIELD_NAMES = "field_names";
         public static final String NUM_CARDS = "num_cards";
         public static final String CSS = "css";
+        public static final String SORT_FIELD_INDEX = "sort_field_index";
+        public static final String TYPE = "type";
+        public static final String LATEX_POST = "latex_post";
+        public static final String LATEX_PRE = "latex_pre";
+
         /**
          * The deck ID that is selected by default when adding new notes with this model.
          * This is only used when the "Deck for new cards" preference is set to "Decide by note type"
@@ -431,7 +436,11 @@ public class FlashCardsContract {
                 FIELD_NAMES,
                 NUM_CARDS,
                 CSS,
-                DECK_ID};
+                DECK_ID,
+                SORT_FIELD_INDEX,
+                TYPE,
+                LATEX_POST,
+                LATEX_PRE};
 
         /**
          * MIME type used for a model.
@@ -1042,11 +1051,23 @@ public class FlashCardsContract {
          */
         public static final String OPTIONS = "options";
 
+        /**
+         * 1 if dynamic (AKA filtered) deck
+         */
+        public static final String DECK_DYN = "deck_dyn";
+
+        /**
+         * Deck description
+         */
+        public static final String DECK_DESC = "deck_desc";
+
         public static final String[] DEFAULT_PROJECTION = {
                 DECK_NAME,
                 DECK_ID,
                 DECK_COUNTS,
-                OPTIONS
+                OPTIONS,
+                DECK_DYN,
+                DECK_DESC
         };
 
 

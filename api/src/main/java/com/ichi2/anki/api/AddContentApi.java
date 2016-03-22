@@ -299,7 +299,7 @@ public final class AddContentApi {
      */
     public Long addNewBasicModel(String name) {
         return addNewCustomModel(name, BasicModel.FIELDS, BasicModel.CARD_NAMES, BasicModel.QFMT,
-                BasicModel.AFMT, null, null);
+                BasicModel.AFMT, null, null, null);
     }
 
 
@@ -311,7 +311,7 @@ public final class AddContentApi {
      */
     public Long addNewBasic2Model(String name) {
         return addNewCustomModel(name, Basic2Model.FIELDS, Basic2Model.CARD_NAMES, Basic2Model.QFMT,
-                Basic2Model.AFMT, null, null);
+                Basic2Model.AFMT, null, null, null);
     }
 
     /**
@@ -324,10 +324,11 @@ public final class AddContentApi {
      * @param afmt: array of formatting strings for the answer side of each template in cards
      * @param css: css styling information to be shared across all of the templates. Use null for default CSS.
      * @param did: default deck to add cards to when using this model. Use null or #DEFAULT_DECK_ID for default deck.
+     * @param sortf: index of field to be used for sorting. Use null for unspecified (unsupported in provider spec v1)
      * @return the mid of the model which was created, or null if it could not be created
      */
     public Long addNewCustomModel(String name, String[] fields, String[] cards, String[] qfmt,
-                                  String[] afmt, String css, Long did) {
+                                  String[] afmt, String css, Long did, Integer sortf) {
         // Check that size of arrays are consistent
         if (qfmt.length != cards.length || afmt.length != cards.length) {
             throw new IllegalArgumentException("cards, qfmt, and afmt arrays must all be same length");
@@ -339,6 +340,7 @@ public final class AddContentApi {
         values.put(FlashCardsContract.Model.NUM_CARDS, cards.length);
         values.put(FlashCardsContract.Model.CSS, css);
         values.put(FlashCardsContract.Model.DECK_ID, did);
+        values.put(FlashCardsContract.Model.SORT_FIELD_INDEX, sortf);
         Uri modelUri = mResolver.insert(FlashCardsContract.Model.CONTENT_URI, values);
         // Set the remaining template parameters
         Uri templatesUri = Uri.withAppendedPath(modelUri, "templates");
@@ -640,6 +642,7 @@ public final class AddContentApi {
      * #addNotes is very slow for large numbers of notes
      * #findNotes is very slow for large numbers of keys
      * #addNewCustomModel is not persisted properly
+     * #addNewCustomModel does not support #sortf argument
      *
      * SPEC VERSION 2: (AnkiDroid 2.6)
      *

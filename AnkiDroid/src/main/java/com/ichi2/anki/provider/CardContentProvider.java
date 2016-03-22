@@ -528,6 +528,10 @@ public class CardContentProvider extends ContentProvider {
                     // Changing the field names would require a full-sync
                     throw new IllegalArgumentException("Field names cannot be changed via provider");
                 }
+                Integer newSortf = values.getAsInteger(FlashCardsContract.Model.SORT_FIELD_INDEX);
+                Integer newType = values.getAsInteger(FlashCardsContract.Model.TYPE);
+                String newLatexPost = values.getAsString(FlashCardsContract.Model.LATEX_POST);
+                String newLatexPre = values.getAsString(FlashCardsContract.Model.LATEX_PRE);
                 // Get the original note JSON
                 JSONObject model = col.getModels().get(getModelIdFromUri(uri, col));
                 try {
@@ -542,6 +546,22 @@ public class CardContentProvider extends ContentProvider {
                     }
                     if (newDid != null) {
                         model.put("did", newDid);
+                        updated++;
+                    }
+                    if (newSortf != null) {
+                        model.put("sortf", newSortf);
+                        updated++;
+                    }
+                    if (newType != null) {
+                        model.put("type", newType);
+                        updated++;
+                    }
+                    if (newLatexPost != null) {
+                        model.put("latexPost", newLatexPost);
+                        updated++;
+                    }
+                    if (newLatexPre != null) {
+                        model.put("latexPre", newLatexPre);
                         updated++;
                     }
                     col.getModels().save(model);
@@ -836,6 +856,10 @@ public class CardContentProvider extends ContentProvider {
                 Long did = values.getAsLong(FlashCardsContract.Model.DECK_ID);
                 String fieldNames = values.getAsString(FlashCardsContract.Model.FIELD_NAMES);
                 Integer numCards = values.getAsInteger(FlashCardsContract.Model.NUM_CARDS);
+                Integer sortf = values.getAsInteger(FlashCardsContract.Model.SORT_FIELD_INDEX);
+                Integer type = values.getAsInteger(FlashCardsContract.Model.TYPE);
+                String latexPost = values.getAsString(FlashCardsContract.Model.LATEX_POST);
+                String latexPre = values.getAsString(FlashCardsContract.Model.LATEX_PRE);
                 // Throw exception if required fields empty
                 if (modelName == null || fieldNames == null || numCards == null) {
                     throw new IllegalArgumentException("Model name, field_names, and num_cards can't be empty");
@@ -868,6 +892,18 @@ public class CardContentProvider extends ContentProvider {
                     if (did != null) {
                         newModel.put("did", did);
                     }
+                    if (sortf != null && sortf < allFields.length) {
+                        newModel.put("sortf", sortf);
+                    }
+                    if (type != null) {
+                        newModel.put("type", type);
+                    }
+                    if (latexPost != null) {
+                        newModel.put("latexPost", latexPost);
+                    }
+                    if (latexPre != null) {
+                        newModel.put("latexPre", latexPre);
+                    }
                     // Add the model to collection (from this point on edits will require a full-sync)
                     mm.add(newModel);
                     mm.save(newModel);  // TODO: is this necessary?
@@ -899,7 +935,23 @@ public class CardContentProvider extends ContentProvider {
                 // Insert new deck with specified name
                 String deckName = values.getAsString(FlashCardsContract.Deck.DECK_NAME);
                 did = col.getDecks().id(deckName);
-                //col.getDecks().flush(); // have not found a situation where flush() is necessary (so not adding it, yet)
+                JSONObject deck = col.getDecks().get(did);
+                if (deck != null) {
+                    try {
+                        Integer deckDyn = values.getAsInteger(FlashCardsContract.Deck.DECK_DYN);
+                        if (deckDyn != null) {
+                            deck.put("dyn", deckDyn);
+                        }
+                        String deckDesc = values.getAsString(FlashCardsContract.Deck.DECK_DESC);
+                        if (deckDesc != null) {
+                            deck.put("desc", deckDesc);
+                        }
+                    } catch (JSONException e) {
+                        Timber.e(e, "Could not set a field of new deck %s", deckName);
+                        return null;
+                    }
+                }
+                col.getDecks().flush();
                 return Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(did));
             case DECK_SELECTED:
                 // Can't have more than one selected deck
@@ -966,6 +1018,14 @@ public class CardContentProvider extends ContentProvider {
                     rb.add(jsonObject.getString("css"));
                 } else if (column.equals(FlashCardsContract.Model.DECK_ID)) {
                     rb.add(jsonObject.getLong("did"));
+                } else if (column.equals(FlashCardsContract.Model.SORT_FIELD_INDEX)) {
+                    rb.add(jsonObject.getLong("sortf"));
+                } else if (column.equals(FlashCardsContract.Model.TYPE)) {
+                    rb.add(jsonObject.getLong("type"));
+                } else if (column.equals(FlashCardsContract.Model.LATEX_POST)) {
+                    rb.add(jsonObject.getString("latexPost"));
+                } else if (column.equals(FlashCardsContract.Model.LATEX_PRE)) {
+                    rb.add(jsonObject.getString("latexPre"));
                 } else {
                     throw new UnsupportedOperationException("Column \"" + column + "\" is unknown");
                 }
@@ -1096,6 +1156,11 @@ public class CardContentProvider extends ContentProvider {
             }else if (column.equals(FlashCardsContract.Deck.OPTIONS)) {
                 String config = col.getDecks().confForDid(id).toString();
                 rb.add(config);
+            }else if (column.equals(FlashCardsContract.Deck.DECK_DYN)) {
+                rb.add(col.getDecks().isDyn(id) ? 1 : 0);
+            }else if (column.equals(FlashCardsContract.Deck.DECK_DESC)) {
+                String desc = col.getDecks().getActualDescription();
+                rb.add(desc);
             }
         }
     }
