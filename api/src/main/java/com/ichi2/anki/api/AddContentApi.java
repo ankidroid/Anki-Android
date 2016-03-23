@@ -27,12 +27,20 @@ import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.text.TextUtils;
+import android.util.SparseArray;
 
 import com.ichi2.anki.FlashCardsContract;
+import com.ichi2.anki.FlashCardsContract.Card;
+import com.ichi2.anki.FlashCardsContract.CardTemplate;
+import com.ichi2.anki.FlashCardsContract.Deck;
+import com.ichi2.anki.FlashCardsContract.Model;
+import com.ichi2.anki.FlashCardsContract.Note;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -54,11 +62,7 @@ public final class AddContentApi {
     private static final String MODEL_REF_DB = "com.ichi2.anki.api.models";
     private static final String PROVIDER_SPEC_META_DATA_KEY = "com.ichi2.anki.provider.spec";
     private static final int DEFAULT_PROVIDER_SPEC_VALUE = 1; // for when meta-data key does not exist
-
-    private static final String[] PROJECTION = {FlashCardsContract.Note._ID,
-            FlashCardsContract.Note.FLDS, FlashCardsContract.Note.TAGS};
-
-
+    private static final String[] PROJECTION = {Note._ID, Note.FLDS, Note.TAGS};
 
     public AddContentApi(Context context) {
         mContext = context.getApplicationContext();
@@ -88,22 +92,22 @@ public final class AddContentApi {
     @Deprecated
     public Uri addNewNote(long modelId, long deckId, String[] fields, String tags) {
         ContentValues values = new ContentValues();
-        values.put(FlashCardsContract.Note.MID, modelId);
-        values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fields));
-        values.put(FlashCardsContract.Note.TAGS, tags);
+        values.put(Note.MID, modelId);
+        values.put(Note.FLDS, Utils.joinFields(fields));
+        values.put(Note.TAGS, tags);
         return addNoteForContentValues(deckId, values);
     }
 
     private Uri addNoteInternal(long modelId, long deckId, String[] fields, Set<String> tags) {
         ContentValues values = new ContentValues();
-        values.put(FlashCardsContract.Note.MID, modelId);
-        values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fields));
-        values.put(FlashCardsContract.Note.TAGS, Utils.joinTags(tags));
+        values.put(Note.MID, modelId);
+        values.put(Note.FLDS, Utils.joinFields(fields));
+        values.put(Note.TAGS, Utils.joinTags(tags));
         return addNoteForContentValues(deckId, values);
     }
 
     private Uri addNoteForContentValues(long deckId, ContentValues values) {
-        Uri newNoteUri = mResolver.insert(FlashCardsContract.Note.CONTENT_URI, values);
+        Uri newNoteUri = mResolver.insert(Note.CONTENT_URI, values);
         if (newNoteUri == null) {
             return null;
         }
@@ -112,9 +116,9 @@ public final class AddContentApi {
         final Cursor cardsCursor = mResolver.query(cardsUri, null, null, null, null);
         try {
             while (cardsCursor.moveToNext()) {
-                String ord = cardsCursor.getString(cardsCursor.getColumnIndex(FlashCardsContract.Card.CARD_ORD));
+                String ord = cardsCursor.getString(cardsCursor.getColumnIndex(Card.CARD_ORD));
                 ContentValues cardValues = new ContentValues();
-                cardValues.put(FlashCardsContract.Card.DECK_ID, deckId);
+                cardValues.put(Card.DECK_ID, deckId);
                 Uri cardUri = Uri.withAppendedPath(Uri.withAppendedPath(newNoteUri, "cards"), ord);
                 mResolver.update(cardUri, cardValues, null, null);
             }
@@ -140,10 +144,10 @@ public final class AddContentApi {
         List<ContentValues> newNoteValuesList = new ArrayList<>();
         for (int i = 0; i < fieldsList.size(); i++) {
             ContentValues values = new ContentValues();
-            values.put(FlashCardsContract.Note.MID, modelId);
-            values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fieldsList.get(i)));
+            values.put(Note.MID, modelId);
+            values.put(Note.FLDS, Utils.joinFields(fieldsList.get(i)));
             if (tagsList != null && tagsList.get(i) != null) {
-                values.put(FlashCardsContract.Note.TAGS, Utils.joinTags(tagsList.get(i)));
+                values.put(Note.TAGS, Utils.joinTags(tagsList.get(i)));
             }
             newNoteValuesList.add(values);
         }
@@ -154,43 +158,30 @@ public final class AddContentApi {
         return getCompat().insertNotes(deckId, newNoteValuesList.toArray(new ContentValues[newNoteValuesList.size()]));
     }
 
-    /**
-     * Check if the note (according to the first field) already exists.
-     * Deprecated from API v2, as duplicates are handled automatically.
-     * @param mid model id
-     * @param did deck id (ignored in API v2)
-     * @param fields list of fields
-     * @return whether there already exists a card with the same model ID and content in the first field
-     */
-    @Deprecated
-    public boolean checkForDuplicates(long mid, long did, String[] fields) {
-        return findExistingNoteId(mid, fields) != null;
-    }
-
 
     /**
-     * Find the note id of any existing notes which have mid and has identical first field as the input list of fields.
-     * If multiple notes exist with the same first field, then the first such note is returned.
+     * Find all existing notes in the collection which have mid and a duplicate key
      * @param mid model id
-     * @param fields list of fields
-     * @return the note id or null if the note does not exist
+     * @param key the first field of a note
+     * @return a list of duplicate notes
      */
-    public Long findExistingNoteId(long mid, String[] fields) {
-        NoteInfo note = findExistingNote(mid, fields);
-        if (note == null) {
-            return null;
+    public List<NoteInfo> findDuplicateNotes(long mid, String key) {
+        SparseArray<List<NoteInfo>> notes = getCompat().findDuplicateNotes(mid, Collections.singletonList(key));
+        if (notes.size() == 0) {
+            return Collections.emptyList();
         }
-        return note.getId();
+        return notes.valueAt(0);
     }
 
-
-    private NoteInfo findExistingNote(long mid, String[] fields) {
-        String[][] fieldsArray = {fields};
-        NoteInfo[] notes = getCompat().findExistingNotes(mid, fieldsArray);
-        if (notes == null) {
-            return null;
-        }
-        return notes[0];
+    /**
+     * Find all notes in the collection which have mid and a first field that matches key
+     * Much faster than calling findDuplicateNotes(long, String) when the list of keys is large
+     * @param mid model id
+     * @param keys list of keys
+     * @return a SparseArray with a list of duplicate notes for each key
+     */
+    public SparseArray<List<NoteInfo>> findDuplicateNotes(long mid, List<String> keys) {
+        return getCompat().findDuplicateNotes(mid, keys);
     }
 
     /**
@@ -231,7 +222,7 @@ public final class AddContentApi {
     }
 
     public NoteInfo getNote(long noteId) {
-        Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
+        Uri noteUri = Uri.withAppendedPath(Note.CONTENT_URI, Long.toString(noteId));
         Cursor cursor = mResolver.query(noteUri, PROJECTION, null, null, null);
         if (cursor == null) {
             return null;
@@ -247,14 +238,14 @@ public final class AddContentApi {
     }
 
     private boolean updateNote(long noteId, String[] fields, Set<String> tags) {
-        Uri.Builder builder = FlashCardsContract.Note.CONTENT_URI.buildUpon();
+        Uri.Builder builder = Note.CONTENT_URI.buildUpon();
         Uri contentUri = builder.appendPath(Long.toString(noteId)).build();
         ContentValues values = new ContentValues();
         if (fields != null) {
-            values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fields));
+            values.put(Note.FLDS, Utils.joinFields(fields));
         }
         if (tags != null) {
-            values.put(FlashCardsContract.Note.TAGS, Utils.joinTags(tags));
+            values.put(Note.TAGS, Utils.joinTags(tags));
         }
         int numRowsUpdated = mResolver.update(contentUri, values, null, null);
         // provider doesn't check whether fields actually changed, so just returns number of notes with id == noteId
@@ -276,9 +267,9 @@ public final class AddContentApi {
         try {
             while (cardsCursor.moveToNext()) {
                 // add question and answer for each card to map
-                final String n = cardsCursor.getString(cardsCursor.getColumnIndex(FlashCardsContract.Card.CARD_NAME));
-                final String q = cardsCursor.getString(cardsCursor.getColumnIndex(FlashCardsContract.Card.QUESTION));
-                final String a = cardsCursor.getString(cardsCursor.getColumnIndex(FlashCardsContract.Card.ANSWER));
+                final String n = cardsCursor.getString(cardsCursor.getColumnIndex(Card.CARD_NAME));
+                final String q = cardsCursor.getString(cardsCursor.getColumnIndex(Card.QUESTION));
+                final String a = cardsCursor.getString(cardsCursor.getColumnIndex(Card.ANSWER));
                 Map<String, String> html = new HashMap<>();
                 html.put("q", q);
                 html.put("a", a);
@@ -335,22 +326,22 @@ public final class AddContentApi {
         }
         // Create the model using dummy templates
         ContentValues values = new ContentValues();
-        values.put(FlashCardsContract.Model.NAME, name);
-        values.put(FlashCardsContract.Model.FIELD_NAMES, Utils.joinFields(fields));
-        values.put(FlashCardsContract.Model.NUM_CARDS, cards.length);
-        values.put(FlashCardsContract.Model.CSS, css);
-        values.put(FlashCardsContract.Model.DECK_ID, did);
-        values.put(FlashCardsContract.Model.SORT_FIELD_INDEX, sortf);
-        Uri modelUri = mResolver.insert(FlashCardsContract.Model.CONTENT_URI, values);
+        values.put(Model.NAME, name);
+        values.put(Model.FIELD_NAMES, Utils.joinFields(fields));
+        values.put(Model.NUM_CARDS, cards.length);
+        values.put(Model.CSS, css);
+        values.put(Model.DECK_ID, did);
+        values.put(Model.SORT_FIELD_INDEX, sortf);
+        Uri modelUri = mResolver.insert(Model.CONTENT_URI, values);
         // Set the remaining template parameters
         Uri templatesUri = Uri.withAppendedPath(modelUri, "templates");
         for (int i = 0; i < cards.length; i++) {
             Uri uri = Uri.withAppendedPath(templatesUri, Integer.toString(i));
             values = new ContentValues();
-            values.put(FlashCardsContract.CardTemplate.NAME, cards[i]);
-            values.put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, qfmt[i]);
-            values.put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, afmt[i]);
-            values.put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, afmt[i]);
+            values.put(CardTemplate.NAME, cards[i]);
+            values.put(CardTemplate.QUESTION_FORMAT, qfmt[i]);
+            values.put(CardTemplate.ANSWER_FORMAT, afmt[i]);
+            values.put(CardTemplate.ANSWER_FORMAT, afmt[i]);
             mResolver.update(uri, values, null, null);
         }
         if (modelUri == null) {
@@ -369,12 +360,12 @@ public final class AddContentApi {
      */
     public long getCurrentModelId() {
         // Get the current model
-        Uri uri = Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, FlashCardsContract.Model.CURRENT_MODEL_ID);
+        Uri uri = Uri.withAppendedPath(Model.CONTENT_URI, Model.CURRENT_MODEL_ID);
         final Cursor singleModelCursor = mResolver.query(uri, null, null, null, null);
         long modelId;
         try {
             singleModelCursor.moveToFirst();
-            modelId = singleModelCursor.getLong(singleModelCursor.getColumnIndex(FlashCardsContract.Model._ID));
+            modelId = singleModelCursor.getLong(singleModelCursor.getColumnIndex(Model._ID));
         } finally {
             singleModelCursor.close();
         }
@@ -418,12 +409,12 @@ public final class AddContentApi {
      */
     public String[] getFieldList(long modelId) {
         // Get the current model
-        Uri uri = Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, Long.toString(modelId));
+        Uri uri = Uri.withAppendedPath(Model.CONTENT_URI, Long.toString(modelId));
         final Cursor modelCursor = mResolver.query(uri, null, null, null, null);
         String[] splitFlds = null;
         try {
             if (modelCursor.moveToNext()) {
-                String flds = modelCursor.getString(modelCursor.getColumnIndex(FlashCardsContract.Model.FIELD_NAMES));
+                String flds = modelCursor.getString(modelCursor.getColumnIndex(Model.FIELD_NAMES));
                 splitFlds = Utils.splitFields(flds);
             }
         } finally {
@@ -447,14 +438,14 @@ public final class AddContentApi {
      */
     public Map<Long, String> getModelList(int minNumFields) {
         // Get the current model
-        final Cursor allModelsCursor = mResolver.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null);
+        final Cursor allModelsCursor = mResolver.query(Model.CONTENT_URI, null, null, null, null);
         HashMap<Long, String> models = new HashMap<>();
         try {
             while (allModelsCursor.moveToNext()) {
-                long modelId = allModelsCursor.getLong(allModelsCursor.getColumnIndex(FlashCardsContract.Model._ID));
-                String name = allModelsCursor.getString(allModelsCursor.getColumnIndex(FlashCardsContract.Model.NAME));
+                long modelId = allModelsCursor.getLong(allModelsCursor.getColumnIndex(Model._ID));
+                String name = allModelsCursor.getString(allModelsCursor.getColumnIndex(Model.NAME));
                 String flds = allModelsCursor.getString(
-                        allModelsCursor.getColumnIndex(FlashCardsContract.Model.FIELD_NAMES));
+                        allModelsCursor.getColumnIndex(Model.FIELD_NAMES));
                 int numFlds = Utils.splitFields(flds).length;
                 if (numFlds >= minNumFields) {
                     models.put(modelId, name);
@@ -491,8 +482,8 @@ public final class AddContentApi {
     public Long addNewDeck(String deckName) {
         // Create a new note
         ContentValues values = new ContentValues();
-        values.put(FlashCardsContract.Deck.DECK_NAME, deckName);
-        Uri newDeckUri = mResolver.insert(FlashCardsContract.Deck.CONTENT_ALL_URI, values);
+        values.put(Deck.DECK_NAME, deckName);
+        Uri newDeckUri = mResolver.insert(Deck.CONTENT_ALL_URI, values);
         if (newDeckUri != null) {
             long did = Long.parseLong(newDeckUri.getLastPathSegment());
             final SharedPreferences decksDb = mContext.getSharedPreferences(DECK_REF_DB, Context.MODE_PRIVATE);
@@ -508,12 +499,12 @@ public final class AddContentApi {
      * @return deck name
      */
     public String getSelectedDeckName() {
-        final Cursor selectedDeckCursor = mResolver.query(FlashCardsContract.Deck.CONTENT_SELECTED_URI,
+        final Cursor selectedDeckCursor = mResolver.query(Deck.CONTENT_SELECTED_URI,
                 null, null, null, null);
         String name = null;
         try {
             if (selectedDeckCursor.moveToNext()) {
-                name=selectedDeckCursor.getString(selectedDeckCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME));
+                name=selectedDeckCursor.getString(selectedDeckCursor.getColumnIndex(Deck.DECK_NAME));
             }
         } finally {
             selectedDeckCursor.close();
@@ -527,12 +518,12 @@ public final class AddContentApi {
      */
     public HashMap<Long, String> getDeckList() {
         // Get the current model
-        final Cursor allDecksCursor = mResolver.query(FlashCardsContract.Deck.CONTENT_ALL_URI, null, null, null, null);
+        final Cursor allDecksCursor = mResolver.query(Deck.CONTENT_ALL_URI, null, null, null, null);
         HashMap<Long, String> decks = new HashMap<>();
         try {
             while (allDecksCursor.moveToNext()) {
-                long deckId = allDecksCursor.getLong(allDecksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID));
-                String name =allDecksCursor.getString(allDecksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME));
+                long deckId = allDecksCursor.getLong(allDecksCursor.getColumnIndex(Deck.DECK_ID));
+                String name =allDecksCursor.getString(allDecksCursor.getColumnIndex(Deck.DECK_NAME));
                 decks.put(deckId, name);
             }
         } finally {
@@ -681,12 +672,12 @@ public final class AddContentApi {
         int insertNotes(long deckId, ContentValues[] valuesArr);
 
         /**
-         * For each item in fieldsArray, look for an existing note that has matching first field
+         * For each key, look for an existing note that has matching first field
          * @param mid the model ID to limit the search to
-         * @param fieldsArray  array containing a set of fields for each note
-         * @return array of NoteInfo objects
+         * @param keys  list of keys for each note
+         * @return array with a list of NoteInfo objects for each key if duplicates exist
          */
-        NoteInfo[] findExistingNotes(long mid, String[][] fieldsArray);
+        SparseArray<List<NoteInfo>> findDuplicateNotes(long mid, List<String> keys);
     }
 
     private class CompatV1 implements Compat {
@@ -697,7 +688,7 @@ public final class AddContentApi {
                 return null;
             }
             String queryFormat = String.format("note:\"%s\"", modelName);
-            return mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, queryFormat, null, null);
+            return mResolver.query(Note.CONTENT_URI, PROJECTION, queryFormat, null, null);
         }
 
         @Override
@@ -713,21 +704,34 @@ public final class AddContentApi {
         }
 
         @Override
-        public NoteInfo[] findExistingNotes(long mid, String[][] fieldsArray) {
+        public SparseArray<List<NoteInfo>> findDuplicateNotes(long mid, List<String> keys) {
             // Content provider spec v1 does not support direct querying of the notes table, so use Anki browser syntax
             String modelName = getModelName(mid);
             if (modelName == null) {
                 modelName = ""; // empty model name will result in no query results
             }
-            final String[] fieldNames = getFieldList(mid);
-            NoteInfo[] result = new NoteInfo[fieldsArray.length];
+            SparseArray<List<NoteInfo>> result = new SparseArray<>();
             // Loop through each item in fieldsArray looking for an existing note
-            for (int i = 0; i < fieldsArray.length; i++) {
-                String sel = String.format("%s:\"%s\" note:\"%s\"", fieldNames[0], fieldsArray[i][0], modelName);
-                Cursor cursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, sel, null, null);
+            String queryFormat = String.format("%s:\"%%s\" note:\"%s\"", getFieldList(mid)[0], modelName);
+            for (int outputPos = 0; outputPos < keys.size(); outputPos++) {
+                String selection = String.format(queryFormat, keys.get(outputPos));
+                Cursor cursor = mResolver.query(Note.CONTENT_URI, PROJECTION, selection, null, null);
+                if (cursor == null) {
+                    continue;
+                }
                 try {
-                    if (cursor != null && cursor.moveToFirst()) {
-                        result[i] = NoteInfo.buildFromCursor(cursor);
+                    if (cursor.moveToFirst()) {
+                        // Build a NoteInfo object and add it to the output sparse array
+                        NoteInfo note = NoteInfo.buildFromCursor(cursor);
+                        int sparseArrayIndex = result.indexOfKey(outputPos);
+                        if (sparseArrayIndex < 0) {
+                            // No existing NoteInfo objects mapping to same key as the current note so add a new List
+                            List<NoteInfo> duplicatesForKey = new ArrayList<>();
+                            duplicatesForKey.add(note);
+                            result.put(outputPos, duplicatesForKey);
+                        } else { // Append note to existing list of duplicates for key
+                            result.valueAt(sparseArrayIndex).add(note);
+                        }
                     }
                 } finally {
                     cursor.close();
@@ -740,48 +744,62 @@ public final class AddContentApi {
     private class CompatV2 implements Compat {
         @Override
         public Cursor queryNotes(long mid) {
-            String[] selectionArgs = {String.format("%s=%d", FlashCardsContract.Note.MID, mid)};
-            return mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, null, selectionArgs, null);
+            String[] selectionArgs = {String.format("%s=%d", Note.MID, mid)};
+            return mResolver.query(Note.CONTENT_URI, PROJECTION, null, selectionArgs, null);
         }
 
         @Override
         public int insertNotes(long deckId, ContentValues[] valuesArr) {
-            Uri.Builder builder = FlashCardsContract.Note.CONTENT_URI.buildUpon();
-            builder.appendQueryParameter(FlashCardsContract.Note.DECK_ID_QUERY_PARAM, String.valueOf(deckId));
+            Uri.Builder builder = Note.CONTENT_URI.buildUpon();
+            builder.appendQueryParameter(Note.DECK_ID_QUERY_PARAM, String.valueOf(deckId));
             return mResolver.bulkInsert(builder.build(), valuesArr);
         }
 
         @Override
-        public NoteInfo[] findExistingNotes(long mid, String[][] fieldsArray) {
-            // Build list of checksums
-            List<Long> csums = new ArrayList<>(fieldsArray.length);
-            for (String[] aFieldsArray : fieldsArray) {
-                csums.add(Utils.fieldChecksum(aFieldsArray[0]));
+        public SparseArray<List<NoteInfo>> findDuplicateNotes(long mid, List<String> keys) {
+            // Build set of checksums and a HashMap from the key (first field) back to the original index in fieldsArray
+            Set<Long> csums = new HashSet<>(keys.size());
+            Map<String, List<Integer>> keyToIndexesMap = new HashMap<>(keys.size());
+            for (int i = 0; i < keys.size(); i++) {
+                String key = keys.get(i);
+                csums.add(Utils.fieldChecksum(key));
+                if (!keyToIndexesMap.containsKey(key)) {    // Some keys could potentially be duplicated
+                    keyToIndexesMap.put(key, new ArrayList<Integer>());
+                }
+                keyToIndexesMap.get(key).add(i);
             }
             // Query for notes that have specified model and checksum of first field matches
-            String sel = String.format("%s=%d and %s in ", FlashCardsContract.Note.MID, mid, FlashCardsContract.Note.CSUM);
-            String[] selArgs = {sel + Utils.ids2str(csums)};
-            Cursor notesTableCursor = mResolver.query(FlashCardsContract.Note.CONTENT_URI, PROJECTION, null, selArgs, null);
+            String sel = String.format("%s=%d and %s in (%s)", Note.MID, mid, Note.CSUM, TextUtils.join(",", csums));
+            Cursor notesTableCursor = mResolver.query(Note.CONTENT_URI, PROJECTION, null, new String[] {sel}, null);
             if (notesTableCursor == null) {
                 return null;
             }
-            // Loop through each result, building a hash-map of first field to note ID
-            Map<String, NoteInfo> idMap = new HashMap<>();
+            // Loop through each note in the cursor, building the result list of duplicates
+            SparseArray<List<NoteInfo>> result = new SparseArray<>();
             try {
                 while (notesTableCursor.moveToNext()) {
                     NoteInfo note = NoteInfo.buildFromCursor(notesTableCursor);
-                    String key = note.getFields()[0];
-                    if (!idMap.containsKey(key)) {
-                        idMap.put(key, note);
+                    if (note == null) {
+                        continue;
+                    }
+                    // If fieldsArray contained current note's key one or more times then it will be in keyToIndexesMap
+                    if (keyToIndexesMap.containsKey(note.getKey())) {
+                        List<Integer> outputPositions = keyToIndexesMap.get(note.getKey());
+                        for (Integer outputPos : outputPositions) {
+                            int sparseArrayIndex = result.indexOfKey(outputPos);
+                            if (sparseArrayIndex < 0) {
+                                // No existing NoteInfo objects mapping to same key as the current note so add a new List
+                                List<NoteInfo> duplicatesForKey = new ArrayList<>();
+                                duplicatesForKey.add(note);
+                                result.put(outputPos, duplicatesForKey);
+                            } else { // Append note to existing list of duplicates for key
+                                result.valueAt(sparseArrayIndex).add(note);
+                            }
+                        }
                     }
                 }
             } finally {
                 notesTableCursor.close();
-            }
-            // Build the result array containing the note ID corresponding to each fieldsArray element, or null
-            NoteInfo[] result = new NoteInfo[fieldsArray.length];
-            for (int i = 0; i < fieldsArray.length; i++) {
-                result[i] = idMap.get(fieldsArray[i][0]);
             }
             return result;
         }

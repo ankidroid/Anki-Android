@@ -53,6 +53,11 @@ public class NoteInfo {
         return mTags;
     }
 
+    /** The first field **/
+    public String getKey() {
+        return getFields()[0];
+    }
+
     /**
      * Static initializer method to build the object from a cursor
      * @param cursor from a query to FlashCardsContract.Note.CONTENT_URI
