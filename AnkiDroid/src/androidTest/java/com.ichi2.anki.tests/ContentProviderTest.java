@@ -175,21 +175,12 @@ public class ContentProviderTest extends AndroidTestCase {
     }
 
     /**
-     * Test queries to notes table including selectionArgs
+     * Test queries to notes table using direct SQL URI
      */
-    public void testQueryNoteSelectionArgs() {
+    public void testQueryDirectSqlQuery() {
         // search for correct mid
         final ContentResolver cr = getContext().getContentResolver();
-        String[] selectionArgs = {String.format("mid=%d", mModelId)};
-        Cursor cursor = cr.query(FlashCardsContract.Note.CONTENT_URI, null, null, selectionArgs, null);
-        assertNotNull(cursor);
-        try {
-            assertEquals("Check number of results", mCreatedNotes.size(), cursor.getCount());
-        } finally {
-            cursor.close();
-        }
-        // search for correct mid and also correct tag
-        cursor = cr.query(FlashCardsContract.Note.CONTENT_URI, null, "tag:" + TEST_TAG, selectionArgs, null);
+        Cursor cursor = cr.query(FlashCardsContract.Note.CONTENT_URI_V2, null, String.format("mid=%d", mModelId), null, null);
         assertNotNull(cursor);
         try {
             assertEquals("Check number of results", mCreatedNotes.size(), cursor.getCount());
@@ -197,14 +188,16 @@ public class ContentProviderTest extends AndroidTestCase {
             cursor.close();
         }
         // search for bogus mid
-        selectionArgs[0] = String.format("mid=%d", 0);
-        cursor = cr.query(FlashCardsContract.Note.CONTENT_URI, null, null, selectionArgs, null);
+        cursor = cr.query(FlashCardsContract.Note.CONTENT_URI_V2, null, "mid=0", null, null);
         assertNotNull(cursor);
         try {
             assertEquals("Check number of results", 0, cursor.getCount());
         } finally {
             cursor.close();
         }
+        // check usage of selection args
+        cursor = cr.query(FlashCardsContract.Note.CONTENT_URI_V2, null, "mid=?", new String[]{"0"}, null);
+        assertNotNull(cursor);
     }
 
     /**

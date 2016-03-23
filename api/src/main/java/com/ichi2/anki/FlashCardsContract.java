@@ -275,6 +275,12 @@ public class FlashCardsContract {
         public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "notes");
 
         /**
+         * The content:// style URI for notes, but with a direct SQL query to the notes table instead of accepting
+         * a query in the libanki browser search syntax like the main URI #CONTENT_URI does.
+         */
+        public static final Uri CONTENT_URI_V2 = Uri.withAppendedPath(AUTHORITY_URI, "notes_v2");
+
+        /**
          * This is the ID of the note. It is the same as the note ID in Anki. This ID can be
          * used for accessing the data of a note using the URI
          * "content://com.ichi2.anki.flashcards/notes/&lt;ID&gt;/data
