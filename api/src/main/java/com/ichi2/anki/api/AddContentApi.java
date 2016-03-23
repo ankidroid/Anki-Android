@@ -114,6 +114,9 @@ public final class AddContentApi {
         // Move cards to specified deck
         Uri cardsUri = Uri.withAppendedPath(newNoteUri, "cards");
         final Cursor cardsCursor = mResolver.query(cardsUri, null, null, null, null);
+        if (cardsCursor == null) {
+            return null;
+        }
         try {
             while (cardsCursor.moveToNext()) {
                 String ord = cardsCursor.getString(cardsCursor.getColumnIndex(Card.CARD_ORD));
@@ -256,7 +259,7 @@ public final class AddContentApi {
      * Get the html that would be generated for the specified note type and field list
      * @param flds array of field values for the note. Length must be the same as num. fields in mid.
      * @param mid id for the note type to be used
-     * @return list of front & back pairs for each card which contain the card HTML
+     * @return list of front & back pairs for each card which contain the card HTML, or null if there was a problem
      */
     public Map<String, Map<String, String>> previewNewNote(long mid, String[] flds) {
         Uri newNoteUri = addNoteInternal(mid, DEFAULT_DECK_ID, flds, Collections.singleton(TEST_TAG));
@@ -264,6 +267,9 @@ public final class AddContentApi {
         Map<String, Map<String, String>> cards = new HashMap<>();
         Uri cardsUri = Uri.withAppendedPath(newNoteUri, "cards");
         final Cursor cardsCursor = mResolver.query(cardsUri, null, null, null, null);
+        if (cardsCursor == null) {
+            return null;
+        }
         try {
             while (cardsCursor.moveToNext()) {
                 // add question and answer for each card to map
@@ -356,12 +362,15 @@ public final class AddContentApi {
 
     /**
      * Get the ID for the note type / model which is currently in use
-     * @return id for current model
+     * @return id for current model, or <0 if there was a problem
      */
     public long getCurrentModelId() {
         // Get the current model
         Uri uri = Uri.withAppendedPath(Model.CONTENT_URI, Model.CURRENT_MODEL_ID);
         final Cursor singleModelCursor = mResolver.query(uri, null, null, null, null);
+        if (singleModelCursor == null) {
+            return -1L;
+        }
         long modelId;
         try {
             singleModelCursor.moveToFirst();
@@ -405,12 +414,15 @@ public final class AddContentApi {
     /**
      * Get the field names belonging to specified model
      * @param modelId
-     * @return the names of all the fields, or null if the model doesn't exist
+     * @return the names of all the fields, or null if the model doesn't exist or there was some other problem
      */
     public String[] getFieldList(long modelId) {
         // Get the current model
         Uri uri = Uri.withAppendedPath(Model.CONTENT_URI, Long.toString(modelId));
         final Cursor modelCursor = mResolver.query(uri, null, null, null, null);
+        if (modelCursor == null) {
+            return null;
+        }
         String[] splitFlds = null;
         try {
             if (modelCursor.moveToNext()) {
@@ -434,11 +446,14 @@ public final class AddContentApi {
     /**
      * Get a map of all model ids and names with number of fields larger than minNumFields
      * @param minNumFields minimum number of fields to consider the model for inclusion
-     * @return map of (id, name) pairs
+     * @return map of (id, name) pairs or null if there was a problem
      */
     public Map<Long, String> getModelList(int minNumFields) {
         // Get the current model
         final Cursor allModelsCursor = mResolver.query(Model.CONTENT_URI, null, null, null, null);
+        if (allModelsCursor == null) {
+            return null;
+        }
         HashMap<Long, String> models = new HashMap<>();
         try {
             while (allModelsCursor.moveToNext()) {
@@ -496,11 +511,13 @@ public final class AddContentApi {
 
     /**
      * Get the name of the selected deck
-     * @return deck name
+     * @return deck name or null if there was a problem
      */
     public String getSelectedDeckName() {
-        final Cursor selectedDeckCursor = mResolver.query(Deck.CONTENT_SELECTED_URI,
-                null, null, null, null);
+        final Cursor selectedDeckCursor = mResolver.query(Deck.CONTENT_SELECTED_URI, null, null, null, null);
+        if (selectedDeckCursor == null) {
+            return null;
+        }
         String name = null;
         try {
             if (selectedDeckCursor.moveToNext()) {
@@ -514,11 +531,14 @@ public final class AddContentApi {
 
     /**
      * Get a list of all the deck id / name pairs
-     * @return Map of (id, name) pairs
+     * @return Map of (id, name) pairs, or null if there was a problem
      */
     public HashMap<Long, String> getDeckList() {
         // Get the current model
         final Cursor allDecksCursor = mResolver.query(Deck.CONTENT_ALL_URI, null, null, null, null);
+        if (allDecksCursor == null) {
+            return null;
+        }
         HashMap<Long, String> decks = new HashMap<>();
         try {
             while (allDecksCursor.moveToNext()) {
