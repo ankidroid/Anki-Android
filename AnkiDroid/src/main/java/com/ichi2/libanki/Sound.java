@@ -209,15 +209,16 @@ public class Sound {
             // and then appending the html code to add the play button
             String button;
             if (CompatHelper.getSdkVersion() >= Build.VERSION_CODES.HONEYCOMB) {
-                button = "<svg width=\"32\" height=\"32\"><polygon points=\"11,25 25,16 11,7\"/>Replay</svg>";
+                button = "<svg viewBox=\"0 0 32 32\"><polygon points=\"11,25 25,16 11,7\"/>Replay</svg>";
             } else {
                 button = "<img src='file:///android_asset/inline_play_button.png' />";
             }
             String soundMarker = matcher.group();
             int markerStart = contentLeft.indexOf(soundMarker);
             stringBuilder.append(contentLeft.substring(0, markerStart));
+            // The <span> around the button (SVG or PNG image) is needed to make the vertical alignment work.
             stringBuilder.append("<a class='replaybutton' href=\"playsound:" + soundPath + "\">"
-                    + "<span style='padding:5px;'>"+ button
+                    + "<span>"+ button
                     + "</span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
             Timber.d("Content left = %s", contentLeft);
