@@ -132,11 +132,13 @@
         <activity
             android:theme="@style/Theme_Dark_Compat.Launcher"
             android:name="com.ichi2.anki.DeckPicker"
+            android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:label="@string/app_name">
         </activity>
         <activity
             android:name="com.ichi2.anki.StudyOptionsActivity"
+            android:exported="false"
             android:configChanges="keyboardHidden|locale|orientation|screenSize"
             android:label="StudyOptions"
             android:parentActivityName=".DeckPicker">
@@ -147,6 +149,7 @@
         </activity>
         <activity
             android:name="com.ichi2.anki.CardBrowser"
+            android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="Card Browser"
             android:parentActivityName=".DeckPicker">
@@ -157,6 +160,7 @@
         </activity>
         <activity
         android:name=".ModelBrowser"
+        android:exported="false"
         android:configChanges="keyboardHidden|orientation|locale|screenSize"
         android:label="@string/model_browser_label" />
         <activity
@@ -165,6 +169,7 @@
             android:label="@string/model_editor_label" />
         <activity
             android:name="com.ichi2.anki.Reviewer"
+            android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".DeckPicker">
@@ -175,45 +180,49 @@
         </activity>
         <activity
             android:name="com.ichi2.anki.VideoPlayer"
+            android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
             android:name="com.ichi2.anki.MyAccount"
+            android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/menu_my_account" />
         <activity
             android:name="com.ichi2.anki.Preferences"
+            android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/preferences_title"
             android:theme="@style/LegacyActionBarLight"/>
         <activity
             android:name="com.ichi2.anki.DeckOptions"
+            android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/deckpreferences_title"
             android:theme="@style/LegacyActionBarLight"/>
         <activity
             android:name=".FilteredDeckOptions"
+            android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/deckpreferences_title"
             android:theme="@style/LegacyActionBarLight"/>
         <activity
             android:name="com.ichi2.anki.Info"
+            android:exported="false"
             android:configChanges="locale"
             android:label="@string/about_title" />
         <activity
             android:name="com.ichi2.anki.NoteEditor"
+            android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/fact_adder_intent_title" >
             <intent-filter>
                 <action android:name="org.openintents.action.CREATE_FLASHCARD" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
@@ -224,6 +233,7 @@
             android:finishOnTaskLaunch="true" />
         <activity
             android:name="com.ichi2.anki.Statistics"
+            android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:parentActivityName=".DeckPicker">
             <!-- The meta-data element is needed for versions lower than 4.1 -->
@@ -232,6 +242,7 @@
                 android:value="com.ichi2.anki.DeckPicker" />
         </activity>
         <activity
+            android:exported="false"
             android:name="com.ichi2.anki.Previewer"
             android:configChanges="locale"
             android:label="@string/preview_title" />
@@ -271,21 +282,25 @@
         </receiver>
 
         <activity
+            android:exported="false"
             android:name=".multimediacard.activity.MultimediaEditFieldActivity"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_edit_text" >
         </activity>
         <activity
+            android:exported="false"
             android:name="com.ichi2.anki.multimediacard.activity.TranslationActivity"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_translation" >
         </activity>
         <activity
+            android:exported="false"
             android:name="com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_load_pronounciation" >
         </activity>
         <activity
+            android:exported="false"
             android:name="com.ichi2.anki.CardTemplateEditor"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_template_editor"
