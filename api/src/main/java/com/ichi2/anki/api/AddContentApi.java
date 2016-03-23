@@ -393,6 +393,7 @@ public final class AddContentApi {
      * @param numFields the minimum number of fields the model is required to have
      * @return the model ID
      */
+    @Deprecated
     public Long findModelIdByName(String modelName, int numFields) {
         SharedPreferences modelsDb = mContext.getSharedPreferences(MODEL_REF_DB, Context.MODE_PRIVATE);
         long prefsModelId = modelsDb.getLong(modelName, -1L);
@@ -562,6 +563,7 @@ public final class AddContentApi {
      * @param deckName the name of the deck to find
      * @return the did of the deck in Anki
      */
+    @Deprecated
     public Long findDeckIdByName(String deckName) {
         SharedPreferences decksDb = mContext.getSharedPreferences(DECK_REF_DB, Context.MODE_PRIVATE);
         // Look for deckName in the deck list
@@ -764,8 +766,7 @@ public final class AddContentApi {
     private class CompatV2 implements Compat {
         @Override
         public Cursor queryNotes(long mid) {
-            String[] selectionArgs = {String.format("%s=%d", Note.MID, mid)};
-            return mResolver.query(Note.CONTENT_URI, PROJECTION, null, selectionArgs, null);
+            return mResolver.query(Note.CONTENT_URI_V2, PROJECTION, String.format("%s=%d", Note.MID, mid), null, null);
         }
 
         @Override
@@ -790,7 +791,7 @@ public final class AddContentApi {
             }
             // Query for notes that have specified model and checksum of first field matches
             String sel = String.format("%s=%d and %s in (%s)", Note.MID, mid, Note.CSUM, TextUtils.join(",", csums));
-            Cursor notesTableCursor = mResolver.query(Note.CONTENT_URI, PROJECTION, null, new String[] {sel}, null);
+            Cursor notesTableCursor = mResolver.query(Note.CONTENT_URI_V2, PROJECTION, sel, null, null);
             if (notesTableCursor == null) {
                 return null;
             }

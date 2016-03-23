@@ -53,6 +53,7 @@ import org.json.JSONObject;
 
 import timber.log.Timber;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -88,6 +89,7 @@ public class CardContentProvider extends ContentProvider {
     private static final int NOTES_ID = 1001;
     private static final int NOTES_ID_CARDS = 1003;
     private static final int NOTES_ID_CARDS_ORD = 1004;
+    private static final int NOTES_V2 = 1005;
     private static final int MODELS = 2000;
     private static final int MODELS_ID = 2001;
     private static final int MODELS_ID_TEMPLATES = 2003;
@@ -103,6 +105,7 @@ public class CardContentProvider extends ContentProvider {
     static {
         // Here you can see all the URIs at a glance
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "notes", NOTES);
+        sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "notes_v2", NOTES_V2);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "notes/#", NOTES_ID);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "notes/#/cards", NOTES_ID_CARDS);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "notes/#/cards/#", NOTES_ID_CARDS_ORD);
@@ -125,6 +128,7 @@ public class CardContentProvider extends ContentProvider {
      * applied to more columns. "MID", "USN", "MOD" are not really user friendly.
      */
     private static final String[] sDefaultNoteProjectionDBAccess = FlashCardsContract.Note.DEFAULT_PROJECTION.clone();
+    private static final String COL_NULL_ERROR_MSG = "AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong.";
 
     static {
         for (int idx = 0; idx < sDefaultNoteProjectionDBAccess.length; idx++) {
@@ -148,6 +152,7 @@ public class CardContentProvider extends ContentProvider {
         int match = sUriMatcher.match(uri);
 
         switch (match) {
+            case NOTES_V2:
             case NOTES:
                 return FlashCardsContract.Note.CONTENT_TYPE;
             case NOTES_ID:
@@ -189,14 +194,14 @@ public class CardContentProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String order) {
         if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
             throwSecurityException("query", uri);
         }
 
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
-            throw new IllegalStateException("AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong.");
+            throw new IllegalStateException(COL_NULL_ERROR_MSG);
         }
         Timber.d(getLogMessage("query", uri));
 
@@ -204,41 +209,32 @@ public class CardContentProvider extends ContentProvider {
         int match = sUriMatcher.match(uri);
 
         switch (match) {
+            case NOTES_V2: {
+                /* Search for notes using direct SQL query */
+                String[] proj = sanitizeNoteProjection(projection);
+                return col.getDb().getDatabase().query("notes", proj, selection, selectionArgs, null, null, order);
+            }
             case NOTES: {
-                /* Search for notes
-                 */
-                // TODO: Allow sort order, then also update description in FlashCardContract
+                /* Search for notes using the libanki browser syntax */
                 String columnsStr = proj2str(projection);
                 String query = (selection != null) ? selection : "";
-                String sqlSelection = (selectionArgs == null && selection == null) ? "" : " where ";
-                // Add optional sql query selection: e.g. {"mid = 12345678"}
-                if (selectionArgs != null) {
-                    sqlSelection += TextUtils.join(" and ", selectionArgs);
-                }
-                // Add optional nid selection based on anki browser search: e.g. "deck:'My Awesome Deck'"
-                if (selection != null) {
-                    List<Long> noteIds = col.findNotes(query);
-                    if ((noteIds != null) && (!noteIds.isEmpty())) {
-                        if (selectionArgs != null) {
-                            sqlSelection += " and ";
-                        }
-                        sqlSelection += "id in " + Utils.ids2str(noteIds);
-                    } else {
-                        return null;
+                List<Long> noteIds = col.findNotes(query);
+                if ((noteIds != null) && (!noteIds.isEmpty())) {
+                    String selectedIds = "id in " + Utils.ids2str(noteIds);
+                    Cursor cur;
+                    try {
+                        cur = col.getDb().getDatabase().rawQuery("select " + columnsStr + " from notes where " + selectedIds, null);
+                    } catch (SQLException e) {
+                        throw new IllegalArgumentException("Not possible to query for data for IDs " +
+                                selectedIds, e);
                     }
+                    return cur;
+                } else {
+                    return null;
                 }
-                // Make the main SQL query and return the cursor
-                Cursor cur;
-                try {
-                    cur = col.getDb().getDatabase().rawQuery("select " + columnsStr + " from notes" + sqlSelection, null);
-                } catch (SQLException e) {
-                    throw new IllegalArgumentException("Not possible to query for data " + sqlSelection, e);
-                }
-                return cur;
             }
             case NOTES_ID: {
-                /* Direct access note
-                 */
+                /* Direct access note with specific ID*/
                 long noteId;
                 noteId = Long.parseLong(uri.getPathSegments().get(1));
                 String columnsStr = proj2str(projection);
@@ -287,8 +283,7 @@ public class CardContentProvider extends ContentProvider {
                 return rv;
             }
             case MODELS_ID_TEMPLATES: {
-                /* Direct access model templates
-                 */
+                /* Direct access model templates */
                 JSONObject currentModel = col.getModels().get(getModelIdFromUri(uri, col));
                 String[] columns = ((projection != null) ? projection : CardTemplate.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
@@ -304,8 +299,7 @@ public class CardContentProvider extends ContentProvider {
                 return rv;
             }
             case MODELS_ID_TEMPLATES_ID: {
-                /* Direct access model template with specific ID
-                 */
+                /* Direct access model template with specific ID */
                 int ord = Integer.parseInt(uri.getLastPathSegment());
                 JSONObject currentModel = col.getModels().get(getModelIdFromUri(uri, col));
                 String[] columns = ((projection != null) ? projection : CardTemplate.DEFAULT_PROJECTION);
@@ -386,8 +380,7 @@ public class CardContentProvider extends ContentProvider {
                 return rv;
             }
             case DECKS_ID: {
-                /* Direct access deck
-                 */
+                /* Direct access deck */
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
                 List<Sched.DeckDueTreeNode> allDecks = col.getSched().deckDueList();
@@ -433,7 +426,7 @@ public class CardContentProvider extends ContentProvider {
         }
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
-            throw new IllegalStateException("AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong.");
+            throw new IllegalStateException(COL_NULL_ERROR_MSG);
         }
         col.log(getLogMessage("update", uri));
 
@@ -441,6 +434,7 @@ public class CardContentProvider extends ContentProvider {
         int match = sUriMatcher.match(uri);
         int updated = 0; // Number of updated entries (return value)
         switch (match) {
+            case NOTES_V2:
             case NOTES:
                 throw new IllegalArgumentException("Not possible to update notes directly (only through data URI)");
             case NOTES_ID: {
@@ -679,7 +673,7 @@ public class CardContentProvider extends ContentProvider {
         }
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
-            throw new IllegalStateException("AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong.");
+            throw new IllegalStateException(COL_NULL_ERROR_MSG);
         }
         col.log(getLogMessage("delete", uri));
 
@@ -734,7 +728,7 @@ public class CardContentProvider extends ContentProvider {
         }
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
-            throw new IllegalStateException("AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong.");
+            throw new IllegalStateException(COL_NULL_ERROR_MSG);
         }
         col.log(String.format("bulkInsertNotes: %d items.\n%s", valuesArr.length, getLogMessage("bulkInsert", null)));
 
@@ -807,7 +801,7 @@ public class CardContentProvider extends ContentProvider {
         }
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         if (col == null) {
-            throw new IllegalStateException("AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong.");
+            throw new IllegalStateException(COL_NULL_ERROR_MSG);
         }
         col.log(getLogMessage("insert", uri));
 
@@ -965,26 +959,24 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private static String proj2str(String[] projection) {
-        StringBuilder rv = new StringBuilder();
-        if (projection != null) {
-            for (String column : projection) {
-                int idx = projSearch(FlashCardsContract.Note.DEFAULT_PROJECTION, column);
-                if (idx >= 0) {
-                    rv.append(sDefaultNoteProjectionDBAccess[idx]);
-                    rv.append(",");
-                } else {
-                    throw new IllegalArgumentException("Unknown column " + column);
-                }
-            }
-        } else {
-            for (String column : sDefaultNoteProjectionDBAccess) {
-                rv.append(column);
-                rv.append(",");
+    private static String[] sanitizeNoteProjection(String[] projection) {
+        if (projection == null || projection.length == 0) {
+            return sDefaultNoteProjectionDBAccess;
+        }
+        List<String> sanitized = new ArrayList<>();
+        for (String column : projection) {
+            int idx = projSearch(FlashCardsContract.Note.DEFAULT_PROJECTION, column);
+            if (idx >= 0) {
+                sanitized.add(sDefaultNoteProjectionDBAccess[idx]);
+            } else {
+                throw new IllegalArgumentException("Unknown column " + column);
             }
         }
-        rv.deleteCharAt(rv.length() - 1);
-        return rv.toString();
+        return sanitized.toArray(new String[sanitized.size()]);
+    }
+
+    private static String proj2str(String[] projection) {
+        return TextUtils.join(",", sanitizeNoteProjection(projection));
     }
 
     private static int projSearch(String[] projection, String column) {
