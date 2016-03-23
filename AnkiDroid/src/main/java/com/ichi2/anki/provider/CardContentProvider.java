@@ -21,6 +21,7 @@ package com.ichi2.anki.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -29,7 +30,9 @@ import android.database.MatrixCursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.ichi2.anki.BuildConfig;
@@ -82,6 +85,7 @@ import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
  * </ul>
  */
 public class CardContentProvider extends ContentProvider {
+    private Context mContext;
 
     /* URI types */
     private static final int NOTES = 1000;
@@ -138,7 +142,7 @@ public class CardContentProvider extends ContentProvider {
     public boolean onCreate() {
         // Initialize content provider on startup.
         Timber.d("CardContentProvider: onCreate");
-
+        mContext = getContext();
         return true;
     }
 
@@ -194,7 +198,7 @@ public class CardContentProvider extends ContentProvider {
             throwSecurityException("query", uri);
         }
 
-        Collection col = CollectionHelper.getInstance().getCol(getContext());
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
         if (col == null) {
             throw new IllegalStateException("AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong.");
         }
@@ -359,7 +363,7 @@ public class CardContentProvider extends ContentProvider {
                         int buttonCount = col.getSched().answerButtons(currentCard);
                         JSONArray buttonTexts = new JSONArray();
                         for (int i = 0; i < buttonCount; i++) {
-                            buttonTexts.put(col.getSched().nextIvlStr(getContext(), currentCard, i + 1));
+                            buttonTexts.put(col.getSched().nextIvlStr(mContext, currentCard, i + 1));
                         }
                         addReviewInfoToCursor(currentCard, buttonTexts, buttonCount, rv, col, columns);
                     }else{
@@ -431,7 +435,7 @@ public class CardContentProvider extends ContentProvider {
         if (!hasReadWritePermission() && shouldEnforceUpdateSecurity(uri)) {
             throwSecurityException("update", uri);
         }
-        Collection col = CollectionHelper.getInstance().getCol(getContext());
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
         if (col == null) {
             throw new IllegalStateException("AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong.");
         }
@@ -657,7 +661,7 @@ public class CardContentProvider extends ContentProvider {
         if (!hasReadWritePermission()) {
             throwSecurityException("delete", uri);
         }
-        Collection col = CollectionHelper.getInstance().getCol(getContext());
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
         if (col == null) {
             throw new IllegalStateException("AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong.");
         }
@@ -712,7 +716,7 @@ public class CardContentProvider extends ContentProvider {
         if (valuesArr == null || valuesArr.length == 0) {
             return 0;
         }
-        Collection col = CollectionHelper.getInstance().getCol(getContext());
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
         if (col == null) {
             throw new IllegalStateException("AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong.");
         }
@@ -785,7 +789,7 @@ public class CardContentProvider extends ContentProvider {
         if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
             throwSecurityException("insert", uri);
         }
-        Collection col = CollectionHelper.getInstance().getCol(getContext());
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
         if (col == null) {
             throw new IllegalStateException("AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong.");
         }
@@ -1169,33 +1173,25 @@ public class CardContentProvider extends ContentProvider {
     }
 
     private String getLogMessage(String methodName, Uri uri) {
-        String format = "%s.%s %s";
+        final String format = "%s.%s %s (%s)";
         String path = uri == null ? null : uri.getPath();
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            return String.format(format, getClass().getSimpleName(), methodName, path);
-        } else {
-            return String.format(format + " (%s)", getClass().getSimpleName(), methodName, path, getCallingPackage());
-        }
+        return String.format(format, getClass().getSimpleName(), methodName, path, getCallingPackageSafe());
     }
 
     private boolean hasReadWritePermission() {
-        if (getContext().checkCallingPermission(READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED) {
-            return true;
+        if (BuildConfig.DEBUG) {    // Allow self-calling of the provider only in debug builds (e.g. for unit tests)
+            return mContext.checkCallingOrSelfPermission(READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED;
         }
-        // Allow self-calling to make unit tests pass, since checkCallingPermission() returns -1 if not doing IPC
-        return BuildConfig.DEBUG && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-                && getContext().getPackageName().equals(getCallingPackage());
+        return mContext.checkCallingPermission(READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED;
     }
+
 
     /** Returns true if the calling package is known to be "rogue" and should be blocked.
      Calling package might be rogue if it has not declared #READ_WRITE_PERMISSION in its manifest, or if blacklisted **/
     private boolean knownRogueClient() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            return false;    // no way to ascertain whether rogue client app
-        }
-        final PackageManager pm = getContext().getPackageManager();
+        final PackageManager pm = mContext.getPackageManager();
         try {
-            PackageInfo callingPi = pm.getPackageInfo(getCallingPackage(), PackageManager.GET_PERMISSIONS);
+            PackageInfo callingPi = pm.getPackageInfo(getCallingPackageSafe(), PackageManager.GET_PERMISSIONS);
              if (callingPi == null || callingPi.requestedPermissions == null) {
                  return false;
              }
@@ -1203,5 +1199,17 @@ public class CardContentProvider extends ContentProvider {
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
+    }
+
+    @Nullable
+    private String getCallingPackageSafe() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return getCallingPackage();
+        }
+        String[] pkgs = mContext.getPackageManager().getPackagesForUid(Binder.getCallingUid());
+        if (pkgs.length == 1) {
+            return pkgs[0]; // This is usual case, unless multiple packages signed with same key & using "sharedUserId"
+        }
+        return null;
     }
 }
