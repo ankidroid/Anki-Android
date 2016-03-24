@@ -74,11 +74,9 @@ Perform the following manual tests to check that your app is working correctly. 
 0. Uninstall AnkiDroid
 0. Check that your app does not give the user the option to send cards to AnkiDroid (since it's not installed)
 
-This is the minimum amount of testing you should do. We **strongly** recommend performing the following additional tests to check compliance with the `com.ichi2.anki.permission.READ_WRITE_DATABASE` permission. If you do not do this, your app will break with a future release of AnkiDroid.
-
 **Test 2: Permissions test with Android Marshmallow**
 
-0. Use a device or emulator running Android 6.0 or higher with the latest dev version of AnkiDroid
+0. Use a device or emulator running Android 6.0 or higher and latest dev version of AnkiDroid
 0. Try to add cards to AnkiDroid from your app
 0. Android should prompt the user whether or not they want to grant your app the `READ_WRITE_DATABASE` permission
 0. Choose "deny"
