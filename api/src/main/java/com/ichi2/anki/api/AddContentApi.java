@@ -88,7 +88,9 @@ public final class AddContentApi {
         ContentValues values = new ContentValues();
         values.put(Note.MID, modelId);
         values.put(Note.FLDS, Utils.joinFields(fields));
-        values.put(Note.TAGS, Utils.joinTags(tags));
+        if (tags != null) {
+            values.put(Note.TAGS, Utils.joinTags(tags));
+        }
         return addNoteForContentValues(deckId, values);
     }
 
