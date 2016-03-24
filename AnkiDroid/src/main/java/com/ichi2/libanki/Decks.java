@@ -4,6 +4,7 @@
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
  * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
  * Copyright (c) 2015 Houssam Salem <houssam.salem.au@gmail.com>                        *
+ * Copyright (c) 2016 Mark Carter <mark@marcardar.com>                                  *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -218,12 +219,12 @@ public class Decks {
 
 
     public Long id(String name, boolean create) {
-        return id(name, create, defaultDeck);
+        return id(name, null, create, defaultDeck);
     }
 
 
-    public Long id(String name, String type) {
-        return id(name, true, type);
+    public Long id(String name, String desc) {
+        return id(name, desc, true, defaultDeck);
     }
 
 
@@ -231,6 +232,11 @@ public class Decks {
      * Add a deck with NAME. Reuse deck if already exists. Return id as int.
      */
     public Long id(String name, boolean create, String type) {
+        return id(name, null, create, type);
+    }
+
+
+    private Long id(String name, String desc, boolean create, String type) {
         try {
             name = name.replace("\"", "");
             for (Map.Entry<Long, JSONObject> g : mDecks.entrySet()) {
@@ -249,6 +255,9 @@ public class Decks {
             long id;
             g = new JSONObject(type);
             g.put("name", name);
+            if (desc != null) {
+                g.put("desc", desc);
+            }
             while (true) {
                 id = Utils.intNow(1000);
                 if (!mDecks.containsKey(id)) {
@@ -994,7 +1003,7 @@ public class Decks {
      * Return a new dynamic deck and set it as the current deck.
      */
     public long newDyn(String name) {
-        long did = id(name, defaultDynamicDeck);
+        long did = id(name, null, true, defaultDynamicDeck);
         select(did);
         return did;
     }
