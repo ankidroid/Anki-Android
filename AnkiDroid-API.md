@@ -29,6 +29,7 @@ Here is a very simple example of adding a new note to AnkiDroid. See the [sample
  *  You need to implement deckExists(), modelExists(), getDeckId(), and getModelId().
  *  Note: On SDK 23+ you must also do a permission check before calling API methods! **/
 if (AddContentApi.getAnkiDroidPackageName(context) != null) {
+    // API available: Add deck and model if required, then add your note
     final AddContentApi api = new AddContentApi(context);
     long deckId = deckExists()? getDeckId(): api.addNewDeck("My app name");
     long modelId = modelExists()? getModelId(): api.addNewBasicModel("com.something.myapp");
