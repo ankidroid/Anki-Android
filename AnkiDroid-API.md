@@ -25,7 +25,7 @@ Release Notes:
 Here is a very simple example of adding a new note to AnkiDroid. See the [sample app](https://github.com/ankidroid/apisample) for a more complete / detailed example including permission checking, duplicate checking, storing and retrieving the model / deck ID, using tags, using a custom model, etc.
 
 ```java
-// Check that the AnkiDroid package is installed before instantiating the API
+// Check the AnkiDroid package is available to the API before instantiating
 if (AddContentApi.getAnkiDroidPackageName(context) != null) {
     final AddContentApi api = new AddContentApi(context);
     long deckId;
@@ -45,7 +45,7 @@ if (AddContentApi.getAnkiDroidPackageName(context) != null) {
     Intent shareIntent = ShareCompat.IntentBuilder.from(context)
             .setType("text/plain")
             .setSubject("日の出")
-            .setText("Sunrise")
+            .setText("sunrise")
             .getIntent();
     if (shareIntent.resolveActivity(context.getPackageManager()) != null) {
         context.startActivity(shareIntent);
