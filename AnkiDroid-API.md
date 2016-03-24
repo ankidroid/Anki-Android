@@ -14,7 +14,7 @@ First things first, you should add the following dependency to your module's `bu
 
 ```Gradle
 dependencies {
-    compile 'com.ichi2.anki:api:1.1.0alpha3'
+    compile 'com.ichi2.anki:api:1.1.0alpha4'
 }
 ```
 
