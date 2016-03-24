@@ -18,6 +18,9 @@ dependencies {
 }
 ```
 
+Release Notes:
+* [v1.1 (2016-03-24)](https://groups.google.com/forum/#!topic/anki-android/LbrQ7kS9Zhg)
+
 ### Simplest Example
 Here is a very simple example of adding a new note to AnkiDroid. See the [sample app](https://github.com/ankidroid/apisample) for a more complete / detailed example including permission checking, duplicate checking, storing and retrieving the model / deck ID, using tags, using a custom model, etc.
 
@@ -84,17 +87,6 @@ Perform the following manual tests to check that your app is working correctly. 
 0. Try to add cards to AnkiDroid from your app again
 0. This time choose to grant the permission
 0. Check that the cards were added to AnkiDroid correctly as per previous tests
-
-### Change log
-#### API v1.1 (2016-03-24)
-v1.1 improves performance when adding multiple notes at once with the introduction of the addNotes() method, and also adds support for updating existing notes. See the javadoc for more info on the new methods. The following public methods were removed:
-
-* **addNewNote()**: use the new method addNote() instead
-* **checkForDuplicates()**: use findDuplicateNotes() instead
-* **checkRequiredPermission()**: use the public field READ_WRITE_PERMISSION instead
-* **findModelIdByName()**: see the sample app for a helper class to replace this
-* **findDeckIdByName()**: see the sample app for a helper class to replace this
-* **addNewCustomModel()**: there is now a new method with the same name and an extra argument for sort field (use null by default)
 
 ## Sending cards to AnkiDroid via intent
 While we strongly recommend using the Instant-Add API, if the user has a version of AnkiDroid that doesn't support the API, or if they've denied permission to your app to access it, you should fall back on an intent-based approach, which is supported by all versions of AnkiDroid. 
