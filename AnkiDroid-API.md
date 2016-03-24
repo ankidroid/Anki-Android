@@ -14,12 +14,12 @@ First things first, you should add the following dependency to your module's `bu
 
 ```Gradle
 dependencies {
-    compile 'com.ichi2.anki:api:1.1.0alpha4'
+    compile 'com.ichi2.anki:api:1.1.0alpha5'
 }
 ```
 
 Release Notes:
-* [v1.1 (2016-03-24)](https://groups.google.com/forum/#!topic/anki-android/LbrQ7kS9Zhg)
+* [v1.1.0 (2016-03-24)](https://groups.google.com/forum/#!topic/anki-android/LbrQ7kS9Zhg)
 
 ### Simplest Example
 Here is a very simple example of adding a new note to AnkiDroid. See the [sample app](https://github.com/ankidroid/apisample) for a more complete / detailed example including permission checking, duplicate checking, storing and retrieving the model / deck ID, using tags, using a custom model, etc.
