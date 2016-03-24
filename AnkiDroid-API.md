@@ -29,7 +29,7 @@ if (AddContentApi.getAnkiDroidPackageName(context) != null) {
     long modelId;
     // Add a new deck and model if you have not already added 
     // (you should implement deckExists() and modelExists() yourself)
-    // Note: On SDK 23+ you must also do a permission check before calling the API methods
+    // Note: On SDK 23+ you must also do a permission check before calling API methods!
     if (!deckExists()) {
         deckId = api.addNewDeck("My app name");
     }
