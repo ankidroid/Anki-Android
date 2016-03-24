@@ -215,6 +215,11 @@ public final class AddContentApi {
         return updateNote(noteId, fields, null);
     }
 
+    /**
+     * Get the contents of a note with known ID
+     * @param noteId the ID of the note to find
+     * @return object containing the contents of note with noteID
+     */
     public NoteInfo getNote(long noteId) {
         Uri noteUri = Uri.withAppendedPath(Note.CONTENT_URI, Long.toString(noteId));
         Cursor cursor = mResolver.query(noteUri, PROJECTION, null, null, null);
@@ -555,7 +560,7 @@ public final class AddContentApi {
      *
      * SPEC VERSION 1: (AnkiDroid 2.5)
      * #addNotes is very slow for large numbers of notes
-     * #findNotes is very slow for large numbers of keys
+     * #findDuplicateNotes is very slow for large numbers of keys
      * #addNewCustomModel is not persisted properly
      * #addNewCustomModel does not support #sortf argument
      *
@@ -590,7 +595,12 @@ public final class AddContentApi {
     }
 
     private interface Compat {
-        Cursor queryNotes(long mid);
+        /**
+         * Query all notes for a given model
+         * @param modelId the model ID to limit query to
+         * @return a cursor with all notes matching modelId
+         */
+        Cursor queryNotes(long modelId);
 
         /**
          * Add new notes to the AnkiDroid content provider in bulk.
@@ -611,8 +621,8 @@ public final class AddContentApi {
 
     private class CompatV1 implements Compat {
         @Override
-        public Cursor queryNotes(long mid) {
-            String modelName = getModelName(mid);
+        public Cursor queryNotes(long modelId) {
+            String modelName = getModelName(modelId);
             if (modelName == null) {
                 return null;
             }
@@ -650,7 +660,7 @@ public final class AddContentApi {
                     continue;
                 }
                 try {
-                    if (cursor.moveToFirst()) {
+                    while (cursor.moveToNext()) {
                         addNoteToDuplicatesArray(NoteInfo.buildFromCursor(cursor), duplicates, outputPos);
                     }
                 } finally {
@@ -676,8 +686,8 @@ public final class AddContentApi {
 
     private class CompatV2 extends CompatV1 {
         @Override
-        public Cursor queryNotes(long mid) {
-            return mResolver.query(Note.CONTENT_URI_V2, PROJECTION, String.format("%s=%d", Note.MID, mid), null, null);
+        public Cursor queryNotes(long modelId) {
+            return mResolver.query(Note.CONTENT_URI_V2, PROJECTION, String.format("%s=%d", Note.MID, modelId), null, null);
         }
 
         @Override
@@ -695,7 +705,7 @@ public final class AddContentApi {
             for (int i = 0; i < keys.size(); i++) {
                 String key = keys.get(i);
                 csums.add(Utils.fieldChecksum(key));
-                if (!keyToIndexesMap.containsKey(key)) {    // Some keys could potentially be duplicated
+                if (!keyToIndexesMap.containsKey(key)) {    // Use a list as some keys could potentially be duplicated
                     keyToIndexesMap.put(key, new ArrayList<Integer>());
                 }
                 keyToIndexesMap.get(key).add(i);
@@ -706,7 +716,7 @@ public final class AddContentApi {
             if (notesTableCursor == null) {
                 return null;
             }
-            // Loop through each note in the cursor, building the result list of duplicates
+            // Loop through each note in the cursor, building the result array of duplicates
             SparseArray<List<NoteInfo>> duplicates = new SparseArray<>();
             try {
                 while (notesTableCursor.moveToNext()) {
@@ -714,12 +724,11 @@ public final class AddContentApi {
                     if (note == null) {
                         continue;
                     }
-                    // If keys list contained current note's key one or more times then it will be in keyToIndexesMap
-                    if (keyToIndexesMap.containsKey(note.getKey())) {
-                        List<Integer> outputPositions = keyToIndexesMap.get(note.getKey());
-                        // Potentially multiple instances of current note's key in the input keys array. Add them all.
-                        for (Integer outputPos : outputPositions) {
-                            addNoteToDuplicatesArray(note, duplicates, outputPos);
+                    if (keyToIndexesMap.containsKey(note.getKey())) { // skip notes that match csum but not key
+                        // Add copy of note to EVERY position in duplicates array corresponding to the current key
+                        List<Integer> outputPos = keyToIndexesMap.get(note.getKey());
+                        for (int i = 0; i < outputPos.size(); i++) {
+                            addNoteToDuplicatesArray(i > 0 ? new NoteInfo(note) : note, duplicates, outputPos.get(i));
                         }
                     }
                 }

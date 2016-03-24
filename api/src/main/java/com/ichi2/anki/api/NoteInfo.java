@@ -25,41 +25,15 @@ import java.util.Set;
 
 
 /**
- * Representation of an existing note in AnkiDroid.
+ * Representation of the contents of a note in AnkiDroid.
  */
-public class NoteInfo {
+public final class NoteInfo {
     private final long mId;
     private final String[] mFields;
     private final Set<String> mTags;
 
-    public NoteInfo(long id, String[] fields, Set<String> tags) {
-        mId = id;
-        mFields = fields;
-        mTags = tags;
-    }
-
-    /** note ID */
-    public long getId() {
-        return mId;
-    }
-
-    /** The array of fields */
-    public String[] getFields() {
-        return mFields;
-    }
-
-    /** The array of tags */
-    public Set<String> getTags() {
-        return mTags;
-    }
-
-    /** The first field **/
-    public String getKey() {
-        return getFields()[0];
-    }
-
     /**
-     * Static initializer method to build the object from a cursor
+     * Static initializer method to build a NoteInfo object from a Cursor
      * @param cursor from a query to FlashCardsContract.Note.CONTENT_URI
      * @return a NoteInfo object or null if the cursor was not valid
      */
@@ -75,5 +49,41 @@ public class NoteInfo {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    private NoteInfo(long id, String[] fields, Set<String> tags) {
+        mId = id;
+        mFields = fields;
+        mTags = tags;
+    }
+
+    /**
+     * Clone a NoteInfo object
+     * @param parent the object to clone
+     */
+    public NoteInfo(NoteInfo parent) {
+        mId = parent.getId();
+        mFields = parent.getFields().clone();
+        mTags = new HashSet<>(parent.getTags());
+    }
+
+    /** Note ID */
+    public long getId() {
+        return mId;
+    }
+
+    /** The array of fields */
+    public String[] getFields() {
+        return mFields;
+    }
+
+    /** The set of tags */
+    public Set<String> getTags() {
+        return mTags;
+    }
+
+    /** The first field **/
+    public String getKey() {
+        return getFields()[0];
     }
 }
