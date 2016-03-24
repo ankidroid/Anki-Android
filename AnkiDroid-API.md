@@ -3,7 +3,7 @@
 *Audience: This page is for Android app developers. AnkiDroid users can ignore it.*
 
 ## Instant-Add API
-Starting From AnkiDroid v2.5, notes can be added directly to AnkiDroid's database without sending any intents via a simple API library released on the LGPL license. This is advantageous for developers and end-users, as it allows quickly adding cards to AnkiDroid in bulk, without any user intervention. Additionally, an app-specific custom model can be used, so that developers can ensure that their content will be formatted into sensible and beautiful flashcards.
+Starting From AnkiDroid v2.5, notes can be added directly to AnkiDroid's database without sending any intents via a simple API library released on the LGPL license. This is advantageous for developers and end-users, as it allows quickly adding flashcards to AnkiDroid in bulk, without any user intervention. Additionally, an app-specific custom model can be used, so that developers can ensure that their content will be formatted into sensible and beautiful flashcards.
 
 ### List of apps that support the Instant-Add API
 Please add your app to this list if it supports the instant-add API
