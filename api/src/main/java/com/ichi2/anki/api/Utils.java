@@ -22,7 +22,6 @@ import android.text.TextUtils;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
-import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,16 +39,18 @@ class Utils {
 
 
     static String joinFields(String[] list) {
-        // note: since list is very unlikely to be length <2, any optimizations for those lengths are irrelevant
-        return TextUtils.join("\u001f", list);
+        return list != null ? TextUtils.join("\u001f", list): null;
     }
 
 
     static String[] splitFields(String fields) {
-        return fields.split("\\x1f", -1);
+        return fields != null? fields.split("\\x1f", -1): null;
     }
 
     static String joinTags(Set<String> tags) {
+        if (tags == null || tags.isEmpty()) {
+            return "";
+        }
         for (String t : tags) {
             t.replaceAll(" ", "_");
         }
@@ -57,6 +58,9 @@ class Utils {
     }
 
     static String[] splitTags(String tags) {
+        if (tags == null) {
+            return null;
+        }
         return tags.trim().split("\\s+");
     }
 
