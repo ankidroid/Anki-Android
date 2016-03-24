@@ -27,7 +27,8 @@ if (AddContentApi.getAnkiDroidPackageName(context) != null) {
     final AddContentApi api = new AddContentApi(context);
     long deckId;
     long modelId;
-    // Add a new deck and model if you have not already added (implement deckExists() and modelExists() yourself)
+    // Add a new deck and model if you have not already added 
+    // (you should implement deckExists() and modelExists() yourself)
     // Note: On SDK 23+ you must also do a permission check before calling the API methods
     if (!deckExists()) {
         deckId = api.addNewDeck("My app name");
@@ -35,7 +36,7 @@ if (AddContentApi.getAnkiDroidPackageName(context) != null) {
     if (!modelExists()) {
         modelId = api.addNewBasicModel("com.something.myapp");
     }
-    api.addNote(modelId , deckId , new String[] {"日の出", "sunrise"}, null);    
+    api.addNote(modelId, deckId, new String[] {"日の出", "sunrise"}, null);
 } else {
     // Fallback on a Share Intent if the API is unavailable
     Intent shareIntent = ShareCompat.IntentBuilder.from(context)
