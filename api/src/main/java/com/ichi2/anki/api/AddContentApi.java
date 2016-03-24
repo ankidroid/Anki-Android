@@ -21,12 +21,12 @@ package com.ichi2.anki.api;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Process;
 import android.text.TextUtils;
 import android.util.SparseArray;
 
@@ -58,8 +58,6 @@ public final class AddContentApi {
     public static final String READ_WRITE_PERMISSION = FlashCardsContract.READ_WRITE_PERMISSION;
     public static final long DEFAULT_DECK_ID = 1L;
     private static final String TEST_TAG = "PREVIEW_NOTE";
-    private static final String DECK_REF_DB = "com.ichi2.anki.api.decks";
-    private static final String MODEL_REF_DB = "com.ichi2.anki.api.models";
     private static final String PROVIDER_SPEC_META_DATA_KEY = "com.ichi2.anki.provider.spec";
     private static final int DEFAULT_PROVIDER_SPEC_VALUE = 1; // for when meta-data key does not exist
     private static final String[] PROJECTION = {Note._ID, Note.FLDS, Note.TAGS};
@@ -84,18 +82,6 @@ public final class AddContentApi {
             return null;
         }
         return Long.parseLong(noteUri.getLastPathSegment());
-    }
-
-    /**
-     * @deprecated As of API v2 use {@link #addNote(long, long, String[], Set)} instead.
-     */
-    @Deprecated
-    public Uri addNewNote(long modelId, long deckId, String[] fields, String tags) {
-        ContentValues values = new ContentValues();
-        values.put(Note.MID, modelId);
-        values.put(Note.FLDS, Utils.joinFields(fields));
-        values.put(Note.TAGS, tags);
-        return addNoteForContentValues(deckId, values);
     }
 
     private Uri addNoteInternal(long modelId, long deckId, String[] fields, Set<String> tags) {
@@ -209,6 +195,7 @@ public final class AddContentApi {
      * @param noteId
      * @param tags set of tags
      * @return true if noteId was found, otherwise false
+     * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
      */
     public boolean updateNoteTags(long noteId, Set<String> tags) {
         return updateNote(noteId, null, tags);
@@ -219,6 +206,7 @@ public final class AddContentApi {
      * @param noteId
      * @param fields array of fields
      * @return true if noteId was found, otherwise false
+     * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
      */
     public boolean updateNoteFields(long noteId, String[] fields) {
         return updateNote(noteId, fields, null);
@@ -260,8 +248,13 @@ public final class AddContentApi {
      * @param flds array of field values for the note. Length must be the same as num. fields in mid.
      * @param mid id for the note type to be used
      * @return list of front & back pairs for each card which contain the card HTML, or null if there was a problem
+     * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
      */
     public Map<String, Map<String, String>> previewNewNote(long mid, String[] flds) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M && !hasReadWritePermission()) {
+            // avoid situation where addNote will pass, but deleteNote will fail
+            throw new SecurityException("previewNewNote requires full read-write-permission");
+        }
         Uri newNoteUri = addNoteInternal(mid, DEFAULT_DECK_ID, flds, Collections.singleton(TEST_TAG));
         // Build map of HTML for each generated card
         Map<String, Map<String, String>> cards = new HashMap<>();
@@ -353,10 +346,7 @@ public final class AddContentApi {
         if (modelUri == null) {
             return null;
         } else {
-            long mid = Long.parseLong(modelUri.getLastPathSegment());
-            final SharedPreferences modelsDb = mContext.getSharedPreferences(MODEL_REF_DB, Context.MODE_PRIVATE);
-            modelsDb.edit().putLong(name, mid).commit();
-            return mid;
+            return Long.parseLong(modelUri.getLastPathSegment());
         }
     }
 
@@ -381,36 +371,6 @@ public final class AddContentApi {
         return modelId;
     }
 
-
-    /**
-     * Try to find the given model by name, accounting for renaming of the model:
-     * If there's a model with this modelName that is known to have previously been created (by this app)
-     *   and the corresponding model ID exists and has the required number of fields
-     *   then return that ID (even though it may have since been renamed)
-     * If there's a model from #getModelList with modelName and required number of fields then return its ID
-     * Otherwise return null
-     * @param modelName the name of the model to find
-     * @param numFields the minimum number of fields the model is required to have
-     * @return the model ID
-     */
-    @Deprecated
-    public Long findModelIdByName(String modelName, int numFields) {
-        SharedPreferences modelsDb = mContext.getSharedPreferences(MODEL_REF_DB, Context.MODE_PRIVATE);
-        long prefsModelId = modelsDb.getLong(modelName, -1L);
-        // if we have a reference saved to modelName and it exists and has at least numFields then return it
-        if (prefsModelId != -1L && getModelName(prefsModelId) != null
-                && getFieldList(prefsModelId).length >= numFields) { // could potentially have been renamed
-            return prefsModelId;
-        }
-        Map<Long, String> modelList = getModelList(numFields);
-        for (Map.Entry<Long, String> entry : modelList.entrySet()) {
-            if (entry.getValue().equals(modelName)) {
-                return entry.getKey(); // first model wins
-            }
-        }
-        // model no longer exists (by name nor old id) or the number of fields was reduced
-        return null;
-    }
 
     /**
      * Get the field names belonging to specified model
@@ -501,10 +461,7 @@ public final class AddContentApi {
         values.put(Deck.DECK_NAME, deckName);
         Uri newDeckUri = mResolver.insert(Deck.CONTENT_ALL_URI, values);
         if (newDeckUri != null) {
-            long did = Long.parseLong(newDeckUri.getLastPathSegment());
-            final SharedPreferences decksDb = mContext.getSharedPreferences(DECK_REF_DB, Context.MODE_PRIVATE);
-            decksDb.edit().putLong(deckName, did).commit();
-            return did;
+            return Long.parseLong(newDeckUri.getLastPathSegment());
         } else {
             return null;
         }
@@ -555,37 +512,6 @@ public final class AddContentApi {
 
 
     /**
-     * Try to find the given deck by name, accounting for potential renaming of the deck by the user as follows:
-     * If there's a deck with deckName then return it's ID
-     * If there's no deck with deckName, but a ref to deckName is stored in SharedPreferences, and that deck exist in
-     * AnkiDroid (i.e. it was renamed), then use that deck.Note: this deck will not be found if your app is re-installed
-     * If there's no reference to deckName anywhere then return null
-     * @param deckName the name of the deck to find
-     * @return the did of the deck in Anki
-     */
-    @Deprecated
-    public Long findDeckIdByName(String deckName) {
-        SharedPreferences decksDb = mContext.getSharedPreferences(DECK_REF_DB, Context.MODE_PRIVATE);
-        // Look for deckName in the deck list
-        Long did = getDeckId(deckName);
-        if (did != null) {
-            // If the deck was found then return it's id
-            return did;
-        } else {
-            // Otherwise try to check if we have a reference to a deck that was renamed and return that
-            did = decksDb.getLong(deckName, -1);
-            if (did != -1 && getDeckName(did) != null) {
-                return did;
-            } else {
-                // If the deck really doesn't exist then return null
-                return null;
-            }
-        }
-    }
-
-
-
-    /**
      * Get the name of the deck which has given ID
      * @param did ID of deck
      * @return the name of the deck, or null if no deck was found
@@ -622,33 +548,6 @@ public final class AddContentApi {
 
 
     /**
-     * Get the ID for any permission which is required to use the API
-     * @param context a Context that can be used to get the PackageManager
-     * @return id of a permission required to access the API or null if no permission is required
-     * @deprecated use {@link #READ_WRITE_PERMISSION} instead and see class-level docs
-     */
-    @Deprecated
-    public static String checkRequiredPermission(Context context) {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? READ_WRITE_PERMISSION : null;
-    }
-
-
-    /**
-     * Get the ID of the deck which matches the name
-     * @param deckName Exact name of deck (note: deck names are unique in Anki)
-     * @return the ID of the deck that has given name, or null if no deck was found
-     */
-    private Long getDeckId(String deckName) {
-        Map<Long, String> deckList = getDeckList();
-        for (Map.Entry<Long, String> entry : deckList.entrySet()) {
-            if (entry.getValue().equals(deckName)) {
-                return entry.getKey();
-            }
-        }
-        return null;
-    }
-
-    /**
      * The API spec version of the installed AnkiDroid app. This is not the same as the AnkiDroid app version code.
      *
      * SPEC VERSION 1: (AnkiDroid 2.5)
@@ -673,6 +572,11 @@ public final class AddContentApi {
         } else {
             return DEFAULT_PROVIDER_SPEC_VALUE;
         }
+    }
+
+    private boolean hasReadWritePermission() {
+        return mContext.checkPermission(READ_WRITE_PERMISSION, Process.myPid(), Process.myUid())
+                == PackageManager.PERMISSION_GRANTED;
     }
 
     /**
