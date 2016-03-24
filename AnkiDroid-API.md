@@ -25,12 +25,11 @@ Release Notes:
 Here is a very simple example of adding a new note to AnkiDroid. See the [sample app](https://github.com/ankidroid/apisample) for a more complete / detailed example including permission checking, duplicate checking, storing and retrieving the model / deck ID, using tags, using a custom model, etc.
 
 ```java
-// Check the AnkiDroid package is available to the API before instantiating
+/** Check the AnkiDroid package is available to the API before instantiating
+ *  You need to implement deckExists(), modelExists(), getDeckId(), and getModelId().
+ *  Note: On SDK 23+ you must also do a permission check before calling API methods! **/
 if (AddContentApi.getAnkiDroidPackageName(context) != null) {
     final AddContentApi api = new AddContentApi(context);
-    // Add a new deck and model if you have not already added 
-    // You should implement deckExists(), modelExists(), getDeckId(), getModelId() 
-    // Note: On SDK 23+ you must also do a permission check before calling API methods!
     long deckId = deckExists()? getDeckId(): api.addNewDeck("My app name");
     long modelId = modelExists()? getModelId(): api.addNewBasicModel("com.something.myapp");
     api.addNote(modelId, deckId, new String[] {"日の出", "sunrise"}, null);
