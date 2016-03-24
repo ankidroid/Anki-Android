@@ -52,6 +52,7 @@ import java.util.Set;
  * On earlier SDK levels, the #READ_WRITE_PERMISSION is currently only required for update/delete operations but
  * this may be extended to all operations at a later date.
  */
+@SuppressWarnings("unused")
 public final class AddContentApi {
     private final ContentResolver mResolver;
     private final Context mContext;
@@ -194,7 +195,7 @@ public final class AddContentApi {
 
     /**
      * Set the tags for a given note
-     * @param noteId
+     * @param noteId the ID of the note to update
      * @param tags set of tags
      * @return true if noteId was found, otherwise false
      * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
@@ -205,7 +206,7 @@ public final class AddContentApi {
 
     /**
      * Set the fields for a given note
-     * @param noteId
+     * @param noteId the ID of the note to update
      * @param fields array of fields
      * @return true if noteId was found, otherwise false
      * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
@@ -376,7 +377,7 @@ public final class AddContentApi {
 
     /**
      * Get the field names belonging to specified model
-     * @param modelId
+     * @param modelId the ID of the model to use
      * @return the names of all the fields, or null if the model doesn't exist or there was some other problem
      */
     public String[] getFieldList(long modelId) {
@@ -417,7 +418,7 @@ public final class AddContentApi {
         if (allModelsCursor == null) {
             return null;
         }
-        HashMap<Long, String> models = new HashMap<>();
+        Map<Long, String> models = new HashMap<>();
         try {
             while (allModelsCursor.moveToNext()) {
                 long modelId = allModelsCursor.getLong(allModelsCursor.getColumnIndex(Model._ID));
@@ -493,13 +494,13 @@ public final class AddContentApi {
      * Get a list of all the deck id / name pairs
      * @return Map of (id, name) pairs, or null if there was a problem
      */
-    public HashMap<Long, String> getDeckList() {
+    public Map<Long, String> getDeckList() {
         // Get the current model
         final Cursor allDecksCursor = mResolver.query(Deck.CONTENT_ALL_URI, null, null, null, null);
         if (allDecksCursor == null) {
             return null;
         }
-        HashMap<Long, String> decks = new HashMap<>();
+        Map<Long, String> decks = new HashMap<>();
         try {
             while (allDecksCursor.moveToNext()) {
                 long deckId = allDecksCursor.getLong(allDecksCursor.getColumnIndex(Deck.DECK_ID));
@@ -519,8 +520,8 @@ public final class AddContentApi {
      * @return the name of the deck, or null if no deck was found
      */
     public String getDeckName(Long did) {
-        if (did != null && did >= 0) {
-            Map<Long, String> deckList = getDeckList();
+        Map<Long, String> deckList = getDeckList();
+        if (did != null && did >= 0 && deckList != null) {
             for (Map.Entry<Long, String> entry : deckList.entrySet()) {
                 if (entry.getKey().equals(did)) {
                     return entry.getValue();
@@ -635,12 +636,13 @@ public final class AddContentApi {
         public SparseArray<List<NoteInfo>> findDuplicateNotes(long modelId, List<String> keys) {
             // Content provider spec v1 does not support direct querying of the notes table, so use Anki browser syntax
             String modelName = getModelName(modelId);
-            if (modelName == null) {
-                modelName = ""; // empty model name will result in no query results
+            String[] modelFieldList = getFieldList(modelId);
+            if (modelName == null || modelFieldList == null) {
+                return null;
             }
             SparseArray<List<NoteInfo>> duplicates = new SparseArray<>();
             // Loop through each item in fieldsArray looking for an existing note, and add it to the duplicates array
-            String queryFormat = String.format("%s:\"%%s\" note:\"%s\"", getFieldList(modelId)[0], modelName);
+            String queryFormat = String.format("%s:\"%%s\" note:\"%s\"", modelFieldList[0], modelName);
             for (int outputPos = 0; outputPos < keys.size(); outputPos++) {
                 String selection = String.format(queryFormat, keys.get(outputPos));
                 Cursor cursor = mResolver.query(Note.CONTENT_URI, PROJECTION, selection, null, null);
