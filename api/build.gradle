@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 def groupId = "com.ichi2.anki"
 def artifactId = "api"
-def version = "1.0.0alpha2"
+def version = "1.1.0alpha2"
 
 android {
     compileSdkVersion 23
@@ -11,7 +11,7 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 22
-        versionCode 1
+        versionCode 3
         versionName version
     }
     buildTypes {
