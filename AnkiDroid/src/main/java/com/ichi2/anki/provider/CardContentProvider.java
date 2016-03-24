@@ -932,22 +932,13 @@ public class CardContentProvider extends ContentProvider {
             case DECKS:
                 // Insert new deck with specified name
                 String deckName = values.getAsString(FlashCardsContract.Deck.DECK_NAME);
-                did = col.getDecks().id(deckName);
-                JSONObject deck = col.getDecks().get(did);
-                if (deck != null) {
-                    try {
-                        Integer deckDyn = values.getAsInteger(FlashCardsContract.Deck.DECK_DYN);
-                        if (deckDyn != null) {
-                            deck.put("dyn", deckDyn);
-                        }
-                        String deckDesc = values.getAsString(FlashCardsContract.Deck.DECK_DESC);
-                        if (deckDesc != null) {
-                            deck.put("desc", deckDesc);
-                        }
-                    } catch (JSONException e) {
-                        Timber.e(e, "Could not set a field of new deck %s", deckName);
-                        return null;
-                    }
+                did = col.getDecks().id(deckName, false);
+                if (did != null) {
+                    throw new IllegalArgumentException("Deck name already exists: " + deckName);
+                }
+                did = col.getDecks().id(deckName, values.getAsString(FlashCardsContract.Deck.DECK_DESC));
+                if (did == null) {
+                    return null;
                 }
                 col.getDecks().flush();
                 return Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(did));
