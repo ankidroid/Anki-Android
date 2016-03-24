@@ -50,7 +50,7 @@ if (AddContentApi.getAnkiDroidPackageName(context) != null) {
 }
 ```
 
-*Note: To add multiple notes you should use addNotes(), which is orders of magnitude faster than calling addNote() in a loop.*
+*Note: To add multiple notes you should use addNotes(), which can often be orders of magnitude faster than calling addNote() in a loop.*
 
 ### Permissions
 The API requires the permission `com.ichi2.anki.permission.READ_WRITE_DATABASE` which is defined by the main AnkiDroid app. This permission will automatically be merged into your manifest if you included the Gradle dependency above. In order to workaround [this Android limitation](https://code.google.com/p/android/issues/detail?id=25906) we use dynamic permission checking to only enforce permissions on Android M and above, or for certain high risk API calls. See the sample app and the API javadoc for more details on working with permissions.
@@ -84,6 +84,17 @@ Perform the following manual tests to check that your app is working correctly. 
 0. Try to add cards to AnkiDroid from your app again
 0. This time choose to grant the permission
 0. Check that the cards were added to AnkiDroid correctly as per previous tests
+
+### Change log
+#### API v1.1 (2016-03-24)
+v1.1 improves performance when adding multiple notes at once with the introduction of the addNotes() method, and also adds support for updating existing notes. See the javadoc for more info on the new methods. The following public methods were removed:
+
+addNewNote(): use the new method addNote() instead
+checkForDuplicates(): use findDuplicateNotes() instead
+checkRequiredPermission(): use the public field READ_WRITE_PERMISSION instead
+findModelIdByName(): see the sample app for a helper class to replace this
+findDeckIdByName(): see the sample app for a helper class to replace this
+addNewCustomModel(): there is now a new method with the same name and an extra argument for sort field (use null by default)
 
 ## Sending cards to AnkiDroid via intent
 While we strongly recommend using the Instant-Add API, if the user has a version of AnkiDroid that doesn't support the API, or if they've denied permission to your app to access it, you should fall back on an intent-based approach, which is supported by all versions of AnkiDroid. 
