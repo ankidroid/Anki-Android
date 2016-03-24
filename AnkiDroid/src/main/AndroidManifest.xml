@@ -128,6 +128,10 @@
                 <action android:name="com.ichi2.anki.DO_SYNC" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="com.ichi2.anki.DELETE_EMPTY_CARDS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:theme="@style/Theme_Dark_Compat.Launcher"

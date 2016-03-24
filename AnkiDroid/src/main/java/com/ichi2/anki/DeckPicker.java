@@ -112,6 +112,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     /**
+     * Result codes for other activities
+     */
+    public static final int RESULT_NO_EMPTY_CARDS = RESULT_FIRST_USER;
+
+    /**
      * Result codes from other activities
      */
     public static final int RESULT_MEDIA_EJECTED = 202;
@@ -2129,6 +2134,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
     };
 
     public void handleEmptyCards() {
+        handleEmptyCards(false);
+    }
+
+    public void handleEmptyCards(final boolean finishActivityWhenDone) {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_FIND_EMPTY_CARDS, new DeckTask.Listener() {
             @Override
             public void onPreExecute(DeckTask task) {
@@ -2140,6 +2149,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
             public void onPostExecute(DeckTask task, TaskData result) {
                 final List<Long> cids = (List<Long>) result.getObjArray()[0];
                 if (cids.size() == 0) {
+                    if (finishActivityWhenDone) {
+                        setResult(RESULT_NO_EMPTY_CARDS);
+                        finishWithoutAnimation();
+                        return;
+                    }
                     showSimpleMessageDialog(getResources().getString(R.string.empty_cards_none));
                 } else {
                     String msg = String.format(getResources().getString(R.string.empty_cards_count), cids.size());
@@ -2147,8 +2161,21 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         @Override
                         public void confirm() {
                             getCol().remCards(Utils.arrayList2array(cids));
-                            showSimpleSnackbar(String.format(
-                                    getResources().getString(R.string.empty_cards_deleted), cids.size()), false);
+                            if (finishActivityWhenDone) {
+                                setResult(RESULT_OK);
+                                finishWithoutAnimation();
+                            }
+                            else {
+                                showSimpleSnackbar(String.format(
+                                        getResources().getString(R.string.empty_cards_deleted), cids.size()), false);
+                            }
+                        }
+
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            if (finishActivityWhenDone) {
+                                finishWithoutAnimation();
+                            }
                         }
                     };
                     dialog.setArgs(msg);
