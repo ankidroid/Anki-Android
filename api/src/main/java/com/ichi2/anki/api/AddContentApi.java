@@ -601,11 +601,11 @@ public final class AddContentApi {
 
         /**
          * For each key, look for an existing note that has matching first field
-         * @param mid the model ID to limit the search to
+         * @param modelId the model ID to limit the search to
          * @param keys  list of keys for each note
          * @return array with a list of NoteInfo objects for each key if duplicates exist
          */
-        SparseArray<List<NoteInfo>> findDuplicateNotes(long mid, List<String> keys);
+        SparseArray<List<NoteInfo>> findDuplicateNotes(long modelId, List<String> keys);
     }
 
     private class CompatV1 implements Compat {
@@ -632,15 +632,15 @@ public final class AddContentApi {
         }
 
         @Override
-        public SparseArray<List<NoteInfo>> findDuplicateNotes(long mid, List<String> keys) {
+        public SparseArray<List<NoteInfo>> findDuplicateNotes(long modelId, List<String> keys) {
             // Content provider spec v1 does not support direct querying of the notes table, so use Anki browser syntax
-            String modelName = getModelName(mid);
+            String modelName = getModelName(modelId);
             if (modelName == null) {
                 modelName = ""; // empty model name will result in no query results
             }
-            SparseArray<List<NoteInfo>> result = new SparseArray<>();
-            // Loop through each item in fieldsArray looking for an existing note
-            String queryFormat = String.format("%s:\"%%s\" note:\"%s\"", getFieldList(mid)[0], modelName);
+            SparseArray<List<NoteInfo>> duplicates = new SparseArray<>();
+            // Loop through each item in fieldsArray looking for an existing note, and add it to the duplicates array
+            String queryFormat = String.format("%s:\"%%s\" note:\"%s\"", getFieldList(modelId)[0], modelName);
             for (int outputPos = 0; outputPos < keys.size(); outputPos++) {
                 String selection = String.format(queryFormat, keys.get(outputPos));
                 Cursor cursor = mResolver.query(Note.CONTENT_URI, PROJECTION, selection, null, null);
@@ -649,27 +649,30 @@ public final class AddContentApi {
                 }
                 try {
                     if (cursor.moveToFirst()) {
-                        // Build a NoteInfo object and add it to the output sparse array
-                        NoteInfo note = NoteInfo.buildFromCursor(cursor);
-                        int sparseArrayIndex = result.indexOfKey(outputPos);
-                        if (sparseArrayIndex < 0) {
-                            // No existing NoteInfo objects mapping to same key as the current note so add a new List
-                            List<NoteInfo> duplicatesForKey = new ArrayList<>();
-                            duplicatesForKey.add(note);
-                            result.put(outputPos, duplicatesForKey);
-                        } else { // Append note to existing list of duplicates for key
-                            result.valueAt(sparseArrayIndex).add(note);
-                        }
+                        addNoteToDuplicatesArray(NoteInfo.buildFromCursor(cursor), duplicates, outputPos);
                     }
                 } finally {
                     cursor.close();
                 }
             }
-            return result;
+            return duplicates;
+        }
+
+        /** Add a NoteInfo object to the given duplicates SparseArray at the specified position */
+        protected void addNoteToDuplicatesArray(NoteInfo note, SparseArray<List<NoteInfo>> duplicates, int position) {
+            int sparseArrayIndex = duplicates.indexOfKey(position);
+            if (sparseArrayIndex < 0) {
+                // No existing NoteInfo objects mapping to same key as the current note so add a new List
+                List<NoteInfo> duplicatesForKey = new ArrayList<>();
+                duplicatesForKey.add(note);
+                duplicates.put(position, duplicatesForKey);
+            } else { // Append note to existing list of duplicates for key
+                duplicates.valueAt(sparseArrayIndex).add(note);
+            }
         }
     }
 
-    private class CompatV2 implements Compat {
+    private class CompatV2 extends CompatV1 {
         @Override
         public Cursor queryNotes(long mid) {
             return mResolver.query(Note.CONTENT_URI_V2, PROJECTION, String.format("%s=%d", Note.MID, mid), null, null);
@@ -683,7 +686,7 @@ public final class AddContentApi {
         }
 
         @Override
-        public SparseArray<List<NoteInfo>> findDuplicateNotes(long mid, List<String> keys) {
+        public SparseArray<List<NoteInfo>> findDuplicateNotes(long modelId, List<String> keys) {
             // Build set of checksums and a HashMap from the key (first field) back to the original index in fieldsArray
             Set<Long> csums = new HashSet<>(keys.size());
             Map<String, List<Integer>> keyToIndexesMap = new HashMap<>(keys.size());
@@ -696,39 +699,32 @@ public final class AddContentApi {
                 keyToIndexesMap.get(key).add(i);
             }
             // Query for notes that have specified model and checksum of first field matches
-            String sel = String.format("%s=%d and %s in (%s)", Note.MID, mid, Note.CSUM, TextUtils.join(",", csums));
+            String sel = String.format("%s=%d and %s in (%s)", Note.MID, modelId, Note.CSUM, TextUtils.join(",", csums));
             Cursor notesTableCursor = mResolver.query(Note.CONTENT_URI_V2, PROJECTION, sel, null, null);
             if (notesTableCursor == null) {
                 return null;
             }
             // Loop through each note in the cursor, building the result list of duplicates
-            SparseArray<List<NoteInfo>> result = new SparseArray<>();
+            SparseArray<List<NoteInfo>> duplicates = new SparseArray<>();
             try {
                 while (notesTableCursor.moveToNext()) {
                     NoteInfo note = NoteInfo.buildFromCursor(notesTableCursor);
                     if (note == null) {
                         continue;
                     }
-                    // If fieldsArray contained current note's key one or more times then it will be in keyToIndexesMap
+                    // If keys list contained current note's key one or more times then it will be in keyToIndexesMap
                     if (keyToIndexesMap.containsKey(note.getKey())) {
                         List<Integer> outputPositions = keyToIndexesMap.get(note.getKey());
+                        // Potentially multiple instances of current note's key in the input keys array. Add them all.
                         for (Integer outputPos : outputPositions) {
-                            int sparseArrayIndex = result.indexOfKey(outputPos);
-                            if (sparseArrayIndex < 0) {
-                                // No existing NoteInfo objects mapping to same key as the current note so add a new List
-                                List<NoteInfo> duplicatesForKey = new ArrayList<>();
-                                duplicatesForKey.add(note);
-                                result.put(outputPos, duplicatesForKey);
-                            } else { // Append note to existing list of duplicates for key
-                                result.valueAt(sparseArrayIndex).add(note);
-                            }
+                            addNoteToDuplicatesArray(note, duplicates, outputPos);
                         }
                     }
                 }
             } finally {
                 notesTableCursor.close();
             }
-            return result;
+            return duplicates;
         }
     }
 }
