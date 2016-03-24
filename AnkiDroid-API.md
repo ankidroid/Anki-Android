@@ -28,17 +28,11 @@ Here is a very simple example of adding a new note to AnkiDroid. See the [sample
 // Check the AnkiDroid package is available to the API before instantiating
 if (AddContentApi.getAnkiDroidPackageName(context) != null) {
     final AddContentApi api = new AddContentApi(context);
-    long deckId;
-    long modelId;
     // Add a new deck and model if you have not already added 
-    // (you should implement deckExists() and modelExists() yourself)
+    // You should implement deckExists(), modelExists(), getDeckId(), getModelId() 
     // Note: On SDK 23+ you must also do a permission check before calling API methods!
-    if (!deckExists()) {
-        deckId = api.addNewDeck("My app name");
-    }
-    if (!modelExists()) {
-        modelId = api.addNewBasicModel("com.something.myapp");
-    }
+    long deckId = deckExists()? getDeckId(): api.addNewDeck("My app name");
+    long modelId = modelExists()? getModelId(): api.addNewBasicModel("com.something.myapp");
     api.addNote(modelId, deckId, new String[] {"日の出", "sunrise"}, null);
 } else {
     // Fallback on ACTION_SEND Share Intent if the API is unavailable
