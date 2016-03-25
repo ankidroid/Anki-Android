@@ -96,6 +96,7 @@ public class CardContentProvider extends ContentProvider {
     private static final int NOTES_V2 = 1005;
     private static final int MODELS = 2000;
     private static final int MODELS_ID = 2001;
+    private static final int MODELS_ID_EMPTY_CARDS = 2002;
     private static final int MODELS_ID_TEMPLATES = 2003;
     private static final int MODELS_ID_TEMPLATES_ID = 2004;
     private static final int SCHEDULE = 3000;
@@ -114,7 +115,8 @@ public class CardContentProvider extends ContentProvider {
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "notes/#/cards", NOTES_ID_CARDS);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "notes/#/cards/#", NOTES_ID_CARDS_ORD);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models", MODELS);
-        sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models/*", MODELS_ID);
+        sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models/*", MODELS_ID); // the model ID can also be "current"
+        sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models/*/empty_cards", MODELS_ID_EMPTY_CARDS);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models/*/templates", MODELS_ID_TEMPLATES);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models/*/templates/#", MODELS_ID_TEMPLATES_ID);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "schedule/", SCHEDULE);
@@ -169,6 +171,8 @@ public class CardContentProvider extends ContentProvider {
                 return FlashCardsContract.Model.CONTENT_TYPE;
             case MODELS_ID:
                 return FlashCardsContract.Model.CONTENT_ITEM_TYPE;
+            case MODELS_ID_EMPTY_CARDS:
+                return FlashCardsContract.Model.CONTENT_TYPE;
             case MODELS_ID_TEMPLATES:
                 return FlashCardsContract.CardTemplate.CONTENT_TYPE;
             case MODELS_ID_TEMPLATES_ID:
@@ -685,6 +689,14 @@ public class CardContentProvider extends ContentProvider {
             case NOTES_ID:
                 col.remNotes(new long[]{Long.parseLong(uri.getPathSegments().get(1))});
                 return 1;
+            case MODELS_ID_EMPTY_CARDS:
+                JSONObject model = col.getModels().get(getModelIdFromUri(uri, col));
+                if (model != null) {
+                    List<Long> cids = col.genCards(col.getModels().nids(model));
+                    col.remCards(Utils.arrayList2array(cids));
+                    return cids.size();
+                }
+                throw new UnsupportedOperationException("Only ?empty=true supported");
             default:
                 throw new UnsupportedOperationException();
         }
