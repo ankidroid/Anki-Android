@@ -348,15 +348,13 @@ public class FlashCardsContract {
      * </tr>
      * <td>String</td>
      * <td>{@link #CSS}</td>
-     * <td>CSS styling code which is shared across all the templates
-     * </td>
+     * <td>CSS styling code which is shared across all the templates</td>
      * </tr>
      * <tr>
      * <td>String</td>
      * <td>{@link #FIELD_NAMES}</td>
      * <td>read-only</td>
-     * <td>Names of all the fields, separate by the 0x1f character
-     * </td>
+     * <td>Names of all the fields, separate by the 0x1f character</td>
      * </tr>
      * <tr>
      * <td>Integer</td>
@@ -364,6 +362,36 @@ public class FlashCardsContract {
      * <td>read-only</td>
      * <td>Number of card templates, which corresponds to the number of rows in the templates table
      * </td>
+     * </tr>
+     * <tr>
+     * <td>Long</td>
+     * <td>{@link #DECK_ID}</td>
+     * <td>read-only</td>
+     * <td>The default deck that cards should be added to</td>
+     * </tr>
+     * <tr>
+     * <td>Integer</td>
+     * <td>{@link #SORT_FIELD_INDEX}</td>
+     * <td>read-only</td>
+     * <td>Which field is used as the main sort field</td>
+     * </tr>
+     * <tr>
+     * <td>Integer</td>
+     * <td>{@link #TYPE}</td>
+     * <td>read-only</td>
+     * <td>0 for normal model, 1 for cloze model</td>
+     * </tr>
+     * <tr>
+     * <td>String</td>
+     * <td>{@link #LATEX_POST}</td>
+     * <td>read-only</td>
+     * <td>Code to go at the end of LaTeX renderings in Anki Desktop</td>
+     * </tr>
+     * <tr>
+     * <td>String</td>
+     * <td>{@link #LATEX_PRE}</td>
+     * <td>read-only</td>
+     * <td>Code to go at the front of LaTeX renderings in Anki Desktop</td>
      * </tr>
      * </table>
      * <p/>
@@ -947,8 +975,12 @@ public class FlashCardsContract {
      * <tr>
      * <td>String</td>
      * <td>{@link #DECK_NAME}</td>
-     * <td>read-only</td>
      * <td>This is the name of the Deck as the user usually sees it.
+     * </tr>
+     * <tr>
+     * <td>String</td>
+     * <td>{@link #DECK_DESC}</td>
+     * <td>The deck description shown on the overview page</td>
      * </tr>
      * <tr>
      * <td>JSONArray</td>
@@ -961,6 +993,12 @@ public class FlashCardsContract {
      * <td>{@link #OPTIONS}</td>
      * <td>read-only</td>
      * <td>These are the options of the deck.
+     * </tr>
+     * <tr>
+     * <td>Boolean</td>
+     * <td>{@link #DECK_DYN}</td>
+     * <td>read-only</td>
+     * <td>Whether or not the deck is a filtered deck</td>
      * </tr>
      * </table>
      *

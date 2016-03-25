@@ -27,7 +27,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.MatrixCursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Binder;
@@ -35,16 +34,16 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.ichi2.anki.BuildConfig;
-import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.DB;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.FlashCardsContract.CardTemplate;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
@@ -54,14 +53,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import timber.log.Timber;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import timber.log.Timber;
+
 import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
 
 /**
@@ -220,37 +220,21 @@ public class CardContentProvider extends ContentProvider {
             }
             case NOTES: {
                 /* Search for notes using the libanki browser syntax */
-                String columnsStr = proj2str(projection);
+                String[] proj = sanitizeNoteProjection(projection);
                 String query = (selection != null) ? selection : "";
                 List<Long> noteIds = col.findNotes(query);
                 if ((noteIds != null) && (!noteIds.isEmpty())) {
-                    String selectedIds = "id in " + Utils.ids2str(noteIds);
-                    Cursor cur;
-                    try {
-                        cur = col.getDb().getDatabase().rawQuery("select " + columnsStr + " from notes where " + selectedIds, null);
-                    } catch (SQLException e) {
-                        throw new IllegalArgumentException("Not possible to query for data for IDs " +
-                                selectedIds, e);
-                    }
-                    return cur;
+                    String sel = String.format("id in (%s)", TextUtils.join(",", noteIds));
+                    return col.getDb().getDatabase().query("notes", proj, sel, null, null, null, order);
                 } else {
                     return null;
                 }
             }
             case NOTES_ID: {
                 /* Direct access note with specific ID*/
-                long noteId;
-                noteId = Long.parseLong(uri.getPathSegments().get(1));
-                String columnsStr = proj2str(projection);
-                String selectedIds = "id = " + noteId;
-                Cursor cur;
-                try {
-                    cur = col.getDb().getDatabase().rawQuery("select " + columnsStr + " from notes where " + selectedIds, null);
-                } catch (SQLException e) {
-                    throw new IllegalArgumentException("Not possible to query for data for ID \"" +
-                            noteId + "\"", e);
-                }
-                return cur;
+                String noteId = uri.getPathSegments().get(1);
+                String[] proj = sanitizeNoteProjection(projection);
+                return col.getDb().getDatabase().query("notes", proj, "id=?", new String[]{noteId}, null, null, order);
             }
 
             case NOTES_ID_CARDS: {
@@ -378,7 +362,6 @@ public class CardContentProvider extends ContentProvider {
                 for (Sched.DeckDueTreeNode deck : allDecks) {
                     long id = deck.did;
                     String name = deck.names[0];
-
                     addDeckToCursor(id, name, getDeckCountsFromDueTreeNode(deck), rv, col, columns);
                 }
                 return rv;
@@ -396,11 +379,9 @@ public class CardContentProvider extends ContentProvider {
                         return rv;
                     }
                 }
-
                 return rv;
             }
             case DECK_SELECTED: {
-
                 long id = col.getDecks().selected();
                 String name = col.getDecks().name(id);
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
@@ -499,7 +480,9 @@ public class CardContentProvider extends ContentProvider {
                     isDeckUpdate = key.equals(FlashCardsContract.Card.DECK_ID);
                     did = values.getAsLong(key);
                 }
-
+                if (col.getDecks().isDyn(did)) {
+                    throw new IllegalArgumentException("Cards cannot be moved to a filtered deck");
+                }
                 /* now update the card
                  */
                 if ((isDeckUpdate) && (did >= 0)) {
@@ -543,6 +526,9 @@ public class CardContentProvider extends ContentProvider {
                         updated++;
                     }
                     if (newDid != null) {
+                        if (col.getDecks().isDyn(Long.parseLong(newDid))) {
+                            throw new IllegalArgumentException("Cannot set a filtered deck as default deck for a model");
+                        }
                         model.put("did", newDid);
                         updated++;
                     }
@@ -649,6 +635,7 @@ public class CardContentProvider extends ContentProvider {
             case DECKS:
                 throw new IllegalArgumentException("Can't update decks in bulk");
             case DECKS_ID:
+                // TODO: be sure to throw exception if change to the dyn value of a deck is requested
                 throw new UnsupportedOperationException("Not yet implemented");
             case DECK_SELECTED: {
                 Set<Map.Entry<String, Object>> valueSet = values.valueSet();
@@ -733,6 +720,9 @@ public class CardContentProvider extends ContentProvider {
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         if (col == null) {
             throw new IllegalStateException(COL_NULL_ERROR_MSG);
+        }
+        if (col.getDecks().isDyn(deckId)) {
+            throw new IllegalArgumentException("A filtered deck cannot be specified as the deck in bulkInsertNotes");
         }
         col.log(String.format("bulkInsertNotes: %d items.\n%s", valuesArr.length, getLogMessage("bulkInsert", null)));
 
@@ -862,6 +852,9 @@ public class CardContentProvider extends ContentProvider {
                 if (modelName == null || fieldNames == null || numCards == null) {
                     throw new IllegalArgumentException("Model name, field_names, and num_cards can't be empty");
                 }
+                if (did != null && col.getDecks().isDyn(did)) {
+                    throw new IllegalArgumentException("Cannot set a filtered deck as default deck for a model");
+                }
                 // Create a new model
                 Models mm = col.getModels();
                 JSONObject newModel = mm.newModel(modelName);
@@ -932,14 +925,14 @@ public class CardContentProvider extends ContentProvider {
             case DECKS:
                 // Insert new deck with specified name
                 String deckName = values.getAsString(FlashCardsContract.Deck.DECK_NAME);
-                did = col.getDecks().id(deckName);
+                did = col.getDecks().id(deckName, false);
+                if (did != null) {
+                    throw new IllegalArgumentException("Deck name already exists: " + deckName);
+                }
+                did = col.getDecks().id(deckName, true);
                 JSONObject deck = col.getDecks().get(did);
                 if (deck != null) {
                     try {
-                        Integer deckDyn = values.getAsInteger(FlashCardsContract.Deck.DECK_DYN);
-                        if (deckDyn != null) {
-                            deck.put("dyn", deckDyn);
-                        }
                         String deckDesc = values.getAsString(FlashCardsContract.Deck.DECK_DESC);
                         if (deckDesc != null) {
                             deck.put("desc", deckDesc);
@@ -977,10 +970,6 @@ public class CardContentProvider extends ContentProvider {
             }
         }
         return sanitized.toArray(new String[sanitized.size()]);
-    }
-
-    private static String proj2str(String[] projection) {
-        return TextUtils.join(",", sanitizeNoteProjection(projection));
     }
 
     private static int projSearch(String[] projection, String column) {
@@ -1153,7 +1142,7 @@ public class CardContentProvider extends ContentProvider {
                 String config = col.getDecks().confForDid(id).toString();
                 rb.add(config);
             }else if (column.equals(FlashCardsContract.Deck.DECK_DYN)) {
-                rb.add(col.getDecks().isDyn(id) ? 1 : 0);
+                rb.add(col.getDecks().isDyn(id));
             }else if (column.equals(FlashCardsContract.Deck.DECK_DESC)) {
                 String desc = col.getDecks().getActualDescription();
                 rb.add(desc);
