@@ -124,11 +124,11 @@ public class IntentHandler extends Activity {
                         .build().show();
             }
         } else if ("com.ichi2.anki.DO_SYNC".equals(action)) {
-            sendDoSyncMsg();
             reloadIntent.setAction(action);
-            reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(reloadIntent);
-            finishWithFade();
+            handleDialogHandlerMsg(DialogHandler.MSG_DO_SYNC, reloadIntent);
+        } else if ("com.ichi2.anki.DELETE_EMPTY_CARDS".equals(action)) {
+            reloadIntent.setAction(action);
+            handleDialogHandlerMsg(DialogHandler.MSG_DELETE_EMPTY_CARDS, reloadIntent);
         } else {
             // Launcher intents should start DeckPicker if no other task exists,
             // otherwise go to previous task
@@ -167,14 +167,17 @@ public class IntentHandler extends Activity {
     }
 
     /**
-     * Send a Message to AnkiDroidApp so that the DialogMessageHandler forces a sync
+     * Send a Message to AnkiDroidApp so that the DialogHandler triggers the action
      */
-    private void sendDoSyncMsg() {
+    private void handleDialogHandlerMsg(int msg, Intent reloadIntent) {
         // Create a new message for DialogHandler
         Message handlerMessage = Message.obtain();
-        handlerMessage.what = DialogHandler.MSG_DO_SYNC;
+        handlerMessage.what = msg;
         // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
         DialogHandler.storeMessage(handlerMessage);
+        reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+        startActivity(reloadIntent);
+        finishWithFade();
     }
 
     /** Finish Activity using FADE animation **/

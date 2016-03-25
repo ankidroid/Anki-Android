@@ -41,6 +41,7 @@ public class DialogHandler extends Handler {
     public static final int MSG_SHOW_DATABASE_ERROR_DIALOG = 6;
     public static final int MSG_SHOW_FORCE_FULL_SYNC_DIALOG = 7;
     public static final int MSG_DO_SYNC = 8;
+    public static final int MSG_DELETE_EMPTY_CARDS = 9;
 
 
     WeakReference<AnkiActivity> mActivity;
@@ -112,6 +113,9 @@ public class DialogHandler extends Handler {
                 }
             }
             mActivity.get().finishWithoutAnimation();
+        } else if (msg.what == MSG_DELETE_EMPTY_CARDS) {
+            ((DeckPicker) mActivity.get()).handleEmptyCards(true);
+            // don't finish the activity now - because waiting for user response to dialog
         }
     }
 
