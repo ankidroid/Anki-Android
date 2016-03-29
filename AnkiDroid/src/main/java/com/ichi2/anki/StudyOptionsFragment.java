@@ -519,7 +519,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                     int revCards = (Integer) obj[2];
                     int totalNew = (Integer) obj[3];
                     int totalCards = (Integer) obj[4];
-                    int eta = (Integer) obj[7];
+                    int eta = (Integer) obj[5];
 
                     // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
                     if (getActivity() == null) {

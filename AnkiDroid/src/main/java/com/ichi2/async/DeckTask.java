@@ -701,10 +701,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             int[] counts = sched.counts();
             int totalNewCount = sched.totalNewForCurrentDeck();
             int totalCount = sched.cardCount();
-            double progressMature = ((double) sched.matureCount()) / ((double) totalCount);
-            double progressAll = 1 - (((double) (totalNewCount + counts[1])) / ((double) totalCount));
-            return new TaskData(new Object[] { counts[0], counts[1], counts[2], totalNewCount, totalCount,
-                    progressMature, progressAll, sched.eta(counts)});
+            return new TaskData(new Object[]{counts[0], counts[1], counts[2], totalNewCount,
+                    totalCount, sched.eta(counts)});
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred");
             return null;

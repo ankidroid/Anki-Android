@@ -2371,12 +2371,6 @@ public class Sched {
     }
 
 
-    public int matureCount() {
-        String dids = _deckLimit();
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE type = 2 AND ivl >= 21 AND did IN " + dids);
-    }
-
-
     public int eta(int[] counts) {
         return eta(counts, true);
     }
