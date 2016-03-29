@@ -38,6 +38,8 @@ public class Previewer extends AbstractFlashcardViewer {
         }
         super.onCreate(savedInstanceState);
         showBackIcon();
+        // Ensure navigation drawer can't be opened. Various actions in the drawer cause crashes.
+        disableDrawerSwipe();
     }
 
     @Override
