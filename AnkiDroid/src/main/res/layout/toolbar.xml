@@ -14,7 +14,7 @@
         <Spinner
             android:id="@+id/toolbar_spinner"
             android:background="?attr/selectableItemBackground"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:popupTheme="@style/ActionBar.Popup"/>
