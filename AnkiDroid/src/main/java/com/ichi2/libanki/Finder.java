@@ -1010,26 +1010,23 @@ public class Finder {
      * ***********************************************************
      */
 
-    public ArrayList<HashMap<String, String>> findCardsForCardBrowser(String query, boolean _order,
-            HashMap<String, String> deckNames) {
+    public List<Map<String, String>> findCardsForCardBrowser(String query, boolean _order, Map<String, String> deckNames) {
         return _findCardsForCardBrowser(query, _order, deckNames);
     }
 
 
-    public ArrayList<HashMap<String, String>> findCardsForCardBrowser(String query, String _order,
-            HashMap<String, String> deckNames) {
+    public List<Map<String, String>> findCardsForCardBrowser(String query, String _order, Map<String, String> deckNames) {
         return _findCardsForCardBrowser(query, _order, deckNames);
     }
 
 
     /** Return a list of card ids for QUERY */
-    private ArrayList<HashMap<String, String>> _findCardsForCardBrowser(String query, Object _order,
-            HashMap<String, String> deckNames) {
+    private List<Map<String, String>> _findCardsForCardBrowser(String query, Object _order, Map<String, String> deckNames) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
         String[] args = res1.second;
-        ArrayList<HashMap<String, String>> res = new ArrayList<>();
+        List<Map<String, String>> res = new ArrayList<>();
         if (preds == null) {
             return res;
         }
@@ -1047,7 +1044,7 @@ public class Finder {
                     Timber.i("_findCardsForCardBrowser() cancelled...");
                     return null;
                 }                
-                HashMap<String, String> map = new HashMap<>();
+                Map<String, String> map = new HashMap<>();
                 map.put("id", cur.getString(0));
                 map.put("sfld", cur.getString(1));
                 map.put("deck", deckNames.get(cur.getString(2)));

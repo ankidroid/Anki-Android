@@ -86,7 +86,7 @@ import timber.log.Timber;
 public class CardBrowser extends NavigationDrawerActivity implements
         DeckDropDownAdapter.SubtitleListener {
 
-    private ArrayList<HashMap<String, String>> mCards;
+    private List<Map<String, String>> mCards;
     private HashMap<String, String> mDeckNames;
     private ArrayList<JSONObject> mDropDownDecks;
     private SearchView mSearchView;
@@ -116,7 +116,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private static final int ADD_NOTE = 1;
     private static final int DEFAULT_FONT_SIZE_RATIO = 100;
     // Minimum number of cards to render
-    private static final int MIN_CARDS_TO_RENDER = 1000;
+    public static final int MIN_CARDS_TO_RENDER = 500;
     // Should match order of R.array.card_browser_order_labels
     public static final int CARD_ORDER_NONE = 0;
     private static final String[] fSortTypes = new String[] {
@@ -469,7 +469,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
         mCardsAdapter = new MultiColumnListAdapter(
                 this,
-                mCards,
                 R.layout.card_item_browser,
                 new String[] {COLUMN1_KEYS[mColumn1Index], COLUMN2_KEYS[mColumn2Index]},
                 new int[] {R.id.card_sfld, R.id.card_column2},
@@ -490,7 +489,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // load up the card selected on the list
                 mPositionInCardsList = position;
-                long cardId = Long.parseLong(mCards.get(mPositionInCardsList).get("id"));
+                long cardId = Long.parseLong(getCards().get(mPositionInCardsList).get("id"));
                 sCardBrowserCard = getCol().getCard(cardId);
                 // start note editor using the card we just loaded
                 Intent editCard = new Intent(CardBrowser.this, NoteEditor.class);
@@ -503,7 +502,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 mPositionInCardsList = position;
-                HashMap<String, String> card = mCards.get(mPositionInCardsList);
+                Map<String, String> card = getCards().get(mPositionInCardsList);
                 int flags = Integer.parseInt(card.get("flags"));
                 String cardName = card.get("sfld");
                 boolean isMarked = (flags == 2 || flags == 3);
@@ -829,7 +828,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private int getPosition(ArrayList<HashMap<String, String>> list, long cardId) {
+    private int getPosition(List<Map<String, String>> list, long cardId) {
         String cardid = Long.toString(cardId);
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).get("id").equals(cardid)) {
@@ -925,9 +924,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    public static void updateSearchItemQA(HashMap<String, String> item, Card c) {
+    public static void updateSearchItemQA(Map<String, String> item, Card c) {
         // render question and answer
-        HashMap<String, String> qa = c._getQA(true, true);
+        Map<String, String> qa = c._getQA(true, true);
         // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
         if (qa.get("q").equals("") || qa.get("a").equals("")) {
             HashMap<String, String> qaFull = c._getQA(true, false);
@@ -1011,8 +1010,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            if (result.getBoolean() && mCards != null) {
-                updateCardInList(getCol().getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id"))), null);
+            if (result.getBoolean()) {
+                updateCardInList(getCol().getCard(Long.parseLong(getCards().get(mPositionInCardsList).get("id"))), null);
             } else {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
@@ -1051,9 +1050,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private DeckTask.TaskListener mSearchCardsHandler = new DeckTask.TaskListener() {
         @Override
         public void onProgressUpdate(TaskData... values) {
-            if (mCards != null && values[0]!= null) {
-                mCards.clear();
-                mCards.addAll(values[0].getCards());
+            if (values[0] != null) {
+                mCards = values[0].getCards();
                 updateList();
             }
         }
@@ -1073,9 +1071,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 if (!mSearchView.isIconified()) {
                     showSimpleSnackbar(getSubtitleText(), false);
                 }
-                // After the initial searchCards query, start rendering the question and answer in the background
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler,
-                        new DeckTask.TaskData(new Object[]{mCards, 0, Math.min(mCards.size(), MIN_CARDS_TO_RENDER)}));
             }
             hideProgressBar();
         }
@@ -1089,6 +1084,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private DeckTask.TaskListener mRenderQAHandler = new DeckTask.TaskListener() {
         @Override
         public void onProgressUpdate(TaskData... values) {
+            // Note: This is called every time a card is rendered.
+            // It blocks the long-click callback while the task is running, so usage of the task should be minimized
             mCardsAdapter.notifyDataSetChanged();
         }
 
@@ -1176,7 +1173,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private final class MultiColumnListAdapter extends BaseAdapter {
-        private ArrayList<HashMap<String, String>> mData;
         private final int mResource;
         private String[] mFromKeys;
         private final int[] mToIds;
@@ -1187,9 +1183,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         private LayoutInflater mInflater;
 
 
-        public MultiColumnListAdapter(Context context, ArrayList<HashMap<String, String>> data, int resource,
-                String[] from, int[] to, String colorFlagKey, int fontSizeScalePcent, String customFont) {
-            mData = data;
+        public MultiColumnListAdapter(Context context, int resource, String[] from, int[] to, String colorFlagKey,
+                                      int fontSizeScalePcent, String customFont) {
             mResource = resource;
             mFromKeys = from;
             mToIds = to;
@@ -1224,7 +1219,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         private void bindView(int position, View v) {
             // Draw the content in the columns
             View[] columns = (View[]) v.getTag();
-            final Map<String, String> dataSet = mData.get(position);
+            final Map<String, String> dataSet = getCards().get(position);
             final int colorIdx = getColor(dataSet.get(mColorFlagKey));
             int[] colors = Themes.getColorFromAttr(CardBrowser.this, new int[]{android.R.attr.colorBackground,
                     R.attr.markedColor, R.attr.suspendedColor, R.attr.markedColor});
@@ -1291,13 +1286,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public int getCount() {
-            return mData.size();
+            return getCards().size();
         }
 
 
         @Override
         public Object getItem(int position) {
-            return mData.get(position);
+            return getCards().get(position);
         }
 
 
@@ -1308,7 +1303,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private ArrayList<HashMap<String, String>> getCards() {
+    private List<Map<String, String>> getCards() {
         if (mCards == null) {
             mCards = new ArrayList<>();
         }
