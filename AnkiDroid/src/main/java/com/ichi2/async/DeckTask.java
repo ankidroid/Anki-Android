@@ -619,9 +619,10 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Map<String, String> deckNames = (HashMap<String, String>) params[0].getObjArray()[0];
         String query = (String) params[0].getObjArray()[1];
         Boolean order = (Boolean) params[0].getObjArray()[2];
+        int numCardsToRender = (int) params[0].getObjArray()[3];
         List<Map<String,String>> searchResult = col.findCardsForCardBrowser(query, order, deckNames);
         // Render the first few items
-        for (int i = 0; i < Math.min(CardBrowser.MIN_CARDS_TO_RENDER, searchResult.size()); i++) {
+        for (int i = 0; i < Math.min(numCardsToRender, searchResult.size()); i++) {
             Card c = col.getCard(Long.parseLong(searchResult.get(i).get("id"), 10));
             CardBrowser.updateSearchItemQA(searchResult.get(i), c);
         }
