@@ -1058,7 +1058,7 @@ public class Collection {
     }
 
 
-    public ArrayList<HashMap<String, String>> findCardsForCardBrowser(String search, boolean order, HashMap<String, String> deckNames) {
+    public List<Map<String, String>> findCardsForCardBrowser(String search, boolean order, Map<String, String> deckNames) {
         return new Finder(this).findCardsForCardBrowser(search, order, deckNames);
     }
 

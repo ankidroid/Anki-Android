@@ -616,10 +616,16 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     private TaskData doInBackgroundSearchCards(TaskData... params) {
         Timber.d("doInBackgroundSearchCards");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        HashMap<String, String> deckNames = (HashMap<String, String>) params[0].getObjArray()[0];
+        Map<String, String> deckNames = (HashMap<String, String>) params[0].getObjArray()[0];
         String query = (String) params[0].getObjArray()[1];
         Boolean order = (Boolean) params[0].getObjArray()[2];
-        ArrayList<HashMap<String,String>> searchResult = col.findCardsForCardBrowser(query, order, deckNames);
+        List<Map<String,String>> searchResult = col.findCardsForCardBrowser(query, order, deckNames);
+        // Render the first few items
+        for (int i = 0; i < Math.min(CardBrowser.MIN_CARDS_TO_RENDER, searchResult.size()); i++) {
+            Card c = col.getCard(Long.parseLong(searchResult.get(i).get("id"), 10));
+            CardBrowser.updateSearchItemQA(searchResult.get(i), c);
+        }
+        // Finish off the task
         if (isCancelled()) {
             Timber.d("doInBackgroundSearchCards was cancelled so return null");
             return null;
@@ -633,7 +639,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     private TaskData doInBackgroundRenderBrowserQA(TaskData... params) {
         Timber.d("doInBackgroundRenderBrowserQA");
         Collection col = CollectionHelper.getInstance().getCol(mContext);
-        ArrayList<HashMap<String, String>> items = (ArrayList<HashMap<String, String>>) params[0].getObjArray()[0];
+        List<Map<String, String>> items = (List<Map<String, String>>) params[0].getObjArray()[0];
         Integer startPos = (Integer) params[0].getObjArray()[1];
         Integer n = (Integer) params[0].getObjArray()[2];
 
@@ -1342,7 +1348,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         private int mInteger;
         private String mMsg;
         private boolean mBool = false;
-        private ArrayList<HashMap<String, String>> mCards;
+        private List<Map<String, String>> mCards;
         private long mLong;
         private Context mContext;
         private int mType;
@@ -1399,12 +1405,12 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
 
 
-        public TaskData(ArrayList<HashMap<String, String>> cards) {
+        public TaskData(List<Map<String, String>> cards) {
             mCards = cards;
         }
 
 
-        public TaskData(ArrayList<HashMap<String, String>> cards, Comparator comparator) {
+        public TaskData(List<Map<String, String>> cards, Comparator comparator) {
             mCards = cards;
             mComparator = comparator;
         }
@@ -1472,12 +1478,12 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
 
 
-        public ArrayList<HashMap<String, String>> getCards() {
+        public List<Map<String, String>> getCards() {
             return mCards;
         }
 
 
-        public void setCards(ArrayList<HashMap<String, String>> cards) {
+        public void setCards(List<Map<String, String>> cards) {
             mCards = cards;
         }
 
