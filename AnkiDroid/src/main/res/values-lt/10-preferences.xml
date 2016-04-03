@@ -45,9 +45,9 @@
   <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Bendrieji nustatymai</string>
-  <string name="pref_cat_reviewing">Reviewing</string>
+  <string name="pref_cat_reviewing">Peržiūra</string>
   <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>
-  <string name="pref_cat_reviewer_behaviour">Behavior</string>
+  <string name="pref_cat_reviewer_behaviour">Elgesys</string>
   <string name="pref_cat_flashcard">Rodymas</string>
   <string name="pref_cat_whiteboard">Lenta</string>
   <string name="pref_cat_automatic_display">Automatic display answer</string>
@@ -94,17 +94,17 @@
   <string name="gestures_swipe_down">Swipe down</string>
   <string name="gestures_swipe_left">Swipe left</string>
   <string name="gestures_swipe_right">Swipe right</string>
-  <string name="gestures_double_tap">Double touch</string>
-  <string name="gestures_tap_top">Touch top</string>
-  <string name="gestures_tap_bottom">Touch bottom</string>
-  <string name="gestures_tap_left">Touch left</string>
-  <string name="gestures_tap_right">Touch right</string>
+  <string name="gestures_double_tap">Dvigubas palietimas</string>
+  <string name="gestures_tap_top">Liesti viršuje</string>
+  <string name="gestures_tap_bottom">Liesti apačioje</string>
+  <string name="gestures_tap_left">Liesti kairėje</string>
+  <string name="gestures_tap_right">Liesti dešinėje</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
   <string name="double_scrolling_gap">Double scrolling</string>
   <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
   <string name="swipe_sensitivity">Swipe sensitivity</string>
-  <string name="tts">Text to speech</string>
+  <string name="tts">Tekstas į šneką</string>
   <string name="tts_summ">Reads out question and answer if no sound file is included</string>
   <string name="sync_fetch_missing_media">Fetch media on sync</string>
   <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing</string>

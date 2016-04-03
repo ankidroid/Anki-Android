@@ -52,6 +52,7 @@
   <string name="not_logged_in_title">登录到 AnkiWeb</string>
   <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
   <string name="no_email_client">没有可用的电子邮件客户端</string>
+  <!-- MyAccount.java -->
   <string name="username">电子邮件地址</string>
   <string name="username_repeat">重复电子邮件地址</string>
   <string name="password">密码</string>
@@ -65,6 +66,7 @@
   <string name="alert_logging_message">登录中&#8230;&#8230;</string>
   <string name="invalid_username_password">错误的电子邮件地址或密码。</string>
   <string name="reset_password">重置密码</string>
+  <!-- AndroidManifest.xml -->
   <string name="downloaddeck_search">搜索</string>
   <string name="preferences_title">偏好设置</string>
   <string name="deckpreferences_title">XXX 选项</string>

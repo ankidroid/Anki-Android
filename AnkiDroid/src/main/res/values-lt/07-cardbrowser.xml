@@ -57,12 +57,12 @@
   <string name="card_browser_show_suspended">Filter suspended</string>
   <string name="card_browser_search_by_tag">Filtruoti pagal žymą</string>
   <string name="card_browser_tags_shown">Žymos: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
+  <string name="card_browser_list_my_searches">Mano paieškos</string>
   <string name="card_browser_list_my_searches_save">Išsaugoti paieška</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
+  <string name="card_browser_list_my_searches_title">Pasirinkite įrašytą paiešką</string>
+  <string name="card_browser_list_my_searches_new_name">Dabartinės ieškos pavadinimas</string>
   <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Pavadinimas egzistuoja</string>
   <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
   <string name="card_browser_change_display_order">Change display order</string>
   <string name="card_browser_change_display_order_title">Choose display order</string>
@@ -75,13 +75,13 @@
   <string-array name="card_browser_order_labels">
     <item>No sorting (faster)</item>
     <item>By sort field</item>
-    <item>By created time</item>
-    <item>By edited time</item>
-    <item>By changed time</item>
+    <item>Pagal sukūrimo laiką</item>
+    <item>Pagal keitimo laiką</item>
+    <item>Pagal pakeitimo laiką</item>
     <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
-    <item>By reviews</item>
+    <item>Pagal intervalą</item>
+    <item>Pagal lengvumą</item>
+    <item>Pagal peržiūras</item>
     <item>By lapses</item>
   </string-array>
 </resources>

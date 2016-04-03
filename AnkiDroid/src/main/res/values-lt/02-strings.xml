@@ -105,13 +105,13 @@
   <string name="discard_unsaved_changes">Close and lose current input?</string>
   <string name="factadder_saving_error">Klaida įrašant pastabą</string>
   <string name="saving_facts">Įrašoma pastaba</string>
-  <string name="saving_model">Saving model</string>
+  <string name="saving_model">Modelis išsaugomas</string>
   <string name="add">Pridėti</string>
   <string name="save">Išsaugoti</string>
   <string name="close">Užverti</string>
   <string name="select">Pasirinkti</string>
   <string name="saving_changes">Išsaugomi pakeitimai&#8230;</string>
-  <string name="reordering_cards">Reordering cards&#8230;</string>
+  <string name="reordering_cards">Įrašomos kortelės&#8230;</string>
   <string name="field_remapping">%1$s (from “%2$s”)</string>
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
@@ -172,7 +172,7 @@
   <string name="study_options">Deck options</string>
   <string name="select_tts">Nustatyti TTS kalbą</string>
   <string name="custom_study">Custom study</string>
-  <string name="more_options">More</string>
+  <string name="more_options">Daugiau</string>
   <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
   <string name="steps_error">Steps must be numbers greater than 0</string>
   <string name="steps_min_error">At least one step is required</string>

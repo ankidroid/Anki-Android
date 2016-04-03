@@ -105,15 +105,15 @@
   <string name="discard_unsaved_changes">Zamknąć i utracić bieżący wkład?</string>
   <string name="factadder_saving_error">Błąd podczas zapisywania notatki</string>
   <string name="saving_facts">Zapisywanie notatki</string>
-  <string name="saving_model">Saving model</string>
+  <string name="saving_model">Tryb zapisu</string>
   <string name="add">Dodaj</string>
   <string name="save">Zapisz</string>
   <string name="close">Zamknij</string>
   <string name="select">Wybierz</string>
   <string name="saving_changes">Trwa zapisywanie zmian...</string>
   <string name="reordering_cards">Zmiana kolejności kart...</string>
-  <string name="field_remapping">%1$s (from “%2$s”)</string>
-  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+  <string name="field_remapping">%1$s (z “%2$s”)</string>
+  <string name="confirm_map_cards_to_nothing">Wszystkie nieprzypisane karty zostaną usunięte. Jeśli notatka nie zawiera już kart, równie zostanie usunięta. Czy na pewno chcesz kontynuować?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d card studied in %2$s</item>
     <item quantity="few">%1$d cards studied in %2$s</item>
@@ -158,7 +158,7 @@
   <string name="import_log_no_apkg">To nie jst prawidłowy plik apkg</string>
   <string name="import_error_not_apkg_extension">Nazwa pliku \"%s\" nie ma rozszerzenia .apkg</string>
   <string name="import_error_content_provider">Wybrany plik nie mógł zostać automatycznie zaimportowany przez AnkiDroid. Zapoznaj się z podręcznikiem użytkownika na temat ręcznego importowania plików anki: \n%s</string>
-  <string name="import_replacing">Replacing collection&#8230;</string>
+  <string name="import_replacing">Zamiana kolekcji&#8230;</string>
   <string name="export_include_schedule">Włącznie z zaplanowanymi powtórkami</string>
   <string name="export_include_media">Włącznie z plikami mediów</string>
   <string name="confirm_apkg_export">Wyeksportować kolekcję jako plik .apkg?</string>
@@ -179,13 +179,13 @@
   <string name="sched_end">(koniec)</string>
   <string name="sched_unbury_action">Żeby zobaczyć je teraz, dotknij elementu \"Odkop\" w menu</string>
   <string name="sched_has_buried">Niektóre związane lub zakopane karty zostały odroczone do następnej sesji.</string>
-  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+  <string name="tag_editor_add_feedback">Dotknij “%2$s” aby potwierdzić dodanie “%1$s”</string>
+  <string name="tag_editor_add_feedback_existing">Wybrano istniejący tag “%1$s”</string>
   <string name="lookup_hint">Po skopiowaniu tekstu, stuknięcie dowolnego miejsca na karcie pokazuje ikonę szukania</string>
   <!-- Time spans -->
   <plurals name="time_span_seconds">
-    <item quantity="one">%s second</item>
-    <item quantity="few">%s seconds</item>
+    <item quantity="one">%s sekund</item>
+    <item quantity="few">%s sekund</item>
     <item quantity="other">%s seconds</item>
   </plurals>
   <plurals name="time_span_minutes">

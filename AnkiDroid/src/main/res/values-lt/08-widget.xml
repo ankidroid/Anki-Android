@@ -50,9 +50,9 @@
     <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
-    <item quantity="few">%1$d decks</item>
-    <item quantity="other">%1$d decks</item>
+    <item quantity="one">%1$d malka</item>
+    <item quantity="few">%1$d malka</item>
+    <item quantity="other">%1$d malkos</item>
   </plurals>
   <string name="widget_small">AnkiDroid Mažas</string>
 </resources>

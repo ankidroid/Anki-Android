@@ -26,7 +26,7 @@
   <!--Toasts-->
   <string name="toast_last_model">You cannot delete your last model</string>
   <string name="toast_last_field">Note types must have at least one field</string>
-  <string name="toast_empty_name">You must enter a name</string>
+  <string name="toast_empty_name">Turite įvesti vardą</string>
   <string name="toast_duplicate_field">Field name already used</string>
   <string name="toast_out_of_range">You must enter a valid value</string>
   <!--Plurals-->
@@ -43,17 +43,17 @@
   <!--Button Values-->
   <string name="model_editor_action_add_model">Add note type</string>
   <!--Browser-->
-  <string name="model_browser_delete">Delete note type</string>
-  <string name="model_browser_rename">Rename</string>
-  <string name="model_browser_options">Options</string>
-  <string name="model_browser_template">Edit cards</string>
-  <string name="model_browser_add">Add note type</string>
+  <string name="model_browser_delete">Naikinti pastabos tipą</string>
+  <string name="model_browser_rename">Pervadinti</string>
+  <string name="model_browser_options">Nustatymai</string>
+  <string name="model_browser_template">Redaguoti korteles</string>
+  <string name="model_browser_add">Pridėti pastabos tipą</string>
   <!--Rename-->
-  <string name="rename_model">Rename model</string>
+  <string name="rename_model">Pervardinti modelį</string>
   <!--Field Editing-->
-  <string name="model_field_editor_title">Edit fields</string>
-  <string name="model_field_editor_add">Add field</string>
-  <string name="model_field_editor_delete">Delete field</string>
+  <string name="model_field_editor_title">Redaguoti laukus</string>
+  <string name="model_field_editor_add">Pridėti lauką</string>
+  <string name="model_field_editor_delete">Ištrinti lauką</string>
   <string name="model_field_editor_options">Field options</string>
   <string name="model_field_editor_rename">Rename field</string>
   <string name="model_field_editor_reposition_menu">Reposition field</string>

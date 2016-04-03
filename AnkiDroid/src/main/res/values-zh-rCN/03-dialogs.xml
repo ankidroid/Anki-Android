@@ -39,33 +39,33 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">检查数据库</string>
+  <string name="check_db_title">检查数据库？</string>
   <string name="check_db_warning">这可能需要很长时间</string>
   <string name="check_db_acknowledge">已检查数据库</string>
-  <string name="check_db_acknowledge_shrunk">已检查并优化数据库。\n缩小了 %d kB</string>
+  <string name="check_db_acknowledge_shrunk">已检查并优化了数据库。\n缩小了 %d kB</string>
   <string name="contextmenu_deckpicker_delete_deck">删除牌组</string>
   <string name="delete_deck_default_deck">不能删除默认牌组</string>
   <string name="delete_deck_title">删除该牌组？</string>
   <plurals name="delete_deck_message">
-    <item quantity="other">删除%1$s的所有卡片吗？它包含%2$d张卡片。</item>
+    <item quantity="other">删除%1$s的所有卡牌吗？它包含%2$d张卡牌。</item>
   </plurals>
-  <string name="delete_cram_deck_message">你确定要把所有卡牌发送回它们原来的牌组吗？</string>
+  <string name="delete_cram_deck_message">你确定要把%s内的所有卡牌发送回它们原来的牌组吗？</string>
   <string name="no_tts_available_message">没有可用的文字转语音（TTS）语言</string>
   <string name="initializing_tts">正在初始化TTS引擎...</string>
   <string name="tts_no_tts">不要发音</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android上的卡片记忆应用</h2>AnkiDroid是一个与<a href=\"%2$s\">Anki桌面客户端</a>完全兼容的卡片记忆应用。你可以在Anki桌面客户端或者AnkiDroid添加和下载学习资料，它们可以很方便的通过AnkiWeb进行同步。]]></item>
-    <item><![CDATA[为了帮助改进AnkiDroid，请把Bugs发送到<a href=\"%1$s\">问题跟踪系统</a>；也欢迎加入新功能的建议。\n在<a href=\"%2$s\">Wiki百科</a>上您可以找到一些问题的答案，也可以加入<a href=\"%3$s\">论坛</a>参与讨论。]]></item>
+    <item><![CDATA[为了帮助改进AnkiDroid，请把Bugs发送到<a href=\"%1$s\">问题跟踪系统</a>；也欢迎提出新功能建议。\n在<a href=\"%2$s\">AnkiDroid的Wiki页面</a>上您可以找到一些问题的答案，也可以加入<a href=\"%3$s\">论坛</a>参与讨论。]]></item>
     <item><![CDATA[AnkiDroid 是一个<a href=\"%1$s\">开源软件<a/>，鼓励每个人都<a href=\"%2$s\">成为它的贡献者</a>。:-)]]></item>
-    <item><![CDATA[非开发人员也可以提供帮助。例如，你可以<a href=\"%1$s\">帮助翻译</a>AnkiDroid，更新 wiki百科、 提供屏幕截图， 到给Anki桌面客户端或AnkiDroid<a href=\"%2$s\"> 捐增</a>]]></item>
+    <item><![CDATA[非开发人员也可以提供帮助。例如，你可以<a href=\"%1$s\">帮助翻译</a>AnkiDroid，更新 wiki百科、 提供屏幕截图，给Anki桌面客户端<a href=\"%2$s\">捐款</a>或者在你的博客里介绍AnkiDroid。]]></item>
     <item><![CDATA[AnkiDroid 在<a href=\"%1$s\"> GNU GPL v3 许可证</a>下发布。源代码在<a href=\"%2$s\">GitHub</a>上提供。]]></item>
   </string-array>
   <string name="preview_title">预览</string>
-  <string name="reset_card_dialog_title">重设学习进度</string>
+  <string name="reset_card_dialog_title">重设卡牌学习进度</string>
   <string name="reset_card_dialog_message">这张卡片将被置于新卡片队列的末尾。</string>
   <string name="reset_card_dialog_acknowledge">重置卡片</string>
-  <string name="reschedule_card_dialog_title">重设学习进度</string>
-  <string name="reschedule_card_dialog_message">重新安排到在x天后查看</string>
+  <string name="reschedule_card_dialog_title">重设卡牌学习进度</string>
+  <string name="reschedule_card_dialog_message">重新安排在x天后复习</string>
   <string name="reschedule_card_dialog_acknowledge">已重设该卡片学习进度</string>
   <string name="answering_error_title">数据库错误</string>
   <string name="answering_error_message">写入集合时出错。可能是数据库损坏，或者磁盘空间不足。\n\n如果频繁发生此错误，请检查数据库，修复集合或从备份中恢复。点击\"选项\"按钮以执行上述操作。\n\n当然，也可能只是AnkiDroid的bug，请报告这个错误，我们会尽力解决。</string>
@@ -77,23 +77,23 @@
   <string name="intent_aedict_category">向AnkiDroid中添加卡牌，需要删除所有NotePad类别，或者添加“默认(default)”类别。</string>
   <string name="custom_study_new_total_new">牌组中的新卡牌数量：%s</string>
   <string name="custom_study_rev_total_rev">牌组中到期的卡牌数量：%s</string>
-  <string name="custom_study_new_extend">增加今天的新卡牌数量限制</string>
-  <string name="custom_study_rev_extend">增加今天的复习数量限制</string>
+  <string name="custom_study_new_extend">将今天新卡牌的数量限制增加</string>
+  <string name="custom_study_rev_extend">将今天的复习数量限制增加</string>
   <string name="custom_study_forgotten">复习过去 x 天中忘记的卡牌:</string>
-  <string name="custom_study_ahead">预先复习 x 天：</string>
+  <string name="custom_study_ahead">提前 x 天复习：</string>
   <string name="custom_study_random">从牌组中随机选择 x 张卡牌：</string>
   <string name="custom_study_preview">预览过去 x 天中新增的卡牌:</string>
   <string name="rebuild_custom_study_deck">重建自定义学习牌组\n 请等待...</string>
-  <string name="importing_collection">正在导入牌组组合.\n请稍等...</string>
+  <string name="importing_collection">正在导入牌组集合&#8230;</string>
   <string name="import_media_count">正在导入媒体文件。请稍等...</string>
-  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
-  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
-  <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
-  <string name="import_complete_count">Cards imported: %d</string>
+  <string name="import_progress">正在导入笔记: %1$d%%\n• 正在导入卡牌: %2$d%%\n• 正在后期处理: %3$d%%</string>
+  <string name="import_update_details">现有笔记%2$d条，已更新%1$d条。</string>
+  <string name="import_update_ignored">忽略了某些更新，因为这些笔记的类型已改变</string>
+  <string name="import_complete_count">卡牌已导入：%d</string>
   <string name="sd_card_full_title">SD 卡已满</string>
   <string name="sd_card_almost_full_title">SD 卡几乎已满</string>
   <string name="restore_backup_title">恢复备份？</string>
-  <string name="restore_backup">你的集合将会被替换成一个旧的副本，任何未保存的进程会被丢失。</string>
+  <string name="restore_backup">你的牌组集合将会被替换成一个旧的副本，任何未保存的进程都将丢失。</string>
   <string name="dialog_cancel">取消</string>
   <string name="dialog_ok">确定</string>
   <string name="dialog_continue">继续</string>
@@ -108,23 +108,26 @@
   <string name="dialog_positive_set">设置</string>
   <string name="lookup_button_content">查找</string>
   <string name="dialog_collection_path_not_dir">指定的路径不是一个有效的目录</string>
+  <!-- Media checking -->
   <string name="check_media_title">检查媒体？</string>
-  <string name="check_media_warning">对于大媒体集合这可能会需要一些时间</string>
-  <string name="check_media_message">正在检查媒体&#8230;&#8230;</string>
-  <string name="check_media_acknowledge">媒体检查完毕</string>
-  <string name="check_media_failed">媒体检查失败</string>
-  <string name="check_media_invalid">无效编码的文件：%d</string>
-  <string name="check_media_unused">存在于文件夹中但未被任何卡片使用的文件：%d</string>
-  <string name="check_media_nohave">被卡片使用但不存在于文件夹中的文件：%d</string>
+  <string name="check_media_warning">如果媒体数据较多，检查媒体文件可能会需要较长的时间</string>
+  <string name="check_media_message">正在检查媒体文件&#8230;</string>
+  <string name="check_media_acknowledge">媒体文件检查完毕</string>
+  <string name="check_media_failed">媒体文件检查失败</string>
+  <string name="check_media_invalid">编码无效的文件：%d</string>
+  <string name="check_media_unused">存在于媒体文件夹中但未被用于任何卡牌的文件：%d</string>
+  <string name="check_media_nohave">被用于一些卡牌，但不存在于媒体文件夹中的文件：%d</string>
   <string name="check_media_no_unused_missing">没有发现未使用或缺失的文件</string>
   <string name="check_media_db_updated">媒体数据库已重建</string>
   <string name="check_media_delete_unused">删除未使用的文件</string>
   <string name="check_media_deleted">已删除文件：%d</string>
+  <!-- Tags Dialog Options -->
   <string name="tags_dialog_option_all_cards">所有卡片</string>
-  <string name="tags_dialog_option_new_cards">新卡片</string>
+  <string name="tags_dialog_option_new_cards">新卡牌</string>
   <string name="tags_dialog_option_due_cards">待复习</string>
-  <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
-  <string name="empty_cards_none">No empty cards</string>
-  <string name="empty_cards_count">Cards to delete: %d</string>
-  <string name="empty_cards_deleted">Cards deleted: %d</string>
+  <!-- Empty cards -->
+  <string name="emtpy_cards_finding">正在查找空白卡牌&#8230;</string>
+  <string name="empty_cards_none">没有空白卡牌</string>
+  <string name="empty_cards_count">将要删除卡牌：%d</string>
+  <string name="empty_cards_deleted">已删除卡牌：%d</string>
 </resources>

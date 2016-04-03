@@ -34,62 +34,101 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Main editor popup menu items -->
   <string name="multimedia_editor_popup_image">添加图像</string>
   <string name="multimedia_editor_popup_audio">录制音频</string>
   <string name="multimedia_editor_popup_text">高级编辑器</string>
+  <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">由 glosbe.com 提供支持</string>
+  <!-- these are like translate f r o m  and t o  some othe languages -->
   <string name="multimedia_editor_trans_from">从</string>
   <string name="multimedia_editor_trans_to">到</string>
+  <!-- imperative for the button title -->
   <string name="multimedia_editor_trans_translate">翻译</string>
+  <!-- waiting message -->
   <string name="multimedia_editor_trans_translating_online">在线翻译</string>
+  <!-- pick the right translation imperative -->
   <string name="multimedia_editor_trans_pick_translation">选择翻译</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_trans_translation_failed">翻译失败</string>
+  <!-- from controller -->
+  <!-- dialog title to ask for translation source -->
   <string name="multimedia_editor_trans_pick_translation_source">选择词典</string>
+  <!-- dialog asking to install ColorDict -->
   <string name="multimedia_editor_trans_install_color_dict">首次安装 ColorDict</string>
+  <!-- Pronunciation activity (Beolingus) -->
   <string name="multimedia_editor_pron_load">加载</string>
   <string name="multimedia_editor_pron_looking_up">查找发音</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_pron_pronunciation_failed">发音失败</string>
   <string name="multimedia_editor_word_search_try_lower_case">尝试仅使用小写字符</string>
   <string name="multimedia_editor_poweredbeolingus">由Beolingus提供</string>
+  <!-- Image search activity -->
+  <!-- in progress dialog when loading the image -->
   <string name="multimedia_editor_imgs_saving_image">保存图片……</string>
   <string name="multimedia_editor_imgs_loading_image">读取图片……</string>
   <string name="multimedia_editor_imgs_no_results">搜索未返回任何结果</string>
   <string name="multimedia_editor_imgs_images_found">已找到图像</string>
   <string name="multimedia_editor_imgs_pow_by_google">谷歌图片搜索提供</string>
+  <!-- buttons -->
   <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
   <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
   <string name="multimedia_editor_imgs_pick">选择</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_imgs_failed">图像搜索失败</string>
+  <!-- while searching -->
   <string name="multimedia_editor_imgs_searching_for_images">正在搜索图像</string>
+  <!-- Field editing general -->
+  <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">文字</string>
   <string name="multimedia_editor_field_editing_image">图片</string>
   <string name="multimedia_editor_field_editing_audio">音频</string>
   <string name="multimedia_editor_field_editing_done">完成</string>
+  <!-- Text field editing -->
+  <!-- buttons -->
   <string name="multimedia_editor_text_field_editing_search_label">搜索：</string>
   <string name="multimedia_editor_text_field_editing_show">图片</string>
   <string name="multimedia_editor_text_field_editing_say">发音</string>
   <string name="multimedia_editor_text_field_editing_clear">清空</string>
   <string name="multimedia_editor_text_field_editing_clone">克隆</string>
   <string name="multimedia_editor_text_field_editing_translate">翻译</string>
+  <!-- message to user, when there is no text or many words, but the user tries something -->
   <string name="multimedia_editor_text_field_editing_no_text">请输入一些文本</string>
   <string name="multimedia_editor_text_field_editing_many_words">字典通常查询只一个词语</string>
+  <!-- message when cloning -->
   <string name="multimedia_editor_text_field_editing_clone_source">从……</string>
+  <!-- Multimedia card editor activity -->
+  <!-- for buttons -->
+  <!-- delete confirmation -->
+  <!-- Image editing -->
+  <!-- for buttons -->
   <string name="multimedia_editor_image_field_editing_galery">图库</string>
   <string name="multimedia_editor_image_field_editing_photo">相机</string>
+  <!-- General -->
+  <!-- message on the progress dialog for the user to wait, means process -->
   <string name="multimedia_editor_general_downloading">下载中</string>
+  <!-- when process finishes -->
   <string name="multimedia_editor_general_done">完成</string>
+  <!-- General word search and failures -->
   <string name="multimedia_editor_error_word_not_found">未找到该词</string>
+  <!-- failure when contacting glosbe or similar -->
   <string name="multimedia_editor_trans_getting_failure">获取翻译失败</string>
   <string name="multimedia_editor_searching_word">正在搜索单词</string>
+  <!-- General -->
   <string name="multimedia_editor_progress_wait_title">等待</string>
+  <!-- not a good message, when an unexpected error happens -->
   <string name="multimedia_editor_something_wrong">出错了</string>
   <string name="multimedia_editor_attach_mm_content">为笔记添加多媒体内容</string>
   <string name="multimedia_editor_attach_media">附加媒体</string>
+  <!-- Audio view -->
+  <!-- Message when recording fails -->
   <string name="multimedia_editor_audio_view_recording_failed">录音失败</string>
   <string name="multimedia_editor_audio_view_playing_failed">播放失败</string>
+  <!-- Activity titles -->
   <string name="title_activity_edit_text">编辑字段</string>
   <string name="title_activity_translation">翻译</string>
   <string name="title_activity_load_pronounciation">发音</string>
   <string name="title_activity_search_image">谷歌图片搜索</string>
+  <!-- Network failure -->
   <string name="network_no_connection">无网络连接</string>
 </resources>

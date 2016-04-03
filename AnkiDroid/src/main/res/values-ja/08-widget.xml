@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Widget -->
   <string name="widget_minimum_cards_due_notification_ticker_title">課題</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">あと%d枚</string>
   <string name="widget_no_cards_due">学習予定日時に達したカードはありません</string>

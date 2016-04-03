@@ -39,8 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX%</string>
-  <string name="drawer_open">Otvoriť zoznam</string>
+  <!-- Navigation drawer strings -->
+  <string name="drawer_open">Otvoriť lištu</string>
   <string name="drawer_close">Zavrieť lištu</string>
   <string name="CardEditorLaterMessage">Informácie uložené na neskôr</string>
   <string name="CardEditorCardDeck">Balíček karty:</string>
@@ -56,6 +58,7 @@
   <string name="no_tags">Ešte ste nepridali žiadne štítky.</string>
   <string name="sdcard_missing_message">Pre prístup k vašim balíčkom odpojte USB</string>
   <string name="updated_version">Aktualizované na verziu %s</string>
+  <!-- Reviewer.java -->
   <string name="enable_whiteboard">Povoliť tabuľu</string>
   <string name="disable_whiteboard">Zakázať tabuľu</string>
   <string name="show_whiteboard">Zobraziť tabuľu</string>
@@ -65,6 +68,7 @@
   <string name="leech_suspend_notification">Karta označená ako pijavica a pozastavená</string>
   <string name="leech_notification">Karta označená ako pijavica</string>
   <string name="corrupt_font">Poškodený súbor písma %s</string>
+  <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>Otázka</item>
     <item>Triediace pole</item>
@@ -78,7 +82,16 @@
     <item>Štítky</item>
     <item>Chyby</item>
     <item>Opakovania</item>
+    <!--
+    <item>Changed</item>
+    <item>Created</item>
+    <item>Due</item>
+    <item>Ease</item>
+    <item>Edited</item>
+    <item>Interval</item>
+        -->
   </string-array>
+  <!-- Custom study options -->
   <string name="custom_study_increase_new_limit">Zvýšiť dnešný limit nových kariet</string>
   <string name="custom_study_increase_review_limit">Zvýšiť dnešný limit kariet na opakovanie</string>
   <string name="custom_study_review_forgotten">Zopakovať zabudnuté karty</string>
@@ -86,6 +99,7 @@
   <string name="custom_study_random_selection">Študovať náhodný výber kariet</string>
   <string name="custom_study_preview_new">Náhľad nových kariet</string>
   <string name="custom_study_limit_tags">Obmedziť na určité štítky</string>
+  <!-- Card editor -->
   <string name="cardeditor_title_add_note">Pridať poznámku</string>
   <string name="cardeditor_title_edit_card">Upraviť poznámku</string>
   <string name="discard_unsaved_changes">Zatvoriť a stratiť aktuálny vstup?</string>
@@ -93,7 +107,7 @@
   <string name="saving_facts">Poznámka sa ukladá</string>
   <string name="saving_model">Ukladanie modelu</string>
   <string name="add">Pridať</string>
-  <string name="save">Save</string>
+  <string name="save">Uložiť</string>
   <string name="close">Zavrieť</string>
   <string name="select">Zvoliť</string>
   <string name="saving_changes">Ukladajú sa zmeny ...</string>
@@ -128,7 +142,7 @@
   <string name="help_title">Pomocník</string>
   <string name="check_db">Skontrolovať databázu</string>
   <string name="check_media">Skontrolovať multimédia</string>
-  <string name="empty_cards">Vymazať všetky karty</string>
+  <string name="empty_cards">Prázdne karty</string>
   <string name="check_db_message">Kontroluje sa databáza&#8230;</string>
   <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Typ odpovede: neznáme pole %s</string>
@@ -156,7 +170,7 @@
   <string name="import_hint">Ak chcete importovať karty, umiestnite súbor apkg do adresára %s a stlačte ok</string>
   <string name="upgrade_import_no_file_found">Žiaden importovateľný %1$s súbor nebol nájdený</string>
   <string name="study_options">Nastavenia balíčka</string>
-  <string name="select_tts">Set TTS language</string>
+  <string name="select_tts">Nastaviť jazyk TTS (Text na reč)</string>
   <string name="custom_study">Vlastné štúdium</string>
   <string name="more_options">Viac</string>
   <string name="dyn_deck_desc">Toto je špeciálny balíček na štúdium mimo bežného plánu. Karty sa automaticky vrátia do svojich pôvodných balíčkov po tom, čo si ich zopakujete. Odstránením tohto balíčku zo zoznamu balíčkov sa všetky zostávajúce karty vrátia do ich pôvodných balíčkov.</string>
@@ -168,6 +182,7 @@
   <string name="tag_editor_add_feedback">Ťuknite “%2$s” pre potvrdenie pridania “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Existujúci štítok “%1$s” zvolený</string>
   <string name="lookup_hint">Po skopírovaní textu, ťuknite kdekoľvek na kartičku, aby sa vám zobrazila ikona hľadania</string>
+  <!-- Time spans -->
   <plurals name="time_span_seconds">
     <item quantity="one">%s sekunda</item>
     <item quantity="few">%s sekundy</item>
@@ -198,6 +213,9 @@
     <item quantity="few">%s roky</item>
     <item quantity="other">%s rokov</item>
   </plurals>
+  <!-- The reason for making a simple “< x” translatable are RTL
+         languages which apparently use the other symbol to mean less
+         than. -->
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">Tento balíček už existuje</string>
   <string name="decks_rename_filtered_nosubdecks">Filtrovaný balíček nemôže mať podbalíčky</string>

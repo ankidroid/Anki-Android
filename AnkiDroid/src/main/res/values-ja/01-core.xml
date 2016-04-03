@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Navigation drawer items-->
   <string name="decks">デッキリスト</string>
   <string name="card_browser">ブラウザ</string>
   <string name="statistics">統計</string>
@@ -51,6 +52,7 @@
   <string name="studyoptions_total_cards">カード総数:</string>
   <string name="studyoptions_eta">推定学習時間 (分):</string>
   <string name="studyoptions_start">学習開始</string>
+  <!-- DeckPicker.java -->
   <string name="study_more">さらに学習</string>
   <plurals name="deckpicker_title">
     <item quantity="other">現在の課題: %1$d枚 (%2$s)</item>
@@ -58,9 +60,11 @@
   <plurals name="reviewer_window_title">
     <item quantity="other">残り %d 分</item>
   </plurals>
+  <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
     <item quantity="other">今日は%1$d枚のカードを%2$sで学習しています</item>
   </plurals>
+  <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">回答の入力</string>
   <string name="show_answer">解答を表示</string>
   <string name="ease_button_again">もう一度</string>
@@ -98,12 +102,20 @@
   <string name="new_dynamic_deck">フィルターデッキを作成</string>
   <string name="night_mode">ナイトモード</string>
   <string name="directory_inaccessible">AnkiDroid ディレクトリにアクセスできません</string>
+  <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
   <string name="time_quantity_seconds">%d秒</string>
   <string name="time_quantity_minutes">%d分</string>
   <string name="time_quantity_hours">%d時間</string>
   <string name="time_quantity_days">%d日間</string>
   <string name="time_quantity_months">%.1fヶ月</string>
   <string name="time_quantity_years">%.1f年</string>
+  <!-- or "%.1f a" -->
   <string name="later">後で</string>
   <string name="rebuild_cram_deck">フィルターデッキを再構築しています...</string>
   <string name="rebuild_cram_label">再構築</string>
@@ -130,6 +142,7 @@
   <string name="export_collection">エクスポート（全デッキ）</string>
   <string name="export_deck">このデッキをエクスポート</string>
   <string name="nothing">Nothing</string>
+  <!-- Card template editor -->
   <string name="title_activity_template_editor">カードレイアウト</string>
   <string name="card_template_editor_front">表面のテンプレート</string>
   <string name="card_template_editor_back">裏面のテンプレート</string>
@@ -141,6 +154,7 @@
   </plurals>
   <string name="invalid_template">カードを作成できませんでした</string>
   <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、一つ以上のノートも削除することになります。まずは新しいカードタイプを追加してください。</string>
+  <!-- Permissions -->
   <string name="read_write_permission_label">AnkiDroid データベースの読み書き</string>
   <string name="read_write_permission_description">このアプリケーションに新規のノート・カード・ノートタイプ・デッキの作成を許可するとともに、既存のノート・カード・ノートタイプ・デッキへのアクセスも許可します</string>
 </resources>

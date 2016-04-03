@@ -50,10 +50,10 @@
   <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
   <string name="error_handling_title">Error handling</string>
   <string name="error_handling_options">Parinktys</string>
-  <string name="backup_retry_opening">Retry opening</string>
-  <string name="backup_error_menu_repair">Repair database</string>
+  <string name="backup_retry_opening">Atidaryti dar kartą</string>
+  <string name="backup_error_menu_repair">Taisyti duomenų bazę</string>
   <string name="backup_repair_deck">Taisyti</string>
-  <string name="backup_repair_deck_progress">Repairing database&#8230;</string>
+  <string name="backup_repair_deck_progress">Duomenų bazė taisoma&#8230;</string>
   <string name="backup_error">Klaida</string>
   <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_select_title">Select backup to restore</string>

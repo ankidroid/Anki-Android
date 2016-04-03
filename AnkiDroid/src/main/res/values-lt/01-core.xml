@@ -80,7 +80,7 @@
   <string name="studyoptions_congrats_undo">Atšaukti %s</string>
   <string name="menu_import">Importuoti</string>
   <string name="undo">Atšaukti</string>
-  <string name="undo_action_review">last review</string>
+  <string name="undo_action_review">paskutinė peržiūra</string>
   <string name="undo_action_edit">pastabos pakeitimą</string>
   <string name="undo_action_bury">pastabos slėpimą</string>
   <string name="undo_action_suspend_card">kortelės sustabdymą</string>

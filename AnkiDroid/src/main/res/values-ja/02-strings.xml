@@ -39,7 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX%</string>
+  <!-- Navigation drawer strings -->
   <string name="drawer_open">ドロワーを開く</string>
   <string name="drawer_close">ドロワーを閉じる</string>
   <string name="CardEditorLaterMessage">後日のために情報を保存</string>
@@ -56,6 +58,7 @@
   <string name="no_tags">まだタグが一つも作成されていません</string>
   <string name="sdcard_missing_message">USBストレージとして使用されているので、SDカードは使用できません。デッキにアクセスするには、USBを切断してください。</string>
   <string name="updated_version">バージョン%sへ更新しました</string>
+  <!-- Reviewer.java -->
   <string name="enable_whiteboard">ホワイトボードを有効にする</string>
   <string name="disable_whiteboard">ホワイトボードを無効にする</string>
   <string name="show_whiteboard">ホワイトボードを表示する</string>
@@ -65,6 +68,7 @@
   <string name="leech_suspend_notification">このカードは \"leech\" （無駄）というタグが付けられ、保留されました</string>
   <string name="leech_notification">このカードに \"leech\" （無駄）というタグを付けました</string>
   <string name="corrupt_font">使用できないフォントファイル %s</string>
+  <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>質問</item>
     <item>ソートフィールド</item>
@@ -78,7 +82,16 @@
     <item>タグ</item>
     <item>忘却回数</item>
     <item>学習回数</item>
+    <!--
+    <item>Changed</item>
+    <item>Created</item>
+    <item>Due</item>
+    <item>Ease</item>
+    <item>Edited</item>
+    <item>Interval</item>
+        -->
   </string-array>
+  <!-- Custom study options -->
   <string name="custom_study_increase_new_limit">今日の新規カードの上限を上げる</string>
   <string name="custom_study_increase_review_limit">今日の復習カードの上限を上げる</string>
   <string name="custom_study_review_forgotten">忘却したカードを復習する</string>
@@ -86,6 +99,7 @@
   <string name="custom_study_random_selection">カードをランダムに学習する</string>
   <string name="custom_study_preview_new">新規カードをプレビューする</string>
   <string name="custom_study_limit_tags">特定のタグによる選択</string>
+  <!-- Card editor -->
   <string name="cardeditor_title_add_note">ノートを追加</string>
   <string name="cardeditor_title_edit_card">ノートの編集</string>
   <string name="discard_unsaved_changes">閉じて現在の入力を破棄しますか？</string>
@@ -150,7 +164,7 @@
   <string name="import_hint">あらかじめコレクションファイル（*.apkg）を \"%s\" に置いた後、この画面で「OK」ボタンをタップしてください。</string>
   <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>
   <string name="study_options">デッキ オプション</string>
-  <string name="select_tts">Set TTS language</string>
+  <string name="select_tts">テキスト読み上げ機能の言語設定</string>
   <string name="custom_study">カスタム学習</string>
   <string name="more_options">その他</string>
   <string name="dyn_deck_desc">これは標準のスケジュールから外れて学習する特別なデッキです。 カードは復習が済んだら元のデッキに自動的に戻ります。 このデッキを削除すると、残りのカードも全て元のデッキに戻ります。</string>
@@ -163,6 +177,7 @@
 </string>
   <string name="tag_editor_add_feedback_existing">既存のタグ「%1$s」が選択されました</string>
   <string name="lookup_hint">文字列をコピーした後、カード内でタップすると、検索辞書アイコンが表示されます</string>
+  <!-- Time spans -->
   <plurals name="time_span_seconds">
     <item quantity="other">%s秒</item>
   </plurals>
@@ -181,6 +196,9 @@
   <plurals name="time_span_years">
     <item quantity="other">%s年</item>
   </plurals>
+  <!-- The reason for making a simple “< x” translatable are RTL
+         languages which apparently use the other symbol to mean less
+         than. -->
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">そのデッキ名は既に使用されています</string>
   <string name="decks_rename_filtered_nosubdecks">フィルターデッキ内にはサブデッキを作れません</string>

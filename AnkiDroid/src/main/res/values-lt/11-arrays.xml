@@ -95,10 +95,10 @@
   </string-array>
   <string-array name="day_theme_labels">
     <item>Numatytas</item>
-    <item>Plain</item>
+    <item>Paprastas</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Default</item>
+    <item>Numatytas</item>
     <item>Juodas</item>
   </string-array>
 </resources>

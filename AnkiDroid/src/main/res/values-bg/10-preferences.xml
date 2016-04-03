@@ -162,10 +162,10 @@
   <string name="enable_api_summary">Нека други приложения, се свържат с AnkiDroid и да четат / записват данни без Ваша намеса</string>
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Разширена статистика</string>
-  <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
+  <string name="enable_advanced_statistics_title">Разрешаване на разширена статистика</string>
   <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
   <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
-  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Точност на изчисленията</string>
   <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
   <!-- Custom sync server settings -->
   <string name="custom_sync_server_title">Синхрон на потребителски сървър</string>

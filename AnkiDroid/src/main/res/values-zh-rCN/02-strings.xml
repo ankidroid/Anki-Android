@@ -39,7 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX%</string>
+  <!-- Navigation drawer strings -->
   <string name="drawer_open">打开侧栏</string>
   <string name="drawer_close">关闭侧栏</string>
   <string name="CardEditorLaterMessage">随后保存相关信息</string>
@@ -56,6 +58,7 @@
   <string name="no_tags">你还没有添加任何标签。</string>
   <string name="sdcard_missing_message">SD卡暂时不可用，因为当前正作为USB存储设备。拔掉USB之后即可访问你的牌组。</string>
   <string name="updated_version">更新到%s版本</string>
+  <!-- Reviewer.java -->
   <string name="enable_whiteboard">启用白板</string>
   <string name="disable_whiteboard">禁用白板</string>
   <string name="show_whiteboard">显示白板</string>
@@ -65,6 +68,7 @@
   <string name="leech_suspend_notification">卡片被标记为记忆难点并暂停复习</string>
   <string name="leech_notification">卡片被标记为记忆难点</string>
   <string name="corrupt_font">字体文件 %s 已损坏</string>
+  <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>问题</item>
     <item>字段</item>
@@ -78,7 +82,16 @@
     <item>标签</item>
     <item>失误</item>
     <item>复习</item>
+    <!--
+    <item>Changed</item>
+    <item>Created</item>
+    <item>Due</item>
+    <item>Ease</item>
+    <item>Edited</item>
+    <item>Interval</item>
+        -->
   </string-array>
+  <!-- Custom study options -->
   <string name="custom_study_increase_new_limit">增加今天的新卡片数量</string>
   <string name="custom_study_increase_review_limit">增加今天的复习数量</string>
   <string name="custom_study_review_forgotten">复习忘记的卡片</string>
@@ -86,6 +99,7 @@
   <string name="custom_study_random_selection">学习随机选择的卡片</string>
   <string name="custom_study_preview_new">预览新卡片</string>
   <string name="custom_study_limit_tags">仅限于特定标签</string>
+  <!-- Card editor -->
   <string name="cardeditor_title_add_note">增加条目注释</string>
   <string name="cardeditor_title_edit_card">编辑卡牌记录</string>
   <string name="discard_unsaved_changes">直接关闭吗？您将丢失所有已输入的内容。</string>
@@ -93,7 +107,7 @@
   <string name="saving_facts">保存卡牌记录</string>
   <string name="saving_model">正在保存</string>
   <string name="add">添加</string>
-  <string name="save">Save</string>
+  <string name="save">保存</string>
   <string name="close">关闭</string>
   <string name="select">选择</string>
   <string name="saving_changes">正在保存设置&#8230;</string>
@@ -122,7 +136,7 @@
   <string name="help_title">帮助</string>
   <string name="check_db">检查数据</string>
   <string name="check_media">检查媒体</string>
-  <string name="empty_cards">Empty cards</string>
+  <string name="empty_cards">空白卡片</string>
   <string name="check_db_message">正在检查数据库\n请等待...</string>
   <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">输入答案：未知字段 %s</string>
@@ -150,7 +164,7 @@
   <string name="import_hint">请把apkg文件放在%s目录中，然后按确定。</string>
   <string name="upgrade_import_no_file_found">没有找到可导入的 %1$s 文件</string>
   <string name="study_options">牌组选项</string>
-  <string name="select_tts">Set TTS language</string>
+  <string name="select_tts">设置 TTS 语言</string>
   <string name="custom_study">自定义学习</string>
   <string name="more_options">更多</string>
   <string name="dyn_deck_desc">这是一个在计划外学习的特殊牌组，卡片在复习后会自动返回原来的牌组。\n在牌组列表中删除此牌组也将会把所有卡片都移回原来的牌组。</string>
@@ -162,6 +176,7 @@
   <string name="tag_editor_add_feedback">点击“%2$s”以确认添加“%1$s”</string>
   <string name="tag_editor_add_feedback_existing">已选中%1$s</string>
   <string name="lookup_hint">复制文字后，点击卡片任意处以显示搜索图标</string>
+  <!-- Time spans -->
   <plurals name="time_span_seconds">
     <item quantity="other">%s秒</item>
   </plurals>
@@ -180,6 +195,9 @@
   <plurals name="time_span_years">
     <item quantity="other">%s年</item>
   </plurals>
+  <!-- The reason for making a simple “< x” translatable are RTL
+         languages which apparently use the other symbol to mean less
+         than. -->
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">That deck already exists</string>
   <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
