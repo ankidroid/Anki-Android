@@ -89,6 +89,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private List<Map<String, String>> mCards;
     private HashMap<String, String> mDeckNames;
     private ArrayList<JSONObject> mDropDownDecks;
+    private ListView mCardsListView;
     private SearchView mSearchView;
     private MultiColumnListAdapter mCardsAdapter;
     private String mSearchTerms;
@@ -115,8 +116,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private static final int EDIT_CARD = 0;
     private static final int ADD_NOTE = 1;
     private static final int DEFAULT_FONT_SIZE_RATIO = 100;
-    // Minimum number of cards to render
-    public static final int MIN_CARDS_TO_RENDER = 500;
     // Should match order of R.array.card_browser_order_labels
     public static final int CARD_ORDER_NONE = 0;
     private static final String[] fSortTypes = new String[] {
@@ -408,7 +407,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         mCards = new ArrayList<>();
-        ListView cardsListView = (ListView) findViewById(R.id.card_browser_list);
+        mCardsListView = (ListView) findViewById(R.id.card_browser_list);
         // Create a spinner for column1
         Spinner cardsColumn1Spinner = (Spinner) findViewById(R.id.browser_column1_spinner);
         ArrayAdapter<CharSequence> column1Adapter = ArrayAdapter.createFromResource(this,
@@ -475,16 +474,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 "flags",
                 sflRelativeFontSize,
                 sflCustomFont);
-        // link the adapter to the main cardsListView
-        cardsListView.setAdapter(mCardsAdapter);
-        // make the second column load dynamically when scrolling
-        cardsListView.setOnScrollListener(new RenderOnScroll());
+        // link the adapter to the main mCardsListView
+        mCardsListView.setAdapter(mCardsAdapter);
+        // make the items (e.g. question & answer) render dynamically when scrolling
+        mCardsListView.setOnScrollListener(new RenderOnScroll());
         // set the spinner index
         cardsColumn1Spinner.setSelection(mColumn1Index);
         cardsColumn2Spinner.setSelection(mColumn2Index);
 
 
-        cardsListView.setOnItemClickListener(new OnItemClickListener() {
+        mCardsListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // load up the card selected on the list
@@ -498,7 +497,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 startActivityForResultWithAnimation(editCard, EDIT_CARD, ActivityTransitionAnimation.LEFT);
             }
         });
-        cardsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+        mCardsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 mPositionInCardsList = position;
@@ -807,9 +806,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // clear the existing card list
             getCards().clear();
             mCardsAdapter.notifyDataSetChanged();
-            // Perform database query to get all card ids / sfld. Shows "filtering cards..." progress message
+            //  estimate maximum number of cards that could be visible (assuming worst-case minimum row height of 20dp)
+            int numCardsToRender = (int) Math.ceil(mCardsListView.getHeight()/
+                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics())) + 5;
+            // Perform database query to get all card ids
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SEARCH_CARDS, mSearchCardsHandler, new DeckTask.TaskData(
-                    new Object[] { mDeckNames, searchText, ((mOrder != CARD_ORDER_NONE)) }));
+                    new Object[] { mDeckNames, searchText, ((mOrder != CARD_ORDER_NONE)),  numCardsToRender}));
         }
     }
 
