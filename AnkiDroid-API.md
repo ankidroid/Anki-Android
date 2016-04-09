@@ -132,3 +132,4 @@ Sync Intent [
 ```
 
 As an example, if you import [this XML file](https://raw.githubusercontent.com/ankidroid/apisample/master/AnkiDroid_Sync.prf.xml) into a Tasker profile, it will trigger AnkiDroid to sync when the power is plugged in. See the [Tasker FAQ](http://tasker.dinglisch.net/userguide/en/faqs/faq-how.html#q) for instructions on how to import profiles.
+For the App Automate you can import [this example Flow](https://llamalab.com/automate/community/flows/3963) to sync every 8 hours and a quarter hour after you closed the app.
