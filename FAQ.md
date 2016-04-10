@@ -98,8 +98,20 @@ Parallel versions of AnkiDroid are not officially maintained, but can be built f
 
 Note that we will not provide any support for these pre-built parallel versions, they are only given as a proof of concept for the build script.
 
-### Lost my decks
-It appears like your decks have disappeared? Don't burn your phone yet: AnkiDroid does regular backups, so you will probably be able to recover your decks. See the [backups section of the manual](http://ankidroid.org/docs/manual.html#backups) for more info.
+### Lost my cards
+Does it appear like your cards have disappeared? Don't burn your phone yet: AnkiDroid does [regular backups](http://ankidroid.org/docs/manual.html#backups), so you will probably be able to recover everything in the unlikely event that this occurs. First of all though, here are some common reasons why users may mistakenly think that their cards have been 'deleted' by the app:
+
+1) Misunderstanding of how spaced repetition works
+
+Some users that are unfamiliar with how Anki's spaced repetition algorithm works may mistake the fact that the cards stop appearing in the study screen to mean that their cards have been 'deleted' by the app. Before assuming that your cards have disappeared, please open the [card browser](https://ankidroid.org/docs/manual.html#browser), make sure that 'all decks' is selected and confirm there that your cards are really not there. If the cards *are* in fact there, you may like to read about the spaced repetition scheduling algorithm in the [Anki manual](http://ankisrs.net/docs/manual.html#introduction) and [this FAQ](https://github.com/ankidroid/Anki-Android/wiki/FAQ#how-can-i-study-my-cards-exactly-when-i-want-to).
+
+2) User error when using the cloud sync service
+
+Sometimes when using the [AnkiWeb cloud sync service](https://ankidroid.org/docs/manual.html#AnkiDesktop), situations can arise where Anki is unable to automatically resolve conflicts between your local and online collections. In this case AnkiDroid may ask you to manually resolve the conflict by downloading from or uploading to AnkiWeb. If you accidentally pushed the wrong button and lost some cards then you should [restore the previous version from a backup](https://ankidroid.org/docs/manual.html#backups) and refer to the section in the manual about [resolving conflicts](https://ankidroid.org/docs/manual.html#AnkiWebConflicts).
+
+3) Data corruption
+
+In some very rare cases the AnkiDroid database can get corrupted, usually due to some error with the file system, or users trying to use a removable SD card (which is **not** officially supported). In such cases AnkiDroid will usually guide you through the steps that you can take to restore your data, but if all else fails you can usually restore from one of the [automatic backups](https://ankidroid.org/docs/manual.html#backups).
 
 ### Help! My collection is corrupted!
 Database corruption can occasionally happen for a small minority of users for reasons unknown to us. If this happens to you, we recommend taking the following course of action:
