@@ -2207,6 +2207,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Timber.d("fillFlashcard()");
         Timber.d("base url = %s", mBaseUrl);
         if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
+            CompatHelper.getCompat().setHTML5MediaAutoPlay(mNextCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
             mNextCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
             mNextCard.setVisibility(View.VISIBLE);
             mCardFrame.removeView(mCard);
@@ -2216,6 +2217,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mNextCard.setVisibility(View.GONE);
             mCardFrame.addView(mNextCard, 0);
         } else if (mCard != null) {
+            CompatHelper.getCompat().setHTML5MediaAutoPlay(mCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
             mCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
         }
         if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {

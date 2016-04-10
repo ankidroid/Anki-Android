@@ -15,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.CookieSyncManager;
+import android.webkit.WebSettings;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RemoteViews;
@@ -85,6 +86,11 @@ public class CompatV10 implements Compat {
     // Note: CookieSyncManager is deprecated since API level 21, but still need to be used here.
     public void flushWebViewCookies() {
         CookieSyncManager.getInstance().sync();
+    }
+
+    // Below API level 17, there is no simple way to enable the auto play feature of HTML media elements.
+    public void setHTML5MediaAutoPlay(WebSettings webSettings, Boolean allow) {
+
     }
 
     // Below API level 16, widget dimensions cannot be adjusted

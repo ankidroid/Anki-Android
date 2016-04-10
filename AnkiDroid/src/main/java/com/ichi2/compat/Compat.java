@@ -22,6 +22,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.widget.RemoteViews;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
@@ -62,5 +63,6 @@ public interface Compat {
     Intent getPreferenceSubscreenIntent(Context context, String subscreen);
     void prepareWebViewCookies(Context context);
     void flushWebViewCookies();
+    void setHTML5MediaAutoPlay(WebSettings settings, Boolean allow);
 }
 

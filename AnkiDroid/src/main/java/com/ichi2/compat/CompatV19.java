@@ -16,7 +16,7 @@ import com.ichi2.anki.R;
 
 /** Implementation of {@link Compat} for SDK level 19 */
 @TargetApi(19)
-public class CompatV19 extends CompatV16 implements Compat {
+public class CompatV19 extends CompatV17 implements Compat {
     private static final int ANIMATION_DURATION = 200;
 
     @Override
