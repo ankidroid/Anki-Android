@@ -111,7 +111,7 @@ Sometimes when using the [AnkiWeb cloud sync service](https://ankidroid.org/docs
 
 3) Data corruption
 
-In some very rare cases the AnkiDroid database can get corrupted, usually due to some error with the file system, or users trying to use a removable SD card (which is **not** officially supported). In such cases AnkiDroid will usually guide you through the steps that you can take to restore your data, but if all else fails you can usually restore from one of the [automatic backups](https://ankidroid.org/docs/manual.html#backups).
+In some very rare cases the AnkiDroid database can get corrupted, usually due to some error with the file system, or users trying to use a removable SD card (which is **not** officially supported). In such cases AnkiDroid will guide you through the steps that you can take to restore your data, but if you make a mistake here by choosing the wrong option you can always restore from one of the [automatic backups](https://ankidroid.org/docs/manual.html#backups).
 
 ### Help! My collection is corrupted!
 Database corruption can occasionally happen for a small minority of users for reasons unknown to us. If this happens to you, we recommend taking the following course of action:
