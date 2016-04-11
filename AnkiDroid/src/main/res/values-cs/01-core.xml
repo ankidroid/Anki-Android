@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Navigation drawer items-->
   <string name="decks">Balíčky</string>
   <string name="card_browser">Prohlížeč karet</string>
   <string name="statistics">Statistiky</string>
@@ -51,6 +52,7 @@
   <string name="studyoptions_total_cards">Celkem karet:</string>
   <string name="studyoptions_eta">Odhadovaný čas (min):</string>
   <string name="studyoptions_start">Studovat</string>
+  <!-- DeckPicker.java -->
   <string name="study_more">Vlastní studium</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d karta ke zkoušení (%2$s)</item>
@@ -62,11 +64,13 @@
     <item quantity="few">%d minutes left</item>
     <item quantity="other">%d minut zbývá</item>
   </plurals>
+  <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
     <item quantity="one">Dnes studována %1$d karta za %2$s</item>
     <item quantity="few">Studied %1$d cards in %2$s today</item>
     <item quantity="other">Dnes studováno %1$d karet za %2$s</item>
   </plurals>
+  <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">Zapište odpověď</string>
   <string name="show_answer">Zobrazit odpověď</string>
   <string name="ease_button_again">Znovu</string>
@@ -104,13 +108,20 @@
   <string name="new_dynamic_deck">Vytvořit filtrovaný balíček</string>
   <string name="night_mode">Noční režim</string>
   <string name="directory_inaccessible">AnkiDroid adresář není přístupný</string>
+  <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
   <string name="time_quantity_seconds">%d s</string>
   <string name="time_quantity_minutes">%d min</string>
   <string name="time_quantity_hours">%d hodin</string>
   <string name="time_quantity_days">%d dní</string>
   <string name="time_quantity_months">%.1f měsíců</string>
   <string name="time_quantity_years">%.1f roků</string>
-  <string name="later">Později</string>
+  <!-- or "%.1f a" -->
   <string name="rebuild_cram_deck">Rekonstrukce balíčku šprtání.\nProsím čekejte...</string>
   <string name="rebuild_cram_label">Znovu sestavit</string>
   <string name="empty_cram_label">Vyprázdnit</string>
@@ -136,6 +147,7 @@
   <string name="export_collection">Export kolekce</string>
   <string name="export_deck">Export balíčku</string>
   <string name="nothing">Nic</string>
+  <!-- Card template editor -->
   <string name="title_activity_template_editor">Typ karet</string>
   <string name="card_template_editor_front">Šablona lícu</string>
   <string name="card_template_editor_back">Šablona rubu</string>
@@ -149,6 +161,7 @@
   </plurals>
   <string name="invalid_template">Karta nemůže být vytvořena</string>
   <string name="card_template_editor_would_delete_note"> Odstraněním tohoto typu karty můžete způsobit, že jedna nebo         více poznámek budou odstraněny. Nejprve vytvořte nový typ karty.</string>
+  <!-- Permissions -->
   <string name="read_write_permission_label">Čtení a zápis do AnkiDroid databáze</string>
   <string name="read_write_permission_description">Umožnit aplikaci přístup k poznámkám, kartám, typům karet, balíčkům a k vytvářením nových</string>
 </resources>

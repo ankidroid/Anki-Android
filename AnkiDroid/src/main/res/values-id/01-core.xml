@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Navigation drawer items-->
   <string name="decks">Geladak</string>
   <string name="card_browser">Kartu browser</string>
   <string name="statistics">Statistik</string>
@@ -51,6 +52,7 @@
   <string name="studyoptions_total_cards">Total kartu:</string>
   <string name="studyoptions_eta">Perkiraan waktu (menit):</string>
   <string name="studyoptions_start">Belajar</string>
+  <!-- DeckPicker.java -->
   <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="other">%1$d kartu jatuh tempo (%2$s)</item>
@@ -58,9 +60,11 @@
   <plurals name="reviewer_window_title">
     <item quantity="other">%d menit tersisa</item>
   </plurals>
+  <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
     <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
+  <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">Ketik jawaban</string>
   <string name="show_answer">Tampilkan jawaban</string>
   <string name="ease_button_again">Ulang</string>
@@ -98,13 +102,20 @@
   <string name="new_dynamic_deck">Buat penyaringan dek</string>
   <string name="night_mode">Mode malam</string>
   <string name="directory_inaccessible">AnkiDroid direktori tidak dapat diakses</string>
+  <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
   <string name="time_quantity_seconds">%d s</string>
   <string name="time_quantity_minutes">%d min</string>
   <string name="time_quantity_hours">%d h</string>
   <string name="time_quantity_days">%d d</string>
   <string name="time_quantity_months">%.1f mo</string>
   <string name="time_quantity_years">%.1f yr</string>
-  <string name="later">Nanti</string>
+  <!-- or "%.1f a" -->
   <string name="rebuild_cram_deck">Bangun kembali dek persiapan</string>
   <string name="rebuild_cram_label">Bangun kembali</string>
   <string name="empty_cram_label">Kosong</string>
@@ -130,6 +141,7 @@
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Export deck</string>
   <string name="nothing">Tidak ada</string>
+  <!-- Card template editor -->
   <string name="title_activity_template_editor">Card types</string>
   <string name="card_template_editor_front">Template depan</string>
   <string name="card_template_editor_back">Template Belakang</string>
@@ -141,6 +153,7 @@
   </plurals>
   <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note">Menghapus jenis kartu ini akan menyebabkan satu atau lebih catatan terhapus. Harap membuat dahulu jenis kartu yang baru.</string>
+  <!-- Permissions -->
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
   <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

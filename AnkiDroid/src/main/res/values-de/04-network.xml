@@ -45,7 +45,6 @@
   <string name="vague_error">Fehler</string>
   <string name="retry">Erneut versuchen</string>
   <string name="cancel">Abbrechen</string>
-  <string name="loading_shared_decks">Verfügbare öffentliche Stapel werden geladen&#8230;</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Nutzungsbedingungen</a></string>
   <string name="menu_get_shared_decks">Öffentlichen Stapel hinzufügen</string>
   <string name="connection_error_message">Ein Netzwerkfehler ist aufgetreten.</string>

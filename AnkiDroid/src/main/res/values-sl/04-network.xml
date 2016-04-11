@@ -45,13 +45,13 @@
   <string name="vague_error">Napaka</string>
   <string name="retry">Poizkusi znova</string>
   <string name="cancel">Prekliči</string>
-  <string name="loading_shared_decks">Nalaganje razpoložljivih deljenih kompletov &#8230;</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Pogoji storitve</a></string>
   <string name="menu_get_shared_decks">Dobi deljene komplete</string>
   <string name="connection_error_message">Pojavila se je omrežna napaka</string>
   <string name="not_logged_in_title">Prijavite se v AnkiWeb</string>
   <string name="login_create_account_message">Za uporabo storitve sinhronizacije v oblaku se morate prijaviti v račun tretje osebe. Enega lahko ustvarite v naslednjem koraku.</string>
   <string name="no_email_client">Noben e-poštni odjemalec ni na voljo</string>
+  <!-- MyAccount.java -->
   <string name="username">E-poštni naslov</string>
   <string name="username_repeat">Ponovite e-poštni naslov</string>
   <string name="password">Geslo</string>
@@ -65,6 +65,7 @@
   <string name="alert_logging_message">Prijavljanje &#8230;</string>
   <string name="invalid_username_password">Neveljaven e-poštni naslov ali geslo</string>
   <string name="reset_password">Ponastavi geslo</string>
+  <!-- AndroidManifest.xml -->
   <string name="downloaddeck_search">Poišči</string>
   <string name="preferences_title">Možnosti</string>
   <string name="deckpreferences_title">Možnosti za XXX</string>

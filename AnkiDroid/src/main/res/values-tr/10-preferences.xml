@@ -39,8 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- generic strings -->
   <string name="disabled">Devredışı</string>
   <string name="enabled">Etkin</string>
+  <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Genel ayarlar</string>
   <string name="pref_cat_reviewing">Çalışma</string>
@@ -51,6 +53,8 @@
   <string name="pref_cat_automatic_display">Cevabı otomatik göster</string>
   <string name="pref_cat_appearance">Görünüş</string>
   <string name="pref_cat_appearance_summ">Temaları ve varsayılan fontu değiştir</string>
+  <string name="pref_cat_themes">Themes</string>
+  <string name="pref_cat_fonts">Fonts</string>
   <string name="pref_cat_gestures">Jestler</string>
   <string name="pref_cat_gestures_summ">Düğmeler yerine dokunma ve kaydırma kullan</string>
   <string name="pref_cat_actions">Eylemler</string>
@@ -61,6 +65,7 @@
   <string name="pref_cat_plugins">Eklentiler</string>
   <string name="about_title">AnkiDroid hakkında</string>
   <string name="about_version">Sürüm: </string>
+  <!-- preferences.xml entries-->
   <string name="whiteboard_stroke_width">Kontur genişliği</string>
   <string name="whiteboard_black">Siyah konturlar</string>
   <string name="whiteboard_black_summ">Daha az hafıza kullanır, gece modu hariç</string>
@@ -114,6 +119,8 @@
   <string name="fix_hebrew_text_summ">İbrânice sesli harflerin düzgün gözükmesi için çözüm</string>
   <string name="fix_hebrew_instructions">Bu ayar İbrânice yazılarda sesli harflerin düzgün gösterilmesi için Android\'in RTL algoritmasını atlar.\n\nBunun işe yaraması için, Tohu.tff fontunu indirip kendiniz şu klasöre kopyalamanız gerekiyor:\n%s/fonts/\n\nKartlarınızda bir değişiklik yapmanız gerekmez.</string>
   <string name="fix_hebrew_download_font">Font İndir</string>
+  <string name="day_theme">Day theme</string>
+  <string name="night_theme">Night theme</string>
   <string name="default_font">Varsayılan yazı tipi</string>
   <string name="override_font">Varsayılan font uygulanabilirliği</string>
   <string name="language">Dil</string>
@@ -157,18 +164,22 @@
   <string name="convert_fen_text_summ">Forsyth Edwards Notasyonundan satranç tahtası çiz. Notasyon [fen][/fen] etiketi içine alınmış olmalıdır.</string>
   <string name="enable_api_title">AnkiDroid API etkinleştir</string>
   <string name="enable_api_summary">Diğer uygulamaların AnkiDroid\'e bağlanmasına ve müdahaleniz olmadan veriyi okuyup / yazmasına izin verir</string>
+  <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">İleri düzey istatistikler</string>
   <string name="enable_advanced_statistics_title">İleri düzey istatistikleri etkinleştir</string>
   <string name="enable_advanced_statistics_summ">Öngörü istatistiklerini, gelecekteki çalışmaların bir hesabı veya simülasyonuna göre (etkinken) veya zaten planlanmış gelecek çalışmalara göre (devredışıyken) göster.</string>
   <string name="advanced_forecast_stats_compute_n_days_title">İlk n günü hesapla, gerisini simüle et</string>
   <string name="advanced_forecast_stats_compute_precision_title">Hesap duyarlılığı</string>
   <string name="advanced_forecast_stats_mc_n_iterations_title">Simülasyonun iterasyon sayısı</string>
+  <!-- Custom sync server settings -->
   <string name="custom_sync_server_title">Özel senkronizasyon sunucusu</string>
   <string name="custom_sync_server_enable_title">Özel senkronizasyon sunucusu kullan</string>
   <string name="custom_sync_server_enable_summary">Özel AnkiWeb hizmetini kullanmak istemiyorsanız burada alternatif bir sunucu belirtebilirsiniz</string>
   <string name="custom_sync_server_base_url_title">Senkronizasyon Url\'i</string>
   <string name="custom_sync_server_media_url_title">Medya Senkronizasyon Url\'i</string>
+  <!-- studyoptions -->
   <string name="studyoptions_limit_select_tags">Etiketleri Seçin</string>
+  <!-- Deck configurations -->
   <string name="deck_conf_deck_description">Deste tanımı</string>
   <string name="deck_conf_group">Seçenek grubu</string>
   <plurals name="deck_conf_group_summ">

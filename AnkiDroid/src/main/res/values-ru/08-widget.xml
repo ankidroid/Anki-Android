@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Widget -->
   <string name="widget_minimum_cards_due_notification_ticker_title">Есть карты для повтора</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">повтор %d карт</string>
   <string name="widget_no_cards_due">Карт для повтора нет</string>

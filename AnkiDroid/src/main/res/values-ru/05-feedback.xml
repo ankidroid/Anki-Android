@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Feedback.java -->
   <string name="error_reporting_choice">Сообщать об ошибках</string>
   <string name="feedback_disclaimer">Отказ от ответственности: мы не собираем личную информацию, например, ваш адрес электронной почты, номер телефона или IMEI телефона. Мы собираем некоторую информацию о вашем устройстве, например, название производителя, модель и версию Android, а также описание ошибок и последовательность шагов, приведших к их появлению.</string>
   <string name="feedback_title">Обратная связь</string>

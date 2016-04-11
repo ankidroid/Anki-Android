@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- CardBrowser -->
   <plurals name="card_browser_subtitle">
     <item quantity="other">已顯示 %d 張卡片</item>
   </plurals>

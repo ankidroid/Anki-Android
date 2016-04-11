@@ -122,7 +122,6 @@
   <string name="time_quantity_months">%.1f mėn</string>
   <string name="time_quantity_years">%.1f metai</string>
   <!-- or "%.1f a" -->
-  <string name="later">Vėliau</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck&#8230;</string>
   <string name="rebuild_cram_label">Atstatyti</string>
   <string name="empty_cram_label">Išvalyti</string>

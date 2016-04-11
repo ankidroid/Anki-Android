@@ -45,7 +45,6 @@
   <string name="vague_error">Грешка</string>
   <string name="retry">Повторен опит</string>
   <string name="cancel">Отказ</string>
-  <string name="loading_shared_decks">Зареждане на налични споделени колоди...</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Правила и условия</a></string>
   <string name="menu_get_shared_decks">Вземете споделени тестета</string>
   <string name="connection_error_message">Възникна мрежова грешка.</string>

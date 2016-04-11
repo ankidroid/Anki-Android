@@ -45,7 +45,6 @@
   <string name="vague_error">Klaida</string>
   <string name="retry">Bandyti dar kartą</string>
   <string name="cancel">Atsisakyti</string>
-  <string name="loading_shared_decks">Įkeliamos prieinamos pasidalintos malkos&#8230;</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
   <string name="menu_get_shared_decks">Gauti pasidalintas malkas</string>
   <string name="connection_error_message">Tinklo klaida</string>

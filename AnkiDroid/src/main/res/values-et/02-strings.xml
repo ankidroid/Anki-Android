@@ -38,8 +38,10 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
+  <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX%</string>
+  <!-- Navigation drawer strings -->
   <string name="drawer_open">Open drawer</string>
   <string name="drawer_close">Close drawer</string>
   <string name="CardEditorLaterMessage">Saved information for later</string>
@@ -56,6 +58,7 @@
   <string name="no_tags">You haven’t added any tags yet</string>
   <string name="sdcard_missing_message">SD kaart pole saadaval kuna see on kasutuses kui USB mäluseade. Katkesta USB ühendus kaardipakkidele juurdepääsuks.</string>
   <string name="updated_version">Updated to version %s</string>
+  <!-- Reviewer.java -->
   <string name="enable_whiteboard">Enable whiteboard</string>
   <string name="disable_whiteboard">Disable whiteboard</string>
   <string name="show_whiteboard">Kuva valgetahvel</string>
@@ -65,6 +68,7 @@
   <string name="leech_suspend_notification">Card marked as leech and suspended</string>
   <string name="leech_notification">Card marked as leech</string>
   <string name="corrupt_font">Corrupt font file %s</string>
+  <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>Question</item>
     <item>Sort field</item>
@@ -78,7 +82,16 @@
     <item>Tags</item>
     <item>Lapses</item>
     <item>Reviews</item>
+    <!--
+    <item>Changed</item>
+    <item>Created</item>
+    <item>Due</item>
+    <item>Ease</item>
+    <item>Edited</item>
+    <item>Interval</item>
+        -->
   </string-array>
+  <!-- Custom study options -->
   <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
   <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
   <string name="custom_study_review_forgotten">Review forgotten cards</string>
@@ -86,6 +99,7 @@
   <string name="custom_study_random_selection">Study a random selection of cards</string>
   <string name="custom_study_preview_new">Preview new cards</string>
   <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <!-- Card editor -->
   <string name="cardeditor_title_add_note">Add note</string>
   <string name="cardeditor_title_edit_card">Edit note</string>
   <string name="discard_unsaved_changes">Close and lose current input?</string>
@@ -165,6 +179,7 @@
   <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+  <!-- Time spans -->
   <plurals name="time_span_seconds">
     <item quantity="one">%s second</item>
     <item quantity="other">%s seconds</item>
@@ -189,6 +204,9 @@
     <item quantity="one">%s year</item>
     <item quantity="other">%s years</item>
   </plurals>
+  <!-- The reason for making a simple “< x” translatable are RTL
+         languages which apparently use the other symbol to mean less
+         than. -->
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">That deck already exists</string>
   <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>

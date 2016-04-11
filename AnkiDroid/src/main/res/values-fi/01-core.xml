@@ -119,7 +119,6 @@
   <string name="time_quantity_months">%.1f kk</string>
   <string name="time_quantity_years">%.1f v</string>
   <!-- or "%.1f a" -->
-  <string name="later">Myöhemmin</string>
   <string name="rebuild_cram_deck">Kasataan pänttäyspakkaa&#8230;</string>
   <string name="rebuild_cram_label">Rakenna uudelleen</string>
   <string name="empty_cram_label">Tyhjä</string>

@@ -45,7 +45,6 @@
   <string name="vague_error">Erro</string>
   <string name="retry">Tentar de novo</string>
   <string name="cancel">Cancelar</string>
-  <string name="loading_shared_decks">Cargando as barallas compartidas dispoñibles&#8230;</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Termos e condicións</a></string>
   <string name="menu_get_shared_decks">Obter barallas compartidas</string>
   <string name="connection_error_message">Produciuse un erro de rede.</string>

@@ -38,8 +38,10 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
+  <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX%</string>
+  <!-- Navigation drawer strings -->
   <string name="drawer_open">Abrir cajón</string>
   <string name="drawer_close">Cerrar cajón</string>
   <string name="CardEditorLaterMessage">Información guardada para más tarde</string>
@@ -56,6 +58,7 @@
   <string name="no_tags">Todavía no has añadido cualquier etiqueta.</string>
   <string name="sdcard_missing_message">La tarjeta SD no se encuentra disponible porque está siendo usada como almacenamiento via USB. Desconecta el USB para acceder a tus mazos.</string>
   <string name="updated_version">Actualizado a la versión %s</string>
+  <!-- Reviewer.java -->
   <string name="enable_whiteboard">Activar pizarra</string>
   <string name="disable_whiteboard">Desactivar pizarra</string>
   <string name="show_whiteboard">Mostrar pizarra</string>
@@ -65,6 +68,7 @@
   <string name="leech_suspend_notification">Tarjeta marcada como sanguijuela y suspendida</string>
   <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
   <string name="corrupt_font">Archivo de fuentes %s corrupto</string>
+  <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>Pregunta</item>
     <item>Campo de clasificación</item>
@@ -78,7 +82,16 @@
     <item>Etiquetas</item>
     <item>Olvidos</item>
     <item>Repasos</item>
+    <!--
+    <item>Changed</item>
+    <item>Created</item>
+    <item>Due</item>
+    <item>Ease</item>
+    <item>Edited</item>
+    <item>Interval</item>
+        -->
   </string-array>
+  <!-- Custom study options -->
   <string name="custom_study_increase_new_limit">Aumentar el límite de tarjetas nuevas para hoy</string>
   <string name="custom_study_increase_review_limit">Aumentar el límite de repasos para hoy</string>
   <string name="custom_study_review_forgotten">Repasar tarjetas olvidadas</string>
@@ -86,6 +99,7 @@
   <string name="custom_study_random_selection">Estudiar una selección aleatoria de tarjetas</string>
   <string name="custom_study_preview_new">Previsualizar tarjetas nuevas</string>
   <string name="custom_study_limit_tags">Limitar a etiquetas concretas</string>
+  <!-- Card editor -->
   <string name="cardeditor_title_add_note">Añadir nota</string>
   <string name="cardeditor_title_edit_card">Editar nota</string>
   <string name="discard_unsaved_changes">¿Cerrar y perder la entrada actual?</string>
@@ -165,6 +179,7 @@
   <string name="tag_editor_add_feedback">Tocar \"%2$s\" para confirmar la adición de \"%1$s\"</string>
   <string name="tag_editor_add_feedback_existing">Etiqueta existente \"%1$s\" seleccionada</string>
   <string name="lookup_hint">Después de copiar el texto, pulsa en cualquier lugar sobre la tarjeta para mostrar el icono de búsqueda.</string>
+  <!-- Time spans -->
   <plurals name="time_span_seconds">
     <item quantity="one">%s segundo</item>
     <item quantity="other">%s segundos</item>
@@ -189,6 +204,9 @@
     <item quantity="one">%s año</item>
     <item quantity="other">%s años</item>
   </plurals>
+  <!-- The reason for making a simple “< x” translatable are RTL
+         languages which apparently use the other symbol to mean less
+         than. -->
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">Ese mazo ya existe.</string>
   <string name="decks_rename_filtered_nosubdecks">Un mazo filtrado no puede tener submazos.</string>

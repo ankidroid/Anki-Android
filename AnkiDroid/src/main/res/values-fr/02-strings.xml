@@ -38,8 +38,10 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
+  <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX %</string>
+  <!-- Navigation drawer strings -->
   <string name="drawer_open">Ouvrir la barre de navigation</string>
   <string name="drawer_close">Fermer la barre de navigation</string>
   <string name="CardEditorLaterMessage">Information sauvegardée pour plus tard</string>
@@ -56,6 +58,7 @@
   <string name="no_tags">Vous n\'avez pas encore ajouté des étiquettes.</string>
   <string name="sdcard_missing_message">La carte SD est indisponible car elle sert de mémoire USB. Déconnectez l’USB pour accéder à vos paquets.</string>
   <string name="updated_version">Mis à jour à la version %s</string>
+  <!-- Reviewer.java -->
   <string name="enable_whiteboard">Activer le tableau blanc</string>
   <string name="disable_whiteboard">Désactiver le tableau blanc</string>
   <string name="show_whiteboard">Afficher le tableau blanc</string>
@@ -65,6 +68,7 @@
   <string name="leech_suspend_notification">La carte a été marquée « encombrante » et est suspendue</string>
   <string name="leech_notification">Carte marquée « encombrante »</string>
   <string name="corrupt_font">Fichier de police corrompu %s</string>
+  <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>Question</item>
     <item>Trier</item>
@@ -78,7 +82,16 @@
     <item>Étiquettes</item>
     <item>Échecs</item>
     <item>Révisions</item>
+    <!--
+    <item>Changed</item>
+    <item>Created</item>
+    <item>Due</item>
+    <item>Ease</item>
+    <item>Edited</item>
+    <item>Interval</item>
+        -->
   </string-array>
+  <!-- Custom study options -->
   <string name="custom_study_increase_new_limit">Augmenter la limite de nouvelles cartes pour aujourd\'hui</string>
   <string name="custom_study_increase_review_limit">Augmenter la limite de révisions pour aujourd\'hui</string>
   <string name="custom_study_review_forgotten">Réviser des cartes oubliées</string>
@@ -86,6 +99,7 @@
   <string name="custom_study_random_selection">Réviser une sélection aléatoire de cartes</string>
   <string name="custom_study_preview_new">Prévisualiser les cartes nouvelles</string>
   <string name="custom_study_limit_tags">Limiter à certaines étiquettes</string>
+  <!-- Card editor -->
   <string name="cardeditor_title_add_note">Ajouter une note</string>
   <string name="cardeditor_title_edit_card">Modifier la note</string>
   <string name="discard_unsaved_changes">Fermer et perdre la saisie en cours ?</string>
@@ -93,7 +107,7 @@
   <string name="saving_facts">Enregistrer la note</string>
   <string name="saving_model">Sauvegarde du modèle</string>
   <string name="add">Ajouter</string>
-  <string name="save">Save</string>
+  <string name="save">Enregistrer</string>
   <string name="close">Fermer</string>
   <string name="select">Sélectionner</string>
   <string name="saving_changes">Enregistrement des modifications&#8230;</string>
@@ -125,15 +139,15 @@
   <string name="help_title">Aide</string>
   <string name="check_db">Vérification de la base de données</string>
   <string name="check_media">Vérifier les médias</string>
-  <string name="empty_cards">Empty cards</string>
+  <string name="empty_cards">Cartes vides</string>
   <string name="check_db_message">Vérification de la base de données. \nVeuillez patienter&#8230;</string>
-  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
+  <string name="empty_card_warning">Cette carte est vide. Utilisez l\'option \"cartes vides\" du menu sur l\'écran de la liste de paquets.</string>
   <string name="unknown_type_field_warning">Taper la réponse : champ inconnu %s</string>
   <string name="delete_deck">Suppression du paquet&#8230;\nVeuillez patienter.</string>
   <string name="show_hint">Afficher %s</string>
   <string name="info_rate">Noter AnkiDroid</string>
   <string name="col_load_failed">Le chargement de la collection à échoué.\nAppuyez sur retour pour fermer AnkiDroid.</string>
-  <string name="import_title">Importing</string>
+  <string name="import_title">Importation en cours</string>
   <string name="import_select_title">Choisir un fichier à importer</string>
   <string name="import_message_add">Ajouter</string>
   <string name="import_message_replace_confirm">Ceci va supprimer votre collection existante et la remplacer par les données du fichier %s. Êtes-vous d\'accord ?</string>
@@ -141,7 +155,7 @@
   <string name="import_log_no_apkg">Ce n\'est pas un fichier apkg valide</string>
   <string name="import_error_not_apkg_extension">Le nom de fichier %s n’a pas l’extension .apkg</string>
   <string name="import_error_content_provider">Le fichier sélectionné n’a pas pu être importé automatiquement par AnkiDroid. Veuillez consulter le manuel de l’utilisateur pour savoir comment importer manuellement des fichiers de Anki : \n %s</string>
-  <string name="import_replacing">Replacing collection&#8230;</string>
+  <string name="import_replacing">Remplacement de la collection en cours&#8230;</string>
   <string name="export_include_schedule">Inclure la planification</string>
   <string name="export_include_media">Inclure les médias</string>
   <string name="confirm_apkg_export">Exporter la collection au format apkg ?</string>
@@ -153,7 +167,7 @@
   <string name="import_hint">Pour importer des cartes, placez le fichier apkg dans le répertoire « %s » et touchez « OK »</string>
   <string name="upgrade_import_no_file_found">Pas de fichier %1$s importable trouvé</string>
   <string name="study_options">Options des paquets</string>
-  <string name="select_tts">Set TTS language</string>
+  <string name="select_tts">Définir la langue de synthèse vocale</string>
   <string name="custom_study">Étude personnalisée</string>
   <string name="more_options">Plus</string>
   <string name="dyn_deck_desc">Ceci est un paquet pour l\'étude en dehors des horaires normaux. Les cartes reviendront automatiquement à leur paquet d\'origine après leur révision. La suppression de ce paquet remettra toutes les cartes restantes dans leur paquet d\'origine.</string>
@@ -165,6 +179,7 @@
   <string name="tag_editor_add_feedback">Touchez «%2$s» pour confirmer l\'addition de «%1$s»</string>
   <string name="tag_editor_add_feedback_existing">Étiquette existante «%1$s» sélectionnée</string>
   <string name="lookup_hint">Après avoir copié le texte, touchez la carte n’importe où pour afficher l’icône de recherche</string>
+  <!-- Time spans -->
   <plurals name="time_span_seconds">
     <item quantity="one">%s seconde</item>
     <item quantity="other">%s secondes</item>
@@ -189,6 +204,9 @@
     <item quantity="one">%s an</item>
     <item quantity="other">%s ans</item>
   </plurals>
+  <!-- The reason for making a simple “< x” translatable are RTL
+         languages which apparently use the other symbol to mean less
+         than. -->
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">Ce paquet existe déjà.</string>
   <string name="decks_rename_filtered_nosubdecks">Un paquet filtré ne peut pas avoir de sous-paquets.</string>

@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Navigation drawer items-->
   <string name="decks">Baralhos</string>
   <string name="card_browser">Explorador de fichas</string>
   <string name="statistics">Estatísticas</string>
@@ -51,6 +52,7 @@
   <string name="studyoptions_total_cards">Total de fichas:</string>
   <string name="studyoptions_eta">Tempo estimado (min):</string>
   <string name="studyoptions_start">Estudar</string>
+  <!-- DeckPicker.java -->
   <string name="study_more">Estudar mais</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d ficha pendente (%2$s)</item>
@@ -60,10 +62,12 @@
     <item quantity="one">%d minuto restante</item>
     <item quantity="other">%d minutos restantes</item>
   </plurals>
+  <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
     <item quantity="one">Estudou hoje %1$d ficha em %2$s</item>
     <item quantity="other">Estudou hoje %1$d fichas em %2$s</item>
   </plurals>
+  <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">Escreva a resposta</string>
   <string name="show_answer">Mostrar resposta</string>
   <string name="ease_button_again">Novamente</string>
@@ -101,13 +105,20 @@
   <string name="new_dynamic_deck">Criar baralho filtrado</string>
   <string name="night_mode">Modo noturno</string>
   <string name="directory_inaccessible">A diretoria AnkiDroid está inacessível</string>
+  <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
   <string name="time_quantity_seconds">%d s</string>
   <string name="time_quantity_minutes">%d mín.</string>
   <string name="time_quantity_hours">%d h</string>
   <string name="time_quantity_days">%d d</string>
   <string name="time_quantity_months">%.1f mês</string>
   <string name="time_quantity_years">%.1f ano</string>
-  <string name="later">Mais tarde</string>
+  <!-- or "%.1f a" -->
   <string name="rebuild_cram_deck">A reconstruir o baralho de estudo intensivo&#8230;</string>
   <string name="rebuild_cram_label">Reconstruir</string>
   <string name="empty_cram_label">Esvaziar</string>
@@ -133,6 +144,7 @@
   <string name="export_collection">Exportar coleção</string>
   <string name="export_deck">Exportar baralho</string>
   <string name="nothing">Nada</string>
+  <!-- Card template editor -->
   <string name="title_activity_template_editor">Tipos de ficha</string>
   <string name="card_template_editor_front">Modelo da frente</string>
   <string name="card_template_editor_back">Modelo de trás</string>
@@ -145,6 +157,7 @@
   </plurals>
   <string name="invalid_template">Não foi possível gerar uma ficha</string>
   <string name="card_template_editor_would_delete_note">Ao remover este tipo de ficha resultará na eliminação de uma ou mais notas. Por favor, crie primeiro um novo tipo de ficha.</string>
+  <!-- Permissions -->
   <string name="read_write_permission_label">Ler e escrever na base de dados do AnkiDroid</string>
   <string name="read_write_permission_description">Permitir que a aplicação possa aceder às notas, fichas, modelos,
         e baralhos existentes, bem como criar novos.</string>

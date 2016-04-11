@@ -55,22 +55,22 @@
   <string name="tts_no_tts">音声なし</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、PCソフトウェア<a href=\"%2$s\">Anki</a>と完全互換のフラッシュカードアプリです。AnkiDroidとAnkiのどちらでも教材を作成し、ダウンロードし、学習し、無料のオンラインサービスAnkiWebを介して簡単に双方を同期することができます。]]></item>
-    <item><![CDATA[AnkiDroidを改善するために、バグを<a href=\"%1$s\">こちら</a>に報告していただけると幸いです。新しい機能のアイデアも大歓迎です。<a href=\"%2$s\">Wiki</a>をご覧になった上で、<a href=\"%3$s\">フォーラム</a>でディスカッションを開始してください。]]></item>
-    <item><![CDATA[AnkiDroid は<a href=\"%1$s\">オープンソースソフトウェア<a/>ですので、誰もが<a href=\"%2$s\">貢献者</a>になることができます :-)　]]></item>
+    <item><![CDATA[AnkiDroidを改善するために、バグを<a href=\"%1$s\">こちら</a>へ報告していただければ幸いです。新しい機能のアイデアも大歓迎です。<a href=\"%2$s\">Wiki</a>をご覧になった上で、<a href=\"%3$s\">フォーラム</a>でディスカッションを開始してください。]]></item>
+    <item><![CDATA[AnkiDroid は<a href=\"%1$s\">オープンソースソフトウェア<a/>です。誰もが<a href=\"%2$s\">貢献者</a>になることができます :-)　]]></item>
     <item><![CDATA[ソフトウェア開発の専門知識を持っていない方も、例えばAnkiDroidの<a href=\"%1$s\">翻訳を改善</a>したり、Wikiを更新したり、スクリーンショット画像を提供したり、Ankiに<a href=\"%2$s\">寄付</a>をしたり、AnkiDroidのことをSNSに書いたりするなどして、このアプリの発展に貢献することができます。]]></item>
-    <item><![CDATA[AnkiDroidは、<a href="%1$s">GNU GPL v3 ライセンス</a>の下でリリースされており、ソースコードは<a href="%2$s">こちら</a>です。]]></item>
+    <item><![CDATA[AnkiDroidは、<a href="%1$s">GNU GPL v3 ライセンス</a>の下でリリースされています。ソースコードは<a href="%2$s">こちら</a>です。]]></item>
   </string-array>
   <string name="preview_title">プレビュー</string>
   <string name="reset_card_dialog_title">カードの進行状況をリセット</string>
   <string name="reset_card_dialog_message">このカードは新規カードの最後に配置されます。</string>
   <string name="reset_card_dialog_acknowledge">カードがリセットされました</string>
   <string name="reschedule_card_dialog_title">スケジュールを変更</string>
-  <string name="reschedule_card_dialog_message">x 日後に復習</string>
+  <string name="reschedule_card_dialog_message">x日後に復習する</string>
   <string name="reschedule_card_dialog_acknowledge">カードのスケジュールを変更しました</string>
   <string name="answering_error_title">データベース エラー</string>
   <string name="answering_error_message">コレクションへの書き込み中にエラーが発生しました。これは、データの破損か、ディスクの容量の不足が原因と考えられます。\n\n繰り返しエラーが発生する場合には、データをチェックするか、バックアップからコレクションを修復してください。\n\nまた、AnkiDroidのバグかもしれませんので\'オプション\'をクリックして、エラーを報告してください。</string>
   <string name="answering_error_report">エラーを報告する</string>
-  <string name="repair_deck_dialog">データを修復しますか？\n\nその前にサブフォルダーにコピーが作成されます。 \'%s\'</string>
+  <string name="repair_deck_dialog">本当にデータの修復を行いますか？　\n\n処理を開始する前に、サブフォルダー（%s）にコピーが作成されます。</string>
   <string name="intent_add_saved_information">保存されたデータ</string>
   <string name="intent_add_clear_all">すべて消去</string>
   <string name="intent_aedict_empty">カテゴリー \'default\' が空です。</string>
@@ -86,9 +86,9 @@
   <string name="rebuild_custom_study_deck">カスタムデッキを再構築しています...</string>
   <string name="importing_collection">コレクションをインポートしています。\nお待ちください&#8230;</string>
   <string name="import_media_count">メディアファイルをインポートしています。 %1$d%%\nお待ちください&#8230;</string>
-  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
-  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
-  <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
+  <string name="import_progress">インポートされたノート： %1$d%%\n• インポートされたカード： %2$d%%\n• 残り： %3$d%%</string>
+  <string name="import_update_details">既存のノート%2$d個のうち%1$d個がアップデートされました</string>
+  <string name="import_update_ignored">ノートタイプが変更されたため、いくつかのアップデートが無視されました</string>
   <string name="import_complete_count">%d枚のカードがインポートされました</string>
   <string name="sd_card_full_title">SD カード残量なし</string>
   <string name="sd_card_almost_full_title">SD カード残量わずか</string>

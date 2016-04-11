@@ -38,13 +38,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
   <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX%</string>
   <!-- Navigation drawer strings -->
-  <string name="drawer_open">ドロワーを開く</string>
-  <string name="drawer_close">ドロワーを閉じる</string>
-  <string name="CardEditorLaterMessage">後日のために情報を保存</string>
+  <string name="drawer_open">引き出しメニューを開く</string>
+  <string name="drawer_close">引き出しメニューを閉じる</string>
+  <string name="CardEditorLaterMessage">後日閲覧用情報</string>
   <string name="CardEditorCardDeck">デッキ:</string>
   <string name="CardEditorNoteDeck">デッキ:</string>
   <string name="CardEditorModel">タイプ:</string>
@@ -57,7 +57,7 @@
   <string name="filter_tags">フィルター (前方一致検索)</string>
   <string name="no_tags">まだタグが一つも作成されていません</string>
   <string name="sdcard_missing_message">USBストレージとして使用されているので、SDカードは使用できません。デッキにアクセスするには、USBを切断してください。</string>
-  <string name="updated_version">バージョン%sへ更新しました</string>
+  <string name="updated_version">バージョン%sへアップデートしました</string>
   <!-- Reviewer.java -->
   <string name="enable_whiteboard">ホワイトボードを有効にする</string>
   <string name="disable_whiteboard">ホワイトボードを無効にする</string>
@@ -65,8 +65,8 @@
   <string name="hide_whiteboard">ホワイトボードを隠す</string>
   <string name="clear_whiteboard">ホワイトボードの内容を全て消去</string>
   <string name="replay_audio">音声・動画を再生</string>
-  <string name="leech_suspend_notification">このカードは \"leech\" （無駄）というタグが付けられ、保留されました</string>
-  <string name="leech_notification">このカードに \"leech\" （無駄）というタグを付けました</string>
+  <string name="leech_suspend_notification">このカードは \"leech\" （無駄） というタグが付けられ、保留されました</string>
+  <string name="leech_notification">このカードに \"leech\" （無駄） というタグを付けました</string>
   <string name="corrupt_font">使用できないフォントファイル %s</string>
   <!-- Browser -->
   <string-array name="browser_column1_headings">
@@ -95,10 +95,10 @@
   <string name="custom_study_increase_new_limit">今日の新規カードの上限を上げる</string>
   <string name="custom_study_increase_review_limit">今日の復習カードの上限を上げる</string>
   <string name="custom_study_review_forgotten">忘却したカードを復習する</string>
-  <string name="custom_study_review_ahead">先取りして復習する</string>
+  <string name="custom_study_review_ahead">予定を先取りして復習する</string>
   <string name="custom_study_random_selection">カードをランダムに学習する</string>
   <string name="custom_study_preview_new">新規カードをプレビューする</string>
-  <string name="custom_study_limit_tags">特定のタグによる選択</string>
+  <string name="custom_study_limit_tags">特定のタグで選ぶ</string>
   <!-- Card editor -->
   <string name="cardeditor_title_add_note">ノートを追加</string>
   <string name="cardeditor_title_edit_card">ノートの編集</string>
@@ -111,9 +111,9 @@
   <string name="close">閉じる</string>
   <string name="select">選択</string>
   <string name="saving_changes">変更を保存しています...</string>
-  <string name="reordering_cards">カード順序の組換え</string>
+  <string name="reordering_cards">カードを並べ替えています...</string>
   <string name="field_remapping">%1$s (\'%2$s\'から)</string>
-  <string name="confirm_map_cards_to_nothing">Nothing に設定したカードは削除されます。ノートにカードが残っていない場合は、そのノートが失われます。それでも処理を続行しますか。</string>
+  <string name="confirm_map_cards_to_nothing">Nothing に設定したカードは削除され、同じノートタイプに１つもカードが残っていない場合は、そのノートタイプも同時に失われます。それでも処理を続行しますか。</string>
   <plurals name="timebox_reached">
     <item quantity="other">%1$d枚のカードを%2$sで学習しました</item>
   </plurals>
@@ -124,12 +124,12 @@
   <string name="fact_adder_intent_title">AnkiDroid カード</string>
   <string name="card_editor_add_card">ノートを追加</string>
   <string name="card_editor_copy_card">カードをコピー</string>
-  <string name="card_editor_reset_card">学習進行状況をリセット</string>
+  <string name="card_editor_reset_card">学習履歴のリセット</string>
   <string name="card_editor_reschedule_card">スケジュールを変更</string>
   <string name="card_editor_preview_card">プレビュー</string>
   <string name="error_insufficient_memory">メモリ不足のため操作できませんでした。</string>
   <string name="rename">名前の変更</string>
-  <string name="default_conf_delete_error">標準オプショングループを削除することはできません。</string>
+  <string name="default_conf_delete_error">デフォルトのオプショングループを削除することはできません</string>
   <plurals name="factadder_cards_added">
     <item quantity="other">%d枚のカードを追加しました</item>
   </plurals>
@@ -147,31 +147,31 @@
   <string name="import_title">インポート</string>
   <string name="import_select_title">インポートするファイルを選択</string>
   <string name="import_message_add">追加</string>
-  <string name="import_message_replace_confirm">このコレクションは削除され、ファイル中のデータに置き換えられます%s. よろしいでしょうか？</string>
-  <string name="import_message_add_confirm">\"%s\" をコレクションに追加しますか？長い時間が必要な場合があります。</string>
+  <string name="import_message_replace_confirm">現在のコレクションは全て削除され、ファイル\"%s\" のデータによって上書きされます。よろしいですか？</string>
+  <string name="import_message_add_confirm">\"%s\" をコレクションに追加しますか？　処理に時間がかかる可能性があります。</string>
   <string name="import_log_no_apkg">これは取り込み可能なapkgファイルではありません</string>
-  <string name="import_error_not_apkg_extension">ファイル名 \"%s\" は .apkg 拡張子を持っていません</string>
+  <string name="import_error_not_apkg_extension">ファイル名 \"%s\" は拡張子が .apkg ではありません。</string>
   <string name="import_error_content_provider">選択されたファイルをAnkiDroidによって自動的にインポートできませんでした。ankiのファイルを手動でインポートする方法については、マニュアルをご覧ください: \n %s</string>
   <string name="import_replacing">コレクションを置き換えています...</string>
   <string name="export_include_schedule">スケジュールを含める</string>
-  <string name="export_include_media">メディアを含める</string>
+  <string name="export_include_media">メディアファイルを含める</string>
   <string name="confirm_apkg_export">コレクションを apkgファイルとしてエクスポートしますか？</string>
   <string name="confirm_apkg_export_deck">\"%s\" を apkgファイルとしてエクスポートしますか？</string>
   <string name="export_in_progress">apkgファイルをエクスポートしています...</string>
-  <string name="export_successful_title">Eメールで送信しますか？</string>
-  <string name="export_successful">データが \"%s\" にエクスポートされました。メールで送信しますか？</string>
+  <string name="export_successful_title">apkg ファイルをメールで送信しますか？</string>
+  <string name="export_successful">データがファイル \"%s\" としてエクスポートされました。メールで送信しますか？</string>
   <string name="export_unsuccessful">コレクションのエクスポート エラー</string>
-  <string name="import_hint">あらかじめコレクションファイル（*.apkg）を \"%s\" に置いた後、この画面で「OK」ボタンをタップしてください。</string>
+  <string name="import_hint">取り込みたいコレクションファイル（*. apkg）をあらかじめ \"%s\" に保存した後、この画面で「OK」ボタンをタップしてください。</string>
   <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>
   <string name="study_options">デッキ オプション</string>
   <string name="select_tts">テキスト読み上げ機能の言語設定</string>
   <string name="custom_study">カスタム学習</string>
   <string name="more_options">その他</string>
-  <string name="dyn_deck_desc">これは標準のスケジュールから外れて学習する特別なデッキです。 カードは復習が済んだら元のデッキに自動的に戻ります。 このデッキを削除すると、残りのカードも全て元のデッキに戻ります。</string>
+  <string name="dyn_deck_desc">これは標準のスケジュールから外れて学習する特別なデッキです。 復習が終わったカードは、自動的に元のデッキに戻ります。 このデッキを削除すると、残っていたカードは全て元のデッキに戻ります。</string>
   <string name="steps_error">学習ステップには1以上の数字を入力してください</string>
   <string name="steps_min_error">少なくとも 1 つの学習ステップが必要です。</string>
   <string name="sched_end">（終了）</string>
-  <string name="sched_unbury_action">それらを今見る場合はメニューの「延期解除」をタップしてください</string>
+  <string name="sched_unbury_action">今それらを見る場合は、メニューの「延期解除」をタップしてください</string>
   <string name="sched_has_buried">関連カード、延期カードの学習は明日まで延期されます。</string>
   <string name="tag_editor_add_feedback">タグ「%1$s」を作成しますか？　よろしければ「%2$s」をタップしてください。
 </string>
@@ -201,6 +201,6 @@
          than. -->
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">そのデッキ名は既に使用されています</string>
-  <string name="decks_rename_filtered_nosubdecks">フィルターデッキ内にはサブデッキを作れません</string>
+  <string name="decks_rename_filtered_nosubdecks">フィルターデッキ内にはサブデッキを作成できません</string>
   <string name="filtered_deck_name">フィルターデッキ</string>
 </resources>

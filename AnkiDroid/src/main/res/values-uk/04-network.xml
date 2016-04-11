@@ -45,7 +45,6 @@
   <string name="vague_error">Помилка</string>
   <string name="retry">Повторити спробу</string>
   <string name="cancel">Відміна</string>
-  <string name="loading_shared_decks">Завантаження доступних відкритих колод...</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Правила та умови</a></string>
   <string name="menu_get_shared_decks">Отримати відкриті колоди</string>
   <string name="connection_error_message">Виникла помилка мережі.</string>

@@ -38,8 +38,10 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
+  <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX %</string>
+  <!-- Navigation drawer strings -->
   <string name="drawer_open">Odpri predal</string>
   <string name="drawer_close">Zapri predal</string>
   <string name="CardEditorLaterMessage">Informacija shranjena za pozneje</string>
@@ -56,6 +58,7 @@
   <string name="no_tags">Niste dodali še nobene oznake</string>
   <string name="sdcard_missing_message">Izklopite pomnilniško napravo USB za dostop do svojih kompletov</string>
   <string name="updated_version">Posodobljen na različico %s</string>
+  <!-- Reviewer.java -->
   <string name="enable_whiteboard">Omogoči belo tablo</string>
   <string name="disable_whiteboard">Onemogoči belo tablo</string>
   <string name="show_whiteboard">Prikaži belo tablo</string>
@@ -65,6 +68,7 @@
   <string name="leech_suspend_notification">Kartica označena kot odvečna in je bila pridržana</string>
   <string name="leech_notification">Kartica označena kot odvečna</string>
   <string name="corrupt_font">Pokvarjena datoteka pisave %s</string>
+  <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>Vprašanje</item>
     <item>Polje za razvrščanje</item>
@@ -78,7 +82,16 @@
     <item>Oznake</item>
     <item>Spodrsljaji</item>
     <item>Pregledi</item>
+    <!--
+    <item>Changed</item>
+    <item>Created</item>
+    <item>Due</item>
+    <item>Ease</item>
+    <item>Edited</item>
+    <item>Interval</item>
+        -->
   </string-array>
+  <!-- Custom study options -->
   <string name="custom_study_increase_new_limit">Povečaj današnjo omejitev novih kartic</string>
   <string name="custom_study_increase_review_limit">Povečaj današnjo omejitev kartic za pregled</string>
   <string name="custom_study_review_forgotten">Preglej pozabljene kartice</string>
@@ -86,6 +99,7 @@
   <string name="custom_study_random_selection">Preučite naključno izbiro kartic</string>
   <string name="custom_study_preview_new">Predogled novih kartic</string>
   <string name="custom_study_limit_tags">Omeji na določene oznake</string>
+  <!-- Card editor -->
   <string name="cardeditor_title_add_note">Dodaj zapisek</string>
   <string name="cardeditor_title_edit_card">Uredi zapisek</string>
   <string name="discard_unsaved_changes">Zapri in izgubi trenutni vnos?</string>
@@ -171,6 +185,7 @@
   <string name="tag_editor_add_feedback">Pritisnite \"%2$s\", da potrdite dodajanje \"%1$s\"</string>
   <string name="tag_editor_add_feedback_existing">Izbrana obstoječa oznaka \"%1$s\"</string>
   <string name="lookup_hint">Po kopiranju besedila tapnite kamorkoli na pomnilno kartico, da prikažete iskalno ikono</string>
+  <!-- Time spans -->
   <plurals name="time_span_seconds">
     <item quantity="one">%s sekunda</item>
     <item quantity="two">%s sekundi</item>
@@ -207,6 +222,9 @@
     <item quantity="few">%s leta</item>
     <item quantity="other">%s let</item>
   </plurals>
+  <!-- The reason for making a simple “< x” translatable are RTL
+         languages which apparently use the other symbol to mean less
+         than. -->
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">Ta komplet že obstaja</string>
   <string name="decks_rename_filtered_nosubdecks">Filtriran komplet ne more imeti podkompletov</string>

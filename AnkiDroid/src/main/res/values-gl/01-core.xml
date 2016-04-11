@@ -119,7 +119,6 @@
   <string name="time_quantity_months">%.1f mes</string>
   <string name="time_quantity_years">%.1f ano</string>
   <!-- or "%.1f a" -->
-  <string name="later">Máis adiante</string>
   <string name="rebuild_cram_deck">Reconstruíndo baralla de chapar.\nAgarde por favor...</string>
   <string name="rebuild_cram_label">Reconstruír</string>
   <string name="empty_cram_label">Baleirar</string>

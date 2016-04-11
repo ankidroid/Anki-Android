@@ -109,6 +109,7 @@
   <string name="dialog_positive_set">Aplicar</string>
   <string name="lookup_button_content">Cercar</string>
   <string name="dialog_collection_path_not_dir">El camí especificat no era un directori vàlid</string>
+  <!-- Media checking -->
   <string name="check_media_title">Comprovar la multimèdia?</string>
   <string name="check_media_warning">Això pot trigar molt de temps amb col·leccions de grans recursos de multimèdia</string>
   <string name="check_media_message">Comprovant multimèdia&#8230;</string>
@@ -121,9 +122,11 @@
   <string name="check_media_db_updated">Base de dades de multimèdia reconstruïda</string>
   <string name="check_media_delete_unused">Suprimir no utilitzats</string>
   <string name="check_media_deleted">Arxius suprimits: %d</string>
+  <!-- Tags Dialog Options -->
   <string name="tags_dialog_option_all_cards">Totes les cartes</string>
   <string name="tags_dialog_option_new_cards">Nou</string>
   <string name="tags_dialog_option_due_cards">Venciment</string>
+  <!-- Empty cards -->
   <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
   <string name="empty_cards_none">No empty cards</string>
   <string name="empty_cards_count">Cards to delete: %d</string>

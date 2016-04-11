@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Feedback.java -->
   <string name="error_reporting_choice">Foutrapportage-modus</string>
   <string name="feedback_disclaimer">Disclaimer: Wij verzamelen geen persoonlijke informatie zoals uw e-mailadres, telefoonnummer of het IMEI nummer van uw telefoon. Wij verzamelen wel sommige gegevens van uw mobielen apparaat zoals de naam van de fabrikant, het model en de versie van Android, evenals de aard van de gemelde fouten en de stappen die tot de fouten leidde.</string>
   <string name="feedback_title">Terugkoppeling</string>

@@ -109,6 +109,7 @@
   <string name="dialog_positive_set">Satei</string>
   <string name="lookup_button_content">Gasokei</string>
   <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
+  <!-- Media checking -->
   <string name="check_media_title">Check media?</string>
   <string name="check_media_warning">This may take a long time with large media collections</string>
   <string name="check_media_message">Checking media&#8230;</string>
@@ -121,9 +122,11 @@
   <string name="check_media_db_updated">Media database rebuilt</string>
   <string name="check_media_delete_unused">Usnim unbruhta</string>
   <string name="check_media_deleted">Feilos usnumanos: %d</string>
+  <!-- Tags Dialog Options -->
   <string name="tags_dialog_option_all_cards">All cards</string>
   <string name="tags_dialog_option_new_cards">New</string>
   <string name="tags_dialog_option_due_cards">Due</string>
+  <!-- Empty cards -->
   <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
   <string name="empty_cards_none">No empty cards</string>
   <string name="empty_cards_count">Cards to delete: %d</string>

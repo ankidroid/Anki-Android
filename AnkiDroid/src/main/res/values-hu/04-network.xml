@@ -45,13 +45,13 @@
   <string name="vague_error">Hiba</string>
   <string name="retry">Újra</string>
   <string name="cancel">Mégse</string>
-  <string name="loading_shared_decks">Elérhető megosztott paklik betöltése...</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Feltételek és kikötések</a></string>
   <string name="menu_get_shared_decks">Megosztott paklik</string>
   <string name="connection_error_message">Hálózati hiba történt.</string>
   <string name="not_logged_in_title">Bejelentkezés az AnkiWebre</string>
   <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
   <string name="no_email_client">Nincs rendelkezésre álló email kliens</string>
+  <!-- MyAccount.java -->
   <string name="username">Email cím</string>
   <string name="username_repeat">Ismételje meg az e-mail címet</string>
   <string name="password">Jelszó</string>
@@ -65,6 +65,7 @@
   <string name="alert_logging_message">Bejelentkezés, kérem várjon...</string>
   <string name="invalid_username_password">Érvénytelen e-mail cím vagy jelszót.</string>
   <string name="reset_password">Jelszó visszaállítása</string>
+  <!-- AndroidManifest.xml -->
   <string name="downloaddeck_search">Keresés</string>
   <string name="preferences_title">Beállítások</string>
   <string name="deckpreferences_title">XXX lehetőségei</string>

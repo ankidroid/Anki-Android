@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Navigation drawer items-->
   <string name="decks">牌組</string>
   <string name="card_browser">卡片瀏覽器</string>
   <string name="statistics">統計資料</string>
@@ -51,6 +52,7 @@
   <string name="studyoptions_total_cards">卡片總數:</string>
   <string name="studyoptions_eta">估計時間(分鐘):</string>
   <string name="studyoptions_start">開始學習</string>
+  <!-- DeckPicker.java -->
   <string name="study_more">再學習一些</string>
   <plurals name="deckpicker_title">
     <item quantity="other">%1$d 張卡片到期 (%2$s)</item>
@@ -58,9 +60,11 @@
   <plurals name="reviewer_window_title">
     <item quantity="other">還有%d分鐘</item>
   </plurals>
+  <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
     <item quantity="other">今日已使用 %2$s 學習 %1$d 張卡片</item>
   </plurals>
+  <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">輸入答案</string>
   <string name="show_answer">看答案</string>
   <string name="ease_button_again">再一次</string>
@@ -98,13 +102,20 @@
   <string name="new_dynamic_deck">新增篩選牌組</string>
   <string name="night_mode">夜間模式</string>
   <string name="directory_inaccessible">無法存取 AnkiDroid 目錄</string>
+  <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
   <string name="time_quantity_seconds">%d秒</string>
   <string name="time_quantity_minutes">%d分鐘</string>
   <string name="time_quantity_hours">%d個小時</string>
   <string name="time_quantity_days">%d天</string>
   <string name="time_quantity_months">%.1f個月</string>
   <string name="time_quantity_years">%.1f年</string>
-  <string name="later">晚點</string>
+  <!-- or "%.1f a" -->
   <string name="rebuild_cram_deck">正在重建填鴨式牌組。\n請稍後...</string>
   <string name="rebuild_cram_label">重建</string>
   <string name="empty_cram_label">清空</string>
@@ -131,6 +142,7 @@
   <string name="export_collection">匯出蒐藏集</string>
   <string name="export_deck">匯出牌組</string>
   <string name="nothing">無</string>
+  <!-- Card template editor -->
   <string name="title_activity_template_editor">卡片種類</string>
   <string name="card_template_editor_front">正面樣本</string>
   <string name="card_template_editor_back">反面樣本</string>
@@ -142,6 +154,7 @@
   </plurals>
   <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note">移除這個卡片種類將會導致一或多個筆記被刪除。請先新增一個卡片種類。</string>
+  <!-- Permissions -->
   <string name="read_write_permission_label">讀寫 AnkiDroid 資料庫</string>
   <string name="read_write_permission_description">允許應用程式能夠存取既有的筆記，卡片，模組，跟牌組，或是新增這些內容。</string>
 </resources>

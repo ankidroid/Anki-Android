@@ -38,8 +38,10 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
+  <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX%</string>
+  <!-- Navigation drawer strings -->
   <string name="drawer_open">Obrir el calaix</string>
   <string name="drawer_close">Tancar el calaix</string>
   <string name="CardEditorLaterMessage">S\'ha desat la informació per més tard</string>
@@ -56,6 +58,7 @@
   <string name="no_tags">Encara no s\'ha afegit cap etiqueta.</string>
   <string name="sdcard_missing_message">La targeta SD no es troba disponible perquè està sent utilitzada com a emmagatzematge via USB. Desconnecteu l\'USB per accedir a les teves baralles.</string>
   <string name="updated_version">Actualitzeu a la versió %s</string>
+  <!-- Reviewer.java -->
   <string name="enable_whiteboard">Activar pissarra</string>
   <string name="disable_whiteboard">Desactiva la pissarra</string>
   <string name="show_whiteboard">Mostra la pissarra</string>
@@ -65,6 +68,7 @@
   <string name="leech_suspend_notification">Fitxa marcada com a lapa i suspesa</string>
   <string name="leech_notification">Fitxa marcada com a lapa</string>
   <string name="corrupt_font">Fitxer de tipus de lletra incorrecte %s</string>
+  <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>Pregunta</item>
     <item>Camp d\'ordenació</item>
@@ -78,7 +82,16 @@
     <item>Etiquetes</item>
     <item>Errades</item>
     <item>Revisions</item>
+    <!--
+    <item>Changed</item>
+    <item>Created</item>
+    <item>Due</item>
+    <item>Ease</item>
+    <item>Edited</item>
+    <item>Interval</item>
+        -->
   </string-array>
+  <!-- Custom study options -->
   <string name="custom_study_increase_new_limit">Augmenta el límit de fitxes d\'avui</string>
   <string name="custom_study_increase_review_limit">Augmenta el límit de fitxes per revisar d\'avui</string>
   <string name="custom_study_review_forgotten">Revisa les fitxes oblidades</string>
@@ -86,6 +99,7 @@
   <string name="custom_study_random_selection">Estudia una selecció aleatòria de les fitxes</string>
   <string name="custom_study_preview_new">Vista prèvia de les fitxes noves</string>
   <string name="custom_study_limit_tags">Limita a determinades etiquetes</string>
+  <!-- Card editor -->
   <string name="cardeditor_title_add_note">Afegeix una nota</string>
   <string name="cardeditor_title_edit_card">Edita la nota</string>
   <string name="discard_unsaved_changes">Abandonar i perdre el procés sense guardar?</string>
@@ -165,6 +179,7 @@
   <string name="tag_editor_add_feedback">Apreti \"%2$s\" per confirmar afegir \"%1$s\"</string>
   <string name="tag_editor_add_feedback_existing">Etiqueta existent \"%1$s\" seleccionada</string>
   <string name="lookup_hint">Després de copiar el text, apreti a qualsevol lloc en la carta per mostrar la icona de cerca</string>
+  <!-- Time spans -->
   <plurals name="time_span_seconds">
     <item quantity="one">%s segon</item>
     <item quantity="other">%s segons</item>
@@ -189,6 +204,9 @@
     <item quantity="one">%s any</item>
     <item quantity="other">%s anys</item>
   </plurals>
+  <!-- The reason for making a simple “< x” translatable are RTL
+         languages which apparently use the other symbol to mean less
+         than. -->
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">That deck already exists</string>
   <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>

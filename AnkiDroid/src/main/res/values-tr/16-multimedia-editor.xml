@@ -34,62 +34,101 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Main editor popup menu items -->
   <string name="multimedia_editor_popup_image">Resim Ekle</string>
   <string name="multimedia_editor_popup_audio">Ses Kaydet</string>
   <string name="multimedia_editor_popup_text">Gelişmiş Düzenleyici</string>
+  <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">Hizmet glosbe.com tarafından sağlanmaktadır.</string>
+  <!-- these are like translate f r o m  and t o  some othe languages -->
   <string name="multimedia_editor_trans_from">Kaynak</string>
   <string name="multimedia_editor_trans_to">Çıktı</string>
+  <!-- imperative for the button title -->
   <string name="multimedia_editor_trans_translate">Çevir</string>
+  <!-- waiting message -->
   <string name="multimedia_editor_trans_translating_online">Online çevriliyor</string>
+  <!-- pick the right translation imperative -->
   <string name="multimedia_editor_trans_pick_translation">Çeviri seç</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_trans_translation_failed">Çeviri başarısız</string>
+  <!-- from controller -->
+  <!-- dialog title to ask for translation source -->
   <string name="multimedia_editor_trans_pick_translation_source">Sözlük seç</string>
+  <!-- dialog asking to install ColorDict -->
   <string name="multimedia_editor_trans_install_color_dict">Önce ColorDict yükleyin</string>
+  <!-- Pronunciation activity (Beolingus) -->
   <string name="multimedia_editor_pron_load">Yükle</string>
   <string name="multimedia_editor_pron_looking_up">Telaffuza bakılıyor</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_pron_pronunciation_failed">Telaffuz başarısız</string>
   <string name="multimedia_editor_word_search_try_lower_case">Yalnızca küçük harf kullanarak deneyin</string>
   <string name="multimedia_editor_poweredbeolingus">Hizmet Beolingus tarafından sağlanmaktadır.</string>
+  <!-- Image search activity -->
+  <!-- in progress dialog when loading the image -->
   <string name="multimedia_editor_imgs_saving_image">Resim kaydediliyor</string>
   <string name="multimedia_editor_imgs_loading_image">Resim yükleniyor</string>
   <string name="multimedia_editor_imgs_no_results">Arama sonuç vermedi</string>
   <string name="multimedia_editor_imgs_images_found">Bulunan resimler</string>
   <string name="multimedia_editor_imgs_pow_by_google">Hizmet Google Resim Arama tarafından sağlanmaktadır.</string>
+  <!-- buttons -->
   <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
   <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
   <string name="multimedia_editor_imgs_pick">Seç</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_imgs_failed">Resim arama başarısız</string>
+  <!-- while searching -->
   <string name="multimedia_editor_imgs_searching_for_images">Resim aranıyor</string>
+  <!-- Field editing general -->
+  <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">Yazı</string>
   <string name="multimedia_editor_field_editing_image">Resim</string>
   <string name="multimedia_editor_field_editing_audio">Ses</string>
   <string name="multimedia_editor_field_editing_done">Bitti</string>
+  <!-- Text field editing -->
+  <!-- buttons -->
   <string name="multimedia_editor_text_field_editing_search_label">Aranan:</string>
   <string name="multimedia_editor_text_field_editing_show">Resim</string>
   <string name="multimedia_editor_text_field_editing_say">Telaffuz</string>
   <string name="multimedia_editor_text_field_editing_clear">Temizle</string>
   <string name="multimedia_editor_text_field_editing_clone">Kopyala</string>
   <string name="multimedia_editor_text_field_editing_translate">Çeviri</string>
+  <!-- message to user, when there is no text or many words, but the user tries something -->
   <string name="multimedia_editor_text_field_editing_no_text">Önce biraz yazı girin</string>
   <string name="multimedia_editor_text_field_editing_many_words">Sözlük genellikle bir kelime bekler</string>
+  <!-- message when cloning -->
   <string name="multimedia_editor_text_field_editing_clone_source">Kaynak</string>
+  <!-- Multimedia card editor activity -->
+  <!-- for buttons -->
+  <!-- delete confirmation -->
+  <!-- Image editing -->
+  <!-- for buttons -->
   <string name="multimedia_editor_image_field_editing_galery">Galeri</string>
   <string name="multimedia_editor_image_field_editing_photo">Kamera</string>
+  <!-- General -->
+  <!-- message on the progress dialog for the user to wait, means process -->
   <string name="multimedia_editor_general_downloading">İndiriliyor</string>
+  <!-- when process finishes -->
   <string name="multimedia_editor_general_done">Bitti</string>
+  <!-- General word search and failures -->
   <string name="multimedia_editor_error_word_not_found">Kelime bulunmadı</string>
+  <!-- failure when contacting glosbe or similar -->
   <string name="multimedia_editor_trans_getting_failure">Çeviri alma başarısız</string>
   <string name="multimedia_editor_searching_word">Kelime aranıyor</string>
+  <!-- General -->
   <string name="multimedia_editor_progress_wait_title">Bekleyin</string>
+  <!-- not a good message, when an unexpected error happens -->
   <string name="multimedia_editor_something_wrong">Üzgünüz, birşey ters gitti</string>
   <string name="multimedia_editor_attach_mm_content">Nota multimedya içeriği iliştir</string>
   <string name="multimedia_editor_attach_media">Medya iliştir</string>
+  <!-- Audio view -->
+  <!-- Message when recording fails -->
   <string name="multimedia_editor_audio_view_recording_failed">Kayıt başarısız</string>
   <string name="multimedia_editor_audio_view_playing_failed">Çalma başarısız</string>
+  <!-- Activity titles -->
   <string name="title_activity_edit_text">Düzenleme Kutusu</string>
   <string name="title_activity_translation">Çeviri</string>
   <string name="title_activity_load_pronounciation">Telaffuz</string>
   <string name="title_activity_search_image">Google Resim Arama</string>
+  <!-- Network failure -->
   <string name="network_no_connection">Bağlantı yok.</string>
 </resources>

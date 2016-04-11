@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Widget -->
   <string name="widget_minimum_cards_due_notification_ticker_title">카드 남음</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid 카드 남음</string>
   <string name="widget_no_cards_due">남은 카드 없음</string>

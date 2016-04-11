@@ -39,8 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- generic strings -->
   <string name="disabled">Disabled</string>
   <string name="enabled">Enabled</string>
+  <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">General settings</string>
   <string name="pref_cat_reviewing">Gjennomgang</string>
@@ -51,6 +53,8 @@
   <string name="pref_cat_automatic_display">Automatic display answer</string>
   <string name="pref_cat_appearance">Appearance</string>
   <string name="pref_cat_appearance_summ">Change themes and default font</string>
+  <string name="pref_cat_themes">Themes</string>
+  <string name="pref_cat_fonts">Fonts</string>
   <string name="pref_cat_gestures">Gestures</string>
   <string name="pref_cat_gestures_summ">Use taps and swipes instead of buttons</string>
   <string name="pref_cat_actions">Handlinger</string>
@@ -61,6 +65,7 @@
   <string name="pref_cat_plugins">Plugins</string>
   <string name="about_title">About AnkiDroid</string>
   <string name="about_version">Version: </string>
+  <!-- preferences.xml entries-->
   <string name="whiteboard_stroke_width">Stroke width</string>
   <string name="whiteboard_black">Black strokes</string>
   <string name="whiteboard_black_summ">Uses less memory, unless in night mode</string>
@@ -115,6 +120,8 @@
   <string name="fix_hebrew_text_summ">Nødløsning for å rendre hebraiske vokaler på riktig måte.</string>
   <string name="fix_hebrew_instructions">Denne innstillingen omgår RTL-algoritmen til Android for å vise hebraisk tekst med vokaler på riktig måte.\n\nFor at dette skal fungere, må du laste ned skrifttypen Tohu.ttf og kopiere den manuelt til:\n%s/fonts/\n\nDu kommer ikke til å behøve å endre kortene dine.</string>
   <string name="fix_hebrew_download_font">Last ned skrifttype</string>
+  <string name="day_theme">Day theme</string>
+  <string name="night_theme">Night theme</string>
   <string name="default_font">Standard-skrifttype</string>
   <string name="override_font">Default font applicability</string>
   <string name="language">Språk</string>
@@ -158,18 +165,22 @@
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
   <string name="enable_api_title">Enable AnkiDroid API</string>
   <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+  <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Advanced statistics</string>
   <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
   <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
   <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
   <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
   <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+  <!-- Custom sync server settings -->
   <string name="custom_sync_server_title">Custom sync server</string>
   <string name="custom_sync_server_enable_title">Use custom sync server</string>
   <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
   <string name="custom_sync_server_base_url_title">Sync url</string>
   <string name="custom_sync_server_media_url_title">Media sync url</string>
+  <!-- studyoptions -->
   <string name="studyoptions_limit_select_tags">Velg emneord</string>
+  <!-- Deck configurations -->
   <string name="deck_conf_deck_description">Kortstokkbeskrivelse</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">

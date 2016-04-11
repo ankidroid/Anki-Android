@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Widget -->
   <string name="widget_minimum_cards_due_notification_ticker_title">Kartos þozei nauh ni tawides</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">Nauh %d AnkiDroid kartos</string>
   <string name="widget_no_cards_due">Ni kartos</string>

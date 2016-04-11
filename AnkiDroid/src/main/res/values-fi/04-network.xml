@@ -45,7 +45,6 @@
   <string name="vague_error">Virhe</string>
   <string name="retry">Yritä uudelleen</string>
   <string name="cancel">Peru</string>
-  <string name="loading_shared_decks">Ladataan saatavilla olevia jaettuja korttipakkoja&#8230;</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Käyttöehdot</a></string>
   <string name="menu_get_shared_decks">Hanki jaettuja pakkoja</string>
   <string name="connection_error_message">Tapahtui verkkovirhe.</string>

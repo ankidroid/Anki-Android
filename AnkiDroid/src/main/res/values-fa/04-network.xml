@@ -45,13 +45,13 @@
   <string name="vague_error">Error</string>
   <string name="retry">تلاش مجدد</string>
   <string name="cancel">لغو</string>
-  <string name="loading_shared_decks">بارگذاري كارتهاي اشتراكي دردسترس...</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and Conditions</a></string>
   <string name="menu_get_shared_decks">دريافت كارتهاي اشتراكي</string>
   <string name="connection_error_message">خطاي شبكه رخ داده است.</string>
   <string name="not_logged_in_title">Log in to AnkiWeb</string>
   <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
   <string name="no_email_client">No email client available</string>
+  <!-- MyAccount.java -->
   <string name="username">نشانی پست الکترونیک</string>
   <string name="username_repeat">تکرار نشانی پست الکترونیک</string>
   <string name="password">رمزعبور</string>
@@ -65,6 +65,7 @@
   <string name="alert_logging_message">ورود اعضاء، لطفا صبر کنید...</string>
   <string name="invalid_username_password">نشانی پست الکترونیک یا رمز عبور وارد شده اشتباه است.</string>
   <string name="reset_password">تنظیم مجدد گذرواژه</string>
+  <!-- AndroidManifest.xml -->
   <string name="downloaddeck_search">جستجو</string>
   <string name="preferences_title">تنظيمات</string>
   <string name="deckpreferences_title">Options for XXX</string>

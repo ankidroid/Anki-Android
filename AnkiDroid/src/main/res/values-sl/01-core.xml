@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Navigation drawer items-->
   <string name="decks">Kompleti</string>
   <string name="card_browser">Brskalnik kartic</string>
   <string name="statistics">Statistika</string>
@@ -51,6 +52,7 @@
   <string name="studyoptions_total_cards">Skupaj kartic:</string>
   <string name="studyoptions_eta">Predviden čas (min.):</string>
   <string name="studyoptions_start">Preuči</string>
+  <!-- DeckPicker.java -->
   <string name="study_more">Preuči več</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Zap. %1$d kartica (%2$s)</item>
@@ -64,12 +66,14 @@
     <item quantity="few">Še %d min.</item>
     <item quantity="other">Še %d min.</item>
   </plurals>
+  <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
     <item quantity="one">Danes preučena %1$d kartica v %2$s</item>
     <item quantity="two">Danes preučeni %1$d kartici v %2$s</item>
     <item quantity="few">Danes preučene %1$d kartice v %2$s</item>
     <item quantity="other">Danes preučenih %1$d kartic v %2$s</item>
   </plurals>
+  <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">Vnos odgovora</string>
   <string name="show_answer">Prikaži odgovor</string>
   <string name="ease_button_again">Ponovno</string>
@@ -107,13 +111,20 @@
   <string name="new_dynamic_deck">Ustvari filtriran komplet</string>
   <string name="night_mode">Nočni način</string>
   <string name="directory_inaccessible">Slovar AnkiDroid ni na voljo</string>
+  <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
   <string name="time_quantity_seconds">%d s</string>
   <string name="time_quantity_minutes">%d min.</string>
   <string name="time_quantity_hours">%d ur</string>
   <string name="time_quantity_days">%d dni</string>
   <string name="time_quantity_months">%.1f mes.</string>
   <string name="time_quantity_years">%.1f let</string>
-  <string name="later">Pozneje</string>
+  <!-- or "%.1f a" -->
   <string name="rebuild_cram_deck">Izgrajevanje intenzivnega kompleta &#8230;</string>
   <string name="rebuild_cram_label">Izgradi</string>
   <string name="empty_cram_label">Prazen</string>
@@ -139,6 +150,7 @@
   <string name="export_collection">Izvozi zbirko</string>
   <string name="export_deck">Izvozi komplet</string>
   <string name="nothing">Brez</string>
+  <!-- Card template editor -->
   <string name="title_activity_template_editor">Vrste kartice</string>
   <string name="card_template_editor_front">Sprednja predloga</string>
   <string name="card_template_editor_back">Zadnja predloga</string>
@@ -153,6 +165,7 @@
   </plurals>
   <string name="invalid_template">Kartice ni bilo mogoče ustvariti</string>
   <string name="card_template_editor_would_delete_note">Odstranjevanje te vrste kartice lahko povzroči izbris enega ali več zapiskov. Najprej ustvarite novo vrsto kartice.</string>
+  <!-- Permissions -->
   <string name="read_write_permission_label">Branje in pisanje v podatkovno zbirko AnkiDroid</string>
   <string name="read_write_permission_description">Omogoči programu dostop do obstoječih zapiskov, kartic, vrst zapiskov in kompletov kot tudi ustvarjanje novih</string>
 </resources>

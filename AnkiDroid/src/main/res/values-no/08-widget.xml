@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Widget -->
   <string name="widget_minimum_cards_due_notification_ticker_title">Kort som forfaller</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid kort forfaller</string>
   <string name="widget_no_cards_due">Ingen kort forfaller</string>

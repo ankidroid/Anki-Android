@@ -63,5 +63,5 @@
   <string name="corrupt_db_message">コレクションが破損しています。\n\n「オプション」をタップして、バックアップからコレクションの復元を行ってください。もしそれで解決しない場合は、データベースを手動で修復するために次の手順を試してください：\n%1$s</string>
   <string name="access_collection_failed_message">コレクションへのアクセス中にエラーが発生しました。無害なバグによって生じた可能性もありますが、コレクションに問題が発生した可能性もあります。\n\n下の「オプション」ボタンをタップして、「データベースをチェック」か「バックアップから復元」を試してください。このメッセージが引き続き表示される場合は、下記リンク先の記載を参照してバグレポートを送信してください:\n%1$s</string>
   <string name="deck_repair_error">コレクションは修復できませんでした</string>
-  <string name="cursor_size_limit_exceeded">The Android size limit for a String in a database has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
+  <string name="cursor_size_limit_exceeded">アンドロイドのデータベース容量制限を超えています。Anki デスクトップ を使用して、使用していないノートタイプを削除してから、完全同期を実行してください。</string>
 </resources>

@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Navigation drawer items-->
   <string name="decks">Kortstokker</string>
   <string name="card_browser">Kortoversikt</string>
   <string name="statistics">Statistikk</string>
@@ -51,6 +52,7 @@
   <string name="studyoptions_total_cards">Totalt antall kort:</string>
   <string name="studyoptions_eta">Tidsestimat (min.):</string>
   <string name="studyoptions_start">Studer nå</string>
+  <!-- DeckPicker.java -->
   <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
@@ -60,10 +62,12 @@
     <item quantity="one">%d minutt igjen</item>
     <item quantity="other">%d minutter igjen</item>
   </plurals>
+  <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
     <item quantity="one">Studied %1$d card in %2$s today</item>
     <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
+  <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">Skriv svar</string>
   <string name="show_answer">Vis svaret</string>
   <string name="ease_button_again">Igjen</string>
@@ -101,13 +105,20 @@
   <string name="new_dynamic_deck">Lag en filtrert kortstokk</string>
   <string name="night_mode">Nattmodus</string>
   <string name="directory_inaccessible">AnkiDroid-mappen er utilgjengelig</string>
+  <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
   <string name="time_quantity_seconds">%d s</string>
   <string name="time_quantity_minutes">%d min</string>
   <string name="time_quantity_hours">%d h</string>
   <string name="time_quantity_days">%d d</string>
   <string name="time_quantity_months">%.1f mo</string>
   <string name="time_quantity_years">%.1f yr</string>
-  <string name="later">Senere</string>
+  <!-- or "%.1f a" -->
   <string name="rebuild_cram_deck">Bygger om pugge-kortstokk.\nVennligst vent...</string>
   <string name="rebuild_cram_label">Gjenoppbygg</string>
   <string name="empty_cram_label">Tøm</string>
@@ -133,6 +144,7 @@
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Export deck</string>
   <string name="nothing">Ingenting</string>
+  <!-- Card template editor -->
   <string name="title_activity_template_editor">Card types</string>
   <string name="card_template_editor_front">Framsidemal</string>
   <string name="card_template_editor_back">Baksidemal</string>
@@ -145,6 +157,7 @@
   </plurals>
   <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note">Fjerning av denne korttypen vil føre til at ett eller flere notater slettes. Vennligst lag en ny korttype først.</string>
+  <!-- Permissions -->
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
   <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

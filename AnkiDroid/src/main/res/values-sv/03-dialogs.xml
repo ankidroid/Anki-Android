@@ -109,6 +109,7 @@
   <string name="dialog_positive_set">Ange</string>
   <string name="lookup_button_content">Slå upp</string>
   <string name="dialog_collection_path_not_dir">Den valda sökvägen är ogiltig</string>
+  <!-- Media checking -->
   <string name="check_media_title">Kontrollera media?</string>
   <string name="check_media_warning">Det här kan ta lång tid för stora mediasamlingar</string>
   <string name="check_media_message">Kontrollerar media&#8230;</string>
@@ -121,9 +122,11 @@
   <string name="check_media_db_updated">Mediadatabasen återskapad.</string>
   <string name="check_media_delete_unused">Radera oanvända</string>
   <string name="check_media_deleted">Filer raderade: %d</string>
+  <!-- Tags Dialog Options -->
   <string name="tags_dialog_option_all_cards">Alla kort</string>
   <string name="tags_dialog_option_new_cards">Ny</string>
   <string name="tags_dialog_option_due_cards">Kö</string>
+  <!-- Empty cards -->
   <string name="emtpy_cards_finding">Hittar tomma kort&#8230;</string>
   <string name="empty_cards_none">Inga tomma kort</string>
   <string name="empty_cards_count">Kort att ta bort: %d</string>

@@ -119,7 +119,6 @@
   <string name="time_quantity_months">%.1f Mo</string>
   <string name="time_quantity_years">%.1f Jr</string>
   <!-- or "%.1f a" -->
-  <string name="later">Später</string>
   <string name="rebuild_cram_deck">Dynamischer Stapel wird neu aufgebaut&#8230;</string>
   <string name="rebuild_cram_label">Neu aufbauen</string>
   <string name="empty_cram_label">Leeren</string>

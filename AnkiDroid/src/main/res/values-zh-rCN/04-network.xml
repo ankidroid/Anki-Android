@@ -45,7 +45,6 @@
   <string name="vague_error">错误</string>
   <string name="retry">重试</string>
   <string name="cancel">取消</string>
-  <string name="loading_shared_decks">正在载入可用的共享牌组&#8230;&#8230;</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">用户协议</a></string>
   <string name="menu_get_shared_decks">获取共享牌组</string>
   <string name="connection_error_message">网络出现错误</string>

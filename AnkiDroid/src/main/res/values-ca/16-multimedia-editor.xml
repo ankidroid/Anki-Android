@@ -34,62 +34,101 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Main editor popup menu items -->
   <string name="multimedia_editor_popup_image">Afegeix imatge</string>
   <string name="multimedia_editor_popup_audio">Gravar àudio</string>
   <string name="multimedia_editor_popup_text">Editor avançat</string>
+  <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">Desenvolupat per glosbe.com</string>
+  <!-- these are like translate f r o m  and t o  some othe languages -->
   <string name="multimedia_editor_trans_from">Des de</string>
   <string name="multimedia_editor_trans_to">A</string>
+  <!-- imperative for the button title -->
   <string name="multimedia_editor_trans_translate">Traduir</string>
+  <!-- waiting message -->
   <string name="multimedia_editor_trans_translating_online">Traduir en línia</string>
+  <!-- pick the right translation imperative -->
   <string name="multimedia_editor_trans_pick_translation">Triar traducció</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_trans_translation_failed">Ha fallat la traducció</string>
+  <!-- from controller -->
+  <!-- dialog title to ask for translation source -->
   <string name="multimedia_editor_trans_pick_translation_source">Triar diccionari</string>
+  <!-- dialog asking to install ColorDict -->
   <string name="multimedia_editor_trans_install_color_dict">Instal·li ColorDict primer</string>
+  <!-- Pronunciation activity (Beolingus) -->
   <string name="multimedia_editor_pron_load">Carrega</string>
   <string name="multimedia_editor_pron_looking_up">Comprovar la pronunciació</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_pron_pronunciation_failed">La pronunciació ha fallat</string>
   <string name="multimedia_editor_word_search_try_lower_case">Proveu d\'utilitzar només caràcters en minúscules</string>
   <string name="multimedia_editor_poweredbeolingus">Desenvolupat per Beolingus</string>
+  <!-- Image search activity -->
+  <!-- in progress dialog when loading the image -->
   <string name="multimedia_editor_imgs_saving_image">Desant imatge</string>
   <string name="multimedia_editor_imgs_loading_image">Carregant imatge</string>
   <string name="multimedia_editor_imgs_no_results">La cerca ha tornat cap resultat</string>
   <string name="multimedia_editor_imgs_images_found">Imatges trobades</string>
   <string name="multimedia_editor_imgs_pow_by_google">Alimentat per Google Image Search</string>
+  <!-- buttons -->
   <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
   <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
   <string name="multimedia_editor_imgs_pick">Tria</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_imgs_failed">Recerca d\'imatge ha fallat</string>
+  <!-- while searching -->
   <string name="multimedia_editor_imgs_searching_for_images">Cercant imatges</string>
+  <!-- Field editing general -->
+  <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">Text</string>
   <string name="multimedia_editor_field_editing_image">Imatge</string>
   <string name="multimedia_editor_field_editing_audio">Àudio</string>
   <string name="multimedia_editor_field_editing_done">Fet</string>
+  <!-- Text field editing -->
+  <!-- buttons -->
   <string name="multimedia_editor_text_field_editing_search_label">Cerca per:</string>
   <string name="multimedia_editor_text_field_editing_show">Imatge</string>
   <string name="multimedia_editor_text_field_editing_say">Pronunciació</string>
   <string name="multimedia_editor_text_field_editing_clear">Buida</string>
   <string name="multimedia_editor_text_field_editing_clone">Clonar de</string>
   <string name="multimedia_editor_text_field_editing_translate">Traducció</string>
+  <!-- message to user, when there is no text or many words, but the user tries something -->
   <string name="multimedia_editor_text_field_editing_no_text">Introduïu un text primer</string>
   <string name="multimedia_editor_text_field_editing_many_words">Diccionari sol esperar una paraula</string>
+  <!-- message when cloning -->
   <string name="multimedia_editor_text_field_editing_clone_source">Prendre de</string>
+  <!-- Multimedia card editor activity -->
+  <!-- for buttons -->
+  <!-- delete confirmation -->
+  <!-- Image editing -->
+  <!-- for buttons -->
   <string name="multimedia_editor_image_field_editing_galery">Galeria</string>
   <string name="multimedia_editor_image_field_editing_photo">Càmera</string>
+  <!-- General -->
+  <!-- message on the progress dialog for the user to wait, means process -->
   <string name="multimedia_editor_general_downloading">Descarregant</string>
+  <!-- when process finishes -->
   <string name="multimedia_editor_general_done">Fet</string>
+  <!-- General word search and failures -->
   <string name="multimedia_editor_error_word_not_found">La paraula no s\'ha trobat</string>
+  <!-- failure when contacting glosbe or similar -->
   <string name="multimedia_editor_trans_getting_failure">Aconseguir la traducció ha fallat</string>
   <string name="multimedia_editor_searching_word">Cercant la paraula</string>
+  <!-- General -->
   <string name="multimedia_editor_progress_wait_title">Esperi</string>
+  <!-- not a good message, when an unexpected error happens -->
   <string name="multimedia_editor_something_wrong">Alguna cosa ha anat malament</string>
   <string name="multimedia_editor_attach_mm_content">Adjuntar contingut multimèdia a la anotació</string>
   <string name="multimedia_editor_attach_media">Adjuntar multimèdia</string>
+  <!-- Audio view -->
+  <!-- Message when recording fails -->
   <string name="multimedia_editor_audio_view_recording_failed">La gravació ha fracassat</string>
   <string name="multimedia_editor_audio_view_playing_failed">La reproducció ha fallat</string>
+  <!-- Activity titles -->
   <string name="title_activity_edit_text">Camp d\'edició</string>
   <string name="title_activity_translation">Traducció</string>
   <string name="title_activity_load_pronounciation">Pronunciació</string>
   <string name="title_activity_search_image">Cercador d\'imatges de Google</string>
+  <!-- Network failure -->
   <string name="network_no_connection">Sense connexió.</string>
 </resources>

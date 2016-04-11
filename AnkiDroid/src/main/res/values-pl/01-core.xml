@@ -122,7 +122,6 @@
   <string name="time_quantity_months">%.1f m</string>
   <string name="time_quantity_years">%.1f r</string>
   <!-- or "%.1f a" -->
-  <string name="later">Później</string>
   <string name="rebuild_cram_deck">Przebudowywanie talii.\nProszę czekać...</string>
   <string name="rebuild_cram_label">Odbuduj</string>
   <string name="empty_cram_label">Wyczyść</string>

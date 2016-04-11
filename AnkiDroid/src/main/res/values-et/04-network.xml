@@ -45,13 +45,13 @@
   <string name="vague_error">Viga</string>
   <string name="retry">Proovi uuesti</string>
   <string name="cancel">Loobu</string>
-  <string name="loading_shared_decks">Laeb saadaolevaid jagatud kaardipakke&#8230;</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
   <string name="menu_get_shared_decks">Get shared decks</string>
   <string name="connection_error_message">Ilmnest võrgutõrge.</string>
   <string name="not_logged_in_title">Log in to AnkiWeb</string>
   <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
   <string name="no_email_client">No email client available</string>
+  <!-- MyAccount.java -->
   <string name="username">E-posti aadress</string>
   <string name="username_repeat">Koorake e-posti aadressi</string>
   <string name="password">Parool</string>
@@ -65,6 +65,7 @@
   <string name="alert_logging_message">Sisse logimine, palun oota...</string>
   <string name="invalid_username_password">Vale e-posti aadress või parool.</string>
   <string name="reset_password">Reset password</string>
+  <!-- AndroidManifest.xml -->
   <string name="downloaddeck_search">Otsi</string>
   <string name="preferences_title">Seaded</string>
   <string name="deckpreferences_title">Options for XXX</string>

@@ -53,6 +53,8 @@
   <string name="pref_cat_automatic_display">Automatyczne wyświetlanie odpowiedzi</string>
   <string name="pref_cat_appearance">Wygląd</string>
   <string name="pref_cat_appearance_summ">Change themes and default font</string>
+  <string name="pref_cat_themes">Themes</string>
+  <string name="pref_cat_fonts">Fonts</string>
   <string name="pref_cat_gestures">Gesty</string>
   <string name="pref_cat_gestures_summ">Użyj gestów zamiast przycisków</string>
   <string name="pref_cat_actions">Czynności</string>
@@ -117,6 +119,8 @@
   <string name="fix_hebrew_text_summ">Obejście dla prawidłowego renderowania hebrajskich samogłosek.</string>
   <string name="fix_hebrew_instructions">To ustawienie omija algorytm RTL Androida aby poprawnie wyświetlać hebrajskie samogłoski.\n\nMusisz jednak najpierw pobrać plik Tohu.ttf i skopiować go ręcznie do:\n%s/fonts/\n\nNie musisz modyfikować swoich kart.</string>
   <string name="fix_hebrew_download_font">Pobierz czcionkę</string>
+  <string name="day_theme">Day theme</string>
+  <string name="night_theme">Night theme</string>
   <string name="default_font">Domyślna czcionka</string>
   <string name="override_font">Zastosowanie standardowego fontu</string>
   <string name="language">Język</string>

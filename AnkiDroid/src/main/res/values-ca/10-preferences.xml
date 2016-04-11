@@ -39,8 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- generic strings -->
   <string name="disabled">Disabled</string>
   <string name="enabled">Enabled</string>
+  <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Configuració general</string>
   <string name="pref_cat_reviewing">Revisió</string>
@@ -51,6 +53,8 @@
   <string name="pref_cat_automatic_display">Mostra la resposta automàticament</string>
   <string name="pref_cat_appearance">Appearance</string>
   <string name="pref_cat_appearance_summ">Change themes and default font</string>
+  <string name="pref_cat_themes">Themes</string>
+  <string name="pref_cat_fonts">Fonts</string>
   <string name="pref_cat_gestures">Gestos</string>
   <string name="pref_cat_gestures_summ">Utilitzar lliscades i tocs en lloc de botons</string>
   <string name="pref_cat_actions">Accions</string>
@@ -61,6 +65,7 @@
   <string name="pref_cat_plugins">Plugins</string>
   <string name="about_title">Sobre AnkiDroid</string>
   <string name="about_version">Versió: </string>
+  <!-- preferences.xml entries-->
   <string name="whiteboard_stroke_width">Amplada del traç</string>
   <string name="whiteboard_black">Traços negres</string>
   <string name="whiteboard_black_summ">Utilitza menys memòria, llevat que estigui en el mode de nit</string>
@@ -114,6 +119,8 @@
   <string name="fix_hebrew_text_summ">Solució per a mostra correctament les vocals de l\'Hebreu.</string>
   <string name="fix_hebrew_instructions">Aquesta configuració evita l\'algorisme d\'Android per mostrar el text hebraic amb vocals correctament.\n\nPer que funcioni, heu de baixar el tipus de lletra Tohu.ttf i copiar-lo manualment a:\n%s/fonts/\n\nNo haureu de modificar les vostres fitxes.</string>
   <string name="fix_hebrew_download_font">Descarrega el tipus de lletra</string>
+  <string name="day_theme">Day theme</string>
+  <string name="night_theme">Night theme</string>
   <string name="default_font">Tipus de lletra per omissió</string>
   <string name="override_font">Aplicabilitat de tipus de lletra per defecte</string>
   <string name="language">Idioma</string>
@@ -157,18 +164,22 @@
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
   <string name="enable_api_title">Activa l\'API de l\'AnkiDroid</string>
   <string name="enable_api_summary">Deixar altres apps connectar-se a AnkiDroid i llegir / escriure dades sense la seva intervenció</string>
+  <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Advanced statistics</string>
   <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
   <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
   <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
   <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
   <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+  <!-- Custom sync server settings -->
   <string name="custom_sync_server_title">Custom sync server</string>
   <string name="custom_sync_server_enable_title">Use custom sync server</string>
   <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
   <string name="custom_sync_server_base_url_title">Sync url</string>
   <string name="custom_sync_server_media_url_title">Media sync url</string>
+  <!-- studyoptions -->
   <string name="studyoptions_limit_select_tags">Trieu les etiquetes</string>
+  <!-- Deck configurations -->
   <string name="deck_conf_deck_description">Descripció del paquet</string>
   <string name="deck_conf_group">Grup d\'opcions</string>
   <plurals name="deck_conf_group_summ">

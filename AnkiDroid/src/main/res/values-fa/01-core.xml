@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Navigation drawer items-->
   <string name="decks">دسته ها</string>
   <string name="card_browser">مرورگر کارت</string>
   <string name="statistics">آمار</string>
@@ -51,6 +52,7 @@
   <string name="studyoptions_total_cards">کل کارتها:</string>
   <string name="studyoptions_eta">زمان برآورد شده (دقیقه):</string>
   <string name="studyoptions_start">مرور کردن</string>
+  <!-- DeckPicker.java -->
   <string name="study_more">بیشتر بخوانید</string>
   <plurals name="deckpicker_title">
     <item quantity="other">%1$dزمان مرور کارت ها (%2$s)</item>
@@ -58,9 +60,11 @@
   <plurals name="reviewer_window_title">
     <item quantity="other">%dزمان باقیمانده</item>
   </plurals>
+  <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
     <item quantity="other">کارت هایی%1$dکه امروز%2$sمطالعه شده اند</item>
   </plurals>
+  <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">پاسخ را تایپ کنید</string>
   <string name="show_answer">نمایش پاسخ</string>
   <string name="ease_button_again">دوباره</string>
@@ -98,13 +102,20 @@
   <string name="new_dynamic_deck">ایجاد دسته فیلتر شده</string>
   <string name="night_mode">حالت شب</string>
   <string name="directory_inaccessible">AnkiDroid فهرست غیر قابل دسترس است</string>
+  <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
   <string name="time_quantity_seconds">%dثانیه</string>
   <string name="time_quantity_minutes">%d دقیقه</string>
   <string name="time_quantity_hours">%dساعت</string>
   <string name="time_quantity_days">%d روز</string>
   <string name="time_quantity_months">%.1f ماه</string>
   <string name="time_quantity_years">سال %.1f</string>
-  <string name="later">بعدا</string>
+  <!-- or "%.1f a" -->
   <string name="rebuild_cram_deck">درحال بازسازی دسته کارت آزمون.\nلطفا صبر کنید...</string>
   <string name="rebuild_cram_label">بازسازی</string>
   <string name="empty_cram_label">خالی</string>
@@ -130,6 +141,7 @@
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Export deck</string>
   <string name="nothing">هیچ </string>
+  <!-- Card template editor -->
   <string name="title_activity_template_editor">نوع کارت</string>
   <string name="card_template_editor_front">قالب جلو</string>
   <string name="card_template_editor_back">قالب پشت</string>
@@ -141,6 +153,7 @@
   </plurals>
   <string name="invalid_template">کارت جدید نمی تواند ساخته شود</string>
   <string name="card_template_editor_would_delete_note">پاکسازی این نوع کارت ممکن است منجر به پاک شدن یک یا تعدادی یادداشت شود.لطفاً در ابتدا یک نوع کارت بسازید. </string>
+  <!-- Permissions -->
   <string name="read_write_permission_label">خواندن و نوشتن داده ها روی AnkiDroid</string>
   <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

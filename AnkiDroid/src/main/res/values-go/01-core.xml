@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Navigation drawer items-->
   <string name="decks">Galisos</string>
   <string name="card_browser">Sokja faur galisos</string>
   <string name="statistics">Raþjons</string>
@@ -51,6 +52,7 @@
   <string name="studyoptions_total_cards">Allos kartos:</string>
   <string name="studyoptions_eta">Beidanda ƕeila (min):</string>
   <string name="studyoptions_start">Laiseins</string>
+  <!-- DeckPicker.java -->
   <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">nauh %1$d karta (%2$s)</item>
@@ -60,10 +62,12 @@
     <item quantity="one">Nauh %d minutus</item>
     <item quantity="other">Nauh %d minutjus</item>
   </plurals>
+  <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
     <item quantity="one">Galaisida %1$d karta in %2$s himma daga</item>
     <item quantity="other">Galaisida %1$d kartos in %2$s himma daga</item>
   </plurals>
+  <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">Melei andahaft</string>
   <string name="show_answer">Ataugei andahaft</string>
   <string name="ease_button_again">Aftra</string>
@@ -101,13 +105,20 @@
   <string name="new_dynamic_deck">Skapei wikon mi</string>
   <string name="night_mode">Nahtamodus</string>
   <string name="directory_inaccessible">AnkiDroid staþ atgaggan mahts nist</string>
+  <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
   <string name="time_quantity_seconds">%d s</string>
   <string name="time_quantity_minutes">%d min</string>
   <string name="time_quantity_hours">%d hv</string>
   <string name="time_quantity_days">%d d</string>
   <string name="time_quantity_months">%.1f men</string>
   <string name="time_quantity_years">%.1f jer</string>
-  <string name="later">Spediza</string>
+  <!-- or "%.1f a" -->
   <string name="rebuild_cram_deck">Aftra gatimrjand fulla wikon&#8230;</string>
   <string name="rebuild_cram_label">Gatimrei aftra</string>
   <string name="empty_cram_label">Laus</string>
@@ -133,6 +144,7 @@
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Export deck</string>
   <string name="nothing">Ni waihts</string>
+  <!-- Card template editor -->
   <string name="title_activity_template_editor">Card types</string>
   <string name="card_template_editor_front">Frumawlits</string>
   <string name="card_template_editor_back">Hindarwlits</string>
@@ -146,6 +158,7 @@
   <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note"> Usniman þis kartahaidaus tawidedi aina fawanda aiþþau 
         managizo fawandaizo meleine. Skapei þata frumist niujata kartahaidu.</string>
+  <!-- Permissions -->
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
   <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

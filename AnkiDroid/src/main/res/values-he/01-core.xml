@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Navigation drawer items-->
   <string name="decks">Decks</string>
   <string name="card_browser">Card browser</string>
   <string name="statistics">Statistics</string>
@@ -51,6 +52,7 @@
   <string name="studyoptions_total_cards">סה\"כ הכרטיסים:</string>
   <string name="studyoptions_eta">זמן משוער (דקות):</string>
   <string name="studyoptions_start">ללמוד עכשיו</string>
+  <!-- DeckPicker.java -->
   <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
@@ -60,10 +62,12 @@
     <item quantity="one">%d minute left</item>
     <item quantity="other">%d minutes left</item>
   </plurals>
+  <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
     <item quantity="one">Studied %1$d card in %2$s today</item>
     <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
+  <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">הקלד תשובה</string>
   <string name="show_answer">הצג תשובה</string>
   <string name="ease_button_again">שוב</string>
@@ -101,13 +105,20 @@
   <string name="new_dynamic_deck">צור חפיסה מסוננת</string>
   <string name="night_mode">מצב לילה</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
   <string name="time_quantity_seconds">%d s</string>
   <string name="time_quantity_minutes">%d min</string>
   <string name="time_quantity_hours">%d h</string>
   <string name="time_quantity_days">%d d</string>
   <string name="time_quantity_months">%.1f mo</string>
   <string name="time_quantity_years">%.1f yr</string>
-  <string name="later">מאוחר יותר</string>
+  <!-- or "%.1f a" -->
   <string name="rebuild_cram_deck">השיקום cram הסיפון. \nPlease רגע...</string>
   <string name="rebuild_cram_label">בונה מחדש</string>
   <string name="empty_cram_label">ריק</string>
@@ -133,6 +144,7 @@
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Export deck</string>
   <string name="nothing">Nothing</string>
+  <!-- Card template editor -->
   <string name="title_activity_template_editor">Card types</string>
   <string name="card_template_editor_front">Front template</string>
   <string name="card_template_editor_back">Back template</string>
@@ -145,6 +157,7 @@
   </plurals>
   <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
+  <!-- Permissions -->
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
   <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

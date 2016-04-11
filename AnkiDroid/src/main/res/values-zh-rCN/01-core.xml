@@ -116,7 +116,6 @@
   <string name="time_quantity_months">%.1f月</string>
   <string name="time_quantity_years">%.1f年</string>
   <!-- or "%.1f a" -->
-  <string name="later">稍后</string>
   <string name="rebuild_cram_deck">重建强记模式牌组。\n请等待...</string>
   <string name="rebuild_cram_label">重建</string>
   <string name="empty_cram_label">无标签</string>

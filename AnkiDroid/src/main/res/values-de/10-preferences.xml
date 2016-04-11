@@ -53,6 +53,8 @@
   <string name="pref_cat_automatic_display">Antworten automatisch zeigen</string>
   <string name="pref_cat_appearance">Erscheinungsbild</string>
   <string name="pref_cat_appearance_summ">Themes und Standard-Schriftart ändern</string>
+  <string name="pref_cat_themes">Themes</string>
+  <string name="pref_cat_fonts">Fonts</string>
   <string name="pref_cat_gestures">Gesten</string>
   <string name="pref_cat_gestures_summ">Berühren und Wischen statt Schaltflächen verwenden</string>
   <string name="pref_cat_actions">Aktionen</string>
@@ -117,6 +119,8 @@
   <string name="fix_hebrew_text_summ">Übergangslösung um hebräische Vokale korrekt anzuzeigen.</string>
   <string name="fix_hebrew_instructions">Diese Einstellung umgeht den RTL-Algorithmus von Android, um hebräischen Text mit Vokalen korrekt anzuzeigen.\n\nDamit dies funktioniert, müssen Sie die Schriftart Tohu.ttf herunterladen und manuell in dieses Verzeichnis kopieren:\n»%s/font/«\n\nIhre Karten müssen Sie dafür nicht ändern.</string>
   <string name="fix_hebrew_download_font">Schrift herunterladen</string>
+  <string name="day_theme">Day theme</string>
+  <string name="night_theme">Night theme</string>
   <string name="default_font">Standardschrift</string>
   <string name="override_font">Anwendungsbereich der Standardschrift</string>
   <string name="language">Sprache</string>

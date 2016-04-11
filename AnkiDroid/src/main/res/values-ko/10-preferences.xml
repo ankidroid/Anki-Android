@@ -39,8 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- generic strings -->
   <string name="disabled">Disabled</string>
   <string name="enabled">Enabled</string>
+  <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">일반 설정</string>
   <string name="pref_cat_reviewing">복습</string>
@@ -51,6 +53,8 @@
   <string name="pref_cat_automatic_display">자동 디스플레이 대답</string>
   <string name="pref_cat_appearance">Appearance</string>
   <string name="pref_cat_appearance_summ">Change themes and default font</string>
+  <string name="pref_cat_themes">Themes</string>
+  <string name="pref_cat_fonts">Fonts</string>
   <string name="pref_cat_gestures">제스쳐</string>
   <string name="pref_cat_gestures_summ">버튼 대신 밀기와 두드리기 사용</string>
   <string name="pref_cat_actions">작업</string>
@@ -61,6 +65,7 @@
   <string name="pref_cat_plugins">플러그인</string>
   <string name="about_title">AnkiDroid에 대해서</string>
   <string name="about_version">버전: </string>
+  <!-- preferences.xml entries-->
   <string name="whiteboard_stroke_width">획 두께</string>
   <string name="whiteboard_black">검은 획</string>
   <string name="whiteboard_black_summ">야간 모드가 아니라면 메모리를 적게 사용</string>
@@ -115,6 +120,8 @@
   <string name="fix_hebrew_text_summ">히브리어 모음을 올바르게 표시하기 위한 해결 방법입니다.</string>
   <string name="fix_hebrew_instructions">이 설정은 안드로이드의 RTL 알고리즘을 우회하여 히브리어 텍스트의 모음을 바르게 표시하게 합니다.\n\nTohu.ttf를 다운로드하여 직접 %s/fonts/ 폴더에 복사하세요.\n\n기존의 카드를 편집할 필요는 없습니다.</string>
   <string name="fix_hebrew_download_font">글꼴 다운로드</string>
+  <string name="day_theme">Day theme</string>
+  <string name="night_theme">Night theme</string>
   <string name="default_font">기본 글꼴</string>
   <string name="override_font">기본 글꼴 적용 가능성</string>
   <string name="language">언어</string>
@@ -158,18 +165,22 @@
   <string name="convert_fen_text_summ">Forsyth–Edwards 표기법으로 체스판을 그립니다. 표기법은 [fen][/fen] 태그에서 묶어야 합니다.</string>
   <string name="enable_api_title">Enable AnkiDroid API</string>
   <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+  <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Advanced statistics</string>
   <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
   <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
   <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
   <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
   <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+  <!-- Custom sync server settings -->
   <string name="custom_sync_server_title">Custom sync server</string>
   <string name="custom_sync_server_enable_title">Use custom sync server</string>
   <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
   <string name="custom_sync_server_base_url_title">Sync url</string>
   <string name="custom_sync_server_media_url_title">Media sync url</string>
+  <!-- studyoptions -->
   <string name="studyoptions_limit_select_tags">태그 선택</string>
+  <!-- Deck configurations -->
   <string name="deck_conf_deck_description">꾸러미 설명</string>
   <string name="deck_conf_group">옵션 그룹</string>
   <plurals name="deck_conf_group_summ">

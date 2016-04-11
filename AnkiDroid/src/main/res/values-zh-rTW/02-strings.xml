@@ -38,8 +38,10 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
+  <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX%</string>
+  <!-- Navigation drawer strings -->
   <string name="drawer_open">開啟側欄</string>
   <string name="drawer_close">關閉側欄</string>
   <string name="CardEditorLaterMessage">封存的資訊</string>
@@ -56,6 +58,7 @@
   <string name="no_tags">您還沒新增任何標籤。</string>
   <string name="sdcard_missing_message">SD記憶卡目前正在當隨身碟存取中，因此無法使用。拔除USB之後即可使用。</string>
   <string name="updated_version">更新到版本 %s</string>
+  <!-- Reviewer.java -->
   <string name="enable_whiteboard">開啓白板</string>
   <string name="disable_whiteboard">關閉白板</string>
   <string name="show_whiteboard">顯示白板</string>
@@ -65,6 +68,7 @@
   <string name="leech_suspend_notification">卡片已擱置，同時標為榨時卡</string>
   <string name="leech_notification">卡片標為榨時卡</string>
   <string name="corrupt_font">損壞的字型檔案 %s</string>
+  <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>問題</item>
     <item>排序欄位</item>
@@ -78,7 +82,16 @@
     <item>標籤</item>
     <item>答錯次數</item>
     <item>複習次數</item>
+    <!--
+    <item>Changed</item>
+    <item>Created</item>
+    <item>Due</item>
+    <item>Ease</item>
+    <item>Edited</item>
+    <item>Interval</item>
+        -->
   </string-array>
+  <!-- Custom study options -->
   <string name="custom_study_increase_new_limit">增加今日新卡片上限</string>
   <string name="custom_study_increase_review_limit">增加今日複習卡片上限</string>
   <string name="custom_study_review_forgotten">複習忘記的卡片</string>
@@ -86,6 +99,7 @@
   <string name="custom_study_random_selection">隨機選擇卡片來複習</string>
   <string name="custom_study_preview_new">預覽新卡片</string>
   <string name="custom_study_limit_tags">僅限特定標籤的卡片</string>
+  <!-- Card editor -->
   <string name="cardeditor_title_add_note">新增筆記</string>
   <string name="cardeditor_title_edit_card">編輯筆記</string>
   <string name="discard_unsaved_changes">關閉且放棄當前的輸入？</string>
@@ -162,6 +176,7 @@
   <string name="tag_editor_add_feedback">輕觸 \"%2$s\" 確認新增 \"%1$s\"</string>
   <string name="tag_editor_add_feedback_existing">現有標籤 \"%1$s\" 已選擇</string>
   <string name="lookup_hint">在複製文字後，點擊 flashcard 之任意處來顯示搜尋圖示</string>
+  <!-- Time spans -->
   <plurals name="time_span_seconds">
     <item quantity="other">%s 秒</item>
   </plurals>
@@ -180,6 +195,9 @@
   <plurals name="time_span_years">
     <item quantity="other">%s 年</item>
   </plurals>
+  <!-- The reason for making a simple “< x” translatable are RTL
+         languages which apparently use the other symbol to mean less
+         than. -->
   <string name="less_than_time">&lt;%s</string>
   <string name="decks_rename_exists">That deck already exists</string>
   <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>

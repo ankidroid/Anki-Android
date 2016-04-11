@@ -109,6 +109,7 @@
   <string name="dialog_positive_set">Beállít</string>
   <string name="lookup_button_content">Keresés</string>
   <string name="dialog_collection_path_not_dir">A megadott elérési út nem érvényes mappa</string>
+  <!-- Media checking -->
   <string name="check_media_title">Média ellenőrzése?</string>
   <string name="check_media_warning">Ez sokáig tarthat nagy média gyűjtemények esetén</string>
   <string name="check_media_message">Média ellenőrzése&#8230;</string>
@@ -121,9 +122,11 @@
   <string name="check_media_db_updated">Média adatbázis újraépült.</string>
   <string name="check_media_delete_unused">Használaton kívüliek törlése</string>
   <string name="check_media_deleted">Törölt fájlok: %d</string>
+  <!-- Tags Dialog Options -->
   <string name="tags_dialog_option_all_cards">All cards</string>
   <string name="tags_dialog_option_new_cards">New</string>
   <string name="tags_dialog_option_due_cards">Due</string>
+  <!-- Empty cards -->
   <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
   <string name="empty_cards_none">No empty cards</string>
   <string name="empty_cards_count">Cards to delete: %d</string>

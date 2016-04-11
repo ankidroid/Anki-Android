@@ -39,8 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- generic strings -->
   <string name="disabled">Onemogočeno</string>
   <string name="enabled">Omogočeno</string>
+  <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Splošne nastavitve</string>
   <string name="pref_cat_reviewing">Pregledovanje</string>
@@ -51,6 +53,8 @@
   <string name="pref_cat_automatic_display">Samodejno prikaži odgovor</string>
   <string name="pref_cat_appearance">Videz</string>
   <string name="pref_cat_appearance_summ">Spremeni teme in privzeto pisavo</string>
+  <string name="pref_cat_themes">Themes</string>
+  <string name="pref_cat_fonts">Fonts</string>
   <string name="pref_cat_gestures">Poteze</string>
   <string name="pref_cat_gestures_summ">Uporabi tape in potege namesto gumbov</string>
   <string name="pref_cat_actions">Dejanja</string>
@@ -61,6 +65,7 @@
   <string name="pref_cat_plugins">Vstavki</string>
   <string name="about_title">O AnkiDroidu</string>
   <string name="about_version">Različica: </string>
+  <!-- preferences.xml entries-->
   <string name="whiteboard_stroke_width">Debelina črte</string>
   <string name="whiteboard_black">Črne črte</string>
   <string name="whiteboard_black_summ">Uporabi manj pomnilnika razen v nočnem načinu</string>
@@ -115,6 +120,8 @@
   <string name="fix_hebrew_text_summ">Zaobidenje za pravilen izris hebrejskih samoglasnikov.</string>
   <string name="fix_hebrew_instructions">Ta nastavitev zaobide Androidov algoritem RTL, da pravilno prikaže hebrejsko besedilo s samoglasniki.\n\nDa bi to delovalo, morate prejeti pisavo Tohu.ttf in jo ročno kopirati v\n\"%s/fonts/”\n\nSvojih kartic vam ne bo treba spremeniti.</string>
   <string name="fix_hebrew_download_font">Prejmi pisavo</string>
+  <string name="day_theme">Day theme</string>
+  <string name="night_theme">Night theme</string>
   <string name="default_font">Privzeta pisava</string>
   <string name="override_font">Uporabnost privzete pisave</string>
   <string name="language">Jezik</string>
@@ -158,18 +165,22 @@
   <string name="convert_fen_text_summ">Nariši šahovnico iz zapisa Forsyth–Edwards. Zapis se mora nahajati znotraj oznak [fen][/fen].</string>
   <string name="enable_api_title">Omogoči API AnkiDroid</string>
   <string name="enable_api_summary">Omogoči drugim napravam povezavo z AnkiDroidom in branje/pisanje podatkov brez mojega posredovanja</string>
+  <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Napredna statistika</string>
   <string name="enable_advanced_statistics_title">Omogoči napredno statistiko</string>
   <string name="enable_advanced_statistics_summ">Prikaži napovedno statistiko glede na izračun ali simulacijo prihodnjih pregledov (omogočeno), ali že načrtovane prihodnje preglede (onemogočeno).</string>
   <string name="advanced_forecast_stats_compute_n_days_title">Izračunaj prvih n dni, simuliraj preostanek</string>
   <string name="advanced_forecast_stats_compute_precision_title">Natančnost izračuna</string>
   <string name="advanced_forecast_stats_mc_n_iterations_title">Število ponovitev simulacije</string>
+  <!-- Custom sync server settings -->
   <string name="custom_sync_server_title">Strežnik za sinhronizacijo po meri</string>
   <string name="custom_sync_server_enable_title">Uporabi strežnik za sinhronizacijo po meri</string>
   <string name="custom_sync_server_enable_summary">Če ne želite uporabljati lastniške storitve AnkiWeb, lahko tu določite nadomestno storitev</string>
   <string name="custom_sync_server_base_url_title">URL za sinhr.</string>
   <string name="custom_sync_server_media_url_title">URL za sinhr. predstavnosti</string>
+  <!-- studyoptions -->
   <string name="studyoptions_limit_select_tags">Izberite oznake</string>
+  <!-- Deck configurations -->
   <string name="deck_conf_deck_description">Opis kompleta</string>
   <string name="deck_conf_group">Skupina možnosti</string>
   <plurals name="deck_conf_group_summ">

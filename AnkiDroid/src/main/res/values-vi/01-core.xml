@@ -116,7 +116,6 @@
   <string name="time_quantity_months">%.1f tháng</string>
   <string name="time_quantity_years">%.1f năm</string>
   <!-- or "%.1f a" -->
-  <string name="later">Để sau</string>
   <string name="rebuild_cram_deck">Đang dựng lại bộ thẻ ôn thi&#8230;</string>
   <string name="rebuild_cram_label">Dựng lại</string>
   <string name="empty_cram_label">Dọn trống</string>

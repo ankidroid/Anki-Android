@@ -45,13 +45,13 @@
   <string name="vague_error">Airzei</string>
   <string name="retry">Aftra gakiusei</string>
   <string name="cancel">Fraqiþ</string>
-  <string name="loading_shared_decks">Laþand wisandos gadailidos wikons&#8230;</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Witoda jah þaurbos</a></string>
   <string name="menu_get_shared_decks">Get shared decks</string>
   <string name="connection_error_message">Natjawaurk airzei warþ.</string>
   <string name="not_logged_in_title">Atgagg du AnkiNati</string>
   <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
   <string name="no_email_client">No email client available</string>
+  <!-- MyAccount.java -->
   <string name="username">E-mel</string>
   <string name="username_repeat">Aftra melei e-mel</string>
   <string name="password">Gamotawaurd</string>
@@ -65,6 +65,7 @@
   <string name="alert_logging_message">Atgaggand&#8230;</string>
   <string name="invalid_username_password">Unraiht e-mel aiþþau gamotawaurd</string>
   <string name="reset_password">Aftrasatei gamotawaurd</string>
+  <!-- AndroidManifest.xml -->
   <string name="downloaddeck_search">Gasokei</string>
   <string name="preferences_title">Waleinos</string>
   <string name="deckpreferences_title">Mahteis faur XXX</string>

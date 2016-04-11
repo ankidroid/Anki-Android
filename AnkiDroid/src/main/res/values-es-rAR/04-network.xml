@@ -45,13 +45,13 @@
   <string name="vague_error">Error</string>
   <string name="retry">Intentar nuevamente</string>
   <string name="cancel">Cancelar</string>
-  <string name="loading_shared_decks">Cargando mazos compartidos disponibles...</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Términos y Condiciones</a></string>
   <string name="menu_get_shared_decks">Obtener mazos compartidos</string>
   <string name="connection_error_message">Ha ocurrido un error de red.</string>
   <string name="not_logged_in_title">Iniciar sesión en AnkiWeb</string>
   <string name="login_create_account_message">Debes iniciar sesión con una cuenta de terceros para utilizar el servicio de sincronización en la nube. Puedes crear una en el paso siguiente.</string>
   <string name="no_email_client">No hay un cliente de email disponible</string>
+  <!-- MyAccount.java -->
   <string name="username">Dirección de correo electrónico</string>
   <string name="username_repeat">Repetir dirección de correo electrónico</string>
   <string name="password">Contraseña</string>
@@ -65,6 +65,7 @@
   <string name="alert_logging_message">Ingresando a la cuenta, por favor aguarde...</string>
   <string name="invalid_username_password">Dirección de correo electrónico o contraseña incorrecta.</string>
   <string name="reset_password">Restablecer contraseña</string>
+  <!-- AndroidManifest.xml -->
   <string name="downloaddeck_search">Buscar</string>
   <string name="preferences_title">Preferencias</string>
   <string name="deckpreferences_title">Opciones para XXX</string>

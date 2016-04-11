@@ -53,6 +53,8 @@
   <string name="pref_cat_automatic_display">Tự động hiển thị trả lời</string>
   <string name="pref_cat_appearance">Appearance</string>
   <string name="pref_cat_appearance_summ">Change themes and default font</string>
+  <string name="pref_cat_themes">Themes</string>
+  <string name="pref_cat_fonts">Fonts</string>
   <string name="pref_cat_gestures">Cử Chỉ/ Điều Hướng</string>
   <string name="pref_cat_gestures_summ">Sử dụng taps và swipes thay vì các nút bấm</string>
   <string name="pref_cat_actions">Tác vụ</string>
@@ -118,6 +120,8 @@
   <string name="fix_hebrew_text_summ">Workaround để làm cho tiếng Do Thái nguyên âm một cách chính xác.</string>
   <string name="fix_hebrew_instructions">Cài đặt này đi qua các thuật toán RTL của Android để hiển thị các văn bản tiếng Do Thái với nguyên âm correctly.\n\nFor để làm việc này, bạn cần phải tải về phông chữ Tohu.ttf và sao chép nó bằng tay đến: \n%s/fonts/\n\nYou sẽ không phải sửa đổi thẻ của bạn.</string>
   <string name="fix_hebrew_download_font">Tải về phông chữ</string>
+  <string name="day_theme">Day theme</string>
+  <string name="night_theme">Night theme</string>
   <string name="default_font">Font mặc định</string>
   <string name="override_font">Tính ứng dụng phông chữ mặc định</string>
   <string name="language">Ngôn ngữ</string>

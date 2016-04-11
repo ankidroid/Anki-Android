@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Feedback.java -->
   <string name="error_reporting_choice">Envia informes d\'error</string>
   <string name="feedback_disclaimer">Avís: Nosaltres no apleguem cap informació personal com podrien ser la seva adreça de correu electrònic, número de telèfon, o la adreça IMEI del seu telèfon mòbil. En canvi, apleguem informació sobre el seu dispositiu, model i versió del seu Android, també errors reportats i els passos que van deixar que passesin.</string>
   <string name="feedback_title">Comentaris</string>

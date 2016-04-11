@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Navigation drawer items-->
   <string name="decks">Шпилови</string>
   <string name="card_browser">Прегледач картица</string>
   <string name="statistics">Статистика</string>
@@ -51,6 +52,7 @@
   <string name="studyoptions_total_cards">Укупно картица:</string>
   <string name="studyoptions_eta">Процењено време (мин):</string>
   <string name="studyoptions_start">Започни учење</string>
+  <!-- DeckPicker.java -->
   <string name="study_more">Учити више</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d карта за (%2$s)</item>
@@ -62,11 +64,13 @@
     <item quantity="few">%d minutes left</item>
     <item quantity="other">%d минута остало</item>
   </plurals>
+  <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
     <item quantity="one">Проучено %1$d карте за %2$s данас</item>
     <item quantity="few">Проучено %1$d карата за %2$s данас</item>
     <item quantity="other">Проучено %1$d карата за %2$s данас</item>
   </plurals>
+  <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">Унесите одговор</string>
   <string name="show_answer">Прикажи одговор</string>
   <string name="ease_button_again">Поново</string>
@@ -104,13 +108,20 @@
   <string name="new_dynamic_deck">Направи филтриран шпил</string>
   <string name="night_mode">Ноћни режим</string>
   <string name="directory_inaccessible">Недоступан каталог AnkiDroid</string>
+  <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
   <string name="time_quantity_seconds">%d s</string>
   <string name="time_quantity_minutes">%d min</string>
   <string name="time_quantity_hours">%d h</string>
   <string name="time_quantity_days">%d d</string>
   <string name="time_quantity_months">%.1f mo</string>
   <string name="time_quantity_years">%.1f yr</string>
-  <string name="later">Касније</string>
+  <!-- or "%.1f a" -->
   <string name="rebuild_cram_deck">Обнова слагања шпила.\nМолим сачекајте...</string>
   <string name="rebuild_cram_label">Ремонтуј</string>
   <string name="empty_cram_label">Очисти</string>
@@ -136,6 +147,7 @@
   <string name="export_collection">Извози колекцију</string>
   <string name="export_deck">Извози шпил</string>
   <string name="nothing">Ништа</string>
+  <!-- Card template editor -->
   <string name="title_activity_template_editor">Типови картица</string>
   <string name="card_template_editor_front">Предњи шаблон</string>
   <string name="card_template_editor_back">Задњи шаблон</string>
@@ -149,6 +161,7 @@
   </plurals>
   <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note">Брисање тог типа карата довешће до брисања једног или неколико белешки. Направите прво нови тип карата.</string>
+  <!-- Permissions -->
   <string name="read_write_permission_label">Читати и писати у бази података AnkiDroid</string>
   <string name="read_write_permission_description">Дозволи апликацији да има доступ ка постојећим белешкама, картама, моделима и шпиловима, а такође да креира нове.</string>
 </resources>

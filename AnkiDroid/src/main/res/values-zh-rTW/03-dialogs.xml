@@ -108,6 +108,7 @@
   <string name="dialog_positive_set">儲存設定</string>
   <string name="lookup_button_content">查找</string>
   <string name="dialog_collection_path_not_dir">所選的路徑不是有效路徑</string>
+  <!-- Media checking -->
   <string name="check_media_title">檢查媒體嗎？</string>
   <string name="check_media_warning">因爲大量的媒體蒐藏，這可能會花上好一段時間</string>
   <string name="check_media_message">正在檢查媒體&#8230;</string>
@@ -120,9 +121,11 @@
   <string name="check_media_db_updated">重建媒體資料庫</string>
   <string name="check_media_delete_unused">刪除未使用的</string>
   <string name="check_media_deleted">已刪除的檔案：%d</string>
+  <!-- Tags Dialog Options -->
   <string name="tags_dialog_option_all_cards">所有卡片</string>
   <string name="tags_dialog_option_new_cards">新增</string>
   <string name="tags_dialog_option_due_cards">到期</string>
+  <!-- Empty cards -->
   <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
   <string name="empty_cards_none">No empty cards</string>
   <string name="empty_cards_count">Cards to delete: %d</string>

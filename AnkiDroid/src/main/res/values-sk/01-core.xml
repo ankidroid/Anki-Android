@@ -122,7 +122,6 @@
   <string name="time_quantity_months">%.1f mes</string>
   <string name="time_quantity_years">%.1f r</string>
   <!-- or "%.1f a" -->
-  <string name="later">Neskôr</string>
   <string name="rebuild_cram_deck">Obnovujem balíček na drvenie sa.\nProsím počkajte...</string>
   <string name="rebuild_cram_label">Znovu zostaviť</string>
   <string name="empty_cram_label">Vyprázdniť</string>

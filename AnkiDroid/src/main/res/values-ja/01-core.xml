@@ -46,7 +46,7 @@
   <string name="settings">設定</string>
   <string name="help">ヘルプ</string>
   <string name="send_feedback">フィードバック</string>
-  <string name="studyoptions_title">デッキ概要</string>
+  <string name="studyoptions_title">デッキの概要</string>
   <string name="studyoptions_due_today">今日の課題:</string>
   <string name="studyoptions_new_total">新規カード:</string>
   <string name="studyoptions_total_cards">カード総数:</string>
@@ -95,7 +95,7 @@
   <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらも全て削除されます。\n%s</string>
   <string name="menu_select">テキストを選択</string>
   <string name="menu_search">%1$sで探す</string>
-  <string name="menu_mark_note">ノートをマーク</string>
+  <string name="menu_mark_note">ノートにマークを付ける</string>
   <string name="menu_unmark_note">ノートのマークをはずす</string>
   <string name="new_deck">デッキを新規作成</string>
   <string name="create">作成</string>
@@ -116,7 +116,6 @@
   <string name="time_quantity_months">%.1fヶ月</string>
   <string name="time_quantity_years">%.1f年</string>
   <!-- or "%.1f a" -->
-  <string name="later">後で</string>
   <string name="rebuild_cram_deck">フィルターデッキを再構築しています...</string>
   <string name="rebuild_cram_label">再構築</string>
   <string name="empty_cram_label">空にする</string>
@@ -128,13 +127,13 @@
   <string name="studyoptions_limit_reached">既に一日あたりの学習枚数の上限に達しています</string>
   <string name="studyoptions_empty_schedule">このデッキでは、今日このあと予定されている課題はありません</string>
   <string name="studyoptions_congrats_finished">おめでとうございます！ このデッキの今日の課題を全て達成しました！</string>
-  <string name="studyoptions_congrats_more_rev">予定日に達した復習カードがまだ他にも残っていますが、今日復習したカードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で上げられます。</string>
-  <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、今日学習した新規カードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で上げられます。（ただしそれに伴って短期的に学習の負担が増えますのでご注意ください。）</string>
+  <string name="studyoptions_congrats_more_rev">今日の学習上限枚数に到達しましたが、学習予定日が来ている復習カードがまだ残っています。１日の学習上限枚数は、「デッキ オプション」内の設定で変更することが出来ます。</string>
+  <string name="studyoptions_congrats_more_new">今日の学習上限枚数に到達しましたが、学習出来る新規カードがまだ残っています。１日の学習上限枚数は、「デッキ オプション」内の設定で変更することが出来ます。（新規カードの学習上限枚数が上がると、短期的に学習の負担が増えますのでご注意ください。）</string>
   <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
   <string name="studyoptions_no_cards_due">今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
-  <string name="sd_card_not_mounted">デバイスストレージがマウントされていません</string>
+  <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
   <string name="button_sync">同期</string>
-  <string name="cancel_sync_confirm">同期をキャンセルしてもよろしいですか？</string>
+  <string name="cancel_sync_confirm">同期をキャンセルしますか？</string>
   <string name="continue_sync">同期を続行</string>
   <string name="sync_cancelled">同期がキャンセルされました</string>
   <string name="sync_cancel_message">キャンセルしています&#8230;\nやや時間がかかることがあります</string>
@@ -153,7 +152,7 @@
     <item quantity="other">カードタイプ \'%2$s\' とそのカード %1$d 枚を削除しますか？</item>
   </plurals>
   <string name="invalid_template">カードを作成できませんでした</string>
-  <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、一つ以上のノートも削除することになります。まずは新しいカードタイプを追加してください。</string>
+  <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、１つ以上のノートが削除されます。まずは新しいカードタイプを追加してください。</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">AnkiDroid データベースの読み書き</string>
   <string name="read_write_permission_description">このアプリケーションに新規のノート・カード・ノートタイプ・デッキの作成を許可するとともに、既存のノート・カード・ノートタイプ・デッキへのアクセスも許可します</string>

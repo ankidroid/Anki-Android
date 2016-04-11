@@ -109,6 +109,7 @@
   <string name="dialog_positive_set">Conjunto</string>
   <string name="lookup_button_content">Buscar</string>
   <string name="dialog_collection_path_not_dir">La ruta especificada no es un directorio válido</string>
+  <!-- Media checking -->
   <string name="check_media_title">¿Comprobar archivos multimedia?</string>
   <string name="check_media_warning">Esto podría tardar mucho tiempo con colecciones de grandes archivos multimedia</string>
   <string name="check_media_message">Comprobando archivos multimedia&#8230;</string>
@@ -121,9 +122,11 @@
   <string name="check_media_db_updated">Base de datos de archivos multimedia reconstruida</string>
   <string name="check_media_delete_unused">Eliminar no utilizado</string>
   <string name="check_media_deleted">Archivos eliminados: %d</string>
+  <!-- Tags Dialog Options -->
   <string name="tags_dialog_option_all_cards">Todas las tarjetas</string>
   <string name="tags_dialog_option_new_cards">Nuevas</string>
   <string name="tags_dialog_option_due_cards">Programadas</string>
+  <!-- Empty cards -->
   <string name="emtpy_cards_finding">Buscando tarjetas vacías&#8230;</string>
   <string name="empty_cards_none">No hay tarjetas vacías</string>
   <string name="empty_cards_count">Tarjetas a eliminar: %d</string>

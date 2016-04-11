@@ -38,8 +38,10 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
+  <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX%</string>
+  <!-- Navigation drawer strings -->
   <string name="drawer_open">Öppna panel</string>
   <string name="drawer_close">Stäng panel</string>
   <string name="CardEditorLaterMessage">Sparad information för senare</string>
@@ -56,6 +58,7 @@
   <string name="no_tags">Du har inte lagt till några etiketter än.</string>
   <string name="sdcard_missing_message">SD-kortet är inte tillgängligt eftersom det används som USB-minne. Koppla ur USB:n för att komma åt din kortlek.</string>
   <string name="updated_version">Uppdaterad till version %s</string>
+  <!-- Reviewer.java -->
   <string name="enable_whiteboard">Aktivera whiteboard</string>
   <string name="disable_whiteboard">Avaktivera whiteboard</string>
   <string name="show_whiteboard">Aktivera whiteboard</string>
@@ -65,6 +68,7 @@
   <string name="leech_suspend_notification">Markerat som utsugarkort och åsidosatt</string>
   <string name="leech_notification">Markerat som utsugarkort</string>
   <string name="corrupt_font">Felaktig teckensnittsfil %s</string>
+  <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>Fråga</item>
     <item>Sortera fält</item>
@@ -78,7 +82,16 @@
     <item>Etiketter</item>
     <item>Felsvar</item>
     <item>Repetitioner</item>
+    <!--
+    <item>Changed</item>
+    <item>Created</item>
+    <item>Due</item>
+    <item>Ease</item>
+    <item>Edited</item>
+    <item>Interval</item>
+        -->
   </string-array>
+  <!-- Custom study options -->
   <string name="custom_study_increase_new_limit">Öka gränsen för nya kort för idag</string>
   <string name="custom_study_increase_review_limit">Öka gränsen för kortrepetitioner för idag</string>
   <string name="custom_study_review_forgotten">Repetera glömda kort</string>
@@ -86,6 +99,7 @@
   <string name="custom_study_random_selection">Studera ett slumpmässigt urval av kort</string>
   <string name="custom_study_preview_new">Förhandsgranska nya kort</string>
   <string name="custom_study_limit_tags">Begränsa till vissa etiketter</string>
+  <!-- Card editor -->
   <string name="cardeditor_title_add_note">Lägg till not</string>
   <string name="cardeditor_title_edit_card">Redigera not</string>
   <string name="discard_unsaved_changes">Vill du stänga och förlora nuvarande inmatning?</string>
@@ -165,6 +179,7 @@
   <string name="tag_editor_add_feedback">Tryck på “%2$s” för att bekräfta att lägga till “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Befintlig etikett “%1$s” vald</string>
   <string name="lookup_hint">Efter att ha kopierat texten, klicka var som helst på flashkortet för att visa sökikonen</string>
+  <!-- Time spans -->
   <plurals name="time_span_seconds">
     <item quantity="one">%s sekund</item>
     <item quantity="other">%s sekunder</item>
@@ -189,6 +204,9 @@
     <item quantity="one">%s år</item>
     <item quantity="other">%s år</item>
   </plurals>
+  <!-- The reason for making a simple “< x” translatable are RTL
+         languages which apparently use the other symbol to mean less
+         than. -->
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">Den kortleken existerar redan</string>
   <string name="decks_rename_filtered_nosubdecks">En filtrerad kortlek kan inte ha underkortlekar</string>

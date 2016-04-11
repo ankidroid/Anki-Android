@@ -131,7 +131,6 @@
   <string name="time_quantity_months">%.1f شهر</string>
   <string name="time_quantity_years">%.1f سنة</string>
   <!-- or "%.1f a" -->
-  <string name="later">في وقت لاحق</string>
   <string name="rebuild_cram_deck">إعادة بناء حزمة المراجعة المركزة.\n يرجى الانتظار...</string>
   <string name="rebuild_cram_label">إعادة بناء</string>
   <string name="empty_cram_label">فارغ</string>

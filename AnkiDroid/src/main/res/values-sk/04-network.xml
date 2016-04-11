@@ -45,7 +45,6 @@
   <string name="vague_error">Chyba</string>
   <string name="retry">Skúsiť znova</string>
   <string name="cancel">Zrušiť</string>
-  <string name="loading_shared_decks">Načítavam dostupné zdieľané balíčky...</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Obchodné podmienky</a></string>
   <string name="menu_get_shared_decks">Stiahnuť zdieľané balíčky</string>
   <string name="connection_error_message">Vyskytla sa chyba siete.</string>

@@ -53,6 +53,8 @@
   <string name="pref_cat_automatic_display">Автоматично показване отговор</string>
   <string name="pref_cat_appearance">Appearance</string>
   <string name="pref_cat_appearance_summ">Промяна теми и шрифт по подразбиране</string>
+  <string name="pref_cat_themes">Themes</string>
+  <string name="pref_cat_fonts">Fonts</string>
   <string name="pref_cat_gestures">Жестове</string>
   <string name="pref_cat_gestures_summ">Използване на докосване и плъзване вместо бутони</string>
   <string name="pref_cat_actions">Действия</string>
@@ -117,6 +119,8 @@
   <string name="fix_hebrew_text_summ">Позволява правилно показване гласните на иврит.</string>
   <string name="fix_hebrew_instructions">Тази настройка заобикаля алгоритъм RTL на Android, за да се покаже правилно гласните в текст на иврит. \n\nЗа да работи правилно, трябва да изтеглите шрифта Tohu.ttf и да го копирате ръчно в \n“%s/fonts/”\n\nНяма нужда да модифицирате картите.</string>
   <string name="fix_hebrew_download_font">Изтегляне на шрифт</string>
+  <string name="day_theme">Day theme</string>
+  <string name="night_theme">Night theme</string>
   <string name="default_font">Шрифт по подразбиране</string>
   <string name="override_font">Използване на шрифт по подразбиране</string>
   <string name="language">Език</string>

@@ -45,7 +45,6 @@
   <string name="vague_error">Błąd</string>
   <string name="retry">Próbuj ponownie</string>
   <string name="cancel">Anuluj</string>
-  <string name="loading_shared_decks">Ładowanie dostępnych udostępnionych talii...</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Warunki użytkowania</a></string>
   <string name="menu_get_shared_decks">Pobierz udostępniane talie</string>
   <string name="connection_error_message">Wystąpił błąd sieciowy.</string>

@@ -45,13 +45,13 @@
   <string name="vague_error">Ошибка</string>
   <string name="retry">Повторить</string>
   <string name="cancel">Отмена</string>
-  <string name="loading_shared_decks">Загрузка списка общедоступных колод.</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Условия</a></string>
   <string name="menu_get_shared_decks">Получить общедоступные колоды</string>
   <string name="connection_error_message">Ошибка сети.</string>
   <string name="not_logged_in_title">Залогиниться в AnkiWeb</string>
   <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
   <string name="no_email_client">Не клиент электронной почты</string>
+  <!-- MyAccount.java -->
   <string name="username">Имейл</string>
   <string name="username_repeat">Повторите имейл</string>
   <string name="password">Пароль</string>
@@ -65,6 +65,7 @@
   <string name="alert_logging_message">Вход в систему, пожалуйста, подождите...</string>
   <string name="invalid_username_password">Недопустимый адрес электронной почты или пароль.</string>
   <string name="reset_password">Сбросить пароль</string>
+  <!-- AndroidManifest.xml -->
   <string name="downloaddeck_search">Поиск</string>
   <string name="preferences_title">Настройки</string>
   <string name="deckpreferences_title">Опции для XXX</string>

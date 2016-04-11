@@ -53,6 +53,8 @@
   <string name="pref_cat_automatic_display">Näytä vastaukset automaattisesti</string>
   <string name="pref_cat_appearance">Appearance</string>
   <string name="pref_cat_appearance_summ">Change themes and default font</string>
+  <string name="pref_cat_themes">Themes</string>
+  <string name="pref_cat_fonts">Fonts</string>
   <string name="pref_cat_gestures">Eleet</string>
   <string name="pref_cat_gestures_summ">Käytä napautuksia ja pyyhkäisyjä painikkeiden sijaan</string>
   <string name="pref_cat_actions">Toiminnot</string>
@@ -118,6 +120,8 @@
   <string name="fix_hebrew_text_summ">Korjaa hepreankielisten vokaalien esitys.</string>
   <string name="fix_hebrew_instructions">Tämä asetus ohittaa Androidin RTL-algoritmin ja näyttää hepreankieliset vokaalit oikein.\n\nJotta tämä toimisi, sinun täytyy ladata kirjasintiedosto Tohu.ttf ja kopioida se käsin hakemistoon:\n%s/fonts/\n\nKorttien muokkaaminen ei ole tarpeen.</string>
   <string name="fix_hebrew_download_font">Lataa fontti</string>
+  <string name="day_theme">Day theme</string>
+  <string name="night_theme">Night theme</string>
   <string name="default_font">Oletusfontti</string>
   <string name="override_font">Oletuskirjasimen käyttöalue</string>
   <string name="language">Kieli</string>

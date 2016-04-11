@@ -119,7 +119,6 @@
   <string name="time_quantity_months">%.1f мес</string>
   <string name="time_quantity_years">%.1f г</string>
   <!-- or "%.1f a" -->
-  <string name="later">По-късно</string>
   <string name="rebuild_cram_deck">Пренареждане тестето за зубрене&#8230;</string>
   <string name="rebuild_cram_label">Възстанови</string>
   <string name="empty_cram_label">Празно</string>

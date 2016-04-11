@@ -53,6 +53,8 @@
   <string name="pref_cat_automatic_display">自动显示答案</string>
   <string name="pref_cat_appearance">Appearance</string>
   <string name="pref_cat_appearance_summ">Change themes and default font</string>
+  <string name="pref_cat_themes">Themes</string>
+  <string name="pref_cat_fonts">Fonts</string>
   <string name="pref_cat_gestures">手势</string>
   <string name="pref_cat_gestures_summ">使用点击和滑动代替按钮</string>
   <string name="pref_cat_actions">动作</string>
@@ -117,6 +119,8 @@
   <string name="fix_hebrew_text_summ">正确显示希伯来语元音的临时解决方法。</string>
   <string name="fix_hebrew_instructions">此设置将绕过Android的 RTL 算法 ，以正确显示希伯来语的元音。\n\n使用此设置，需要下载Tohu.ttf字体，并手动拷贝到:\n%s/fonts/\n\n目录中。不需要修改卡牌。</string>
   <string name="fix_hebrew_download_font">下载字体</string>
+  <string name="day_theme">Day theme</string>
+  <string name="night_theme">Night theme</string>
   <string name="default_font">默认字体</string>
   <string name="override_font">默认字体适用范围</string>
   <string name="language">语言</string>

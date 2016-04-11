@@ -34,62 +34,101 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Main editor popup menu items -->
   <string name="multimedia_editor_popup_image">Lägg till bild</string>
   <string name="multimedia_editor_popup_audio">Spela in ljud</string>
   <string name="multimedia_editor_popup_text">Avancerad redigering</string>
+  <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">Använder glosbe.com</string>
+  <!-- these are like translate f r o m  and t o  some othe languages -->
   <string name="multimedia_editor_trans_from">Från</string>
   <string name="multimedia_editor_trans_to">Till</string>
+  <!-- imperative for the button title -->
   <string name="multimedia_editor_trans_translate">Översätt</string>
+  <!-- waiting message -->
   <string name="multimedia_editor_trans_translating_online">Översätt online</string>
+  <!-- pick the right translation imperative -->
   <string name="multimedia_editor_trans_pick_translation">Välj översättning</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_trans_translation_failed">Översättning misslyckades</string>
+  <!-- from controller -->
+  <!-- dialog title to ask for translation source -->
   <string name="multimedia_editor_trans_pick_translation_source">Välj ordbok</string>
+  <!-- dialog asking to install ColorDict -->
   <string name="multimedia_editor_trans_install_color_dict">Installera ColorDict först</string>
+  <!-- Pronunciation activity (Beolingus) -->
   <string name="multimedia_editor_pron_load">Ladda</string>
   <string name="multimedia_editor_pron_looking_up">Söker efter uttal</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_pron_pronunciation_failed">Uttal misslyckades</string>
   <string name="multimedia_editor_word_search_try_lower_case">Försök att använda enbart små bokstäver</string>
   <string name="multimedia_editor_poweredbeolingus">Använder Beolingus</string>
+  <!-- Image search activity -->
+  <!-- in progress dialog when loading the image -->
   <string name="multimedia_editor_imgs_saving_image">Sparar bild</string>
   <string name="multimedia_editor_imgs_loading_image">Laddar bild</string>
   <string name="multimedia_editor_imgs_no_results">Sökning gav inga resultat</string>
   <string name="multimedia_editor_imgs_images_found">Bilder hittade</string>
   <string name="multimedia_editor_imgs_pow_by_google">Använder Google Image Search</string>
+  <!-- buttons -->
   <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
   <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
   <string name="multimedia_editor_imgs_pick">Välj</string>
+  <!-- in controller when fails -->
   <string name="multimedia_editor_imgs_failed">Bildsökning misslyckades</string>
+  <!-- while searching -->
   <string name="multimedia_editor_imgs_searching_for_images">Söker efter bilder</string>
+  <!-- Field editing general -->
+  <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">Text</string>
   <string name="multimedia_editor_field_editing_image">Bild</string>
   <string name="multimedia_editor_field_editing_audio">Ljud</string>
   <string name="multimedia_editor_field_editing_done">Klar</string>
+  <!-- Text field editing -->
+  <!-- buttons -->
   <string name="multimedia_editor_text_field_editing_search_label">Sök efter:</string>
   <string name="multimedia_editor_text_field_editing_show">Bild</string>
   <string name="multimedia_editor_text_field_editing_say">Uttal</string>
   <string name="multimedia_editor_text_field_editing_clear">Rensa</string>
   <string name="multimedia_editor_text_field_editing_clone">Klona från</string>
   <string name="multimedia_editor_text_field_editing_translate">Översättning</string>
+  <!-- message to user, when there is no text or many words, but the user tries something -->
   <string name="multimedia_editor_text_field_editing_no_text">Skriv något först</string>
   <string name="multimedia_editor_text_field_editing_many_words">Ordböcker förväntar sig vanligtvis ett ord</string>
+  <!-- message when cloning -->
   <string name="multimedia_editor_text_field_editing_clone_source">Ta från</string>
+  <!-- Multimedia card editor activity -->
+  <!-- for buttons -->
+  <!-- delete confirmation -->
+  <!-- Image editing -->
+  <!-- for buttons -->
   <string name="multimedia_editor_image_field_editing_galery">Galleri</string>
   <string name="multimedia_editor_image_field_editing_photo">Kamera</string>
+  <!-- General -->
+  <!-- message on the progress dialog for the user to wait, means process -->
   <string name="multimedia_editor_general_downloading">Laddar ner</string>
+  <!-- when process finishes -->
   <string name="multimedia_editor_general_done">Klar</string>
+  <!-- General word search and failures -->
   <string name="multimedia_editor_error_word_not_found">Ordet hittades inte</string>
+  <!-- failure when contacting glosbe or similar -->
   <string name="multimedia_editor_trans_getting_failure">Att få översättning misslyckades</string>
   <string name="multimedia_editor_searching_word">Sök efter ord</string>
+  <!-- General -->
   <string name="multimedia_editor_progress_wait_title">Vänta</string>
+  <!-- not a good message, when an unexpected error happens -->
   <string name="multimedia_editor_something_wrong">Tyvärr, någonting gick fel</string>
   <string name="multimedia_editor_attach_mm_content">Lägg till multimedia-innehåll till noten</string>
   <string name="multimedia_editor_attach_media">Bifoga media</string>
+  <!-- Audio view -->
+  <!-- Message when recording fails -->
   <string name="multimedia_editor_audio_view_recording_failed">Inspelning misslyckades</string>
   <string name="multimedia_editor_audio_view_playing_failed">Uppspelning misslyckades</string>
+  <!-- Activity titles -->
   <string name="title_activity_edit_text">Redigeringsfält</string>
   <string name="title_activity_translation">Översättning</string>
   <string name="title_activity_load_pronounciation">Uttal</string>
   <string name="title_activity_search_image">Google Bildsökning</string>
+  <!-- Network failure -->
   <string name="network_no_connection">Ingen anslutning.</string>
 </resources>

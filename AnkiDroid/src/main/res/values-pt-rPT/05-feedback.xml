@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Feedback.java -->
   <string name="error_reporting_choice">Modo de comunicação de erros</string>
   <string name="feedback_disclaimer">Aviso: Não recolhemos dados pessoais tais como o seu endereço de e-mail, número de telefone ou o IMEI deste telefone. No entanto, recolhemos algumas informações relacionadas com o seu dispositivo, tais como a marca, o modelo e a versão do Android instalada, além de outras informações relacionadas com a natureza dos erros que está a comunicar.</string>
   <string name="feedback_title">Comentários</string>

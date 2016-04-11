@@ -38,8 +38,10 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
+  <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX%</string>
+  <!-- Navigation drawer strings -->
   <string name="drawer_open">Abrir painel</string>
   <string name="drawer_close">Fechar painel</string>
   <string name="CardEditorLaterMessage">Informação guardada para mais tarde</string>
@@ -56,6 +58,7 @@
   <string name="no_tags">Ainda não adicionou quaisquer etiquetas.</string>
   <string name="sdcard_missing_message">Desativar o armazenamento USB para aceder aos seus baralhos</string>
   <string name="updated_version">Atualizada para a versão %s</string>
+  <!-- Reviewer.java -->
   <string name="enable_whiteboard">Activar quadro</string>
   <string name="disable_whiteboard">Desactivar quadro</string>
   <string name="show_whiteboard">Mostrar quadro</string>
@@ -65,6 +68,7 @@
   <string name="leech_suspend_notification">Ficha marcada como sanguessuga e suspensa</string>
   <string name="leech_notification">Ficha marcada como sanguessuga</string>
   <string name="corrupt_font">Ficheiro de tipo de letra %s corrompido</string>
+  <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>Pergunta</item>
     <item>Ordenar campo</item>
@@ -78,7 +82,16 @@
     <item>Etiquetas</item>
     <item>Falhas</item>
     <item>Revisões</item>
+    <!--
+    <item>Changed</item>
+    <item>Created</item>
+    <item>Due</item>
+    <item>Ease</item>
+    <item>Edited</item>
+    <item>Interval</item>
+        -->
   </string-array>
+  <!-- Custom study options -->
   <string name="custom_study_increase_new_limit">Aumentar o limite de novas fichas para hoje</string>
   <string name="custom_study_increase_review_limit">Aumentar o limite de revisões para hoje</string>
   <string name="custom_study_review_forgotten">Rever fichas esquecidas</string>
@@ -86,6 +99,7 @@
   <string name="custom_study_random_selection">Estudar uma seleção aleatória de fichas</string>
   <string name="custom_study_preview_new">Pré-visualizar fichas novas</string>
   <string name="custom_study_limit_tags">Limitar a etiquetas específicas</string>
+  <!-- Card editor -->
   <string name="cardeditor_title_add_note">Adicionar nota</string>
   <string name="cardeditor_title_edit_card">Editar nota</string>
   <string name="discard_unsaved_changes">Fechar e perder a entrada atual?</string>
@@ -165,6 +179,7 @@
   <string name="tag_editor_add_feedback">Toque em \"%2$s\" para confirmar a adição de \"%1$s\"</string>
   <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
   <string name="lookup_hint">Depois de copiar o texto, toque na ficha em qualquer lugar para mostrar o ícone de procura</string>
+  <!-- Time spans -->
   <plurals name="time_span_seconds">
     <item quantity="one">%s segundo</item>
     <item quantity="other">%s segundos</item>
@@ -189,6 +204,9 @@
     <item quantity="one">%s ano</item>
     <item quantity="other">%s anos</item>
   </plurals>
+  <!-- The reason for making a simple “< x” translatable are RTL
+         languages which apparently use the other symbol to mean less
+         than. -->
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">Esse baralho já existe.</string>
   <string name="decks_rename_filtered_nosubdecks">Um baralho filtrado não pode ter subbaralhos.</string>

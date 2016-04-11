@@ -39,6 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- Navigation drawer items-->
   <string name="decks">Колоды</string>
   <string name="card_browser">Обозреватель карт</string>
   <string name="statistics">Статистика</string>
@@ -51,6 +52,7 @@
   <string name="studyoptions_total_cards">Всего карт:</string>
   <string name="studyoptions_eta">Вероятно займёт (мин):</string>
   <string name="studyoptions_start">Начать обучение</string>
+  <!-- DeckPicker.java -->
   <string name="study_more">Продолжить обучение</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
@@ -62,11 +64,13 @@
     <item quantity="few">%d минуты остались</item>
     <item quantity="other">%d минут остались</item>
   </plurals>
+  <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
     <item quantity="one">Studied %1$d card in %2$s today</item>
     <item quantity="few">Studied %1$d cards in %2$s today</item>
     <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
+  <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">Напечатайте ответ</string>
   <string name="show_answer">Показать ответ</string>
   <string name="ease_button_again">Снова</string>
@@ -104,13 +108,20 @@
   <string name="new_dynamic_deck">Создать фильтрованную колоду</string>
   <string name="night_mode">Ночной режим</string>
   <string name="directory_inaccessible">Недоступен каталог AnkiDroid</string>
+  <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
   <string name="time_quantity_seconds">%d s</string>
   <string name="time_quantity_minutes">%d min</string>
   <string name="time_quantity_hours">%d h</string>
   <string name="time_quantity_days">%d d</string>
   <string name="time_quantity_months">%.1f mo</string>
   <string name="time_quantity_years">%.1f yr</string>
-  <string name="later">Позже</string>
+  <!-- or "%.1f a" -->
   <string name="rebuild_cram_deck">Перестроение колоды для зубрёжки.\nПожалуйста, подождите...</string>
   <string name="rebuild_cram_label">Перестроить</string>
   <string name="empty_cram_label">Очистить</string>
@@ -136,6 +147,7 @@
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Экспортировать колоду</string>
   <string name="nothing">Ничего</string>
+  <!-- Card template editor -->
   <string name="title_activity_template_editor">Типы карт</string>
   <string name="card_template_editor_front">Шаблон лицевой стороны</string>
   <string name="card_template_editor_back">Шаблон обратной стороны</string>
@@ -150,6 +162,7 @@
   <string name="invalid_template">A card could not be generated</string>
   <string name="card_template_editor_would_delete_note"> Удаление этого типа карт приведет к удалению одного
         или нескольких примечаний, создайте сначала новый тип карт.</string>
+  <!-- Permissions -->
   <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
   <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

@@ -45,7 +45,6 @@
   <string name="vague_error">Lỗi</string>
   <string name="retry">Thử lại</string>
   <string name="cancel">Huỷ bỏ</string>
-  <string name="loading_shared_decks">Đang nạp các bộ thẻ hiện hữu đã chia sẻ&#8230;</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Điều khoản và điều kiện</a></string>
   <string name="menu_get_shared_decks">Nhận các bộ thẻ đã chia sẻ</string>
   <string name="connection_error_message">Đã xảy ra lỗi mạng</string>

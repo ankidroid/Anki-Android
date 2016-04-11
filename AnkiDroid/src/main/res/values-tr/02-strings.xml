@@ -38,8 +38,10 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
+  <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX%</string>
+  <!-- Navigation drawer strings -->
   <string name="drawer_open">Çekmeceyi Aç</string>
   <string name="drawer_close">Çekmeceyi Kapat</string>
   <string name="CardEditorLaterMessage">Bilgi daha sonrası için kaydedildi</string>
@@ -56,6 +58,7 @@
   <string name="no_tags">Henüz herhangi bir etiket eklemediniz.</string>
   <string name="sdcard_missing_message">SD kart USB depolama olarak kullanıldığı için kullanılamıyor. Destelerinize erişmek için USB bağlantısını kesin.</string>
   <string name="updated_version">%s versiyonuna güncellendi</string>
+  <!-- Reviewer.java -->
   <string name="enable_whiteboard">Yazı tahtasını etkinleştir</string>
   <string name="disable_whiteboard">Yazı tahtasını devredışı bırak</string>
   <string name="show_whiteboard">Yazı tahtasını göster</string>
@@ -65,6 +68,7 @@
   <string name="leech_suspend_notification">Kart asalak olarak işaretlenip askıya alınmış</string>
   <string name="leech_notification">Kart asalak olarak işaretlenmiş</string>
   <string name="corrupt_font">Bozuk yazı tipi dosyası %s</string>
+  <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>Soru</item>
     <item>Alanı sırala</item>
@@ -78,7 +82,16 @@
     <item>Etiketler</item>
     <item>Yanlışlar</item>
     <item>Çalışmalar</item>
+    <!--
+    <item>Changed</item>
+    <item>Created</item>
+    <item>Due</item>
+    <item>Ease</item>
+    <item>Edited</item>
+    <item>Interval</item>
+        -->
   </string-array>
+  <!-- Custom study options -->
   <string name="custom_study_increase_new_limit">Bugünün yeni kart sınırını yükselt</string>
   <string name="custom_study_increase_review_limit">Bugünün tekrar edilecek kart sınırını yükselt</string>
   <string name="custom_study_review_forgotten">Unutulmuş kartları tekrarla</string>
@@ -86,6 +99,7 @@
   <string name="custom_study_random_selection">Rastgele seçilmiş kartları çalış</string>
   <string name="custom_study_preview_new">Yeni kartlara önden bak</string>
   <string name="custom_study_limit_tags">Belirli etiketlere sınırla</string>
+  <!-- Card editor -->
   <string name="cardeditor_title_add_note">Not Ekle</string>
   <string name="cardeditor_title_edit_card">Notu Düzenle</string>
   <string name="discard_unsaved_changes">Kapatıp şu anki girdi kaybedilsin mi?</string>
@@ -165,6 +179,7 @@
   <string name="tag_editor_add_feedback">\"%1$s\" eklemek için buna dokunun: \"%2$s\"</string>
   <string name="tag_editor_add_feedback_existing">Varolan bir etiketi seçtiniz: \"%1$s\"</string>
   <string name="lookup_hint">Metni kopyaladıktan sonra, arama simgesini göstermek için bilgi kartının üzerine dokunun</string>
+  <!-- Time spans -->
   <plurals name="time_span_seconds">
     <item quantity="one">%s saniye</item>
     <item quantity="other">%s saniye</item>
@@ -189,6 +204,9 @@
     <item quantity="one">%s yıl</item>
     <item quantity="other">%s yıl</item>
   </plurals>
+  <!-- The reason for making a simple “< x” translatable are RTL
+         languages which apparently use the other symbol to mean less
+         than. -->
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">Bu deste zaten var.</string>
   <string name="decks_rename_filtered_nosubdecks">Filtreli destenin alt destesi olmaz</string>

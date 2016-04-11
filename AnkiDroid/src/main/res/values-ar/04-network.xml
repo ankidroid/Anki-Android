@@ -45,7 +45,6 @@
   <string name="vague_error">Error</string>
   <string name="retry">إعادة المحاولة</string>
   <string name="cancel">إلغاء</string>
-  <string name="loading_shared_decks">تحميل الرزم المشاركة المتاحة...</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
   <string name="menu_get_shared_decks">احصل على رزم مشاركة</string>
   <string name="connection_error_message">حدث خطأ في شبكة الاتصال.</string>

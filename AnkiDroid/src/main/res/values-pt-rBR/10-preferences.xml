@@ -39,8 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- generic strings -->
   <string name="disabled">Desativado</string>
   <string name="enabled">Habilitado</string>
+  <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Configurações gerais</string>
   <string name="pref_cat_reviewing">Revisando</string>
@@ -51,6 +53,8 @@
   <string name="pref_cat_automatic_display">Mostrar resposta automaticamente</string>
   <string name="pref_cat_appearance">Aparência</string>
   <string name="pref_cat_appearance_summ">Alterar temas e fonte padrão</string>
+  <string name="pref_cat_themes">Themes</string>
+  <string name="pref_cat_fonts">Fonts</string>
   <string name="pref_cat_gestures">Gestos</string>
   <string name="pref_cat_gestures_summ">Usar gestos em vez de botões</string>
   <string name="pref_cat_actions">Ações</string>
@@ -61,6 +65,7 @@
   <string name="pref_cat_plugins">Plugins</string>
   <string name="about_title">Sobre o AnkiDroid</string>
   <string name="about_version">Versão: </string>
+  <!-- preferences.xml entries-->
   <string name="whiteboard_stroke_width">Largura do traço</string>
   <string name="whiteboard_black">Traçados pretos</string>
   <string name="whiteboard_black_summ">Utilizar menos memória, exceto no modo noturno</string>
@@ -114,6 +119,8 @@
   <string name="fix_hebrew_text_summ">Solução alternativa de renderização correta dos sons de vogais do Hebraico.</string>
   <string name="fix_hebrew_instructions">Esta definição ignora o algoritmo do Android para mostrar texto Hebraico com vogais corretamente.\n\nPara isso funcionar, você precisa baixar a fonte Tohu.ttf e copiá-la manualmente para:\n%s/fonts/\n\nVocê não terá que modificar seus cartões.</string>
   <string name="fix_hebrew_download_font">Baixar Fonte</string>
+  <string name="day_theme">Day theme</string>
+  <string name="night_theme">Night theme</string>
   <string name="default_font">Fonte padrão</string>
   <string name="override_font">Aplicabilidade da fonte padrão</string>
   <string name="language">Idioma</string>
@@ -157,18 +164,22 @@
   <string name="convert_fen_text_summ">Desenhar tabuleiro de xadrez a partir da Notação Forsyth-Edwards. A notação deve estar delimitada pelas tags [fen][/fen].</string>
   <string name="enable_api_title">Habilitar o AnkiDroid API</string>
   <string name="enable_api_summary">Deixe outros apps se conectarem ao AnkiDroid e ler / escrever dados sem a sua intervenção</string>
+  <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Estatísticas avançadas</string>
   <string name="enable_advanced_statistics_title">Habilitar estatísticas avançadas</string>
   <string name="enable_advanced_statistics_summ">Exibir previsão estatística com base em um cálculo ou simulação de futuras revisões (habilitadas) ou sobre revisões futuras agendadas (desativado).</string>
   <string name="advanced_forecast_stats_compute_n_days_title">Calcular primeiros n dias, simular o restante</string>
   <string name="advanced_forecast_stats_compute_precision_title">Precisão de cálculo</string>
   <string name="advanced_forecast_stats_mc_n_iterations_title">Número de iterações da simulação</string>
+  <!-- Custom sync server settings -->
   <string name="custom_sync_server_title">Servidos de sincronização personalizado</string>
   <string name="custom_sync_server_enable_title">Utilizar servidor de sincronização personalizado</string>
   <string name="custom_sync_server_enable_summary">Se você não deseja utilizar o serviço proprietário do AnkiWeb você pode especificar um servidor alternativo aqui</string>
   <string name="custom_sync_server_base_url_title">Url de sincronismo</string>
   <string name="custom_sync_server_media_url_title">Url de sincronismo de mídia</string>
+  <!-- studyoptions -->
   <string name="studyoptions_limit_select_tags">Selecione Tags</string>
+  <!-- Deck configurations -->
   <string name="deck_conf_deck_description">Descrição do deck</string>
   <string name="deck_conf_group">Grupo de opções</string>
   <plurals name="deck_conf_group_summ">

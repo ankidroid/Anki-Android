@@ -94,11 +94,11 @@
     <item>全て</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>ブルー（デフォルト）</item>
+    <item>ライトブルー</item>
     <item>プレーン</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>グレー（デフォルト）</item>
     <item>ブラック</item>
+    <item>ダークグレー</item>
   </string-array>
 </resources>

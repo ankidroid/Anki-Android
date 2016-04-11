@@ -39,8 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <!-- generic strings -->
   <string name="disabled">Disabled</string>
   <string name="enabled">Enabled</string>
+  <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Pengaturan umum</string>
   <string name="pref_cat_reviewing">Meninjau</string>
@@ -51,6 +53,8 @@
   <string name="pref_cat_automatic_display">Otomatis tampilkan jawaban</string>
   <string name="pref_cat_appearance">Appearance</string>
   <string name="pref_cat_appearance_summ">Change themes and default font</string>
+  <string name="pref_cat_themes">Themes</string>
+  <string name="pref_cat_fonts">Fonts</string>
   <string name="pref_cat_gestures">Gerakan</string>
   <string name="pref_cat_gestures_summ">Gunakan ketukan dan gesekan pengganti tombol</string>
   <string name="pref_cat_actions">Tindakan</string>
@@ -61,6 +65,7 @@
   <string name="pref_cat_plugins">Pengaya</string>
   <string name="about_title">Tentang AnkiDroid</string>
   <string name="about_version">Versi: </string>
+  <!-- preferences.xml entries-->
   <string name="whiteboard_stroke_width">Lebar pukulan</string>
   <string name="whiteboard_black">Pukulan-pukulan hitam</string>
   <string name="whiteboard_black_summ">Gunakan lebih sedikit memori, kecuali dalam modus malam</string>
@@ -115,6 +120,8 @@
   <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
   <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to\n“%s/fonts/”\n\nYou won’t have to modify your cards.</string>
   <string name="fix_hebrew_download_font">Unduh huruf</string>
+  <string name="day_theme">Day theme</string>
+  <string name="night_theme">Night theme</string>
   <string name="default_font">Font standar</string>
   <string name="override_font">Default font applicability</string>
   <string name="language">Bahasa</string>
@@ -158,18 +165,22 @@
   <string name="convert_fen_text_summ">Menggambar papan catur dari Notasi Forsyth-Edwards. Notasi harus tertutup dalam tag [fen][/fen].</string>
   <string name="enable_api_title">Enable AnkiDroid API</string>
   <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+  <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Advanced statistics</string>
   <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
   <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
   <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
   <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
   <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+  <!-- Custom sync server settings -->
   <string name="custom_sync_server_title">Custom sync server</string>
   <string name="custom_sync_server_enable_title">Use custom sync server</string>
   <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
   <string name="custom_sync_server_base_url_title">Sync url</string>
   <string name="custom_sync_server_media_url_title">Media sync url</string>
+  <!-- studyoptions -->
   <string name="studyoptions_limit_select_tags">Pilih tag</string>
+  <!-- Deck configurations -->
   <string name="deck_conf_deck_description">Deskripsi dek</string>
   <string name="deck_conf_group">Pilihan-pilihan grup</string>
   <plurals name="deck_conf_group_summ">
