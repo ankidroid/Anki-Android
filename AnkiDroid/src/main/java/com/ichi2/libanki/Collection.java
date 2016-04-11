@@ -607,16 +607,22 @@ public class Collection {
         HashMap<Long, Long> dids = new HashMap<>();
         Cursor cur = null;
         try {
-            cur = mDb.getDatabase().rawQuery("SELECT id, nid, ord, did FROM cards WHERE nid IN " + snids, null);
+            cur = mDb.getDatabase().rawQuery("select id, nid, ord, did, odid from cards where nid in " + snids, null);
             while (cur.moveToNext()) {
-                // existing cards
                 long nid = cur.getLong(1);
+                long did = cur.getLong(3);
+                long odid = cur.getLong(4);
+
+                // existing cards
                 if (!have.containsKey(nid)) {
                     have.put(nid, new HashMap<Integer, Long>());
                 }
                 have.get(nid).put(cur.getInt(2), cur.getLong(0));
+                // if in a filtered deck, add new cards to original deck
+                if (odid != 0) {
+                    did = odid;
+                }
                 // and their dids
-                long did = cur.getLong(3);
                 if (dids.containsKey(nid)) {
                     if (dids.get(nid) != 0 && dids.get(nid) != did) {
                         // cards are in two or more different decks; revert to model default
