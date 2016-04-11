@@ -32,6 +32,8 @@
     <string name="pref_cat_automatic_display">Automatic display answer</string>
     <string name="pref_cat_appearance">Appearance</string>
     <string name="pref_cat_appearance_summ">Change themes and default font</string>
+    <string name="pref_cat_themes">Themes</string>
+    <string name="pref_cat_fonts">Fonts</string>
     <string name="pref_cat_gestures">Gestures</string>
     <string name="pref_cat_gestures_summ">Use taps and swipes instead of buttons</string>
     <string name="pref_cat_actions">Actions</string>
@@ -98,6 +100,8 @@
     <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
     <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to\n“%s/fonts/”\n\nYou won’t have to modify your cards.</string>
     <string name="fix_hebrew_download_font">Download font</string>
+    <string name="day_theme">Day theme</string>
+    <string name="night_theme">Night theme</string>
     <string name="default_font">Default font</string>
     <string name="override_font">Default font applicability</string>
     <string name="language">Language</string>
