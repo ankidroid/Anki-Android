@@ -32,7 +32,7 @@ An apk file signed with a standard "debug" key will be generated named `"AnkiDro
 `%AnkiDroidRoot%/AnkiDroid/build/outputs/apk/`
 
 ## Making "parallel" builds
-If you want to run several different versions of AnkiDroid side by side, you need to edit the package ID (from com.ichi2.anki) in the following places so that every version of AnkiDroid that you install has a unique ID:
+If you want to run several different versions of AnkiDroid side by side (e.g. as described in the [FAQ on using profiles](https://github.com/ankidroid/Anki-Android/wiki/FAQ#how-to-use-different-anki-profiles)), you need to edit the package ID (from com.ichi2.anki) in the following places so that every version of AnkiDroid that you install has a unique ID:
 
 * `applicationId` in `AnkiDroid/build.gradle`
 *  `android:authorities="com.ichi2.anki.flashcards"` and `com.ichi2.anki.permission.READ_WRITE_DATABASE` in `%AnkiDroidRoot/AndroidManifest.xml`
