@@ -95,17 +95,14 @@ public class CardContentProvider extends ContentProvider {
     private static final int NOTES_ID_CARDS_ORD = 1004;
     private static final int NOTES_V2 = 1005;
     private static final int MODELS = 2000;
-    private static final int MODELS_COUNTS = 2001;
-    private static final int MODELS_ID = 2002;
-    private static final int MODELS_ID_EMPTY_CARDS = 2003;
-    private static final int MODELS_ID_TEMPLATES = 2004;
-    private static final int MODELS_ID_TEMPLATES_COUNTS = 2005;
-    private static final int MODELS_ID_TEMPLATES_ID = 2006;
+    private static final int MODELS_ID = 2001;
+    private static final int MODELS_ID_EMPTY_CARDS = 2002;
+    private static final int MODELS_ID_TEMPLATES = 2003;
+    private static final int MODELS_ID_TEMPLATES_ID = 2004;
     private static final int SCHEDULE = 3000;
     private static final int DECKS = 4000;
     private static final int DECK_SELECTED = 4001;
-    private static final int DECKS_COUNTS = 4002;
-    private static final int DECKS_ID = 4003;
+    private static final int DECKS_ID = 4002;
 
     private static final UriMatcher sUriMatcher =
             new UriMatcher(UriMatcher.NO_MATCH);
@@ -118,16 +115,13 @@ public class CardContentProvider extends ContentProvider {
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "notes/#/cards", NOTES_ID_CARDS);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "notes/#/cards/#", NOTES_ID_CARDS_ORD);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models", MODELS);
-        sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models/counts", MODELS_COUNTS);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models/*", MODELS_ID); // the model ID can also be "current"
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models/*/empty_cards", MODELS_ID_EMPTY_CARDS);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models/*/templates", MODELS_ID_TEMPLATES);
-        sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models/*/templates/counts", MODELS_ID_TEMPLATES_COUNTS);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models/*/templates/#", MODELS_ID_TEMPLATES_ID);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "schedule/", SCHEDULE);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "decks/", DECKS);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "decks/#", DECKS_ID);
-        sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "decks/counts", DECKS_COUNTS);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "selected_deck/", DECK_SELECTED);
     }
 
@@ -175,16 +169,12 @@ public class CardContentProvider extends ContentProvider {
                 return FlashCardsContract.Card.CONTENT_ITEM_TYPE;
             case MODELS:
                 return FlashCardsContract.Model.CONTENT_TYPE;
-            case MODELS_COUNTS:
-                return FlashCardsContract.ModelCounts.CONTENT_TYPE;
             case MODELS_ID:
                 return FlashCardsContract.Model.CONTENT_ITEM_TYPE;
             case MODELS_ID_EMPTY_CARDS:
                 return FlashCardsContract.Card.CONTENT_TYPE;
             case MODELS_ID_TEMPLATES:
                 return FlashCardsContract.CardTemplate.CONTENT_TYPE;
-            case MODELS_ID_TEMPLATES_COUNTS:
-                return FlashCardsContract.CardTemplateCounts.CONTENT_TYPE;
             case MODELS_ID_TEMPLATES_ID:
                 return FlashCardsContract.CardTemplate.CONTENT_ITEM_TYPE;
             case SCHEDULE:
@@ -193,8 +183,6 @@ public class CardContentProvider extends ContentProvider {
                 return FlashCardsContract.Deck.CONTENT_TYPE;
             case DECKS_ID:
                 return FlashCardsContract.Deck.CONTENT_TYPE;
-            case DECKS_COUNTS:
-                return FlashCardsContract.DeckCounts.CONTENT_TYPE;
             case DECK_SELECTED:
                 return FlashCardsContract.Deck.CONTENT_TYPE;
             default:
@@ -270,60 +258,48 @@ public class CardContentProvider extends ContentProvider {
                 return rv;
             }
             case MODELS: {
-                HashMap<Long, JSONObject> models = col.getModels().getModels();
+                Models models = col.getModels();
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Model.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
-                for (Long modelId : models.keySet()) {
+                for (Long modelId : models.getModels().keySet()) {
                     addModelToCursor(modelId, models, rv, columns);
                 }
                 return rv;
-            }
-            case MODELS_COUNTS: {
-                String sql = String.format("select mid as %s, count(*) as %s from notes group by mid",
-                        FlashCardsContract.ModelCounts._ID, FlashCardsContract.ModelCounts.NOTE_COUNT);
-                return col.getDb().getDatabase().rawQuery(sql, null);
             }
             case MODELS_ID: {
                 long modelId = getModelIdFromUri(uri, col);
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Model.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
-                HashMap<Long, JSONObject> models = col.getModels().getModels();
-                addModelToCursor(modelId, models, rv, columns);
+                addModelToCursor(modelId, col.getModels(), rv, columns);
                 return rv;
             }
             case MODELS_ID_TEMPLATES: {
                 /* Direct access model templates */
-                JSONObject currentModel = col.getModels().get(getModelIdFromUri(uri, col));
+                Models models = col.getModels();
+                JSONObject currentModel = models.get(getModelIdFromUri(uri, col));
                 String[] columns = ((projection != null) ? projection : CardTemplate.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
                 try {
                     JSONArray templates = currentModel.getJSONArray("tmpls");
                     for (int idx = 0; idx < templates.length(); idx++) {
                         JSONObject template = templates.getJSONObject(idx);
-                        addTemplateToCursor(template, currentModel, idx+1, rv, columns);
+                        addTemplateToCursor(template, currentModel, idx+1, models, rv, columns);
                     }
                 } catch (JSONException e) {
                     throw new IllegalArgumentException("Model is malformed", e);
                 }
                 return rv;
             }
-            case MODELS_ID_TEMPLATES_COUNTS: {
-                long mid = getModelIdFromUri(uri, col);
-                String sql = String.format("select cards.ord as %s, cards.ord as %s, count(*) as %s from cards, notes"
-                                + " where cards.nid = notes.id and notes.mid = ? group by cards.ord",
-                        FlashCardsContract.CardTemplateCounts._ID, FlashCardsContract.CardTemplateCounts.ORD,
-                        FlashCardsContract.CardTemplateCounts.CARD_COUNT);
-                return col.getDb().getDatabase().rawQuery(sql, new String[]{Long.toString(mid)});
-            }
             case MODELS_ID_TEMPLATES_ID: {
                 /* Direct access model template with specific ID */
+                Models models = col.getModels();
                 int ord = Integer.parseInt(uri.getLastPathSegment());
-                JSONObject currentModel = col.getModels().get(getModelIdFromUri(uri, col));
+                JSONObject currentModel = models.get(getModelIdFromUri(uri, col));
                 String[] columns = ((projection != null) ? projection : CardTemplate.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
                 try {
                     JSONObject template = getTemplateFromUri(uri, col);
-                    addTemplateToCursor(template, currentModel, ord+1, rv, columns);
+                    addTemplateToCursor(template, currentModel, ord+1, models, rv, columns);
                 } catch (JSONException e) {
                     throw new IllegalArgumentException("Model is malformed", e);
                 }
@@ -394,11 +370,6 @@ public class CardContentProvider extends ContentProvider {
                     addDeckToCursor(id, name, getDeckCountsFromDueTreeNode(deck), rv, col, columns);
                 }
                 return rv;
-            }
-            case DECKS_COUNTS: {
-                String sql = String.format("select cards.did as %s, count(*) as %s from cards group by cards.did",
-                        FlashCardsContract.DeckCounts.DECK_ID, FlashCardsContract.DeckCounts.CARD_COUNT);
-                return col.getDb().getDatabase().rawQuery(sql, null);
             }
             case DECKS_ID: {
                 /* Direct access deck */
@@ -1023,7 +994,7 @@ public class CardContentProvider extends ContentProvider {
         return -1;
     }
 
-    private void addModelToCursor(Long modelId, HashMap<Long, JSONObject> models, MatrixCursor rv, String[] columns) {
+    private void addModelToCursor(Long modelId, Models models, MatrixCursor rv, String[] columns) {
         JSONObject jsonObject = models.get(modelId);
         MatrixCursor.RowBuilder rb = rv.newRow();
         try {
@@ -1053,6 +1024,8 @@ public class CardContentProvider extends ContentProvider {
                     rb.add(jsonObject.getString("latexPost"));
                 } else if (column.equals(FlashCardsContract.Model.LATEX_PRE)) {
                     rb.add(jsonObject.getString("latexPre"));
+                } else if (column.equals(FlashCardsContract.Model.NOTE_COUNT)) {
+                    rb.add(models.useCount(jsonObject));
                 } else {
                     throw new UnsupportedOperationException("Column \"" + column + "\" is unknown");
                 }
@@ -1140,7 +1113,7 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private void addTemplateToCursor(JSONObject tmpl, JSONObject model, int id, MatrixCursor rv, String[] columns) {
+    private void addTemplateToCursor(JSONObject tmpl, JSONObject model, int id, Models models, MatrixCursor rv, String[] columns) {
         try {
             MatrixCursor.RowBuilder rb = rv.newRow();
             for (String column : columns) {
@@ -1160,6 +1133,8 @@ public class CardContentProvider extends ContentProvider {
                     rb.add(tmpl.getString("bqfmt"));
                 } else if (column.equals(CardTemplate.BROWSER_ANSWER_FORMAT)) {
                     rb.add(tmpl.getString("bafmt"));
+                } else if (column.equals(CardTemplate.CARD_COUNT)) {
+                    rb.add(models.tmplUseCount(model, tmpl.getInt("ord")));
                 } else {
                     throw new UnsupportedOperationException("Support for column \"" + column +
                             "\" is not implemented");

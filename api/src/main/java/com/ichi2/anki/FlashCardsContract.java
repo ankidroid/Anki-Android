@@ -457,6 +457,7 @@ public class FlashCardsContract {
         public static final String TYPE = "type";
         public static final String LATEX_POST = "latex_post";
         public static final String LATEX_PRE = "latex_pre";
+        public static final String NOTE_COUNT = "note_count";
 
         /**
          * The deck ID that is selected by default when adding new notes with this model.
@@ -487,21 +488,6 @@ public class FlashCardsContract {
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.ichi2.anki.model";
     }
 
-    public static class ModelCounts {
-
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "models/counts");
-
-        /**
-         * @See Model#_ID
-         */
-        public static final String _ID = "_id";
-        public static final String NOTE_COUNT = "note_count";
-
-        /**
-         * MIME type used for model counts.
-         */
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.ichi2.anki.model.counts";
-    }
 
     /**
      * Card template for a model. A template defines how to render the fields of a note into the actual HTML that
@@ -568,6 +554,8 @@ public class FlashCardsContract {
          */
         public static final String BROWSER_ANSWER_FORMAT = "browser_answer_format";
 
+        public static final String CARD_COUNT = "card_count";
+
 
         /**
          * Default columns that are returned when querying the ...models/#/templates URI.
@@ -579,25 +567,6 @@ public class FlashCardsContract {
                 NAME,
                 QUESTION_FORMAT,
                 ANSWER_FORMAT};
-    }
-
-    public static class CardTemplateCounts {
-
-        /**
-         * @See CardTemplate#_ID
-         */
-        public static final String _ID = "_id";
-
-		/**
-         * @see CardTemplate#ORD
-         */
-        public static final String ORD = "ord";
-        public static final String CARD_COUNT = "card_count";
-
-        /**
-         * MIME type used for card counts for each card template of a given model.
-         */
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.ichi2.anki.model.template.counts";
     }
 
     /**
@@ -1154,26 +1123,5 @@ public class FlashCardsContract {
          */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.ichi2.anki.deck";
 
-    }
-
-
-    public static class DeckCounts {
-
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "decks/counts");
-
-        /**
-         * @See Deck#DECK_ID
-         */
-        public static final String DECK_ID = "deck_id";
-
-        /**
-         * Number of cards in the deck
-         */
-        public static final String CARD_COUNT = "card_count";
-
-        /**
-         * MIME type used for Deck.
-         */
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.ichi2.anki.deck.counts";
     }
 }
