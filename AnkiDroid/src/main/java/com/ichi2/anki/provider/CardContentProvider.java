@@ -258,10 +258,10 @@ public class CardContentProvider extends ContentProvider {
                 return rv;
             }
             case MODELS: {
-                HashMap<Long, JSONObject> models = col.getModels().getModels();
+                Models models = col.getModels();
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Model.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
-                for (Long modelId : models.keySet()) {
+                for (Long modelId : models.getModels().keySet()) {
                     addModelToCursor(modelId, models, rv, columns);
                 }
                 return rv;
@@ -270,20 +270,20 @@ public class CardContentProvider extends ContentProvider {
                 long modelId = getModelIdFromUri(uri, col);
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Model.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
-                HashMap<Long, JSONObject> models = col.getModels().getModels();
-                addModelToCursor(modelId, models, rv, columns);
+                addModelToCursor(modelId, col.getModels(), rv, columns);
                 return rv;
             }
             case MODELS_ID_TEMPLATES: {
                 /* Direct access model templates */
-                JSONObject currentModel = col.getModels().get(getModelIdFromUri(uri, col));
+                Models models = col.getModels();
+                JSONObject currentModel = models.get(getModelIdFromUri(uri, col));
                 String[] columns = ((projection != null) ? projection : CardTemplate.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
                 try {
                     JSONArray templates = currentModel.getJSONArray("tmpls");
                     for (int idx = 0; idx < templates.length(); idx++) {
                         JSONObject template = templates.getJSONObject(idx);
-                        addTemplateToCursor(template, currentModel, idx+1, rv, columns);
+                        addTemplateToCursor(template, currentModel, idx+1, models, rv, columns);
                     }
                 } catch (JSONException e) {
                     throw new IllegalArgumentException("Model is malformed", e);
@@ -292,13 +292,14 @@ public class CardContentProvider extends ContentProvider {
             }
             case MODELS_ID_TEMPLATES_ID: {
                 /* Direct access model template with specific ID */
+                Models models = col.getModels();
                 int ord = Integer.parseInt(uri.getLastPathSegment());
-                JSONObject currentModel = col.getModels().get(getModelIdFromUri(uri, col));
+                JSONObject currentModel = models.get(getModelIdFromUri(uri, col));
                 String[] columns = ((projection != null) ? projection : CardTemplate.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
                 try {
                     JSONObject template = getTemplateFromUri(uri, col);
-                    addTemplateToCursor(template, currentModel, ord+1, rv, columns);
+                    addTemplateToCursor(template, currentModel, ord+1, models, rv, columns);
                 } catch (JSONException e) {
                     throw new IllegalArgumentException("Model is malformed", e);
                 }
@@ -993,7 +994,7 @@ public class CardContentProvider extends ContentProvider {
         return -1;
     }
 
-    private void addModelToCursor(Long modelId, HashMap<Long, JSONObject> models, MatrixCursor rv, String[] columns) {
+    private void addModelToCursor(Long modelId, Models models, MatrixCursor rv, String[] columns) {
         JSONObject jsonObject = models.get(modelId);
         MatrixCursor.RowBuilder rb = rv.newRow();
         try {
@@ -1023,6 +1024,8 @@ public class CardContentProvider extends ContentProvider {
                     rb.add(jsonObject.getString("latexPost"));
                 } else if (column.equals(FlashCardsContract.Model.LATEX_PRE)) {
                     rb.add(jsonObject.getString("latexPre"));
+                } else if (column.equals(FlashCardsContract.Model.NOTE_COUNT)) {
+                    rb.add(models.useCount(jsonObject));
                 } else {
                     throw new UnsupportedOperationException("Column \"" + column + "\" is unknown");
                 }
@@ -1110,7 +1113,7 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private void addTemplateToCursor(JSONObject tmpl, JSONObject model, int id, MatrixCursor rv, String[] columns) {
+    private void addTemplateToCursor(JSONObject tmpl, JSONObject model, int id, Models models, MatrixCursor rv, String[] columns) {
         try {
             MatrixCursor.RowBuilder rb = rv.newRow();
             for (String column : columns) {
@@ -1130,6 +1133,8 @@ public class CardContentProvider extends ContentProvider {
                     rb.add(tmpl.getString("bqfmt"));
                 } else if (column.equals(CardTemplate.BROWSER_ANSWER_FORMAT)) {
                     rb.add(tmpl.getString("bafmt"));
+                } else if (column.equals(CardTemplate.CARD_COUNT)) {
+                    rb.add(models.tmplUseCount(model, tmpl.getInt("ord")));
                 } else {
                     throw new UnsupportedOperationException("Support for column \"" + column +
                             "\" is not implemented");

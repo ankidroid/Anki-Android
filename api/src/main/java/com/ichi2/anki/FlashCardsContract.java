@@ -457,6 +457,7 @@ public class FlashCardsContract {
         public static final String TYPE = "type";
         public static final String LATEX_POST = "latex_post";
         public static final String LATEX_PRE = "latex_pre";
+        public static final String NOTE_COUNT = "note_count";
 
         /**
          * The deck ID that is selected by default when adding new notes with this model.
@@ -552,6 +553,8 @@ public class FlashCardsContract {
          * Optional alternative definition of the template for the answer when rendered with the browser
          */
         public static final String BROWSER_ANSWER_FORMAT = "browser_answer_format";
+
+        public static final String CARD_COUNT = "card_count";
 
 
         /**
