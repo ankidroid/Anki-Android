@@ -450,6 +450,7 @@ public class FlashCardsContract {
          */
         public static final String _ID = "_id";
         public static final String NAME = "name";
+        public static final String FIELD_NAME = "field_name";
         public static final String FIELD_NAMES = "field_names";
         public static final String NUM_CARDS = "num_cards";
         public static final String CSS = "css";
