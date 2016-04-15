@@ -20,6 +20,7 @@
 package com.ichi2.anki.provider;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
@@ -55,7 +56,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -927,11 +927,37 @@ public class CardContentProvider extends ContentProvider {
                 // Model ID is generated automatically by libanki
                 throw new IllegalArgumentException("Not possible to insert model with specific ID");
             case MODELS_ID_TEMPLATES:
-                // Adding new templates after the model is created could require a full-sync
-                throw new IllegalArgumentException("Templates can only be added at the time of model insertion");
+                Models models = col.getModels();
+                Long mid = getModelIdFromUri(uri, col);
+                JSONObject existingModel = models.get(mid);
+                if (existingModel == null) {
+                    throw new IllegalArgumentException("model missing: " + mid);
+                }
+                String name = values.getAsString(CardTemplate.NAME);
+                String qfmt = values.getAsString(CardTemplate.QUESTION_FORMAT);
+                String afmt = values.getAsString(CardTemplate.ANSWER_FORMAT);
+                String bqfmt = values.getAsString(CardTemplate.BROWSER_QUESTION_FORMAT);
+                String bafmt = values.getAsString(CardTemplate.BROWSER_ANSWER_FORMAT);
+                try {
+                    JSONObject t = models.newTemplate(name);
+                    try {
+                        t.put("qfmt", qfmt);
+                        t.put("afmt", afmt);
+                        t.put("bqfmt", bqfmt);
+                        t.put("bafmt", bafmt);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                    models.addTemplate(existingModel, t);
+                    col.getModels().save(existingModel);
+                    return ContentUris.withAppendedId(uri, t.getInt("ord"));
+                } catch (ConfirmModSchemaException e) {
+                    throw new IllegalArgumentException("Unable to add template", e);
+                } catch (JSONException e) {
+                    throw new IllegalArgumentException("Unable to get ord from new template", e);
+                }
             case MODELS_ID_TEMPLATES_ID:
-                // Adding new templates after the model is created could require a full-sync
-                throw new IllegalArgumentException("Templates can only be added at the time of model insertion");
+                throw new IllegalArgumentException("Not possible to insert template with specific ORD");
             case SCHEDULE:
                 // Doesn't make sense to insert an object into the schedule table
                 throw new IllegalArgumentException("Not possible to perform insert operation on schedule");

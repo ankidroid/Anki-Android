@@ -2,6 +2,7 @@
  *                                                                                      *
  * Copyright (c) 2015 Frank Oltmanns <frank.oltmanns@gmail.com>                         *
  * Copyright (c) 2015 Timothy Rae <timothy.rae@gmail.com>                               *
+ * Copyright (c) 2016 Mark Carter <mark@marcardar.com>                                  *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -19,6 +20,7 @@
 package com.ichi2.anki.tests;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
@@ -172,6 +174,40 @@ public class ContentProviderTest extends AndroidTestCase {
         } catch (RuntimeException e) {
             // Expect RuntimeException to be thrown when loading deleted note
         }
+    }
+
+    /**
+     * Check that inserting and removing a note into default deck works as expected
+     */
+    public void testInsertTemplate() throws Exception {
+        // Get required objects for test
+        final ContentResolver cr = getContext().getContentResolver();
+        final Collection col = CollectionHelper.getInstance().getCol(getContext());
+        // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
+        JSONObject model = Models.addBasicModel(col, BASIC_MODEL_NAME);
+        long modelId = model.getLong("id");
+        // Add the note
+        Uri modelUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, modelId);
+        int testIndex = TEST_MODEL_CARDS.length - 1; // choose the last one because not the same as the basic model template
+        int expectedOrd = model.getJSONArray("tmpls").length();
+        ContentValues cv = new ContentValues();
+        cv.put(FlashCardsContract.CardTemplate.NAME, TEST_MODEL_CARDS[testIndex]);
+        cv.put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, TEST_MODEL_QFMT[testIndex]);
+        cv.put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, TEST_MODEL_AFMT[testIndex]);
+        cv.put(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT, TEST_MODEL_QFMT[testIndex]);
+        cv.put(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT, TEST_MODEL_AFMT[testIndex]);
+        Uri templatesUri = Uri.withAppendedPath(modelUri, "templates");
+        Uri templateUri = cr.insert(templatesUri, cv);
+        assertNotNull("Check template uri", templateUri);
+        assertEquals("Check template uri ord", expectedOrd, ContentUris.parseId(templateUri));
+        JSONObject template = col.getModels().get(modelId).getJSONArray("tmpls").getJSONObject(expectedOrd);
+        assertEquals("Check template JSONObject ord", expectedOrd, template.getInt("ord"));
+        assertEquals("Check template name", TEST_MODEL_CARDS[testIndex], template.getString("name"));
+        assertEquals("Check qfmt", TEST_MODEL_QFMT[testIndex], template.getString("qfmt"));
+        assertEquals("Check afmt", TEST_MODEL_AFMT[testIndex], template.getString("afmt"));
+        assertEquals("Check bqfmt", TEST_MODEL_QFMT[testIndex], template.getString("bqfmt"));
+        assertEquals("Check bafmt", TEST_MODEL_AFMT[testIndex], template.getString("bafmt"));
+        col.getModels().rem(model);
     }
 
     /**
