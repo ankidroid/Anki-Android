@@ -135,22 +135,22 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             case R.id.action_bury_card:
                 Timber.i("Reviewer:: Bury card button pressed");
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 4));
+                dismiss(Collection.DismissType.BURY_CARD);
                 break;
 
             case R.id.action_bury_note:
                 Timber.i("Reviewer:: Bury note button pressed");
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 0));
+                dismiss(Collection.DismissType.BURY_NOTE);
                 break;
 
             case R.id.action_suspend_card:
                 Timber.i("Reviewer:: Suspend card button pressed");
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 1));
+                dismiss(Collection.DismissType.SUSPEND_CARD);
                 break;
 
             case R.id.action_suspend_note:
                 Timber.i("Reviewer:: Suspend note button pressed");
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 2));
+                dismiss(Collection.DismissType.SUSPEND_NOTE);
                 break;
 
             case R.id.action_delete:
@@ -303,19 +303,19 @@ public class Reviewer extends AbstractFlashcardViewer {
 	            return true;
 	        }
 	        if (keyPressed == '-') {
-	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 4));
+                dismiss(Collection.DismissType.BURY_CARD);
 	            return true;
 	        }
 	        if (keyPressed == '=') {
-	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 0));
+                dismiss(Collection.DismissType.BURY_NOTE);
 	            return true;
 	        }
 	        if (keyPressed == '@') {
-	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 1));
+                dismiss(Collection.DismissType.SUSPEND_CARD);
 	            return true;
 	        }
 	        if (keyPressed == '!') {
-	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 2));
+                dismiss(Collection.DismissType.SUSPEND_NOTE);
 	            return true;
 	        }
 	        if (keyPressed == 'r' || keyCode == KeyEvent.KEYCODE_F5) {

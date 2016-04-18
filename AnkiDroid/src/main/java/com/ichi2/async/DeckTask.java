@@ -70,7 +70,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_ADD_FACT = 6;
     public static final int TASK_TYPE_UPDATE_FACT = 7;
     public static final int TASK_TYPE_UNDO = 8;
-    public static final int TASK_TYPE_DISMISS_NOTE = 11;
+    public static final int TASK_TYPE_DISMISS = 11;
     public static final int TASK_TYPE_CHECK_DATABASE = 14;
     public static final int TASK_TYPE_REPAIR_DECK = 20;
     public static final int TASK_TYPE_LOAD_DECK_COUNTS = 22;
@@ -252,7 +252,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             case TASK_TYPE_SEARCH_CARDS:
                 return doInBackgroundSearchCards(params);
 
-            case TASK_TYPE_DISMISS_NOTE:
+            case TASK_TYPE_DISMISS:
                 return doInBackgroundDismissNote(params);
 
             case TASK_TYPE_CHECK_DATABASE:
@@ -508,32 +508,31 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     private TaskData doInBackgroundDismissNote(TaskData... params) {
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         Sched sched = col.getSched();
-        Card card = params[0].getCard();
+        Object[] data = params[0].getObjArray();
+        Card card = (Card) data[0];
+        Collection.DismissType type = (Collection.DismissType) data[1];
         Note note = card.note();
-        int type = params[0].getInt();
         try {
             col.getDb().getDatabase().beginTransaction();
             try {
                 switch (type) {
-                    case 4:
+                    case BURY_CARD:
                         // collect undo information
-                        col.markUndo(Collection.UNDO_BURY_CARD,
-                                new Object[] { col.getDirty(), note.cards(), card.getId() });
+                        col.markUndo(type, new Object[] { col.getDirty(), note.cards(), card.getId() });
                         // then bury
                         sched.buryCards(new long[] { card.getId() });
                         sHadCardQueue = true;
                         break;
-                    case 0:
+                    case BURY_NOTE:
                         // collect undo information
-                        col.markUndo(Collection.UNDO_BURY_NOTE,
-                                new Object[] { col.getDirty(), note.cards(), card.getId() });
+                        col.markUndo(type, new Object[] { col.getDirty(), note.cards(), card.getId() });
                         // then bury
                         sched.buryNote(note.getId());
                         sHadCardQueue = true;
                         break;
-                    case 1:
+                    case SUSPEND_CARD:
                         // collect undo information
-                        col.markUndo(Collection.UNDO_SUSPEND_CARD, new Object[] { card });
+                        col.markUndo(type, new Object[] { card });
                         // suspend card
                         if (card.getQueue() == -1) {
                             sched.unsuspendCards(new long[] { card.getId() });
@@ -542,22 +541,22 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         }
                         sHadCardQueue = true;
                         break;
-                    case 2:
+                    case SUSPEND_NOTE:
                         // collect undo information
                         ArrayList<Card> cards = note.cards();
                         long[] cids = new long[cards.size()];
                         for (int i = 0; i < cards.size(); i++) {
                             cids[i] = cards.get(i).getId();
                         }
-                        col.markUndo(Collection.UNDO_SUSPEND_NOTE, new Object[] { cards, card.getId() });
+                        col.markUndo(type, new Object[] { cards, card.getId() });
                         // suspend note
                         sched.suspendCards(cids);
                         sHadCardQueue = true;
                         break;
-                    case 3:
+                    case DELETE_NOTE:
                         // collect undo information
                         ArrayList<Card> allCs = note.cards();
-                        col.markUndo(Collection.UNDO_DELETE_NOTE, new Object[] { note, allCs, card.getId() });
+                        col.markUndo(type, new Object[] { note, allCs, card.getId() });
                         // delete note
                         col.remNotes(new long[] { note.getId() });
                         sHadCardQueue = true;

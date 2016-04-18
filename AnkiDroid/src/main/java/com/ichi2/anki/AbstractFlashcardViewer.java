@@ -1236,8 +1236,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler,
-                                new DeckTask.TaskData(mCurrentCard, 3));
+                        dismiss(Collection.DismissType.DELETE_NOTE);
                     }
                 })
                 .build().show();
@@ -2490,20 +2489,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 lookUpOrSelectText();
                 break;
             case GESTURE_BURY_CARD:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler,
-                        new DeckTask.TaskData(mCurrentCard, 4));
+                dismiss(Collection.DismissType.BURY_CARD);
                 break;
             case GESTURE_BURY_NOTE:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler,
-                        new DeckTask.TaskData(mCurrentCard, 0));
+                dismiss(Collection.DismissType.BURY_NOTE);
                 break;
             case GESTURE_SUSPEND_CARD:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler,
-                        new DeckTask.TaskData(mCurrentCard, 1));
+                dismiss(Collection.DismissType.SUSPEND_CARD);
                 break;
             case GESTURE_SUSPEND_NOTE:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler,
-                        new DeckTask.TaskData(mCurrentCard, 2));
+                dismiss(Collection.DismissType.SUSPEND_NOTE);
                 break;
             case GESTURE_DELETE:
                 showDeleteNoteDialog();
@@ -2756,5 +2751,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
         note.flush();
         refreshActionBar();
+    }
+
+    protected void dismiss(Collection.DismissType type) {
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS, mDismissCardHandler,
+                new DeckTask.TaskData(new Object[]{mCurrentCard, type}));
     }
 }
