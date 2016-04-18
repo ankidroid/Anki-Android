@@ -108,21 +108,20 @@ public class Collection {
             "'curModel': null, " + "'nextPos': 1, " + "'sortType': \"noteFld\", "
             + "'sortBackwards': False, 'addToCur': True }"; // add new to currently selected deck?
 
-    public static final int UNDO_REVIEW = 0;
-    public static final int UNDO_BURY_NOTE = 2;
-    public static final int UNDO_SUSPEND_CARD = 3;
-    public static final int UNDO_SUSPEND_NOTE = 4;
-    public static final int UNDO_DELETE_NOTE = 5;
-    public static final int UNDO_BURY_CARD = 7;
+    public enum DismissType {
+        REVIEW(R.string.undo_action_review),
+        BURY_CARD(R.string.undo_action_bury_card),
+        BURY_NOTE(R.string.undo_action_bury_note),
+        SUSPEND_CARD(R.string.undo_action_suspend_card),
+        SUSPEND_NOTE(R.string.undo_action_suspend_note),
+        DELETE_NOTE(R.string.undo_action_delete);
 
-    private static final int[] fUndoNames = new int[]{
-        R.string.undo_action_review,
-        R.string.undo_action_edit,
-        R.string.undo_action_bury,
-        R.string.undo_action_suspend_card,
-        R.string.undo_action_suspend_note,
-        R.string.undo_action_delete,
-        R.string.undo_action_mark};
+        public int undoNameId;
+
+        DismissType(int undoNameId) {
+            this.undoNameId = undoNameId;
+        }
+    }
 
     private static final int UNDO_SIZE_MAX = 20;
 
@@ -1175,10 +1174,8 @@ public class Collection {
     /** Undo menu item name, or "" if undo unavailable. */
     public String undoName(Resources res) {
         if (mUndo.size() > 0) {
-            int undoType = (Integer) mUndo.getLast()[0];
-            if (undoType >= 0 && undoType < fUndoNames.length) {
-                return res.getString(fUndoNames[undoType]);
-            }
+            DismissType type = (DismissType) mUndo.getLast()[0];
+            return res.getString(type.undoNameId);
         }
         return "";
     }
@@ -1191,90 +1188,90 @@ public class Collection {
 
     public long undo() {
     	Object[] data = mUndo.removeLast();
-    	switch ((Integer)data[0]) {
-    	case UNDO_REVIEW:
-            Card c = (Card) data[1];
-            // remove leech tag if it didn't have it before
-            Boolean wasLeech = (Boolean) data[2];
-            if (!wasLeech && c.note().hasTag("leech")) {
-                c.note().delTag("leech");
-                c.note().flush();
-            }
-            // write old data
-            c.flush(false);
-            // and delete revlog entry
-            long last = mDb.queryLongScalar("SELECT id FROM revlog WHERE cid = " + c.getId() + " ORDER BY id DESC LIMIT 1");
-            mDb.execute("DELETE FROM revlog WHERE id = " + last);
-            // restore any siblings
-            mDb.execute("update cards set queue=type,mod=?,usn=? where queue=-2 and nid=?",
-                    new Object[]{ Utils.intNow(), usn(), c.getNid() });
-            // and finally, update daily count
-            int n = c.getQueue() == 3 ? 1 : c.getQueue();
-            String type = (new String[] { "new", "lrn", "rev" })[n];
-            mSched._updateStats(c, type, -1);
-            mSched.setReps(mSched.getReps() - 1);
-            return c.getId();
+    	switch ((DismissType) data[0]) {
+            case REVIEW:
+                Card c = (Card) data[1];
+                // remove leech tag if it didn't have it before
+                Boolean wasLeech = (Boolean) data[2];
+                if (!wasLeech && c.note().hasTag("leech")) {
+                    c.note().delTag("leech");
+                    c.note().flush();
+                }
+                // write old data
+                c.flush(false);
+                // and delete revlog entry
+                long last = mDb.queryLongScalar("SELECT id FROM revlog WHERE cid = " + c.getId() + " ORDER BY id DESC LIMIT 1");
+                mDb.execute("DELETE FROM revlog WHERE id = " + last);
+                // restore any siblings
+                mDb.execute("update cards set queue=type,mod=?,usn=? where queue=-2 and nid=?",
+                        new Object[]{Utils.intNow(), usn(), c.getNid()});
+                // and finally, update daily count
+                int n = c.getQueue() == 3 ? 1 : c.getQueue();
+                String type = (new String[]{"new", "lrn", "rev"})[n];
+                mSched._updateStats(c, type, -1);
+                mSched.setReps(mSched.getReps() - 1);
+                return c.getId();
 
-    	case UNDO_BURY_NOTE:
-    		for (Card cc : (ArrayList<Card>)data[2]) {
-    			cc.flush(false);
-    		}
-    		return (Long) data[3];
+            case BURY_NOTE:
+                for (Card cc : (ArrayList<Card>) data[2]) {
+                    cc.flush(false);
+                }
+                return (Long) data[3];
 
-    	case UNDO_SUSPEND_CARD:
-    		Card suspendedCard = (Card)data[1];
-    		suspendedCard.flush(false);
-    		return suspendedCard.getId();
+            case SUSPEND_CARD:
+                Card suspendedCard = (Card) data[1];
+                suspendedCard.flush(false);
+                return suspendedCard.getId();
 
-    	case UNDO_SUSPEND_NOTE:
-    		for (Card ccc : (ArrayList<Card>) data[1]) {
-    			ccc.flush(false);
-    		}
-    		return (Long) data[2];
+            case SUSPEND_NOTE:
+                for (Card ccc : (ArrayList<Card>) data[1]) {
+                    ccc.flush(false);
+                }
+                return (Long) data[2];
 
-    	case UNDO_DELETE_NOTE:
-    		ArrayList<Long> ids = new ArrayList<>();
-    		Note note2 = (Note)data[1];
-    		note2.flush(note2.getMod(), false);
-    		ids.add(note2.getId());
-        		for (Card c4 : (ArrayList<Card>) data[2]) {
-        			c4.flush(false);
-    			ids.add(c4.getId());
-        		}
-    		mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
-    		return (Long) data[3];
+            case DELETE_NOTE:
+                ArrayList<Long> ids = new ArrayList<>();
+                Note note2 = (Note) data[1];
+                note2.flush(note2.getMod(), false);
+                ids.add(note2.getId());
+                for (Card c4 : (ArrayList<Card>) data[2]) {
+                    c4.flush(false);
+                    ids.add(c4.getId());
+                }
+                mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
+                return (Long) data[3];
 
-        case UNDO_BURY_CARD:
-            for (Card cc : (ArrayList<Card>)data[2]) {
-                cc.flush(false);
-            }
-            return (Long) data[3];
-        default:
-        	return 0;
-    	}
+            case BURY_CARD:
+                for (Card cc : (ArrayList<Card>) data[2]) {
+                    cc.flush(false);
+                }
+                return (Long) data[3];
+            default:
+                return 0;
+        }
     }
 
 
-    public void markUndo(int type, Object[] o) {
+    public void markUndo(DismissType type, Object[] o) {
     	switch(type) {
-    	case UNDO_REVIEW:
+    	case REVIEW:
     		mUndo.add(new Object[]{type, ((Card)o[0]).clone(), o[1]});
     		break;
-        case UNDO_BURY_NOTE:
+        case BURY_CARD:
             mUndo.add(new Object[]{type, o[0], o[1], o[2]});
             break;
-        case UNDO_SUSPEND_CARD:
+        case BURY_NOTE:
+            mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+            break;
+        case SUSPEND_CARD:
             mUndo.add(new Object[]{type, ((Card)o[0]).clone()});
             break;
-        case UNDO_SUSPEND_NOTE:
+        case SUSPEND_NOTE:
             mUndo.add(new Object[]{type, o[0], o[1]});
             break;
-    	case UNDO_DELETE_NOTE:
+    	case DELETE_NOTE:
     		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
     		break;
-        case UNDO_BURY_CARD:
-            mUndo.add(new Object[]{type, o[0], o[1], o[2]});
-            break;
     	}
     	while (mUndo.size() > UNDO_SIZE_MAX) {
     		mUndo.removeFirst();
@@ -1283,7 +1280,7 @@ public class Collection {
 
 
     public void markReview(Card card) {
-        markUndo(UNDO_REVIEW, new Object[]{card, card.note().hasTag("leech")});
+        markUndo(DismissType.REVIEW, new Object[]{card, card.note().hasTag("leech")});
     }
 
     /**

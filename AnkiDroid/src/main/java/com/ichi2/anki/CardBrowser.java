@@ -165,9 +165,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 searchCards();
                 return;
             }
+            final Card card = getCol().getCard(Long.parseLong(getCards().get(mPositionInCardsList).get("id")));
             switch (which) {
                 case CardBrowserContextMenu.CONTEXT_MENU_MARK:
-                    Card card = getCol().getCard(Long.parseLong(getCards().get(mPositionInCardsList).get("id")));
                     onMark(card);
                     updateCardInList(card, null);
                     return;
@@ -177,10 +177,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                         mReloadRequired = true;
                     }
                     DeckTask.launchDeckTask(
-                            DeckTask.TASK_TYPE_DISMISS_NOTE,
+                            DeckTask.TASK_TYPE_DISMISS,
                             mSuspendCardHandler,
-                            new DeckTask.TaskData(getCol().getCard(Long.parseLong(getCards().get(
-                                    mPositionInCardsList).get("id"))), 1));
+                            new DeckTask.TaskData(new Object[]{card, Collection.DismissType.SUSPEND_CARD}));
                     return;
 
                 case CardBrowserContextMenu.CONTEXT_MENU_DELETE:
@@ -195,10 +194,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
                             .onPositive(new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    Card card = getCol().getCard(Long.parseLong(getCards().get(mPositionInCardsList).get("id")));
                                     deleteNote(card);
-                                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDeleteNoteHandler,
-                                            new DeckTask.TaskData(card, 3));
+                                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS,
+                                            mDeleteNoteHandler,
+                                            new DeckTask.TaskData(new Object[]{card, Collection.DismissType.DELETE_NOTE}));
                                 }
                             })
                             .build().show();
