@@ -65,6 +65,9 @@ import timber.log.Timber;
 import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
 
 /**
+ * This provider is intended to be a wrapper around libanki and the database in general for some performance
+ * critical tasks.
+ *
  * Supported URIs:
  * .../notes (search for notes)
  * .../notes/# (direct access to note)
@@ -556,6 +559,7 @@ public class CardContentProvider extends ContentProvider {
                         updated++;
                     }
                     col.getModels().save(model);
+                    col.getModels().flush();
                 } catch (JSONException e) {
                     Timber.e(e, "JSONException updating model");
                 }
@@ -604,6 +608,7 @@ public class CardContentProvider extends ContentProvider {
                     templates.put(templateOrd, template);
                     existingModel.put("tmpls", templates);
                     col.getModels().save(existingModel, true);
+                    col.getModels().flush();
                 } catch (JSONException e) {
                     throw new IllegalArgumentException("Model is malformed", e);
                 }
