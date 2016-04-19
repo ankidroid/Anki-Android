@@ -99,6 +99,7 @@ public class CardContentProvider extends ContentProvider {
     private static final int MODELS_ID_EMPTY_CARDS = 2002;
     private static final int MODELS_ID_TEMPLATES = 2003;
     private static final int MODELS_ID_TEMPLATES_ID = 2004;
+    private static final int MODELS_ID_FIELDS = 2005;
     private static final int SCHEDULE = 3000;
     private static final int DECKS = 4000;
     private static final int DECK_SELECTED = 4001;
@@ -119,6 +120,7 @@ public class CardContentProvider extends ContentProvider {
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models/*/empty_cards", MODELS_ID_EMPTY_CARDS);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models/*/templates", MODELS_ID_TEMPLATES);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models/*/templates/#", MODELS_ID_TEMPLATES_ID);
+        sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "models/*/fields", MODELS_ID_FIELDS);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "schedule/", SCHEDULE);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "decks/", DECKS);
         sUriMatcher.addURI(FlashCardsContract.AUTHORITY, "decks/#", DECKS_ID);
@@ -926,7 +928,7 @@ public class CardContentProvider extends ContentProvider {
             case MODELS_ID:
                 // Model ID is generated automatically by libanki
                 throw new IllegalArgumentException("Not possible to insert model with specific ID");
-            case MODELS_ID_TEMPLATES:
+            case MODELS_ID_TEMPLATES: {
                 Models models = col.getModels();
                 Long mid = getModelIdFromUri(uri, col);
                 JSONObject existingModel = models.get(mid);
@@ -949,15 +951,40 @@ public class CardContentProvider extends ContentProvider {
                         throw new RuntimeException(e);
                     }
                     models.addTemplate(existingModel, t);
-                    col.getModels().save(existingModel);
+                    models.save(existingModel);
+                    models.flush();
                     return ContentUris.withAppendedId(uri, t.getInt("ord"));
                 } catch (ConfirmModSchemaException e) {
                     throw new IllegalArgumentException("Unable to add template", e);
                 } catch (JSONException e) {
                     throw new IllegalArgumentException("Unable to get ord from new template", e);
                 }
+            }
             case MODELS_ID_TEMPLATES_ID:
                 throw new IllegalArgumentException("Not possible to insert template with specific ORD");
+            case MODELS_ID_FIELDS: {
+                Models models = col.getModels();
+                Long mid = getModelIdFromUri(uri, col);
+                JSONObject existingModel = models.get(mid);
+                if (existingModel == null) {
+                    throw new IllegalArgumentException("model missing: " + mid);
+                }
+                String name = values.getAsString(FlashCardsContract.Model.FIELD_NAME);
+                if (name == null) {
+                    throw new IllegalArgumentException("field name missing for model: " + mid);
+                }
+                JSONObject field = models.newField(name);
+                try {
+                    models.addField(existingModel, field);
+                    models.flush();
+                    JSONArray ja = existingModel.getJSONArray("flds");
+                    return ContentUris.withAppendedId(uri, ja.length() - 1);
+                } catch (ConfirmModSchemaException e) {
+                    throw new IllegalArgumentException("Unable to insert field: " + name, e);
+                } catch (JSONException e) {
+                    throw new IllegalArgumentException("Unable to get newly created field: " + name, e);
+                }
+            }
             case SCHEDULE:
                 // Doesn't make sense to insert an object into the schedule table
                 throw new IllegalArgumentException("Not possible to perform insert operation on schedule");

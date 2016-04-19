@@ -55,6 +55,7 @@ import java.util.List;
 public class ContentProviderTest extends AndroidTestCase {
 
     private static final String BASIC_MODEL_NAME = "com.ichi2.anki.provider.test.basic.x94oa3F";
+    private static final String TEST_FIELD_NAME = "TestFieldName";
     private static final String TEST_FIELD_VALUE = "test field value";
     private static final String TEST_TAG = "aldskfhewjklhfczmxkjshf";
     private static final String[] TEST_DECKS = {"cmxieunwoogyxsctnjmv"
@@ -207,6 +208,31 @@ public class ContentProviderTest extends AndroidTestCase {
         assertEquals("Check afmt", TEST_MODEL_AFMT[testIndex], template.getString("afmt"));
         assertEquals("Check bqfmt", TEST_MODEL_QFMT[testIndex], template.getString("bqfmt"));
         assertEquals("Check bafmt", TEST_MODEL_AFMT[testIndex], template.getString("bafmt"));
+        col.getModels().rem(model);
+    }
+
+    /**
+     * Check that inserting and removing a note into default deck works as expected
+     */
+    public void testInsertField() throws Exception {
+        // Get required objects for test
+        final ContentResolver cr = getContext().getContentResolver();
+        final Collection col = CollectionHelper.getInstance().getCol(getContext());
+        JSONObject model = Models.addBasicModel(col, BASIC_MODEL_NAME);
+        long modelId = model.getLong("id");
+        JSONArray initialFldsArr = model.getJSONArray("flds");
+        int initialFieldCount = initialFldsArr.length();
+
+        Uri noteTypeUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, modelId);
+        ContentValues insertFieldValues = new ContentValues();
+        insertFieldValues.put(FlashCardsContract.Model.FIELD_NAME, TEST_FIELD_NAME);
+        Uri fieldUri = cr.insert(Uri.withAppendedPath(noteTypeUri, "fields"), insertFieldValues);
+        assertNotNull("Check field uri", fieldUri);
+        long fieldId = ContentUris.parseId(fieldUri);
+        assertEquals("Check field id", initialFieldCount, fieldId);
+        JSONArray fldsArr = model.getJSONArray("flds");
+        assertEquals("Check fields length", initialFieldCount + 1, fldsArr.length());
+        assertEquals("Check last field name", TEST_FIELD_NAME, fldsArr.getJSONObject(fldsArr.length() - 1).optString("name", ""));
         col.getModels().rem(model);
     }
 
