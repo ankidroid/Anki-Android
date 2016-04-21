@@ -61,3 +61,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.4'
     compile project(":api")
 }
+
+apply from: "testconfig.gradle"
