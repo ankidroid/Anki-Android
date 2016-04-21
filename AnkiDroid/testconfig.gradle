@@ -1,0 +1,12 @@
+def adb = android.getAdbExe().toString()
+
+// hack that pre-installs the app with necessary permissions before connectedDebugAndroidTest re-installs
+task preInstallApp(type: Exec, dependsOn: 'assembleDebugAndroidTest') {
+    commandLine "$adb install -g ./build/outputs/apk/AnkiDroid-debug.apk".split(' ')
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name.startsWith('connectedDebugAndroidTest')) {
+        task.dependsOn preInstallApp
+    }
+}
