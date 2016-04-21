@@ -95,6 +95,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -164,6 +165,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     private boolean mTtsInitialized = false;
     private boolean mReplayOnTtsInit = false;
+
+    protected static final int MENU_DISABLED = 3;
 
 
     /**
@@ -295,6 +298,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private int mGestureTapTop;
     private int mGestureTapBottom;
     private int mGestureLongclick;
+
+    /**
+     * Custom button allocation
+     */
+    protected HashMap<Integer, Integer> mCustomButtons = new HashMap<Integer, Integer>();
+    protected HashMap<Integer, Integer> mCustomButtons_submenu_items = new HashMap<Integer, Integer>();
+    protected HashMap<Integer, Integer> mCustomButtons_submenu_items_related = new HashMap<Integer, Integer>();
+
 
     protected static final int GESTURE_NOTHING = 0;
     private static final int GESTURE_SHOW_ANSWER = 1;
@@ -1696,6 +1707,25 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "2"));
             mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "11"));
         }
+
+        mCustomButtons.put(R.id.action_undo, Integer.parseInt(preferences.getString("customButtonUndo", "2")));
+        mCustomButtons.put(R.id.action_mark_card, Integer.parseInt(preferences.getString("customButtonMarkCard", "2")));
+        mCustomButtons.put(R.id.action_edit, Integer.parseInt(preferences.getString("customButtonEditCard", "1")));
+        mCustomButtons.put(R.id.action_add_note_reviewer, Integer.parseInt(preferences.getString("customButtonAddCard", "3")));
+        mCustomButtons.put(R.id.action_replay, Integer.parseInt(preferences.getString("customButtonReplay", "1")));
+        mCustomButtons.put(R.id.action_clear_whiteboard, Integer.parseInt(preferences.getString("customButtonClearWhiteboard", "2")));
+        mCustomButtons.put(R.id.action_hide_whiteboard, Integer.parseInt(preferences.getString("customButtonShowHideWhiteboard", "2")));
+        mCustomButtons.put(R.id.action_enable_whiteboard, Integer.parseInt(preferences.getString("customButtonEnableWhiteboard", "0")));
+        mCustomButtons.put(R.id.action_select_tts, Integer.parseInt(preferences.getString("customButtonSelectTts", "0")));
+        mCustomButtons.put(R.id.action_open_deck_options, Integer.parseInt(preferences.getString("customButtonDeckOptions", "0")));
+        // Workaround for submenu items
+        mCustomButtons_submenu_items.put(R.id.action_bury_actionbar_only, Integer.parseInt(preferences.getString("customButtonBury", "0")));
+        mCustomButtons_submenu_items.put(R.id.action_suspend_actionbar_only, Integer.parseInt(preferences.getString("customButtonSuspend", "0")));
+        mCustomButtons_submenu_items.put(R.id.action_delete_actionbar_only, Integer.parseInt(preferences.getString("customButtonDelete", "0")));
+        mCustomButtons_submenu_items_related.put(R.id.action_bury_actionbar_only, R.id.group_menu_bury);
+        mCustomButtons_submenu_items_related.put(R.id.action_suspend_actionbar_only, R.id.group_menu_suspend);
+        mCustomButtons_submenu_items_related.put(R.id.action_delete_actionbar_only, R.id.group_menu_delete);
+
         if (mLongClickWorkaround) {
             mGestureLongclick = GESTURE_LOOKUP;
         }

@@ -34,7 +34,16 @@
         <item>Fora</item>
         <item>Nciku (Web)</item>
     </string-array>
-
+    <string-array name="custom_button_labels">
+        <item>@string/custom_buttons_setting_always_show</item>
+        <item>@string/custom_buttons_setting_if_room</item>
+        <item>@string/custom_buttons_setting_menu_only</item>
+        <item>@string/disabled</item>
+    </string-array>
+    <string-array name="custom_button_labels_menu_and_disabled">
+        <item>@string/custom_buttons_setting_menu_only</item>
+        <item>@string/disabled</item>
+    </string-array>
     <string-array name="dictionary_values">
         <item>0</item>
         <item>1</item>
@@ -96,6 +105,16 @@
         <item>17</item>
         <item>18</item>
         <item>19</item>
+    </string-array>
+    <string-array name="custom_button_values">
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="custom_button_values_menu_and_disabled">
+        <item>0</item>
+        <item>3</item>
     </string-array>
     <string name="link_anki">http://ankisrs.net</string>
     <string name="link_forum">http://groups.google.com/group/anki-android</string>
