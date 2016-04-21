@@ -81,12 +81,11 @@
   <string name="menu_import">Увези</string>
   <string name="undo">Опозови</string>
   <string name="undo_action_review">последње понављање</string>
-  <string name="undo_action_edit">уреди белешку</string>
-  <string name="undo_action_bury">закопај белешку</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">откажи карту</string>
   <string name="undo_action_suspend_note">откажи белешку</string>
   <string name="undo_action_delete">избриши белешку</string>
-  <string name="undo_action_mark">означи белешку</string>
   <string name="unbury">Откриј</string>
   <string name="rename_deck">Преименуј шпил</string>
   <string name="menu_add">Додај</string>

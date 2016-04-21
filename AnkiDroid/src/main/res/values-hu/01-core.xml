@@ -78,12 +78,11 @@
   <string name="menu_import">Importálás</string>
   <string name="undo">Visszavonás</string>
   <string name="undo_action_review">legutolsó áttekintés</string>
-  <string name="undo_action_edit">jegyzet szerkesztése</string>
-  <string name="undo_action_bury">jegyzet félretétele</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">kártya felfüggesztése</string>
   <string name="undo_action_suspend_note">jegyzet felfüggesztése</string>
   <string name="undo_action_delete">jegyzet törlése</string>
-  <string name="undo_action_mark">jegyzet megjelölése</string>
   <string name="unbury">Félretétel megszüntetése</string>
   <string name="rename_deck">Pakli átnevezése</string>
   <string name="menu_add">Hozzáadás</string>

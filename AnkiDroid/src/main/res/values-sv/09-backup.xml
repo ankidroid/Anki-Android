@@ -63,5 +63,5 @@
   <string name="corrupt_db_message">Din saming har blivit korrupt. \n\n Tryck på \"Alternativ\" för att återställa ifrån en backup, eller om det inte fungerar, läs följande instruktioner för att manuellt reparera databasen:\n%1$s</string>
   <string name="access_collection_failed_message">Ett fel uppstod vid tillgång till din samling. Det kan ha orsakats av en ofarlig bugg, eller så kan det finnas ett problem med den. \n\nFörsök att köra Kontrollera Databas, eller återställ ifrån backup genom att trycka på “Alternativ” knappen. Om du fortsätter att se detta meddelande, vänligen lämna en felrapport:\n%1$s</string>
   <string name="deck_repair_error">Samlingen kunde inte repareras</string>
-  <string name="cursor_size_limit_exceeded">The Android size limit for a String in a database has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
+  <string name="cursor_size_limit_exceeded">Androids gräns för strängstorlek i databasen har uppnåtts. Ta bort oanvända nottyper genom att använda skrivbordsversionen av Anki, gör sedan en fullständig synkronisering.</string>
 </resources>

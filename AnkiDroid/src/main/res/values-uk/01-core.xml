@@ -81,12 +81,11 @@
   <string name="menu_import">Імпортувати</string>
   <string name="undo">Відмінити</string>
   <string name="undo_action_review">Останній відгук</string>
-  <string name="undo_action_edit">Редагувати примітку</string>
-  <string name="undo_action_bury">Сховати примітку</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">Відкласти картку</string>
   <string name="undo_action_suspend_note">Призупинити примітку</string>
   <string name="undo_action_delete">Видалити примітку</string>
-  <string name="undo_action_mark">Відмітити примітку</string>
   <string name="unbury">Скасувати зрушення</string>
   <string name="rename_deck">Переназвати колоду</string>
   <string name="menu_add">Додати</string>

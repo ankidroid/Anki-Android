@@ -78,12 +78,11 @@
   <string name="menu_import">Import</string>
   <string name="undo">पूर्ववत् करें</string>
   <string name="undo_action_review">last review</string>
-  <string name="undo_action_edit">नोट संपादित करें</string>
-  <string name="undo_action_bury">नोट गाड़</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">कार्ड को निलंबित</string>
   <string name="undo_action_suspend_note">नोट निलंबित</string>
   <string name="undo_action_delete">नोट हटाएँ</string>
-  <string name="undo_action_mark">मार्क नोट करें</string>
   <string name="unbury">Unbury</string>
   <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Add</string>

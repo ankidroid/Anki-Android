@@ -46,7 +46,7 @@
   <string name="settings">Inställningar</string>
   <string name="help">Hjälp</string>
   <string name="send_feedback">Skicka feedback</string>
-  <string name="studyoptions_title">Leköversikt</string>
+  <string name="studyoptions_title">Kortleksöversikt</string>
   <string name="studyoptions_due_today">Aktuella idag:</string>
   <string name="studyoptions_new_total">Nya kort totalt:</string>
   <string name="studyoptions_total_cards">Totalt antal kort:</string>
@@ -78,12 +78,11 @@
   <string name="menu_import">Importera</string>
   <string name="undo">Ångra</string>
   <string name="undo_action_review">senaste repetition</string>
-  <string name="undo_action_edit">redigera not</string>
-  <string name="undo_action_bury">dölj not</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">åsidosätt kort</string>
   <string name="undo_action_suspend_note">lås not</string>
   <string name="undo_action_delete">ta bort not</string>
-  <string name="undo_action_mark">markera not</string>
   <string name="unbury">Sluta dölja</string>
   <string name="rename_deck">Byt namn på lek</string>
   <string name="menu_add">Lägg till</string>

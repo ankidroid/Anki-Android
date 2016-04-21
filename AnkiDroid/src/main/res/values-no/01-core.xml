@@ -78,12 +78,11 @@
   <string name="menu_import">Importer</string>
   <string name="undo">Angre</string>
   <string name="undo_action_review">siste gjennomgang</string>
-  <string name="undo_action_edit">rediger notat</string>
-  <string name="undo_action_bury">begrav notat</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">suspender kort</string>
   <string name="undo_action_suspend_note">suspender notat</string>
   <string name="undo_action_delete">slett notat</string>
-  <string name="undo_action_mark">merk notat</string>
   <string name="unbury">Grav opp igjen</string>
   <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Legg til</string>

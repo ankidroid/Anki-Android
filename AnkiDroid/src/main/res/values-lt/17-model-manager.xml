@@ -41,7 +41,7 @@
     <item quantity="other">%d notes</item>
   </plurals>
   <!--Button Values-->
-  <string name="model_editor_action_add_model">Add note type</string>
+  <string name="model_editor_action_add_model">Pridėti pastabos tipą</string>
   <!--Browser-->
   <string name="model_browser_delete">Naikinti pastabos tipą</string>
   <string name="model_browser_rename">Pervadinti</string>
@@ -54,18 +54,18 @@
   <string name="model_field_editor_title">Redaguoti laukus</string>
   <string name="model_field_editor_add">Pridėti lauką</string>
   <string name="model_field_editor_delete">Ištrinti lauką</string>
-  <string name="model_field_editor_options">Field options</string>
-  <string name="model_field_editor_rename">Rename field</string>
+  <string name="model_field_editor_options">Lauko pasirinktys</string>
+  <string name="model_field_editor_rename">Pervardyti lauką</string>
   <string name="model_field_editor_reposition_menu">Reposition field</string>
   <string name="model_field_editor_reposition" formatted="false">Reposition field (enter a value %1$d–%2$d)</string>
   <string name="model_field_editor_changing">Updating fields</string>
-  <string name="model_field_editor_sort_field">Sort by this field</string>
-  <string name="model_clone_suffix">copy</string>
+  <string name="model_field_editor_sort_field">Rūšiuoti pagal šitą lauką</string>
+  <string name="model_clone_suffix">kopijuoti</string>
   <!--Warnings-->
   <string name="model_delete_warning">Are you sure you wish to delete this model?</string>
-  <string name="field_delete_warning">Are you sure you wish to delete this field?</string>
+  <string name="field_delete_warning">Ar esate tikri jog norite pašalinti šį laukelį?</string>
   <!--Model Add Suffixes-->
-  <string name="model_browser_add_add">Add: %1$s </string>
+  <string name="model_browser_add_add">Pridėti: %1$s </string>
   <!--This prefix is used for standard note types-->
-  <string name="model_browser_add_clone">Clone: %1$s </string>
+  <string name="model_browser_add_clone">Klonas: %1$s </string>
 </resources>

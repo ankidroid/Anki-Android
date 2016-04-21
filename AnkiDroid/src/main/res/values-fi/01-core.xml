@@ -78,12 +78,11 @@
   <string name="menu_import">Tuo</string>
   <string name="undo">Kumoa</string>
   <string name="undo_action_review">edellinen kertaus</string>
-  <string name="undo_action_edit">merkinnän muokkaus</string>
-  <string name="undo_action_bury">piilota merkintä</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">jäädytä kortti</string>
   <string name="undo_action_suspend_note">jäädytä merkintä</string>
   <string name="undo_action_delete">poista merkintä</string>
-  <string name="undo_action_mark">merkitse merkintä</string>
   <string name="unbury">Paljasta</string>
   <string name="rename_deck">Nimeä pakka uudelleen</string>
   <string name="menu_add">Lisää</string>

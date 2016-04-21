@@ -94,11 +94,11 @@
     <item>Alltid</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Plain</item>
+    <item>Ljus</item>
+    <item>Simpel</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
+    <item>Svart</item>
+    <item>Mörk</item>
   </string-array>
 </resources>

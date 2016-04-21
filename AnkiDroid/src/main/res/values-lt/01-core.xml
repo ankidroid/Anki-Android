@@ -81,12 +81,11 @@
   <string name="menu_import">Importuoti</string>
   <string name="undo">Atšaukti</string>
   <string name="undo_action_review">paskutinė peržiūra</string>
-  <string name="undo_action_edit">pastabos pakeitimą</string>
-  <string name="undo_action_bury">pastabos slėpimą</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">kortelės sustabdymą</string>
   <string name="undo_action_suspend_note">pastabos sustabdymą</string>
   <string name="undo_action_delete">pastabos pašalinimą</string>
-  <string name="undo_action_mark">pastabos pažimėjimą</string>
   <string name="unbury">Ištraukti</string>
   <string name="rename_deck">Pervadinti kaladę</string>
   <string name="menu_add">Pridėti</string>
@@ -107,7 +106,7 @@
   <string name="create">Sukurti</string>
   <string name="new_dynamic_deck">Sukurti malką su filtrais</string>
   <string name="night_mode">Naktinis režimas</string>
-  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <string name="directory_inaccessible">AnkiDroid katalogas yra nepasiekiamas</string>
   <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -146,7 +145,7 @@
   <string name="export">Eksportuoti</string>
   <string name="export_collection">Eksportuoti koleciją</string>
   <string name="export_deck">Eksportuoti kaladę</string>
-  <string name="nothing">Nothing</string>
+  <string name="nothing">Nieko</string>
   <!-- Card template editor -->
   <string name="title_activity_template_editor">Kortelių tipai</string>
   <string name="card_template_editor_front">Priekinis šablonas</string>

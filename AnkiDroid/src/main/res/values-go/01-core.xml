@@ -78,12 +78,11 @@
   <string name="menu_import">Innatbair</string>
   <string name="undo">Blauþei</string>
   <string name="undo_action_review">aftumisto staua</string>
-  <string name="undo_action_edit">inmaidei melein</string>
-  <string name="undo_action_bury">nawistr melein</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">beidnei karta</string>
   <string name="undo_action_suspend_note">beidnei melein</string>
   <string name="undo_action_delete">usnim melein</string>
-  <string name="undo_action_mark">gatarhameleins</string>
   <string name="unbury">Unnawistr</string>
   <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Biauk</string>

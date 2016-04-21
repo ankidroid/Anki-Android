@@ -78,12 +78,11 @@
   <string name="menu_import">Kaarten importeren</string>
   <string name="undo">Ongedaan maken</string>
   <string name="undo_action_review">laatste overhoring</string>
-  <string name="undo_action_edit">bewerk memo</string>
-  <string name="undo_action_bury">verberg memo</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">kaart opschorten</string>
   <string name="undo_action_suspend_note">blokkeer memo</string>
   <string name="undo_action_delete">memo verwijderen</string>
-  <string name="undo_action_mark">markeer memo</string>
   <string name="unbury">Niet langer verbergen</string>
   <string name="rename_deck">Setnaam wijzigen</string>
   <string name="menu_add">Toevoegen</string>

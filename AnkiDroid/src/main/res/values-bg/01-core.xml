@@ -78,12 +78,11 @@
   <string name="menu_import">Импортиране</string>
   <string name="undo">Отмени</string>
   <string name="undo_action_review">последен преглед</string>
-  <string name="undo_action_edit">редактиране на бележка</string>
-  <string name="undo_action_bury">скрий бележка</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">отлагане на карта</string>
   <string name="undo_action_suspend_note">отлагане на бележка</string>
   <string name="undo_action_delete">изтрий бележка</string>
-  <string name="undo_action_mark">маркирай бележка</string>
   <string name="unbury">Откопай</string>
   <string name="rename_deck">Преименувай тестето</string>
   <string name="menu_add">Добави</string>

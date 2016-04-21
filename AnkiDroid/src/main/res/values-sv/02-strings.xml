@@ -107,7 +107,7 @@
   <string name="saving_facts">Sparar not</string>
   <string name="saving_model">Sparar modell</string>
   <string name="add">Lägg till</string>
-  <string name="save">Save</string>
+  <string name="save">Spara</string>
   <string name="close">Stäng</string>
   <string name="select">Välj</string>
   <string name="saving_changes">Sparar ändringar...</string>
@@ -147,7 +147,7 @@
   <string name="show_hint">Visa %s</string>
   <string name="info_rate">Betygsätt AnkiDroid</string>
   <string name="col_load_failed">Fel vid inläsning av samling.\nTryck bakåt för att stänga AnkiDroid.</string>
-  <string name="import_title">Importing</string>
+  <string name="import_title">Importera</string>
   <string name="import_select_title">Välj fil att importera</string>
   <string name="import_message_add">Lägg till</string>
   <string name="import_message_replace_confirm">Detta kommer att ta bort din befintliga samling och ersätta den med datat i filen %s. Är du säker?</string>
@@ -155,7 +155,7 @@
   <string name="import_log_no_apkg">Detta är inte en giltig apkg-fil</string>
   <string name="import_error_not_apkg_extension">Filnamnet %s har inget .apkg-suffix</string>
   <string name="import_error_content_provider">Den valda filen kunde inte importeras automatiskt av AnkiDroid. Vänligen se användarmanualen för information om manuell import av Anki-filer: \n %s</string>
-  <string name="import_replacing">Replacing collection&#8230;</string>
+  <string name="import_replacing">Ersätter samling&#8230;</string>
   <string name="export_include_schedule">Inkludera schemaläggning</string>
   <string name="export_include_media">Inkludera media</string>
   <string name="confirm_apkg_export">Exportera samling som APKG-fil?</string>
@@ -167,7 +167,7 @@
   <string name="import_hint">För att importera kort, placera apkg-filen i katalogen %s och tryck på ok</string>
   <string name="upgrade_import_no_file_found">Ingen importerbar %1$s fil hittad</string>
   <string name="study_options">Kortleksalternativ</string>
-  <string name="select_tts">Set TTS language</string>
+  <string name="select_tts">Ställ in TTS-språk</string>
   <string name="custom_study">Anpassade studier</string>
   <string name="more_options">Mer</string>
   <string name="dyn_deck_desc">Det här är en specialkortlek för studier utanför det normala schemat. Kort återförs automatiskt till sina ursprungliga kortlekar efter att du repeterat dem. Om du tar bort denna kortlek återförs alla återstående kort till sina ursprungliga kortlekar.</string>

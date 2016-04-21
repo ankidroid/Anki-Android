@@ -53,8 +53,8 @@
   <string name="pref_cat_automatic_display">Mostrar respuesta automáticamente</string>
   <string name="pref_cat_appearance">Apariencia</string>
   <string name="pref_cat_appearance_summ">Cambiar temas y fuente predeterminada</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_themes">Temas</string>
+  <string name="pref_cat_fonts">Fuentes</string>
   <string name="pref_cat_gestures">Gestos</string>
   <string name="pref_cat_gestures_summ">Puede tocar y deslizar en la pantalla en lugar de usar botones</string>
   <string name="pref_cat_actions">Acciones</string>
@@ -119,8 +119,8 @@
   <string name="fix_hebrew_text_summ">Solución para mostrar las vocales Hebreas correctamente.</string>
   <string name="fix_hebrew_instructions">Esta opción evade el algoritmo RTL de Android para mostrar correctamente texto hebreo con vocales.\n\nPara que esto funcione, necesitas descargar la fuente Tohu.ttf y copiarla manualmente a:\n%s/fonts/\n\nNo necesitarás hacer ninguna modificación a tus tarjetas.</string>
   <string name="fix_hebrew_download_font">Descargar Fuente</string>
-  <string name="day_theme">Day theme</string>
-  <string name="night_theme">Night theme</string>
+  <string name="day_theme">Tema del día</string>
+  <string name="night_theme">Tema nocturno</string>
   <string name="default_font">Fuente predeterminada</string>
   <string name="override_font">Aplicabilidad de fuente por defecto</string>
   <string name="language">Idioma</string>
@@ -168,7 +168,7 @@
   <string name="advanced_statistics_title">Estadísticas avanzadas</string>
   <string name="enable_advanced_statistics_title">Activar estadísticas avanzadas</string>
   <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
-  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Calcular primeros n días, simular el resto</string>
   <string name="advanced_forecast_stats_compute_precision_title">Precisión de la computación</string>
   <string name="advanced_forecast_stats_mc_n_iterations_title">Número de iteraciones de la simulación</string>
   <!-- Custom sync server settings -->

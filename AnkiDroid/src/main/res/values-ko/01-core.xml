@@ -75,12 +75,11 @@
   <string name="menu_import">가져오기</string>
   <string name="undo">실행 취소</string>
   <string name="undo_action_review">마지막 복습</string>
-  <string name="undo_action_edit">노트 편집</string>
-  <string name="undo_action_bury">노트 나중에 보기</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">카드 미루기</string>
   <string name="undo_action_suspend_note">노트 비활성화하기</string>
   <string name="undo_action_delete">노트 삭제</string>
-  <string name="undo_action_mark">노트 표시</string>
   <string name="unbury">넣었던 카드 꺼내기</string>
   <string name="rename_deck">Rename deck</string>
   <string name="menu_add">추가</string>

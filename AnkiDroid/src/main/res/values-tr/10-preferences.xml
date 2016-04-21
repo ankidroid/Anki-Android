@@ -53,8 +53,8 @@
   <string name="pref_cat_automatic_display">Cevabı otomatik göster</string>
   <string name="pref_cat_appearance">Görünüş</string>
   <string name="pref_cat_appearance_summ">Temaları ve varsayılan fontu değiştir</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_themes">Temalar</string>
+  <string name="pref_cat_fonts">Fontlar</string>
   <string name="pref_cat_gestures">Jestler</string>
   <string name="pref_cat_gestures_summ">Düğmeler yerine dokunma ve kaydırma kullan</string>
   <string name="pref_cat_actions">Eylemler</string>
@@ -119,8 +119,8 @@
   <string name="fix_hebrew_text_summ">İbrânice sesli harflerin düzgün gözükmesi için çözüm</string>
   <string name="fix_hebrew_instructions">Bu ayar İbrânice yazılarda sesli harflerin düzgün gösterilmesi için Android\'in RTL algoritmasını atlar.\n\nBunun işe yaraması için, Tohu.tff fontunu indirip kendiniz şu klasöre kopyalamanız gerekiyor:\n%s/fonts/\n\nKartlarınızda bir değişiklik yapmanız gerekmez.</string>
   <string name="fix_hebrew_download_font">Font İndir</string>
-  <string name="day_theme">Day theme</string>
-  <string name="night_theme">Night theme</string>
+  <string name="day_theme">Gündüz teması</string>
+  <string name="night_theme">Gece teması</string>
   <string name="default_font">Varsayılan yazı tipi</string>
   <string name="override_font">Varsayılan font uygulanabilirliği</string>
   <string name="language">Dil</string>

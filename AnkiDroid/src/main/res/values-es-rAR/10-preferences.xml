@@ -53,8 +53,8 @@
   <string name="pref_cat_automatic_display">Mostrar automáticamente la respuesta</string>
   <string name="pref_cat_appearance">Apariencia</string>
   <string name="pref_cat_appearance_summ">Cambia los temas y la fuente por defecto</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_themes">Temas</string>
+  <string name="pref_cat_fonts">Fuentes</string>
   <string name="pref_cat_gestures">Gestos</string>
   <string name="pref_cat_gestures_summ">Usar toques y deslizamientos en lugar de botones</string>
   <string name="pref_cat_actions">Acciones</string>
@@ -119,8 +119,8 @@
   <string name="fix_hebrew_text_summ">Solución para renderizar las vocales hebreas correctamente.</string>
   <string name="fix_hebrew_instructions">Esta característica evita el algoritmo RTL de Android para mostrar texto en hebreo con las vocales correctas.\n\nPara que esto funcione debe descargar la fuente Tohu.ttf y copiarla manualmente a:\n%sfonts\n\nNo deberá modificar sus tarjetas.</string>
   <string name="fix_hebrew_download_font">Descargar fuente</string>
-  <string name="day_theme">Day theme</string>
-  <string name="night_theme">Night theme</string>
+  <string name="day_theme">Tema del día</string>
+  <string name="night_theme">Tema nocturno</string>
   <string name="default_font">Tipografía por defecto</string>
   <string name="override_font">Aplicabilidad de fuente por defecto</string>
   <string name="language">Idioma</string>

@@ -59,8 +59,8 @@
   <string name="sdcard_missing_message">SD kortelė yra nepasiekiama, nes jis yra naudojama kaip USB laikmena. Atjunkite USB, jei norite naudoti savo rinkinius.</string>
   <string name="updated_version">Updated to version %s</string>
   <!-- Reviewer.java -->
-  <string name="enable_whiteboard">Enable whiteboard</string>
-  <string name="disable_whiteboard">Disable whiteboard</string>
+  <string name="enable_whiteboard">Įgalinti piešimo lenta</string>
+  <string name="disable_whiteboard">Išjungti piešimo lenta</string>
   <string name="show_whiteboard">Rodyti baltą lentą</string>
   <string name="hide_whiteboard">Paslėpti baltą lentą</string>
   <string name="clear_whiteboard">Išvalyti lentą</string>
@@ -158,10 +158,10 @@
   <string name="import_log_no_apkg">Tai nėra galiojančio apkg failo</string>
   <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg extension</string>
   <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
-  <string name="import_replacing">Replacing collection&#8230;</string>
+  <string name="import_replacing">Pakeičiama kolekcija&#8230;</string>
   <string name="export_include_schedule">Įtraukti planavimą</string>
   <string name="export_include_media">Include media</string>
-  <string name="confirm_apkg_export">Export collection as apkg file?</string>
+  <string name="confirm_apkg_export">Eksportuoti kolekcija kaip apkg failą?</string>
   <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
   <string name="export_in_progress">Exporting apkg file&#8230;</string>
   <string name="export_successful_title">Email apkg?</string>
@@ -169,13 +169,13 @@
   <string name="export_unsuccessful">Klaida eksportuojant kolekciją</string>
   <string name="import_hint">Norėdamas importuoti korteles, padėkite apkg failą į aplanką %s ir paspauskite Ok</string>
   <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
-  <string name="study_options">Deck options</string>
+  <string name="study_options">Rinkinio parinktys</string>
   <string name="select_tts">Nustatyti TTS kalbą</string>
   <string name="custom_study">Custom study</string>
   <string name="more_options">Daugiau</string>
   <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
   <string name="steps_error">Steps must be numbers greater than 0</string>
-  <string name="steps_min_error">At least one step is required</string>
+  <string name="steps_min_error">Reikalingas bent vienas etapas</string>
   <string name="sched_end">(pabaiga)</string>
   <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
   <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow</string>

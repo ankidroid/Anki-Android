@@ -78,12 +78,11 @@
   <string name="menu_import">Import</string>
   <string name="undo">Αναίρεση</string>
   <string name="undo_action_review">last review</string>
-  <string name="undo_action_edit">επεξεργασίας σημείωσης</string>
-  <string name="undo_action_bury">απόκρυψης σημείωσης</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">αναστολής κάρτας</string>
   <string name="undo_action_suspend_note">αναστολής σημείωσης</string>
   <string name="undo_action_delete">διαγραφής κάρτας</string>
-  <string name="undo_action_mark">μαρκαρίσματος σημείωσης</string>
   <string name="unbury">Unbury</string>
   <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Add</string>

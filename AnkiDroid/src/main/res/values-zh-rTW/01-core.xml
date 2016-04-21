@@ -75,12 +75,11 @@
   <string name="menu_import">匯入</string>
   <string name="undo">復原</string>
   <string name="undo_action_review">上次複習</string>
-  <string name="undo_action_edit">編輯筆記</string>
-  <string name="undo_action_bury">暫時隱藏筆記</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">長久擱置卡片</string>
   <string name="undo_action_suspend_note">長久擱置筆記</string>
   <string name="undo_action_delete">刪除筆記</string>
-  <string name="undo_action_mark">標記筆記</string>
   <string name="unbury">取消暫時隱藏</string>
   <string name="rename_deck">重新命名牌組</string>
   <string name="menu_add">新增</string>

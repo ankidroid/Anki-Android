@@ -75,12 +75,11 @@
   <string name="menu_import">Nhập</string>
   <string name="undo">Hoàn tác</string>
   <string name="undo_action_review">lần ôn tập trước</string>
-  <string name="undo_action_edit">sửa ghi chú</string>
-  <string name="undo_action_bury">tạm ẩn ghi chú</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">tạm dừng thẻ</string>
   <string name="undo_action_suspend_note">tạm dừng ghi chú</string>
   <string name="undo_action_delete">xoá ghi chú</string>
-  <string name="undo_action_mark">đánh dấu ghi chú</string>
   <string name="unbury">Bỏ tạm ẩn</string>
   <string name="rename_deck">Đổi tên bộ thẻ</string>
   <string name="menu_add">Thêm</string>

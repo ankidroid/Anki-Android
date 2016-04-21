@@ -81,12 +81,11 @@
   <string name="menu_import">Importuj</string>
   <string name="undo">Cofnij</string>
   <string name="undo_action_review">ostatnia powtórka</string>
-  <string name="undo_action_edit">edycję notatki</string>
-  <string name="undo_action_bury">zakop notatkę</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">zawieszenie karty</string>
   <string name="undo_action_suspend_note">zawieszenie notatki</string>
   <string name="undo_action_delete">usunięcie notatki</string>
-  <string name="undo_action_mark">wyróżnienie notatki</string>
   <string name="unbury">Odkop</string>
   <string name="rename_deck">Zmień nazwę talii</string>
   <string name="menu_add">Dodaj</string>

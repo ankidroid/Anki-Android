@@ -75,12 +75,11 @@
   <string name="menu_import">导入牌组</string>
   <string name="undo">撤销</string>
   <string name="undo_action_review">上次复习</string>
-  <string name="undo_action_edit">编辑笔记</string>
-  <string name="undo_action_bury">隐藏笔记</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">暂停卡片</string>
   <string name="undo_action_suspend_note">暂停笔记</string>
   <string name="undo_action_delete">删除笔记</string>
-  <string name="undo_action_mark">标记笔记</string>
   <string name="unbury">取消隐藏</string>
   <string name="rename_deck">重命名</string>
   <string name="menu_add">添加</string>

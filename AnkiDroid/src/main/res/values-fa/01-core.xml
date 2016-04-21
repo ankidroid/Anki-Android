@@ -75,12 +75,11 @@
   <string name="menu_import">اضافه کردن</string>
   <string name="undo">تصحیح عمل قبلی</string>
   <string name="undo_action_review">آخرین بازنگری</string>
-  <string name="undo_action_edit">ویرایش یادداشت</string>
-  <string name="undo_action_bury">پوشاندن یادداشت</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">تعلیق کارت</string>
   <string name="undo_action_suspend_note">تعلیق یادداشت</string>
   <string name="undo_action_delete">حذف یادداشت</string>
-  <string name="undo_action_mark">علامتگذاری یادداشت</string>
   <string name="unbury">نمایش در نشست جاری</string>
   <string name="rename_deck">تغییر نام دسته</string>
   <string name="menu_add">افزودن</string>

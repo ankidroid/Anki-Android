@@ -53,8 +53,8 @@
   <string name="pref_cat_automatic_display">Visualizzazione automatica risposta</string>
   <string name="pref_cat_appearance">Aspetto</string>
   <string name="pref_cat_appearance_summ">Cambia temi e tipo di carattere predefinito</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_themes">Temi</string>
+  <string name="pref_cat_fonts">Caratteri</string>
   <string name="pref_cat_gestures">Gesti</string>
   <string name="pref_cat_gestures_summ">Usa tocchi e scorrimento al posto dei pulsanti</string>
   <string name="pref_cat_actions">Azioni</string>

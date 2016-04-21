@@ -36,8 +36,8 @@
 -->
 <resources>
   <string-array name="error_reporting_choice_labels">
-    <item>Always report</item>
-    <item>Never report</item>
+    <item>Visada pranešti</item>
+    <item>Niekada nepranešti</item>
     <item>Paklausti</item>
   </string-array>
   <string-array name="gestures_labels">
@@ -56,7 +56,7 @@
     <item>Paslėpti kortelę</item>
     <item>Sustabdyti kortelę</item>
     <item>Šalinti pastabą</item>
-    <item>Play media</item>
+    <item>Leisti mediją</item>
     <item>Nutraukti mokymąsį</item>
     <item>Palaidoti pastabą</item>
     <item>Sustabdyti pastabą</item>
@@ -74,10 +74,10 @@
     <item>Atsitiktinai</item>
     <item>Didėjantys intervalai</item>
     <item>Mažėjantys intervalai</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
+    <item>Daugiausia praėja</item>
+    <item>Pridėjimo tvarka</item>
     <item>Order due</item>
-    <item>Latest added first</item>
+    <item>Naujausia pridėta pirmiau</item>
     <item>Relative overdueness</item>
   </string-array>
   <string-array name="add_to_cur_labels">
@@ -94,11 +94,11 @@
     <item>Visada</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Light</item>
+    <item>Šviesi</item>
     <item>Paprastas</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
+    <item>Juodas</item>
+    <item>Tamsi</item>
   </string-array>
 </resources>

@@ -81,12 +81,11 @@
   <string name="menu_import">Import</string>
   <string name="undo">Späť</string>
   <string name="undo_action_review">posledné opakovanie</string>
-  <string name="undo_action_edit">upraviť poznámku</string>
-  <string name="undo_action_bury">zahrabať poznámku</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">pozastaviť kartu</string>
   <string name="undo_action_suspend_note">pozastaviť poznámku</string>
   <string name="undo_action_delete">vymazať poznámku</string>
-  <string name="undo_action_mark">označiť poznámku</string>
   <string name="unbury">Vyhrabať</string>
   <string name="rename_deck">Premenovať balíček</string>
   <string name="menu_add">Pridať</string>

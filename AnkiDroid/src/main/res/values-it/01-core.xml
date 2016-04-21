@@ -78,12 +78,11 @@
   <string name="menu_import">Importa</string>
   <string name="undo">Annulla</string>
   <string name="undo_action_review">ultima ripetizione</string>
-  <string name="undo_action_edit">modifica nota</string>
-  <string name="undo_action_bury">seppellisci nota</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">sospendi carta</string>
   <string name="undo_action_suspend_note">sospendi nota</string>
   <string name="undo_action_delete">elimina nota</string>
-  <string name="undo_action_mark">contrassegna nota</string>
   <string name="unbury">Disseppellisci</string>
   <string name="rename_deck">Rinomina mazzo</string>
   <string name="menu_add">Aggiungi</string>

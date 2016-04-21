@@ -6,7 +6,7 @@ Studera allt möjligt var och när du vill. Utnyttja inaktiv tid på bussen, i k
 
 Skapa dina egna flashkort eller ladda ner gratis kortlekar på flera olika språk och ämnen (mer än 6000 tillgängliga).
 
-Lägga till material genom skrivbordsprogrammet Anki eller direkt via AnkiDroid. Programmet stöder även att automatiskt lägga till material från en ordlista!
+Lägg till material genom skrivbordsprogrammet Anki eller direkt via AnkiDroid. Programmet stöder även att automatiskt lägga till material från en ordlista!
 
 ★ Huvudfunktioner:
 • fungerande innehåll för flashkort: text, bilder, ljud och LaTeX

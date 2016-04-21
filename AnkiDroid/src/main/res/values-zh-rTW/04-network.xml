@@ -107,14 +107,14 @@
   <string name="sync_generic_error">出現錯誤，請稍後再試</string>
   <string name="sync_check_upload_file">正在檢查需要上傳的檔案...</string>
   <string name="sync_check_download_file">檢查下載的檔案...</string>
-  <string name="sync_media_find">尋找變更的媒體檔...</string>
+  <string name="sync_media_find">尋找變更的媒體檔&#8230;</string>
   <string name="sync_media_no_changes">媒體檔無變更</string>
   <string name="sync_media_success">成功同步媒體檔</string>
   <string name="sync_media_changes_count">將上傳 %d 個媒體檔變更</string>
-  <string name="sync_media_downloaded_count">已下載 %d 個給媒體檔案</string>
+  <string name="sync_media_downloaded_count">已下載 %d 個媒體檔案</string>
   <string name="sync_sanity_failed">您的收藏狀態在同步以後不一致，AnkiDroid 會強制進行完整同步來修復這問題。請選擇你想要保留哪一邊的檔案。如果您想要稍後進行同步，請選擇取消。</string>
   <string name="sync_media_sanity_failed">媒體檔案同步完成，不過媒體檔數量與伺服器上的不相等。下次將進行完整同步來更正這問題。</string>
-  <string name="sync_media_error">同步媒體資料時出錯。</string>
+  <string name="sync_media_error">同步媒體資料時出錯</string>
   <string name="sync_media_error_check">同步媒體檔時發生錯誤。建議進行一次媒體檢查。</string>
   <string name="sync_sanity_local">本機</string>
   <string name="sync_sanity_remote">遠端</string>

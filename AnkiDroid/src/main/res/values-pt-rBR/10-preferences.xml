@@ -53,8 +53,8 @@
   <string name="pref_cat_automatic_display">Mostrar resposta automaticamente</string>
   <string name="pref_cat_appearance">Aparência</string>
   <string name="pref_cat_appearance_summ">Alterar temas e fonte padrão</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_themes">Temas</string>
+  <string name="pref_cat_fonts">Fontes</string>
   <string name="pref_cat_gestures">Gestos</string>
   <string name="pref_cat_gestures_summ">Usar gestos em vez de botões</string>
   <string name="pref_cat_actions">Ações</string>
@@ -119,8 +119,8 @@
   <string name="fix_hebrew_text_summ">Solução alternativa de renderização correta dos sons de vogais do Hebraico.</string>
   <string name="fix_hebrew_instructions">Esta definição ignora o algoritmo do Android para mostrar texto Hebraico com vogais corretamente.\n\nPara isso funcionar, você precisa baixar a fonte Tohu.ttf e copiá-la manualmente para:\n%s/fonts/\n\nVocê não terá que modificar seus cartões.</string>
   <string name="fix_hebrew_download_font">Baixar Fonte</string>
-  <string name="day_theme">Day theme</string>
-  <string name="night_theme">Night theme</string>
+  <string name="day_theme">Tema Dia</string>
+  <string name="night_theme">Tema Noite</string>
   <string name="default_font">Fonte padrão</string>
   <string name="override_font">Aplicabilidade da fonte padrão</string>
   <string name="language">Idioma</string>

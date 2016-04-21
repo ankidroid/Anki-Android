@@ -78,12 +78,11 @@
   <string name="menu_import">İçeri aktar</string>
   <string name="undo">Geri Al</string>
   <string name="undo_action_review">son çalışma</string>
-  <string name="undo_action_edit">Not düzenleme</string>
-  <string name="undo_action_bury">Not gizlemeyi</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">Kart askıya almayı</string>
   <string name="undo_action_suspend_note">Not askıya almayı</string>
   <string name="undo_action_delete">Not silmeyi</string>
-  <string name="undo_action_mark">Not işâretlemeyi</string>
   <string name="unbury">Görünür Yap</string>
   <string name="rename_deck">Destenin adını değiştir</string>
   <string name="menu_add">Ekle</string>

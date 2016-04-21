@@ -81,12 +81,11 @@
   <string name="menu_import">Import</string>
   <string name="undo">Anulare</string>
   <string name="undo_action_review">last review</string>
-  <string name="undo_action_edit">Editare notă</string>
-  <string name="undo_action_bury">Îngroapă nota</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">suspendă cardul</string>
   <string name="undo_action_suspend_note">suspendă nota</string>
   <string name="undo_action_delete">Ştergeţi nota</string>
-  <string name="undo_action_mark">marcheaza nota</string>
   <string name="unbury">Dezgroapă</string>
   <string name="rename_deck">Rename deck</string>
   <string name="menu_add">Add</string>

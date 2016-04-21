@@ -58,7 +58,7 @@
     <item><![CDATA[<h2>%1$s:<br/>Tarjetas para Android</h2>AnkiDroid es una aplicación de tarjetas totalmente compatible con <a href=\"%2$s\">Anki</a>, el software de escritorio. Se puede crear, descargar y aprender material tanto en AnkiDroid como en Anki de escritorio, y sincronizarlo fácilmente con AnkiWeb.]]></item>
     <item><![CDATA[Para ayudarnos a mejorar la AnkiDroid, por favor informe los errores por <a href=\"%1$s\">el issue tracker</a>; nuevas ideas son muy agradadecidas también. Encuentre las respuestas en <a href=\"%2$s\"> la wiki</a> o inicie una discusión en <a href=\"%3$s\">el foro</a>.]]></item>
     <item><![CDATA[AnkiDroid es <a href=\"%1$s\">software libre<a/>, por lo que todo el mundo se anima a <a href=\"%2$s\"> ser un colaborador</a> :-)]]></item>
-    <item><![CDATA[No-desarrolladores también pueden ayudar. Por ejemplo, puedes <a href=\"%1$s\">ayudar a traducir</a> AnkiDroid, actualizar el wiki, proveer capturas de pantalla, <a href=\"%2$s\">donar</a> a Anki Desktop o bloguear acerca de AnkiDroid.]]></item>
+    <item><![CDATA[No-desarrolladores también pueden ayudar. Por ejemplo, puedes <a href=\"%1$s\">ayudar a traducir</a> AnkiDroid, actualizar el wiki, proveer capturas de pantalla, <a href=\"%2$s\">donar</a> a Anki de escritorio o bloguear acerca de AnkiDroid.]]></item>
     <item><![CDATA[AnkiDroid está publicado bajo la <a href=\"%1$s\">licencia de GNU-GPL v3</a> y el código fuente está disponible <a href=\"%2$s\">en GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Vista previa</string>
@@ -87,7 +87,7 @@
   <string name="rebuild_custom_study_deck">Se está reconstruyendo el mazo de estudio personalizado.\nEspera, por favor...</string>
   <string name="importing_collection">Importando colección&#8230;</string>
   <string name="import_media_count">Importando archivos multimedia %1$d%%&#8230;</string>
-  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
+  <string name="import_progress">• Importando notas: %1$d%%\n• Importando tarjetas: %2$d%%\n• Postprocesando: %3$d%%</string>
   <string name="import_update_details">Se ha(n) actualizado %1$d de %2$d notas existentes.</string>
   <string name="import_update_ignored">Se han ignorado algunas actualizaciones porque el tipo de nota ha cambiado</string>
   <string name="import_complete_count">Tarjetas importadas: %d</string>

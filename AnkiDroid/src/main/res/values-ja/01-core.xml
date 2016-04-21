@@ -75,12 +75,11 @@
   <string name="menu_import">インポート</string>
   <string name="undo">元に戻す</string>
   <string name="undo_action_review">最後の復習</string>
-  <string name="undo_action_edit">ノートを編集</string>
-  <string name="undo_action_bury">ノートを延期</string>
+  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">カードを保留</string>
   <string name="undo_action_suspend_note">ノートを保留</string>
   <string name="undo_action_delete">ノートの削除</string>
-  <string name="undo_action_mark">ノートにマークをつける</string>
   <string name="unbury">延期を解除</string>
   <string name="rename_deck">このデッキの名前を変更</string>
   <string name="menu_add">ノートを追加</string>
