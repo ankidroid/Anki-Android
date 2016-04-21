@@ -107,6 +107,8 @@ Several unit tests are defined in the `AnkiDroid/androidTest` folder. You can ru
 
 **Note:** Some of the unit tests involve the deletion of models, which will force a full-sync, so it's not recommended to try running the tests on your main device.
 
+**Note:** Successful completion of the tests on an SDK23+ device when running from Android Studio may require you to manually grant the storage permission on the device before running the tests. Command line invocation should not have this problem.
+
 ## Compiling from the command line
 If you have the Android SDK installed, you should be able to compile from the command line even without installing Android Studio.
 
