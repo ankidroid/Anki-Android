@@ -497,6 +497,7 @@ public class CardContentProvider extends ContentProvider {
                     col.getDecks().flush();
                     currentCard.setDid(did);
                     currentCard.flush();
+                    col.save();
                     updated++;
                 } else {
                     // User tries an operation that is not (yet?) supported.
@@ -556,6 +557,7 @@ public class CardContentProvider extends ContentProvider {
                         updated++;
                     }
                     col.getModels().save(model);
+                    col.save();
                 } catch (JSONException e) {
                     Timber.e(e, "JSONException updating model");
                 }
@@ -604,6 +606,7 @@ public class CardContentProvider extends ContentProvider {
                     templates.put(templateOrd, template);
                     existingModel.put("tmpls", templates);
                     col.getModels().save(existingModel, true);
+                    col.save();
                 } catch (JSONException e) {
                     throw new IllegalArgumentException("Model is malformed", e);
                 }
@@ -655,6 +658,7 @@ public class CardContentProvider extends ContentProvider {
                         }
                     }
                 }
+                col.save();
                 break;
             }
             default:
@@ -795,7 +799,7 @@ public class CardContentProvider extends ContentProvider {
                 }
                 result++;
             }
-            col.flush(); // TODO is this necessary? Probably better to be safe than sorry
+            col.save();
             sqldb.setTransactionSuccessful();
             return result;
         } finally {
@@ -841,6 +845,7 @@ public class CardContentProvider extends ContentProvider {
                 }
                 // Add to collection
                 col.addNote(newNote);
+                col.save();
                 return Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(newNote.getId()));
             }
             case NOTES_ID:
@@ -912,8 +917,7 @@ public class CardContentProvider extends ContentProvider {
                     }
                     // Add the model to collection (from this point on edits will require a full-sync)
                     mm.add(newModel);
-                    mm.save(newModel);  // TODO: is this necessary?
-                    mm.flush();
+                    col.save();
                     // Get the mid and return a URI
                     String mid = Long.toString(newModel.getLong("id"));
                     return Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, mid);
@@ -952,7 +956,7 @@ public class CardContentProvider extends ContentProvider {
                     }
                     models.addTemplate(existingModel, t);
                     models.save(existingModel);
-                    models.flush();
+                    col.save();
                     return ContentUris.withAppendedId(uri, t.getInt("ord"));
                 } catch (ConfirmModSchemaException e) {
                     throw new IllegalArgumentException("Unable to add template", e);
@@ -976,7 +980,7 @@ public class CardContentProvider extends ContentProvider {
                 JSONObject field = models.newField(name);
                 try {
                     models.addField(existingModel, field);
-                    models.flush();
+                    col.save();
                     JSONArray ja = existingModel.getJSONArray("flds");
                     return ContentUris.withAppendedId(uri, ja.length() - 1);
                 } catch (ConfirmModSchemaException e) {
