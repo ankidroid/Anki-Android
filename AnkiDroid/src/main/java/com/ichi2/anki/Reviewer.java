@@ -20,16 +20,19 @@ package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ActionProvider;
 import android.support.v4.view.MenuItemCompat;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -38,14 +41,14 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Note;
+import com.ichi2.libanki.Collection.DismissType;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -54,9 +57,6 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mShowWhiteboard = true;
     private boolean mBlackWhiteboard = true;
     private boolean mPrefFullscreenReview = false;
-    private Menu mMenu;
-    private boolean mShowBuryActionbarOnlySubmenu = false;
-    private boolean mShowSuspendActionbarOnlySubmenu = false;
     private static final int ADD_NOTE = 12;
     private Long mLastSelectedBrowserDid = null;
 
@@ -137,52 +137,23 @@ public class Reviewer extends AbstractFlashcardViewer {
                 Timber.i("Reviewer:: Edit note button pressed");
                 return editCard();
 
-            case R.id.action_bury_actionbar_only:
+            case R.id.action_bury:
                 Timber.i("Reviewer:: Bury button pressed");
-                if(!mShowBuryActionbarOnlySubmenu) {
-                    // Don't show submenu, just bury the current card
-                    mMenu.findItem(R.id.action_bury_actionbar_only).getSubMenu().setGroupVisible(R.id.group_menu_bury_actionbar_only, false);
-                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 4));
-                }
-                else {
-                    mMenu.findItem(R.id.action_bury_actionbar_only).getSubMenu().setGroupVisible(R.id.group_menu_bury_actionbar_only, true);
+                if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
+                    Timber.d("Bury card due to no submenu");
+                    dismiss(DismissType.BURY_CARD);
                 }
                 break;
 
-            case R.id.action_bury_card:
-                Timber.i("Reviewer:: Bury card button pressed");
-                dismiss(Collection.DismissType.BURY_CARD);
-                break;
-
-            case R.id.action_bury_note:
-                Timber.i("Reviewer:: Bury note button pressed");
-                dismiss(Collection.DismissType.BURY_NOTE);
-                break;
-
-            case R.id.action_suspend_card:
-                Timber.i("Reviewer:: Suspend card button pressed");
-                dismiss(Collection.DismissType.SUSPEND_CARD);
-                break;
-
-            case R.id.action_suspend_note:
-                Timber.i("Reviewer:: Suspend note button pressed");
-                dismiss(Collection.DismissType.SUSPEND_NOTE);
-                break;
-
-            case R.id.action_suspend_actionbar_only:
+            case R.id.action_suspend:
                 Timber.i("Reviewer:: Suspend button pressed");
-                if(!mShowSuspendActionbarOnlySubmenu) {
-                    // Don't show submenu, just suspend the current card
-                    mMenu.findItem(R.id.action_suspend_actionbar_only).getSubMenu().setGroupVisible(R.id.group_menu_suspend_actionbar_only, false);
-                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(mCurrentCard, 1));
-                }
-                else {
-                    mMenu.findItem(R.id.action_suspend_actionbar_only).getSubMenu().setGroupVisible(R.id.group_menu_suspend_actionbar_only, true);
+                if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
+                    Timber.d("Suspend card due to no submenu");
+                    dismiss(DismissType.SUSPEND_CARD);
                 }
                 break;
 
             case R.id.action_delete:
-            case R.id.action_delete_actionbar_only:
                 Timber.i("Reviewer:: Delete note button pressed");
                 showDeleteNoteDialog();
                 break;
@@ -253,39 +224,13 @@ public class Reviewer extends AbstractFlashcardViewer {
                 menu.findItem(itemId).setVisible(false);
             }
         }
-        // Workaround for submenu items "If room".
-        int relatedGroupId;
-        for(int itemId : mCustomButtons_submenu_items.keySet()) {
-            relatedGroupId = mCustomButtons_submenu_items_related.get(itemId);
-            switch (mCustomButtons_submenu_items.get(itemId)) {
-                case MENU_DISABLED:
-                    menu.findItem(itemId).setVisible(false);
-                    menu.findItem(R.id.action_dismiss).getSubMenu().setGroupVisible(relatedGroupId, false);
-                    break;
-                case MenuItemCompat.SHOW_AS_ACTION_ALWAYS:
-                case MenuItemCompat.SHOW_AS_ACTION_IF_ROOM:
-                    menu.findItem(R.id.action_dismiss).getSubMenu().setGroupVisible(relatedGroupId, false);
-                    break;
-                case MenuItemCompat.SHOW_AS_ACTION_NEVER:
-                    menu.findItem(itemId).setVisible(false);
-                    menu.findItem(R.id.action_dismiss).getSubMenu().setGroupVisible(relatedGroupId, true);
-                    break;
-            }
-        }
-        // If submenu is empty, hide it.
-        if(!menu.findItem(R.id.action_dismiss).getSubMenu().hasVisibleItems()) {
-            menu.findItem(R.id.action_dismiss).setVisible(false);
-        }
-        else {
-            menu.findItem(R.id.action_dismiss).setVisible(true);
-        }
     }
 
 
     @SuppressLint("NewApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        mMenu = menu;
+        // NOTE: This is called every time a new question is shown via invalidate options menu
         getMenuInflater().inflate(R.menu.reviewer, menu);
         Resources res = getResources();
         setCustomButtons(menu);
@@ -332,6 +277,23 @@ public class Reviewer extends AbstractFlashcardViewer {
             if(mCustomButtons.get(R.id.action_select_tts) != MENU_DISABLED)
                 menu.findItem(R.id.action_select_tts).setVisible(true);
         }
+        // Setup bury / suspend providers
+        MenuItemCompat.setActionProvider(menu.findItem(R.id.action_suspend), new SuspendProvider(this));
+        MenuItemCompat.setActionProvider(menu.findItem(R.id.action_bury), new BuryProvider(this));
+        if (dismissNoteAvailable(DismissType.SUSPEND_NOTE)) {
+            menu.findItem(R.id.action_suspend).setIcon(R.drawable.ic_lock_outline_white_24px_dropdown);
+            menu.findItem(R.id.action_suspend).setTitle(R.string.menu_suspend);
+        } else {
+            menu.findItem(R.id.action_suspend).setIcon(R.drawable.ic_lock_outline_white_24dp);
+            menu.findItem(R.id.action_suspend).setTitle(R.string.menu_suspend_card);
+        }
+        if (dismissNoteAvailable(DismissType.BURY_NOTE)) {
+            menu.findItem(R.id.action_bury).setIcon(R.drawable.ic_flip_to_back_white_24px_dropdown);
+            menu.findItem(R.id.action_bury).setTitle(R.string.menu_bury);
+        } else {
+            menu.findItem(R.id.action_bury).setIcon(R.drawable.ic_flip_to_back_white_24dp);
+            menu.findItem(R.id.action_bury).setTitle(R.string.menu_bury_card);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -371,19 +333,19 @@ public class Reviewer extends AbstractFlashcardViewer {
 	            return true;
 	        }
 	        if (keyPressed == '-') {
-                dismiss(Collection.DismissType.BURY_CARD);
+                dismiss(DismissType.BURY_CARD);
 	            return true;
 	        }
 	        if (keyPressed == '=') {
-                dismiss(Collection.DismissType.BURY_NOTE);
+                dismiss(DismissType.BURY_NOTE);
 	            return true;
 	        }
 	        if (keyPressed == '@') {
-                dismiss(Collection.DismissType.SUSPEND_CARD);
+                dismiss(DismissType.SUSPEND_CARD);
 	            return true;
 	        }
 	        if (keyPressed == '!') {
-                dismiss(Collection.DismissType.SUSPEND_NOTE);
+                dismiss(DismissType.SUSPEND_NOTE);
 	            return true;
 	        }
 	        if (keyPressed == 'r' || keyCode == KeyEvent.KEYCODE_F5) {
@@ -420,29 +382,12 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
-    private void checkActionbarSuspendBurySubmenu() {
-        // Check if action bar suspend and bury submenu should be shown for current card (custom buttons)
-        Note note = mCurrentCard.note();
-        mShowBuryActionbarOnlySubmenu = false;
-        mShowSuspendActionbarOnlySubmenu = false;
-        if(note.cards().size() > 1) {
-            ArrayList<Card> cards = note.cards();
-            for(Card card : cards) {
-                if(card.getQueue() != Card.QUEUE_SUSP && card.getQueue() != Card.QUEUE_USER_BRD && card.getQueue() != Card.QUEUE_SCHED_BRD && card.getId() != mCurrentCard.getId())
-                    mShowBuryActionbarOnlySubmenu = true;
-                if(card.getQueue() != Card.QUEUE_SUSP && card.getId() != mCurrentCard.getId())
-                    mShowSuspendActionbarOnlySubmenu = true;
-            }
-        }
-    }
 
     @Override
     public void displayCardQuestion() {
         // show timer, if activated in the deck's preferences
         initTimer();
         super.displayCardQuestion();
-        if(mMenu.findItem(R.id.action_bury_actionbar_only).isVisible() || mMenu.findItem(R.id.action_suspend_actionbar_only).isVisible())
-            checkActionbarSuspendBurySubmenu();
     }
 
     @Override
@@ -568,5 +513,113 @@ public class Reviewer extends AbstractFlashcardViewer {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    /**
+     * Whether or not dismiss note is available for current card and specified DismissType
+     * @param type Currently only SUSPEND_NOTE and BURY_NOTE supported
+     * @return true if there is another card of same note that could be dismissed
+     */
+    private boolean dismissNoteAvailable(DismissType type) {
+        if (mCurrentCard == null || mCurrentCard.note() == null || mCurrentCard.note().cards().size() < 2) {
+            return false;
+        }
+        List<Card> cards = mCurrentCard.note().cards();
+        for(Card card : cards) {
+            if (card.getId() == mCurrentCard.getId()) continue;
+            int queue = card.getQueue();
+            if(type == DismissType.SUSPEND_NOTE && queue != Card.QUEUE_SUSP) {
+                return true;
+            } else if (type == DismissType.BURY_NOTE &&
+                    queue != Card.QUEUE_SUSP && queue != Card.QUEUE_USER_BRD && queue != Card.QUEUE_SCHED_BRD) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Inner class which implements the submenu for the Suspend button
+     */
+    class SuspendProvider extends ActionProvider implements MenuItem.OnMenuItemClickListener {
+        public SuspendProvider(Context context) {
+            super(context);
+        }
+
+        @Override
+        public View onCreateActionView() {
+            return null;  // Just return null for a simple dropdown menu
+        }
+
+        @Override
+        public boolean hasSubMenu() {
+            return dismissNoteAvailable(DismissType.SUSPEND_NOTE);
+        }
+
+        @Override
+        public void onPrepareSubMenu(SubMenu subMenu) {
+            subMenu.clear();
+            getMenuInflater().inflate(R.menu.reviewer_suspend, subMenu);
+            for (int i = 0; i < subMenu.size(); i++) {
+                subMenu.getItem(i).setOnMenuItemClickListener(this);
+            }
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_suspend_card:
+                    dismiss(DismissType.SUSPEND_CARD);
+                    return true;
+                case R.id.action_suspend_note:
+                    dismiss(DismissType.SUSPEND_NOTE);
+                    return true;
+                default:
+                    return false;
+            }
+        }
+    }
+
+    /**
+     * Inner class which implements the submenu for the Suspend button
+     */
+    class BuryProvider extends ActionProvider implements MenuItem.OnMenuItemClickListener {
+        public BuryProvider(Context context) {
+            super(context);
+        }
+
+        @Override
+        public View onCreateActionView() {
+            return null;    // Just return null for a simple dropdown menu
+        }
+
+        @Override
+        public boolean hasSubMenu() {
+            return dismissNoteAvailable(DismissType.BURY_NOTE);
+        }
+
+        @Override
+        public void onPrepareSubMenu(SubMenu subMenu) {
+            subMenu.clear();
+            getMenuInflater().inflate(R.menu.reviewer_bury, subMenu);
+            for (int i = 0; i < subMenu.size(); i++) {
+                subMenu.getItem(i).setOnMenuItemClickListener(this);
+            }
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_bury_card:
+                    dismiss(DismissType.BURY_CARD);
+                    return true;
+                case R.id.action_bury_note:
+                    dismiss(DismissType.BURY_NOTE);
+                    return true;
+                default:
+                    return false;
+            }
+        }
     }
 }

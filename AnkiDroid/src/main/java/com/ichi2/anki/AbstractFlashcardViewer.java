@@ -44,7 +44,9 @@ import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
@@ -97,6 +99,7 @@ import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -302,10 +305,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /**
      * Custom button allocation
      */
-    protected HashMap<Integer, Integer> mCustomButtons = new HashMap<Integer, Integer>();
-    protected HashMap<Integer, Integer> mCustomButtons_submenu_items = new HashMap<Integer, Integer>();
-    protected HashMap<Integer, Integer> mCustomButtons_submenu_items_related = new HashMap<Integer, Integer>();
-
+    protected Map<Integer, Integer> mCustomButtons = new HashMap<>();
 
     protected static final int GESTURE_NOTHING = 0;
     private static final int GESTURE_SHOW_ANSWER = 1;
@@ -1714,17 +1714,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mCustomButtons.put(R.id.action_add_note_reviewer, Integer.parseInt(preferences.getString("customButtonAddCard", "3")));
         mCustomButtons.put(R.id.action_replay, Integer.parseInt(preferences.getString("customButtonReplay", "1")));
         mCustomButtons.put(R.id.action_clear_whiteboard, Integer.parseInt(preferences.getString("customButtonClearWhiteboard", "2")));
-        mCustomButtons.put(R.id.action_hide_whiteboard, Integer.parseInt(preferences.getString("customButtonShowHideWhiteboard", "2")));
-        mCustomButtons.put(R.id.action_enable_whiteboard, Integer.parseInt(preferences.getString("customButtonEnableWhiteboard", "0")));
+        mCustomButtons.put(R.id.action_hide_whiteboard, Integer.parseInt(preferences.getString("customButtonShowHideWhiteboard",
+                isSmallScreen() ? "1" : "2")));
         mCustomButtons.put(R.id.action_select_tts, Integer.parseInt(preferences.getString("customButtonSelectTts", "0")));
         mCustomButtons.put(R.id.action_open_deck_options, Integer.parseInt(preferences.getString("customButtonDeckOptions", "0")));
-        // Workaround for submenu items
-        mCustomButtons_submenu_items.put(R.id.action_bury_actionbar_only, Integer.parseInt(preferences.getString("customButtonBury", "0")));
-        mCustomButtons_submenu_items.put(R.id.action_suspend_actionbar_only, Integer.parseInt(preferences.getString("customButtonSuspend", "0")));
-        mCustomButtons_submenu_items.put(R.id.action_delete_actionbar_only, Integer.parseInt(preferences.getString("customButtonDelete", "0")));
-        mCustomButtons_submenu_items_related.put(R.id.action_bury_actionbar_only, R.id.group_menu_bury);
-        mCustomButtons_submenu_items_related.put(R.id.action_suspend_actionbar_only, R.id.group_menu_suspend);
-        mCustomButtons_submenu_items_related.put(R.id.action_delete_actionbar_only, R.id.group_menu_delete);
+        mCustomButtons.put(R.id.action_bury, Integer.parseInt(preferences.getString("customButtonBury", "0")));
+        mCustomButtons.put(R.id.action_suspend, Integer.parseInt(preferences.getString("customButtonSuspend", "0")));
+        mCustomButtons.put(R.id.action_delete, Integer.parseInt(preferences.getString("customButtonDelete", "0")));
 
         if (mLongClickWorkaround) {
             mGestureLongclick = GESTURE_LOOKUP;
@@ -1743,6 +1739,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
 
         return preferences;
+    }
+
+    private boolean isSmallScreen() {
+        Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+        float density  = getResources().getDisplayMetrics().density;
+        float dpWidth  = outMetrics.widthPixels / density;
+        if (dpWidth < 360) {
+            return true;
+        }
+        return false;
     }
 
 

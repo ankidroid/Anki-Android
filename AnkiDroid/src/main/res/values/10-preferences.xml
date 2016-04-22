@@ -145,10 +145,10 @@
     <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
     <string name="enable_api_title">Enable AnkiDroid API</string>
     <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
-    <string name="custom_buttons">Customize buttons</string>
-    <string name="custom_buttons_summary">Customize which buttons appear in the reviewer action bar</string>
+    <string name="custom_buttons">Toolbar buttons</string>
+    <string name="custom_buttons_summary">Customize which buttons appear in the reviewer toolbar</string>
     <string name="custom_buttons_setting_always_show">Always show</string>
-    <string name="custom_buttons_setting_if_room">If room</string>
+    <string name="custom_buttons_setting_if_room">Show if room</string>
     <string name="custom_buttons_setting_menu_only">Menu only</string>
     <string name="reset_custom_buttons">Reset to default</string>
 

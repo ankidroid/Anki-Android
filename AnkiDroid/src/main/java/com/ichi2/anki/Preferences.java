@@ -280,7 +280,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 getSupportActionBar().setTitle(R.string.custom_buttons);
                 listener.addPreferencesFromResource(R.xml.preferences_custom_buttons);
                 screen = listener.getPreferenceScreen();
-                // Reset custom buttons
+                // Reset toolbar button customizations
                 Preference reset_custom_buttons = screen.findPreference("reset_custom_buttons");
                 reset_custom_buttons.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                     public boolean onPreferenceClick(Preference preference) {
@@ -290,16 +290,16 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         edit.remove("customButtonEditCard");
                         edit.remove("customButtonAddCard");
                         edit.remove("customButtonReplay");
+                        edit.remove("customButtonSelectTts");
+                        edit.remove("customButtonDeckOptions");
                         edit.remove("customButtonBury");
                         edit.remove("customButtonSuspend");
                         edit.remove("customButtonDelete");
-                        edit.remove("customButtonEnableWhiteboard");
                         edit.remove("customButtonClearWhiteboard");
                         edit.remove("customButtonShowHideWhiteboard");
-                        edit.remove("customButtonSelectTts");
-                        edit.remove("customButtonDeckOptions");
                         edit.apply();
                         //finish();
+                        //TODO: Should reload the preferences screen on completion
                         return true;
                     }
                 });
