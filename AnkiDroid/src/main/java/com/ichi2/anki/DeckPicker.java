@@ -86,6 +86,7 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
@@ -96,6 +97,7 @@ import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -895,6 +897,24 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (previous < 20301208) {
                 mRecommendFullSync = true;
             }
+
+            // Fix "font-family" definition in templates created by AnkiDroid before 2.6alhpa23
+            if (previous < 20600123) {
+                try {
+                    Models models = getCol().getModels();
+                    for (JSONObject m : models.all()) {
+                        String css = m.getString("css");
+                        if (css.contains("font-familiy")) {
+                            m.put("css", css.replace("font-familiy", "font-family"));
+                            models.save(m);
+                        }
+                    }
+                    models.flush();
+                } catch (JSONException e) {
+                    Timber.e(e, "Failed to upgrade css definitions.");
+                }
+            }
+
             // Check if preference upgrade or database check required, otherwise go to new feature screen
             int upgradePrefsVersion = AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION;
             int upgradeDbVersion = AnkiDroidApp.CHECK_DB_AT_VERSION;
