@@ -3,6 +3,7 @@
  * Copyright (c) 2014 Bruno Romero de Azevedo <brunodea@inf.ufsm.br>                    *
  * Copyright (c) 2014–15 Roland Sieker <ospalh@gmail.com>                               *
  * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
+ * Copyright (c) 2016 Mark Carter <mark@marcardar.com>                                  *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -96,6 +97,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -160,6 +162,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     // Type answer patterns
     private static final Pattern sTypeAnsPat = Pattern.compile("\\[\\[type:(.+?)\\]\\]");
     private static final Pattern sTypeAnsTyped = Pattern.compile("typed=([^&]*)");
+    private static final String EXTRA_BROWSER_FALLBACK_URL = "browser_fallback_url";
 
     /** to be sent to and from the card editor */
     private static Card sEditorCard;
@@ -1485,8 +1488,48 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     mFlipCardLayout.setVisibility(View.GONE);
                     return true;
                 }
-                Timber.d("Opening external link \"%s\" with an Intent", url);
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                Intent intent = null;
+                try {
+                    if (url.startsWith("intent:")) {
+                        intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
+                    } else if (url.startsWith("android-app:")) {
+                        intent = Intent.parseUri(url, Intent.URI_ANDROID_APP_SCHEME); // note - also works pre-22
+                    }
+                    if (intent != null) {
+                        if (getPackageManager().resolveActivity(intent, 0) == null) {
+                            String fallbackUrl = intent.getStringExtra(EXTRA_BROWSER_FALLBACK_URL);
+                            if (!TextUtils.isEmpty(fallbackUrl)) {
+                                Timber.d("Using fallback url in intent uri: %s", url);
+                                intent = null; // open it the same way as other urls
+                                url = fallbackUrl;
+                            } else {
+                                String packageName = intent.getPackage();
+                                if (packageName == null) {
+                                    Timber.d("Not using resolved intent uri because not available: %s", intent);
+                                    intent = null;
+                                } else {
+                                    Timber.d("Resolving intent uri to market uri because not available: %s", intent);
+                                    intent = new Intent(Intent.ACTION_VIEW,
+                                            Uri.parse("market://details?id=" + packageName));
+                                    if (getPackageManager().resolveActivity(intent, 0) == null) {
+                                        intent = null;
+                                    }
+                                }
+                            }
+                        } else {
+                            // https://developer.chrome.com/multidevice/android/intents says that we should remove this
+                            intent.removeExtra(EXTRA_BROWSER_FALLBACK_URL);
+                        }
+                    }
+                } catch (URISyntaxException e) {
+                    Timber.w("Unable to parse intent uri: %s", url);
+                }
+                if (intent == null) {
+                    Timber.d("Opening external link \"%s\" with an Intent", url);
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                } else {
+                    Timber.d("Opening resolved external link \"%s\" with an Intent: %s", url, intent);
+                }
                 try {
                     startActivityWithoutAnimation(intent);
                 } catch (ActivityNotFoundException e) {
