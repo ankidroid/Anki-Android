@@ -30,38 +30,35 @@
         android:title="@string/cardeditor_title_edit_card"
         ankidroid:showAsAction="ifRoom"/>
     <item
+        android:id="@+id/action_add_note_reviewer"
+        android:title="@string/menu_add_note"
+        android:icon="@drawable/ic_add_white_24dp"
+        ankidroid:showAsAction="never"/>
+    <item
         android:id="@+id/action_replay"
         android:title="@string/replay_audio"
         android:icon="@drawable/ic_replay_white_24dp"
         ankidroid:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/action_dismiss"
-        android:title="@string/menu_dismiss_note">
-        <menu>
-            <item
-                android:id="@+id/action_bury_card"
-                android:title="@string/menu_bury_card"/>
-            <item
-                android:id="@+id/action_bury_note"
-                android:title="@string/menu_bury_note"/>
-            <item
-                android:id="@+id/action_suspend_card"
-                android:title="@string/menu_suspend_card"/>
-            <item
-                android:id="@+id/action_suspend_note"
-                android:title="@string/menu_suspend_note"/>
-            <item
-                android:id="@+id/action_delete"
-                android:title="@string/menu_delete_note"/>
-        </menu>
-    </item>
+        android:id="@+id/action_bury"
+        android:title="@string/menu_bury"
+        android:icon="@drawable/ic_flip_to_back_white_24dp"/>
+    <item
+        android:id="@+id/action_suspend"
+        android:title="@string/menu_suspend"
+        android:icon="@drawable/ic_lock_outline_white_24dp" />
+    <item
+        android:id="@+id/action_delete"
+        android:title="@string/menu_delete_note"
+        android:icon="@drawable/ic_delete_white_24dp"/>
     <item
         android:id="@+id/action_search_dictionary"
         android:title="@string/menu_select"
         android:visible="false"/>
     <item
         android:id="@+id/action_enable_whiteboard"
-        android:title="@string/enable_whiteboard" />
+        android:title="@string/enable_whiteboard"
+        android:icon="@drawable/ic_gesture_white_24dp" />
     <item
         android:id="@+id/action_open_deck_options"
         android:title="@string/study_options" />

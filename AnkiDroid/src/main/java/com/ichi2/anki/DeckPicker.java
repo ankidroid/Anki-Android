@@ -836,7 +836,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     public void addNote() {
-        Preferences.COMING_FROM_ADD = true;
         Intent intent = new Intent(DeckPicker.this, NoteEditor.class);
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER);
         startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);

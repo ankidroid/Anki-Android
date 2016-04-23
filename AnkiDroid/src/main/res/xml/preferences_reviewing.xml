@@ -54,6 +54,10 @@
             app:min="0" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_flashcard" >
+        <Preference
+            android:summary="@string/custom_buttons_summary"
+            android:title="@string/custom_buttons"
+            android:key="custom_buttons_link"/>
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="keepScreenOn"

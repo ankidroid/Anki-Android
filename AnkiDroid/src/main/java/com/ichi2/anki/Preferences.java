@@ -90,7 +90,6 @@ interface PreferenceContext {
 public class Preferences extends AppCompatPreferenceActivity implements PreferenceContext, OnSharedPreferenceChangeListener {
 
     private static final int DIALOG_HEBREW_FONT = 3;
-    public static boolean COMING_FROM_ADD = false;
 
     /** Key of the language preference */
     public static final String LANGUAGE = "language";
@@ -258,6 +257,16 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         }
                     }
                 });
+                // Custom buttons options
+                Preference customButtonsPreference = screen.findPreference("custom_buttons_link");
+                customButtonsPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                    public boolean onPreferenceClick(Preference preference) {
+                        Intent i = CompatHelper.getCompat().getPreferenceSubscreenIntent(Preferences.this,
+                                "com.ichi2.anki.prefs.custom_buttons");
+                        startActivity(i);
+                        return true;
+                    }
+                });
                 break;
             case "com.ichi2.anki.prefs.appearance":
                 listener.addPreferencesFromResource(R.xml.preferences_appearance);
@@ -266,6 +275,34 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 break;
             case "com.ichi2.anki.prefs.gestures":
                 listener.addPreferencesFromResource(R.xml.preferences_gestures);
+                break;
+            case "com.ichi2.anki.prefs.custom_buttons":
+                getSupportActionBar().setTitle(R.string.custom_buttons);
+                listener.addPreferencesFromResource(R.xml.preferences_custom_buttons);
+                screen = listener.getPreferenceScreen();
+                // Reset toolbar button customizations
+                Preference reset_custom_buttons = screen.findPreference("reset_custom_buttons");
+                reset_custom_buttons.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                    public boolean onPreferenceClick(Preference preference) {
+                        SharedPreferences.Editor edit = AnkiDroidApp.getSharedPrefs(getBaseContext()).edit();
+                        edit.remove("customButtonUndo");
+                        edit.remove("customButtonMarkCard");
+                        edit.remove("customButtonEditCard");
+                        edit.remove("customButtonAddCard");
+                        edit.remove("customButtonReplay");
+                        edit.remove("customButtonSelectTts");
+                        edit.remove("customButtonDeckOptions");
+                        edit.remove("customButtonBury");
+                        edit.remove("customButtonSuspend");
+                        edit.remove("customButtonDelete");
+                        edit.remove("customButtonClearWhiteboard");
+                        edit.remove("customButtonShowHideWhiteboard");
+                        edit.apply();
+                        //finish();
+                        //TODO: Should reload the preferences screen on completion
+                        return true;
+                    }
+                });
                 break;
             case "com.ichi2.anki.prefs.advanced":
                 listener.addPreferencesFromResource(R.xml.preferences_advanced);

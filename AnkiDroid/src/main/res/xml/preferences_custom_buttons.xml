@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2016 Aron Freidle <aron.freidle@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- Custom buttons Prefrences -->
+<!--
+MenuItem.SHOW_AS_ACTION_IF_ROOM = 1
+MenuItem.SHOW_AS_ACTION_ALWAYS  = 2
+MenuItem.SHOW_AS_ACTION_NEVER = 0
+MENU_DISABLED = 3
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="reset_custom_buttons"
+        android:title="@string/reset_custom_buttons" />
+    <PreferenceCategory android:title="@string/deck_conf_general" >
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="customButtonUndo"
+            android:title="@string/undo" />
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="customButtonMarkCard"
+            android:title="@string/menu_mark_note" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="customButtonEditCard"
+            android:title="@string/cardeditor_title_edit_card" />
+        <ListPreference
+            android:defaultValue="3"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="customButtonAddCard"
+            android:title="@string/menu_add_note" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="customButtonReplay"
+            android:title="@string/replay_audio" />
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/custom_button_labels_menu_and_disabled"
+            android:entryValues="@array/custom_button_values_menu_and_disabled"
+            android:key="customButtonSelectTts"
+            android:title="@string/select_tts" />
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/custom_button_labels_menu_and_disabled"
+            android:entryValues="@array/custom_button_values_menu_and_disabled"
+            android:key="customButtonDeckOptions"
+            android:title="@string/study_options" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/menu_dismiss_note" >
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="customButtonBury"
+            android:title="@string/menu_bury" />
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="customButtonSuspend"
+            android:title="@string/menu_suspend" />
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="customButtonDelete"
+            android:title="@string/menu_delete_note" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_whiteboard" >
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="customButtonClearWhiteboard"
+            android:title="@string/clear_whiteboard" />
+        <!-- Note:  we set default value dynamically in AbstractFlashCardViewer based on screen size -->
+        <ListPreference
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="customButtonShowHideWhiteboard"
+            android:title="@string/hide_whiteboard" />
+    </PreferenceCategory>
+</PreferenceScreen>
