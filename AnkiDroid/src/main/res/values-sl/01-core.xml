@@ -99,6 +99,8 @@
   <string name="menu_bury_note">Prikrij zapisek</string>
   <string name="menu_suspend_card">Pridrži kartico</string>
   <string name="menu_suspend_note">Pridrži zapisek</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Izbriši zapisek</string>
   <string name="delete_note_message">Ali res želite izbrisati ta zapisek in vse vezane kartice?\n%s</string>
   <string name="menu_select">Označi besedilo</string>

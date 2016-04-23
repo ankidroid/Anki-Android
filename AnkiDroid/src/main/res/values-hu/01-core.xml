@@ -93,6 +93,8 @@
   <string name="menu_bury_note">Jegyzet félretétele</string>
   <string name="menu_suspend_card">Kártya felfüggesztése</string>
   <string name="menu_suspend_note">Jegyzet felfüggesztése</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Jegyet törlése</string>
   <string name="delete_note_message">Biztosan törölni akarod ezt a jegyzetet és az összes kártyáját?\n%s</string>
   <string name="menu_select">Szöveg kijelölése</string>

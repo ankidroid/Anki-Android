@@ -96,6 +96,8 @@
   <string name="menu_bury_note">Скрыть запись</string>
   <string name="menu_suspend_card">Отложить карту</string>
   <string name="menu_suspend_note">Приостановить заметку</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Удалить заметку</string>
   <string name="delete_note_message">Действительно удалить эту заметку и все связанные карты?\n%s</string>
   <string name="menu_select">Выделить текст</string>

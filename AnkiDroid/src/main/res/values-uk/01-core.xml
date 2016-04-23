@@ -96,6 +96,8 @@
   <string name="menu_bury_note">Сховати Примітку</string>
   <string name="menu_suspend_card">Відкласти картку</string>
   <string name="menu_suspend_note">Призупинити Примітку</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Видалити Примітку</string>
   <string name="delete_note_message">Дійсно видалити цю примітку і усі зв\'язані з нею картки?\n%s</string>
   <string name="menu_select">Виділити текст</string>

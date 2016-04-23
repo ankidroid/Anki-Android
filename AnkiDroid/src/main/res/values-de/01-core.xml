@@ -93,6 +93,8 @@
   <string name="menu_bury_note">Notiz zurückstellen</string>
   <string name="menu_suspend_card">Karte dauerhaft aussetzen</string>
   <string name="menu_suspend_note">Notiz dauerhaft aussetzen</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Notiz löschen</string>
   <string name="delete_note_message">Diese Notiz und alle ihre Karten tatsächlich löschen?\n%s</string>
   <string name="menu_select">Text auswählen</string>

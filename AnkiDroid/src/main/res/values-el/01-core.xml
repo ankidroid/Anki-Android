@@ -93,6 +93,8 @@
   <string name="menu_bury_note">Απόκρυψη Σημείωσης</string>
   <string name="menu_suspend_card">Αναστολή κάρτας</string>
   <string name="menu_suspend_note">Αναστολή Σημείωσης</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Διαγραφή Σημείωσης</string>
   <string name="delete_note_message">Πραγματικά να διαγραφεί αυτή η σημείωση και όλες οι κάρτες της;\n%s</string>
   <string name="menu_select">Επιλογή κειμένου</string>

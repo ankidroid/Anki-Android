@@ -90,6 +90,8 @@
   <string name="menu_bury_note">Kubur catatan</string>
   <string name="menu_suspend_card">Tangguhkan kartu</string>
   <string name="menu_suspend_note">Tangguhkan catatan</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Hapus catatan</string>
   <string name="delete_note_message">Benar-benar hapus catatan ini dan semua kartu-kartunya?\n%s</string>
   <string name="menu_select">Pilih teks</string>

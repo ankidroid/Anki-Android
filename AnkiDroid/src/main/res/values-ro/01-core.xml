@@ -96,6 +96,8 @@
   <string name="menu_bury_note">Ingroapa notă</string>
   <string name="menu_suspend_card">Suspendă Card</string>
   <string name="menu_suspend_note">Suspenda Notă</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Ștergere notă</string>
   <string name="delete_note_message">Chiar doriţi să ştergeţi această notă şi toate cardurile ei?\n%s sale</string>
   <string name="menu_select">Selectaţi text</string>

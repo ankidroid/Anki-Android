@@ -96,6 +96,8 @@
   <string name="menu_bury_note">Zahrabať poznámku</string>
   <string name="menu_suspend_card">Pozastaviť kartu</string>
   <string name="menu_suspend_note">Pozastaviť poznámku</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Vymazať poznámku</string>
   <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej karty?\n%s</string>
   <string name="menu_select">Zvoliť text</string>

@@ -93,6 +93,8 @@
   <string name="menu_bury_note">Agochar nota</string>
   <string name="menu_suspend_card">Suspender cartón</string>
   <string name="menu_suspend_note">Suspender nota</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Eliminar nota</string>
   <string name="delete_note_message">Tes a certeza de querer eliminar esta nota e todos os seus cartóns?\n%s</string>
   <string name="menu_select">Seleccionar texto</string>

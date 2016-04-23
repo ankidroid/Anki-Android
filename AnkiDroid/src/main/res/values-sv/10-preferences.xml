@@ -164,6 +164,12 @@
   <string name="convert_fen_text_summ">Rita ett schackbräde med Forsyth–Edwards Notation. Notationen måste använda [fen][/fen]-märkning</string>
   <string name="enable_api_title">Aktivera AnkiDroid API</string>
   <string name="enable_api_summary">Låt andra appar ansluta till AnkiDroid och läsa / skriva data utan din medverkan</string>
+  <string name="custom_buttons">Toolbar buttons</string>
+  <string name="custom_buttons_summary">Customize which buttons appear in the reviewer toolbar</string>
+  <string name="custom_buttons_setting_always_show">Always show</string>
+  <string name="custom_buttons_setting_if_room">Show if room</string>
+  <string name="custom_buttons_setting_menu_only">Menu only</string>
+  <string name="reset_custom_buttons">Reset to default</string>
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Avancerad statistik</string>
   <string name="enable_advanced_statistics_title">Aktivera avancerad statistik</string>

@@ -90,6 +90,8 @@
   <string name="menu_bury_note">暫時隱藏筆記</string>
   <string name="menu_suspend_card">長久擱置卡片</string>
   <string name="menu_suspend_note">長久擱置筆記</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">刪除筆記</string>
   <string name="delete_note_message">真的要刪除這個筆記跟它的卡片嗎?\n%s</string>
   <string name="menu_select">選擇文字</string>

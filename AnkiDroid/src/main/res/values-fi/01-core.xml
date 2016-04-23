@@ -93,6 +93,8 @@
   <string name="menu_bury_note">Piilota merkintä</string>
   <string name="menu_suspend_card">Jäädytä kortti</string>
   <string name="menu_suspend_note">Jäädytä merkintä</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Poista merkintä</string>
   <string name="delete_note_message">Haluatko varmasti poistaa tämän merkinnän ja kaikki sen kortit?\n%s</string>
   <string name="menu_select">Valitse teksti</string>

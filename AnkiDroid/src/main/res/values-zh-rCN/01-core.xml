@@ -90,6 +90,8 @@
   <string name="menu_bury_note">隐藏笔记</string>
   <string name="menu_suspend_card">暂停卡片</string>
   <string name="menu_suspend_note">暂停笔记</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">删除笔记</string>
   <string name="delete_note_message">确定要删除此笔记及生成的卡片？\n%s</string>
   <string name="menu_select">选择文本</string>

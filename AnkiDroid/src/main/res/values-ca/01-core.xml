@@ -93,6 +93,8 @@
   <string name="menu_bury_note">Enterra la nota</string>
   <string name="menu_suspend_card">Suspèn la fitxa</string>
   <string name="menu_suspend_note">Suspen la nota</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Suprimeix la nota</string>
   <string name="delete_note_message">Segur que voleu suprimir aquesta nota i tots les seves fitxes?\n%s</string>
   <string name="menu_select">Selecciona text</string>

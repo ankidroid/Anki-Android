@@ -96,6 +96,8 @@
   <string name="menu_bury_note">Paslėpti pastabą</string>
   <string name="menu_suspend_card">Sustabdyti kortelę</string>
   <string name="menu_suspend_note">Sustabdyti pastabą</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Šalinti pastabą</string>
   <string name="delete_note_message">Tikrai šalinti šią pastabą ir visas jos korteles?\n%s</string>
   <string name="menu_select">Žymėti tekstą</string>

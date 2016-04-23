@@ -164,6 +164,12 @@
   <string name="convert_fen_text_summ">Dibujar un tablero de ajedrez a partir de la notación de Edward Forsyth. La notación debe estar enmarcada en una etiqueta que contenga [fen][/fen].</string>
   <string name="enable_api_title">Habilitar API de AnkiDroid</string>
   <string name="enable_api_summary">Permitir que otras aplicaciones se conecten a AnkiDroid y lean / escriban datos sin tu intervención</string>
+  <string name="custom_buttons">Toolbar buttons</string>
+  <string name="custom_buttons_summary">Customize which buttons appear in the reviewer toolbar</string>
+  <string name="custom_buttons_setting_always_show">Always show</string>
+  <string name="custom_buttons_setting_if_room">Show if room</string>
+  <string name="custom_buttons_setting_menu_only">Menu only</string>
+  <string name="reset_custom_buttons">Reset to default</string>
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Estadísticas avanzadas</string>
   <string name="enable_advanced_statistics_title">Activar estadísticas avanzadas</string>

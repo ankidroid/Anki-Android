@@ -93,6 +93,8 @@
   <string name="menu_bury_note">Notu Gizle</string>
   <string name="menu_suspend_card">Kartı Askıya Al</string>
   <string name="menu_suspend_note">Notu Askıya Al</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Notu Sil</string>
   <string name="delete_note_message">Bu not ve bütün kartları gerçekten silinsin mi?\n%s</string>
   <string name="menu_select">Metni seç</string>

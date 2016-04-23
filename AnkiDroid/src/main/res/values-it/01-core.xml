@@ -93,6 +93,8 @@
   <string name="menu_bury_note">Seppellisci nota</string>
   <string name="menu_suspend_card">Sospendi carta</string>
   <string name="menu_suspend_note">Sospendi nota</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Elimina nota</string>
   <string name="delete_note_message">Vuoi veramente eliminare questa nota e tutte le sue carte?\n%s</string>
   <string name="menu_select">Seleziona testo</string>

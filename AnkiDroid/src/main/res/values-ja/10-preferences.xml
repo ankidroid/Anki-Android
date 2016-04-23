@@ -164,6 +164,12 @@
   <string name="convert_fen_text_summ">Forsyth Edwards Notation 表記法を使いチェス盤を描画します。この表記は[fen][/fen] で囲む必要があります</string>
   <string name="enable_api_title">AnkiDroid API を有効にする</string>
   <string name="enable_api_summary">他のアプリがAnkiDroidに接続しデータを読み書きすることを許可します</string>
+  <string name="custom_buttons">Toolbar buttons</string>
+  <string name="custom_buttons_summary">Customize which buttons appear in the reviewer toolbar</string>
+  <string name="custom_buttons_setting_always_show">Always show</string>
+  <string name="custom_buttons_setting_if_room">Show if room</string>
+  <string name="custom_buttons_setting_menu_only">Menu only</string>
+  <string name="reset_custom_buttons">Reset to default</string>
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">高度な統計</string>
   <string name="enable_advanced_statistics_title">高度な統計を有効にする</string>

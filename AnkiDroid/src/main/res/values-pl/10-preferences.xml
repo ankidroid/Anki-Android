@@ -164,6 +164,12 @@
   <string name="convert_fen_text_summ">Rysuj szachownicę z notacji Forsytha-Edwardsa. Notacja musi być w znacznikach [fen][/fen].</string>
   <string name="enable_api_title">Zezwól na AnkiDroid API</string>
   <string name="enable_api_summary">Pozwól innym aplikacjom na podłączanie do AnkiDroid i zapisywanie i odczyt danych bez Twojej ingerencji</string>
+  <string name="custom_buttons">Toolbar buttons</string>
+  <string name="custom_buttons_summary">Customize which buttons appear in the reviewer toolbar</string>
+  <string name="custom_buttons_setting_always_show">Always show</string>
+  <string name="custom_buttons_setting_if_room">Show if room</string>
+  <string name="custom_buttons_setting_menu_only">Menu only</string>
+  <string name="reset_custom_buttons">Reset to default</string>
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Zaawansowane statystyki</string>
   <string name="enable_advanced_statistics_title">Włącz zaawansowane statystyki</string>

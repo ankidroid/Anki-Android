@@ -93,6 +93,8 @@
   <string name="menu_bury_note">Зарови бележка</string>
   <string name="menu_suspend_card">Прекрати картата</string>
   <string name="menu_suspend_note">Отлагане на бележка</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Изтрий бележка</string>
   <string name="delete_note_message">Наистина изтрий тази бележка и всичките и карти? \n%s</string>
   <string name="menu_select">Избор на текст</string>

@@ -90,6 +90,8 @@
   <string name="menu_bury_note">Tạm ẩn ghi chú</string>
   <string name="menu_suspend_card">Tạm dừng thẻ</string>
   <string name="menu_suspend_note">Tạm dừng ghi chú</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Xoá ghi chú</string>
   <string name="delete_note_message">Bạn thực sự muốn xoá ghi chú này cùng toàn bộ thẻ của nó?\n%s</string>
   <string name="menu_select">Chọn văn bản</string>

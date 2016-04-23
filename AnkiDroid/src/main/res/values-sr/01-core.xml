@@ -96,6 +96,8 @@
   <string name="menu_bury_note">Сакриј белешку</string>
   <string name="menu_suspend_card">Откажи карту</string>
   <string name="menu_suspend_note">Откажи белешку</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Избриши белешку</string>
   <string name="delete_note_message">Да ли заисте желите да избришете белешку и све повезане карте?\n%s</string>
   <string name="menu_select">Означи текст</string>

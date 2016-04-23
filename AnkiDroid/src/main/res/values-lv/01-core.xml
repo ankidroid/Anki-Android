@@ -96,6 +96,8 @@
   <string name="menu_bury_note">Apglabāt piezīmi</string>
   <string name="menu_suspend_card">Apturēt kārti</string>
   <string name="menu_suspend_note">Apturēt piezīmi</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Dzēst piezīmi</string>
   <string name="delete_note_message">Tiešām dzēst šo piezīmi un visas pievienotās kārtis?\n%s</string>
   <string name="menu_select">Iezīmēt tekstu</string>

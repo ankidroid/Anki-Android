@@ -93,6 +93,8 @@
   <string name="menu_bury_note">Begrav notat</string>
   <string name="menu_suspend_card">Suspender kort</string>
   <string name="menu_suspend_note">Utsett notat</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Slett notat</string>
   <string name="delete_note_message">Slette dette notatet med alle kortene?\n%s</string>
   <string name="menu_select">Merk tekst</string>

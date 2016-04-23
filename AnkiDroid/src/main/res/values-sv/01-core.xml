@@ -93,6 +93,8 @@
   <string name="menu_bury_note">Dölj not</string>
   <string name="menu_suspend_card">Lås kort</string>
   <string name="menu_suspend_note">Lås not</string>
+  <string name="menu_bury">Bury</string>
+  <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Ta bort not</string>
   <string name="delete_note_message">Vill du verkligen ta bort den här noten och alla dess kort?\n%s</string>
   <string name="menu_select">Markera text</string>
