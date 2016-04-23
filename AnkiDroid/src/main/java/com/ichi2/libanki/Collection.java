@@ -308,6 +308,9 @@ public class Collection {
             } catch (RuntimeException e) {
                 AnkiDroidApp.sendExceptionReport(e, "closeDB");
             }
+            if (!mServer) {
+                mDb.getDatabase().rawQuery("pragma journal_mode = delete", null);
+            }
             mDb.close();
             mDb = null;
             mMedia.close();
