@@ -21,6 +21,7 @@
 package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
@@ -32,6 +33,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -186,7 +188,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mShowTypeAnswerField;
     private boolean mInputWorkaround;
     private boolean mLongClickWorkaround;
-    private boolean mPrefFullscreenReview;
+    private int mPrefFullscreenReview;
     private int mCardZoom;
     private int mImageZoom;
     private int mRelativeButtonSize;
@@ -844,16 +846,25 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
         // Create the extensions as early as possible, so that they can be offered events.
         mExtensions = new ReviewerExtRegistry(getBaseContext());
         restorePreferences();
-        // Call parent activity
         super.onCreate(savedInstanceState);
-        // create inherited navigation drawer layout here so that it can be used by parent class
-        setContentView(R.layout.flashcard);
+
+        if (mPrefFullscreenReview == 0) {
+            // Ordinary (non-full-screen) layout
+            setContentView(R.layout.reviewer);
+        } else {
+            // Use special configuration if fullscreen mode enabled
+            setContentView(mPrefFullscreenReview == 1 ? R.layout.reviewer_fullscreen_1 : R.layout.reviewer_fullscreen_2);
+            if (CompatHelper.isLollipop()) {
+                getWindow().setStatusBarColor(Themes.getColorFromAttr(this, R.attr.colorPrimaryDark));
+            }
+        }
         View mainView = findViewById(android.R.id.content);
         initNavigationDrawer(mainView);
         // Load the collection
@@ -1680,7 +1691,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
         // mDeckFilename = preferences.getString("deckFilename", "");
         mNightMode = preferences.getBoolean("invertedColors", false);
-        mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0")) >0;
+        mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0"));
         mCardZoom = preferences.getInt("cardZoom", 100);
         mImageZoom = preferences.getInt("imageZoom", 100);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
@@ -2733,7 +2744,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected final Handler mFullScreenHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (mPrefFullscreenReview) {
+            if (mPrefFullscreenReview > 0) {
                 CompatHelper.getCompat().setFullScreen(AbstractFlashcardViewer.this);
             }
         }

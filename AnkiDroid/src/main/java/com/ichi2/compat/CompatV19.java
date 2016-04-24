@@ -18,6 +18,7 @@ import com.ichi2.anki.R;
 @TargetApi(19)
 public class CompatV19 extends CompatV17 implements Compat {
     private static final int ANIMATION_DURATION = 200;
+    private static final float TRANSPARENCY = 0.90f;
 
     @Override
     public void setFullScreen(final AbstractFlashcardViewer a) {
@@ -53,16 +54,16 @@ public class CompatV19 extends CompatV17 implements Compat {
                         if (visible) {
                             toolbar.setAlpha(0.0f);
                             toolbar.setVisibility(View.VISIBLE);
-                            toolbar.animate().alpha(1f).setDuration(ANIMATION_DURATION)
+                            toolbar.animate().alpha(TRANSPARENCY).setDuration(ANIMATION_DURATION)
                                     .setListener(null);
                             if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
                                 topbar.setAlpha(0.0f);
                                 topbar.setVisibility(View.VISIBLE);
-                                topbar.animate().alpha(1f).setDuration(ANIMATION_DURATION)
+                                topbar.animate().alpha(TRANSPARENCY).setDuration(ANIMATION_DURATION)
                                         .setListener(null);
                                 answerButtons.setAlpha(0.0f);
                                 answerButtons.setVisibility(View.VISIBLE);
-                                answerButtons.animate().alpha(1f).setDuration(ANIMATION_DURATION)
+                                answerButtons.animate().alpha(TRANSPARENCY).setDuration(ANIMATION_DURATION)
                                         .setListener(null);
                             }
                         } else {
