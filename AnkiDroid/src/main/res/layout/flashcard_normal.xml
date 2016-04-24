@@ -1,0 +1,18 @@
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                        android:id="@+id/drawer_layout"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:id="@+id/root_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:focusableInTouchMode="true">
+
+        <include layout="@layout/flashcard_base"/>
+        <include layout="@layout/anki_progress"/>
+    </RelativeLayout>
+
+    <include layout="@layout/navigation_drawer"/>
+</android.support.v4.widget.DrawerLayout>

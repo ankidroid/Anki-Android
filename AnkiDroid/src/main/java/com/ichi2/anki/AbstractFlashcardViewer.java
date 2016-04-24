@@ -853,7 +853,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // Call parent activity
         super.onCreate(savedInstanceState);
         // create inherited navigation drawer layout here so that it can be used by parent class
-        setContentView(R.layout.flashcard);
+        if (mPrefFullscreenReview) {
+            setContentView(R.layout.flashcard_fullscreen);
+        } else {
+            setContentView(R.layout.flashcard_normal);
+        }
+
         View mainView = findViewById(android.R.id.content);
         initNavigationDrawer(mainView);
         // Load the collection
