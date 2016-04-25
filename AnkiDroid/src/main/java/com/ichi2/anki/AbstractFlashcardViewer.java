@@ -33,6 +33,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -97,7 +98,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -162,7 +162,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     // Type answer patterns
     private static final Pattern sTypeAnsPat = Pattern.compile("\\[\\[type:(.+?)\\]\\]");
     private static final Pattern sTypeAnsTyped = Pattern.compile("typed=([^&]*)");
-    private static final String EXTRA_BROWSER_FALLBACK_URL = "browser_fallback_url";
 
     /** to be sent to and from the card editor */
     private static Card sEditorCard;
@@ -1493,36 +1492,35 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     if (url.startsWith("intent:")) {
                         intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
                     } else if (url.startsWith("android-app:")) {
-                        intent = Intent.parseUri(url, Intent.URI_ANDROID_APP_SCHEME); // note - also works pre-22
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+                            intent = Intent.parseUri(url, 0);
+                            intent.setData(null);
+                            intent.setPackage(Uri.parse(url).getHost());
+                        } else {
+                            intent = Intent.parseUri(url, Intent.URI_ANDROID_APP_SCHEME);
+                        }
                     }
                     if (intent != null) {
                         if (getPackageManager().resolveActivity(intent, 0) == null) {
-                            String fallbackUrl = intent.getStringExtra(EXTRA_BROWSER_FALLBACK_URL);
-                            if (!TextUtils.isEmpty(fallbackUrl)) {
-                                Timber.d("Using fallback url in intent uri: %s", url);
-                                intent = null; // open it the same way as other urls
-                                url = fallbackUrl;
+                            String packageName = intent.getPackage();
+                            if (packageName == null) {
+                                Timber.d("Not using resolved intent uri because not available: %s", intent);
+                                intent = null;
                             } else {
-                                String packageName = intent.getPackage();
-                                if (packageName == null) {
-                                    Timber.d("Not using resolved intent uri because not available: %s", intent);
+                                Timber.d("Resolving intent uri to market uri because not available: %s", intent);
+                                intent = new Intent(Intent.ACTION_VIEW,
+                                        Uri.parse("market://details?id=" + packageName));
+                                if (getPackageManager().resolveActivity(intent, 0) == null) {
                                     intent = null;
-                                } else {
-                                    Timber.d("Resolving intent uri to market uri because not available: %s", intent);
-                                    intent = new Intent(Intent.ACTION_VIEW,
-                                            Uri.parse("market://details?id=" + packageName));
-                                    if (getPackageManager().resolveActivity(intent, 0) == null) {
-                                        intent = null;
-                                    }
                                 }
                             }
                         } else {
                             // https://developer.chrome.com/multidevice/android/intents says that we should remove this
-                            intent.removeExtra(EXTRA_BROWSER_FALLBACK_URL);
+                            intent.addCategory(Intent.CATEGORY_BROWSABLE);
                         }
                     }
-                } catch (URISyntaxException e) {
-                    Timber.w("Unable to parse intent uri: %s", url);
+                } catch (Throwable t) {
+                    Timber.w("Unable to parse intent uri: %s because: %s", url, t.getMessage());
                 }
                 if (intent == null) {
                     Timber.d("Opening external link \"%s\" with an Intent", url);
@@ -1550,7 +1548,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         webView.setBackgroundColor(Color.argb(1, 0, 0, 0));
         return webView;
     }
-
 
     private void destroyWebView(WebView webView) {
         if (webView != null) {
