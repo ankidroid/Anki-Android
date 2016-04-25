@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.view.View;
+import android.view.Window;
 import android.webkit.CookieManager;
 
 /** Implementation of {@link Compat} for SDK level 21 */
@@ -30,5 +31,10 @@ public class CompatV21 extends CompatV19 implements Compat {
     @Override
     public void flushWebViewCookies() {
         CookieManager.getInstance().flush();
+    }
+
+    @Override
+    public void setStatusBarColor(Window window, int color) {
+        window.setStatusBarColor(color);
     }
 }

@@ -13,6 +13,7 @@ import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
@@ -184,5 +185,10 @@ public class CompatV10 implements Compat {
         Intent i = new Intent(context, Preferences.class);
         i.setAction(subscreen);
         return i;
+    }
+
+    @Override
+    public void setStatusBarColor(Window window, int color) {
+        // Not settable before API 21 so do nothing
     }
 }

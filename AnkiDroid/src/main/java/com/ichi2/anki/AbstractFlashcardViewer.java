@@ -186,7 +186,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mShowTypeAnswerField;
     private boolean mInputWorkaround;
     private boolean mLongClickWorkaround;
-    private boolean mPrefFullscreenReview;
+    private int mPrefFullscreenReview;
     private int mCardZoom;
     private int mImageZoom;
     private int mRelativeButtonSize;
@@ -850,16 +850,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // Create the extensions as early as possible, so that they can be offered events.
         mExtensions = new ReviewerExtRegistry(getBaseContext());
         restorePreferences();
-        // Call parent activity
         super.onCreate(savedInstanceState);
-        // create inherited navigation drawer layout here so that it can be used by parent class
-        setContentView(R.layout.flashcard);
+        setContentView(getContentViewAttr(mPrefFullscreenReview));
         View mainView = findViewById(android.R.id.content);
         initNavigationDrawer(mainView);
-        // Load the collection
+        // Open collection asynchronously
         startLoadingCollection();
     }
 
+    protected int getContentViewAttr(int fullscreenMode) {
+        return R.layout.reviewer;
+    }
 
     @ Override
     public void onConfigurationChanged(Configuration config) {
@@ -1680,7 +1681,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
         // mDeckFilename = preferences.getString("deckFilename", "");
         mNightMode = preferences.getBoolean("invertedColors", false);
-        mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0")) >0;
+        mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0"));
         mCardZoom = preferences.getInt("cardZoom", 100);
         mImageZoom = preferences.getInt("imageZoom", 100);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
@@ -2698,7 +2699,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
-            if (mGesturesEnabled && !mIsSelecting) {
+            if (mGesturesEnabled && !mIsSelecting && !isPendingImmersiveMode()) {
                 int height = mTouchLayer.getHeight();
                 int width = mTouchLayer.getWidth();
                 float posX = e.getX();
@@ -2723,6 +2724,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
     }
 
+    private boolean isPendingImmersiveMode() {
+        return mPrefFullscreenReview > 0 &&
+                (getWindow().getDecorView().getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
+    }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -2733,7 +2739,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected final Handler mFullScreenHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (mPrefFullscreenReview) {
+            if (mPrefFullscreenReview > 0) {
                 CompatHelper.getCompat().setFullScreen(AbstractFlashcardViewer.this);
             }
         }
