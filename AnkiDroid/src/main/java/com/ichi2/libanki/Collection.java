@@ -29,6 +29,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.utils.VersionUtils;
@@ -309,7 +310,7 @@ public class Collection {
                 AnkiDroidApp.sendExceptionReport(e, "closeDB");
             }
             if (!mServer) {
-                mDb.getDatabase().rawQuery("pragma journal_mode = delete", null);
+                CompatHelper.getCompat().disableDatabaseWriteAheadLogging(mDb.getDatabase());
             }
             mDb.close();
             mDb = null;
