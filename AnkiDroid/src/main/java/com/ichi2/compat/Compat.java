@@ -22,6 +22,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
+import android.view.Window;
 import android.webkit.WebSettings;
 import android.widget.RemoteViews;
 
@@ -64,5 +65,6 @@ public interface Compat {
     void prepareWebViewCookies(Context context);
     void flushWebViewCookies();
     void setHTML5MediaAutoPlay(WebSettings settings, Boolean allow);
+    void setStatusBarColor(Window window, int color);
 }
 

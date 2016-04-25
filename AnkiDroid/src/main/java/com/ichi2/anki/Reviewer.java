@@ -77,6 +77,17 @@ public class Reviewer extends AbstractFlashcardViewer {
         getSupportActionBar().setSubtitle("");
     }
 
+    @Override
+    protected int getContentViewAttr(int fullscreenMode) {
+        switch (fullscreenMode) {
+            case 1:
+                return R.layout.reviewer_fullscreen_1;
+            case 2:
+                return R.layout.reviewer_fullscreen_2;
+            default:
+                return R.layout.reviewer;
+        }
+    }
 
     @Override
     protected void onCollectionLoaded(Collection col) {

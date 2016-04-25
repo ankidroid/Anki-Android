@@ -21,7 +21,6 @@
 package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
@@ -33,7 +32,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -846,7 +844,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
@@ -854,23 +851,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mExtensions = new ReviewerExtRegistry(getBaseContext());
         restorePreferences();
         super.onCreate(savedInstanceState);
-
-        if (mPrefFullscreenReview == 0) {
-            // Ordinary (non-full-screen) layout
-            setContentView(R.layout.reviewer);
-        } else {
-            // Use special configuration if fullscreen mode enabled
-            setContentView(mPrefFullscreenReview == 1 ? R.layout.reviewer_fullscreen_1 : R.layout.reviewer_fullscreen_2);
-            if (CompatHelper.isLollipop()) {
-                getWindow().setStatusBarColor(Themes.getColorFromAttr(this, R.attr.colorPrimaryDark));
-            }
-        }
+        setContentView(getContentViewAttr(mPrefFullscreenReview));
         View mainView = findViewById(android.R.id.content);
         initNavigationDrawer(mainView);
-        // Load the collection
+        // Open collection asynchronously
         startLoadingCollection();
     }
 
+    protected int getContentViewAttr(int fullscreenMode) {
+        return R.layout.reviewer;
+    }
 
     @ Override
     public void onConfigurationChanged(Configuration config) {
@@ -2709,7 +2699,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
-            if (mGesturesEnabled && !mIsSelecting) {
+            if (mGesturesEnabled && !mIsSelecting && !isPendingImmersiveMode()) {
                 int height = mTouchLayer.getHeight();
                 int width = mTouchLayer.getWidth();
                 float posX = e.getX();
@@ -2732,6 +2722,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             showLookupButtonIfNeeded();
             return false;
         }
+    }
+
+    private boolean isPendingImmersiveMode() {
+        return mPrefFullscreenReview > 0 &&
+                (getWindow().getDecorView().getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
     }
 
 
