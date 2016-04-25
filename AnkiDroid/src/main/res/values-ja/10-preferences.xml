@@ -122,7 +122,7 @@
   <string name="day_theme">デイ テーマ</string>
   <string name="night_theme">ナイト テーマ</string>
   <string name="default_font">標準フォント</string>
-  <string name="override_font">既定のフォントの適用範囲</string>
+  <string name="override_font">標準フォントの適用範囲</string>
   <string name="language">言語</string>
   <string name="language_system">システム言語</string>
   <string name="notification_pref">通知</string>
@@ -142,7 +142,7 @@
   <string name="safe_display">安全表示モード</string>
   <string name="safe_display_summ">アニメーションを無効化し、より安全な方法で描画します。電子ペーパーや古い機器でカスタムフォントを使用する際にお試しください</string>
   <string name="vertical_centering">上下中央揃え</string>
-  <string name="vertical_centering_summ">コンテンツを垂直方向に中央揃えします</string>
+  <string name="vertical_centering_summ">コンテンツを上下方向に中央揃えします</string>
   <string name="pref_backup_max">保管するバックアップの世代数</string>
   <string name="show_estimates">ボタン上に時間を表示</string>
   <string name="show_estimates_summ">回答ボタン上に、次の復習までの間隔を表示します</string>
@@ -154,7 +154,7 @@
   <string name="learn_cutoff_summ">XXX 分</string>
   <string name="time_limit">タイムボックスの制限時間</string>
   <string name="time_limit_summ">XXX 分</string>
-  <string name="day_offset">日付更新の時刻</string>
+  <string name="day_offset">日付更新時刻</string>
   <string name="day_offset_summ">XXX 時</string>
   <string name="input_workaround">回避方法を入力</string>
   <string name="input_workaround_summ">HTMLの入力ボックスへ、フォーカスが移動した時の問題を回避します。いくつかのデバイスで問題が発生しています。</string>
@@ -164,12 +164,12 @@
   <string name="convert_fen_text_summ">Forsyth Edwards Notation 表記法を使いチェス盤を描画します。この表記は[fen][/fen] で囲む必要があります</string>
   <string name="enable_api_title">AnkiDroid API を有効にする</string>
   <string name="enable_api_summary">他のアプリがAnkiDroidに接続しデータを読み書きすることを許可します</string>
-  <string name="custom_buttons">Toolbar buttons</string>
-  <string name="custom_buttons_summary">Customize which buttons appear in the reviewer toolbar</string>
-  <string name="custom_buttons_setting_always_show">Always show</string>
-  <string name="custom_buttons_setting_if_room">Show if room</string>
-  <string name="custom_buttons_setting_menu_only">Menu only</string>
-  <string name="reset_custom_buttons">Reset to default</string>
+  <string name="custom_buttons">App bar buttons</string>
+  <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
+  <string name="custom_buttons_setting_always_show">常に表示</string>
+  <string name="custom_buttons_setting_if_room">空きスペースがあれば表示</string>
+  <string name="custom_buttons_setting_menu_only">ボタン非表示（文字メニューでのみ表示）</string>
+  <string name="reset_custom_buttons">初期設定にリセット</string>
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">高度な統計</string>
   <string name="enable_advanced_statistics_title">高度な統計を有効にする</string>
@@ -178,8 +178,8 @@
   <string name="advanced_forecast_stats_compute_precision_title">スケジュール済みの復習枚数の計算の精度</string>
   <string name="advanced_forecast_stats_mc_n_iterations_title">シミュレーションの反復回数</string>
   <!-- Custom sync server settings -->
-  <string name="custom_sync_server_title">カスタム同期サーバー</string>
-  <string name="custom_sync_server_enable_title">カスタム同期サーバーを使用する</string>
+  <string name="custom_sync_server_title">同期サーバーのカスタマイズ</string>
+  <string name="custom_sync_server_enable_title">同期サーバーを変更する</string>
   <string name="custom_sync_server_enable_summary">AnkiWebのサービスを使用せず、代替サーバーを指定します</string>
   <string name="custom_sync_server_base_url_title">同期URL</string>
   <string name="custom_sync_server_media_url_title">メディア同期URL</string>

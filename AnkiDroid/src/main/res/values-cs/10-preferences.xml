@@ -164,8 +164,8 @@
   <string name="convert_fen_text_summ">Vykreslení šachovnice z Forsyth Edwards Notation. Zápis musí být uzavřen mezi značky [fen][/fen].</string>
   <string name="enable_api_title">Povolit AnkiDroid API</string>
   <string name="enable_api_summary">Umožnit ostatním aplikacím číst a zapisovat data AnkiDroid bez uživatelské intervence</string>
-  <string name="custom_buttons">Toolbar buttons</string>
-  <string name="custom_buttons_summary">Customize which buttons appear in the reviewer toolbar</string>
+  <string name="custom_buttons">App bar buttons</string>
+  <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
   <string name="custom_buttons_setting_always_show">Always show</string>
   <string name="custom_buttons_setting_if_room">Show if room</string>
   <string name="custom_buttons_setting_menu_only">Menu only</string>

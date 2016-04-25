@@ -90,8 +90,8 @@
   <string name="menu_bury_note">ノートを延期</string>
   <string name="menu_suspend_card">カードを保留</string>
   <string name="menu_suspend_note">ノートを保留</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">延期</string>
+  <string name="menu_suspend">保留</string>
   <string name="menu_delete_note">ノートを削除</string>
   <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらも全て削除されます。\n%s</string>
   <string name="menu_select">テキストを選択</string>

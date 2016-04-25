@@ -164,8 +164,8 @@
   <string name="convert_fen_text_summ">使用福斯夫－爱德华兹记号法来画棋盘。记号必须用[fen][/fen]标签括起来。</string>
   <string name="enable_api_title">启用AnkiDroid API</string>
   <string name="enable_api_summary">让其他的应用程序连接到AnkiDroid读写数据</string>
-  <string name="custom_buttons">Toolbar buttons</string>
-  <string name="custom_buttons_summary">Customize which buttons appear in the reviewer toolbar</string>
+  <string name="custom_buttons">App bar buttons</string>
+  <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
   <string name="custom_buttons_setting_always_show">Always show</string>
   <string name="custom_buttons_setting_if_room">Show if room</string>
   <string name="custom_buttons_setting_menu_only">Menu only</string>
