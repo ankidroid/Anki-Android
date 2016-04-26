@@ -42,6 +42,9 @@
     <attr name="deckDivider" format="reference"/>
     <attr name="expandRef" format="reference"/>
     <attr name="collapseRef" format="reference"/>
+    <!-- Navigation drawer -->
+    <attr name="navDrawerItemColor" format="reference"/>
+    <attr name="navDrawerItemBackgroundColor" format="reference"/>
     <!-- Card count colors -->
     <attr name="newCountColor" format="color"/>
     <attr name="learnCountColor" format="color"/>

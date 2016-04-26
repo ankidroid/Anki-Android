@@ -7,6 +7,8 @@
     <color name="theme_dark_primary_text">@color/white</color>
     <color name="theme_dark_secondary_text">#b2ffffff</color>
     <color name="theme_dark_row_current">#393939</color>
+    <color name="theme_dark_drawer_row_current">#33999999</color>
+    <color name="theme_dark_drawer_item">#DEFFFFFF</color>
 
     <style name="Theme_Dark" parent="@style/Theme.AppCompat">
         <!-- Android colors -->
@@ -18,6 +20,9 @@
         <item name="android:textColorSecondary">@color/theme_dark_secondary_text</item>
         <item name="android:colorBackground">@color/material_theme_grey</item>
         <item name="android:windowBackground">@color/material_theme_grey</item>
+        <!-- Navigation drawer -->
+        <item name="navDrawerItemColor">@color/drawer_item_text_dark</item>
+        <item name="navDrawerItemBackgroundColor">@drawable/drawer_item_background_dark</item>
         <!-- App buttons -->
         <item name="largeButtonBackgroundColor">@color/material_light_blue_700</item>
         <item name="largeButtonTextColor">@color/white</item>

@@ -8,4 +8,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="start"
     app:headerLayout="@layout/navdrawer_header"
+    app:itemIconTint="?attr/navDrawerItemColor"
+    app:itemTextColor="?attr/navDrawerItemColor"
+    app:itemBackground="?attr/navDrawerItemBackgroundColor"
     app:menu="@menu/navigation_drawer" />
