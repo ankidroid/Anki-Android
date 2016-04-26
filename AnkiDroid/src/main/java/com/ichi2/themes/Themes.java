@@ -89,6 +89,7 @@ public class Themes {
                     break;
                 case THEME_DAY_PLAIN:
                     context.setTheme(R.style.LegacyActionBarPlain);
+                    break;
             }
         }
     }
