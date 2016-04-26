@@ -130,8 +130,8 @@
   <string name="never_notify">通知しない</string>
   <string name="notify_when_pending">待受状態（AnkiDroidを表示していない間に進行していたデータ処理（例: 同期、バックアップ）が完了し、ユーザーが操作を再開できる状態）</string>
   <string name="notification_minimum_cards_due">待受状態の時と、 課題のカードが%d枚を超えている時</string>
-  <string name="notification_minimum_cards_due_vibrate">振動で通知</string>
-  <string name="notification_minimum_cards_due_blink">ライト点滅で通知</string>
+  <string name="notification_minimum_cards_due_vibrate">振動でも通知</string>
+  <string name="notification_minimum_cards_due_blink">LEDランプ点滅でも通知</string>
   <string name="timeout_answer_text">解答を自動的に表示</string>
   <string name="timeout_answer_summ">操作しなくても自動的に解答を表示</string>
   <string name="timeout_answer_seconds">解答を表示するまでの時間</string>
@@ -164,8 +164,8 @@
   <string name="convert_fen_text_summ">Forsyth Edwards Notation 表記法を使いチェス盤を描画します。この表記は[fen][/fen] で囲む必要があります</string>
   <string name="enable_api_title">AnkiDroid API を有効にする</string>
   <string name="enable_api_summary">他のアプリがAnkiDroidに接続しデータを読み書きすることを許可します</string>
-  <string name="custom_buttons">App bar buttons</string>
-  <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
+  <string name="custom_buttons">Appバー アイコン</string>
+  <string name="custom_buttons_summary">学習画面のAppバーにどの操作をアイコン表示するかカスタマイズします</string>
   <string name="custom_buttons_setting_always_show">常に表示</string>
   <string name="custom_buttons_setting_if_room">空きスペースがあれば表示</string>
   <string name="custom_buttons_setting_menu_only">ボタン非表示（文字メニューでのみ表示）</string>
