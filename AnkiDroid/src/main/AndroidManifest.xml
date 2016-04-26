@@ -304,7 +304,7 @@
             android:name="com.ichi2.anki.CardTemplateEditor"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_template_editor"
-            android:windowSoftInputMode="stateAlwaysHidden" >
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" >
         </activity>
         <!-- stuff for Samsung Multi-Window -->
         <uses-library
