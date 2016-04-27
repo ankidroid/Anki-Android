@@ -17,7 +17,11 @@
                      android:layout_width="fill_parent"
                      android:layout_height="wrap_content"
                      android:layout_alignParentTop="true"/>
-            <include layout="@layout/reviewer_flashcard"/>
+            <include layout="@layout/reviewer_flashcard"
+                     android:layout_width="fill_parent"
+                     android:layout_height="fill_parent"
+                     android:layout_above="@+id/bottom_area_layout"
+                     android:layout_below="@+id/top_bar"/>
             <include layout="@layout/reviewer_answer_buttons"/>
         </RelativeLayout>
         <!-- Controls that are overlaid over the main content when the user interrupts immersive mode -->
