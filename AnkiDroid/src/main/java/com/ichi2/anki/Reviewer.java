@@ -131,7 +131,11 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             case R.id.action_undo:
                 Timber.i("Reviewer:: Undo button pressed");
-                undo();
+                if (mShowWhiteboard && mWhiteboard != null && mWhiteboard.undoSize() > 0) {
+                    mWhiteboard.undo();
+                } else {
+                    undo();
+                }
                 break;
 
             case R.id.action_mark_card:
@@ -250,11 +254,16 @@ public class Reviewer extends AbstractFlashcardViewer {
         } else {
             menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_outline_white_24dp);
         }
-        if (colIsOpen() && getCol().undoAvailable()) {
+
+        if (mShowWhiteboard && mWhiteboard != null && mWhiteboard.undoSize() > 0) {
+            menu.findItem(R.id.action_undo).setIcon(R.drawable.ic_exposure_neg_1_white_24dp);
+            menu.findItem(R.id.action_undo).setEnabled(true).getIcon().setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
+        } else if (colIsOpen() && getCol().undoAvailable()) {
+            menu.findItem(R.id.action_undo).setIcon(R.drawable.ic_undo_white_24dp);
             menu.findItem(R.id.action_undo).setEnabled(true).getIcon().setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
         } else {
-            menu.findItem(R.id.action_undo).setEnabled(false).getIcon().setAlpha(
-                    Themes.ALPHA_ICON_DISABLED_LIGHT);
+            menu.findItem(R.id.action_undo).setIcon(R.drawable.ic_undo_white_24dp);
+            menu.findItem(R.id.action_undo).setEnabled(false).getIcon().setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
         }
         if (mPrefWhiteboard) {
             // Configure the whiteboard related items in the action bar

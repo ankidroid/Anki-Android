@@ -46,9 +46,7 @@ import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
@@ -1754,9 +1752,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mCustomButtons.put(R.id.action_edit, Integer.parseInt(preferences.getString("customButtonEditCard", "1")));
         mCustomButtons.put(R.id.action_add_note_reviewer, Integer.parseInt(preferences.getString("customButtonAddCard", "3")));
         mCustomButtons.put(R.id.action_replay, Integer.parseInt(preferences.getString("customButtonReplay", "1")));
-        mCustomButtons.put(R.id.action_clear_whiteboard, Integer.parseInt(preferences.getString("customButtonClearWhiteboard", "2")));
-        mCustomButtons.put(R.id.action_hide_whiteboard, Integer.parseInt(preferences.getString("customButtonShowHideWhiteboard",
-                isSmallScreen() ? "1" : "2")));
+        mCustomButtons.put(R.id.action_clear_whiteboard, Integer.parseInt(preferences.getString("customButtonClearWhiteboard", "1")));
+        mCustomButtons.put(R.id.action_hide_whiteboard, Integer.parseInt(preferences.getString("customButtonShowHideWhiteboard", "2")));
         mCustomButtons.put(R.id.action_select_tts, Integer.parseInt(preferences.getString("customButtonSelectTts", "0")));
         mCustomButtons.put(R.id.action_open_deck_options, Integer.parseInt(preferences.getString("customButtonDeckOptions", "0")));
         mCustomButtons.put(R.id.action_bury, Integer.parseInt(preferences.getString("customButtonBury", "0")));
@@ -1780,18 +1777,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
 
         return preferences;
-    }
-
-    private boolean isSmallScreen() {
-        Display display = getWindowManager().getDefaultDisplay();
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        display.getMetrics(outMetrics);
-        float density  = getResources().getDisplayMetrics().density;
-        float dpWidth  = outMetrics.widthPixels / density;
-        if (dpWidth < 360) {
-            return true;
-        }
-        return false;
     }
 
 
