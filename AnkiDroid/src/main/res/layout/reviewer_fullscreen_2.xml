@@ -15,6 +15,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true">
+            <FrameLayout
+                android:id="@+id/whiteboard"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
             <RelativeLayout
                 android:id="@+id/front_frame"
                 android:layout_width="match_parent"

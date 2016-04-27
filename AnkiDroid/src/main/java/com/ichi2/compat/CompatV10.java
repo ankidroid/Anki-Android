@@ -191,4 +191,9 @@ public class CompatV10 implements Compat {
     public void setStatusBarColor(Window window, int color) {
         // Not settable before API 21 so do nothing
     }
+
+    @Override
+    public boolean isSystemUiVisible(AnkiActivity activity) {
+        return false;   // Immersive mode introduced in KitKat
+    }
 }

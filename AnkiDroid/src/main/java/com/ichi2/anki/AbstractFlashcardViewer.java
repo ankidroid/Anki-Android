@@ -40,6 +40,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GestureDetectorCompat;
 import android.text.ClipboardManager;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -47,7 +48,6 @@ import android.text.SpannedString;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
 import android.util.TypedValue;
-import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -283,7 +283,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /**
      * Swipe Detection
      */
-    private GestureDetector gestureDetector;
+    private GestureDetectorCompat gestureDetector;
 
     private boolean mIsXScrolling = false;
     private boolean mIsYScrolling = false;
@@ -1113,7 +1113,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    public GestureDetector getGestureDetector() {
+    public GestureDetectorCompat getGestureDetector() {
         return gestureDetector;
     }
 
@@ -1339,7 +1339,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mCardFrame.removeAllViews();
 
         // Initialize swipe
-        gestureDetector = new GestureDetector(new MyGestureDetector());
+        gestureDetector = new GestureDetectorCompat(this, new MyGestureDetector());
 
         mEase1 = (TextView) findViewById(R.id.ease1);
         mEase1.setTypeface(TypefaceHelper.get(this, "Roboto-Medium"));
@@ -2717,14 +2717,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 longClickHandler.removeCallbacks(longClickTestRunnable);
                 mTouchStarted = false;
             }
-            delayedHide(INITIAL_HIDE_DELAY);
             return false;
         }
 
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
-            if (mGesturesEnabled && !mIsSelecting && !isPendingImmersiveMode()) {
+            if (mPrefFullscreenReview > 0 && CompatHelper.getCompat().isSystemUiVisible(AbstractFlashcardViewer.this)) {
+                delayedHide(INITIAL_HIDE_DELAY);
+                return true;
+            }
+            if (mGesturesEnabled && !mIsSelecting) {
                 int height = mTouchLayer.getHeight();
                 int width = mTouchLayer.getWidth();
                 float posX = e.getX();
@@ -2747,17 +2750,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             showLookupButtonIfNeeded();
             return false;
         }
-    }
-
-    private boolean isPendingImmersiveMode() {
-        return mPrefFullscreenReview > 0 &&
-                (getWindow().getDecorView().getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
-    }
-
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return gestureDetector.onTouchEvent(event);
     }
 
 

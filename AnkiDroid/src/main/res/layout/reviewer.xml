@@ -26,6 +26,10 @@
             <include layout="@layout/reviewer_flashcard"/>
             <include layout="@layout/reviewer_answer_buttons"/>
         </RelativeLayout>
+        <FrameLayout
+            android:id="@+id/whiteboard"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
     </android.support.design.widget.CoordinatorLayout>
     <!-- Left navigation drawer -->
     <include layout="@layout/navigation_drawer" />
