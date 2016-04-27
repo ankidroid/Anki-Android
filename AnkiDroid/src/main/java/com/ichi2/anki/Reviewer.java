@@ -452,10 +452,11 @@ public class Reviewer extends AbstractFlashcardViewer {
         mWhiteboard.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (mShowWhiteboard) {
+                if (!mShowWhiteboard ||
+                        mPrefFullscreenReview && CompatHelper.getCompat().isSystemUiVisible(Reviewer.this)) {
                     return false;
                 }
-                return getGestureDetector().onTouchEvent(event);
+                return mWhiteboard.handleTouchEvent(event);
             }
         });
         mWhiteboard.setEnabled(true);

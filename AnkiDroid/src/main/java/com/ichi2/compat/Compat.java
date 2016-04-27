@@ -66,5 +66,7 @@ public interface Compat {
     void flushWebViewCookies();
     void setHTML5MediaAutoPlay(WebSettings settings, Boolean allow);
     void setStatusBarColor(Window window, int color);
+    /** Returns true if the system UI currently visible */
+    boolean isSystemUiVisible(AnkiActivity activity);
 }
 

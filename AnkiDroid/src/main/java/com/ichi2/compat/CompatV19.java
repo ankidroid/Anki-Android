@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
+import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.themes.Themes;
@@ -83,5 +84,10 @@ public class CompatV19 extends CompatV17 implements Compat {
                         view.setVisibility(View.GONE);
                     }
                 });
+    }
+
+    @Override
+    public boolean isSystemUiVisible(AnkiActivity activity) {
+        return (activity.getWindow().getDecorView().getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
     }
 }

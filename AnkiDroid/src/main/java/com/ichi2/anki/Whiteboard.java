@@ -108,8 +108,7 @@ public class Whiteboard extends View {
      * @param event The motion event.
      * @return True if the event was handled, false otherwise.
      */
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean handleTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
 
