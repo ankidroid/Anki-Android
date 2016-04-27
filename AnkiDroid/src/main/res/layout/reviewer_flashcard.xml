@@ -42,10 +42,6 @@
         android:layout_marginBottom="20dip"
         android:layout_marginTop="20dip"
         android:longClickable="true" />
-    <FrameLayout
-        android:id="@+id/whiteboard"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
     <ImageView
         android:id="@+id/lookup_button"
         android:layout_width="wrap_content"
