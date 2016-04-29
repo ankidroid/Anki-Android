@@ -939,6 +939,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 }
             }
             col.getDecks().setConf(deck, newConfId);
+            col.save();
             return new TaskData(true);
         } catch (JSONException e) {
             return new TaskData(false);
@@ -952,6 +953,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Object[] data = params[0].getObjArray();
         JSONObject conf = (JSONObject) data[0];
         col.getDecks().restoreToDefault(conf);
+        col.save();
         return new TaskData(true);
     }
 
@@ -973,6 +975,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 conf.getJSONObject("new").put("order", defaultOrder);
                 col.getSched().resortConf(conf);
             }
+            col.save();
             return new TaskData(true);
         } catch (JSONException e) {
             return new TaskData(false);
@@ -1031,6 +1034,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         // add the new template
         try {
             col.getModels().addTemplate(model, template);
+            col.save();
         } catch (ConfirmModSchemaException e) {
             Timber.e("doInBackgroundAddTemplate :: ConfirmModSchemaException");
             return new TaskData(false);
@@ -1052,6 +1056,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             if (! success) {
                 return new TaskData("removeTemplateFailed", false);
             }
+            col.save();
         } catch (ConfirmModSchemaException e) {
             Timber.e("doInBackgroundRemoveTemplate :: ConfirmModSchemaException");
             return new TaskData(false);
@@ -1069,6 +1074,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         JSONObject model = (JSONObject) args[0];
         col.getModels().save(model, true);
         col.reset();
+        col.save();
         return new TaskData(true);
     }
 
@@ -1124,8 +1130,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         try {
             col.getModels().rem(col.getModels().get(modID));
-        }
-        catch (ConfirmModSchemaException e) {
+            col.save();
+        } catch (ConfirmModSchemaException e) {
             Timber.e("doInBackGroundDeleteModel :: ConfirmModSchemaException");
             return new TaskData(false);
         }
@@ -1146,8 +1152,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         try {
             col.getModels().remField(model, field);
-        }
-        catch (ConfirmModSchemaException e) {
+            col.save();
+        } catch (ConfirmModSchemaException e) {
             //Should never be reached
             return new TaskData(false);
         }
@@ -1169,8 +1175,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         try {
             col.getModels().moveField(model, field, index);
-        }
-        catch (ConfirmModSchemaException e) {
+            col.save();
+        } catch (ConfirmModSchemaException e) {
             //Should never be reached
             return new TaskData(false);
         }
@@ -1190,8 +1196,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         try {
             col.getModels().addField(model, col.getModels().newField(fieldName));
-        }
-        catch (ConfirmModSchemaException e) {
+            col.save();
+        } catch (ConfirmModSchemaException e) {
             //Should never be reached
             return new TaskData(false);
         }
@@ -1211,9 +1217,10 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             Collection col = CollectionHelper.getInstance().getCol(mContext);
             col.getModels().setSortIdx(model, idx);
-        }
-        catch(Exception e){
-            e.printStackTrace();
+            col.save();
+        } catch(Exception e){
+            Timber.e(e, "Error changing sort field");
+            return new TaskData(false);
         }
         return new TaskData(true);
     }
