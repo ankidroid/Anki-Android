@@ -30,18 +30,19 @@ import com.ichi2.libanki.hooks.Hooks;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.GregorianCalendar;
+import java.util.Vector;
 
 import timber.log.Timber;
 
-/**
- * Deck statistics.
- */
+
 public class Stats {
 
-
-
-    public static enum AxisType{
+    public enum AxisType {
         TYPE_MONTH(30, R.string.stats_period_month),
         TYPE_YEAR(365, R.string.stats_period_year),
         TYPE_LIFE(-1, R.string.stats_period_lifetime);
@@ -54,15 +55,14 @@ public class Stats {
         }
     }
 
-    public static enum ChartType {FORECAST, REVIEW_COUNT, REVIEW_TIME,
-        INTERVALS, HOURLY_BREAKDOWN, WEEKLY_BREAKDOWN, ANSWER_BUTTONS, CARDS_TYPES, OTHER};
+    public enum ChartType {FORECAST, REVIEW_COUNT, REVIEW_TIME,
+        INTERVALS, HOURLY_BREAKDOWN, WEEKLY_BREAKDOWN, ANSWER_BUTTONS, CARDS_TYPES, OTHER}
 
     private static Stats sCurrentInstance;
 
     private Collection mCol;
     private boolean mWholeCollection;
     private boolean mDynamicAxis = false;
-    private boolean mIsPieChart = false;
     private double[][] mSeriesList;
 
     private boolean mHasColoredCumulative = false;
@@ -95,11 +95,6 @@ public class Stats {
         sCurrentInstance = this;
     }
 
-    public static Stats currentStats() {
-        return sCurrentInstance;
-    }
-
-
     public double[][] getSeriesList() {
         return mSeriesList;
     }
@@ -127,12 +122,13 @@ public class Stats {
 
 
     /**
-     * Todays statistics
+     * Today's statistics
      */
     public int[] calculateTodayStats(){
         String lim = _getDeckFilter();
-        if (lim.length() > 0)
+        if (lim.length() > 0) {
             lim = " and " + lim;
+        }
 
         Cursor cur = null;
         String query = "select count(), sum(time)/1000, "+
@@ -188,25 +184,23 @@ public class Stats {
         return new int[]{cards, thetime, failed, lrn, rev, relrn, filt, mcnt, msum};
     }
 
-    private String getRevlogTimeFilter(AxisType timespan, boolean inverse){
-        if (timespan == AxisType.TYPE_LIFE){
+    private String getRevlogTimeFilter(AxisType timespan, boolean inverse) {
+        if (timespan == AxisType.TYPE_LIFE) {
             return "";
         }
         else {
-            String operator = null;
-            if (inverse){
+            String operator;
+            if (inverse) {
                 operator = "<= ";
-            }else{
+            } else {
                 operator = "> ";
             }
             return "id "+ operator + ((mCol.getSched().getDayCutoff() - (timespan.days * SECONDS_PER_DAY)) * 1000);
         }
     }
 
-    public int getNewCards(AxisType timespan){
-
+    public int getNewCards(AxisType timespan) {
         String filter = getRevlogFilter(timespan,false);
-
         String queryNeg = "";
         if (timespan != AxisType.TYPE_LIFE){
             String invfilter = getRevlogFilter(timespan,true);
@@ -216,8 +210,8 @@ public class Stats {
         String query = "SELECT COUNT(*) FROM(\n" +
                 "            SELECT distinct cid\n" +
                 "            FROM revlog \n" +
-                             filter+
-                             queryNeg+
+                             filter +
+                             queryNeg +
                 "        )";
         Timber.d("New cards query: %s", query);
         Cursor cur = null;
@@ -239,7 +233,9 @@ public class Stats {
     String getRevlogFilter(AxisType timespan,boolean inverseTimeSpan){
         ArrayList<String> lims = new ArrayList<>();
         String dayFilter = getRevlogTimeFilter(timespan, inverseTimeSpan);
-        if (dayFilter != "") lims.add(dayFilter);
+        if (!TextUtils.isEmpty(dayFilter)) {
+            lims.add(dayFilter);
+        }
         String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
         if (lim.length() > 0){
             lims.add(lim);
@@ -247,26 +243,26 @@ public class Stats {
 
         if (!lims.isEmpty()) {
             lim = "WHERE ";
-            lim += TextUtils.join(" AND ",lims.toArray());
+            lim += TextUtils.join(" AND ", lims.toArray());
         }
 
         return lim;
     }
 
-    public void calculateOverviewStatistics(AxisType timespan, OverviewStatsBuilder.OverviewStats oStats, Context context) {
+    public void calculateOverviewStatistics(AxisType timespan, OverviewStatsBuilder.OverviewStats oStats) {
         oStats.allDays = timespan.days;
-
         String lim = getRevlogFilter(timespan,false);
         Cursor cur = null;
-
         try {
-            cur = mCol.getDb().getDatabase().rawQuery( "SELECT COUNT(*) as num_reviews, sum(case when type = 0 then 1 else 0 end) as new_cards FROM revlog "+ lim, null);
+            cur = mCol.getDb().getDatabase().rawQuery(
+                    "SELECT COUNT(*) as num_reviews, sum(case when type = 0 then 1 else 0 end) as new_cards FROM revlog " + lim, null);
             while (cur.moveToNext()) {
                 oStats.totalReviews = cur.getInt(0);
             }
         } finally {
-            if (cur != null && !cur.isClosed())
+            if (cur != null && !cur.isClosed()) {
                 cur.close();
+            }
         }
 
         String cntquery = "SELECT  COUNT(*) numDays, MIN(day) firstDay, SUM(time_per_day) sum_time  from (" +
@@ -278,8 +274,9 @@ public class Stats {
             while (cur.moveToNext()) {
                 oStats.daysStudied = cur.getInt(0);
                 oStats.totalTime = cur.getDouble(2);
-                if (timespan == AxisType.TYPE_LIFE)
-                    oStats.allDays = Math.abs(cur.getInt(1))+1; // +1 for today
+                if (timespan == AxisType.TYPE_LIFE) {
+                    oStats.allDays = Math.abs(cur.getInt(1)) + 1; // +1 for today
+                }
             }
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -288,9 +285,8 @@ public class Stats {
         }
 
         try {
-            cur = mCol.getDb().getDatabase().rawQuery("select avg(ivl), max(ivl) from cards where did in " +_limit() +
-                    " and queue = 2", null);
-
+            cur = mCol.getDb().getDatabase().rawQuery(
+                    "select avg(ivl), max(ivl) from cards where did in " +_limit() + " and queue = 2", null);
             cur.moveToFirst();
             oStats.averageInterval = cur.getDouble(0);
             oStats.longestInterval = cur.getDouble(1);
@@ -299,26 +295,21 @@ public class Stats {
                 cur.close();
             }
         }
-        oStats.reviewsPerDayOnAll = (double)oStats.totalReviews / oStats.allDays;
-        oStats.reviewsPerDayOnStudyDays = (double)oStats.totalReviews / oStats.daysStudied;
+        oStats.reviewsPerDayOnAll = (double) oStats.totalReviews / oStats.allDays;
+        oStats.reviewsPerDayOnStudyDays = (double) oStats.totalReviews / oStats.daysStudied;
 
         oStats.timePerDayOnAll = oStats.totalTime / oStats.allDays;
         oStats.timePerDayOnStudyDays = oStats.totalTime / oStats.daysStudied;
 
         oStats.totalNewCards = getNewCards(timespan);
-        oStats.newCardsPerDay = (double)oStats.totalNewCards/(double) oStats.allDays;
-
+        oStats.newCardsPerDay = (double) oStats.totalNewCards / (double) oStats.allDays;
     }
 
     public boolean calculateDue(Context context, AxisType type) {
-
         // Not in libanki
         StatsMetaInfo metaInfo = new StatsMetaInfo();
-
         metaInfo = (StatsMetaInfo) Hooks.getInstance(context).runFilter("advancedStatistics", metaInfo, type, context, _limit());
-
-        if(metaInfo.isStatsCalculated()) {
-
+        if (metaInfo.isStatsCalculated()) {
             mDynamicAxis = metaInfo.ismDynamicAxis();
             mHasColoredCumulative = metaInfo.ismHasColoredCumulative();
             mType = metaInfo.getmType();
@@ -334,12 +325,9 @@ public class Stats {
             mZeroIndex = metaInfo.getmZeroIndex();
             mCumulative = metaInfo.getmCumulative();
             mMcount = metaInfo.getmMcount();
-
             mSeriesList = metaInfo.getmSeriesList();
-
             return metaInfo.isDataAvailable();
-        }
-        else {
+        } else {
             return calculateDue(type);
         }
     }
@@ -420,15 +408,17 @@ public class Stats {
         for (int i = 0; i < dues.size(); i++) {
             int[] data = dues.get(i);
 
-            if(data[1] > mMaxCards)
-                mMaxCards =data[1];
+            if (data[1] > mMaxCards) {
+                mMaxCards = data[1];
+            }
 
             mSeriesList[0][i] = data[0];
             mSeriesList[1][i] = data[1];
             mSeriesList[2][i] = data[2];
-            if(data[0] > mLastElement)
+            if (data[0] > mLastElement) {
                 mLastElement = data[0];
-            if(data[0] == 0){
+            }
+            if (data[0] == 0) {
                 mZeroIndex = i;
             }
         }
@@ -443,65 +433,26 @@ public class Stats {
             default:
         }
         mFirstElement = 0;
-
         mHasColoredCumulative = false;
         mCumulative = Stats.createCumulative(new double[][]{mSeriesList[0], mSeriesList[1]}, mZeroIndex);
         mMcount = mCumulative[1][mCumulative[1].length-1];
         //some adjustments to not crash the chartbuilding with emtpy data
-        if(mMaxElements == 0){
+        if (mMaxElements == 0) {
             mMaxElements = 10;
         }
-        if(mMcount == 0){
+        if (mMcount == 0) {
             mMcount = 10;
         }
-        if(mFirstElement == mLastElement){
+        if (mFirstElement == mLastElement) {
             mFirstElement = 0;
             mLastElement = 6;
         }
-        if(mMaxCards == 0)
+        if (mMaxCards == 0) {
             mMaxCards = 10;
+        }
         return dues.size() > 0;
     }
 
-    /* only needed for studyoptions small chart */
-    public static double[][] getSmallDueStats(Collection col) {
-        ArrayList<int[]> dues = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            cur = col
-                    .getDb()
-                    .getDatabase()
-                    .rawQuery(
-                            "SELECT (due - " + col.getSched().getToday()
-                                    + ") AS day, " // day
-                                    + "count(), " // all cards
-                                    + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
-                                    + "FROM cards WHERE did IN " + col.getSched()._deckLimit()
-                                    + " AND queue IN (2,3) AND day <= 7 GROUP BY day ORDER BY day", null);
-            while (cur.moveToNext()) {
-                dues.add(new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2) });
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
-        }
-        // small adjustment for a proper chartbuilding with achartengine
-        if (dues.size() == 0 || dues.get(0)[0] > 0) {
-            dues.add(0, new int[] { 0, 0, 0 });
-        }
-        if (dues.get(dues.size() - 1)[0] < 7) {
-            dues.add(new int[] { 7, 0, 0 });
-        }
-        double[][] serieslist = new double[3][dues.size()];
-        for (int i = 0; i < dues.size(); i++) {
-            int[] data = dues.get(i);
-            serieslist[0][i] = data[0];
-            serieslist[1][i] = data[1];
-            serieslist[2][i] = data[2];
-        }
-        return serieslist;
-    }
 
     public boolean calculateReviewCount(AxisType type) {
         return calculateDone(type, ChartType.REVIEW_COUNT);
@@ -511,11 +462,11 @@ public class Stats {
         return calculateDone(type, ChartType.REVIEW_TIME);
     }
 
+
     /**
      * Calculation of Review count or Review time
-     * @param type
+     * @param type Type
      * @param charType CharType.REVIEW_COUNT or Chartype.REVIEW_TIME
-     * @return
      */
     private boolean calculateDone(AxisType type,  ChartType charType) {
         mHasColoredCumulative = true;
@@ -632,34 +583,36 @@ public class Stats {
             mSeriesList[3][i] = data[3] + data[4] + data[5]; // young
             mSeriesList[4][i] = data[4] + data[5]; // mature
             mSeriesList[5][i] = data[5]; // cram
-            if(mSeriesList[1][i] > mMaxCards)
+            if (mSeriesList[1][i] > mMaxCards) {
                 mMaxCards = (int) Math.round(data[1] + data[2] + data[3] + data[4] + data[5]);
-
-            if(data[5] >= 0.999)
+            }
+            if (data[5] >= 0.999) {
                 mFoundCramCards = true;
-
-            if(data[1] >= 0.999)
+            }
+            if (data[1] >= 0.999) {
                 mFoundLearnCards = true;
-
-            if(data[2] >= 0.999)
+            }
+            if (data[2] >= 0.999) {
                 mFoundRelearnCards = true;
-            if(data[0] > mLastElement)
+            }
+            if (data[0] > mLastElement) {
                 mLastElement = data[0];
-            if(data[0] < mFirstElement)
+            }
+            if (data[0] < mFirstElement) {
                 mFirstElement = data[0];
-            if(data[0] == 0){
+            }
+            if (data[0] == 0) {
                 mZeroIndex = i;
             }
         }
         mMaxElements = list.size()-1;
-
         mCumulative = new double[6][];
         mCumulative[0] = mSeriesList[0];
-        for(int i= 1; i<mSeriesList.length; i++){
+        for (int i = 1; i < mSeriesList.length; i++) {
             mCumulative[i] = createCumulative(mSeriesList[i]);
-            if(i>1){
-                for(int j = 0; j< mCumulative[i-1].length; j++){
-                    mCumulative[i-1][j] -= mCumulative[i][j];
+            if (i > 1) {
+                for (int j = 0; j < mCumulative[i - 1].length; j++) {
+                    mCumulative[i - 1][j] -= mCumulative[i][j];
                 }
             }
         }
@@ -674,30 +627,28 @@ public class Stats {
             default:
         }
 
-
         mMcount = 0;
         // we could assume the last element to be the largest,
         // but on some collections that may not be true due some negative values
         //so we search for the largest element:
-        for(int i = 1; i < mCumulative.length; i++){
-            for(int j = 0; j< mCumulative[i].length; j++){
-                if(mMcount < mCumulative[i][j])
+        for (int i = 1; i < mCumulative.length; i++) {
+            for (int j = 0; j < mCumulative[i].length; j++) {
+                if (mMcount < mCumulative[i][j])
                     mMcount = mCumulative[i][j];
             }
         }
 
         //some adjustments to not crash the chartbuilding with emtpy data
-
-        if(mMaxCards == 0)
+        if (mMaxCards == 0) {
             mMaxCards = 10;
-
-        if(mMaxElements == 0){
+        }
+        if (mMaxElements == 0) {
             mMaxElements = 10;
         }
-        if(mMcount == 0){
+        if (mMcount == 0) {
             mMcount = 10;
         }
-        if(mFirstElement == mLastElement){
+        if (mFirstElement == mLastElement) {
             mFirstElement = -10;
             mLastElement = 0;
         }
@@ -714,10 +665,8 @@ public class Stats {
         mType = type;
         double all = 0, avg = 0, max_ = 0;
         mBackwards = false;
-
         mTitle = R.string.stats_review_intervals;
         mAxisTitles = new int[] { type.ordinal(), R.string.stats_cards, R.string.stats_percentage };
-
         mValueLabels = new int[] { R.string.stats_cards_intervals};
         mColors = new int[] { R.attr.stats_interval};
         int num = 0;
@@ -755,9 +704,7 @@ public class Stats {
             while (cur.moveToNext()) {
                 list.add(new double[] { cur.getDouble(0), cur.getDouble(1) });
             }
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
+            cur.close();
             cur = mCol
                     .getDb()
                     .getDatabase()
@@ -768,7 +715,6 @@ public class Stats {
             all = cur.getDouble(0);
             avg = cur.getDouble(1);
             max_ = cur.getDouble(2);
-
         } finally {
             if (cur != null && !cur.isClosed()) {
                 cur.close();
@@ -788,21 +734,21 @@ public class Stats {
             list.add(new double[] { Math.max(12, list.get(list.size() - 1)[0] + 1), 0 });
         }
 
-        mLastElement=0;
+        mLastElement = 0;
         mSeriesList = new double[2][list.size()];
         for (int i = 0; i < list.size(); i++) {
             double[] data = list.get(i);
             mSeriesList[0][i] = data[0]; // grp
             mSeriesList[1][i] = data[1]; // cnt
-            if(mSeriesList[1][i] > mMaxCards)
+            if (mSeriesList[1][i] > mMaxCards)
                 mMaxCards = (int) Math.round(data[1]);
-            if(data[0]>mLastElement)
+            if (data[0] > mLastElement)
                 mLastElement = data[0];
 
         }
         mCumulative = createCumulative(mSeriesList);
-        for(int i = 0; i<list.size(); i++){
-            mCumulative[1][i] /= all/100;
+        for (int i = 0; i < list.size(); i++) {
+            mCumulative[1][i] /= all / 100;
         }
         mMcount = 100;
 
@@ -816,24 +762,24 @@ public class Stats {
             default:
         }
         mFirstElement = 0;
-
-        mMaxElements = list.size()-1;
-        mAverage = Utils.timeSpan(context, (int)Math.round(avg*SECONDS_PER_DAY));
-        mLongest = Utils.timeSpan(context, (int)Math.round(max_*SECONDS_PER_DAY));
+        mMaxElements = list.size() - 1;
+        mAverage = Utils.timeSpan(context, (int) Math.round(avg * SECONDS_PER_DAY));
+        mLongest = Utils.timeSpan(context, (int) Math.round(max_ * SECONDS_PER_DAY));
 
         //some adjustments to not crash the chartbuilding with emtpy data
-        if(mMaxElements == 0){
+        if (mMaxElements == 0) {
             mMaxElements = 10;
         }
-        if(mMcount == 0){
+        if (mMcount == 0) {
             mMcount = 10;
         }
-        if(mFirstElement == mLastElement){
+        if (mFirstElement == mLastElement) {
             mFirstElement = 0;
             mLastElement = 6;
         }
-        if(mMaxCards == 0)
+        if (mMaxCards == 0) {
             mMaxCards = 10;
+        }
         return list.size() > 0;
     }
 
@@ -843,10 +789,8 @@ public class Stats {
     public boolean calculateBreakdown(AxisType type) {
         mTitle = R.string.stats_breakdown;
         mAxisTitles = new int[] { R.string.stats_time_of_day, R.string.stats_percentage_correct, R.string.stats_reviews };
-
         mValueLabels = new int[] { R.string.stats_percentage_correct, R.string.stats_answers};
         mColors = new int[] { R.attr.stats_counts, R.attr.stats_hours};
-
         mType = type;
         String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
 
@@ -858,11 +802,11 @@ public class Stats {
         sd.setTimeInMillis(mCol.getCrt() * 1000);
 
         int pd = _periodDays();
-        if(pd > 0){
-            lim += " and id > "+ ((mCol.getSched().getDayCutoff()-(SECONDS_PER_DAY*pd))*1000);
+        if (pd > 0) {
+            lim += " and id > " + ((mCol.getSched().getDayCutoff() - (SECONDS_PER_DAY * pd)) * 1000);
         }
         long cutoff = mCol.getSched().getDayCutoff();
-        long cut = cutoff  - sd.get(Calendar.HOUR_OF_DAY)*3600;
+        long cut = cutoff - sd.get(Calendar.HOUR_OF_DAY) * 3600;
 
         ArrayList<double[]> list = new ArrayList<>();
         Cursor cur = null;
@@ -881,8 +825,6 @@ public class Stats {
             while (cur.moveToNext()) {
                 list.add(new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) });
             }
-
-
         } finally {
             if (cur != null && !cur.isClosed()) {
                 cur.close();
@@ -895,13 +837,13 @@ public class Stats {
             list.add(0, new double[] { 0, 0, 0 });
         }
 
-
-        for(int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             double[] data = list.get(i);
-            int intHour = (int)data[0];
+            int intHour = (int) data[0];
             int hour = (intHour - 4) % 24;
-            if (hour < 0)
+            if (hour < 0) {
                 hour += 24;
+            }
             data[0] = hour;
             list.set(i, data);
         }
@@ -924,67 +866,65 @@ public class Stats {
             int hour = (int)data[0];
 
             //double hour = data[0];
-            if(hour < minHour)
+            if (hour < minHour) {
                 minHour = hour;
-
-            if(hour > maxHour)
+            }
+            if (hour > maxHour) {
                 maxHour = hour;
-
+            }
             double pct = data[1];
-            if (pct > mPeak)
+            if (pct > mPeak) {
                 mPeak = pct;
-
+            }
             mSeriesList[0][i] = hour;
             mSeriesList[1][i] = pct;
             mSeriesList[2][i] = data[2];
-            if(i==0){
+            if (i == 0) {
                 mSeriesList[3][i] = pct;
             } else {
-                double prev = mSeriesList[3][i-1];
-                double diff = pct-prev;
+                double prev = mSeriesList[3][i - 1];
+                double diff = pct - prev;
                 diff /= 3.0;
-                diff = Math.round(diff*10.0)/10.0;
-
-                mSeriesList[3][i] = prev+diff;
+                diff = Math.round(diff * 10.0) / 10.0;
+                mSeriesList[3][i] = prev + diff;
             }
-
-            if (data[2] > mMcount)
+            if (data[2] > mMcount) {
                 mMcount = data[2];
-            if(mSeriesList[1][i] > mMaxCards)
+            }
+            if (mSeriesList[1][i] > mMaxCards) {
                 mMaxCards = (int) mSeriesList[1][i];
+            }
         }
 
         mFirstElement = mSeriesList[0][0];
-        mLastElement = mSeriesList[0][mSeriesList[0].length-1];
-        mMaxElements = (int)(maxHour -minHour);
+        mLastElement = mSeriesList[0][mSeriesList[0].length - 1];
+        mMaxElements = (int) (maxHour - minHour);
 
         //some adjustments to not crash the chartbuilding with emtpy data
-        if(mMaxElements == 0){
+        if (mMaxElements == 0) {
             mMaxElements = 10;
         }
-        if(mMcount == 0){
+        if (mMcount == 0) {
             mMcount = 10;
         }
-        if(mFirstElement == mLastElement){
+        if (mFirstElement == mLastElement) {
             mFirstElement = 0;
             mLastElement = 23;
         }
-        if(mMaxCards == 0)
+        if (mMaxCards == 0) {
             mMaxCards = 10;
+        }
         return list.size() > 0;
     }
 
     /**
      * Weekly Breakdown
      */
-
     public boolean calculateWeeklyBreakdown(AxisType type) {
         mTitle = R.string.stats_weekly_breakdown;
         mAxisTitles = new int[] { R.string.stats_day_of_week, R.string.stats_percentage_correct, R.string.stats_reviews };
-
         mValueLabels = new int[] { R.string.stats_percentage_correct, R.string.stats_answers};
         mColors = new int[] { R.attr.stats_counts, R.attr.stats_hours};
-
         mType = type;
         String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
 
@@ -995,20 +935,15 @@ public class Stats {
         Calendar sd = GregorianCalendar.getInstance();
         sd.setTimeInMillis(mCol.getSched().getDayCutoff() * 1000);
 
-
         int pd = _periodDays();
-        if(pd > 0){
-            lim += " and id > "+ ((mCol.getSched().getDayCutoff()-(SECONDS_PER_DAY*pd))*1000);
+        if (pd > 0) {
+            lim += " and id > " + ((mCol.getSched().getDayCutoff() - (SECONDS_PER_DAY * pd)) * 1000);
         }
 
         long cutoff = mCol.getSched().getDayCutoff();
-        long cut = cutoff  - sd.get(Calendar.HOUR_OF_DAY)*3600;
-
-
-
         ArrayList<double[]> list = new ArrayList<>();
         Cursor cur = null;
-        String query = "SELECT strftime('%w',datetime( cast(id/ 1000  -" + sd.get(Calendar.HOUR_OF_DAY)*3600 +
+        String query = "SELECT strftime('%w',datetime( cast(id/ 1000  -" + sd.get(Calendar.HOUR_OF_DAY) * 3600 +
                 " as int), 'unixepoch')) as wd, " +
                 "sum(case when ease = 1 then 0 else 1 end) / " +
                 "cast(count() as float) * 100, " +
@@ -1025,8 +960,6 @@ public class Stats {
             while (cur.moveToNext()) {
                 list.add(new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) });
             }
-
-
         } finally {
             if (cur != null && !cur.isClosed()) {
                 cur.close();
@@ -1039,8 +972,6 @@ public class Stats {
             list.add(0, new double[] { 0, 0, 0 });
         }
 
-
-
         mSeriesList = new double[4][list.size()];
         mPeak = 0.0;
         mMcount = 0.0;
@@ -1048,96 +979,99 @@ public class Stats {
         double maxHour = 0;
         for (int i = 0; i < list.size(); i++) {
             double[] data = list.get(i);
-            int hour = (int)data[0];
+            int hour = (int) data[0];
 
             //double hour = data[0];
-            if(hour < minHour)
+            if (hour < minHour) {
                 minHour = hour;
-
-            if(hour > maxHour)
+            }
+            if (hour > maxHour) {
                 maxHour = hour;
-
+            }
             double pct = data[1];
-            if (pct > mPeak)
+            if (pct > mPeak) {
                 mPeak = pct;
+            }
 
             mSeriesList[0][i] = hour;
             mSeriesList[1][i] = pct;
             mSeriesList[2][i] = data[2];
-            if(i==0){
+            if (i == 0) {
                 mSeriesList[3][i] = pct;
             } else {
-                double prev = mSeriesList[3][i-1];
-                double diff = pct-prev;
+                double prev = mSeriesList[3][i - 1];
+                double diff = pct - prev;
                 diff /= 3.0;
-                diff = Math.round(diff*10.0)/10.0;
-
-                mSeriesList[3][i] = prev+diff;
+                diff = Math.round(diff * 10.0) / 10.0;
+                mSeriesList[3][i] = prev + diff;
             }
-
-            if (data[2] > mMcount)
+            if (data[2] > mMcount) {
                 mMcount = data[2];
-            if(mSeriesList[1][i] > mMaxCards)
+            }
+            if (mSeriesList[1][i] > mMaxCards) {
                 mMaxCards = (int) mSeriesList[1][i];
+            }
         }
         mFirstElement = mSeriesList[0][0];
-        mLastElement = mSeriesList[0][mSeriesList[0].length-1];
-        mMaxElements = (int)(maxHour -minHour);
+        mLastElement = mSeriesList[0][mSeriesList[0].length - 1];
+        mMaxElements = (int) (maxHour - minHour);
 
         //some adjustments to not crash the chartbuilding with emtpy data
-        if(mMaxElements == 0){
+        if (mMaxElements == 0) {
             mMaxElements = 10;
         }
-        if(mMcount == 0){
+        if (mMcount == 0) {
             mMcount = 10;
         }
-        if(mFirstElement == mLastElement){
+        if (mFirstElement == mLastElement) {
             mFirstElement = 0;
             mLastElement = 6;
         }
-        if(mMaxCards == 0)
+        if (mMaxCards == 0) {
             mMaxCards = 10;
-
+        }
         return list.size() > 0;
     }
+
 
     /**
      * Answer Buttons
      */
-
     public boolean calculateAnswerButtons(AxisType type) {
         mHasColoredCumulative = true;
         mTitle = R.string.stats_answer_buttons;
         mAxisTitles = new int[] { R.string.stats_answer_type, R.string.stats_answers, R.string.stats_cumulative_correct_percentage };
-
         mValueLabels = new int[] { R.string.statistics_learn, R.string.statistics_young, R.string.statistics_mature};
         mColors = new int[] { R.attr.stats_learn, R.attr.stats_young, R.attr.stats_mature};
-
         mType = type;
         String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
 
         Vector<String> lims = new Vector<>();
-        int days = 0;
+        int days;
 
-        if (lim.length() > 0)
+        if (lim.length() > 0) {
             lims.add(lim);
+        }
 
-        if (type == AxisType.TYPE_MONTH)
+        if (type == AxisType.TYPE_MONTH) {
             days = 30;
-        else if (type == AxisType.TYPE_YEAR)
+        } else if (type == AxisType.TYPE_YEAR) {
             days = 365;
-        else
+        } else {
             days = -1;
+        }
 
-        if (days > 0)
-            lims.add("id > " + ((mCol.getSched().getDayCutoff()-(days*SECONDS_PER_DAY))*1000));
+        if (days > 0) {
+            lims.add("id > " + ((mCol.getSched().getDayCutoff() - (days * SECONDS_PER_DAY)) * 1000));
+        }
         if (lims.size() > 0) {
             lim = "where " + lims.get(0);
-            for(int i=1; i<lims.size(); i++)
-                lim+= " and " + lims.get(i);
-        }
-        else
+            for (int i = 1; i < lims.size(); i++) {
+                lim += " and " + lims.get(i);
+            }
+        } else {
             lim = "";
+        }
 
         ArrayList<double[]> list = new ArrayList<>();
         Cursor cur = null;
@@ -1145,7 +1079,7 @@ public class Stats {
                 "                when type in (0,2) then 0 " +
                 "        when lastIvl < 21 then 1 " +
                 "        else 2 end) as thetype, " +
-                "        (case when type in (0,2) and ease = 4 then 3 else ease end), count() from revlog " + lim + " "+
+                "        (case when type in (0,2) and ease = 4 then 3 else ease end), count() from revlog " + lim + " " +
                 "        group by thetype, ease " +
                 "        order by thetype, ease";
         Timber.d("AnswerButtons query: %s", query);
@@ -1155,10 +1089,8 @@ public class Stats {
                     .getDatabase()
                     .rawQuery(query, null);
             while (cur.moveToNext()) {
-                list.add(new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) });
+                list.add(new double[]{cur.getDouble(0), cur.getDouble(1), cur.getDouble(2)});
             }
-
-
         } finally {
             if (cur != null && !cur.isClosed()) {
                 cur.close();
@@ -1168,24 +1100,20 @@ public class Stats {
         //TODO adjust for AnswerButton, for now only copied from intervals
         // small adjustment for a proper chartbuilding with achartengine
         if (list.size() == 0) {
-            list.add(0, new double[] { 0, 1, 0 });
+            list.add(0, new double[]{0, 1, 0});
         }
 
-
-
-        double[] totals= new double[3];
+        double[] totals = new double[3];
         for (int i = 0; i < list.size(); i++) {
             double[] data = list.get(i);
-            int currentType = (int)data[0];
+            int currentType = (int) data[0];
             double ease = data[1];
             double cnt = data[2];
-
             totals[currentType] += cnt;
         }
         int badNew = 0;
         int badYoung = 0;
         int badMature = 0;
-
 
         mSeriesList = new double[4][list.size()+1];
 
@@ -1195,25 +1123,25 @@ public class Stats {
             double ease = data[1];
             double cnt = data[2];
 
-            if (currentType == 1)
+            if (currentType == 1) {
                 ease += 5;
-            else if(currentType == 2)
+            } else if (currentType == 2) {
                 ease += 10;
-
-            if((int)ease == 1){
+            }
+            if ((int) ease == 1) {
                 badNew = i;
             }
-
-            if((int)ease == 6){
+            if ((int) ease == 6) {
                 badYoung = i;
             }
-            if((int)ease == 11){
+            if ((int) ease == 11) {
                 badMature = i;
             }
             mSeriesList[0][i] = ease;
-            mSeriesList[1+currentType][i] = cnt;
-            if(cnt > mMaxCards)
+            mSeriesList[1 + currentType][i] = cnt;
+            if (cnt > mMaxCards) {
                 mMaxCards = (int) cnt;
+            }
         }
         mSeriesList[0][list.size()] = 15;
 
@@ -1227,28 +1155,21 @@ public class Stats {
         mLastElement = 14.5;
         mMcount = 100;
         mMaxElements = 15;      //bars are positioned from 1 to 14
-        if(mMaxCards == 0)
+        if(mMaxCards == 0) {
             mMaxCards = 10;
-
+        }
         return list.size() > 0;
     }
 
     /**
-     * Cards Types
+     * Card Types
      */
-    public boolean calculateCardsTypes(AxisType type) {
+    public boolean calculateCardTypes(AxisType type) {
         mTitle = R.string.stats_cards_types;
-        mIsPieChart = true;
         mAxisTitles = new int[] { R.string.stats_answer_type, R.string.stats_answers, R.string.stats_cumulative_correct_percentage };
-
         mValueLabels = new int[] {R.string.statistics_mature, R.string.statistics_young_and_learn, R.string.statistics_unlearned, R.string.statistics_suspended};
         mColors = new int[] { R.attr.stats_mature, R.attr.stats_young, R.attr.stats_unseen, R.attr.stats_suspended };
-
-
-
         mType = type;
-
-
         ArrayList<double[]> list = new ArrayList<>();
         double[] pieData;
         Cursor cur = null;
@@ -1267,8 +1188,6 @@ public class Stats {
 
             cur.moveToFirst();
             pieData = new double[]{ cur.getDouble(0), cur.getDouble(1), cur.getDouble(2), cur.getDouble(3) };
-
-
         } finally {
             if (cur != null && !cur.isClosed()) {
                 cur.close();
@@ -1290,14 +1209,14 @@ public class Stats {
 //        }
 
         mSeriesList = new double[1][4];
-        mSeriesList[0]= pieData;
-
+        mSeriesList[0] = pieData;
         mFirstElement = 0.5;
         mLastElement = 9.5;
         mMcount = 100;
         mMaxElements = 10;      //bars are positioned from 1 to 14
-        if(mMaxCards == 0)
+        if (mMaxCards == 0) {
             mMaxCards = 10;
+        }
         return list.size() > 0;
     }
 
@@ -1330,65 +1249,69 @@ public class Stats {
         }
     }
 
-    public static double[][] createCumulative(double [][] nonCumulative){
+
+    public static double[][] createCumulative(double[][] nonCumulative) {
         double[][] cumulativeValues = new double[2][nonCumulative[0].length];
         cumulativeValues[0][0] = nonCumulative[0][0];
         cumulativeValues[1][0] = nonCumulative[1][0];
-        for(int i = 1; i<nonCumulative[0].length; i++){
+        for (int i = 1; i < nonCumulative[0].length; i++) {
             cumulativeValues[0][i] = nonCumulative[0][i];
-            cumulativeValues[1][i] = cumulativeValues[1][i-1] + nonCumulative[1][i];
-
+            cumulativeValues[1][i] = cumulativeValues[1][i - 1] + nonCumulative[1][i];
         }
-
         return cumulativeValues;
     }
 
-    public static double[][] createCumulative(double [][] nonCumulative, int startAtIndex){
+
+    public static double[][] createCumulative(double[][] nonCumulative, int startAtIndex) {
         double[][] cumulativeValues = new double[2][nonCumulative[0].length - startAtIndex];
         cumulativeValues[0][0] = nonCumulative[0][startAtIndex];
         cumulativeValues[1][0] = nonCumulative[1][startAtIndex];
-        for(int i = startAtIndex+1; i<nonCumulative[0].length; i++){
-            cumulativeValues[0][i- startAtIndex] = nonCumulative[0][i];
-            cumulativeValues[1][i- startAtIndex] = cumulativeValues[1][i-1- startAtIndex] + nonCumulative[1][i];
-
+        for (int i = startAtIndex + 1; i < nonCumulative[0].length; i++) {
+            cumulativeValues[0][i - startAtIndex] = nonCumulative[0][i];
+            cumulativeValues[1][i - startAtIndex] = cumulativeValues[1][i - 1 - startAtIndex] + nonCumulative[1][i];
         }
-
         return cumulativeValues;
     }
 
-    public static double[] createCumulative(double [] nonCumulative){
+
+    public static double[] createCumulative(double[] nonCumulative) {
         double[] cumulativeValues = new double[nonCumulative.length];
         cumulativeValues[0] = nonCumulative[0];
-        for(int i = 1; i<nonCumulative.length; i++){
-            cumulativeValues[i] = cumulativeValues[i-1] + nonCumulative[i];
+        for (int i = 1; i < nonCumulative.length; i++) {
+            cumulativeValues[i] = cumulativeValues[i - 1] + nonCumulative[i];
         }
         return cumulativeValues;
     }
+
+
     public static double[] createCumulativeInPercent(double [] nonCumulative, double total){
         return createCumulativeInPercent(nonCumulative, total, -1);
     }
 
     //use -1 on ignoreIndex if you do not want to exclude anything
-    public static double[] createCumulativeInPercent(double [] nonCumulative, double total, int ignoreIndex){
+    public static double[] createCumulativeInPercent(double[] nonCumulative, double total, int ignoreIndex) {
         double[] cumulativeValues = new double[nonCumulative.length];
-        if(total < 1)
+        if (total < 1) {
             cumulativeValues[0] = 0;
-        else if (0 != ignoreIndex)
+        } else if (0 != ignoreIndex) {
             cumulativeValues[0] = nonCumulative[0] / total * 100.0;
+        }
 
-        for(int i = 1; i<nonCumulative.length; i++){
-            if(total < 1){
+        for (int i = 1; i < nonCumulative.length; i++) {
+            if (total < 1) {
                 cumulativeValues[i] = 0;
-            } else if (i != ignoreIndex)
-                cumulativeValues[i] = cumulativeValues[i-1] + nonCumulative[i] / total * 100.0;
-            else
-                cumulativeValues[i] = cumulativeValues[i-1];
+            } else if (i != ignoreIndex) {
+                cumulativeValues[i] = cumulativeValues[i - 1] + nonCumulative[i] / total * 100.0;
+            } else {
+                cumulativeValues[i] = cumulativeValues[i - 1];
+            }
         }
         return cumulativeValues;
     }
 
+
     private int _periodDays() {
-        switch (mType){
+        switch (mType) {
             case TYPE_MONTH:
                 return 30;
             case TYPE_YEAR:

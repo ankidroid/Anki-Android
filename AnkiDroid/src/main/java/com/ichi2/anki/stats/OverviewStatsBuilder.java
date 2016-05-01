@@ -17,7 +17,6 @@ package com.ichi2.anki.stats;
 
 
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.webkit.WebView;
 
 import com.ichi2.anki.R;
@@ -26,21 +25,17 @@ import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
 
-import java.util.ArrayList;
-
-import timber.log.Timber;
-
 public class OverviewStatsBuilder {
-    private final int CARDS_INDEX = 0;
-    private final int THETIME_INDEX = 1;
-    private final int FAILED_INDEX = 2;
-    private final int LRN_INDEX = 3;
-    private final int REV_INDEX = 4;
-    private final int RELRN_INDEX = 5;
-    private final int FILT_INDEX = 6;
-    private final int MCNT_INDEX = 7;
-    private final int MSUM_INDEX = 8
-            ;
+    private static final int CARDS_INDEX = 0;
+    private static final int THETIME_INDEX = 1;
+    private static final int FAILED_INDEX = 2;
+    private static final int LRN_INDEX = 3;
+    private static final int REV_INDEX = 4;
+    private static final int RELRN_INDEX = 5;
+    private static final int FILT_INDEX = 6;
+    private static final int MCNT_INDEX = 7;
+    private static final int MSUM_INDEX = 8;
+
     private final WebView mWebView; //for resources access
     private final Collection mCollectionData;
     private final boolean mWholeCollection;
@@ -69,15 +64,14 @@ public class OverviewStatsBuilder {
         mType = mStatType;
     }
 
-    public String createInfoHtmlString(){
-
+    public String createInfoHtmlString() {
         int textColorInt = Themes.getColorFromAttr(mWebView.getContext(), android.R.attr.textColor);
         String textColor = String.format("#%06X", (0xFFFFFF & textColorInt)); // Color to hex string
 
         String css = "<style>\n" +
-                "h1 { margin-bottom: 0; margin-top: 1em; }\n" +
+                "h1, h3 { margin-bottom: 0; margin-top: 1em; text-transform: capitalize; }\n" +
                 ".pielabel { text-align:center; padding:0px; color:white; }\n" +
-                "body {color:"+textColor+";}\n" +
+                "body {color:" + textColor + ";}\n" +
                 "</style>";
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -95,47 +89,65 @@ public class OverviewStatsBuilder {
         Stats stats = new Stats(mCollectionData, mWholeCollection);
 
         OverviewStats oStats = new OverviewStats();
-        stats.calculateOverviewStatistics(mType, oStats, mWebView.getContext());
+        stats.calculateOverviewStatistics(mType, oStats);
         Resources res = mWebView.getResources();
 
         stringBuilder.append(_title(res.getString(mType.descriptionId)));
 
-
         boolean allDaysStudied = oStats.daysStudied == oStats.allDays;
+        String daysStudied = res.getString(R.string.stats_overview_days_studied,
+                (int) ((float) oStats.daysStudied / (float) oStats.allDays * 100),
+                oStats.daysStudied, oStats.allDays);
 
+
+        // TODO: FORECAST
+        // Total: xxx reviews
+        // Average: xx reviews/day
+        // Due tomorrow: 209 cards
+
+        // REVIEW COUNT
         stringBuilder.append(_subtitle(res.getString(R.string.stats_review_count).toUpperCase()));
-        stringBuilder.append(res.getString(R.string.stats_overview_days_studied,(int)((float)oStats.daysStudied/(float)oStats.allDays*100), oStats.daysStudied, oStats.allDays));
+        stringBuilder.append(daysStudied);
+        stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_total_reviews,oStats.totalReviews));
         stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_reviews_per_day_studydays,oStats.reviewsPerDayOnStudyDays));
-        if (!allDaysStudied){
+        if (!allDaysStudied) {
             stringBuilder.append("<br>");
-            stringBuilder.append(res.getString(R.string.stats_overview_reviews_per_day_all,oStats.reviewsPerDayOnAll));
+            stringBuilder.append(res.getString(R.string.stats_overview_reviews_per_day_all, oStats.reviewsPerDayOnAll));
         }
 
-        stringBuilder.append("<br><br>");
-        stringBuilder.append(_subtitle(res.getString(R.string.stats_review_time).toUpperCase()));
-        stringBuilder.append(res.getString(R.string.stats_overview_time_per_day_studydays,oStats.timePerDayOnStudyDays));
-        if (!allDaysStudied){
-            stringBuilder.append("<br>");
-            stringBuilder.append(res.getString(R.string.stats_overview_time_per_day_all,oStats.timePerDayOnAll));
-        }
-
-        stringBuilder.append("<br><br>");
-        stringBuilder.append(_subtitle(res.getString(R.string.stats_progress).toUpperCase()));
-        stringBuilder.append(res.getString(R.string.stats_overview_total_new_cards,oStats.totalNewCards));
         stringBuilder.append("<br>");
-        stringBuilder.append(res.getString(R.string.stats_overview_new_cards_per_day,oStats.newCardsPerDay));
 
-        stringBuilder.append("<br><br>");
+        //REVIEW TIME
+        stringBuilder.append(_subtitle(res.getString(R.string.stats_review_time).toUpperCase()));
+        stringBuilder.append(daysStudied);
+        stringBuilder.append("<br>");
+        // TODO: Total: x minutes
+        stringBuilder.append(res.getString(R.string.stats_overview_time_per_day_studydays, oStats.timePerDayOnStudyDays));
+        if (!allDaysStudied) {
+            stringBuilder.append("<br>");
+            stringBuilder.append(res.getString(R.string.stats_overview_time_per_day_all, oStats.timePerDayOnAll));
+        }
+        // TODO: Average answer time: x.xs (x.x cards/minute)
+
+        stringBuilder.append("<br>");
+
+        // INTERVALS
         stringBuilder.append(_subtitle(res.getString(R.string.stats_review_intervals).toUpperCase()));
         stringBuilder.append(res.getString(R.string.stats_overview_average_interval));
-
-        stringBuilder.append(Utils.roundedTimeSpan(mWebView.getContext(), (int)Math.round(oStats.averageInterval*Stats.SECONDS_PER_DAY)));
+        stringBuilder.append(Utils.roundedTimeSpan(mWebView.getContext(), (int) Math.round(oStats.averageInterval * Stats.SECONDS_PER_DAY)));
         stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_longest_interval));
-        stringBuilder.append(Utils.roundedTimeSpan(mWebView.getContext(), (int)Math.round(oStats.longestInterval*Stats.SECONDS_PER_DAY)));
+        stringBuilder.append(Utils.roundedTimeSpan(mWebView.getContext(), (int) Math.round(oStats.longestInterval * Stats.SECONDS_PER_DAY)));
 
+        stringBuilder.append("<br>");
+
+        // PROGRESS
+        stringBuilder.append(_subtitle(res.getString(R.string.stats_progress).toUpperCase()));
+        stringBuilder.append(res.getString(R.string.stats_overview_total_new_cards, oStats.totalNewCards));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_new_cards_per_day, oStats.newCardsPerDay));
     }
 
     private void appendTodaysStats(StringBuilder stringBuilder){
@@ -143,10 +155,10 @@ public class OverviewStatsBuilder {
         int[] todayStats = stats.calculateTodayStats();
         stringBuilder.append(_title(mWebView.getResources().getString(R.string.stats_today)));
         Resources res = mWebView.getResources();
-        final int minutes = (int) Math.round(todayStats[THETIME_INDEX]/60.0);
+        final int minutes = (int) Math.round(todayStats[THETIME_INDEX] / 60.0);
         final String span = res.getQuantityString(R.plurals.time_span_minutes, minutes, minutes);
         stringBuilder.append(res.getQuantityString(R.plurals.stats_today_cards,
-                                                   todayStats[CARDS_INDEX], todayStats[CARDS_INDEX], span));
+                todayStats[CARDS_INDEX], todayStats[CARDS_INDEX], span));
         stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_today_again_count, todayStats[FAILED_INDEX]));
         if (todayStats[CARDS_INDEX] > 0) {
@@ -157,12 +169,10 @@ public class OverviewStatsBuilder {
         stringBuilder.append(res.getString(R.string.stats_today_type_breakdown, todayStats[LRN_INDEX], todayStats[REV_INDEX], todayStats[RELRN_INDEX], todayStats[FILT_INDEX]));
         stringBuilder.append("<br>");
         if (todayStats[MCNT_INDEX] != 0) {
-            stringBuilder.append(res.getString(R.string.stats_today_mature_cards, todayStats[MSUM_INDEX], todayStats[MCNT_INDEX], (todayStats[MSUM_INDEX] / (float)(todayStats[MCNT_INDEX]) * 100.0)));
+            stringBuilder.append(res.getString(R.string.stats_today_mature_cards, todayStats[MSUM_INDEX], todayStats[MCNT_INDEX], (todayStats[MSUM_INDEX] / (float) (todayStats[MCNT_INDEX]) * 100.0)));
         } else {
             stringBuilder.append(res.getString(R.string.stats_today_no_mature_cards));
         }
-
-
     }
 
 
@@ -170,12 +180,8 @@ public class OverviewStatsBuilder {
         return "<h1>" + title + "</h1>";
     }
 
+
     private String _subtitle(String title){
         return "<h3>" + title + "</h3>";
     }
-
-    private String  bold(String s) {
-        return "<b>" + s + "</b>";
-    }
-
 }

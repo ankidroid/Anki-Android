@@ -21,7 +21,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-
 import android.view.View;
 
 import com.ichi2.anki.Statistics;
@@ -31,10 +30,9 @@ import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
 
 import timber.log.Timber;
 
-public class ChartView extends View{
+public class ChartView extends View {
 
     private Statistics.ChartFragment mFragment;
-    private RectangleWrap mRectangle;
     private PlotSheet mPlotSheet;
     private boolean mDataIsSet;
 
@@ -54,10 +52,11 @@ public class ChartView extends View{
         setWillNotDraw(false);
     }
 
+
     @Override
     public void onDraw(Canvas canvas) {
         //Timber.d("drawing chart");
-        if(mDataIsSet){
+        if (mDataIsSet) {
             //Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
             Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG);
             paint.setAntiAlias(true);
@@ -66,33 +65,35 @@ public class ChartView extends View{
 
             Rect field = new Rect();
             this.getDrawingRect(field);
-            mRectangle = new RectangleWrap(field);
-            g.setClip(mRectangle);
-            if(mPlotSheet != null){
+            g.setClip(new RectangleWrap(field));
+            if (mPlotSheet != null) {
                 mPlotSheet.paint(g);
-            }
-            else {
+            } else {
                 super.onDraw(canvas);
             }
         } else {
             super.onDraw(canvas);
         }
-
     }
 
-    public void addFragment(Statistics.ChartFragment fragment){
+
+    public void addFragment(Statistics.ChartFragment fragment) {
         mFragment = fragment;
     }
-    public void setData(PlotSheet plotSheet){
+
+
+    public void setData(PlotSheet plotSheet) {
         mPlotSheet = plotSheet;
         mDataIsSet = true;
     }
+
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         Timber.d("ChartView sizeChange!");
-        if(mFragment != null)
+        if (mFragment != null) {
             mFragment.checkAndUpdate();
+        }
     }
 }

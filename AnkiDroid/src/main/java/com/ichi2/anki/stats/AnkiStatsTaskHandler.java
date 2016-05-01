@@ -104,16 +104,17 @@ public class AnkiStatsTaskHandler {
             sLock.lock();
             try {
                 if (!mIsRunning) {
-                    Timber.d("quiting CreateChartTask (%s) before execution", mChartType.name());
+                    Timber.d("Quitting CreateChartTask (%s) before execution", mChartType.name());
                     return null;
-                } else
-                    Timber.d("starting Create ChartTask, type: %s", mChartType.name());
+                } else {
+                    Timber.d("Starting CreateChartTask, type: %s", mChartType.name());
+                }
                 mImageView = (ChartView) params[0];
                 mProgressBar = (ProgressBar) params[1];
                 ChartBuilder chartBuilder = new ChartBuilder(mImageView, mCollectionData,
-                       mIsWholeCollection, mChartType);
+                        mIsWholeCollection, mChartType);
                 return chartBuilder.renderChart(mStatType);
-            }finally {
+            } finally {
                 sLock.unlock();
             }
         }
@@ -125,16 +126,13 @@ public class AnkiStatsTaskHandler {
 
         @Override
         protected void onPostExecute(PlotSheet plotSheet) {
-            if(plotSheet != null && mIsRunning){
-
+            if (plotSheet != null && mIsRunning) {
                 mImageView.setData(plotSheet);
                 mProgressBar.setVisibility(View.GONE);
                 mImageView.setVisibility(View.VISIBLE);
                 mImageView.invalidate();
-
             }
         }
-
     }
 
     private class CreateStatisticsOverview extends AsyncTask<View, Void, String>{
@@ -155,17 +153,16 @@ public class AnkiStatsTaskHandler {
             sLock.lock();
             try {
                 if (!mIsRunning) {
-                    Timber.d("quiting CreateStatisticsOverview before execution");
+                    Timber.d("Quitting CreateStatisticsOverview before execution");
                     return null;
-                } else
-                    Timber.d("starting CreateStatisticsOverview" );
+                } else {
+                    Timber.d("Starting CreateStatisticsOverview");
+                }
                 mWebView = (WebView) params[0];
                 mProgressBar = (ProgressBar) params[1];
-                String html = "";
                 OverviewStatsBuilder overviewStatsBuilder = new OverviewStatsBuilder(mWebView, mCollectionData, mIsWholeCollection, mStatType);
-                html = overviewStatsBuilder.createInfoHtmlString();
-                return html;
-            }finally {
+                return overviewStatsBuilder.createInfoHtmlString();
+            } finally {
                 sLock.unlock();
             }
         }
@@ -177,10 +174,9 @@ public class AnkiStatsTaskHandler {
 
         @Override
         protected void onPostExecute(String html) {
-            if(html != null && mIsRunning){
-
+            if (html != null && mIsRunning) {
                 try {
-                    mWebView.loadData(URLEncoder.encode(html, "UTF-8").replaceAll("\\+"," "), "text/html; charset=utf-8",  "utf-8");
+                    mWebView.loadData(URLEncoder.encode(html, "UTF-8").replaceAll("\\+", " "), "text/html; charset=utf-8", "utf-8");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -189,18 +185,16 @@ public class AnkiStatsTaskHandler {
                 mWebView.setBackgroundColor(backgroundColor);
                 mWebView.setVisibility(View.VISIBLE);
                 mWebView.invalidate();
-
             }
         }
-
     }
 
-    private static class DeckPreviewStatistics extends AsyncTask<Object, Void, String>{
+    private static class DeckPreviewStatistics extends AsyncTask<Object, Void, String> {
         private TextView mTextView;
 
         private boolean mIsRunning = false;
 
-        public DeckPreviewStatistics(){
+        public DeckPreviewStatistics() {
             super();
             mIsRunning = true;
         }
@@ -213,17 +207,18 @@ public class AnkiStatsTaskHandler {
             try {
                 Collection collection = (Collection) params[0];
                 if (!mIsRunning || collection == null || collection.getDb() == null) {
-                    Timber.d("quiting DeckPreviewStatistics before execution");
+                    Timber.d("Quitting DeckPreviewStatistics before execution");
                     return null;
-                } else
-                    Timber.d("starting DeckPreviewStatistics" );
+                } else {
+                    Timber.d("Starting DeckPreviewStatistics");
+                }
                 mTextView = (TextView) params[1];
 
                 //eventually put this in Stats (in desktop it is not though)
                 int cards;
                 int minutes;
                 Cursor cur = null;
-                String query = "select count(), sum(time)/1000 from revlog where id > " + ((collection.getSched().getDayCutoff()-86400)*1000);
+                String query = "select count(), sum(time)/1000 from revlog where id > " + ((collection.getSched().getDayCutoff() - 86400) * 1000);
                 Timber.d("DeckPreviewStatistics query: " + query);
 
                 try {
@@ -233,7 +228,7 @@ public class AnkiStatsTaskHandler {
 
                     cur.moveToFirst();
                     cards = cur.getInt(0);
-                    minutes = (int) Math.round(cur.getInt(1)/60.0);
+                    minutes = (int) Math.round(cur.getInt(1) / 60.0);
                 } finally {
                     if (cur != null && !cur.isClosed()) {
                         cur.close();
@@ -242,7 +237,7 @@ public class AnkiStatsTaskHandler {
                 Resources res = collection.getContext().getResources();
                 final String span = res.getQuantityString(R.plurals.time_span_minutes, minutes, minutes);
                 return res.getQuantityString(R.plurals.studied_cards_today, cards, cards, span);
-            }finally {
+            } finally {
                 sLock.unlock();
             }
         }
@@ -254,21 +249,19 @@ public class AnkiStatsTaskHandler {
 
         @Override
         protected void onPostExecute(String todayStatString) {
-            if(todayStatString != null && mIsRunning){
+            if (todayStatString != null && mIsRunning) {
                 mTextView.setText(todayStatString);
                 mTextView.setVisibility(View.VISIBLE);
                 mTextView.invalidate();
             }
         }
-
     }
 
-    private static class CreateFirstStatisticChooserTask extends AsyncTask<Object, Void, Integer>{
+    private static class CreateFirstStatisticChooserTask extends AsyncTask<Object, Void, Integer> {
         private ViewPager mViewPager;
-
         private boolean mIsRunning = false;
 
-        public CreateFirstStatisticChooserTask(){
+        public CreateFirstStatisticChooserTask() {
             super();
             mIsRunning = true;
         }
@@ -281,16 +274,17 @@ public class AnkiStatsTaskHandler {
             try {
                 Collection collection = (Collection) params[0];
                 if (!mIsRunning || collection == null || collection.getDb() == null) {
-                    Timber.d("quiting CreateTodayLearnCountOnly before execution");
+                    Timber.d("Quitting CreateFirstStatisticChooserTask before execution");
                     return null;
-                } else
-                    Timber.d("starting CreateTodayLearnCountOnly" );
+                } else {
+                    Timber.d("Starting CreateFirstStatisticChooserTask");
+                }
                 mViewPager = (ViewPager) params[1];
 
                 //eventually put this in Stats (in desktop it is not though)
                 int cards;
                 Cursor cur = null;
-                String query = "select count() from revlog where id > " + ((collection.getSched().getDayCutoff()-86400)*1000);
+                String query = "select count() from revlog where id > " + ((collection.getSched().getDayCutoff() - 86400) * 1000);
                 Timber.d("DeckPreviewStatistics query: " + query);
 
                 try {
@@ -300,16 +294,13 @@ public class AnkiStatsTaskHandler {
 
                     cur.moveToFirst();
                     cards = cur.getInt(0);
-
-
-
                 } finally {
                     if (cur != null && !cur.isClosed()) {
                         cur.close();
                     }
                 }
                 return cards;
-            }finally {
+            } finally {
                 sLock.unlock();
             }
         }
@@ -321,21 +312,21 @@ public class AnkiStatsTaskHandler {
 
         @Override
         protected void onPostExecute(Integer todayStatString) {
-            if(todayStatString != null && mIsRunning && mViewPager != null){
+            if (todayStatString != null && mIsRunning && mViewPager != null) {
                 int chosen = todayStatString;
-                switch (chosen){
+                switch (chosen) {
                     case 0:
                         mViewPager.setCurrentItem(Statistics.FORECAST_TAB_POSITION);
                 }
             }
         }
-
     }
 
 
     public float getmStandardTextSize() {
         return mStandardTextSize;
     }
+
     public void setmStandardTextSize(float mStandardTextSize) {
         this.mStandardTextSize = mStandardTextSize;
     }
