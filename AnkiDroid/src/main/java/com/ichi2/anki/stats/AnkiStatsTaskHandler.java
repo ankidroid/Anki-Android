@@ -72,10 +72,10 @@ public class AnkiStatsTaskHandler {
         createChartTask.execute(views);
         return createChartTask;
     }
-    public static CreateSmallTodayOverview createSmallTodayOverview(Collection col, TextView view){
-        CreateSmallTodayOverview createSmallTodayOverview = new CreateSmallTodayOverview();
-        createSmallTodayOverview.execute(col, view);
-        return createSmallTodayOverview;
+    public static DeckPreviewStatistics createReviewSummaryStatistics(Collection col, TextView view){
+        DeckPreviewStatistics deckPreviewStatistics = new DeckPreviewStatistics();
+        deckPreviewStatistics.execute(col, view);
+        return deckPreviewStatistics;
     }
 
     public static CreateFirstStatisticChooserTask createFirstStatisticChooserTask(Collection col, ViewPager viewPager){
@@ -162,8 +162,8 @@ public class AnkiStatsTaskHandler {
                 mWebView = (WebView) params[0];
                 mProgressBar = (ProgressBar) params[1];
                 String html = "";
-                InfoStatsBuilder infoStatsBuilder = new InfoStatsBuilder(mWebView, mCollectionData, mIsWholeCollection);
-                html = infoStatsBuilder.createInfoHtmlString();
+                OverviewStatsBuilder overviewStatsBuilder = new OverviewStatsBuilder(mWebView, mCollectionData, mIsWholeCollection, mStatType);
+                html = overviewStatsBuilder.createInfoHtmlString();
                 return html;
             }finally {
                 sLock.unlock();
@@ -195,12 +195,12 @@ public class AnkiStatsTaskHandler {
 
     }
 
-    private static class CreateSmallTodayOverview extends AsyncTask<Object, Void, String>{
+    private static class DeckPreviewStatistics extends AsyncTask<Object, Void, String>{
         private TextView mTextView;
 
         private boolean mIsRunning = false;
 
-        public CreateSmallTodayOverview(){
+        public DeckPreviewStatistics(){
             super();
             mIsRunning = true;
         }
@@ -213,10 +213,10 @@ public class AnkiStatsTaskHandler {
             try {
                 Collection collection = (Collection) params[0];
                 if (!mIsRunning || collection == null || collection.getDb() == null) {
-                    Timber.d("quiting CreateSmallTodayOverview before execution");
+                    Timber.d("quiting DeckPreviewStatistics before execution");
                     return null;
                 } else
-                    Timber.d("starting CreateSmallTodayOverview" );
+                    Timber.d("starting DeckPreviewStatistics" );
                 mTextView = (TextView) params[1];
 
                 //eventually put this in Stats (in desktop it is not though)
@@ -224,7 +224,7 @@ public class AnkiStatsTaskHandler {
                 int minutes;
                 Cursor cur = null;
                 String query = "select count(), sum(time)/1000 from revlog where id > " + ((collection.getSched().getDayCutoff()-86400)*1000);
-                Timber.d("CreateSmallTodayOverview query: " + query);
+                Timber.d("DeckPreviewStatistics query: " + query);
 
                 try {
                     cur = collection.getDb()
@@ -291,7 +291,7 @@ public class AnkiStatsTaskHandler {
                 int cards;
                 Cursor cur = null;
                 String query = "select count() from revlog where id > " + ((collection.getSched().getDayCutoff()-86400)*1000);
-                Timber.d("CreateSmallTodayOverview query: " + query);
+                Timber.d("DeckPreviewStatistics query: " + query);
 
                 try {
                     cur = collection.getDb()

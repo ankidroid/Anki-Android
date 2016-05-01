@@ -324,7 +324,7 @@ public class Statistics extends NavigationDrawerActivity implements
 
             switch (position) {
                 case TODAYS_STATS_TAB_POSITION:
-                    return getString(R.string.stats_today).toUpperCase(l);
+                    return getString(R.string.stats_overview).toUpperCase(l);
                 case FORECAST_TAB_POSITION:
                     return getString(R.string.stats_forecast).toUpperCase(l);
                 case REVIEW_COUNT_TAB_POSITION:
