@@ -40,8 +40,8 @@
 -->
 <resources>
   <!-- generic strings -->
-  <string name="disabled">Disabled</string>
-  <string name="enabled">Enabled</string>
+  <string name="disabled">Vypnuto</string>
+  <string name="enabled">Povoleno</string>
   <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Obecné nastavení</string>
@@ -51,10 +51,10 @@
   <string name="pref_cat_flashcard">Zobrazení</string>
   <string name="pref_cat_whiteboard">Tabule</string>
   <string name="pref_cat_automatic_display">Automaticky zobrazovat odpověď</string>
-  <string name="pref_cat_appearance">Appearance</string>
-  <string name="pref_cat_appearance_summ">Change themes and default font</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_appearance">Nastavení vzhledu</string>
+  <string name="pref_cat_appearance_summ">Změna motivu vzhledu a výchozího písma</string>
+  <string name="pref_cat_themes">Motivy vzhledu</string>
+  <string name="pref_cat_fonts">Písmo</string>
   <string name="pref_cat_gestures">Gesta</string>
   <string name="pref_cat_gestures_summ">Použití poklepání a gest místo tlačítek</string>
   <string name="pref_cat_actions">Akce</string>
@@ -77,14 +77,14 @@
   <string name="text_selection_click_summ">Povolte, pokud nejste schopni spustit výběr textu přes dlouhý klik</string>
   <string name="dictionary">Slovník</string>
   <string name="reset_languages">Obnovit jazyky</string>
-  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
+  <string name="reset_languages_summ">Vynulovat přiřazení jazyka (pro řevod textu na řeč a slovníky) pro všechny balíčky</string>
   <string name="reset_languages_question">Obnovit všechny přiřazení jazyka?</string>
   <string name="reset_confirmation">Obnovit všechny stavy</string>
   <string name="card_zoom">Zvětšení karty</string>
   <string name="image_zoom">Zvětšení obrázku</string>
   <string name="button_size">Velikost tlačítka pro odpověď</string>
   <string name="card_browser_font_size">Velikost písma v prohlížení</string>
-  <string name="col_path">AnkiDroid directory</string>
+  <string name="col_path">Adresář AnkiDroid</string>
   <string name="fullscreen_review">Celoobrazovkový režim</string>
   <string name="full_screen_off">Vypnout</string>
   <string name="full_screen_system">Skrýt panely systému</string>
@@ -119,8 +119,8 @@
   <string name="fix_hebrew_text_summ">Úprava pro správné vykreslování hebrejských samohlásek </string>
   <string name="fix_hebrew_instructions">Toto nastavení obejde RTL algoritmus Androidu, aby ukázal správně hebrejský text s samohláskami.\n\nAby to fungovalo potřebujete stáhnout font Tohu.ttf a ručně ho zkopírovat do:\n%s/fonts/\n\nNemusíte upravovat vaše karty.</string>
   <string name="fix_hebrew_download_font">Stáhnout Font</string>
-  <string name="day_theme">Day theme</string>
-  <string name="night_theme">Night theme</string>
+  <string name="day_theme">Motivy vzhledu - den</string>
+  <string name="night_theme">Motivy vzhledu - noc</string>
   <string name="default_font">Výchozí písmo</string>
   <string name="override_font">Použití výchozího písma</string>
   <string name="language">Jazyk</string>
@@ -164,25 +164,25 @@
   <string name="convert_fen_text_summ">Vykreslení šachovnice z Forsyth Edwards Notation. Zápis musí být uzavřen mezi značky [fen][/fen].</string>
   <string name="enable_api_title">Povolit AnkiDroid API</string>
   <string name="enable_api_summary">Umožnit ostatním aplikacím číst a zapisovat data AnkiDroid bez uživatelské intervence</string>
-  <string name="custom_buttons">App bar buttons</string>
-  <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
-  <string name="custom_buttons_setting_always_show">Always show</string>
-  <string name="custom_buttons_setting_if_room">Show if room</string>
-  <string name="custom_buttons_setting_menu_only">Menu only</string>
-  <string name="reset_custom_buttons">Reset to default</string>
+  <string name="custom_buttons">Tlačítka na panelu aplikace</string>
+  <string name="custom_buttons_summary">Vlastní akce, které se objeví v panelu aplikace</string>
+  <string name="custom_buttons_setting_always_show">Vždy zobrazovat</string>
+  <string name="custom_buttons_setting_if_room">Ukazuj pokud je místo</string>
+  <string name="custom_buttons_setting_menu_only">Pouze nabídka</string>
+  <string name="reset_custom_buttons">Obnovit výchozí nastavení</string>
   <!-- Advanced statistics settings -->
-  <string name="advanced_statistics_title">Advanced statistics</string>
-  <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
-  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
-  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
-  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
-  <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+  <string name="advanced_statistics_title">Pokročilé statistiky</string>
+  <string name="enable_advanced_statistics_title">Zapnout pokročilé statistiky</string>
+  <string name="enable_advanced_statistics_summ">Zobrazení předpovědi statistiky založené na výpočtu nebo simulaci budoucích opakování (povoleno) nebo na základě již naplánovaných budoucích opakování (zakázáno).</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Vypočítat prvních n dní a zbytek simulovat</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Přesnost výpočtu</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">Počet iterací simulace</string>
   <!-- Custom sync server settings -->
-  <string name="custom_sync_server_title">Custom sync server</string>
-  <string name="custom_sync_server_enable_title">Use custom sync server</string>
-  <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
+  <string name="custom_sync_server_title">Vlastní sync server</string>
+  <string name="custom_sync_server_enable_title">Použij vlastní sync server</string>
+  <string name="custom_sync_server_enable_summary">Pokud nechcete používat proprietární službu AnkiWeb, můžete zadat alternativní server zde</string>
   <string name="custom_sync_server_base_url_title">Sync url</string>
-  <string name="custom_sync_server_media_url_title">Media sync url</string>
+  <string name="custom_sync_server_media_url_title">Sync url pro média</string>
   <!-- studyoptions -->
   <string name="studyoptions_limit_select_tags">Výběr štítků</string>
   <!-- Deck configurations -->
@@ -190,8 +190,8 @@
   <string name="deck_conf_group">Skupina nastavení</string>
   <plurals name="deck_conf_group_summ">
     <item quantity="one">%1$s\n%2$d balíček používá tuto skupinu</item>
-    <item quantity="few">%1$s\n%2$d decks use this group</item>
-    <item quantity="other">%1$s\n%2$d balíčky(ů) používá tuto skupinu</item>
+    <item quantity="few">%1$s\n%2$d balíčky používají tuto skupinu</item>
+    <item quantity="other">%1$s\n%2$d balíčků používá tuto skupinu</item>
   </plurals>
   <string name="deck_conf_new_cards">Nové karty</string>
   <string name="deck_conf_rev_cards">Opakování</string>
@@ -237,8 +237,8 @@
   <string name="deck_conf_set_subdecks">Nastavit pro všechny podřízené balíčky</string>
   <plurals name="deck_conf_set_subdecks_summ">
     <item quantity="one">%s podřízený balíček bude používat tuto skupinu</item>
-    <item quantity="few">%s subdecks will use this group</item>
-    <item quantity="other">%s podřízené(ých) balíčků bude používat tuto skupinu</item>
+    <item quantity="few">%s podřízené balíčky budou používat tuto skupinu</item>
+    <item quantity="other">%s podřízených balíčků budou používat tuto skupinu</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Nastavit pro všechny podřízené balíčky</string>
   <string name="deck_conf_set_subdecks_message">Použít aktuální nastavení pro všechny podbalíčky tohoto balíčku?</string>

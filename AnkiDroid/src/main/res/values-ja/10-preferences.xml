@@ -168,7 +168,7 @@
   <string name="custom_buttons_summary">学習画面のAppバーにどの操作をアイコン表示するかカスタマイズします</string>
   <string name="custom_buttons_setting_always_show">常に表示</string>
   <string name="custom_buttons_setting_if_room">空きスペースがあれば表示</string>
-  <string name="custom_buttons_setting_menu_only">ボタン非表示（文字メニューでのみ表示）</string>
+  <string name="custom_buttons_setting_menu_only">文字メニューでのみ表示</string>
   <string name="reset_custom_buttons">初期設定にリセット</string>
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">高度な統計</string>

@@ -155,7 +155,7 @@
   <string name="import_replacing">コレクションを置き換えています...</string>
   <string name="export_include_schedule">スケジュールを含める</string>
   <string name="export_include_media">メディアファイルを含める</string>
-  <string name="confirm_apkg_export">コレクションを apkgファイルとしてエクスポートしますか？</string>
+  <string name="confirm_apkg_export">コレクション（全デッキ）を anki形式のファイル \"collection.apkg\" としてエクスポートします。よろしいですか？</string>
   <string name="confirm_apkg_export_deck">\"%s\" を apkgファイルとしてエクスポートしますか？</string>
   <string name="export_in_progress">apkgファイルをエクスポートしています...</string>
   <string name="export_successful_title">apkg ファイルをメールで送信しますか？</string>

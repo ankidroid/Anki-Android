@@ -94,11 +94,11 @@
     <item>항상</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Plain</item>
+    <item>밝음</item>
+    <item>플레인</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
+    <item>블랙</item>
+    <item>어두움</item>
   </string-array>
 </resources>

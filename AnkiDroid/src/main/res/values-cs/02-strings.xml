@@ -107,7 +107,7 @@
   <string name="saving_facts">Ukládání poznámky</string>
   <string name="saving_model">Ukládání modelu</string>
   <string name="add">Přidat</string>
-  <string name="save">Save</string>
+  <string name="save">Uložit</string>
   <string name="close">Zavřít</string>
   <string name="select">Vybrat</string>
   <string name="saving_changes">Ukládání změn ...</string>
@@ -116,12 +116,12 @@
   <string name="confirm_map_cards_to_nothing">Karty mapované na prázný cíl budou smazány. Nezbývají-li už v poznámce žádné karty, bude poznámka ztracena. Opravdu chcete pokračovat?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d karta studována za %2$s</item>
-    <item quantity="few">%1$d cards studied in %2$s</item>
+    <item quantity="few">%1$d karty studovány za %2$s</item>
     <item quantity="other">%1$d karet studováno za %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
     <item quantity="one">%1$d minuta</item>
-    <item quantity="few">%1$d minutes</item>
+    <item quantity="few">%1$d minuty</item>
     <item quantity="other">%1$d minut</item>
   </plurals>
   <string name="studyoptions_welcome_title">Vítejte v AnkiDroid</string>
@@ -136,7 +136,7 @@
   <string name="default_conf_delete_error">Nelze odstranit výchozí skupinu</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">přidána %d karta</item>
-    <item quantity="few">%d cards added</item>
+    <item quantity="few">přidány %d karty</item>
     <item quantity="other">přidáno %d karet</item>
   </plurals>
   <string name="help_title">Nápověda</string>
@@ -150,7 +150,7 @@
   <string name="show_hint">Zobrazit %s</string>
   <string name="info_rate">Ohodnotit AnkiDroid</string>
   <string name="col_load_failed">Načítání kolekce se nezdařilo.\nStiskněte zpět pro zavření AnkiDroid.</string>
-  <string name="import_title">Importing</string>
+  <string name="import_title">Importuje se</string>
   <string name="import_select_title">Vyberte soubor k importu</string>
   <string name="import_message_add">Přidat</string>
   <string name="import_message_replace_confirm">Tímto vymažete vaši stávající kolekci a nahradíte jí daty ze souboru %s. Jste si jistý?</string>
@@ -158,7 +158,7 @@
   <string name="import_log_no_apkg">Toto není platný apkg soubor</string>
   <string name="import_error_not_apkg_extension">Souboru %s nemá příponu .apkg</string>
   <string name="import_error_content_provider">Vybraný soubor nelze automaticky importovat pomocí AnkiDroid. V uživatelské příručce naleznete, jak provést ruční import souborů anki: \n %s</string>
-  <string name="import_replacing">Replacing collection&#8230;</string>
+  <string name="import_replacing">Nahrazuji kolekci&#8230;</string>
   <string name="export_include_schedule">Zahrnout plánování</string>
   <string name="export_include_media">Zahrnout multimédia</string>
   <string name="confirm_apkg_export">Export kolekce jako apkg soubor?</string>
@@ -170,7 +170,7 @@
   <string name="import_hint">Pro import karet umístěte soubor apkg do adresáře %s a stiskněte ok</string>
   <string name="upgrade_import_no_file_found">Iportvatelný soubor %1$s nebyl nenalezen</string>
   <string name="study_options">Nastavení balíčku</string>
-  <string name="select_tts">Set TTS language</string>
+  <string name="select_tts">Výběr hlasu pro převod textu na hlas</string>
   <string name="custom_study">Vlastní učení</string>
   <string name="more_options">Více</string>
   <string name="dyn_deck_desc">Toto je speciální balíček pro studium mimo normální plán. Karty se automaticky po opakování vrátí do svého původního balíčku. Odstraněním tohoto balíčku ze seznamu se všechny zbývající karty vrátí to jejich původního balíčku.</string>
@@ -185,32 +185,32 @@
   <!-- Time spans -->
   <plurals name="time_span_seconds">
     <item quantity="one">%s sekunda</item>
-    <item quantity="few">%s seconds</item>
-    <item quantity="other">%s sekundy</item>
+    <item quantity="few">%s sekundy</item>
+    <item quantity="other">%s sekund</item>
   </plurals>
   <plurals name="time_span_minutes">
     <item quantity="one">%s minuta</item>
-    <item quantity="few">%s minutes</item>
+    <item quantity="few">%s minuty</item>
     <item quantity="other">%s minut</item>
   </plurals>
   <plurals name="time_span_hours">
     <item quantity="one">%s hodina</item>
-    <item quantity="few">%s hours</item>
-    <item quantity="other">%s hodiny</item>
+    <item quantity="few">%s hodiny</item>
+    <item quantity="other">%s hodin</item>
   </plurals>
   <plurals name="time_span_days">
     <item quantity="one">%s den</item>
-    <item quantity="few">%s days</item>
+    <item quantity="few">%s deny</item>
     <item quantity="other">%s dnů</item>
   </plurals>
   <plurals name="time_span_months">
     <item quantity="one">%s měsíc</item>
-    <item quantity="few">%s months</item>
+    <item quantity="few">%s měsíce</item>
     <item quantity="other">%s měsíců</item>
   </plurals>
   <plurals name="time_span_years">
     <item quantity="one">%s rok</item>
-    <item quantity="few">%s years</item>
+    <item quantity="few">%s roky</item>
     <item quantity="other">%s let</item>
   </plurals>
   <!-- The reason for making a simple “< x” translatable are RTL

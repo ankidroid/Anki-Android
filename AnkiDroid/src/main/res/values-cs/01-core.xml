@@ -56,19 +56,19 @@
   <string name="study_more">Vlastní studium</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d karta ke zkoušení (%2$s)</item>
-    <item quantity="few">%1$d cards due (%2$s)</item>
+    <item quantity="few">%1$d karty ke zkoušení (%2$s)</item>
     <item quantity="other">%1$d karet ke zkoušení (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minuta zbývá</item>
-    <item quantity="few">%d minutes left</item>
-    <item quantity="other">%d minut zbývá</item>
+    <item quantity="one">zbývá %d minuta</item>
+    <item quantity="few">zbývají %d minuty</item>
+    <item quantity="other">zbývá %d minut</item>
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
-    <item quantity="one">Dnes studována %1$d karta za %2$s</item>
-    <item quantity="few">Studied %1$d cards in %2$s today</item>
-    <item quantity="other">Dnes studováno %1$d karet za %2$s</item>
+    <item quantity="one">Dnes studována %1$d karta během %2$s</item>
+    <item quantity="few">Dnes studovány %1$d karty během %2$s</item>
+    <item quantity="other">Dnes studováno %1$d karet během %2$s</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">Zapište odpověď</string>
@@ -81,8 +81,8 @@
   <string name="menu_import">Import</string>
   <string name="undo">Vrátit zpět</string>
   <string name="undo_action_review">poslední opakování</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
+  <string name="undo_action_bury_card">přeskočit kartu</string>
+  <string name="undo_action_bury_note">přeskočit poznámku</string>
   <string name="undo_action_suspend_card">vyřadit kartu</string>
   <string name="undo_action_suspend_note">vyřadit poznámku</string>
   <string name="undo_action_delete">odstranit poznámku</string>
@@ -96,8 +96,8 @@
   <string name="menu_bury_note">Přeskočit poznámku</string>
   <string name="menu_suspend_card">Vyřadit kartu</string>
   <string name="menu_suspend_note">Vyřadit poznámku</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">Přeskočit</string>
+  <string name="menu_suspend">Vyřadit</string>
   <string name="menu_delete_note">Odstranit poznámku</string>
   <string name="delete_note_message">Opravdu smazat poznámku a všechny její karty?\n%s</string>
   <string name="menu_select">Vybrat text</string>
@@ -157,8 +157,8 @@
   <string name="card_template_editor_cant_delete">Je vyžadován alespoň jeden typ karty.</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">Odstranit typ karty \'%2$s\' a jeho %1$d kartu?</item>
-    <item quantity="few">Delete the “%2$s” card type, and its %1$d cards?</item>
-    <item quantity="other">Odstranit typ karty \'%2$s\' a jeho %1$d karty?</item>
+    <item quantity="few">Odstranit typ karty \'%2$s\' a jeho %1$d karty?</item>
+    <item quantity="other">Odstranit typ karty \'%2$s\' a jeho %1$d karet?</item>
   </plurals>
   <string name="invalid_template">Karta nemůže být vytvořena</string>
   <string name="card_template_editor_would_delete_note"> Odstraněním tohoto typu karty můžete způsobit, že jedna nebo         více poznámek budou odstraněny. Nejprve vytvořte nový typ karty.</string>

@@ -50,8 +50,8 @@
   <string name="card_browser_unsuspend_card">Reactivar tarjeta</string>
   <string name="card_browser_mark_card">Marcar nota</string>
   <string name="card_browser_unmark_card">Desmarcar nota</string>
-  <string name="delete_card_title">Eliminar nota</string>
-  <string name="delete_card_message">¿Está seguro de eliminar todas las tarjetas de esta nota?\nBuscar en el campo. %s</string>
+  <string name="delete_card_title">¿Eliminar nota?</string>
+  <string name="delete_card_message">¿Estás seguro de eliminar todas las tarjetas de esta nota?\nCampo de búsqueda: %s</string>
   <string name="card_browser_show_marked">Filtro marcado</string>
   <string name="card_browser_show_suspended">Filtro suspendido</string>
   <string name="card_browser_search_by_tag">Filtrar por etiqueta</string>

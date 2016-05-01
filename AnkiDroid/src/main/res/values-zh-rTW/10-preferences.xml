@@ -40,8 +40,8 @@
 -->
 <resources>
   <!-- generic strings -->
-  <string name="disabled">Disabled</string>
-  <string name="enabled">Enabled</string>
+  <string name="disabled">已停用</string>
+  <string name="enabled">已啟用</string>
   <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">一般設定</string>
@@ -53,8 +53,8 @@
   <string name="pref_cat_automatic_display">自動顯示答案</string>
   <string name="pref_cat_appearance">Appearance</string>
   <string name="pref_cat_appearance_summ">Change themes and default font</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_themes">佈景</string>
+  <string name="pref_cat_fonts">字型</string>
   <string name="pref_cat_gestures">手勢</string>
   <string name="pref_cat_gestures_summ">使用點擊和滑動來取代按鈕</string>
   <string name="pref_cat_actions">動作</string>
@@ -78,7 +78,7 @@
   <string name="dictionary">查找字典</string>
   <string name="reset_languages">重設語言</string>
   <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
-  <string name="reset_languages_question">確定要重設所有的語言？</string>
+  <string name="reset_languages_question">重設所有的語言？</string>
   <string name="reset_confirmation">重設所有狀態</string>
   <string name="card_zoom">卡片縮放</string>
   <string name="image_zoom">圖片縮放</string>
@@ -163,7 +163,7 @@
   <string name="convert_fen_text">支援國際象棋記譜法</string>
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
   <string name="enable_api_title">開啓 AnkiDroid API</string>
-  <string name="enable_api_summary">讓其他應用程式不需經過您同意，即可連結到 AnkiDroid 且讀寫檔案</string>
+  <string name="enable_api_summary">讓其他應用程式不需經過你同意，即可連結到 AnkiDroid 且讀寫檔案</string>
   <string name="custom_buttons">App bar buttons</string>
   <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
   <string name="custom_buttons_setting_always_show">Always show</string>

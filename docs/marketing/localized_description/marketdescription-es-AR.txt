@@ -2,7 +2,7 @@
 
 AnkiDroid le permite aprender mediante tarjetas flash de modo muy eficiente mostrandoselas justo antes de que las olvide. Es completamente compatible con el software de repetición espaciada Anki (incluyendo la sincronización), el cual está disponible para Windows, Linux y MacOS.
 
-Estudie todo tipo de contenidos en cuando y donde quiera. ¡Aproveche los tiempos muertos de viajes en ómnibus, colas de supermercado y en cualquier otra situación de espera!
+Estudiá todo tipo de cosas donde y cuando quieras. ¡Aproveche los tiempos muertos de viajes en ómnibus, colas de supermercado y en cualquier otra situación de espera!
 
 Cree su propio mazo de tarjetas flash o descargue mazos gratuitos compilados para muchos idiomas y temas (más de 6000 disponibles).
 

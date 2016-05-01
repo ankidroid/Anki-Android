@@ -40,8 +40,8 @@
 -->
 <resources>
   <!-- generic strings -->
-  <string name="disabled">Disabled</string>
-  <string name="enabled">Enabled</string>
+  <string name="disabled">사용하지 않음</string>
+  <string name="enabled">사용함</string>
   <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">일반 설정</string>
@@ -51,10 +51,10 @@
   <string name="pref_cat_flashcard">디스플레이</string>
   <string name="pref_cat_whiteboard">칠판</string>
   <string name="pref_cat_automatic_display">자동 디스플레이 대답</string>
-  <string name="pref_cat_appearance">Appearance</string>
-  <string name="pref_cat_appearance_summ">Change themes and default font</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_appearance">외관</string>
+  <string name="pref_cat_appearance_summ">기본 글꼴과 테마 변경</string>
+  <string name="pref_cat_themes">테마</string>
+  <string name="pref_cat_fonts">글꼴</string>
   <string name="pref_cat_gestures">제스쳐</string>
   <string name="pref_cat_gestures_summ">버튼 대신 밀기와 두드리기 사용</string>
   <string name="pref_cat_actions">작업</string>
@@ -71,25 +71,25 @@
   <string name="whiteboard_black_summ">야간 모드가 아니라면 메모리를 적게 사용</string>
   <string name="write_answers_disable">정답 타이핑 사용 안함</string>
   <string name="write_answers_disable_summ">\'정답 입력\' 필드가 있는 카드에서 키보드가 나타나는 것을 방지</string>
-  <string name="use_input_tag">Type answer into the card</string>
-  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
+  <string name="use_input_tag">카드에 정답 입력</string>
+  <string name="use_input_tag_summ">카드 안의 텍스트 입력 상자에다가 정답을 입력하도록 사용</string>
   <string name="text_selection_click">길게 누름과 관련된 차선책</string>
   <string name="text_selection_click_summ">긴 클릭을 통해서 텍스트를 선택할 수 없는 경우 이 항목을 활성화</string>
   <string name="dictionary">색인 사전</string>
   <string name="reset_languages">언어 재설정</string>
-  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
+  <string name="reset_languages_summ">모든 카드 묶음에 할당된 언어(사전과 TTS) 초기화</string>
   <string name="reset_languages_question">모든 언어 설정을 재설정할까요?</string>
   <string name="reset_confirmation">모든 상태 재설정</string>
   <string name="card_zoom">카드 확대</string>
   <string name="image_zoom">이미지 확대</string>
   <string name="button_size">정답 버튼 크기</string>
   <string name="card_browser_font_size">카드 탐색기 글꼴 크기 조정</string>
-  <string name="col_path">AnkiDroid directory</string>
+  <string name="col_path">AnkiDroid 디렉토리</string>
   <string name="fullscreen_review">전체 화면 모드</string>
-  <string name="full_screen_off">Off</string>
-  <string name="full_screen_system">Hide the system bars</string>
-  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
+  <string name="full_screen_off">끔</string>
+  <string name="full_screen_system">시스템 바 숨기기</string>
+  <string name="full_screen_complete">시스템 바와 정답 버튼 숨기기</string>
+  <string name="full_screen_error_gestures">정답 버튼을 숨기려면 제스처를 사용하도록 해야 합니다.</string>
   <string name="gestures">제스처 사용</string>
   <string name="gestures_summ">응답 및 카드 편집 등의 작업에 제스쳐 할당</string>
   <string name="gestures_swipe_up">위로 밀기</string>
@@ -113,15 +113,14 @@
   <string name="sync_account">AnkiWeb 계정</string>
   <string name="sync_account_summ_logged_out">로그인 하지 않음</string>
   <string name="sync_account_summ_logged_in">%s</string>
-  <string name="automatic_sync_choice">Automatic synchronization</string>
-  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
+  <string name="automatic_sync_choice">자동 동기화</string>
+  <string name="automatic_sync_choice_summ">마지막 동기화로부터 10분이 넘었을 경우 앱 시작 및 종료시 자동으로 동기화</string>
   <string name="fix_hebrew_text">히브리어 모음에 대한 수정</string>
   <string name="fix_hebrew_text_summ">히브리어 모음을 올바르게 표시하기 위한 해결 방법입니다.</string>
   <string name="fix_hebrew_instructions">이 설정은 안드로이드의 RTL 알고리즘을 우회하여 히브리어 텍스트의 모음을 바르게 표시하게 합니다.\n\nTohu.ttf를 다운로드하여 직접 %s/fonts/ 폴더에 복사하세요.\n\n기존의 카드를 편집할 필요는 없습니다.</string>
   <string name="fix_hebrew_download_font">글꼴 다운로드</string>
-  <string name="day_theme">Day theme</string>
-  <string name="night_theme">Night theme</string>
+  <string name="day_theme">주간 테마</string>
+  <string name="night_theme">야간 테마</string>
   <string name="default_font">기본 글꼴</string>
   <string name="override_font">기본 글꼴 적용 가능성</string>
   <string name="language">언어</string>
@@ -163,27 +162,27 @@
   <string name="pref_keep_screen_on_summ">화면 시간 제한 해제</string>
   <string name="convert_fen_text">체스 표기법 지원</string>
   <string name="convert_fen_text_summ">Forsyth–Edwards 표기법으로 체스판을 그립니다. 표기법은 [fen][/fen] 태그에서 묶어야 합니다.</string>
-  <string name="enable_api_title">Enable AnkiDroid API</string>
-  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
-  <string name="custom_buttons">App bar buttons</string>
-  <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
-  <string name="custom_buttons_setting_always_show">Always show</string>
+  <string name="enable_api_title">AnkiDroid API를 사용하도록 설정</string>
+  <string name="enable_api_summary">사용자의 개입 없이 다른 앱이 AnkiDroid에 연결하고 데이터를 읽고 쓸 수 있도록 허용</string>
+  <string name="custom_buttons">앱 바 버튼</string>
+  <string name="custom_buttons_summary">앱 바에 어떠한 동작이 표시될 것인지 지정</string>
+  <string name="custom_buttons_setting_always_show">항상 표시</string>
   <string name="custom_buttons_setting_if_room">Show if room</string>
-  <string name="custom_buttons_setting_menu_only">Menu only</string>
-  <string name="reset_custom_buttons">Reset to default</string>
+  <string name="custom_buttons_setting_menu_only">메뉴만</string>
+  <string name="reset_custom_buttons">기본값으로 초기화</string>
   <!-- Advanced statistics settings -->
-  <string name="advanced_statistics_title">Advanced statistics</string>
-  <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
-  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
-  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
-  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
-  <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+  <string name="advanced_statistics_title">고급 통계</string>
+  <string name="enable_advanced_statistics_title">고급 통계 사용</string>
+  <string name="enable_advanced_statistics_summ">향후 복습의 시뮬레이션이나 계산에 기반한(옵션 사용할 경우), 또는 이미 예정된 향후 복습에 기반한(옵션 사용하지 않을 경우) 예측 통계를 표시</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">처음 n일을 계산, 나머지는 시뮬레이트</string>
+  <string name="advanced_forecast_stats_compute_precision_title">계산의 정확도</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">시뮬레이션 반복 횟수</string>
   <!-- Custom sync server settings -->
-  <string name="custom_sync_server_title">Custom sync server</string>
-  <string name="custom_sync_server_enable_title">Use custom sync server</string>
-  <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
-  <string name="custom_sync_server_base_url_title">Sync url</string>
-  <string name="custom_sync_server_media_url_title">Media sync url</string>
+  <string name="custom_sync_server_title">임의의 동기화 서버</string>
+  <string name="custom_sync_server_enable_title">임의의 동기화 서버 사용</string>
+  <string name="custom_sync_server_enable_summary">독점 AnkiWeb 서비스를 사용하지 않기를 원하신다면 대체 서버를 여기에 지정할 수 있습니다.</string>
+  <string name="custom_sync_server_base_url_title">동기화 URL</string>
+  <string name="custom_sync_server_media_url_title">미디어 동기화 URL</string>
   <!-- studyoptions -->
   <string name="studyoptions_limit_select_tags">태그 선택</string>
   <!-- Deck configurations -->

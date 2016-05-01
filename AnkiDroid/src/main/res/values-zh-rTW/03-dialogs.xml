@@ -39,26 +39,26 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">檢查資料庫</string>
+  <string name="check_db_title">檢查資料庫？</string>
   <string name="check_db_warning">這可能會花上好一段時間</string>
   <string name="check_db_acknowledge">資料庫已檢查</string>
   <string name="check_db_acknowledge_shrunk">資料庫已檢查且最佳化。\n 縮小 %d kb。</string>
   <string name="contextmenu_deckpicker_delete_deck">刪除牌組</string>
   <string name="delete_deck_default_deck">無法刪除預設的牌組。</string>
-  <string name="delete_deck_title">刪除牌組</string>
+  <string name="delete_deck_title">刪除牌組？</string>
   <plurals name="delete_deck_message">
     <item quantity="other">刪除 %1$s 內所有卡片嗎？共包含 %2$d 張卡片。</item>
   </plurals>
-  <string name="delete_cram_deck_message">您確定要將 %s 裡的所有卡片送回它們原本的牌組？</string>
+  <string name="delete_cram_deck_message">你確定要將 %s 裡的所有卡片送回它們原本的牌組？</string>
   <string name="no_tts_available_message">沒有可用的朗讀語言</string>
   <string name="initializing_tts">正在初始化 TTS&#8230;</string>
   <string name="tts_no_tts">不要發音</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>給 Android 的 Flashcard</h2>AnkiDroid 是完全相容桌面版本的 flashcard 應用程式 <a href=\"%2$s\">Anki</a>。 您可以任意在 AnkiDroid 或是桌面版 Anki 上新增，下載和學習東西，並使用 AnkiWeb 輕鬆同步這些記錄。]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>給 Android 的 Flashcard</h2>AnkiDroid 是完全相容桌面版本的 flashcard 應用程式 <a href=\"%2$s\">Anki</a>。 你可以任意在 AnkiDroid 或是桌面版 Anki 上新增、下載和學習東西，並使用 AnkiWeb 輕鬆同步這些記錄。]]></item>
     <item><![CDATA[為了協助我們讓 AnkiDroid 更好，請到 <a href=\"%1$s\">issue tracker</a> 回報錯誤; 任何有關新功能的點子也很歡迎。在 <a href=\"%2$s\">wiki</a> 尋找答案或是在<a href=\"%3$s\">論壇</a>參與討論。]]></item>
     <item><![CDATA[AnkiDroid 是<a href=\"%1$s\">自由軟體<a/>，所以我們鼓勵任何人<a href=\"%2$s\">成爲貢獻者</a> :-)]]></item>
-    <item><![CDATA[非開發人員也可以幫忙。例如，您可以<a href=\"%1$s\">幫忙翻譯</a> AnkiDroid，更新 wiki，提供螢幕截圖，<a href=\"%2$s\">捐款</a> 給桌面版 Anki，或是幫 AnkiDroid 寫篇部落格文章。]]></item>
-    <item><![CDATA[AnkiDroid 在 <a href=\"%1$s\">GNU-GPL v3 授權</a>下釋出且您可在<a href=\"%2$s\">GitHub</a> 上取得其程式碼]]></item>
+    <item><![CDATA[非開發人員也可以幫忙。例如，你可以<a href=\"%1$s\">幫忙翻譯</a> AnkiDroid、更新維基、提供螢幕截圖、<a href=\"%2$s\">捐款</a> 給桌面版 Anki，或是幫 AnkiDroid 寫篇部落格文章。]]></item>
+    <item><![CDATA[AnkiDroid 在 <a href=\"%1$s\">GNU-GPL v3 授權</a>下釋出且你可在<a href=\"%2$s\">GitHub</a> 上取得其程式碼]]></item>
   </string-array>
   <string name="preview_title">預覽</string>
   <string name="reset_card_dialog_title">重置卡片進度</string>
@@ -68,9 +68,9 @@
   <string name="reschedule_card_dialog_message">重置 x 天內複習的進度：</string>
   <string name="reschedule_card_dialog_acknowledge">已重置卡片進度</string>
   <string name="answering_error_title">資料庫錯誤</string>
-  <string name="answering_error_message">寫入資料庫時發生錯誤。可能是資料庫毀損或是記憶卡空間不足。\n\n如果這經常發生的話，請嘗試檢查資料庫，修復您的收藏或從備份中還原。當然這也可能是 AnkiDroid 的 bug ，請回報錯誤讓我們知道。</string>
+  <string name="answering_error_message">寫入資料庫時發生錯誤。可能是資料庫毀損或是記憶卡空間不足。\n\n如果這經常發生的話，請嘗試檢查資料庫，修復你的收藏或從備份中還原。\n當然這也可能是 AnkiDroid 的程式錯誤，請回報錯誤讓我們知道。</string>
   <string name="answering_error_report">回報錯誤</string>
-  <string name="repair_deck_dialog">您真的想要修復資料庫嗎?\n\n在開始修復之前, 會先複製一份備份檔案放置於資料夾\'%s\'中.</string>
+  <string name="repair_deck_dialog">你真的想要修復資料庫嗎？\n\n在開始修復之前，會先複製一份備份檔案放置於資料夾\'%s\'中。</string>
   <string name="intent_add_saved_information">儲存的資料</string>
   <string name="intent_add_clear_all">全部清除</string>
   <string name="intent_aedict_empty">\'default\'類別是空的</string>
@@ -84,7 +84,7 @@
   <string name="custom_study_random">隨機選擇 x 張卡片，從牌組:</string>
   <string name="custom_study_preview">預覽過去 x 天新增的卡片:</string>
   <string name="rebuild_custom_study_deck">重建自訂學習的牌組。\n請稍後...</string>
-  <string name="importing_collection">匯入收藏中\n請稍後...</string>
+  <string name="importing_collection">匯入收藏中&#8230;</string>
   <string name="import_media_count">匯入媒體檔案 %1$d%%\n 請稍後......</string>
   <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
   <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
@@ -93,7 +93,7 @@
   <string name="sd_card_full_title">SD 卡空間已滿</string>
   <string name="sd_card_almost_full_title">SD 卡空間快滿</string>
   <string name="restore_backup_title">回復備份嗎？</string>
-  <string name="restore_backup">您的蒐藏將會被較舊的版本給覆蓋。任何尚未儲存的進度都會遺失。</string>
+  <string name="restore_backup">你的收藏將會被較舊的版本給覆蓋。任何尚未儲存的進度都會遺失。</string>
   <string name="dialog_cancel">取消</string>
   <string name="dialog_ok">確定</string>
   <string name="dialog_continue">繼續</string>
@@ -110,7 +110,7 @@
   <string name="dialog_collection_path_not_dir">所選的路徑不是有效路徑</string>
   <!-- Media checking -->
   <string name="check_media_title">檢查媒體嗎？</string>
-  <string name="check_media_warning">因爲大量的媒體蒐藏，這可能會花上好一段時間</string>
+  <string name="check_media_warning">因爲大量的媒體收藏，這可能會花上好一段時間</string>
   <string name="check_media_message">正在檢查媒體&#8230;</string>
   <string name="check_media_acknowledge">媒體已檢查</string>
   <string name="check_media_failed">媒體檢查失敗</string>

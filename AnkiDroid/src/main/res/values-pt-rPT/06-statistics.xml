@@ -74,6 +74,20 @@
   <string name="stats_today_type_breakdown">Aprender: &lt;b&gt;%1$s&lt;/b&gt;, Revisão: &lt;b&gt;%2$s&lt;/b&gt;, Reaprender: &lt;b&gt;%3$s&lt;/b&gt;, Filtradas: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Respostas corretas em fichas maduras: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Nenhuma ficha madura foi estudada hoje.</string>
+  <string name="stats_overview_days_studied">Days studied: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
+  <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt;  reviews</string>
+  <string name="stats_overview_reviews_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
+  <string name="stats_overview_reviews_per_day_all">If you studied every day: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
+  <string name="stats_overview_time_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day</string>
+  <string name="stats_overview_time_per_day_all">If you studied every day:  &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day</string>
+  <string name="stats_overview_new_cards_per_day">Average: &lt;b&gt;%1$.1f&lt;/b&gt; new cards/day</string>
+  <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt;  new cards</string>
+  <string name="stats_overview_average_interval">"Average interval: "</string>
+  <string name="stats_overview_longest_interval">"Longest interval: "</string>
+  <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; years</string>
+  <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; months</string>
+  <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; days</string>
+  <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; hours</string>
   <string name="deck_summary_all_decks">Todos os baralhos</string>
   <string name="stats_select_time_scale">Selecionar escala de tempo</string>
   <string-array name="due_x_axis_title">
@@ -82,9 +96,11 @@
     <item>Meses</item>
   </string-array>
   <string name="stats_today">Hoje</string>
+  <string name="stats_overview">Overview</string>
   <string name="stats_forecast">Previsão</string>
   <string name="stats_review_count">Contagem de revisões</string>
   <string name="stats_review_time">Tempo de revisão</string>
+  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Intervalos</string>
   <string name="stats_breakdown">Divisão horária</string>
   <string name="stats_weekly_breakdown">Divisão semanal</string>

@@ -76,7 +76,7 @@
   <string name="undo">復原</string>
   <string name="undo_action_review">上次複習</string>
   <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
+  <string name="undo_action_bury_note">掩埋註解</string>
   <string name="undo_action_suspend_card">長久擱置卡片</string>
   <string name="undo_action_suspend_note">長久擱置筆記</string>
   <string name="undo_action_delete">刪除筆記</string>
@@ -93,7 +93,7 @@
   <string name="menu_bury">Bury</string>
   <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">刪除筆記</string>
-  <string name="delete_note_message">真的要刪除這個筆記跟它的卡片嗎?\n%s</string>
+  <string name="delete_note_message">真的要刪除這個筆記跟它的卡片嗎？\n%s</string>
   <string name="menu_select">選擇文字</string>
   <string name="menu_search">在%1$s中查詢</string>
   <string name="menu_mark_note">標記筆記</string>
@@ -128,19 +128,18 @@
   <string name="studyoptions_limit_reached">已達每日學習上限</string>
   <string name="studyoptions_empty_schedule">沒有預訂的卡片要學習</string>
   <string name="studyoptions_congrats_finished">恭喜！你完成今天的進度了。</string>
-  <string name="studyoptions_congrats_more_rev">今天的複習上限已經達到了，但還有卡片尚待複習。為達最佳記憶效果，可考慮在選項中增加每日複習上限。
-</string>
-  <string name="studyoptions_congrats_more_new">牌組裡還有其他新的卡片，只是您已經達到今天的進度了。您可以在選項中增加每日卡片數量上限，但請注意，這將會加重你短期的復習量。</string>
+  <string name="studyoptions_congrats_more_rev">今天的複習上限已經達到了，但還有卡片尚待複習。為達最佳記憶效果，可考慮在選項中增加每日複習上限。</string>
+  <string name="studyoptions_congrats_more_new">牌組裡還有其他新的卡片，只是你已經達到今天的進度了。你可以在選項中增加每日卡片數量上限，但請注意，這將會加重你短期的復習量。</string>
   <string name="studyoptions_congrats_custom">如果要有額外的學習進度，請按下方的「自訂學習」按鈕。</string>
   <string name="studyoptions_no_cards_due">尚無到期的卡片。</string>
   <string name="sd_card_not_mounted">儲存裝置未掛載</string>
   <string name="button_sync">同步</string>
-  <string name="cancel_sync_confirm">您要取消同步嗎？</string>
+  <string name="cancel_sync_confirm">你要取消同步嗎？</string>
   <string name="continue_sync">繼續同步</string>
   <string name="sync_cancelled">同步已取消</string>
   <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
   <string name="export">匯出</string>
-  <string name="export_collection">匯出蒐藏集</string>
+  <string name="export_collection">匯出收藏</string>
   <string name="export_deck">匯出牌組</string>
   <string name="nothing">無</string>
   <!-- Card template editor -->

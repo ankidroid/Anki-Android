@@ -47,8 +47,8 @@
   <string name="delete_deck_default_deck">Nelze odstranit výchozí balíček</string>
   <string name="delete_deck_title">Smazat balíček</string>
   <plurals name="delete_deck_message">
-    <item quantity="one">Odstranit všechny karty v %1$s? Obsahuje %2$d kartu.</item>
-    <item quantity="few">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="one">Odstranit kartu v %1$s? Obsahuje %2$d kartu.</item>
+    <item quantity="few">Odstranit všechny karty v %1$s? Obsahuje %2$d karty.</item>
     <item quantity="other">Odstranit všechny karty v %1$s? Obsahuje %2$d karet.</item>
   </plurals>
   <string name="delete_cram_deck_message">Jste si jistý, že si přejete poslat všechny karty z balíčku %s zpátky do původního balíčku?</string>
@@ -88,10 +88,10 @@
   <string name="rebuild_custom_study_deck">Obnovování uživatelského balíčku.\nProsím čekejte...</string>
   <string name="importing_collection">Importování kolekce.\nProsím čekejte&#8230;</string>
   <string name="import_media_count">Import multimediálních souborů %1$d%%\nProsím čekejte&#8230;</string>
-  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
-  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
-  <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
-  <string name="import_complete_count">Cards imported: %d</string>
+  <string name="import_progress">• Importuji poznámek: %1$d%%\n• Importuji karet: %2$d%%\n• Post-processing: %3$d%%</string>
+  <string name="import_update_details">Aktualizováno %1$d z %2$d existujících poznámek.</string>
+  <string name="import_update_ignored">Některé aktualizace byly ignorovány, protože se změnil typ poznámky</string>
+  <string name="import_complete_count">Importováno karet: %d</string>
   <string name="sd_card_full_title">SD karta je plná</string>
   <string name="sd_card_almost_full_title">SD karta téměř plná</string>
   <string name="restore_backup_title">Obnovit zálohu?</string>

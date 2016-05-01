@@ -41,7 +41,7 @@
 <resources>
   <!-- generic strings -->
   <string name="disabled">Desativado</string>
-  <string name="enabled">Enabled</string>
+  <string name="enabled">Ativado</string>
   <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Definições gerais</string>
@@ -51,10 +51,10 @@
   <string name="pref_cat_flashcard">Exibir</string>
   <string name="pref_cat_whiteboard">Quadro</string>
   <string name="pref_cat_automatic_display">Mostrar resposta automaticamente</string>
-  <string name="pref_cat_appearance">Appearance</string>
-  <string name="pref_cat_appearance_summ">Change themes and default font</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_appearance">Aparência</string>
+  <string name="pref_cat_appearance_summ">Mudar temas e tipos de letra padrão</string>
+  <string name="pref_cat_themes">Temas</string>
+  <string name="pref_cat_fonts">Tipos de letra</string>
   <string name="pref_cat_gestures">Gestos</string>
   <string name="pref_cat_gestures_summ">Usar toques e deslizar em vez dos botões</string>
   <string name="pref_cat_actions">Ações</string>
@@ -120,8 +120,8 @@
   <string name="fix_hebrew_text_summ">Solução alternativa para processar corretamente  as vogais em Hebraico.</string>
   <string name="fix_hebrew_instructions">Esta definição ignora o algoritmo RTL do Android para mostrar corretamente o texto hebraico com vogais.\n\nPara isto funcionar, precisa de transferir o tipo de letra Tohu.ttf e copiá-lo manualmente para:\n%s/fonts/\n\nNão terá de modificar as suas fichas.</string>
   <string name="fix_hebrew_download_font">Transferir tipo de letra</string>
-  <string name="day_theme">Day theme</string>
-  <string name="night_theme">Night theme</string>
+  <string name="day_theme">Tema do dia</string>
+  <string name="night_theme">Tema noturno</string>
   <string name="default_font">Letra predefinida</string>
   <string name="override_font">Aplicabilidade da letra predefinida</string>
   <string name="language">Idioma</string>
@@ -167,13 +167,13 @@
   <string name="enable_api_summary">Deixe as outras aplicações ligar à AnkiDroid e ler/gravar dados sem a sua intervenção</string>
   <string name="custom_buttons">App bar buttons</string>
   <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
-  <string name="custom_buttons_setting_always_show">Always show</string>
+  <string name="custom_buttons_setting_always_show">Mostrar sempre</string>
   <string name="custom_buttons_setting_if_room">Show if room</string>
   <string name="custom_buttons_setting_menu_only">Menu only</string>
-  <string name="reset_custom_buttons">Reset to default</string>
+  <string name="reset_custom_buttons">Redefinir valores padrão</string>
   <!-- Advanced statistics settings -->
-  <string name="advanced_statistics_title">Advanced statistics</string>
-  <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
+  <string name="advanced_statistics_title">Estatísticas avançadas</string>
+  <string name="enable_advanced_statistics_title">Ativar estatísticas avançadas</string>
   <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
   <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
   <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>

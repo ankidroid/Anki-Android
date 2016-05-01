@@ -53,12 +53,12 @@
     <item>Editar nota</item>
     <item>Marcar nota</item>
     <item>Consultar expresión</item>
-    <item>Ocultar tarjeta</item>
+    <item>Enterrar tarjeta</item>
     <item>Suspender tarjeta</item>
     <item>Eliminar nota</item>
     <item>Reproducir archivos multimedia</item>
     <item>Abandonar aprendizaje</item>
-    <item>Ocultar nota</item>
+    <item>Enterrar nota</item>
     <item>Suspender nota</item>
   </string-array>
   <string-array name="leech_action_labels">

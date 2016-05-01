@@ -47,7 +47,7 @@
   <string name="help">Ayuda</string>
   <string name="send_feedback">Enviar comentarios</string>
   <string name="studyoptions_title">Perspectiva general del mazo</string>
-  <string name="studyoptions_due_today">Programadas hoy:</string>
+  <string name="studyoptions_due_today">Programadas para hoy:</string>
   <string name="studyoptions_new_total">Tarjetas nuevas totales:</string>
   <string name="studyoptions_total_cards">Tarjetas totales:</string>
   <string name="studyoptions_eta">Tiempo estimado (min):</string>
@@ -78,8 +78,8 @@
   <string name="menu_import">Importar</string>
   <string name="undo">Deshacer</string>
   <string name="undo_action_review">último repaso</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
+  <string name="undo_action_bury_card">enterrar tarjeta</string>
+  <string name="undo_action_bury_note">enterrar nota</string>
   <string name="undo_action_suspend_card">suspender tarjeta</string>
   <string name="undo_action_suspend_note">suspender nota</string>
   <string name="undo_action_delete">eliminar nota</string>
@@ -90,11 +90,11 @@
   <string name="menu_my_account">Cuenta de sincronización</string>
   <string name="menu_dismiss_note">Ocultar / eliminar</string>
   <string name="menu_bury_card">Enterrar tarjeta</string>
-  <string name="menu_bury_note">Ocultar nota</string>
+  <string name="menu_bury_note">Enterrar nota</string>
   <string name="menu_suspend_card">Suspender tarjeta</string>
   <string name="menu_suspend_note">Suspender nota</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">Enterrar</string>
+  <string name="menu_suspend">Suspender</string>
   <string name="menu_delete_note">Eliminar nota</string>
   <string name="delete_note_message">¿Realmente deseas eliminar esta nota y todas sus tarjetas?\n%s</string>
   <string name="menu_select">Seleccionar texto</string>
@@ -147,11 +147,11 @@
   <string name="nothing">Nada</string>
   <!-- Card template editor -->
   <string name="title_activity_template_editor">Tipos de tarjeta</string>
-  <string name="card_template_editor_front">Plantilla delantera</string>
-  <string name="card_template_editor_back">Plantilla trasera</string>
+  <string name="card_template_editor_front">Plantilla del anverso</string>
+  <string name="card_template_editor_back">Plantilla del reverso</string>
   <string name="card_template_editor_styling">Estilo</string>
   <string name="card_template_editor_menu_delete">Eliminar</string>
-  <string name="card_template_editor_cant_delete">Por lo menos un tipo de tarjeta es requerido.</string>
+  <string name="card_template_editor_cant_delete">Se requiere por lo menos un tipo de tarjeta</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">¿Eliminar el tipo de tarjeta \'%2$s\' y su %1$d tarjeta?</item>
     <item quantity="other">¿Eliminar el tipo de tarjeta \'%2$s\' y sus %1$d tarjetas?</item>

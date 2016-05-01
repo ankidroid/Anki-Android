@@ -78,8 +78,8 @@
   <string name="menu_import">Importar</string>
   <string name="undo">Anular</string>
   <string name="undo_action_review">última revisão</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
+  <string name="undo_action_bury_card">ocultar ficha</string>
+  <string name="undo_action_bury_note">ocultar nota</string>
   <string name="undo_action_suspend_card">suspender ficha</string>
   <string name="undo_action_suspend_note">suspender nota</string>
   <string name="undo_action_delete">eliminar nota</string>
@@ -93,8 +93,8 @@
   <string name="menu_bury_note">Ocultar nota</string>
   <string name="menu_suspend_card">Suspender ficha</string>
   <string name="menu_suspend_note">Suspender nota</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">Ocultar</string>
+  <string name="menu_suspend">Suspender</string>
   <string name="menu_delete_note">Eliminar nota</string>
   <string name="delete_note_message">Deseja realmente eliminar esta nota e todas as suas fichas?\n%s</string>
   <string name="menu_select">Selecionar texto</string>

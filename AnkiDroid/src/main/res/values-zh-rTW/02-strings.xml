@@ -55,7 +55,7 @@
   <string name="add_tag">新增標籤</string>
   <string name="check_all_tags">選擇/不選擇所有標籤</string>
   <string name="filter_tags">篩選標籤</string>
-  <string name="no_tags">您還沒新增任何標籤。</string>
+  <string name="no_tags">你還沒新增任何標籤</string>
   <string name="sdcard_missing_message">SD記憶卡目前正在當隨身碟存取中，因此無法使用。拔除USB之後即可使用。</string>
   <string name="updated_version">更新到版本 %s</string>
   <!-- Reviewer.java -->
@@ -113,7 +113,7 @@
   <string name="saving_changes">正在儲存設定&#8230;</string>
   <string name="reordering_cards">正在重新排列卡片...</string>
   <string name="field_remapping">%1$s (來自 \"%2$s\")</string>
-  <string name="confirm_map_cards_to_nothing">空白卡片會被刪除，而筆記如果沒有在卡片上也會遺失。您確定要繼續嗎？</string>
+  <string name="confirm_map_cards_to_nothing">空白卡片會被刪除，而筆記如果沒有在卡片上也會遺失。你確定要繼續嗎？</string>
   <plurals name="timebox_reached">
     <item quantity="other">使用 %2$s 學習共 %1$d 張卡片</item>
   </plurals>
@@ -127,7 +127,7 @@
   <string name="card_editor_reset_card">重設卡片進度</string>
   <string name="card_editor_reschedule_card">重置卡片進度</string>
   <string name="card_editor_preview_card">預覽</string>
-  <string name="error_insufficient_memory">因為裝置上沒有足夠的記憶體所以不能執行您要求的操作</string>
+  <string name="error_insufficient_memory">因為裝置上沒有足夠的記憶體所以不能執行你要求的操作</string>
   <string name="rename">重新命名</string>
   <string name="default_conf_delete_error">無法移除預設的設定群組</string>
   <plurals name="factadder_cards_added">
@@ -148,26 +148,26 @@
   <string name="import_select_title">選擇欲匯入的檔案</string>
   <string name="import_message_add">新增</string>
   <string name="import_message_replace_confirm">這將會刪除你現有的收藏並以%s的內容取代，你確定嗎？</string>
-  <string name="import_message_add_confirm">新增 %s 到蒐藏嗎？這可能會花上好一段時間</string>
+  <string name="import_message_add_confirm">新增「%s」到收藏嗎？這可能會花上好一段時間</string>
   <string name="import_log_no_apkg">請不是有效的apkg檔</string>
   <string name="import_error_not_apkg_extension">檔案 \"%s\" 的副檔名不是 .apkg</string>
   <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考使用者手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
   <string name="import_replacing">Replacing collection&#8230;</string>
   <string name="export_include_schedule">包含進度</string>
   <string name="export_include_media">包含媒體</string>
-  <string name="confirm_apkg_export">將蒐藏匯出成 apkg 檔案嗎？</string>
+  <string name="confirm_apkg_export">將收藏匯出成 apkg 檔案嗎？</string>
   <string name="confirm_apkg_export_deck">將 \"%s\" 匯出成 apkg 檔案嗎？</string>
   <string name="export_in_progress">正在匯出 apkg 檔案&#8230;</string>
   <string name="export_successful_title">用電子郵件寄出 apkg 嗎？</string>
-  <string name="export_successful">檔案 \"%s\" 已匯入。您要用電子郵件寄出它嗎？</string>
-  <string name="export_unsuccessful">匯出蒐藏時發生錯誤</string>
-  <string name="import_hint">若您要匯入卡片，請將 apkg 檔案放在 %s 目錄下，然後按OK</string>
+  <string name="export_successful">檔案「%s」已匯入。你要用電子郵件寄出它嗎？</string>
+  <string name="export_unsuccessful">匯出收藏時發生錯誤</string>
+  <string name="import_hint">若你要匯入卡片，請將 apkg 檔案放在「%s」目錄下，然後按OK</string>
   <string name="upgrade_import_no_file_found">找不到可匯入的%1$s檔案</string>
   <string name="study_options">牌組選項</string>
   <string name="select_tts">Set TTS language</string>
   <string name="custom_study">自訂學習</string>
   <string name="more_options">更多</string>
-  <string name="dyn_deck_desc">這是專門用來進行額外學習進度的牌組。卡片在您複習完以後會自動回歸原本的牌組。如果在牌組列表中刪除這個牌組，其他剩下的卡片也會回歸它們原本的牌組。</string>
+  <string name="dyn_deck_desc">這是專門用來進行額外學習進度的牌組。卡片在你複習完以後會自動回歸原本的牌組。如果在牌組列表中刪除這個牌組，其他剩下的卡片也會回歸它們原本的牌組。</string>
   <string name="steps_error">步數必須是大於 0 的數字</string>
   <string name="steps_min_error">至少需要一步</string>
   <string name="sched_end">(結束)</string>
@@ -201,5 +201,5 @@
   <string name="less_than_time">&lt;%s</string>
   <string name="decks_rename_exists">That deck already exists</string>
   <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
-  <string name="filtered_deck_name">Filtered Deck</string>
+  <string name="filtered_deck_name">篩選牌組</string>
 </resources>

@@ -41,9 +41,9 @@
 <resources>
   <string name="statistics_young">年輕卡</string>
   <string name="statistics_mature">熟練卡</string>
-  <string name="statistics_young_and_learn">Young and learn</string>
-  <string name="statistics_unlearned">Unseen</string>
-  <string name="statistics_suspended">Suspended</string>
+  <string name="statistics_young_and_learn">年輕和學習中</string>
+  <string name="statistics_unlearned">尚未看過</string>
+  <string name="statistics_suspended">長久擱置</string>
   <string name="statistics_relearn">重新學習</string>
   <string name="statistics_learn">新學習的卡</string>
   <string name="statistics_cram">填鴨模式</string>
@@ -59,13 +59,13 @@
   <string name="stats_answers">答案</string>
   <string name="stats_minutes">分鐘</string>
   <string name="stats_hours">小時</string>
-  <string name="stats_percentage">Percentage</string>
-  <string name="stats_period_month">1 month</string>
-  <string name="stats_period_year">1 year</string>
+  <string name="stats_percentage">百分比</string>
+  <string name="stats_period_month">1個月</string>
+  <string name="stats_period_year">1年</string>
   <string name="stats_period_lifetime">deck life</string>
-  <string name="stats_deck_collection">collection</string>
+  <string name="stats_deck_collection">收藏</string>
   <string name="stats_time_of_day">Time of day</string>
-  <string name="stats_day_of_week">Day of week</string>
+  <string name="stats_day_of_week">星期幾</string>
   <string formatted="false" name="stats_percentage_correct">% correct</string>
   <string name="stats_reviews">Reviews</string>
   <string name="stats_answer_type">Answer type</string>
@@ -74,6 +74,20 @@
   <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, review: &lt;b&gt;%2$s&lt;/b&gt;, relearn: &lt;b&gt;%3$s&lt;/b&gt;, filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Correct answers on mature cards: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">No mature cards were studied today</string>
+  <string name="stats_overview_days_studied">Days studied: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
+  <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt;  reviews</string>
+  <string name="stats_overview_reviews_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
+  <string name="stats_overview_reviews_per_day_all">If you studied every day: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
+  <string name="stats_overview_time_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day</string>
+  <string name="stats_overview_time_per_day_all">If you studied every day:  &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day</string>
+  <string name="stats_overview_new_cards_per_day">Average: &lt;b&gt;%1$.1f&lt;/b&gt; new cards/day</string>
+  <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt;  new cards</string>
+  <string name="stats_overview_average_interval">"Average interval: "</string>
+  <string name="stats_overview_longest_interval">"Longest interval: "</string>
+  <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; years</string>
+  <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; months</string>
+  <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; days</string>
+  <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; hours</string>
   <string name="deck_summary_all_decks">所有牌組</string>
   <string name="stats_select_time_scale">Select timescale</string>
   <string-array name="due_x_axis_title">
@@ -81,10 +95,12 @@
     <item>周</item>
     <item>月</item>
   </string-array>
-  <string name="stats_today">Today</string>
+  <string name="stats_today">今天</string>
+  <string name="stats_overview">Overview</string>
   <string name="stats_forecast">預測</string>
   <string name="stats_review_count">複習次數</string>
   <string name="stats_review_time">複習時間</string>
+  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Intervals</string>
   <string name="stats_breakdown">Hourly breakdown</string>
   <string name="stats_weekly_breakdown">Weekly breakdown</string>
@@ -98,13 +114,13 @@
     <item>3AM</item>
   </string-array>
   <string-array name="stats_week_days">
-    <item>Sun</item>
-    <item>Mon</item>
-    <item>Tue</item>
-    <item>Wed</item>
-    <item>Thu</item>
-    <item>Fri</item>
-    <item>Sat</item>
+    <item>週日</item>
+    <item>週一</item>
+    <item>週二</item>
+    <item>週三</item>
+    <item>週四</item>
+    <item>週五</item>
+    <item>週六</item>
   </string-array>
   <string-array name="stats_eases_ticks">
     <item>1</item>

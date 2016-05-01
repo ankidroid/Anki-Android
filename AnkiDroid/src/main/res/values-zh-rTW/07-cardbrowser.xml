@@ -49,8 +49,8 @@
   <string name="card_browser_unsuspend_card">取消長久擱置卡片</string>
   <string name="card_browser_mark_card">標記筆記</string>
   <string name="card_browser_unmark_card">解除筆記的標記</string>
-  <string name="delete_card_title">刪除筆記</string>
-  <string name="delete_card_message">您確定要刪除本筆記的所有卡片嗎？\n搜尋欄位：%s</string>
+  <string name="delete_card_title">刪除筆記？</string>
+  <string name="delete_card_message">你確定要刪除本筆記的所有卡片嗎？\n搜尋欄位：%s</string>
   <string name="card_browser_show_marked">篩選有標記的卡片</string>
   <string name="card_browser_show_suspended">篩選出擱置的卡片</string>
   <string name="card_browser_search_by_tag">按標籤篩選</string>
@@ -59,9 +59,9 @@
   <string name="card_browser_list_my_searches_save">儲存搜尋</string>
   <string name="card_browser_list_my_searches_title">選擇一個已儲存的搜尋</string>
   <string name="card_browser_list_my_searches_new_name">目前搜尋的名稱</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">您不能儲存沒有名稱的搜尋</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">你不能儲存沒有名稱的搜尋</string>
   <string name="card_browser_list_my_searches_new_search_error_dup">名稱已存在</string>
-  <string name="card_browser_list_my_searches_remove_content">刪除 \"%1$s\" 嗎？</string>
+  <string name="card_browser_list_my_searches_remove_content">刪除「%1$s」嗎？</string>
   <string name="card_browser_change_display_order">更改顯示順序</string>
   <string name="card_browser_change_display_order_title">選擇顯示順序</string>
   <string name="card_browser_change_display_order_reverse">點兩下欄位來反向順序排列</string>

@@ -8,7 +8,7 @@ Crea tus propios mazos de tarjetas o descarga mazos gratuitos creados para mucho
 
 Añade contenido mediante la aplicación de escritorio Anki o directamente mediante AnkiDroid. ¡La aplicación soporta incluso la creación de contenidos de forma automática a partir de un diccionario!
 
-★ Características principales:
+★ Características clave:
 • contenidos de tarjeta soportados: texto, imágenes, sonidos, LaTeX
 • repaso espaciado (algoritmo de SuperMemo 2)
 • integración de texto a voz

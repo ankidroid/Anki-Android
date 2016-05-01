@@ -63,5 +63,5 @@
   <string name="corrupt_db_message">안타깝게도 컬렉션이 손상되었습니다.\n\n옵션을 눌러 백업으로부터 복원하세요. 만약 불가능하다면, 수동으로 데이터베이스를 복구하는 방법을 다음에서 알아보세요:\n%1$s</string>
   <string name="access_collection_failed_message">컬렉션에 접근 중 오류가 발생했습니다. 사소한 버그거나 아니면 문제가 있는 경우입니다.\n\n데이터베이스를 검토를 시도해보거나 옵션 버튼을 눌러 백업으로부터 복원하세요. 이 메세지가 계속 나타난다면 오류 보고를 전송하세요:\n%1$s</string>
   <string name="deck_repair_error">컬렉션 복구할 수 없음</string>
-  <string name="cursor_size_limit_exceeded">The Android size limit for a String in a database has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
+  <string name="cursor_size_limit_exceeded">안드로이드의 데이터베이스 스트링 크기 제한을 초과했습니다. Anki 데스크탑 버전을 사용해 사용하지 않은 노트 유형을 삭제한 후 다시 동기화하세요.</string>
 </resources>

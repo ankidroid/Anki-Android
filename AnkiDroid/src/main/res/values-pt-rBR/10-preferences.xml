@@ -166,10 +166,10 @@
   <string name="enable_api_summary">Deixe outros apps se conectarem ao AnkiDroid e ler / escrever dados sem a sua intervenção</string>
   <string name="custom_buttons">App bar buttons</string>
   <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
-  <string name="custom_buttons_setting_always_show">Always show</string>
+  <string name="custom_buttons_setting_always_show">Mostrar sempre</string>
   <string name="custom_buttons_setting_if_room">Show if room</string>
   <string name="custom_buttons_setting_menu_only">Menu only</string>
-  <string name="reset_custom_buttons">Reset to default</string>
+  <string name="reset_custom_buttons">Redefinir valores padrão</string>
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Estatísticas avançadas</string>
   <string name="enable_advanced_statistics_title">Habilitar estatísticas avançadas</string>

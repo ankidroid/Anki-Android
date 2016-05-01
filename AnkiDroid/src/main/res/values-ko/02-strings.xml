@@ -57,7 +57,7 @@
   <string name="filter_tags">태그 필터링</string>
   <string name="no_tags">아직 추가된 태그가 없습니다.</string>
   <string name="sdcard_missing_message">현재 SD카드가 USB 저장소로 사용되고 있어 사용이 불가능합니다. 덱에 접근하려면 USB 연결을 해제하세요.</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="updated_version">버전 %s로 업데이트됨</string>
   <!-- Reviewer.java -->
   <string name="enable_whiteboard">칠판 사용</string>
   <string name="disable_whiteboard">칠판 해제</string>
@@ -70,8 +70,8 @@
   <string name="corrupt_font">손상된 글꼴 파일 %s</string>
   <!-- Browser -->
   <string-array name="browser_column1_headings">
-    <item>Question</item>
-    <item>Sort field</item>
+    <item>질문</item>
+    <item>필드 정렬</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>정답</item>
@@ -92,13 +92,13 @@
         -->
   </string-array>
   <!-- Custom study options -->
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
-  <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_increase_new_limit">오늘의 새로운 카드 학습량 늘리기</string>
+  <string name="custom_study_increase_review_limit">오늘의 복습량 늘리기</string>
+  <string name="custom_study_review_forgotten">잊어버린 카드 복습하기</string>
+  <string name="custom_study_review_ahead">미리 복습하기</string>
+  <string name="custom_study_random_selection">무작위 카드 학습하기</string>
+  <string name="custom_study_preview_new">새로운 카드 미리보기</string>
+  <string name="custom_study_limit_tags">특정 태그로만 제한하기</string>
   <!-- Card editor -->
   <string name="cardeditor_title_add_note">노트 추가하기</string>
   <string name="cardeditor_title_edit_card">노트 편집하기</string>
@@ -107,7 +107,7 @@
   <string name="saving_facts">노트 저장 중</string>
   <string name="saving_model">저장 모델</string>
   <string name="add">추가하기</string>
-  <string name="save">Save</string>
+  <string name="save">저장</string>
   <string name="close">닫기</string>
   <string name="select">선택하기</string>
   <string name="saving_changes">변경 내용 저장 중...</string>
@@ -136,15 +136,15 @@
   <string name="help_title">도움말</string>
   <string name="check_db">데이터베이스 점검하기</string>
   <string name="check_media">미디어 확인</string>
-  <string name="empty_cards">Empty cards</string>
+  <string name="empty_cards">빈 카드</string>
   <string name="check_db_message">데이터베이스 점검 중.\n잠시만 기다려 주세요...</string>
-  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
+  <string name="empty_card_warning">이 카드는 비어 있습니다. 카드 묶음 목록 화면의 메뉴에서 \"빈 카드\" 옵션을 사용하세요.</string>
   <string name="unknown_type_field_warning">정답 입력: 알 수 없는 필드 %s</string>
   <string name="delete_deck">카드 묶음 삭제 중...\n 잠시만 기다리세요.</string>
   <string name="show_hint">%s 표시</string>
   <string name="info_rate">AnkiDroid 평가하기</string>
   <string name="col_load_failed">컬렉션을 불러오지 못했습니다.\nAnkiDroid을 종료하려면 뒤로가기 버튼을 누르세요.</string>
-  <string name="import_title">Importing</string>
+  <string name="import_title">가져오는 중</string>
   <string name="import_select_title">가져올 파일 선택</string>
   <string name="import_message_add">추가하기</string>
   <string name="import_message_replace_confirm">기존의 컬렉션을 삭제하고 파일 %s의 데이터로 덮어씁니다. 확실합니까?</string>
@@ -152,7 +152,7 @@
   <string name="import_log_no_apkg">유효하지 않은 apkg 파일입니다</string>
   <string name="import_error_not_apkg_extension">파일명 %s는 .apkg 확장자를 가지고 있지 않습니다.</string>
   <string name="import_error_content_provider">선택된 파일은 AnkiDroid가 자동적으로 가져올 수 없습니다. anki 파일을 수동으로 가져오는 방법은 사용자 설명서를 참조하세요. \n %s</string>
-  <string name="import_replacing">Replacing collection&#8230;</string>
+  <string name="import_replacing">컬렉션을 대체하는 중...</string>
   <string name="export_include_schedule">일정 포함</string>
   <string name="export_include_media">미디어 포함</string>
   <string name="confirm_apkg_export">컬렉션을 apkg 파일로 내보낼까요?</string>
@@ -164,42 +164,42 @@
   <string name="import_hint">카드를 가져오려면, %s 폴더로 apkg 파일을 옮긴 후 확인을 눌러주세요</string>
   <string name="upgrade_import_no_file_found">가져올 수 있는 %1$s 파일이 발견되지 않음</string>
   <string name="study_options">카드 묶음 옵션</string>
-  <string name="select_tts">Set TTS language</string>
+  <string name="select_tts">TTS 언어 설정</string>
   <string name="custom_study">맞춤 학습</string>
-  <string name="more_options">More</string>
+  <string name="more_options">기타</string>
   <string name="dyn_deck_desc">이것은 평상시 일정 이상으로 학습하기 위한 특별한 카드 묶음입니다. 카드들은 복습 후 자동으로 원래의 카드 묶음으로 돌아가게 됩니다. 카드 묶음 목록에서 이 카드 묶음을 지운다면 남아 있는 모든 카드는 원래의 카드 묶음으로 돌아가게 됩니다.</string>
   <string name="steps_error">단계는 0보다 큰 숫자여야 합니다.</string>
   <string name="steps_min_error">적어도 하나 이상의 단계가 필요합니다.</string>
   <string name="sched_end">(끝)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
+  <string name="sched_unbury_action">지금 이것들을 보려면 메뉴에서 \"집어넣었던 카드 꺼내기\" 항목을 터치하세요.</string>
   <string name="sched_has_buried">관련되거나 집어넣은 일부 카드가 내일까지 연기되었습니다.</string>
   <string name="tag_editor_add_feedback">\"%1$s\" 추가를 확인하려면 \"%2$s\" 누르세요</string>
   <string name="tag_editor_add_feedback_existing">기존 태그 \"%1$s\" 선택됨</string>
   <string name="lookup_hint">텍스트 복사 후, 플래시카드의 아무 곳이나 두드려 검색 아이콘 표시</string>
   <!-- Time spans -->
   <plurals name="time_span_seconds">
-    <item quantity="other">%s seconds</item>
+    <item quantity="other">%s초</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="other">%s minutes</item>
+    <item quantity="other">%s분</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="other">%s hours</item>
+    <item quantity="other">%s시간</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="other">%s days</item>
+    <item quantity="other">%s일</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="other">%s months</item>
+    <item quantity="other">%s개월</item>
   </plurals>
   <plurals name="time_span_years">
-    <item quantity="other">%s years</item>
+    <item quantity="other">%s년</item>
   </plurals>
   <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
   <string name="less_than_time">&lt; %s</string>
-  <string name="decks_rename_exists">That deck already exists</string>
-  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
-  <string name="filtered_deck_name">Filtered Deck</string>
+  <string name="decks_rename_exists">카드 묶음이 이미 존재합니다</string>
+  <string name="decks_rename_filtered_nosubdecks">필터링된 카드 묶음은 하위 카드 묶음을 가질 수 없습니다</string>
+  <string name="filtered_deck_name">필터링된 카드 묶음</string>
 </resources>

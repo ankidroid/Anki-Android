@@ -78,8 +78,8 @@
   <string name="menu_import">Importar</string>
   <string name="undo">Deshacer</string>
   <string name="undo_action_review">último repaso</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
+  <string name="undo_action_bury_card">enterrar tarjeta</string>
+  <string name="undo_action_bury_note">enterrar nota</string>
   <string name="undo_action_suspend_card">suspender tarjeta</string>
   <string name="undo_action_suspend_note">suspender nota</string>
   <string name="undo_action_delete">eliminar nota</string>
@@ -93,8 +93,8 @@
   <string name="menu_bury_note">Enterrar nota</string>
   <string name="menu_suspend_card">Suspender tarjeta</string>
   <string name="menu_suspend_note">Suspender nota</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">Enterrar</string>
+  <string name="menu_suspend">Suspender</string>
   <string name="menu_delete_note">Eliminar nota</string>
   <string name="delete_note_message">¿Eliminar esta nota y todas sus tarjetas?\n%s</string>
   <string name="menu_select">Seleccione el texto</string>
