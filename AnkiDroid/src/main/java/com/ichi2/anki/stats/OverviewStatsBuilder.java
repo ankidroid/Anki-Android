@@ -17,7 +17,6 @@ package com.ichi2.anki.stats;
 
 
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.webkit.WebView;
 
 import com.ichi2.anki.R;
@@ -25,10 +24,6 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
-
-import java.util.ArrayList;
-
-import timber.log.Timber;
 
 public class OverviewStatsBuilder {
     private final int CARDS_INDEX = 0;
@@ -95,7 +90,7 @@ public class OverviewStatsBuilder {
         Stats stats = new Stats(mCollectionData, mWholeCollection);
 
         OverviewStats oStats = new OverviewStats();
-        stats.calculateOverviewStatistics(mType, oStats, mWebView.getContext());
+        stats.calculateOverviewStatistics(mType, oStats);
         Resources res = mWebView.getResources();
 
         stringBuilder.append(_title(res.getString(mType.descriptionId)));
