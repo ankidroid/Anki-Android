@@ -78,12 +78,6 @@ public class AnkiStatsTaskHandler {
         return deckPreviewStatistics;
     }
 
-    public static CreateFirstStatisticChooserTask createFirstStatisticChooserTask(Collection col, ViewPager viewPager){
-        CreateFirstStatisticChooserTask createFirstStatisticChooserTask = new CreateFirstStatisticChooserTask();
-        createFirstStatisticChooserTask.execute(col, viewPager);
-        return createFirstStatisticChooserTask;
-    }
-
     private class CreateChartTask extends AsyncTask<View, Void, PlotSheet>{
         private ChartView mImageView;
         private ProgressBar mProgressBar;
@@ -257,70 +251,6 @@ public class AnkiStatsTaskHandler {
         }
     }
 
-    private static class CreateFirstStatisticChooserTask extends AsyncTask<Object, Void, Integer> {
-        private ViewPager mViewPager;
-        private boolean mIsRunning = false;
-
-        public CreateFirstStatisticChooserTask() {
-            super();
-            mIsRunning = true;
-        }
-
-        @Override
-        protected Integer doInBackground(Object... params) {
-            //make sure only one task of CreateChartTask is running, first to run should get sLock
-            //only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
-            sLock.lock();
-            try {
-                Collection collection = (Collection) params[0];
-                if (!mIsRunning || collection == null || collection.getDb() == null) {
-                    Timber.d("Quitting CreateFirstStatisticChooserTask before execution");
-                    return null;
-                } else {
-                    Timber.d("Starting CreateFirstStatisticChooserTask");
-                }
-                mViewPager = (ViewPager) params[1];
-
-                //eventually put this in Stats (in desktop it is not though)
-                int cards;
-                Cursor cur = null;
-                String query = "select count() from revlog where id > " + ((collection.getSched().getDayCutoff() - 86400) * 1000);
-                Timber.d("DeckPreviewStatistics query: " + query);
-
-                try {
-                    cur = collection.getDb()
-                            .getDatabase()
-                            .rawQuery(query, null);
-
-                    cur.moveToFirst();
-                    cards = cur.getInt(0);
-                } finally {
-                    if (cur != null && !cur.isClosed()) {
-                        cur.close();
-                    }
-                }
-                return cards;
-            } finally {
-                sLock.unlock();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mIsRunning = false;
-        }
-
-        @Override
-        protected void onPostExecute(Integer todayStatString) {
-            if (todayStatString != null && mIsRunning && mViewPager != null) {
-                int chosen = todayStatString;
-                switch (chosen) {
-                    case 0:
-                        mViewPager.setCurrentItem(Statistics.FORECAST_TAB_POSITION);
-                }
-            }
-        }
-    }
 
 
     public float getmStandardTextSize() {

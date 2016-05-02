@@ -124,7 +124,6 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         mViewPager.setOffscreenPageLimit(8);
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         slidingTabLayout.setViewPager(mViewPager);
-        AnkiStatsTaskHandler.createFirstStatisticChooserTask(col, mViewPager);
 
         // Dirty way to get text size from a TextView with current style, change if possible
         float size = new TextView(this).getTextSize();
