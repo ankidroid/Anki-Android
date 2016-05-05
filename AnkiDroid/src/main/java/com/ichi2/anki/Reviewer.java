@@ -454,7 +454,8 @@ public class Reviewer extends AbstractFlashcardViewer {
             public boolean onTouch(View v, MotionEvent event) {
                 if (!mShowWhiteboard ||
                         mPrefFullscreenReview && CompatHelper.getCompat().isSystemUiVisible(Reviewer.this)) {
-                    return false;
+                    // TODO: (timrae). Tidy this logic up and confirm working on all API levels
+                    return getGestureDetector().onTouchEvent(event);
                 }
                 return mWhiteboard.handleTouchEvent(event);
             }
