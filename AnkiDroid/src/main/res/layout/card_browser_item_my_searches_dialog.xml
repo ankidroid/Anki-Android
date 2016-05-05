@@ -8,11 +8,10 @@
     android:paddingBottom="5dp">
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="left|center_vertical"
-        android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/card_browser_my_search_remove_button">
         <TextView android:id="@+id/card_browser_my_search_name_textview"
             android:layout_width="wrap_content"
