@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,14 +20,12 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.IntentCompat;
 import android.support.v4.content.Loader;
-
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
@@ -389,66 +386,6 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
         showSimpleMessageDialog(title, message, false);
     }
 
-    /**
-     * Show a simple Toast-like Snackbar with no actions. 
-     * To enable swipe-to-dismiss, the Activity layout should include a CoordinatorLayout with id "root_layout"
-     * @param mainTextResource
-     * @param shortLength
-     */
-    protected void showSimpleSnackbar(int mainTextResource, boolean shortLength) {
-        View root = findViewById(R.id.root_layout);
-        showSnackbar(mainTextResource, shortLength, -1, null, root);
-    }
-    protected void showSimpleSnackbar(String mainText, boolean shortLength) {
-        View root = findViewById(R.id.root_layout);
-        showSnackbar(mainText, shortLength, -1, null, root, null);
-    }
-
-    /**
-     * Show a snackbar with an action
-     * @param mainTextResource resource for the main text string
-     * @param shortLength whether or not to use long length
-     * @param actionTextResource resource for the text string shown as the action
-     * @param listener listener for the action (if null no action shown)
-     * @oaram root View Snackbar will attach to. Should be CoordinatorLayout for swipe-to-dismiss to work.
-     */
-    protected void showSnackbar(int mainTextResource, boolean shortLength, int actionTextResource,
-                                View.OnClickListener listener, View root) {
-        showSnackbar(mainTextResource,shortLength,actionTextResource,listener,root, null);
-    }
-    protected void showSnackbar(int mainTextResource, boolean shortLength, int actionTextResource,
-                                View.OnClickListener listener, View root, Snackbar.Callback callback) {
-        String mainText = getResources().getString(mainTextResource);
-        showSnackbar(mainText, shortLength, actionTextResource, listener, root, callback);
-    }
-    protected void showSnackbar(String mainText, boolean shortLength, int actionTextResource,
-                                View.OnClickListener listener, View root, Snackbar.Callback callback) {
-        if (root == null) {
-            root = findViewById(android.R.id.content);
-            if (root == null) {
-                Timber.e("Could not show Snackbar due to null View");
-                return;
-            }
-        }
-        int length = shortLength ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG;
-        Snackbar sb = Snackbar.make(root, mainText, length);
-        if (listener != null) {
-            sb.setAction(actionTextResource, listener);
-        }
-        if (callback != null) {
-            sb.setCallback(callback);
-        }
-        // Make the text white to avoid interference from our theme colors.
-        View view = sb.getView();
-        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        TextView action = (TextView) view.findViewById(android.support.design.R.id.snackbar_action);
-        if (tv != null && action != null) {
-            tv.setTextColor(Color.WHITE);
-            action.setTextColor(ContextCompat.getColor(this, R.color.material_light_blue_500));
-            tv.setMaxLines(2);  // prevent tablets from truncating to 1 line
-        }
-        sb.show();
-    }
 
 
     /**

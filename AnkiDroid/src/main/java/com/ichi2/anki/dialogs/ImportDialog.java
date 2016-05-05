@@ -10,6 +10,7 @@ import android.view.View;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
 
@@ -86,7 +87,7 @@ public class ImportDialog extends DialogFragment {
                 // Allow user to choose from the list of available APKG files
                 List<File> fileList = Utils.getImportableDecks(getActivity());
                 if (fileList.size() == 0) {
-                    Themes.showThemedToast(getActivity(),
+                    UIUtils.showThemedToast(getActivity(),
                             getResources().getString(R.string.upgrade_import_no_file_found, "'.apkg'"), false);
                     return builder.showListener(new DialogInterface.OnShowListener() {
                         @Override

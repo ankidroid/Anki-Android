@@ -216,10 +216,10 @@ public class NoteEditor extends AnkiActivity {
                 } catch (JSONException e) {
                     throw new RuntimeException();
                 }
-                Themes.showThemedToast(NoteEditor.this,
+                UIUtils.showThemedToast(NoteEditor.this,
                         getResources().getQuantityString(R.plurals.factadder_cards_added, count, count), true);
             } else {
-                Themes.showThemedToast(NoteEditor.this, getResources().getString(R.string.factadder_saving_error), true);
+                UIUtils.showThemedToast(NoteEditor.this, getResources().getString(R.string.factadder_saving_error), true);
             }
             if (!mAddNote || mCaller == CALLER_CARDEDITOR || mAedictIntent) {
                 mChanged = true;
@@ -597,12 +597,12 @@ public class NoteEditor extends AnkiActivity {
                             mSourceText[1] = entry_lines[0];
                             mAedictIntent = true;
                         } else {
-                            Themes.showThemedToast(NoteEditor.this,
+                            UIUtils.showThemedToast(NoteEditor.this,
                                     getResources().getString(R.string.intent_aedict_empty), false);
                             return true;
                         }
                     } else {
-                        Themes.showThemedToast(NoteEditor.this, getResources().getString(R.string.intent_aedict_empty),
+                        UIUtils.showThemedToast(NoteEditor.this, getResources().getString(R.string.intent_aedict_empty),
                                 false);
                         return true;
                     }
@@ -610,7 +610,7 @@ public class NoteEditor extends AnkiActivity {
                 }
             }
         }
-        Themes.showThemedToast(NoteEditor.this, getResources().getString(R.string.intent_aedict_category), false);
+        UIUtils.showThemedToast(NoteEditor.this, getResources().getString(R.string.intent_aedict_category), false);
         return true;
     }
 
@@ -858,7 +858,7 @@ public class NoteEditor extends AnkiActivity {
                         getCol().getSched().forgetCards(new long[] { mCurrentEditedCard.getId() });
                         getCol().reset();
                         mReloadRequired = true;
-                        Themes.showThemedToast(NoteEditor.this,
+                        UIUtils.showThemedToast(NoteEditor.this,
                                 getResources().getString(R.string.reset_card_dialog_acknowledge), true);
                     }
                 };
@@ -975,7 +975,7 @@ public class NoteEditor extends AnkiActivity {
         getCol().getSched().reschedCards(new long[] { mCurrentEditedCard.getId() }, days, days);
         getCol().reset();
         mReloadRequired = true;
-        Themes.showThemedToast(NoteEditor.this,
+        UIUtils.showThemedToast(NoteEditor.this,
                 getResources().getString(R.string.reschedule_card_dialog_acknowledge), true);
     }
 

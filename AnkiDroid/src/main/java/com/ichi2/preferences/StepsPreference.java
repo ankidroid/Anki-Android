@@ -24,7 +24,7 @@ import android.util.AttributeSet;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
-import com.ichi2.themes.Themes;
+import com.ichi2.anki.UIUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -71,9 +71,9 @@ public class StepsPreference extends EditTextPreference {
         if (positiveResult) {
             String validated = getValidatedStepsInput(getEditText().getText().toString());
             if (validated == null) {
-                Themes.showThemedToast(getContext(), getContext().getResources().getString(R.string.steps_error), false);
+                UIUtils.showThemedToast(getContext(), getContext().getResources().getString(R.string.steps_error), false);
             } else if (TextUtils.isEmpty(validated) && !mAllowEmpty) {
-                Themes.showThemedToast(getContext(), getContext().getResources().getString(R.string.steps_min_error),
+                UIUtils.showThemedToast(getContext(), getContext().getResources().getString(R.string.steps_min_error),
                         false);
             } else {
                 setText(validated);

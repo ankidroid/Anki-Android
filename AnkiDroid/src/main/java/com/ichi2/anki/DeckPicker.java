@@ -327,7 +327,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (exportPath != null) {
                 showAsyncDialogFragment(DeckPickerExportCompleteDialog.newInstance(exportPath));
             } else {
-                Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.export_unsuccessful), true);
+                UIUtils.showThemedToast(DeckPicker.this, getResources().getString(R.string.export_unsuccessful), true);
             }
         }
 
@@ -658,9 +658,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // Show a message when reviewing has finished
             int[] studyOptionsCounts = getCol().getSched().counts();
             if (studyOptionsCounts[0] + studyOptionsCounts[1] + studyOptionsCounts[2] == 0) {
-                showSimpleSnackbar(R.string.studyoptions_congrats_finished, false);
+                UIUtils.showSimpleSnackbar(this, R.string.studyoptions_congrats_finished, false);
             } else {
-                showSimpleSnackbar(R.string.studyoptions_no_cards_due, false);
+                UIUtils.showSimpleSnackbar(this, R.string.studyoptions_no_cards_due, false);
             }
         } else if (requestCode == REQUEST_BROWSE_CARDS) {
             // Store the selected deck after opening browser
@@ -949,7 +949,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     // Don't show new features dialog for development builds
                     preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
                     String ver = getResources().getString(R.string.updated_version, VersionUtils.getPkgVersionName());
-                    showSnackbar(ver, true, -1, null, findViewById(R.id.root_layout), null);
+                    UIUtils.showSnackbar(this, ver, true, -1, null, findViewById(R.id.root_layout), null);
                     showStartupScreensAndDialogs(preferences, 2);
                 }
             }
@@ -1079,7 +1079,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             Resources res = AnkiDroidApp.getAppResources();
             showSimpleNotification(res.getString(R.string.app_name), res.getString(messageResource));
         } else {
-            showSimpleSnackbar(messageResource, false);
+            UIUtils.showSimpleSnackbar(this, messageResource, false);
         }
     }
 
@@ -1097,7 +1097,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public void onSdCardNotMounted() {
-        Themes.showThemedToast(this, getResources().getString(R.string.sd_card_not_mounted), false);
+        UIUtils.showThemedToast(this, getResources().getString(R.string.sd_card_not_mounted), false);
         finishWithoutAnimation();
     }
 
@@ -1124,7 +1124,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     mProgressDialog.dismiss();
                 }
                 if (result == null || !result.getBoolean()) {
-                    Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.deck_repair_error), true);
+                    UIUtils.showThemedToast(DeckPicker.this, getResources().getString(R.string.deck_repair_error), true);
                     onCollectionLoadError();
                 }
             }
@@ -1636,7 +1636,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         try {
             startActivityWithoutAnimation(intent);
         } catch (ActivityNotFoundException e) {
-            Themes.showThemedToast(this, getResources().getString(R.string.no_email_client), false);
+            UIUtils.showThemedToast(this, getResources().getString(R.string.no_email_client), false);
         }
     }
 
@@ -1743,7 +1743,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             openStudyOptions(false);
         } else if (getCol().getSched().newDue() || getCol().getSched().revDue()) {
             // If there are no cards to review because of the daily study limit then give "Study more" option
-            showSnackbar(R.string.studyoptions_limit_reached, false, R.string.study_more, new OnClickListener() {
+            UIUtils.showSnackbar(this, R.string.studyoptions_limit_reached, false, R.string.study_more, new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     CustomStudyDialog d = CustomStudyDialog.newInstance(
@@ -1759,7 +1759,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // If the deck is empty and has no children then show a message saying it's empty
             final Uri helpUrl = Uri.parse(getResources().getString(R.string.link_manual_getting_started));
             mayOpenUrl(helpUrl);
-            showSnackbar(R.string.empty_deck, false, R.string.help, new OnClickListener() {
+            UIUtils.showSnackbar(this, R.string.empty_deck, false, R.string.help, new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     openUrl(helpUrl);
@@ -1767,7 +1767,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }, findViewById(R.id.root_layout), mSnackbarShowHideCallback);
         } else {
             // Otherwise say there are no cards scheduled to study, and give option to do custom study
-            showSnackbar(R.string.studyoptions_empty_schedule, false, R.string.custom_study, new OnClickListener() {
+            UIUtils.showSnackbar(this, R.string.studyoptions_empty_schedule, false, R.string.custom_study, new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     CustomStudyDialog d = CustomStudyDialog.newInstance(
@@ -1923,7 +1923,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                                 col.getDecks().rename(col.getDecks().get(did), newName);
                             } catch (DeckRenameException e) {
                                 // We get a localized string from libanki to explain the error
-                                Themes.showThemedToast(DeckPicker.this, e.getLocalizedMessage(res), false);
+                                UIUtils.showThemedToast(DeckPicker.this, e.getLocalizedMessage(res), false);
                             }
                         }
                         dismissAllDialogFragments();
@@ -1954,7 +1954,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             return;
         }
         if (did == 1) {
-            showSimpleSnackbar(R.string.delete_deck_default_deck, true);
+            UIUtils.showSimpleSnackbar(this, R.string.delete_deck_default_deck, true);
             dismissAllDialogFragments();
             return;
         }
@@ -2166,7 +2166,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         @Override
                         public void confirm() {
                             getCol().remCards(Utils.arrayList2array(cids));
-                            showSimpleSnackbar(String.format(
+                            UIUtils.showSimpleSnackbar(DeckPicker.this, String.format(
                                     getResources().getString(R.string.empty_cards_deleted), cids.size()), false);
                         }
                     };

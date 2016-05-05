@@ -290,7 +290,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void OnSaveSearch(String searchName, String searchTerms) {
             if (TextUtils.isEmpty(searchName)) {
-                Themes.showThemedToast(CardBrowser.this,
+                UIUtils.showThemedToast(CardBrowser.this,
                         getString(R.string.card_browser_list_my_searches_new_search_error_empty_name), true);
                 return;
             }
@@ -305,7 +305,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     savedFiltersObj.put(searchName, searchTerms);
                     should_save = true;
                 } else {
-                    Themes.showThemedToast(CardBrowser.this,
+                    UIUtils.showThemedToast(CardBrowser.this,
                             getString(R.string.card_browser_list_my_searches_new_search_error_dup), true);
                 }
                 if (should_save) {
@@ -1070,7 +1070,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfuly");
                 updateList();
                 if (!mSearchView.isIconified()) {
-                    showSimpleSnackbar(getSubtitleText(), false);
+                    UIUtils.showSimpleSnackbar(CardBrowser.this, getSubtitleText(), false);
                 }
             }
             hideProgressBar();
