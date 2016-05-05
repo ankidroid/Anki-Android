@@ -362,7 +362,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             // Show hint about lookup function if dictionary available and Webview version supports text selection
             if (!mDisableClipboard && Lookup.isAvailable() && CompatHelper.isHoneycomb()) {
                 String lookupHint = getResources().getString(R.string.lookup_hint);
-                Themes.showThemedToast(AbstractFlashcardViewer.this, lookupHint, false);
+                UIUtils.showThemedToast(AbstractFlashcardViewer.this, lookupHint, false);
             }
             Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibratorManager.vibrate(50);
@@ -620,7 +620,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 int nMins = elapsed[0].intValue() / 60;
                 String mins = res.getQuantityString(R.plurals.timebox_reached_minutes, nMins, nMins);
                 String timeboxMessage = res.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins);
-                Themes.showThemedToast(AbstractFlashcardViewer.this, timeboxMessage, true);
+                UIUtils.showThemedToast(AbstractFlashcardViewer.this, timeboxMessage, true);
                 getCol().startTimebox();
             }
         }

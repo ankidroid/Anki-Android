@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -292,8 +293,8 @@ public class TagsDialog extends DialogFragment {
             }
             mTagsArrayAdapter.notifyDataSetChanged();
             // Show a snackbar to let the user know the tag was added successfully
-            Snackbar.make(mDialog.getView().findViewById(R.id.tags_dialog_snackbar),
-                    feedbackText, Snackbar.LENGTH_LONG).show();
+            UIUtils.showSnackbar(getActivity(), feedbackText, false, -1, null,
+                    mDialog.getView().findViewById(R.id.tags_dialog_snackbar), null);
         }
     }
 

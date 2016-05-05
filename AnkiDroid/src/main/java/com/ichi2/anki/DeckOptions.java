@@ -245,7 +245,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                         } else if (key.equals("confRemove")) {
                             if (mOptions.getLong("id") == 1) {
                                 // Don't remove the options group if it's the default group
-                                Themes.showThemedToast(DeckOptions.this,
+                                UIUtils.showThemedToast(DeckOptions.this,
                                         getResources().getString(R.string.default_conf_delete_error), false);
                             } else {
                                 // Remove options group, handling the case where the user needs to confirm full sync

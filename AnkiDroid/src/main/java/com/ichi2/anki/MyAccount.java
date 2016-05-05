@@ -139,7 +139,7 @@ public class MyAccount extends AnkiActivity {
         if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
             Connection.login(loginListener, new Connection.Payload(new Object[]{username, password}));
         } else {
-            showSimpleSnackbar(R.string.invalid_username_password, true);
+            UIUtils.showSimpleSnackbar(this, R.string.invalid_username_password, true);
         }
     }
 
@@ -258,9 +258,9 @@ public class MyAccount extends AnkiActivity {
             } else {
                 Timber.e("Login failed, error code %d",data.returnType);
                 if (data.returnType == 403) {
-                    showSimpleSnackbar(R.string.invalid_username_password, true);
+                    UIUtils.showSimpleSnackbar(MyAccount.this, R.string.invalid_username_password, true);
                 } else {
-                    showSimpleSnackbar(R.string.connection_error_message, true);
+                    UIUtils.showSimpleSnackbar(MyAccount.this, R.string.connection_error_message, true);
                 }
             }
         }
@@ -268,7 +268,7 @@ public class MyAccount extends AnkiActivity {
 
         @Override
         public void onDisconnected() {
-            showSimpleSnackbar(R.string.youre_offline, true);
+            UIUtils.showSimpleSnackbar(MyAccount.this, R.string.youre_offline, true);
         }
     };
 

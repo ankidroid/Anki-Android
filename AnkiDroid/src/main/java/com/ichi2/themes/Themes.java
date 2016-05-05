@@ -40,10 +40,6 @@ public class Themes {
     private final static int THEME_NIGHT_DARK = 1;
 
 
-    public static void showThemedToast(Context context, String text, boolean shortLength) {
-        Toast.makeText(context, text, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
-    }
-
     public static void setTheme(Context context) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context.getApplicationContext());
         if (prefs.getBoolean("invertedColors", false)) {

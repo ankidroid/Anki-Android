@@ -104,7 +104,7 @@ public class CardTemplateEditor extends AnkiActivity {
             } else if (result.getString() != null && result.getString().equals("removeTemplateFailed")) {
                 // Failed to remove template
                 String message = getResources().getString(R.string.card_template_editor_would_delete_note);
-                Themes.showThemedToast(CardTemplateEditor.this, message, false);
+                UIUtils.showThemedToast(CardTemplateEditor.this, message, false);
             } else {
                 // RuntimeException occurred
                 setResult(RESULT_CANCELED);
@@ -464,7 +464,7 @@ public class CardTemplateEditor extends AnkiActivity {
                         final JSONObject template = tmpls.getJSONObject(position);
                         // Don't do anything if only one template
                         if (tmpls.length() < 2) {
-                            Themes.showThemedToast(getActivity(), res.getString(R.string.card_template_editor_cant_delete), false);
+                            UIUtils.showThemedToast(getActivity(), res.getString(R.string.card_template_editor_cant_delete), false);
                             return true;
                         }
                         // Show confirmation dialog
@@ -495,7 +495,7 @@ public class CardTemplateEditor extends AnkiActivity {
                         if (dummyCard != null) {
                             cid = dummyCard.getId();
                         } else {
-                            ((AnkiActivity) getActivity()).showSimpleSnackbar(R.string.invalid_template, false);
+                            UIUtils.showSimpleSnackbar(getActivity(), R.string.invalid_template, false);
                             return true;
                         }
                     }
