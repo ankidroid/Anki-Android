@@ -29,10 +29,6 @@
                 android:layout_above="@+id/bottom_area_layout"
                 android:layout_below="@+id/top_bar">
                 <include layout="@layout/reviewer_flashcard"/>
-                <FrameLayout
-                    android:id="@+id/whiteboard"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
             </FrameLayout>
             <include layout="@layout/reviewer_answer_buttons"/>
         </RelativeLayout>
