@@ -53,8 +53,8 @@
   <string name="pref_cat_automatic_display">Samodejno prikaži odgovor</string>
   <string name="pref_cat_appearance">Videz</string>
   <string name="pref_cat_appearance_summ">Spremeni teme in privzeto pisavo</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_themes">Teme</string>
+  <string name="pref_cat_fonts">Pisave</string>
   <string name="pref_cat_gestures">Poteze</string>
   <string name="pref_cat_gestures_summ">Uporabi tape in potege namesto gumbov</string>
   <string name="pref_cat_actions">Dejanja</string>
@@ -120,8 +120,8 @@
   <string name="fix_hebrew_text_summ">Zaobidenje za pravilen izris hebrejskih samoglasnikov.</string>
   <string name="fix_hebrew_instructions">Ta nastavitev zaobide Androidov algoritem RTL, da pravilno prikaže hebrejsko besedilo s samoglasniki.\n\nDa bi to delovalo, morate prejeti pisavo Tohu.ttf in jo ročno kopirati v\n\"%s/fonts/”\n\nSvojih kartic vam ne bo treba spremeniti.</string>
   <string name="fix_hebrew_download_font">Prejmi pisavo</string>
-  <string name="day_theme">Day theme</string>
-  <string name="night_theme">Night theme</string>
+  <string name="day_theme">Dnevna tema</string>
+  <string name="night_theme">Nočna tema</string>
   <string name="default_font">Privzeta pisava</string>
   <string name="override_font">Uporabnost privzete pisave</string>
   <string name="language">Jezik</string>
@@ -165,12 +165,12 @@
   <string name="convert_fen_text_summ">Nariši šahovnico iz zapisa Forsyth–Edwards. Zapis se mora nahajati znotraj oznak [fen][/fen].</string>
   <string name="enable_api_title">Omogoči API AnkiDroid</string>
   <string name="enable_api_summary">Omogoči drugim napravam povezavo z AnkiDroidom in branje/pisanje podatkov brez mojega posredovanja</string>
-  <string name="custom_buttons">App bar buttons</string>
-  <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
-  <string name="custom_buttons_setting_always_show">Always show</string>
-  <string name="custom_buttons_setting_if_room">Show if room</string>
-  <string name="custom_buttons_setting_menu_only">Menu only</string>
-  <string name="reset_custom_buttons">Reset to default</string>
+  <string name="custom_buttons">Gumbi vrstice programa</string>
+  <string name="custom_buttons_summary">Prilagodite, kateri gumbi naj se pojavijo v vrstici programa</string>
+  <string name="custom_buttons_setting_always_show">Vedno prikaži</string>
+  <string name="custom_buttons_setting_if_room">Prikaži, če je dovolj prostora</string>
+  <string name="custom_buttons_setting_menu_only">Samo meni</string>
+  <string name="reset_custom_buttons">Ponastavi na privzeto</string>
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Napredna statistika</string>
   <string name="enable_advanced_statistics_title">Omogoči napredno statistiko</string>

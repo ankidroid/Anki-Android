@@ -84,8 +84,8 @@
   <string name="menu_import">Uvozi</string>
   <string name="undo">Razveljavi</string>
   <string name="undo_action_review">zadnji pregled</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
+  <string name="undo_action_bury_card">prikrij kartico</string>
+  <string name="undo_action_bury_note">prikrij zapisek</string>
   <string name="undo_action_suspend_card">pridrži kartico</string>
   <string name="undo_action_suspend_note">pridrži zapisek</string>
   <string name="undo_action_delete">izbriši zapisek</string>
@@ -99,8 +99,8 @@
   <string name="menu_bury_note">Prikrij zapisek</string>
   <string name="menu_suspend_card">Pridrži kartico</string>
   <string name="menu_suspend_note">Pridrži zapisek</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">Prikrij</string>
+  <string name="menu_suspend">Pridrži</string>
   <string name="menu_delete_note">Izbriši zapisek</string>
   <string name="delete_note_message">Ali res želite izbrisati ta zapisek in vse vezane kartice?\n%s</string>
   <string name="menu_select">Označi besedilo</string>
