@@ -42,6 +42,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -687,7 +688,8 @@ public final class AddContentApi {
     private class CompatV2 extends CompatV1 {
         @Override
         public Cursor queryNotes(long modelId) {
-            return mResolver.query(Note.CONTENT_URI_V2, PROJECTION, String.format("%s=%d", Note.MID, modelId), null, null);
+            return mResolver.query(Note.CONTENT_URI_V2, PROJECTION,
+                    String.format(Locale.US, "%s=%d", Note.MID, modelId), null, null);
         }
 
         @Override
@@ -711,7 +713,8 @@ public final class AddContentApi {
                 keyToIndexesMap.get(key).add(i);
             }
             // Query for notes that have specified model and checksum of first field matches
-            String sel = String.format("%s=%d and %s in (%s)", Note.MID, modelId, Note.CSUM, TextUtils.join(",", csums));
+            String sel = String.format(Locale.US, "%s=%d and %s in (%s)", Note.MID, modelId, Note.CSUM,
+                    TextUtils.join(",", csums));
             Cursor notesTableCursor = mResolver.query(Note.CONTENT_URI_V2, PROJECTION, sel, null, null);
             if (notesTableCursor == null) {
                 return null;

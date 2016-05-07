@@ -2552,7 +2552,7 @@ public class Sched {
 
         @Override
         public String toString() {
-            return String.format("%s, %d, %d, %d, %d, %d, %s",
+            return String.format(Locale.US, "%s, %d, %d, %d, %d, %d, %s",
                     Arrays.toString(names), did, depth, revCount, lrnCount, newCount, children);
         }
     }
