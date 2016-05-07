@@ -88,7 +88,7 @@ public class CompatV19 extends CompatV17 implements Compat {
     }
 
     @Override
-    public boolean isSystemUiVisible(AnkiActivity activity) {
+    public boolean isImmersiveSystemUiVisible(AnkiActivity activity) {
         return (activity.getWindow().getDecorView().getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
     }
 }

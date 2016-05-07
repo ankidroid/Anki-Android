@@ -2723,7 +2723,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
-            if (mPrefFullscreenReview > 0 && CompatHelper.getCompat().isSystemUiVisible(AbstractFlashcardViewer.this)) {
+            if (mPrefFullscreenReview > 0 &&
+                    CompatHelper.getCompat().isImmersiveSystemUiVisible(AbstractFlashcardViewer.this)) {
                 delayedHide(INITIAL_HIDE_DELAY);
                 return true;
             }
