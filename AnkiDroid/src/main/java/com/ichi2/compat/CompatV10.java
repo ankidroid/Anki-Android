@@ -193,7 +193,7 @@ public class CompatV10 implements Compat {
     }
 
     @Override
-    public boolean isSystemUiVisible(AnkiActivity activity) {
+    public boolean isImmersiveSystemUiVisible(AnkiActivity activity) {
         return false;   // Immersive mode introduced in KitKat
     }
 }

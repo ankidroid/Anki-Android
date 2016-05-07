@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ActionProvider;
 import android.support.v4.view.MenuItemCompat;
@@ -78,6 +79,9 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected int getContentViewAttr(int fullscreenMode) {
+        if (CompatHelper.getSdkVersion() < Build.VERSION_CODES.KITKAT) {
+            fullscreenMode = 0;     // The specific fullscreen layouts are only applicable for immersive mode
+        }
         switch (fullscreenMode) {
             case 1:
                 return R.layout.reviewer_fullscreen_1;
@@ -450,9 +454,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         mWhiteboard.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (!mShowWhiteboard ||
-                        mPrefFullscreenReview && CompatHelper.getCompat().isSystemUiVisible(Reviewer.this)) {
-                    // TODO: (timrae). Tidy this logic up and confirm working on all API levels
+                if (!mShowWhiteboard || (mPrefFullscreenReview
+                        && CompatHelper.getCompat().isImmersiveSystemUiVisible(Reviewer.this))) {
+                    // Bypass whiteboard listener when it's hidden or fullscreen immersive mode is temporarily suspended
                     return getGestureDetector().onTouchEvent(event);
                 }
                 return mWhiteboard.handleTouchEvent(event);
