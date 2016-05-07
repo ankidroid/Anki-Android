@@ -44,6 +44,7 @@ public class BasicAudioFieldController extends FieldControllerBase implements IF
      */
     private String tempAudioPath;
     private String origAudioPath;
+    private AudioView mAudioView;
 
 
     @Override
@@ -74,10 +75,9 @@ public class BasicAudioFieldController extends FieldControllerBase implements IF
             }
         }
 
-        AudioView audioView = AudioView.createRecorderInstance(mActivity, R.drawable.av_play, R.drawable.av_pause,
+        mAudioView = AudioView.createRecorderInstance(mActivity, R.drawable.av_play, R.drawable.av_pause,
                 R.drawable.av_stop, R.drawable.av_rec, R.drawable.av_rec_stop, tempAudioPath);
-
-        audioView.setOnRecordingFinishEventListener(new AudioView.OnRecordingFinishEventListener() {
+        mAudioView.setOnRecordingFinishEventListener(new AudioView.OnRecordingFinishEventListener() {
             @Override
             public void onRecordingFinish(View v) {
                 // currentFilePath.setText("Recording done, you can preview it. Hit save after finish");
@@ -85,22 +85,27 @@ public class BasicAudioFieldController extends FieldControllerBase implements IF
                 mField.setHasTemporaryMedia(true);
             }
         });
-        layout.addView(audioView, LinearLayout.LayoutParams.FILL_PARENT);
+        layout.addView(mAudioView, LinearLayout.LayoutParams.FILL_PARENT);
     }
 
 
     @Override
     public void onDone() {
+        mAudioView.notifyStopRecord();
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 
+    @Override
+    public void onFocusLost() {
+        mAudioView.notifyReleaseRecorder();
+    }
+
 
     @Override
     public void onDestroy() {
+        mAudioView.notifyReleaseRecorder();
     }
-
 }

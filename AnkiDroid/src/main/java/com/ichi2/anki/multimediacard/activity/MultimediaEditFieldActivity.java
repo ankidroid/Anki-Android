@@ -162,18 +162,21 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         switch (item.getItemId()) {
             case R.id.multimedia_edit_field_to_text:
                 Timber.i("To text field button pressed");
+                mFieldController.onFocusLost();
                 toTextField();
                 supportInvalidateOptionsMenu();
                 return true;
 
             case R.id.multimedia_edit_field_to_image:
                 Timber.i("To image button pressed");
+                mFieldController.onFocusLost();
                 toImageField();
                 supportInvalidateOptionsMenu();
                 return true;
 
             case R.id.multimedia_edit_field_to_audio:
                 Timber.i("To audio button pressed");
+                mFieldController.onFocusLost();
                 toAudioField();
                 supportInvalidateOptionsMenu();
                 return true;
