@@ -776,7 +776,7 @@ public class Finder {
                     new String[] { mid, csum });
             long nid = cur.getLong(0);
             String flds = cur.getString(1);
-            if (Utils.stripHTMLMedia(Utils.splitFields(flds)[0]) == val) {
+            if (Utils.stripHTMLMedia(Utils.splitFields(flds)[0]).equals(val)) {
                 nids.add(nid);
             }
         } finally {
