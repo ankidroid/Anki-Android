@@ -568,10 +568,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 mDialogEditText = new EditText(DeckPicker.this);
                 ArrayList<String> names = getCol().getDecks().allNames();
                 int n = 1;
-                String name = String.format("%s %d", res.getString(R.string.filtered_deck_name), n);
+                String name = String.format(Locale.getDefault(), "%s %d", res.getString(R.string.filtered_deck_name), n);
                 while (names.contains(name)) {
                     n++;
-                    name = String.format("%s %d", res.getString(R.string.filtered_deck_name), n);
+                    name = String.format(Locale.getDefault(), "%s %d", res.getString(R.string.filtered_deck_name), n);
                 }
                 mDialogEditText.setText(name);
                 // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });

@@ -57,6 +57,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -743,7 +744,7 @@ public class CardContentProvider extends ContentProvider {
         if (col.getDecks().isDyn(deckId)) {
             throw new IllegalArgumentException("A filtered deck cannot be specified as the deck in bulkInsertNotes");
         }
-        col.log(String.format("bulkInsertNotes: %d items.\n%s", valuesArr.length, getLogMessage("bulkInsert", null)));
+        col.log(String.format(Locale.US, "bulkInsertNotes: %d items.\n%s", valuesArr.length, getLogMessage("bulkInsert", null)));
 
         // for caching model information (so we don't have to query for each note)
         long modelId = -1L;

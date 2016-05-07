@@ -259,7 +259,7 @@ public class Media {
                 root = root + " (1)";
             } else {
                 int n = Integer.parseInt(m.group(1));
-                root = String.format(" (%d)", n + 1);
+                root = String.format(Locale.US, " (%d)", n + 1);
             }
         }
     }
