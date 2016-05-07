@@ -39,5 +39,7 @@
     <style name="LegacyActionBarPlain" parent="Theme_Light.Plain">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
+        <item name="android:textColor">@color/prefs_item_light</item>
+        <item name="android:textColorSecondary">@color/prefs_item_light</item>
     </style>
 </resources>
