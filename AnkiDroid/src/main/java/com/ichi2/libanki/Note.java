@@ -134,9 +134,9 @@ public class Note implements Cloneable {
         String sfld = Utils.stripHTMLMedia(mFields[mCol.getModels().sortIdx(mModel)]);
         String tags = stringTags();
         String fields = joinedFields();
-        if (mod == null && mCol.getDb().queryScalar(String.format(Locale.US,
+        if (mod == null && mCol.getDb().queryScalar(
                 "select 1 from notes where id = ? and tags = ? and flds = ?",
-                mId, tags, fields)) > 0) {
+                new String[]{Long.toString(mId), tags, fields}) > 0) {
             return;
         }
         long csum = Utils.fieldChecksum(mFields[0]);

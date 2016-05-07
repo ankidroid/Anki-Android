@@ -133,10 +133,15 @@ public class DB {
      * @return The integer result of the query.
      */
     public int queryScalar(String query) {
+        return queryScalar(query, null);
+    }
+
+
+    public int queryScalar(String query, String[] selectionArgs) {
         Cursor cursor = null;
         int scalar;
         try {
-            cursor = mDatabase.rawQuery(query, null);
+            cursor = mDatabase.rawQuery(query, selectionArgs);
             if (!cursor.moveToNext()) {
                 return 0;
             }
