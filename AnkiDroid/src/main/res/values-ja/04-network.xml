@@ -56,7 +56,7 @@
   <string name="username_repeat">メールアドレス（確認）</string>
   <string name="password">パスワード</string>
   <string name="password_repeat">パスワード（確認）</string>
-  <string name="log_in">ログイン画面へ</string>
+  <string name="log_in">ログイン</string>
   <string name="sign_up_description">AnkiWebのアカウントを新規登録（無料）</string>
   <string name="sign_up_not_affiliated">備考: AnkiWebはAnkiのサービスです。Ankiから独立して活動しているAnkiDroid開発グループが管理するものではありません。</string>
   <string name="sign_up">新規登録用ページに進む</string>
