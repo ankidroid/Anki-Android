@@ -317,6 +317,11 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         }
     }
 
+    @Override
+    public void onFocusLost() {
+
+    }
+
 
     /**
      * @param context

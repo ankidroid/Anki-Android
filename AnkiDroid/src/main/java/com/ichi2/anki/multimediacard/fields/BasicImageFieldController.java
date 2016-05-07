@@ -178,6 +178,11 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         setPreviewImage(mField.getImagePath(), getMaxImageSize());
     }
 
+    @Override
+    public void onFocusLost() {
+
+    }
+
 
     @Override
     public void onDone() {
