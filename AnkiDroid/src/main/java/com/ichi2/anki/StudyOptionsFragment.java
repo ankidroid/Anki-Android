@@ -149,7 +149,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     private void openFilteredDeckOptions(boolean defaultConfig) {
         Intent i = new Intent(getActivity(), FilteredDeckOptions.class);
         i.putExtra("defaultConfig", defaultConfig);
-        startActivityForResult(i, DECK_OPTIONS);
+        getActivity().startActivityForResult(i, DECK_OPTIONS);
         ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
     }
 
@@ -227,7 +227,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     private void openReviewer() {
         Intent reviewer = new Intent(getActivity(), Reviewer.class);
         if (mFragmented) {
-            startActivityForResult(reviewer, AnkiActivity.REQUEST_REVIEW);
+            getActivity().startActivityForResult(reviewer, AnkiActivity.REQUEST_REVIEW);
         } else {
             // Go to DeckPicker after studying when not tablet
             reviewer.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
@@ -297,7 +297,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                     openFilteredDeckOptions();
                 } else {
                     Intent i = new Intent(getActivity(), DeckOptions.class);
-                    startActivityForResult(i, DECK_OPTIONS);
+                    getActivity().startActivityForResult(i, DECK_OPTIONS);
                     ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
                 }
                 return true;
