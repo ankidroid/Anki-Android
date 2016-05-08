@@ -60,7 +60,7 @@
   <string name="sign_up_description">AnkiWebのアカウントを新規登録（無料）</string>
   <string name="sign_up_not_affiliated">備考: AnkiWebはAnkiのサービスです。Ankiから独立して活動しているAnkiDroid開発グループが管理するものではありません。</string>
   <string name="sign_up">新規登録用ページに進む</string>
-  <string name="logged_as">ログイン名</string>
+  <string name="logged_as">ログイン中のアカウント：</string>
   <string name="log_out">ログアウト</string>
   <string name="alert_logging_message">ログインしています&#8230;</string>
   <string name="invalid_username_password">メールアドレスまたはパスワードが無効です</string>

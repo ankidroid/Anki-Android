@@ -53,7 +53,7 @@
   <string name="delete_card_message">このノートから作られたカードを全て削除してもよろしいですか？\n検索フィールド: %s</string>
   <string name="card_browser_show_marked">マーク付きカードを抽出</string>
   <string name="card_browser_show_suspended">保留カードを抽出</string>
-  <string name="card_browser_search_by_tag">タグによる抽出</string>
+  <string name="card_browser_search_by_tag">タグやカードの状態による抽出</string>
   <string name="card_browser_tags_shown">タグ: %1$s</string>
   <string name="card_browser_list_my_searches">マイ検索条件</string>
   <string name="card_browser_list_my_searches_save">検索条件を保存</string>

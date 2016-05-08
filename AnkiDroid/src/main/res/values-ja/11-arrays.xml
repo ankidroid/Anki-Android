@@ -36,8 +36,8 @@
 -->
 <resources>
   <string-array name="error_reporting_choice_labels">
-    <item>常にレポートする</item>
-    <item>レポートしない</item>
+    <item>常に報告する</item>
+    <item>報告しない</item>
     <item>毎回確認する</item>
   </string-array>
   <string-array name="gestures_labels">

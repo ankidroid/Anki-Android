@@ -161,20 +161,19 @@
   <string name="export_successful_title">apkg ファイルをメールで送信しますか？</string>
   <string name="export_successful">データがファイル \"%s\" としてエクスポートされました。メールで送信しますか？</string>
   <string name="export_unsuccessful">コレクションのエクスポート エラー</string>
-  <string name="import_hint">取り込みたいコレクションファイル（*. apkg）をあらかじめ \"%s\" に保存した後、この画面で「OK」ボタンをタップしてください。</string>
+  <string name="import_hint">取り込みたいデッキまたはコレクション（全デッキ）のファイル（*. apkg）をあらかじめ \"%s\" に保存した後、この画面で「OK」ボタンをタップしてください。</string>
   <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>
   <string name="study_options">デッキ オプション</string>
   <string name="select_tts">テキスト読み上げ機能の言語設定</string>
   <string name="custom_study">カスタム学習</string>
   <string name="more_options">その他</string>
-  <string name="dyn_deck_desc">これは標準のスケジュールから外れて学習する特別なデッキです。 復習が終わったカードは、自動的に元のデッキに戻ります。 このデッキを削除すると、残っていたカードは全て元のデッキに戻ります。</string>
+  <string name="dyn_deck_desc">これは標準のスケジュールから外れて学習する特別なデッキです。 復習が終わったカードは自動的に元のデッキに戻ります。 このデッキを削除すると、残っていたカードも全て元のデッキに戻ります。</string>
   <string name="steps_error">学習ステップには1以上の数字を入力してください</string>
   <string name="steps_min_error">少なくとも 1 つの学習ステップが必要です。</string>
   <string name="sched_end">（終了）</string>
   <string name="sched_unbury_action">今それらを見る場合は、メニューの「延期解除」をタップしてください</string>
   <string name="sched_has_buried">関連カード、延期カードの学習は明日まで延期されます。</string>
-  <string name="tag_editor_add_feedback">タグ「%1$s」を作成しますか？　よろしければ「%2$s」をタップしてください。
-</string>
+  <string name="tag_editor_add_feedback">このまま「%2$s」ボタンをタップすると、タグ「%1$s」の追加が確定します</string>
   <string name="tag_editor_add_feedback_existing">既存のタグ「%1$s」が選択されました</string>
   <string name="lookup_hint">文字列をコピーした後、カード内でタップすると、検索辞書アイコンが表示されます</string>
   <!-- Time spans -->
