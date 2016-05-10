@@ -17,6 +17,7 @@ package com.ichi2.anki.stats;
 
 
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.webkit.WebView;
 
 import com.ichi2.anki.R;
@@ -24,6 +25,15 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import timber.log.Timber;
 
 public class OverviewStatsBuilder {
     private static final int CARDS_INDEX = 0;
@@ -37,12 +47,15 @@ public class OverviewStatsBuilder {
     private static final int MSUM_INDEX = 8;
 
     private final WebView mWebView; //for resources access
-    private final Collection mCollectionData;
+    private final Collection mCol;
     private final boolean mWholeCollection;
     private final Stats.AxisType mType;
 
 
     public class OverviewStats {
+        public int forecastTotalReviews;
+        public double forecastAverageReviews;
+        public int forecastDueTomorrow;
         public double reviewsPerDayOnAll;
         public double reviewsPerDayOnStudyDays;
         public int allDays;
@@ -57,9 +70,9 @@ public class OverviewStatsBuilder {
         public double longestInterval;
     }
 
-    public OverviewStatsBuilder(WebView chartView, Collection collectionData, boolean isWholeCollection, Stats.AxisType mStatType){
+    public OverviewStatsBuilder(WebView chartView, Collection collectionData, boolean isWholeCollection, Stats.AxisType mStatType) {
         mWebView = chartView;
-        mCollectionData = collectionData;
+        mCol = collectionData;
         mWholeCollection = isWholeCollection;
         mType = mStatType;
     }
@@ -86,7 +99,7 @@ public class OverviewStatsBuilder {
     }
 
     private void appendOverViewStats(StringBuilder stringBuilder) {
-        Stats stats = new Stats(mCollectionData, mWholeCollection);
+        Stats stats = new Stats(mCol, mWholeCollection);
 
         OverviewStats oStats = new OverviewStats();
         stats.calculateOverviewStatistics(mType, oStats);
@@ -100,18 +113,26 @@ public class OverviewStatsBuilder {
                 oStats.daysStudied, oStats.allDays);
 
 
-        // TODO: FORECAST
-        // Total: xxx reviews
-        // Average: xx reviews/day
-        // Due tomorrow: 209 cards
+        // FORECAST
+        // Fill in the forecast summaries first
+        calculateForecastOverview(mType, oStats);
+
+        stringBuilder.append(_subtitle(res.getString(R.string.stats_forecast).toUpperCase()));
+        stringBuilder.append(res.getString(R.string.stats_overview_forecast_total, oStats.forecastTotalReviews));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_forecast_average, oStats.forecastAverageReviews));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_forecast_due_tomorrow, oStats.forecastDueTomorrow));
+
+        stringBuilder.append("<br>");
 
         // REVIEW COUNT
         stringBuilder.append(_subtitle(res.getString(R.string.stats_review_count).toUpperCase()));
         stringBuilder.append(daysStudied);
         stringBuilder.append("<br>");
-        stringBuilder.append(res.getString(R.string.stats_overview_total_reviews,oStats.totalReviews));
+        stringBuilder.append(res.getString(R.string.stats_overview_total_reviews, oStats.totalReviews));
         stringBuilder.append("<br>");
-        stringBuilder.append(res.getString(R.string.stats_overview_reviews_per_day_studydays,oStats.reviewsPerDayOnStudyDays));
+        stringBuilder.append(res.getString(R.string.stats_overview_reviews_per_day_studydays, oStats.reviewsPerDayOnStudyDays));
         if (!allDaysStudied) {
             stringBuilder.append("<br>");
             stringBuilder.append(res.getString(R.string.stats_overview_reviews_per_day_all, oStats.reviewsPerDayOnAll));
@@ -133,6 +154,14 @@ public class OverviewStatsBuilder {
 
         stringBuilder.append("<br>");
 
+        // ADDED
+        stringBuilder.append(_subtitle(res.getString(R.string.stats_added).toUpperCase()));
+        stringBuilder.append(res.getString(R.string.stats_overview_total_new_cards, oStats.totalNewCards));
+        stringBuilder.append("<br>");
+        stringBuilder.append(res.getString(R.string.stats_overview_new_cards_per_day, oStats.newCardsPerDay));
+
+        stringBuilder.append("<br>");
+
         // INTERVALS
         stringBuilder.append(_subtitle(res.getString(R.string.stats_review_intervals).toUpperCase()));
         stringBuilder.append(res.getString(R.string.stats_overview_average_interval));
@@ -140,18 +169,10 @@ public class OverviewStatsBuilder {
         stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_longest_interval));
         stringBuilder.append(Utils.roundedTimeSpan(mWebView.getContext(), (int) Math.round(oStats.longestInterval * Stats.SECONDS_PER_DAY)));
-
-        stringBuilder.append("<br>");
-
-        // PROGRESS
-        stringBuilder.append(_subtitle(res.getString(R.string.stats_progress).toUpperCase()));
-        stringBuilder.append(res.getString(R.string.stats_overview_total_new_cards, oStats.totalNewCards));
-        stringBuilder.append("<br>");
-        stringBuilder.append(res.getString(R.string.stats_overview_new_cards_per_day, oStats.newCardsPerDay));
     }
 
-    private void appendTodaysStats(StringBuilder stringBuilder){
-        Stats stats = new Stats(mCollectionData, mWholeCollection);
+    private void appendTodaysStats(StringBuilder stringBuilder) {
+        Stats stats = new Stats(mCol, mWholeCollection);
         int[] todayStats = stats.calculateTodayStats();
         stringBuilder.append(_title(mWebView.getResources().getString(R.string.stats_today)));
         Resources res = mWebView.getResources();
@@ -176,12 +197,101 @@ public class OverviewStatsBuilder {
     }
 
 
-    private String _title(String title){
+    private String _title(String title) {
         return "<h1>" + title + "</h1>";
     }
 
 
-    private String _subtitle(String title){
+    private String _subtitle(String title) {
         return "<h3>" + title + "</h3>";
+    }
+
+    // This is a copy of Stats#calculateDue that is more similar to the original desktop version which
+    // allows us to easily fetch the values required for the summary. In the future, this version
+    // should replace the one in Stats.java.
+    private void calculateForecastOverview(Stats.AxisType type, OverviewStats oStats) {
+        Integer start = null;
+        Integer end = null;
+        int chunk = 0;
+        switch (type) {
+            case TYPE_MONTH:
+                start = 0; end = 31; chunk = 1;
+                break;
+            case TYPE_YEAR:
+                start = 0; end = 52; chunk = 7;
+                break;
+            case TYPE_LIFE:
+                start = 0; end = null; chunk = 30;
+                break;
+        }
+        List<int[]> d = _due(start, end, chunk);
+        List<int[]> yng = new ArrayList<>();
+        List<int[]> mtr = new ArrayList<>();
+        int tot = 0;
+        List<int[]> totd = new ArrayList<>();
+        for (int[] day : d) {
+            yng.add(new int[] {day[0], day[1]});
+            mtr.add(new int[] {day[0], day[2]});
+            tot += day[1]+day[2];
+            totd.add(new int[] {day[0], tot});
+        }
+
+        // Fill in the overview stats
+        oStats.forecastTotalReviews = tot;
+        oStats.forecastAverageReviews = (double) tot / (totd.size() * chunk);
+        oStats.forecastDueTomorrow = mCol.getDb().queryScalar(String.format(Locale.US,
+                "select count() from cards where did in %s and queue in (2,3) " +
+                        "and due = ?", _limit()), new String[]{Integer.toString(mCol.getSched().getToday() + 1)});
+    }
+
+    private List<int[]> _due(Integer start, Integer end, int chunk) {
+        String lim = "";
+        if (start != null) {
+            lim += String.format(Locale.US, " and due-%d >= %d", mCol.getSched().getToday(), start);
+        }
+        if (end != null) {
+            lim += String.format(Locale.US, " and day < %d", end);
+        }
+
+        List<int[]> d = new ArrayList<>();
+        Cursor cur = null;
+        try {
+            String query;
+            query = String.format(Locale.US,
+                    "select (due-%d)/%d as day,\n" +
+                    "sum(case when ivl < 21 then 1 else 0 end), -- yng\n" +
+                    "sum(case when ivl >= 21 then 1 else 0 end) -- mtr\n" +
+                    "from cards\n" +
+                    "where did in %s and queue in (2,3)\n" +
+                    "%s\n" +
+                    "group by day order by day",
+                    mCol.getSched().getToday(), chunk, _limit(), lim);
+            cur = mCol.getDb().getDatabase().rawQuery(query, null);
+            while (cur.moveToNext()) {
+                d.add(new int[]{cur.getInt(0), cur.getInt(1), cur.getInt(2)});
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+        return d;
+    }
+
+
+    private String _limit() {
+        if (mWholeCollection) {
+            ArrayList<Long> ids = new ArrayList<>();
+            for (JSONObject d : mCol.getDecks().all()) {
+                try {
+                    ids.add(d.getLong("id"));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            return Utils.ids2str(Utils.arrayList2array(ids));
+        } else {
+            return mCol.getSched()._deckLimit();
+        }
     }
 }
