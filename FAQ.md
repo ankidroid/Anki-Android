@@ -242,7 +242,7 @@ Here are some tips for debugging your custom font issue.
 
 1. Use Android version 4.4+ without any custom ROM for best results
 1. Make sure that you are using the latest version of the [Android System Webview](https://play.google.com/store/apps/details?id=com.google.android.webview) (46.x at the time of writing)
-1. Use the method recommended in the manual (**not** the alternative method)
+1. Use the method recommended in the [manual](http://ankidroid.org/manual.html#customFonts) (**not** the alternative method)
 1. Go to AnkiDroid settings > Fonts and ensure that "Default font" is set to "System default", and "Default font applicability" is set to "When no font specified on flashcard"
 1. Check that the font shows correctly on both Anki Desktop and AnkiWeb
 1. Check that the font file correctly exists in your AnkiDroid/collection.media folder and that it has the same name as the one in your collection.media folder in Anki Desktop (if you have disabled "fetch media on sync" on either client then your font will *not* be automatically copied to AnkiDroid)
