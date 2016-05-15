@@ -22,7 +22,8 @@ import com.wildplot.android.rendering.graphics.wrapper.*;
 import com.wildplot.android.rendering.interfaces.Drawable;
 import com.wildplot.android.rendering.interfaces.Legendable;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
@@ -90,7 +91,10 @@ public class PlotSheet implements Drawable {
      * the ploting screens, screen 0 is the only one in single mode
      */
     Vector<MultiScreenPart> screenParts = new Vector<>();
-    private HashMap<String, ColorWrap> mLegendMap = new HashMap<>();
+
+    //Use LinkedHashMap so that the legend items will be displayed in the order
+    //in which they were added
+    private Map<String, ColorWrap> mLegendMap = new LinkedHashMap<>();
     private boolean mDrawablesPrepared = false;
 
     /**

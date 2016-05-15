@@ -371,31 +371,50 @@ public class ChartBuilder {
         return tics;
     }
 
-
     public double ticksCalcY(int pixelDistance, RectangleWrap field, double start, double end) {
-        double deltaRange = end - start;
-        int ticlimit = field.height / pixelDistance;
-        double tics = Math.pow(10, (int) Math.log10(deltaRange / ticlimit));
-        while (2.0 * (deltaRange / (tics)) <= ticlimit) {
-            tics /= 2.0;
-        }
-        while ((deltaRange / (tics)) / 2 >= ticlimit) {
-            tics *= 2.0;
-        }
-        Timber.d("ChartBuilder ticksCalcY: pixelDistance: %d, ticks: %,.2f", pixelDistance, tics);
-        return tics;
+
+        double size = ticsCalc(pixelDistance, field, end - start);
+        Timber.d("ChartBuilder ticksCalcY: pixelDistance: %d, ticks: %,.2f, start: %,.2f, end: %,.2f, height: %d", pixelDistance, size, start, end, field.height);
+        return size;
     }
 
-
     public double ticsCalc(int pixelDistance, RectangleWrap field, double deltaRange) {
-        int ticlimit = field.height / pixelDistance;
-        double tics = Math.pow(10, (int) Math.log10(deltaRange / ticlimit));
-        while (2.0 * (deltaRange / (tics)) <= ticlimit) {
-            tics /= 2.0;
+
+        //Make approximation of number of ticks based on desired number of pixels per tick
+        double numTicks = field.height / pixelDistance;
+
+        //Compute size of one tick in graph-units
+        double delta = deltaRange / numTicks;
+
+        //Write size of one tick in the form norm * magn
+        double dec = Math.floor(Math.log(delta) / Math.log(10));
+        double magn = Math.pow(10, dec);
+
+        double norm = delta / magn; // norm is between 1.0 and 10.0
+
+        //Write size of one tick in the form size * magn
+        //Where size in (1, 2, 2.5, 5, 10)
+        double size;
+
+        if (norm < 1.5) {
+            size = 1;
+        } else if (norm < 3) {
+            size = 2;
+            // special case for 2.5, requires an extra decimal
+            if (norm > 2.25) {
+                size = 2.5;
+            }
+        } else if (norm < 7.5) {
+            size = 5;
+        } else {
+            size = 10;
         }
-        while ((deltaRange / (tics)) / 2 >= ticlimit) {
-            tics *= 2.0;
-        }
-        return tics;
+
+        //Compute size * magn so that we return one number
+        size *= magn;
+
+        Timber.d("ChartBuilder ticksCalc : pixelDistance: %d, ticks: %,.2f, deltaRange: %,.2f, height: %d", pixelDistance, size, deltaRange, field.height);
+
+        return size;
     }
 }
