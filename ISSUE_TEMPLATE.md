@@ -1,11 +1,11 @@
-**Please refer to the [support page](https://ankidroid.org/docs/help.html) if you are unsure if this is the correct place to submit your issue.**
-
 ###### Research
-*Enter an 'x' character to confirm the points below:*
+*Enter an [ x ] character to confirm the points below:*
 
-[] I have searched for similar existing issues on the issue tracker and the user forum
-    
-[] I have checked the [manual](https://ankidroid.org/docs/manual.html) and the [FAQ](https://github.com/ankidroid/Anki-Android/wiki/FAQ) and could not find a solution to my problem.
+[  ] I have read the [support instructions](https://ankidroid.org/docs/help.html) and am reporting a bug or enhancement request specific to AnkiDroid
+
+[  ] I have checked the [manual](https://ankidroid.org/docs/manual.html) and the [FAQ](https://github.com/ankidroid/Anki-Android/wiki/FAQ) and could not find a solution to my issue
+
+[  ] I have searched for similar existing issues here and on the user forum
 
 
 ###### Reproduction Steps
