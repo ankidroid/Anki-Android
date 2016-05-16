@@ -271,7 +271,7 @@ public class AdvancedStatistics extends Hook  {
         metaInfo.setmHasColoredCumulative(true);
         metaInfo.setmType(type);
         metaInfo.setmTitle(R.string.stats_forecast);
-        metaInfo.setmBackwards(false);
+        metaInfo.setmBackwards(true);
         metaInfo.setmValueLabels(mValueLabels);
         metaInfo.setmColors(mColors);
         metaInfo.setmAxisTitles(mAxisTitles);
