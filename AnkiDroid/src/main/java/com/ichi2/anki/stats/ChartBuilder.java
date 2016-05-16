@@ -47,6 +47,7 @@ public class ChartBuilder {
     private Collection mCollectionData;
 
     int mMaxCards = 0;
+    private boolean mBackwards;
     private int[] mValueLabels;
     private int[] mColors;
     private int[] mAxisTitles;
@@ -96,7 +97,7 @@ public class ChartBuilder {
         mCumulative = stats.getCumulative();
         mSeriesList = stats.getSeriesList();
         Object[] metaData = stats.getMetaInfo();
-        //backwards = (Boolean) metaData[2];
+        mBackwards = (Boolean) metaData[2];
         mValueLabels = (int[]) metaData[3];
         mColors = (int[]) metaData[4];
         mAxisTitles = (int[]) metaData[5];
@@ -137,6 +138,7 @@ public class ChartBuilder {
         plotSheet.setBackgroundColor(new ColorWrap(backgroundColor));
         int textColor = Themes.getColorFromAttr(mChartView.getContext(), android.R.attr.textColor);
         plotSheet.setTextColor(new ColorWrap(textColor));
+        plotSheet.setIsBackwards(mBackwards);
 
         if (mChartType == Stats.ChartType.CARDS_TYPES) {
             return createPieChart(plotSheet);
@@ -145,8 +147,8 @@ public class ChartBuilder {
         PlotSheet hiddenPlotSheet = new PlotSheet(mFirstElement - 0.5, mLastElement + 0.5, 0, mMcount * Y_AXIS_STRETCH_FACTOR);     //for second y-axis
         hiddenPlotSheet.setFrameThickness(frameThickness * 0.66f, frameThickness * 0.66f, frameThickness, frameThickness * 0.9f);
 
-        setupBarGraphs(plotSheet, hiddenPlotSheet);
         setupCumulative(plotSheet, hiddenPlotSheet);
+        setupBarGraphs(plotSheet, hiddenPlotSheet);
 
         double xTicks = ticksCalcX(desiredPixelDistanceBetweenTicks, rect, mFirstElement, mLastElement);
         setupXaxis(plotSheet, xTicks, true);
