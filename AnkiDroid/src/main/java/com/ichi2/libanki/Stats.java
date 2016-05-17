@@ -1167,8 +1167,8 @@ public class Stats {
     public boolean calculateCardTypes(AxisType type) {
         mTitle = R.string.stats_cards_types;
         mAxisTitles = new int[] { R.string.stats_answer_type, R.string.stats_answers, R.string.stats_cumulative_correct_percentage };
-        mValueLabels = new int[] {R.string.statistics_mature, R.string.statistics_young_and_learn, R.string.statistics_unlearned, R.string.statistics_suspended};
-        mColors = new int[] { R.attr.stats_mature, R.attr.stats_young, R.attr.stats_unseen, R.attr.stats_suspended };
+        mValueLabels = new int[] {R.string.statistics_mature, R.string.statistics_young_and_learn, R.string.statistics_unlearned, R.string.statistics_suspended_and_buried};
+        mColors = new int[] { R.attr.stats_mature, R.attr.stats_young, R.attr.stats_unseen, R.attr.stats_suspended_and_buried };
         mType = type;
         ArrayList<double[]> list = new ArrayList<>();
         double[] pieData;

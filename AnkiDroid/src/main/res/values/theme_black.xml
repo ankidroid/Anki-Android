@@ -64,7 +64,7 @@
         <item name="stats_hours">@color/material_grey_500</item>
         <item name="stats_counts">@color/material_grey_800</item>
         <item name="stats_unseen">@color/material_grey_800</item>
-        <item name="stats_suspended">#ff0</item>
+        <item name="stats_suspended_and_buried">#ff0</item>
         <item name="stats_cumulative">@color/material_grey_800</item>
         <!-- Browser colors -->
         <item name="suspendedColor">#A8A634</item>

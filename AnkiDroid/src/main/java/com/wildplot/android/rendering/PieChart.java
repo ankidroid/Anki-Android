@@ -49,9 +49,12 @@ public class PieChart implements Drawable, Legendable {
 		//mValues = new double[] {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5};
 		mPercent = new double[mValues.length];
 		for(double v: mValues) mSum +=v;
-		mPercent[0]= mValues[0]/ mSum;
+
+        double denominator = (mSum == 0) ? 1 : mSum;
+
+		mPercent[0]= mValues[0]/ denominator;
 		for(int i=1; i< mValues.length; i++){
-			mPercent[i]= mPercent[i-1]+ mValues[i]/ mSum;
+			mPercent[i]= mPercent[i-1]+ mValues[i]/ denominator;
 		}
 		mColorHelper = mColors.length;
 		if((mValues.length-1)%(mColors.length)==0) mColorHelper = mColors.length-1;
@@ -71,6 +74,10 @@ public class PieChart implements Drawable, Legendable {
 	 * @see rendering.Drawable#paint(java.awt.Graphics)
 	 */
 	public void paint(GraphicsWrap g){
+
+        //Do not show chart if segments are all zero
+        if(mSum == 0) return;
+
 		RectangleWrap field = g.getClipBounds();
         float maxSideBorders = Math.max(mPlotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX],
                 mPlotSheet.getFrameThickness()[PlotSheet.RIGHT_FRAME_THICKNESS_INDEX]);
@@ -87,20 +94,22 @@ public class PieChart implements Drawable, Legendable {
         float xMiddle = xCenter - (float)(diameter/2.0);
         float yMiddle = yCenter - (float)(diameter/2.0);
 
-        float currentAngle = 0;
-        float nextAngle = (float)(360.0* mPercent[0]);
+        float angleOffSet = -90;
+        float currentAngle = angleOffSet;
+        float nextAngle = currentAngle + (float)(360.0* mPercent[0]);
         int tmp = 0;
 		for(int i = 0; i< mPercent.length-1; i++) {
 			g.setColor(mColors[i% mColorHelper]);
-			g.fillArc(xMiddle, yMiddle, (int)diameter, (int)(diameter), currentAngle, nextAngle - currentAngle);
+            g.fillArc(xMiddle, yMiddle, (int)diameter, (int)(diameter), -1*currentAngle, -1*(nextAngle - currentAngle));
 			currentAngle = nextAngle;
-			nextAngle = (int)(360.0* mPercent[i+1]);
+			nextAngle = (int)(angleOffSet + 360.0* mPercent[i+1]);
 			tmp = i;
 		}
         tmp++;
+
 		//last one does need some corrections to fill a full circle:
 		g.setColor(mColors[tmp% mColorHelper]);
-		g.fillArc(xMiddle, yMiddle, diameter, diameter, currentAngle, 360 - currentAngle);
+        g.fillArc(xMiddle, yMiddle, diameter, diameter, -1*currentAngle, -1*(360 + angleOffSet - currentAngle));
 		g.setColor(ColorWrap.black);
 		g.drawArc(xMiddle, yMiddle, diameter, diameter, 0, 360);
 		
@@ -113,8 +122,8 @@ public class PieChart implements Drawable, Legendable {
             if(j  != 0)
                 oldPercent = mPercent[j-1];
             String text = ""+Math.round((((mPercent[j]- oldPercent))*100)*100)/100.0+"%";
-            float x = (float)(xCenter+Math.cos((oldPercent+(mPercent[j]- oldPercent)*0.5)*360*Math.PI/180.0)*0.375*diameter)-20;
-            float y = (float)(yCenter-Math.sin((oldPercent+(mPercent[j]- oldPercent)*0.5)*360*Math.PI/180.0)*0.375*diameter);
+            float x = (float)(xCenter+Math.cos(-1*((oldPercent+(mPercent[j]- oldPercent)*0.5)*360+angleOffSet)*Math.PI/180.0)*0.375*diameter)-20;
+            float y = (float)(yCenter-Math.sin(-1*((oldPercent+(mPercent[j]- oldPercent)*0.5)*360+angleOffSet)*Math.PI/180.0)*0.375*diameter);
             FontMetricsWrap fm = g.getFontMetrics();
             float width = fm.stringWidth(text);
             float height = fm.getHeight();

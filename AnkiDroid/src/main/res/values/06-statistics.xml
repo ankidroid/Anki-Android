@@ -22,7 +22,7 @@
     <string name="statistics_mature">Mature</string>
     <string name="statistics_young_and_learn">Young and learn</string>
     <string name="statistics_unlearned">Unseen</string>
-    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_suspended_and_buried">Suspended+Buried</string>
     <string name="statistics_relearn">Relearn</string>
     <string name="statistics_learn">Learn</string>
     <string name="statistics_cram">Cram</string>
