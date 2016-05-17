@@ -296,10 +296,10 @@ public class Stats {
             }
         }
         oStats.reviewsPerDayOnAll = (double) oStats.totalReviews / oStats.allDays;
-        oStats.reviewsPerDayOnStudyDays = (double) oStats.totalReviews / oStats.daysStudied;
+        oStats.reviewsPerDayOnStudyDays = oStats.daysStudied == 0 ? 0 : (double) oStats.totalReviews / oStats.daysStudied;
 
         oStats.timePerDayOnAll = oStats.totalTime / oStats.allDays;
-        oStats.timePerDayOnStudyDays = oStats.totalTime / oStats.daysStudied;
+        oStats.timePerDayOnStudyDays = oStats.daysStudied == 0 ? 0 : oStats.totalTime / oStats.daysStudied;
 
         oStats.totalNewCards = getNewCards(timespan);
         oStats.newCardsPerDay = (double) oStats.totalNewCards / (double) oStats.allDays;
