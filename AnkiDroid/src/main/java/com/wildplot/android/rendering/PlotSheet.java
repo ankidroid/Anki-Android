@@ -22,7 +22,9 @@ import com.wildplot.android.rendering.graphics.wrapper.*;
 import com.wildplot.android.rendering.interfaces.Drawable;
 import com.wildplot.android.rendering.interfaces.Legendable;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
@@ -56,7 +58,9 @@ public class PlotSheet implements Drawable {
      * not yet implemented
      */
     protected boolean isMultiMode = false;
-    
+
+    protected boolean isBackwards = false;
+
     /**
      * thickness of frame in pixel
      */
@@ -419,7 +423,11 @@ public class PlotSheet implements Drawable {
                 g.setFontSize(oldFontSize);
             }
 
-            Set<String> keySet = mLegendMap.keySet();
+            List<String> keyList = new Vector<>(mLegendMap.keySet());
+
+            if(isBackwards) {
+                Collections.reverse(keyList);
+            }
 
             float oldFontSize = g.getFontSize();
             g.setFontSize(oldFontSize* 0.9f);
@@ -434,7 +442,8 @@ public class PlotSheet implements Drawable {
 
             int legendCnt = 0;
             Timber.d("should draw legend now, number of legend entries: %d", mLegendMap.size());
-            for(String legendName : keySet){
+
+            for(String legendName : keyList){
 
                 float stringWidth = fm.stringWidth(" : "+legendName);
 
@@ -721,6 +730,14 @@ public class PlotSheet implements Drawable {
     public void unsetFontSize() {
         fontSizeSet = false;
 
+    }
+
+    /**
+     * Show the legend items in reverse order of the order in which they were added.
+     * @param isBackwards If true, the legend items are shown in reverse order.
+     */
+    public void setIsBackwards(boolean isBackwards) {
+        this.isBackwards = isBackwards;
     }
 
     public void setFontSize(float fontSize) {

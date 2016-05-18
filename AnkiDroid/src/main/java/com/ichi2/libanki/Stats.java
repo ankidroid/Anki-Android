@@ -340,7 +340,7 @@ public class Stats {
         mHasColoredCumulative = false;
         mType = type;
         mDynamicAxis = true;
-        mBackwards = false;
+        mBackwards = true;
         mTitle = R.string.stats_forecast;
         mValueLabels = new int[] { R.string.statistics_young, R.string.statistics_mature };
         mColors = new int[] { R.attr.stats_young, R.attr.stats_mature };
@@ -479,10 +479,10 @@ public class Stats {
         } else if(charType == ChartType.REVIEW_TIME) {
             mTitle = R.string.stats_review_time;
         }
-        mValueLabels = new int[] { R.string.statistics_learn, R.string.statistics_relearn, R.string.statistics_young,
-                R.string.statistics_mature, R.string.statistics_cram };
-        mColors = new int[] { R.attr.stats_learn, R.attr.stats_relearn, R.attr.stats_young, R.attr.stats_mature,
-                R.attr.stats_cram };
+        mValueLabels = new int[] { R.string.statistics_cram, R.string.statistics_learn, R.string.statistics_relearn, R.string.statistics_young,
+                R.string.statistics_mature };
+        mColors = new int[] { R.attr.stats_cram, R.attr.stats_learn, R.attr.stats_relearn, R.attr.stats_young,
+                R.attr.stats_mature };
         int num = 0;
         int chunk = 0;
         switch (type) {
@@ -554,8 +554,8 @@ public class Stats {
                     .rawQuery(
                             query, null);
             while (cur.moveToNext()) {
-                list.add(new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(4), cur.getDouble(2),
-                        cur.getDouble(3), cur.getDouble(5) });
+                list.add(new double[] { cur.getDouble(0), cur.getDouble(5), cur.getDouble(1), cur.getDouble(4),
+                        cur.getDouble(2), cur.getDouble(3)});
             }
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -578,11 +578,12 @@ public class Stats {
         for (int i = 0; i < list.size(); i++) {
             double[] data = list.get(i);
             mSeriesList[0][i] = data[0]; // day
-            mSeriesList[1][i] = data[1] + data[2] + data[3] + data[4] + data[5]; // lrn
-            mSeriesList[2][i] = data[2] + data[3] + data[4] + data[5]; // relearn
-            mSeriesList[3][i] = data[3] + data[4] + data[5]; // young
-            mSeriesList[4][i] = data[4] + data[5]; // mature
-            mSeriesList[5][i] = data[5]; // cram
+            mSeriesList[1][i] = data[1] + data[2] + data[3] + data[4] + data[5]; // cram
+            mSeriesList[2][i] = data[2] + data[3] + data[4] + data[5]; // learn
+            mSeriesList[3][i] = data[3] + data[4] + data[5]; // relearn
+            mSeriesList[4][i] = data[4] + data[5]; // young
+            mSeriesList[5][i] = data[5]; // mature
+
             if (mSeriesList[1][i] > mMaxCards) {
                 mMaxCards = (int) Math.round(data[1] + data[2] + data[3] + data[4] + data[5]);
             }
@@ -788,6 +789,7 @@ public class Stats {
      */
     public boolean calculateBreakdown(AxisType type) {
         mTitle = R.string.stats_breakdown;
+        mBackwards = false;
         mAxisTitles = new int[] { R.string.stats_time_of_day, R.string.stats_percentage_correct, R.string.stats_reviews };
         mValueLabels = new int[] { R.string.stats_percentage_correct, R.string.stats_answers};
         mColors = new int[] { R.attr.stats_counts, R.attr.stats_hours};
@@ -922,6 +924,7 @@ public class Stats {
      */
     public boolean calculateWeeklyBreakdown(AxisType type) {
         mTitle = R.string.stats_weekly_breakdown;
+        mBackwards = false;
         mAxisTitles = new int[] { R.string.stats_day_of_week, R.string.stats_percentage_correct, R.string.stats_reviews };
         mValueLabels = new int[] { R.string.stats_percentage_correct, R.string.stats_answers};
         mColors = new int[] { R.attr.stats_counts, R.attr.stats_hours};
@@ -1040,6 +1043,7 @@ public class Stats {
     public boolean calculateAnswerButtons(AxisType type) {
         mHasColoredCumulative = true;
         mTitle = R.string.stats_answer_buttons;
+        mBackwards = false;
         mAxisTitles = new int[] { R.string.stats_answer_type, R.string.stats_answers, R.string.stats_cumulative_correct_percentage };
         mValueLabels = new int[] { R.string.statistics_learn, R.string.statistics_young, R.string.statistics_mature};
         mColors = new int[] { R.attr.stats_learn, R.attr.stats_young, R.attr.stats_mature};
@@ -1166,6 +1170,7 @@ public class Stats {
      */
     public boolean calculateCardTypes(AxisType type) {
         mTitle = R.string.stats_cards_types;
+        mBackwards = false;
         mAxisTitles = new int[] { R.string.stats_answer_type, R.string.stats_answers, R.string.stats_cumulative_correct_percentage };
         mValueLabels = new int[] {R.string.statistics_mature, R.string.statistics_young_and_learn, R.string.statistics_unlearned, R.string.statistics_suspended_and_buried};
         mColors = new int[] { R.attr.stats_mature, R.attr.stats_young, R.attr.stats_unseen, R.attr.stats_suspended_and_buried };
