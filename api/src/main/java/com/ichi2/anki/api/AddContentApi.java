@@ -341,6 +341,9 @@ public final class AddContentApi {
         values.put(Model.DECK_ID, did);
         values.put(Model.SORT_FIELD_INDEX, sortf);
         Uri modelUri = mResolver.insert(Model.CONTENT_URI, values);
+        if (modelUri == null) {
+            return null;
+        }
         // Set the remaining template parameters
         Uri templatesUri = Uri.withAppendedPath(modelUri, "templates");
         for (int i = 0; i < cards.length; i++) {
@@ -352,11 +355,7 @@ public final class AddContentApi {
             values.put(CardTemplate.ANSWER_FORMAT, afmt[i]);
             mResolver.update(uri, values, null, null);
         }
-        if (modelUri == null) {
-            return null;
-        } else {
-            return Long.parseLong(modelUri.getLastPathSegment());
-        }
+        return Long.parseLong(modelUri.getLastPathSegment());
     }
 
     /**
