@@ -155,8 +155,11 @@ public class ChartBuilder {
 
         double yTicks = ticksCalcY(desiredPixelDistanceBetweenTicks, rect, 0, mMaxCards * Y_AXIS_STRETCH_FACTOR);
         setupYaxis(plotSheet, hiddenPlotSheet, yTicks, mAxisTitles[1], false, true);
-        double rightYtics = ticsCalc(desiredPixelDistanceBetweenTicks, rect, mMcount * Y_AXIS_STRETCH_FACTOR);
-        setupYaxis(plotSheet, hiddenPlotSheet, rightYtics, mAxisTitles[2], true, true);
+
+        if(mCumulative != null) {
+            double rightYtics = ticsCalc(desiredPixelDistanceBetweenTicks, rect, mMcount * Y_AXIS_STRETCH_FACTOR);
+            setupYaxis(plotSheet, hiddenPlotSheet, rightYtics, mAxisTitles[2], true, true);
+        }
         setupGrid(plotSheet, yTicks * 0.5, xTicks * 0.5);
 
         return plotSheet;
