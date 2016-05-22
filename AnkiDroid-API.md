@@ -9,6 +9,8 @@ Starting From AnkiDroid v2.5, notes can be added directly to AnkiDroid's databas
 Please add your app to this list if it supports the instant-add API
 * [Aedict3](https://play.google.com/store/apps/details?id=sk.baka.aedict3)
 * [Bildkortsappen](https://github.com/rabinv/bildkortsappen)
+* [Hanping Chinese Dicitonary Pro](https://play.google.com/store/apps/details?id=com.embermitre.hanping.app.pro)
+* [Hanping Cantonese Dicitonary](https://play.google.com/store/apps/details?id=com.embermitre.hanping.cantodict.app.pro)
 
 ### Gradle dependency
 First things first, you should add the following dependency to your module's `build.gradle` file:
