@@ -1041,10 +1041,11 @@ public class Stats {
      * Answer Buttons
      */
     public boolean calculateAnswerButtons(AxisType type) {
-        mHasColoredCumulative = true;
+        mHasColoredCumulative = false;
+        mCumulative = null;
         mTitle = R.string.stats_answer_buttons;
         mBackwards = false;
-        mAxisTitles = new int[] { R.string.stats_answer_type, R.string.stats_answers, R.string.stats_cumulative_correct_percentage };
+        mAxisTitles = new int[] { R.string.stats_answer_type, R.string.stats_answers };
         mValueLabels = new int[] { R.string.statistics_learn, R.string.statistics_young, R.string.statistics_mature};
         mColors = new int[] { R.attr.stats_learn, R.attr.stats_young, R.attr.stats_mature};
         mType = type;
@@ -1107,18 +1108,6 @@ public class Stats {
             list.add(0, new double[]{0, 1, 0});
         }
 
-        double[] totals = new double[3];
-        for (int i = 0; i < list.size(); i++) {
-            double[] data = list.get(i);
-            int currentType = (int) data[0];
-            double ease = data[1];
-            double cnt = data[2];
-            totals[currentType] += cnt;
-        }
-        int badNew = 0;
-        int badYoung = 0;
-        int badMature = 0;
-
         mSeriesList = new double[4][list.size()+1];
 
         for (int i = 0; i < list.size(); i++) {
@@ -1132,15 +1121,6 @@ public class Stats {
             } else if (currentType == 2) {
                 ease += 10;
             }
-            if ((int) ease == 1) {
-                badNew = i;
-            }
-            if ((int) ease == 6) {
-                badYoung = i;
-            }
-            if ((int) ease == 11) {
-                badMature = i;
-            }
             mSeriesList[0][i] = ease;
             mSeriesList[1 + currentType][i] = cnt;
             if (cnt > mMaxCards) {
@@ -1148,12 +1128,6 @@ public class Stats {
             }
         }
         mSeriesList[0][list.size()] = 15;
-
-        mCumulative = new double[4][];
-        mCumulative[0] = mSeriesList[0];
-        mCumulative[1] = createCumulativeInPercent(mSeriesList[1], totals[0], badNew);
-        mCumulative[2] = createCumulativeInPercent(mSeriesList[2], totals[1], badYoung);
-        mCumulative[3] = createCumulativeInPercent(mSeriesList[3], totals[2], badMature);
 
         mFirstElement = 0.5;
         mLastElement = 14.5;
@@ -1287,33 +1261,6 @@ public class Stats {
         }
         return cumulativeValues;
     }
-
-
-    public static double[] createCumulativeInPercent(double [] nonCumulative, double total){
-        return createCumulativeInPercent(nonCumulative, total, -1);
-    }
-
-    //use -1 on ignoreIndex if you do not want to exclude anything
-    public static double[] createCumulativeInPercent(double[] nonCumulative, double total, int ignoreIndex) {
-        double[] cumulativeValues = new double[nonCumulative.length];
-        if (total < 1) {
-            cumulativeValues[0] = 0;
-        } else if (0 != ignoreIndex) {
-            cumulativeValues[0] = nonCumulative[0] / total * 100.0;
-        }
-
-        for (int i = 1; i < nonCumulative.length; i++) {
-            if (total < 1) {
-                cumulativeValues[i] = 0;
-            } else if (i != ignoreIndex) {
-                cumulativeValues[i] = cumulativeValues[i - 1] + nonCumulative[i] / total * 100.0;
-            } else {
-                cumulativeValues[i] = cumulativeValues[i - 1];
-            }
-        }
-        return cumulativeValues;
-    }
-
 
     private int _periodDays() {
         switch (mType) {
