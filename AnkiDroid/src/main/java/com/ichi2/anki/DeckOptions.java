@@ -222,8 +222,6 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             mOptions = mCol.getDecks().getConf(newConfId);
                             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_CHANGE, mConfChangeHandler,
                                     new DeckTask.TaskData(new Object[] { mDeck, mOptions }));
-                            // Restart to reflect the new preference values
-                            restartActivity();
                         } else if (key.equals("confRename")) {
                             String newName = (String) value;
                             if (!TextUtils.isEmpty(newName)) {
@@ -382,6 +380,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                     buildLists();
                     updateSummaries();
                     mProgressDialog.dismiss();
+                    // Restart to reflect the new preference values
+                    restartActivity();
                 }
 
 
