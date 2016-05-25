@@ -1752,6 +1752,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     showDialogFragment(d);
                 }
             }, findViewById(R.id.root_layout), mSnackbarShowHideCallback);
+            // Check if we need to update the fragment or update the deck list. The same checks
+            // are required for all snackbars below.
+            if (mFragmented) {
+                // Tablets must always show the study options that corresponds to the current deck,
+                // regardless of whether the deck is currently reviewable or not.
+                openStudyOptions(false);
+            } else {
+                // On phones, we update the deck list to ensure the currently selected deck is
+                // highlighted correctly.
+                updateDeckList();
+            }
         } else if (getCol().getDecks().isDyn(did)) {
             // Go to the study options screen if filtered deck with no cards to study
             openStudyOptions(false);
@@ -1765,6 +1776,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     openUrl(helpUrl);
                 }
             }, findViewById(R.id.root_layout), mSnackbarShowHideCallback);
+            if (mFragmented) {
+                openStudyOptions(false);
+            } else {
+                updateDeckList();
+            }
         } else {
             // Otherwise say there are no cards scheduled to study, and give option to do custom study
             UIUtils.showSnackbar(this, R.string.studyoptions_empty_schedule, false, R.string.custom_study, new OnClickListener() {
@@ -1776,6 +1792,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     showDialogFragment(d);
                 }
             }, findViewById(R.id.root_layout), mSnackbarShowHideCallback);
+            if (mFragmented) {
+                openStudyOptions(false);
+            } else {
+                updateDeckList();
+            }
         }
     }
 
