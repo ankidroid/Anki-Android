@@ -164,8 +164,8 @@
   <string name="convert_fen_text_summ">Tablero de dibujo de notación de Forsyth-Edwards. La notación debe adjuntar etiquetas del [fen][/fen].</string>
   <string name="enable_api_title">Habilitar API de AnkiDroid</string>
   <string name="enable_api_summary">Permitir que otras aplicaciones conecten a AnkiDroid y lean / escriban datos sin tu intervención</string>
-  <string name="custom_buttons">App bar buttons</string>
-  <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
+  <string name="custom_buttons">Botones de la barra de la aplicación</string>
+  <string name="custom_buttons_summary">Personalizar qué acciones aparecen en la barra de la aplicación</string>
   <string name="custom_buttons_setting_always_show">Mostrar siempre</string>
   <string name="custom_buttons_setting_if_room">Mostrar si hay espacio</string>
   <string name="custom_buttons_setting_menu_only">Sólo el menú</string>
@@ -173,7 +173,7 @@
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Estadísticas avanzadas</string>
   <string name="enable_advanced_statistics_title">Activar estadísticas avanzadas</string>
-  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
+  <string name="enable_advanced_statistics_summ">Despliega estadísticas de pronóstico basadas en un cálculo o simulación de futuros repasos (activado) o de repasos futuros ya programados (desactivado).</string>
   <string name="advanced_forecast_stats_compute_n_days_title">Calcular primeros n días, simular el resto</string>
   <string name="advanced_forecast_stats_compute_precision_title">Precisión de la computación</string>
   <string name="advanced_forecast_stats_mc_n_iterations_title">Número de iteraciones de la simulación</string>

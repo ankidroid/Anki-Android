@@ -164,12 +164,12 @@
   <string name="convert_fen_text_summ">Forsyth Edwards Notasyonundan satranç tahtası çiz. Notasyon [fen][/fen] etiketi içine alınmış olmalıdır.</string>
   <string name="enable_api_title">AnkiDroid API etkinleştir</string>
   <string name="enable_api_summary">Diğer uygulamaların AnkiDroid\'e bağlanmasına ve müdahaleniz olmadan veriyi okuyup / yazmasına izin verir</string>
-  <string name="custom_buttons">App bar buttons</string>
-  <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
-  <string name="custom_buttons_setting_always_show">Always show</string>
-  <string name="custom_buttons_setting_if_room">Show if room</string>
-  <string name="custom_buttons_setting_menu_only">Menu only</string>
-  <string name="reset_custom_buttons">Reset to default</string>
+  <string name="custom_buttons">Uygulama çubuğundaki düğmeler</string>
+  <string name="custom_buttons_summary">Hangi eylemlerin uygulama çubuğunda gözüktüğünü seç</string>
+  <string name="custom_buttons_setting_always_show">Hep göster</string>
+  <string name="custom_buttons_setting_if_room">Yer varsa göster</string>
+  <string name="custom_buttons_setting_menu_only">Sadece menüde</string>
+  <string name="reset_custom_buttons">Varsayılana döndür</string>
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">İleri düzey istatistikler</string>
   <string name="enable_advanced_statistics_title">İleri düzey istatistikleri etkinleştir</string>

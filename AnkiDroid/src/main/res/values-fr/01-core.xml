@@ -78,8 +78,8 @@
   <string name="menu_import">Importer</string>
   <string name="undo">Annuler</string>
   <string name="undo_action_review">Dernière révision</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
+  <string name="undo_action_bury_card">enterrer la carte</string>
+  <string name="undo_action_bury_note">enterrer la note</string>
   <string name="undo_action_suspend_card">suspendre la carte</string>
   <string name="undo_action_suspend_note">suspendre la note</string>
   <string name="undo_action_delete">supprimer la note</string>
@@ -93,8 +93,8 @@
   <string name="menu_bury_note">Enterrer la note</string>
   <string name="menu_suspend_card">Suspendre la carte</string>
   <string name="menu_suspend_note">Suspendre la note</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">Enterrer</string>
+  <string name="menu_suspend">Suspendre</string>
   <string name="menu_delete_note">Supprimer la note</string>
   <string name="delete_note_message">Voulez-vous vraiment supprimer cette note et toutes ses cartes ?\n%s</string>
   <string name="menu_select">Sélectionner le texte</string>

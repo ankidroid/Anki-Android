@@ -87,10 +87,10 @@
   <string name="rebuild_custom_study_deck">Reconstruction du paquet d\'étude personnalisée.\nMerci de patienter&#8230;</string>
   <string name="importing_collection">Importation de la collection. \nVeuillez patienter&#8230;</string>
   <string name="import_media_count">Importation des fichiers médias %1$d%%\nVeuillez patienter&#8230;</string>
-  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
-  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
-  <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
-  <string name="import_complete_count">Cards imported: %d</string>
+  <string name="import_progress">• Importation de notes : %1$d%%\n• importation de cartes : %2$d%%\n• post-traitement : %3$d%%</string>
+  <string name="import_update_details">Mise à jour de %1$d de %2$d notes existantes.</string>
+  <string name="import_update_ignored">Certaines mises à jour ont été ignorées parce que le type de note a changé</string>
+  <string name="import_complete_count">Cartes supprimées : %d</string>
   <string name="sd_card_full_title">Carte SD pleine</string>
   <string name="sd_card_almost_full_title">Carte SD presque pleine</string>
   <string name="restore_backup_title">Restaurer la sauvegarde ?</string>
@@ -129,6 +129,6 @@
   <!-- Empty cards -->
   <string name="emtpy_cards_finding">Recherche de cartes vides en cours&#8230;</string>
   <string name="empty_cards_none">Aucune carte vide</string>
-  <string name="empty_cards_count">Cards to delete: %d</string>
-  <string name="empty_cards_deleted">Cards deleted: %d</string>
+  <string name="empty_cards_count">Cartes à supprimer : %d</string>
+  <string name="empty_cards_deleted">Cartes supprimées : %d</string>
 </resources>

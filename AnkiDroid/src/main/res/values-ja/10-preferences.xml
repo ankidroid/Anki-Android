@@ -193,7 +193,7 @@
   </plurals>
   <string name="deck_conf_new_cards">新規カードと基本学習（短期集中反復）</string>
   <string name="deck_conf_rev_cards">復習（中長期間隔の反復）</string>
-  <string name="deck_conf_lps_cards">忘却と再学習</string>
+  <string name="deck_conf_lps_cards">忘却と再学習（短期集中反復）</string>
   <string name="deck_conf_general">一般</string>
   <string name="deck_conf_steps">学習ステップ（分）</string>
   <string name="deck_conf_order">順序</string>
@@ -221,7 +221,7 @@
   <string name="deck_conf_autoplay">音声・動画を自動再生</string>
   <string name="deck_conf_replayq">質問の音声・動画も再生</string>
   <string name="deck_conf_replayq_summ">解答が表示されている時に「音声・動画を再生」を選択すると、解答の音声・動画の前に質問の音声・動画も再生します</string>
-  <string name="deck_conf_manage">グループ管理</string>
+  <string name="deck_conf_manage">オプショングループの管理</string>
   <string name="deck_conf_current_group">現在のオプショングループ</string>
   <string name="deck_conf_rename">名前の変更</string>
   <string name="deck_conf_reset">標準の設定へ戻す</string>

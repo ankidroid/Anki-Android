@@ -54,7 +54,7 @@
   <string name="pref_cat_appearance">Erscheinungsbild</string>
   <string name="pref_cat_appearance_summ">Themes und Standard-Schriftart ändern</string>
   <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_fonts">Schriftarten</string>
   <string name="pref_cat_gestures">Gesten</string>
   <string name="pref_cat_gestures_summ">Berühren und Wischen statt Schaltflächen verwenden</string>
   <string name="pref_cat_actions">Aktionen</string>
@@ -166,10 +166,10 @@
   <string name="enable_api_summary">Verbindungen anderer Apps mit AnkiDroid zulassen und sie ohne weitere Eingriffe Daten lesen und schreiben lassen</string>
   <string name="custom_buttons">App bar buttons</string>
   <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
-  <string name="custom_buttons_setting_always_show">Always show</string>
-  <string name="custom_buttons_setting_if_room">Show if room</string>
-  <string name="custom_buttons_setting_menu_only">Menu only</string>
-  <string name="reset_custom_buttons">Reset to default</string>
+  <string name="custom_buttons_setting_always_show">Immer anzeigen</string>
+  <string name="custom_buttons_setting_if_room">Anzeigen wenn Freiraum</string>
+  <string name="custom_buttons_setting_menu_only">Nur im Menü</string>
+  <string name="reset_custom_buttons">Auf Standard zurücksetzen</string>
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Erweiterte Statistik</string>
   <string name="enable_advanced_statistics_title">Erweiterte Statistik aktivieren</string>

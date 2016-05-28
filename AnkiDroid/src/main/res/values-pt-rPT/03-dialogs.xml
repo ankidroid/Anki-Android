@@ -87,7 +87,7 @@
   <string name="rebuild_custom_study_deck">A reconstruir o baralho de estudo personalizado&#8230;</string>
   <string name="importing_collection">A importar colecção&#8230;</string>
   <string name="import_media_count">A importar os arquivos multimédia %1$d%%&#8230;</string>
-  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
+  <string name="import_progress">• A importar notas: %1$d%%\n• A importar fichas: %2$d%%\n• A pós-processar: %3$d%%</string>
   <string name="import_update_details">Atualizada(s) %1$d de %2$d notas existentes.</string>
   <string name="import_update_ignored">Algumas atualizações foram ignoradas porque o tipo de nota mudou</string>
   <string name="import_complete_count">Fichas importadas: %d</string>

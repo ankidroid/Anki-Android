@@ -55,7 +55,7 @@
   <string name="tts_no_tts">音声なし</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、PCソフトウェア<a href=\"%2$s\">Anki</a>と完全互換のフラッシュカードアプリです。AnkiDroidとAnkiのどちらでも教材を作成し、ダウンロードし、学習し、無料のオンラインサービスAnkiWebを介して簡単に双方を同期することができます。]]></item>
-    <item><![CDATA[AnkiDroidを改善するために、バグを<a href=\"%1$s\">こちら</a>へ報告していただければ幸いです。新しい機能のアイデアも大歓迎です。<a href=\"%2$s\">Wiki</a>をご覧になった上で、<a href=\"%3$s\">フォーラム</a>でディスカッションを開始してください。]]></item>
+    <item><![CDATA[AnkiDroidをよりよいものにするため、バグ（不具合）を見つけた場合は<a href=\"%1$s\">こちら</a>へ報告していただければ幸いです。新しい機能のアイデアも大歓迎です。<a href=\"%2$s\">Wiki</a>をご覧になった上で、<a href=\"%3$s\">フォーラム</a>でディスカッションを開始してください。]]></item>
     <item><![CDATA[AnkiDroid は<a href=\"%1$s\">オープンソースソフトウェア<a/>です。誰もが<a href=\"%2$s\">貢献者</a>になることができます :-)　]]></item>
     <item><![CDATA[ソフトウェア開発の専門知識を持っていない方も、例えばAnkiDroidの<a href=\"%1$s\">翻訳を改善</a>したり、Wikiを更新したり、スクリーンショット画像を提供したり、Ankiに<a href=\"%2$s\">寄付</a>をしたり、AnkiDroidのことをSNSに書いたりして、このアプリの発展に貢献することができます。]]></item>
     <item><![CDATA[AnkiDroidは、<a href="%1$s">GNU GPL v3 ライセンス</a>の下でリリースされています。ソースコードは<a href="%2$s">こちら</a>です。]]></item>
@@ -104,7 +104,7 @@
   <string name="dialog_positive_remove">削除</string>
   <string name="dialog_positive_repair">修復</string>
   <string name="dialog_positive_replace">置換</string>
-  <string name="dialog_positive_restore">復元</string>
+  <string name="dialog_positive_restore">戻す</string>
   <string name="dialog_positive_set">適用</string>
   <string name="lookup_button_content">調べる</string>
   <string name="dialog_collection_path_not_dir">指定されたパスは有効なディレクトリではありませんでした</string>
