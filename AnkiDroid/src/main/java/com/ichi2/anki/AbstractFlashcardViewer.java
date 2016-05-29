@@ -2662,6 +2662,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            // Go back to immersive mode if the user had temporarily exited it (and then execute swipe gesture)
+            if (mPrefFullscreenReview > 0 &&
+                    CompatHelper.getCompat().isImmersiveSystemUiVisible(AbstractFlashcardViewer.this)) {
+                delayedHide(INITIAL_HIDE_DELAY);
+            }
             if (mGesturesEnabled) {
                 try {
                     float dy = e2.getY() - e1.getY();
@@ -2723,6 +2728,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
+            // Go back to immersive mode if the user had temporarily exited it (and ignore the tap gesture)
             if (mPrefFullscreenReview > 0 &&
                     CompatHelper.getCompat().isImmersiveSystemUiVisible(AbstractFlashcardViewer.this)) {
                 delayedHide(INITIAL_HIDE_DELAY);
