@@ -41,6 +41,7 @@ import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v7.app.ActionBar;
 import android.text.ClipboardManager;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -1814,21 +1815,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     protected void updateScreenCounts() {
-        if (mCurrentCard == null) {
-            return;
-        }
-
-        try {
-            String[] title = getCol().getDecks().get(mCurrentCard.getDid()).getString("name").split("::");
-            getSupportActionBar().setTitle(title[title.length - 1]);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-
+        ActionBar actionBar = getSupportActionBar();
+        if (mCurrentCard == null) return;
         int[] counts = mSched.counts(mCurrentCard);
 
-        int eta = mSched.eta(counts, false);
-        getSupportActionBar().setSubtitle(getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
+        if (actionBar != null) {
+            try {
+                String[] title = getCol().getDecks().get(mCurrentCard.getDid()).getString("name").split("::");
+                actionBar.setTitle(title[title.length - 1]);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            int eta = mSched.eta(counts, false);
+            actionBar.setSubtitle(getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
+        }
 
         SpannableString newCount = new SpannableString(String.valueOf(counts[0]));
         SpannableString lrnCount = new SpannableString(String.valueOf(counts[1]));
