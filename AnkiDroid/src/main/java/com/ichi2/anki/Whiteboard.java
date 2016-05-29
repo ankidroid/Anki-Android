@@ -55,6 +55,7 @@ public class Whiteboard extends View {
 
     private boolean mInvertedColors = false;
     private boolean mMonochrome = true;
+    private boolean mUndoModeActive = false;
 
 
     public Whiteboard(AnkiActivity context, boolean inverted, boolean monochrome) {
@@ -138,6 +139,7 @@ public class Whiteboard extends View {
      * Clear the whiteboard.
      */
     public void clear() {
+        mUndoModeActive = false;
         mBitmap.eraseColor(0);
         mUndo.clear();
         invalidate();
@@ -158,8 +160,18 @@ public class Whiteboard extends View {
         }
     }
 
+    /**
+     * @return the number of strokes currently on the undo queue
+     */
     public int undoSize() {
         return mUndo.size();
+    }
+
+    /**
+     * @return true if the undo queue has had any strokes added to it since the last clear
+     */
+    public boolean isUndoModeActive() {
+        return mUndoModeActive;
     }
 
     private void createBitmap(int w, int h, Bitmap.Config conf) {
@@ -209,6 +221,7 @@ public class Whiteboard extends View {
             mCanvas.drawPoint(mX, mY, mPaint);
             mUndo.add(mX, mY);
         }
+        mUndoModeActive = true;
         // kill the path so we don't double draw
         mPath.reset();
         if (mUndo.size() == 1 && mActivity.get() != null) {
