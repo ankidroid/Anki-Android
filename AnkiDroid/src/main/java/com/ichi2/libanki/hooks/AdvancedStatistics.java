@@ -35,7 +35,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
 
@@ -321,9 +323,10 @@ public class AdvancedStatistics extends Hook  {
 
         EaseClassifier classifier = new EaseClassifier(mCol.getDb().getDatabase());
         ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb().getDatabase(), classifier, end, chunk);
+        TodayStats todayStats = new TodayStats(mCol.getDb().getDatabase(), Settings.getDayStartCutoff((int)mCol.getCrt()));
 
         long t0 = System.currentTimeMillis();
-        SimulationResult simulationResult = reviewSimulator.simNreviews(Settings.getToday((int)mCol.getCrt()), mCol.getDecks(), dids);
+        SimulationResult simulationResult = reviewSimulator.simNreviews(Settings.getToday((int)mCol.getCrt()), mCol.getDecks(), dids, todayStats);
         long t1 = System.currentTimeMillis();
 
         Timber.d("Simulation of all decks took: " + (t1 - t0) + " ms");
@@ -834,13 +837,49 @@ public class AdvancedStatistics extends Hook  {
         }
     }
 
+    public class TodayStats {
+
+        private Map<Long, Integer> nLearnedPerDeckId = new HashMap<Long, Integer>();
+
+        public TodayStats(SQLiteDatabase db, long dayStartCutoff) {
+
+            Cursor cur = null;
+            String query = "select cards.did, "+
+                    "sum(case when revlog.type = 0 then 1 else 0 end)"+ /* learning */
+                    " from revlog, cards where revlog.cid = cards.id and revlog.id > " + dayStartCutoff +
+                    " group by cards.did";
+            Timber.d("AdvancedStatistics.TodayStats query: %s", query);
+
+            try {
+                cur = db.rawQuery(query, null);
+                cur.moveToFirst();
+
+                nLearnedPerDeckId.put(cur.getLong(0), cur.getInt(1));
+
+            } finally {
+                if (cur != null && !cur.isClosed()) {
+                    cur.close();
+                }
+            }
+        }
+
+        public int getNLearned(long did) {
+            if(nLearnedPerDeckId.containsKey(did)) {
+                return nLearnedPerDeckId.get(did);
+            }
+            else {
+                return 0;
+            }
+        }
+    }
+
     public class NewCardSimulator {
 
         private int nAddedToday;
         private int tAdd;
 
         public NewCardSimulator() {
-            reset();
+            reset(0);
         }
 
         public int simulateNewCard(Deck deck) {
@@ -853,10 +892,10 @@ public class AdvancedStatistics extends Hook  {
             return tElapsed;
         }
 
-        public void reset()
+        public void reset(int nAddedToday)
         {
-            nAddedToday = 0;
-            tAdd = 0;
+            this.nAddedToday = nAddedToday;
+            this.tAdd = 0;
         }
     }
 
@@ -892,7 +931,7 @@ public class AdvancedStatistics extends Hook  {
             this.tMax = this.nTimeBins * this.timeBinLength;
         }
 
-        public SimulationResult simNreviews(int today, Decks decks, String didsStr) {
+        public SimulationResult simNreviews(int today, Decks decks, String didsStr, TodayStats todayStats) {
 
             SimulationResult simulationResultAggregated = new SimulationResult(nTimeBins, timeBinLength, SimulationResult.DOUBLE_TO_INT_MODE_ROUND);
 
@@ -902,7 +941,7 @@ public class AdvancedStatistics extends Hook  {
 
             for(long did : dids) {
                 for(int iteration = 0; iteration < nIterations; iteration++) {
-                    newCardSimulator.reset();
+                    newCardSimulator.reset(todayStats.getNLearned(did));
                     simulationResultAggregated.add(simNreviews(today, Decks.createDeck(did, decks)), nIterationsInv);
                 }
             }
@@ -1060,6 +1099,16 @@ public class AdvancedStatistics extends Hook  {
             int currentTime = (int) (getNow() / 1000);
             Timber.d("Now: " + currentTime);
             return (currentTime - collectionCreatedTime) / getNSecsPerDay();
+        }
+
+        /**
+         * Beginning of today.
+         * @param collectionCreatedTime The difference, measured in seconds, between midnight, January 1, 1970 UTC and the time at which the collection was created.
+         * @return The beginning of today in milliseconds counted from the time at which the collection was created
+         */
+        public long getDayStartCutoff (int collectionCreatedTime) {
+            long today = getToday(collectionCreatedTime);
+            return (collectionCreatedTime + (today * getNSecsPerDay())) * 1000;
         }
 
         public int getNSecsPerDay() {
