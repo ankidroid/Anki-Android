@@ -54,6 +54,7 @@ import java.util.List;
 import timber.log.Timber;
 
 public class Reviewer extends AbstractFlashcardViewer {
+    private boolean mHasDrawerSwipeConflicts = false;
     private boolean mShowWhiteboard = true;
     private boolean mBlackWhiteboard = true;
     private boolean mPrefFullscreenReview = false;
@@ -109,6 +110,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler,
                 new DeckTask.TaskData(null, 0));
 
+        disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
         mSched.setContext(new WeakReference<Activity>(this));
 
@@ -473,7 +475,32 @@ public class Reviewer extends AbstractFlashcardViewer {
     // Show or hide the whiteboard
     private void setWhiteboardVisibility(boolean state) {
         mShowWhiteboard = state;
-        mWhiteboard.setVisibility(state? View.VISIBLE: View.GONE);
+        if (state) {
+            mWhiteboard.setVisibility(View.VISIBLE);
+            disableDrawerSwipe();
+        } else {
+            mWhiteboard.setVisibility(View.GONE);
+            if (!mHasDrawerSwipeConflicts) {
+                enableDrawerSwipe();
+            }
+        }
+    }
+
+
+    private void disableDrawerSwipeOnConflicts() {
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        boolean gesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
+        if (gesturesEnabled) {
+            int gestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
+            int gestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
+            int gestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "17"));
+            if (gestureSwipeUp != GESTURE_NOTHING ||
+                    gestureSwipeDown != GESTURE_NOTHING ||
+                    gestureSwipeRight != GESTURE_NOTHING) {
+                mHasDrawerSwipeConflicts = true;
+                super.disableDrawerSwipe();
+            }
+        }
     }
 
 
