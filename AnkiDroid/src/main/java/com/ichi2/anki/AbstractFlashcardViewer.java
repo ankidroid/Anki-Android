@@ -853,8 +853,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         restorePreferences();
         super.onCreate(savedInstanceState);
         setContentView(getContentViewAttr(mPrefFullscreenReview));
-        View mainView = findViewById(android.R.id.content);
-        initNavigationDrawer(mainView);
+        // If not using fullscreen mode then set whiteboard/gesture margins to zero
+        View whiteboard = findViewById(R.id.whiteboard);
+        View touchLayer = findViewById(R.id.touch_layer);
+        if (mPrefFullscreenReview == 0 && whiteboard != null && touchLayer != null) {
+            FrameLayout.LayoutParams pwb  = (FrameLayout.LayoutParams) whiteboard.getLayoutParams();
+            FrameLayout.LayoutParams ptl  = (FrameLayout.LayoutParams) touchLayer.getLayoutParams();
+            pwb.setMargins(pwb.leftMargin, 0, 0 , 0);
+            ptl.setMargins(ptl.leftMargin, 0, 0 , 0);
+            whiteboard.setLayoutParams(pwb);
+            touchLayer.setLayoutParams(ptl);
+        }
+        // Setup navigation drawer
+        initNavigationDrawer(findViewById(android.R.id.content));
         // Open collection asynchronously
         startLoadingCollection();
     }
