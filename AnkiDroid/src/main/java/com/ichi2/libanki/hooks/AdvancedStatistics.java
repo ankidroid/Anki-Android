@@ -852,10 +852,10 @@ public class AdvancedStatistics extends Hook  {
 
             try {
                 cur = db.rawQuery(query, null);
-                cur.moveToFirst();
 
-                nLearnedPerDeckId.put(cur.getLong(0), cur.getInt(1));
-
+                while(cur.moveToNext()) {
+                    nLearnedPerDeckId.put(cur.getLong(0), cur.getInt(1));
+                }
             } finally {
                 if (cur != null && !cur.isClosed()) {
                     cur.close();
