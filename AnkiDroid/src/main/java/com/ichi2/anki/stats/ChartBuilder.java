@@ -156,7 +156,10 @@ public class ChartBuilder {
         double yTicks = ticksCalcY(desiredPixelDistanceBetweenTicks, rect, 0, mMaxCards * Y_AXIS_STRETCH_FACTOR);
         setupYaxis(plotSheet, hiddenPlotSheet, yTicks, mAxisTitles[1], false, true);
 
-        if(mCumulative != null) {
+        //0 = X-axis title
+        //1 = Y-axis title left
+        //2 = Y-axis title right (optional)
+        if(mAxisTitles.length == 3) {
             double rightYtics = ticsCalc(desiredPixelDistanceBetweenTicks, rect, mMcount * Y_AXIS_STRETCH_FACTOR);
             setupYaxis(plotSheet, hiddenPlotSheet, rightYtics, mAxisTitles[2], true, true);
         }
