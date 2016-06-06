@@ -41,18 +41,18 @@
 <resources>
   <!-- CardBrowser -->
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d zobrazená karta</item>
-    <item quantity="few">%d zobrazené karty</item>
-    <item quantity="other">%d zobrazených kariet</item>
+    <item quantity="one">%d zobrazená kartička</item>
+    <item quantity="few">%d zobrazené kartičky</item>
+    <item quantity="other">%d zobrazených kartičiek</item>
   </plurals>
   <string name="card_browser_all_decks">Všetky balíčky</string>
   <string name="card_browser_delete_card">Vymazať poznámku</string>
-  <string name="card_browser_suspend_card">Pozastaviť kartu</string>
-  <string name="card_browser_unsuspend_card">Vypnúť pozastavenie karty</string>
+  <string name="card_browser_suspend_card">Pozastaviť kartičku</string>
+  <string name="card_browser_unsuspend_card">Zrušiť pozastavenie kartičky</string>
   <string name="card_browser_mark_card">Označiť poznámku</string>
   <string name="card_browser_unmark_card">Odznačiť poznámku</string>
   <string name="delete_card_title">Vymazať poznámku?</string>
-  <string name="delete_card_message">Skutočne chcete vymazať všetky karty tejto poznámky?\nPole vyhľadávania: %s</string>
+  <string name="delete_card_message">Skutočne chcete vymazať všetky kartičky tejto poznámky?\nPole vyhľadávania: %s</string>
   <string name="card_browser_show_marked">Filtrovať označené</string>
   <string name="card_browser_show_suspended">Filtrovať pozastavené</string>
   <string name="card_browser_search_by_tag">Filtrovať podľa štítku</string>
@@ -71,7 +71,7 @@
   <string name="card_details_answer">Odpoveď</string>
   <string name="card_details_due">Na preskúšanie</string>
   <string name="card_details_tags">Štítky</string>
-  <string name="card_browser_filtering_cards">Karty sa filtrujú&#8230;\nPre zrušenie stlačte tlačidlo Späť</string>
+  <string name="card_browser_filtering_cards">Kartičky sa filtrujú&#8230;\nPre zrušenie stlačte tlačidlo Späť</string>
   <string-array name="card_browser_order_labels">
     <item>Bez triedenia (rýchlejšie)</item>
     <item>Podľa triediaceho poľa</item>
@@ -82,6 +82,6 @@
     <item>Podľa intervalu</item>
     <item>Podľa jednoduchosti</item>
     <item>Podľa opakovaní</item>
-    <item>Podľa pochybení</item>
+    <item>Podľa zabudnutí</item>
   </string-array>
 </resources>

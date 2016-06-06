@@ -72,8 +72,8 @@
   <string name="stats_today_again_count">忘却回数: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(正解率: &lt;b&gt;%.1f%%&lt;/b&gt;)</string>
   <string name="stats_today_type_breakdown">基本学習: &lt;b&gt;%1$s&lt;/b&gt;　復習: &lt;b&gt;%2$s&lt;/b&gt;　再学習: &lt;b&gt;%3$s&lt;/b&gt;　フィルター学習: &lt;b&gt;%4$s&lt;/b&gt;</string>
-  <string name="stats_today_mature_cards">復習(熟知)での正解率: %3$.1f%% (%1$d/%2$d)</string>
-  <string name="stats_today_no_mature_cards">復習(熟知)での正解率: -- (熟知カードを復習していません)</string>
+  <string name="stats_today_mature_cards">復習(熟知)の正解率: %3$.1f%% (%1$d/%2$d)</string>
+  <string name="stats_today_no_mature_cards">復習(熟知)の正解率: -- (未復習)</string>
   <string name="stats_overview_days_studied">学習実行率: &lt;b&gt;%1$d%% &lt;/b &gt; (%3$d日中%2$d日)</string>
   <string name="stats_overview_total_reviews">回答数: &lt;b&gt;%1$d&lt;/b&gt;回</string>
   <string name="stats_overview_reviews_per_day_studydays">平均: &lt;b&gt;%1$.1f&lt;/b&gt;回/日</string>

@@ -190,6 +190,7 @@
   <string name="deck_conf_deck_description">توصیف دسته</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
     <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">کارت های جدید</string>
@@ -235,6 +236,7 @@
   <string name="deck_conf_remove_message">تنظیمات فعلی گروه حذف شود؟</string>
   <string name="deck_conf_set_subdecks">برای تمام دسته ها تنظیم شود</string>
   <plurals name="deck_conf_set_subdecks_summ">
+    <item quantity="one">%s subdeck will use this group</item>
     <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">برای تمام دسته ها تنظیم شود</string>

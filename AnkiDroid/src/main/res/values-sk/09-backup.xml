@@ -39,13 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_deck_no_space_left">Posledná záloha bola neúspešná v dôsledku nedostatku miesta na SD karte. Odstráňte nejaké nepotrebné súbory alebo znížte počet záloh AnkiDroid.</string>
-  <string name="sd_space_warning">Na SD karte je menej než %d MB miesta. \nUvoľnite miesto, prosím, predídete tým prípadnej strate dát.</string>
+  <string name="backup_deck_no_space_left">Posledná záloha bola neúspešná v dôsledku nedostatku miesta na SD karte. Odstráňte niektoré nepotrebné súbory alebo znížte počet záloh AnkiDroid.</string>
+  <string name="sd_space_warning">Na SD karte je menej než %d MB miesta. \nUvoľnite miesto, predídete tým prípadnej strate dát.</string>
   <string name="backup_delete">Zálohy sa odstraňujú&#8230;</string>
   <string name="backup_restore">Obnoviť zo zálohy</string>
   <string name="backup_new_collection">Nová zbierka</string>
   <string name="backup_del_collection">Odstrániť zbierku a vytvoriť novú</string>
-  <string name="backup_del_collection_question">Skutočne chcete odstrániť zbierku a vytvoriť novú? Týmto zrušíte celý proces učenia a vymažete všetky karty.</string>
+  <string name="backup_del_collection_question">Skutočne chcete odstrániť zbierku a vytvoriť novú? Týmto zrušíte celý proces učenia a vymažete všetky kartičky.</string>
   <string name="backup_full_sync_from_server">Úplná synchronizácia zo serveru</string>
   <string name="backup_full_sync_from_server_question">Skutočne chcete prepísať vašu zbierku tou z AnkiWeb? Prídete tak o všetky zmeny a informácie zaznamenané od poslednej synchronizácie.</string>
   <string name="error_handling_title">Spracovanie chýb</string>
@@ -63,5 +63,5 @@
   <string name="corrupt_db_message">Vaša zbierka bola poškodená.\n\nŤuknite na “Možnosti” pre obnovenie zo zálohy. Ak to nepomôže, postupujte podľa nasledovných pokynov pre manuálnu opravu databázy:\n%1$s</string>
   <string name="access_collection_failed_message">Počas prístupu k vašej zbierke sa vyskytla chyba. Mohlo to byť spôsobené chybou v aplikácii, alebo ide o problém s vašou kolekciou. \n\nPokúste sa spustiť kontrolu databázy alebo obnovu zo zálohy ťuknutím na tlačítko “Možnosti”. V prípade, že sa toto oznámenie objaví znova, zašlite nám, prosím, správu:\n%1$s</string>
   <string name="deck_repair_error">Zbierku nebolo možné opraviť</string>
-  <string name="cursor_size_limit_exceeded">The Android size limit for a String in a database has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
+  <string name="cursor_size_limit_exceeded">Veľkosť textového reťazca v databáze bola prekročená. Vymažte niektoré nepoužívané typy poznámok prostredníctvom desktopovej verzie Anki, potom uskutočnite úplnú synchronizáciu.</string>
 </resources>

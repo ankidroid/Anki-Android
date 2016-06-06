@@ -77,9 +77,9 @@
   <string name="stats_overview_days_studied">Días estudiados: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d de %3$d)</string>
   <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt;  repasos</string>
   <string name="stats_overview_reviews_per_day_studydays">Promedio de los días estudiados: &lt;b&gt;%1$.1f&lt;/b&gt; repasos/día</string>
-  <string name="stats_overview_reviews_per_day_all">Si estudiaras todos los días: &lt;b&gt;%1$.1f&lt;/b&gt; repasos/día</string>
+  <string name="stats_overview_reviews_per_day_all">Estudiando todos los días: &lt;b&gt;%1$.1f&lt;/b&gt; repasos/día</string>
   <string name="stats_overview_time_per_day_studydays">Promedio de los días estudiados: &lt;b&gt;%1$.1f&lt;/b&gt; minutos/día</string>
-  <string name="stats_overview_time_per_day_all">Si estudiaras todos los días:  &lt;b&gt;%1$.1f&lt;/b&gt; minutos/día</string>
+  <string name="stats_overview_time_per_day_all">Estudiando todos los días:  &lt;b&gt;%1$.1f&lt;/b&gt; minutos/día</string>
   <string name="stats_overview_new_cards_per_day">Promedio: &lt;b&gt;%1$.1f&lt;/b&gt; tarjetas nuevas/día</string>
   <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt;  tarjetas nuevas</string>
   <string name="stats_overview_average_interval">"Intervalo promedio: "</string>

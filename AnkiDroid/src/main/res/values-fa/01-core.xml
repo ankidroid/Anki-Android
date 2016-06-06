@@ -55,13 +55,16 @@
   <!-- DeckPicker.java -->
   <string name="study_more">بیشتر بخوانید</string>
   <plurals name="deckpicker_title">
+    <item quantity="one">%1$dزمان مرور کارت ها (%2$s)</item>
     <item quantity="other">%1$dزمان مرور کارت ها (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
+    <item quantity="one">%dزمان باقیمانده</item>
     <item quantity="other">%dزمان باقیمانده</item>
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
+    <item quantity="one">کارت هایی%1$dکه امروز%2$sمطالعه شده اند</item>
     <item quantity="other">کارت هایی%1$dکه امروز%2$sمطالعه شده اند</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
@@ -150,6 +153,7 @@
   <string name="card_template_editor_menu_delete">حذف</string>
   <string name="card_template_editor_cant_delete">حداقل یک کارت وارد کنید.</string>
   <plurals name="card_template_editor_confirm_delete">
+    <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
     <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
   </plurals>
   <string name="invalid_template">کارت جدید نمی تواند ساخته شود</string>

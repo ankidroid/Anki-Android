@@ -40,14 +40,14 @@
 -->
 <resources>
   <!-- Widget -->
-  <string name="widget_minimum_cards_due_notification_ticker_title">Karty na preskúšanie</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid kariet na preskúšanie</string>
-  <string name="widget_no_cards_due">Žiadne karty na preskúšanie</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Kartičky na preskúšanie</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid kartičiek na preskúšanie</string>
+  <string name="widget_no_cards_due">Žiadne kartičky na preskúšanie</string>
   <string name="widget_loading">Načítava sa widget...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d karta na preskúšanie v %2$s</item>
-    <item quantity="few">%1$d karty na preskúšanie v %2$s</item>
-    <item quantity="other">%1$d kariet na preskúšanie v %2$s</item>
+    <item quantity="one">%1$d kartička na preskúšanie v %2$s</item>
+    <item quantity="few">%1$d kartičky na preskúšanie v %2$s</item>
+    <item quantity="other">%1$d kartičiek na preskúšanie v %2$s</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">%1$d balíček</item>

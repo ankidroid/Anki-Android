@@ -128,6 +128,6 @@
   <!-- Empty cards -->
   <string name="emtpy_cards_finding">無効なカード（カードの表側が表示できないカード）を検索しています&#8230;</string>
   <string name="empty_cards_none">無効なカードはありません</string>
-  <string name="empty_cards_count">%d枚のカードを削除します</string>
+  <string name="empty_cards_count">無効なカードが%d枚見つかりました。削除しますか？</string>
   <string name="empty_cards_deleted">%d枚のカードを削除しました</string>
 </resources>

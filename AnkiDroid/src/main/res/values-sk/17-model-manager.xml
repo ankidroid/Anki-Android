@@ -46,7 +46,7 @@
   <string name="model_browser_delete">Vymazať typ poznámok</string>
   <string name="model_browser_rename">Premenovať</string>
   <string name="model_browser_options">Možnosti</string>
-  <string name="model_browser_template">Upraviť karty</string>
+  <string name="model_browser_template">Upraviť kartičky</string>
   <string name="model_browser_add">Pridať typ poznámok</string>
   <!--Rename-->
   <string name="rename_model">Premenovať model</string>
