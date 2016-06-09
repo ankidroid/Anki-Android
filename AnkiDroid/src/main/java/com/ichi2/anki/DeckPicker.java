@@ -1018,7 +1018,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 if (isReview || isBury || isSuspend) {
                     openReviewer();
                 }
-
             }
 
             @Override
