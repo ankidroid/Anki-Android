@@ -40,12 +40,12 @@
 -->
 <resources>
   <!-- Navigation drawer items-->
-  <string name="decks">Decks</string>
-  <string name="card_browser">Card browser</string>
-  <string name="statistics">Statistics</string>
-  <string name="settings">Settings</string>
-  <string name="help">Help</string>
-  <string name="send_feedback">Send feedback</string>
+  <string name="decks">חפיסות</string>
+  <string name="card_browser">חיפוש</string>
+  <string name="statistics">סטטיסטיקה</string>
+  <string name="settings">הגדרות</string>
+  <string name="help">עזרה</string>
+  <string name="send_feedback">צור קשר</string>
   <string name="studyoptions_title">Deck overview</string>
   <string name="studyoptions_due_today">להיום:</string>
   <string name="studyoptions_new_total">סה\"כ כרטיסים חדשים:</string>
@@ -53,18 +53,24 @@
   <string name="studyoptions_eta">זמן משוער (דקות):</string>
   <string name="studyoptions_start">ללמוד עכשיו</string>
   <!-- DeckPicker.java -->
-  <string name="study_more">Study more</string>
+  <string name="study_more">תוספות</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="one">%1$d כרטיס נותר (%2$s)</item>
+    <item quantity="two">%1$d כרטיסים נותרים (%2$s)</item>
+    <item quantity="many">%1$d cards due (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minute left</item>
+    <item quantity="two">%d minutes left</item>
+    <item quantity="many">%d minutes left</item>
     <item quantity="other">%d minutes left</item>
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
     <item quantity="one">Studied %1$d card in %2$s today</item>
+    <item quantity="two">Studied %1$d cards in %2$s today</item>
+    <item quantity="many">Studied %1$d cards in %2$s today</item>
     <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
@@ -75,37 +81,37 @@
   <string name="ease_button_good">טוב</string>
   <string name="ease_button_easy">קל</string>
   <string name="studyoptions_congrats_undo">בטל את ה%s</string>
-  <string name="menu_import">Import</string>
+  <string name="menu_import">ייבא</string>
   <string name="undo">בטל</string>
   <string name="undo_action_review">תירגול אחרון</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
+  <string name="undo_action_bury_card">הסר כרטיס</string>
+  <string name="undo_action_bury_note">הסר הערה</string>
   <string name="undo_action_suspend_card">להשעות כרטיס</string>
   <string name="undo_action_suspend_note">להשעות רשומה</string>
   <string name="undo_action_delete">למחוק רשומה</string>
   <string name="unbury">לחלץ</string>
-  <string name="rename_deck">Rename deck</string>
+  <string name="rename_deck">ערוך שם חפיסה</string>
   <string name="menu_add">הוסף</string>
   <string name="menu_add_note">הוסף הערה</string>
   <string name="menu_my_account">סינכרון חשבון</string>
-  <string name="menu_dismiss_note">Hide / delete</string>
+  <string name="menu_dismiss_note">הסתר \ מחק</string>
   <string name="menu_bury_card">לקבור קלף</string>
   <string name="menu_bury_note">לקבור הערה</string>
   <string name="menu_suspend_card">השהה כרטיס</string>
   <string name="menu_suspend_note">לעצור הערה</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">הסתר</string>
+  <string name="menu_suspend">השהה</string>
   <string name="menu_delete_note">למחוק הערה</string>
   <string name="delete_note_message">אתה בטוח שברצונך למחוק את הערה זאת וכל קלפיה?‏\n%s</string>
   <string name="menu_select">בחירת טקסט</string>
-  <string name="menu_search">Lookup in %1$s</string>
-  <string name="menu_mark_note">Mark note</string>
-  <string name="menu_unmark_note">Unmark note</string>
+  <string name="menu_search">חפש ב%1$s</string>
+  <string name="menu_mark_note">סמן הערה</string>
+  <string name="menu_unmark_note">הסר סימון הערה</string>
   <string name="new_deck">צור חפיסה</string>
   <string name="create">צור</string>
   <string name="new_dynamic_deck">צור חפיסה מסוננת</string>
   <string name="night_mode">מצב לילה</string>
-  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <string name="directory_inaccessible">מאגר אנקידרויד אינו נגיש</string>
   <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -113,47 +119,49 @@
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-  <string name="time_quantity_seconds">%d s</string>
-  <string name="time_quantity_minutes">%d min</string>
-  <string name="time_quantity_hours">%d h</string>
-  <string name="time_quantity_days">%d d</string>
-  <string name="time_quantity_months">%.1f mo</string>
-  <string name="time_quantity_years">%.1f yr</string>
+  <string name="time_quantity_seconds">%dשניות</string>
+  <string name="time_quantity_minutes">%dדקות</string>
+  <string name="time_quantity_hours">%dשעות</string>
+  <string name="time_quantity_days">%dימים</string>
+  <string name="time_quantity_months">%.1f חודשים</string>
+  <string name="time_quantity_years">%.1f שנים</string>
   <!-- or "%.1f a" -->
   <string name="rebuild_cram_deck">השיקום cram הסיפון. \nPlease רגע...</string>
   <string name="rebuild_cram_label">בונה מחדש</string>
   <string name="empty_cram_label">ריק</string>
   <string name="empty_cram_deck">מרקן את חפיסת הדחיסה.‏\nנא להמתין...‏</string>
   <string name="custom_study_deck_name">שיעור למידה מותאם</string>
-  <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
-  <string name="empty_deck">This deck is empty</string>
-  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-  <string name="studyoptions_limit_reached">Daily study limit reached</string>
-  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+  <string name="custom_study_deck_exists">ראשית, ערוך שם חפיסה חדשה</string>
+  <string name="empty_deck">החפיסה ריקה</string>
+  <string name="studyoptions_empty">החפיסה ריקה. לחץ על כפתור ה+ להוספת תוכן חדש.</string>
+  <string name="studyoptions_limit_reached">יעד הלמידה היומי הושלם</string>
+  <string name="studyoptions_empty_schedule">אין כרטיסים מתוכננים ללמידה</string>
   <string name="studyoptions_congrats_finished">מזל טוב! סיימת לרגע.‏</string>
-  <string name="studyoptions_congrats_more_rev">Today’s limit has been reached, but there are still cards to review. You can increase the limit in the options.</string>
-  <string name="studyoptions_congrats_more_new">Today’s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
-  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the “Custom study” button</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet</string>
-  <string name="sd_card_not_mounted">Device storage not mounted</string>
+  <string name="studyoptions_congrats_more_rev">יעד הלמידה היומי הושלם, אך עדיין יש כרטיסים לשינון. ניתן להגדיל את היעד באפשרויות.</string>
+  <string name="studyoptions_congrats_more_new">יעד הלמידה היומי הושלם. ישנם כרטיסים חדשים זמינים; ניתן להגדיל את היעד באפשרויות, אך זה יגדיל את עומס הסקירה לטווח קצר.</string>
+  <string name="studyoptions_congrats_custom">על מנת ללמוד מחוץ ללוח הזמנים הרגיל, לחץ על \"למידה מותאמת אישית\"</string>
+  <string name="studyoptions_no_cards_due">אין קלפים נוספים</string>
+  <string name="sd_card_not_mounted">התקן אחסון לא מחובר</string>
   <string name="button_sync">סנכרן</string>
-  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-  <string name="continue_sync">Continue sync</string>
-  <string name="sync_cancelled">Sync cancelled</string>
-  <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
-  <string name="export">Export</string>
-  <string name="export_collection">Export collection</string>
-  <string name="export_deck">Export deck</string>
-  <string name="nothing">Nothing</string>
+  <string name="cancel_sync_confirm">האם ברצונך לבטל את הסינכרון?</string>
+  <string name="continue_sync">המשך סינכרון</string>
+  <string name="sync_cancelled">סינכרון בוטל</string>
+  <string name="sync_cancel_message">מבטל&#8230;\n אנא המתן.</string>
+  <string name="export">ייבא</string>
+  <string name="export_collection">ייבא אוסף</string>
+  <string name="export_deck">ייבא חפיסה</string>
+  <string name="nothing">ריק</string>
   <!-- Card template editor -->
-  <string name="title_activity_template_editor">Card types</string>
-  <string name="card_template_editor_front">Front template</string>
-  <string name="card_template_editor_back">Back template</string>
-  <string name="card_template_editor_styling">Styling</string>
+  <string name="title_activity_template_editor">סוג כרטיס</string>
+  <string name="card_template_editor_front">תבנית קדמית</string>
+  <string name="card_template_editor_back">תבנית אחורית</string>
+  <string name="card_template_editor_styling">עריכה</string>
   <string name="card_template_editor_menu_delete">Delete</string>
   <string name="card_template_editor_cant_delete">At least one card type is required</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
+    <item quantity="two">Delete the “%2$s” card type, and its %1$d cards?</item>
+    <item quantity="many">Delete the “%2$s” card type, and its %1$d cards?</item>
     <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
   </plurals>
   <string name="invalid_template">A card could not be generated</string>

@@ -50,16 +50,16 @@
     <item>پاسخ توصيه شده-سبز</item>
     <item>پاسخ بهتر از توصيه شده</item>
     <item>برگشت</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>ويرايش يادداشت</item>
+    <item>علامتگذاری یادداشت</item>
     <item>جستجوي عبارت</item>
     <item>تعليق موقت</item>
     <item>تعلیق کارت</item>
-    <item>Delete note</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>حذف یادداشت</item>
+    <item>پخش رسانه</item>
+    <item>توقف یادگیری</item>
+    <item>مخفی کردن یادداشت</item>
+    <item>یادداشت معلق شده</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>تعلیق کارت</item>
@@ -94,11 +94,11 @@
     <item>همیشه</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Light</item>
+    <item>روشن</item>
     <item>Plain</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
+    <item>سیاه</item>
+    <item>تیره</item>
   </string-array>
 </resources>

@@ -116,10 +116,14 @@
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d card studied in %2$s</item>
+    <item quantity="two">%1$d cards studied in %2$s</item>
+    <item quantity="many">%1$d cards studied in %2$s</item>
     <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
     <item quantity="one">%1$d minute</item>
+    <item quantity="two">%1$d minutes</item>
+    <item quantity="many">%1$d minutes</item>
     <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">בריך הבא לאנקידריוד</string>
@@ -134,6 +138,8 @@
   <string name="default_conf_delete_error">The default options group can’t be removed</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d card added</item>
+    <item quantity="two">%d cards added</item>
+    <item quantity="many">%d cards added</item>
     <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">עזרה</string>
@@ -182,26 +188,38 @@
   <!-- Time spans -->
   <plurals name="time_span_seconds">
     <item quantity="one">%s second</item>
+    <item quantity="two">%s seconds</item>
+    <item quantity="many">%s seconds</item>
     <item quantity="other">%s seconds</item>
   </plurals>
   <plurals name="time_span_minutes">
     <item quantity="one">%s minute</item>
+    <item quantity="two">%s minutes</item>
+    <item quantity="many">%s minutes</item>
     <item quantity="other">%s minutes</item>
   </plurals>
   <plurals name="time_span_hours">
     <item quantity="one">%s hour</item>
+    <item quantity="two">%s hours</item>
+    <item quantity="many">%s hours</item>
     <item quantity="other">%s hours</item>
   </plurals>
   <plurals name="time_span_days">
     <item quantity="one">%s day</item>
+    <item quantity="two">%s days</item>
+    <item quantity="many">%s days</item>
     <item quantity="other">%s days</item>
   </plurals>
   <plurals name="time_span_months">
     <item quantity="one">%s month</item>
+    <item quantity="two">%s months</item>
+    <item quantity="many">%s months</item>
     <item quantity="other">%s months</item>
   </plurals>
   <plurals name="time_span_years">
     <item quantity="one">%s year</item>
+    <item quantity="two">%s years</item>
+    <item quantity="many">%s years</item>
     <item quantity="other">%s years</item>
   </plurals>
   <!-- The reason for making a simple “< x” translatable are RTL

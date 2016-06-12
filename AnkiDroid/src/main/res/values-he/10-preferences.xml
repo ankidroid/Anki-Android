@@ -191,6 +191,8 @@
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
     <item quantity="one">%1$s\n%2$d deck uses this group</item>
+    <item quantity="two">%1$s\n%2$d decks use this group</item>
+    <item quantity="many">%1$s\n%2$d decks use this group</item>
     <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">New cards</string>
@@ -237,6 +239,8 @@
   <string name="deck_conf_set_subdecks">Set for all subdecks</string>
   <plurals name="deck_conf_set_subdecks_summ">
     <item quantity="one">%s subdeck will use this group</item>
+    <item quantity="two">%s subdecks will use this group</item>
+    <item quantity="many">%s subdecks will use this group</item>
     <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Set for all subdecks</string>
