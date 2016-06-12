@@ -556,6 +556,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                     // open cram deck option if deck is opened for the first time
                     if (mLoadWithDeckOptions) {
                         openFilteredDeckOptions(mLoadWithDeckOptions);
+                        mLoadWithDeckOptions = false;
                         return;
                     }
                     // Switch between the empty view, the ordinary view, and the "congratulations" view
