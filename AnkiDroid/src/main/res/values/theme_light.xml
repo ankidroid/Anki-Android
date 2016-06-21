@@ -87,6 +87,8 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <!-- Browser colors -->
         <item name="suspendedColor">#FFFFB2</item>
         <item name="markedColor">#D9B2E9</item>
+        <!-- Note editor colors -->
+        <item name="duplicateColor">#fcc</item>
         <!-- FAB -->
         <item name="fab_normal">@color/material_light_blue_700</item>
         <item name="fab_pressed">@color/material_light_blue_900</item>

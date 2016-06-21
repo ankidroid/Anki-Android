@@ -69,6 +69,8 @@
         <!-- Browser colors -->
         <item name="suspendedColor">#A8A634</item>
         <item name="markedColor">#391080</item>
+        <!-- Note editor colors -->
+        <item name="duplicateColor">#855</item>
         <!-- FAB -->
         <item name="fab_normal">#ff303030</item>
         <item name="fab_pressed">#c8303030</item> <!-- 55 less opacity than fab_normal -->
