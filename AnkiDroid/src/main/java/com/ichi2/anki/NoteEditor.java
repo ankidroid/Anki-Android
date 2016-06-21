@@ -1303,11 +1303,10 @@ public class NoteEditor extends AnkiActivity {
         Integer dupeCode = mEditorNote.dupeOrEmpty();
         // Change bottom line color of text field
         if (dupeCode != null && dupeCode == 2) {
-            field.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.material_red_500),
-                    PorterDuff.Mode.SRC_ATOP);
+            field.setDupeStyle();
             isDupe = true;
         } else {
-            field.getBackground().clearColorFilter();
+            field.setDefaultStyle();
             isDupe = false;
         }
         // Put back the old value so we don't interfere with modification detection
