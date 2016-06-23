@@ -17,6 +17,7 @@ package com.ichi2.anki.stats;
 
 import android.graphics.Paint;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
@@ -32,6 +33,8 @@ import com.wildplot.android.rendering.YAxis;
 import com.wildplot.android.rendering.YGrid;
 import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
 import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
+
+import java.util.Calendar;
 
 import timber.log.Timber;
 
@@ -298,7 +301,16 @@ public class ChartBuilder {
                 xAxis.setExplicitTicks(timePositions, mChartView.getResources().getStringArray(R.array.stats_day_time_strings));
                 break;
             case WEEKLY_BREAKDOWN:
-                timePositions = new double[]{0, 1, 2, 3, 4, 5, 6};
+                int startOfWeek = Integer.parseInt(AnkiDroidApp.getSharedPrefs(mChartView.getContext()).getString(
+                        mChartView.getContext().getString(R.string.start_of_week_preference),
+                        mChartView.getContext().getString(R.string.start_of_week_sunday)
+                ));
+
+                if (Calendar.MONDAY == startOfWeek) {
+                    timePositions = new double[]{6, 0, 1, 2, 3, 4, 5};
+                } else {
+                    timePositions = new double[]{0, 1, 2, 3, 4, 5, 6};
+                }
                 xAxis.setExplicitTicks(timePositions, mChartView.getResources().getStringArray(R.array.stats_week_days));
                 break;
         }

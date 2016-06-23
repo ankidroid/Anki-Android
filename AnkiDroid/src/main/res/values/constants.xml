@@ -201,4 +201,13 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+
+    <string name="start_of_week_preference" translatable="false">startOfWeek</string>
+    <string name="start_of_week_sunday" translatable="false">1</string>
+    <string name="start_of_week_monday" translatable="false">2</string>
+    <string name="start_of_week_default" translatable="false">@string/start_of_week_sunday</string>
+    <string-array name="start_of_week">
+        <item>@string/start_of_week_sunday</item>
+        <item>@string/start_of_week_monday</item>
+    </string-array>
 </resources>

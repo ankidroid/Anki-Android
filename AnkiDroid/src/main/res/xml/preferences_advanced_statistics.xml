@@ -4,7 +4,12 @@
 <!-- Advanced Statistics Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki">
-
+    <ListPreference
+        android:defaultValue="@string/start_of_week_default"
+        android:entries="@array/start_of_week_labels"
+        android:entryValues="@array/start_of_week"
+        android:key="@string/start_of_week_preference"
+        android:title="@string/start_of_week" />
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="advanced_statistics_enabled"
