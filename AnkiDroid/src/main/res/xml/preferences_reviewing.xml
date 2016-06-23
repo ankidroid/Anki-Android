@@ -110,6 +110,11 @@
             android:key="showProgress"
             android:summary="@string/show_progress_summ"
             android:title="@string/show_progress" />
+        <CheckBoxPreference
+            android:key="showETA"
+            android:defaultValue="true"
+            android:summary="@string/show_eta_summ"
+            android:title="@string/show_eta" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_whiteboard" >
         <com.ichi2.ui.SeekBarPreference
