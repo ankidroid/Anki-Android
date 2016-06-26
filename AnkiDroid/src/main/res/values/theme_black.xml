@@ -6,7 +6,7 @@
     <color name="theme_black_accent">#1565C0</color>
     <color name="theme_black_primary_text">#fff</color> <!-- Alternative: #808080 -->
     <color name="theme_black_secondary_text">#a0a0a0</color>
-    <color name="theme_black_row_current">#101010</color>
+    <color name="theme_black_row_current">#1a1a1a</color>
 
     <style name="Theme_Dark.Black">
         <!-- Android colors -->
