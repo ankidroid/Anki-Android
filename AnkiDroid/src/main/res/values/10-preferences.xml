@@ -129,6 +129,8 @@
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
     <string name="show_progress">Show remaining</string>
     <string name="show_progress_summ">Show remaining card count</string>
+    <string name="show_eta">Show ETA</string>
+    <string name="show_eta_summ">Show remaining time</string>
     <string name="use_current">Deck for new cards</string>
     <string name="new_spread">New card position</string>
     <string name="learn_cutoff">Learn ahead limit</string>

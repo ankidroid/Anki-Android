@@ -182,6 +182,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * Variables to hold preferences
      */
     private boolean mPrefHideDueCount;
+    private boolean mPrefShowETA;
     private boolean mShowTimer;
     protected boolean mPrefWhiteboard;
     private boolean mShowTypeAnswerField;
@@ -1713,6 +1714,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
+        mPrefShowETA = preferences.getBoolean("showETA", true);
         mUseInputTag = preferences.getBoolean("useInputTag", false) && (CompatHelper.getSdkVersion() >= 15);
         mShowTypeAnswerField = (!preferences.getBoolean("writeAnswersDisable", false)) && !mUseInputTag;
         // On newer Androids, ignore this setting, which sholud be hidden in the prefs anyway.
@@ -1826,8 +1828,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            int eta = mSched.eta(counts, false);
-            actionBar.setSubtitle(getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
+            if (mPrefShowETA) {
+                int eta = mSched.eta(counts, false);
+                actionBar.setSubtitle(getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
+            }
         }
 
         SpannableString newCount = new SpannableString(String.valueOf(counts[0]));
