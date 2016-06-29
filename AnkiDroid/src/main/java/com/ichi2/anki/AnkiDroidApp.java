@@ -286,18 +286,12 @@ public class AnkiDroidApp extends Application {
      * Sets the user language.
      *
      * @param localeCode The locale code of the language to set
-     * @return True if the language has changed, else false
      */
-    public static boolean setLanguage(String localeCode) {
-        boolean languageChanged = false;
+    public static void setLanguage(String localeCode) {
         Configuration config = getInstance().getResources().getConfiguration();
         Locale newLocale = LanguageUtil.getLocale(localeCode);
-        if (!config.locale.equals(newLocale)) {
-            languageChanged = true;
-            config.locale = newLocale;
-            getInstance().getResources().updateConfiguration(config, getInstance().getResources().getDisplayMetrics());
-        }
-        return languageChanged;
+        config.locale = newLocale;
+        getInstance().getResources().updateConfiguration(config, getInstance().getResources().getDisplayMetrics());
     }
 
 
