@@ -43,7 +43,6 @@
   <string name="statistics_mature">Olgun</string>
   <string name="statistics_young_and_learn">Genç+Öğrenilen</string>
   <string name="statistics_unlearned">Görünmeyen</string>
-  <string name="statistics_suspended">Askıya alınan</string>
   <string name="statistics_relearn">Yeniden öğren</string>
   <string name="statistics_learn">Öğren</string>
   <string name="statistics_cram">İnekleme</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Tahmin</string>
   <string name="stats_review_count">Çalışma sayısı</string>
   <string name="stats_review_time">Çalışma süresi</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Zaman aralıkları</string>
   <string name="stats_breakdown">Saatlik döküm</string>
   <string name="stats_weekly_breakdown">Haftalık döküm</string>

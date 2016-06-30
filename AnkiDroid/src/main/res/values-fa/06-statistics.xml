@@ -43,7 +43,6 @@
   <string name="statistics_mature">سررسیده</string>
   <string name="statistics_young_and_learn">Young and learn</string>
   <string name="statistics_unlearned">Unseen</string>
-  <string name="statistics_suspended">Suspended</string>
   <string name="statistics_relearn">بازآموزی</string>
   <string name="statistics_learn">یادگیری</string>
   <string name="statistics_cram">مطالعه فشرده</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">پیش بینی</string>
   <string name="stats_review_count">شماره مرور</string>
   <string name="stats_review_time">زمان مرور</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Intervals</string>
   <string name="stats_breakdown">Hourly breakdown</string>
   <string name="stats_weekly_breakdown">Weekly breakdown</string>

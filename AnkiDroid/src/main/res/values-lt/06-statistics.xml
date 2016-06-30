@@ -43,7 +43,6 @@
   <string name="statistics_mature">Sena</string>
   <string name="statistics_young_and_learn">Young and learn</string>
   <string name="statistics_unlearned">Nematyti</string>
-  <string name="statistics_suspended">Sulaikyti</string>
   <string name="statistics_relearn">Vėl išmokti</string>
   <string name="statistics_learn">Išmokti</string>
   <string name="statistics_cram">Cram</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Prognozė</string>
   <string name="stats_review_count">Kartojimų skaičius</string>
   <string name="stats_review_time">Kartojimų laikas</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Intervalai</string>
   <string name="stats_breakdown">Valandinis suskirstymas</string>
   <string name="stats_weekly_breakdown">Savaitinis suskirstymas</string>

@@ -43,7 +43,6 @@
   <string name="statistics_mature">Развитые</string>
   <string name="statistics_young_and_learn">Недавние+Изучаемые</string>
   <string name="statistics_unlearned">Непросмотренные</string>
-  <string name="statistics_suspended">Приостановленные</string>
   <string name="statistics_relearn">Переучивание</string>
   <string name="statistics_learn">Обучение</string>
   <string name="statistics_cram">Зубрёжка</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Прогноз</string>
   <string name="stats_review_count">Число просмотров</string>
   <string name="stats_review_time">Время просмотра</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Интервалы</string>
   <string name="stats_breakdown">Ежечасный перерыв</string>
   <string name="stats_weekly_breakdown">Еженедельный перерыв</string>

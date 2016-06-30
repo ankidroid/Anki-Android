@@ -43,7 +43,6 @@
   <string name="statistics_mature">오래된</string>
   <string name="statistics_young_and_learn">최근+학습</string>
   <string name="statistics_unlearned">본 적 없는</string>
-  <string name="statistics_suspended">보류된</string>
   <string name="statistics_relearn">재학습</string>
   <string name="statistics_learn">학습</string>
   <string name="statistics_cram">벼락치기</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">예상</string>
   <string name="stats_review_count">복습 횟수</string>
   <string name="stats_review_time">복습 시간</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">간격</string>
   <string name="stats_breakdown">시간별 분석</string>
   <string name="stats_weekly_breakdown">주간 분석</string>

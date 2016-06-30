@@ -43,7 +43,6 @@
   <string name="statistics_mature">Uswahsans</string>
   <string name="statistics_young_and_learn">Jugg+Laisjan</string>
   <string name="statistics_unlearned">Unsaiƕan</string>
-  <string name="statistics_suspended">Bidand</string>
   <string name="statistics_relearn">Relearn</string>
   <string name="statistics_learn">Laisjan</string>
   <string name="statistics_cram">Cram</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Forecast</string>
   <string name="stats_review_count">Domeinaraþjo</string>
   <string name="stats_review_time">Domeinaƕeila</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Intervals</string>
   <string name="stats_breakdown">Hourly breakdown</string>
   <string name="stats_weekly_breakdown">Weekly breakdown</string>

@@ -43,7 +43,6 @@
   <string name="statistics_mature">Mature</string>
   <string name="statistics_young_and_learn">Giovani+Impara</string>
   <string name="statistics_unlearned">Mai viste</string>
-  <string name="statistics_suspended">Sospese</string>
   <string name="statistics_relearn">Reimpara</string>
   <string name="statistics_learn">Impara</string>
   <string name="statistics_cram">Studio focalizzato</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Previsioni</string>
   <string name="stats_review_count">Ripetizioni</string>
   <string name="stats_review_time">Durata</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Intervalli</string>
   <string name="stats_breakdown">Ripartizione oraria</string>
   <string name="stats_weekly_breakdown">Ripartizione settimanale</string>

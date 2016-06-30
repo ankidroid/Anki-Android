@@ -43,7 +43,6 @@
   <string name="statistics_mature">復習(熟知)</string>
   <string name="statistics_young_and_learn">基本学習＋復習(未熟)</string>
   <string name="statistics_unlearned">未学習(新規)</string>
-  <string name="statistics_suspended">保留＋延期</string>
   <string name="statistics_relearn">再学習</string>
   <string name="statistics_learn">基本学習</string>
   <string name="statistics_cram">フィルター学習</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">予測</string>
   <string name="stats_review_count">履歴（回答数）</string>
   <string name="stats_review_time">履歴（時間）</string>
-  <string name="stats_progress">デッキの成長</string>
   <string name="stats_review_intervals">間隔</string>
   <string name="stats_breakdown">時間帯ごとの分析</string>
   <string name="stats_weekly_breakdown">曜日ごとの分析</string>

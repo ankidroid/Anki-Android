@@ -43,7 +43,6 @@
   <string name="statistics_mature">Зрели</string>
   <string name="statistics_young_and_learn">Още нови и за учене</string>
   <string name="statistics_unlearned">Невидяни</string>
-  <string name="statistics_suspended">Спрени</string>
   <string name="statistics_relearn">Преговор</string>
   <string name="statistics_learn">Учене</string>
   <string name="statistics_cram">Зубрене</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Прогноза</string>
   <string name="stats_review_count">Брой преглеждания</string>
   <string name="stats_review_time">Преглед на времето</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Интервали</string>
   <string name="stats_breakdown">Почасова разбивка</string>
   <string name="stats_weekly_breakdown">Седмична разбивка</string>

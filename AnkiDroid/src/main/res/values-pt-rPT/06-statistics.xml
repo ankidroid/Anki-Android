@@ -43,7 +43,6 @@
   <string name="statistics_mature">Antiga</string>
   <string name="statistics_young_and_learn">Jovens + Em aprendizagem</string>
   <string name="statistics_unlearned">Não vistas</string>
-  <string name="statistics_suspended">Suspensas</string>
   <string name="statistics_relearn">Reaprender</string>
   <string name="statistics_learn">Aprender</string>
   <string name="statistics_cram">Estudo Focado</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Previsão</string>
   <string name="stats_review_count">Contagem de revisões</string>
   <string name="stats_review_time">Tempo de revisão</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Intervalos</string>
   <string name="stats_breakdown">Divisão horária</string>
   <string name="stats_weekly_breakdown">Divisão semanal</string>

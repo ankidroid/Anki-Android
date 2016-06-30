@@ -43,7 +43,6 @@
   <string name="statistics_mature">Zrele</string>
   <string name="statistics_young_and_learn">Sveže in za preučiti</string>
   <string name="statistics_unlearned">Neogledane</string>
-  <string name="statistics_suspended">Pridržane</string>
   <string name="statistics_relearn">Za pon. učenje</string>
   <string name="statistics_learn">Za učenje</string>
   <string name="statistics_cram">Inten.</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Napoved</string>
   <string name="stats_review_count">Števec pregledov</string>
   <string name="stats_review_time">Čas pregleda</string>
-  <string name="stats_progress">Napredek</string>
   <string name="stats_review_intervals">Razmiki</string>
   <string name="stats_breakdown">Po urah</string>
   <string name="stats_weekly_breakdown">Po tednih</string>

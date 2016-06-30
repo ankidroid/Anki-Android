@@ -43,7 +43,6 @@
   <string name="statistics_mature">Зрілі</string>
   <string name="statistics_young_and_learn">Young and learn</string>
   <string name="statistics_unlearned">Unseen</string>
-  <string name="statistics_suspended">Suspended</string>
   <string name="statistics_relearn">Перевчити</string>
   <string name="statistics_learn">Вчити</string>
   <string name="statistics_cram">Зубріння</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Прогноз</string>
   <string name="stats_review_count">Лічильник переглядів</string>
   <string name="stats_review_time">Час огдляду</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Intervals</string>
   <string name="stats_breakdown">Hourly breakdown</string>
   <string name="stats_weekly_breakdown">Weekly breakdown</string>

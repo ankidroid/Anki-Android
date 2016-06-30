@@ -43,7 +43,6 @@
   <string name="statistics_mature">Dojrzałe</string>
   <string name="statistics_young_and_learn">Młode+Uczone</string>
   <string name="statistics_unlearned">Nie widziane</string>
-  <string name="statistics_suspended">Zawieszone</string>
   <string name="statistics_relearn">Uczone ponownie</string>
   <string name="statistics_learn">Uczone</string>
   <string name="statistics_cram">Zakuwane</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Prognoza</string>
   <string name="stats_review_count">Liczba powtórek</string>
   <string name="stats_review_time">Czas powtórek</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Interwały</string>
   <string name="stats_breakdown">Rozkład godzinowy</string>
   <string name="stats_weekly_breakdown">Rozkład po dniach tygodnia</string>

@@ -43,7 +43,6 @@
   <string name="statistics_mature">Развијени</string>
   <string name="statistics_young_and_learn">Младе + учење</string>
   <string name="statistics_unlearned">Непрегледане</string>
-  <string name="statistics_suspended">Отказано</string>
   <string name="statistics_relearn">Поновно учење</string>
   <string name="statistics_learn">Учење</string>
   <string name="statistics_cram">Штребање</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Прогноза</string>
   <string name="stats_review_count">Број прегледа</string>
   <string name="stats_review_time">Време прегледа</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Размаци</string>
   <string name="stats_breakdown">Опсег сати</string>
   <string name="stats_weekly_breakdown">Опсек седмице</string>
