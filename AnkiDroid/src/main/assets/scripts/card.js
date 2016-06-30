@@ -28,7 +28,7 @@ var resizeImages = function() {
         if (window.innerWidth === 0 || window.innerHeight === 0) {
             return;
         }
-        var maxWidth = window.innerWidth * 0.99;
+        var maxWidth = window.innerWidth * 0.90;
         var maxHeight = window.innerHeight * 0.90;
         var ratio = 0;
         var images = document.getElementsByTagName('img');
