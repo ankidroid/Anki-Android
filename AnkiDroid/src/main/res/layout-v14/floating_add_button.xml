@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             fab:fab_colorNormal="?attr/fab_normal"
             fab:fab_icon="@drawable/ic_add_white_24dp"
-            fab:fab_title="@string/menu_add"
+            fab:fab_title="@string/menu_add_note"
             fab:fab_size="mini"
             fab:fab_colorPressed="?attr/fab_pressed"/>
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
