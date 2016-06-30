@@ -43,7 +43,6 @@
   <string name="statistics_mature">Alte</string>
   <string name="statistics_young_and_learn">Junge Karten</string>
   <string name="statistics_unlearned">Neu</string>
-  <string name="statistics_suspended">Ausgesetzt</string>
   <string name="statistics_relearn">Erneut gelernte</string>
   <string name="statistics_learn">Gelernte</string>
   <string name="statistics_cram">Gepaukte</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Prognose</string>
   <string name="stats_review_count">Anzahl Wiederholungen</string>
   <string name="stats_review_time">Lernzeit</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Intervalle</string>
   <string name="stats_breakdown">Gedächtnisleistung nach Tageszeit</string>
   <string name="stats_weekly_breakdown">Gedächtnisleistung nach Wochentag</string>

@@ -43,7 +43,6 @@
   <string name="statistics_mature">Maduras</string>
   <string name="statistics_young_and_learn">Jóvenes y aprender</string>
   <string name="statistics_unlearned">No vistas</string>
-  <string name="statistics_suspended">Suspendida</string>
   <string name="statistics_relearn">Volver a aprender</string>
   <string name="statistics_learn">Aprender</string>
   <string name="statistics_cram">Intensivas</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Pronóstico</string>
   <string name="stats_review_count">Número de revisión</string>
   <string name="stats_review_time">Tiempo de revisión</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Intervalos</string>
   <string name="stats_breakdown">Desglose por hora</string>
   <string name="stats_weekly_breakdown">Desglose por semana</string>

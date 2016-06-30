@@ -43,7 +43,6 @@
   <string name="statistics_mature">Rijp</string>
   <string name="statistics_young_and_learn">Jong en Leren</string>
   <string name="statistics_unlearned">Nieuw</string>
-  <string name="statistics_suspended">Geschorst</string>
   <string name="statistics_relearn">Opnieuw leren</string>
   <string name="statistics_learn">Leren</string>
   <string name="statistics_cram">Blokken</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Prognose</string>
   <string name="stats_review_count">Aantal overhoringen</string>
   <string name="stats_review_time">Overhoringstijd</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Intervallen</string>
   <string name="stats_breakdown">Verdeling per uur</string>
   <string name="stats_weekly_breakdown">Verdeling per week</string>

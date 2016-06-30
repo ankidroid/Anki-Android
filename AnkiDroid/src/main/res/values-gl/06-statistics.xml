@@ -43,7 +43,6 @@
   <string name="statistics_mature">Vellos</string>
   <string name="statistics_young_and_learn">Novos e aprender</string>
   <string name="statistics_unlearned">Non vistas</string>
-  <string name="statistics_suspended">Suspensas</string>
   <string name="statistics_relearn">Aprender de novo</string>
   <string name="statistics_learn">Aprender</string>
   <string name="statistics_cram">Repaso intensivo</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Previsión</string>
   <string name="stats_review_count">Número de avaliacións</string>
   <string name="stats_review_time">Tempo de avaliación</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Intervalos</string>
   <string name="stats_breakdown">Desagregar por hora</string>
   <string name="stats_weekly_breakdown">Desagregar por semana</string>

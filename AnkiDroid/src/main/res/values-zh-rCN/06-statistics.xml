@@ -43,7 +43,6 @@
   <string name="statistics_mature">熟悉</string>
   <string name="statistics_young_and_learn">有待熟悉+学习</string>
   <string name="statistics_unlearned">未学习</string>
-  <string name="statistics_suspended">暂停</string>
   <string name="statistics_relearn">重新学习</string>
   <string name="statistics_learn">学习</string>
   <string name="statistics_cram">强记模式</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">预测</string>
   <string name="stats_review_count">复习计数</string>
   <string name="stats_review_time">复习时间</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">间隔</string>
   <string name="stats_breakdown">按小时分类</string>
   <string name="stats_weekly_breakdown">按周分类</string>

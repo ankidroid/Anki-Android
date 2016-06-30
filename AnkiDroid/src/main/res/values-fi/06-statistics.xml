@@ -43,7 +43,6 @@
   <string name="statistics_mature">Kypsät</string>
   <string name="statistics_young_and_learn">Nuoret+Opeteltavat</string>
   <string name="statistics_unlearned">Näkemättömät</string>
-  <string name="statistics_suspended">Keskeytetyt</string>
   <string name="statistics_relearn">Uudelleenopi</string>
   <string name="statistics_learn">Opi</string>
   <string name="statistics_cram">Pänttää</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Ennuste</string>
   <string name="stats_review_count">Läpikäyntimäärä</string>
   <string name="stats_review_time">Läpikäyntiaika</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Intervallit</string>
   <string name="stats_breakdown">Tunneittain</string>
   <string name="stats_weekly_breakdown">Viikottain</string>

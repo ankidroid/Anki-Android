@@ -43,7 +43,6 @@
   <string name="statistics_mature">Madures</string>
   <string name="statistics_young_and_learn">Joves i Aprendre</string>
   <string name="statistics_unlearned">No vistes</string>
-  <string name="statistics_suspended">Amagades</string>
   <string name="statistics_relearn">Aprendre de nou</string>
   <string name="statistics_learn">Aprendre</string>
   <string name="statistics_cram">Repàs</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Previsió</string>
   <string name="stats_review_count">Compte de revisions</string>
   <string name="stats_review_time">L\'hora de revisió</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Intervals</string>
   <string name="stats_breakdown">Desglossament per hora</string>
   <string name="stats_weekly_breakdown">Desglossament per setmana</string>

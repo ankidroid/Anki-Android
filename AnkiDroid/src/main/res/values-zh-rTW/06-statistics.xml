@@ -43,7 +43,6 @@
   <string name="statistics_mature">熟練卡</string>
   <string name="statistics_young_and_learn">年輕和學習中</string>
   <string name="statistics_unlearned">尚未看過</string>
-  <string name="statistics_suspended">長久擱置</string>
   <string name="statistics_relearn">重新學習</string>
   <string name="statistics_learn">新學習的卡</string>
   <string name="statistics_cram">填鴨模式</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">預測</string>
   <string name="stats_review_count">複習次數</string>
   <string name="stats_review_time">複習時間</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Intervals</string>
   <string name="stats_breakdown">Hourly breakdown</string>
   <string name="stats_weekly_breakdown">Weekly breakdown</string>

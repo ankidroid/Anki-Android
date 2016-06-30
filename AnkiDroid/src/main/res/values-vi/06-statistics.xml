@@ -43,7 +43,6 @@
   <string name="statistics_mature">Trưởng thành</string>
   <string name="statistics_young_and_learn">Non trẻ và cần học</string>
   <string name="statistics_unlearned">Chưa xem</string>
-  <string name="statistics_suspended">Đã tạm dừng</string>
   <string name="statistics_relearn">Học lại</string>
   <string name="statistics_learn">Cần học</string>
   <string name="statistics_cram">Ôn thi</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Dự báo</string>
   <string name="stats_review_count">Số lượng ôn tập</string>
   <string name="stats_review_time">Thời gian ôn tập</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Khoảng thời gian</string>
   <string name="stats_breakdown">Phân tích theo giờ</string>
   <string name="stats_weekly_breakdown">Phân tích theo tuần</string>

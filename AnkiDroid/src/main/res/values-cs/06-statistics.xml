@@ -43,7 +43,6 @@
   <string name="statistics_mature">Zralé</string>
   <string name="statistics_young_and_learn">Mladé a nové</string>
   <string name="statistics_unlearned">Neučené</string>
-  <string name="statistics_suspended">Vyřazené</string>
   <string name="statistics_relearn">Znovu učit</string>
   <string name="statistics_learn">Učit se</string>
   <string name="statistics_cram">Šprtat</string>
@@ -100,7 +99,6 @@
   <string name="stats_forecast">Předpověď</string>
   <string name="stats_review_count">Počet opakování</string>
   <string name="stats_review_time">Čas opakování</string>
-  <string name="stats_progress">Progress</string>
   <string name="stats_review_intervals">Intervaly</string>
   <string name="stats_breakdown">Hodinový přehled</string>
   <string name="stats_weekly_breakdown">Týdenní přehled</string>
