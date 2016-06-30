@@ -65,7 +65,7 @@ zoom into images correctly even with max dimensions specified, so this way is
 preferred over using JavaScript.
 */
 .chrome img {
-  max-width: 99%;
+  max-width: 100%;
   max-height: 90%;
 }
 
