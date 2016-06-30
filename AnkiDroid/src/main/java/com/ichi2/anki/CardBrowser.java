@@ -206,7 +206,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 case CardBrowserContextMenu.CONTEXT_MENU_DETAILS:
                     Long cardId = Long.parseLong(getCards().get(mPositionInCardsList).get("id"));
                     Intent previewer = new Intent(CardBrowser.this, Previewer.class);
-                    previewer.putExtra("currentCardId", cardId);
+                    previewer.putExtra("index", mPositionInCardsList);
+                    previewer.putExtra("cardList", getCardIds());
                     startActivityWithoutAnimation(previewer);
             }
         }
@@ -1309,6 +1310,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mCards = new ArrayList<>();
         }
         return mCards;
+    }
+
+    private long[] getCardIds() {
+        long[] l = new long[mCards.size()];
+        for (int i = 0; i < mCards.size(); i++) {
+            l[i] = Long.parseLong(mCards.get(i).get("id"));
+        }
+        return l;
     }
 
 
