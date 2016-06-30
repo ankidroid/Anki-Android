@@ -390,6 +390,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Setup the FloatingActionButtons
         mActionsMenu = (FloatingActionsMenu) findViewById(R.id.add_content_menu);
         if (mActionsMenu != null) {
+            mActionsMenu.findViewById(R.id.fab_expand_menu_button).setContentDescription(getString(R.string.menu_add));
             configureFloatingActionsMenu();
         } else {
             // FloatingActionsMenu only works properly on Android 14+ so fallback on a context menu below API 14

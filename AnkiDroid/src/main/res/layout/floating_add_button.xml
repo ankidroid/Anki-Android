@@ -9,6 +9,7 @@
         android:src="@drawable/ic_add_white_24dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
+        android:contentDescription="@string/menu_add"
         app:elevation="6dp"
         app:backgroundTint="?attr/fab_normal"
         app:pressedTranslationZ="12dp"/>
