@@ -1120,6 +1120,7 @@ public class NoteEditor extends AnkiActivity {
                 mediaButton.setBackgroundResource(icons[0]);
                 setMMButtonListener(mediaButton, i);
             }
+            mediaButton.setContentDescription(getString(R.string.multimedia_editor_attach_mm_content, fields[i][0]));
             mFieldsLayoutContainer.addView(label);
             mFieldsLayoutContainer.addView(editline_view);
         }

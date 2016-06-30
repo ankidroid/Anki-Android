@@ -68,6 +68,7 @@ public class FieldEditText extends EditText {
             content = content.replaceAll("<br(\\s*\\/*)>", NEW_LINE);
         }
         setText(content);
+        setContentDescription(name);
         setMinimumWidth(400);
         mOrigBackground = getBackground();
         // Fixes bug where new instances of this object have wrong colors, probably
