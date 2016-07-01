@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.ichi2.libanki.Collection;
+import com.ichi2.themes.Themes;
 
 import timber.log.Timber;
 
@@ -40,8 +41,8 @@ public class Previewer extends AbstractFlashcardViewer {
         Timber.d("onCreate()");
         mCardList = getIntent().getLongArrayExtra("cardList");
         mIndex = getIntent().getIntExtra("index", -1);
-        if (mCardList.length == 0 || mIndex == -1) {
-            Timber.e("Previewer started without empty card list or invalid index");
+        if (mCardList.length == 0 || mIndex < 0 || mIndex > mCardList.length - 1) {
+            Timber.e("Previewer started with empty card list or invalid index");
             finishWithoutAnimation();
         }
         super.onCreate(savedInstanceState);
@@ -75,8 +76,8 @@ public class Previewer extends AbstractFlashcardViewer {
     @Override
     protected void displayCardQuestion() {
         super.displayCardQuestion();
-        updateButtonState();
         mShowingAnswer = false;
+        updateButtonState();
     }
 
 
@@ -84,8 +85,8 @@ public class Previewer extends AbstractFlashcardViewer {
     @Override
     protected void displayCardAnswer() {
         super.displayCardAnswer();
-        updateButtonState();
         mShowingAnswer = true;
+        updateButtonState();
     }
 
 
@@ -106,27 +107,28 @@ public class Previewer extends AbstractFlashcardViewer {
             if (!mShowingAnswer) {
                 displayCardAnswer();
             } else {
-                switch (view.getId()) {
-                    case R.id.flashcard_layout_ease1:
-                        mIndex--;
-                        break;
-                    case R.id.flashcard_layout_ease2:
-                        mIndex++;
-                        break;
+                if (view.getId() == R.id.flashcard_layout_ease1) {
+                    mIndex--;
+                } else if (view.getId() == R.id.flashcard_layout_ease2) {
+                    mIndex++;
                 }
                 mCurrentCard = getCol().getCard(mCardList[mIndex]);
                 displayCardQuestion();
             }
-            updateButtonState();
         }
     };
 
     private void updateButtonState() {
-        // If we are in single-card mode, don't show any buttons.
+        // If we are in single-card mode, we show the "Show Answer" button on the question side
+        // and hide all the button s on the answer side.
         if (mCardList.length == 1) {
-            findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
-            mFlipCardLayout.setVisibility(View.GONE);
-            hideEaseButtons();
+            if (!mShowingAnswer) {
+                mFlipCardLayout.setVisibility(View.VISIBLE);
+            } else {
+                findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
+                mFlipCardLayout.setVisibility(View.GONE);
+                hideEaseButtons();
+            }
             return;
         }
 
@@ -136,13 +138,20 @@ public class Previewer extends AbstractFlashcardViewer {
         mEase3Layout.setVisibility(View.GONE);
         mEase4Layout.setVisibility(View.GONE);
 
+        final int[] background = Themes.getResFromAttr(this, new int[]{R.attr.hardButtonRef});
+        final int[] textColor = Themes.getColorFromAttr(this, new int[]{R.attr.hardButtonTextColor});
+
         mNext1.setTextSize(30);
         mEase1.setVisibility(View.GONE);
+        mNext1.setTextColor(textColor[0]);
         mEase1Layout.setOnClickListener(mSelectScrollHandler);
+        mEase1Layout.setBackgroundResource(background[0]);
 
         mNext2.setTextSize(30);
         mEase2.setVisibility(View.GONE);
+        mNext2.setTextColor(textColor[0]);
         mEase2Layout.setOnClickListener(mSelectScrollHandler);
+        mEase2Layout.setBackgroundResource(background[0]);
 
 
         if (mIndex == 0 && mShowingAnswer) {
@@ -153,7 +162,7 @@ public class Previewer extends AbstractFlashcardViewer {
             mNext1.setText("<");
         }
 
-        if (mIndex == mCardList.length-1 && mShowingAnswer) {
+        if (mIndex == mCardList.length - 1 && mShowingAnswer) {
             mEase2Layout.setEnabled(false);
             mNext2.setText("-");
         } else {
