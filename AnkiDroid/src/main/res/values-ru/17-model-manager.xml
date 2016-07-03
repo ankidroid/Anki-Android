@@ -26,9 +26,9 @@
   <!--Toasts-->
   <string name="toast_last_model">You cannot delete your last model</string>
   <string name="toast_last_field">Note types must have at least one field</string>
-  <string name="toast_empty_name">You must enter a name</string>
-  <string name="toast_duplicate_field">Field name already used</string>
-  <string name="toast_out_of_range">You must enter a valid value</string>
+  <string name="toast_empty_name">Вы должны ввести имя</string>
+  <string name="toast_duplicate_field">Имя поля уже используется</string>
+  <string name="toast_out_of_range">Вы должны ввести корректное значение</string>
   <!--Plurals-->
   <plurals name="model_browser_types_available">
     <item quantity="one">%d note type available</item>
@@ -44,23 +44,23 @@
   <string name="model_editor_action_add_model">Add note type</string>
   <!--Browser-->
   <string name="model_browser_delete">Delete note type</string>
-  <string name="model_browser_rename">Rename</string>
-  <string name="model_browser_options">Options</string>
+  <string name="model_browser_rename">Переименовать</string>
+  <string name="model_browser_options">Опции</string>
   <string name="model_browser_template">Edit cards</string>
   <string name="model_browser_add">Add note type</string>
   <!--Rename-->
   <string name="rename_model">Rename model</string>
   <!--Field Editing-->
-  <string name="model_field_editor_title">Edit fields</string>
-  <string name="model_field_editor_add">Add field</string>
-  <string name="model_field_editor_delete">Delete field</string>
-  <string name="model_field_editor_options">Field options</string>
-  <string name="model_field_editor_rename">Rename field</string>
-  <string name="model_field_editor_reposition_menu">Reposition field</string>
-  <string name="model_field_editor_reposition" formatted="false">Reposition field (enter a value %1$d–%2$d)</string>
-  <string name="model_field_editor_changing">Updating fields</string>
-  <string name="model_field_editor_sort_field">Sort by this field</string>
-  <string name="model_clone_suffix">copy</string>
+  <string name="model_field_editor_title">Редактировать поля</string>
+  <string name="model_field_editor_add">Добавить поле</string>
+  <string name="model_field_editor_delete">Удалить поле</string>
+  <string name="model_field_editor_options">Опции поля</string>
+  <string name="model_field_editor_rename">Переименовать поле</string>
+  <string name="model_field_editor_reposition_menu">Переместить поле</string>
+  <string name="model_field_editor_reposition" formatted="false">Переместить поле (введите значение %1$d–%2$d)</string>
+  <string name="model_field_editor_changing">Обновить поля</string>
+  <string name="model_field_editor_sort_field">Сортировать по этому полю</string>
+  <string name="model_clone_suffix">копировать</string>
   <!--Warnings-->
   <string name="model_delete_warning">Are you sure you wish to delete this model?</string>
   <string name="field_delete_warning">Are you sure you wish to delete this field?</string>

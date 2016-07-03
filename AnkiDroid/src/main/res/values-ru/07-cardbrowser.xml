@@ -46,13 +46,13 @@
     <item quantity="other">Показаны %d карт</item>
   </plurals>
   <string name="card_browser_all_decks">Все колоды</string>
-  <string name="card_browser_delete_card">Удалить заметку</string>
+  <string name="card_browser_delete_card">Удалить запись</string>
   <string name="card_browser_suspend_card">Отложить карту</string>
   <string name="card_browser_unsuspend_card">Вернуть из отложенных</string>
-  <string name="card_browser_mark_card">Отметить заметку</string>
-  <string name="card_browser_unmark_card">Снять пометку заметки</string>
-  <string name="delete_card_title">Удалить заметку</string>
-  <string name="delete_card_message">Действительно удалить все карты этой заметки?\nПоиск поля: %s</string>
+  <string name="card_browser_mark_card">Пометить запись</string>
+  <string name="card_browser_unmark_card">Снять пометку</string>
+  <string name="delete_card_title">Удалить запись?</string>
+  <string name="delete_card_message">Действительно удалить все карты этой записи?\nПоиск поля: %s</string>
   <string name="card_browser_show_marked">Фильтр отмечен</string>
   <string name="card_browser_show_suspended">Фильтр приостановлен</string>
   <string name="card_browser_search_by_tag">Фильтр по тегу</string>

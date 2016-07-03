@@ -50,15 +50,15 @@
     <item>Рекомендованный ответ (зелёный)</item>
     <item>Лучше, чем рекомендованный</item>
     <item>Откат</item>
-    <item>Edit note</item>
+    <item>Редактировать запись</item>
     <item>Mark note</item>
     <item>Поиск выражения</item>
     <item>Скрыть (показать позже)</item>
     <item>Приостановить карту</item>
-    <item>Delete note</item>
+    <item>Удалить запись</item>
     <item>Воспроизвести медиа</item>
     <item>Прервать обучение</item>
-    <item>Bury note</item>
+    <item>Скрыть запись</item>
     <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
@@ -82,7 +82,7 @@
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Использовать текущую колоду</item>
-    <item>Выбор по типу заметки</item>
+    <item>Выбор по типу записи</item>
   </string-array>
   <string-array name="new_spread_labels">
     <item>Перемешать новые карты и повторяемые</item>
@@ -94,11 +94,11 @@
     <item>Всегда</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Plain</item>
+    <item>Светлый</item>
+    <item>Простой</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
+    <item>Чёрный</item>
+    <item>Тёмный</item>
   </string-array>
 </resources>

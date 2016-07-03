@@ -41,9 +41,9 @@
 <resources>
   <string name="statistics_young">Sveže</string>
   <string name="statistics_mature">Zrele</string>
-  <string name="statistics_young_and_learn">Sveže in za preučiti</string>
+  <string name="statistics_young_and_learn">Young+Learn</string>
   <string name="statistics_unlearned">Neogledane</string>
-  <string name="statistics_suspended">Pridržane</string>
+  <string name="statistics_suspended_and_buried">Suspended+Buried</string>
   <string name="statistics_relearn">Za pon. učenje</string>
   <string name="statistics_learn">Za učenje</string>
   <string name="statistics_cram">Inten.</string>
@@ -74,14 +74,17 @@
   <string name="stats_today_type_breakdown">Za preučiti: &lt;b&gt;%1$s&lt;/b&gt;, pregled: &lt;b&gt;%2$s&lt;/b&gt;, pon. učenje: &lt;b&gt;%3$s&lt;/b&gt;, filtrirane: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Pravilni odgovori na zrelih karticah: %1$d/%2$d (%3$.1f %%)</string>
   <string name="stats_today_no_mature_cards">Nobenih zrelih kartic ni bilo preučenih danes</string>
+  <string name="stats_overview_forecast_total">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
+  <string name="stats_overview_forecast_average">Average: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
+  <string name="stats_overview_forecast_due_tomorrow">Due tomorrow: &lt;b&gt;%1$d&lt;/b&gt;</string>
   <string name="stats_overview_days_studied">Učeno dni: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d od %3$d)</string>
-  <string name="stats_overview_total_reviews">Skupaj: &lt;b&gt;%1$d&lt;/b&gt; pregledov</string>
+  <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
   <string name="stats_overview_reviews_per_day_studydays">Povprečje za dni učenja: &lt;b&gt;%1$.1f&lt;/b&gt; pregledov/dan</string>
   <string name="stats_overview_reviews_per_day_all">Vsakodnevno učenje: &lt;b&gt;%1$.1f&lt;/b&gt; pregledov/dan</string>
   <string name="stats_overview_time_per_day_studydays">Povprečje za dni učenja: &lt;b&gt;%1$.1f&lt;/b&gt; minut/dan</string>
   <string name="stats_overview_time_per_day_all">Vsakodnevno učenje: &lt;b&gt;%1$.1f&lt;/b&gt; minut/dan</string>
-  <string name="stats_overview_new_cards_per_day">Povprečje: &lt;b&gt;%1$.1f&lt;/b&gt; novih kartic/dan</string>
-  <string name="stats_overview_total_new_cards">Skupaj: &lt;b&gt;%1$d&lt;/b&gt; novih kartic</string>
+  <string name="stats_overview_new_cards_per_day">Average: &lt;b&gt;%1$.1f&lt;/b&gt; cards/day</string>
+  <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt; cards</string>
   <string name="stats_overview_average_interval">"Povprečen razmik: "</string>
   <string name="stats_overview_longest_interval">"Najdaljši razmik: "</string>
   <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; let</string>
@@ -100,7 +103,7 @@
   <string name="stats_forecast">Napoved</string>
   <string name="stats_review_count">Števec pregledov</string>
   <string name="stats_review_time">Čas pregleda</string>
-  <string name="stats_progress">Napredek</string>
+  <string name="stats_added">Added</string>
   <string name="stats_review_intervals">Razmiki</string>
   <string name="stats_breakdown">Po urah</string>
   <string name="stats_weekly_breakdown">Po tednih</string>

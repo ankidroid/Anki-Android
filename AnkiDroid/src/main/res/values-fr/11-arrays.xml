@@ -94,11 +94,11 @@
     <item>Toujours</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Plain</item>
+    <item>Lumineux</item>
+    <item>Clair</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
+    <item>Noir</item>
+    <item>Sombre</item>
   </string-array>
 </resources>

@@ -131,7 +131,7 @@
   <string name="studyoptions_congrats_more_rev">予定日に達した復習カードがまだ他にも残っていますが、今日復習したカードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で変更することができます。</string>
   <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、今日学習した新規カードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で変更することができます。（上限を上げると短期的に学習の負担が増えますのでご注意ください。）</string>
   <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
-  <string name="studyoptions_no_cards_due">今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
+  <string name="studyoptions_no_cards_due">このデッキの今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
   <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
   <string name="button_sync">同期</string>
   <string name="cancel_sync_confirm">同期をキャンセルしますか？</string>

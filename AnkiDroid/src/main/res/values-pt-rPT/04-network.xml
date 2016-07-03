@@ -111,7 +111,7 @@
   <string name="sync_media_no_changes">Sem mudanças nos ficheiros multimédia</string>
   <string name="sync_media_success">Multimédia sincronizada</string>
   <string name="sync_media_changes_count">%d alterações de multimédia para enviar</string>
-  <string name="sync_media_downloaded_count">%d ficheiros multimédia recebidos</string>
+  <string name="sync_media_downloaded_count">%d ficheiro(s) multimédia recebido(s)</string>
   <string name="sync_sanity_failed">Após a sincronização, a coleção encontra-se num estado inconsistente. Para corrigir este problema, AnkiDroid terá que impor uma sincronização integral. Escolha qual dos lados deseja manter.</string>
   <string name="sync_media_sanity_failed">Sincronização de multimédia completa, mas não corresponde com o servidor. A próxima sincronização de multimédia terá que ser integral para corrigir qualquer erro.</string>
   <string name="sync_media_error">Erro ao sincronizar dados de multimédia</string>

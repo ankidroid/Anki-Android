@@ -60,8 +60,8 @@
   <string name="model_field_editor_sort_field">مرتب کردن بر اساس این فیلد</string>
   <string name="model_clone_suffix">کپی</string>
   <!--Warnings-->
-  <string name="model_delete_warning">از حذف این مدل مطمئن هستید?</string>
-  <string name="field_delete_warning">از حذف این فیلد مطمئن هستید?</string>
+  <string name="model_delete_warning">از حذف این مدل مطمئن هستید؟</string>
+  <string name="field_delete_warning">از حذف این فیلد مطمئن هستید؟</string>
   <!--Model Add Suffixes-->
   <string name="model_browser_add_add">افزودن: %1$s </string>
   <!--This prefix is used for standard note types-->

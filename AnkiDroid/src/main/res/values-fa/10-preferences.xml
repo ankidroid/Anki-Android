@@ -79,12 +79,12 @@
   <string name="reset_languages">بازنشانی زبان‌ها</string>
   <string name="reset_languages_summ">تنظیم مجدد زبان( برای تبدیل متن به گفتار و فرهنگ لغت ها) برای تمامی دسته ها</string>
   <string name="reset_languages_question">کل زبان فعلی را دوباره تنظیم می کنید؟</string>
-  <string name="reset_confirmation">All states reset</string>
+  <string name="reset_confirmation">تنظیم مجدد تمام وضعیت ها</string>
   <string name="card_zoom">بزرگ نمایی کارت</string>
   <string name="image_zoom">بزرگ نمایی عکس</string>
   <string name="button_size">اندازه دکمه پاسخ</string>
   <string name="card_browser_font_size">تغییر اندازه فونت مرورگر کارت</string>
-  <string name="col_path">فهرست راهنمای AnkiDroid</string>
+  <string name="col_path">مسیر قرارگیری AnkiDroid</string>
   <string name="fullscreen_review">حالت تمام‌صفحه</string>
   <string name="full_screen_off">خاموش</string>
   <string name="full_screen_system">پنهان کردن نوار سیستم</string>
@@ -114,7 +114,7 @@
   <string name="sync_account_summ_logged_out">هنوز وارد سایت نشده</string>
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="automatic_sync_choice">همگام سازی خودکار</string>
-  <string name="automatic_sync_choice_summ">همگام سازی خودکار موقع ورود و خروج از برنامه اگر آخرین همگام سازی بیشتر از 10 دقیقه گذشته باشد.</string>
+  <string name="automatic_sync_choice_summ">همگام سازی خودکار موقع ورود و خروج از برنامه اگر از آخرین همگام سازی بیشتر از 10 دقیقه گذشته باشد.</string>
   <string name="fix_hebrew_text">تعمیر برای اصوات عبری</string>
   <string name="fix_hebrew_text_summ">راه حل ارائه شده برای تصحیح ترجمه اصوات عبری.</string>
   <string name="fix_hebrew_instructions">این تنظیمات مسیر فرعی قالب چیدمان راست به چپ اندروید است که برای تصحیح نمایش متن با صوت عبری بکار می رود .\n\nبرای انجام این کارk, شما باید قلم Tohu.ttf  را  بارگیری کنید و آن را بصورت دستی به:\n%s/fonts/\n\n کپی کنید.شما مجبور به تغییر کارت نیستید.</string>
@@ -165,10 +165,10 @@
   <string name="enable_api_title">فعال کردن API این برنامه</string>
   <string name="enable_api_summary">به دیگر برنامه ها اجازه دهید تا با ankidroid ارتباط داشته و اطلاعات را بدون دخالت شما بخوانند و بنویسند</string>
   <string name="custom_buttons">دکمه های نوار برنامه</string>
-  <string name="custom_buttons_summary">اینکه چه عملیاتی در نوار برنامه ظاهر شود را شخصی سازی کنید</string>
-  <string name="custom_buttons_setting_always_show">نمایش همیشگی</string>
-  <string name="custom_buttons_setting_if_room">نشان بده اگر اتاق</string>
-  <string name="custom_buttons_setting_menu_only">فقط فهرست</string>
+  <string name="custom_buttons_summary">اینکه چه عملى در نوار برنامه ظاهر شود را شخصی سازی کنید</string>
+  <string name="custom_buttons_setting_always_show">همیشه نمایش بده</string>
+  <string name="custom_buttons_setting_if_room">نشان بده اگر جا باشد</string>
+  <string name="custom_buttons_setting_menu_only">فقط در فهرست</string>
   <string name="reset_custom_buttons">بازگشت به حالت پیش فرض</string>
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">آمار پیشرفته</string>

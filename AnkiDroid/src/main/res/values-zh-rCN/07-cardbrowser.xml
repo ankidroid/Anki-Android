@@ -73,7 +73,7 @@
   <string-array name="card_browser_order_labels">
     <item>不排序(更快)</item>
     <item>按字段名称排序</item>
-    <item>按照创建时间排序</item>
+    <item>按创建时间排序</item>
     <item>按编辑时间排序</item>
     <item>按改变时间排序</item>
     <item>按到期时间排序</item>
