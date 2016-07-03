@@ -168,7 +168,7 @@
   <string name="upgrade_import_no_file_found">Keine importierbare Datei %1$s gefunden</string>
   <string name="study_options">Stapeloptionen</string>
   <string name="select_tts">Vorlesesprache festlegen</string>
-  <string name="custom_study">Benutzerdefiniertes Lernen</string>
+  <string name="custom_study">Benutzer&#173;de&#173;fi&#173;nier&#173;tes Lernen</string>
   <string name="more_options">Mehr</string>
   <string name="dyn_deck_desc">Dies ist ein besonderer Stapel, um außerhalb des normalen Lehrplans zu lernen. Karten werden nach dem Lernen automatisch in ihren ursprünglichen Stapel zurückgeschickt. Beim Löschen dieses Stapels werden alle verbleibenden Karten in ihren ursprünglichen Stapel zurückgeschickt.</string>
   <string name="steps_error">Die Schrittanzahl muss größer als 0 sein</string>

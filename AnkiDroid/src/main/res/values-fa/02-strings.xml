@@ -42,22 +42,22 @@
   <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX%</string>
   <!-- Navigation drawer strings -->
-  <string name="drawer_open">Open drawer</string>
-  <string name="drawer_close">Close drawer</string>
+  <string name="drawer_open">بازکردن کشو</string>
+  <string name="drawer_close">بستن کشو</string>
   <string name="CardEditorLaterMessage">اطلاعات برای بعد ذخیره شد</string>
   <string name="CardEditorCardDeck">دسته کارت:</string>
   <string name="CardEditorNoteDeck">دسته:</string>
   <string name="CardEditorModel">نوع:</string>
   <string name="CardEditorTags">برچسب ها: %1$s</string>
-  <string name="CardEditorCards">Cards: %1$s</string>
-  <string name="tag_name">Tag name</string>
+  <string name="CardEditorCards">کارت ها: %1$s</string>
+  <string name="tag_name">نام برچسب</string>
   <string name="add_new_filter_tags">افزودن/فیلترکردن برچسب ها</string>
-  <string name="add_tag">Add tag</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
+  <string name="add_tag">اضافه نمودن برچسب</string>
+  <string name="check_all_tags">علامت زدن/نزدن همه برچسب ها</string>
   <string name="filter_tags">فیلترکردن برچسب ها</string>
-  <string name="no_tags">You haven’t added any tags yet</string>
+  <string name="no_tags">شما هنوز برچسبى را اضافه نکرده اید</string>
   <string name="sdcard_missing_message">کارت حافظه در دسترس نیست زیرا حافظه یواس بی در حال استفاده است.اتصال را برای دسترسی به دسته های کارت قطع نمایید.</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="updated_version">به نسخه %s بروزرسانی شد</string>
   <!-- Reviewer.java -->
   <string name="enable_whiteboard">فعال سازی تخته سفید</string>
   <string name="disable_whiteboard">غیر فعال کردن تخته سفید</string>
@@ -70,7 +70,7 @@
   <string name="corrupt_font">فونت فایل خراب %s</string>
   <!-- Browser -->
   <string-array name="browser_column1_headings">
-    <item>Question</item>
+    <item>سوال</item>
     <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
@@ -92,33 +92,35 @@
         -->
   </string-array>
   <!-- Custom study options -->
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
-  <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_increase_new_limit">افزایش محدوده کارتهای جدید امروز</string>
+  <string name="custom_study_increase_review_limit">افزایش محدوده مرور کارت امروز</string>
+  <string name="custom_study_review_forgotten">مرور کارت های فراموش شده</string>
+  <string name="custom_study_review_ahead">مرور آنهایي که در شرف مطالعه اند</string>
+  <string name="custom_study_random_selection">مطالعه کارت ها به صورت تصادفی</string>
+  <string name="custom_study_preview_new">پیش نمایش کارت های جدید</string>
+  <string name="custom_study_limit_tags">محدود کردن به برچسب هايی خاص</string>
   <!-- Card editor -->
   <string name="cardeditor_title_add_note">افزودن یادداشت</string>
   <string name="cardeditor_title_edit_card">ویرایش یادداشت</string>
   <string name="discard_unsaved_changes">آیا می خواهید خارج شوید؟ورودی ها از بین خواهد رفت.</string>
   <string name="factadder_saving_error">خطای ذخیره سازی یادداشت</string>
   <string name="saving_facts">ذخیره یادداشت</string>
-  <string name="saving_model">Saving model</string>
+  <string name="saving_model">ذخیره مدل</string>
   <string name="add">اضافه کردن</string>
-  <string name="save">Save</string>
+  <string name="save">ذخیره</string>
   <string name="close">بستن</string>
   <string name="select">انتخاب</string>
   <string name="saving_changes">ذخیره تغییرات</string>
   <string name="reordering_cards">مرتب سازی مجدد کارتها...</string>
-  <string name="field_remapping">%1$s (from “%2$s”)</string>
-  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+  <string name="field_remapping">%1$s (از \"%2$s\")</string>
+  <string name="confirm_map_cards_to_nothing">هرکارتی که با هیچ چیز پیوند نخورده باشد حذف خواهد شد. اگر یک یادداشت هیچ کارت باقی مانده ای نداشته باشد، از دست خواهد رفت. ادامه می دهید؟</string>
   <plurals name="timebox_reached">
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="one">%1$d کارت در %2$s مطالعه شد</item>
+    <item quantity="other">%1$d کارت در %2$s مطالعه شد</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="one">%1$d دقیقه</item>
+    <item quantity="other">%1$d دقیقه</item>
   </plurals>
   <string name="studyoptions_welcome_title">به آنکی دروید خوش آمدید</string>
   <string name="fact_adder_intent_title">کارت آنکی دروید</string>
@@ -131,75 +133,82 @@
   <string name="rename">تغییر نام</string>
   <string name="default_conf_delete_error">امکان پاک کردن تنظیمات پیش فرض گروه نمی باشد</string>
   <plurals name="factadder_cards_added">
-    <item quantity="other">%d cards added</item>
+    <item quantity="one">%d کارت اضافه شد</item>
+    <item quantity="other">%d کارت اضافه شد</item>
   </plurals>
   <string name="help_title">کمک</string>
   <string name="check_db">بررسی پایگاه داده</string>
   <string name="check_media">بررسی رسانه ها</string>
-  <string name="empty_cards">Empty cards</string>
+  <string name="empty_cards">کارت های خالی</string>
   <string name="check_db_message">بررسی پایگاه داده.\nلطفا صبر کنید...</string>
-  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
+  <string name="empty_card_warning">این کارت خالی است. از گزینه \"کارت های خالی\" که در قسمت فهرست است استفاده کنید.</string>
   <string name="unknown_type_field_warning">پاسخ دهید:فیلد نامشخص %s</string>
   <string name="delete_deck">حذف دسته کارت...\nلطفا صبر کنید.</string>
   <string name="show_hint">%s را نمایش بده</string>
   <string name="info_rate">امتیازدهی به آنکی دروید</string>
   <string name="col_load_failed">عدم موفقیت در بارگذاری مجموعه.\nبرای بستن آنکی دروید دکمه برگشت را فشار دهید.</string>
-  <string name="import_title">Importing</string>
-  <string name="import_select_title">Choose a file to import</string>
+  <string name="import_title">درحال وارد کردن</string>
+  <string name="import_select_title">فایلی را برای وارد کردن انتخاب کنید</string>
   <string name="import_message_add">اضافه کردن</string>
   <string name="import_message_replace_confirm">با این کار مجموعه کنونی شما پاک شده و با داده های پرونده%sجایگزین خواهد شد. آیا مطمئنید؟</string>
   <string name="import_message_add_confirm">آیا می خواهید \"%s\" را به مجموعه اضافه کنید ؟ ممکن است زمان زیادی طول بکشد</string>
   <string name="import_log_no_apkg">این فایل، یک فایل معتبر apkg نیست.</string>
-  <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg extension</string>
-  <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
-  <string name="import_replacing">Replacing collection&#8230;</string>
-  <string name="export_include_schedule">Include scheduling</string>
-  <string name="export_include_media">Include media</string>
-  <string name="confirm_apkg_export">Export collection as apkg file?</string>
-  <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
-  <string name="export_in_progress">Exporting apkg file&#8230;</string>
-  <string name="export_successful_title">Email apkg?</string>
-  <string name="export_successful">File “%s” was exported. Do you want to email it?</string>
-  <string name="export_unsuccessful">Error exporting collection</string>
-  <string name="import_hint">برای وارد کردن کارتها,  apkg فایلهای در پوشه %s قرار داده و دکمه خب را فشار دهید</string>
-  <string name="upgrade_import_no_file_found">غیر وارد کردنی %1$s فایل یافت شد</string>
-  <string name="study_options">Deck options</string>
-  <string name="select_tts">Set TTS language</string>
+  <string name="import_error_not_apkg_extension">نام این فایل %s داراى پسوند apkg. نیست</string>
+  <string name="import_error_content_provider">فایل انتخاب شده به صورت خودکار توسط ankidroid نمی تواند وارد شود. لطفا راهنمای کاربر را ببینید که چگونه به صورت دستی بتوان فایل anki را وارد کرد:\n%s</string>
+  <string name="import_replacing">در حال جایگزین کردن مجموعه&#8230;</string>
+  <string name="export_include_schedule">به همراه زمانبندی</string>
+  <string name="export_include_media">به همراه رسانه</string>
+  <string name="confirm_apkg_export">مجموعه فلش کارت ها با پسوند apkg صادر شوند؟</string>
+  <string name="confirm_apkg_export_deck">%s به عنوان یک فایل با پسوند apkg صادر شود؟</string>
+  <string name="export_in_progress">در حال صادر کردن فایل apkg&#8230;</string>
+  <string name="export_successful_title">فایل apkg ایمیل شود؟</string>
+  <string name="export_successful">فایل \"%s\" صادر شد. می خواهید آن را ایمیل کنید؟</string>
+  <string name="export_unsuccessful">خطا در صادر کردن مجموعه</string>
+  <string name="import_hint">برای وارد کردن کارتها, فایل apkg را در مسیر \"%s\" قرار داده و دکمه خب را فشار دهید</string>
+  <string name="upgrade_import_no_file_found">فایل %1$s قابل وارد کردن یافت نشد</string>
+  <string name="study_options">گزینه های دسته</string>
+  <string name="select_tts">تنظیم زبان تبدیل متن به صدا TTS</string>
   <string name="custom_study">مطالعه بر اساس تنظیمات دلخواه</string>
-  <string name="more_options">More</string>
+  <string name="more_options">بیشتر</string>
   <string name="dyn_deck_desc">این یک دسته ویژه برای مطالعه در خارج از زمان بندی عادی می باشد.بعد از مرور کارتها آنها بطور خودکار به دسته های اصلی برگردانده خواهد شد.حذف کردن این دسته از لیست دسته ها سبب می شود که همه کارتهای باقیمانده نیز به دسته اصلی برگردانده شود.</string>
   <string name="steps_error">مراحل باید با اعداد بزرگتر از 0 شماره گذاری گردند</string>
   <string name="steps_min_error">حداقل یک مرحله لازم است</string>
   <string name="sched_end">(پایان)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
+  <string name="sched_unbury_action">برای دیدن آنها در حال حاضر گزینه \"خروج از حالت مخفی\" در فهرست را لمس کنید</string>
   <string name="sched_has_buried">تعدادی از کارت های مرتبط یا مخفی شده تا نشست بعدی نمایش داده نخواهند شد.</string>
-  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
-  <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+  <string name="tag_editor_add_feedback">برای تایید اضافه شدن %1$s لطفا %2$s رالمس کنید</string>
+  <string name="tag_editor_add_feedback_existing">برچسب موجود \"%1$s\" انتخاب شده است</string>
+  <string name="lookup_hint">بعد از کپی کردن متن ،با لمس هرکجا در فلش کارت نماد جستجو نمایش داده می شود</string>
   <!-- Time spans -->
   <plurals name="time_span_seconds">
-    <item quantity="other">%s seconds</item>
+    <item quantity="one">%s ثانیه</item>
+    <item quantity="other">%s ثانیه</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="other">%s minutes</item>
+    <item quantity="one">%s دقیقه</item>
+    <item quantity="other">%s دقیقه</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="other">%s hours</item>
+    <item quantity="one">%s ساعت</item>
+    <item quantity="other">%s ساعت</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="other">%s days</item>
+    <item quantity="one">%s روز</item>
+    <item quantity="other">%s روز</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="other">%s months</item>
+    <item quantity="one">%s ماه</item>
+    <item quantity="other">%s ماه</item>
   </plurals>
   <plurals name="time_span_years">
-    <item quantity="other">%s years</item>
+    <item quantity="one">%s سال</item>
+    <item quantity="other">%s سال</item>
   </plurals>
   <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
   <string name="less_than_time">&lt; %s</string>
-  <string name="decks_rename_exists">That deck already exists</string>
-  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
-  <string name="filtered_deck_name">Filtered Deck</string>
+  <string name="decks_rename_exists">این دسته از قبل وجود دارد</string>
+  <string name="decks_rename_filtered_nosubdecks">دسته فیلتر شده نمی تواند زیر دسته داشته باشد</string>
+  <string name="filtered_deck_name">دسته فیلتر شده</string>
 </resources>

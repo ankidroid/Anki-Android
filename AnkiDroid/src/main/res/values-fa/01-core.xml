@@ -41,12 +41,12 @@
 <resources>
   <!-- Navigation drawer items-->
   <string name="decks">دسته ها</string>
-  <string name="card_browser">مرورگر کارت</string>
+  <string name="card_browser">جستجوی کارت</string>
   <string name="statistics">آمار</string>
   <string name="settings">تنظیمات</string>
   <string name="help">راهنما</string>
   <string name="send_feedback">ارسال بازخورد</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <string name="studyoptions_title">مرور دسته</string>
   <string name="studyoptions_due_today">موعد مقرر امروز:</string>
   <string name="studyoptions_new_total">کل کارت های جدید:</string>
   <string name="studyoptions_total_cards">کل کارتها:</string>
@@ -55,14 +55,17 @@
   <!-- DeckPicker.java -->
   <string name="study_more">بیشتر بخوانید</string>
   <plurals name="deckpicker_title">
-    <item quantity="other">%1$dزمان مرور کارت ها (%2$s)</item>
+    <item quantity="one">موعد مرور %1$d کارت (%2$s)</item>
+    <item quantity="other">موعد مرور %1$d کارت (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
+    <item quantity="one">%dزمان باقیمانده</item>
     <item quantity="other">%dزمان باقیمانده</item>
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
-    <item quantity="other">کارت هایی%1$dکه امروز%2$sمطالعه شده اند</item>
+    <item quantity="one">امروز شما %1$d کارت را در %2$s مطالعه کردید</item>
+    <item quantity="other">امروز شما %1$d کارت را در %2$s مطالعه کردید</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">پاسخ را تایپ کنید</string>
@@ -71,16 +74,16 @@
   <string name="ease_button_hard">سخت</string>
   <string name="ease_button_good">خوب</string>
   <string name="ease_button_easy">آسان</string>
-  <string name="studyoptions_congrats_undo">تصحصح عمل  %s</string>
-  <string name="menu_import">اضافه کردن</string>
+  <string name="studyoptions_congrats_undo">تصحيح عمل %s</string>
+  <string name="menu_import">وارد کردن</string>
   <string name="undo">تصحیح عمل قبلی</string>
   <string name="undo_action_review">آخرین بازنگری</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
+  <string name="undo_action_bury_card">مخفی کردن کارت</string>
+  <string name="undo_action_bury_note">مخفی کردن یادداشت</string>
   <string name="undo_action_suspend_card">تعلیق کارت</string>
   <string name="undo_action_suspend_note">تعلیق یادداشت</string>
   <string name="undo_action_delete">حذف یادداشت</string>
-  <string name="unbury">نمایش در نشست جاری</string>
+  <string name="unbury">خروج از حالت مخفی</string>
   <string name="rename_deck">تغییر نام دسته</string>
   <string name="menu_add">افزودن</string>
   <string name="menu_add_note">افزودن یادداشت</string>
@@ -90,8 +93,8 @@
   <string name="menu_bury_note">مخفی کردن یادداشت</string>
   <string name="menu_suspend_card">تعلیق کارت</string>
   <string name="menu_suspend_note">تعلیق یادداشت</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">مخفی کردن</string>
+  <string name="menu_suspend">تعلیق</string>
   <string name="menu_delete_note">حذف یادداشت</string>
   <string name="delete_note_message">مطمئنید می خواهید این یادداشت و همه کارتهایش را پاک کنید؟\n%s</string>
   <string name="menu_select">انتخاب متن</string>
@@ -102,7 +105,7 @@
   <string name="create">ساختن</string>
   <string name="new_dynamic_deck">ایجاد دسته فیلتر شده</string>
   <string name="night_mode">حالت شب</string>
-  <string name="directory_inaccessible">AnkiDroid فهرست غیر قابل دسترس است</string>
+  <string name="directory_inaccessible">فهرست ankidroid غیر قابل دسترس است</string>
   <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -138,23 +141,24 @@
   <string name="continue_sync">ادامه همگام سازی</string>
   <string name="sync_cancelled">همگام سازی لغو شد</string>
   <string name="sync_cancel_message">در حال لغو کردن...\nممکن اس کمی زمان بر باشد.</string>
-  <string name="export">ارسال کردن</string>
-  <string name="export_collection">Export collection</string>
-  <string name="export_deck">Export deck</string>
+  <string name="export">صادر کردن</string>
+  <string name="export_collection">صادر کردن مجموعه فلش کارتها</string>
+  <string name="export_deck">صادر کردن دسته</string>
   <string name="nothing">هیچ </string>
   <!-- Card template editor -->
   <string name="title_activity_template_editor">نوع کارت</string>
   <string name="card_template_editor_front">قالب جلو</string>
   <string name="card_template_editor_back">قالب پشت</string>
-  <string name="card_template_editor_styling">Styling</string>
+  <string name="card_template_editor_styling">طراحی</string>
   <string name="card_template_editor_menu_delete">حذف</string>
   <string name="card_template_editor_cant_delete">حداقل یک کارت وارد کنید.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+    <item quantity="one">حذف نوع کارت %2$s ،و %1$d کارت آن؟</item>
+    <item quantity="other">حذف نوع کارت %2$s و %1$d کارت آن؟</item>
   </plurals>
   <string name="invalid_template">کارت جدید نمی تواند ساخته شود</string>
   <string name="card_template_editor_would_delete_note">پاکسازی این نوع کارت ممکن است منجر به پاک شدن یک یا تعدادی یادداشت شود.لطفاً در ابتدا یک نوع کارت بسازید. </string>
   <!-- Permissions -->
   <string name="read_write_permission_label">خواندن و نوشتن داده ها روی AnkiDroid</string>
-  <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="read_write_permission_description">به برنامه اجازه دهید تا به یادداشتهای موجود،کارت ها، نوع یادداشتها و دسته ها و همچنین ایجاد موارد جدید دسترسی داشته باشد</string>
 </resources>

@@ -41,23 +41,23 @@
 <resources>
   <!-- Navigation drawer items-->
   <string name="decks">Balíčky</string>
-  <string name="card_browser">Prehliadač kariet</string>
+  <string name="card_browser">Prehliadač kartičiek</string>
   <string name="statistics">Štatistiky</string>
   <string name="settings">Nastavenia</string>
   <string name="help">Pomoc</string>
   <string name="send_feedback">Poslať spätnú väzbu</string>
   <string name="studyoptions_title">Prehľad o balíčku</string>
   <string name="studyoptions_due_today">Dnes na preskúšanie:</string>
-  <string name="studyoptions_new_total">Celkový počet nových kariet:</string>
-  <string name="studyoptions_total_cards">Celkový počet kariet:</string>
+  <string name="studyoptions_new_total">Celkový počet nových kartičiek:</string>
+  <string name="studyoptions_total_cards">Celkový počet kartičiek:</string>
   <string name="studyoptions_eta">Odhadovaný čas (min):</string>
   <string name="studyoptions_start">Študovať teraz</string>
   <!-- DeckPicker.java -->
   <string name="study_more">Študovať viac</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d karta na preskúšanie (%2$s)</item>
-    <item quantity="few">%1$d karty na preskúšanie (%2$s)</item>
-    <item quantity="other">%1$d kariet na preskúšanie (%2$s)</item>
+    <item quantity="one">%1$d kartička na preskúšanie (%2$s)</item>
+    <item quantity="few">%1$d kartičky na preskúšanie (%2$s)</item>
+    <item quantity="other">%1$d kartičiek na preskúšanie (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">zostáva %d minúta</item>
@@ -66,9 +66,9 @@
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
-    <item quantity="one">Dnes naučená %1$d karta počas %2$s</item>
-    <item quantity="few">Dnes naučené %1$d karty počas %2$s</item>
-    <item quantity="other">Dnes naučených %1$d kariet počas %2$s</item>
+    <item quantity="one">Dnes naučená %1$d kartička počas %2$s</item>
+    <item quantity="few">Dnes naučené %1$d kartičky počas %2$s</item>
+    <item quantity="other">Dnes naučených %1$d kartičiek počas %2$s</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">Napísať odpoveď</string>
@@ -81,9 +81,9 @@
   <string name="menu_import">Import</string>
   <string name="undo">Späť</string>
   <string name="undo_action_review">posledné opakovanie</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
-  <string name="undo_action_suspend_card">pozastaviť kartu</string>
+  <string name="undo_action_bury_card">zahrabať kartičku</string>
+  <string name="undo_action_bury_note">zahrabať poznámku</string>
+  <string name="undo_action_suspend_card">pozastaviť kartičku</string>
   <string name="undo_action_suspend_note">pozastaviť poznámku</string>
   <string name="undo_action_delete">vymazať poznámku</string>
   <string name="unbury">Vyhrabať</string>
@@ -92,14 +92,14 @@
   <string name="menu_add_note">Pridať poznámku</string>
   <string name="menu_my_account">Synchronizácia účtu</string>
   <string name="menu_dismiss_note">Skryt / vymazať</string>
-  <string name="menu_bury_card">Zahrabať kartu</string>
+  <string name="menu_bury_card">Zahrabať kartičku</string>
   <string name="menu_bury_note">Zahrabať poznámku</string>
-  <string name="menu_suspend_card">Pozastaviť kartu</string>
+  <string name="menu_suspend_card">Pozastaviť kartičku</string>
   <string name="menu_suspend_note">Pozastaviť poznámku</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">Zahrabať</string>
+  <string name="menu_suspend">Pozastaviť</string>
   <string name="menu_delete_note">Vymazať poznámku</string>
-  <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej karty?\n%s</string>
+  <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej kartičky?\n%s</string>
   <string name="menu_select">Zvoliť text</string>
   <string name="menu_search">Vyhľadať v %1$s</string>
   <string name="menu_mark_note">Označiť poznámku</string>
@@ -132,38 +132,37 @@
   <string name="empty_deck">Tento balíček je prázdny</string>
   <string name="studyoptions_empty">Tento balíček je prázdny. Stlačte + pre pridávanie obsahu.</string>
   <string name="studyoptions_limit_reached">Denný limit učenia bol dosiahnutý</string>
-  <string name="studyoptions_empty_schedule">Na dnes nie sú naplánované žiadne karty na učenie</string>
+  <string name="studyoptions_empty_schedule">Na dnes nie sú naplánované žiadne kartičky na učenie</string>
   <string name="studyoptions_congrats_finished">Blahoželáme! Na teraz ste tento balíček dokončili.</string>
-  <string name="studyoptions_congrats_more_rev">Bol dosiahnutý denný limit, ale stále zostávajú nejaké karty na opakovanie. Pre optimálne zapamätanie zvážte zvýšenie tohto limitu v nastaveniach.</string>
-  <string name="studyoptions_congrats_more_new">Bol dosiahnutý denný limit. Dostupné sú aj ďalšie nové karty; v nastaveniach môžete zvýšiť svoj denný limit, no bude to mať za následok zvýšenie počtu kariet na opakovanie.</string>
+  <string name="studyoptions_congrats_more_rev">Bol dosiahnutý denný limit, ale stále zostávajú nejaké kartičky na opakovanie. Pre optimálne zapamätanie zvážte zvýšenie tohto limitu v nastaveniach.</string>
+  <string name="studyoptions_congrats_more_new">Bol dosiahnutý denný limit. Dostupné sú aj ďalšie nové kartičky; v nastaveniach môžete zvýšiť svoj denný limit, no bude to mať za následok zvýšenie počtu kartičiek na opakovanie v krátkodobom časovom horizonte.</string>
   <string name="studyoptions_congrats_custom">Ak chcete študovať mimo bežný plán, kliknite na tlačidlo Vlastné štúdium nižšie.</string>
-  <string name="studyoptions_no_cards_due">Ešte nie sú žiadne karty na preskúšanie.</string>
+  <string name="studyoptions_no_cards_due">Ešte nie sú žiadne kartičky na preskúšanie</string>
   <string name="sd_card_not_mounted">Ukladacie zariadenie nepripojené</string>
   <string name="button_sync">Synchronizácia</string>
   <string name="cancel_sync_confirm">Chcete prerušiť synchronizáciu?</string>
   <string name="continue_sync">Pokračovať v synchronizácii</string>
   <string name="sync_cancelled">Synchronizácia zrušená</string>
-  <string name="sync_cancel_message">Ruším operáciu..\n Potrvá to len chvíľku.</string>
+  <string name="sync_cancel_message">Ruší sa synchronizácia&#8230;\nMôže to chvíľu trvať.</string>
   <string name="export">Export</string>
   <string name="export_collection">Exportovať zbierku</string>
   <string name="export_deck">Exportovať balíček</string>
   <string name="nothing">Nič</string>
   <!-- Card template editor -->
-  <string name="title_activity_template_editor">Typy kariet</string>
+  <string name="title_activity_template_editor">Typy kartičiek</string>
   <string name="card_template_editor_front">Šablóna prednej strany</string>
   <string name="card_template_editor_back">Šablóna zadnej strany</string>
   <string name="card_template_editor_styling">Štýl</string>
   <string name="card_template_editor_menu_delete">Vymazať</string>
-  <string name="card_template_editor_cant_delete">Vyžaduje sa aspoň jeden typ karty.</string>
+  <string name="card_template_editor_cant_delete">Vyžaduje sa aspoň jeden typ kartičky</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Vymazať “%2$s” typ kariet a jeho %1$d kartu?</item>
-    <item quantity="few">Vymazať “%2$s” typy kariet a ich %1$d karty?</item>
-    <item quantity="other">Vymazať “%2$s” typov kariet a ich %1$d kariet?</item>
+    <item quantity="one">Vymazať “%2$s” typ kartičky a jeho %1$d kartičku?</item>
+    <item quantity="few">Vymazať “%2$s” typy kartičiek a ich %1$d kartičky?</item>
+    <item quantity="other">Vymazať “%2$s” typov kartičiek a ich %1$d kartičiek?</item>
   </plurals>
-  <string name="invalid_template">Kartu nie je možné vygenerovať</string>
-  <string name="card_template_editor_would_delete_note">Odstránením tejto karty spôsobíte, že jedna alebo viac poznámok budú vymazané. Predtým si vytvorte, prosím, nový typ karty.</string>
+  <string name="invalid_template">Kartičku nie je možné vygenerovať</string>
+  <string name="card_template_editor_would_delete_note">Odstránením tejto kartičky spôsobíte, že jedna alebo viac poznámok budú vymazané. Predtým si vytvorte, prosím, nový typ kartičky.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Čítať a písať do databázy AnkiDroid</string>
-  <string name="read_write_permission_description">Povoliť aplikácii prístup k existujúcim poznámkam, kartám,
-        modelom a balíčkom, rovnako ako vytvárať nové.</string>
+  <string name="read_write_permission_description">Povoliť aplikácii prístup k existujúcim poznámkam, kartičkám, typom kartičiek, balíčkom, a taktiež umožniť vytvárať nové</string>
 </resources>

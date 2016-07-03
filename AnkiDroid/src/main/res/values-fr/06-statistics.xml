@@ -41,9 +41,9 @@
 <resources>
   <string name="statistics_young">Récentes</string>
   <string name="statistics_mature">Anciennes</string>
-  <string name="statistics_young_and_learn">Récentes + apprentissage</string>
+  <string name="statistics_young_and_learn">Young+Learn</string>
   <string name="statistics_unlearned">Non vues</string>
-  <string name="statistics_suspended">Suspendues</string>
+  <string name="statistics_suspended_and_buried">Suspended+Buried</string>
   <string name="statistics_relearn">Réapprentissage</string>
   <string name="statistics_learn">Apprentissage</string>
   <string name="statistics_cram">Bachotage</string>
@@ -74,20 +74,23 @@
   <string name="stats_today_type_breakdown">Apprentissage : &lt;b&gt;%1$s&lt;/b&gt;, Révision : &lt;b&gt;%2$s&lt;/b&gt;, Réapprentissage : &lt;b&gt;%3$s&lt;/b&gt;, Filtrées : &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Réponses exactes sur les anciennes cartes : %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Aucune ancienne carte n’a été étudiée aujourd’hui.</string>
-  <string name="stats_overview_days_studied">Days studied: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
-  <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt;  reviews</string>
-  <string name="stats_overview_reviews_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-  <string name="stats_overview_reviews_per_day_all">If you studied every day: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-  <string name="stats_overview_time_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day</string>
-  <string name="stats_overview_time_per_day_all">If you studied every day:  &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day</string>
-  <string name="stats_overview_new_cards_per_day">Average: &lt;b&gt;%1$.1f&lt;/b&gt; new cards/day</string>
-  <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt;  new cards</string>
-  <string name="stats_overview_average_interval">"Average interval: "</string>
-  <string name="stats_overview_longest_interval">"Longest interval: "</string>
-  <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; years</string>
-  <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; months</string>
-  <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; days</string>
-  <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; hours</string>
+  <string name="stats_overview_forecast_total">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
+  <string name="stats_overview_forecast_average">Average: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
+  <string name="stats_overview_forecast_due_tomorrow">Due tomorrow: &lt;b&gt;%1$d&lt;/b&gt;</string>
+  <string name="stats_overview_days_studied">Jours étudiés: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d parmi %3$d)</string>
+  <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
+  <string name="stats_overview_reviews_per_day_studydays">Moyenne pour les jours étudiés: &lt;b&gt;%1$.1f&lt;/b&gt; révisions/jour</string>
+  <string name="stats_overview_reviews_per_day_all">Si vous étudiez chaque jour: &lt;b&gt;%1$.1f&lt;/b&gt; révisions/jour</string>
+  <string name="stats_overview_time_per_day_studydays">Moyenne pour les jours étudiés: &lt;b&gt;%1$.1f&lt;/b&gt; minutes/jour</string>
+  <string name="stats_overview_time_per_day_all">Si vous étudiez chaque jour: &lt;b&gt;%1$.1f&lt;/b&gt; minutes/jour</string>
+  <string name="stats_overview_new_cards_per_day">Average: &lt;b&gt;%1$.1f&lt;/b&gt; cards/day</string>
+  <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt; cards</string>
+  <string name="stats_overview_average_interval">"Intervalle moyen : "</string>
+  <string name="stats_overview_longest_interval">"Plus long intervalle : "</string>
+  <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; années</string>
+  <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; mois</string>
+  <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; jours</string>
+  <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; heures</string>
   <string name="deck_summary_all_decks">Tous les paquets</string>
   <string name="stats_select_time_scale">Choisir l’échelle de temps</string>
   <string-array name="due_x_axis_title">
@@ -96,11 +99,11 @@
     <item>mois</item>
   </string-array>
   <string name="stats_today">Aujourd’hui</string>
-  <string name="stats_overview">Overview</string>
+  <string name="stats_overview">Vue d’ensemble</string>
   <string name="stats_forecast">Prévisions</string>
   <string name="stats_review_count">Nombre de révisions</string>
   <string name="stats_review_time">Temps de révision</string>
-  <string name="stats_progress">Progress</string>
+  <string name="stats_added">Added</string>
   <string name="stats_review_intervals">Intervalles</string>
   <string name="stats_breakdown">Division horaire</string>
   <string name="stats_weekly_breakdown">Division hebdomadaire</string>

@@ -49,7 +49,7 @@
   <string name="menu_get_shared_decks">Télécharger des paquets partagés</string>
   <string name="connection_error_message">Une erreur réseau s\'est produite.</string>
   <string name="not_logged_in_title">Se connecter à AnkiWeb</string>
-  <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
+  <string name="login_create_account_message">Vous devez vous connecter à un service tiers pour utiliser le service de synchronisation. Vous pouvez créer un compte à l’étape suivante.</string>
   <string name="no_email_client">Aucun client de messagerie disponible</string>
   <!-- MyAccount.java -->
   <string name="username">Adresse électronique</string>
@@ -58,7 +58,7 @@
   <string name="password_repeat">Confirmation du mot de passe</string>
   <string name="log_in">Se connecter</string>
   <string name="sign_up_description">Vous n\'avez pas de compte AnkiWeb ? C\'est gratuit !</string>
-  <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
+  <string name="sign_up_not_affiliated">Remarque : AnkiWeb n’est pas affilié à AnkiDroid</string>
   <string name="sign_up">Inscrivez-vous</string>
   <string name="logged_as">Connecté en tant que</string>
   <string name="log_out">Se déconnecter</string>

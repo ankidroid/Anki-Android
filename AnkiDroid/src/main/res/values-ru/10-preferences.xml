@@ -51,10 +51,10 @@
   <string name="pref_cat_flashcard">Экран</string>
   <string name="pref_cat_whiteboard">Доска</string>
   <string name="pref_cat_automatic_display">Автоматически показывать ответ</string>
-  <string name="pref_cat_appearance">Appearance</string>
-  <string name="pref_cat_appearance_summ">Change themes and default font</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_appearance">Внешний вид</string>
+  <string name="pref_cat_appearance_summ">Изменение темы и шрифтов</string>
+  <string name="pref_cat_themes">Темы</string>
+  <string name="pref_cat_fonts">Шрифты</string>
   <string name="pref_cat_gestures">Жесты</string>
   <string name="pref_cat_gestures_summ">Использовать тапы и свайпы вместо кнопок</string>
   <string name="pref_cat_actions">Действия</string>
@@ -86,7 +86,7 @@
   <string name="card_browser_font_size">Масштабирование шрифта обозревателя карт</string>
   <string name="col_path">AnkiDroid directory</string>
   <string name="fullscreen_review">Полноэкранный режим</string>
-  <string name="full_screen_off">Off</string>
+  <string name="full_screen_off">Выключено</string>
   <string name="full_screen_system">Hide the system bars</string>
   <string name="full_screen_complete">Hide the system bars and answer buttons</string>
   <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
@@ -120,8 +120,8 @@
   <string name="fix_hebrew_text_summ">Позволяет правильно отображать гласные на иврите.</string>
   <string name="fix_hebrew_instructions">Этот параметр обходит RTL алгоритм системы Android, чтобы показать правильно гласные в тексте на иврите.\n\nЧтобы это работало, вам нужно скачать шрифт Tohu.ttf и вручную скопировать в:\n%s/fonts/\n\nВам не нужно модифицировать ваши карты.</string>
   <string name="fix_hebrew_download_font">Скачать шрифт</string>
-  <string name="day_theme">Day theme</string>
-  <string name="night_theme">Night theme</string>
+  <string name="day_theme">Дневная тема</string>
+  <string name="night_theme">Ночная тема</string>
   <string name="default_font">Шрифт по умолчанию</string>
   <string name="override_font">Применение шрифта по умолчанию</string>
   <string name="language">Язык</string>
@@ -179,10 +179,10 @@
   <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
   <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
   <!-- Custom sync server settings -->
-  <string name="custom_sync_server_title">Custom sync server</string>
-  <string name="custom_sync_server_enable_title">Use custom sync server</string>
+  <string name="custom_sync_server_title">Пользовательский сервер синхронизации</string>
+  <string name="custom_sync_server_enable_title">Использовать пользовательский сервер синхронизации</string>
   <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
-  <string name="custom_sync_server_base_url_title">Sync url</string>
+  <string name="custom_sync_server_base_url_title">URL синхронизации</string>
   <string name="custom_sync_server_media_url_title">Media sync url</string>
   <!-- studyoptions -->
   <string name="studyoptions_limit_select_tags">Выберите теги</string>

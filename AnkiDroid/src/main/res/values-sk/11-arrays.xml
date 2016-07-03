@@ -53,8 +53,8 @@
     <item>Upraviť poznámku</item>
     <item>Označiť poznámku</item>
     <item>Vyhľadať výraz</item>
-    <item>Zahrabať kartu</item>
-    <item>Pozastaviť kartu</item>
+    <item>Zahrabať kartičku</item>
+    <item>Pozastaviť kartičku</item>
     <item>Vymazať poznámku</item>
     <item>Prehrať multimédiá</item>
     <item>Prerušiť učenie</item>
@@ -62,19 +62,19 @@
     <item>Pozastaviť poznámku</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Pozastaviť kartu</item>
+    <item>Pozastaviť kartičku</item>
     <item>Iba oštítkovať</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>Nové karty v náhodnom poradí</item>
-    <item>Nové karty v poradí, v akom boli pridané</item>
+    <item>Nové kartičky v náhodnom poradí</item>
+    <item>Nové kartičky v poradí, v akom boli pridané</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
     <item>Od najstarších</item>
     <item>Náhodne</item>
     <item>Rastúce intervaly</item>
     <item>Klesajúce intervaly</item>
-    <item>Najviac zabudnuté</item>
+    <item>Najviac zabúdané</item>
     <item>V poradí, v akom boli pridané</item>
     <item>Podľa poradia opakovania</item>
     <item>Od poslednej pridanej</item>
@@ -85,20 +85,20 @@
     <item>Rozhodnúť podľa typu poznámky</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Zmiešať nové karty s opakovanými</item>
-    <item>Nové karty po opakovaných</item>
-    <item>Nové karty pred opakovanými</item>
+    <item>Zmiešať nové kartičky s opakovanými</item>
+    <item>Nové kartičky po opakovaných</item>
+    <item>Nové kartičky pred opakovanými</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>Keď pre kartičky nie je určené žiadne písmo</item>
     <item>Vždy</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Plain</item>
+    <item>Svetlý</item>
+    <item>Jednoduchý</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
+    <item>Čierny</item>
+    <item>Tmavý</item>
   </string-array>
 </resources>

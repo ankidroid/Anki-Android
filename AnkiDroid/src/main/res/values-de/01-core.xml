@@ -78,8 +78,8 @@
   <string name="menu_import">Importieren</string>
   <string name="undo">Rückgängig</string>
   <string name="undo_action_review">Letzte Wiederholung</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
+  <string name="undo_action_bury_card">Karte zurückstellen</string>
+  <string name="undo_action_bury_note">Notiz zurückstellen</string>
   <string name="undo_action_suspend_card">Karte dauerhaft aussetzen</string>
   <string name="undo_action_suspend_note">Notiz dauerhaft aussetzen</string>
   <string name="undo_action_delete">Notiz löschen</string>
@@ -93,8 +93,8 @@
   <string name="menu_bury_note">Notiz zurückstellen</string>
   <string name="menu_suspend_card">Karte dauerhaft aussetzen</string>
   <string name="menu_suspend_note">Notiz dauerhaft aussetzen</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">Zurückstellen</string>
+  <string name="menu_suspend">Aussetzen</string>
   <string name="menu_delete_note">Notiz löschen</string>
   <string name="delete_note_message">Diese Notiz und alle ihre Karten tatsächlich löschen?\n%s</string>
   <string name="menu_select">Text auswählen</string>

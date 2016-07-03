@@ -167,7 +167,7 @@
   <string name="select_tts">テキスト読み上げ機能の言語設定</string>
   <string name="custom_study">カスタム学習</string>
   <string name="more_options">その他</string>
-  <string name="dyn_deck_desc">これは標準のスケジュールから外れて学習する特別なデッキです。 復習が終わったカードは自動的に元のデッキに戻ります。 このデッキを削除すると、残っていたカードも全て元のデッキに戻ります。</string>
+  <string name="dyn_deck_desc">これは標準のスケジュールから外れて学習する特別なデッキです。 復習が終わったカードは自動的に元のデッキに戻ります。 このデッキを削除すると、残りのカードも全て元のデッキに戻ります。</string>
   <string name="steps_error">学習ステップには1以上の数字を入力してください</string>
   <string name="steps_min_error">少なくとも 1 つの学習ステップが必要です。</string>
   <string name="sched_end">（終了）</string>

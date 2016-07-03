@@ -40,8 +40,8 @@
 -->
 <resources>
   <!-- generic strings -->
-  <string name="disabled">Disabled</string>
-  <string name="enabled">Enabled</string>
+  <string name="disabled">禁用</string>
+  <string name="enabled">启用</string>
   <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">常用设置</string>
@@ -51,15 +51,15 @@
   <string name="pref_cat_flashcard">显示</string>
   <string name="pref_cat_whiteboard">白板</string>
   <string name="pref_cat_automatic_display">自动显示答案</string>
-  <string name="pref_cat_appearance">Appearance</string>
-  <string name="pref_cat_appearance_summ">Change themes and default font</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
-  <string name="pref_cat_gestures">手势</string>
+  <string name="pref_cat_appearance">皮肤</string>
+  <string name="pref_cat_appearance_summ">更改主题和默认字体</string>
+  <string name="pref_cat_themes">主题</string>
+  <string name="pref_cat_fonts">字体</string>
+  <string name="pref_cat_gestures">手势操作</string>
   <string name="pref_cat_gestures_summ">使用点击和滑动代替按钮</string>
   <string name="pref_cat_actions">动作</string>
   <string name="pref_cat_advanced">高级设置</string>
-  <string name="pref_cat_advanced_summ">优化和实验特性</string>
+  <string name="pref_cat_advanced_summ">优化和实验性的功能</string>
   <string name="pref_cat_performance">成绩</string>
   <string name="pref_cat_workarounds">变通方法</string>
   <string name="pref_cat_plugins">插件</string>
@@ -71,25 +71,25 @@
   <string name="whiteboard_black_summ">在非夜间模式中占用更少内存</string>
   <string name="write_answers_disable">禁用键入答案</string>
   <string name="write_answers_disable_summ">在包括“输入答案”字段的卡片中，禁止弹出键盘</string>
-  <string name="use_input_tag">Type answer into the card</string>
-  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
+  <string name="use_input_tag">在卡片中输入答案</string>
+  <string name="use_input_tag_summ">在卡片中使用一个文本框里输入答案</string>
   <string name="text_selection_click">长按解决方案</string>
   <string name="text_selection_click_summ">如果您不能够通过长点击选择文本，启用此选项。</string>
   <string name="dictionary">查找字典</string>
   <string name="reset_languages">重设语言</string>
-  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
+  <string name="reset_languages_summ">重置指定牌组语言(TTS和字典)</string>
   <string name="reset_languages_question">要重置所有牌组指定的语言吗？</string>
   <string name="reset_confirmation">重置所有状态</string>
   <string name="card_zoom">卡片缩放</string>
   <string name="image_zoom">图片缩放</string>
   <string name="button_size">显示答案按钮大小</string>
   <string name="card_browser_font_size">卡片浏览器字体缩放</string>
-  <string name="col_path">AnkiDroid directory</string>
+  <string name="col_path">AnkiDroid路径</string>
   <string name="fullscreen_review">全屏显示</string>
-  <string name="full_screen_off">Off</string>
-  <string name="full_screen_system">Hide the system bars</string>
-  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
+  <string name="full_screen_off">关闭</string>
+  <string name="full_screen_system">隐藏系统状态栏</string>
+  <string name="full_screen_complete">隐藏系统状态栏和回答按钮</string>
+  <string name="full_screen_error_gestures">您必须启用手势操作才能隐藏回答按钮</string>
   <string name="gestures">启用手势</string>
   <string name="gestures_summ">为回答或编辑卡片等动作指定手势。</string>
   <string name="gestures_swipe_up">向上滑动</string>
@@ -119,8 +119,8 @@
   <string name="fix_hebrew_text_summ">正确显示希伯来语元音的临时解决方法。</string>
   <string name="fix_hebrew_instructions">此设置将绕过Android的 RTL 算法 ，以正确显示希伯来语的元音。\n\n使用此设置，需要下载Tohu.ttf字体，并手动拷贝到:\n%s/fonts/\n\n目录中。不需要修改卡牌。</string>
   <string name="fix_hebrew_download_font">下载字体</string>
-  <string name="day_theme">Day theme</string>
-  <string name="night_theme">Night theme</string>
+  <string name="day_theme">白天主题</string>
+  <string name="night_theme">夜间主题</string>
   <string name="default_font">默认字体</string>
   <string name="override_font">默认字体适用范围</string>
   <string name="language">语言</string>
@@ -164,25 +164,25 @@
   <string name="convert_fen_text_summ">使用福斯夫－爱德华兹记号法来画棋盘。记号必须用[fen][/fen]标签括起来。</string>
   <string name="enable_api_title">启用AnkiDroid API</string>
   <string name="enable_api_summary">让其他的应用程序连接到AnkiDroid读写数据</string>
-  <string name="custom_buttons">App bar buttons</string>
-  <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
-  <string name="custom_buttons_setting_always_show">Always show</string>
-  <string name="custom_buttons_setting_if_room">Show if room</string>
-  <string name="custom_buttons_setting_menu_only">Menu only</string>
-  <string name="reset_custom_buttons">Reset to default</string>
+  <string name="custom_buttons">顶栏按钮</string>
+  <string name="custom_buttons_summary">自定义顶栏按钮</string>
+  <string name="custom_buttons_setting_always_show">总是显示</string>
+  <string name="custom_buttons_setting_if_room">有空间时显示</string>
+  <string name="custom_buttons_setting_menu_only">仅限菜单</string>
+  <string name="reset_custom_buttons">重置为默认设置</string>
   <!-- Advanced statistics settings -->
-  <string name="advanced_statistics_title">Advanced statistics</string>
-  <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
-  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
-  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
-  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
-  <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+  <string name="advanced_statistics_title">高级统计</string>
+  <string name="enable_advanced_statistics_title">启用高级统计</string>
+  <string name="enable_advanced_statistics_summ">显示预测统计：基于对未来复习进行的计算或模拟（启用）和已安排好的未来复习（禁用）。</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">计算前n天，从而模拟出接下来的</string>
+  <string name="advanced_forecast_stats_compute_precision_title">计算精度</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">模拟的迭代次数</string>
   <!-- Custom sync server settings -->
-  <string name="custom_sync_server_title">Custom sync server</string>
-  <string name="custom_sync_server_enable_title">Use custom sync server</string>
-  <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
-  <string name="custom_sync_server_base_url_title">Sync url</string>
-  <string name="custom_sync_server_media_url_title">Media sync url</string>
+  <string name="custom_sync_server_title">自定义同步服务器</string>
+  <string name="custom_sync_server_enable_title">使用自定义同步服务器</string>
+  <string name="custom_sync_server_enable_summary">如果你不想使用专有的 AnkiWeb 服务，您可以指定替代的服务器</string>
+  <string name="custom_sync_server_base_url_title">同步地址</string>
+  <string name="custom_sync_server_media_url_title">媒体文件同步地址</string>
   <!-- studyoptions -->
   <string name="studyoptions_limit_select_tags">选择标签</string>
   <!-- Deck configurations -->

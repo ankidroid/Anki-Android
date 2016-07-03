@@ -94,11 +94,11 @@
     <item>总是</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Plain</item>
+    <item>亮色</item>
+    <item>简洁</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
+    <item>黑色</item>
+    <item>暗色</item>
   </string-array>
 </resources>

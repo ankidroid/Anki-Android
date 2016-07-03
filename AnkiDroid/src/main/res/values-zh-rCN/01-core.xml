@@ -62,7 +62,7 @@
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
-    <item quantity="other">今天学习了%1$d张卡片，用了%2$s</item>
+    <item quantity="other">今天学习了%1$d张卡片，用了%2$s。</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">输入答案</string>
@@ -75,8 +75,8 @@
   <string name="menu_import">导入牌组</string>
   <string name="undo">撤销</string>
   <string name="undo_action_review">上次复习</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
+  <string name="undo_action_bury_card">隐藏卡片</string>
+  <string name="undo_action_bury_note">隐藏笔记</string>
   <string name="undo_action_suspend_card">暂停卡片</string>
   <string name="undo_action_suspend_note">暂停笔记</string>
   <string name="undo_action_delete">删除笔记</string>
@@ -90,8 +90,8 @@
   <string name="menu_bury_note">隐藏笔记</string>
   <string name="menu_suspend_card">暂停卡片</string>
   <string name="menu_suspend_note">暂停笔记</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">隐藏</string>
+  <string name="menu_suspend">暂停</string>
   <string name="menu_delete_note">删除笔记</string>
   <string name="delete_note_message">确定要删除此笔记及生成的卡片？\n%s</string>
   <string name="menu_select">选择文本</string>
@@ -100,7 +100,7 @@
   <string name="menu_unmark_note">取消标记</string>
   <string name="new_deck">创建牌组</string>
   <string name="create">创建</string>
-  <string name="new_dynamic_deck">筛选牌组</string>
+  <string name="new_dynamic_deck">创建筛选牌组</string>
   <string name="night_mode">夜间模式</string>
   <string name="directory_inaccessible">无法访问AnkiDroid目录</string>
   <!--
@@ -117,10 +117,10 @@
   <string name="time_quantity_months">%.1f月</string>
   <string name="time_quantity_years">%.1f年</string>
   <!-- or "%.1f a" -->
-  <string name="rebuild_cram_deck">重建强记模式牌组。\n请等待...</string>
+  <string name="rebuild_cram_deck">重建强记模式牌组。\n请稍等&#8230;</string>
   <string name="rebuild_cram_label">重建</string>
   <string name="empty_cram_label">无标签</string>
-  <string name="empty_cram_deck">清空强记模式牌组。\n请等待...</string>
+  <string name="empty_cram_deck">清空强记模式牌组。\n请稍等&#8230;</string>
   <string name="custom_study_deck_name">自定义学习的进程</string>
   <string name="custom_study_deck_exists">请先重命名现有的自定义学习牌组。</string>
   <string name="empty_deck">这个牌组是空的~</string>

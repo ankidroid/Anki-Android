@@ -114,7 +114,7 @@
   <string name="sync_account_summ_logged_out">ログインしていません</string>
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="automatic_sync_choice">自動同期</string>
-  <string name="automatic_sync_choice_summ">最後に同期したのが10 分以上前であった場合、アプリ起動/終了時に自動的に同期します</string>
+  <string name="automatic_sync_choice_summ">最後に同期したのが10分以上前であった場合、アプリ起動/終了時に自動的に同期します</string>
   <string name="fix_hebrew_text">ヘブライ語母音への対応</string>
   <string name="fix_hebrew_text_summ">ヘブライ語の母音を適切に描画するための回避策です</string>
   <string name="fix_hebrew_instructions">この設定は、ヘブライ語を表示するために、AndroidのRTLアルゴリズムをバイパスします\n\nこのが機能を使うために、フォント（Tohu.ttf）をダウンロードして手動で:\n%s/fonts/\n\nへコピーする必要があります。カードを変更する必要はありません。</string>
@@ -133,7 +133,7 @@
   <string name="notification_minimum_cards_due_vibrate">振動でも通知</string>
   <string name="notification_minimum_cards_due_blink">LEDランプ点滅でも通知</string>
   <string name="timeout_answer_text">解答を自動的に表示</string>
-  <string name="timeout_answer_summ">操作しなくても自動的に解答を表示</string>
+  <string name="timeout_answer_summ">操作しなくても一定時間後に自動的に解答を表示します</string>
   <string name="timeout_answer_seconds">解答を表示するまでの時間</string>
   <string name="timeout_answer_seconds_summ">XXX 秒</string>
   <string name="timeout_question_seconds">次の質問までの時間</string>
@@ -144,15 +144,15 @@
   <string name="vertical_centering">上下中央揃え</string>
   <string name="vertical_centering_summ">コンテンツを上下方向に中央揃えします</string>
   <string name="pref_backup_max">保管するバックアップの世代数</string>
-  <string name="show_estimates">ボタン上に時間を表示</string>
-  <string name="show_estimates_summ">回答ボタン上に、次の復習までの間隔を表示します</string>
+  <string name="show_estimates">回答ボタンに復習間隔を表示</string>
+  <string name="show_estimates_summ">回答ボタンの中に、次の復習までの間隔を表示します</string>
   <string name="show_progress">残りのカード枚数を表示</string>
   <string name="show_progress_summ">画面左上に、残りのカード枚数を表示します（青: 新規、赤: 基本学習および再学習、緑: 復習）</string>
   <string name="use_current">新規カードの追加先デッキ</string>
   <string name="new_spread">新規カードの追加場所</string>
   <string name="learn_cutoff">先取り学習の限度</string>
   <string name="learn_cutoff_summ">XXX 分</string>
-  <string name="time_limit">タイムボックスの制限時間</string>
+  <string name="time_limit">タイムボックスの時間枠</string>
   <string name="time_limit_summ">XXX 分</string>
   <string name="day_offset">日付更新時刻</string>
   <string name="day_offset_summ">XXX 時</string>
@@ -193,7 +193,7 @@
   </plurals>
   <string name="deck_conf_new_cards">新規カードと基本学習（短期集中反復）</string>
   <string name="deck_conf_rev_cards">復習（中長期間隔の反復）</string>
-  <string name="deck_conf_lps_cards">忘却と再学習</string>
+  <string name="deck_conf_lps_cards">忘却と再学習（短期集中反復）</string>
   <string name="deck_conf_general">一般</string>
   <string name="deck_conf_steps">学習ステップ（分）</string>
   <string name="deck_conf_order">順序</string>
@@ -221,7 +221,7 @@
   <string name="deck_conf_autoplay">音声・動画を自動再生</string>
   <string name="deck_conf_replayq">質問の音声・動画も再生</string>
   <string name="deck_conf_replayq_summ">解答が表示されている時に「音声・動画を再生」を選択すると、解答の音声・動画の前に質問の音声・動画も再生します</string>
-  <string name="deck_conf_manage">グループ管理</string>
+  <string name="deck_conf_manage">オプショングループの管理</string>
   <string name="deck_conf_current_group">現在のオプショングループ</string>
   <string name="deck_conf_rename">名前の変更</string>
   <string name="deck_conf_reset">標準の設定へ戻す</string>

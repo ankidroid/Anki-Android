@@ -40,15 +40,17 @@
 -->
 <resources>
   <!-- Widget -->
-  <string name="widget_minimum_cards_due_notification_ticker_title">کارتهای موعد مرور</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d کارتهای موعد مرور آنکی دروید</string>
-  <string name="widget_no_cards_due">بدون کارتهای موعد مرور</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">موعد مرور کارتها</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">موعد مرور %d کارت آنکی دروید</string>
+  <string name="widget_no_cards_due">عدم موعد مرور کارتها</string>
   <string name="widget_loading">بارگذاری ویدجت...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="one">موعد مرور %1$d کارت در %2$s</item>
+    <item quantity="other">موعد مرور %1$d کارت در %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="other">%1$d decks</item>
+    <item quantity="one">%1$d دسته</item>
+    <item quantity="other">%1$d دسته ها</item>
   </plurals>
   <string name="widget_small">آنکی دروید کوچک</string>
 </resources>

@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">检查数据库？</string>
+  <string name="check_db_title">是否检查数据库？</string>
   <string name="check_db_warning">这可能需要很长时间</string>
   <string name="check_db_acknowledge">已检查数据库</string>
   <string name="check_db_acknowledge_shrunk">已检查并优化了数据库。\n缩小了 %d kB</string>
@@ -47,12 +47,12 @@
   <string name="delete_deck_default_deck">不能删除默认牌组</string>
   <string name="delete_deck_title">删除该牌组？</string>
   <plurals name="delete_deck_message">
-    <item quantity="other">删除%1$s的所有卡牌吗？它包含%2$d张卡牌。</item>
+    <item quantity="other">删除%1$s的所有卡片吗？它包含%2$d张卡片。</item>
   </plurals>
-  <string name="delete_cram_deck_message">你确定要把%s内的所有卡牌发送回它们原来的牌组吗？</string>
+  <string name="delete_cram_deck_message">你确定要把%s内的所有卡片发送回它们原来的牌组吗？</string>
   <string name="no_tts_available_message">没有可用的文字转语音（TTS）语言</string>
   <string name="initializing_tts">正在初始化TTS引擎...</string>
-  <string name="tts_no_tts">不要发音</string>
+  <string name="tts_no_tts">不要朗读</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android上的卡片记忆应用</h2>AnkiDroid是一个与<a href=\"%2$s\">Anki桌面客户端</a>完全兼容的卡片记忆应用。你可以在Anki桌面客户端或者AnkiDroid添加和下载学习资料，它们可以很方便的通过AnkiWeb进行同步。]]></item>
     <item><![CDATA[为了帮助改进AnkiDroid，请把Bugs发送到<a href=\"%1$s\">问题跟踪系统</a>；也欢迎提出新功能建议。\n在<a href=\"%2$s\">AnkiDroid的Wiki页面</a>上您可以找到一些问题的答案，也可以加入<a href=\"%3$s\">论坛</a>参与讨论。]]></item>
@@ -61,7 +61,7 @@
     <item><![CDATA[AnkiDroid 在<a href=\"%1$s\"> GNU GPL v3 许可证</a>下发布。源代码在<a href=\"%2$s\">GitHub</a>上提供。]]></item>
   </string-array>
   <string name="preview_title">预览</string>
-  <string name="reset_card_dialog_title">重设卡牌学习进度</string>
+  <string name="reset_card_dialog_title">重设卡片进度</string>
   <string name="reset_card_dialog_message">这张卡片将被置于新卡片队列的末尾。</string>
   <string name="reset_card_dialog_acknowledge">重置卡片</string>
   <string name="reschedule_card_dialog_title">重设卡牌学习进度</string>
@@ -75,14 +75,14 @@
   <string name="intent_add_clear_all">全部清除</string>
   <string name="intent_aedict_empty">类别“默认”为空</string>
   <string name="intent_aedict_category">向AnkiDroid中添加卡牌，需要删除所有NotePad类别，或者添加“默认(default)”类别。</string>
-  <string name="custom_study_new_total_new">牌组中的新卡牌数量：%s</string>
+  <string name="custom_study_new_total_new">牌组中的新卡片数量：%s</string>
   <string name="custom_study_rev_total_rev">牌组中到期的卡牌数量：%s</string>
   <string name="custom_study_new_extend">将今天新卡牌的数量限制增加</string>
   <string name="custom_study_rev_extend">将今天的复习数量限制增加</string>
-  <string name="custom_study_forgotten">复习过去 x 天中忘记的卡牌:</string>
+  <string name="custom_study_forgotten">复习过去 x 天中忘记的卡片：</string>
   <string name="custom_study_ahead">提前 x 天复习：</string>
-  <string name="custom_study_random">从牌组中随机选择 x 张卡牌：</string>
-  <string name="custom_study_preview">预览过去 x 天中新增的卡牌:</string>
+  <string name="custom_study_random">从牌组中随机选择 x 张卡片：</string>
+  <string name="custom_study_preview">预览过去 x 天中新增的卡片：</string>
   <string name="rebuild_custom_study_deck">重建自定义学习牌组\n 请等待...</string>
   <string name="importing_collection">正在导入牌组集合&#8230;</string>
   <string name="import_media_count">正在导入媒体文件。请稍等...</string>
@@ -109,7 +109,7 @@
   <string name="lookup_button_content">查找</string>
   <string name="dialog_collection_path_not_dir">指定的路径不是一个有效的目录</string>
   <!-- Media checking -->
-  <string name="check_media_title">检查媒体？</string>
+  <string name="check_media_title">是否检查媒体？</string>
   <string name="check_media_warning">如果媒体数据较多，检查媒体文件可能会需要较长的时间</string>
   <string name="check_media_message">正在检查媒体文件&#8230;</string>
   <string name="check_media_acknowledge">媒体文件检查完毕</string>

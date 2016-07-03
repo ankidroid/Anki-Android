@@ -41,12 +41,12 @@
 <resources>
   <!-- Feedback.java -->
   <string name="error_reporting_choice">حالت گزارش خطا</string>
-  <string name="feedback_disclaimer">Disclaimer: We don’t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
+  <string name="feedback_disclaimer">سلب مسئولیت: ما هیچگونه اطلاعات شخصی مثل نشانی پست الکترونیک،شماره تلفن ،و یا شماره سریال گوشی شما را جمع آوری نمی کنیم. آنچه را که ما جمع آوری می کنیم اطلاعاتى است راجع به دستگاه شما مثل کارخانه سازنده،مدل و نسخه اندروید و نیز ماهیت گزارشات خطاها م قدم هایي که سبب به وجود آمدن اینگونه اشکالات شده اند.</string>
   <string name="feedback_title">پیشنهادات و انتقادات</string>
   <string name="feedback_default_text">لطفا پيشنهاد و انتقاد خود را بفرستید و يا اطلاعاتی درباره ماهيت هر خطا گزارش کنید.</string>
-  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
-  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
-  <string name="feedback_copy_debug">Copy debug info</string>
-  <string name="feedback_report">Report</string>
-  <string name="feedback_report_automatically">Send error reports automatically</string>
+  <string name="feedback_auto_toast_text">برنامه با مشکل مواجه شده است ؛ یک گزارش خطا در حال فرستاده شدن به توسعه دهنده می باشد&#8230;</string>
+  <string name="feedback_manual_toast_text">برنامه با مشکل مواجه شده است ؛ یک گزارش خطا در حال ایجاد شدن است&#8230;</string>
+  <string name="feedback_copy_debug">کپی اطلاعات اشکال زدایی</string>
+  <string name="feedback_report">گزارش</string>
+  <string name="feedback_report_automatically">ارسال گزارش خطاها به صورت خودکار</string>
 </resources>

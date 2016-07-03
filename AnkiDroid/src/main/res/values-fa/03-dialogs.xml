@@ -44,29 +44,30 @@
   <string name="check_db_acknowledge">بانک اطلاعاتی بررسی شد</string>
   <string name="check_db_acknowledge_shrunk">بانک اطلاعاتی بررسی و بهینه سازی شد.\nفضای از بین رفته %d کیلوبایت.</string>
   <string name="contextmenu_deckpicker_delete_deck">حذف دسته</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
-  <string name="delete_deck_title">حذف دسته</string>
+  <string name="delete_deck_default_deck">دسته پیش فرض نمی تواند حذف شود</string>
+  <string name="delete_deck_title">حذف دسته؟</string>
   <plurals name="delete_deck_message">
-    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="one">حذف همه کارت ها در %1$s؟ این دسته شامل %2$d کارت می باشد.</item>
+    <item quantity="other">حذف همه کارت ها در %1$s؟ این دسته شامل %2$d کارت می باشد.</item>
   </plurals>
   <string name="delete_cram_deck_message">آیا مایلید که همه کارتهای موجود در %s  را به دسته اصلی خودتان برگردانید؟</string>
   <string name="no_tts_available_message">زبان متن به گفتار در دسترس نیست</string>
-  <string name="initializing_tts">Initializing TTS&#8230;</string>
+  <string name="initializing_tts">در حال راه‌اندازی تبدیل متن به گفتار&#8230;</string>
   <string name="tts_no_tts">حرف نزن</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
-    <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
-    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, <a href=\"%2$s\">donate</a> to Anki Desktop, or blog about AnkiDroid.]]></item>
-    <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
+    <item><![CDATA[<h2>%1$s<br/>فلش کارتهایی برای آندروید</h2>این یک برنامه ای است که فلش کارتهای آن کاملا با نسخه رایانه ای سازگاری دارند <a href=\"%2$s\">Anki</a>. شما در هر دو نسخه تلفن همراه و رایانه می توانید فلش کارت بسازید، دانلود کنید و یاد بگیرید، و به آسانی آنها را با پایگاه اینترنتی برنامه همگام سازی کنید.]]></item>
+    <item><![CDATA[برای بهتر کردن برنامه لطفا اشکالات را به <a href=\"%1$s\">دنبال کننده موضوع </a> گزارش کنید. نظراتي که قابلیت جدید معرفی کنند هم مورد استقبال قرار خواهد گرفت. پاسخ اشکالات خود را در<a href=\"%2$s\">ویکی </a>پیدا کنید یا یک بحث جدید را در <a href=\"%3$s\"> انجمن </a> شروع کنید.]]></item>
+    <item><![CDATA[این برنامه یک <a href=\"%1$s\"> نرم افزار متن باز است <a/>،بنابراین همه ترغیب به <a href=\"%2$s\"> یک مشارکت کننده بودن می شوند</a>]]></item>
+    <item><![CDATA[غیر برنامه نویسان نیز می توانند کمک کنند. برای مثال، شما می توانید <a href=\"%1$s\">به ترجمه </a>این برنامه کمک کنید،یا ویکی را به روز کنید ،عکس صفحه تهیه کنید،<a href=\"%2$s\"> کمک کنید </a>به نسخه رایانه ای این برنامه و یا درباره این برنامه وبلاگ بزنید.]]></item>
+    <item><![CDATA[این برنامه تحت مجوز <a href=\"%1$s\">GNU-GPL v3</a>منتشر شده است و منبع کدها قابل دسترسی است <a href=\"%2$s\">در GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">پیش نمایش</string>
   <string name="reset_card_dialog_title">بازنشانی پیشرفت کارت</string>
-  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
-  <string name="reset_card_dialog_acknowledge">Card reset</string>
-  <string name="reschedule_card_dialog_title">Reschedule card</string>
-  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
-  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
+  <string name="reset_card_dialog_message">این کارت در انتهاي ردیف کارت جدید قرار خواهد گرفت</string>
+  <string name="reset_card_dialog_acknowledge">کارت تنظیم مجدد شد</string>
+  <string name="reschedule_card_dialog_title">زمانبندی دوباره کارت</string>
+  <string name="reschedule_card_dialog_message">زمانبندی مجدد برای مرور در x روز:</string>
+  <string name="reschedule_card_dialog_acknowledge">کارت زمانبندی مجدد شد</string>
   <string name="answering_error_title">خطای پایگاه داده</string>
   <string name="answering_error_message">یک خطا هنگام نوشتن مجموعه رخ داده است. که می تواند مربوط به پایگاه داده آسیب دیده و یا فضای ناکافی هارد باشد.\n\nاگر در اغلب موارد این حالت اتفاق می افتد, لطفا پایگاه داده را بررسی کنید, مجموعه را تعمیر کنید یا آن را از فایل پشتیبان بازگردانید.  به این منظور روی \'تنظیمات\' کلیک کنید .\n\nدر صورتی که درست نشد, احتمالا اشکال از برنامه آنکی دروید است; لطفا خطایی را که ما می توانیم آن را بررسی کنیم گزارش کنید.</string>
   <string name="answering_error_report">گزارش خطا</string>
@@ -85,11 +86,13 @@
   <string name="custom_study_preview">پیش نمایش کارت های جدید اضافه شده در  x روز گذشته:</string>
   <string name="rebuild_custom_study_deck">ساخت مجدد دسته مطالعه سفارشی.\nلطفا صبر کنید...</string>
   <string name="importing_collection">در حال ورود مجموعه.\nلطفا صبر کنید&#8230;</string>
-  <string name="import_media_count">در حال وارد کردن فایلهای جند رسانه ای %1$d%%\nلطفا صبر کنید&#8230;</string>
-  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
-  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
-  <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
-  <string name="import_complete_count">Cards imported: %d</string>
+  <string name="import_media_count">در حال وارد کردن فایلهای رسانه %1$d%%&#8230;</string>
+  <string name="import_progress">* در حال وارد کردن یادداشتها: %1$d%%\n
+* در حال وارد کردن کارت ها: %2$d%%\n
+* پردازش انجام شده: %3$d%%\n</string>
+  <string name="import_update_details">%1$d از %2$d یادداشت موجود به روزرسانی شده است.</string>
+  <string name="import_update_ignored">بعضی از به روزرسانی ها نادیده گرفته شدند زیرا نوع یادداشت تغییر کرده است</string>
+  <string name="import_complete_count">کارت های وارد شده: %d</string>
   <string name="sd_card_full_title">کارت حافظه پر</string>
   <string name="sd_card_almost_full_title">کارت حافظه تقریبا پر</string>
   <string name="restore_backup_title">بازیابی نسخه پشتیبان؟</string>
@@ -105,29 +108,29 @@
   <string name="dialog_positive_repair">اصلاح</string>
   <string name="dialog_positive_replace">جایگزین کردن</string>
   <string name="dialog_positive_restore">بازگرداني</string>
-  <string name="dialog_positive_set">Set</string>
-  <string name="lookup_button_content">Look up</string>
-  <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
+  <string name="dialog_positive_set">تنظیم</string>
+  <string name="lookup_button_content">جستجوی اطلاعات بیشتر</string>
+  <string name="dialog_collection_path_not_dir">مسیر مشخص شده یک مسیر معتبر نیست</string>
   <!-- Media checking -->
-  <string name="check_media_title">Check media?</string>
-  <string name="check_media_warning">This may take a long time with large media collections</string>
-  <string name="check_media_message">Checking media&#8230;</string>
-  <string name="check_media_acknowledge">Media checked</string>
-  <string name="check_media_failed">Media check failed</string>
-  <string name="check_media_invalid">Files with invalid encoding: %d</string>
-  <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
-  <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
-  <string name="check_media_no_unused_missing">No unused or missing files found</string>
-  <string name="check_media_db_updated">Media database rebuilt</string>
-  <string name="check_media_delete_unused">Delete unused</string>
-  <string name="check_media_deleted">Files deleted: %d</string>
+  <string name="check_media_title">رسانه بررسی شود؟</string>
+  <string name="check_media_warning">در صورت حجیم بودن رسانه مجموعه،این ممکن است طول بکشد</string>
+  <string name="check_media_message">در حال بررسی رسانه&#8230;</string>
+  <string name="check_media_acknowledge">رسانه بررسی شد</string>
+  <string name="check_media_failed">خطا در بررسی رسانه</string>
+  <string name="check_media_invalid">فایل هایي با کدگذاری نامعتبر: %d</string>
+  <string name="check_media_unused">فایل هایي که در پوشه رسانه هستند ولی توسط هیچ کارتی استفاده نشده اند: %d</string>
+  <string name="check_media_nohave">فایل هایي که در کارت ها استفاده شده اند ولی در پوشه رسانه وجود ندارند: %d</string>
+  <string name="check_media_no_unused_missing">هیچ فایل مفقود شده یا بلا استفاده یافت نشد</string>
+  <string name="check_media_db_updated">پایگاه داده رسانه بازسازی شد</string>
+  <string name="check_media_delete_unused">حذف استفاده نشده ها</string>
+  <string name="check_media_deleted">فایل های حذف شده: %d</string>
   <!-- Tags Dialog Options -->
-  <string name="tags_dialog_option_all_cards">All cards</string>
-  <string name="tags_dialog_option_new_cards">New</string>
-  <string name="tags_dialog_option_due_cards">Due</string>
+  <string name="tags_dialog_option_all_cards">همه کارتها</string>
+  <string name="tags_dialog_option_new_cards">جدید</string>
+  <string name="tags_dialog_option_due_cards">موعد</string>
   <!-- Empty cards -->
-  <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
-  <string name="empty_cards_none">No empty cards</string>
-  <string name="empty_cards_count">Cards to delete: %d</string>
-  <string name="empty_cards_deleted">Cards deleted: %d</string>
+  <string name="emtpy_cards_finding">در حال پیدا کردن کارت های خالی&#8230;</string>
+  <string name="empty_cards_none">کارت خالی یافت نشد</string>
+  <string name="empty_cards_count">کارتها برای اینکه حذف شوند: %d</string>
+  <string name="empty_cards_deleted">کارتهای حذف شده: %d</string>
 </resources>

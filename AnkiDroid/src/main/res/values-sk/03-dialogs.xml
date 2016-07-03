@@ -47,11 +47,11 @@
   <string name="delete_deck_default_deck">Východiskový balíček sa nemôže vymazať.</string>
   <string name="delete_deck_title">Vymazať balíček?</string>
   <plurals name="delete_deck_message">
-    <item quantity="one">Vymazať všetky karty v balíčku %1$s? Obsahuje %2$d kartu.</item>
-    <item quantity="few">Vymazať všetky karty v balíčku %1$s? Obsahuje %2$d karty.</item>
-    <item quantity="other">Vymazať všetky karty v balíčku %1$s? Obsahuje %2$d kariet.</item>
+    <item quantity="one">Vymazať všetky kartičky v balíčku %1$s? Obsahuje %2$d kartičku.</item>
+    <item quantity="few">Vymazať všetky kartičky v balíčku %1$s? Obsahuje %2$d kartičky.</item>
+    <item quantity="other">Vymazať všetky kartičky v balíčku %1$s? Obsahuje %2$d kartičiek.</item>
   </plurals>
-  <string name="delete_cram_deck_message">Vrátiť všetky karty v %s späť do ich pôvodných balíčkov?</string>
+  <string name="delete_cram_deck_message">Vrátiť všetky kartičky v %s späť do ich pôvodných balíčkov?</string>
   <string name="no_tts_available_message">Žiaden TTS jazyk nie je k dispozícii</string>
   <string name="initializing_tts">Inicializuje sa TTS&#8230;</string>
   <string name="tts_no_tts">Nehovoriť</string>
@@ -63,12 +63,12 @@
     <item><![CDATA[AnkiDroid je vydaný pod <a href=\"%1$s\">licenciou GNU-GPL v3</a> a jeho zdrojový kód je dostupný na stránke <a href=\"%2$s\">GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Náhľad</string>
-  <string name="reset_card_dialog_title">Vynulovať pokrok v učení</string>
-  <string name="reset_card_dialog_message">Táto karta bude umiestnená na posledné miesto v poradí nových kariet.</string>
-  <string name="reset_card_dialog_acknowledge">Obnoviť kartu</string>
-  <string name="reschedule_card_dialog_title">Preplánovať kartu</string>
+  <string name="reset_card_dialog_title">Vynulovať zaznamenaný priebeh v učení kartičky</string>
+  <string name="reset_card_dialog_message">Táto kartička bude umiestnená na posledné miesto v poradí nových kartičiek</string>
+  <string name="reset_card_dialog_acknowledge">Obnoviť kartičku</string>
+  <string name="reschedule_card_dialog_title">Preplánovať kartičku</string>
   <string name="reschedule_card_dialog_message">Preplánovať opakovanie pre x dní:</string>
-  <string name="reschedule_card_dialog_acknowledge">Karta preplánovaná</string>
+  <string name="reschedule_card_dialog_acknowledge">Kartička preplánovaná</string>
   <string name="answering_error_title">Chyba databázy</string>
   <string name="answering_error_message">Chyba pri zápise do zbierky. Môže to súvisieť s poškodenou databázou alebo nedostatkom miesta na disku.\n\nAk sa to stáva častejšie, skúste skontrolovať databázu, opraviť zbierku alebo obnoviť zo zálohy ťuknutím na \"Možnosti\".\n\Taktiež to môže byť aj chyba AnkiDroid; prosím oznámte chybu, aby sme to mohli skontrolovať.</string>
   <string name="answering_error_report">Nahlásiť chybu</string>
@@ -76,24 +76,24 @@
   <string name="intent_add_saved_information">Uložené dáta</string>
   <string name="intent_add_clear_all">Vymazať všetko</string>
   <string name="intent_aedict_empty">Kategória \"predvolený\" je prázdna</string>
-  <string name="intent_aedict_category">Ak chcete pridať karty do AnkiDroid, odstráňte všetky kategórie poznámkového bloku alebo pridajte jednu s názvom \"predvolený\"</string>
-  <string name="custom_study_new_total_new">Nové karty v balíčku: %s</string>
-  <string name="custom_study_rev_total_rev">Karty na opakovanie v balíčku: %s</string>
-  <string name="custom_study_new_extend">Zvýšiť dnešný limit nových kariet o</string>
-  <string name="custom_study_rev_extend">Zvýšiť dnešný limit opakovaných kariet o</string>
-  <string name="custom_study_forgotten">Opakovať karty zabudnuté za posledných x dní:</string>
+  <string name="intent_aedict_category">Ak chcete pridať kartičky do AnkiDroid, odstráňte všetky kategórie poznámkového bloku alebo pridajte jednu s názvom \"predvolený\"</string>
+  <string name="custom_study_new_total_new">Nové kartičky v balíčku: %s</string>
+  <string name="custom_study_rev_total_rev">Kartičky na opakovanie v balíčku: %s</string>
+  <string name="custom_study_new_extend">Zvýšiť dnešný limit nových kartičiek o</string>
+  <string name="custom_study_rev_extend">Zvýšiť dnešný limit opakovaných kartičiek o</string>
+  <string name="custom_study_forgotten">Zopakovať si kartičky zabudnuté za posledných x dní:</string>
   <string name="custom_study_ahead">Opakovať dopredu o x dní:</string>
-  <string name="custom_study_random">Náhodne vybrať x kariet z balíčka:</string>
-  <string name="custom_study_preview">Ukážka nových kariet pridaných za posledných x dní:</string>
+  <string name="custom_study_random">Náhodne vybrať x kartičiek z balíčka:</string>
+  <string name="custom_study_preview">Ukážka nových kartičiek pridaných za posledných x dní:</string>
   <string name="rebuild_custom_study_deck">Obnovujem balíček vlastného štúdia.\nProsím počkajte...</string>
   <string name="importing_collection">Zbierka sa importuje&#8230;</string>
   <string name="import_media_count">Importujú sa mediálne súbory %1$d%%&#8230;</string>
-  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
-  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
-  <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
-  <string name="import_complete_count">Cards imported: %d</string>
+  <string name="import_progress">• Importujú sa poznámky: %1$d%%\n• Importujú sa kartičky: %2$d%%\n• Spracované: %3$d%%</string>
+  <string name="import_update_details">Aktualizovaných %1$d z %2$d existujúcich poznámok.</string>
+  <string name="import_update_ignored">Niektoré zmeny sa neuskutočnili, pretože sa zmenil typ poznámky</string>
+  <string name="import_complete_count">Importovaných kartičiek: %d</string>
   <string name="sd_card_full_title">SD karta je plná</string>
-  <string name="sd_card_almost_full_title">SD karta je skoro plná</string>
+  <string name="sd_card_almost_full_title">SD karta je takmer plná</string>
   <string name="restore_backup_title">Obnoviť zálohu?</string>
   <string name="restore_backup">Vaša kolekcia bude nahradená staršou kópiou. Všetky neuložené zmeny budú stratené.</string>
   <string name="dialog_cancel">Zrušiť</string>
@@ -117,19 +117,19 @@
   <string name="check_media_acknowledge">Multimédiá skontrolované</string>
   <string name="check_media_failed">Kontrola multimédií zlyhala</string>
   <string name="check_media_invalid">Súbory s neplatným kódovaním: %d</string>
-  <string name="check_media_unused">Súborý v multimediálnom priečinku nepoužívané žiadnymi kartami: %d</string>
-  <string name="check_media_nohave">Použité súbory na kartách ale nie v priečinku multimédií: %d</string>
+  <string name="check_media_unused">Súborý v multimediálnom priečinku nepoužívané žiadnymi kartičkami: %d</string>
+  <string name="check_media_nohave">Použité súbory na kartičkách, ktoré nie sú v priečinku multimédií: %d</string>
   <string name="check_media_no_unused_missing">Neboli nájdené žiadne nepoužívané alebo chýbajúce súbory</string>
   <string name="check_media_db_updated">Databáza multimédií bola opravená</string>
   <string name="check_media_delete_unused">Vymazať nepoužívané</string>
   <string name="check_media_deleted">Vymazaných súborov: %d</string>
   <!-- Tags Dialog Options -->
-  <string name="tags_dialog_option_all_cards">Všetky karty</string>
+  <string name="tags_dialog_option_all_cards">Všetky kartičky</string>
   <string name="tags_dialog_option_new_cards">Nové</string>
   <string name="tags_dialog_option_due_cards">Na preskúšanie</string>
   <!-- Empty cards -->
-  <string name="emtpy_cards_finding">Hľadanie prázdnych kariet...</string>
-  <string name="empty_cards_none">Žiadne prázdne karty</string>
+  <string name="emtpy_cards_finding">Hľadanie prázdnych kartičiek&#8230;</string>
+  <string name="empty_cards_none">Žiadne prázdne kartičky</string>
   <string name="empty_cards_count">Počet kartičiek, ktoré budú vymazané: %d</string>
   <string name="empty_cards_deleted">Počet vymazaných kartičiek: %d</string>
 </resources>

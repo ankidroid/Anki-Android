@@ -40,7 +40,7 @@
 -->
 <resources>
   <string name="backup_deck_no_space_left">به دلیل فضای ناکافی کارت حافظه امکان پشتیبان گیری در موعد مقرر وجود ندارد.\n\nمقداری از فضا را خالی کنید یا حجم فایل پشتیبان را کم کنید.</string>
-  <string name="sd_space_warning">کمتر از %dمگابایت فضا بر روی حافظه رم باقیمانده.\nبرای جلوگیری از هدر رفتن اطلاعات مقداری فضا خالی کنید.</string>
+  <string name="sd_space_warning">کمتر از %d مگابایت فضا بر روی کارت حافظه باقیمانده است.\nبرای جلوگیری از هدر رفتن اطلاعات مقداری فضا خالی کنید.</string>
   <string name="backup_delete">درحال حذف فایلهای پشتیبان.\nلطفا صبر کنید...</string>
   <string name="backup_restore">بازیابی از نسخه های پشتیبان</string>
   <string name="backup_new_collection">مجموعه جدید</string>
@@ -54,14 +54,14 @@
   <string name="backup_error_menu_repair">تعمیر پایگاه داده</string>
   <string name="backup_repair_deck">تعمیر</string>
   <string name="backup_repair_deck_progress">تعمیر پایگاه داده. \nلطفا صبر کنید...</string>
-  <string name="backup_error">Error</string>
-  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
+  <string name="backup_error">خطا</string>
+  <string name="backup_invalid_file_error">فایل پشتیبان انتخاب شده معتبر نبود</string>
   <string name="backup_restore_select_title">نسخه پشتیبان را جهت بازیابی انتخاب کنید</string>
   <string name="backup_restore_no_backups">هیچ نسخه پشتیبانی برای این مجموعه در این دستگاه وجود ندارد.اگر در رایانه خود فایل پشتیبان دارید، آن را به صورت دستی در پوشه آنکی دروید کپی کنید </string>
   <string name="open_collection_failed_title">مجموعه باز نشد</string>
-  <string name="open_collection_failed_message">Database couldn’t be opened. It’s either not a real Anki database or has been corrupted.\n\nTouch “options” for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
-  <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
-  <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
+  <string name="open_collection_failed_message">خطا در بازکردن پایگاه داده. این یا به خاطر واقعی نبودن پایگاه داده مخصوص anki است یا به خاطر خراب شدن آن.\n\nبرای بازیابی مجدد پایگاه داده لطفا گزینه ها را لمس کنید یا برای تعمیر مجموعه های خراب شده \n%1$s را ببینید</string>
+  <string name="corrupt_db_message">مجموعه فلش کارت شما خراب شده است.\n\n برای بازیابی از فایل های پشتیبان گزینه ها را لمس کنید ،یا اگر این قسمت هم کار نمی کند ،آموزش های زیر را برای تعمیر دستی پایگاه داده ببینید:\n%1$s</string>
+  <string name="access_collection_failed_message">موقع دستیابی به مجموعه فلش کارتها خطایی رخ داد. این ممکن است به خاطر یک نقص بی ضرر به وجود آمده باشد یا یک مشکلي داشته باشد.\n\n لطفا بررسی پایگاه داده را اجرا کنید یا با استفاده از دکمه گزینه ها از فایل های پشتیبان برای بازیابی کمک بگیرید. اگر این پیام مستمرا نمایش داده شد لطفا گزارش اشکال را ارسال کنید\n%1$s</string>
   <string name="deck_repair_error">مجموعه را نمی توان بازگرداند</string>
-  <string name="cursor_size_limit_exceeded">The Android size limit for a String in a database has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
+  <string name="cursor_size_limit_exceeded">سیستم‌عامل آندروید برای اندازه یک رشته در پایگاه داده محدودیتی دارد. با استفاده از نسخه رایانه ای anki هر نوع یادداشت بلا استفاده را حذف کنید سپس یک همگام سازی کامل انجام دهید.</string>
 </resources>
