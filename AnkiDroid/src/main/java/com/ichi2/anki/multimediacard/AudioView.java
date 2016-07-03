@@ -190,17 +190,17 @@ public class AudioView extends LinearLayout {
 
 
     public void notifyStopRecord() {
-        mPlayPause.update();
-        mStop.update();
-        if (mRecord != null) {
-            mRecord.update();
-        }
         if (mRecorder != null && mStatus == Status.RECORDING) {
             mRecorder.stop();
             mStatus = Status.IDLE;
             if (mOnRecordingFinishEventListener != null) {
                 mOnRecordingFinishEventListener.onRecordingFinish(AudioView.this);
             }
+        }
+        mPlayPause.update();
+        mStop.update();
+        if (mRecord != null) {
+            mRecord.update();
         }
     }
 

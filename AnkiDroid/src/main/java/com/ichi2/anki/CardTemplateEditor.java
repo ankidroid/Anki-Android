@@ -500,7 +500,8 @@ public class CardTemplateEditor extends AnkiActivity {
                         }
                     }
                     // Launch intent
-                    i.putExtra("currentCardId", cid);
+                    i.putExtra("cardList", new long[] {cid});
+                    i.putExtra("index", 0);
                     startActivityForResult(i, REQUEST_PREVIEWER);
                     return true;
                 }

@@ -83,11 +83,6 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         Timber.d("onActivityResult (requestCode = %d, resultCode = %d)", requestCode, resultCode);
-
-        String newLanguage = AnkiDroidApp.getSharedPrefs(this).getString(Preferences.LANGUAGE, "");
-        if (AnkiDroidApp.setLanguage(newLanguage)) {
-            supportInvalidateOptionsMenu();
-        }
         getCurrentFragment().restorePreferences();
     }
 

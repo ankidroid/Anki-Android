@@ -182,6 +182,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * Variables to hold preferences
      */
     private boolean mPrefHideDueCount;
+    private boolean mPrefShowETA;
     private boolean mShowTimer;
     protected boolean mPrefWhiteboard;
     private boolean mShowTypeAnswerField;
@@ -236,16 +237,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private TextView mTextBarLearn;
     private TextView mTextBarReview;
     private TextView mChosenAnswer;
-    private TextView mNext1;
-    private TextView mNext2;
-    private TextView mNext3;
-    private TextView mNext4;
+    protected TextView mNext1;
+    protected TextView mNext2;
+    protected TextView mNext3;
+    protected TextView mNext4;
     private Button mFlipCard;
     protected EditText mAnswerField;
-    private TextView mEase1;
-    private TextView mEase2;
-    private TextView mEase3;
-    private TextView mEase4;
+    protected TextView mEase1;
+    protected TextView mEase2;
+    protected TextView mEase3;
+    protected TextView mEase4;
     protected LinearLayout mFlipCardLayout;
     protected LinearLayout mEase1Layout;
     protected LinearLayout mEase2Layout;
@@ -1713,6 +1714,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
+        mPrefShowETA = preferences.getBoolean("showETA", true);
         mUseInputTag = preferences.getBoolean("useInputTag", false) && (CompatHelper.getSdkVersion() >= 15);
         mShowTypeAnswerField = (!preferences.getBoolean("writeAnswersDisable", false)) && !mUseInputTag;
         // On newer Androids, ignore this setting, which sholud be hidden in the prefs anyway.
@@ -1826,8 +1828,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            int eta = mSched.eta(counts, false);
-            actionBar.setSubtitle(getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
+            if (mPrefShowETA) {
+                int eta = mSched.eta(counts, false);
+                actionBar.setSubtitle(getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta));
+            }
         }
 
         SpannableString newCount = new SpannableString(String.valueOf(counts[0]));
