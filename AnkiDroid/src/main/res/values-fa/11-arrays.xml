@@ -82,7 +82,7 @@
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>استفاده از دسته فعلی</item>
-    <item>تصمیم گیری براساس نوع توجه</item>
+    <item>تصمیم گیری براساس نوع یادداشت</item>
   </string-array>
   <string-array name="new_spread_labels">
     <item>ادغام کارتهای جدید و مرور شده</item>
@@ -95,7 +95,7 @@
   </string-array>
   <string-array name="day_theme_labels">
     <item>روشن</item>
-    <item>Plain</item>
+    <item>ساده و بی رنگ</item>
   </string-array>
   <string-array name="night_theme_labels">
     <item>سیاه</item>

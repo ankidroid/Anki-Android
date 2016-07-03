@@ -45,9 +45,9 @@
   <string name="widget_no_cards_due">Карт для повтора нет</string>
   <string name="widget_loading">Виджет загружается&#8230;</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d card due in %2$s</item>
-    <item quantity="few">%1$d cards due in %2$s</item>
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="one">%1$d карта для повтора в %2$s</item>
+    <item quantity="few">%1$d карты для повтора в %2$s</item>
+    <item quantity="other">%1$d карт для повтора в %2$s</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">%1$d колода</item>

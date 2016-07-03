@@ -45,7 +45,7 @@
   <string name="check_db_acknowledge_shrunk">بانک اطلاعاتی بررسی و بهینه سازی شد.\nفضای از بین رفته %d کیلوبایت.</string>
   <string name="contextmenu_deckpicker_delete_deck">حذف دسته</string>
   <string name="delete_deck_default_deck">دسته پیش فرض نمی تواند حذف شود</string>
-  <string name="delete_deck_title">حذف دسته?</string>
+  <string name="delete_deck_title">حذف دسته؟</string>
   <plurals name="delete_deck_message">
     <item quantity="one">حذف همه کارت ها در %1$s؟ این دسته شامل %2$d کارت می باشد.</item>
     <item quantity="other">حذف همه کارت ها در %1$s؟ این دسته شامل %2$d کارت می باشد.</item>
@@ -55,11 +55,11 @@
   <string name="initializing_tts">در حال راه‌اندازی تبدیل متن به گفتار&#8230;</string>
   <string name="tts_no_tts">حرف نزن</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s<br/>فلش کارتهایی برای آندروید</h2>این یک برنامه ای است که فلش کارتهای آن کاملا با نسخه رایانه ای سازگاری دارند<a href=\"%2$s\">Anki</a>. شما در هر دو نسخه تلفن همراه و رایانه می توانید فلش کارت بسازید ،دانلود کنید و یاد بگیرید،و به آسانی آنها را با سایت anki همگام سازی کنید.]]></item>
+    <item><![CDATA[<h2>%1$s<br/>فلش کارتهایی برای آندروید</h2>این یک برنامه ای است که فلش کارتهای آن کاملا با نسخه رایانه ای سازگاری دارند <a href=\"%2$s\">Anki</a>. شما در هر دو نسخه تلفن همراه و رایانه می توانید فلش کارت بسازید، دانلود کنید و یاد بگیرید، و به آسانی آنها را با پایگاه اینترنتی برنامه همگام سازی کنید.]]></item>
     <item><![CDATA[برای بهتر کردن برنامه لطفا اشکالات را به <a href=\"%1$s\">دنبال کننده موضوع </a> گزارش کنید. نظراتي که قابلیت جدید معرفی کنند هم مورد استقبال قرار خواهد گرفت. پاسخ اشکالات خود را در<a href=\"%2$s\">ویکی </a>پیدا کنید یا یک بحث جدید را در <a href=\"%3$s\"> انجمن </a> شروع کنید.]]></item>
     <item><![CDATA[این برنامه یک <a href=\"%1$s\"> نرم افزار متن باز است <a/>،بنابراین همه ترغیب به <a href=\"%2$s\"> یک مشارکت کننده بودن می شوند</a>]]></item>
     <item><![CDATA[غیر برنامه نویسان نیز می توانند کمک کنند. برای مثال، شما می توانید <a href=\"%1$s\">به ترجمه </a>این برنامه کمک کنید،یا ویکی را به روز کنید ،عکس صفحه تهیه کنید،<a href=\"%2$s\"> کمک کنید </a>به نسخه رایانه ای این برنامه و یا درباره این برنامه وبلاگ بزنید.]]></item>
-    <item><![CDATA[این برنامه تحت <a href=\"%1$s\">GNU-GPL v3 مجوز</a>منتشر شده است و منبع کدها قابل دسترسی <a href=\"%2$s\"> در GitHub می باشد</a>.]]></item>
+    <item><![CDATA[این برنامه تحت مجوز <a href=\"%1$s\">GNU-GPL v3</a>منتشر شده است و منبع کدها قابل دسترسی است <a href=\"%2$s\">در GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">پیش نمایش</string>
   <string name="reset_card_dialog_title">بازنشانی پیشرفت کارت</string>
@@ -86,7 +86,7 @@
   <string name="custom_study_preview">پیش نمایش کارت های جدید اضافه شده در  x روز گذشته:</string>
   <string name="rebuild_custom_study_deck">ساخت مجدد دسته مطالعه سفارشی.\nلطفا صبر کنید...</string>
   <string name="importing_collection">در حال ورود مجموعه.\nلطفا صبر کنید&#8230;</string>
-  <string name="import_media_count">در حال وارد کردن فایلهای جند رسانه ای %1$d%%\nلطفا صبر کنید&#8230;</string>
+  <string name="import_media_count">در حال وارد کردن فایلهای رسانه %1$d%%&#8230;</string>
   <string name="import_progress">* در حال وارد کردن یادداشتها: %1$d%%\n
 * در حال وارد کردن کارت ها: %2$d%%\n
 * پردازش انجام شده: %3$d%%\n</string>
@@ -112,7 +112,7 @@
   <string name="lookup_button_content">جستجوی اطلاعات بیشتر</string>
   <string name="dialog_collection_path_not_dir">مسیر مشخص شده یک مسیر معتبر نیست</string>
   <!-- Media checking -->
-  <string name="check_media_title">رسانه بررسی شود?</string>
+  <string name="check_media_title">رسانه بررسی شود؟</string>
   <string name="check_media_warning">در صورت حجیم بودن رسانه مجموعه،این ممکن است طول بکشد</string>
   <string name="check_media_message">در حال بررسی رسانه&#8230;</string>
   <string name="check_media_acknowledge">رسانه بررسی شد</string>

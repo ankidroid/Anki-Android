@@ -58,7 +58,7 @@
   <string name="password_repeat">Повторите пароль</string>
   <string name="log_in">Войти</string>
   <string name="sign_up_description">Нет AnkiWeb аккаунта? Это бесплатно!</string>
-  <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
+  <string name="sign_up_not_affiliated">Примечание: AnkiWeb не аффилирован с AnkiDroid</string>
   <string name="sign_up">Зарегистрироваться</string>
   <string name="logged_as">Используется логин</string>
   <string name="log_out">Завершить сеанс</string>

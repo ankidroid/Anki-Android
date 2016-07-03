@@ -41,9 +41,9 @@
 <resources>
   <string name="statistics_young">Young</string>
   <string name="statistics_mature">Mature</string>
-  <string name="statistics_young_and_learn">Young and learn</string>
+  <string name="statistics_young_and_learn">Young+Learn</string>
   <string name="statistics_unlearned">Unseen</string>
-  <string name="statistics_suspended">Suspended</string>
+  <string name="statistics_suspended_and_buried">Suspended+Buried</string>
   <string name="statistics_relearn">Relearn</string>
   <string name="statistics_learn">Learn</string>
   <string name="statistics_cram">Cram</string>
@@ -74,14 +74,17 @@
   <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, review: &lt;b&gt;%2$s&lt;/b&gt;, relearn: &lt;b&gt;%3$s&lt;/b&gt;, filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Correct answers on mature cards: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">No mature cards were studied today</string>
+  <string name="stats_overview_forecast_total">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
+  <string name="stats_overview_forecast_average">Average: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
+  <string name="stats_overview_forecast_due_tomorrow">Due tomorrow: &lt;b&gt;%1$d&lt;/b&gt;</string>
   <string name="stats_overview_days_studied">Days studied: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
-  <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt;  reviews</string>
+  <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
   <string name="stats_overview_reviews_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
   <string name="stats_overview_reviews_per_day_all">If you studied every day: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
   <string name="stats_overview_time_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day</string>
   <string name="stats_overview_time_per_day_all">If you studied every day:  &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day</string>
-  <string name="stats_overview_new_cards_per_day">Average: &lt;b&gt;%1$.1f&lt;/b&gt; new cards/day</string>
-  <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt;  new cards</string>
+  <string name="stats_overview_new_cards_per_day">Average: &lt;b&gt;%1$.1f&lt;/b&gt; cards/day</string>
+  <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt; cards</string>
   <string name="stats_overview_average_interval">"Average interval: "</string>
   <string name="stats_overview_longest_interval">"Longest interval: "</string>
   <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; years</string>
@@ -100,7 +103,7 @@
   <string name="stats_forecast">Forecast</string>
   <string name="stats_review_count">Review count</string>
   <string name="stats_review_time">Review time</string>
-  <string name="stats_progress">Progress</string>
+  <string name="stats_added">Added</string>
   <string name="stats_review_intervals">Intervals</string>
   <string name="stats_breakdown">Hourly breakdown</string>
   <string name="stats_weekly_breakdown">Weekly breakdown</string>

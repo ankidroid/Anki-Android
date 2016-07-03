@@ -64,8 +64,8 @@
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
-    <item quantity="one">کارت هایی%1$dکه امروز%2$sمطالعه شده اند</item>
-    <item quantity="other">کارت هایی%1$dکه امروز%2$sمطالعه شده اند</item>
+    <item quantity="one">امروز شما %1$d کارت را در %2$s مطالعه کردید</item>
+    <item quantity="other">امروز شما %1$d کارت را در %2$s مطالعه کردید</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">پاسخ را تایپ کنید</string>
@@ -74,7 +74,7 @@
   <string name="ease_button_hard">سخت</string>
   <string name="ease_button_good">خوب</string>
   <string name="ease_button_easy">آسان</string>
-  <string name="studyoptions_congrats_undo">تصحصح عمل  %s</string>
+  <string name="studyoptions_congrats_undo">تصحيح عمل %s</string>
   <string name="menu_import">وارد کردن</string>
   <string name="undo">تصحیح عمل قبلی</string>
   <string name="undo_action_review">آخرین بازنگری</string>
@@ -153,8 +153,8 @@
   <string name="card_template_editor_menu_delete">حذف</string>
   <string name="card_template_editor_cant_delete">حداقل یک کارت وارد کنید.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">حذف نوع کارت %2$s ،و %1$d کارت آن?</item>
-    <item quantity="other">حذف نوع کارت %2$s و %1$d کارت آن?</item>
+    <item quantity="one">حذف نوع کارت %2$s ،و %1$d کارت آن؟</item>
+    <item quantity="other">حذف نوع کارت %2$s و %1$d کارت آن؟</item>
   </plurals>
   <string name="invalid_template">کارت جدید نمی تواند ساخته شود</string>
   <string name="card_template_editor_would_delete_note">پاکسازی این نوع کارت ممکن است منجر به پاک شدن یک یا تعدادی یادداشت شود.لطفاً در ابتدا یک نوع کارت بسازید. </string>

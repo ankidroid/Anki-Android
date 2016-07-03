@@ -40,7 +40,7 @@
 -->
 <resources>
   <string name="backup_deck_no_space_left">به دلیل فضای ناکافی کارت حافظه امکان پشتیبان گیری در موعد مقرر وجود ندارد.\n\nمقداری از فضا را خالی کنید یا حجم فایل پشتیبان را کم کنید.</string>
-  <string name="sd_space_warning">کمتر از %dمگابایت فضا بر روی حافظه رم باقیمانده.\nبرای جلوگیری از هدر رفتن اطلاعات مقداری فضا خالی کنید.</string>
+  <string name="sd_space_warning">کمتر از %d مگابایت فضا بر روی کارت حافظه باقیمانده است.\nبرای جلوگیری از هدر رفتن اطلاعات مقداری فضا خالی کنید.</string>
   <string name="backup_delete">درحال حذف فایلهای پشتیبان.\nلطفا صبر کنید...</string>
   <string name="backup_restore">بازیابی از نسخه های پشتیبان</string>
   <string name="backup_new_collection">مجموعه جدید</string>

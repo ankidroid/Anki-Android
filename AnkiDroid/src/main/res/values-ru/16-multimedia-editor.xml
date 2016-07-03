@@ -118,8 +118,8 @@
   <string name="multimedia_editor_progress_wait_title">Подождите</string>
   <!-- not a good message, when an unexpected error happens -->
   <string name="multimedia_editor_something_wrong">Что-то пошло не так</string>
-  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the note</string>
-  <string name="multimedia_editor_attach_media">Attach media</string>
+  <string name="multimedia_editor_attach_mm_content">Добавить мультимедийный контент к записи</string>
+  <string name="multimedia_editor_attach_media">Добавить медиа-файл</string>
   <!-- Audio view -->
   <!-- Message when recording fails -->
   <string name="multimedia_editor_audio_view_recording_failed">Запись не удалась</string>
@@ -130,5 +130,5 @@
   <string name="title_activity_load_pronounciation">Произношение</string>
   <string name="title_activity_search_image">Google Image Search</string>
   <!-- Network failure -->
-  <string name="network_no_connection">No connection</string>
+  <string name="network_no_connection">Нет соединения</string>
 </resources>

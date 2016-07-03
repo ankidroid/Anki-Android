@@ -41,14 +41,14 @@
 <resources>
   <string name="statistics_young">جوان</string>
   <string name="statistics_mature">سررسیده</string>
-  <string name="statistics_young_and_learn">Young and learn</string>
+  <string name="statistics_young_and_learn">Young+Learn</string>
   <string name="statistics_unlearned">دیده نشده</string>
-  <string name="statistics_suspended">معلق شده</string>
+  <string name="statistics_suspended_and_buried">Suspended+Buried</string>
   <string name="statistics_relearn">بازآموزی</string>
   <string name="statistics_learn">یادگیری</string>
   <string name="statistics_cram">مطالعه فشرده</string>
   <string name="stats_cards">کارتها</string>
-  <string name="stats_cards_intervals">Cards with given interval</string>
+  <string name="stats_cards_intervals">کارت ها با وقفه داده شده</string>
   <string name="stats_cumulative_cards">Cumulative cards</string>
   <string name="stats_cumulative_answers">Cumulative answers</string>
   <string name="stats_cumulative_time_minutes">Cumulative minutes</string>
@@ -60,7 +60,7 @@
   <string name="stats_minutes">دقیقه</string>
   <string name="stats_hours">ساعت</string>
   <string name="stats_percentage">درصد</string>
-  <string name="stats_period_month">1 ماه</string>
+  <string name="stats_period_month">یک ماه</string>
   <string name="stats_period_year">1 سال</string>
   <string name="stats_period_lifetime">مدت عمر دسته</string>
   <string name="stats_deck_collection">مجموعه</string>
@@ -69,13 +69,16 @@
   <string formatted="false" name="stats_percentage_correct">% درست</string>
   <string name="stats_reviews">مرورها</string>
   <string name="stats_answer_type">نوع پاسخ</string>
-  <string name="stats_today_again_count">دوباره شمارش:%d &lt; b &gt; &lt;/ب &gt;</string>
+  <string name="stats_today_again_count">شمارش دوباره: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(&lt; b &gt;%.1f%% &lt;/ب &gt; درست)</string>
-  <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, review: &lt;b&gt;%2$s&lt;/b&gt;, relearn: &lt;b&gt;%3$s&lt;/b&gt;, filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
-  <string name="stats_today_mature_cards">Correct answers on mature cards: %1$d/%2$d (%3$.1f%%)</string>
-  <string name="stats_today_no_mature_cards">No mature cards were studied today</string>
+  <string name="stats_today_type_breakdown">یادگیری: &lt;b&gt;%1$s&lt;/b&gt;,مرور: &lt;b&gt;%2$s&lt;/b&gt;, یادگیری دوباره: &lt;b&gt;%3$s&lt;/b&gt;, فيلتر شده: &lt;b&gt;%4$s&lt;/b&gt;</string>
+  <string name="stats_today_mature_cards">پاسخ های درست روی کارت های تثبیت شده: %1$d/%2$d (%3$.1f%%)</string>
+  <string name="stats_today_no_mature_cards">هیچ کارت تثبیت شده ای در امروز مطالعه نشده است</string>
+  <string name="stats_overview_forecast_total">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
+  <string name="stats_overview_forecast_average">Average: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
+  <string name="stats_overview_forecast_due_tomorrow">Due tomorrow: &lt;b&gt;%1$d&lt;/b&gt;</string>
   <string name="stats_overview_days_studied">Days studied: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
-  <string name="stats_overview_total_reviews">مجموع: &lt;b&gt;%1$d&lt;/b&gt; مرورها</string>
+  <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
   <string name="stats_overview_reviews_per_day_studydays">میانگین برای روزها که مطالعه شد:
 &lt;b&gt;%1$.1f&lt;/b&gt; مرورها/ روز</string>
   <string name="stats_overview_reviews_per_day_all">اگر هر روز مطالعه کردی:
@@ -84,8 +87,8 @@
 &lt;b&gt;%1$.1f&lt;/b&gt; دقیقه/ روز</string>
   <string name="stats_overview_time_per_day_all">اگر هر روز مطالعه کردی:
 &lt;b&gt;%1$.1f&lt;/b&gt; دقیقه ها/ روز</string>
-  <string name="stats_overview_new_cards_per_day">میانگین: &lt;b&gt;%1$.1f&lt;/b&gt; کارتها/ روز</string>
-  <string name="stats_overview_total_new_cards">مجموع: &lt;b&gt;%1$d&lt;/b&gt; کارتهاي جدید</string>
+  <string name="stats_overview_new_cards_per_day">Average: &lt;b&gt;%1$.1f&lt;/b&gt; cards/day</string>
+  <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt; cards</string>
   <string name="stats_overview_average_interval">"وقفه عادی: "</string>
   <string name="stats_overview_longest_interval">"بیشترین وقفه: "</string>
   <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; سال</string>
@@ -104,7 +107,7 @@
   <string name="stats_forecast">پیش بینی</string>
   <string name="stats_review_count">شماره مرور</string>
   <string name="stats_review_time">زمان مرور</string>
-  <string name="stats_progress">پیشرفت</string>
+  <string name="stats_added">Added</string>
   <string name="stats_review_intervals">وقفه ها</string>
   <string name="stats_breakdown">Hourly breakdown</string>
   <string name="stats_weekly_breakdown">Weekly breakdown</string>
@@ -141,6 +144,6 @@
   </string-array>
   <plurals name="stats_today_cards">
     <item quantity="one">&lt;b&gt;%1$d کارت &lt;/ b&gt; در &lt;؛b&gt;%2$s&lt;/b&gt; امروز مطالعه شد</item>
-    <item quantity="other">&lt;b&gt;%1$d کارت &lt;/ b&gt; در &lt;؛b&gt;%2$s&lt;/b&gt; امروز مطالعه شد</item>
+    <item quantity="other">امروز شما &lt;b&gt;%1$d کارت&lt;/b&gt; در &lt;b&gt;%2$s&lt;/b&gt; مطالعه کردید</item>
   </plurals>
 </resources>

@@ -41,9 +41,9 @@
 <resources>
   <string name="statistics_young">Giovani</string>
   <string name="statistics_mature">Mature</string>
-  <string name="statistics_young_and_learn">Giovani+Impara</string>
+  <string name="statistics_young_and_learn">Young+Learn</string>
   <string name="statistics_unlearned">Mai viste</string>
-  <string name="statistics_suspended">Sospese</string>
+  <string name="statistics_suspended_and_buried">Suspended+Buried</string>
   <string name="statistics_relearn">Reimpara</string>
   <string name="statistics_learn">Impara</string>
   <string name="statistics_cram">Studio focalizzato</string>
@@ -74,14 +74,17 @@
   <string name="stats_today_type_breakdown">Impara: &lt;b&gt;%1$s&lt;/b&gt;, Ripeti: &lt;b&gt;%2$s&lt;/b&gt;, Reimpara: &lt;b&gt;%3$s&lt;/b&gt;, Filtrate: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Carte mature corrette: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Oggi non è stata studiata nessuna carta matura.</string>
+  <string name="stats_overview_forecast_total">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
+  <string name="stats_overview_forecast_average">Average: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
+  <string name="stats_overview_forecast_due_tomorrow">Due tomorrow: &lt;b&gt;%1$d&lt;/b&gt;</string>
   <string name="stats_overview_days_studied">Giorni di studio: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d di %3$d)</string>
-  <string name="stats_overview_total_reviews">Totale: &lt;b&gt;%1$d&lt;/b&gt;  ripetizioni</string>
+  <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
   <string name="stats_overview_reviews_per_day_studydays">Media per i giorni di studio: &lt;b&gt;%1$.1f&lt;/b&gt; ripetizioni/giorno</string>
   <string name="stats_overview_reviews_per_day_all">Se avessi studiato ogni giorno: &lt;b&gt;%1$.1f&lt;/b&gt; ripetizioni/giorno</string>
   <string name="stats_overview_time_per_day_studydays">Media per i giorni di studio: &lt;b&gt;%1$.1f&lt;/b&gt; minuti/giorno</string>
   <string name="stats_overview_time_per_day_all">Se avessi studiato ogni giorno: &lt;b&gt;%1$.1f&lt;/b&gt; minuti/giorno</string>
-  <string name="stats_overview_new_cards_per_day">Media: &lt;b&gt;%1$.1f&lt;/b&gt; carte nuove/giorno</string>
-  <string name="stats_overview_total_new_cards">Totale: &lt;b&gt;%1$d&lt;/b&gt;  carte nuove</string>
+  <string name="stats_overview_new_cards_per_day">Average: &lt;b&gt;%1$.1f&lt;/b&gt; cards/day</string>
+  <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt; cards</string>
   <string name="stats_overview_average_interval">"Intervallo medio: "</string>
   <string name="stats_overview_longest_interval">"Intervallo più lungo: "</string>
   <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; anni</string>
@@ -100,7 +103,7 @@
   <string name="stats_forecast">Previsioni</string>
   <string name="stats_review_count">Ripetizioni</string>
   <string name="stats_review_time">Durata</string>
-  <string name="stats_progress">Avanzamento</string>
+  <string name="stats_added">Added</string>
   <string name="stats_review_intervals">Intervalli</string>
   <string name="stats_breakdown">Ripartizione oraria</string>
   <string name="stats_weekly_breakdown">Ripartizione settimanale</string>

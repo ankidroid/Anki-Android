@@ -45,9 +45,9 @@
   <string name="backup_restore">恢复备份</string>
   <string name="backup_new_collection">新建集合</string>
   <string name="backup_del_collection">删除集合，并创建新集合</string>
-  <string name="backup_del_collection_question">您确实想要删除该集合，然后创建一个新吗？这将删除所有您的学习进度和删除所有卡牌！</string>
+  <string name="backup_del_collection_question">您确定想要删除该集合然后重新创建一个吗？这将删除所有您的学习进度和删除所有卡片！</string>
   <string name="backup_full_sync_from_server">从服务器完全同步</string>
-  <string name="backup_full_sync_from_server_question">确实要从AnkiWeb下载并覆盖您的本地集合吗？这将删除自您上次同步以来的所有学习进度及增加的信息！</string>
+  <string name="backup_full_sync_from_server_question">确定要从AnkiWeb下载并覆盖您的本地集合吗？这将删除自您上次同步以来的所有学习进度及增加的信息！</string>
   <string name="error_handling_title">错误处理</string>
   <string name="error_handling_options">选项</string>
   <string name="backup_retry_opening">重新尝试打开</string>
@@ -63,5 +63,5 @@
   <string name="corrupt_db_message">您的集合已损坏。\n\n请点击\"选项\"从备份还原，如果依然无法正常工作，请参阅手动修复数据库: \n%1$s</string>
   <string name="access_collection_failed_message">访问您的集合时出现错误。它可能由无害的 bug或其他问题造成。\n\n尝试点击\"选项\"按钮运行检查数据库，或从备份还原。如果您仍然看到此消息，请提交bug报告: \n%1$s</string>
   <string name="deck_repair_error">集合无法修复</string>
-  <string name="cursor_size_limit_exceeded">The Android size limit for a String in a database has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
+  <string name="cursor_size_limit_exceeded">已超出Android的数据库中字符串的大小限制。请使用Anki桌面客户端删除任何未使用的笔记类型，然后完全同步。</string>
 </resources>

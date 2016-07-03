@@ -48,17 +48,17 @@
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">用户协议</a></string>
   <string name="menu_get_shared_decks">获取共享牌组</string>
   <string name="connection_error_message">网络出现错误</string>
-  <string name="not_logged_in_title">登录到 AnkiWeb</string>
-  <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
+  <string name="not_logged_in_title">登录到AnkiWeb</string>
+  <string name="login_create_account_message">您必须登录到第三方账户以使用云同步服务。您可以在下一步创建一个账户。</string>
   <string name="no_email_client">没有可用的电子邮件客户端</string>
   <!-- MyAccount.java -->
   <string name="username">电子邮件地址</string>
-  <string name="username_repeat">重复电子邮件地址</string>
+  <string name="username_repeat">确认电子邮件地址</string>
   <string name="password">密码</string>
   <string name="password_repeat">确认密码</string>
   <string name="log_in">登录</string>
   <string name="sign_up_description">还没有AnkiWeb账户吗？它是免费的！</string>
-  <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
+  <string name="sign_up_not_affiliated">注 ︰ AnkiWeb不属于AnkiDroid</string>
   <string name="sign_up">注册</string>
   <string name="logged_as">登录为</string>
   <string name="log_out">注销</string>
@@ -115,7 +115,7 @@
   <string name="sync_sanity_failed">同步之后，牌组集合处于不一致的状态。AnkiDroid将会强制完全同步以修复这一问题。请选择你想保留哪一方的状态，如果你想稍后再同步，请取消</string>
   <string name="sync_media_sanity_failed">媒体同步完成，但媒体数量与服务器不一致。下一次将进行全部同步，以纠正错误。</string>
   <string name="sync_media_error">同步媒体数据出错。</string>
-  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
+  <string name="sync_media_error_check">同步媒体文件时出错。建议检查媒体文件。</string>
   <string name="sync_sanity_local">本地</string>
   <string name="sync_sanity_remote">远程</string>
   <string name="force_full_sync_title">强制完全同步</string>

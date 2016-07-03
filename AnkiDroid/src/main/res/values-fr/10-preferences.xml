@@ -40,8 +40,8 @@
 -->
 <resources>
   <!-- generic strings -->
-  <string name="disabled">Disabled</string>
-  <string name="enabled">Enabled</string>
+  <string name="disabled">Désactivé</string>
+  <string name="enabled">Activé</string>
   <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Paramètres généraux</string>
@@ -51,10 +51,10 @@
   <string name="pref_cat_flashcard">Afficher</string>
   <string name="pref_cat_whiteboard">Tableau blanc</string>
   <string name="pref_cat_automatic_display">Affichage automatique de la réponse</string>
-  <string name="pref_cat_appearance">Appearance</string>
-  <string name="pref_cat_appearance_summ">Change themes and default font</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_appearance">Affichage</string>
+  <string name="pref_cat_appearance_summ">Changer le thème et la police par défaut</string>
+  <string name="pref_cat_themes">Thèmes</string>
+  <string name="pref_cat_fonts">Polices</string>
   <string name="pref_cat_gestures">Gestes</string>
   <string name="pref_cat_gestures_summ">Utiliser les gestes et mouvements au lieu des boutons</string>
   <string name="pref_cat_actions">Actions</string>
@@ -71,7 +71,7 @@
   <string name="whiteboard_black_summ">Utilise moins de mémoire, mais ne fonctionne pas en mode nuit</string>
   <string name="write_answers_disable">Désactiver la saisie de la réponse</string>
   <string name="write_answers_disable_summ">Éviter au clavier d’apparaître contenant un champ « taper la réponse »</string>
-  <string name="use_input_tag">Type answer into the card</string>
+  <string name="use_input_tag">Saisir la réponse dans la carte</string>
   <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
   <string name="text_selection_click">Solution alternative pour les appuis longs</string>
   <string name="text_selection_click_summ">Sélectionnez ceci si vous ne pouvez pas commencer une sélection de texte avec une pression longue</string>
@@ -84,7 +84,7 @@
   <string name="image_zoom">Zoom d\'image</string>
   <string name="button_size">Taille des boutons de réponse</string>
   <string name="card_browser_font_size">Échelle de la police de l’explorateur</string>
-  <string name="col_path">AnkiDroid directory</string>
+  <string name="col_path">Répertoire de AnkiDroid</string>
   <string name="fullscreen_review">Mode plein écran</string>
   <string name="full_screen_off">Inactif</string>
   <string name="full_screen_system">Masquer les barres système</string>
@@ -119,8 +119,8 @@
   <string name="fix_hebrew_text_summ">Solution de rechange pour afficher correctement les voyelles hébraïques.</string>
   <string name="fix_hebrew_instructions">Ce paramètre contourne l\'algorithme RTL d’Android, pour afficher correctement les voyelles.\n\nPour que ça fonctionne, vous devez téléchargez la police Tohu.ttf et la copier manuellement vers :\n%s/fonts/\n\nVous n\'aurez pas à modifier vos cartes.</string>
   <string name="fix_hebrew_download_font">Télécharger la police</string>
-  <string name="day_theme">Day theme</string>
-  <string name="night_theme">Night theme</string>
+  <string name="day_theme">Thème de jour</string>
+  <string name="night_theme">Thème de nuit</string>
   <string name="default_font">Police par défaut</string>
   <string name="override_font">Application de la police par défaut</string>
   <string name="language">Langue</string>
@@ -166,16 +166,16 @@
   <string name="enable_api_summary">Laissez les autres applications se connecter à AnkiDroid et lire / écrire des données sans votre intervention</string>
   <string name="custom_buttons">App bar buttons</string>
   <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
-  <string name="custom_buttons_setting_always_show">Always show</string>
+  <string name="custom_buttons_setting_always_show">Toujours afficher</string>
   <string name="custom_buttons_setting_if_room">Show if room</string>
-  <string name="custom_buttons_setting_menu_only">Menu only</string>
-  <string name="reset_custom_buttons">Reset to default</string>
+  <string name="custom_buttons_setting_menu_only">Menu uniquement</string>
+  <string name="reset_custom_buttons">Rétablir les paramètres par défaut</string>
   <!-- Advanced statistics settings -->
-  <string name="advanced_statistics_title">Advanced statistics</string>
-  <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
+  <string name="advanced_statistics_title">Statistiques avancées</string>
+  <string name="enable_advanced_statistics_title">Activer les statistiques avancées</string>
   <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
   <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
-  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Précision du calcul</string>
   <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
   <!-- Custom sync server settings -->
   <string name="custom_sync_server_title">Custom sync server</string>
