@@ -227,8 +227,10 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         // Apply the correct expand/collapse drawable
         if (collapsed) {
             expander.setImageDrawable(mExpandImage);
+            expander.setContentDescription(expander.getContext().getString(R.string.expand));
         } else if (node.children.size() > 0) {
             expander.setImageDrawable(mCollapseImage);
+            expander.setContentDescription(expander.getContext().getString(R.string.collapse));
         } else {
             expander.setImageDrawable(mNoExpander);
         }
