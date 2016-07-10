@@ -40,10 +40,10 @@
 -->
 <resources>
   <string name="statistics_young">Jovem</string>
-  <string name="statistics_mature">Maduro</string>
-  <string name="statistics_young_and_learn">Young+Learn</string>
+  <string name="statistics_mature">Aprendido</string>
+  <string name="statistics_young_and_learn">Jovem+Aprendido</string>
   <string name="statistics_unlearned">Não vistos</string>
-  <string name="statistics_suspended_and_buried">Suspended+Buried</string>
+  <string name="statistics_suspended_and_buried">Suspendido+Ocultado</string>
   <string name="statistics_relearn">Reaprender</string>
   <string name="statistics_learn">Aprender</string>
   <string name="statistics_cram">Cursinho</string>
@@ -72,19 +72,19 @@
   <string name="stats_today_again_count">Número de repetições: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; corretas)</string>
   <string name="stats_today_type_breakdown">Aprender: &lt;b&gt;%1$s&lt;/b&gt;, Revisar: &lt;b&gt;%2$s&lt;/b&gt;, Reaprender: &lt;b&gt;%3$s&lt;/b&gt;, Filtradas: &lt;b&gt;%4$s&lt;/b&gt;</string>
-  <string name="stats_today_mature_cards">Respostas corretas em cartões maduros: %1$d/%2$d (%3$.1f%%)</string>
-  <string name="stats_today_no_mature_cards">Nenhum cartão maduro foi estudado hoje.</string>
-  <string name="stats_overview_forecast_total">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
-  <string name="stats_overview_forecast_average">Average: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-  <string name="stats_overview_forecast_due_tomorrow">Due tomorrow: &lt;b&gt;%1$d&lt;/b&gt;</string>
-  <string name="stats_overview_days_studied">Days studied: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
-  <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
-  <string name="stats_overview_reviews_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-  <string name="stats_overview_reviews_per_day_all">Se estudasses todos os dias: &lt;b&gt;%1$.1f&lt;/b&gt; revisões/dia</string>
-  <string name="stats_overview_time_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day</string>
-  <string name="stats_overview_time_per_day_all">Se estudasses todos os dias:  &lt;b&gt;%1$.1f&lt;/b&gt; minutos/dia</string>
-  <string name="stats_overview_new_cards_per_day">Average: &lt;b&gt;%1$.1f&lt;/b&gt; cards/day</string>
-  <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt; cards</string>
+  <string name="stats_today_mature_cards">Respostas corretas em cartões aprendidos: %1$d/%2$d (%3$.1f%%)</string>
+  <string name="stats_today_no_mature_cards">Nenhum cartão já apreendido foi estudado hoje.</string>
+  <string name="stats_overview_forecast_total">Total: &lt;b&gt;%1$d&lt;/b&gt; revisões</string>
+  <string name="stats_overview_forecast_average">Média: &lt;b&gt;%1$.1f&lt;/b&gt; revisões/dia</string>
+  <string name="stats_overview_forecast_due_tomorrow">Vence amanhã: &lt;b&gt;%1$d&lt;/b&gt;</string>
+  <string name="stats_overview_days_studied">Dias estudados: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
+  <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt; revisões</string>
+  <string name="stats_overview_reviews_per_day_studydays">Média por dias estudados: &lt;b&gt;%1$.1f&lt;/b&gt; revisões/dia</string>
+  <string name="stats_overview_reviews_per_day_all">Se estudasse todos os dias: &lt;b&gt;%1$.1f&lt;/b&gt; revisões/dia</string>
+  <string name="stats_overview_time_per_day_studydays">Média por dias estudados: &lt;b&gt;%1$.1f&lt;/b&gt; minutos/dia</string>
+  <string name="stats_overview_time_per_day_all">Se estudasse todos os dias:  &lt;b&gt;%1$.1f&lt;/b&gt; minutos/dia</string>
+  <string name="stats_overview_new_cards_per_day">Média: &lt;b&gt;%1$.1f&lt;/b&gt; cartão/dia</string>
+  <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt; cartões</string>
   <string name="stats_overview_average_interval">"Intervalo médio: "</string>
   <string name="stats_overview_longest_interval">"Intervalo mais longo: "</string>
   <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; anos</string>
@@ -99,11 +99,11 @@
     <item>Meses</item>
   </string-array>
   <string name="stats_today">Hoje</string>
-  <string name="stats_overview">Overview</string>
+  <string name="stats_overview">Visão geral</string>
   <string name="stats_forecast">Previsão</string>
   <string name="stats_review_count">Contagem de revisões</string>
   <string name="stats_review_time">Tempo de revisão</string>
-  <string name="stats_added">Added</string>
+  <string name="stats_added">Adicionado</string>
   <string name="stats_review_intervals">Intervalos</string>
   <string name="stats_breakdown">Por Hora</string>
   <string name="stats_weekly_breakdown">Por Semanas</string>
