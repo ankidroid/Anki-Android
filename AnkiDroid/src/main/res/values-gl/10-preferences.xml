@@ -149,6 +149,8 @@
   <string name="show_estimates_summ">Show next review time on answer buttons</string>
   <string name="show_progress">Amosar restantes</string>
   <string name="show_progress_summ">Amosar o contador de cartóns restantes</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Baralla para os novos cartóns</string>
   <string name="new_spread">Posición do novo cartón</string>
   <string name="learn_cutoff">Learn ahead limit</string>

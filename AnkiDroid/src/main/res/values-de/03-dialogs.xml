@@ -58,7 +58,7 @@
     <item><![CDATA[<h2>%1$s:<br/>Lernkartei für Android</h2>AnkiDroid ist eine Lernkartei-Anwendung, die voll kompatibel mit der Desktop-Software <a href=\"%2$s\">Anki</a> ist. Sie können mit AnkiDroid oder Anki Desktop Inhalte erstellen, herunterladen und lerne, und dann ganz einfach mit AnkiWeb synchronisieren.]]></item>
     <item><![CDATA[Um AnkiDroid zu verbessern, melden Sie Bugs bitte in dem <a href=\"%1$s\">Issue-Tracker</a>; Sie können dort auch Ideen für neue Funktionen eintragen. Schauen Sie sich auch das <a href=\"%2$s\">Wiki</a> an oder schreiben Sie einen Post im <a href=\"%3$s\">Forum</a>.]]></item>
     <item><![CDATA[AnkiDroid ist <a href=\"%1$s\">quelloffene Software<a/>, und wir würden uns freuen, auch Sie <a href=\"%2$s\">als neue Mitwirkende</a> willkommenen heißen zu können :-)]]></item>
-    <item><![CDATA[Auch Nicht-Entwickler können helfen. Sie können z. B. beim <a href=\"%1$s\">Übersetzen</a> von AnkiDroid helfen, das Wiki aktualisieren, Bildschirmfotos machen, für Anki Desktop <a href=\"%2$s\">spenden</a> oder über AnkiDroid bloggen.]]></item>
+    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
     <item><![CDATA[AnkiDroid ist nach <a href=\"%1$s\">GNU-GPL v3</a> lizenziert, der Quellcode ist <a href=\"%2$s\">bei GitHub</a> verfügbar.]]></item>
   </string-array>
   <string name="preview_title">Vorschau</string>

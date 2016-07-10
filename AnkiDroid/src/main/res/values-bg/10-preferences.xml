@@ -148,6 +148,8 @@
   <string name="show_estimates_summ">Показване на времето за следващото повторение над бутоните за отговор</string>
   <string name="show_progress">Показване на оставащото</string>
   <string name="show_progress_summ">Показване на брояч на оставащите карти</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Тесте за нови карти</string>
   <string name="new_spread">Нова позиция на картите</string>
   <string name="learn_cutoff">Учене над лимита</string>

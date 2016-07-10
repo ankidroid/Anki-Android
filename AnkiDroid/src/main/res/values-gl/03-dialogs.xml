@@ -58,7 +58,7 @@
     <item><![CDATA[<h2>%1$s:<br/>Cartóns Android</h2>AnkiDroid é unha aplicación de cartóns compatible co software de escritorio <a href=\"%2$s\">Anki</a>. Podes crear, descargar e aprender materias en ámbolos dous programas, e sincronizalos dun xeito doado co AnkiWeb.]]></item>
     <item><![CDATA[Para axudarnos a facer o AnkiDroid mellor, por favor informa dos erros no <a href=\"%1$s\">seguimento de problemas</a>; ideas sobre novas características son benvidas. Atopa respostas na <a href=\"%2$s\">wiki</a> ou comeza unha conversa no <a href=\"%3$s\">foro</a>.]]></item>
     <item><![CDATA[AnkiDroid é <a href=\"%1$s\">software de código aberto<a/>, polo que é animado a <a href=\"%2$s\">colaborar</a> :-)]]></item>
-    <item><![CDATA[Os que non son desenvolvedores tamen poden axudar. Por exemplo, poden <a href=\"%1$s\">axudar a traducir</a> o AnkiDroid, actualizar o wiki, fornecer capturas, <a href=\"%2$s\">facer unha doazón</a> a Anki Desktop, ou blogar sobre AnkiDroid.]]></item>
+    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
     <item><![CDATA[Ankidroid distribúese baixo <a href=\"%1$s\">licenza GNU-GPL v3</a> e o código fonte está dispoñible <a href=\"%2$s\">no GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Vista previa</string>

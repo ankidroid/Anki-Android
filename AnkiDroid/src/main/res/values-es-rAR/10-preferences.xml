@@ -148,6 +148,8 @@
   <string name="show_estimates_summ">Mostrar el tiempo para el próximo repaso encima de los botones de respuesta</string>
   <string name="show_progress">Mostar restantes</string>
   <string name="show_progress_summ">Mostrar contador de tarjetas restantes</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Mazo para nuevas tarjetas</string>
   <string name="new_spread">Nueva posición de tarjeta</string>
   <string name="learn_cutoff">Aprender antes del límite</string>

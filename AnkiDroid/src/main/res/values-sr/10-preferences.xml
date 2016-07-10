@@ -149,6 +149,8 @@
   <string name="show_estimates_summ">Следећи пут прикажи разматрање изнад дугмета за одговоре</string>
   <string name="show_progress">Прикажи преостале</string>
   <string name="show_progress_summ">Прикажи број остале картице</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Шпил за нове картице</string>
   <string name="new_spread">Нова позиција карте</string>
   <string name="learn_cutoff">Учити више од задатог лимита</string>

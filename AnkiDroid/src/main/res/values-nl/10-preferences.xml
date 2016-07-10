@@ -148,6 +148,8 @@
   <string name="show_estimates_summ">In de antwoordknoppen weergeven wanneer de volgende overhoring is</string>
   <string name="show_progress">Resterende weergeven</string>
   <string name="show_progress_summ">Toon resterend aantal kaarten</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Set voor nieuwe kaarten</string>
   <string name="new_spread">Positie nieuwe kaart</string>
   <string name="learn_cutoff">Max vooruit leren</string>

@@ -60,7 +60,7 @@
     <item><![CDATA[<h2>%1$s:<br/>Pomnilne kartice za Android</h2>AnkiDroid je program za pomnilne kartice, ki je v celoti združljiv z namiznim programom <a href=\"%2$s\">Anki</a>. Snov lahko ustvarjate, prejmete in se jo naučite tako v AnkiDroidu kot namiznem Ankiju in jo enostavno sinhronizirate z AnkiWebom.]]></item>
     <item><![CDATA[Da ga nam pomagate izboljšati, prijavite hrošče v <a href=\"%1$s\">sledilniku težav</a>; nove zamisli o značilnostih so tudi dobrodošle. Odgovore poiščite v <a href=\"%2$s\">wikiju</a> ali začnite razpravo v <a href=\"%3$s\">forumu</a>.]]></item>
     <item><![CDATA[AnkiDroid je <a href=\"%1$s\">odprtokodna programska oprema<a/>, tako da spodbujamo vsakogar, ki želi <a href=\"%2$s\">prispevati</a> :-)]]></item>
-    <item><![CDATA[Poleg razvijalcev lahko pomagajo tudi ostali. Na primer lahko ga <a href=\"%1$s\"> pomagate prevesti</a>, posodobiti wiki, priskrbeti zaslonske slike, <a href=\"%2$s\">darovati</a> za namizni Anki ali o njem blogati.]]></item>
+    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
     <item><![CDATA[AnkiDroid je izdan pod <a href=\"%1$s\">dovoljenjem GNU-GPL v3</a> in izvorna koda je na voljo <a href=\"%2$s\">na GitHubu</a>.]]></item>
   </string-array>
   <string name="preview_title">Predogled</string>

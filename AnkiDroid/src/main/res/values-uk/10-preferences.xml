@@ -149,6 +149,8 @@
   <string name="show_estimates_summ">Показати час наступного повторення вище кнопок відповіді</string>
   <string name="show_progress">Показати решту</string>
   <string name="show_progress_summ">Show remaining card count</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Колода для нових карт</string>
   <string name="new_spread">Положення нової карти</string>
   <string name="learn_cutoff">Вчити наперед</string>

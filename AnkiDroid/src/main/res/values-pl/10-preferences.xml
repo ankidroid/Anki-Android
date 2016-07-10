@@ -148,6 +148,8 @@
   <string name="show_estimates_summ">Pokazuj czas kolejnej powtórki nad przyciskami odpowiedzi</string>
   <string name="show_progress">Pokaż pozostałe</string>
   <string name="show_progress_summ">Pokazuj licznik pozostałych kart</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Talia dla nowych kart</string>
   <string name="new_spread">Pozycja nowych kart</string>
   <string name="learn_cutoff">Limit nauki z wyprzedzeniem</string>

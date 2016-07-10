@@ -58,7 +58,7 @@
     <item><![CDATA[<h2>%1$s:<br/>Android için bilgi kartları</h2>AnkiDroid, masaüstü yazılımı <a href=\"%2$s\">Anki</a>\'yle tamamen uyumlu bir bilgi kartı uygulamasıdır. İster AnkiDroid\'de ister Anki Masaüstü\'nde materyal oluşturup, indirip ve öğrenip, bunları AnkiWeb\'le kolayca senkronize edebilirsiniz.]]></item>
     <item><![CDATA[AnkiDroid\'i daha iyi hâle getirmemize yardım etmek için, lütfen bugları <a href=\"%1$s\">sorun takipçisi</a>ne bildirin; yeni özellik fikirlerinizi de bekliyoruz. <a href=\"%2$s\">Wiki</a>de sorularınıza cevap arayın veya <a href=\"%3$s\">forum</a>da bir tartışma açın.]]></item>
     <item><![CDATA[AnkiDroid <a href=\"%1$s\">açık kaynaklı bir programdır<a/>, böylece herkes <a href=\"%2$s\"> katılımcı olabilir</a> :-)]]></item>
-    <item><![CDATA[Geliştirici olmayanlar da yardım edebilir. Örneğin, AnkiDroid\'in <a href=\"%1$s\">çevrilmesine yardımcı olabilir</a>, wikiyi güncelleyebilir, ekran görüntüleri koyabilir, Anki Masaüstü\'ne <a href=\"%2$s\">bağışta bulunabilir</a>, veya AnkiDroid\'le ilgili blog yazabilirsiniz.]]></item>
+    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
     <item><![CDATA[AnkiDroid GNU-GPL v3 <a href=\"%1$s\"> lisansı altında çıkartılmıştır </a> kaynak kodlarına <a href=\"%2$s\"> GitHub\'dan ulaşabilirsiniz</a>.]]></item>
   </string-array>
   <string name="preview_title">Önizleme</string>

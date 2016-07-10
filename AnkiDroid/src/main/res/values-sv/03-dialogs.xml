@@ -58,7 +58,7 @@
     <item><![CDATA[<h2>%1$s:<br/>Flash-kort för Android</h2>AnkiDroid är en flash-kort applikation som är helt kompatibel med stationära mjukvaran <a href=\"%2$s\">Anki</a>. Du kan skapa, ladda ner och lära dig material på både AnkiDroid eller Anki Desktop, och synkronisera dem lätt med AnkiWeb.]]></item>
     <item><![CDATA[För att hjälpa oss göra AnkiDroid bättre, vänligen rapportera buggar till <a href=\"%1$s\">issue trackern</a>; nya funktionsidéer är också mycket välkomna. Hitta svar på <a href=\"%2$s\">wikin</a> eller starta en diskussion på <a href=\"%3$s\">forumet</a>.]]></item>
     <item><![CDATA[AnkiDroid är en <a href=\"%1$s\">open source mjukvara<a/>, så alla uppmuntras till att <a href=\"%2$s\">bli en bidragsgivare</a> :-)]]></item>
-    <item><![CDATA[Icke-utvecklare kan också hjälpa. Till exempel, du kan <a href=\"%1$s\">hjälpa översätta</a> AnkiDroid, uppdatera wikin, ge skärmdumpar, <a href=\"%2$s\">donera</a> till Anki Desktop, eller blogga om AnkiDroid.]]></item>
+    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
     <item><![CDATA[AnkiDroid är släppt under <a href=\"%1$s\">GNU-GPL v3 licensen</a> och all källkod finns tillgänglig <a href=\"%2$s\">på GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Förhandsgranskning</string>

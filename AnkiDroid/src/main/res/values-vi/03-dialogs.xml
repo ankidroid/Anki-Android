@@ -57,7 +57,7 @@
     <item><![CDATA[<h2>%1$s:<br/>Thẻ ghi nhớ cho Android</h2>AnkiDroid là ứng dụng thẻ ghi nhớ hoàn toàn tương thích với phần mềm cho máy bàn <a href=\"%2$s\">Anki</a>. Bạn có thể tạo, tải xuống và học các tài liệu trên cả AnkiDroid hoặc Anki cho máy bàn và dễ dàng đồng bộ chúng với AnkiWeb.]]></item>
     <item><![CDATA[Để giúp chúng tôi hoàn thiện AnkiDroid, xin báo cáo lỗi đến <a href=\"%1$s\">trình theo dõi lỗi</a>; các ý tưởng tính năng mới đều được hoan nghênh. Hãy tìm câu trả lời trên <a href=\"%2$s\">wiki</a> hoặc mở đầu cuộc thảo luận trên <a href=\"%3$s\">diễn đàn</a>.]]></item>
     <item><![CDATA[AnkiDroid là <a href=\"%1$s\">phần mềm nguồn mở<a/>, do đó mọi người đều được khuyến khích <a href=\"%2$s\">trở thành người cộng tác</a> :-)]]></item>
-    <item><![CDATA[Bạn vẫn có thể giúp dù không phải là nhà phát triển. VD: bạn có thể <a href=\"%1$s\">giúp dịch thuật</a> AnkiDroid, cập nhật wiki, cung cấp ảnh chụp màn hình, <a href=\"%2$s\">ủng hộ</a> Anki cho máy bàn hoặc viết blog về AnkiDroid.]]></item>
+    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
     <item><![CDATA[AnkiDroid được phát hành theo <a href=\"%1$s\">Giấy phép GNU-GPL v3</a> và mã nguồn có <a href=\"%2$s\">trên GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Xem trước</string>

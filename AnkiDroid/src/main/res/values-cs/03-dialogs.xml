@@ -59,7 +59,7 @@
     <item><![CDATA[<h2>%1$s:<br/>Kartičky pro Android</h2>AnkiDroid je kartičková aplikace plně kompatibilní s desktopovou verzí <a href=\"%2$s\">Anki</a>. Můžete vytvářet, stahovat a učit se materiály jak v AnkiDroid tak Anki Desktop a velmi snadno je synchronizovat i s AnkiWeb.]]></item>
     <item><![CDATA[Chcete-li nám pomoci vylepšit AnkiDroid prosím ohlaste chyby ve <a href=\"%1$s\">sledovači chyb</a>; nové myšlenky na funkce jsou také velmi vítány. Mnoho odpovědí naleznete ve <a href=\"%2$s\">wiki</a> nebo začněte diskutovat na <a href=\"%3$s\">foru</a>.]]></item>
     <item><![CDATA[AnkiDroid je <a href=\"%1$s\">open source software<a/>, takže každý se může <a href=\"%2$s\">stát přispěvatelem</a> :-)]]></item>
-    <item><![CDATA[Nejenom vývojáři mohou pomoci. Například můžete <a href=\"%1$s\">pomoc s překladem</a> AnkiDroid, aktualizovat wiki, poskytnout náhledy obrazovky, <a href=\"%2$s\">poskytnout dar</a> Anki Desktop nebo blogovat o AnkiDroid.]]></item>
+    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
     <item><![CDATA[AnkiDroid je vydán pod <a href=\"%1$s\">GNU-GPL v3 licencí</a> a zdrojový kód je dostupný <a href=\"%2$s\">na GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Náhled</string>

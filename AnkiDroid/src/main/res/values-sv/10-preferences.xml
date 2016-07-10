@@ -148,6 +148,8 @@
   <string name="show_estimates_summ">Visa nästa repetitionstid ovan svarsknapparna</string>
   <string name="show_progress">Visa återstående</string>
   <string name="show_progress_summ">Visa antal återstående kort</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Kortlek för nya kort</string>
   <string name="new_spread">Ny kortposition</string>
   <string name="learn_cutoff">Gräns för att lära i förväg</string>

@@ -148,6 +148,8 @@
   <string name="show_estimates_summ">답변 버튼에 다음 복습 시간 표시</string>
   <string name="show_progress">남은 개수 표시</string>
   <string name="show_progress_summ">남은 카드 개수 표시</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">새 카드의 카드 묶음</string>
   <string name="new_spread">새 카드 위치</string>
   <string name="learn_cutoff">미리 학습하기 시간 설정</string>

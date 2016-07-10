@@ -59,7 +59,7 @@
     <item><![CDATA[<h2>%1$s:<br/>Kартице за учење за Android</h2>AnkiDroid је програм који користи картице за учење и добро ради са десктоп верзијом <a href=\"%2$s\">Anki</a>. Можете да правите, преузимате и проучавате информације и у AnkiDroid и у Anki Desktop, синхронизујући их међусобно.]]></item>
     <item><![CDATA[Како би нам помогли да AnkiDroid буде бољи, молимо вас да пријавите грешке на <a href=\"%1$s\"> базу грешака</a>; Идеје за нове функционалности су добродошле. Пронађите одговор на <a href=\"%2$s\"> wiki</a> или започните дискусију на <a href=\"%3$s\">форуму</a>.]]></item>
     <item><![CDATA[AnkiDroid je <a href=\"%1$s\"> open source software<a/>, тако да су сви позвани да <a href=\"%2$s\"> допринесу развоју</a> :-)]]></item>
-    <item><![CDATA[И они који нису програмери могу да помогну. На пример, можете да <a href=\"%1$s\">помогнете превођење</a> AnkiDroid, допуните wiki страницу, направите снимке апликације, <a href=\"%2$s\">донирате</a> за Anki Desktop, или пишете на блогу о AnkiDroid.]]></item>
+    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
     <item><![CDATA[AnkiDroid је објављен под <a href=\"%1$s\">GNU-GPL v3 лиценцом</a> и изворни код је доступан <a href=\"%2$s\">овде</a>.]]></item>
   </string-array>
   <string name="preview_title">Преглед</string>

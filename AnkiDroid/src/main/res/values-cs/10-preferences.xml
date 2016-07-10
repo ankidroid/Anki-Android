@@ -148,6 +148,8 @@
   <string name="show_estimates_summ">Zobrazit čas příštího opakování nad tlačítkem odpovědí</string>
   <string name="show_progress">Zobraz zbývající</string>
   <string name="show_progress_summ">Zobrazit zbývající počet karet</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Balíček pro nové karty</string>
   <string name="new_spread">Pozice nové karty</string>
   <string name="learn_cutoff">Limit učení se napřed</string>

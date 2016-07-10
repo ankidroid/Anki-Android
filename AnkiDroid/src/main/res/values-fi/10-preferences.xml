@@ -149,6 +149,8 @@
   <string name="show_estimates_summ">Näytä seuraava kertausaika vastauspainikkeissa</string>
   <string name="show_progress">Näytä jäljelläoleva</string>
   <string name="show_progress_summ">Näytä jäljelläolevien korttien määrä</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Pakka uusille korteille</string>
   <string name="new_spread">Uuden kortin sijainti</string>
   <string name="learn_cutoff">Kertauksen etukäteisaikaraja</string>

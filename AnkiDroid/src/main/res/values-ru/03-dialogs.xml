@@ -59,7 +59,7 @@
     <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
     <item><![CDATA[Чтобы помочь нам сделать AnkiDroid лучше, пожалуйста, сообщайте об ошибках <a href=\"%1$s\">в баг-трекере</a>; новые идеи также приветствуются. Ищите ответы на <a href=\"%2$s\">вики</a> или начните дискуссию на <a href=\"%3$s\">форуме</a>.]]></item>
     <item><![CDATA[AnkiDroid — это <a href=\"%1$s\">программное обеспечение с открытым исходным кодом<a/>, поэтому любой желающий может <a href=\"%2$s\">внести свой вклад</a> :-)]]></item>
-    <item><![CDATA[Не-разработчики тоже могут помочь. Например, вы можете <a href=\"%1$s\">помочь с переводом</a> AnkiDroid, обновить вики, предоставить скриншоты, <a href=\"%2$s\">внести пожертвования</a> для Anki Desktop, или написать в блоге об AnkiDroid.]]></item>
+    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
     <item><![CDATA[AnkiDroid выпускается под <a href=\"%1$s\">лицензией GNU-GPL v3</a> и исходный код доступен <a href=\"%2$s\">на GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Предпросмотр</string>

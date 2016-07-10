@@ -95,7 +95,7 @@
   <string name="custom_study_increase_new_limit">Aumentar o limite de novas fichas para hoje</string>
   <string name="custom_study_increase_review_limit">Aumentar o limite de revisões para hoje</string>
   <string name="custom_study_review_forgotten">Rever fichas esquecidas</string>
-  <string name="custom_study_review_ahead">Revisar antecipadamente</string>
+  <string name="custom_study_review_ahead">Rever antecipadamente</string>
   <string name="custom_study_random_selection">Estudar uma seleção aleatória de fichas</string>
   <string name="custom_study_preview_new">Pré-visualizar fichas novas</string>
   <string name="custom_study_limit_tags">Limitar a etiquetas específicas</string>

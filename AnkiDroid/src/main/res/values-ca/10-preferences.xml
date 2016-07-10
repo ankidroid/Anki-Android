@@ -148,6 +148,8 @@
   <string name="show_estimates_summ">Mostra el temps de la pròxima revisió al botons de resposta</string>
   <string name="show_progress">Mostra el romanent</string>
   <string name="show_progress_summ">Mostra el recompte de cartes restants</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Paquet per a cartes noves</string>
   <string name="new_spread">Nova posició de la carta</string>
   <string name="learn_cutoff">Informeu-vos de límit per davant</string>

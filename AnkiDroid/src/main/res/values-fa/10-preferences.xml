@@ -148,6 +148,8 @@
   <string name="show_estimates_summ">نمایش زمان مرور بعدی در بالای دکمه پاسخ</string>
   <string name="show_progress">نمایش باقیمانده</string>
   <string name="show_progress_summ">نمایش تعداد کارت‌های باقیمانده</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">دسته برای کارتهای جدید</string>
   <string name="new_spread">موقعیت کارت جدید</string>
   <string name="learn_cutoff">محدودیت های پیش رو را یاد بگیرید</string>

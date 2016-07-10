@@ -57,7 +57,7 @@
     <item><![CDATA[<h2>%1$s:<br/>給 Android 的 Flashcard</h2>AnkiDroid 是完全相容桌面版本的 flashcard 應用程式 <a href=\"%2$s\">Anki</a>。 你可以任意在 AnkiDroid 或是桌面版 Anki 上新增、下載和學習東西，並使用 AnkiWeb 輕鬆同步這些記錄。]]></item>
     <item><![CDATA[為了協助我們讓 AnkiDroid 更好，請到 <a href=\"%1$s\">issue tracker</a> 回報錯誤; 任何有關新功能的點子也很歡迎。在 <a href=\"%2$s\">wiki</a> 尋找答案或是在<a href=\"%3$s\">論壇</a>參與討論。]]></item>
     <item><![CDATA[AnkiDroid 是<a href=\"%1$s\">自由軟體<a/>，所以我們鼓勵任何人<a href=\"%2$s\">成爲貢獻者</a> :-)]]></item>
-    <item><![CDATA[非開發人員也可以幫忙。例如，你可以<a href=\"%1$s\">幫忙翻譯</a> AnkiDroid、更新維基、提供螢幕截圖、<a href=\"%2$s\">捐款</a> 給桌面版 Anki，或是幫 AnkiDroid 寫篇部落格文章。]]></item>
+    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
     <item><![CDATA[AnkiDroid 在 <a href=\"%1$s\">GNU-GPL v3 授權</a>下釋出且你可在<a href=\"%2$s\">GitHub</a> 上取得其程式碼]]></item>
   </string-array>
   <string name="preview_title">預覽</string>

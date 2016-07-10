@@ -78,7 +78,7 @@
   <string name="menu_import">Importar</string>
   <string name="undo">Desfazer</string>
   <string name="undo_action_review">última revisão</string>
-  <string name="undo_action_bury_card">ocultar ficha</string>
+  <string name="undo_action_bury_card">desfazer ocultação da carta</string>
   <string name="undo_action_bury_note">ocultar nota</string>
   <string name="undo_action_suspend_card">suspender cartão</string>
   <string name="undo_action_suspend_note">suspender nota</string>

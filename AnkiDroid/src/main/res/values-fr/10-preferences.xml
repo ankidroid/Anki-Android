@@ -148,6 +148,8 @@
   <string name="show_estimates_summ">Afficher le temps avant la prochaine révision sur les boutons de réponse</string>
   <string name="show_progress">Afficher le nombre restant de révision</string>
   <string name="show_progress_summ">Montrer le nombre de cartes restantes</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Paquet utilisé pour les nouvelles cartes</string>
   <string name="new_spread">Position des nouvelles cartes</string>
   <string name="learn_cutoff">Limite d’apprentissage</string>

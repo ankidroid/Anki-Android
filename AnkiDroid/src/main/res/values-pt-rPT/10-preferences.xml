@@ -149,6 +149,8 @@
   <string name="show_estimates_summ">Mostrar o próximo agendamento nos botões de resposta</string>
   <string name="show_progress">Mostrar restantes</string>
   <string name="show_progress_summ">Mostrar o contador de fichas restantes</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Baralho para as fichas novas</string>
   <string name="new_spread">Posição da ficha nova</string>
   <string name="learn_cutoff">Limite para antecipação de aprendizagem</string>
@@ -168,8 +170,8 @@
   <string name="custom_buttons">App bar buttons</string>
   <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
   <string name="custom_buttons_setting_always_show">Mostrar sempre</string>
-  <string name="custom_buttons_setting_if_room">Show if room</string>
-  <string name="custom_buttons_setting_menu_only">Menu only</string>
+  <string name="custom_buttons_setting_if_room">Mostrar se couber</string>
+  <string name="custom_buttons_setting_menu_only">Apenas o menu</string>
   <string name="reset_custom_buttons">Redefinir valores padrão</string>
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Estatísticas avançadas</string>

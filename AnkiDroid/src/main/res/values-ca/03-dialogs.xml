@@ -58,7 +58,7 @@
     <item><![CDATA[<h2>%1$s: <br/> Flashcards per Android</h2>AnkiDroid és una aplicació de flashcards que és totalment compatible amb el programari d\'escriptori <a href=\"%2$s\"> Anki</a>. Podeu crear, descarregar i aprendre sobre aquest material en tant AnkiDroid o Anki i sincronitzar-los fàcilment amb AnkiWeb.]]></item>
     <item><![CDATA[Per ajudar-nos a fer millor la AnkiDroid, si us plau informeu els errors al <a href=\"%1$s\"> buscador d\'incidències</a>; noves idees són molt benvingudes. Trobeu respostes a la <a href=\"%2$s\"> wiki</a> o comenceu un debat al <a href=\"%3$s\"> fòrum</a>.]]></item>
     <item><![CDATA[AnkiDroid és <a href=\"%1$s\"> programari de font oberta <a/>, així que tothom es animat a <a href=\"%2$s\"> ser col·laborador</a> :-)]]></item>
-    <item><![CDATA[Els no desenvolupadors també pot ajudar. Per exemple, vostè pot <a href=\"%1$s\"> ajudar a traduir</a> AnkiDroid, actualitzar la wiki, proporcionant captures de pantalla, <a href=\"%2$s\"> donar</a> a Anki, o fer blogs sobre AnkiDroid.]]></item>
+    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
     <item><![CDATA[AnkiDroid és alliberat sota la <a href=\"%1$s\"> llicència de GNU-GPL v3</a> i el codi font està disponible <a href=\"%2$s\"> a GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Previsualització</string>

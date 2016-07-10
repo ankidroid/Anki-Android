@@ -148,6 +148,8 @@
   <string name="show_estimates_summ">在答案按钮上方显示下次复习的时间</string>
   <string name="show_progress">显示剩余数量</string>
   <string name="show_progress_summ">显示剩余卡片数量</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">新牌组</string>
   <string name="new_spread">新卡片位置</string>
   <string name="learn_cutoff">提前学习的限制</string>

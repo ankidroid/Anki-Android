@@ -149,6 +149,8 @@
   <string name="show_estimates_summ">Отображать время следующего повторения над кнопками ответа</string>
   <string name="show_progress">Показать оставшиеся</string>
   <string name="show_progress_summ">Показывать счётчик оставшихся карт</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Колода для новых карточек</string>
   <string name="new_spread">Новая позиция карты</string>
   <string name="learn_cutoff">Учить больше установленного лимита</string>

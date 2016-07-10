@@ -148,6 +148,8 @@
   <string name="show_estimates_summ">Zeigt Zeiten bis zur nächsten Wiederholung auf den Antwortschaltflächen</string>
   <string name="show_progress">Fällige anzeigen</string>
   <string name="show_progress_summ">Verbleibende Anzahl der Karten anzeigen</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Stapel für neue Karten</string>
   <string name="new_spread">Position neuer Karten</string>
   <string name="learn_cutoff">Grenzwert für vorzeitiges Lernen</string>

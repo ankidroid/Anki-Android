@@ -78,7 +78,7 @@
     <item>Ordem de adição</item>
     <item>Ordem de revisão</item>
     <item>Primeiro, a última adicionada</item>
-    <item>Relative overdueness</item>
+    <item>Atrasos relativos</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Usar o baralho atual</item>
