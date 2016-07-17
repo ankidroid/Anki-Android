@@ -11,18 +11,24 @@
 
         <include layout="@layout/toolbar" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/files"
-            android:scrollbars="vertical"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/pull_to_sync_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawSelectorOnTop="true"
-            android:fastScrollEnabled="true"
-            android:layout_below="@+id/toolbar"
             android:layout_above="@+id/today_stats_text_view"
-            android:focusable="true"
-            android:paddingBottom="72dp"
-            android:clipToPadding="false"/>
+            android:layout_below="@+id/toolbar">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/files"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:drawSelectorOnTop="true"
+                android:fastScrollEnabled="true"
+                android:focusable="true"
+                android:paddingBottom="72dp"
+                android:scrollbars="vertical" />
+        </android.support.v4.widget.SwipeRefreshLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
