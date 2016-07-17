@@ -43,6 +43,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -91,7 +92,6 @@ import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.themes.StyledProgressDialog;
-import com.ichi2.themes.Themes;
 import com.ichi2.ui.DividerItemDecoration;
 import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
@@ -143,6 +143,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private LinearLayoutManager mRecyclerViewLayoutManager;
     private DeckAdapter mDeckListAdapter;
     private FloatingActionsMenu mActionsMenu;   // Note this will be null below SDK 14
+
+    private SwipeRefreshLayout mPullToSyncWrapper;
 
     private TextView mReviewSummaryTextView;
 
@@ -386,6 +388,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mDeckListAdapter.setDeckExpanderClickListener(mDeckExpanderClickListener);
         mDeckListAdapter.setDeckLongClickListener(mDeckLongClickListener);
         mRecyclerView.setAdapter(mDeckListAdapter);
+
+        mPullToSyncWrapper = (SwipeRefreshLayout) findViewById(R.id.pull_to_sync_wrapper);
+        mPullToSyncWrapper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                sync();
+            }
+        });
 
         // Setup the FloatingActionButtons
         mActionsMenu = (FloatingActionsMenu) findViewById(R.id.add_content_menu);
@@ -1280,6 +1290,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         String hkey = preferences.getString("hkey", "");
         if (hkey.length() == 0) {
+            mPullToSyncWrapper.setRefreshing(false);
             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC);
         } else {
             Connection.sync(mSyncListener,
@@ -1290,7 +1301,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private Connection.TaskListener mSyncListener = new Connection.CancellableTaskListener() {
-
         String currentMessage;
         long countUp;
         long countDown;
@@ -1403,6 +1413,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         @SuppressWarnings("unchecked")
         @Override
         public void onPostExecute(Payload data) {
+            mPullToSyncWrapper.setRefreshing(false);
             String dialogMessage = "";
             String syncMessage = "";
             Timber.d("Sync Listener onPostExecute()");
