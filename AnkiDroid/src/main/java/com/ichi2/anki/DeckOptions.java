@@ -102,7 +102,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("maxAnswerTime", mOptions.getString("maxTaken"));
                 mValues.put("showAnswerTimer", Boolean.toString(mOptions.getInt("timer") == 1));
                 mValues.put("autoPlayAudio", Boolean.toString(mOptions.getBoolean("autoplay")));
-                mValues.put("replayQuestion", Boolean.toString(mOptions.getBoolean("replayq")));
+                mValues.put("replayQuestion", Boolean.toString(mOptions.optBoolean("replayq", true)));
                 // new
                 JSONObject newOptions = mOptions.getJSONObject("new");
                 mValues.put("newSteps", StepsPreference.convertFromJSON(newOptions.getJSONArray("delays")));
@@ -129,7 +129,6 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 // options group management
                 mValues.put("currentConf", mCol.getDecks().getConf(mDeck.getLong("conf")).getString("name"));
             } catch (JSONException e) {
-                addMissingValues();
                 finish();
             }
         }
@@ -770,21 +769,6 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             IntentFilter iFilter = new IntentFilter();
             iFilter.addAction(SdCardReceiver.MEDIA_EJECT);
             registerReceiver(mUnmountReceiver, iFilter);
-        }
-    }
-
-
-    private void addMissingValues() {
-        try {
-            for (JSONObject o : mCol.getDecks().all()) {
-                JSONObject conf = mCol.getDecks().confForDid(o.getLong("id"));
-                if (!conf.has("replayq")) {
-                    conf.put("replayq", true);
-                    mCol.getDecks().save(conf);
-                }
-            }
-        } catch (JSONException e1) {
-            // nothing
         }
     }
 
