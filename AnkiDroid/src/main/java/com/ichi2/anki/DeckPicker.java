@@ -393,6 +393,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mPullToSyncWrapper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                mPullToSyncWrapper.setRefreshing(false);
                 sync();
             }
         });
