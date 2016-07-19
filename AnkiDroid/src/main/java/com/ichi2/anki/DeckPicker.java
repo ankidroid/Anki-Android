@@ -46,6 +46,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -1640,7 +1641,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void emailFile(String path) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("message/rfc822");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "AnkiDroid Apkg");
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.export_email_subject));
+        intent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(getString(R.string.export_email_text)));
         File attachment = new File(path);
         if (attachment.exists()) {
             Uri uri = Uri.fromFile(attachment);
