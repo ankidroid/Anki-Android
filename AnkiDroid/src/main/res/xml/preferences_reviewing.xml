@@ -106,6 +106,12 @@
             android:title="@string/button_size"
             app:interval="10"
             app:min="100" />
+        <ListPreference
+            android:defaultValue="bottom"
+            android:entries="@array/answer_buttons_position_labels"
+            android:entryValues="@array/answer_buttons_position"
+            android:key="@string/answer_buttons_position_preference"
+            android:title="@string/answer_buttons_position" />
         <CheckBoxPreference
             android:key="showProgress"
             android:summary="@string/show_progress_summ"
