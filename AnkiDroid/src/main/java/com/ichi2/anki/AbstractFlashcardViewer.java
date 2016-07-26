@@ -1428,6 +1428,31 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         });
         initControls();
+
+        // Position answer buttons
+        String answerButtonsPosition = AnkiDroidApp.getSharedPrefs(this).getString(
+                getString(R.string.answer_buttons_position_preference),
+                "bottom"
+        );
+        LinearLayout answerArea = (LinearLayout) findViewById(R.id.bottom_area_layout);
+        RelativeLayout.LayoutParams answerAreaParams = (RelativeLayout.LayoutParams) answerArea.getLayoutParams();
+        RelativeLayout.LayoutParams cardContainerParams = (RelativeLayout.LayoutParams) mCardContainer.getLayoutParams();
+
+        switch (answerButtonsPosition) {
+            case "top":
+                cardContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout);
+                answerAreaParams.addRule(RelativeLayout.BELOW, R.id.top_bar);
+                answerArea.removeView(mAnswerField);
+                answerArea.addView(mAnswerField, 1);
+                break;
+            case "bottom":
+                cardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout);
+                cardContainerParams.addRule(RelativeLayout.BELOW, R.id.top_bar);
+                answerAreaParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                break;
+        }
+        answerArea.setLayoutParams(answerAreaParams);
+        mCardContainer.setLayoutParams(cardContainerParams);
     }
 
 

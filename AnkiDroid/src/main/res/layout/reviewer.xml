@@ -22,14 +22,10 @@
             <include layout="@layout/reviewer_topbar"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
-                     android:layout_below="@+id/toolbar"/>
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/bottom_area_layout"
-                android:layout_below="@+id/top_bar">
-                <include layout="@layout/reviewer_flashcard"/>
-            </FrameLayout>
+                     android:layout_below="@+id/toolbar" />
+            <include layout="@layout/reviewer_flashcard"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"/>
             <include layout="@layout/reviewer_answer_buttons"/>
         </RelativeLayout>
     </android.support.design.widget.CoordinatorLayout>
