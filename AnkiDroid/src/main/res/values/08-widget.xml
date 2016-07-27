@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<!--
+<?xml version='1.0' encoding='UTF-8'?><!--
 ~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
 ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
 ~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
@@ -47,4 +46,7 @@
         <item quantity="one">%d minute remaining</item>
         <item quantity="other">%d minutes remaining</item>
     </plurals>
+
+    <string name="widget_add_note">Add note</string>
+    <string name="widget_add_note_button">Add new AnkiDroid note</string>
 </resources>
