@@ -138,6 +138,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // 10 minutes in milliseconds.
     public static final long AUTOMATIC_SYNC_MIN_INTERVAL = 600000;
 
+    private static final int SWIPE_TO_SYNC_TRIGGER_DISTANCE = 400;
+
     private MaterialDialog mProgressDialog;
     private View mStudyoptionsFrame;
     private RecyclerView mRecyclerView;
@@ -391,6 +393,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mRecyclerView.setAdapter(mDeckListAdapter);
 
         mPullToSyncWrapper = (SwipeRefreshLayout) findViewById(R.id.pull_to_sync_wrapper);
+        mPullToSyncWrapper.setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE);
         mPullToSyncWrapper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -1527,7 +1530,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                                     break;
                             }
                         } else if (result[0] instanceof String) {
-                            dialogMessage = res.getString(R.string.sync_log_error_specific, -1, result[0]);
+                            dialogMessage = res.getString(R.string.sync_log_error_specific, Integer.toString(-1), result[0]);
                         } else {
                             dialogMessage = res.getString(R.string.sync_generic_error);
                         }
