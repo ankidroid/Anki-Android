@@ -49,6 +49,7 @@ public class AnkiPackageImporter extends Anki2Importer {
     public void run() {
         publishProgress(0, 0, 0);
         File tempDir = new File(new File(mCol.getPath()).getParent(), "tmpzip");
+        Collection tmpCol;
         try {
             // We extract the zip contents into a temporary directory and do a little more
             // validation than the desktop client to ensure the extracted collection is an apkg.
@@ -57,7 +58,7 @@ public class AnkiPackageImporter extends Anki2Importer {
                 mZip = new ZipFile(new File(mFile), ZipFile.OPEN_READ);
                 Utils.unzipFiles(mZip, tempDir.getAbsolutePath(), new String[]{"collection.anki2", "media"}, null);
             } catch (IOException e) {
-                Timber.e("Failed to unzip apkg.", e);
+                Timber.e(e, "Failed to unzip apkg.");
                 mLog.add(getRes().getString(R.string.import_log_no_apkg));
                 return;
             }
@@ -66,9 +67,16 @@ public class AnkiPackageImporter extends Anki2Importer {
                 mLog.add(getRes().getString(R.string.import_log_no_apkg));
                 return;
             }
-            if (!Storage.Collection(mContext, colpath).validCollection()) {
-                mLog.add(getRes().getString(R.string.import_log_no_apkg));
-                return;
+            tmpCol = Storage.Collection(mContext, colpath);
+            try {
+                if (!tmpCol.validCollection()) {
+                    mLog.add(getRes().getString(R.string.import_log_no_apkg));
+                    return;
+                }
+            } finally {
+                if (tmpCol != null) {
+                    tmpCol.close();
+                }
             }
             mFile = colpath;
             // we need the media dict in advance, and we'll need a map of fname ->
