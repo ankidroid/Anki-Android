@@ -942,9 +942,8 @@ public class Sched {
             int delay = _delayForGrade(conf, card.getLeft());
             if (card.getDue() < Utils.now()) {
                 // not collapsed; add some randomness
-                delay *= (1 + (new Random().nextInt(25) / 100));
+                delay *= Utils.randomFloatInRange(1f, 1.25f);
             }
-            // TODO: check, if type for second due is correct
             card.setDue((int) (Utils.now() + delay));
 
             // due today?
