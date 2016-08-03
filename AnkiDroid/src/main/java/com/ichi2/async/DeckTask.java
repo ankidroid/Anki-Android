@@ -821,7 +821,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
         int addedCount = -1;
         try {
-            col.reopen();
             CollectionHelper.getInstance().unlockCollection();
 
             // because users don't have a backup of media, it's safer to import new
