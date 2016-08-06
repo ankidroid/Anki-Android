@@ -133,6 +133,7 @@ public class NoteEditor extends AnkiActivity {
     public static final int REQUEST_TEMPLATE_EDIT = 3;
 
     private boolean mChanged = false;
+    private boolean mTagsEdited = false;
     private boolean mFieldEdited = false;
 
     /**
@@ -265,6 +266,7 @@ public class NoteEditor extends AnkiActivity {
                 } else {
                     // Reset check for changes to fields
                     mFieldEdited = false;
+                    mTagsEdited = false;
                 }
             } else {
                 // RuntimeException occured on adding note
@@ -639,14 +641,8 @@ public class NoteEditor extends AnkiActivity {
         if (mFieldEdited) {
             return true;
         }
-        // added tag?
-        for (String t : mSelectedTags) {
-            if (!mEditorNote.hasTag(t)) {
-                return true;
-            }
-        }
-        // removed tag?
-        if (mEditorNote.getTags().size() > mSelectedTags.size()) {
+        // changed tags?
+        if (mTagsEdited) {
             return true;
         }
         return false;
@@ -991,6 +987,9 @@ public class NoteEditor extends AnkiActivity {
         dialog.setTagsDialogListener(new TagsDialogListener() {
             @Override
             public void onPositive(List<String> selectedTags, int option) {
+                if (!mSelectedTags.equals(selectedTags)) {
+                    mTagsEdited = true;
+                }
                 mSelectedTags = selectedTags;
                 updateTags();
             }
