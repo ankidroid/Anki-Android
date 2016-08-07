@@ -1015,4 +1015,13 @@ public class Utils {
     public static String unescape(String htmlText) {
         return Html.fromHtml(htmlText).toString();
     }
+
+
+    /**
+     * Return a random float within the range of min and max.
+     */
+    public static float randomFloatInRange(float min, float max) {
+        Random rand = new Random();
+        return rand.nextFloat() * (max - min) + min;
+    }
 }

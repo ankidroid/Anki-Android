@@ -43,8 +43,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -91,7 +93,6 @@ import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.themes.StyledProgressDialog;
-import com.ichi2.themes.Themes;
 import com.ichi2.ui.DividerItemDecoration;
 import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
@@ -137,12 +138,16 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // 10 minutes in milliseconds.
     public static final long AUTOMATIC_SYNC_MIN_INTERVAL = 600000;
 
+    private static final int SWIPE_TO_SYNC_TRIGGER_DISTANCE = 400;
+
     private MaterialDialog mProgressDialog;
     private View mStudyoptionsFrame;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mRecyclerViewLayoutManager;
     private DeckAdapter mDeckListAdapter;
     private FloatingActionsMenu mActionsMenu;   // Note this will be null below SDK 14
+
+    private SwipeRefreshLayout mPullToSyncWrapper;
 
     private TextView mReviewSummaryTextView;
 
@@ -387,9 +392,20 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mDeckListAdapter.setDeckLongClickListener(mDeckLongClickListener);
         mRecyclerView.setAdapter(mDeckListAdapter);
 
+        mPullToSyncWrapper = (SwipeRefreshLayout) findViewById(R.id.pull_to_sync_wrapper);
+        mPullToSyncWrapper.setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE);
+        mPullToSyncWrapper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPullToSyncWrapper.setRefreshing(false);
+                sync();
+            }
+        });
+
         // Setup the FloatingActionButtons
         mActionsMenu = (FloatingActionsMenu) findViewById(R.id.add_content_menu);
         if (mActionsMenu != null) {
+            mActionsMenu.findViewById(R.id.fab_expand_menu_button).setContentDescription(getString(R.string.menu_add));
             configureFloatingActionsMenu();
         } else {
             // FloatingActionsMenu only works properly on Android 14+ so fallback on a context menu below API 14
@@ -1279,6 +1295,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         String hkey = preferences.getString("hkey", "");
         if (hkey.length() == 0) {
+            mPullToSyncWrapper.setRefreshing(false);
             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC);
         } else {
             Connection.sync(mSyncListener,
@@ -1289,7 +1306,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private Connection.TaskListener mSyncListener = new Connection.CancellableTaskListener() {
-
         String currentMessage;
         long countUp;
         long countDown;
@@ -1402,6 +1418,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         @SuppressWarnings("unchecked")
         @Override
         public void onPostExecute(Payload data) {
+            mPullToSyncWrapper.setRefreshing(false);
             String dialogMessage = "";
             String syncMessage = "";
             Timber.d("Sync Listener onPostExecute()");
@@ -1513,7 +1530,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                                     break;
                             }
                         } else if (result[0] instanceof String) {
-                            dialogMessage = res.getString(R.string.sync_log_error_specific, -1, result[0]);
+                            dialogMessage = res.getString(R.string.sync_log_error_specific, Integer.toString(-1), result[0]);
                         } else {
                             dialogMessage = res.getString(R.string.sync_generic_error);
                         }
@@ -1627,7 +1644,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void emailFile(String path) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("message/rfc822");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "AnkiDroid Apkg");
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.export_email_subject));
+        intent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(getString(R.string.export_email_text)));
         File attachment = new File(path);
         if (attachment.exists()) {
             Uri uri = Uri.fromFile(attachment);

@@ -6,5 +6,6 @@
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/switch_compat"
         android:layout_width="fill_parent"
+        android:contentDescription="@string/night_mode"
         android:layout_height="match_parent" />
 </LinearLayout>

@@ -34,6 +34,8 @@
     <string name="studyoptions_start">Study</string>
 
     <!-- DeckPicker.java -->
+    <string name="expand">Expand</string>
+    <string name="collapse">Collapse</string>
     <string name="study_more">Study more</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d card due (%2$s)</item>

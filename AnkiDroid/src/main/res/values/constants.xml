@@ -201,4 +201,10 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+
+    <string name="answer_buttons_position_preference" translatable="false">answerButtonPosition</string>
+    <string-array name="answer_buttons_position" translatable="false">
+        <item>top</item>
+        <item>bottom</item>
+    </string-array>
 </resources>

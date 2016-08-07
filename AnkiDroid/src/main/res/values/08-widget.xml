@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<!--
+<?xml version='1.0' encoding='UTF-8'?><!--
 ~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
 ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
 ~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
@@ -17,7 +16,8 @@
 ~
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
---><resources>
+-->
+<resources>
 
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
@@ -35,4 +35,18 @@
     </plurals>
 
     <string name="widget_small">AnkiDroid small</string>
-    </resources>
+
+    <string name="widget_small_button">AnkiDroid</string>
+
+    <plurals name="widget_cards_due">
+        <item quantity="one">%d card due</item>
+        <item quantity="other">%d cards due</item>
+    </plurals>
+    <plurals name="widget_eta">
+        <item quantity="one">%d minute remaining</item>
+        <item quantity="other">%d minutes remaining</item>
+    </plurals>
+
+    <string name="widget_add_note">Add note</string>
+    <string name="widget_add_note_button">Add new AnkiDroid note</string>
+</resources>
