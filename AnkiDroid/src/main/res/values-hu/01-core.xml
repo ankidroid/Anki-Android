@@ -56,7 +56,7 @@
   <string name="study_more">Tanulj többet</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d kártya esedékes (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="other">%1$d kártya esedékes (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d perc van hátra</item>
@@ -93,8 +93,8 @@
   <string name="menu_bury_note">Jegyzet félretétele</string>
   <string name="menu_suspend_card">Kártya felfüggesztése</string>
   <string name="menu_suspend_note">Jegyzet felfüggesztése</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">Félretétel</string>
+  <string name="menu_suspend">Felfüggesztés</string>
   <string name="menu_delete_note">Jegyet törlése</string>
   <string name="delete_note_message">Biztosan törölni akarod ezt a jegyzetet és az összes kártyáját?\n%s</string>
   <string name="menu_select">Szöveg kijelölése</string>
@@ -103,7 +103,7 @@
   <string name="menu_unmark_note">Unmark note</string>
   <string name="new_deck">Pakli létrehozása</string>
   <string name="create">Létrehozás</string>
-  <string name="new_dynamic_deck">Pakli szűrt elemekkel létrehozása</string>
+  <string name="new_dynamic_deck">Szűrt pakli létrehozása</string>
   <string name="night_mode">Éjszakai mód</string>
   <string name="directory_inaccessible">Nem érhető el az AnkiDroid könyvtár</string>
   <!--
@@ -122,7 +122,7 @@
   <!-- or "%.1f a" -->
   <string name="rebuild_cram_deck">Magoló pakli újraépítése.\nKérlek, várj...</string>
   <string name="rebuild_cram_label">Újraépít</string>
-  <string name="empty_cram_label">Üres</string>
+  <string name="empty_cram_label">Kiürítés</string>
   <string name="empty_cram_deck">Magoló pakli ürítése.\nKérlek, várj...</string>
   <string name="custom_study_deck_name">Egyéni tanulás pakli</string>
   <string name="custom_study_deck_exists">Kérlek, előbb nevezd át a meglevő, Egyéni tanulás paklit.</string>

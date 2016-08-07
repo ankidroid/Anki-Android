@@ -59,8 +59,8 @@
     <item quantity="other">موعد مرور %1$d کارت (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%dزمان باقیمانده</item>
-    <item quantity="other">%dزمان باقیمانده</item>
+    <item quantity="one">%d دقیقه باقیمانده</item>
+    <item quantity="other">%d دقیقه باقیمانده</item>
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
@@ -74,9 +74,9 @@
   <string name="ease_button_hard">سخت</string>
   <string name="ease_button_good">خوب</string>
   <string name="ease_button_easy">آسان</string>
-  <string name="studyoptions_congrats_undo">تصحيح عمل %s</string>
+  <string name="studyoptions_congrats_undo">بازگردانی %s</string>
   <string name="menu_import">وارد کردن</string>
-  <string name="undo">تصحیح عمل قبلی</string>
+  <string name="undo">بازگردانی</string>
   <string name="undo_action_review">آخرین بازنگری</string>
   <string name="undo_action_bury_card">مخفی کردن کارت</string>
   <string name="undo_action_bury_note">مخفی کردن یادداشت</string>

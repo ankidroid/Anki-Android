@@ -110,7 +110,7 @@
   <string name="save">ذخیره</string>
   <string name="close">بستن</string>
   <string name="select">انتخاب</string>
-  <string name="saving_changes">ذخیره تغییرات</string>
+  <string name="saving_changes">در حال ذخیره تغییرات...</string>
   <string name="reordering_cards">مرتب سازی مجدد کارتها...</string>
   <string name="field_remapping">%1$s (از \"%2$s\")</string>
   <string name="confirm_map_cards_to_nothing">هرکارتی که با هیچ چیز پیوند نخورده باشد حذف خواهد شد. اگر یک یادداشت هیچ کارت باقی مانده ای نداشته باشد، از دست خواهد رفت. ادامه می دهید؟</string>
@@ -127,7 +127,7 @@
   <string name="card_editor_add_card">افزودن یادداشت</string>
   <string name="card_editor_copy_card">کپی کارت</string>
   <string name="card_editor_reset_card">تنظیم مجدد پیشرفت</string>
-  <string name="card_editor_reschedule_card">برنا مه ریزی دوباره کارت</string>
+  <string name="card_editor_reschedule_card">زمان بندی دوباره کارت</string>
   <string name="card_editor_preview_card">پیش نمایش</string>
   <string name="error_insufficient_memory">به علت عدم وجود حافظه کافی در دستگاه شما عملیات امکان پذیر نیست</string>
   <string name="rename">تغییر نام</string>
@@ -159,7 +159,7 @@
   <string name="export_include_schedule">به همراه زمانبندی</string>
   <string name="export_include_media">به همراه رسانه</string>
   <string name="confirm_apkg_export">مجموعه فلش کارت ها با پسوند apkg صادر شوند؟</string>
-  <string name="confirm_apkg_export_deck">%s به عنوان یک فایل با پسوند apkg صادر شود؟</string>
+  <string name="confirm_apkg_export_deck">دسته %s به عنوان یک فایل با پسوند apkg صادر شود؟</string>
   <string name="export_in_progress">در حال صادر کردن فایل apkg&#8230;</string>
   <string name="export_successful_title">فایل apkg ایمیل شود؟</string>
   <string name="export_successful">فایل \"%s\" صادر شد. می خواهید آن را ایمیل کنید؟</string>

@@ -149,7 +149,7 @@
   <string name="show_progress">Mostar restantes</string>
   <string name="show_progress_summ">Mostrar contagem de cartões restantes</string>
   <string name="show_eta">Show ETA</string>
-  <string name="show_eta_summ">Show remaining time</string>
+  <string name="show_eta_summ">Mostrar o tempo restante</string>
   <string name="use_current">Baralho para novos cartões</string>
   <string name="new_spread">Posição do novo cartão</string>
   <string name="learn_cutoff">Aprender antes do limite</string>

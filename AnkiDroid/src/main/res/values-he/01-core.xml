@@ -46,7 +46,7 @@
   <string name="settings">הגדרות</string>
   <string name="help">עזרה</string>
   <string name="send_feedback">צור קשר</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <string name="studyoptions_title">סקירת חפיסה</string>
   <string name="studyoptions_due_today">להיום:</string>
   <string name="studyoptions_new_total">סה\"כ כרטיסים חדשים:</string>
   <string name="studyoptions_total_cards">סה\"כ הכרטיסים:</string>
@@ -61,8 +61,8 @@
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
-    <item quantity="two">%d minutes left</item>
+    <item quantity="one">נותרה דקה %d</item>
+    <item quantity="two">נותרו %d דקות</item>
     <item quantity="many">%d minutes left</item>
     <item quantity="other">%d minutes left</item>
   </plurals>
@@ -156,8 +156,8 @@
   <string name="card_template_editor_front">תבנית קדמית</string>
   <string name="card_template_editor_back">תבנית אחורית</string>
   <string name="card_template_editor_styling">עריכה</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required</string>
+  <string name="card_template_editor_menu_delete">מחק</string>
+  <string name="card_template_editor_cant_delete">לפחות סוג קלף אחד נדרש</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
     <item quantity="two">Delete the “%2$s” card type, and its %1$d cards?</item>

@@ -46,14 +46,14 @@
   <string name="settings">Gawaleinos</string>
   <string name="help">Hilpa</string>
   <string name="send_feedback">Sandei staua</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <string name="studyoptions_title">Siuns kartahuzdis</string>
   <string name="studyoptions_due_today">Nauh himma daga:</string>
   <string name="studyoptions_new_total">Allos niujos kartos:</string>
   <string name="studyoptions_total_cards">Allos kartos:</string>
   <string name="studyoptions_eta">Beidanda ƕeila (min):</string>
   <string name="studyoptions_start">Laiseins</string>
   <!-- DeckPicker.java -->
-  <string name="study_more">Study more</string>
+  <string name="study_more">Laisei mais</string>
   <plurals name="deckpicker_title">
     <item quantity="one">nauh %1$d karta (%2$s)</item>
     <item quantity="other">nauh %1$d kartos (%2$s)</item>
@@ -84,7 +84,7 @@
   <string name="undo_action_suspend_note">beidnei melein</string>
   <string name="undo_action_delete">usnim melein</string>
   <string name="unbury">Unnawistr</string>
-  <string name="rename_deck">Rename deck</string>
+  <string name="rename_deck">Aftra gif namo du kartahuzda</string>
   <string name="menu_add">Biauk</string>
   <string name="menu_add_note">Biauk melein</string>
   <string name="menu_my_account">Galeik kawtsjon</string>
@@ -128,8 +128,8 @@
   <string name="custom_study_deck_exists">Gif þata frumist niujata namo du wisandon laiseinawikon</string>
   <string name="empty_deck">This deck is empty</string>
   <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-  <string name="studyoptions_limit_reached">Daily study limit reached</string>
-  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+  <string name="studyoptions_limit_reached">Sinteina laiseinimarka atqamt</string>
+  <string name="studyoptions_empty_schedule">Ni kartos in þeinamma garehsna du laisjan</string>
   <string name="studyoptions_congrats_finished">Is manwiþ nu.</string>
   <string name="studyoptions_congrats_more_rev">Marka bigitana himma daga, akei ju sind kartos gakiusan. Magt biaukan marka in mahtim.</string>
   <string name="studyoptions_congrats_more_new">Marka bigitana himma daga. Ni ju sind niujos kartos; magt biaukan marka in mahtim, akei þata biaukiþ þeinana sprautana waurst.</string>
@@ -146,17 +146,17 @@
   <string name="export_deck">Export deck</string>
   <string name="nothing">Ni waihts</string>
   <!-- Card template editor -->
-  <string name="title_activity_template_editor">Card types</string>
+  <string name="title_activity_template_editor">Kartahaidjus</string>
   <string name="card_template_editor_front">Frumawlits</string>
   <string name="card_template_editor_back">Hindarwlits</string>
   <string name="card_template_editor_styling">Wlits</string>
   <string name="card_template_editor_menu_delete">Usnim</string>
   <string name="card_template_editor_cant_delete">Mais þau ain kartahaidus ganauhiþ.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
-    <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+    <item quantity="one">Fraqistei \"%2$s\" kartahaidau, jah þis %1$d kartai?</item>
+    <item quantity="other">Fraqistei \"%2$s\" kartahaidau, jah þis %1$d kartom?</item>
   </plurals>
-  <string name="invalid_template">A card could not be generated</string>
+  <string name="invalid_template">Karta ni mahts was skapjan</string>
   <string name="card_template_editor_would_delete_note"> Usniman þis kartahaidaus tawidedi aina fawanda aiþþau 
         managizo fawandaizo meleine. Skapei þata frumist niujata kartahaidu.</string>
   <!-- Permissions -->

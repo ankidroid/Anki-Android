@@ -148,8 +148,8 @@
   <string name="show_estimates_summ">Cevap düğmelerinin üzerinde sonraki çıkma zamanını göster</string>
   <string name="show_progress">Kalanı göster</string>
   <string name="show_progress_summ">Kalan kart sayısını göster</string>
-  <string name="show_eta">Show ETA</string>
-  <string name="show_eta_summ">Show remaining time</string>
+  <string name="show_eta">ETA göster</string>
+  <string name="show_eta_summ">Kalan zamanı göster</string>
   <string name="use_current">Yeni kartlar için deste</string>
   <string name="new_spread">Yeni kart pozisyonu</string>
   <string name="learn_cutoff">Önceden öğrenme sınırı</string>

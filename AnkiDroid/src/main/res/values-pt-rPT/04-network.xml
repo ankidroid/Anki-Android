@@ -107,7 +107,7 @@
   <string name="sync_generic_error">Ocorreu um erro. Por favor, tente novamente mais tarde.</string>
   <string name="sync_check_upload_file">A verificar o ficheiro antes de carregar&#8230;</string>
   <string name="sync_check_download_file">A verificar o ficheiro recebido&#8230;</string>
-  <string name="sync_media_find">Procurando alterações em multimédia&#8230;</string>
+  <string name="sync_media_find">A procurar alterações em multimédia&#8230;</string>
   <string name="sync_media_no_changes">Sem mudanças nos ficheiros multimédia</string>
   <string name="sync_media_success">Multimédia sincronizada</string>
   <string name="sync_media_changes_count">%d alterações de multimédia para carregar</string>

@@ -44,18 +44,18 @@
   <!-- Navigation drawer strings -->
   <string name="drawer_open">Open drawer</string>
   <string name="drawer_close">Close drawer</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
+  <string name="CardEditorLaterMessage">Gafastaida infaurmatsjon du spedizin mela</string>
   <string name="CardEditorCardDeck">Kartawiko:</string>
   <string name="CardEditorNoteDeck">Wiko:</string>
   <string name="CardEditorModel">Haidus:</string>
-  <string name="CardEditorTags">Tags: %1$s</string>
+  <string name="CardEditorTags">Sokeiniwaurda: %1$s</string>
   <string name="CardEditorCards">Kartos: %1$s</string>
-  <string name="tag_name">Tag name</string>
+  <string name="tag_name">Namo sokeiniwaurdis</string>
   <string name="add_new_filter_tags">Add/filter tags</string>
-  <string name="add_tag">Add tag</string>
+  <string name="add_tag">Biaik sokeiniwaurd</string>
   <string name="check_all_tags">Check/uncheck all tags</string>
   <string name="filter_tags">Filter tags</string>
-  <string name="no_tags">You haven’t added any tags yet</string>
+  <string name="no_tags">Nauh ni biaiaukt sokeiniwaurd</string>
   <string name="sdcard_missing_message">Switch off USB storage to access your decks</string>
   <string name="updated_version">Updated to version %s</string>
   <!-- Reviewer.java -->
@@ -70,7 +70,7 @@
   <string name="corrupt_font">Corrupt font file %s</string>
   <!-- Browser -->
   <string-array name="browser_column1_headings">
-    <item>Question</item>
+    <item>Sokns</item>
     <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
@@ -79,7 +79,7 @@
     <item>Wiko</item>
     <item>Meleins</item>
     <item>Bida</item>
-    <item>Tags</item>
+    <item>Sokeiniwaurda</item>
     <item>Lapses</item>
     <item>Domeinos</item>
     <!--
@@ -97,7 +97,7 @@
   <string name="custom_study_review_forgotten">Review forgotten cards</string>
   <string name="custom_study_review_ahead">Review ahead</string>
   <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
+  <string name="custom_study_preview_new">Faurasaihv niujos kartos</string>
   <string name="custom_study_limit_tags">Limit to particular tags</string>
   <!-- Card editor -->
   <string name="cardeditor_title_add_note">Biauk melein</string>
@@ -107,7 +107,7 @@
   <string name="saving_facts">Saving note</string>
   <string name="saving_model">Saving model</string>
   <string name="add">Biauk</string>
-  <string name="save">Save</string>
+  <string name="save">Gafast</string>
   <string name="close">Luk</string>
   <string name="select">Walei</string>
   <string name="saving_changes">Inmaideinos gafastand&#8230;</string>
@@ -128,18 +128,18 @@
   <string name="card_editor_copy_card">Copy card</string>
   <string name="card_editor_reset_card">Reset progress</string>
   <string name="card_editor_reschedule_card">Reschedule card</string>
-  <string name="card_editor_preview_card">Preview</string>
+  <string name="card_editor_preview_card">Faurasaihv</string>
   <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
-  <string name="rename">Rename</string>
+  <string name="rename">Gif niujata namo</string>
   <string name="default_conf_delete_error">The default options group can’t be removed</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d card added</item>
     <item quantity="other">%d cards added</item>
   </plurals>
-  <string name="help_title">Help</string>
+  <string name="help_title">Hilpa</string>
   <string name="check_db">Check database</string>
   <string name="check_media">Check media</string>
-  <string name="empty_cards">Empty cards</string>
+  <string name="empty_cards">Lausos kartos</string>
   <string name="check_db_message">Checking database&#8230;</string>
   <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Melei andahaft: unkunþs staþs %s</string>
@@ -162,14 +162,14 @@
   <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
   <string name="export_in_progress">Exporting apkg file&#8230;</string>
   <string name="export_successful_title">Sandei e-mel miþ apkg?</string>
-  <string name="export_successful">Feila \"%s\" usbairana ist. Wileizu þo sandjan þairh e-mel?</string>
+  <string name="export_successful">Feila \"%s\" usbairana ist. Wileis þo sandjan þairh e-mel?</string>
   <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Place the apkg file in directory “%s” and touch “OK” to import cards</string>
   <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
   <string name="study_options">Wiko mahteis</string>
-  <string name="select_tts">Set TTS language</string>
+  <string name="select_tts">Satei bokos-du-stibnai razda</string>
   <string name="custom_study">Anþara laiseins</string>
-  <string name="more_options">More</string>
+  <string name="more_options">Mais</string>
   <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
   <string name="steps_error">Steps must be numbers greater than 0</string>
   <string name="steps_min_error">Mais þau aina griþs binah</string>
@@ -189,20 +189,20 @@
     <item quantity="other">%s minutes</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="one">%s hour</item>
-    <item quantity="other">%s hours</item>
+    <item quantity="one">%s hveila</item>
+    <item quantity="other">%s hveilos</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="one">%s day</item>
-    <item quantity="other">%s days</item>
+    <item quantity="one">%s dags</item>
+    <item quantity="other">%s dagos</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="one">%s month</item>
-    <item quantity="other">%s months</item>
+    <item quantity="one">%s menoþs</item>
+    <item quantity="other">%s menoþs</item>
   </plurals>
   <plurals name="time_span_years">
-    <item quantity="one">%s year</item>
-    <item quantity="other">%s years</item>
+    <item quantity="one">%s jer</item>
+    <item quantity="other">%s jera</item>
   </plurals>
   <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less

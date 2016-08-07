@@ -77,7 +77,7 @@
   <string name="text_selection_click_summ">اگر از طریق کلیک طولانی نمی توانید متن را انتخاب کنید این را انجام دهید</string>
   <string name="dictionary">فرهنگ لغت برای مراجعه</string>
   <string name="reset_languages">بازنشانی زبان‌ها</string>
-  <string name="reset_languages_summ">تنظیم مجدد زبان( برای تبدیل متن به گفتار و فرهنگ لغت ها) برای تمامی دسته ها</string>
+  <string name="reset_languages_summ">تنظیم مجدد زبان ( برای تبدیل متن به گفتار و فرهنگ لغت ها) برای تمامی دسته ها</string>
   <string name="reset_languages_question">کل زبان فعلی را دوباره تنظیم می کنید؟</string>
   <string name="reset_confirmation">تنظیم مجدد تمام وضعیت ها</string>
   <string name="card_zoom">بزرگ نمایی کارت</string>
@@ -148,8 +148,8 @@
   <string name="show_estimates_summ">نمایش زمان مرور بعدی در بالای دکمه پاسخ</string>
   <string name="show_progress">نمایش باقیمانده</string>
   <string name="show_progress_summ">نمایش تعداد کارت‌های باقیمانده</string>
-  <string name="show_eta">Show ETA</string>
-  <string name="show_eta_summ">Show remaining time</string>
+  <string name="show_eta">نمایش زمان تخمینی</string>
+  <string name="show_eta_summ">نمایش زمان باقیمانده</string>
   <string name="use_current">دسته برای کارتهای جدید</string>
   <string name="new_spread">موقعیت کارت جدید</string>
   <string name="learn_cutoff">محدودیت های پیش رو را یاد بگیرید</string>

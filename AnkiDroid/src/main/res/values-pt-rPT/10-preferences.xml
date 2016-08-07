@@ -117,8 +117,8 @@
   <string name="automatic_sync_choice_summ">Sincronizar automaticalmente ao iniciar/sair da aplicação, se a última sicnronização foi há mais 
         de 10 minutos.</string>
   <string name="fix_hebrew_text">Correção para vogais em Hebraico</string>
-  <string name="fix_hebrew_text_summ">Solução alternativa para processar corretamente  as vogais em Hebraico.</string>
-  <string name="fix_hebrew_instructions">Esta definição ignora o algoritmo RTL do Android para mostrar corretamente o texto hebraico com vogais.\n\nPara isto funcionar, precisa de transferir o tipo de letra Tohu.ttf e copiá-lo manualmente para:\n%s/fonts/\n\nNão terá de modificar as suas fichas.</string>
+  <string name="fix_hebrew_text_summ">Solução alternativa para processar correctamente as vogais em hebraico.</string>
+  <string name="fix_hebrew_instructions">Esta definição ignora o algoritmo RTL do Android para mostrar correctamente o texto hebraico com vogais.\n\nPara isto funcionar, precisa de descarregar o tipo de letra Tohu.ttf e copiá-lo manualmente para:\n%s/fonts/\n\nNão terá de modificar as suas fichas.</string>
   <string name="fix_hebrew_download_font">Transferir tipo de letra</string>
   <string name="day_theme">Tema do dia</string>
   <string name="night_theme">Tema noturno</string>
@@ -150,7 +150,7 @@
   <string name="show_progress">Mostrar restantes</string>
   <string name="show_progress_summ">Mostrar o contador de fichas restantes</string>
   <string name="show_eta">Show ETA</string>
-  <string name="show_eta_summ">Show remaining time</string>
+  <string name="show_eta_summ">Mostrar o tempo restante</string>
   <string name="use_current">Baralho para as fichas novas</string>
   <string name="new_spread">Posição da ficha nova</string>
   <string name="learn_cutoff">Limite para antecipação de aprendizagem</string>

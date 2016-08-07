@@ -148,8 +148,8 @@
   <string name="show_estimates_summ">Mostra la prossima scadenza sopra i pulsanti di risposta</string>
   <string name="show_progress">Mostra rimanenti</string>
   <string name="show_progress_summ">Visualizza il conteggio delle carte rimanenti</string>
-  <string name="show_eta">Show ETA</string>
-  <string name="show_eta_summ">Show remaining time</string>
+  <string name="show_eta">Visualizza tempo rimanente</string>
+  <string name="show_eta_summ">Visualizza il tempo rimanente</string>
   <string name="use_current">Mazzo per carte nuove</string>
   <string name="new_spread">Posizione carte nuove</string>
   <string name="learn_cutoff">Impara oltre il limite</string>
