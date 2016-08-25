@@ -113,7 +113,7 @@ CREATE TABLE notes (
       --   includes space at the beginning and end, for LIKE "% tag %" queries
     flds            text not null,
       -- the values of the fields in this note. separated by 0x1f (31) character.
-    sfld            integer not null,
+    sfld            text not null,
       -- sort field: used for quick sorting and duplicate check
     csum            integer not null,
       -- field checksum used for duplicate check.
