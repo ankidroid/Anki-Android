@@ -42,21 +42,22 @@
   <!-- CardBrowser -->
   <plurals name="card_browser_subtitle">
     <item quantity="one">Показана %d карта</item>
-    <item quantity="few">Показаны %d карты</item>
-    <item quantity="other">Показаны %d карт</item>
+    <item quantity="few">Показано %d карты</item>
+    <item quantity="many">Показано %d карт</item>
+    <item quantity="other">Показано %d карт</item>
   </plurals>
   <string name="card_browser_all_decks">Все колоды</string>
-  <string name="card_browser_delete_card">Удалить запись</string>
-  <string name="card_browser_suspend_card">Отложить карту</string>
-  <string name="card_browser_unsuspend_card">Вернуть из отложенных</string>
-  <string name="card_browser_mark_card">Пометить запись</string>
-  <string name="card_browser_unmark_card">Снять пометку</string>
-  <string name="delete_card_title">Удалить запись?</string>
-  <string name="delete_card_message">Действительно удалить все карты этой записи?\nПоиск поля: %s</string>
-  <string name="card_browser_show_marked">Фильтр отмечен</string>
-  <string name="card_browser_show_suspended">Фильтр приостановлен</string>
-  <string name="card_browser_search_by_tag">Фильтр по тегу</string>
-  <string name="card_browser_tags_shown">Теги: %1$s</string>
+  <string name="card_browser_delete_card">Удалить карту</string>
+  <string name="card_browser_suspend_card">Скрыть карту</string>
+  <string name="card_browser_unsuspend_card">Вернуть из скрытых</string>
+  <string name="card_browser_mark_card">Отметить карту</string>
+  <string name="card_browser_unmark_card">Снять отметку</string>
+  <string name="delete_card_title">Удалить карту?</string>
+  <string name="delete_card_message">Действительно удалить все найденные карты?\nПоиск по фильтру: %s</string>
+  <string name="card_browser_show_marked">Фильтр - Отмеченные</string>
+  <string name="card_browser_show_suspended">Фильтр - Скрытые</string>
+  <string name="card_browser_search_by_tag">Фильтр по меткам</string>
+  <string name="card_browser_tags_shown">Метки: %1$s</string>
   <string name="card_browser_list_my_searches">Мои поисковые запросы</string>
   <string name="card_browser_list_my_searches_save">Сохранить поисковый запрос</string>
   <string name="card_browser_list_my_searches_title">Выберите сохраненный поисковый запрос</string>
@@ -64,16 +65,16 @@
   <string name="card_browser_list_my_searches_new_search_error_empty_name">Нельзя сохранить поисковый запрос без названия.</string>
   <string name="card_browser_list_my_searches_new_search_error_dup">Такое название уже существует!</string>
   <string name="card_browser_list_my_searches_remove_content">Удалить «%1$s»?</string>
-  <string name="card_browser_change_display_order">Изменение сортировки</string>
+  <string name="card_browser_change_display_order">Сортировка...</string>
   <string name="card_browser_change_display_order_title">Сортировка</string>
-  <string name="card_browser_change_display_order_reverse">Выберите поле дважды, чтобы реверсировать.</string>
+  <string name="card_browser_change_display_order_reverse">Выберите поле, чтобы помениять сортировку.</string>
   <string name="card_details_question">Вопрос</string>
   <string name="card_details_answer">Ответ</string>
   <string name="card_details_due">Повтор</string>
   <string name="card_details_tags">Метки</string>
   <string name="card_browser_filtering_cards">К картам применяется фильтр&#8230;\nНажмите кнопку Назад чтобы отменить</string>
   <string-array name="card_browser_order_labels">
-    <item>Без сортировки (быстрее)</item>
+    <item>Без сортировки (быстро)</item>
     <item>По полю сортировки</item>
     <item>По времени создания</item>
     <item>По времени редактирования</item>
@@ -82,6 +83,6 @@
     <item>По интервалу</item>
     <item>По сложности</item>
     <item>по количеству просмотров</item>
-    <item>По повторам</item>
+    <item>По просмотрам</item>
   </string-array>
 </resources>

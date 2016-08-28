@@ -90,13 +90,13 @@
   <string name="multimedia_editor_text_field_editing_show">Изображение</string>
   <string name="multimedia_editor_text_field_editing_say">Произношение</string>
   <string name="multimedia_editor_text_field_editing_clear">Очистить</string>
-  <string name="multimedia_editor_text_field_editing_clone">Очистить от</string>
+  <string name="multimedia_editor_text_field_editing_clone">Копировать из</string>
   <string name="multimedia_editor_text_field_editing_translate">Перевод</string>
   <!-- message to user, when there is no text or many words, but the user tries something -->
   <string name="multimedia_editor_text_field_editing_no_text">Сперва введите текст</string>
   <string name="multimedia_editor_text_field_editing_many_words">Словарь обычно ожидает одно слово</string>
   <!-- message when cloning -->
-  <string name="multimedia_editor_text_field_editing_clone_source">Принять от</string>
+  <string name="multimedia_editor_text_field_editing_clone_source">Копировать из</string>
   <!-- Multimedia card editor activity -->
   <!-- for buttons -->
   <!-- delete confirmation -->
@@ -118,8 +118,8 @@
   <string name="multimedia_editor_progress_wait_title">Подождите</string>
   <!-- not a good message, when an unexpected error happens -->
   <string name="multimedia_editor_something_wrong">Что-то пошло не так</string>
-  <string name="multimedia_editor_attach_mm_content">Добавить мультимедийный контент к записи</string>
-  <string name="multimedia_editor_attach_media">Добавить медиа-файл</string>
+  <string name="multimedia_editor_attach_mm_content">Добавить мультимедийный контент к заметке</string>
+  <string name="multimedia_editor_attach_media">Добавить Media-файл</string>
   <!-- Audio view -->
   <!-- Message when recording fails -->
   <string name="multimedia_editor_audio_view_recording_failed">Запись не удалась</string>
