@@ -50,39 +50,39 @@
     <item>Рекомендованный ответ (зелёный)</item>
     <item>Лучше, чем рекомендованный</item>
     <item>Откат</item>
-    <item>Редактировать запись</item>
-    <item>Mark note</item>
+    <item>Редактировать заметку</item>
+    <item>Отметить заметку</item>
     <item>Поиск выражения</item>
-    <item>Скрыть (показать позже)</item>
-    <item>Приостановить карту</item>
-    <item>Удалить запись</item>
-    <item>Воспроизвести медиа</item>
+    <item>Отложить карту</item>
+    <item>Скрыть карту</item>
+    <item>Удалить заметку</item>
+    <item>Воспроизвести Media</item>
     <item>Прервать обучение</item>
-    <item>Скрыть запись</item>
-    <item>Suspend note</item>
+    <item>Отложить заметку</item>
+    <item>Скрыть заметку</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Отложить карту</item>
-    <item>Только тег добавить</item>
+    <item>Только метка</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Новые в случайном порядке</item>
     <item>Новые в порядке их добавления</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Старейшие показывать первыми</item>
+    <item>Старейшие первыми</item>
     <item>Случайно</item>
     <item>По увеличению интервалов</item>
     <item>По уменьшению интервалов</item>
-    <item>Больше истёкших</item>
-    <item>Порядок просмотра добавлен</item>
+    <item>Количество пропусков</item>
     <item>В порядке добавления</item>
+    <item>В порядке просмотра</item>
     <item>Последние добавленные первыми</item>
-    <item>Relative overdueness</item>
+    <item>Относительно задержки</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Использовать текущую колоду</item>
-    <item>Выбор по типу записи</item>
+    <item>Выбор по типу заметки</item>
   </string-array>
   <string-array name="new_spread_labels">
     <item>Перемешать новые карты и повторяемые</item>
@@ -90,7 +90,7 @@
     <item>Новые до повторяемых</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>Когда не определён шрифт карточек</item>
+    <item>Когда не определён шрифт карт</item>
     <item>Всегда</item>
   </string-array>
   <string-array name="day_theme_labels">

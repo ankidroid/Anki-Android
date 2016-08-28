@@ -40,16 +40,17 @@
 -->
 <resources>
   <string name="check_db_title">Проверка базы данных</string>
-  <string name="check_db_warning">Это может занять долгое время</string>
+  <string name="check_db_warning">Это может занять много времени</string>
   <string name="check_db_acknowledge">База проверена</string>
   <string name="check_db_acknowledge_shrunk">База проверена и оптимизирована.\nСжато на %d кБ.</string>
   <string name="contextmenu_deckpicker_delete_deck">Удалить колоду</string>
   <string name="delete_deck_default_deck">Нельзя удалить основную колоду</string>
   <string name="delete_deck_title">Удалить колоду</string>
   <plurals name="delete_deck_message">
-    <item quantity="one">Удалить все карточки в %1$s? Содержится %2$d карточка.</item>
-    <item quantity="few">Удалить все карточки в %1$s? Содержится %2$d карточки.</item>
-    <item quantity="other">Удалить все карточки в %1$s? Содержится %2$d карточек.</item>
+    <item quantity="one">Удалить карту из колоды %1$s? Содержится %2$d карта.</item>
+    <item quantity="few">Удалить все карты из колоды %1$s? Содержится %2$d карты.</item>
+    <item quantity="many">Удалить все карты из колоды %1$s? Содержится %2$d карт.</item>
+    <item quantity="other">Удалить все карты из колоды %1$s? Содержится %2$d карт.</item>
   </plurals>
   <string name="delete_cram_deck_message">Вы уверены, что хотите отправить все карты из %s в их оригинальные колоды?</string>
   <string name="no_tts_available_message">Функция преобразования текста в речь недоступна</string>
@@ -63,7 +64,7 @@
     <item><![CDATA[AnkiDroid выпускается под <a href=\"%1$s\">лицензией GNU-GPL v3</a> и исходный код доступен <a href=\"%2$s\">на GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Предпросмотр</string>
-  <string name="reset_card_dialog_title">Сброс учебного прогресса карты</string>
+  <string name="reset_card_dialog_title">Сброс учебного прогресса колоды</string>
   <string name="reset_card_dialog_message">Эта карта будет помещена в конец очереди новых карт.</string>
   <string name="reset_card_dialog_acknowledge">Сброс карт</string>
   <string name="reschedule_card_dialog_title">Изменить расписание карты</string>
@@ -79,19 +80,19 @@
   <string name="intent_aedict_category">При добавлении карты AnkiDroid удаляет все категории блокнота или добавляет одну с именем «default»</string>
   <string name="custom_study_new_total_new">Новых  карт  в колоде: %s</string>
   <string name="custom_study_rev_total_rev">Требуют повторения: %s</string>
-  <string name="custom_study_new_extend">Увеличить сегодняшний лимит новых карт на</string>
-  <string name="custom_study_rev_extend">Увеличить сегодняшний лимит повторения карт на</string>
-  <string name="custom_study_forgotten">Повторить забытое за последние x дней:</string>
-  <string name="custom_study_ahead">Просмотреть вперед на x дней:</string>
-  <string name="custom_study_random">Выбрать х случайных карт из колоды:</string>
-  <string name="custom_study_preview">Новые карты, добавленные за последние х дней:</string>
+  <string name="custom_study_new_extend">Увеличить сегодняшний лимит новых карт на (шт.)</string>
+  <string name="custom_study_rev_extend">Увеличить сегодняшний лимит карт для повторения на (шт.)</string>
+  <string name="custom_study_forgotten">Отобрать забытые карты за последние дни (кол-во дней)</string>
+  <string name="custom_study_ahead">Отобрать карты вперед на несколько дней  (кол-во дней)</string>
+  <string name="custom_study_random">Выбрать случайные карты из колоды (шт.)</string>
+  <string name="custom_study_preview">Выбрать новые карты, добавленные за последние дни (кол-во дней)</string>
   <string name="rebuild_custom_study_deck">Пересборка специальной колоды.\nПожалуйста, подождите...</string>
   <string name="importing_collection">Импортирование коллекции.\nПожалуйста подождите&#8230;</string>
-  <string name="import_media_count">Импорт медиа файлов %1$d%%\nПожалуйста подождите&#8230;</string>
-  <string name="import_progress">• Импорт заметок: %1$d%%\n• Импорт карточек: %2$d%%\n• Пост-процессинг: %3$d%%</string>
+  <string name="import_media_count">Импорт Media файлов %1$d%%\nПожалуйста подождите&#8230;</string>
+  <string name="import_progress">• Импорт заметок: %1$d%%\n• Импорт карт: %2$d%%\n• Пост-процессинг: %3$d%%</string>
   <string name="import_update_details">Обновлено %1$d из %2$d существующих заметок.</string>
-  <string name="import_update_ignored">Некоторые обновления были проигнорированы, потому что изменился тип записи</string>
-  <string name="import_complete_count">Импортировано карточек: %d</string>
+  <string name="import_update_ignored">Некоторые обновления были проигнорированы, потому что изменился тип данных заметки</string>
+  <string name="import_complete_count">Импортировано карт: %d</string>
   <string name="sd_card_full_title">SD карта переполнена</string>
   <string name="sd_card_almost_full_title">SD карта почти заполнена</string>
   <string name="restore_backup_title">Восстановить резервную копию?</string>
@@ -111,25 +112,25 @@
   <string name="lookup_button_content">искать</string>
   <string name="dialog_collection_path_not_dir">Указанный путь не является допустимым каталогом</string>
   <!-- Media checking -->
-  <string name="check_media_title">Проверить медиа?</string>
+  <string name="check_media_title">Проверить Media?</string>
   <string name="check_media_warning">На это может потребоваться значительное время для больших коллекций</string>
-  <string name="check_media_message">Проверка медиа&#8230;</string>
-  <string name="check_media_acknowledge">Медиа проверено</string>
-  <string name="check_media_failed">Ошибка проверки медиа</string>
+  <string name="check_media_message">Проверка Media&#8230;</string>
+  <string name="check_media_acknowledge">Media проверено</string>
+  <string name="check_media_failed">Ошибка проверки Media</string>
   <string name="check_media_invalid">Файлы с недопустимой кодировкой: %d</string>
-  <string name="check_media_unused">Файлы находятся в каталоге с медиа, но не используются ни в одной карте: %d</string>
-  <string name="check_media_nohave">Файлы используются в картах, но отсутствуют в каталоге с медиа: %d</string>
+  <string name="check_media_unused">Файлы находятся в каталоге с Media данными, но не используются ни в одной карте: %d</string>
+  <string name="check_media_nohave">Файлы используются в картах, но отсутствуют в каталоге с Madia данными: %d</string>
   <string name="check_media_no_unused_missing">Неиспользуемые и отсутствующие файлы не найдены.</string>
-  <string name="check_media_db_updated">База данных медиа перестроена.</string>
+  <string name="check_media_db_updated">База данных Media перестроена.</string>
   <string name="check_media_delete_unused">Удалить неиспользуемые</string>
   <string name="check_media_deleted">Файлы удалены: %d</string>
   <!-- Tags Dialog Options -->
-  <string name="tags_dialog_option_all_cards">Все карточки</string>
+  <string name="tags_dialog_option_all_cards">Все карты</string>
   <string name="tags_dialog_option_new_cards">Новые</string>
   <string name="tags_dialog_option_due_cards">К просмотру</string>
   <!-- Empty cards -->
-  <string name="emtpy_cards_finding">Поиск пустых карточек&#8230;</string>
-  <string name="empty_cards_none">Нет пустых карточек</string>
-  <string name="empty_cards_count">Карточек к удалению: %d</string>
-  <string name="empty_cards_deleted">Удалено карточек: %d</string>
+  <string name="emtpy_cards_finding">Поиск пустых карт&#8230;</string>
+  <string name="empty_cards_none">Нет пустых карт</string>
+  <string name="empty_cards_count">Карт к удалению: %d</string>
+  <string name="empty_cards_deleted">Удалено карт: %d</string>
 </resources>
