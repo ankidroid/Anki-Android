@@ -171,6 +171,21 @@
   <string name="custom_buttons_setting_if_room">Show if room</string>
   <string name="custom_buttons_setting_menu_only">Menu only</string>
   <string name="reset_custom_buttons">Reset to default</string>
+
+  <!-- Card creation preferences -->
+  <string name="pref_cat_card_creation">Создание карточек при отправке из других приложений</string>
+
+  <string name="card_front_or_back_position">Заполнять изучаемое слово в:</string>
+
+  <string name="ignore_intents_subject">Автоматически определять изучаемое слово</string>
+  <string name="ignore_intents_subject_summary">Игнорировать изучаемое слово, предоставленное внешним приложением, вместо него использовать первое в тексте</string>
+
+  <string name="parse_clipboard">Автоматически заполнять карточку</string>
+  <string name="parse_clipboard_summary">Автоматически разбирать карточку на изучаемое слово и перевод</string>
+
+  <string name="card_obfuscation">Прятать изучаемое слово в примерах</string>
+  <string name="card_obfuscation_summary"></string>
+
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Advanced statistics</string>
   <string name="enable_advanced_statistics_title">Enable advanced statistics</string>

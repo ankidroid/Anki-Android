@@ -39,6 +39,7 @@
     <string name="pref_cat_actions">Actions</string>
     <string name="pref_cat_advanced">Advanced</string>
     <string name="pref_cat_advanced_summ">Optimization and experimental features</string>
+    <string name="pref_cat_card_creation">Adding cards via "send to" dialog</string>
     <string name="pref_cat_performance">Performance</string>
     <string name="pref_cat_workarounds">Workarounds</string>
     <string name="pref_cat_plugins">Plugins</string>
@@ -158,6 +159,19 @@
     <string name="custom_buttons_setting_if_room">Show if room</string>
     <string name="custom_buttons_setting_menu_only">Menu only</string>
     <string name="reset_custom_buttons">Reset to default</string>
+
+    <!-- Card creation preferences -->
+    <string name="card_front_or_back_position">Subject word goes to:</string>
+
+    <string name="ignore_intents_subject">Derive the word from article text</string>
+    <string name="ignore_intents_subject_summary">Ignore the word provided from another app and instead retrieve it with transcription</string>
+
+    <string name="parse_clipboard">Parse clipboard for translation</string>
+    <string name="parse_clipboard_summary">Try to derive translated words while creating cards from other apps</string>
+
+    <string name="card_obfuscation">Hide original word in examples</string>
+    <string name="card_obfuscation_summary">At receiving card from another app original word will be hidden in transaltion examples</string>
+
 
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Advanced statistics</string>

@@ -90,6 +90,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
@@ -551,36 +553,69 @@ public class NoteEditor extends AnkiActivity {
 
     private void fetchIntentInformation(Intent intent) {
         Bundle extras = intent.getExtras();
+        mSourceText = new String[2];
+
         if (ACTION_CREATE_FLASHCARD.equals(intent.getAction())) {
             // mSourceLanguage = extras.getString(SOURCE_LANGUAGE);
             // mTargetLanguage = extras.getString(TARGET_LANGUAGE);
-            mSourceText = new String[2];
             mSourceText[0] = extras.getString(SOURCE_TEXT);
             mSourceText[1] = extras.getString(TARGET_TEXT);
         } else {
-            String first;
-            String second;
+            String subject;
+            String text;
             if (extras.getString(Intent.EXTRA_SUBJECT) != null) {
-                first = extras.getString(Intent.EXTRA_SUBJECT);
+                subject = extras.getString(Intent.EXTRA_SUBJECT);
             } else {
-                first = "";
+                subject = "";
             }
             if (extras.getString(Intent.EXTRA_TEXT) != null) {
-                second = extras.getString(Intent.EXTRA_TEXT);
+                text = extras.getString(Intent.EXTRA_TEXT);
             } else {
-                second = "";
+                text = "";
             }
-            // Some users add cards via SEND intent from clipboard. In this case SUBJECT is empty
-            if (first.equals("")) {
-                // Assume that if only one field was sent then it should be the front
-                first = second;
-                second = "";
-            }
-            Pair<String, String> messages = new Pair<>(first, second);
 
-            mSourceText = new String[2];
-            mSourceText[0] = messages.first;
-            mSourceText[1] = messages.second;
+            Pair<String, String> cardFrontAndBack=new Pair<String,String>("","");
+            SharedPreferences preferences=AnkiDroidApp.getSharedPrefs(getBaseContext());
+            TextToCardParser textToCardParser=new TextToCardParser();
+            boolean hideTranslationInExamples=preferences.getBoolean("hide_subject_word_in_translation_examples",false);
+            
+            // Some users add cards via SEND intent from clipboard. In this case SUBJECT is empty
+            boolean ignoreSubjectAndParseText=(subject.equals("") || preferences.getBoolean("ignore_subject_from_the_app",true));
+            boolean parsingTextSuccess=true;
+                    
+            if (ignoreSubjectAndParseText) {
+
+                if (preferences.getBoolean("parse_clipboard_for_translation",false)) {
+                    cardFrontAndBack = textToCardParser.splitTextOnFrontAndBack(text,hideTranslationInExamples);
+                    //parsing was non-resultive and we have a subject instead
+                    if (cardFrontAndBack.second.equals("")) parsingTextSuccess=false;
+                }
+                else {
+                    // Assume that if only one field was sent then it should be the front
+                    cardFrontAndBack = new Pair<>(text, subject);
+                }
+            }
+            if (!ignoreSubjectAndParseText || !parsingTextSuccess) {
+                if (hideTranslationInExamples) {
+                    text=textToCardParser.getRidOfTranscriptions(textToCardParser.replaceWordWithUnderscores(text,subject));
+                }
+                cardFrontAndBack = new Pair<>(subject, text);
+            }
+
+            String subjectCardPosition=preferences.getString("card_front_or_back_position","front");
+            if ("back".equals(subjectCardPosition)) {
+                /**
+                 * Here we presume that Anki user would like to learn which word in the learned language
+                 * matches the translation in his own language and examples showed to him on the card front.
+                 * Thus we put the learned word and transcription from dictionary to the back.
+                 */
+                mSourceText[0] = cardFrontAndBack.second;
+                mSourceText[1] = cardFrontAndBack.first;
+            }
+            else {
+                mSourceText[0] = cardFrontAndBack.first;
+                mSourceText[1] = cardFrontAndBack.second;
+            }
         }
     }
 
@@ -1644,6 +1679,74 @@ public class NoteEditor extends AnkiActivity {
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
             // Do Nothing
+        }
+    }
+
+    /**
+     * parsing clipboard text and Send_To intents from dictionaries in a format:
+     * LearnedWord
+     * [transcription]
+     * translation into a know language, some examples
+     *
+    * Most dictionaries are comprised of articles written in such a format.
+    * For learning purposes this dictionary article can be divided into original word with transcription
+    * on the front of the card and the translation on the back. Or vice versa
+     *
+     *  @author Oleg (odemidenko@gmail.com) on 29.08.2016.
+    */
+    private class TextToCardParser {
+
+        /**
+         * Text from clipboard doesn't have a subject (translated word) and here we expect to find it at the beginning of the text
+         * and thus split text into translated word and its translation
+         *  Mechanics:
+         *  Original word and its translation/transcription may be delimited with end-of-line,space and punctuations symblos
+         * There may or may not be a transcription (but we expect it always to be either in square brackets or backslashes)
+         * As well some dictionaries provide several transcriptions for the same word, delimited by punctuation symbols or numbers
+         *
+         * @param clipboardText - text to be splitted
+         * @param hideWordInTranslationExamples - the translated word can be hidden in the example, to prepare a learning card
+         * @return pair: 1.translated word [with transcription, if any] 2.translation. If parsing was unsuccessful - second.equals("")
+         */
+        public Pair<String, String> splitTextOnFrontAndBack(String clipboardText,boolean hideWordInTranslationExamples) {
+            String first, second;
+
+            Pattern pattern = Pattern.compile("^([\\w]+)(?:[\\s\\d]|[,.;]|\\n)*(?:(?:\\[.+?\\])|(?:\\\\.+?\\\\)(?:[\\s]|[,.;]|\\n)*)*");
+            Matcher matcher = pattern.matcher(clipboardText);
+            if (matcher.find()) {
+                String translatedWordWithTranscription = matcher.group(0);
+
+                String translationGroup = clipboardText.substring(translatedWordWithTranscription.length());
+                String originalWord = matcher.group(1);
+
+                //get rid of subseguent transcriptions if there are any of them
+                translationGroup=getRidOfTranscriptions(translationGroup);
+
+               if (hideWordInTranslationExamples) {
+                    translationGroup = replaceWordWithUnderscores(translationGroup, originalWord);
+                }
+
+                return new Pair<>(translatedWordWithTranscription,translationGroup);
+            } else {
+                return new Pair<>(clipboardText, "");
+            }
+        }
+
+        private String getRidOfTranscriptions(String translationGroup) {
+            Pattern pattern = Pattern.compile("(?:\\[.+?\\])|(?:\\\\.+?\\\\)");
+            Matcher matcher = pattern.matcher(translationGroup);
+            return matcher.replaceAll("");
+        }
+
+        private String replaceWordWithUnderscores(String text, String wordToHide) {
+
+
+            StringBuilder replacementString = new StringBuilder();
+
+            for (int i = 0; i < wordToHide.length(); i++) {
+                replacementString.append('_');
+            }
+            return Pattern.compile("\\Q"+wordToHide+"\\E",Pattern.CASE_INSENSITIVE).matcher(text).replaceAll(replacementString.toString());
         }
     }
 }
