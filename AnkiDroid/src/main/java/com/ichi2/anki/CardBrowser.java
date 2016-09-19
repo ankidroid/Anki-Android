@@ -46,6 +46,9 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -56,6 +59,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.CardBrowserContextMenu;
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog;
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog;
+import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
 import com.ichi2.anki.receiver.SdCardReceiver;
@@ -65,6 +69,7 @@ import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.Tags;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
@@ -469,9 +474,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mCardsAdapter = new MultiColumnListAdapter(
                 this,
                 R.layout.card_item_browser,
-                new String[] {COLUMN1_KEYS[mColumn1Index], COLUMN2_KEYS[mColumn2Index]},
-                new int[] {R.id.card_sfld, R.id.card_column2},
+                new String[]{COLUMN1_KEYS[mColumn1Index], COLUMN2_KEYS[mColumn2Index]},
+                new int[]{R.id.card_sfld, R.id.card_column2},
                 "flags",
+                R.id.card_mark,
                 sflRelativeFontSize,
                 sflCustomFont);
         // link the adapter to the main mCardsListView
@@ -560,7 +566,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             closeCardBrowser(RESULT_OK, data);
         }
     }
-    
+
     @Override
     protected void onResume() {
         Timber.d("onResume()");
@@ -672,10 +678,20 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 searchCards();
                 return true;
 
+            case R.id.action_show_all:
+                mSearchTerms = "";
+                mSearchView.setQuery("", false);
+                mSearchView.setQueryHint(getResources().getString(R.string.card_browser_show_all));
+                searchCards();
+                return true;
+
             case R.id.action_search_by_tag:
                 showTagsDialog();
                 return true;
 
+            case R.id.action_rename_tag:
+                showRenameTagDialog();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
 
@@ -767,6 +783,68 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         });
         showDialogFragment(dialog);
+    }
+
+    private void showRenameTagDialog() {
+        TagsDialog dialog = TagsDialog.newInstance(
+                TagsDialog.TYPE_SINGLE_TAG, new ArrayList<String>(),
+                new ArrayList<>(getCol().getTags().all()));
+        dialog.setTagsDialogListener(new TagsDialogListener() {
+            @Override
+            public void onPositive(List<String> selectedTags, int option) {
+                        if (selectedTags.size() == 0) return; // tag not selected
+                        //mSearchView.setQuery("", false);
+                        final String mSelectedTag = selectedTags.get(0);
+                        mSearchView.setQueryHint(getResources().getString(R.string.card_browser_tags_shown,
+                                mSelectedTag.substring(1, mSelectedTag.length() - 1)));
+                        Timber.d("Card Browser::renameTagDialog() -> Search notes");
+
+                        TagsDialog dialog2 = TagsDialog.newInstance(
+                                TagsDialog.TYPE_NEW_NAME_TAG, new ArrayList<String>(),
+                                new ArrayList<>(getCol().getTags().all()));
+                        dialog2.setTagsDialogListener(new TagsDialogListener() {
+                            @Override
+                            public void onPositive(List<String> selectedNewTags, int option) {
+                                if (selectedNewTags.size() == 0) return; // new tag not selected
+                                final String mSelectedNewTag = selectedNewTags.get(0);
+                                ConfirmationDialog dialog3 = new ConfirmationDialog () {
+                                    @Override
+                                    public void confirm() {
+                                        // Bypass the check once the user confirms
+                                        renameTag(mSelectedTag, mSelectedNewTag);
+                                    }
+                                };
+                                dialog3.setArgs(String.format(getResources().getString(R.string.card_browser_confirm_rename_tag),
+                                        mSelectedTag, mSelectedNewTag));
+                                showDialogFragment(dialog3);
+                    }
+                });
+                dialog2.setStartSnackMessage(getString(R.string.card_browser_new_tags_info));
+                dialog2.show(getSupportFragmentManager(), "dialog2");
+                //showDialogFragment(dialog2);
+            }
+        });
+        dialog.show(getSupportFragmentManager(), "dialog");
+        //showDialogFragment(dialog);
+    }
+
+    public void renameTag(String oldTag, String newTag) {
+
+        Collection col = CollectionHelper.getInstance().getCol(getApplicationContext());
+        Tags colTags = new Tags(col);
+
+        String searchText = mRestrictOnDeck + "Tag:" + oldTag;
+        List<Long> taggedNotes = col.findNotes(searchText);
+        if (taggedNotes.size() > 0) {
+            Timber.d("Card Browser::renameTagDialog() -> Found " + taggedNotes.size() + " notes");
+            for (int ii = 0; ii < taggedNotes.size(); ii++) {
+                Note note = col.getNote(taggedNotes.get(ii));
+                note.delTag(oldTag);
+                note.addTag(newTag);
+                note.flush();
+            }
+        }
+        searchCards();
     }
 
 
@@ -894,6 +972,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // update flags (marked / suspended / etc) which determine color
             String flags = Integer.toString((c.getQueue() == -1 ? 1 : 0) + (note.hasTag("marked") ? 2 : 0));
             getCards().get(pos).put("flags", flags);
+            // marked flag
+            flags = note.hasTag("marked") ? "true" : "false";
+            getCards().get(pos).put("mark", flags);
         }
         updateList();
     }
@@ -1066,7 +1147,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onPostExecute(TaskData result) {            
+        public void onPostExecute(TaskData result) {
             if (result != null && mCards != null) {
                 Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfuly");
                 updateList();
@@ -1076,7 +1157,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             hideProgressBar();
         }
-        
+
         @Override
         public void onCancelled(){
             Timber.d("doInBackgroundSearchCards onCancelled() called");
@@ -1179,18 +1260,20 @@ public class CardBrowser extends NavigationDrawerActivity implements
         private String[] mFromKeys;
         private final int[] mToIds;
         private final String mColorFlagKey;
+        private final int mMarkedFlagID;
         private float mOriginalTextSize = -1.0f;
         private final int mFontSizeScalePcent;
         private Typeface mCustomTypeface = null;
         private LayoutInflater mInflater;
 
 
-        public MultiColumnListAdapter(Context context, int resource, String[] from, int[] to, String colorFlagKey,
-                                      int fontSizeScalePcent, String customFont) {
+        public MultiColumnListAdapter(Context context, int resource, String[] from, int[] to,
+                                      String colorFlagKey, int markedFieldID, int fontSizeScalePcent, String customFont) {
             mResource = resource;
             mFromKeys = from;
             mToIds = to;
             mColorFlagKey = colorFlagKey;
+            mMarkedFlagID = markedFieldID;
             mFontSizeScalePcent = fontSizeScalePcent;
             if (!customFont.equals("")) {
                 mCustomTypeface = AnkiFont.getTypeface(context, customFont);
@@ -1205,14 +1288,39 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (convertView == null) {
                 v = mInflater.inflate(mResource, parent, false);
                 final int count = mToIds.length;
-                final View[] columns = new View[count];
+                final View[] columns = new View[count + 1];       //add for marked
                 for (int i = 0; i < count; i++) {
                     columns[i] = v.findViewById(mToIds[i]);
                 }
+                columns[count] = v.findViewById(mMarkedFlagID); //last view is marked
                 v.setTag(columns);
             } else {
                 v = convertView;
             }
+
+            final int pos = position;
+            CheckBox cbMarked = (CheckBox) v.findViewById(R.id.card_mark);
+
+            cbMarked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    final Card card = getCol().getCard(Long.parseLong(getCards().get(pos).get("id")));
+                    Note note = card.note();
+                    if (buttonView.isChecked()) {
+                        if (!note.hasTag("marked")) {
+                            note.addTag("marked");
+                            note.flush();
+                            updateCardInList(card, note.stringTags());
+                        }
+                    } else {
+                        if (note.hasTag("marked")) {
+                            note.delTag("marked");
+                            note.flush();
+                            updateCardInList(card, note.stringTags());
+                        }
+                    }
+                }
+            });
             bindView(position, v);
             return v;
         }
@@ -1234,6 +1342,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 // set text for column
                 col.setText(dataSet.get(mFromKeys[i]));
             }
+            // marked
+            CheckBox markCol = (CheckBox) columns[mToIds.length]; //last view
+            markCol.setBackgroundColor(colors[colorIdx]);
+            markCol.setChecked(Boolean.valueOf(dataSet.get("mark")));
         }
 
 

@@ -35,8 +35,12 @@
     <string name="delete_card_message">Delete all cards of this note?\nSearch field: %s</string>
     <string name="card_browser_show_marked">Filter marked</string>
     <string name="card_browser_show_suspended">Filter suspended</string>
+    <string name="card_browser_show_all">Clear filter</string>
+    <string name="card_browser_rename_tag">Rename tag</string>
     <string name="card_browser_search_by_tag">Filter by tag</string>
     <string name="card_browser_tags_shown">Tags: %1$s</string>
+    <string name="card_browser_new_tags_info">Select or add new tag name</string>
+    <string name="card_browser_confirm_rename_tag">You are really want to rename tag \"%1$s\" to tag \"%2$s\" ? This operation can not be undo.</string>
     <string name="card_browser_list_my_searches">My searches</string>
     <string name="card_browser_list_my_searches_save">Save search</string>
     <string name="card_browser_list_my_searches_title">Choose a saved search</string>
@@ -51,6 +55,8 @@
     <string name="card_details_answer">Answer</string>
     <string name="card_details_due">Due</string>
     <string name="card_details_tags">Tags</string>
+    <string name="card_details_tag_select">Select tag</string>
+    <string name="card_details_new_tag_select">Select new tag</string>
     <string name="card_browser_filtering_cards">Filtering cards… \nPress back button to cancel</string>
     <string-array name="card_browser_order_labels">
         <item>No sorting (faster)</item>

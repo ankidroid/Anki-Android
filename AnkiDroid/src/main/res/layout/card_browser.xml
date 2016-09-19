@@ -21,7 +21,15 @@
                 android:layout_height="wrap_content"
                 android:background="?android:attr/colorBackground"
                 android:orientation="horizontal" >
-
+                <CheckBox
+                    android:id="@+id/browser_column0_check_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:visibility="invisible"
+                    android:focusableInTouchMode="false"
+                    android:layout_weight="0"
+                    />
                 <Spinner
                     android:id="@+id/browser_column1_spinner"
                     android:layout_width="0dp"
