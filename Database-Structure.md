@@ -158,9 +158,11 @@ CREATE INDEX ix_revlog_usn on revlog (usn);
 ```
 
 # Models JSONObjects
-Here is an annotated description of the JSONObjects in the models field of the `col` table:
+Here is an annotated description of the JSONObjects in the models field of the `col` table. Each object is the value of a key that's a model id (epoch time in milliseconds):
 ``` java
 {
+"model id (epoch time in milliseconds)" :
+  {
     css : "CSS, shared for all templates",
     did :
         "Long specifying the id of the deck that cards are added to by default",
@@ -211,6 +213,7 @@ Here is an annotated description of the JSONObjects in the models field of the `
     type : "Integer specifying what type of model. 0 for standard, 1 for cloze",
     usn : "usn: Update sequence number: used in same way as other usn vales in db",
     vers : "Legacy version number (unused)"
+  }
 }
 ```
 
