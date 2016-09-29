@@ -545,6 +545,7 @@ public final class AddContentApi {
     public void startActivityReviewer(Long deckId) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setComponent(new ComponentName(getAnkiDroidPackageName(mContext), "com.ichi2.anki.Reviewer"));
 
         if(deckId != null) {
