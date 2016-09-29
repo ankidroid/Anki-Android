@@ -66,20 +66,17 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
-        String action = getIntent().getAction();
-        Timber.d(String.format("action = %s", action));
-        if(action != null)
-            switch (action) {
-                case Intent.ACTION_VIEW:
-                    initalizeDeck(getIntent().getExtras());
-                    break;
-                default:
-            }
+
+        if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
+            Timber.d("onCreate() :: received Intent with action = " + getIntent().getAction());
+            selectDeckFromExtra();
+        }
 
         super.onCreate(savedInstanceState);
     }
 
-    private void initalizeDeck(Bundle extras) {
+    private void selectDeckFromExtra() {
+        Bundle extras = getIntent().getExtras();
         long did = extras.getLong("deckId", Long.MIN_VALUE);
 
         if(did == Long.MIN_VALUE) {
@@ -87,7 +84,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             return;
         }
 
-        Timber.d(String.format("initalizeDeck with deckId %d", did));
+        Timber.d(String.format("selectDeckFromExtra() with deckId = %d", did));
 
         // Clear the undo history when selecting a new deck
         if (getCol().getDecks().selected() != did) {

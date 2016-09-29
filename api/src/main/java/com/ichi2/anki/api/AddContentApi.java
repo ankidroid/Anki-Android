@@ -18,9 +18,11 @@
 
 package com.ichi2.anki.api;
 
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
@@ -531,6 +533,51 @@ public final class AddContentApi {
                 if (entry.getKey().equals(did)) {
                     return entry.getValue();
                 }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Start review of deck given deck ID
+     * @param deckId ID of deck
+     * @return the name of the deck, or null if no deck was found
+     */
+    public boolean startActivityReviewer(Long deckId) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setComponent(new ComponentName(getAnkiDroidPackageName(mContext), "com.ichi2.anki.Reviewer"));
+        intent.putExtra("deckId", deckId);
+        mContext.startActivity(intent);
+
+        return true;
+    }
+
+    /**
+     * Start review of deck given deck ID
+     * @param deckName name of deck
+     * @return the name of the deck, or null if no deck was found
+     */
+    public boolean startActivityReviewer(String deckName) {
+        Long deckId = this.getDeckId(deckName);
+
+        if(deckId == null) {
+            return false;
+        } else {
+            return startActivityReviewer(deckId);
+        }
+    }
+
+    /**
+     * Get the ID of the deck which matches the name
+     * @param deckName Exact name of deck (note: deck names are unique in Anki)
+     * @return the ID of the deck that has given name, or null if no deck was found
+     */
+    public Long getDeckId(String deckName) {
+        Map<Long, String> deckList = getDeckList();
+        for (Map.Entry<Long, String> entry : deckList.entrySet()) {
+            if (entry.getValue().equalsIgnoreCase(deckName)) {
+                return entry.getKey();
             }
         }
         return null;
