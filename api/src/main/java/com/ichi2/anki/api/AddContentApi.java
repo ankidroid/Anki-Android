@@ -541,31 +541,26 @@ public final class AddContentApi {
     /**
      * Start review of deck given deck ID
      * @param deckId ID of deck
-     * @return the name of the deck, or null if no deck was found
      */
-    public boolean startActivityReviewer(Long deckId) {
+    public void startActivityReviewer(Long deckId) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.setComponent(new ComponentName(getAnkiDroidPackageName(mContext), "com.ichi2.anki.Reviewer"));
-        intent.putExtra("deckId", deckId);
-        mContext.startActivity(intent);
 
-        return true;
+        if(deckId != null) {
+            intent.putExtra("deckId", deckId);
+        }
+
+        mContext.startActivity(intent);
     }
 
     /**
-     * Start review of deck given deck ID
+     * Start review of deck given deck name
      * @param deckName name of deck
-     * @return the name of the deck, or null if no deck was found
      */
-    public boolean startActivityReviewer(String deckName) {
+    public void startActivityReviewer(String deckName) {
         Long deckId = this.getDeckId(deckName);
-
-        if(deckId == null) {
-            return false;
-        } else {
-            return startActivityReviewer(deckId);
-        }
+        startActivityReviewer(deckId);
     }
 
     /**
