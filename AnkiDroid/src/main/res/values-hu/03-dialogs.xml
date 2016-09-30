@@ -124,8 +124,8 @@
   <string name="check_media_deleted">Törölt fájlok: %d</string>
   <!-- Tags Dialog Options -->
   <string name="tags_dialog_option_all_cards">All cards</string>
-  <string name="tags_dialog_option_new_cards">New</string>
-  <string name="tags_dialog_option_due_cards">Due</string>
+  <string name="tags_dialog_option_new_cards">Új</string>
+  <string name="tags_dialog_option_due_cards">Esedékes</string>
   <!-- Empty cards -->
   <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
   <string name="empty_cards_none">No empty cards</string>

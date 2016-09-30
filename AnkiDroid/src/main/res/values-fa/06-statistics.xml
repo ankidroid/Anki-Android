@@ -143,7 +143,7 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">امروز شما &lt;b&gt;%1$d کارت&lt;/b&gt; در &lt;b&gt;%2$s&lt;/b&gt; مطالعه کردید</item>
-    <item quantity="other">امروز شما &lt;b&gt;%1$d کارت&lt;/b&gt; در &lt;b&gt;%2$s&lt;/b&gt; مطالعه کردید</item>
+    <item quantity="one">امروز شما &lt;b&gt;%1$d کارت را&lt;/b&gt; در &lt;b&gt;%2$s&lt;/b&gt; مطالعه کردید</item>
+    <item quantity="other">امروز شما &lt;b&gt;%1$d کارت را&lt;/b&gt; در &lt;b&gt;%2$s&lt;/b&gt; مطالعه کردید</item>
   </plurals>
 </resources>

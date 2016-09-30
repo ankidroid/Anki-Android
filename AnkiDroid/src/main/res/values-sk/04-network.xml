@@ -94,7 +94,7 @@
   <string name="sync_remote_db_error">Stiahnutá databáza bola poškodená. Prosím skúste to znova.</string>
   <string name="sync_overwrite_error">Vašu aktuálnu zbierku sa nepodarilo prepísať stiahnutým súborom</string>
   <string name="sync_connection_error">Vypršal časový limit pripojenia. Buď máte problém s internetovým pripojením alebo máte veľký multimediálny súbor v priečinku.</string>
-  <string name="sync_error_409">V jednej chvíli má prístup k AnkiWeb iba jeden klient. Ak predchádzajúca synchronizácia zlyhala, prosím, pokúste sa o synchronizáciu o pár minút neskôr.</string>
+  <string name="sync_error_409">V rovnakom momente môže mať prístup k AnkiWeb iba jeden klient. Ak predchádzajúca synchronizácia zlyhala, prosím, pokúste sa o synchronizáciu o pár minút neskôr.</string>
   <string name="sync_write_access_error">Stiahnutý súbor sa nepodarilo uložiť na SD kartu. Buď je vaša SD karta pripojená iba na čítanie alebo na nej nie je dostatok miesta.</string>
   <string name="sync_deletions_message">Synchronizujú sa odstránené položky...</string>
   <string name="sync_small_objects_message">Synchronizujú sa malé objekty...</string>
@@ -119,7 +119,7 @@
   <string name="sync_sanity_local">Miestnu</string>
   <string name="sync_sanity_remote">Vzdialenú</string>
   <string name="force_full_sync_title">Vynútiť úplnú synchronizáciu</string>
-  <string name="force_full_sync_summary">Pri ďalej synchronizácii, vynútiť zmeny v jednom smere</string>
+  <string name="force_full_sync_summary">Pri ďalšej synchronizácii, vynútiť zmeny v jednom smere</string>
   <string name="full_sync_confirmation">Požadované zmeny si vyžadujú úplné nahratie databázy na server pri ďalšej synchronizácii vašej zbierky. Ak máte naplánované skúšanie alebo zmeny na iných zariadeniach, ktoré ešte neboli synchronizované, budú stratené. Chcete pokračovať?</string>
   <string name="full_sync_confirmation_upgrade">Kvôli chybe v predchádzajúcej nainštalovanej verzii AnkiDroid, odporúča sa úplná synchronizácia.</string>
   <string name="sync_error_501_upgrade_required">Prosím aktualizujte na najnovšiu verziu AnkiDroid</string>

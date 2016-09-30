@@ -127,7 +127,7 @@
   <string name="language">Jazyk</string>
   <string name="language_system">Systémový jazyk</string>
   <string name="notification_pref">Oznámenia</string>
-  <string name="notification_pref_title">Upozorniť keď</string>
+  <string name="notification_pref_title">Upozorniť ak</string>
   <string name="never_notify">Nikdy neupozorniť</string>
   <string name="notify_when_pending">Sú k dispozícii správy</string>
   <string name="notification_minimum_cards_due">Viac ako %d kartičiek na preskúšanie</string>
@@ -149,8 +149,8 @@
   <string name="show_estimates_summ">Zobraziť čas ďalšieho opakovania nad tlačidlami odpovedí</string>
   <string name="show_progress">Zobraziť zostávajúce</string>
   <string name="show_progress_summ">Zobraziť zostávajúci počet kartičiek</string>
-  <string name="show_eta">Show ETA</string>
-  <string name="show_eta_summ">Show remaining time</string>
+  <string name="show_eta">Zobraziť ETA</string>
+  <string name="show_eta_summ">Zobraziť zostávajúci čas</string>
   <string name="use_current">Balíček pre nové kartičky</string>
   <string name="new_spread">Pozícia novej kartičky</string>
   <string name="learn_cutoff">Limit pre učenie sa dopredu</string>
@@ -208,10 +208,10 @@
   <string name="deck_conf_easy_ivl">Interval ľahkých</string>
   <string name="deck_conf_start_ease">Počiatočná jednoduchosť</string>
   <string name="deck_conf_max_rev">Maximálny počet opakovaných kariet za deň</string>
-  <string name="deck_conf_new_bury">Zahrabať súvisiace nové kartičky</string>
-  <string name="deck_conf_new_bury_summ">Súvisiace nové kartičky sú zahrabané do ďalšieho dňa</string>
-  <string name="deck_conf_rev_bury">Zahrabať súvisiace opakovania</string>
-  <string name="deck_conf_rev_bury_summ">Súvisiace opakovania sú zahrabané do ďalšieho dňa</string>
+  <string name="deck_conf_new_bury">Skryť súvisiace nové kartičky</string>
+  <string name="deck_conf_new_bury_summ">Súvisiace nové kartičky sú skryté do ďalšieho dňa</string>
+  <string name="deck_conf_rev_bury">Skryť súvisiace opakovania</string>
+  <string name="deck_conf_rev_bury_summ">Súvisiace opakovania sú skryté do ďalšieho dňa</string>
   <string name="deck_conf_easy_bonus">Bonus za jednoduchosť</string>
   <string name="deck_conf_ivl_fct">Modifikátor intervalu</string>
   <string name="deck_conf_max_ivl">Maximálny interval</string>

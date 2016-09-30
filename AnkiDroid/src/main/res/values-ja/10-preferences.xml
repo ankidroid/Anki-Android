@@ -236,7 +236,7 @@
   <string name="deck_conf_remove_message">現在のオプショングループを削除しますか？</string>
   <string name="deck_conf_set_subdecks">全てのサブデッキに適用</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="other">この設定を行うと %s個のサブデッキもこのオプショングループを使用することになります</item>
+    <item quantity="other">この設定を行うと、このデッキの中にある %s個のサブデッキもこのオプショングループを使用することになります</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">全てのサブデッキに適用</string>
   <string name="deck_conf_set_subdecks_message">現在のオプショングループをすべてのサブデッキに適用しますか？</string>

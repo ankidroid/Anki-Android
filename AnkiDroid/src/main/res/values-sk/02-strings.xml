@@ -177,8 +177,8 @@
   <string name="steps_error">Kroky musia byť čísla väčšie ako 0</string>
   <string name="steps_min_error">Je nutné zadať aspoň jeden krok</string>
   <string name="sched_end">(koniec)</string>
-  <string name="sched_unbury_action">Ak ich chcete vidieť teraz, ťuknite v menu na položku “Odhrabať”.</string>
-  <string name="sched_has_buried">Niektoré súvisiace alebo zahrabané kartičky boli odložené až na zajtra</string>
+  <string name="sched_unbury_action">Ak ich chcete vidieť teraz, ťuknite v menu na položku “Odkryť”</string>
+  <string name="sched_has_buried">Niektoré súvisiace alebo skryté kartičky boli odložené až na zajtra</string>
   <string name="tag_editor_add_feedback">Ťuknite “%2$s” pre potvrdenie pridania “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">Existujúci štítok “%1$s” zvolený</string>
   <string name="lookup_hint">Po skopírovaní textu, ťuknite kdekoľvek na kartičku, aby sa vám zobrazila ikona hľadania</string>
@@ -189,8 +189,8 @@
     <item quantity="other">%s sekúnd</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="one">%s minúta</item>
-    <item quantity="few">%s minúty</item>
+    <item quantity="one">%s minúty</item>
+    <item quantity="few">%s minút</item>
     <item quantity="other">%s minút</item>
   </plurals>
   <plurals name="time_span_hours">

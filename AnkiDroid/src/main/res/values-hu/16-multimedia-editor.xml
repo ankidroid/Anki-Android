@@ -35,7 +35,7 @@
 -->
 <resources>
   <!-- Main editor popup menu items -->
-  <string name="multimedia_editor_popup_image">Add image</string>
+  <string name="multimedia_editor_popup_image">Kép hozzáadása</string>
   <string name="multimedia_editor_popup_audio">Record audio</string>
   <string name="multimedia_editor_popup_text">Advanced editor</string>
   <!-- Translation activity (Glosbe) -->

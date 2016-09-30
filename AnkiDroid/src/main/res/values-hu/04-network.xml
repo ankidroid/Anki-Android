@@ -58,7 +58,7 @@
   <string name="password_repeat">Jelszó mégegyszer</string>
   <string name="log_in">Bejelentkezés</string>
   <string name="sign_up_description">Nincs AnkiWeb fiókod? Ingyenes, meg minden!</string>
-  <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
+  <string name="sign_up_not_affiliated">Az AnkiWeb nem áll kapcsolatban az AnkiDroiddal</string>
   <string name="sign_up">Regisztráció</string>
   <string name="logged_as">Bejelentkezve mint</string>
   <string name="log_out">Kijelentkezés</string>

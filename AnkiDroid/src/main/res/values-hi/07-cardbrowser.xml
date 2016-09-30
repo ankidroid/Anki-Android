@@ -67,9 +67,9 @@
   <string name="card_browser_change_display_order_title">Choose display order</string>
   <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
   <string name="card_details_question">Question</string>
-  <string name="card_details_answer">Answer</string>
+  <string name="card_details_answer">जवाब</string>
   <string name="card_details_due">Due</string>
-  <string name="card_details_tags">Tags</string>
+  <string name="card_details_tags">टैग</string>
   <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string-array name="card_browser_order_labels">
     <item>No sorting (faster)</item>

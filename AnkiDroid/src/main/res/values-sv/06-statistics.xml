@@ -103,7 +103,7 @@
   <string name="stats_forecast">Prognos</string>
   <string name="stats_review_count">Antal repetitioner</string>
   <string name="stats_review_time">Repetitionsstid</string>
-  <string name="stats_added">Added</string>
+  <string name="stats_added">Tillagt</string>
   <string name="stats_review_intervals">Intervaller</string>
   <string name="stats_breakdown">Resultat uppdelat på timme</string>
   <string name="stats_weekly_breakdown">Resultat uppdelat på vecka</string>

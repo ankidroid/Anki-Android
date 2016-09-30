@@ -89,11 +89,11 @@
   <string name="menu_add_note">Megjegyzés hozzáadása</string>
   <string name="menu_my_account">Fiók szinkronizálása</string>
   <string name="menu_dismiss_note">Elrejtés / Törlés</string>
-  <string name="menu_bury_card">Kártya félretétele</string>
-  <string name="menu_bury_note">Jegyzet félretétele</string>
+  <string name="menu_bury_card">Kártya holnapra halasztása</string>
+  <string name="menu_bury_note">Jegyzet holnapra halasztása</string>
   <string name="menu_suspend_card">Kártya felfüggesztése</string>
   <string name="menu_suspend_note">Jegyzet felfüggesztése</string>
-  <string name="menu_bury">Félretétel</string>
+  <string name="menu_bury">Holnapra halasztás</string>
   <string name="menu_suspend">Felfüggesztés</string>
   <string name="menu_delete_note">Jegyet törlése</string>
   <string name="delete_note_message">Biztosan törölni akarod ezt a jegyzetet és az összes kártyáját?\n%s</string>

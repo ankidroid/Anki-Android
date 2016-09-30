@@ -41,9 +41,9 @@
 <resources>
   <string name="statistics_young">Mladé</string>
   <string name="statistics_mature">Zrelé</string>
-  <string name="statistics_young_and_learn">Young+Learn</string>
+  <string name="statistics_young_and_learn">Mladé+Novonaučené</string>
   <string name="statistics_unlearned">Neučené</string>
-  <string name="statistics_suspended_and_buried">Suspended+Buried</string>
+  <string name="statistics_suspended_and_buried">Pozastavené+Skryté</string>
   <string name="statistics_relearn">Znovunaučené</string>
   <string name="statistics_learn">Novonaučené</string>
   <string name="statistics_cram">Nabiflené</string>
@@ -74,17 +74,17 @@
   <string name="stats_today_type_breakdown">Novonaučených: &lt;b&gt;%1$s&lt;/b&gt;, Zopakovaných: &lt;b&gt;%2$s&lt;/b&gt;, Znovunaučených: &lt;b&gt;%3$s&lt;/b&gt;, Filtrovaných: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Správne odpovede pri zrelých kartičkách: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Dnes ste neštudovali žiadne zrelé kartičky</string>
-  <string name="stats_overview_forecast_total">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
-  <string name="stats_overview_forecast_average">Average: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-  <string name="stats_overview_forecast_due_tomorrow">Due tomorrow: &lt;b&gt;%1$d&lt;/b&gt;</string>
-  <string name="stats_overview_days_studied">Počet dní učenia: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
-  <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
+  <string name="stats_overview_forecast_total">Celkovo: &lt;b&gt;%1$d&lt;/b&gt; zopakovaných</string>
+  <string name="stats_overview_forecast_average">Priemerne: &lt;b&gt;%1$.1f&lt;/b&gt; opakovaní/deň</string>
+  <string name="stats_overview_forecast_due_tomorrow">Zajtra na preskúšanie: &lt;b&gt;%1$d&lt;/b&gt;</string>
+  <string name="stats_overview_days_studied">Počet dní učenia: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d z %3$d)</string>
+  <string name="stats_overview_total_reviews">Celkovo: &lt;b&gt;%1$d&lt;/b&gt; zopakovaných</string>
   <string name="stats_overview_reviews_per_day_studydays">Priemer na dni, počas ktorých sa študovalo: &lt;b&gt;%1$.1f&lt;/b&gt; zopakovaných denne</string>
   <string name="stats_overview_reviews_per_day_all">Ak by ste študovali každý deň: &lt;b&gt;%1$.1f&lt;/b&gt; zopakovaných denne</string>
   <string name="stats_overview_time_per_day_studydays">Priemer v rámci dní, kedy ste sa učili: &lt;b&gt;%1$.1f&lt;/b&gt; minút denne</string>
   <string name="stats_overview_time_per_day_all">Ak by ste študovali každý deň:  &lt;b&gt;%1$.1f&lt;/b&gt; minút denne</string>
-  <string name="stats_overview_new_cards_per_day">Average: &lt;b&gt;%1$.1f&lt;/b&gt; cards/day</string>
-  <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt; cards</string>
+  <string name="stats_overview_new_cards_per_day">Priemerne: &lt;b&gt;%1$.1f&lt;/b&gt; kartičiek/deň</string>
+  <string name="stats_overview_total_new_cards">Celkovo: &lt;b&gt;%1$d&lt;/b&gt; kartičiek</string>
   <string name="stats_overview_average_interval">"Priemerný interval: "</string>
   <string name="stats_overview_longest_interval">"Najdlhší interval: "</string>
   <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; rokov</string>
@@ -103,7 +103,7 @@
   <string name="stats_forecast">Predpoveď</string>
   <string name="stats_review_count">Počet opakovaní</string>
   <string name="stats_review_time">Čas opakovania</string>
-  <string name="stats_added">Added</string>
+  <string name="stats_added">Pridané</string>
   <string name="stats_review_intervals">Intervaly</string>
   <string name="stats_breakdown">Hodinový prehľad</string>
   <string name="stats_weekly_breakdown">Týždenný prehľad</string>
@@ -139,8 +139,8 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">Dnes preštudovaná &lt;b&gt;%1$d kartička&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;</item>
-    <item quantity="few">Dnes preštudované &lt;b&gt;%1$d kartičky&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;</item>
-    <item quantity="other">Dnes preštudované &lt;b&gt;%1$d kartičiek&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;</item>
+    <item quantity="one">Dnes preštudovaná: &lt;b&gt;%1$d kartička&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;</item>
+    <item quantity="few">Dnes preštudované: &lt;b&gt;%1$d kartičky&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;</item>
+    <item quantity="other">Dnes preštudovaných: &lt;b&gt;%1$d kartičiek&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;</item>
   </plurals>
 </resources>

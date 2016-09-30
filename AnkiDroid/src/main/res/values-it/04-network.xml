@@ -48,11 +48,11 @@
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Termini e condizioni</a></string>
   <string name="menu_get_shared_decks">Ottieni mazzi condivisi</string>
   <string name="connection_error_message">Si è verificato un errore di rete.</string>
-  <string name="not_logged_in_title">Accedi a AnkiWeb</string>
+  <string name="not_logged_in_title">Accedi ad AnkiWeb</string>
   <string name="login_create_account_message">È necessario accedere ad un account di terzi per utilizzare il servizio di sincronizzazione cloud. Puoi crearne uno nel passaggio successivo.</string>
   <string name="no_email_client">Nessun client di posta elettronica disponibile</string>
   <!-- MyAccount.java -->
-  <string name="username">Indirizzo e-mail</string>
+  <string name="username">Indirizzo di posta elettronica</string>
   <string name="username_repeat">Ripeti indirizzo e-mail</string>
   <string name="password">Password</string>
   <string name="password_repeat">Ripeti la password</string>

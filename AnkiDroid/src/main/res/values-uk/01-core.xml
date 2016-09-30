@@ -81,8 +81,8 @@
   <string name="menu_import">Імпортувати</string>
   <string name="undo">Відмінити</string>
   <string name="undo_action_review">Останній відгук</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
+  <string name="undo_action_bury_card">прихована картка</string>
+  <string name="undo_action_bury_note">прихована примітка</string>
   <string name="undo_action_suspend_card">Відкласти картку</string>
   <string name="undo_action_suspend_note">Призупинити примітку</string>
   <string name="undo_action_delete">Видалити примітку</string>
@@ -96,8 +96,8 @@
   <string name="menu_bury_note">Сховати Примітку</string>
   <string name="menu_suspend_card">Відкласти картку</string>
   <string name="menu_suspend_note">Призупинити Примітку</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">Приховати</string>
+  <string name="menu_suspend">Призупинити</string>
   <string name="menu_delete_note">Видалити Примітку</string>
   <string name="delete_note_message">Дійсно видалити цю примітку і усі зв\'язані з нею картки?\n%s</string>
   <string name="menu_select">Виділити текст</string>

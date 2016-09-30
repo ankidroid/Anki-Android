@@ -45,16 +45,16 @@
   <string name="drawer_open">Открыть панель</string>
   <string name="drawer_close">Закрыть панель</string>
   <string name="CardEditorLaterMessage">Сохранённая информация</string>
-  <string name="CardEditorCardDeck">Колода карт:</string>
+  <string name="CardEditorCardDeck">Колода:</string>
   <string name="CardEditorNoteDeck">Колода:</string>
-  <string name="CardEditorModel">Тип:</string>
-  <string name="CardEditorTags">Теги: %1$s</string>
+  <string name="CardEditorModel">Тип данных:</string>
+  <string name="CardEditorTags">Метки: %1$s</string>
   <string name="CardEditorCards">Карты: %1$s</string>
   <string name="tag_name">Название метки</string>
-  <string name="add_new_filter_tags">Добавить/отфильтровать метки</string>
+  <string name="add_new_filter_tags">Добавить/Фильтровать метки</string>
   <string name="add_tag">Добавить метку</string>
   <string name="check_all_tags">Выбрать/снять все метки</string>
-  <string name="filter_tags">Отфильтровать метки</string>
+  <string name="filter_tags">Фильтровать метки</string>
   <string name="no_tags">Вы пока не добавили ни одной метки</string>
   <string name="sdcard_missing_message">SD-карта недоступна, т.к. она (и ваш аппарат) используется как USB-хранилище. Отключите режим USB-хранилище вашего аппарата для доступа к колоде.</string>
   <string name="updated_version">Обновлено до версии %s</string>
@@ -65,8 +65,8 @@
   <string name="hide_whiteboard">Скрыть доску</string>
   <string name="clear_whiteboard">Очистить доску</string>
   <string name="replay_audio">Воспроизведение аудио</string>
-  <string name="leech_suspend_notification">Карта помечена как \"приставучая\" и отложена</string>
-  <string name="leech_notification">Карта помечена как \"приставучая\"</string>
+  <string name="leech_suspend_notification">Карта помечена как \"Пиявка\" и отложена</string>
+  <string name="leech_notification">Карта помечена как \"Пиявка\"</string>
   <string name="corrupt_font">Повреждённый файл шрифта %s</string>
   <!-- Browser -->
   <string-array name="browser_column1_headings">
@@ -75,13 +75,13 @@
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Ответ</item>
-    <item>Карта</item>
+    <item>Карты</item>
     <item>Колода</item>
-    <item>Запись</item>
+    <item>Тип</item>
     <item>Вопрос</item>
     <item>Метки</item>
     <item>Неудачные попытки</item>
-    <item>Пересмотры</item>
+    <item>Просмотры</item>
     <!--
     <item>Changed</item>
     <item>Created</item>
@@ -92,37 +92,37 @@
         -->
   </string-array>
   <!-- Custom study options -->
-  <string name="custom_study_increase_new_limit">Увеличить сегодняшний лимит новых карт</string>
-  <string name="custom_study_increase_review_limit">Увеличить сегодняшний лимит старых карт</string>
-  <string name="custom_study_review_forgotten">Обзор забытых карт</string>
-  <string name="custom_study_review_ahead">Обзор наперёд</string>
-  <string name="custom_study_random_selection">Учить случайную группу карт</string>
-  <string name="custom_study_preview_new">Новые карты в колоде</string>
-  <string name="custom_study_limit_tags">Установить ограничение по тегам</string>
+  <string name="custom_study_increase_new_limit">Добавить на сегодня новые карты</string>
+  <string name="custom_study_increase_review_limit">Добавить на сегодня карты для повторения</string>
+  <string name="custom_study_review_forgotten">Отобрать забываемые карты</string>
+  <string name="custom_study_review_ahead">Отобрать вперёд</string>
+  <string name="custom_study_random_selection">Отобрать случайные карты</string>
+  <string name="custom_study_preview_new">Отобрать новые карты</string>
+  <string name="custom_study_limit_tags">Отобрать карты по меткам</string>
   <!-- Card editor -->
-  <string name="cardeditor_title_add_note">Добавить заметку</string>
-  <string name="cardeditor_title_edit_card">Изменить заметку</string>
+  <string name="cardeditor_title_add_note">Добавить</string>
+  <string name="cardeditor_title_edit_card">Изменить</string>
   <string name="discard_unsaved_changes">Закрыть и отказаться от изменений?</string>
   <string name="factadder_saving_error">Ошибка при сохранении заметки</string>
   <string name="saving_facts">Сохранение заметки</string>
-  <string name="saving_model">Сохранение модели</string>
+  <string name="saving_model">Сохранение типа данных</string>
   <string name="add">Добавить</string>
   <string name="save">Сохранить</string>
   <string name="close">Закрыть</string>
   <string name="select">Выбрать</string>
   <string name="saving_changes">Сохранение изменений...</string>
-  <string name="reordering_cards">Изменение очерёдности карт...</string>
+  <string name="reordering_cards">Сортировка карт...</string>
   <string name="field_remapping">%1$s (из \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Несопоставленные карты будут удалены. Записи, оставшиеся без карт, будут утеряны. Продолжить?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d карта изучена за %2$s</item>
-    <item quantity="few">%1$d карты изучены за %2$s</item>
-    <item quantity="other">%1$d карт изучены за %2$s</item>
+    <item quantity="one">%1$d карта изучена за %2$ сек.</item>
+    <item quantity="few">%1$d карты изучены за %2$ сек.</item>
+    <item quantity="other">%1$d карт изучены за %2$ сек.</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d минута</item>
-    <item quantity="few">%1$d минуты</item>
-    <item quantity="other">%1$d минут</item>
+    <item quantity="one">%1$d мин.</item>
+    <item quantity="few">%1$d мин.</item>
+    <item quantity="other">%1$d мин.</item>
   </plurals>
   <string name="studyoptions_welcome_title">Добро пожаловать в AnkiDroid</string>
   <string name="fact_adder_intent_title">AnkiDroid Карта</string>
@@ -130,10 +130,10 @@
   <string name="card_editor_copy_card">Копировать карту</string>
   <string name="card_editor_reset_card">Сбросить прогресс</string>
   <string name="card_editor_reschedule_card">Изменить расписание карты</string>
-  <string name="card_editor_preview_card">Предпросмотр</string>
+  <string name="card_editor_preview_card">Предпросмотр карты</string>
   <string name="error_insufficient_memory">Операция не возможна из-за недостатка памяти на Вашем устройстве</string>
   <string name="rename">Переименовать</string>
-  <string name="default_conf_delete_error">Невозможно удалить группу опций по умолчанию</string>
+  <string name="default_conf_delete_error">Невозможно удалить конфигурацию по умолчанию</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d карта добавлена</item>
     <item quantity="few">%d карты добавлены</item>
@@ -141,26 +141,26 @@
   </plurals>
   <string name="help_title">Справка</string>
   <string name="check_db">Проверить базу данных</string>
-  <string name="check_media">Проверить медиа</string>
-  <string name="empty_cards">Пустые карты</string>
+  <string name="check_media">Проверить Media данные</string>
+  <string name="empty_cards">Поиск пустых карт</string>
   <string name="check_db_message">Идет проверка базы данных&#8230;</string>
   <string name="empty_card_warning">Эта карта пуста. Используйте опцию \"Пустые карты\" из меню на экране списка колод.</string>
-  <string name="unknown_type_field_warning">Тип ответа: неизвестное поле %s</string>
+  <string name="unknown_type_field_warning">Неизвестный тип поля: %s</string>
   <string name="delete_deck">Удаление колоды&#8230;</string>
   <string name="show_hint">Показать %s</string>
   <string name="info_rate">Оценить AnkiDroid</string>
   <string name="col_load_failed">Сбой загрузки коллекции.\nНажмите кнопку назад, чтобы закрыть AnkiDroid.</string>
-  <string name="import_title">Импортируется</string>
+  <string name="import_title">Импорт коллекции</string>
   <string name="import_select_title">Выбрать файл для импорта</string>
   <string name="import_message_add">Добавить</string>
   <string name="import_message_replace_confirm">Удалить Вашу существующую коллекцию и заменить её данными файла %s. Вы уверены?</string>
   <string name="import_message_add_confirm">Добавить \"%s\" в коллекцию? Это может занять много времени</string>
-  <string name="import_log_no_apkg">Это негодный apkg-файл</string>
+  <string name="import_log_no_apkg">Это поврежденный apkg-файл</string>
   <string name="import_error_not_apkg_extension">У файла %s должно быть расширение .apkg</string>
   <string name="import_error_content_provider">Это файл невозможно импортировать автоматически. Пожалуйста, посмотрите в руководстве пользователя, как импортировать anki-файлы вручную: \n %s</string>
   <string name="import_replacing">Замена коллекции&#8230;</string>
-  <string name="export_include_schedule">Включить планирование</string>
-  <string name="export_include_media">Включить медиа</string>
+  <string name="export_include_schedule">Включая \"Планировщик\"</string>
+  <string name="export_include_media">Включая Media</string>
   <string name="confirm_apkg_export">Экспортировать коллекцию в apkg файл?</string>
   <string name="confirm_apkg_export_deck">Экспортировать \"%s\" в apkg файл?</string>
   <string name="export_in_progress">Экспортирую apkg файл&#8230;</string>
@@ -173,40 +173,42 @@
   <string name="select_tts">Язык синтезированной речи</string>
   <string name="custom_study">Дополнительное обучение</string>
   <string name="more_options">Еще</string>
-  <string name="dyn_deck_desc">Это специальная колода для изучения вне нормального расписания. Карты будут автоматически возвращены в их изначальную колоду после их просмотра. Удаление этой колоды из списка колод возвратит все оставшиеся карты в их изначальную колоду.</string>
+  <string name="dyn_deck_desc">Это специальная колода для натаскивания (Зубрения) вне нормального расписания.
+    Карты будут автоматически возвращены в их изначальную колоду после их просмотра.
+    Удаление этой колоды из списка колод возвратит все оставшиеся карты в их изначальную колоду.</string>
   <string name="steps_error">Шаги должны быть числами больше 0</string>
   <string name="steps_min_error">Требуется по крайней мере один шаг</string>
   <string name="sched_end">(конец)</string>
-  <string name="sched_unbury_action">Чтобы просмотреть их сейчас, выберите \"Откопать\" в меню</string>
+  <string name="sched_unbury_action">Чтобы просмотреть их сейчас, выберите \"Отменить Скрытие\" в меню</string>
   <string name="sched_has_buried">Некоторые связанные или скрытые карты были отложены до следующей сессии.</string>
   <string name="tag_editor_add_feedback">Выберите “%2$s” чтобы подтвердить добавление “%1$s”</string>
-  <string name="tag_editor_add_feedback_existing">Выбран существующий тег \"%1$s\"</string>
+  <string name="tag_editor_add_feedback_existing">Выбрана существующая метка \"%1$s\"</string>
   <string name="lookup_hint">Скопировав текст, нажмите где-нибудь на карте, чтобы показать иконку поиска</string>
   <!-- Time spans -->
   <plurals name="time_span_seconds">
-    <item quantity="one">%s секунда</item>
-    <item quantity="few">%s секунды</item>
-    <item quantity="other">%s секунд</item>
+    <item quantity="one">%s сек.</item>
+    <item quantity="few">%s сек.</item>
+    <item quantity="other">%s сек.</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="one">%s минута</item>
-    <item quantity="few">%s минуты</item>
-    <item quantity="other">%s минут</item>
+    <item quantity="one">%s мин.</item>
+    <item quantity="few">%s мин.</item>
+    <item quantity="other">%s мин.</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="one">%s час</item>
-    <item quantity="few">%s часа</item>
-    <item quantity="other">%s часов</item>
+    <item quantity="one">%s ч.</item>
+    <item quantity="few">%s ч.</item>
+    <item quantity="other">%s ч.</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="one">%s день</item>
-    <item quantity="few">%s дня</item>
-    <item quantity="other">%s дней</item>
+    <item quantity="one">%s дн.</item>
+    <item quantity="few">%s дн.</item>
+    <item quantity="other">%s дн.</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="one">%s месяц</item>
-    <item quantity="few">%s месяца</item>
-    <item quantity="other">%s месяцев</item>
+    <item quantity="one">%s мес.</item>
+    <item quantity="few">%s мес.</item>
+    <item quantity="other">%s мес.</item>
   </plurals>
   <plurals name="time_span_years">
     <item quantity="one">%s год</item>
@@ -218,6 +220,6 @@
          than. -->
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">Эта колода уже существует</string>
-  <string name="decks_rename_filtered_nosubdecks">Отфильтрованая колода не может иметь дочерних колод</string>
-  <string name="filtered_deck_name">Отфильтрованая колода</string>
+  <string name="decks_rename_filtered_nosubdecks">Фильтрованая колода не может иметь дочерних колод</string>
+  <string name="filtered_deck_name">Фильтрованная колода</string>
 </resources>

@@ -81,8 +81,8 @@
   <string name="menu_import">Importuj</string>
   <string name="undo">Cofnij</string>
   <string name="undo_action_review">ostatnia powtórka</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
+  <string name="undo_action_bury_card">zakop kartę</string>
+  <string name="undo_action_bury_note">zakop notatkę</string>
   <string name="undo_action_suspend_card">zawieszenie karty</string>
   <string name="undo_action_suspend_note">zawieszenie notatki</string>
   <string name="undo_action_delete">usunięcie notatki</string>
@@ -96,8 +96,8 @@
   <string name="menu_bury_note">Ukryj notatkę</string>
   <string name="menu_suspend_card">Zawieś kartę</string>
   <string name="menu_suspend_note">Zawieś notatkę</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">Zakop</string>
+  <string name="menu_suspend">Zawieś</string>
   <string name="menu_delete_note">Usuń notatkę</string>
   <string name="delete_note_message">Jesteś pewny, że chcesz usunąć tę notatkę i wszystkie jej karty?\n%s</string>
   <string name="menu_select">Zaznacz tekst</string>
@@ -157,7 +157,7 @@
   <string name="card_template_editor_cant_delete">Wymagany jest przynajmniej jeden typ karty.</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">Czy usunąć typ kart “%2$s” oraz jego %1$d kartę?</item>
-    <item quantity="few">Delete the “%2$s” card type, and its %1$d cards?</item>
+    <item quantity="few">Czy usunąć typ kart “%2$s” oraz jego %1$d kart?</item>
     <item quantity="other">Czy usunąć typ kart “%2$s” oraz jego %1$d karty?</item>
   </plurals>
   <string name="invalid_template">Karta nie mogła zostać wygenerowana</string>

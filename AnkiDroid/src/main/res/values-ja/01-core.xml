@@ -41,7 +41,7 @@
 <resources>
   <!-- Navigation drawer items-->
   <string name="decks">デッキリスト</string>
-  <string name="card_browser">ブラウザ</string>
+  <string name="card_browser">カードブラウザ</string>
   <string name="statistics">統計</string>
   <string name="settings">設定</string>
   <string name="help">ヘルプ</string>

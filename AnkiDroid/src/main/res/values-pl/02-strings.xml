@@ -115,9 +115,9 @@
   <string name="field_remapping">%1$s (z “%2$s”)</string>
   <string name="confirm_map_cards_to_nothing">Wszystkie nieprzypisane karty zostaną usunięte. Jeśli notatka nie zawiera już kart, równie zostanie usunięta. Czy na pewno chcesz kontynuować?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
-    <item quantity="few">%1$d cards studied in %2$s</item>
-    <item quantity="other">%1$d kart, uczonych w %2$s</item>
+    <item quantity="one">%1$d karta przerobiona w %2$s</item>
+    <item quantity="few">%1$d kart przerobione w %2$s</item>
+    <item quantity="other">%1$d kart przerobione w %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
     <item quantity="one">%1$d minutę</item>
@@ -136,8 +136,8 @@
   <string name="default_conf_delete_error">Nie można usunąć domyślnej grupy ustawień</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d karta dodana</item>
-    <item quantity="few">%d cards added</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="few">dodanych %d kart</item>
+    <item quantity="other">dodanych %d kart</item>
   </plurals>
   <string name="help_title">Pomoc</string>
   <string name="check_db">Sprawdź bazę danych</string>
@@ -184,19 +184,19 @@
   <string name="lookup_hint">Po skopiowaniu tekstu, stuknięcie dowolnego miejsca na karcie pokazuje ikonę szukania</string>
   <!-- Time spans -->
   <plurals name="time_span_seconds">
-    <item quantity="one">%s sekund</item>
+    <item quantity="one">%s sekunda</item>
     <item quantity="few">%s sekund</item>
-    <item quantity="other">%s seconds</item>
+    <item quantity="other">%s sekund</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="one">%s minute</item>
-    <item quantity="few">%s minutes</item>
-    <item quantity="other">%s minutes</item>
+    <item quantity="one">%s minut</item>
+    <item quantity="few">%s minut</item>
+    <item quantity="other">%s minut</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="one">%s hour</item>
-    <item quantity="few">%s hours</item>
-    <item quantity="other">%s hours</item>
+    <item quantity="one">%s godzina</item>
+    <item quantity="few">%s godzin</item>
+    <item quantity="other">%s godzin</item>
   </plurals>
   <plurals name="time_span_days">
     <item quantity="one">%s dzień</item>
@@ -204,9 +204,9 @@
     <item quantity="other">%s dni</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="one">%s month</item>
-    <item quantity="few">%s months</item>
-    <item quantity="other">%s months</item>
+    <item quantity="one">%s miesiąc</item>
+    <item quantity="few">%s miesięcy</item>
+    <item quantity="other">%s miesięcy</item>
   </plurals>
   <plurals name="time_span_years">
     <item quantity="one">%s rok</item>
@@ -218,6 +218,6 @@
          than. -->
   <string name="less_than_time">&lt; %s</string>
   <string name="decks_rename_exists">Ta talia już istnieje</string>
-  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
+  <string name="decks_rename_filtered_nosubdecks">Filtrowana talia nie może mieć podtalii</string>
   <string name="filtered_deck_name">Talia filtrowana</string>
 </resources>

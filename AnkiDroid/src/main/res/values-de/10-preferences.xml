@@ -119,8 +119,8 @@
   <string name="fix_hebrew_text_summ">Übergangslösung um hebräische Vokale korrekt anzuzeigen.</string>
   <string name="fix_hebrew_instructions">Diese Einstellung umgeht den RTL-Algorithmus von Android, um hebräischen Text mit Vokalen korrekt anzuzeigen.\n\nDamit dies funktioniert, müssen Sie die Schriftart Tohu.ttf herunterladen und manuell in dieses Verzeichnis kopieren:\n»%s/font/«\n\nIhre Karten müssen Sie dafür nicht ändern.</string>
   <string name="fix_hebrew_download_font">Schrift herunterladen</string>
-  <string name="day_theme">Day theme</string>
-  <string name="night_theme">Night theme</string>
+  <string name="day_theme">Tag Theme</string>
+  <string name="night_theme">Nacht Theme</string>
   <string name="default_font">Standardschrift</string>
   <string name="override_font">Anwendungsbereich der Standardschrift</string>
   <string name="language">Sprache</string>
@@ -148,7 +148,7 @@
   <string name="show_estimates_summ">Zeigt Zeiten bis zur nächsten Wiederholung auf den Antwortschaltflächen</string>
   <string name="show_progress">Fällige anzeigen</string>
   <string name="show_progress_summ">Verbleibende Anzahl der Karten anzeigen</string>
-  <string name="show_eta">Show ETA</string>
+  <string name="show_eta">ETA anzeigen</string>
   <string name="show_eta_summ">Verbleibende Zeit anzeigen</string>
   <string name="use_current">Stapel für neue Karten</string>
   <string name="new_spread">Position neuer Karten</string>

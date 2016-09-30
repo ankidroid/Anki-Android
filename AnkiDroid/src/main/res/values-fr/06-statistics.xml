@@ -103,7 +103,7 @@
   <string name="stats_forecast">Prévisions</string>
   <string name="stats_review_count">Nombre de révisions</string>
   <string name="stats_review_time">Temps de révision</string>
-  <string name="stats_added">Added</string>
+  <string name="stats_added">Ajouté</string>
   <string name="stats_review_intervals">Intervalles</string>
   <string name="stats_breakdown">Division horaire</string>
   <string name="stats_weekly_breakdown">Division hebdomadaire</string>
