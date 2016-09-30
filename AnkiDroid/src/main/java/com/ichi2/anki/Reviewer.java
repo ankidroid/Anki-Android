@@ -51,6 +51,7 @@ import com.ichi2.widget.WidgetStatus;
 import org.json.JSONException;
 
 import java.lang.ref.WeakReference;
+import java.text.MessageFormat;
 import java.util.List;
 
 import timber.log.Timber;
@@ -68,7 +69,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         Timber.d("onCreate()");
 
         if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
-            Timber.d("onCreate() :: received Intent with action = " + getIntent().getAction());
+            Timber.d("onCreate() :: received Intent with action = %s", getIntent().getAction());
             selectDeckFromExtra();
         }
 
@@ -84,7 +85,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             return;
         }
 
-        Timber.d(String.format("selectDeckFromExtra() with deckId = %d", did));
+        Timber.d("selectDeckFromExtra() with deckId = %d", did);
 
         // Clear the undo history when selecting a new deck
         if (getCol().getDecks().selected() != did) {
