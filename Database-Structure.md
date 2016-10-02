@@ -195,7 +195,7 @@ Here is an annotated description of the JSONObjects in the models field of the `
             ]
           ],
     sortf : "Integer specifying which field is used for sorting in the browser",
-    tags : "Anki saves the tags of the last added note to the current model",
+    tags : "Anki saves the tags of the last added note to the current model, use an empty array []",
     tmpls : [
               "JSONArray containing object of CardTemplate for each card in model",
               {
@@ -212,7 +212,7 @@ Here is an annotated description of the JSONObjects in the models field of the `
             ],
     type : "Integer specifying what type of model. 0 for standard, 1 for cloze",
     usn : "usn: Update sequence number: used in same way as other usn vales in db",
-    vers : "Legacy version number (unused)"
+    vers : "Legacy version number (unused), use an empty array []"
   }
 }
 ```
