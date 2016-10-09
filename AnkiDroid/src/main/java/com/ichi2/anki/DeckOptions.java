@@ -18,6 +18,8 @@ package com.ichi2.anki;
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -40,10 +42,13 @@ import android.view.MenuItem;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.receiver.ReminderReceiver;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.anki.services.ReminderService;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.preferences.StepsPreference;
+import com.ichi2.preferences.TimePreference;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
@@ -53,6 +58,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -128,6 +134,17 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mValues.put("lapLeechAct", lapOptions.getString("leechAction"));
                 // options group management
                 mValues.put("currentConf", mCol.getDecks().getConf(mDeck.getLong("conf")).getString("name"));
+                // reminders
+                if (mOptions.has("reminder")) {
+                    final JSONObject reminder = mOptions.getJSONObject("reminder");
+                    final JSONArray reminderTime = reminder.getJSONArray("time");
+
+                    mValues.put("reminderEnabled", Boolean.toString(reminder.getBoolean("enabled")));
+                    mValues.put("reminderTime", String.format("%1$02d:%2$02d", reminderTime.get(0), reminderTime.get(1)));
+                } else {
+                    mValues.put("reminderEnabled", "false");
+                    mValues.put("reminderTime", TimePreference.DEFAULT_VALUE);
+                }
             } catch (JSONException e) {
                 finish();
             }
@@ -275,6 +292,76 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_SET_SUBDECKS, mConfChangeHandler,
                                         new DeckTask.TaskData(new Object[] { mDeck, mOptions }));
                             }
+                        } else if (key.equals("reminderEnabled")) {
+                            final JSONObject reminder = new JSONObject();
+
+                            reminder.put("enabled", value);
+                            if (mOptions.has("reminder")) {
+                                reminder.put("time", mOptions.getJSONObject("reminder").getJSONArray("time"));
+                            } else {
+                                reminder.put("time", new JSONArray()
+                                        .put(TimePreference.parseHours(TimePreference.DEFAULT_VALUE))
+                                        .put(TimePreference.parseMinutes(TimePreference.DEFAULT_VALUE)));
+                            }
+
+                            mOptions.put("reminder", reminder);
+
+                            final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                            final PendingIntent reminderIntent = PendingIntent.getBroadcast(
+                                    getApplicationContext(),
+                                    (int) mDeck.getLong("id"),
+                                    new Intent(getApplicationContext(), ReminderReceiver.class).putExtra
+                                            (ReminderService.EXTRA_DECK_ID, mDeck.getLong("id")),
+                                    0
+                            );
+
+                            alarmManager.cancel(reminderIntent);
+                            if ((Boolean) value) {
+                                final Calendar calendar = Calendar.getInstance();
+
+                                calendar.set(Calendar.HOUR_OF_DAY, reminder.getJSONArray("time").getInt(0));
+                                calendar.set(Calendar.MINUTE, reminder.getJSONArray("time").getInt(1));
+                                calendar.set(Calendar.SECOND, 0);
+
+                                alarmManager.setInexactRepeating(
+                                        AlarmManager.RTC_WAKEUP,
+                                        calendar.getTimeInMillis(),
+                                        AlarmManager.INTERVAL_DAY,
+                                        reminderIntent
+                                );
+                            }
+                        } else if (key.equals("reminderTime")) {
+                            final JSONObject reminder = new JSONObject();
+
+                            reminder.put("enabled", true);
+                            reminder.put("time", new JSONArray().put(TimePreference.parseHours((String) value))
+                                    .put(TimePreference.parseMinutes((String) value)));
+
+                            mOptions.put("reminder", reminder);
+
+                            final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                            final PendingIntent reminderIntent = PendingIntent.getBroadcast(
+                                    getApplicationContext(),
+                                    (int) mDeck.getLong("id"),
+                                    new Intent(getApplicationContext(), ReminderReceiver.class).putExtra
+                                            (ReminderService.EXTRA_DECK_ID, mDeck.getLong("id")),
+                                    0
+                            );
+
+                            alarmManager.cancel(reminderIntent);
+
+                            final Calendar calendar = Calendar.getInstance();
+
+                            calendar.set(Calendar.HOUR_OF_DAY, reminder.getJSONArray("time").getInt(0));
+                            calendar.set(Calendar.MINUTE, reminder.getJSONArray("time").getInt(1));
+                            calendar.set(Calendar.SECOND, 0);
+
+                            alarmManager.setInexactRepeating(
+                                    AlarmManager.RTC_WAKEUP,
+                                    calendar.getTimeInMillis(),
+                                    AlarmManager.INTERVAL_DAY,
+                                    reminderIntent
+                            );
                         }
                     }
                 } catch (JSONException e) {
