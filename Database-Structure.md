@@ -186,12 +186,11 @@ Here is an annotated description of the JSONObjects in the models field of the `
     name : "model name",
     req : [
             "Array of arrays describing which fields are required 
-                for each card to be generated",
+                for each card to be generated, looks like: [[0, "any", [0, 3, 6]]], this is required to display a template",
             [
-              "array index, 0, 1, ...",
-              '? string, "all"',
-              "another array",
-              ["appears to be the array index again"]
+              "the 'ord' value of the template object from the 'tmpls' array you are setting the required fields of",
+              '? string, "all" or "any"',
+              ["? another array of 'ord' values from field object you want to require from the 'flds' array"]
             ]
           ],
     sortf : "Integer specifying which field is used for sorting in the browser",
