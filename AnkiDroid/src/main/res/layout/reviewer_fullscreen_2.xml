@@ -8,25 +8,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusableInTouchMode="true">
-        <!-- Main content that takes up the fullscreen -->
-        <include layout="@layout/reviewer_flashcard_fullscreen_2"/>
-        <!-- Controls that are overlaid over the main content when the user interrupts immersive mode -->
-        <FrameLayout
+        <!-- AbstractFlashcardViewer pulls layout params from parent, casting it as RelativeLayout -->
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true">
-            <RelativeLayout
-                android:id="@+id/front_frame"
+            android:layout_height="match_parent">
+            <!-- Main content that takes up the fullscreen -->
+            <include layout="@layout/reviewer_flashcard_fullscreen_2"/>
+            <!-- Controls that are overlaid over the main content when the user interrupts immersive mode -->
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <include layout="@layout/toolbar"/>
-                <include layout="@layout/reviewer_topbar"
-                         android:layout_width="fill_parent"
-                         android:layout_height="wrap_content"
-                         android:layout_below="@id/toolbar"/>
-                <include layout="@layout/reviewer_answer_buttons"/>
-            </RelativeLayout>
-        </FrameLayout>
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true">
+                <RelativeLayout
+                    android:id="@+id/front_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <include layout="@layout/toolbar"/>
+                    <include layout="@layout/reviewer_topbar"
+                             android:layout_width="fill_parent"
+                             android:layout_height="wrap_content"
+                             android:layout_below="@id/toolbar"/>
+                    <include layout="@layout/reviewer_answer_buttons"/>
+                </RelativeLayout>
+            </FrameLayout>
+        </RelativeLayout>
     </android.support.design.widget.CoordinatorLayout>
     <include layout="@layout/navigation_drawer" />
 </android.support.v4.widget.DrawerLayout>
