@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0041)https://ankidroid.org/docs/changelog.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>AnkiDroid Changelog</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./changelog_files/css">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 /* Remove comment around @import statement below when using as a custom stylesheet */
@@ -17,7 +17,6 @@ audio:not([controls]){display:none;height:0}
 [hidden],template{display:none}
 script{display:none!important}
 html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
-body{margin:0}
 a{background:transparent}
 a:focus{outline:thin dotted}
 a:active,a:hover{outline:0}
@@ -52,7 +51,7 @@ textarea{overflow:auto;vertical-align:top}
 table{border-collapse:collapse;border-spacing:0}
 *,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
 html,body{font-size:100%}
-body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
 a:hover{cursor:pointer}
 img,object,embed{max-width:100%;height:auto}
 object,embed{height:100%}
@@ -64,7 +63,6 @@ img{-ms-interpolation-mode:bicubic}
 .text-center{text-align:center!important}
 .text-justify{text-align:justify!important}
 .hide{display:none}
-body{-webkit-font-smoothing:antialiased}
 img,object,svg{display:inline-block;vertical-align:middle}
 textarea{height:auto;min-height:50px}
 select{width:100%}
@@ -119,13 +117,16 @@ table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:
 table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
 table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
 table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
-body{tab-size:4}
 h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
 h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
 .clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
 .clearfix:after,.float-group:after{clear:both}
-*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
+*:not(pre)>code.nobreak{word-wrap:normal}
+*:not(pre)>code.nowrap{white-space:nowrap}
 pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
+em em{font-style:normal}
+strong strong{font-weight:400}
 .keyseq{color:rgba(51,51,51,.8)}
 kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
 .keyseq kbd:first-child{margin-left:0}
@@ -416,21 +417,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
 </style>
-<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
-<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
-<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
-<link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
-<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
-<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
-<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-<link rel="manifest" href="/manifest.json">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#03a9f4">
+<link rel="apple-touch-icon" sizes="57x57" href="https://ankidroid.org/apple-touch-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="https://ankidroid.org/apple-touch-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://ankidroid.org/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://ankidroid.org/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://ankidroid.org/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://ankidroid.org/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://ankidroid.org/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://ankidroid.org/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://ankidroid.org/apple-touch-icon-180x180.png">
+<link rel="icon" type="image/png" href="https://ankidroid.org/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://ankidroid.org/android-chrome-192x192.png" sizes="192x192">
+<link rel="icon" type="image/png" href="https://ankidroid.org/favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="https://ankidroid.org/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="https://ankidroid.org/manifest.json">
+<link rel="mask-icon" href="https://ankidroid.org/safari-pinned-tab.svg" color="#03a9f4">
 <meta name="msapplication-TileColor" content="#303030">
 <meta name="msapplication-TileImage" content="/mstile-144x144.png">
 <meta name="theme-color" content="#03a9f4">
@@ -441,18 +442,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_version_2_6_2_2016_08_12"><a class="anchor" href="#_version_2_6_2_2016_08_12"></a>Version 2.6.2 (2016-08-12)</h2>
+<h2 id="_version_2_7_2016_10_16"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_7_2016_10_16"></a>Version 2.7 (2016-10-16)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p>Added pull-to-sync feature</p>
+<p>Add pull-to-sync feature</p>
 </li>
 <li>
-<p>Added option to place answer buttons at the top</p>
+<p>Add option to place answer buttons at the top</p>
 </li>
 <li>
-<p>Added widget to directly access "Add note" screen</p>
+<p>Add widget to directly access "Add note" screen</p>
 </li>
 <li>
 <p>Fix issue with importing whole collections and restoring backups</p>
@@ -464,17 +465,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Fix cards in learning queue not being randomized</p>
 </li>
 <li>
+<p>Fix crash with fullscreen mode and hidden answer buttons</p>
+</li>
+<li>
 <p>Fix rare crash when opening deck options</p>
 </li>
 <li>
-<p>Improved support with TalkBack</p>
+<p>Improve support with TalkBack</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_6_1_2016_07_08"><a class="anchor" href="#_version_2_6_1_2016_07_08"></a>Version 2.6.1 (2016-07-08)</h2>
+<h2 id="_version_2_6_1_2016_07_08"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_6_1_2016_07_08"></a>Version 2.6.1 (2016-07-08)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -504,7 +508,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_6_2016_06_14"><a class="anchor" href="#_version_2_6_2016_06_14"></a>Version 2.6 (2016-06-14)</h2>
+<h2 id="_version_2_6_2016_06_14"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_6_2016_06_14"></a>Version 2.6 (2016-06-14)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -564,7 +568,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_5_4_2015_12_14"><a class="anchor" href="#_version_2_5_4_2015_12_14"></a>Version 2.5.4 (2015-12-14)</h2>
+<h2 id="_version_2_5_4_2015_12_14"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_5_4_2015_12_14"></a>Version 2.5.4 (2015-12-14)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -576,7 +580,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_5_3_2015_12_14"><a class="anchor" href="#_version_2_5_3_2015_12_14"></a>Version 2.5.3 (2015-12-14)</h2>
+<h2 id="_version_2_5_3_2015_12_14"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_5_3_2015_12_14"></a>Version 2.5.3 (2015-12-14)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -599,7 +603,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Multiple media files can now be added to one field in the note editor</p>
 </li>
 <li>
-<p>Don&#8217;t include unused media files on export</p>
+<p>Don’t include unused media files on export</p>
 </li>
 <li>
 <p>Undo behaviour is now consistent with the desktop client (can no longer undo note edits)</p>
@@ -615,7 +619,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_5_2_2015_12_04"><a class="anchor" href="#_version_2_5_2_2015_12_04"></a>Version 2.5.2 (2015-12-04)</h2>
+<h2 id="_version_2_5_2_2015_12_04"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_5_2_2015_12_04"></a>Version 2.5.2 (2015-12-04)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -648,7 +652,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_5_1_2015_12_01"><a class="anchor" href="#_version_2_5_1_2015_12_01"></a>Version 2.5.1 (2015-12-01)</h2>
+<h2 id="_version_2_5_1_2015_12_01"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_5_1_2015_12_01"></a>Version 2.5.1 (2015-12-01)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -663,7 +667,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_5_2015_11_30"><a class="anchor" href="#_version_2_5_2015_11_30"></a>Version 2.5 (2015-11-30)</h2>
+<h2 id="_version_2_5_2015_11_30"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_5_2015_11_30"></a>Version 2.5 (2015-11-30)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -729,7 +733,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_4_4_2015_10_20"><a class="anchor" href="#_version_2_4_4_2015_10_20"></a>Version 2.4.4 (2015-10-20)</h2>
+<h2 id="_version_2_4_4_2015_10_20"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_4_4_2015_10_20"></a>Version 2.4.4 (2015-10-20)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -753,7 +757,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_4_3_2015_04_21"><a class="anchor" href="#_version_2_4_3_2015_04_21"></a>Version 2.4.3 (2015-04-21)</h2>
+<h2 id="_version_2_4_3_2015_04_21"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_4_3_2015_04_21"></a>Version 2.4.3 (2015-04-21)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -783,7 +787,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_4_2_2015_03_18"><a class="anchor" href="#_version_2_4_2_2015_03_18"></a>Version 2.4.2 (2015-03-18)</h2>
+<h2 id="_version_2_4_2_2015_03_18"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_4_2_2015_03_18"></a>Version 2.4.2 (2015-03-18)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -798,7 +802,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_4_1_2015_03_15"><a class="anchor" href="#_version_2_4_1_2015_03_15"></a>Version 2.4.1 (2015-03-15)</h2>
+<h2 id="_version_2_4_1_2015_03_15"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_4_1_2015_03_15"></a>Version 2.4.1 (2015-03-15)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -831,7 +835,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_4_2015_01_28"><a class="anchor" href="#_version_2_4_2015_01_28"></a>Version 2.4 (2015-01-28)</h2>
+<h2 id="_version_2_4_2015_01_28"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_4_2015_01_28"></a>Version 2.4 (2015-01-28)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -873,7 +877,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_3_2_2014_11_06"><a class="anchor" href="#_version_2_3_2_2014_11_06"></a>Version 2.3.2 (2014-11-06)</h2>
+<h2 id="_version_2_3_2_2014_11_06"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_3_2_2014_11_06"></a>Version 2.3.2 (2014-11-06)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -888,7 +892,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_3_2014_10_27"><a class="anchor" href="#_version_2_3_2014_10_27"></a>Version 2.3 (2014-10-27)</h2>
+<h2 id="_version_2_3_2014_10_27"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_3_2014_10_27"></a>Version 2.3 (2014-10-27)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -951,7 +955,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_2_3_2014_08_04"><a class="anchor" href="#_version_2_2_3_2014_08_04"></a>Version 2.2.3 (2014-08-04)</h2>
+<h2 id="_version_2_2_3_2014_08_04"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_2_3_2014_08_04"></a>Version 2.2.3 (2014-08-04)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -966,7 +970,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_2_2014_07_21"><a class="anchor" href="#_version_2_2_2014_07_21"></a>Version 2.2 (2014-07-21)</h2>
+<h2 id="_version_2_2_2014_07_21"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_2_2014_07_21"></a>Version 2.2 (2014-07-21)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -1035,7 +1039,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_1_3_2014_04_05"><a class="anchor" href="#_version_2_1_3_2014_04_05"></a>Version 2.1.3 (2014-04-05)</h2>
+<h2 id="_version_2_1_3_2014_04_05"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_1_3_2014_04_05"></a>Version 2.1.3 (2014-04-05)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -1050,7 +1054,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_1_2014_03_27"><a class="anchor" href="#_version_2_1_2014_03_27"></a>Version 2.1 (2014-03-27)</h2>
+<h2 id="_version_2_1_2014_03_27"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_1_2014_03_27"></a>Version 2.1 (2014-03-27)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -1067,7 +1071,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>New override font preference in addition to default font</p>
 </li>
 <li>
-<p>New "Kanji Info" feature (enabled in preferences&#8594;reviewing&#8594;Kanji Info)</p>
+<p>New "Kanji Info" feature (enabled in preferences→reviewing→Kanji Info)</p>
 </li>
 <li>
 <p>Improve Aedict integration</p>
@@ -1095,7 +1099,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_0_4_2014_02_03"><a class="anchor" href="#_version_2_0_4_2014_02_03"></a>Version 2.0.4 (2014-02-03)</h2>
+<h2 id="_version_2_0_4_2014_02_03"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_0_4_2014_02_03"></a>Version 2.0.4 (2014-02-03)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -1119,7 +1123,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_0_2_2013_12_15"><a class="anchor" href="#_version_2_0_2_2013_12_15"></a>Version 2.0.2 (2013-12-15)</h2>
+<h2 id="_version_2_0_2_2013_12_15"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_0_2_2013_12_15"></a>Version 2.0.2 (2013-12-15)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -1176,7 +1180,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_0_1_2013_02_06"><a class="anchor" href="#_version_2_0_1_2013_02_06"></a>Version 2.0.1 (2013-02-06)</h2>
+<h2 id="_version_2_0_1_2013_02_06"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_0_1_2013_02_06"></a>Version 2.0.1 (2013-02-06)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -1194,7 +1198,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_2_0_2013_01_03"><a class="anchor" href="#_version_2_0_2013_01_03"></a>Version 2.0 (2013-01-03)</h2>
+<h2 id="_version_2_0_2013_01_03"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_2_0_2013_01_03"></a>Version 2.0 (2013-01-03)</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -1239,7 +1243,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_version_0_1_to_1_1_3"><a class="anchor" href="#_version_0_1_to_1_1_3"></a>Version 0.1 to 1.1.3</h2>
+<h2 id="_version_0_1_to_1_1_3"><a class="anchor" href="https://ankidroid.org/docs/changelog.html#_version_0_1_to_1_1_3"></a>Version 0.1 to 1.1.3</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>AnkiDroid has continuously evolved collectively as an open source project, with the first version released to the Google Market on <a href="http://nicolas-raoul.blogspot.jp/2009/06/just-published-ankidroid-on-market.html">June 28 2009</a>.
@@ -1251,8 +1255,8 @@ essentially rewritten from scratch to be compatible with the new Anki Desktop v2
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-03 18:26:08 AEST
+Last updated 2016-10-16 12:02:24 UTC
 </div>
 </div>
-</body>
-</html>
+
+</body></html>
