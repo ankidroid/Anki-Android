@@ -41,7 +41,7 @@
 <resources>
   <string name="statistics_young">Jóvenes</string>
   <string name="statistics_mature">Maduras</string>
-  <string name="statistics_young_and_learn">Young+Learn</string>
+  <string name="statistics_young_and_learn">Joven+aprender</string>
   <string name="statistics_unlearned">No vistas</string>
   <string name="statistics_suspended_and_buried">Suspended+Buried</string>
   <string name="statistics_relearn">Vueltas a aprender</string>

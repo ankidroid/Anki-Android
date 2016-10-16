@@ -60,7 +60,7 @@
   <string name="stats_minutes">分</string>
   <string name="stats_hours">時間</string>
   <string name="stats_percentage">累積比率(%) 〔折れ線グラフ〕</string>
-  <string name="stats_period_month">1ヶ月</string>
+  <string name="stats_period_month">1か月</string>
   <string name="stats_period_year">1年</string>
   <string name="stats_period_lifetime">すべての期間</string>
   <string name="stats_deck_collection">すべてのデッキ</string>
