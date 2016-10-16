@@ -38,6 +38,36 @@
         <Preference
             android:key="custom_sync_server_link"
             android:title="@string/custom_sync_server_title"/>
+        <PreferenceCategory android:title="@string/pref_cat_card_creation" >
+            <ListPreference
+                android:key="card_front_or_back_position"
+                android:title="@string/card_front_or_back_position"
+                android:defaultValue="front"
+                android:entries="@array/card_position"
+                android:entryValues="@array/card_position_value"/>
+            <!-- some dictionaries provide in intent "Subject" field the search text, that was used to find current trnaslation,
+            i.e. subject "diction" may have been used for finding "dictionary" article.
+            Meanwhile, in case this dictionary includes translated word at the beginning of its article, and this word can be detected
+            being divided by transription from the translation text - then subject can be ignored and the word can be parsed from intent
+            "text" field. For example, the intent.text may be the following:
+            DICTIONARY [дикшэнери] some translation text-->
+            <CheckBoxPreference
+                android:key="ignore_subject_from_the_app"
+                android:defaultValue="false"
+                android:title="@string/ignore_intents_subject"
+                android:summary="@string/ignore_intents_subject_summary"/>
+            <CheckBoxPreference
+                android:key="parse_clipboard_for_translation"
+                android:defaultValue="false"
+                android:title="@string/parse_clipboard"
+                android:summary="@string/parse_clipboard_summary"/>
+            <!-- usually the following setting makes sense only in case translation is on front (i.e. card_front_or_back_position=back)-->
+            <CheckBoxPreference
+                android:key="hide_subject_word_in_translation_examples"
+                android:defaultValue="false"
+                android:summary="@string/card_obfuscation_summary"
+                android:title="@string/card_obfuscation"/>
+        </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_performance" >
             <com.ichi2.ui.SeekBarPreference
                 android:defaultValue="8"

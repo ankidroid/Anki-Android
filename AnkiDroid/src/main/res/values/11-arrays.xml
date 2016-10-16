@@ -80,4 +80,12 @@
         <item>Black</item>
         <item>Dark</item>
     </string-array>
+    <string-array name="card_position">
+        <item>front</item>
+        <item>back</item>
+    </string-array>
+    <string-array name="card_position_value">
+        <item>front</item>
+        <item>back</item>
+    </string-array>
 </resources>
