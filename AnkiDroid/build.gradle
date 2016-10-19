@@ -3,7 +3,7 @@ apply plugin: 'com.github.triplet.play'
 def homePath = System.properties['user.home']
 android {
     compileSdkVersion 24
-    buildToolsVersion '24'
+    buildToolsVersion '24.0.3'
 
     defaultConfig {
         applicationId "com.ichi2.anki"
@@ -47,11 +47,11 @@ play {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:appcompat-v7:24.2.1'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
-    compile 'com.android.support:design:24.1.1'
-    compile 'com.android.support:customtabs:24.1.1'
-    compile 'com.android.support:recyclerview-v7:24.1.1'
+    compile 'com.android.support:design:24.2.1'
+    compile 'com.android.support:customtabs:24.2.1'
+    compile 'com.android.support:recyclerview-v7:24.2.1'
     compile('com.afollestad.material-dialogs:core:0.8.6.2@aar') {
         //exclude group: 'com.android.support'  // uncomment to force our local support lib version
         transitive = true
