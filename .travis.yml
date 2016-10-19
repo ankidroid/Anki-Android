@@ -8,11 +8,16 @@ android:
   components:
     - tools
     - platform-tools
-    - build-tools-24.0.0
-    - android-24
+    - build-tools-24.0.3
+    - android-25
     - extra-android-support
     - extra-android-m2repository
     - sys-img-armeabi-v7a-android-21
+
+licenses:
+    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
 
 jdk:
   - oraclejdk8

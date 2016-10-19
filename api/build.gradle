@@ -5,12 +5,12 @@ def artifactId = "api"
 def version = "1.1.0alpha5"
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '24'
+    compileSdkVersion 25
+    buildToolsVersion '24.0.3'
 
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 11015   // 4th digit: 1=alpha, 2=beta, 3=official
         versionName version
     }
