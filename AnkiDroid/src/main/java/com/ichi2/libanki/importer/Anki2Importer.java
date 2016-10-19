@@ -179,65 +179,78 @@ public class Anki2Importer extends Importer {
         int dupes = 0;
         ArrayList<String> dupesIgnored = new ArrayList<>();
         try {
-            cur = mSrc.getDb().getDatabase().rawQuery("select * from notes", null);
+            cur = mSrc.getDb().getDatabase().rawQuery("select count(*) from notes", null);
+            if(cur.getColumnCount() > 0) {
+                cur.moveToNext();
+                int total = cur.getInt(0);
+                // Counters for progress updates
+                int i = 0;
+                int offset = 200;
+                boolean largeCollection = total > 200;
+                int onePercent = total / offset / 100;
+                String[] limit_offsets = new String[]{Integer.toString(offset), Integer.toString(i)};
 
-            // Counters for progress updates
-            int total = cur.getCount();
-            boolean largeCollection = total > 200;
-            int onePercent = total/100;
-            int i = 0;
+                while (i < total) {
 
-            while (cur.moveToNext()) {
-                // turn the db result into a mutable list
-                Object[] note = new Object[]{cur.getLong(0), cur.getString(1), cur.getLong(2),
-                        cur.getLong(3), cur.getInt(4), cur.getString(5), cur.getString(6),
-                        cur.getString(7), cur.getLong(8), cur.getInt(9), cur.getString(10)};
-                boolean shouldAdd = _uniquifyNote(note);
-                if (shouldAdd) {
-                    // ensure id is unique
-                    while (existing.containsKey(note[0])) {
-                        note[0] = ((Long) note[0]) + 999;
-                    }
-                    existing.put((Long) note[0], true);
-                    // bump usn
-                    note[4] = usn;
-                    // update media references in case of dupes
-                    note[6] = _mungeMedia((Long) note[MID], (String) note[6]);
-                    add.add(note);
-                    dirty.add((Long) note[0]);
-                    // note we have the added guid
-                    mNotes.put((String) note[GUID], new Object[]{note[0], note[3], note[MID]});
-                } else {
-                    // a duplicate or changed schema - safe to update?
-                    dupes += 1;
-                    if (mAllowUpdate) {
-                        Object[] n = mNotes.get(note[GUID]);
-                        long oldNid = (Long) n[0];
-                        long oldMod = (Long) n[1];
-                        long oldMid = (Long) n[2];
-                        // will update if incoming note more recent
-                        if (oldMod < (Long) note[MOD]) {
-                            // safe if note types identical
-                            if (oldMid == (Long) note[MID]) {
-                                // incoming note should use existing id
-                                note[0] = oldNid;
-                                note[4] = usn;
-                                note[6] = _mungeMedia((Long) note[MID], (String) note[6]);
-                                update.add(note);
-                                dirty.add((Long) note[0]);
-                            } else {
-                                dupesIgnored.add(String.format("%s: %s",
-                                        mCol.getModels().get(oldMid).getString("name"),
-                                        ((String) note[6]).replace("\u001f", ",")));
-                                mIgnoredGuids.put((String) note[GUID], true);
+                    // paging by limit-offset, to avoid "*BANG* this causes OOM if the record is huge enough (>60k)"
+                     limit_offsets[1] = Integer.toString(i);
+                    cur = mSrc.getDb().getDatabase().rawQuery("select * from notes order by rowid limit ? offset ?", limit_offsets);
+
+                    while (cur.moveToNext()) {
+                        // turn the db result into a mutable list
+                        Object[] note = new Object[]{cur.getLong(0), cur.getString(1), cur.getLong(2),
+                                cur.getLong(3), cur.getInt(4), cur.getString(5), cur.getString(6),
+                                cur.getString(7), cur.getLong(8), cur.getInt(9), cur.getString(10)};
+                        boolean shouldAdd = _uniquifyNote(note);
+                        if (shouldAdd) {
+                            // ensure id is unique
+                            while (existing.containsKey(note[0])) {
+                                note[0] = ((Long) note[0]) + 999;
+                            }
+                            existing.put((Long) note[0], true);
+                            // bump usn
+                            note[4] = usn;
+                            // update media references in case of dupes
+                            note[6] = _mungeMedia((Long) note[MID], (String) note[6]);
+                            add.add(note);
+                            dirty.add((Long) note[0]);
+                            // note we have the added guid
+                            mNotes.put((String) note[GUID], new Object[]{note[0], note[3], note[MID]});
+                        } else {
+                            // a duplicate or changed schema - safe to update?
+                            dupes += 1;
+                            if (mAllowUpdate) {
+                                Object[] n = mNotes.get(note[GUID]);
+                                long oldNid = (Long) n[0];
+                                long oldMod = (Long) n[1];
+                                long oldMid = (Long) n[2];
+                                // will update if incoming note more recent
+                                if (oldMod < (Long) note[MOD]) {
+                                    // safe if note types identical
+                                    if (oldMid == (Long) note[MID]) {
+                                        // incoming note should use existing id
+                                        note[0] = oldNid;
+                                        note[4] = usn;
+                                        note[6] = _mungeMedia((Long) note[MID], (String) note[6]);
+                                        update.add(note);
+                                        dirty.add((Long) note[0]);
+                                    } else {
+                                        dupesIgnored.add(String.format("%s: %s",
+                                                mCol.getModels().get(oldMid).getString("name"),
+                                                ((String) note[6]).replace("\u001f", ",")));
+                                        mIgnoredGuids.put((String) note[GUID], true);
+                                    }
+                                }
+                            }
+                        }
+                        i += offset;
+                        if (total != 0 && (!largeCollection || (i/offset) % onePercent == 0)) {
+                            if(i*100 / total <= 100) {
+                                // Calls to publishProgress are reasonably expensive due to res.getString()
+                                publishProgress(i * 100 / total, 0, 0);
                             }
                         }
                     }
-                }
-                i++;
-                if (total != 0 && (!largeCollection || i % onePercent == 0)) {
-                    // Calls to publishProgress are reasonably expensive due to res.getString()
-                    publishProgress(i * 100 / total, 0, 0);
                 }
             }
             publishProgress(100, 0, 0);
