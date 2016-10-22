@@ -15,9 +15,15 @@
  ****************************************************************************************/
 package com.wildplot.android.rendering.graphics.wrapper;
 
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.RectF;
+import android.graphics.Typeface;
+import android.graphics.Xfermode;
 
 /**
  * Wrapper of swing/awt graphics class for android use
@@ -96,7 +102,7 @@ public class GraphicsWrap {
         Style oldStyle = paint.getStyle();
         paint.setStyle(Style.FILL);
         RectF rectF = new RectF(x,y,x+width,y+height);
-        canvas.drawArc(rectF,-startAngle,-arcAngle,true,paint);
+        canvas.drawArc(rectF, startAngle, arcAngle, true, paint);
         paint.setStyle(oldStyle);
     }
     
