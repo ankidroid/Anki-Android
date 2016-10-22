@@ -2186,7 +2186,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Matcher m = Pattern.compile("([^\u0000-\uFFFF])").matcher(text);
         while (m.find()) {
             String a = "&#x" + Integer.toHexString(m.group(1).codePointAt(0)) + ";";
-            m.appendReplacement(sb, a);
+            m.appendReplacement(sb, Matcher.quoteReplacement(a));
         }
         m.appendTail(sb);
         return sb.toString();

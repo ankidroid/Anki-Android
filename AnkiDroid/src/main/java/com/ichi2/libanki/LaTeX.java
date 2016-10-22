@@ -56,6 +56,7 @@ public class LaTeX {
      * in AnkiDroid. The omitted parameters are used to generate LaTeX images. AnkiDroid does not
      * support the generation of LaTeX media and the provided parameters are sufficient for all
      * other cases.
+     * NOTE: _imgLink produces an alphanumeric filename so there is no need to escape the replacement string.
      */
     public static String mungeQA(String html, Collection col) {
         StringBuffer sb = new StringBuffer();
