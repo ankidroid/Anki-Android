@@ -653,7 +653,7 @@ public class Anki2Importer extends Importer {
                 BufferedInputStream dstData = _dstMediaData(fname);
                 if (srcData == null) {
                     // file was not in source, ignore
-                    m.appendReplacement(sb, m.group(0));
+                    m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0)));
                     continue;
                 }
                 // if model-local file exists from a previous import, use that
@@ -663,19 +663,19 @@ public class Anki2Importer extends Importer {
 
                 String lname = String.format(Locale.US, "%s_%s%s", name, mid, ext);
                 if (mDst.getMedia().have(lname)) {
-                    m.appendReplacement(sb, m.group(0).replace(fname, lname));
+                    m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0).replace(fname, lname)));
                     continue;
                 } else if (dstData == null || compareMedia(srcData, dstData)) { // if missing or the same, pass unmodified
                     // need to copy?
                     if (dstData == null) {
                         _writeDstMedia(fname, srcData);
                     }
-                    m.appendReplacement(sb, m.group(0));
+                    m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0)));
                     continue;
                 }
                 // exists but does not match, so we need to dedupe
                 _writeDstMedia(lname, srcData);
-                m.appendReplacement(sb, m.group(0).replace(fname, lname));
+                m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0).replace(fname, lname)));
             }
             m.appendTail(sb);
             fields = sb.toString();
