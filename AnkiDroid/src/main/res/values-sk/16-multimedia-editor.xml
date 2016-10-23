@@ -118,7 +118,7 @@
   <string name="multimedia_editor_progress_wait_title">Počkajte</string>
   <!-- not a good message, when an unexpected error happens -->
   <string name="multimedia_editor_something_wrong">Niečo sa pokazilo</string>
-  <string name="multimedia_editor_attach_mm_content">Pridať multimediálny obsah k poznámke</string>
+  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the %1$s field</string>
   <string name="multimedia_editor_attach_media">Pridať multimédia</string>
   <!-- Audio view -->
   <!-- Message when recording fails -->

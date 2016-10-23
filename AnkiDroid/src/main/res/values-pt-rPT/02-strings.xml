@@ -95,7 +95,7 @@
   <string name="custom_study_increase_new_limit">Aumentar o limite de novas fichas para hoje</string>
   <string name="custom_study_increase_review_limit">Aumentar o limite de revisões para hoje</string>
   <string name="custom_study_review_forgotten">Rever fichas esquecidas</string>
-  <string name="custom_study_review_ahead">Revisar antecipadamente</string>
+  <string name="custom_study_review_ahead">Rever antecipadamente</string>
   <string name="custom_study_random_selection">Estudar uma seleção aleatória de fichas</string>
   <string name="custom_study_preview_new">Pré-visualizar fichas novas</string>
   <string name="custom_study_limit_tags">Limitar a etiquetas específicas</string>
@@ -163,6 +163,15 @@
   <string name="export_in_progress">A exportar o ficheiro apkg&#8230;</string>
   <string name="export_successful_title">Enviar ficheiro apkg por email?</string>
   <string name="export_successful">Ficheiro \"%s\" foi exportado. Deseja envia-lo por email?</string>
+  <string name="export_email_subject">AnkiDroid exported collection</string>
+  <string name="export_email_text">
+        <![CDATA[
+        Hi!
+        <br/><br/>
+        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        ]]>
+    </string>
   <string name="export_unsuccessful">Erro ao exportar a coleção</string>
   <string name="import_hint">Coloque o ficheiro apkg na diretoria %s e toque em \"ACEITAR\" para importar as fichas</string>
   <string name="upgrade_import_no_file_found">Não foi encontrado ficheiro %1$s para importar</string>

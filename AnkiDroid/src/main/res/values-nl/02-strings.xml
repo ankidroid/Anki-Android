@@ -107,7 +107,7 @@
   <string name="saving_facts">Kaart opslaan</string>
   <string name="saving_model">Model aan het opslaan</string>
   <string name="add">Toevoegen</string>
-  <string name="save">Save</string>
+  <string name="save">Opslaan</string>
   <string name="close">Sluiten</string>
   <string name="select">Selecteren</string>
   <string name="saving_changes">Wijzigingen worden bewaard...</string>
@@ -147,7 +147,7 @@
   <string name="show_hint">Toon %s</string>
   <string name="info_rate">Beoordeel AnkiDroid</string>
   <string name="col_load_failed">Laden van collectie mislukt.\nKlik \'terug\' om AnkiDroid te sluiten.</string>
-  <string name="import_title">Importing</string>
+  <string name="import_title">Importeren</string>
   <string name="import_select_title">Kies een bestand om te importeren</string>
   <string name="import_message_add">Toevoegen</string>
   <string name="import_message_replace_confirm">Deze actie zal uw bestaande collectie verwijderen en vervangen door de data van bestand %s. Bent u zeker?</string>
@@ -155,7 +155,7 @@
   <string name="import_log_no_apkg">Dit is geen geldig apkg-bestand</string>
   <string name="import_error_not_apkg_extension">Bestandsnaam “%s” mist de extensie .apkg</string>
   <string name="import_error_content_provider">Het selecteerde bestand kon niet automatisch geïmporteerd worden door AnkiDroid. Bekijk de gebruikershandleiding om te zien hoe je anki bestanden handmatig importeert: \n%s</string>
-  <string name="import_replacing">Replacing collection&#8230;</string>
+  <string name="import_replacing">Collectie vervangen&#8230;</string>
   <string name="export_include_schedule">Inclusief de planning</string>
   <string name="export_include_media">Inclusief media</string>
   <string name="confirm_apkg_export">Verzameling exporteren als apkg-bestand?</string>
@@ -163,11 +163,20 @@
   <string name="export_in_progress">Apkg-bestand exporteren&#8230;</string>
   <string name="export_successful_title">E-mail apkg?</string>
   <string name="export_successful">Het bestand “%s” is geëxporteerd. Wilt u het versturen via email?</string>
+  <string name="export_email_subject">AnkiDroid exported collection</string>
+  <string name="export_email_text">
+        <![CDATA[
+        Hi!
+        <br/><br/>
+        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        ]]>
+    </string>
   <string name="export_unsuccessful">Exporteren verzameling mislukt</string>
   <string name="import_hint">Om kaarten te importeren, plaats het apkg-bestand in map %s en klik ok</string>
   <string name="upgrade_import_no_file_found">Geen %1$s bestand gevonden om te importeren</string>
   <string name="study_options">Leerset opties</string>
-  <string name="select_tts">Set TTS language</string>
+  <string name="select_tts">TTS-taal instellen</string>
   <string name="custom_study">Aangepast studeren</string>
   <string name="more_options">Meer</string>
   <string name="dyn_deck_desc">Dit is een speciale set bedoeld om buiten het normale schema te studeren. Kaarten keren onmiddellijk terug naar hun oorspronkelijke set nadat u hen herhaald heeft. Als u deze set verwijdert, keren alle overgebleven kaarten onmiddellijk terug naar hun oorspronkelijke set.</string>

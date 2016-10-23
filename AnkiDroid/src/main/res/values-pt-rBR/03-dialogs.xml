@@ -58,7 +58,7 @@
     <item><![CDATA[<h2>%1$s:<br/>Fichas de estudo para Android</h2>AnkiDroid é uma aplicação de fichas de estudo que é totalmente compatível com o software de PC <a href=\"%2$s\">Anki</a>. Você pode criar, descarregar e aprender conteúdos em ambos AnkiDroid ou Anki Desktop, e sincronizá-los facilmente com AnkiWeb.]]></item>
     <item><![CDATA[Para nos ajudar a melhorar a AnkiDroid, favor reportar bugs para <a href=\"%1$s\"> o rastreador de problemas</a>; novas ideias de recurso também são muito bem-vindas. Encontrar respostas na <a href=\"%2$s\"> wiki</a> ou iniciar uma discussão no <a href=\"%3$s\"> fórum</a>.]]></item>
     <item><![CDATA[AnkiDroid é <a href=\"%1$s\"> um software de código aberto<a/>, então todo mundo é incentivado a <a href=\"%2$s\"> tornar-se um colaborador</a> :-)]]></item>
-    <item><![CDATA[Não-desenvolvedores também podem ajudar. Por exemplo, você pode <a href=\"%1$s\"> ajudar a traduzir</a> AnkiDroid, atualizar o wiki, fornecer screenshots, <a href=\"%2$s\"> doar</a> para Anki Desktop ou blogar sobre AnkiDroid.]]></item>
+    <item><![CDATA[Não-desenvolvedores também podem ajudar. Por exemplo, você pode <a href=\"%1$s\"> ajudar a traduzir</a> AnkiDroid, atualizar o wiki, fornecer screenshots, ou blogar sobre AnkiDroid.]]></item>
     <item><![CDATA[O AnkiDroid é publicado sob a <a href=\"%1$s\">licença GNU-GPL v3</a> e o código-fonte está disponível <a href=\"%2$s\">no GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Pré visualização</string>

@@ -90,6 +90,11 @@
   <string name="full_screen_system">Sistem çubuklarını gizle</string>
   <string name="full_screen_complete">Sistem çubuklarını ve cevap butonlarını gizle</string>
   <string name="full_screen_error_gestures">Cevap butonlarını devre dışı bırakmak için desenleri açmalısınız</string>
+  <string name="answer_buttons_position">Answer buttons position</string>
+  <string-array name="answer_buttons_position_labels">
+    <item>Top</item>
+    <item>Bottom</item>
+  </string-array>
   <string name="gestures">Jestleri etkinleştir</string>
   <string name="gestures_summ">Cevap verme ve kart düzenleme gibi eylemlere jestler ata.</string>
   <string name="gestures_swipe_up">Yukarı sürükleme</string>
@@ -148,6 +153,8 @@
   <string name="show_estimates_summ">Cevap düğmelerinin üzerinde sonraki çıkma zamanını göster</string>
   <string name="show_progress">Kalanı göster</string>
   <string name="show_progress_summ">Kalan kart sayısını göster</string>
+  <string name="show_eta">ETA göster</string>
+  <string name="show_eta_summ">Kalan zamanı göster</string>
   <string name="use_current">Yeni kartlar için deste</string>
   <string name="new_spread">Yeni kart pozisyonu</string>
   <string name="learn_cutoff">Önceden öğrenme sınırı</string>

@@ -59,9 +59,9 @@
   <string name="backup_restore_select_title">Wybierz kopię do odtworzenia.</string>
   <string name="backup_restore_no_backups">Brak kopii zapasowych dla tej kolekcji na urządzeniu. Jeśli masz kopię zapasową na swoim komputerze stacjonarnym, przenieś ją ręcznie do folderu AnkiDroid.</string>
   <string name="open_collection_failed_title">Nie udało się otworzyć kolekcji</string>
-  <string name="open_collection_failed_message">Database couldn’t be opened. It’s either not a real Anki database or has been corrupted.\n\nTouch “options” for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
-  <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
-  <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
+  <string name="open_collection_failed_message">Nie można otworzyć bazy danych. Albo to nie jest bazy danych Anki albo została uszkodzona.\n\nWybierz \"opcje\" aby spróbować przywrócić bazę danych, albo w celu uzyskania dalszych informacji na temat naprawiania uszkodzonych zbiorów zobacz:\n%1$s</string>
+  <string name="corrupt_db_message">Kolekcja została uszkodzona.\n\nWybierz \"opcje\", aby przywrócić zawartość z kopii zapasowej, lub jeśli to nie zadziała, sprawdź poniższe instrukcje ręcznego naprawiania bazy danych: \n%1$s</string>
+  <string name="access_collection_failed_message">Wystąpił błąd podczas uzyskiwania dostępu do kolekcji. Może to być nieszkodliwa usterka albo coś poważnego.\n\nSpróbuj uruchomić sprawdzanie bazy danych lub przywracanie z kopii zapasowej, naciskając przycisk \"opcje\". Jeśli nadal będzie wyświetlany ten komunikat, zgłoś proszę błąd: \n%1$s</string>
   <string name="deck_repair_error">Nie można naprawić kolekcji</string>
-  <string name="cursor_size_limit_exceeded">The Android size limit for a String in a database has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
+  <string name="cursor_size_limit_exceeded">Przekroczono limit długości ciągu tekstowego w bazie danych dla systemu Android. Usuń wszelkie niewykorzystywane typy notatek za pomocą desktopowej wersji programu Anki, a następnie wykonaj pełną synchronizację.</string>
 </resources>

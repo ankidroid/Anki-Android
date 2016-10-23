@@ -51,4 +51,13 @@
     <item quantity="other">%1$d個のデッキ</item>
   </plurals>
   <string name="widget_small">AnkiDroid 小</string>
+  <string name="widget_small_button">AnkiDroid</string>
+  <plurals name="widget_cards_due">
+    <item quantity="other">%d cards due</item>
+  </plurals>
+  <plurals name="widget_eta">
+    <item quantity="other">%d minutes remaining</item>
+  </plurals>
+  <string name="widget_add_note">Add note</string>
+  <string name="widget_add_note_button">Add new AnkiDroid note</string>
 </resources>

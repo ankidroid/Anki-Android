@@ -60,7 +60,7 @@
   <string name="backup_restore_no_backups">Sem cópias de segurança disponíveis neste dispositivo. Se tiver cópias de segurança no seu PC, por favor, copie-os manualmente para a sua pasta da AnkiDroid.</string>
   <string name="open_collection_failed_title">Coleção não aberta</string>
   <string name="open_collection_failed_message">Database couldn’t be opened. It’s either not a real Anki database or has been corrupted.\n\nTouch “options” for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
-  <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
+  <string name="corrupt_db_message">A sua colecção ficou corrupta.\n\nToque em \"opções\" para restaurar de uma cópia de segurança ou, se isso não funcionar, veja as seguintes instruções para reparar a base de dados manualmente:\n%1$s</string>
   <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
   <string name="deck_repair_error">Não foi possível reparar a coleção</string>
   <string name="cursor_size_limit_exceeded">The Android size limit for a String in a database has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>

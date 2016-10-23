@@ -90,6 +90,11 @@
   <string name="full_screen_system">Ocultar as barras do sistema</string>
   <string name="full_screen_complete">Ocultar as barras do sistema e botões de resposta</string>
   <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
+  <string name="answer_buttons_position">Answer buttons position</string>
+  <string-array name="answer_buttons_position_labels">
+    <item>Top</item>
+    <item>Bottom</item>
+  </string-array>
   <string name="gestures">Ativar gestos</string>
   <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar fichas.</string>
   <string name="gestures_swipe_up">Deslizar para cima</string>
@@ -117,8 +122,8 @@
   <string name="automatic_sync_choice_summ">Sincronizar automaticalmente ao iniciar/sair da aplicação, se a última sicnronização foi há mais 
         de 10 minutos.</string>
   <string name="fix_hebrew_text">Correção para vogais em Hebraico</string>
-  <string name="fix_hebrew_text_summ">Solução alternativa para processar corretamente  as vogais em Hebraico.</string>
-  <string name="fix_hebrew_instructions">Esta definição ignora o algoritmo RTL do Android para mostrar corretamente o texto hebraico com vogais.\n\nPara isto funcionar, precisa de transferir o tipo de letra Tohu.ttf e copiá-lo manualmente para:\n%s/fonts/\n\nNão terá de modificar as suas fichas.</string>
+  <string name="fix_hebrew_text_summ">Solução alternativa para processar correctamente as vogais em hebraico.</string>
+  <string name="fix_hebrew_instructions">Esta definição ignora o algoritmo RTL do Android para mostrar correctamente o texto hebraico com vogais.\n\nPara isto funcionar, precisa de descarregar o tipo de letra Tohu.ttf e copiá-lo manualmente para:\n%s/fonts/\n\nNão terá de modificar as suas fichas.</string>
   <string name="fix_hebrew_download_font">Transferir tipo de letra</string>
   <string name="day_theme">Tema do dia</string>
   <string name="night_theme">Tema noturno</string>
@@ -149,6 +154,8 @@
   <string name="show_estimates_summ">Mostrar o próximo agendamento nos botões de resposta</string>
   <string name="show_progress">Mostrar restantes</string>
   <string name="show_progress_summ">Mostrar o contador de fichas restantes</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Mostrar o tempo restante</string>
   <string name="use_current">Baralho para as fichas novas</string>
   <string name="new_spread">Posição da ficha nova</string>
   <string name="learn_cutoff">Limite para antecipação de aprendizagem</string>
@@ -168,8 +175,8 @@
   <string name="custom_buttons">App bar buttons</string>
   <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
   <string name="custom_buttons_setting_always_show">Mostrar sempre</string>
-  <string name="custom_buttons_setting_if_room">Show if room</string>
-  <string name="custom_buttons_setting_menu_only">Menu only</string>
+  <string name="custom_buttons_setting_if_room">Mostrar se couber</string>
+  <string name="custom_buttons_setting_menu_only">Apenas o menu</string>
   <string name="reset_custom_buttons">Redefinir valores padrão</string>
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Estatísticas avançadas</string>

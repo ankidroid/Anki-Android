@@ -118,7 +118,7 @@
   <string name="multimedia_editor_progress_wait_title">대기</string>
   <!-- not a good message, when an unexpected error happens -->
   <string name="multimedia_editor_something_wrong">무언가가 잘못되었습니다</string>
-  <string name="multimedia_editor_attach_mm_content">메모에 멀티미디어 파일 첨부</string>
+  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the %1$s field</string>
   <string name="multimedia_editor_attach_media">미디어 첨부</string>
   <!-- Audio view -->
   <!-- Message when recording fails -->

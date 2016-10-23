@@ -46,14 +46,14 @@
   <string name="retry">Повторить</string>
   <string name="cancel">Отмена</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Условия</a></string>
-  <string name="menu_get_shared_decks">Получить общедоступные колоды</string>
-  <string name="connection_error_message">Ошибка сети.</string>
+  <string name="menu_get_shared_decks">Общедоступные колоды</string>
+  <string name="connection_error_message">Ошибка сети</string>
   <string name="not_logged_in_title">Залогиниться в AnkiWeb</string>
-  <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
+  <string name="login_create_account_message">Вы должны зарегистрироваться в одном и облачных сервисов для использования сервиса синхронизации. Вы можете создать регистрацию на следующем шаге.</string>
   <string name="no_email_client">Не клиент электронной почты</string>
   <!-- MyAccount.java -->
-  <string name="username">Имейл</string>
-  <string name="username_repeat">Повторите имейл</string>
+  <string name="username">email</string>
+  <string name="username_repeat">Повторите email</string>
   <string name="password">Пароль</string>
   <string name="password_repeat">Повторите пароль</string>
   <string name="log_in">Войти</string>
@@ -63,7 +63,7 @@
   <string name="logged_as">Используется логин</string>
   <string name="log_out">Завершить сеанс</string>
   <string name="alert_logging_message">Вход в систему, пожалуйста, подождите...</string>
-  <string name="invalid_username_password">Недопустимый адрес электронной почты или пароль.</string>
+  <string name="invalid_username_password">Недопустимый адрес email или пароль.</string>
   <string name="reset_password">Сбросить пароль</string>
   <!-- AndroidManifest.xml -->
   <string name="downloaddeck_search">Поиск</string>
@@ -79,7 +79,7 @@
   <string name="sync_uploading_message">Выгрузка данных...</string>
   <string name="sync_downloading_message">Скачивание с сервера...</string>
   <string name="sync_title">Синхронизация</string>
-  <string name="sync_downloading_media">Скачивание медиа-файлов %1$d/%2$d...</string>
+  <string name="sync_downloading_media">Скачивание Media файлов %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Полностью синхронизировано с локальными данными</string>
   <string name="sync_log_downloading_message">Полная синхронизация с сервера</string>
   <string name="sync_log_clocks_unsynchronized">Часы на вашем устройстве неверны на %1$d секунд%2$s; Для синхронизации необходимо, чтобы и часы и временная зона были корректными для избежания ошибок. Пожалуйста, установите корректную дату, время и временную зону вашего телефона и запустите синхронизацию снова.</string>
@@ -93,7 +93,7 @@
   <string name="sync_too_busy">Сервер перегружен. Попробуйте еще раз позже.</string>
   <string name="sync_remote_db_error">Скачанная база данных была повреждена. Пожалуйста, попробуйте еще раз.</string>
   <string name="sync_overwrite_error">Текущая коллекция не может быть перезаписана загруженным файлом.</string>
-  <string name="sync_connection_error">Превышено время ожидания подключения. Либо у вас проблемы с интернет соединением, либо в медиа-папке есть очень большой файл.</string>
+  <string name="sync_connection_error">Превышено время ожидания подключения. Либо у вас проблемы с интернет соединением, либо в Media папке есть очень большой файл.</string>
   <string name="sync_error_409">К AnkiWeb может подключаться только один клиент одновременно.  Если недавняя синхронизация была неудачной, подождите, пожалуйста, несколько минут.</string>
   <string name="sync_write_access_error">Загруженный файл не может быть сохранен на SD карту. Либо ваш SD карта установлена в режиме только для чтения или не хватает места.</string>
   <string name="sync_deletions_message">Синхронизация удаления...</string>
@@ -107,15 +107,15 @@
   <string name="sync_generic_error">Произошла ошибка. Пожалуйста, повторите попытку позже.</string>
   <string name="sync_check_upload_file">Проверка файла перед загрузкой...</string>
   <string name="sync_check_download_file">Проверка загруженного файла...</string>
-  <string name="sync_media_find">Поиск изменённых медиа-файлов...</string>
-  <string name="sync_media_no_changes">Медиа-файлы не изменены.</string>
-  <string name="sync_media_success">Медиа-файлы успешно синхронизированы.</string>
-  <string name="sync_media_changes_count">%d изменений медиа для обновления</string>
-  <string name="sync_media_downloaded_count">%d медиа файлов загружено</string>
+  <string name="sync_media_find">Поиск изменённых Media-файлов...</string>
+  <string name="sync_media_no_changes">Media-файлы не изменены.</string>
+  <string name="sync_media_success">Media-файлы успешно синхронизированы.</string>
+  <string name="sync_media_changes_count">%d изменений Media для обновления</string>
+  <string name="sync_media_downloaded_count">%d Media файлов загружено</string>
   <string name="sync_sanity_failed">После синхронизации, некоторые данные вашей коллекции оказались в противоречивом состоянии. Чтобы устранить эту проблему AnkiDroid выполнит полную синхронизацию. Пожалуйста, выберите какую версию Вы хотите оставить, или отмените, если вы предпочитаете синхронизировать позже.</string>
-  <string name="sync_media_sanity_failed">Синхронизация медиа-файлов завершена, но количество медиа-файлов на вашем мобильном устройстве не совпадает с количеством на сервере. При следующей синхронизации будут устранены все ошибки.</string>
-  <string name="sync_media_error">Ошибка синхронизации медиа-данных.</string>
-  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
+  <string name="sync_media_sanity_failed">Синхронизация Media-файлов завершена, но количество Media-файлов на вашем мобильном устройстве не совпадает с количеством на сервере. При следующей синхронизации будут устранены все ошибки.</string>
+  <string name="sync_media_error">Ошибка синхронизации Media-данных.</string>
+  <string name="sync_media_error_check">Ошибка во время синхронизации Media данных. Проверка Media данных рекомендуется.</string>
   <string name="sync_sanity_local">Локальную</string>
   <string name="sync_sanity_remote">Удалённую</string>
   <string name="force_full_sync_title">Выполнить полную синхронизацию</string>

@@ -90,6 +90,11 @@
   <string name="full_screen_system">Skrij sistemske vrstice</string>
   <string name="full_screen_complete">Skrij sistemske vrstice in gumbe za odgovor</string>
   <string name="full_screen_error_gestures">Za skritje gumbov za odgovor morate omogočiti poteze</string>
+  <string name="answer_buttons_position">Answer buttons position</string>
+  <string-array name="answer_buttons_position_labels">
+    <item>Top</item>
+    <item>Bottom</item>
+  </string-array>
   <string name="gestures">Omogoči poteze</string>
   <string name="gestures_summ">Dodeli poteze dejanjem, kot sta odgovarjanje in urejanje kartic.</string>
   <string name="gestures_swipe_up">Potegni gor</string>
@@ -149,6 +154,8 @@
   <string name="show_estimates_summ">Prikaži naslednji čas pregleda na gumbih za odgovor</string>
   <string name="show_progress">Prikaži preostale</string>
   <string name="show_progress_summ">Prikaži število preostalih kartic</string>
+  <string name="show_eta">Prikaži pre. čas</string>
+  <string name="show_eta_summ">Prikaži preostali čas</string>
   <string name="use_current">Komplet za nove kartice</string>
   <string name="new_spread">Položaj novih kartic</string>
   <string name="learn_cutoff">Omejitev vnaprejšnjega učenja</string>

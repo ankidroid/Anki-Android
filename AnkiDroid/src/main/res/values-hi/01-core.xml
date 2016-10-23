@@ -40,27 +40,29 @@
 -->
 <resources>
   <!-- Navigation drawer items-->
-  <string name="decks">Decks</string>
-  <string name="card_browser">Card browser</string>
-  <string name="statistics">Statistics</string>
-  <string name="settings">Settings</string>
-  <string name="help">Help</string>
-  <string name="send_feedback">Send feedback</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <string name="decks">डेकस</string>
+  <string name="card_browser">कार्ड ब्राउज़र</string>
+  <string name="statistics">आंकड़े</string>
+  <string name="settings">सेटिंग्स</string>
+  <string name="help">मदद</string>
+  <string name="send_feedback">प्रतिक्रिया भेजें</string>
+  <string name="studyoptions_title">डेक अवलोकन</string>
   <string name="studyoptions_due_today">आज पूर्ण करने हेतु:</string>
   <string name="studyoptions_new_total">कुल नए कार्ड:</string>
   <string name="studyoptions_total_cards">कुल कार्ड:</string>
   <string name="studyoptions_eta">अनुमानित समय (मिनट):</string>
-  <string name="studyoptions_start">Study</string>
+  <string name="studyoptions_start">सीखें</string>
   <!-- DeckPicker.java -->
+  <string name="expand">Expand</string>
+  <string name="collapse">Collapse</string>
   <string name="study_more">Study more</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d card due (%2$s)</item>
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
-    <item quantity="other">%d minutes left</item>
+    <item quantity="one">%d मिनट छोड़ दिया</item>
+    <item quantity="other">%d मिनट छोड़ दिया</item>
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
@@ -68,40 +70,40 @@
     <item quantity="other">Studied %1$d cards in %2$s today</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
-  <string name="type_answer_hint">Type answer</string>
+  <string name="type_answer_hint">प्रकार उत्तर</string>
   <string name="show_answer">जवाब दिखाना</string>
   <string name="ease_button_again">फिर से</string>
   <string name="ease_button_hard">कठिन</string>
   <string name="ease_button_good">अच्छा</string>
   <string name="ease_button_easy">आसान</string>
   <string name="studyoptions_congrats_undo">पूर्ववत् करें %s</string>
-  <string name="menu_import">Import</string>
+  <string name="menu_import">आयात करें</string>
   <string name="undo">पूर्ववत् करें</string>
   <string name="undo_action_review">last review</string>
   <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
+  <string name="undo_action_bury_note">नोट दफनाना</string>
   <string name="undo_action_suspend_card">कार्ड को निलंबित</string>
   <string name="undo_action_suspend_note">नोट निलंबित</string>
   <string name="undo_action_delete">नोट हटाएँ</string>
   <string name="unbury">Unbury</string>
-  <string name="rename_deck">Rename deck</string>
-  <string name="menu_add">Add</string>
-  <string name="menu_add_note">Add note</string>
+  <string name="rename_deck">डेक का नाम बदलें</string>
+  <string name="menu_add">जोड़ें</string>
+  <string name="menu_add_note">नोट जोड़ें</string>
   <string name="menu_my_account">सिंक्रनाइज़ेशन खाता</string>
   <string name="menu_dismiss_note">Hide / delete</string>
   <string name="menu_bury_card">कार्ड दफनाना</string>
   <string name="menu_bury_note">नोट दफनाना</string>
   <string name="menu_suspend_card">कार्ड को निलंबित</string>
   <string name="menu_suspend_note">नोट को निलंबित</string>
-  <string name="menu_bury">Bury</string>
+  <string name="menu_bury">दफनाना</string>
   <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">नोट हटाएँ</string>
   <string name="delete_note_message">वास्तव में इस नोट और उसके सभी cards?\n%s को हटाना</string>
   <string name="menu_select">पाठ का चयन करें</string>
   <string name="menu_search">लुकअप में %1$s</string>
-  <string name="menu_mark_note">Mark note</string>
+  <string name="menu_mark_note">मार्क नोट करें</string>
   <string name="menu_unmark_note">Unmark note</string>
-  <string name="new_deck">Create deck</string>
+  <string name="new_deck">डेक बनाने</string>
   <string name="create">बनाएँ</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="night_mode">रात मोड</string>
@@ -114,10 +116,10 @@
         alphabet.
     -->
   <string name="time_quantity_seconds">%d s</string>
-  <string name="time_quantity_minutes">%d min</string>
-  <string name="time_quantity_hours">%d h</string>
+  <string name="time_quantity_minutes">%d मिनट</string>
+  <string name="time_quantity_hours">%d ज</string>
   <string name="time_quantity_days">%d d</string>
-  <string name="time_quantity_months">%.1f mo</string>
+  <string name="time_quantity_months">%.1f मो</string>
   <string name="time_quantity_years">%.1f yr</string>
   <!-- or "%.1f a" -->
   <string name="rebuild_cram_deck">पुनर्निर्माण रटना डेक. \nPlease रुको...</string>
@@ -126,7 +128,7 @@
   <string name="empty_cram_deck">Emptying रटना डेक. \nPlease रुको...</string>
   <string name="custom_study_deck_name">कस्टम अध्ययन सत्र</string>
   <string name="custom_study_deck_exists">कृपया पहले मौजूदा कस्टम अध्ययन डेक का नाम बदलें।</string>
-  <string name="empty_deck">This deck is empty</string>
+  <string name="empty_deck">इस डेक खाली है</string>
   <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
   <string name="studyoptions_limit_reached">Daily study limit reached</string>
   <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
@@ -135,7 +137,7 @@
   <string name="studyoptions_congrats_more_new">वहाँ और अधिक नए कार्ड उपलब्ध हैं, लेकिन दैनिक सीमा तक पहुँच गया है। आप विकल्पों में सीमा में वृद्धि कर सकते हैं, लेकिन कि यह अपने अल्पकालिक समीक्षा काम का बोझ बढ़ जाएगा मन में भालू कृपया।</string>
   <string name="studyoptions_congrats_custom">सामान्य समय के बाहर का अध्ययन करने के लिए, कस्टम अध्ययन बटन नीचे क्लिक करें।</string>
   <string name="studyoptions_no_cards_due">No cards are due yet</string>
-  <string name="sd_card_not_mounted">Device storage not mounted</string>
+  <string name="sd_card_not_mounted">डिवाइस संग्रह माउंट नहीं</string>
   <string name="button_sync">सिंक</string>
   <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
   <string name="continue_sync">Continue sync</string>

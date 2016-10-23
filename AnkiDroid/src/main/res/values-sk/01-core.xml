@@ -53,6 +53,8 @@
   <string name="studyoptions_eta">Odhadovaný čas (min):</string>
   <string name="studyoptions_start">Študovať teraz</string>
   <!-- DeckPicker.java -->
+  <string name="expand">Expand</string>
+  <string name="collapse">Collapse</string>
   <string name="study_more">Študovať viac</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d kartička na preskúšanie (%2$s)</item>
@@ -81,22 +83,22 @@
   <string name="menu_import">Import</string>
   <string name="undo">Späť</string>
   <string name="undo_action_review">posledné opakovanie</string>
-  <string name="undo_action_bury_card">zahrabať kartičku</string>
-  <string name="undo_action_bury_note">zahrabať poznámku</string>
+  <string name="undo_action_bury_card">skryť kartičku</string>
+  <string name="undo_action_bury_note">skryť poznámku</string>
   <string name="undo_action_suspend_card">pozastaviť kartičku</string>
   <string name="undo_action_suspend_note">pozastaviť poznámku</string>
   <string name="undo_action_delete">vymazať poznámku</string>
-  <string name="unbury">Vyhrabať</string>
+  <string name="unbury">Odkryť</string>
   <string name="rename_deck">Premenovať balíček</string>
   <string name="menu_add">Pridať</string>
   <string name="menu_add_note">Pridať poznámku</string>
   <string name="menu_my_account">Synchronizácia účtu</string>
   <string name="menu_dismiss_note">Skryt / vymazať</string>
-  <string name="menu_bury_card">Zahrabať kartičku</string>
-  <string name="menu_bury_note">Zahrabať poznámku</string>
+  <string name="menu_bury_card">Skryť kartičku</string>
+  <string name="menu_bury_note">Skryť poznámku</string>
   <string name="menu_suspend_card">Pozastaviť kartičku</string>
   <string name="menu_suspend_note">Pozastaviť poznámku</string>
-  <string name="menu_bury">Zahrabať</string>
+  <string name="menu_bury">Skryť</string>
   <string name="menu_suspend">Pozastaviť</string>
   <string name="menu_delete_note">Vymazať poznámku</string>
   <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej kartičky?\n%s</string>

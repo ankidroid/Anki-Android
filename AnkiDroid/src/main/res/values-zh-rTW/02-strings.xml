@@ -160,6 +160,15 @@
   <string name="export_in_progress">正在匯出 apkg 檔案&#8230;</string>
   <string name="export_successful_title">用電子郵件寄出 apkg 嗎？</string>
   <string name="export_successful">檔案「%s」已匯入。你要用電子郵件寄出它嗎？</string>
+  <string name="export_email_subject">AnkiDroid exported collection</string>
+  <string name="export_email_text">
+        <![CDATA[
+        Hi!
+        <br/><br/>
+        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        ]]>
+    </string>
   <string name="export_unsuccessful">匯出收藏時發生錯誤</string>
   <string name="import_hint">若你要匯入卡片，請將 apkg 檔案放在「%s」目錄下，然後按OK</string>
   <string name="upgrade_import_no_file_found">找不到可匯入的%1$s檔案</string>

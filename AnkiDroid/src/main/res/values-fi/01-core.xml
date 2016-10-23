@@ -53,6 +53,8 @@
   <string name="studyoptions_eta">Arvioitu aika (min):</string>
   <string name="studyoptions_start">Opiskele nyt</string>
   <!-- DeckPicker.java -->
+  <string name="expand">Expand</string>
+  <string name="collapse">Collapse</string>
   <string name="study_more">Opiskele lisää</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d kortti kerrattavissa (%2$s)</item>

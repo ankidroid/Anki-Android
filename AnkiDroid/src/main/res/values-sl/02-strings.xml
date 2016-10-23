@@ -169,6 +169,15 @@
   <string name="export_in_progress">Izvažanje datoteke apkg &#8230;</string>
   <string name="export_successful_title">Pošlji apkg?</string>
   <string name="export_successful">Datoteka \"%s\" je bila izvožena. Ali jo želite poslati?</string>
+  <string name="export_email_subject">AnkiDroid exported collection</string>
+  <string name="export_email_text">
+        <![CDATA[
+        Hi!
+        <br/><br/>
+        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        ]]>
+    </string>
   <string name="export_unsuccessful">Napaka pri izvažanju zbirke</string>
   <string name="import_hint">Vstavite datoteko apkg v mapo \"%s\" in pritisnite \"V redu\", da uvozite kartice</string>
   <string name="upgrade_import_no_file_found">Nobene uvozljive datoteke %1$s ni bilo mogoče najti</string>

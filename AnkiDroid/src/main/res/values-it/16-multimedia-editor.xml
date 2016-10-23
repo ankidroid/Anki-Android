@@ -118,7 +118,7 @@
   <string name="multimedia_editor_progress_wait_title">Attendi</string>
   <!-- not a good message, when an unexpected error happens -->
   <string name="multimedia_editor_something_wrong">Qualcosa è andato storto</string>
-  <string name="multimedia_editor_attach_mm_content">Allega contenuti multimediali alla nota</string>
+  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the %1$s field</string>
   <string name="multimedia_editor_attach_media">Allega un media</string>
   <!-- Audio view -->
   <!-- Message when recording fails -->

@@ -90,6 +90,11 @@
   <string name="full_screen_system">Masquer les barres système</string>
   <string name="full_screen_complete">Masquer les barres système et les boutons de réponse</string>
   <string name="full_screen_error_gestures">Vous devez activer les gestes pour pouvoir masquer les boutons de réponse</string>
+  <string name="answer_buttons_position">Answer buttons position</string>
+  <string-array name="answer_buttons_position_labels">
+    <item>Top</item>
+    <item>Bottom</item>
+  </string-array>
   <string name="gestures">Activer les gestes</string>
   <string name="gestures_summ">Assigner des gestes à des actions comme répondre et éditer des cartes.</string>
   <string name="gestures_swipe_up">Glissez vers le haut</string>
@@ -148,6 +153,8 @@
   <string name="show_estimates_summ">Afficher le temps avant la prochaine révision sur les boutons de réponse</string>
   <string name="show_progress">Afficher le nombre restant de révision</string>
   <string name="show_progress_summ">Montrer le nombre de cartes restantes</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Paquet utilisé pour les nouvelles cartes</string>
   <string name="new_spread">Position des nouvelles cartes</string>
   <string name="learn_cutoff">Limite d’apprentissage</string>

@@ -90,6 +90,11 @@
   <string name="full_screen_system">隐藏系统状态栏</string>
   <string name="full_screen_complete">隐藏系统状态栏和回答按钮</string>
   <string name="full_screen_error_gestures">您必须启用手势操作才能隐藏回答按钮</string>
+  <string name="answer_buttons_position">Answer buttons position</string>
+  <string-array name="answer_buttons_position_labels">
+    <item>Top</item>
+    <item>Bottom</item>
+  </string-array>
   <string name="gestures">启用手势</string>
   <string name="gestures_summ">为回答或编辑卡片等动作指定手势。</string>
   <string name="gestures_swipe_up">向上滑动</string>
@@ -148,6 +153,8 @@
   <string name="show_estimates_summ">在答案按钮上方显示下次复习的时间</string>
   <string name="show_progress">显示剩余数量</string>
   <string name="show_progress_summ">显示剩余卡片数量</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">新牌组</string>
   <string name="new_spread">新卡片位置</string>
   <string name="learn_cutoff">提前学习的限制</string>

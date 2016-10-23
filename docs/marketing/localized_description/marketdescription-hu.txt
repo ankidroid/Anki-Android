@@ -4,7 +4,7 @@ Az AnkiDroid segítségével hatékonyan tanulhatsz szókártyákat, mert akkor 
 
 Tanulj meg akármit, bármikor, bárhol, ha rád tör a tanulhatnék! Használd ki jól a buszozás, sorban állás, vagy másféle várakozás miatt kieső időt!
 
-Készíts saját tanulókártya paklit, vagy tölts le néhányat a több mint 6000, különböző témájú és nyelvű ingyen elérhető pakli közül!
+Készíts saját tanulókártya paklit, vagy tölts le néhányat a több, mint 6000, különböző témájú és nyelvű ingyen elérhető pakli közül!
 
 Adj új szavakat a paklihoz az asztali Ankival, vagy közvetlenül az AnkiDroiddal. Az alkalmazással akár automatikusan is tudsz szavakat hozzáadni egy szótárból!
 
@@ -12,7 +12,7 @@ Adj új szavakat a paklihoz az asztali Ankival, vagy közvetlenül az AnkiDroidd
 • támogatott szókártya tartalmak: szöveg, kép, hang, LaTeX
 • késleltetett ismétlés (supermemo 2 algoritmus)
 • szöveg-beszéd integráció
-• több mint 6000 előre előkészített pakli
+• több, mint 6000 előre előkészített pakli
 • előrehaladás widget
 • részletes statisztikák
 • AnkiWeb szinkronizálás
@@ -20,10 +20,10 @@ Adj új szavakat a paklihoz az asztali Ankival, vagy közvetlenül az AnkiDroidd
 
 ★ További funkciók:
 • válaszok beírása (lehetőség)
-• tábla
+• rajztábla
 • kártya szerkesztő/létrehozó
 • kártya böngésző
-• tablet kijelzős elrendezés
+• tabletre optimalizált elrendezés
 • importáld már meglévő gyűjteményed (Anki Desktoppal)
 • szótár-integráció (ColorDict, GoldenDict, Leo.org, Aedict, különböző webes szótárak)
 • kártyák hozzáadása más programokból (pl. szótárak)

@@ -163,6 +163,15 @@
   <string name="export_in_progress">S\'està important l\'arxiu apkg&#8230;</string>
   <string name="export_successful_title">Enviar per correu electrònic l\'apkg?</string>
   <string name="export_successful">L\'arxiu \"%s\" ha sigut exportat. Voleu enviar-l\'ho per correu electrònic?</string>
+  <string name="export_email_subject">AnkiDroid exported collection</string>
+  <string name="export_email_text">
+        <![CDATA[
+        Hi!
+        <br/><br/>
+        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        ]]>
+    </string>
   <string name="export_unsuccessful">Error en exportar la col·lecció</string>
   <string name="import_hint">Per importar fitxes, poseu l\'arxiu apkg a la carpeta %s i premeu d\'acord</string>
   <string name="upgrade_import_no_file_found">No s\'ha trobat cap fitxer %1$s que es pugui importar</string>

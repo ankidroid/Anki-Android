@@ -36,9 +36,9 @@
 -->
 <resources>
   <string-array name="error_reporting_choice_labels">
-    <item>Mindig jelentsen</item>
-    <item>Soha ne jelentsen</item>
-    <item>Kérdezzen meg</item>
+    <item>Mindig jelentse</item>
+    <item>Soha ne jelentse</item>
+    <item>Kérdezzen rá</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Nincs művelet</item>
@@ -53,12 +53,12 @@
     <item>Edit note</item>
     <item>Mark note</item>
     <item>Kifejezés keresése</item>
-    <item>Kártya temetése</item>
+    <item>Kártya holnapra halasztása</item>
     <item>Kártya felfüggesztése</item>
     <item>Delete note</item>
     <item>Play media</item>
     <item>Abort learning</item>
-    <item>Bury note</item>
+    <item>Jegyzet holnapra halasztása</item>
     <item>Suspend note</item>
   </string-array>
   <string-array name="leech_action_labels">
@@ -82,12 +82,12 @@
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Jelenlegi pakli használata</item>
-    <item>Decide by note type</item>
+    <item>Jegyzettípustól függ</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Keverjük össze az új kártyákat, és vélemények</item>
-    <item>Új kártyák után vélemények</item>
-    <item>Új kártyák előtt vélemények</item>
+    <item>Új kártyák az ismétlendők közé</item>
+    <item>Új kártyák az ismétlendők után</item>
+    <item>Új kártyák az ismétlendők elé</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>When no font specified on flashcards</item>

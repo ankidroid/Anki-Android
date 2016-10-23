@@ -41,7 +41,7 @@
 <resources>
   <!-- Navigation drawer items-->
   <string name="decks">デッキリスト</string>
-  <string name="card_browser">ブラウザ</string>
+  <string name="card_browser">カードブラウザ</string>
   <string name="statistics">統計</string>
   <string name="settings">設定</string>
   <string name="help">ヘルプ</string>
@@ -53,6 +53,8 @@
   <string name="studyoptions_eta">推定学習時間 (分):</string>
   <string name="studyoptions_start">学習開始</string>
   <!-- DeckPicker.java -->
+  <string name="expand">Expand</string>
+  <string name="collapse">Collapse</string>
   <string name="study_more">さらに学習</string>
   <plurals name="deckpicker_title">
     <item quantity="other">現在の課題: %1$d枚 (%2$s)</item>

@@ -46,32 +46,34 @@
   <string name="settings">הגדרות</string>
   <string name="help">עזרה</string>
   <string name="send_feedback">צור קשר</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <string name="studyoptions_title">סקירת חפיסה</string>
   <string name="studyoptions_due_today">להיום:</string>
   <string name="studyoptions_new_total">סה\"כ כרטיסים חדשים:</string>
   <string name="studyoptions_total_cards">סה\"כ הכרטיסים:</string>
   <string name="studyoptions_eta">זמן משוער (דקות):</string>
   <string name="studyoptions_start">ללמוד עכשיו</string>
   <!-- DeckPicker.java -->
+  <string name="expand">Expand</string>
+  <string name="collapse">Collapse</string>
   <string name="study_more">תוספות</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d כרטיס נותר (%2$s)</item>
     <item quantity="two">%1$d כרטיסים נותרים (%2$s)</item>
-    <item quantity="many">%1$d cards due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="many">%1$d כרטיסים נותרים (%2$s)</item>
+    <item quantity="other">%1$d כרטיסים נותרים (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
-    <item quantity="two">%d minutes left</item>
+    <item quantity="one">נותרה דקה %d</item>
+    <item quantity="two">נותרו %d דקות</item>
     <item quantity="many">%d minutes left</item>
     <item quantity="other">%d minutes left</item>
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
-    <item quantity="one">Studied %1$d card in %2$s today</item>
-    <item quantity="two">Studied %1$d cards in %2$s today</item>
-    <item quantity="many">Studied %1$d cards in %2$s today</item>
-    <item quantity="other">Studied %1$d cards in %2$s today</item>
+    <item quantity="one">היום נלמד %1$d כרטיסיה מתוך %2$s</item>
+    <item quantity="two">היום נלמדו %1$d כרטיסיות מתוך %2$s</item>
+    <item quantity="many">היום נלמדו %1$d כרטיסיות מתוך %2$s</item>
+    <item quantity="other">היום נלמדו %1$d כרטיסיות מתוך %2$s</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">הקלד תשובה</string>
@@ -156,17 +158,17 @@
   <string name="card_template_editor_front">תבנית קדמית</string>
   <string name="card_template_editor_back">תבנית אחורית</string>
   <string name="card_template_editor_styling">עריכה</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required</string>
+  <string name="card_template_editor_menu_delete">מחק</string>
+  <string name="card_template_editor_cant_delete">לפחות סוג קלף אחד נדרש</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
-    <item quantity="two">Delete the “%2$s” card type, and its %1$d cards?</item>
-    <item quantity="many">Delete the “%2$s” card type, and its %1$d cards?</item>
-    <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+    <item quantity="one">מחק את סוג הכרטסיה \"%2$s\" ואת כל %1$d כרטסיותיו?</item>
+    <item quantity="two">מחק את סוג הכרטסיה \"%2$s\" ואת כל %1$d כרטסיותיו?</item>
+    <item quantity="many">מחק את סוג הכרטסיה \"%2$s\" ואת כל %1$d כרטסיותיו?</item>
+    <item quantity="other">מחק את סוג הכרטסיה \"%2$s\" ואת כל %1$d כרטסיותיו?</item>
   </plurals>
-  <string name="invalid_template">A card could not be generated</string>
-  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
+  <string name="invalid_template">כרטיסיה לא נוצרה</string>
+  <string name="card_template_editor_would_delete_note">הסרת סוג הכרטסיה תגרום לרשימה אחת או יותר להימחק. אנא צור סוג כרטיסיות חדש קודם.</string>
   <!-- Permissions -->
-  <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-  <string name="read_write_permission_description">Allow the application to access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="read_write_permission_label">קרא ושמור לממסד הנתונים של אנקידרוייד</string>
+  <string name="read_write_permission_description">תן לאפליקציה גישה לרשימות, כרטסיות, סוגי רשימות, וחפיסות, וכן גישה ליצור חדשות</string>
 </resources>

@@ -57,13 +57,13 @@
   <string name="card_browser_show_suspended">Odfiltruj zawieszone</string>
   <string name="card_browser_search_by_tag">Filtruj po etykiecie</string>
   <string name="card_browser_tags_shown">Etykiety: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
+  <string name="card_browser_list_my_searches">Moje wyszukiwania</string>
+  <string name="card_browser_list_my_searches_save">Zapisz wyszukiwanie</string>
+  <string name="card_browser_list_my_searches_title">Wybierz zapisane wyszukiwanie</string>
+  <string name="card_browser_list_my_searches_new_name">Nazwa bieżącego wyszukiwania</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">Nie można zapisać wyszukiwania bez nazwy</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Nazwa już istnieje</string>
+  <string name="card_browser_list_my_searches_remove_content">Usunąć \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Zmień kolejność wyświetlania</string>
   <string name="card_browser_change_display_order_title">Wybierz kolejność wyświetlania</string>
   <string name="card_browser_change_display_order_reverse">Zaznacz pole podwójnie aby odwrócić.</string>
@@ -74,7 +74,7 @@
   <string name="card_browser_filtering_cards">Filtrowanie kart&#8230; \nAby przerwać, wciśnij przycisk powrotu</string>
   <string-array name="card_browser_order_labels">
     <item>Bez sortowania (szybciej)</item>
-    <item>By sort field</item>
+    <item>Wg pola wyszukiwania</item>
     <item>Wg utworzenia</item>
     <item>Wg zmodyfikowania</item>
     <item>Według czasu zmiany</item>

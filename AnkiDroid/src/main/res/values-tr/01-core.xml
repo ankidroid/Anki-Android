@@ -53,6 +53,8 @@
   <string name="studyoptions_eta">Tahminî süre (dk):</string>
   <string name="studyoptions_start">Çalışmaya Başla</string>
   <!-- DeckPicker.java -->
+  <string name="expand">Expand</string>
+  <string name="collapse">Collapse</string>
   <string name="study_more">Daha fazla çalış</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d kart çalışılacak (%2$s)</item>

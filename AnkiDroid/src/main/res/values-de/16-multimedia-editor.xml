@@ -118,7 +118,7 @@
   <string name="multimedia_editor_progress_wait_title">Warten</string>
   <!-- not a good message, when an unexpected error happens -->
   <string name="multimedia_editor_something_wrong">Etwas ist schiefgelaufen</string>
-  <string name="multimedia_editor_attach_mm_content">Multimediainhalt zur Notiz hinzufügen</string>
+  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the %1$s field</string>
   <string name="multimedia_editor_attach_media">Medien anhängen</string>
   <!-- Audio view -->
   <!-- Message when recording fails -->

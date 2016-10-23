@@ -163,6 +163,15 @@
   <string name="export_in_progress">Експортиране apkg файл&#8230;</string>
   <string name="export_successful_title">Apkg по имейл?</string>
   <string name="export_successful">Файлът “%s” е изнесен- Искате ли да го изпратите по имейл?</string>
+  <string name="export_email_subject">AnkiDroid exported collection</string>
+  <string name="export_email_text">
+        <![CDATA[
+        Hi!
+        <br/><br/>
+        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        ]]>
+    </string>
   <string name="export_unsuccessful">Грешка при експортиране на колекцията</string>
   <string name="import_hint">Поставете apkg файла в директорията \"%s\" и докоснете \"OK\", за да импортирате карти</string>
   <string name="upgrade_import_no_file_found">Открит е файл %1$s, който не може да се импортира</string>

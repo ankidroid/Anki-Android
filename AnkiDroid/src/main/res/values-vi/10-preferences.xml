@@ -90,6 +90,11 @@
   <string name="full_screen_system">Hide the system bars</string>
   <string name="full_screen_complete">Hide the system bars and answer buttons</string>
   <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
+  <string name="answer_buttons_position">Answer buttons position</string>
+  <string-array name="answer_buttons_position_labels">
+    <item>Top</item>
+    <item>Bottom</item>
+  </string-array>
   <string name="gestures">Kích hoạt Cử chỉ</string>
   <string name="gestures_summ">Chỉ định các cử chỉ để hành động như trả lời và chỉnh sửa thẻ.</string>
   <string name="gestures_swipe_up">Kéo lên</string>
@@ -149,6 +154,8 @@
   <string name="show_estimates_summ">Show next review time on answer buttons</string>
   <string name="show_progress">Show remaining</string>
   <string name="show_progress_summ">Show remaining card count</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Deck for new cards</string>
   <string name="new_spread">New card position</string>
   <string name="learn_cutoff">Learn ahead limit</string>

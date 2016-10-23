@@ -40,8 +40,8 @@
 -->
 <resources>
   <!-- generic strings -->
-  <string name="disabled">Disabled</string>
-  <string name="enabled">Enabled</string>
+  <string name="disabled">Uitgeschakeld</string>
+  <string name="enabled">Ingeschakeld</string>
   <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Algemene instellingen</string>
@@ -52,9 +52,9 @@
   <string name="pref_cat_whiteboard">Schrijfbord</string>
   <string name="pref_cat_automatic_display">Automatische weergave antwoord</string>
   <string name="pref_cat_appearance">Appearance</string>
-  <string name="pref_cat_appearance_summ">Change themes and default font</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_appearance_summ">Wijzig thema\'s en standaardlettertype</string>
+  <string name="pref_cat_themes">Thema\'s</string>
+  <string name="pref_cat_fonts">Lettertypes</string>
   <string name="pref_cat_gestures">Gebaren</string>
   <string name="pref_cat_gestures_summ">Gebruik tikken en vegen in plaats van knoppen</string>
   <string name="pref_cat_actions">Acties</string>
@@ -90,6 +90,11 @@
   <string name="full_screen_system">De systeembalken verbergen</string>
   <string name="full_screen_complete">De systeembalken en antwoordknoppen verbergen</string>
   <string name="full_screen_error_gestures">U moet de gebaren inschakelen om de antwoordknoppen te kunnen verbergen</string>
+  <string name="answer_buttons_position">Answer buttons position</string>
+  <string-array name="answer_buttons_position_labels">
+    <item>Top</item>
+    <item>Bottom</item>
+  </string-array>
   <string name="gestures">Bewegingen inschakelen</string>
   <string name="gestures_summ">Bewegingen toewijzen aan acties zoals het beantwoorden en bewerken van kaarten.</string>
   <string name="gestures_swipe_up">Omhoog vegen</string>
@@ -119,8 +124,8 @@
   <string name="fix_hebrew_text_summ">Alternatieve methode voor correcte weergave Hebreeuwse klinkers.</string>
   <string name="fix_hebrew_instructions">Deze instelling omzeilt het RTL-algoritme van Android, voor een correcte weergave van Hebreeuwse klinkers.\n\nHiervoor moet je de font Tohu.ttf downloaden en handmatig kopiëren naar:\n%s/fonts/\n\nJe hoeft je kaarten hiervoor niet aan te passen.</string>
   <string name="fix_hebrew_download_font">Lettertype downloaden</string>
-  <string name="day_theme">Day theme</string>
-  <string name="night_theme">Night theme</string>
+  <string name="day_theme">Dag thema</string>
+  <string name="night_theme">Nacht thema</string>
   <string name="default_font">Standaardlettertype</string>
   <string name="override_font">Toepassen van het standaard lettertype</string>
   <string name="language">Taal</string>
@@ -148,6 +153,8 @@
   <string name="show_estimates_summ">In de antwoordknoppen weergeven wanneer de volgende overhoring is</string>
   <string name="show_progress">Resterende weergeven</string>
   <string name="show_progress_summ">Toon resterend aantal kaarten</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Resterende tijd tonen</string>
   <string name="use_current">Set voor nieuwe kaarten</string>
   <string name="new_spread">Positie nieuwe kaart</string>
   <string name="learn_cutoff">Max vooruit leren</string>
@@ -169,18 +176,18 @@
   <string name="custom_buttons_setting_always_show">Always show</string>
   <string name="custom_buttons_setting_if_room">Show if room</string>
   <string name="custom_buttons_setting_menu_only">Menu only</string>
-  <string name="reset_custom_buttons">Reset to default</string>
+  <string name="reset_custom_buttons">Standaardinstellingen herstellen</string>
   <!-- Advanced statistics settings -->
-  <string name="advanced_statistics_title">Advanced statistics</string>
-  <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
-  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
-  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
-  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
-  <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+  <string name="advanced_statistics_title">Geavanceerde statistieken</string>
+  <string name="enable_advanced_statistics_title">Geavanceerde statistieken inschakelen</string>
+  <string name="enable_advanced_statistics_summ">Laat prognose statistieken zien op basis van een berekening of simulatie van toekomstige herzieningen (ingeschakeld) of op basis van de reeds ingeplande toekomstige herzieningen (uitgeschakeld).</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Eerste n dagen berekenen, rest simuleren</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Nauwkeurigheid van de berekening</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">Aantal iteraties van de simulatie</string>
   <!-- Custom sync server settings -->
-  <string name="custom_sync_server_title">Custom sync server</string>
-  <string name="custom_sync_server_enable_title">Use custom sync server</string>
-  <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
+  <string name="custom_sync_server_title">Aangepaste synchronisatie-server</string>
+  <string name="custom_sync_server_enable_title">Aangepaste synchronisatie-server gebruiken</string>
+  <string name="custom_sync_server_enable_summary">Als u AnkiWeb\'s eigen service niet wilt gebruiken, kunt u hier een alternatieve server opgeven</string>
   <string name="custom_sync_server_base_url_title">Sync url</string>
   <string name="custom_sync_server_media_url_title">Media sync url</string>
   <!-- studyoptions -->

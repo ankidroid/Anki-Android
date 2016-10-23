@@ -160,6 +160,15 @@
   <string name="export_in_progress">正在导出apkg文件&#8230;</string>
   <string name="export_successful_title">发送apkg文件</string>
   <string name="export_successful">文件“%s”导出完毕，您想将其用电子邮件发出吗？</string>
+  <string name="export_email_subject">AnkiDroid exported collection</string>
+  <string name="export_email_text">
+        <![CDATA[
+        Hi!
+        <br/><br/>
+        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        ]]>
+    </string>
   <string name="export_unsuccessful">导出记忆库错误</string>
   <string name="import_hint">请把apkg文件放在%s目录中，然后按确定。</string>
   <string name="upgrade_import_no_file_found">没有找到可导入的 %1$s 文件</string>

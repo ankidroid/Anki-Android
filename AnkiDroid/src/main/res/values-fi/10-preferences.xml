@@ -90,6 +90,11 @@
   <string name="full_screen_system">Hide the system bars</string>
   <string name="full_screen_complete">Hide the system bars and answer buttons</string>
   <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
+  <string name="answer_buttons_position">Answer buttons position</string>
+  <string-array name="answer_buttons_position_labels">
+    <item>Top</item>
+    <item>Bottom</item>
+  </string-array>
   <string name="gestures">Ota eleet käyttöön</string>
   <string name="gestures_summ">Liitä eleitä toimintoihin, kuten vastaamiseen ja korttien muokkaamiseen.</string>
   <string name="gestures_swipe_up">Pyyhkäisy ylös</string>
@@ -149,6 +154,8 @@
   <string name="show_estimates_summ">Näytä seuraava kertausaika vastauspainikkeissa</string>
   <string name="show_progress">Näytä jäljelläoleva</string>
   <string name="show_progress_summ">Näytä jäljelläolevien korttien määrä</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Pakka uusille korteille</string>
   <string name="new_spread">Uuden kortin sijainti</string>
   <string name="learn_cutoff">Kertauksen etukäteisaikaraja</string>

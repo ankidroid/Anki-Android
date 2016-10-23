@@ -160,6 +160,15 @@
   <string name="export_in_progress">apkg 파일 내보내는 중...</string>
   <string name="export_successful_title">apkg 파일을 이메일로 전송할까요?</string>
   <string name="export_successful">\"%s\" 파일을 내보냈습니다. 이메일로 전송할까요?</string>
+  <string name="export_email_subject">AnkiDroid exported collection</string>
+  <string name="export_email_text">
+        <![CDATA[
+        Hi!
+        <br/><br/>
+        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        ]]>
+    </string>
   <string name="export_unsuccessful">컬렉션 내보내기 오류</string>
   <string name="import_hint">카드를 가져오려면, %s 폴더로 apkg 파일을 옮긴 후 확인을 눌러주세요</string>
   <string name="upgrade_import_no_file_found">가져올 수 있는 %1$s 파일이 발견되지 않음</string>

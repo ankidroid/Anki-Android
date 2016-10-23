@@ -90,6 +90,11 @@
   <string name="full_screen_system">Systemzeilen verbergen</string>
   <string name="full_screen_complete">Systemzeilen und Antwortschaltflächen verbergen</string>
   <string name="full_screen_error_gestures">Gesten müssen aktiviert sein, um die Antwortschaltflächen zu verbergen</string>
+  <string name="answer_buttons_position">Answer buttons position</string>
+  <string-array name="answer_buttons_position_labels">
+    <item>Top</item>
+    <item>Bottom</item>
+  </string-array>
   <string name="gestures">Gesten aktivieren</string>
   <string name="gestures_summ">Weise Aktionen, wie zum Beispiel Beantworten oder Bearbeiten der Karten, Gesten zu.</string>
   <string name="gestures_swipe_up">Nach oben wischen</string>
@@ -119,8 +124,8 @@
   <string name="fix_hebrew_text_summ">Übergangslösung um hebräische Vokale korrekt anzuzeigen.</string>
   <string name="fix_hebrew_instructions">Diese Einstellung umgeht den RTL-Algorithmus von Android, um hebräischen Text mit Vokalen korrekt anzuzeigen.\n\nDamit dies funktioniert, müssen Sie die Schriftart Tohu.ttf herunterladen und manuell in dieses Verzeichnis kopieren:\n»%s/font/«\n\nIhre Karten müssen Sie dafür nicht ändern.</string>
   <string name="fix_hebrew_download_font">Schrift herunterladen</string>
-  <string name="day_theme">Day theme</string>
-  <string name="night_theme">Night theme</string>
+  <string name="day_theme">Tag Theme</string>
+  <string name="night_theme">Nacht Theme</string>
   <string name="default_font">Standardschrift</string>
   <string name="override_font">Anwendungsbereich der Standardschrift</string>
   <string name="language">Sprache</string>
@@ -148,6 +153,8 @@
   <string name="show_estimates_summ">Zeigt Zeiten bis zur nächsten Wiederholung auf den Antwortschaltflächen</string>
   <string name="show_progress">Fällige anzeigen</string>
   <string name="show_progress_summ">Verbleibende Anzahl der Karten anzeigen</string>
+  <string name="show_eta">ETA anzeigen</string>
+  <string name="show_eta_summ">Verbleibende Zeit anzeigen</string>
   <string name="use_current">Stapel für neue Karten</string>
   <string name="new_spread">Position neuer Karten</string>
   <string name="learn_cutoff">Grenzwert für vorzeitiges Lernen</string>
@@ -164,8 +171,8 @@
   <string name="convert_fen_text_summ">Schachbrett aus Forsyth–Edwards-Notation erstellen. Die Position muss in  [fen][/fen]-Tags eingefasst sein.</string>
   <string name="enable_api_title">AnkiDroid-API aktivieren</string>
   <string name="enable_api_summary">Verbindungen anderer Apps mit AnkiDroid zulassen und sie ohne weitere Eingriffe Daten lesen und schreiben lassen</string>
-  <string name="custom_buttons">App bar buttons</string>
-  <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
+  <string name="custom_buttons">Leistenschaltflächen</string>
+  <string name="custom_buttons_summary">Anpassen von Aktionen in der App-Leiste</string>
   <string name="custom_buttons_setting_always_show">Immer anzeigen</string>
   <string name="custom_buttons_setting_if_room">Anzeigen wenn Freiraum</string>
   <string name="custom_buttons_setting_menu_only">Nur im Menü</string>

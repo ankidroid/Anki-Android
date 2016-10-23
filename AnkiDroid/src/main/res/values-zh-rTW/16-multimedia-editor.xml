@@ -118,7 +118,7 @@
   <string name="multimedia_editor_progress_wait_title">等待</string>
   <!-- not a good message, when an unexpected error happens -->
   <string name="multimedia_editor_something_wrong">發生狀況</string>
-  <string name="multimedia_editor_attach_mm_content">在筆記內附上多媒體內容</string>
+  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the %1$s field</string>
   <string name="multimedia_editor_attach_media">附上媒體檔</string>
   <!-- Audio view -->
   <!-- Message when recording fails -->

@@ -90,6 +90,11 @@
   <string name="full_screen_system">Dölj systemets statusfält</string>
   <string name="full_screen_complete">Dölj systemets statusfält och svarsknapparna</string>
   <string name="full_screen_error_gestures">Du måste aktivera gester för att dölja svarsknapparna</string>
+  <string name="answer_buttons_position">Answer buttons position</string>
+  <string-array name="answer_buttons_position_labels">
+    <item>Top</item>
+    <item>Bottom</item>
+  </string-array>
   <string name="gestures">Aktivera gester</string>
   <string name="gestures_summ">Koppla gester till handlingar, som t ex att svara på eller redigera kort.</string>
   <string name="gestures_swipe_up">Svep uppåt</string>
@@ -148,6 +153,8 @@
   <string name="show_estimates_summ">Visa nästa repetitionstid ovan svarsknapparna</string>
   <string name="show_progress">Visa återstående</string>
   <string name="show_progress_summ">Visa antal återstående kort</string>
+  <string name="show_eta">Visa ETA</string>
+  <string name="show_eta_summ">Visa återstående tid</string>
   <string name="use_current">Kortlek för nya kort</string>
   <string name="new_spread">Ny kortposition</string>
   <string name="learn_cutoff">Gräns för att lära i förväg</string>

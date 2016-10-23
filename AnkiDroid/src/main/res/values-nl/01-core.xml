@@ -53,6 +53,8 @@
   <string name="studyoptions_eta">Geschatte tijd (min):</string>
   <string name="studyoptions_start">Studeer nu</string>
   <!-- DeckPicker.java -->
+  <string name="expand">Expand</string>
+  <string name="collapse">Collapse</string>
   <string name="study_more">Studeer meer</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d kaart te gaan (%2$s)</item>
@@ -78,8 +80,8 @@
   <string name="menu_import">Kaarten importeren</string>
   <string name="undo">Ongedaan maken</string>
   <string name="undo_action_review">laatste overhoring</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
+  <string name="undo_action_bury_card">verberg kaart</string>
+  <string name="undo_action_bury_note">verberg memo</string>
   <string name="undo_action_suspend_card">kaart opschorten</string>
   <string name="undo_action_suspend_note">blokkeer memo</string>
   <string name="undo_action_delete">memo verwijderen</string>
@@ -93,8 +95,8 @@
   <string name="menu_bury_note">Memo verbergen</string>
   <string name="menu_suspend_card">Blokkeer kaart</string>
   <string name="menu_suspend_note">Memo opschorten</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">Verbergen</string>
+  <string name="menu_suspend">Opschorten</string>
   <string name="menu_delete_note">Memo verwijderen</string>
   <string name="delete_note_message">Deze memo en al zijn kaarten verwijderen?\n%s</string>
   <string name="menu_select">Tekst selecteren</string>

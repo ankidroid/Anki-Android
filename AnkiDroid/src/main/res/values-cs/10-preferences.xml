@@ -90,6 +90,11 @@
   <string name="full_screen_system">Skrýt panely systému</string>
   <string name="full_screen_complete">Skrýt panely systému a tlačítka odpovědí</string>
   <string name="full_screen_error_gestures">Musíte povolit gesta, aby byla tlačítka odpovědí skryta</string>
+  <string name="answer_buttons_position">Answer buttons position</string>
+  <string-array name="answer_buttons_position_labels">
+    <item>Top</item>
+    <item>Bottom</item>
+  </string-array>
   <string name="gestures">Povolit gesta</string>
   <string name="gestures_summ">Přiřazení gest jednotlivým akcím.</string>
   <string name="gestures_swipe_up">Tažení nahoru</string>
@@ -148,6 +153,8 @@
   <string name="show_estimates_summ">Zobrazit čas příštího opakování nad tlačítkem odpovědí</string>
   <string name="show_progress">Zobraz zbývající</string>
   <string name="show_progress_summ">Zobrazit zbývající počet karet</string>
+  <string name="show_eta">Show ETA</string>
+  <string name="show_eta_summ">Show remaining time</string>
   <string name="use_current">Balíček pro nové karty</string>
   <string name="new_spread">Pozice nové karty</string>
   <string name="learn_cutoff">Limit učení se napřed</string>

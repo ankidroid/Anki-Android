@@ -78,7 +78,7 @@
     <item>W kolejności dodania</item>
     <item>W kolejności do przejrzenia</item>
     <item>Ostatnio dodane na początku</item>
-    <item>Relative overdueness</item>
+    <item>Względne zaległości</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Użyj obecnej talii</item>
@@ -94,11 +94,11 @@
     <item>Zawsze</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Light</item>
+    <item>Jasny</item>
     <item>Zwykły</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
+    <item>Czarny</item>
+    <item>Ciemny</item>
   </string-array>
 </resources>

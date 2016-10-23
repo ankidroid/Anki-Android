@@ -53,6 +53,8 @@
   <string name="studyoptions_eta">Tempo estimado (min):</string>
   <string name="studyoptions_start">Estudar</string>
   <!-- DeckPicker.java -->
+  <string name="expand">Expand</string>
+  <string name="collapse">Collapse</string>
   <string name="study_more">Estudar mais</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d cartão programado (%2$s)</item>
@@ -78,7 +80,7 @@
   <string name="menu_import">Importar</string>
   <string name="undo">Desfazer</string>
   <string name="undo_action_review">última revisão</string>
-  <string name="undo_action_bury_card">ocultar ficha</string>
+  <string name="undo_action_bury_card">desfazer ocultação da carta</string>
   <string name="undo_action_bury_note">ocultar nota</string>
   <string name="undo_action_suspend_card">suspender cartão</string>
   <string name="undo_action_suspend_note">suspender nota</string>

@@ -57,7 +57,7 @@
     <item><![CDATA[<h2>%1$s:<br/>Android上的卡片记忆应用</h2>AnkiDroid是一个与<a href=\"%2$s\">Anki桌面客户端</a>完全兼容的卡片记忆应用。你可以在Anki桌面客户端或者AnkiDroid添加和下载学习资料，它们可以很方便的通过AnkiWeb进行同步。]]></item>
     <item><![CDATA[为了帮助改进AnkiDroid，请把Bugs发送到<a href=\"%1$s\">问题跟踪系统</a>；也欢迎提出新功能建议。\n在<a href=\"%2$s\">AnkiDroid的Wiki页面</a>上您可以找到一些问题的答案，也可以加入<a href=\"%3$s\">论坛</a>参与讨论。]]></item>
     <item><![CDATA[AnkiDroid 是一个<a href=\"%1$s\">开源软件<a/>，鼓励每个人都<a href=\"%2$s\">成为它的贡献者</a>。:-)]]></item>
-    <item><![CDATA[非开发人员也可以提供帮助。例如，你可以<a href=\"%1$s\">帮助翻译</a>AnkiDroid，更新 wiki百科、 提供屏幕截图，给Anki桌面客户端<a href=\"%2$s\">捐款</a>或者在你的博客里介绍AnkiDroid。]]></item>
+    <item><![CDATA[非开发者亦可帮助。例如，你可以<a href=\"%1$s\">帮助翻译</a>AnkiDroid、更新wiki、提供屏幕截图，或写关于AnkiDroid的博客。]]></item>
     <item><![CDATA[AnkiDroid 在<a href=\"%1$s\"> GNU GPL v3 许可证</a>下发布。源代码在<a href=\"%2$s\">GitHub</a>上提供。]]></item>
   </string-array>
   <string name="preview_title">预览</string>

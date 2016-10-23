@@ -49,7 +49,7 @@
   <string name="menu_get_shared_decks">Pobierz udostępniane talie</string>
   <string name="connection_error_message">Wystąpił błąd sieciowy.</string>
   <string name="not_logged_in_title">Zaloguj się do AnkiWeb</string>
-  <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
+  <string name="login_create_account_message">Musisz zalogować się na konto zewnętrznego serwisu aby korzystać z usługi synchronizacji w chmurze. Możesz utworzyć nowe konto w następnym kroku.</string>
   <string name="no_email_client">Brak dostępnego klienta poczty</string>
   <!-- MyAccount.java -->
   <string name="username">Adres e-mail</string>
@@ -115,7 +115,7 @@
   <string name="sync_sanity_failed">Po synchronizacji kolekcja była niespójna. Aby to naprawić AnkiDroid wymusi pełną synchronizację. Wybierz którą wersję chcesz zatrzymać (lokalną czy z serwera) lub anuluj, jeśli chcesz synchronizować później.</string>
   <string name="sync_media_sanity_failed">Synchronizacja mediów zakończona ale licznik mediów nie zgadza się z serwerem. Następna synchronizacja mediów będzie pełną synchronizacją aby naprawić błędy.</string>
   <string name="sync_media_error">Błąd w synchronizacji mediów.</string>
-  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
+  <string name="sync_media_error_check">Wystąpił błąd podczas synchronizowania multimediów. Zaleca się sprawdzenie spójności multimediów.</string>
   <string name="sync_sanity_local">Lokalne</string>
   <string name="sync_sanity_remote">Zdalne</string>
   <string name="force_full_sync_title">Wymuś pełną synchronizację</string>

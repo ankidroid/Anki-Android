@@ -60,7 +60,7 @@
   <string name="model_field_editor_reposition" formatted="false">Zmień pozycję pola (wprowadź wartość %1$d–%2$d)</string>
   <string name="model_field_editor_changing">Aktualizowanie pola</string>
   <string name="model_field_editor_sort_field">Sortuj według tego pola</string>
-  <string name="model_clone_suffix">copy</string>
+  <string name="model_clone_suffix">kopia</string>
   <!--Warnings-->
   <string name="model_delete_warning">Czy na pewno chcesz usunąć ten model?</string>
   <string name="field_delete_warning">Czy na pewno chcesz usunąć to pole?</string>

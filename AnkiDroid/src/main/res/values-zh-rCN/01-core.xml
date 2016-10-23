@@ -53,6 +53,8 @@
   <string name="studyoptions_eta">预计所需时间（分钟）：</string>
   <string name="studyoptions_start">开始学习</string>
   <!-- DeckPicker.java -->
+  <string name="expand">Expand</string>
+  <string name="collapse">Collapse</string>
   <string name="study_more">学习更多</string>
   <plurals name="deckpicker_title">
     <item quantity="other">%1$d张卡片待复习 (%2$s)</item>

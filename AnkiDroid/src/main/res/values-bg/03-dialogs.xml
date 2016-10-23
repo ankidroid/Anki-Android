@@ -58,7 +58,7 @@
     <item><![CDATA[<h2>%1$s:<br/>Флашкарти за Андроид</h2>AnkiDroid е приложение за флашкарти, което е напълно съвместимо с настолният софтуер <a href=\"%2$s\">Anki</a>. Вие можете да създадете, свалите и учите материали на AnkiDroid или Anki Desktop, и да ги синхронизирате лесно с AnkiWeb.]]></item>
     <item><![CDATA[За да помогнете да направим AnkiDroid по-добър, моля докладвайте за бъговете към <a href=\"%1$s\">нашия въпросник</a>; идеи да нови функции са добре дошли. Намерете отговори на въпросите си в <a href=\"%2$s\"> уикито ни</a> или започнете дискусия във <a href=\"%3$s\"> форума ни</a>.]]></item>
     <item><![CDATA[AnkiDroid е <a href=\"%1$s\">софтуер с отворен код<a/>, така че всеки е окуражен да <a href=\"%2$s\"> стане сътрудник</a> :-)]]></item>
-    <item><![CDATA[Ако не сте разработчик, също можете да помогнете. Например можете да <a href=\"%1$s\">помогнете в превода</a> на AnkiDroid, да обновите уикито, да предоставите снимки от работни екрани, да <a href=\"%2$s\">спонсорирате</a>Anki Desktop или да пишете в блога си за AnkiDroid.]]></item>
+    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
     <item><![CDATA[AnkiDroid се разпространява под <a href=\"%1$s\">GNU GPL v3 лиценз</a> и изходният код е наличен <a href=\"%2$s\">на GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Преглед</string>

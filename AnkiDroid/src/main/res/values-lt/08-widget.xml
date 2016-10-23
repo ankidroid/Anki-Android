@@ -55,4 +55,17 @@
     <item quantity="other">%1$d malkos</item>
   </plurals>
   <string name="widget_small">AnkiDroid Mažas</string>
+  <string name="widget_small_button">AnkiDroid</string>
+  <plurals name="widget_cards_due">
+    <item quantity="one">%d card due</item>
+    <item quantity="few">%d cards due</item>
+    <item quantity="other">%d cards due</item>
+  </plurals>
+  <plurals name="widget_eta">
+    <item quantity="one">%d minute remaining</item>
+    <item quantity="few">%d minutes remaining</item>
+    <item quantity="other">%d minutes remaining</item>
+  </plurals>
+  <string name="widget_add_note">Add note</string>
+  <string name="widget_add_note_button">Add new AnkiDroid note</string>
 </resources>

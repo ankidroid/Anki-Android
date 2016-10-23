@@ -160,6 +160,15 @@
   <string name="export_in_progress">Đang xuất tệp apkg&#8230;</string>
   <string name="export_successful_title">Email tệp apkg?</string>
   <string name="export_successful">Đã xuất tệp \"%s\". Bạn có muốn email nó?</string>
+  <string name="export_email_subject">AnkiDroid exported collection</string>
+  <string name="export_email_text">
+        <![CDATA[
+        Hi!
+        <br/><br/>
+        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        ]]>
+    </string>
   <string name="export_unsuccessful">Lỗi khi xuất bộ sưu tập</string>
   <string name="import_hint">Đưa tệp apkg vào thư mục \"%s\" và bấm \"OK\" để nhập thẻ</string>
   <string name="upgrade_import_no_file_found">Không tìm thấy %1$s tệp có thể nhập</string>

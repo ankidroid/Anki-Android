@@ -59,7 +59,7 @@
     <item><![CDATA[<h2>%1$s:<br/>Картки для Android</h2>AnkiDroid - додаток для карток, повністю сумісний з настільною програмою <a href=\"%2$s\">Anki</a>. Ви можете створювати, завантажувати та вивчати матеріал як на AnkiDroid, так і на Anki Desktop, і з легкістю синхронізувати їх за допомогою AnkiWeb.]]></item>
     <item><![CDATA[Щоб допомогти нам зробити AnkiDroid кращим, будь ласка, повідомте про помилки до <a href=\"%1$s\"> баг трекеру</a>; ідеї нових функцій також дуже вітаються. Знайдіть відповіді на <a href=\"%2$s\"> вікі</a> або почніть обговорення на <a href=\"%3$s\"> форумі</a>.]]></item>
     <item><![CDATA[AnkiDroid - це <a href=\"%1$s\"> програмне забезпечення з відкритим кодом <a/>, тому кожен може <a href=\"%2$s\"> прийняти участь</a> :-)]]></item>
-    <item><![CDATA[Не-розробники також можуть допомогати. Наприклад, ви можете <a href=\"%1$s\"> допомогти перекласти</a> AnkiDroid, оновити вікі, зробити скріншоти, <a href=\"%2$s\"> підтримати пожертвою</a> Anki Desktop, або блог AnkiDroid.]]></item>
+    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
     <item><![CDATA[AnkiDroid випущений під <a href=\"%1$s\"> ліцензією GNU GPL v3</a>, а програмний код доступний <a href=\"%2$s\"> на GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Перегляд</string>

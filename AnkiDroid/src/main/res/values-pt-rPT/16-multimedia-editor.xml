@@ -77,7 +77,7 @@
   <!-- in controller when fails -->
   <string name="multimedia_editor_imgs_failed">Falha na procura de imagens</string>
   <!-- while searching -->
-  <string name="multimedia_editor_imgs_searching_for_images">Procurando imagens</string>
+  <string name="multimedia_editor_imgs_searching_for_images">A procurar imagens</string>
   <!-- Field editing general -->
   <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">Texto</string>
@@ -118,7 +118,7 @@
   <string name="multimedia_editor_progress_wait_title">Aguarde</string>
   <!-- not a good message, when an unexpected error happens -->
   <string name="multimedia_editor_something_wrong">Algo correu mal</string>
-  <string name="multimedia_editor_attach_mm_content">Anexar conteúdo de multimédia à nota</string>
+  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the %1$s field</string>
   <string name="multimedia_editor_attach_media">Anexar multimédia</string>
   <!-- Audio view -->
   <!-- Message when recording fails -->
