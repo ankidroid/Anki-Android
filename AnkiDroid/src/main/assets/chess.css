@@ -1,10 +1,10 @@
 .chess_board {
+  color: black;
   border:1px solid #333;
 }
 
 .chess_board td {
-  background: -webkit-gradient(linear,0 0, 0 100%, from(#e4dff), to(#e4dff));
-  -webkit-box-shadow:inset 0 0 0 0px #000;
+  background-color: #fff;
   font-family: "Chess Merida Unicode", sans-serif;
   height:30px;
   width:30px;
@@ -15,16 +15,15 @@
 
 .chess_board tr:nth-child(odd) td:nth-child(even),
 .chess_board tr:nth-child(even) td:nth-child(odd) {
-  background:-webkit-gradient(linear,0 0, 0 100%, from(#b1ccff), to(#b1ccff));
+  background-color: #b1ccff;
   -webkit-box-shadow:inset 0 0 8px rgba(0,0,0,.4);
 }
 
 .night_mode .chess_board td {
-  background:-webkit-gradient(linear,0 0, 0 100%, from(#000), to(#333));
-  -webkit-box-shadow:inset 0 0 0 1px #000;
+  background-color: #777;
 }
 .night_mode .chess_board tr:nth-child(odd) td:nth-child(even),
 .night_mode .chess_board tr:nth-child(even) td:nth-child(odd) {
-  background:-webkit-gradient(linear,0 0, 0 100%, from(#555), to(#777));
-  -webkit-box-shadow:inset 0 0 8px rgba(128, 128, 128,.4);
+  background-color: #444;
+  -webkit-box-shadow:inset 0 0 8px rgba(0,0,0,.4);
 }
