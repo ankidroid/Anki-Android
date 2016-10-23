@@ -59,7 +59,8 @@ read -sp "Enter keystore password: " KSTOREPWD; echo
 read -sp "Enter key password: " KEYPWD; echo
 export KSTOREPWD
 export KEYPWD
-# Build signed APK using Gradle
+# Build signed APK using Gradle and publish to Play 
+# Configuration for pushing to Play specified in build.gradle 'play' task
 CMD="./gradlew publishApkRelease"
 ${CMD}
 if [ $? -ne 0 ]; then
@@ -97,5 +98,3 @@ fi
 
 github-release release --tag v$VERSION --name "AnkiDroid $VERSION" $PRE_RELEASE
 github-release upload --tag v$VERSION --name AnkiDroid-$VERSION.apk --file AnkiDroid-$VERSION.apk
-
-# TODO: Push to Google Play
