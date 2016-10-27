@@ -11,6 +11,8 @@ android {
         targetSdkVersion 25
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
+        resValue 'string', 'APP_NAME', 'AnkiDroid'
+        resValue 'string', 'TARGET_PACKAGE', defaultConfig.applicationId
     }
     lintOptions {
         abortOnError false
@@ -29,6 +31,12 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+        }
+        debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-DEBUG'
+            resValue 'string', 'APP_NAME', 'AnkiDroid.DEBUG'
+            resValue 'string', 'TARGET_PACKAGE', defaultConfig.applicationId + buildTypes.debug.applicationIdSuffix
         }
     }
     useLibrary 'org.apache.http.legacy'

@@ -20,7 +20,7 @@
     <PreferenceScreen android:title="@string/pref_cat_general"
         android:summary="@string/pref_cat_general_summ">
           <intent 
-            android:targetPackage="com.ichi2.anki"
+            android:targetPackage="@string/TARGET_PACKAGE"
             android:targetClass="com.ichi2.anki.Preferences"
             android:action="com.ichi2.anki.prefs.general" />
     </PreferenceScreen>
@@ -29,7 +29,7 @@
     <PreferenceScreen android:title="@string/pref_cat_reviewing"
         android:summary="@string/pref_cat_reviewing_summ" >
           <intent 
-            android:targetPackage="com.ichi2.anki"
+            android:targetPackage="@string/TARGET_PACKAGE"
             android:targetClass="com.ichi2.anki.Preferences"
             android:action="com.ichi2.anki.prefs.reviewing" />        
     </PreferenceScreen>
@@ -39,7 +39,7 @@
         android:key="appearance_preference_group"
         android:summary="@string/pref_cat_appearance_summ">
           <intent 
-            android:targetPackage="com.ichi2.anki"
+            android:targetPackage="@string/TARGET_PACKAGE"
             android:targetClass="com.ichi2.anki.Preferences"
             android:action="com.ichi2.anki.prefs.appearance" />
     </PreferenceScreen>
@@ -48,7 +48,7 @@
     <PreferenceScreen android:title="@string/pref_cat_gestures"
         android:summary="@string/pref_cat_gestures_summ" >
           <intent 
-            android:targetPackage="com.ichi2.anki"
+            android:targetPackage="@string/TARGET_PACKAGE"
             android:targetClass="com.ichi2.anki.Preferences"
             android:action="com.ichi2.anki.prefs.gestures" />        
     </PreferenceScreen>
@@ -58,7 +58,7 @@
         android:summary="@string/pref_cat_advanced_summ"
         android:key="pref_screen_advanced">
           <intent 
-            android:targetPackage="com.ichi2.anki"
+            android:targetPackage="@string/TARGET_PACKAGE"
             android:targetClass="com.ichi2.anki.Preferences"
             android:action="com.ichi2.anki.prefs.advanced" />        
     </PreferenceScreen>
