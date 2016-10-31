@@ -156,7 +156,7 @@ public class Anki2Importer extends Importer {
                 String guid = cur.getString(1);
                 long mod = cur.getLong(2);
                 long mid = cur.getLong(3);
-                mNotes.put(guid, new Object[] { id, mod, mid });
+                mNotes.put(guid, new Object[]{id, mod, mid});
                 existing.put(id, true);
             }
         } finally {
@@ -180,7 +180,7 @@ public class Anki2Importer extends Importer {
         ArrayList<String> dupesIgnored = new ArrayList<>();
         try {
             cur = mSrc.getDb().getDatabase().rawQuery("select count(*) from notes", null);
-            if(cur.getColumnCount() > 0) {
+            if (cur.getColumnCount() > 0) {
                 cur.moveToNext();
                 int total = cur.getInt(0);
                 // Counters for progress updates
@@ -192,8 +192,8 @@ public class Anki2Importer extends Importer {
 
                 while (i < total) {
 
-                    // paging by limit-offset, to avoid "*BANG* this causes OOM if the record is huge enough (>60k)"
-                     limit_offsets[1] = Integer.toString(i);
+                    // paging by limit-offset, to avoid OOM if the record is huge enough (>60k)
+                    limit_offsets[1] = Integer.toString(i);
                     cur = mSrc.getDb().getDatabase().rawQuery("select * from notes order by rowid limit ? offset ?", limit_offsets);
 
                     while (cur.moveToNext()) {
@@ -244,8 +244,8 @@ public class Anki2Importer extends Importer {
                             }
                         }
                         i += offset;
-                        if (total != 0 && (!largeCollection || (i/offset) % onePercent == 0)) {
-                            if(i*100 / total <= 100) {
+                        if (total != 0 && (!largeCollection || (i / offset) % onePercent == 0)) {
+                            if (i * 100 / total <= 100) {
                                 // Calls to publishProgress are reasonably expensive due to res.getString()
                                 publishProgress(i * 100 / total, 0, 0);
                             }
