@@ -20,7 +20,6 @@ package com.ichi2.libanki.hooks;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 
 import com.ichi2.anki.CollectionHelper;
@@ -41,6 +40,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
 
+import io.requery.android.database.sqlite.SQLiteDatabase;
 import timber.log.Timber;
 
 /**

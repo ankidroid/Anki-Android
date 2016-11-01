@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
@@ -32,6 +31,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.ReadText;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
 
+import io.requery.android.database.sqlite.SQLiteDatabase;
 import timber.log.Timber;
 
 /** Implementation of {@link Compat} for SDK level 7 */

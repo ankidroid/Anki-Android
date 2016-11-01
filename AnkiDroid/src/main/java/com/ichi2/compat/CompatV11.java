@@ -4,7 +4,6 @@ package com.ichi2.compat;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.support.v4.app.TaskStackBuilder;
@@ -12,6 +11,7 @@ import android.support.v4.app.TaskStackBuilder;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.Preferences;
 
+import io.requery.android.database.sqlite.SQLiteDatabase;
 import timber.log.Timber;
 
 /** Implementation of {@link Compat} for SDK level 11 (Honeycomb) */
