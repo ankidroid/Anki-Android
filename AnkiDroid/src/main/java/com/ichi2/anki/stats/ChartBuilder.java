@@ -170,13 +170,12 @@ public class ChartBuilder {
 
 
     private PlotSheet createPieChart(PlotSheet plotSheet) {
-        PieChart pieChart = new PieChart(plotSheet, mSeriesList[0]);
-
         ColorWrap[] colors = {new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[0])),
                               new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[1])),
                               new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[2])),
                               new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[3]))};
-        pieChart.setColors(colors);
+
+        PieChart pieChart = new PieChart(plotSheet, mSeriesList[0], colors);
         pieChart.setName(mChartView.getResources().getString(mValueLabels[0]) + ": " + (int) mSeriesList[0][0]);
         LegendDrawable legendDrawable1 = new LegendDrawable();
         LegendDrawable legendDrawable2 = new LegendDrawable();
