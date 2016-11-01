@@ -138,7 +138,7 @@
         android:key="about_dialog_preference"
         android:title="@string/about_title">
         <intent
-            android:targetPackage="com.ichi2.anki"
+            android:targetPackage="@string/TARGET_PACKAGE"
             android:targetClass="com.ichi2.anki.Info"/>
     </Preference>
 </PreferenceScreen>
