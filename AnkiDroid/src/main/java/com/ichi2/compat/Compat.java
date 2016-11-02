@@ -18,7 +18,6 @@ package com.ichi2.compat;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
@@ -29,6 +28,8 @@ import android.widget.RemoteViews;
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.DeckPicker;
+
+import io.requery.android.database.sqlite.SQLiteDatabase;
 
 /**
  * This interface defines a set of functions that are not available on all platforms.

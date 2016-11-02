@@ -21,7 +21,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.util.Pair;
 
@@ -53,6 +52,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import io.requery.android.database.sqlite.SQLiteDatabase;
 import timber.log.Timber;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags

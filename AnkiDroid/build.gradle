@@ -52,6 +52,7 @@ dependencies {
     compile 'com.android.support:design:25.0.0'
     compile 'com.android.support:customtabs:25.0.0'
     compile 'com.android.support:recyclerview-v7:25.0.0'
+    compile 'io.requery:sqlite-android:3.15.0'
     compile('com.afollestad.material-dialogs:core:0.8.6.2@aar') {
         //exclude group: 'com.android.support'  // uncomment to force our local support lib version
         transitive = true

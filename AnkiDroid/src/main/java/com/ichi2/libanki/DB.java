@@ -22,11 +22,8 @@ package com.ichi2.libanki;
 import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
-
 import android.widget.Toast;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -39,6 +36,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import io.requery.android.database.DatabaseErrorHandler;
+import io.requery.android.database.sqlite.SQLiteDatabase;
 import timber.log.Timber;
 
 /**

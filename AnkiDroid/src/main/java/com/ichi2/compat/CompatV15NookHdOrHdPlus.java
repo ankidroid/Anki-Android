@@ -2,7 +2,8 @@
 package com.ichi2.compat;
 
 import android.annotation.TargetApi;
-import android.database.sqlite.SQLiteDatabase;
+
+import io.requery.android.database.sqlite.SQLiteDatabase;
 
 /**
  * Implementation of {@link Compat} for SDK level 15 for Nook HD Plus.
