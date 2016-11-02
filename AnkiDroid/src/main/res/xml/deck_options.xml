@@ -182,6 +182,15 @@
                 android:summary="@string/deck_conf_replayq_summ"
                 android:title="@string/deck_conf_replayq" />
         </PreferenceScreen>
+        <PreferenceScreen android:title="@string/deck_conf_reminders">
+            <CheckBoxPreference
+                android:key="reminderEnabled"
+                android:title="@string/deck_conf_reminders_enabled" />
+            <com.ichi2.preferences.TimePreference
+                android:key="reminderTime"
+                android:title="@string/deck_conf_reminders_time"
+                android:dependency="reminderEnabled" />
+        </PreferenceScreen>
         <EditTextPreference
             android:key="desc"
             android:title="@string/deck_conf_deck_description" />
