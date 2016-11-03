@@ -150,17 +150,17 @@
   </plurals>
   <string name="help_title">تعليمات</string>
   <string name="check_db">افحص قاعدة البيانات</string>
-  <string name="check_media">Check media</string>
-  <string name="empty_cards">Empty cards</string>
+  <string name="check_media">فحص الميديا</string>
+  <string name="empty_cards">بطاقات فارغة</string>
   <string name="check_db_message">فحص قاعدة البيانات.\nالرجاء الانتظار...</string>
   <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="delete_deck">حذف الرزمة...\nالرجاء الانتظار.</string>
-  <string name="show_hint">Show %s</string>
+  <string name="show_hint">مشاهدة %s</string>
   <string name="info_rate">قيم أنكيدرويد</string>
   <string name="col_load_failed">فشل تحميل المجموعة-\nاضغط تراجع لإغلاق أنكيدرويد.</string>
-  <string name="import_title">Importing</string>
-  <string name="import_select_title">Choose a file to import</string>
+  <string name="import_title">استيراد</string>
+  <string name="import_select_title">إختيار الملف الذي تريد استيراده</string>
   <string name="import_message_add">إضافة</string>
   <string name="import_message_replace_confirm">سيقوم بحذف المجموعة الحالية الخاصة بك واستبدالها ببيانات الملف %s. هل أنت متأكد؟</string>
   <string name="import_message_add_confirm">Add “%s” to collection? This may take a long time</string>
