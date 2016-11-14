@@ -99,7 +99,7 @@ Parallel versions of AnkiDroid are not officially maintained, but can be built f
 Note that we will not provide any support for these pre-built parallel versions, they are only given as a proof of concept for the build script.
 
 ### Lost my cards
-Does it appear like your cards have disappeared? Don't burn your phone yet: AnkiDroid does [regular backups](http://ankidroid.org/docs/manual.html#backups), so you will probably be able to recover everything in the unlikely event that this occurs. First of all though, here are some common reasons why users may mistakenly think that their cards have been 'deleted' by the app:
+Does it appear like your cards have disappeared? Don't burn your phone yet: AnkiDroid saves regular backups to your device, so you should be able to recover everything in the unlikely event that this occurs. If you know the reason why your cards are gone, please see the [manual](http://ankidroid.org/docs/manual.html#backups) for info on how to restore from a backup. Otherwise you should check below to understand some common reasons why users may mistakenly think that their cards have been 'deleted' by the app:
 
 1) Misunderstanding of how spaced repetition works
 
