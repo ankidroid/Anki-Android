@@ -121,7 +121,12 @@ public class MediaSyncer {
                 for (int i = 0; i < data.length(); i++) {
                     String fname = data.getJSONArray(i).getString(0);
                     int rusn = data.getJSONArray(i).getInt(1);
-                    String rsum = data.getJSONArray(i).optString(2);
+                    String rsum = null;
+                    if (!data.getJSONArray(i).isNull(2)) {
+                        // If `rsum` is a JSON `null` value, `.optString(2)` will
+                        // return `"null"` as a string
+                        rsum = data.getJSONArray(i).optString(2);
+                    }
                     Pair<String, Integer> info = mCol.getMedia().syncInfo(fname);
                     String lsum = info.first;
                     int ldirty = info.second;
