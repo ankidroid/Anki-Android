@@ -60,8 +60,8 @@
   </plurals>
   <plurals name="widget_eta">
     <item quantity="one">%d minute remaining</item>
-    <item quantity="other">%d minutes remaining</item>
+    <item quantity="other">%d minutos restantes</item>
   </plurals>
-  <string name="widget_add_note">Add note</string>
+  <string name="widget_add_note">Añadir nota</string>
   <string name="widget_add_note_button">Add new AnkiDroid note</string>
 </resources>

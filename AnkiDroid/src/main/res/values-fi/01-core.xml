@@ -53,8 +53,8 @@
   <string name="studyoptions_eta">Arvioitu aika (min):</string>
   <string name="studyoptions_start">Opiskele nyt</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Expand</string>
-  <string name="collapse">Collapse</string>
+  <string name="expand">Laajenna</string>
+  <string name="collapse">Pienennä</string>
   <string name="study_more">Opiskele lisää</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d kortti kerrattavissa (%2$s)</item>
@@ -80,8 +80,8 @@
   <string name="menu_import">Tuo</string>
   <string name="undo">Kumoa</string>
   <string name="undo_action_review">edellinen kertaus</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
+  <string name="undo_action_bury_card">piilota kortti</string>
+  <string name="undo_action_bury_note">piilota merkintä</string>
   <string name="undo_action_suspend_card">jäädytä kortti</string>
   <string name="undo_action_suspend_note">jäädytä merkintä</string>
   <string name="undo_action_delete">poista merkintä</string>
@@ -95,8 +95,8 @@
   <string name="menu_bury_note">Piilota merkintä</string>
   <string name="menu_suspend_card">Jäädytä kortti</string>
   <string name="menu_suspend_note">Jäädytä merkintä</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">Piilota</string>
+  <string name="menu_suspend">Keskeytä</string>
   <string name="menu_delete_note">Poista merkintä</string>
   <string name="delete_note_message">Haluatko varmasti poistaa tämän merkinnän ja kaikki sen kortit?\n%s</string>
   <string name="menu_select">Valitse teksti</string>

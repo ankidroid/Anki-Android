@@ -137,7 +137,7 @@
   <string name="notification_pref">Уведомления</string>
   <string name="notification_pref_title">Показывать если</string>
   <string name="never_notify">Никогда</string>
-  <string name="notify_when_pending">Есть карты в очереди</string>
+  <string name="notify_when_pending">Только системные уведомления</string>
   <string name="notification_minimum_cards_due">Более %d карт в очереди</string>
   <string name="notification_minimum_cards_due_vibrate">Вибрация</string>
   <string name="notification_minimum_cards_due_blink">Мерцание светодиода</string>

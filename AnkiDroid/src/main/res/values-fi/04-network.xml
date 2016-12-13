@@ -49,7 +49,7 @@
   <string name="menu_get_shared_decks">Hanki jaettuja pakkoja</string>
   <string name="connection_error_message">Tapahtui verkkovirhe.</string>
   <string name="not_logged_in_title">Kirjaudu AnkiWebiin</string>
-  <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
+  <string name="login_create_account_message">Sinun tulee kirjautua kolmannen osapuolen käyttäjätilille käyttääksesi pilvisynkronointipalvelua. Voit luoda uuden tilin seuraavassa vaiheessa.</string>
   <string name="no_email_client">Sähköpostiohjelmaa ei ole saatavilla</string>
   <!-- MyAccount.java -->
   <string name="username">Sähköpostiosoite</string>
@@ -58,7 +58,7 @@
   <string name="password_repeat">Toista salasana</string>
   <string name="log_in">Kirjaudu sisään</string>
   <string name="sign_up_description">Eikö sinulla ole AnkiWeb-tiliä? Se on ilmainen!</string>
-  <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
+  <string name="sign_up_not_affiliated">Huomatus: AnkiWeb ei ole sidoksissa AnkiDroidiin</string>
   <string name="sign_up">Rekisteröidy</string>
   <string name="logged_as">Kirjauduttu nimellä</string>
   <string name="log_out">Kirjaudu ulos</string>
@@ -115,12 +115,12 @@
   <string name="sync_sanity_failed">Kokoelma oli epäyhtenäisessä tilassa synkronoinnin jälkeen. AnkiDroid tekee täyden synkronoinnin ongelman korjaamiseksi. Valitse kumman puolen tiedot haluat pitää.</string>
   <string name="sync_media_sanity_failed">Median synkronointi valmistui, mutta median lukumäärä ei vastaa serverillä olevaa arvoa. Seuraavalla kerralla tehdään täysi median synkronointi, jotta ongelma korjaantuisi.</string>
   <string name="sync_media_error">Virhe median synkronoinnissa</string>
-  <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
+  <string name="sync_media_error_check">Virhe mediaa synkronoitaessa. Median tarkistaminen on suositeltavaa.</string>
   <string name="sync_sanity_local">Paikallinen</string>
   <string name="sync_sanity_remote">Etä</string>
   <string name="force_full_sync_title">Pakota täysi synkronointi</string>
   <string name="force_full_sync_summary">Pakota muutokset yhteen suuntaan seuraavan synkronoinnin yhteydessä</string>
   <string name="full_sync_confirmation">Pyytämäsi muutos vaatii tietokannan täyden lähetyksen AnkiWebiin kun synkronoit kokoelmasi seuraavan kerran. Jos sinulla on kertauksia tai muita muutoksia odottamassa toisessa laitteessa, jota ei ole vielä synkronoitu tänne, nämä synkronoimattomat tiedot katoavat. Haluatko jatkaa?</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
-  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
+  <string name="full_sync_confirmation_upgrade">AnkiDroidin edellisessä versiossa olleen bugin takia, täydellinen syknronointi on suositeltavaa.</string>
+  <string name="sync_error_501_upgrade_required">Päivitä AnkiDroid uusimpaan versioon</string>
 </resources>

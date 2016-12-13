@@ -53,8 +53,8 @@
   <string name="studyoptions_eta">زمان برآورد شده (دقیقه):</string>
   <string name="studyoptions_start">مرور کردن</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Expand</string>
-  <string name="collapse">Collapse</string>
+  <string name="expand">گسترش</string>
+  <string name="collapse">بستن</string>
   <string name="study_more">بیشتر بخوانید</string>
   <plurals name="deckpicker_title">
     <item quantity="one">موعد مرور %1$d کارت (%2$s)</item>

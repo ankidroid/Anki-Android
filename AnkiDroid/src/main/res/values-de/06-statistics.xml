@@ -41,7 +41,7 @@
 <resources>
   <string name="statistics_young">Junge</string>
   <string name="statistics_mature">Alte</string>
-  <string name="statistics_young_and_learn">Junge karten</string>
+  <string name="statistics_young_and_learn">Jung+Lernend</string>
   <string name="statistics_unlearned">Neu</string>
   <string name="statistics_suspended_and_buried">Ausgesetzt+Begraben</string>
   <string name="statistics_relearn">Erneut gelernte</string>
@@ -55,11 +55,11 @@
   <string name="stats_cumulative_time_hours">Stunden insgesamt</string>
   <string name="stats_cumulative">Kumulativ</string>
   <string name="stats_cumulative_percentage">Prozent insgesamt</string>
-  <string formatted="false" name="stats_cumulative_correct_percentage">Insgesamt Richtig in %</string>
+  <string formatted="false" name="stats_cumulative_correct_percentage">Insgesamt richtig in %</string>
   <string name="stats_answers">Antworten</string>
   <string name="stats_minutes">Minuten</string>
   <string name="stats_hours">Stunden</string>
-  <string name="stats_percentage">Prozentualer Anteil</string>
+  <string name="stats_percentage">Prozentsatz</string>
   <string name="stats_period_month">1 Monat</string>
   <string name="stats_period_year">1 Jahr</string>
   <string name="stats_period_lifetime">Lebensdauer des Stapels</string>
@@ -74,16 +74,16 @@
   <string name="stats_today_type_breakdown">Neu: &lt;b&gt;%1$s&lt;/b&gt;, wiederholt: &lt;b&gt;%2$s&lt;/b&gt;, erneut gelernt: &lt;b&gt;%3$s&lt;/b&gt;, ausgewählte Karten: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Richtige Antworten bei alten Karten: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Heute wurden keine alten Karten wiederholt.</string>
-  <string name="stats_overview_forecast_total">Gesamtwiederholungen: &lt;b&gt;%1$d&lt;/b&gt;</string>
-  <string name="stats_overview_forecast_average">Durchschnittswiederholungen pro tag: &lt;b&gt;%1$.1f&lt;/b&gt;</string>
+  <string name="stats_overview_forecast_total">Insgesamt: &lt;b&gt;%1$d&lt;/b&gt; Wiederholungen</string>
+  <string name="stats_overview_forecast_average">Durchschnitt: &lt;b&gt;%1$.1f&lt;/b&gt; Wiederholungen / Tag</string>
   <string name="stats_overview_forecast_due_tomorrow">Morgen fällig: &lt;b&gt;%1$d&lt;/b&gt;</string>
-  <string name="stats_overview_days_studied">Tage Gelernt: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d %3$d)</string>
-  <string name="stats_overview_total_reviews">Gesamtwiederholungen: &lt;b&gt;%1$d&lt;/b&gt;</string>
+  <string name="stats_overview_days_studied">Tage gelernt: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d von %3$d)</string>
+  <string name="stats_overview_total_reviews">Gesamt: &lt;b&gt;%1$d&lt;/b&gt; Wiederholungen</string>
   <string name="stats_overview_reviews_per_day_studydays">Durchschnitt an gelernten Tagen: &lt;b&gt;%1$.1f&lt;/b&gt; Wiederholungen / Tag</string>
-  <string name="stats_overview_reviews_per_day_all">Wenn Sie jeden Tag studiert hätten &lt;b&gt;%1$.1f&lt;/b&gt; Wiederholungen / Tag</string>
+  <string name="stats_overview_reviews_per_day_all">Wenn Sie jeden Tag studiert hätten: &lt;b&gt;%1$.1f&lt;/b&gt; Wiederholungen / Tag</string>
   <string name="stats_overview_time_per_day_studydays">Durchschnitt an gelernten Tagen: &lt;b&gt;%1$.1f&lt;/b&gt; Minuten / Tag</string>
   <string name="stats_overview_time_per_day_all">Wenn Sie jeden Tag studiert hätten: &lt;b&gt;%1$.1f&lt;/b&gt; Wiederholungen / Tag</string>
-  <string name="stats_overview_new_cards_per_day">Durchschnittlich: &lt;b&gt;%1$.1f&lt;/b&gt; Karten / Tag</string>
+  <string name="stats_overview_new_cards_per_day">Durchschnitt: &lt;b&gt;%1$.1f&lt;/b&gt; Karten / Tag</string>
   <string name="stats_overview_total_new_cards">Gesamt: &lt;b&gt;%1$d&lt;/b&gt; Karten</string>
   <string name="stats_overview_average_interval">"Durchschnittlichsintervall: "</string>
   <string name="stats_overview_longest_interval">"Längstes Intervall: "</string>
@@ -105,8 +105,8 @@
   <string name="stats_review_time">Lernzeit</string>
   <string name="stats_added">Hinzugefügt</string>
   <string name="stats_review_intervals">Intervalle</string>
-  <string name="stats_breakdown">Gedächtnisleistung nach Tageszeit</string>
-  <string name="stats_weekly_breakdown">Gedächtnisleistung nach Wochentag</string>
+  <string name="stats_breakdown">Stündliche Aufschlüsselung</string>
+  <string name="stats_weekly_breakdown">Wöchentliche Aufschlüsselung</string>
   <string name="stats_answer_buttons">Antwortschaltflächen</string>
   <string name="stats_cards_types">Kartentypen</string>
   <string-array name="stats_day_time_strings">

@@ -55,13 +55,13 @@
   <string name="widget_small">AnkiDroid petit</string>
   <string name="widget_small_button">AnkiDroid</string>
   <plurals name="widget_cards_due">
-    <item quantity="one">%d card due</item>
-    <item quantity="other">%d cards due</item>
+    <item quantity="one">%d carte à faire</item>
+    <item quantity="other">%d cartes à faire</item>
   </plurals>
   <plurals name="widget_eta">
-    <item quantity="one">%d minute remaining</item>
-    <item quantity="other">%d minutes remaining</item>
+    <item quantity="one">%d minute restante</item>
+    <item quantity="other">%d minutes restantes</item>
   </plurals>
-  <string name="widget_add_note">Add note</string>
-  <string name="widget_add_note_button">Add new AnkiDroid note</string>
+  <string name="widget_add_note">Ajouter une note</string>
+  <string name="widget_add_note_button">Ajouter une nouvelle note AnkiDroid</string>
 </resources>

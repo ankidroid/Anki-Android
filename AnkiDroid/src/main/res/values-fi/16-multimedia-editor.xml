@@ -118,7 +118,7 @@
   <string name="multimedia_editor_progress_wait_title">Odota</string>
   <!-- not a good message, when an unexpected error happens -->
   <string name="multimedia_editor_something_wrong">Jokin meni pieleen</string>
-  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the %1$s field</string>
+  <string name="multimedia_editor_attach_mm_content">Liitä multimediasisältöä %1$s-kenttään</string>
   <string name="multimedia_editor_attach_media">Liitä mediaa</string>
   <!-- Audio view -->
   <!-- Message when recording fails -->

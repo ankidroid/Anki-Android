@@ -49,15 +49,15 @@
   <string name="CardEditorNoteDeck">Pakka:</string>
   <string name="CardEditorModel">Tyyppi:</string>
   <string name="CardEditorTags">Tunnisteet: %1$s</string>
-  <string name="CardEditorCards">Cards: %1$s</string>
-  <string name="tag_name">Tag name</string>
+  <string name="CardEditorCards">Kortit: %1$s</string>
+  <string name="tag_name">Tunnistenimi</string>
   <string name="add_new_filter_tags">Lisää/suodata tunnisteita</string>
-  <string name="add_tag">Add tag</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
+  <string name="add_tag">Lisää tunniste</string>
+  <string name="check_all_tags">Valitse/poista valinnasta kaikki tunnisteet</string>
   <string name="filter_tags">Suodata tunnisteita</string>
-  <string name="no_tags">You haven’t added any tags yet</string>
+  <string name="no_tags">Et ole vielä lisännyt tunnisteita</string>
   <string name="sdcard_missing_message">SD-kortti ei ole käytettävissä, koska sitä käytetään USB-liitännän kautta. Irrota USB käyttääksesi korttipakkojasi</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="updated_version">Päivitetty versioon %s</string>
   <!-- Reviewer.java -->
   <string name="enable_whiteboard">Ota kirjoitustaulu käyttöön</string>
   <string name="disable_whiteboard">Poista kirjoitustaulu käytöstä</string>
@@ -70,8 +70,8 @@
   <string name="corrupt_font">Vioittunut kirjasintiedosto %s</string>
   <!-- Browser -->
   <string-array name="browser_column1_headings">
-    <item>Question</item>
-    <item>Sort field</item>
+    <item>Kysymys</item>
+    <item>Lajittelukenttä</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Vastaus</item>
@@ -92,35 +92,35 @@
         -->
   </string-array>
   <!-- Custom study options -->
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
-  <string name="custom_study_review_ahead">Review ahead</string>
-  <string name="custom_study_random_selection">Study a random selection of cards</string>
-  <string name="custom_study_preview_new">Preview new cards</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_increase_new_limit">Lisää tämän päivän uusien korttien rajoitusta</string>
+  <string name="custom_study_increase_review_limit">Lisää tämän päivän kertauskorttien rajoitusta</string>
+  <string name="custom_study_review_forgotten">Kertaa unohdettuja kortteja</string>
+  <string name="custom_study_review_ahead">Kertaa etukäteen</string>
+  <string name="custom_study_random_selection">Opiskele satunnaisia kortteja</string>
+  <string name="custom_study_preview_new">Esikatsele uusia kortteja</string>
+  <string name="custom_study_limit_tags">Rajoitu tiettyhin tunnisteisiin</string>
   <!-- Card editor -->
   <string name="cardeditor_title_add_note">Lisää merkintä</string>
   <string name="cardeditor_title_edit_card">Muokkaa merkintää</string>
   <string name="discard_unsaved_changes">Sulje ja menetä muutokset?</string>
   <string name="factadder_saving_error">Virhe tallennettaessa merkintää</string>
   <string name="saving_facts">Tallennetaan merkintää</string>
-  <string name="saving_model">Saving model</string>
+  <string name="saving_model">Tallennetaan mallia</string>
   <string name="add">Lisää</string>
-  <string name="save">Save</string>
+  <string name="save">Tallenna</string>
   <string name="close">Sulje</string>
   <string name="select">Valitse</string>
   <string name="saving_changes">Tallennetaan muutoksia&#8230;</string>
   <string name="reordering_cards">Uudelleenjärjestetään kortteja...</string>
-  <string name="field_remapping">%1$s (from “%2$s”)</string>
-  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+  <string name="field_remapping">%1$s (\"%2$s\":sta)</string>
+  <string name="confirm_map_cards_to_nothing">Kortit, joita ei ole liitetty mihinkään, poistetaan. Jos muistiinpanoon ei liity jäljelle jääviä kortteja, se katoaa. Oletko varma, että haluat jatkaa?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="one">%1$d korttia opiskeltu ajassa %2$s</item>
+    <item quantity="other">%1$d korttia opiskeltu ajassa %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minute</item>
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="one">%1$d minuutti</item>
+    <item quantity="other">%1$d minuuttia</item>
   </plurals>
   <string name="studyoptions_welcome_title">Tervetuloa AnkiDroidiin</string>
   <string name="fact_adder_intent_title">AnkiDroid-kortti</string>
@@ -133,29 +133,29 @@
   <string name="rename">Nimeä uudelleen</string>
   <string name="default_conf_delete_error">Oletusasetusryhmää ei voi poistaa</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="one">%d kortti lisätty</item>
+    <item quantity="other">%d korttia lisätty</item>
   </plurals>
   <string name="help_title">Ohje</string>
   <string name="check_db">Tarkasta tietokanta</string>
   <string name="check_media">Tarkista media</string>
-  <string name="empty_cards">Empty cards</string>
+  <string name="empty_cards">Tyhjät kortit</string>
   <string name="check_db_message">Tarkistetaan tietokantaa&#8230;</string>
-  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
+  <string name="empty_card_warning">Tämä kortti on tyhjä. Käytä \"Tyhjät kortit\" vaihtoehtoa pakka-luettelon -valikosta.</string>
   <string name="unknown_type_field_warning">Kirjoita vastaus: tuntematon kenttä %s</string>
   <string name="delete_deck">Poistetaan pakkaa&#8230;</string>
   <string name="show_hint">Näytä %s</string>
   <string name="info_rate">Arvostele AnkiDroid</string>
   <string name="col_load_failed">Kokoelman lataaminen epäonnistui.\nPaina Takaisin-painiketta sulkeaksesi AnkiDroidin.</string>
-  <string name="import_title">Importing</string>
+  <string name="import_title">Tuodaan</string>
   <string name="import_select_title">Valitse tuotava tiedosto</string>
   <string name="import_message_add">Lisää</string>
   <string name="import_message_replace_confirm">Poistetaan nykyinen kokoelma ja korvataan se tiedoston %s tiedoilla. Haluatko varmasti jatkaa?</string>
   <string name="import_message_add_confirm">Lisää \"%s\" kokoelmaan? Se voi kestää pitkään</string>
   <string name="import_log_no_apkg">Tämä ei ole validi apkg-tiedosto</string>
-  <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg extension</string>
-  <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
-  <string name="import_replacing">Replacing collection&#8230;</string>
+  <string name="import_error_not_apkg_extension">Tiedostolla \"%s\" ei ole .apkg -päätettä</string>
+  <string name="import_error_content_provider">Valittua tiedostoa ei voitu tuoda automaattisesti AnkiDroidiin. Katso käyttöohjeesta, kuinka tuoda manuaalisesti anki-tiedostoja: \n%s</string>
+  <string name="import_replacing">Korvataan kokoelmaa&#8230;</string>
   <string name="export_include_schedule">Myös ajoitukset</string>
   <string name="export_include_media">Myös media</string>
   <string name="confirm_apkg_export">Tallenna kokoelma apkg-tiedostona?</string>
@@ -163,61 +163,61 @@
   <string name="export_in_progress">Tallennetaan apkg-tiedostoa&#8230;</string>
   <string name="export_successful_title">Lähetä apkg sähköpostissa?</string>
   <string name="export_successful">Tiedosto \"%s\" tallennettiin. Haluatko lähettää sen sähköpostissa?</string>
-  <string name="export_email_subject">AnkiDroid exported collection</string>
+  <string name="export_email_subject">AnkiDroidista tuotu kokoelma</string>
   <string name="export_email_text">
-        <![CDATA[
-        Hi!
+<![CDATA[
+        Hei!
         <br/><br/>
-        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        Tämä on Anki-korttipakka <a href="https://ankidroid.org/docs/manual.html">AnkiDroidista</a>.
+        Avaa se käyttämällä jotain olemassa olevaa <a href="http://ankisrs.net/#download">Anki -sovellusta</a> ja nauti helposta ja tehokkaasta opiskelusta!
         ]]>
     </string>
   <string name="export_unsuccessful">Virhe kokoelmaa tallennettaessa</string>
   <string name="import_hint">Tuodaksesi kortteja aseta apkg-tiedosto hakemistoon %s ja paina Ok-painiketta</string>
   <string name="upgrade_import_no_file_found">Tuotavaa tiedostoa %1$s ei löytynyt</string>
   <string name="study_options">Pakan asetukset</string>
-  <string name="select_tts">Set TTS language</string>
+  <string name="select_tts">Määritä TTS-kieli</string>
   <string name="custom_study">Mukautettu opiskelu</string>
-  <string name="more_options">More</string>
+  <string name="more_options">Lisää</string>
   <string name="dyn_deck_desc">Tämä on erityispakka normaalin aikataulun ulkopuolella tapahtuvaan opiskeluun. Kortit palautetaan automaattisesti alkuperäisiin pakkoihinsa läpikäynnin jälkeen. Tämän pakan poistaminen palauttaa kaikki sen sisältämät kortit alkuperäisiin pakkoihin.</string>
   <string name="steps_error">Vaiheiden on oltava numeroita, jotka ovat suurempia kuin 0</string>
   <string name="steps_min_error">Vähintään yksi vaihe on pakollinen</string>
   <string name="sched_end">(loppu)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
+  <string name="sched_unbury_action">Nähdäksesi ne nyt, klikkaa alla olevaa Poista piilotus -painetta</string>
   <string name="sched_has_buried">Liittyviä tai piilotettuja kortteja on viivästetty myöhempään istuntoon.</string>
-  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+  <string name="tag_editor_add_feedback">Paina \"%2$s\" vahvistaaksesi \"%1$s\":n lisääminen</string>
+  <string name="tag_editor_add_feedback_existing">Olemassa oleva tunniste \"%1$s\" valittu</string>
   <string name="lookup_hint">Kun olet kopioinut tekstin, napauta korttia nähdäksesi hakuikonin</string>
   <!-- Time spans -->
   <plurals name="time_span_seconds">
-    <item quantity="one">%s second</item>
-    <item quantity="other">%s seconds</item>
+    <item quantity="one">%s sekunti</item>
+    <item quantity="other">%s sekuntia</item>
   </plurals>
   <plurals name="time_span_minutes">
-    <item quantity="one">%s minute</item>
-    <item quantity="other">%s minutes</item>
+    <item quantity="one">%s minuutti</item>
+    <item quantity="other">%s minuuttia</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="one">%s hour</item>
-    <item quantity="other">%s hours</item>
+    <item quantity="one">%s tunti</item>
+    <item quantity="other">%s tuntia</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="one">%s day</item>
-    <item quantity="other">%s days</item>
+    <item quantity="one">%s päivä</item>
+    <item quantity="other">%s päivää</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="one">%s month</item>
-    <item quantity="other">%s months</item>
+    <item quantity="one">%s kuukausi</item>
+    <item quantity="other">%s kuukautta</item>
   </plurals>
   <plurals name="time_span_years">
-    <item quantity="one">%s year</item>
-    <item quantity="other">%s years</item>
+    <item quantity="one">%s vuosi</item>
+    <item quantity="other">%s vuotta</item>
   </plurals>
   <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
   <string name="less_than_time">&lt; %s</string>
-  <string name="decks_rename_exists">That deck already exists</string>
-  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
-  <string name="filtered_deck_name">Filtered Deck</string>
+  <string name="decks_rename_exists">Pakka on jo olemassa</string>
+  <string name="decks_rename_filtered_nosubdecks">Suodatetulla pakalla ei voi olla alapakkoja</string>
+  <string name="filtered_deck_name">Suodatettu Pakka</string>
 </resources>

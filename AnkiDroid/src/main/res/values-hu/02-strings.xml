@@ -92,8 +92,8 @@
         -->
   </string-array>
   <!-- Custom study options -->
-  <string name="custom_study_increase_new_limit">Ma több új kártya tanulása</string>
-  <string name="custom_study_increase_review_limit">Ma több kártya átismétlése</string>
+  <string name="custom_study_increase_new_limit">Ma még több új kártyát tanulok</string>
+  <string name="custom_study_increase_review_limit">Ma még több kártyát átismételek</string>
   <string name="custom_study_review_forgotten">Elfelejtett kártyák ismétlése</string>
   <string name="custom_study_review_ahead">Review ahead</string>
   <string name="custom_study_random_selection">Véletlenszerű kártyák tanulása</string>
@@ -183,7 +183,7 @@
   <string name="steps_error">A lépések száma 0-nál nagyobb kell hogy legyen</string>
   <string name="steps_min_error">Legalább egy lépés szükség</string>
   <string name="sched_end">(vége)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
+  <string name="sched_unbury_action">A \"Félretétel megszüntetése\" menüponttal megjelenítheted őket.</string>
   <string name="sched_has_buried">Néhány kapcsolódó vagy félretett kártya halasztásra került a következő gyakorlásig.</string>
   <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
   <string name="tag_editor_add_feedback_existing">“%1$s” címke kiválasztva</string>

@@ -90,10 +90,10 @@
   <string name="full_screen_system">Ocultar barras de sistema</string>
   <string name="full_screen_complete">Ocultar barras de sistema e botões de resposta</string>
   <string name="full_screen_error_gestures">Você precisa habilitar os gestos para esconder os botões de resposta</string>
-  <string name="answer_buttons_position">Answer buttons position</string>
+  <string name="answer_buttons_position">Posição dos botões de resposta</string>
   <string-array name="answer_buttons_position_labels">
-    <item>Top</item>
-    <item>Bottom</item>
+    <item>Topo</item>
+    <item>Final</item>
   </string-array>
   <string name="gestures">Habilitar gestos</string>
   <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar cartões.</string>
@@ -154,7 +154,7 @@
   <string name="show_progress">Mostar restantes</string>
   <string name="show_progress_summ">Mostrar contagem de cartões restantes</string>
   <string name="show_eta">Show ETA</string>
-  <string name="show_eta_summ">Mostrar o tempo restante</string>
+  <string name="show_eta_summ">Mostrar tempo restante</string>
   <string name="use_current">Baralho para novos cartões</string>
   <string name="new_spread">Posição do novo cartão</string>
   <string name="learn_cutoff">Aprender antes do limite</string>
@@ -171,8 +171,8 @@
   <string name="convert_fen_text_summ">Desenhar tabuleiro de xadrez a partir da Notação Forsyth-Edwards. A notação deve estar delimitada pelas tags [fen][/fen].</string>
   <string name="enable_api_title">Habilitar o AnkiDroid API</string>
   <string name="enable_api_summary">Deixe outros apps se conectarem ao AnkiDroid e ler / escrever dados sem a sua intervenção</string>
-  <string name="custom_buttons">App bar buttons</string>
-  <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
+  <string name="custom_buttons">Botões da App bar</string>
+  <string name="custom_buttons_summary">Customizar quais ações aparecem na app bar</string>
   <string name="custom_buttons_setting_always_show">Mostrar sempre</string>
   <string name="custom_buttons_setting_if_room">Mostrar se couber</string>
   <string name="custom_buttons_setting_menu_only">Apenas o menu</string>

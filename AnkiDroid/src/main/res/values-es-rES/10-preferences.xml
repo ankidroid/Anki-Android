@@ -96,7 +96,7 @@
     <item>Bottom</item>
   </string-array>
   <string name="gestures">Habilitar gestos</string>
-  <string name="gestures_summ">Asignar gestos a acciones tales como contestaro editar tarjetas.</string>
+  <string name="gestures_summ">Asignar gestos a acciones tales como contestar o editar tarjetas.</string>
   <string name="gestures_swipe_up">Deslizar hacia arriba</string>
   <string name="gestures_swipe_down">Deslizar hacia abajo</string>
   <string name="gestures_swipe_left">Deslizar hacia la izquierda</string>
@@ -154,7 +154,7 @@
   <string name="show_progress">Mostrar restante</string>
   <string name="show_progress_summ">Mostrar contador de tarjetas restantes</string>
   <string name="show_eta">Show ETA</string>
-  <string name="show_eta_summ">Show remaining time</string>
+  <string name="show_eta_summ">Mostrar el tiempo restante</string>
   <string name="use_current">Mazo para las nuevas tarjetas</string>
   <string name="new_spread">Posición de nuevas tarjetas</string>
   <string name="learn_cutoff">Aprender por delante del límite</string>

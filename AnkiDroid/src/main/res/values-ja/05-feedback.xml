@@ -41,7 +41,7 @@
 <resources>
   <!-- Feedback.java -->
   <string name="error_reporting_choice">エラーの報告</string>
-  <string name="feedback_disclaimer">免責事項: 個人情報（電子メールアドレス、電話番号、端末のIMEI（端末識別番号）など）を無断で送信することは一切ありませんが、エラー情報、エラーに至ったプロセスの情報とともに、端末の製造元、機種名、Androidのバージョンなどの情報を送信します。</string>
+  <string name="feedback_disclaimer">免責事項: 個人情報（電子メールアドレス、電話番号、IMEI(端末識別番号)など）を無断で送信することは一切ありませんが、エラー情報、エラーに至ったプロセスの情報とともに、端末の製造元、機種名、Androidのバージョンなど端末に関する情報を送信します。</string>
   <string name="feedback_title">フィードバック</string>
   <string name="feedback_default_text">このエラーについての情報やご意見をご入力ください</string>
   <string name="feedback_auto_toast_text">AnkiDroid で問題が発生しました。レポートを開発者に送信しています&#8230;</string>

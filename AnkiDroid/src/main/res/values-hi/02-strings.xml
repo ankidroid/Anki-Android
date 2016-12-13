@@ -42,46 +42,46 @@
   <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX%</string>
   <!-- Navigation drawer strings -->
-  <string name="drawer_open">Open drawer</string>
-  <string name="drawer_close">Close drawer</string>
+  <string name="drawer_open">दराज़ खोलें</string>
+  <string name="drawer_close">दराज़ बंद करें</string>
   <string name="CardEditorLaterMessage">जानकारी के लिए बाद में बचा लिया</string>
-  <string name="CardEditorCardDeck">Card deck:</string>
-  <string name="CardEditorNoteDeck">Deck:</string>
-  <string name="CardEditorModel">Type:</string>
+  <string name="CardEditorCardDeck">पत्ता डेक:</string>
+  <string name="CardEditorNoteDeck">डेक:</string>
+  <string name="CardEditorModel">प्रकार:</string>
   <string name="CardEditorTags">टैग: %1$s</string>
-  <string name="CardEditorCards">Cards: %1$s</string>
-  <string name="tag_name">Tag name</string>
-  <string name="add_new_filter_tags">Add/filter tags</string>
-  <string name="add_tag">Add tag</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
-  <string name="filter_tags">Filter tags</string>
-  <string name="no_tags">You haven’t added any tags yet</string>
+  <string name="CardEditorCards">पत्ते: %1$s</string>
+  <string name="tag_name">टैग नाम</string>
+  <string name="add_new_filter_tags">टैग को जोड़ें/छानें</string>
+  <string name="add_tag">टैग जोड़ें</string>
+  <string name="check_all_tags">सभी टैग चयनित/अचयनित करें</string>
+  <string name="filter_tags">टैग छानें</string>
+  <string name="no_tags">अपने अभी तक कोई टैग नहीं जोड़ा है</string>
   <string name="sdcard_missing_message">एसडी कार्ड उपलब्ध नहीं है क्योंकि यह USB भंडारण के रूप में इस्तेमाल किया जा रहा है। आपके डेक तक पहुँचने के लिए USB डिस्कनेक्ट करें।</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="updated_version">%s संस्करण को अद्यतित किया गया</string>
   <!-- Reviewer.java -->
-  <string name="enable_whiteboard">Enable whiteboard</string>
-  <string name="disable_whiteboard">Disable whiteboard</string>
+  <string name="enable_whiteboard">स्लेट सक्षम करें</string>
+  <string name="disable_whiteboard">स्लेट अक्षम करें</string>
   <string name="show_whiteboard">Whiteboard दिखाएँ</string>
   <string name="hide_whiteboard">Whiteboard छुपाएँ</string>
   <string name="clear_whiteboard">स्पष्ट Whiteboard</string>
-  <string name="replay_audio">Replay audio</string>
+  <string name="replay_audio">ध्वनि फिर चलाएँ</string>
   <string name="leech_suspend_notification">जोंक के रूप में के रूप में चिह्नित और निलंबित कार्ड</string>
   <string name="leech_notification">जोंक के रूप में के रूप में चिह्नित कार्ड</string>
   <string name="corrupt_font">दूषित फ़ॉन्ट फ़ाइल %s</string>
   <!-- Browser -->
   <string-array name="browser_column1_headings">
-    <item>Question</item>
+    <item>प्रश्न</item>
     <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
-    <item>Answer</item>
-    <item>Card</item>
-    <item>Deck</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
+    <item>उत्तर</item>
+    <item>पत्ता</item>
+    <item>डेक</item>
+    <item>नोट</item>
+    <item>प्रश्न</item>
+    <item>टैग</item>
+    <item>चूक</item>
+    <item>समीक्षाएँ</item>
     <!--
     <item>Changed</item>
     <item>Created</item>

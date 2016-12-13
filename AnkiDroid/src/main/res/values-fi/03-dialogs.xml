@@ -44,19 +44,19 @@
   <string name="check_db_acknowledge">Tietokanta tarkistettu</string>
   <string name="check_db_acknowledge_shrunk">Tietokanta tarkistettu ja optimoitu.\nKoko pieneni %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Poista korttipakka</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
+  <string name="delete_deck_default_deck">Oletuspakkaa ei voida poistaa</string>
   <string name="delete_deck_title">Poista korttipakka?</string>
   <plurals name="delete_deck_message">
-    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
-    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="one">Poista kaikki kortit %1$s-pakassa? Se sisältää %2$d kortin.</item>
+    <item quantity="other">Poista kaikki kortit %1$s-pakassa? Se sisältää %2$d korttia.</item>
   </plurals>
   <string name="delete_cram_deck_message">Haluatko varmasti lähettää kaikki pakan %s kortit niiden alkuperäisiin pakkoihin?</string>
   <string name="no_tts_available_message">Yhtään puhesyntetisaattorin tukemaa kieltä ei ole käytettävissä</string>
-  <string name="initializing_tts">Initializing TTS&#8230;</string>
+  <string name="initializing_tts">Valmistellaan TTS:ää&#8230;</string>
   <string name="tts_no_tts">Älä puhu</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
-    <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Kääntökorttisovellus Androidille</h2>AnkiDroid on ohjelma opiskeluun kääntökorttien (flashcard) avulla. Se on täysin yhteensopiva <a href=\"%2$s\">Anki</a> -työpöytäsovelluksen kanssa. Voit luoda kortteja, ladata niitä ja opiskella sekä AnkiDroidilla, että Ankilla ja synkronoida ne helposti toistensa kanssa.]]></item>
+    <item><![CDATA[Auta tekemään AnkiDroidista parempi, raportoi löytämäsi virheet <a href=\"%1$s\">täällä</a>. Ideoita uusiksi ominaisuuksiksi otetaan myös vastaan, käytä <a href=\"%2$s\">wikiä</a> ja käy <a href=\"%3$s\">foorumilla</a>.]]></item>
     <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
     <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
     <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>

@@ -163,13 +163,13 @@
   <string name="export_in_progress">Esporto il file apkg&#8230;</string>
   <string name="export_successful_title">Invia apkg per eMail?</string>
   <string name="export_successful">File \"%s\" esportato. Vuoi inviarlo per eMail?</string>
-  <string name="export_email_subject">AnkiDroid exported collection</string>
+  <string name="export_email_subject">Collezione AnkiDroid esportata</string>
   <string name="export_email_text">
         <![CDATA[
-        Hi!
+        Ciao!
         <br/><br/>
-        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        Questo è un mazzo di carte di studio per Anki inviato da <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        Prova ad aprirlo utilizzando una delle <a href="http://ankisrs.net/#download">distribuzioni Anki</a> disponibili ed approfitta di un metodo di studio facile ed efficiente!
         ]]>
     </string>
   <string name="export_unsuccessful">Errore nell\'esportazione della collezione</string>

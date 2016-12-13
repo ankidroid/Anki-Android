@@ -44,21 +44,21 @@
   <string name="card_browser">कार्ड ब्राउज़र</string>
   <string name="statistics">आंकड़े</string>
   <string name="settings">सेटिंग्स</string>
-  <string name="help">मदद</string>
+  <string name="help">सहायता</string>
   <string name="send_feedback">प्रतिक्रिया भेजें</string>
   <string name="studyoptions_title">डेक अवलोकन</string>
-  <string name="studyoptions_due_today">आज पूर्ण करने हेतु:</string>
+  <string name="studyoptions_due_today">आज बाकी:</string>
   <string name="studyoptions_new_total">कुल नए कार्ड:</string>
   <string name="studyoptions_total_cards">कुल कार्ड:</string>
   <string name="studyoptions_eta">अनुमानित समय (मिनट):</string>
   <string name="studyoptions_start">सीखें</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Expand</string>
-  <string name="collapse">Collapse</string>
-  <string name="study_more">Study more</string>
+  <string name="expand">वोस्तर करें</string>
+  <string name="collapse">संक्षिप्त करें</string>
+  <string name="study_more">अधिक अध्ययन करें</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">%1$d पत्ता बाकी (%2$s)</item>
+    <item quantity="other">%1$d पत्ते बाकी (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d मिनट छोड़ दिया</item>
@@ -66,8 +66,8 @@
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
-    <item quantity="one">Studied %1$d card in %2$s today</item>
-    <item quantity="other">Studied %1$d cards in %2$s today</item>
+    <item quantity="one">%2$s में %1$d पत्ते का अध्ययन किया</item>
+    <item quantity="other">%2$s में %1$d पत्तों का अध्ययन किया</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">प्रकार उत्तर</string>
@@ -79,8 +79,8 @@
   <string name="studyoptions_congrats_undo">पूर्ववत् करें %s</string>
   <string name="menu_import">आयात करें</string>
   <string name="undo">पूर्ववत् करें</string>
-  <string name="undo_action_review">last review</string>
-  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_review">पिछली समीक्षा</string>
+  <string name="undo_action_bury_card">पत्ता दफन करें</string>
   <string name="undo_action_bury_note">नोट दफनाना</string>
   <string name="undo_action_suspend_card">कार्ड को निलंबित</string>
   <string name="undo_action_suspend_note">नोट निलंबित</string>

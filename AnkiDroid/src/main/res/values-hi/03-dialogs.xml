@@ -39,45 +39,45 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">Check database?</string>
-  <string name="check_db_warning">This may take a long time</string>
-  <string name="check_db_acknowledge">Database checked</string>
-  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
-  <string name="contextmenu_deckpicker_delete_deck">Delete deck</string>
-  <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
-  <string name="delete_deck_title">Delete deck?</string>
+  <string name="check_db_title">डेटाबेस की जाँच करें?</string>
+  <string name="check_db_warning">इसमें बहुत समय लग सकता है</string>
+  <string name="check_db_acknowledge">डेटाबेस की जाँच की गई</string>
+  <string name="check_db_acknowledge_shrunk">डेटाबेस जाँची और अनुकूलित की गई।\n%d kB से घटाया गया।</string>
+  <string name="contextmenu_deckpicker_delete_deck">डेक मिटाएँ</string>
+  <string name="delete_deck_default_deck">डिफ़ॉल्ट डेक को मिटाया नहीं जा सकता।</string>
+  <string name="delete_deck_title">डेक मिटाएँ?</string>
   <plurals name="delete_deck_message">
-    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
-    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="one">%1$s के सारे पत्ते मिटाएँ? इसमें %2$d पत्ता है।</item>
+    <item quantity="other">%1$s के सारे पत्ते मिटाएँ? इसमें %2$d पत्ते है।</item>
   </plurals>
-  <string name="delete_cram_deck_message">Send all cards in %s back to their original decks?</string>
-  <string name="no_tts_available_message">No text-to-speech language available</string>
-  <string name="initializing_tts">Initializing TTS&#8230;</string>
-  <string name="tts_no_tts">Don’t speak</string>
+  <string name="delete_cram_deck_message">%s के सारे पत्ते उनके मूल डेक में भेज दें?</string>
+  <string name="no_tts_available_message">कोई लेख-से-बोली भाषा उपलब्ध नहीं</string>
+  <string name="initializing_tts">लेख-से-बोली सेवा शुरू की जा रही है...</string>
+  <string name="tts_no_tts">बात न करें</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
-    <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
-    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
-    <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>एंड्रॉइड के लिए फ़्लैशकार्ड</h2>AnkiDroid एक फ़्लैशकार्ड अनुप्रयोग है जो डेस्कटॉप सॉफ्टवेयर <a href=\"%2$s\">Anki</a> से पूरी तरह सांगत है। आप Anki डेस्कटॉप और AnkiDroid सामग्री बना, डाउनलोड कर और सीख सकते हैं, और AnkiWeb से साथ आसानी से समकालीन कर सकते हैं।]]></item>
+    <item><![CDATA[AnkiDroid को बेहतर बनाने में हमारी सहायता करने के लिए, कृपया <a href=\"%1$s\">समस्या ट्रैकर</a> को दोष सूचित करें; नई सुविधाओं के विचार भी स्वीकारे जाते हैं। <a href=\"%2$s\"> विकि</a> पर उतर खोजें या <a href=\"%3$s\">फोरम</a> पर बातचीत शुरू करें।]]></item>
+    <item><![CDATA[AnkiDroid एक <a href=\"%1$s\">मुक्त स्रोत सॉफ्टवेयर<a/> है, इसलिए हम सभी को <a href=\"%2$s\">योगदानकर्ता बनने</a> के लिए प्रोत्सहित करते हैं :-)]]></item>
+    <item><![CDATA[गैर-विकासक भी सहायता कर सकते हैं। उदाहरण के लिए, आप AnkiDroid के<a href=\"%1$s\">अनुवाद में सहायता</a>, विकि का अद्यतन, स्क्रीनशॉट प्रदान, या AnkiDroid के बारे में ब्लॉग कर सकते हैं।]]></item>
+    <item><![CDATA[AnkiDroid <a href=\"%1$s\"> v3 GNU-GPL लाइसेंस</a> के तहत जारी किया गया है और स्रोत कोड <a href=\"%2$s\"> GitHub पर</a>उपलब्ध है।]]></item>
   </string-array>
-  <string name="preview_title">Preview</string>
-  <string name="reset_card_dialog_title">Reset card progress</string>
-  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
-  <string name="reset_card_dialog_acknowledge">Card reset</string>
-  <string name="reschedule_card_dialog_title">Reschedule card</string>
-  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
-  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
-  <string name="answering_error_title">Database error</string>
+  <string name="preview_title">पूर्वावलोकन</string>
+  <string name="reset_card_dialog_title">पत्ता प्रगति रीसेट करें</string>
+  <string name="reset_card_dialog_message">इस पत्ते को नए पत्तों के कतार के अंत में रखा जाएगा</string>
+  <string name="reset_card_dialog_acknowledge">पत्ता रीसेट हुआ</string>
+  <string name="reschedule_card_dialog_title">कार्ड पुनर्निर्धारित करें</string>
+  <string name="reschedule_card_dialog_message">X दिनों में समीक्षा के लिए पुनर्निर्धारित करें:</string>
+  <string name="reschedule_card_dialog_acknowledge">पत्ता पुनर्निर्धारित</string>
+  <string name="answering_error_title">डेटाबेस त्रुटि</string>
   <string name="answering_error_message">Writing to the collection failed. The databese could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
-  <string name="answering_error_report">Report error</string>
+  <string name="answering_error_report">त्रुटि की सूचना दें</string>
   <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
-  <string name="intent_add_saved_information">Saved data</string>
-  <string name="intent_add_clear_all">Clear all</string>
+  <string name="intent_add_saved_information">सहेजा गया डेटा</string>
+  <string name="intent_add_clear_all">सभी साफ़ करें</string>
   <string name="intent_aedict_empty">Category “default” is empty</string>
-  <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
-  <string name="custom_study_new_total_new">New cards in deck: %s</string>
-  <string name="custom_study_rev_total_rev">Reviews due in deck: %s</string>
+  <string name="intent_aedict_category">AnkiDroid में कार्ड जोड़ने के लिए सभी नोटपैड श्रेणियों को हटाएँ या एक \"डिफ़ॉल्ट\" नामक पत्ता जोड़ें</string>
+  <string name="custom_study_new_total_new">डेक में नए पत्ते: %s</string>
+  <string name="custom_study_rev_total_rev">डेक में समीक्षा के लिए बाकी: %s</string>
   <string name="custom_study_new_extend">Increase today’s new card limit by</string>
   <string name="custom_study_rev_extend">Increase today’s review limit by</string>
   <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>

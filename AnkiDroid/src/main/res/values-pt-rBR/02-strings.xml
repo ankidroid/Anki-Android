@@ -163,7 +163,7 @@
   <string name="export_in_progress">Exportando arquivo apkg...</string>
   <string name="export_successful_title">E-mail apkg?</string>
   <string name="export_successful">Arquivo \"%s\" foi exportado. Você quer enviar um e-mail?</string>
-  <string name="export_email_subject">AnkiDroid exported collection</string>
+  <string name="export_email_subject">Coleção exportada do AnkiDroid</string>
   <string name="export_email_text">
         <![CDATA[
         Hi!

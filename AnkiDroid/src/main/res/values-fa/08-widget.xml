@@ -55,13 +55,13 @@
   <string name="widget_small">آنکی دروید کوچک</string>
   <string name="widget_small_button">AnkiDroid</string>
   <plurals name="widget_cards_due">
-    <item quantity="one">%d card due</item>
-    <item quantity="other">%d cards due</item>
+    <item quantity="one">موعد مرور %d کارت</item>
+    <item quantity="other">موعد مرور %d کارت</item>
   </plurals>
   <plurals name="widget_eta">
-    <item quantity="one">%d minute remaining</item>
-    <item quantity="other">%d minutes remaining</item>
+    <item quantity="one">%d دقیقه باقیمانده</item>
+    <item quantity="other">%d دقیقه باقیمانده</item>
   </plurals>
-  <string name="widget_add_note">Add note</string>
-  <string name="widget_add_note_button">Add new AnkiDroid note</string>
+  <string name="widget_add_note">افزودن یادداشت</string>
+  <string name="widget_add_note_button">افزودن یادداشت جدید</string>
 </resources>

@@ -39,29 +39,29 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remone some other files.</string>
-  <string name="sd_space_warning">Less than %d MB space on your SD card left.\nFree some space to avoid data loss.</string>
+  <string name="backup_deck_no_space_left">बैकअप सहेजा नहीं गया। SD कार्ड पर्याप्त स्थान नहीं है। बैकअप की गहराई घटाएँ या कुछ अन्य फ़ाइल हटाएँ।</string>
+  <string name="sd_space_warning">SD कार्ड में %d MB से कम जगह है। \nडेटा हानि से बचने के लिए जगह खाली करें।</string>
   <string name="backup_delete">बैकअप हटाए जा रहे...</string>
-  <string name="backup_restore">Restore from backup</string>
-  <string name="backup_new_collection">New collection</string>
-  <string name="backup_del_collection">Delete collection and create new one</string>
-  <string name="backup_del_collection_question">Delete the collection and create a new one? This will drop all your learning progress and delete all cards.</string>
-  <string name="backup_full_sync_from_server">Full sync from server</string>
-  <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
-  <string name="error_handling_title">Error handling</string>
-  <string name="error_handling_options">Options</string>
-  <string name="backup_retry_opening">Retry opening</string>
-  <string name="backup_error_menu_repair">Repair database</string>
-  <string name="backup_repair_deck">Repair</string>
-  <string name="backup_repair_deck_progress">Repairing database&#8230;</string>
-  <string name="backup_error">Error</string>
-  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
-  <string name="backup_restore_select_title">Select backup to restore</string>
+  <string name="backup_restore">बैकअप से पुनर्स्थापित करें</string>
+  <string name="backup_new_collection">नया संग्रह</string>
+  <string name="backup_del_collection">संग्रह हटाएँ और नया संग्रह बनाएँ</string>
+  <string name="backup_del_collection_question">संग्रह हटाएँ और नया संग्रह बनाएँ? यह आपके सीखने की प्रगति को हटा देगा और सभी पत्तों को मिटा देगा।</string>
+  <string name="backup_full_sync_from_server">परिसेवक से पूर्ण समकालन</string>
+  <string name="backup_full_sync_from_server_question">AnkiWeb के संग्रह से अपने संग्रह को अधिलेखित करें? यह पिछले समकालन के बाद से आपके सीखने की प्रगति और जोड़े जानकारी को मिटा देगा।</string>
+  <string name="error_handling_title">त्रुटि प्रबंधन</string>
+  <string name="error_handling_options">विकल्प</string>
+  <string name="backup_retry_opening">खोलने का पुनः प्रयास करें</string>
+  <string name="backup_error_menu_repair">डेटाबेस सुधारें</string>
+  <string name="backup_repair_deck">सुधारें</string>
+  <string name="backup_repair_deck_progress">डेटाबेस सुधारा जा रहा है...</string>
+  <string name="backup_error">त्रुटि</string>
+  <string name="backup_invalid_file_error">चयनित बैकअप फ़ाइल अमान्य था</string>
+  <string name="backup_restore_select_title">पुनर्स्थापित करने के लिए बैकअप चुनें</string>
   <string name="backup_restore_no_backups">No backups available on this device. If you have backups on your desktop computer, copy them manually into your AnkiDroid folder.</string>
-  <string name="open_collection_failed_title">Collection not opened</string>
+  <string name="open_collection_failed_title">संग्रह नहीं खोला गया</string>
   <string name="open_collection_failed_message">Database couldn’t be opened. It’s either not a real Anki database or has been corrupted.\n\nTouch “options” for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
   <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
-  <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
-  <string name="deck_repair_error">Collection couldn’t be repaired</string>
-  <string name="cursor_size_limit_exceeded">The Android size limit for a String in a database has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
+  <string name="access_collection_failed_message">अपने संग्रह तक पहुँचते समय कोई त्रुटि हुई। यह एक हानिरहित दोष से हो सकता है, या इसके साथ एक समस्या हो सकती है। \n\nडेटाबेस जाँच आज़माएँ, या \"विकल्प\" बटन दबाकर बैकअप से पुनर्स्थापित करें। आप यह संदेश बार-बार देख रहे हैं, कृपया एक दोष सूचना दर्ज करें: \n%1$s</string>
+  <string name="deck_repair_error">संग्रह सुधारा नहीं कर सका</string>
+  <string name="cursor_size_limit_exceeded">डेटाबेस में स्ट्रिंग के लिए एंड्रॉइड की आकार सीमा पार हो गई है। Anki डेस्कटॉप का उपयोग कर सारे अनुपयोगी नोट प्रकार हटाएँ, फिर एक पूर्ण समकालन करें।</string>
 </resources>
