@@ -341,6 +341,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     private Sound mSoundPlayer = new Sound();
 
+    private long mUseTimerDynamicMS;
+
     // private int zEase;
 
     // ----------------------------------------------------------------------------
@@ -1973,9 +1975,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         hideEaseButtons();
 
         // If the user wants to show the answer automatically
-        if (mPrefUseTimer && mWaitAnswerSecond > 0) {
-            mTimeoutHandler.removeCallbacks(mShowAnswerTask);
-            mTimeoutHandler.postDelayed(mShowAnswerTask, mWaitAnswerSecond * 1000);
+        if (mPrefUseTimer) {
+            long delay = mWaitAnswerSecond * 1000 + mUseTimerDynamicMS;
+            if (delay > 0) {
+                mTimeoutHandler.removeCallbacks(mShowAnswerTask);
+                mTimeoutHandler.postDelayed(mShowAnswerTask, delay);
+            }
         }
 
         Timber.i("AbstractFlashcardViewer:: Question successfully shown for card id %d", mCurrentCard.getId());
@@ -2057,9 +2062,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         updateCard(enrichWithQADiv(answer, true));
         showEaseButtons();
         // If the user wants to show the next question automatically
-        if (mPrefUseTimer && mWaitQuestionSecond > 0) {
-            mTimeoutHandler.removeCallbacks(mShowQuestionTask);
-            mTimeoutHandler.postDelayed(mShowQuestionTask, mWaitQuestionSecond * 1000);
+        if (mPrefUseTimer) {
+            long delay = mWaitQuestionSecond * 1000 + mUseTimerDynamicMS;
+            if (delay > 0) {
+                mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+                mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
+            }
         }
     }
 
@@ -2083,10 +2091,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
     }
 
+    private void addAnswerSounds(String answer) {
+        // don't add answer sounds multiple times, such as when reshowing card after exiting editor
+        // additionally, this condition reduces computation time
+        if (!mAnswerSoundsAdded) {
+            String answerSoundSource = removeFrontSideAudio(answer);
+            mSoundPlayer.addSounds(mBaseUrl, answerSoundSource, Sound.SOUNDS_ANSWER);
+            mAnswerSoundsAdded = true;
+        }
+    }
+
 
     private void updateCard(String content) {
         Timber.d("updateCard()");
 
+        mUseTimerDynamicMS = 0;
 
         // Add CSS for font color and font size
         if (mCurrentCard == null) {
@@ -2094,19 +2113,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
 
         if (sDisplayAnswer) {
-            // don't add answer sounds multiple times, such as when reshowing card after exiting editor
-            // additionally, this condition reduces computation time
-            if (!mAnswerSoundsAdded) {
-                String answerSoundSource = removeFrontSideAudio(content);
-                mSoundPlayer.addSounds(mBaseUrl, answerSoundSource, Sound.SOUNDS_ANSWER);
-                mAnswerSoundsAdded = true;
-            }
+            addAnswerSounds(content);
         } else {
             // reset sounds each time first side of card is displayed, which may happen repeatedly without ever
             // leaving the card (such as when edited)
             mSoundPlayer.resetSounds();
             mAnswerSoundsAdded = false;
             mSoundPlayer.addSounds(mBaseUrl, content, Sound.SOUNDS_QUESTION);
+            if (mPrefUseTimer && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
+                addAnswerSounds(mCurrentCard.a());
+            }
         }
 
         content = Sound.expandSounds(mBaseUrl, content);
@@ -2192,7 +2208,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         return sb.toString();
     }
 
-
     /**
      * Plays sounds (or TTS, if configured) for currently shown side of card.
      *
@@ -2201,13 +2216,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      */
     protected void playSounds(boolean doAudioReplay) {
         boolean replayQuestion = getConfigForCurrentCard().optBoolean("replayq", true);
-        boolean autoPlayEnabled;
-        try {
-            autoPlayEnabled = getConfigForCurrentCard().getBoolean("autoplay");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        if (autoPlayEnabled || doAudioReplay) {
+
+        if (getConfigForCurrentCard().optBoolean("autoplay", false) || doAudioReplay) {
             // Use TTS if TTS preference enabled and no other sound source
             boolean useTTS = mSpeakText &&
                     !(sDisplayAnswer && mSoundPlayer.hasAnswer()) && !(!sDisplayAnswer && mSoundPlayer.hasQuestion());
@@ -2218,8 +2228,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     mSoundPlayer.playSounds(Sound.SOUNDS_QUESTION_AND_ANSWER);
                 } else if (sDisplayAnswer) {
                     mSoundPlayer.playSounds(Sound.SOUNDS_ANSWER);
+                    if (mPrefUseTimer) {
+                        mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(Sound.SOUNDS_ANSWER);
+                    }
                 } else { // question is displayed
                     mSoundPlayer.playSounds(Sound.SOUNDS_QUESTION);
+                    // If the user wants to show the answer automatically
+                    if (mPrefUseTimer) {
+                        mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(Sound.SOUNDS_QUESTION_AND_ANSWER);
+                    }
                 }
             } else { // Text to speech is in effect here
                 // If the question is displayed or if the question should be replayed, read the question

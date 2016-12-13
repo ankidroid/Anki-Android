@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
@@ -42,6 +43,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -246,6 +248,23 @@ public class Sound {
                 playSound(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa));
             }
         }
+    }
+
+    /**
+     * Returns length in milliseconds.
+     * @param qa -- One of Sound.SOUNDS_QUESTION, Sound.SOUNDS_ANSWER, or Sound.SOUNDS_QUESTION_AND_ANSWER
+     */
+    public long getSoundsLength(int qa) {
+        long length = 0;
+        if (mSoundPaths != null && (qa == Sound.SOUNDS_QUESTION_AND_ANSWER && makeQuestionAnswerList() || mSoundPaths.containsKey(qa))) {
+            MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
+            for (String uri_string : mSoundPaths.get(qa)) {
+                Uri soundUri = Uri.parse(uri_string);
+                metaRetriever.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(), soundUri);
+                length += Long.parseLong(metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+            }
+        }
+        return length;
     }
 
     /**

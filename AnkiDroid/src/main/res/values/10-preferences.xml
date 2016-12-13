@@ -119,7 +119,7 @@
     <string name="notification_minimum_cards_due_vibrate">Vibrate</string>
     <string name="notification_minimum_cards_due_blink">Blink light</string>
     <string name="timeout_answer_text">Automatic display answer</string>
-    <string name="timeout_answer_summ">Show answer automatically without user input</string>
+    <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
     <string name="timeout_answer_seconds">Time to show answer</string>
     <string name="timeout_answer_seconds_summ">XXX s</string>
     <string name="timeout_question_seconds">Time to show next question</string>
