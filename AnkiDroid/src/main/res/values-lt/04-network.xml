@@ -52,7 +52,7 @@
   <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
   <string name="no_email_client">No email client available</string>
   <!-- MyAccount.java -->
-  <string name="username">Elektroninis paštas</string>
+  <string name="username">El. paštas</string>
   <string name="username_repeat">Pakartoti el. paštą</string>
   <string name="password">Slaptažodis</string>
   <string name="password_repeat">Pakartoti slaptažodį</string>
