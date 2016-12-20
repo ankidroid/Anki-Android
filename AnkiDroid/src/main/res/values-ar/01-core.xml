@@ -89,7 +89,7 @@
   <string name="ease_button_good">جيد</string>
   <string name="ease_button_easy">سهل</string>
   <string name="studyoptions_congrats_undo">تراجع عن%s</string>
-  <string name="menu_import">Import</string>
+  <string name="menu_import">استيراد</string>
   <string name="undo">تراجع</string>
   <string name="undo_action_review">آخر مراجعة</string>
   <string name="undo_action_bury_card">bury card</string>
@@ -99,8 +99,8 @@
   <string name="undo_action_delete">احذف الملاحظة</string>
   <string name="unbury">Unbury</string>
   <string name="rename_deck">Rename deck</string>
-  <string name="menu_add">Add</string>
-  <string name="menu_add_note">Add note</string>
+  <string name="menu_add">إضافة</string>
+  <string name="menu_add_note">إضافة ملاحظة</string>
   <string name="menu_my_account">حساب المزامنة</string>
   <string name="menu_dismiss_note">Hide / delete</string>
   <string name="menu_bury_card">Bury card</string>
@@ -115,9 +115,9 @@
   <string name="menu_search">البحث في %1$s</string>
   <string name="menu_mark_note">Mark note</string>
   <string name="menu_unmark_note">Unmark note</string>
-  <string name="new_deck">Create deck</string>
+  <string name="new_deck">إنشاءداك</string>
   <string name="create">إنشاء</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="new_dynamic_deck">إنشاء مصفات للداك</string>
   <string name="night_mode">وضع ليلي</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <!--
@@ -155,10 +155,10 @@
   <string name="continue_sync">Continue sync</string>
   <string name="sync_cancelled">Sync cancelled</string>
   <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
-  <string name="export">Export</string>
-  <string name="export_collection">Export collection</string>
+  <string name="export">تصدير</string>
+  <string name="export_collection">تصدير مجموعة</string>
   <string name="export_deck">Export deck</string>
-  <string name="nothing">Nothing</string>
+  <string name="nothing">فارغ</string>
   <!-- Card template editor -->
   <string name="title_activity_template_editor">Card types</string>
   <string name="card_template_editor_front">Front template</string>
