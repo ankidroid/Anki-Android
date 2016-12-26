@@ -906,7 +906,7 @@ public class Syncer {
             Timber.i("Sync was cancelled");
             publishProgress(con, R.string.sync_cancelled);
             try {
-                mServer.finish();
+                mServer.abort();
             } catch (UnknownHttpResponseException e) {
             }
             throw new RuntimeException("UserAbortedSync");

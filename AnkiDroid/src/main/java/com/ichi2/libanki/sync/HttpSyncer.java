@@ -348,6 +348,9 @@ public class HttpSyncer {
         return 0;
     }
 
+    public void abort() throws UnknownHttpResponseException {
+    }
+
 
     public HttpResponse meta() throws UnknownHttpResponseException {
         return null;
