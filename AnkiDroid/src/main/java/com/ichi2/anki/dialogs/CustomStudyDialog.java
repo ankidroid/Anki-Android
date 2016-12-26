@@ -173,7 +173,7 @@ public class CustomStudyDialog extends DialogFragment {
                                             sb.append("(").append(TextUtils.join(" or ", arr)).append(")");
                                         }
                                         createCustomStudySession(new JSONArray(), new Object[]{sb.toString(),
-                                                Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM}, false);
+                                                Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM}, true);
                                     }
                                 });
                                 activity.showDialogFragment(dialogFragment);
