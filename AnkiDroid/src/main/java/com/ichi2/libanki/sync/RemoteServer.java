@@ -73,20 +73,20 @@ public class RemoteServer extends HttpSyncer {
 
     @Override
     public JSONObject applyChanges(JSONObject kw) throws UnknownHttpResponseException {
-        return _run("applyChanges", kw);
+        return parseDict(_run("applyChanges", kw));
     }
 
 
     @Override
     public JSONObject start(JSONObject kw) throws UnknownHttpResponseException {
-        return _run("start", kw);
+        return parseDict(_run("start", kw));
     }
 
 
     @Override
     public JSONObject chunk() throws UnknownHttpResponseException {
         JSONObject co = new JSONObject();
-        return _run("chunk", co);
+        return parseDict(_run("chunk", co));
     }
 
 
@@ -98,35 +98,47 @@ public class RemoteServer extends HttpSyncer {
 
     @Override
     public JSONObject sanityCheck2(JSONObject client) throws UnknownHttpResponseException {
-        return _run("sanityCheck2", client);
+        return parseDict(_run("sanityCheck2", client));
     }
-
 
     @Override
     public long finish() throws UnknownHttpResponseException {
+        return parseLong(_run("finish", new JSONObject()));
+    }
+
+    @Override
+    public void abort() throws UnknownHttpResponseException {
+        _run("abort", new JSONObject());
+    }
+
+    /** Python has dynamic type deduction, but we don't, so return String **/
+    private String _run(String cmd, JSONObject data) throws UnknownHttpResponseException {
+        HttpResponse ret = super.req(cmd, super.getInputStream(Utils.jsonToString(data)));
         try {
-            HttpResponse ret = super.req("finish", super.getInputStream("{}"));
-            String s = super.stream2String(ret.getEntity().getContent());
-            return Long.parseLong(s);
-        } catch (NumberFormatException e) {
-            return 0;
+            return super.stream2String(ret.getEntity().getContent());
         } catch (IllegalStateException | IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-
-    private JSONObject _run(String cmd, JSONObject data) throws UnknownHttpResponseException {
-        HttpResponse ret = super.req(cmd, super.getInputStream(Utils.jsonToString(data)));
+    /** Note: these conversion helpers aren't needed in libanki as type deduction occurs automatically there **/
+    private JSONObject parseDict(String s) {
         try {
-            String s = super.stream2String(ret.getEntity().getContent());
             if (!s.equalsIgnoreCase("null") && s.length() != 0) {
                 return new JSONObject(s);
             } else {
                 return new JSONObject();
             }
-        } catch (IllegalStateException | JSONException | IOException e) {
+        } catch (JSONException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private long parseLong(String s) {
+        try {
+            return Long.parseLong(s);
+        } catch (NumberFormatException e) {
+            return 0;
         }
     }
 }
