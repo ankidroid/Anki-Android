@@ -58,7 +58,7 @@
     <item><![CDATA[<h2>%1$s : <br/>Cartes mémoire pour Android</h2>AnkiDroid est une application de cartes mémoire qui est entièrement compatible avec le logiciel <a href=\"%2$s\"> Anki</a>. Vous pouvez créer, télécharger et apprendre le matériel à votre convenance sur AnkiDroid ou Anki Desktop, et synchroniser facilement avec AnkiWeb.]]></item>
     <item><![CDATA[Pour nous aider à améliorer AnkiDroid, veuillez signaler les bogues sur <a href=\"%1$s\"> le gestionnaire d\'incidents</a> ; vos idées de nouvelles fonctionnalité sont également bienvenues. Trouvez des réponses à vos questions sur <a href=\"%2$s\">le wiki</a> ou entamez une discussion sur <a href=\"%3$s\">le forum</a>.]]></item>
     <item><![CDATA[AnkiDroid est <a href=\"%1$s\">un logiciel open source <a/>, tout le monde est donc encouragé à <a href=\"%2$s\">devenir un contributeur</a> :-)]]></item>
-    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
+    <item><![CDATA[Les non-programmeurs peuvent aussi aider. Par exemple, vous pouvez aider à <a href=\"%1$s\">traduire</a> AnkiDroid, mettre à jour le wiki, envoyer des screenshots ou partager AnkiDroid sur votre blog.]]></item>
     <item><![CDATA[AnkiDroid est distribué sous la <a href=\"%1$s\">licence GNU-GPL v3</a> et le code source est disponible <a href=\"%2$s\">sur GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Aperçu</string>

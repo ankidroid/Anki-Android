@@ -40,28 +40,28 @@
 -->
 <resources>
   <!-- Widget -->
-  <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
-  <string name="widget_no_cards_due">No cards due</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">पत्ते बाकी</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid पत्ते बाकी</string>
+  <string name="widget_no_cards_due">कोई पत्ते बाकी नहीं</string>
   <string name="widget_loading">विजेट लोड हो रहा है...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d card due in %2$s</item>
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="one">%2$s में %1$d पत्ता बाकी</item>
+    <item quantity="other">%2$s में %1$d पत्ते बाकी</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
-    <item quantity="other">%1$d decks</item>
+    <item quantity="one">%1$d डेक</item>
+    <item quantity="other">%1$d डेक</item>
   </plurals>
-  <string name="widget_small">छोटे AnkiDroid</string>
+  <string name="widget_small">AnkiDroid छोटा</string>
   <string name="widget_small_button">AnkiDroid</string>
   <plurals name="widget_cards_due">
-    <item quantity="one">%d card due</item>
-    <item quantity="other">%d cards due</item>
+    <item quantity="one">%d पत्ता बाकी</item>
+    <item quantity="other">%d पत्ते बाकी</item>
   </plurals>
   <plurals name="widget_eta">
-    <item quantity="one">%d minute remaining</item>
-    <item quantity="other">%d minutes remaining</item>
+    <item quantity="one">%d मिनट बाकी</item>
+    <item quantity="other">%d मिनट बाकी</item>
   </plurals>
-  <string name="widget_add_note">Add note</string>
-  <string name="widget_add_note_button">Add new AnkiDroid note</string>
+  <string name="widget_add_note">नोट जोड़ें</string>
+  <string name="widget_add_note_button">नया AnkiDroid नोट जोड़ें</string>
 </resources>

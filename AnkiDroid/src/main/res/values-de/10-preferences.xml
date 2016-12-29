@@ -90,10 +90,10 @@
   <string name="full_screen_system">Systemzeilen verbergen</string>
   <string name="full_screen_complete">Systemzeilen und Antwortschaltflächen verbergen</string>
   <string name="full_screen_error_gestures">Gesten müssen aktiviert sein, um die Antwortschaltflächen zu verbergen</string>
-  <string name="answer_buttons_position">Answer buttons position</string>
+  <string name="answer_buttons_position">Position der Antwortschaltflächen</string>
   <string-array name="answer_buttons_position_labels">
-    <item>Top</item>
-    <item>Bottom</item>
+    <item>Oberseite</item>
+    <item>Unterseite</item>
   </string-array>
   <string name="gestures">Gesten aktivieren</string>
   <string name="gestures_summ">Weise Aktionen, wie zum Beispiel Beantworten oder Bearbeiten der Karten, Gesten zu.</string>

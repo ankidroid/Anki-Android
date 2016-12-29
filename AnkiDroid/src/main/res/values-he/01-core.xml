@@ -53,8 +53,8 @@
   <string name="studyoptions_eta">זמן משוער (דקות):</string>
   <string name="studyoptions_start">ללמוד עכשיו</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Expand</string>
-  <string name="collapse">Collapse</string>
+  <string name="expand">הרחב</string>
+  <string name="collapse">מזער</string>
   <string name="study_more">תוספות</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d כרטיס נותר (%2$s)</item>
@@ -63,10 +63,10 @@
     <item quantity="other">%1$d כרטיסים נותרים (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">נותרה דקה %d</item>
-    <item quantity="two">נותרו %d דקות</item>
-    <item quantity="many">%d minutes left</item>
-    <item quantity="other">%d minutes left</item>
+    <item quantity="one">נתרה %d דקה</item>
+    <item quantity="two">נתרה %d דקה</item>
+    <item quantity="many">נתרו %d דקות</item>
+    <item quantity="other">נתרו %d דקות</item>
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">

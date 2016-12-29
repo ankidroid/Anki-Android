@@ -118,7 +118,7 @@
   <string name="multimedia_editor_progress_wait_title">صبر کنید</string>
   <!-- not a good message, when an unexpected error happens -->
   <string name="multimedia_editor_something_wrong">متأسفیم، مشکلی به وجود آمد</string>
-  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the %1$s field</string>
+  <string name="multimedia_editor_attach_mm_content">ضمیمه کردن محتوای چند رسانه ای به زمینه %1$s</string>
   <string name="multimedia_editor_attach_media">ضمیمه رسانه</string>
   <!-- Audio view -->
   <!-- Message when recording fails -->

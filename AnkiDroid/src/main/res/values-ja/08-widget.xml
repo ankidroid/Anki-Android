@@ -53,11 +53,11 @@
   <string name="widget_small">AnkiDroid 小</string>
   <string name="widget_small_button">AnkiDroid</string>
   <plurals name="widget_cards_due">
-    <item quantity="other">%d cards due</item>
+    <item quantity="other">現在の課題: %d枚</item>
   </plurals>
   <plurals name="widget_eta">
-    <item quantity="other">%d minutes remaining</item>
+    <item quantity="other">残り%d分</item>
   </plurals>
-  <string name="widget_add_note">Add note</string>
-  <string name="widget_add_note_button">Add new AnkiDroid note</string>
+  <string name="widget_add_note">AnkiDroid ノートを追加</string>
+  <string name="widget_add_note_button">AnkiDroid の新規ノートを追加</string>
 </resources>

@@ -90,7 +90,7 @@
     <item>Новые до повторяемых</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>Когда не определён шрифт карт</item>
+    <item>Если не задан шрифт в карточках</item>
     <item>Всегда</item>
   </string-array>
   <string-array name="day_theme_labels">

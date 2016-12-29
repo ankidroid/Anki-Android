@@ -36,52 +36,52 @@
 -->
 <resources>
   <string-array name="error_reporting_choice_labels">
-    <item>Always report</item>
-    <item>Never report</item>
-    <item>Ask me</item>
+    <item>हमेशा सूचित करें</item>
+    <item>कभी सूचित न करें</item>
+    <item>मुझसे पूछें</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>No action</item>
-    <item>Show answer</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
-    <item>Lookup expression</item>
-    <item>Bury card</item>
-    <item>Suspend card</item>
-    <item>Delete note</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>कोई क्रिया नहीं</item>
+    <item>उत्तर दिखाएँ</item>
+    <item>उत्तर बटन 1</item>
+    <item>उत्तर बटन 2</item>
+    <item>उत्तर बटन 3</item>
+    <item>उत्तर बटन 4</item>
+    <item>सुझाया गया उत्तर (हरा)</item>
+    <item>उत्तर सुझाव से बेहतर</item>
+    <item>पूर्ववत्</item>
+    <item>नोट संपादित करें</item>
+    <item>नोट चिह्नित करें</item>
+    <item>वाक्यांश खोजें</item>
+    <item>पत्ता दफन करें</item>
+    <item>पत्ता निलंबित करें</item>
+    <item>नोट मिटाएँ</item>
+    <item>मीडिया चलाएँ</item>
+    <item>सीखना रोक दें</item>
+    <item>नोट दफन करें</item>
+    <item>नोट निलंबित करें</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Suspend card</item>
-    <item>Tag only</item>
+    <item>पत्ता निलंबित करें</item>
+    <item>केवल टैग</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>New cards in random order</item>
+    <item>नए पत्ते यादृच्छिक क्रम में</item>
     <item>New cards in order added</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
+    <item>सबसे पुराना देखा पहले</item>
+    <item>यादृच्छिक</item>
+    <item>बढ़ते अंतराल</item>
+    <item>घटते अंतराल</item>
+    <item>सर्वाधिक चूका</item>
+    <item>जोड़ने का क्रम</item>
     <item>Order due</item>
-    <item>Latest added first</item>
+    <item>नवीनतम जोड़ा गया पहले</item>
     <item>Relative overdueness</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
+    <item>वर्तमान डेक का उपयोग करें</item>
     <item>Decide by note type</item>
   </string-array>
   <string-array name="new_spread_labels">

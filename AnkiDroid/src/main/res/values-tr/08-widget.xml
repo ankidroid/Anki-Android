@@ -40,7 +40,7 @@
 -->
 <resources>
   <!-- Widget -->
-  <string name="widget_minimum_cards_due_notification_ticker_title">Çalışılacak Kart</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Kartlar çalışılacak</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid kartı çalışılacak</string>
   <string name="widget_no_cards_due">Çalışılacak kart yok</string>
   <string name="widget_loading">Widget yükleniyor...</string>
@@ -55,13 +55,13 @@
   <string name="widget_small">AnkiDroid Küçük</string>
   <string name="widget_small_button">AnkiDroid</string>
   <plurals name="widget_cards_due">
-    <item quantity="one">%d card due</item>
-    <item quantity="other">%d cards due</item>
+    <item quantity="one">%d kart çalışılacak</item>
+    <item quantity="other">%d kart çalışılacak</item>
   </plurals>
   <plurals name="widget_eta">
-    <item quantity="one">%d minute remaining</item>
-    <item quantity="other">%d minutes remaining</item>
+    <item quantity="one">%d dakika kaldı</item>
+    <item quantity="other">%d dakika kaldı</item>
   </plurals>
-  <string name="widget_add_note">Add note</string>
-  <string name="widget_add_note_button">Add new AnkiDroid note</string>
+  <string name="widget_add_note">Not ekle</string>
+  <string name="widget_add_note_button">Yeni AnkiDroid notu ekle</string>
 </resources>

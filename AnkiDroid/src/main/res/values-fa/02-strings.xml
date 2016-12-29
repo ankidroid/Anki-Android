@@ -163,17 +163,17 @@
   <string name="export_in_progress">در حال صادر کردن فایل apkg&#8230;</string>
   <string name="export_successful_title">فایل apkg ایمیل شود؟</string>
   <string name="export_successful">فایل \"%s\" صادر شد. می خواهید آن را ایمیل کنید؟</string>
-  <string name="export_email_subject">AnkiDroid exported collection</string>
+  <string name="export_email_subject">AnkiDroid مجموعه را صادر کرد</string>
   <string name="export_email_text">
-        <![CDATA[
-        Hi!
+<![CDATA[
+        سلام!
         <br/><br/>
-        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        این یک دسته از فلش کارت های ankidroid هست که توسط <a href="https://ankidroid.org/docs/manual.html">ankidroid برای شما ارسال شده است</a>.
+        برای استفاده از آن یکی از عامل های در دسترس <a href="http://ankisrs.net/#download">anki را امتحان کنید</a> و از یادگیری کارآمد و آسان لذت ببرید.
         ]]>
     </string>
   <string name="export_unsuccessful">خطا در صادر کردن مجموعه</string>
-  <string name="import_hint">برای وارد کردن کارتها, فایل apkg را در مسیر \"%s\" قرار داده و دکمه خب را فشار دهید</string>
+  <string name="import_hint">برای وارد کردن کارتها, فایل apkg را در مسیر \"%s\" قرار داده و دکمه تایید را فشار دهید</string>
   <string name="upgrade_import_no_file_found">فایل %1$s قابل وارد کردن یافت نشد</string>
   <string name="study_options">گزینه های دسته</string>
   <string name="select_tts">تنظیم زبان تبدیل متن به صدا TTS</string>

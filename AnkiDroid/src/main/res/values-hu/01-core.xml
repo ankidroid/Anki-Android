@@ -76,10 +76,10 @@
   <string name="ease_button_hard">Nehéz</string>
   <string name="ease_button_good">Jó</string>
   <string name="ease_button_easy">Könnyű</string>
-  <string name="studyoptions_congrats_undo">Visszavonás %s</string>
+  <string name="studyoptions_congrats_undo">%s visszavonása</string>
   <string name="menu_import">Importálás</string>
   <string name="undo">Visszavonás</string>
-  <string name="undo_action_review">legutolsó áttekintés</string>
+  <string name="undo_action_review">Utoljára ismételt kártya</string>
   <string name="undo_action_bury_card">bury card</string>
   <string name="undo_action_bury_note">bury note</string>
   <string name="undo_action_suspend_card">kártya felfüggesztése</string>
@@ -133,10 +133,10 @@
   <string name="studyoptions_limit_reached">Elérted a napi tanulási mennyiséget</string>
   <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
   <string name="studyoptions_congrats_finished">Gratulálok! Mára végeztél.</string>
-  <string name="studyoptions_congrats_more_rev">A mai átnézési korlátot elérted, de még mindig maradt átnézendő kártya. Az optimális tanulás érdekében lehet, hogy meg kellene emelni a napi korlátot a Beállítások menüben.</string>
+  <string name="studyoptions_congrats_more_rev">A mai ismétlési korlátot elérted, de még mindig maradt ismétlendő kártya. Az optimális tanulás érdekében lehet, hogy meg kellene emelni a napi korlátot a Beállítások menüben.</string>
   <string name="studyoptions_congrats_more_new">További új kártyák állnak rendelkezésre, azonban a napi limitet elérted. A napi limitet az opciók menüben módosíthatod, de kérlek ne feledd, hogy ez rövidtávon megnöveli az ismétléseid számát.</string>
   <string name="studyoptions_congrats_custom">Ahhoz, hogy a szokásostól eltérő ütemben tanulhass, kattints lent, az \"Egyéni tanulás\" gombra.</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet</string>
+  <string name="studyoptions_no_cards_due">Jelenleg nincs esedékes kártya</string>
   <string name="sd_card_not_mounted">Nincs elérhető tárolóhely</string>
   <string name="button_sync">Szinkronizálás</string>
   <string name="cancel_sync_confirm">Tényleg megszakítod a szinkronizálást?</string>

@@ -50,16 +50,16 @@
     <item>Vastaa ehdotettu (vihreä)</item>
     <item>Vastaa paremmin kuin ehdotettu</item>
     <item>Kumoa</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Muokkaa merkintää</item>
+    <item>Merkitse merkintä</item>
     <item>Hakutermi</item>
     <item>Piilota kortti</item>
     <item>Keskeytä kortti</item>
-    <item>Delete note</item>
+    <item>Poista merkintä</item>
     <item>Toista media</item>
     <item>Keskeytä oppiminen</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Piilota merkintä</item>
+    <item>Jäädytä merkintä</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Jäädytä kortti</item>
@@ -78,7 +78,7 @@
     <item>Lisäysjärjestyksessä</item>
     <item>Näyttöjärjestyksessä</item>
     <item>Viimeisimmät lisätyt ensin</item>
-    <item>Relative overdueness</item>
+    <item>Suhteellinen erääntyneisyys</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Käytä tätä pakkaa</item>
@@ -94,11 +94,11 @@
     <item>Aina</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Plain</item>
+    <item>Vaalea</item>
+    <item>Pelkistetty</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
+    <item>Musta</item>
+    <item>Tumma</item>
   </string-array>
 </resources>

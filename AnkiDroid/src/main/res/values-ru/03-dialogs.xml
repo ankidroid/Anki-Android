@@ -118,11 +118,11 @@
   <string name="check_media_failed">Ошибка проверки Media</string>
   <string name="check_media_invalid">Файлы с недопустимой кодировкой: %d</string>
   <string name="check_media_unused">Файлы находятся в каталоге с Media данными, но не используются ни в одной карте: %d</string>
-  <string name="check_media_nohave">Файлы используются в картах, но отсутствуют в каталоге с Madia данными: %d</string>
+  <string name="check_media_nohave">Ссылок на отсутствующие медиафайлы: %d</string>
   <string name="check_media_no_unused_missing">Неиспользуемые и отсутствующие файлы не найдены.</string>
   <string name="check_media_db_updated">База данных Media перестроена.</string>
   <string name="check_media_delete_unused">Удалить неиспользуемые</string>
-  <string name="check_media_deleted">Файлы удалены: %d</string>
+  <string name="check_media_deleted">Удалено файлов: %d</string>
   <!-- Tags Dialog Options -->
   <string name="tags_dialog_option_all_cards">Все карты</string>
   <string name="tags_dialog_option_new_cards">Новые</string>

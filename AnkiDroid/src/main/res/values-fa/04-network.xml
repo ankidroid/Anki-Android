@@ -94,7 +94,7 @@
   <string name="sync_remote_db_error">بانک اطلاعات دریافت شده خراب شده بود. لطفا مجددا امتحان نمایید.</string>
   <string name="sync_overwrite_error">مجموعه فعلی شما با فایل دانلود شده نمی تواند رونویسی شود.</string>
   <string name="sync_connection_error">مدت اتصال به اینترنت به پایان رسید. یا به خاطر مشکلات اتصال اینترنت شما یا به خاطر حجیم بودن فایل در پوشه رسانه.</string>
-  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
+  <string name="sync_error_409">در یک لحظه فقط یک عامل مثلا فقط نسخه اندروید یا نسخه رایانه می تواند به AnkiWeb دسترسی داشته باشد. اگر همگام سازی قبلی با خطا همراه بوده است لطفا دقایقی دیگر دوباره امتحان کنید.</string>
   <string name="sync_write_access_error">فایل دانلود شده نمی تواند بر روی کارت حافظه ذخیره شود. یا کارت حافظه شما بصورت فقط خواندنی نصب شده و یا فضای کافی وجود ندارد.</string>
   <string name="sync_deletions_message">حذف همگام سازی...</string>
   <string name="sync_small_objects_message">همگام سازی موارد کوچک&#8230;</string>

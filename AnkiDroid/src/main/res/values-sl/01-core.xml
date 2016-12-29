@@ -53,8 +53,8 @@
   <string name="studyoptions_eta">Predviden čas (min.):</string>
   <string name="studyoptions_start">Preuči</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Expand</string>
-  <string name="collapse">Collapse</string>
+  <string name="expand">Razširi</string>
+  <string name="collapse">Strni</string>
   <string name="study_more">Preuči več</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Zap. %1$d kartica (%2$s)</item>

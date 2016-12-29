@@ -53,8 +53,8 @@
   <string name="studyoptions_eta">Вероятно займёт (мин):</string>
   <string name="studyoptions_start">Начать обучение</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Expand</string>
-  <string name="collapse">Collapse</string>
+  <string name="expand">Развернуть</string>
+  <string name="collapse">Свернуть</string>
   <string name="study_more">Продолжить обучение</string>
   <plurals name="deckpicker_title">
     <item quantity="one">План %1$d карта (%2$s)</item>

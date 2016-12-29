@@ -40,45 +40,45 @@
 
 -->
 <resources>
-  <string name="youre_offline">You are offline</string>
-  <string name="sync_error">Sync error</string>
-  <string name="vague_error">Error</string>
-  <string name="retry">Retry</string>
-  <string name="cancel">Cancel</string>
-  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
-  <string name="menu_get_shared_decks">Get shared decks</string>
-  <string name="connection_error_message">A network error has occurred</string>
-  <string name="not_logged_in_title">Log in to AnkiWeb</string>
-  <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
-  <string name="no_email_client">No email client available</string>
+  <string name="youre_offline">आप ऑफ़लाइन हैं</string>
+  <string name="sync_error">समकालन में त्रुटि</string>
+  <string name="vague_error">त्रुटि</string>
+  <string name="retry">पुनः प्रयास करें</string>
+  <string name="cancel">रद्द करें</string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms"> नियम और शर्तें</a></string>
+  <string name="menu_get_shared_decks">साझा किए गए डेक पाएँ</string>
+  <string name="connection_error_message">कोई नेटवर्क त्रुटि हुई</string>
+  <string name="not_logged_in_title">AnkiWeb में लॉग इन करें</string>
+  <string name="login_create_account_message">क्लाउड समकालन सेवा का उपयोग करने के लिए आपको किसी तीसरा पक्ष खाते में लॉग इन करना होगा। आप अगले चरण में खाता बना सकते हैं।</string>
+  <string name="no_email_client">कोई ईमेल ग्राहक उपलब्ध नहीं</string>
   <!-- MyAccount.java -->
-  <string name="username">Email address</string>
-  <string name="username_repeat">Repeat email address</string>
-  <string name="password">Password</string>
-  <string name="password_repeat">Repeat password</string>
-  <string name="log_in">Log in</string>
-  <string name="sign_up_description">Don’t have an AnkiWeb account? It’s free!</string>
-  <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
-  <string name="sign_up">Sign up</string>
-  <string name="logged_as">Logged in as</string>
-  <string name="log_out">Log out</string>
-  <string name="alert_logging_message">Logging in&#8230;</string>
-  <string name="invalid_username_password">Invalid email address or password</string>
-  <string name="reset_password">Reset password</string>
+  <string name="username">ईमेल पता</string>
+  <string name="username_repeat">ईमेल पता दोहराएँ</string>
+  <string name="password">पासवर्ड</string>
+  <string name="password_repeat">पासवर्ड दोहराएँ</string>
+  <string name="log_in">लॉग इन करें</string>
+  <string name="sign_up_description">AnkiWeb खाता नहीं है? यह मुफ़्त है!</string>
+  <string name="sign_up_not_affiliated">नोट: AnkiWeb AnkiDroid से सम्बंधित नहीं है</string>
+  <string name="sign_up">साइन अप करें</string>
+  <string name="logged_as">के रूप में लॉग इन</string>
+  <string name="log_out">लॉग आउट</string>
+  <string name="alert_logging_message">लॉग इन कर रहे हैं...</string>
+  <string name="invalid_username_password">अमान्य ईमेल पता या पासवर्ड</string>
+  <string name="reset_password">पासवर्ड रीसेट करें</string>
   <!-- AndroidManifest.xml -->
-  <string name="downloaddeck_search">Search</string>
-  <string name="preferences_title">Preferences</string>
-  <string name="deckpreferences_title">Options for XXX</string>
+  <string name="downloaddeck_search">खोज</string>
+  <string name="preferences_title">पसंद</string>
+  <string name="deckpreferences_title">XXX के लिए विकल्प</string>
   <string name="sync_conflict_message">You must either upload this collection or download it from Ankiweb, as they can’t be merged. The collection on one side will be overwritten.</string>
-  <string name="sync_conflict_local">Upload</string>
-  <string name="sync_conflict_remote">Download</string>
-  <string name="sync_conflict_remote_confirm">Overwrite your local collection?</string>
-  <string name="sync_conflict_local_confirm">Overwrite your collection on the server?</string>
+  <string name="sync_conflict_local">अपलोड करें</string>
+  <string name="sync_conflict_remote">डाउनलोड करें</string>
+  <string name="sync_conflict_remote_confirm">अपने स्थानीय संग्रह को अधिलेखित करें?</string>
+  <string name="sync_conflict_local_confirm">आपके परिसेवक के संग्रह को अधिलेखित करें?</string>
   <string name="sync_prepare_syncing">Preparing syncing&#8230;</string>
-  <string name="sync_preparing_full_sync_message">Preparing full sync&#8230;</string>
-  <string name="sync_uploading_message">Uploading&#8230;</string>
-  <string name="sync_downloading_message">Downloading&#8230;</string>
-  <string name="sync_title">Synchronization</string>
+  <string name="sync_preparing_full_sync_message">पूर्ण समकालन की तैयारी हो रही है...</string>
+  <string name="sync_uploading_message">अपलोड हो रहा है...</string>
+  <string name="sync_downloading_message">डाउनलोड कर रहा है...</string>
+  <string name="sync_title">समकालन</string>
   <string name="sync_downloading_media">Downloading media %1$d/%2$d&#8230;</string>
   <string name="sync_log_uploading_message">Full sync from local</string>
   <string name="sync_log_downloading_message">Full sync from server</string>

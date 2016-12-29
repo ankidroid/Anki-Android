@@ -41,46 +41,46 @@
 <resources>
   <!-- CardBrowser -->
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">%d पत्ता दिखाया गया</item>
+    <item quantity="other">%d पत्ते दिखाए गए</item>
   </plurals>
-  <string name="card_browser_all_decks">All decks</string>
-  <string name="card_browser_delete_card">Delete note</string>
-  <string name="card_browser_suspend_card">Suspend card</string>
-  <string name="card_browser_unsuspend_card">Unsuspend card</string>
-  <string name="card_browser_mark_card">Mark note</string>
-  <string name="card_browser_unmark_card">Unmark note</string>
-  <string name="delete_card_title">Delete note?</string>
-  <string name="delete_card_message">Delete all cards of this note?\nSearch field: %s</string>
-  <string name="card_browser_show_marked">Filter marked</string>
-  <string name="card_browser_show_suspended">Filter suspended</string>
-  <string name="card_browser_search_by_tag">Filter by tag</string>
-  <string name="card_browser_tags_shown">Tags: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
-  <string name="card_browser_change_display_order">Change display order</string>
-  <string name="card_browser_change_display_order_title">Choose display order</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
-  <string name="card_details_question">Question</string>
+  <string name="card_browser_all_decks">सरे डेक</string>
+  <string name="card_browser_delete_card">नोट मिटाएँ</string>
+  <string name="card_browser_suspend_card">पत्ता निलंबित करें</string>
+  <string name="card_browser_unsuspend_card">पत्ता अनिलंबित करें</string>
+  <string name="card_browser_mark_card">नोट चिह्नित करें</string>
+  <string name="card_browser_unmark_card">नोट अचिह्नित करें</string>
+  <string name="delete_card_title">नोट मिटाएँ?</string>
+  <string name="delete_card_message">इस नोट के सारे पत्ते मिटाएँ?\nखोज फ़ील्ड: %s</string>
+  <string name="card_browser_show_marked">चिह्नित नोटों को छानें</string>
+  <string name="card_browser_show_suspended">निलंबित पत्तों को छानें</string>
+  <string name="card_browser_search_by_tag">टैग से छानें</string>
+  <string name="card_browser_tags_shown">टैग: %1$s</string>
+  <string name="card_browser_list_my_searches">मेरे खोज</string>
+  <string name="card_browser_list_my_searches_save">खोज सहेजें</string>
+  <string name="card_browser_list_my_searches_title">कोई सहेजी गई खोज चुने</string>
+  <string name="card_browser_list_my_searches_new_name">वर्तमान खोज का नाम</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">आप नाम के बिना खोज सहेज नहीं सकते</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">नाम मौजूद है</string>
+  <string name="card_browser_list_my_searches_remove_content">\"%1$s\" को मिटाएँ?</string>
+  <string name="card_browser_change_display_order">प्रदर्शन क्रम बदलें</string>
+  <string name="card_browser_change_display_order_title">प्रदर्शन क्रम बदलें</string>
+  <string name="card_browser_change_display_order_reverse">किसी फ़ील्ड को पलटने के लिए उसे दो बार चुनें</string>
+  <string name="card_details_question">प्रश्न</string>
   <string name="card_details_answer">जवाब</string>
-  <string name="card_details_due">Due</string>
+  <string name="card_details_due">बाकी</string>
   <string name="card_details_tags">टैग</string>
   <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string-array name="card_browser_order_labels">
     <item>No sorting (faster)</item>
-    <item>By sort field</item>
-    <item>By created time</item>
-    <item>By edited time</item>
-    <item>By changed time</item>
-    <item>By due time</item>
-    <item>By interval</item>
+    <item>क्रम फ़ील्ड से</item>
+    <item>निर्माण के समय से</item>
+    <item>संपादित समय से</item>
+    <item>बदले समय से</item>
+    <item>नियत समय से</item>
+    <item>अंतराल से</item>
     <item>By ease</item>
-    <item>By reviews</item>
-    <item>By lapses</item>
+    <item>समीक्षाओं से</item>
+    <item>चूकों से</item>
   </string-array>
 </resources>

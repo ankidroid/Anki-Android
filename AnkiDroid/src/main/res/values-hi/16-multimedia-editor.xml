@@ -35,63 +35,63 @@
 -->
 <resources>
   <!-- Main editor popup menu items -->
-  <string name="multimedia_editor_popup_image">Add image</string>
-  <string name="multimedia_editor_popup_audio">Record audio</string>
-  <string name="multimedia_editor_popup_text">Advanced editor</string>
+  <string name="multimedia_editor_popup_image">चित्र जोड़ें</string>
+  <string name="multimedia_editor_popup_audio">ध्वनि रिकॉर्ड करें</string>
+  <string name="multimedia_editor_popup_text">उन्नत संपादक</string>
   <!-- Translation activity (Glosbe) -->
-  <string name="multimedia_editor_trans_poweredglosbe">Powered by glosbe.com</string>
+  <string name="multimedia_editor_trans_poweredglosbe">Glosbe.com द्वारा संचालित</string>
   <!-- these are like translate f r o m  and t o  some othe languages -->
-  <string name="multimedia_editor_trans_from">From</string>
-  <string name="multimedia_editor_trans_to">To</string>
+  <string name="multimedia_editor_trans_from">से</string>
+  <string name="multimedia_editor_trans_to">को</string>
   <!-- imperative for the button title -->
-  <string name="multimedia_editor_trans_translate">Translate</string>
+  <string name="multimedia_editor_trans_translate">अनुवाद करें</string>
   <!-- waiting message -->
-  <string name="multimedia_editor_trans_translating_online">Translating online</string>
+  <string name="multimedia_editor_trans_translating_online">ऑनलाइन अनुवाद की जा रही है</string>
   <!-- pick the right translation imperative -->
-  <string name="multimedia_editor_trans_pick_translation">Pick translation</string>
+  <string name="multimedia_editor_trans_pick_translation">अनुवाद चुनें</string>
   <!-- in controller when fails -->
-  <string name="multimedia_editor_trans_translation_failed">Translation failed</string>
+  <string name="multimedia_editor_trans_translation_failed">अनुवाद विफल</string>
   <!-- from controller -->
   <!-- dialog title to ask for translation source -->
-  <string name="multimedia_editor_trans_pick_translation_source">Pick dictionary</string>
+  <string name="multimedia_editor_trans_pick_translation_source">शब्दकोष चुनें</string>
   <!-- dialog asking to install ColorDict -->
-  <string name="multimedia_editor_trans_install_color_dict">Install ColorDict first</string>
+  <string name="multimedia_editor_trans_install_color_dict">पहले ColorDict स्थापित करें</string>
   <!-- Pronunciation activity (Beolingus) -->
-  <string name="multimedia_editor_pron_load">Load</string>
-  <string name="multimedia_editor_pron_looking_up">Looking up pronunciation</string>
+  <string name="multimedia_editor_pron_load">लोड करें</string>
+  <string name="multimedia_editor_pron_looking_up">उच्चारण खोजा जा रहा है</string>
   <!-- in controller when fails -->
-  <string name="multimedia_editor_pron_pronunciation_failed">Pronunciation failed</string>
-  <string name="multimedia_editor_word_search_try_lower_case">Try using only lower case characters</string>
-  <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
+  <string name="multimedia_editor_pron_pronunciation_failed">उच्चारण विफल</string>
+  <string name="multimedia_editor_word_search_try_lower_case">केवल छोटे अक्षरों को उपयोग करने का प्रयास करें</string>
+  <string name="multimedia_editor_poweredbeolingus">Beolingus द्वारा संचालित</string>
   <!-- Image search activity -->
   <!-- in progress dialog when loading the image -->
-  <string name="multimedia_editor_imgs_saving_image">Saving image</string>
-  <string name="multimedia_editor_imgs_loading_image">Loading image</string>
-  <string name="multimedia_editor_imgs_no_results">Search returned no results</string>
-  <string name="multimedia_editor_imgs_images_found">Images found</string>
-  <string name="multimedia_editor_imgs_pow_by_google">Powered by Google Image Search</string>
+  <string name="multimedia_editor_imgs_saving_image">छवि सहेज रहा है</string>
+  <string name="multimedia_editor_imgs_loading_image">चित्र लोड हो रहा है</string>
+  <string name="multimedia_editor_imgs_no_results">खोज में कोई परिणाम नहीं मिले</string>
+  <string name="multimedia_editor_imgs_images_found">चित्र मिले</string>
+  <string name="multimedia_editor_imgs_pow_by_google">गूगल चित्र खोज द्वारा संचालित</string>
   <!-- buttons -->
   <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
   <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
-  <string name="multimedia_editor_imgs_pick">Pick</string>
+  <string name="multimedia_editor_imgs_pick">चुनें</string>
   <!-- in controller when fails -->
-  <string name="multimedia_editor_imgs_failed">Image search failed</string>
+  <string name="multimedia_editor_imgs_failed">चित्र खोज विफल</string>
   <!-- while searching -->
   <string name="multimedia_editor_imgs_searching_for_images">Searching for images</string>
   <!-- Field editing general -->
   <!-- these are button names to convert field type -->
-  <string name="multimedia_editor_field_editing_text">Text</string>
-  <string name="multimedia_editor_field_editing_image">Image</string>
-  <string name="multimedia_editor_field_editing_audio">Audio</string>
-  <string name="multimedia_editor_field_editing_done">Done</string>
+  <string name="multimedia_editor_field_editing_text">पाठ</string>
+  <string name="multimedia_editor_field_editing_image">चित्र</string>
+  <string name="multimedia_editor_field_editing_audio">ध्वनि</string>
+  <string name="multimedia_editor_field_editing_done">समाप्त</string>
   <!-- Text field editing -->
   <!-- buttons -->
-  <string name="multimedia_editor_text_field_editing_search_label">Search for:</string>
-  <string name="multimedia_editor_text_field_editing_show">Image</string>
-  <string name="multimedia_editor_text_field_editing_say">Pronunciation</string>
-  <string name="multimedia_editor_text_field_editing_clear">Clear</string>
-  <string name="multimedia_editor_text_field_editing_clone">Clone from</string>
-  <string name="multimedia_editor_text_field_editing_translate">Translation</string>
+  <string name="multimedia_editor_text_field_editing_search_label">इसे खोजें:</string>
+  <string name="multimedia_editor_text_field_editing_show">चित्र</string>
+  <string name="multimedia_editor_text_field_editing_say">उच्चारण</string>
+  <string name="multimedia_editor_text_field_editing_clear">खाली करें</string>
+  <string name="multimedia_editor_text_field_editing_clone">से जुड़वाँ बनाएँ</string>
+  <string name="multimedia_editor_text_field_editing_translate">अनुवाद</string>
   <!-- message to user, when there is no text or many words, but the user tries something -->
   <string name="multimedia_editor_text_field_editing_no_text">Input some text first</string>
   <string name="multimedia_editor_text_field_editing_many_words">Dictionary usually expects one word</string>

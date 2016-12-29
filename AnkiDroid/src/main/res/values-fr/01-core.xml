@@ -53,8 +53,8 @@
   <string name="studyoptions_eta">Temps estimé (min):</string>
   <string name="studyoptions_start">Réviser</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Expand</string>
-  <string name="collapse">Collapse</string>
+  <string name="expand">Développer</string>
+  <string name="collapse">Regrouper</string>
   <string name="study_more">Réviser plus</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d carte due (%2$s)</item>

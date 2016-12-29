@@ -40,6 +40,7 @@
 -->
 <resources>
   <!-- Feedback.java -->
+  <string name="empty_string"></string>
   <string name="error_reporting_choice">Modo de informação de erro</string>
   <string name="feedback_disclaimer">Disclaimer: Não coletamos qualquer informações pessoais como seu endereço de email, número ou código IMEI do seu telefone . Nós coletamos apenas informações relacionadas ao seu dispositivo, tais como o nome do fabricante, o modelo e a versão do Android, além da própria natureza dos erros relatados e as etapas que levaram às suas ocorrências.</string>
   <string name="feedback_title">Comentários</string>

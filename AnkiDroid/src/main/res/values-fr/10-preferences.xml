@@ -72,12 +72,12 @@
   <string name="write_answers_disable">Désactiver la saisie de la réponse</string>
   <string name="write_answers_disable_summ">Éviter au clavier d’apparaître contenant un champ « taper la réponse »</string>
   <string name="use_input_tag">Saisir la réponse dans la carte</string>
-  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
+  <string name="use_input_tag_summ">Utiliser la saisie de la réponse directement dans la carte</string>
   <string name="text_selection_click">Solution alternative pour les appuis longs</string>
   <string name="text_selection_click_summ">Sélectionnez ceci si vous ne pouvez pas commencer une sélection de texte avec une pression longue</string>
   <string name="dictionary">Dictionnaire de recherche</string>
   <string name="reset_languages">Réinitialiser les langages</string>
-  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
+  <string name="reset_languages_summ">Réinitialiser les paramètres de langue (pour le TTS et les dictionnaires) pour tous les paquets de cartes</string>
   <string name="reset_languages_question">Réinitialiser toutes les affectations de langues ?</string>
   <string name="reset_confirmation">Réinitialisation des états</string>
   <string name="card_zoom">Zoom de carte</string>
@@ -90,10 +90,10 @@
   <string name="full_screen_system">Masquer les barres système</string>
   <string name="full_screen_complete">Masquer les barres système et les boutons de réponse</string>
   <string name="full_screen_error_gestures">Vous devez activer les gestes pour pouvoir masquer les boutons de réponse</string>
-  <string name="answer_buttons_position">Answer buttons position</string>
+  <string name="answer_buttons_position">Position des boutons de réponse</string>
   <string-array name="answer_buttons_position_labels">
-    <item>Top</item>
-    <item>Bottom</item>
+    <item>Haut</item>
+    <item>Bas</item>
   </string-array>
   <string name="gestures">Activer les gestes</string>
   <string name="gestures_summ">Assigner des gestes à des actions comme répondre et éditer des cartes.</string>
@@ -153,8 +153,8 @@
   <string name="show_estimates_summ">Afficher le temps avant la prochaine révision sur les boutons de réponse</string>
   <string name="show_progress">Afficher le nombre restant de révision</string>
   <string name="show_progress_summ">Montrer le nombre de cartes restantes</string>
-  <string name="show_eta">Show ETA</string>
-  <string name="show_eta_summ">Show remaining time</string>
+  <string name="show_eta">Afficher le temps restant</string>
+  <string name="show_eta_summ">Afficher le temps restant</string>
   <string name="use_current">Paquet utilisé pour les nouvelles cartes</string>
   <string name="new_spread">Position des nouvelles cartes</string>
   <string name="learn_cutoff">Limite d’apprentissage</string>
@@ -171,25 +171,25 @@
   <string name="convert_fen_text_summ">Échiquier avec la notation Forsyth-Edwards Notation. La notation doit être placée entre des balises [fen][/fen].</string>
   <string name="enable_api_title">Activer l\'API AnkiDroid</string>
   <string name="enable_api_summary">Laissez les autres applications se connecter à AnkiDroid et lire / écrire des données sans votre intervention</string>
-  <string name="custom_buttons">App bar buttons</string>
-  <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
+  <string name="custom_buttons">Boutons de la barre d’application</string>
+  <string name="custom_buttons_summary">Personnaliser les actions de la barre d’application</string>
   <string name="custom_buttons_setting_always_show">Toujours afficher</string>
-  <string name="custom_buttons_setting_if_room">Show if room</string>
+  <string name="custom_buttons_setting_if_room">Afficher s’il y a de la place</string>
   <string name="custom_buttons_setting_menu_only">Menu uniquement</string>
   <string name="reset_custom_buttons">Rétablir les paramètres par défaut</string>
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Statistiques avancées</string>
   <string name="enable_advanced_statistics_title">Activer les statistiques avancées</string>
-  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
-  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
+  <string name="enable_advanced_statistics_summ">Afficher les prévisions de statistiques d’après les calculs des révisions futures (activé) ou des révisions futures déjà programmées (désactivé).</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Calculer les premiers n jours, simuler le reste</string>
   <string name="advanced_forecast_stats_compute_precision_title">Précision du calcul</string>
-  <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">Nombres d’essais de simulation</string>
   <!-- Custom sync server settings -->
-  <string name="custom_sync_server_title">Custom sync server</string>
-  <string name="custom_sync_server_enable_title">Use custom sync server</string>
-  <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
-  <string name="custom_sync_server_base_url_title">Sync url</string>
-  <string name="custom_sync_server_media_url_title">Media sync url</string>
+  <string name="custom_sync_server_title">Serveur de synchronisation personnalisé</string>
+  <string name="custom_sync_server_enable_title">Utiliser un serveur de synchronisation personnalisé</string>
+  <string name="custom_sync_server_enable_summary">Si vous ne souhaitez pas utiliser le service propriétaire AnkiWeb, vous pouvez spécifiez ici un serveur alternatif</string>
+  <string name="custom_sync_server_base_url_title">Synchroniser l’URL</string>
+  <string name="custom_sync_server_media_url_title">Synchroniser l’URL pour les médias</string>
   <!-- studyoptions -->
   <string name="studyoptions_limit_select_tags">Sélectionner les étiquettes</string>
   <!-- Deck configurations -->

@@ -40,8 +40,8 @@
 -->
 <resources>
   <!-- generic strings -->
-  <string name="disabled">Disabled</string>
-  <string name="enabled">Enabled</string>
+  <string name="disabled">Ei käytössä</string>
+  <string name="enabled">Käytössä</string>
   <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Yleiset asetukset</string>
@@ -51,10 +51,10 @@
   <string name="pref_cat_flashcard">Näyttö</string>
   <string name="pref_cat_whiteboard">Valkotaulu</string>
   <string name="pref_cat_automatic_display">Näytä vastaukset automaattisesti</string>
-  <string name="pref_cat_appearance">Appearance</string>
-  <string name="pref_cat_appearance_summ">Change themes and default font</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_appearance">Ulkoasu</string>
+  <string name="pref_cat_appearance_summ">Vaihda teemaa ja oletusfonttia</string>
+  <string name="pref_cat_themes">Teemat</string>
+  <string name="pref_cat_fonts">Fontit</string>
   <string name="pref_cat_gestures">Eleet</string>
   <string name="pref_cat_gestures_summ">Käytä napautuksia ja pyyhkäisyjä painikkeiden sijaan</string>
   <string name="pref_cat_actions">Toiminnot</string>
@@ -71,29 +71,29 @@
   <string name="whiteboard_black_summ">Käyttää vähemmän muistia, mutta ei silloin, kun yötila on päällä</string>
   <string name="write_answers_disable">Ota vastauksen kirjoittaminen pois käytöstä</string>
   <string name="write_answers_disable_summ">Estää näppäimistöä tulemasta esille korteissa, joissa on \'kirjoita vastaus\'-kenttiä</string>
-  <string name="use_input_tag">Type answer into the card</string>
-  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
+  <string name="use_input_tag">Kirjoita vastaus korttiin</string>
+  <string name="use_input_tag_summ">Kirjoita vastaus kortin sisällä olevaan vastauskenttään</string>
   <string name="text_selection_click">Korjaa pitkät painallukset</string>
   <string name="text_selection_click_summ">Ota käyttöön, jos et pysty aloittamaan tekstivalintaa pitkällä painalluksella</string>
   <string name="dictionary">Sanakirja</string>
   <string name="reset_languages">Palauta kielet</string>
-  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
+  <string name="reset_languages_summ">Palauta kielimääritykset (tekstissä puheeksi ja sanakirjoissa) kaikissa pakoissa</string>
   <string name="reset_languages_question">Palauta kaikki kielivalinnat?</string>
   <string name="reset_confirmation">Kaikki tilat palautettu</string>
-  <string name="card_zoom">Card zoom</string>
-  <string name="image_zoom">Image zoom</string>
+  <string name="card_zoom">Kortin tarkennus</string>
+  <string name="image_zoom">Kuvan tarkennus</string>
   <string name="button_size">Vastauspainikkeen koko</string>
   <string name="card_browser_font_size">Korttiselaimen kirjasimien skaalaus</string>
-  <string name="col_path">AnkiDroid directory</string>
+  <string name="col_path">AnkiDroid-hakemisto</string>
   <string name="fullscreen_review">Koko näytön tila</string>
-  <string name="full_screen_off">Off</string>
-  <string name="full_screen_system">Hide the system bars</string>
-  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
-  <string name="answer_buttons_position">Answer buttons position</string>
+  <string name="full_screen_off">Pois päältä</string>
+  <string name="full_screen_system">Piilota järjestelmäpalkit</string>
+  <string name="full_screen_complete">Piilota järjestelmäpalkit ja vastauspainikkeet</string>
+  <string name="full_screen_error_gestures">Sinun täytyy ottaa käyttöön eleet piilottaaksesi vastauspainikkeet</string>
+  <string name="answer_buttons_position">Vastauspainikkeiden sijainti</string>
   <string-array name="answer_buttons_position_labels">
-    <item>Top</item>
-    <item>Bottom</item>
+    <item>Ylhäällä</item>
+    <item>Alhaalla</item>
   </string-array>
   <string name="gestures">Ota eleet käyttöön</string>
   <string name="gestures_summ">Liitä eleitä toimintoihin, kuten vastaamiseen ja korttien muokkaamiseen.</string>
@@ -118,24 +118,23 @@
   <string name="sync_account">AnkiWeb tili</string>
   <string name="sync_account_summ_logged_out">Ei kirjautuneena</string>
   <string name="sync_account_summ_logged_in">%s</string>
-  <string name="automatic_sync_choice">Automatic synchronization</string>
-  <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
+  <string name="automatic_sync_choice">Automaattinen synkronointi</string>
+  <string name="automatic_sync_choice_summ">Synkronoi automaattisesti sovelluksen auetessa tai suljetessam, jos viimeistä synkronoinnista on enemmän kuin 10         minuuttia.</string>
   <string name="fix_hebrew_text">Korjaa hepreankieliset vokaalit</string>
   <string name="fix_hebrew_text_summ">Korjaa hepreankielisten vokaalien esitys.</string>
   <string name="fix_hebrew_instructions">Tämä asetus ohittaa Androidin RTL-algoritmin ja näyttää hepreankieliset vokaalit oikein.\n\nJotta tämä toimisi, sinun täytyy ladata kirjasintiedosto Tohu.ttf ja kopioida se käsin hakemistoon:\n%s/fonts/\n\nKorttien muokkaaminen ei ole tarpeen.</string>
   <string name="fix_hebrew_download_font">Lataa fontti</string>
-  <string name="day_theme">Day theme</string>
-  <string name="night_theme">Night theme</string>
+  <string name="day_theme">Päiväteema</string>
+  <string name="night_theme">Yöteema</string>
   <string name="default_font">Oletusfontti</string>
   <string name="override_font">Oletuskirjasimen käyttöalue</string>
   <string name="language">Kieli</string>
   <string name="language_system">Järjestelmän kieli</string>
   <string name="notification_pref">Ilmoitukset</string>
-  <string name="notification_pref_title">Notify when</string>
-  <string name="never_notify">Never notify</string>
-  <string name="notify_when_pending">Pending messages available</string>
-  <string name="notification_minimum_cards_due">More than %d cards due</string>
+  <string name="notification_pref_title">Ilmoita, kun</string>
+  <string name="never_notify">Älä ilmoita koskaan</string>
+  <string name="notify_when_pending">Odottavia ilmoituksia saatavilla</string>
+  <string name="notification_minimum_cards_due">Enemmän kuin %d korttia erääntymässä</string>
   <string name="notification_minimum_cards_due_vibrate">Värinä</string>
   <string name="notification_minimum_cards_due_blink">Vilkkuvalo</string>
   <string name="timeout_answer_text">Näytä vastaukset automaattisesti</string>
@@ -154,8 +153,8 @@
   <string name="show_estimates_summ">Näytä seuraava kertausaika vastauspainikkeissa</string>
   <string name="show_progress">Näytä jäljelläoleva</string>
   <string name="show_progress_summ">Näytä jäljelläolevien korttien määrä</string>
-  <string name="show_eta">Show ETA</string>
-  <string name="show_eta_summ">Show remaining time</string>
+  <string name="show_eta">Näytä ETA</string>
+  <string name="show_eta_summ">Näytä jäljellä oleva aika</string>
   <string name="use_current">Pakka uusille korteille</string>
   <string name="new_spread">Uuden kortin sijainti</string>
   <string name="learn_cutoff">Kertauksen etukäteisaikaraja</string>
@@ -170,35 +169,35 @@
   <string name="pref_keep_screen_on_summ">Poista näytön aikakatkaisu</string>
   <string name="convert_fen_text">Tuki shakkinotaatiolle</string>
   <string name="convert_fen_text_summ">Piirrä shakkilauta Forsyth-Edwards-notaatiolla. Tekstin pitää olla ympäröity [fen][/fen] tunnisteilla.</string>
-  <string name="enable_api_title">Enable AnkiDroid API</string>
-  <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
-  <string name="custom_buttons">App bar buttons</string>
-  <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
-  <string name="custom_buttons_setting_always_show">Always show</string>
-  <string name="custom_buttons_setting_if_room">Show if room</string>
-  <string name="custom_buttons_setting_menu_only">Menu only</string>
-  <string name="reset_custom_buttons">Reset to default</string>
+  <string name="enable_api_title">Ota käyttöön AnkiDroid-rajapinta</string>
+  <string name="enable_api_summary">Anna muiden sovellusten käyttää itsenäisesti AnkiDroidin tietoja</string>
+  <string name="custom_buttons">Sovelluspalkin painikkeet</string>
+  <string name="custom_buttons_summary">Mukauta, mitkä toiminnot näkyvät sovelluspalkissa</string>
+  <string name="custom_buttons_setting_always_show">Näytä aina</string>
+  <string name="custom_buttons_setting_if_room">Näytä, jos tilaa</string>
+  <string name="custom_buttons_setting_menu_only">Vain valikossa</string>
+  <string name="reset_custom_buttons">Palauta oletukset</string>
   <!-- Advanced statistics settings -->
-  <string name="advanced_statistics_title">Advanced statistics</string>
-  <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
-  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
-  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
-  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
-  <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+  <string name="advanced_statistics_title">Tarkat statistiikat</string>
+  <string name="enable_advanced_statistics_title">Ota tarkat statistiikat käyttöön</string>
+  <string name="enable_advanced_statistics_summ">Näytä ennustetut tilastot, jotka perustuvat tulevien korttien laskentaan tai simulaation (käytössä) tai jo suunniteltuihin tuleviin harjoituksiin (ei käytössä).</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Laske ensimmäiset n päivää, simuloi loput</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Laskennan tarkkuus</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">Iteraatioiden määrä simuloinnissa</string>
   <!-- Custom sync server settings -->
-  <string name="custom_sync_server_title">Custom sync server</string>
-  <string name="custom_sync_server_enable_title">Use custom sync server</string>
-  <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
-  <string name="custom_sync_server_base_url_title">Sync url</string>
-  <string name="custom_sync_server_media_url_title">Media sync url</string>
+  <string name="custom_sync_server_title">Mukautettu synkronointiserveri</string>
+  <string name="custom_sync_server_enable_title">Käytä mukautettua synkronointiserveriä</string>
+  <string name="custom_sync_server_enable_summary">Jos et halua käyttää AnkiWebin omaa palvelua, voit määrittää vaihtoehtoisen serverin täällä</string>
+  <string name="custom_sync_server_base_url_title">Synkronointiosoite</string>
+  <string name="custom_sync_server_media_url_title">Median synkronointiosoite</string>
   <!-- studyoptions -->
   <string name="studyoptions_limit_select_tags">Valitse tunnisteet</string>
   <!-- Deck configurations -->
   <string name="deck_conf_deck_description">Pakan kuvaus</string>
   <string name="deck_conf_group">Asetusryhmä</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d deck uses this group</item>
-    <item quantity="other">%1$s\n%2$d decks use this group</item>
+    <item quantity="one">%1$s\n%2$d pakka käyttää tätä ryhmää</item>
+    <item quantity="other">%1$s\n%2$d pakkaa käyttää tätä ryhmää</item>
   </plurals>
   <string name="deck_conf_new_cards">Uusia kortteja</string>
   <string name="deck_conf_rev_cards">Kertauksia</string>
@@ -243,8 +242,8 @@
   <string name="deck_conf_remove_message">Poista nykyinen asetusryhmä?</string>
   <string name="deck_conf_set_subdecks">Aseta kaikille alipakoille</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s subdeck will use this group</item>
-    <item quantity="other">%s subdecks will use this group</item>
+    <item quantity="one">%s alapakka käyttää tätä ryhmää</item>
+    <item quantity="other">%s alapakkaa käyttää tätä ryhmää</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Aseta kaikille alipakoille</string>
   <string name="deck_conf_set_subdecks_message">Aseta nykyinen asetusryhmä kaikille tämän pakan alipakoille?</string>

@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_deck_no_space_left">Последнее резервное копирование не было выполненно из-за отсутствия места на SD карте.\n\nОсвободите место или снизьте глубину резервного копирования.</string>
+  <string name="backup_deck_no_space_left">Резервное копирование не выполнено из-за недостатка свободного места на SD карте.\n\nОсвободите место на карте или уменьшите число резервных копий.</string>
   <string name="sd_space_warning">Осталось меньше %d МБ на вашей SD-карте.\nОсвободите немного места, чтобы избежать потери данных.</string>
   <string name="backup_delete">Удаление резервных копий.\nПожалуйста подождите...</string>
   <string name="backup_restore">Восстановить из резервной копии</string>

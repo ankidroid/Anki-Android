@@ -169,7 +169,7 @@
   <string name="export_in_progress">מייצא קובץ apkg&#8230;</string>
   <string name="export_successful_title">שלח apkg כאימייל?</string>
   <string name="export_successful">הקובץ \"%s\" יוצא. האם תרצה לשלוח אותו כאימייל?</string>
-  <string name="export_email_subject">AnkiDroid exported collection</string>
+  <string name="export_email_subject">אוסף מיוצא מאנקי דרויד</string>
   <string name="export_email_text">
         <![CDATA[
         Hi!
