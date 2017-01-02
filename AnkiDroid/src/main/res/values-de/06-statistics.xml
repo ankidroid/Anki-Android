@@ -80,9 +80,9 @@
   <string name="stats_overview_days_studied">Tage gelernt: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d von %3$d)</string>
   <string name="stats_overview_total_reviews">Gesamt: &lt;b&gt;%1$d&lt;/b&gt; Wiederholungen</string>
   <string name="stats_overview_reviews_per_day_studydays">Durchschnitt an gelernten Tagen: &lt;b&gt;%1$.1f&lt;/b&gt; Wiederholungen / Tag</string>
-  <string name="stats_overview_reviews_per_day_all">Wenn Sie jeden Tag studiert hätten: &lt;b&gt;%1$.1f&lt;/b&gt; Wiederholungen / Tag</string>
+  <string name="stats_overview_reviews_per_day_all">Wenn Sie jeden Tag gelernt hätten: &lt;b&gt;%1$.1f&lt;/b&gt; Wiederholungen / Tag</string>
   <string name="stats_overview_time_per_day_studydays">Durchschnitt an gelernten Tagen: &lt;b&gt;%1$.1f&lt;/b&gt; Minuten / Tag</string>
-  <string name="stats_overview_time_per_day_all">Wenn Sie jeden Tag studiert hätten: &lt;b&gt;%1$.1f&lt;/b&gt; Wiederholungen / Tag</string>
+  <string name="stats_overview_time_per_day_all">Wenn Sie jeden Tag gelernt hätten: &lt;b&gt;%1$.1f&lt;/b&gt; Wiederholungen / Tag</string>
   <string name="stats_overview_new_cards_per_day">Durchschnitt: &lt;b&gt;%1$.1f&lt;/b&gt; Karten / Tag</string>
   <string name="stats_overview_total_new_cards">Gesamt: &lt;b&gt;%1$d&lt;/b&gt; Karten</string>
   <string name="stats_overview_average_interval">"Durchschnittlichsintervall: "</string>

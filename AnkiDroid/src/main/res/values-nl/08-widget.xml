@@ -53,15 +53,15 @@
     <item quantity="other">%1$d sets</item>
   </plurals>
   <string name="widget_small">AnkiDroid (klein)</string>
-  <string name="widget_small_button">AnkiDroid</string>
+  <string name="widget_small_button">Ankidroid</string>
   <plurals name="widget_cards_due">
     <item quantity="one">%d card due</item>
-    <item quantity="other">%d cards due</item>
+    <item quantity="other">%d kaarten te doen</item>
   </plurals>
   <plurals name="widget_eta">
     <item quantity="one">%d minute remaining</item>
-    <item quantity="other">%d minutes remaining</item>
+    <item quantity="other">%d minuten over</item>
   </plurals>
-  <string name="widget_add_note">Add note</string>
-  <string name="widget_add_note_button">Add new AnkiDroid note</string>
+  <string name="widget_add_note">Aantekening toevoegen</string>
+  <string name="widget_add_note_button">Nieuwe Ankidroid aantekening toevoegen</string>
 </resources>

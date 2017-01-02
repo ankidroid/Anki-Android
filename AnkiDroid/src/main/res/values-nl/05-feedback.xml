@@ -40,6 +40,7 @@
 -->
 <resources>
   <!-- Feedback.java -->
+  <string name="empty_string"></string>
   <string name="error_reporting_choice">Foutrapportage-modus</string>
   <string name="feedback_disclaimer">Disclaimer: Wij verzamelen geen persoonlijke informatie zoals uw e-mailadres, telefoonnummer of het IMEI nummer van uw telefoon. Wij verzamelen wel sommige gegevens van uw mobiele apparaat zoals de naam van de fabrikant, het model en de versie van Android, evenals de aard van de gemelde fouten en de stappen die tot de fouten leidden.</string>
   <string name="feedback_title">Terugkoppeling</string>

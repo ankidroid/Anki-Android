@@ -74,9 +74,9 @@
   <string name="stats_today_type_breakdown">Geleerd: &lt;b&gt;%1$s&lt;/b&gt;, Herhaald: &lt;b&gt;%2$s&lt;/b&gt;, Opnieuw geleerd: &lt;b&gt;%3$s&lt;/b&gt;, Gefilterd: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Correcte antwoorden op rijpe kaarten: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Er werden vandaag geen rijpe kaarten gestudeerd.</string>
-  <string name="stats_overview_forecast_total">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
-  <string name="stats_overview_forecast_average">Average: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-  <string name="stats_overview_forecast_due_tomorrow">Due tomorrow: &lt;b&gt;%1$d&lt;/b&gt;</string>
+  <string name="stats_overview_forecast_total">Totaal: &lt;b&gt;%1$d&lt;/b&gt; overhoringen</string>
+  <string name="stats_overview_forecast_average">Gemiddeld: &lt;b&gt;%1$.1f&lt;/b&gt; overhoringen/per dag</string>
+  <string name="stats_overview_forecast_due_tomorrow">Morgen te doen: &lt;b&gt;%1$d&lt;/b&gt;</string>
   <string name="stats_overview_days_studied">Dagen gestudeerd: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d van %3$d)</string>
   <string name="stats_overview_total_reviews">In totaal: &lt;b&gt;%1$d&lt;/b&gt; overhoringen</string>
   <string name="stats_overview_reviews_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
@@ -87,7 +87,7 @@
   <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt; cards</string>
   <string name="stats_overview_average_interval">"Gemiddelde interval: "</string>
   <string name="stats_overview_longest_interval">"Langste interval: "</string>
-  <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; years</string>
+  <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; jaren</string>
   <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; months</string>
   <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; days</string>
   <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; hours</string>
