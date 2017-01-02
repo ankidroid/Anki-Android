@@ -151,7 +151,7 @@ public class MediaSyncer {
                         
                     } else if (!TextUtils.isEmpty(lsum)) {
                         // deleted remotely
-                        if (ldirty != 0) {
+                        if (ldirty == 0) {
                             mCol.log("delete local");
                             mCol.getMedia().syncDelete(fname);
                         } else {
