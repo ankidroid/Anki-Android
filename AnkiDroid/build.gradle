@@ -47,12 +47,12 @@ play {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:appcompat-v7:25.1.0'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
-    compile 'com.android.support:design:25.0.0'
-    compile 'com.android.support:customtabs:25.0.0'
-    compile 'com.android.support:recyclerview-v7:25.0.0'
-    compile 'io.requery:sqlite-android:3.15.0'
+    compile 'com.android.support:design:25.1.0'
+    compile 'com.android.support:customtabs:25.1.0'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'io.requery:sqlite-android:3.16.0'
     compile('com.afollestad.material-dialogs:core:0.8.6.2@aar') {
         //exclude group: 'com.android.support'  // uncomment to force our local support lib version
         transitive = true
