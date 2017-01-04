@@ -7,6 +7,7 @@ import android.content.Intent;
 
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.receiver.ReminderReceiver;
+import com.ichi2.libanki.Collection;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,9 +25,12 @@ public class BootService extends IntentService {
 
         try {
             for (JSONObject deck : CollectionHelper.getInstance().getCol(this).getDecks().all()) {
+                Collection col = CollectionHelper.getInstance().getCol(this);
+                if (col.getDecks().isDyn(deck.getLong("id"))) {
+                    continue;
+                }
                 final long deckConfigurationId = deck.getLong("conf");
-                final JSONObject deckConfiguration = CollectionHelper.getInstance().getCol(this).getDecks()
-                        .getConf(deckConfigurationId);
+                final JSONObject deckConfiguration = col.getDecks().getConf(deckConfigurationId);
 
                 if (deckConfiguration.has("reminder")) {
                     final JSONObject reminder = deckConfiguration.getJSONObject("reminder");
