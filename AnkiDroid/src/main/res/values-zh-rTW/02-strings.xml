@@ -211,4 +211,8 @@
   <string name="decks_rename_exists">That deck already exists</string>
   <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
   <string name="filtered_deck_name">篩選牌組</string>
+  <string name="reminder_title">Do not forget to study today!</string>
+  <plurals name="reminder_text">
+    <item quantity="other">%2$d new cards to review in %1$s</item>
+  </plurals>
 </resources>

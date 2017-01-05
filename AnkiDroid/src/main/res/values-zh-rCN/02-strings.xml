@@ -211,4 +211,8 @@
   <string name="decks_rename_exists">该牌组已存在</string>
   <string name="decks_rename_filtered_nosubdecks">筛选牌组不能有子牌组</string>
   <string name="filtered_deck_name">筛选牌组</string>
+  <string name="reminder_title">Do not forget to study today!</string>
+  <plurals name="reminder_text">
+    <item quantity="other">%2$d new cards to review in %1$s</item>
+  </plurals>
 </resources>

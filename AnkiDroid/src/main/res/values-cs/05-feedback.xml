@@ -40,6 +40,7 @@
 -->
 <resources>
   <!-- Feedback.java -->
+  <string name="empty_string"></string>
   <string name="error_reporting_choice">Režim hlášení chyb</string>
   <string name="feedback_disclaimer">Upozornění: Neshromažďujeme žádné osobní údaje jako je vaše emailová adresa, telefonní číslo nebo IMEI telefonu. Shromažďujeme pouze informace o vašem zařízení, jako je výrobce, model, verze systému Android, podstatu hlášené chyby a kroky, které k ní vedly.</string>
   <string name="feedback_title">Napište nám</string>

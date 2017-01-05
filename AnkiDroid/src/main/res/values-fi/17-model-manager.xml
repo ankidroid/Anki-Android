@@ -55,7 +55,7 @@
   <string name="model_field_editor_options">Kentän asetukset</string>
   <string name="model_field_editor_rename">Uudelleennimeä kenttä</string>
   <string name="model_field_editor_reposition_menu">Uudelleensijoita kenttä</string>
-  <string name="model_field_editor_reposition" formatted="false">Uudelleensijoita kenttä (syötä arvo %1$d-%2$d)</string>
+  <string name="model_field_editor_reposition">Uudelleensijoita kenttä (syötä arvo %1$d-%2$d)</string>
   <string name="model_field_editor_changing">Päivitetään kenttiä</string>
   <string name="model_field_editor_sort_field">Järjestä tämän kentän mukaan</string>
   <string name="model_clone_suffix">kopioi</string>

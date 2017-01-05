@@ -40,6 +40,7 @@
 -->
 <resources>
   <!-- Feedback.java -->
+  <string name="empty_string"></string>
   <string name="error_reporting_choice">Tryb raportowania błędów</string>
   <string name="feedback_disclaimer">Zastrzeżenie: Nie zbieramy żadnych danych osobowych, takich jak adres e-mail, numer telefonu czy IMEI. Gromadzimy jedynie informacje techniczne na temat urządzenia, takie jak nazwa jego producenta, model i wersja Androida, a także charakter zgłaszanych błędów i czynności, które do nich doprowadziły.</string>
   <string name="feedback_title">Opinie</string>

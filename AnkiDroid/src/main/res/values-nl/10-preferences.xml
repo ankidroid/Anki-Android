@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">Trillen</string>
   <string name="notification_minimum_cards_due_blink">Licht knipperen</string>
   <string name="timeout_answer_text">Automatisch het antwoord tonen</string>
-  <string name="timeout_answer_summ">Toon het antwoord automatisch zonder tussenkomst van de gebruiker</string>
+  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
   <string name="timeout_answer_seconds">Tijd om het antwoord te tonen</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Tijd om de volgende vraag te tonen</string>
@@ -203,6 +203,7 @@
   <string name="deck_conf_rev_cards">Overhoringen</string>
   <string name="deck_conf_lps_cards">Missers</string>
   <string name="deck_conf_general">Algemeen</string>
+  <string name="deck_conf_reminders">Reminders</string>
   <string name="deck_conf_steps">Stappen (in minuten)</string>
   <string name="deck_conf_order">Volgorde</string>
   <string name="deck_conf_new_cards_day">Nieuwe kaarten/dag</string>
@@ -255,6 +256,8 @@
   <string name="deck_conf_cram_order">kaarten geselecteerd door</string>
   <string name="deck_conf_cram_reschedule">Opnieuw inplannen</string>
   <string name="deck_conf_cram_reschedule_summ">Karaten opnieuw inplannen op basis van mijn antwoorden in deze set</string>
-  <string name="deck_conf_cram_steps">Aangepaste stapgroottes</string>
+  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
   <string name="deck_conf_cram_steps_summ">Aangepaste stapgroottes definiëren</string>
+  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
+  <string name="deck_conf_reminders_time">Remind at</string>
 </resources>

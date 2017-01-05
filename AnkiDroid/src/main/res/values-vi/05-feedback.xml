@@ -40,6 +40,7 @@
 -->
 <resources>
   <!-- Feedback.java -->
+  <string name="empty_string"></string>
   <string name="error_reporting_choice">Chế độ báo cáo lỗi</string>
   <string name="feedback_disclaimer">Miễn trừ trách nhiệm: Chúng tôi không thu thập bất kỳ thông tin cá nhân nào như địa chỉ email, số điện thoại hoặc số IMEI. Chúng tôi chỉ thu thập một số thông tin về thiết bị của bạn chẳng hạn như nhà sản xuất, đời máy và phiên bản Android cũng như nguyên bản báo cáo lỗi và từng bước xảy ra lỗi.</string>
   <string name="feedback_title">Phản hồi</string>

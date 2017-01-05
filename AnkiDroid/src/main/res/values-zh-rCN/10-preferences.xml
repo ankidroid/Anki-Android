@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">振动</string>
   <string name="notification_minimum_cards_due_blink">呼吸灯</string>
   <string name="timeout_answer_text">自动显示答案</string>
-  <string name="timeout_answer_summ">无需用户输入而自动显示答案</string>
+  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
   <string name="timeout_answer_seconds">显示答案时间</string>
   <string name="timeout_answer_seconds_summ">XXX 秒</string>
   <string name="timeout_question_seconds">显示下一个问题时间</string>
@@ -202,6 +202,7 @@
   <string name="deck_conf_rev_cards">复习</string>
   <string name="deck_conf_lps_cards">失误</string>
   <string name="deck_conf_general">常规</string>
+  <string name="deck_conf_reminders">Reminders</string>
   <string name="deck_conf_steps">步骤（以分钟为单位）</string>
   <string name="deck_conf_order">顺序</string>
   <string name="deck_conf_new_cards_day">新卡片/天</string>
@@ -253,6 +254,8 @@
   <string name="deck_conf_cram_order">卡片选择标准</string>
   <string name="deck_conf_cram_reschedule">重新安排学习进度</string>
   <string name="deck_conf_cram_reschedule_summ">按当前牌组的回答重排卡牌</string>
-  <string name="deck_conf_cram_steps">自定义步骤</string>
+  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
   <string name="deck_conf_cram_steps_summ">自定义步骤</string>
+  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
+  <string name="deck_conf_reminders_time">Remind at</string>
 </resources>

@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">Värinä</string>
   <string name="notification_minimum_cards_due_blink">Vilkkuvalo</string>
   <string name="timeout_answer_text">Näytä vastaukset automaattisesti</string>
-  <string name="timeout_answer_summ">Näytä vastaus automaattisesti ilman käyttäjän syötettä</string>
+  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
   <string name="timeout_answer_seconds">Aika ennen vastauksen näyttämistä</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Aika ennen seuraavan kysymyksen näyttämistä</string>
@@ -203,6 +203,7 @@
   <string name="deck_conf_rev_cards">Kertauksia</string>
   <string name="deck_conf_lps_cards">Vääriä vastauksia</string>
   <string name="deck_conf_general">Yleistä</string>
+  <string name="deck_conf_reminders">Reminders</string>
   <string name="deck_conf_steps">Askelia (minuuteissa)</string>
   <string name="deck_conf_order">järjestys</string>
   <string name="deck_conf_new_cards_day">Uusia kortteja / päivä</string>
@@ -255,6 +256,8 @@
   <string name="deck_conf_cram_order">korttia valittu</string>
   <string name="deck_conf_cram_reschedule">Ajoita uudelleen</string>
   <string name="deck_conf_cram_reschedule_summ">Ajoita kortit tämän pakan vastausten perusteella</string>
-  <string name="deck_conf_cram_steps">Muokatut vaiheet</string>
+  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
   <string name="deck_conf_cram_steps_summ">Määritä muokatut vaiheet</string>
+  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
+  <string name="deck_conf_reminders_time">Remind at</string>
 </resources>

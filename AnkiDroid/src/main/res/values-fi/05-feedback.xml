@@ -40,6 +40,7 @@
 -->
 <resources>
   <!-- Feedback.java -->
+  <string name="empty_string"></string>
   <string name="error_reporting_choice">Virheraportointitila</string>
   <string name="feedback_disclaimer">Huomio: Emme kerää mitään henkilökohtaisia tietojasi, kuten sähköpostiosoitettasi, puhelinnumeroasi tai puhelimesi IMEI-koodia. Keräämme tietoja laitteestasi, kuten valmistajan, mallin ja Android-version, samoin kuten virheraporttien luonteen ja toimet, jotka johtivat niiden syntymiseen.</string>
   <string name="feedback_title">Palaute</string>

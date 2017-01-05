@@ -55,7 +55,7 @@
   <string name="model_field_editor_options">گزینه های فیلد</string>
   <string name="model_field_editor_rename">تغییر نام فیلد</string>
   <string name="model_field_editor_reposition_menu">تغییر مکان فیلد</string>
-  <string name="model_field_editor_reposition" formatted="false">مکان فیلد(مقدار %1$d-%2$d را وارد کنید)</string>
+  <string name="model_field_editor_reposition">مکان فیلد(مقدار %1$d-%2$d را وارد کنید)</string>
   <string name="model_field_editor_changing">به روزرسانی فیلدها</string>
   <string name="model_field_editor_sort_field">مرتب کردن بر اساس این فیلد</string>
   <string name="model_clone_suffix">کپی</string>

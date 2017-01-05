@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">لرزش</string>
   <string name="notification_minimum_cards_due_blink">چشمک زدن نور</string>
   <string name="timeout_answer_text">نمایش پاسخ بصورت خودکار</string>
-  <string name="timeout_answer_summ">نمایش پاسخ بطور خودکار بدون ورودی کاربر</string>
+  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
   <string name="timeout_answer_seconds">زمان نمایش پاسخ</string>
   <string name="timeout_answer_seconds_summ">XXX ثانیه</string>
   <string name="timeout_question_seconds">زمان نمایش پرسش بعدی</string>
@@ -203,6 +203,7 @@
   <string name="deck_conf_rev_cards">مرورها</string>
   <string name="deck_conf_lps_cards">خطاها</string>
   <string name="deck_conf_general">عمومی</string>
+  <string name="deck_conf_reminders">Reminders</string>
   <string name="deck_conf_steps">مراحل (در دقیقه)</string>
   <string name="deck_conf_order">دیگر</string>
   <string name="deck_conf_new_cards_day">کارتهای جدید/روز</string>
@@ -255,6 +256,8 @@
   <string name="deck_conf_cram_order">کارتهای انتخاب شده بوسیله</string>
   <string name="deck_conf_cram_reschedule">برنا مه ریزی مجدد</string>
   <string name="deck_conf_cram_reschedule_summ">برنامه ریزی مجدد کارتها براساس جوابهای من در این دسته</string>
-  <string name="deck_conf_cram_steps">مراحل سفارشی</string>
+  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
   <string name="deck_conf_cram_steps_summ">تعریف مراحل سفارشی</string>
+  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
+  <string name="deck_conf_reminders_time">Remind at</string>
 </resources>

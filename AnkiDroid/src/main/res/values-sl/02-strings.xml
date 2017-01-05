@@ -238,4 +238,11 @@
   <string name="decks_rename_exists">Ta komplet že obstaja</string>
   <string name="decks_rename_filtered_nosubdecks">Filtriran komplet ne more imeti podkompletov</string>
   <string name="filtered_deck_name">Filtriran komplet</string>
+  <string name="reminder_title">Do not forget to study today!</string>
+  <plurals name="reminder_text">
+    <item quantity="one">%2$d new card to review in %1$s</item>
+    <item quantity="two">%2$d new cards to review in %1$s</item>
+    <item quantity="few">%2$d new cards to review in %1$s</item>
+    <item quantity="other">%2$d new cards to review in %1$s</item>
+  </plurals>
 </resources>

@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">Вибрация</string>
   <string name="notification_minimum_cards_due_blink">Мигаща светлина</string>
   <string name="timeout_answer_text">Автоматично  показване на отговор</string>
-  <string name="timeout_answer_summ">Покажи отговора автоматично, без въвеждане от потребителя</string>
+  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
   <string name="timeout_answer_seconds">Време за показване на отговора</string>
   <string name="timeout_answer_seconds_summ">ХХХ с</string>
   <string name="timeout_question_seconds">Време за показване на следващия въпрос</string>
@@ -203,6 +203,7 @@
   <string name="deck_conf_rev_cards">Разглеждания</string>
   <string name="deck_conf_lps_cards">Пропуски</string>
   <string name="deck_conf_general">Общо</string>
+  <string name="deck_conf_reminders">Reminders</string>
   <string name="deck_conf_steps">Стъпки (в минути)</string>
   <string name="deck_conf_order">Ред</string>
   <string name="deck_conf_new_cards_day">Нови карти на ден</string>
@@ -255,6 +256,8 @@
   <string name="deck_conf_cram_order">карти, избрани от</string>
   <string name="deck_conf_cram_reschedule">Повторно планиране</string>
   <string name="deck_conf_cram_reschedule_summ">Пренасрочване карти на базата на моите отговори в това тесте</string>
-  <string name="deck_conf_cram_steps">Потребителски стъпки</string>
+  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
   <string name="deck_conf_cram_steps_summ">Определяне потребителски стъпки</string>
+  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
+  <string name="deck_conf_reminders_time">Remind at</string>
 </resources>

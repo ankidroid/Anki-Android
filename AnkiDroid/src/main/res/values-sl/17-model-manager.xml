@@ -59,7 +59,7 @@
   <string name="model_field_editor_options">Možnosti polja</string>
   <string name="model_field_editor_rename">Preimenuj polje</string>
   <string name="model_field_editor_reposition_menu">Prestavi polje</string>
-  <string name="model_field_editor_reposition" formatted="false">Prestavi polje (vnesite vrednost %1$d - %2$d)</string>
+  <string name="model_field_editor_reposition">Prestavi polje (vnesite vrednost %1$d - %2$d)</string>
   <string name="model_field_editor_changing">Posodabljanje polj</string>
   <string name="model_field_editor_sort_field">Razvrsti po temu polju</string>
   <string name="model_clone_suffix">kopija</string>

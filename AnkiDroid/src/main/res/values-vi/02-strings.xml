@@ -211,4 +211,8 @@
   <string name="decks_rename_exists">Đã có bộ thẻ này rồi</string>
   <string name="decks_rename_filtered_nosubdecks">Một bộ thẻ đã lọc không thể có bộ thẻ phụ</string>
   <string name="filtered_deck_name">Bộ thẻ đã lọc</string>
+  <string name="reminder_title">Do not forget to study today!</string>
+  <plurals name="reminder_text">
+    <item quantity="other">%2$d new cards to review in %1$s</item>
+  </plurals>
 </resources>

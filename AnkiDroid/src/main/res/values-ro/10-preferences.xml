@@ -139,7 +139,7 @@
   <string name="notification_minimum_cards_due_vibrate">Vibrate</string>
   <string name="notification_minimum_cards_due_blink">Blink light</string>
   <string name="timeout_answer_text">Automatic display answer</string>
-  <string name="timeout_answer_summ">Show answer automatically without user input</string>
+  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
   <string name="timeout_answer_seconds">Time to show answer</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Time to show next question</string>
@@ -205,6 +205,7 @@
   <string name="deck_conf_rev_cards">Recaptiulări</string>
   <string name="deck_conf_lps_cards">Lapses</string>
   <string name="deck_conf_general">General</string>
+  <string name="deck_conf_reminders">Reminders</string>
   <string name="deck_conf_steps">Paşi (în minute)</string>
   <string name="deck_conf_order">Ordine</string>
   <string name="deck_conf_new_cards_day">Carduri noi/zi</string>
@@ -258,6 +259,8 @@
   <string name="deck_conf_cram_order">carduri selectate de</string>
   <string name="deck_conf_cram_reschedule">Reprogramează</string>
   <string name="deck_conf_cram_reschedule_summ">Reprogramează cardurile din acest pachet pe baza răspunsurilor mele</string>
-  <string name="deck_conf_cram_steps">Paşi personalizați</string>
+  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
   <string name="deck_conf_cram_steps_summ">Definește paşii personalizați</string>
+  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
+  <string name="deck_conf_reminders_time">Remind at</string>
 </resources>

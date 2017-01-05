@@ -40,6 +40,7 @@
 -->
 <resources>
   <!-- Feedback.java -->
+  <string name="empty_string"></string>
   <string name="error_reporting_choice">Hata bildirme modu</string>
   <string name="feedback_disclaimer">Yasal uyarı: Mail adresiniz, telefon numaranız, veya telefon IMEI\'niz gibi hiçbir kişisel bilgi toplamıyoruz. Cihazınızla ilgili üretici, model ve Android sürümü gibi, aynı zamanda bildirilen hataların kendilerinin esasları ve meydana gelmelerine yol açan adımlarla ilgili bazı bilgiler ise topluyoruz.</string>
   <string name="feedback_title">Geribildirim</string>

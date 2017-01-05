@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">진동</string>
   <string name="notification_minimum_cards_due_blink">깜빡이기</string>
   <string name="timeout_answer_text">자동으로 정답 나타내기</string>
-  <string name="timeout_answer_summ">사용자 입력 없이 자동으로 정답 보기</string>
+  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
   <string name="timeout_answer_seconds">정답을 표시할 시간</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">다음 문제를 표시할 시간</string>
@@ -202,6 +202,7 @@
   <string name="deck_conf_rev_cards">복습 횟수</string>
   <string name="deck_conf_lps_cards">학습경과 시간</string>
   <string name="deck_conf_general">일반</string>
+  <string name="deck_conf_reminders">Reminders</string>
   <string name="deck_conf_steps">학습단계(분)</string>
   <string name="deck_conf_order">순서</string>
   <string name="deck_conf_new_cards_day">1일 새카드 수</string>
@@ -253,6 +254,8 @@
   <string name="deck_conf_cram_order">에 선택된 카드</string>
   <string name="deck_conf_cram_reschedule">일정을 다시</string>
   <string name="deck_conf_cram_reschedule_summ">이 카드묶음에서 내 대답에 근거에 재조정된 카드들</string>
-  <string name="deck_conf_cram_steps">사용자 정의 단계</string>
+  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
   <string name="deck_conf_cram_steps_summ">사용자 정의 단계를 정의</string>
+  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
+  <string name="deck_conf_reminders_time">Remind at</string>
 </resources>

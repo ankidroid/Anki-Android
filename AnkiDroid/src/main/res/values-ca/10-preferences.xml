@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">Vibra</string>
   <string name="notification_minimum_cards_due_blink">Parpellejar el llum</string>
   <string name="timeout_answer_text">Visualització automàtica de la resposta</string>
-  <string name="timeout_answer_summ">Mostra la resposta automàticament sense input d\'usuari</string>
+  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
   <string name="timeout_answer_seconds">Temps per mostrar la resposta</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Temps per mostrar la següent pregunta</string>
@@ -203,6 +203,7 @@
   <string name="deck_conf_rev_cards">Revisions</string>
   <string name="deck_conf_lps_cards">Intervals</string>
   <string name="deck_conf_general">General</string>
+  <string name="deck_conf_reminders">Reminders</string>
   <string name="deck_conf_steps">Passos (en minuts)</string>
   <string name="deck_conf_order">Ordre</string>
   <string name="deck_conf_new_cards_day">Noves fitxes per dia</string>
@@ -255,6 +256,8 @@
   <string name="deck_conf_cram_order">fitxes triades per</string>
   <string name="deck_conf_cram_reschedule">Torna a planificar</string>
   <string name="deck_conf_cram_reschedule_summ">Torna a planificar les fitxes en base a les meves respostes en aquest paquet</string>
-  <string name="deck_conf_cram_steps">Passos personalitzats</string>
+  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
   <string name="deck_conf_cram_steps_summ">Defines els passos personalitzats</string>
+  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
+  <string name="deck_conf_reminders_time">Remind at</string>
 </resources>

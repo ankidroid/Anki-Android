@@ -211,4 +211,8 @@
   <string name="decks_rename_exists">카드 묶음이 이미 존재합니다</string>
   <string name="decks_rename_filtered_nosubdecks">필터링된 카드 묶음은 하위 카드 묶음을 가질 수 없습니다</string>
   <string name="filtered_deck_name">필터링된 카드 묶음</string>
+  <string name="reminder_title">Do not forget to study today!</string>
+  <plurals name="reminder_text">
+    <item quantity="other">%2$d new cards to review in %1$s</item>
+  </plurals>
 </resources>

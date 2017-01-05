@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">Vibrar</string>
   <string name="notification_minimum_cards_due_blink">Luz de piscamento</string>
   <string name="timeout_answer_text">Exibir resposta automáticamente</string>
-  <string name="timeout_answer_summ">Mostrar resposta automaticamente sem entrada do usuário</string>
+  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
   <string name="timeout_answer_seconds">Tempo para mostrar a resposta</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Tempo para mostrar próxima questão</string>
@@ -203,6 +203,7 @@
   <string name="deck_conf_rev_cards">Revisões</string>
   <string name="deck_conf_lps_cards">Lapsos</string>
   <string name="deck_conf_general">Geral</string>
+  <string name="deck_conf_reminders">Reminders</string>
   <string name="deck_conf_steps">Passos (em minutos)</string>
   <string name="deck_conf_order">Ordem</string>
   <string name="deck_conf_new_cards_day">Novos cartões/dia</string>
@@ -255,6 +256,8 @@
   <string name="deck_conf_cram_order">cartões selecionados por</string>
   <string name="deck_conf_cram_reschedule">Remarcar</string>
   <string name="deck_conf_cram_reschedule_summ">Reagendar cartões baseado nas minhas respostas deste deck</string>
-  <string name="deck_conf_cram_steps">Passos personalizados</string>
+  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
   <string name="deck_conf_cram_steps_summ">Definir passoss personalizados</string>
+  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
+  <string name="deck_conf_reminders_time">Remind at</string>
 </resources>

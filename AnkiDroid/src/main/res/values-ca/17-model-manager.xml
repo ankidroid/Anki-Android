@@ -55,7 +55,7 @@
   <string name="model_field_editor_options">Opcions del camp</string>
   <string name="model_field_editor_rename">Canviar el nom del camp</string>
   <string name="model_field_editor_reposition_menu">Camp de repós</string>
-  <string name="model_field_editor_reposition" formatted="false">Camp de repós (entri un valor %1$d-%2$d)</string>
+  <string name="model_field_editor_reposition">Camp de repós (entri un valor %1$d-%2$d)</string>
   <string name="model_field_editor_changing">Actualitzant els camps</string>
   <string name="model_field_editor_sort_field">Ordena per aquest camp</string>
   <string name="model_clone_suffix">còpia</string>

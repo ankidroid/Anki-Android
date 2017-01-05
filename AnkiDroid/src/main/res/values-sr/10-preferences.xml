@@ -139,7 +139,7 @@
   <string name="notification_minimum_cards_due_vibrate">Вибрирај</string>
   <string name="notification_minimum_cards_due_blink">Мигај</string>
   <string name="timeout_answer_text">Аутоматски приказуј одговор</string>
-  <string name="timeout_answer_summ">Прикажи одговор аутоматски без корисничког дејства</string>
+  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
   <string name="timeout_answer_seconds">Време за приказивање одговора</string>
   <string name="timeout_answer_seconds_summ">XXX с</string>
   <string name="timeout_question_seconds">Време за приказивање следећег питања</string>
@@ -205,6 +205,7 @@
   <string name="deck_conf_rev_cards">Понављања</string>
   <string name="deck_conf_lps_cards">Промашаји</string>
   <string name="deck_conf_general">Опште</string>
+  <string name="deck_conf_reminders">Reminders</string>
   <string name="deck_conf_steps">Кораци (у минутима)</string>
   <string name="deck_conf_order">Редослед</string>
   <string name="deck_conf_new_cards_day">Нове картице/дан</string>
@@ -258,6 +259,8 @@
   <string name="deck_conf_cram_order">картице изабране по</string>
   <string name="deck_conf_cram_reschedule">Препланирање</string>
   <string name="deck_conf_cram_reschedule_summ">Препланирање картица, засновано на мојим одговорима у том шпилу</string>
-  <string name="deck_conf_cram_steps">Допунски кораци</string>
+  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
   <string name="deck_conf_cram_steps_summ">Одредити допунске кораке</string>
+  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
+  <string name="deck_conf_reminders_time">Remind at</string>
 </resources>

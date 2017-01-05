@@ -40,6 +40,7 @@
 -->
 <resources>
   <!-- Feedback.java -->
+  <string name="empty_string"></string>
   <string name="error_reporting_choice">Режим за докладване на грешки</string>
   <string name="feedback_disclaimer">Опровержение: Ние не събираме никаква лична информация като Вашите имейл адреси, телефонни номер или IMEI на Вашия телефон. Ние събираме информация за Вашето устройство като производител, модел и версия на Android, както и естеството на докладвани грешки, за стъпките, които доведоха до тяхното настъпване.</string>
   <string name="feedback_title">Обратна връзка</string>

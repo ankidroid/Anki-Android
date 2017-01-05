@@ -238,4 +238,11 @@
   <string name="decks_rename_exists">החפיסה כבר קיימת</string>
   <string name="decks_rename_filtered_nosubdecks">חפיסה מסוננת אינה יכולה להחיל חפיסות משנה</string>
   <string name="filtered_deck_name">חפיסה מסוננת</string>
+  <string name="reminder_title">Do not forget to study today!</string>
+  <plurals name="reminder_text">
+    <item quantity="one">%2$d new card to review in %1$s</item>
+    <item quantity="two">%2$d new cards to review in %1$s</item>
+    <item quantity="many">%2$d new cards to review in %1$s</item>
+    <item quantity="other">%2$d new cards to review in %1$s</item>
+  </plurals>
 </resources>

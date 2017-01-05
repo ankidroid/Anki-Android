@@ -40,6 +40,7 @@
 -->
 <resources>
   <!-- Feedback.java -->
+  <string name="empty_string"></string>
   <string name="error_reporting_choice">오류 보고 모드</string>
   <string name="feedback_disclaimer">면책 사항: 저희는 이메일 주소, 전화번호, IMEI 고유 번호 등의 어떠한 개인 정보도 수집하지 않습니다. 저희는 기기 제조사, 모델명, 안드로이드 버전 등의 기기 정보 일부와, 보고된 오류와 그 발생 경위를 수집합니다.</string>
   <string name="feedback_title">피드백</string>

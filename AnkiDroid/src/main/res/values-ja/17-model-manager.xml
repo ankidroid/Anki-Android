@@ -53,7 +53,7 @@
   <string name="model_field_editor_options">フィールドのオプション</string>
   <string name="model_field_editor_rename">名前を変更</string>
   <string name="model_field_editor_reposition_menu">並べ替える</string>
-  <string name="model_field_editor_reposition" formatted="false">上から何番目にこのフィールドを配置しますか？（ %1$d ～ %2$d ）</string>
+  <string name="model_field_editor_reposition">上から何番目にこのフィールドを配置しますか？（ %1$d ～ %2$d ）</string>
   <string name="model_field_editor_changing">フィールドを更新</string>
   <string name="model_field_editor_sort_field">ブラウザでのソートフィールド（見出し）にする</string>
   <string name="model_clone_suffix">コピー</string>

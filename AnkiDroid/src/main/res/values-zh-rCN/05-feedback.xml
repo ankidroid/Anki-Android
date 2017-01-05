@@ -40,6 +40,7 @@
 -->
 <resources>
   <!-- Feedback.java -->
+  <string name="empty_string"></string>
   <string name="error_reporting_choice">错误报告模式</string>
   <string name="feedback_disclaimer">声明: 我们不收集任何个人信息，如您的电子邮件地址、 电话号码或手机IMEI串号。我们收集有关您的设备制造商、 型号和Android系统版本这样一些可能导致发生错误的信息以及错误报告和步骤。</string>
   <string name="feedback_title">反馈</string>
