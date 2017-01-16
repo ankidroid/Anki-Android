@@ -229,7 +229,7 @@
   <string name="decks_rename_exists">Ta talia już istnieje</string>
   <string name="decks_rename_filtered_nosubdecks">Filtrowana talia nie może mieć podtalii</string>
   <string name="filtered_deck_name">Talia filtrowana</string>
-  <string name="reminder_title">Do not forget to study today!</string>
+  <string name="reminder_title">Nie zapomnij się dziś pouczyć!</string>
   <plurals name="reminder_text">
     <item quantity="one">%2$d new card to review in %1$s</item>
     <item quantity="few">%2$d new cards to review in %1$s</item>

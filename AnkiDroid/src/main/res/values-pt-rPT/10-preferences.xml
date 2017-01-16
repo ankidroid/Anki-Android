@@ -71,7 +71,7 @@
   <string name="whiteboard_black_summ">Usa menos memória, exceto quando no modo noturno</string>
   <string name="write_answers_disable">Desativar escrita na resposta</string>
   <string name="write_answers_disable_summ">Impede que o teclado apareça em fichas contendo campos \'escreva a resposta\'</string>
-  <string name="use_input_tag">Tipo de resposta para a ficha</string>
+  <string name="use_input_tag">Escrever a resposta na ficha</string>
   <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
   <string name="text_selection_click">Solução alternativa para toque longo</string>
   <string name="text_selection_click_summ">Ative isto se não conseguir selecionar o texto com um toque longo</string>
@@ -82,18 +82,18 @@
   <string name="reset_confirmation">Reinicializar todos os estados</string>
   <string name="card_zoom">Zoom da ficha</string>
   <string name="image_zoom">Zoom da imagem</string>
-  <string name="button_size">Tamanho do botão de resposta</string>
+  <string name="button_size">Tamanho dos botões de resposta</string>
   <string name="card_browser_font_size">Dimensionamento do texto no navegador de fichas</string>
   <string name="col_path">Diretoria do AnkiDroid</string>
   <string name="fullscreen_review">Modo de ecrã completo</string>
   <string name="full_screen_off">Desligado</string>
   <string name="full_screen_system">Ocultar as barras do sistema</string>
   <string name="full_screen_complete">Ocultar as barras do sistema e botões de resposta</string>
-  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
-  <string name="answer_buttons_position">Answer buttons position</string>
+  <string name="full_screen_error_gestures">Deve ativar gestos para ocultar os botões de resposta</string>
+  <string name="answer_buttons_position">Posição dos botões de resposta</string>
   <string-array name="answer_buttons_position_labels">
-    <item>Top</item>
-    <item>Bottom</item>
+    <item>Em cima</item>
+    <item>Em baixo</item>
   </string-array>
   <string name="gestures">Ativar gestos</string>
   <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar fichas.</string>
@@ -204,7 +204,7 @@
   <string name="deck_conf_rev_cards">Revisões</string>
   <string name="deck_conf_lps_cards">Lapsos</string>
   <string name="deck_conf_general">Geral</string>
-  <string name="deck_conf_reminders">Reminders</string>
+  <string name="deck_conf_reminders">Lembretes</string>
   <string name="deck_conf_steps">Passos (em minutos)</string>
   <string name="deck_conf_order">Ordem</string>
   <string name="deck_conf_new_cards_day">Novas fichas/dia</string>

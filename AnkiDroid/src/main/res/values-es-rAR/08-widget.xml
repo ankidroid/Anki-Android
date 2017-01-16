@@ -53,7 +53,7 @@
     <item quantity="other">%1$d mazos</item>
   </plurals>
   <string name="widget_small">AnkiDroid pequeño</string>
-  <string name="widget_small_button">Ankidroid</string>
+  <string name="widget_small_button">AnkiDroid</string>
   <plurals name="widget_cards_due">
     <item quantity="one">%d tarjeta programada</item>
     <item quantity="other">%d tarjetas programadas</item>

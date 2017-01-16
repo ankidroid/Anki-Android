@@ -204,7 +204,7 @@
   <string name="deck_conf_rev_cards">Powtórki</string>
   <string name="deck_conf_lps_cards">Pomyłki</string>
   <string name="deck_conf_general">Ogólne</string>
-  <string name="deck_conf_reminders">Reminders</string>
+  <string name="deck_conf_reminders">Przypomnienia</string>
   <string name="deck_conf_steps">Kroki (w minutach)</string>
   <string name="deck_conf_order">Kolejność</string>
   <string name="deck_conf_new_cards_day">Nowe karty/dzień</string>
@@ -260,6 +260,6 @@
   <string name="deck_conf_cram_reschedule_summ">Kolejkuj karty ponownie bazując na moich odpowiedziach w tej talii</string>
   <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
   <string name="deck_conf_cram_steps_summ">Zdefiniuj własne kroki</string>
-  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
-  <string name="deck_conf_reminders_time">Remind at</string>
+  <string name="deck_conf_reminders_enabled">Włącz powiadomienia dla tej talii</string>
+  <string name="deck_conf_reminders_time">Przypomnij o</string>
 </resources>

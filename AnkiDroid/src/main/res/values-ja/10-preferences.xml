@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">振動でも通知</string>
   <string name="notification_minimum_cards_due_blink">LEDランプ点滅でも通知</string>
   <string name="timeout_answer_text">解答を自動的に表示</string>
-  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
+  <string name="timeout_answer_summ">操作しなくても、一定時間経過後に自動的に解答を表示します。音声ファイルを自動的に再生する場合は、その再生時間と下記の「解答を表示するまでの時間」が経過した後に解答を表示します。</string>
   <string name="timeout_answer_seconds">解答を表示するまでの時間</string>
   <string name="timeout_answer_seconds_summ">XXX 秒</string>
   <string name="timeout_question_seconds">次の質問までの時間</string>
@@ -202,7 +202,7 @@
   <string name="deck_conf_rev_cards">復習（中長期間隔の反復）</string>
   <string name="deck_conf_lps_cards">忘却と再学習（短期集中反復）</string>
   <string name="deck_conf_general">一般</string>
-  <string name="deck_conf_reminders">Reminders</string>
+  <string name="deck_conf_reminders">リマインダー</string>
   <string name="deck_conf_steps">学習ステップ（分）</string>
   <string name="deck_conf_order">順序</string>
   <string name="deck_conf_new_cards_day">一日あたりの新規カード枚数の上限</string>
@@ -254,8 +254,8 @@
   <string name="deck_conf_cram_order">抽出されたカードの並べ方</string>
   <string name="deck_conf_cram_reschedule">スケジュールを変更</string>
   <string name="deck_conf_cram_reschedule_summ">回答結果を元のデッキでのスケジュールに反映させます</string>
-  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
-  <string name="deck_conf_cram_steps_summ">元のデッキの学習ステップとは異なる、独自の学習ステップを設定します。</string>
-  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
-  <string name="deck_conf_reminders_time">Remind at</string>
+  <string name="deck_conf_cram_steps">カスタム学習ステップ（分）</string>
+  <string name="deck_conf_cram_steps_summ">独自の学習ステップを設定</string>
+  <string name="deck_conf_reminders_enabled">このデッキの学習予定時刻に通知</string>
+  <string name="deck_conf_reminders_time">このデッキの学習予定時刻</string>
 </resources>

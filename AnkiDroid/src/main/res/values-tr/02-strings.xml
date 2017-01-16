@@ -219,9 +219,9 @@
   <string name="decks_rename_exists">Bu deste zaten var.</string>
   <string name="decks_rename_filtered_nosubdecks">Filtreli destenin alt destesi olmaz</string>
   <string name="filtered_deck_name">Filtreli Deste</string>
-  <string name="reminder_title">Do not forget to study today!</string>
+  <string name="reminder_title">Bugün çalışmaya unutmayın!</string>
   <plurals name="reminder_text">
-    <item quantity="one">%2$d new card to review in %1$s</item>
-    <item quantity="other">%2$d new cards to review in %1$s</item>
+    <item quantity="one">%1$s\'de görüntülemek için %2$d yeni kart</item>
+    <item quantity="other">%1$s\'de görüntülemek için %2$d yeni kart</item>
   </plurals>
 </resources>

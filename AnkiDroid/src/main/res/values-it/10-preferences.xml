@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">Vibra</string>
   <string name="notification_minimum_cards_due_blink">Lampeggia</string>
   <string name="timeout_answer_text">Mostra automaticamente la risposta</string>
-  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
+  <string name="timeout_answer_summ">Visualizza la risposta automaticamente senza input dell\'utente. Il ritardo include il tempo per i file audio riprodotti automaticamente.</string>
   <string name="timeout_answer_seconds">Tempo prima di mostrare la risposta</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Tempo prima di mostrare la prossima domanda</string>
@@ -203,7 +203,7 @@
   <string name="deck_conf_rev_cards">Ripetizioni</string>
   <string name="deck_conf_lps_cards">Errori</string>
   <string name="deck_conf_general">Generale</string>
-  <string name="deck_conf_reminders">Reminders</string>
+  <string name="deck_conf_reminders">Promemoria</string>
   <string name="deck_conf_steps">Passi (in minuti)</string>
   <string name="deck_conf_order">Ordine</string>
   <string name="deck_conf_new_cards_day">Carte nuove/giorno</string>
@@ -256,8 +256,8 @@
   <string name="deck_conf_cram_order">carte selezionate per</string>
   <string name="deck_conf_cram_reschedule">Ripianifica</string>
   <string name="deck_conf_cram_reschedule_summ">Ripianifica le carte considerando le mie risposte in questo mazzo</string>
-  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
+  <string name="deck_conf_cram_steps">Passi personalizzati (in minuti)</string>
   <string name="deck_conf_cram_steps_summ">Definisci passi personalizzati</string>
-  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
-  <string name="deck_conf_reminders_time">Remind at</string>
+  <string name="deck_conf_reminders_enabled">Attiva le notifiche di promemoria per questo mazzo</string>
+  <string name="deck_conf_reminders_time">Notifica alle</string>
 </resources>

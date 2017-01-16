@@ -139,7 +139,7 @@
   <string name="notification_minimum_cards_due_vibrate">Vibriraj</string>
   <string name="notification_minimum_cards_due_blink">Utripaj lučko</string>
   <string name="timeout_answer_text">Sam. prikaži odgovor</string>
-  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
+  <string name="timeout_answer_summ">Samodejno prikaži odgovor brez uporabniškega vnosa. Zakasnitev vključuje čas za samodejno predvajanje zvočnih datotek.</string>
   <string name="timeout_answer_seconds">Čas za prikaz odgovora</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Časa do naslednjega vprašanja</string>
@@ -206,7 +206,7 @@
   <string name="deck_conf_rev_cards">Pregledi</string>
   <string name="deck_conf_lps_cards">Spodrsljaji</string>
   <string name="deck_conf_general">Splošno</string>
-  <string name="deck_conf_reminders">Reminders</string>
+  <string name="deck_conf_reminders">Opomniki</string>
   <string name="deck_conf_steps">Koraki (v minutah)</string>
   <string name="deck_conf_order">Vrstni red</string>
   <string name="deck_conf_new_cards_day">Nove kartice/dan</string>
@@ -261,8 +261,8 @@
   <string name="deck_conf_cram_order">kartic, ki jih je izbral</string>
   <string name="deck_conf_cram_reschedule">Spremeni urnik</string>
   <string name="deck_conf_cram_reschedule_summ">Spremeni urnik kartic glede na moje odgovore v tem kompletu</string>
-  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
+  <string name="deck_conf_cram_steps">Koraki po meri (v minutah)</string>
   <string name="deck_conf_cram_steps_summ">Določi korake po meri</string>
-  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
-  <string name="deck_conf_reminders_time">Remind at</string>
+  <string name="deck_conf_reminders_enabled">Omogoči opomnike za ta komplet</string>
+  <string name="deck_conf_reminders_time">Opomni ob</string>
 </resources>

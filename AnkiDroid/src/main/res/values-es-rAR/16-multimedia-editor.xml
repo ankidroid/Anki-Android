@@ -65,7 +65,7 @@
   <string name="multimedia_editor_poweredbeolingus">Con tecnología de Beolingus</string>
   <!-- Image search activity -->
   <!-- in progress dialog when loading the image -->
-  <string name="multimedia_editor_imgs_saving_image">Salvando imagen</string>
+  <string name="multimedia_editor_imgs_saving_image">Guardando imagen</string>
   <string name="multimedia_editor_imgs_loading_image">Cargando imagen</string>
   <string name="multimedia_editor_imgs_no_results">La búsqueda no arrojó resultados</string>
   <string name="multimedia_editor_imgs_images_found">Se encontró imágenes</string>

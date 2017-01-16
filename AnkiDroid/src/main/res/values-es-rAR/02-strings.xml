@@ -220,9 +220,9 @@
   <string name="decks_rename_exists">El mazo ya existe</string>
   <string name="decks_rename_filtered_nosubdecks">Un mazo filtrado no puede tener submazos</string>
   <string name="filtered_deck_name">Mazo filtrado</string>
-  <string name="reminder_title">Do not forget to study today!</string>
+  <string name="reminder_title">¡No se olvide de estudiar hoy!</string>
   <plurals name="reminder_text">
-    <item quantity="one">%2$d new card to review in %1$s</item>
-    <item quantity="other">%2$d new cards to review in %1$s</item>
+    <item quantity="one">%2$d tarjeta nueva para revisar en %1$s</item>
+    <item quantity="other">%2$d tarjetas nuevas para revisar en %1$s</item>
   </plurals>
 </resources>

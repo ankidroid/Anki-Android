@@ -62,7 +62,7 @@
   <string name="sign_up">Inscribirse</string>
   <string name="logged_as">Ingresado en la cuenta como</string>
   <string name="log_out">Saliendo de la cuenta</string>
-  <string name="alert_logging_message">Ingresando a la cuenta, por favor aguarde...</string>
+  <string name="alert_logging_message">Ingresando a la cuenta&#8230;</string>
   <string name="invalid_username_password">Dirección de correo electrónico o contraseña incorrecta.</string>
   <string name="reset_password">Restablecer contraseña</string>
   <!-- AndroidManifest.xml -->
@@ -72,12 +72,12 @@
   <string name="sync_conflict_message">Sus mazos aquí y en AnkiWeb difieren de tal modo que no pueden ser combinados, por lo cual se precisa sobreescribir los mazos en uno de esos sitios con los del otro.\n\n¿Desde subir desde aquí sus mazos o descargar los mazos de AnkiWeb?</string>
   <string name="sync_conflict_local">Subir</string>
   <string name="sync_conflict_remote">Descargar</string>
-  <string name="sync_conflict_remote_confirm">¿Desea realmente descargar la colección desde el servidor? Tenga en cuenta que esto sobreescribirá su colección local.</string>
+  <string name="sync_conflict_remote_confirm">¿Sobrescribir su colección local?</string>
   <string name="sync_conflict_local_confirm">¿Desea realmente subir la colección local? Tenga en cuenta que esto sobreescribirá la colección del servidor.</string>
   <string name="sync_prepare_syncing">Preparando sincronización...</string>
   <string name="sync_preparing_full_sync_message">Preparando sincronización completa...</string>
   <string name="sync_uploading_message">Subiendo...</string>
-  <string name="sync_downloading_message">Descargando...</string>
+  <string name="sync_downloading_message">Descargando&#8230;</string>
   <string name="sync_title">Sincronización</string>
   <string name="sync_downloading_media">Descargando archivos multimedia %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Sincronización desde el dispositivo completa</string>
