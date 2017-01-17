@@ -70,6 +70,27 @@ public final class AddContentApi {
     }
 
     /**
+     * Check whether we have permission to call query methods such as #findNotes
+     *
+     * @param modelId model ID. Use -1 for queries not specific to a model
+     * @return true iff permission granted (if modelId does not exist then result is unspecified)
+     */
+    public boolean canQuery(long modelId) {
+        // for future-proof compatibility, we should do a real check
+        try {
+            if (modelId < 0L) {
+                return getModelList() != null;
+            }
+            else {
+                return getNoteCount(modelId) >= 0;
+            }
+        }
+        catch (SecurityException e) {
+            return false;
+        }
+    }
+
+    /**
      * Create a new note with specified fields, tags, and model and place it in the specified deck.
      * No duplicate checking is performed - so the note should be checked beforehand using #findNotesByKeys
      * @param modelId ID for the model used to add the notes
