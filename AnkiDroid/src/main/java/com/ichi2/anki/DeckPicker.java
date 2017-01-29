@@ -1090,12 +1090,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
      *  Show a simple snackbar message or notification if the activity is not in foreground
      * @param messageResource String resource for message
      */
-    private void showSyncLogMessage(int messageResource) {
+    private void showSyncLogMessage(int messageResource, String syncMessage) {
         if (mActivityPaused) {
             Resources res = AnkiDroidApp.getAppResources();
             showSimpleNotification(res.getString(R.string.app_name), res.getString(messageResource));
         } else {
-            UIUtils.showSimpleSnackbar(this, messageResource, false);
+            if (syncMessage.length() == 0) {
+                UIUtils.showSimpleSnackbar(this, messageResource, false);
+            } else {
+                Resources res = AnkiDroidApp.getAppResources();
+                showSimpleMessageDialog(res.getString(messageResource), syncMessage, false);
+            }
         }
     }
 
@@ -1312,13 +1317,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void onDisconnected() {
-            showSyncLogMessage(R.string.youre_offline);
+            showSyncLogMessage(R.string.youre_offline, "");
         }
 
         @Override
         public void onCancelled() {
             mProgressDialog.dismiss();
-            showSyncLogMessage(R.string.sync_cancelled);
+            showSyncLogMessage(R.string.sync_cancelled, "");
             // update deck list in case sync was cancelled during media sync and main sync was actually successful
             updateDeckList();
         }
@@ -1447,7 +1452,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC);
                     } else if (resultType.equals("noChanges")) {
                         // show no changes message, use false flag so we don't show "sync error" as the Dialog title
-                        showSyncLogMessage(R.string.sync_no_changes_message);
+                        showSyncLogMessage(R.string.sync_no_changes_message, "");
                     } else if (resultType.equals("clockOff")) {
                         long diff = (Long) result[1];
                         if (diff >= 86100) {
@@ -1538,22 +1543,25 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     }
                 }
             } else {
+                // Sync was successful!
                 if (data.data[2] != null && !data.data[2].equals("")) {
+                    // There was a media error, so show it
                     String message = res.getString(R.string.sync_database_acknowledge) + "\n\n" + data.data[2];
                     showSimpleMessageDialog(message);
                 } else if (data.data.length > 0 && data.data[0] instanceof String
                         && ((String) data.data[0]).length() > 0) {
+                    // A full sync occurred
                     String dataString = (String) data.data[0];
                     if (dataString.equals("upload")) {
-                        showSyncLogMessage(R.string.sync_log_uploading_message);
+                        showSyncLogMessage(R.string.sync_log_uploading_message, syncMessage);
                     } else if (dataString.equals("download")) {
-                        showSyncLogMessage(R.string.sync_log_downloading_message);
-                        // set downloaded collection as current one
+                        showSyncLogMessage(R.string.sync_log_downloading_message, syncMessage);
                     } else {
-                        showSyncLogMessage(R.string.sync_database_acknowledge);
+                        showSyncLogMessage(R.string.sync_database_acknowledge, syncMessage);
                     }
                 } else {
-                    showSyncLogMessage(R.string.sync_database_acknowledge);
+                    // Regular sync completed successfully
+                    showSyncLogMessage(R.string.sync_database_acknowledge, syncMessage);
                 }
                 updateDeckList();
                 WidgetStatus.update(DeckPicker.this);
