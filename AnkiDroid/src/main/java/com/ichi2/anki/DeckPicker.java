@@ -22,7 +22,6 @@
 package com.ichi2.anki;
 
 import android.Manifest;
-import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -43,10 +42,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ShareCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -1616,9 +1616,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public void exportApkg(String filename, Long did, boolean includeSched, boolean includeMedia) {
-        // get export path
+        // get export path from internal storage
         File colPath = new File(getCol().getPath());
-        File exportDir = new File(colPath.getParentFile(), "export");
+        File exportDir = new File(getFilesDir(), "export");
         exportDir.mkdirs();
         File exportPath;
         if (filename != null) {
@@ -1650,19 +1650,34 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     public void emailFile(String path) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("message/rfc822");
-        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.export_email_subject));
-        intent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(getString(R.string.export_email_text)));
+        // Make sure the file actually exists
         File attachment = new File(path);
-        if (attachment.exists()) {
-            Uri uri = Uri.fromFile(attachment);
-            intent.putExtra(Intent.EXTRA_STREAM, uri);
+        if (!attachment.exists()) {
+            Timber.e("Specified apkg file %s does not exist", path);
+            UIUtils.showThemedToast(this, getResources().getString(R.string.apk_share_error), false);
+            return;
         }
+        // Get a URI for the file to be shared via the FileProvider API
+        Uri uri;
         try {
-            startActivityWithoutAnimation(intent);
-        } catch (ActivityNotFoundException e) {
-            UIUtils.showThemedToast(this, getResources().getString(R.string.no_email_client), false);
+            uri = FileProvider.getUriForFile(DeckPicker.this, "com.ichi2.anki.apkgfileprovider", attachment);
+        } catch (IllegalArgumentException e) {
+            Timber.e("Could not generate a valid URI for the apkg file");
+            UIUtils.showThemedToast(this, getResources().getString(R.string.apk_share_error), false);
+            return;
+        }
+        Intent shareIntent = ShareCompat.IntentBuilder.from(DeckPicker.this)
+                .setType("text/html")
+                .setStream(uri)
+                .setSubject(getString(R.string.export_email_subject))
+                .setHtmlText(getString(R.string.export_email_text))
+                .getIntent();
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        if (shareIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityWithoutAnimation(shareIntent);
+        } else {
+            Timber.e("Could not find appropriate application to share apkg with");
+            UIUtils.showThemedToast(this, getResources().getString(R.string.apk_share_error), false);
         }
     }
 
