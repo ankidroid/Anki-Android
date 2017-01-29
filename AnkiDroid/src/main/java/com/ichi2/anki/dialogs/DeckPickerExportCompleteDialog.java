@@ -5,8 +5,15 @@ import android.os.Bundle;
 import android.os.Message;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
+import com.ichi2.utils.Files;
+
+import java.io.File;
+
+import timber.log.Timber;
 
 public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
     
@@ -38,6 +45,17 @@ public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
 
                     @Override
                     public void onNegative(MaterialDialog dialog) {
+                        // Move the file to external storage so that it can be accessed by the user
+                        File exportFile = new File(exportPath);
+                        File colPath = new File(CollectionHelper.getCollectionPath(getContext())).getParentFile();
+                        File newExportFile = new File(new File(colPath, "export"), exportFile.getName());
+                        newExportFile.mkdirs();
+                        if (!Files.move(exportFile, newExportFile)) {
+                            Timber.e("Could not move exported apkg file to external storage");
+                            UIUtils.showThemedToast(getContext(), getResources().getString(R.string.apk_share_error), false);
+                        } else {
+                            UIUtils.showThemedToast(getContext(), newExportFile.getAbsolutePath(), false);
+                        }
                         ((DeckPicker) getActivity()).dismissAllDialogFragments();
                     }
                 })
@@ -50,7 +68,8 @@ public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
 
 
     public String getNotificationMessage() {
-        return res().getString(R.string.export_successful, getArguments().getString("exportPath"));
+        String name = new File(getArguments().getString("exportPath")).getName();
+        return res().getString(R.string.export_successful, name);
     }
 
 
