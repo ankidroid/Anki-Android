@@ -13,7 +13,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.DialogHandler;
-import com.ichi2.anki.services.ReminderService;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -129,12 +128,6 @@ public class IntentHandler extends Activity {
             reloadIntent.setAction(action);
             reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(reloadIntent);
-            finishWithFade();
-        } else if (intent.hasExtra(ReminderService.EXTRA_DECK_ID)) {
-            final Intent reviewIntent = new Intent(this, Reviewer.class);
-
-            CollectionHelper.getInstance().getCol(this).getDecks().select(intent.getLongExtra(ReminderService.EXTRA_DECK_ID, 0));
-            startActivity(reviewIntent);
             finishWithFade();
         } else {
             // Launcher intents should start DeckPicker if no other task exists,
