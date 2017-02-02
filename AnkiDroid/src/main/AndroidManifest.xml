@@ -358,6 +358,16 @@
             android:exported="true" >
             <meta-data android:name="com.ichi2.anki.provider.spec" android:value="2" />
         </provider>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.ichi2.anki.apkgfileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
     </application>
 
 </manifest>
