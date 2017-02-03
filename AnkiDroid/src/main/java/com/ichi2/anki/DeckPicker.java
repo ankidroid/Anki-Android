@@ -674,6 +674,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             int[] studyOptionsCounts = getCol().getSched().counts();
             if (studyOptionsCounts[0] + studyOptionsCounts[1] + studyOptionsCounts[2] == 0) {
                 UIUtils.showSimpleSnackbar(this, R.string.studyoptions_congrats_finished, false);
+                afterFinishSync();
             } else {
                 UIUtils.showSimpleSnackbar(this, R.string.studyoptions_no_cards_due, false);
             }
@@ -784,6 +785,18 @@ public class DeckPicker extends NavigationDrawerActivity implements
             sync();
         }
     }
+
+    private void afterFinishSync() {
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        // Check whether the option is selected, the user is signed in.
+        String hkey = preferences.getString("hkey", "");
+        if (hkey.length() != 0
+                && preferences.getBoolean("deckFinishedSyncMode", false)
+                && Connection.isOnline()) {
+            sync();
+        }
+    }
+
 
     @Override
     public void onBackPressed() {

@@ -120,7 +120,9 @@
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="automatic_sync_choice">Automatische Synchronisierung</string>
   <string name="automatic_sync_choice_summ">Automatische Synchronisierung beim Programmstart oder -stopp, wenn seit letzter Synchronisierung mehr als 10 Minuten vergangen sind.</string>
-  <string name="fix_hebrew_text">Übergangslösung für hebräische Vokale</string>
+  <string name="deck_finished_sync_choice" >Synchronisierung wenn Tagespensum absolviert wurde</string>
+  <string name="deck_finished_sync_choice_summ">Synchronisierung nachdem im Deck keine Karten zum Lernen mehr übrig sind.</string>
+    <string name="fix_hebrew_text">Übergangslösung für hebräische Vokale</string>
   <string name="fix_hebrew_text_summ">Übergangslösung um hebräische Vokale korrekt anzuzeigen.</string>
   <string name="fix_hebrew_instructions">Diese Einstellung umgeht den RTL-Algorithmus von Android, um hebräischen Text mit Vokalen korrekt anzuzeigen.\n\nDamit dies funktioniert, müssen Sie die Schriftart Tohu.ttf herunterladen und manuell in dieses Verzeichnis kopieren:\n»%s/font/«\n\nIhre Karten müssen Sie dafür nicht ändern.</string>
   <string name="fix_hebrew_download_font">Schrift herunterladen</string>

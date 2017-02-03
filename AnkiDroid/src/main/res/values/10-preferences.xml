@@ -101,6 +101,8 @@
     <string name="automatic_sync_choice">Automatic synchronization</string>
     <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
+    <string name="deck_finished_sync_choice_summ">After no cards to learn are left in the deck results are synced immediatly.</string>
+    <string name="deck_finished_sync_choice" >Synchronize when deck is finished</string>
     <string name="fix_hebrew_text">Fix for Hebrew vowels</string>
     <string name="fix_hebrew_text_summ">Workaround for rendering Hebrew vowels correctly.</string>
     <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to\n“%s/fonts/”\n\nYou won’t have to modify your cards.</string>
