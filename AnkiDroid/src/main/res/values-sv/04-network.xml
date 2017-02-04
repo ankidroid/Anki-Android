@@ -50,7 +50,6 @@
   <string name="connection_error_message">Ett nätverksfel har uppstått.</string>
   <string name="not_logged_in_title">Logga in på AnkiWeb</string>
   <string name="login_create_account_message">Du måste logga in till ett tredjeparts-konto för att använda molnsynkroniseringen. Du kan skapa ett i nästa steg.</string>
-  <string name="no_email_client">Ingen epostklient tillgänglig</string>
   <!-- MyAccount.java -->
   <string name="username">E-postadress</string>
   <string name="username_repeat">Upprepa e-postadress</string>

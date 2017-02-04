@@ -53,7 +53,7 @@
   <string name="model_field_editor_options">欄位選項</string>
   <string name="model_field_editor_rename">重新命名欄位</string>
   <string name="model_field_editor_reposition_menu">Reposition field</string>
-  <string name="model_field_editor_reposition" formatted="false">Reposition field (enter a value %1$d–%2$d)</string>
+  <string name="model_field_editor_reposition">Reposition field (enter a value %1$d–%2$d)</string>
   <string name="model_field_editor_changing">更新欄位</string>
   <string name="model_field_editor_sort_field">Sort by this field</string>
   <string name="model_clone_suffix">複本</string>

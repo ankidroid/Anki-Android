@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">Titreş</string>
   <string name="notification_minimum_cards_due_blink">Işığı yanıp söndür</string>
   <string name="timeout_answer_text">Cevabı otomatik göster</string>
-  <string name="timeout_answer_summ">Cevabı kullanıcı girdisi olmadan otomatik göster</string>
+  <string name="timeout_answer_summ">Cevabı kullanıcı girişi yapılmadan otomatik olarak göster. Ses dosyasını otomatik oynatmak için gecikme zamanı içerir.</string>
   <string name="timeout_answer_seconds">Cevabı gösterme zamanı</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Sonraki soruyu gösterme zamanı</string>
@@ -203,6 +203,7 @@
   <string name="deck_conf_rev_cards">Çalışma</string>
   <string name="deck_conf_lps_cards">Hatâlar</string>
   <string name="deck_conf_general">Genel</string>
+  <string name="deck_conf_reminders">Hatırlatmalar</string>
   <string name="deck_conf_steps">Adımlar (dakika)</string>
   <string name="deck_conf_order">Sıralama</string>
   <string name="deck_conf_new_cards_day">Gün başına yeni kart sayısı</string>
@@ -255,6 +256,8 @@
   <string name="deck_conf_cram_order">kart seçme ölçütü:</string>
   <string name="deck_conf_cram_reschedule">Zamanını değiştir</string>
   <string name="deck_conf_cram_reschedule_summ">Bu destede cevaplarıma göre kartların zamanını değiştir</string>
-  <string name="deck_conf_cram_steps">Kişisel adımlar</string>
+  <string name="deck_conf_cram_steps">Özel adımlar (dakika cinsinden)</string>
   <string name="deck_conf_cram_steps_summ">Kendi adımlarınızı tanımlayın</string>
+  <string name="deck_conf_reminders_enabled">Bu kısım için hatırlatma bildirimlerini etkinleştir</string>
+  <string name="deck_conf_reminders_time">Hatırlat</string>
 </resources>

@@ -50,7 +50,6 @@
   <string name="connection_error_message">网络出现错误</string>
   <string name="not_logged_in_title">登录到AnkiWeb</string>
   <string name="login_create_account_message">您必须登录到第三方账户以使用云同步服务。您可以在下一步创建一个账户。</string>
-  <string name="no_email_client">没有可用的电子邮件客户端</string>
   <!-- MyAccount.java -->
   <string name="username">电子邮件地址</string>
   <string name="username_repeat">确认电子邮件地址</string>

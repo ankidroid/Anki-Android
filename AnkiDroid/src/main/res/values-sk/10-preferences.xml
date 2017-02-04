@@ -139,7 +139,7 @@
   <string name="notification_minimum_cards_due_vibrate">Vibrovať</string>
   <string name="notification_minimum_cards_due_blink">Blikajúce svetlo</string>
   <string name="timeout_answer_text">Automatické zobrazenie odpovede</string>
-  <string name="timeout_answer_summ">Ukázať odpovede automaticky bez zásahu používateľa</string>
+  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
   <string name="timeout_answer_seconds">Čas do zobrazenia odpovede</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Čas do zobrazenia ďalšej otázky</string>
@@ -205,6 +205,7 @@
   <string name="deck_conf_rev_cards">Opakovania</string>
   <string name="deck_conf_lps_cards">Zabudnutia</string>
   <string name="deck_conf_general">Všeobecné</string>
+  <string name="deck_conf_reminders">Reminders</string>
   <string name="deck_conf_steps">Kroky (v minútach)</string>
   <string name="deck_conf_order">Poradie</string>
   <string name="deck_conf_new_cards_day">Denne nových kartičiek</string>
@@ -258,6 +259,8 @@
   <string name="deck_conf_cram_order">kartičky zvolené podľa</string>
   <string name="deck_conf_cram_reschedule">Preplánovať</string>
   <string name="deck_conf_cram_reschedule_summ">Preplánovať kartičky podľa mojich odpovedí v tomto balíčku</string>
-  <string name="deck_conf_cram_steps">Vlastné kroky</string>
+  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
   <string name="deck_conf_cram_steps_summ">Definovať vlastné kroky</string>
+  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
+  <string name="deck_conf_reminders_time">Remind at</string>
 </resources>

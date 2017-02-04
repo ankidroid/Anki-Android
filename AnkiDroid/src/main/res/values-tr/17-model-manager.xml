@@ -55,7 +55,7 @@
   <string name="model_field_editor_options">Alan seçenekleri</string>
   <string name="model_field_editor_rename">Alanın ismini değiştir</string>
   <string name="model_field_editor_reposition_menu">Alanın yerini değiştir</string>
-  <string name="model_field_editor_reposition" formatted="false">Alanın yerini değiştir (%1$d–%2$d arası bir değer girin)</string>
+  <string name="model_field_editor_reposition">Alanın yerini değiştir (%1$d–%2$d arası bir değer girin)</string>
   <string name="model_field_editor_changing">Alanlar güncelleniyor</string>
   <string name="model_field_editor_sort_field">Bu alana göre sırala</string>
   <string name="model_clone_suffix">kopyası</string>

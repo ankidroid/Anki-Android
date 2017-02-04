@@ -158,9 +158,9 @@
   <string name="confirm_apkg_export">컬렉션을 apkg 파일로 내보낼까요?</string>
   <string name="confirm_apkg_export_deck">\"%s\"를 apkg 파일로 내보낼까요?</string>
   <string name="export_in_progress">apkg 파일 내보내는 중...</string>
-  <string name="export_successful_title">apkg 파일을 이메일로 전송할까요?</string>
-  <string name="export_successful">\"%s\" 파일을 내보냈습니다. 이메일로 전송할까요?</string>
-  <string name="export_email_subject">AnkiDroid exported collection</string>
+  <string name="export_successful_title">Send apkg?</string>
+  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
+  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
   <string name="export_email_text">
         <![CDATA[
         Hi!
@@ -211,4 +211,10 @@
   <string name="decks_rename_exists">카드 묶음이 이미 존재합니다</string>
   <string name="decks_rename_filtered_nosubdecks">필터링된 카드 묶음은 하위 카드 묶음을 가질 수 없습니다</string>
   <string name="filtered_deck_name">필터링된 카드 묶음</string>
+  <string name="reminder_title">Do not forget to study today!</string>
+  <plurals name="reminder_text">
+    <item quantity="other">%2$d new cards to review in %1$s</item>
+  </plurals>
+  <!-- Currently only used if exporting APKG fails -->
+  <string name="apk_share_error">Error sharing apkg file</string>
 </resources>

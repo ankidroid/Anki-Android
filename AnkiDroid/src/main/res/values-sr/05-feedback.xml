@@ -40,6 +40,7 @@
 -->
 <resources>
   <!-- Feedback.java -->
+  <string name="empty_string"></string>
   <string name="error_reporting_choice">Пријављање грешака</string>
   <string name="feedback_disclaimer">Пажња:Ми не скупљамо никакву личну информацију, као што су адреса е-поште, број телефона, IP адреса или IMEI телефона. Ми скупљамо неке информације општег карактера, као што су: произвођач вашег уређаја. модел и верзија Android, као и сам карактер грешке.</string>
   <string name="feedback_title">Ваше мишљење</string>

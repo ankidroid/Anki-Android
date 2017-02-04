@@ -76,7 +76,7 @@
   <string name="stats_today_no_mature_cards">復習(熟知)の正解率: -- (未復習)</string>
   <string name="stats_overview_forecast_total">合計: &lt;b&gt;%1$d&lt;/b&gt;枚</string>
   <string name="stats_overview_forecast_average">平均: &lt;b&gt;%1$.1f&lt;/b&gt;枚/日</string>
-  <string name="stats_overview_forecast_due_tomorrow">明日の課題: &lt;b&gt;%1$d&lt;/b&gt;</string>
+  <string name="stats_overview_forecast_due_tomorrow">明日: &lt;b&gt;%1$d&lt;/b&gt;枚</string>
   <string name="stats_overview_days_studied">学習実行率: &lt;b&gt;%1$d%% &lt;/b &gt; (%3$d日中%2$d日)</string>
   <string name="stats_overview_total_reviews">合計: &lt;b&gt;%1$d&lt;/b&gt;枚</string>
   <string name="stats_overview_reviews_per_day_studydays">平均: &lt;b&gt;%1$.1f&lt;/b&gt;回/日</string>
@@ -99,7 +99,7 @@
     <item>か月</item>
   </string-array>
   <string name="stats_today">今日</string>
-  <string name="stats_overview">履歴概要</string>
+  <string name="stats_overview">概要</string>
   <string name="stats_forecast">予測</string>
   <string name="stats_review_count">履歴（回答数）</string>
   <string name="stats_review_time">履歴（時間）</string>

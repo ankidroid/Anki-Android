@@ -53,7 +53,7 @@
   <string name="studyoptions_eta">Tempo estimado (min):</string>
   <string name="studyoptions_start">Estudar</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Expand</string>
+  <string name="expand">Expandir</string>
   <string name="collapse">Collapse</string>
   <string name="study_more">Estudar mais</string>
   <plurals name="deckpicker_title">

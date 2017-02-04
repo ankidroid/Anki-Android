@@ -57,7 +57,7 @@
   <string name="model_field_editor_options">Опције поља</string>
   <string name="model_field_editor_rename">Преименуј поље</string>
   <string name="model_field_editor_reposition_menu">Репозиција поље</string>
-  <string name="model_field_editor_reposition" formatted="false">Репозиција поље (унесите вредности %1$d–%2$d)</string>
+  <string name="model_field_editor_reposition">Репозиција поље (унесите вредности %1$d–%2$d)</string>
   <string name="model_field_editor_changing">Поље ажурирања</string>
   <string name="model_field_editor_sort_field">Сортирај по овом пољу</string>
   <string name="model_clone_suffix">копирај</string>

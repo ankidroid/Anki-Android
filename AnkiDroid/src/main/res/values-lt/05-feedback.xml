@@ -40,6 +40,7 @@
 -->
 <resources>
   <!-- Feedback.java -->
+  <string name="empty_string"></string>
   <string name="error_reporting_choice">Klaidų ataskaitų režimas</string>
   <string name="feedback_disclaimer">Atsižadėjimas: Mes nerenkame jokios asmeninės informacijos, tokios kaip el. pašto adresas, tel. numeris, ar telefono IMEI. Mes renkame tokia informacija kaip, tel. gamintojas, modelis ir android versija, taip apie praneštas klaidas.</string>
   <string name="feedback_title">Atsiliepimas</string>

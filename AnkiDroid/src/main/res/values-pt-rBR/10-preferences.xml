@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">Vibrar</string>
   <string name="notification_minimum_cards_due_blink">Luz de piscamento</string>
   <string name="timeout_answer_text">Exibir resposta automáticamente</string>
-  <string name="timeout_answer_summ">Mostrar resposta automaticamente sem entrada do usuário</string>
+  <string name="timeout_answer_summ">Mostra a resposta automaticamente sem intervenção do usuário. Inclui atraso para reprodução automatica de arquivos de áudio.</string>
   <string name="timeout_answer_seconds">Tempo para mostrar a resposta</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Tempo para mostrar próxima questão</string>
@@ -153,7 +153,7 @@
   <string name="show_estimates_summ">Mostrar a próxima revisão acima dos botões de resposta</string>
   <string name="show_progress">Mostar restantes</string>
   <string name="show_progress_summ">Mostrar contagem de cartões restantes</string>
-  <string name="show_eta">Show ETA</string>
+  <string name="show_eta">Mostrar tempo restante estimado</string>
   <string name="show_eta_summ">Mostrar tempo restante</string>
   <string name="use_current">Baralho para novos cartões</string>
   <string name="new_spread">Posição do novo cartão</string>
@@ -203,6 +203,7 @@
   <string name="deck_conf_rev_cards">Revisões</string>
   <string name="deck_conf_lps_cards">Lapsos</string>
   <string name="deck_conf_general">Geral</string>
+  <string name="deck_conf_reminders">Lembretes</string>
   <string name="deck_conf_steps">Passos (em minutos)</string>
   <string name="deck_conf_order">Ordem</string>
   <string name="deck_conf_new_cards_day">Novos cartões/dia</string>
@@ -255,6 +256,8 @@
   <string name="deck_conf_cram_order">cartões selecionados por</string>
   <string name="deck_conf_cram_reschedule">Remarcar</string>
   <string name="deck_conf_cram_reschedule_summ">Reagendar cartões baseado nas minhas respostas deste deck</string>
-  <string name="deck_conf_cram_steps">Passos personalizados</string>
+  <string name="deck_conf_cram_steps">Passos personalizados (em minutos)</string>
   <string name="deck_conf_cram_steps_summ">Definir passoss personalizados</string>
+  <string name="deck_conf_reminders_enabled">Habilite notificações de lembrete para este baralho</string>
+  <string name="deck_conf_reminders_time">Lembrar em</string>
 </resources>

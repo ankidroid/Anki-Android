@@ -53,7 +53,7 @@
   <string name="model_field_editor_options">필드 옵션</string>
   <string name="model_field_editor_rename">필드 이름 변경</string>
   <string name="model_field_editor_reposition_menu">필드 재배치</string>
-  <string name="model_field_editor_reposition" formatted="false">필드 재배치 (%1$d–%2$d 값을 입력하세요)</string>
+  <string name="model_field_editor_reposition">필드 재배치 (%1$d–%2$d 값을 입력하세요)</string>
   <string name="model_field_editor_changing">필드 업데이트 중</string>
   <string name="model_field_editor_sort_field">이 필드로 정렬</string>
   <string name="model_clone_suffix">복사</string>

@@ -1,6 +1,6 @@
 Memorize qualquer coisa com AnkiDroid!
 
-AnkiDroid permite que você aprenda com cartões de estudo de forma muito eficiente, mostrando-os imediatamente antes que você os esqueça. Ele é totalmente compatível com o software de repetição espaçada Anki (incluindo a sincronização), que está disponível para Windows, Linux e MacOS.
+AnkiDroid permite que você aprenda com cartões de estudo de forma muito eficiente, mostrando-os antes que você os esqueça. Ele é totalmente compatível com o software de repetição espaçada Anki (incluindo a sincronização), que está disponível para Windows, Linux e MacOS.
 
 Estude qualquer tipo de coisa, onde e quando quiser. Faça bom uso do tempo livre em viagens de ônibus, em filas de supermercado ou em qualquer outra situação de espera!
 

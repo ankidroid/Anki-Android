@@ -40,6 +40,7 @@
 -->
 <resources>
   <!-- Feedback.java -->
+  <string name="empty_string"></string>
   <string name="error_reporting_choice">Feilrapporteringsmodus</string>
   <string name="feedback_disclaimer">Ansvarsfraskrivelse: Vi samler ikke inn personlig informasjon som e-postadresse, telefonnummer eller telefonens IMEI. Vi samler derimot inn informasjon angående enheten din, som for eksempel produsenten, modellen og Android-versjonen i tillegg til detaljert informasjon om rapporterte feil og hva som ble gjort når og før de oppstod.</string>
   <string name="feedback_title">Tilbakemelding</string>

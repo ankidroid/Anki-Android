@@ -40,6 +40,7 @@
 -->
 <resources>
   <!-- Feedback.java -->
+  <string name="empty_string"></string>
   <string name="error_reporting_choice">Način poročanja o napakah</string>
   <string name="feedback_disclaimer">Omejitev odgovornosti: ne zbiramo osebnih informacij, kot so e-poštni naslov, telefonska številka ali IMEI telefona. Zbiramo nekaj podatkov o vaši napravi, kot so izdelovalec, model in različica Androida, kot tudi naravo samih prijavljenih napak in korake, ki so prevedli do njih.</string>
   <string name="feedback_title">Povratne info.</string>

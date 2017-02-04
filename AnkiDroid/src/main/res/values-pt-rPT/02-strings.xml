@@ -161,9 +161,9 @@
   <string name="confirm_apkg_export">Exportar coleção como ficheiro apkg?</string>
   <string name="confirm_apkg_export_deck">Exportar \"%s\" como ficheiro apkg?</string>
   <string name="export_in_progress">A exportar o ficheiro apkg&#8230;</string>
-  <string name="export_successful_title">Enviar ficheiro apkg por email?</string>
-  <string name="export_successful">Ficheiro \"%s\" foi exportado. Deseja envia-lo por email?</string>
-  <string name="export_email_subject">AnkiDroid exported collection</string>
+  <string name="export_successful_title">Send apkg?</string>
+  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
+  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
   <string name="export_email_text">
         <![CDATA[
         Hi!
@@ -186,7 +186,7 @@
   <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
   <string name="sched_has_buried">Algumas fichas relacionadas ou enterradas foram adiadas para amanhã.</string>
   <string name="tag_editor_add_feedback">Toque em \"%2$s\" para confirmar a adição de \"%1$s\"</string>
-  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+  <string name="tag_editor_add_feedback_existing">Etiqueta existente \"%1$s\" selecionada</string>
   <string name="lookup_hint">Depois de copiar o texto, toque na ficha em qualquer lugar para mostrar o ícone de procura</string>
   <!-- Time spans -->
   <plurals name="time_span_seconds">
@@ -220,4 +220,11 @@
   <string name="decks_rename_exists">Esse baralho já existe.</string>
   <string name="decks_rename_filtered_nosubdecks">Um baralho filtrado não pode ter subbaralhos.</string>
   <string name="filtered_deck_name">Baralho filtrado</string>
+  <string name="reminder_title">Não se esqueça de estudar hoje!</string>
+  <plurals name="reminder_text">
+    <item quantity="one">%2$d ficha nova para rever em %1$s</item>
+    <item quantity="other">%2$d fichas novas para rever em %1$s</item>
+  </plurals>
+  <!-- Currently only used if exporting APKG fails -->
+  <string name="apk_share_error">Error sharing apkg file</string>
 </resources>

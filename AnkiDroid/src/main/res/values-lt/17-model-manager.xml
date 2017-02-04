@@ -57,7 +57,7 @@
   <string name="model_field_editor_options">Lauko pasirinktys</string>
   <string name="model_field_editor_rename">Pervardyti lauką</string>
   <string name="model_field_editor_reposition_menu">Reposition field</string>
-  <string name="model_field_editor_reposition" formatted="false">Reposition field (enter a value %1$d–%2$d)</string>
+  <string name="model_field_editor_reposition">Reposition field (enter a value %1$d–%2$d)</string>
   <string name="model_field_editor_changing">Updating fields</string>
   <string name="model_field_editor_sort_field">Rūšiuoti pagal šitą lauką</string>
   <string name="model_clone_suffix">kopijuoti</string>

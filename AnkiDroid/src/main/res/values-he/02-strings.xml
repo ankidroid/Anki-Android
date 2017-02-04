@@ -167,9 +167,9 @@
   <string name="confirm_apkg_export">יצא אוסף כקובץ apkg?</string>
   <string name="confirm_apkg_export_deck">יצא \"%s\" כקובץ apkg?</string>
   <string name="export_in_progress">מייצא קובץ apkg&#8230;</string>
-  <string name="export_successful_title">שלח apkg כאימייל?</string>
-  <string name="export_successful">הקובץ \"%s\" יוצא. האם תרצה לשלוח אותו כאימייל?</string>
-  <string name="export_email_subject">אוסף מיוצא מאנקי דרויד</string>
+  <string name="export_successful_title">Send apkg?</string>
+  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
+  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
   <string name="export_email_text">
         <![CDATA[
         Hi!
@@ -238,4 +238,13 @@
   <string name="decks_rename_exists">החפיסה כבר קיימת</string>
   <string name="decks_rename_filtered_nosubdecks">חפיסה מסוננת אינה יכולה להחיל חפיסות משנה</string>
   <string name="filtered_deck_name">חפיסה מסוננת</string>
+  <string name="reminder_title">Do not forget to study today!</string>
+  <plurals name="reminder_text">
+    <item quantity="one">%2$d new card to review in %1$s</item>
+    <item quantity="two">%2$d new cards to review in %1$s</item>
+    <item quantity="many">%2$d new cards to review in %1$s</item>
+    <item quantity="other">%2$d new cards to review in %1$s</item>
+  </plurals>
+  <!-- Currently only used if exporting APKG fails -->
+  <string name="apk_share_error">Error sharing apkg file</string>
 </resources>

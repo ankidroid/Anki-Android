@@ -161,15 +161,15 @@
   <string name="confirm_apkg_export">¿Exportar colección como archivo apkg?</string>
   <string name="confirm_apkg_export_deck">¿Exportar \"%s\" como archivo apkg?</string>
   <string name="export_in_progress">Exportando archivo apkg&#8230;</string>
-  <string name="export_successful_title">¿Enviar apkg por email?</string>
-  <string name="export_successful">El archivo \"%s\" fue exportado. ¿Desea enviarlo por mail?</string>
-  <string name="export_email_subject">AnkiDroid exported collection</string>
+  <string name="export_successful_title">Send apkg?</string>
+  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
+  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
   <string name="export_email_text">
-        <![CDATA[
-        Hi!
+<![CDATA[
+        ¡Hola!
         <br/><br/>
-        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        Este es un mazo de tarjetas de estudio de Anki enviado desde <a href="https://ankidroid.org/docs/manual.html">Ankidroid</a>.
+        ¡Intenta abrirlo usando una de las distribuciones disponibles de Anki <a href="http://ankisrs.net/#download"> y disfruta de un sencillo y eficiente aprendizaje!
         ]]>
     </string>
   <string name="export_unsuccessful">Error al exportar colección</string>
@@ -220,4 +220,11 @@
   <string name="decks_rename_exists">El mazo ya existe</string>
   <string name="decks_rename_filtered_nosubdecks">Un mazo filtrado no puede tener submazos</string>
   <string name="filtered_deck_name">Mazo filtrado</string>
+  <string name="reminder_title">¡No se olvide de estudiar hoy!</string>
+  <plurals name="reminder_text">
+    <item quantity="one">%2$d tarjeta nueva para revisar en %1$s</item>
+    <item quantity="other">%2$d tarjetas nuevas para revisar en %1$s</item>
+  </plurals>
+  <!-- Currently only used if exporting APKG fails -->
+  <string name="apk_share_error">Error sharing apkg file</string>
 </resources>

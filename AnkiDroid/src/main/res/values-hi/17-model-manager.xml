@@ -55,7 +55,7 @@
   <string name="model_field_editor_options">फ़ील्ड विकल्प</string>
   <string name="model_field_editor_rename">फ़ील्ड का नाम बदलें</string>
   <string name="model_field_editor_reposition_menu">फ़ील्ड का स्थान बदलें</string>
-  <string name="model_field_editor_reposition" formatted="false">फ़ील्ड का स्थान बदलें (%1$d-%2$d के बीच का मूल्य दर्ज करें)</string>
+  <string name="model_field_editor_reposition">फ़ील्ड का स्थान बदलें (%1$d-%2$d के बीच का मूल्य दर्ज करें)</string>
   <string name="model_field_editor_changing">फ़ील्ड अद्यतित हो रहे हैं</string>
   <string name="model_field_editor_sort_field">इस फ़ील्ड के अनुसार क्रम में रखें</string>
   <string name="model_clone_suffix">प्रतिलिपि</string>

@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">Rezgés</string>
   <string name="notification_minimum_cards_due_blink">Villogó fény</string>
   <string name="timeout_answer_text">Automatikusan mutassa a választ</string>
-  <string name="timeout_answer_summ">Válasz automatikus mutatása a felhasználó beavatkozása nélkül</string>
+  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
   <string name="timeout_answer_seconds">Válasz mutatása ennyi idő után</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Time to show next question</string>
@@ -203,6 +203,7 @@
   <string name="deck_conf_rev_cards">Ismétlések</string>
   <string name="deck_conf_lps_cards">Körök</string>
   <string name="deck_conf_general">General</string>
+  <string name="deck_conf_reminders">Reminders</string>
   <string name="deck_conf_steps">Lépések (percben)</string>
   <string name="deck_conf_order">Rendezés</string>
   <string name="deck_conf_new_cards_day">Új kártyák/nap</string>
@@ -255,6 +256,8 @@
   <string name="deck_conf_cram_order">cards selected by</string>
   <string name="deck_conf_cram_reschedule">Reschedule</string>
   <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
-  <string name="deck_conf_cram_steps">Custom steps</string>
+  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
   <string name="deck_conf_cram_steps_summ">Define custom steps</string>
+  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
+  <string name="deck_conf_reminders_time">Remind at</string>
 </resources>

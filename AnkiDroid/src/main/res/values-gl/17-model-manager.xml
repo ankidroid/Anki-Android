@@ -55,7 +55,7 @@
   <string name="model_field_editor_options">Opcións do campo</string>
   <string name="model_field_editor_rename">Renomear o campo</string>
   <string name="model_field_editor_reposition_menu">Campo de reposición</string>
-  <string name="model_field_editor_reposition" formatted="false">Campo de reposición (insire un valor entre %1$d-%2$d)</string>
+  <string name="model_field_editor_reposition">Campo de reposición (insire un valor entre %1$d-%2$d)</string>
   <string name="model_field_editor_changing">Actualizando campos</string>
   <string name="model_field_editor_sort_field">Ordenar por este campo</string>
   <string name="model_clone_suffix">copiar</string>

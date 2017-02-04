@@ -139,7 +139,7 @@
   <string name="notification_minimum_cards_due_vibrate">Báo rung</string>
   <string name="notification_minimum_cards_due_blink">Nhấp nháy ánh sáng</string>
   <string name="timeout_answer_text">Tự động hiển thị trả lời</string>
-  <string name="timeout_answer_summ">Hiển thị các câu trả lời tự động mà không có nhập liệu đầu vào từ người dùng</string>
+  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
   <string name="timeout_answer_seconds">Thời gian để hiển thị câu trả lời</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Thời gian để hiển thị câu hỏi tiếp theo</string>
@@ -203,6 +203,7 @@
   <string name="deck_conf_rev_cards">Reviews</string>
   <string name="deck_conf_lps_cards">Lapses</string>
   <string name="deck_conf_general">General</string>
+  <string name="deck_conf_reminders">Reminders</string>
   <string name="deck_conf_steps">Steps (in minutes)</string>
   <string name="deck_conf_order">Order</string>
   <string name="deck_conf_new_cards_day">New cards/day</string>
@@ -254,6 +255,8 @@
   <string name="deck_conf_cram_order">thẻ được lựa chọn bởi</string>
   <string name="deck_conf_cram_reschedule">Lên lịch lại</string>
   <string name="deck_conf_cram_reschedule_summ">Lên lịch lại thẻ dựa trên câu trả lời của tôi trong chủ đề này</string>
-  <string name="deck_conf_cram_steps">Các bước tuỳ chỉnh</string>
+  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
   <string name="deck_conf_cram_steps_summ">Define custom steps</string>
+  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
+  <string name="deck_conf_reminders_time">Remind at</string>
 </resources>

@@ -53,7 +53,7 @@
   <string name="model_field_editor_options">字段选项</string>
   <string name="model_field_editor_rename">重命名字段</string>
   <string name="model_field_editor_reposition_menu">修改字段位置</string>
-  <string name="model_field_editor_reposition" formatted="false">修改字段位置(输入%1$d~%2$d的数值)</string>
+  <string name="model_field_editor_reposition">修改字段位置(输入%1$d~%2$d的数值)</string>
   <string name="model_field_editor_changing">更新字段</string>
   <string name="model_field_editor_sort_field">按此字段排序</string>
   <string name="model_clone_suffix">复制</string>

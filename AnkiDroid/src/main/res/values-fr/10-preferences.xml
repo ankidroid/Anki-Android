@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">Vibrer</string>
   <string name="notification_minimum_cards_due_blink">LED de notification</string>
   <string name="timeout_answer_text">Affichage automatique de la réponse</string>
-  <string name="timeout_answer_summ">Montrer la réponse automatiquement sans action de l’utilisateur</string>
+  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
   <string name="timeout_answer_seconds">Temps avant d’afficher la réponse</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Temps avant de montrer la question suivante</string>
@@ -203,6 +203,7 @@
   <string name="deck_conf_rev_cards">Révisions</string>
   <string name="deck_conf_lps_cards">Intervalles</string>
   <string name="deck_conf_general">Général</string>
+  <string name="deck_conf_reminders">Reminders</string>
   <string name="deck_conf_steps">Intervalle (en minutes)</string>
   <string name="deck_conf_order">Ordre</string>
   <string name="deck_conf_new_cards_day">Nouvelles cartes par jour</string>
@@ -255,6 +256,8 @@
   <string name="deck_conf_cram_order">Cartes sélectionnées par</string>
   <string name="deck_conf_cram_reschedule">Replanifier</string>
   <string name="deck_conf_cram_reschedule_summ">Replanifier les cartes selon mes réponses dans ce paquet</string>
-  <string name="deck_conf_cram_steps">Pas personnalisé</string>
+  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
   <string name="deck_conf_cram_steps_summ">Définir le pas personnalisé</string>
+  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
+  <string name="deck_conf_reminders_time">Remind at</string>
 </resources>

@@ -139,7 +139,7 @@
   <string name="notification_minimum_cards_due_vibrate">Vibrate</string>
   <string name="notification_minimum_cards_due_blink">Blink light</string>
   <string name="timeout_answer_text">Αυτόματη εμφάνιση απαντήσεων</string>
-  <string name="timeout_answer_summ">Show answer automatically without user input</string>
+  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
   <string name="timeout_answer_seconds">Time to show answer</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Time to show next question</string>
@@ -204,6 +204,7 @@
   <string name="deck_conf_rev_cards">Επαναλήψεις</string>
   <string name="deck_conf_lps_cards">Ολισθήσεις</string>
   <string name="deck_conf_general">General</string>
+  <string name="deck_conf_reminders">Reminders</string>
   <string name="deck_conf_steps">Βήματα (σε λεπτά)</string>
   <string name="deck_conf_order">Σειρά</string>
   <string name="deck_conf_new_cards_day">Νέες κάρτες/μέρα</string>
@@ -256,6 +257,8 @@
   <string name="deck_conf_cram_order">Επιλογή καρτών κατά</string>
   <string name="deck_conf_cram_reschedule">Επαναπρογραμματισμός</string>
   <string name="deck_conf_cram_reschedule_summ">Επαναπρογραμματισμός καρτών με βάση τις απαντήσεις μου σε αυτή την τράπουλα</string>
-  <string name="deck_conf_cram_steps">Προσαρμοσμένα βήματα</string>
+  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
   <string name="deck_conf_cram_steps_summ">Ορισμός προσαρμοσμένων βημάτων</string>
+  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
+  <string name="deck_conf_reminders_time">Remind at</string>
 </resources>

@@ -57,7 +57,7 @@
   <string name="model_field_editor_options">Параметры поля</string>
   <string name="model_field_editor_rename">Переименовать поле</string>
   <string name="model_field_editor_reposition_menu">Переместить поле</string>
-  <string name="model_field_editor_reposition" formatted="false">Переместить поле (введите значение %1$d–%2$d)</string>
+  <string name="model_field_editor_reposition">Переместить поле (введите значение %1$d–%2$d)</string>
   <string name="model_field_editor_changing">Обновить поля</string>
   <string name="model_field_editor_sort_field">Сортировать по этому полю</string>
   <string name="model_clone_suffix">копировать</string>

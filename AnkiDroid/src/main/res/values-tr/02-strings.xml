@@ -161,9 +161,9 @@
   <string name="confirm_apkg_export">Koleksiyon apkg dosyası olarak kaydedilsin mi?</string>
   <string name="confirm_apkg_export_deck">\"%s\" apkg dosyası olarak kaydedilsin mi?</string>
   <string name="export_in_progress">apkg dosyası keydediliyor&#8230;</string>
-  <string name="export_successful_title">apkg maillensin mi?</string>
-  <string name="export_successful">\"%s\" dosyası kaydedildi. Maillemek istiyor musunuz?</string>
-  <string name="export_email_subject">AnkiDroid koleksiyon kaydı</string>
+  <string name="export_successful_title">Send apkg?</string>
+  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
+  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
   <string name="export_email_text">
 <![CDATA[
         Selam!
@@ -219,4 +219,11 @@
   <string name="decks_rename_exists">Bu deste zaten var.</string>
   <string name="decks_rename_filtered_nosubdecks">Filtreli destenin alt destesi olmaz</string>
   <string name="filtered_deck_name">Filtreli Deste</string>
+  <string name="reminder_title">Bugün çalışmaya unutmayın!</string>
+  <plurals name="reminder_text">
+    <item quantity="one">%1$s\'de görüntülemek için %2$d yeni kart</item>
+    <item quantity="other">%1$s\'de görüntülemek için %2$d yeni kart</item>
+  </plurals>
+  <!-- Currently only used if exporting APKG fails -->
+  <string name="apk_share_error">Error sharing apkg file</string>
 </resources>

@@ -40,6 +40,7 @@
 -->
 <resources>
   <!-- Feedback.java -->
+  <string name="empty_string"></string>
   <string name="error_reporting_choice">त्रुटि सूचक मोड</string>
   <string name="feedback_disclaimer">अस्वीकरण: हम कोई भी व्यक्तिगत जानकारी जैसे आपका ईमेल पता, फ़ोन नंबर, या अपने फोन IMEI इकट्ठा नहीं करते। हम आपके उपकरण की जानकारी इकट्ठा करते हैं जैसे निर्माता, मॉडल और एंड्रॉइड का संस्करण, और साथ ही सूचित त्रुटियाँ और उनके होने का कारण।</string>
   <string name="feedback_title">आपके सुझाव</string>

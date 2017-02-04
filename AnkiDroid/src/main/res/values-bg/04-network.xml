@@ -50,7 +50,6 @@
   <string name="connection_error_message">Възникна мрежова грешка.</string>
   <string name="not_logged_in_title">Влезте в AnkiWeb</string>
   <string name="login_create_account_message">Трябва да влезете като трето лице, за да използвате услугата за синхронизиране в облака. Можете да създадете един в следващия етап.</string>
-  <string name="no_email_client">Няма наличен имейл клиент</string>
   <!-- MyAccount.java -->
   <string name="username">Email адрес</string>
   <string name="username_repeat">Повторете email адрес</string>

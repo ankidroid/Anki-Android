@@ -50,7 +50,6 @@
   <string name="connection_error_message">Ocorreu um erro de rede.</string>
   <string name="not_logged_in_title">Iniciar sessão na AnkiWeb</string>
   <string name="login_create_account_message">Deve iniciar a sessão numa conta de terceiros para usar o serviço de sincronização da nuvem. Pode criar uma no passo seguinte.</string>
-  <string name="no_email_client">Nenhum cliente de e-mail disponível</string>
   <!-- MyAccount.java -->
   <string name="username">Endereço de correio eletrónico</string>
   <string name="username_repeat">Repita o endereço de correio eletrónico</string>
@@ -101,12 +100,12 @@
   <string name="sync_finish_message">A finalizar a sincronização&#8230;</string>
   <string name="sync_log_finish_error">Erro ao enviar a direção de destino ao servidor</string>
   <string name="sync_writing_db">A gravar as alterações na base de dados&#8230;</string>
-  <string name="sync_download_chunk">A transferir as alterações&#8230;</string>
+  <string name="sync_download_chunk">A descarregar as alterações&#8230;</string>
   <string name="sync_upload_chunk">A carregar as alterações&#8230;</string>
   <string name="sync_up_down_size">Enviar: %1$d kB, Receber: %2$d kB</string>
   <string name="sync_generic_error">Ocorreu um erro. Por favor, tente novamente mais tarde.</string>
   <string name="sync_check_upload_file">A verificar o ficheiro antes de carregar&#8230;</string>
-  <string name="sync_check_download_file">A verificar o ficheiro recebido&#8230;</string>
+  <string name="sync_check_download_file">A verificar o ficheiro descarregado&#8230;</string>
   <string name="sync_media_find">A procurar alterações em multimédia&#8230;</string>
   <string name="sync_media_no_changes">Sem mudanças nos ficheiros multimédia</string>
   <string name="sync_media_success">Multimédia sincronizada</string>

@@ -53,7 +53,7 @@
   <string name="studyoptions_eta">Tempo estimado (min):</string>
   <string name="studyoptions_start">Estudar</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Abrir</string>
+  <string name="expand">Expandir</string>
   <string name="collapse">Fechar</string>
   <string name="study_more">Estudar mais</string>
   <plurals name="deckpicker_title">
@@ -70,7 +70,7 @@
     <item quantity="other">%1$d cartões estudados em %2$s hoje</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
-  <string name="type_answer_hint">Digitar resposta</string>
+  <string name="type_answer_hint">Digite a resposta</string>
   <string name="show_answer">Mostrar resposta</string>
   <string name="ease_button_again">Novamente</string>
   <string name="ease_button_hard">Difícil</string>
@@ -80,7 +80,7 @@
   <string name="menu_import">Importar</string>
   <string name="undo">Desfazer</string>
   <string name="undo_action_review">última revisão</string>
-  <string name="undo_action_bury_card">desfazer ocultação da carta</string>
+  <string name="undo_action_bury_card">ocultar cartão</string>
   <string name="undo_action_bury_note">ocultar nota</string>
   <string name="undo_action_suspend_card">suspender cartão</string>
   <string name="undo_action_suspend_note">suspender nota</string>
@@ -91,7 +91,7 @@
   <string name="menu_add_note">Adicionar nota</string>
   <string name="menu_my_account">Sincronizar conta</string>
   <string name="menu_dismiss_note">Ocultar / excluir</string>
-  <string name="menu_bury_card">Enterrar cartão</string>
+  <string name="menu_bury_card">Ocultar cartão</string>
   <string name="menu_bury_note">Enterrar nota</string>
   <string name="menu_suspend_card">Suspender cartão</string>
   <string name="menu_suspend_note">Suspender nota</string>
@@ -125,7 +125,7 @@
   <string name="rebuild_cram_deck">Reconstruindo baralho de estudo intensivo&#8230;</string>
   <string name="rebuild_cram_label">Reconstruir</string>
   <string name="empty_cram_label">Esvaziar</string>
-  <string name="empty_cram_deck">A limpar o baralho de estudo intensivo&#8230;</string>
+  <string name="empty_cram_deck">Esvaziando baralho de estudo intensivo&#8230;</string>
   <string name="custom_study_deck_name">Sessão de estudo personalizado</string>
   <string name="custom_study_deck_exists">Por favor renomeie o baralho de estudo personalizado existente primeiro</string>
   <string name="empty_deck">Este baralho está vazio</string>
@@ -134,7 +134,7 @@
   <string name="studyoptions_empty_schedule">Sem cartões programados para estudar</string>
   <string name="studyoptions_congrats_finished">Parabéns! Você terminou por enquanto.</string>
   <string name="studyoptions_congrats_more_rev">O limite de hoje foi atingido, mas ainda existem cartões para serem revistos. Você pode aumentar o limite nas opções.</string>
-  <string name="studyoptions_congrats_more_new">Existem mais cartões novos disponíveis, mas o limite diário foi alcançado. Você pode aumentar o limite nas opções, mas por favor, tenha em mente que isso vai aumentar sua carga de trabalho de revisão a curto prazo.</string>
+  <string name="studyoptions_congrats_more_new">O limite de hoje foi atingido. Ainda existem novos cartões; você pode aumentar o limite nas opçòes, mas isso irá aumentar a sua carga de revisões a curto prazo.</string>
   <string name="studyoptions_congrats_custom">Para estudar fora do agendamento normal, toque no botão \"Estudo personalizado\".</string>
   <string name="studyoptions_no_cards_due">Nenhum cartão está programado por enquanto.</string>
   <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>

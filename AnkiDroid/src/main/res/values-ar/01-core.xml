@@ -40,29 +40,29 @@
 -->
 <resources>
   <!-- Navigation drawer items-->
-  <string name="decks">Decks</string>
+  <string name="decks">مجاميع</string>
   <string name="card_browser">متصفح البطاقات</string>
   <string name="statistics">إحصائيات</string>
   <string name="settings">إعدادات</string>
   <string name="help">مساعدة</string>
   <string name="send_feedback">ارسل رأيك</string>
-  <string name="studyoptions_title">Deck overview</string>
+  <string name="studyoptions_title">نظرة إجمالية على المجموعة</string>
   <string name="studyoptions_due_today">المستحق اليوم:</string>
   <string name="studyoptions_new_total">مجموع البطاقات الجديدة:</string>
   <string name="studyoptions_total_cards">مجموع البطاقات:</string>
   <string name="studyoptions_eta">الوقت المقدر (دقيقة):</string>
   <string name="studyoptions_start">دراسة</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Expand</string>
-  <string name="collapse">Collapse</string>
-  <string name="study_more">Study more</string>
+  <string name="expand">وَسِّعْ</string>
+  <string name="collapse">قَلِّصْ</string>
+  <string name="study_more">ادرس أكثر</string>
   <plurals name="deckpicker_title">
-    <item quantity="zero">%1$d cards due (%2$s)</item>
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="two">%1$d cards due (%2$s)</item>
-    <item quantity="few">%1$d cards due (%2$s)</item>
-    <item quantity="many">%1$d cards due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="zero">%1$d بطاقة مستحقة (%2$s)</item>
+    <item quantity="one">%1$d بطاقة مستحقة (%2$s)</item>
+    <item quantity="two">%1$d بطاقتان مستحقتان (%2$s)</item>
+    <item quantity="few">%1$d بطاقات مستحقة (%2$s)</item>
+    <item quantity="many">%1$d بطاقة مستحقة (%2$s)</item>
+    <item quantity="other">%1$d بطاقة مستحقة (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="zero">%d دقيقة متبقية</item>
@@ -74,12 +74,12 @@
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
-    <item quantity="zero">Studied %1$d cards in %2$s today</item>
-    <item quantity="one">Studied %1$d card in %2$s today</item>
-    <item quantity="two">Studied %1$d cards in %2$s today</item>
-    <item quantity="few">Studied %1$d cards in %2$s today</item>
-    <item quantity="many">Studied %1$d cards in %2$s today</item>
-    <item quantity="other">Studied %1$d cards in %2$s today</item>
+    <item quantity="zero">تم دراسة %1$d بطاقة خلال %2$s اليوم</item>
+    <item quantity="one">تم دراسة بطاقة واحدة خلال %2$s اليوم</item>
+    <item quantity="two">تم دراسة بطاقتين خلال %2$s اليوم</item>
+    <item quantity="few">تم دراسة %1$d بطاقة خلال %2$s اليوم</item>
+    <item quantity="many">تم دراسة %1$d بطاقة خلال %2$s اليوم</item>
+    <item quantity="other">تم دراسة %1$d بطاقة خلال %2$s اليوم</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">أدخل الإجابة</string>
@@ -92,34 +92,34 @@
   <string name="menu_import">استيراد</string>
   <string name="undo">تراجع</string>
   <string name="undo_action_review">آخر مراجعة</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
+  <string name="undo_action_bury_card">ادفن البطاقة</string>
+  <string name="undo_action_bury_note">ادفن الملاحظة</string>
   <string name="undo_action_suspend_card">علق البطاقة</string>
   <string name="undo_action_suspend_note">علق الملاحظة</string>
   <string name="undo_action_delete">احذف الملاحظة</string>
-  <string name="unbury">Unbury</string>
-  <string name="rename_deck">Rename deck</string>
+  <string name="unbury">إلغِ الدفن</string>
+  <string name="rename_deck">أعِد تسمية المجموعة</string>
   <string name="menu_add">اضافة</string>
   <string name="menu_add_note">إضافة ملاحظة</string>
   <string name="menu_my_account">حساب المزامنة</string>
-  <string name="menu_dismiss_note">Hide / delete</string>
-  <string name="menu_bury_card">Bury card</string>
+  <string name="menu_dismiss_note">اخفِ / احذف</string>
+  <string name="menu_bury_card">ادفن البطاقة</string>
   <string name="menu_bury_note">أخف الملاحظة</string>
   <string name="menu_suspend_card">علق البطاقة</string>
   <string name="menu_suspend_note">ملاحظة التعليق</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">ادفن</string>
+  <string name="menu_suspend">عَطِّل</string>
   <string name="menu_delete_note">ملاحظة الحذف</string>
   <string name="delete_note_message">هل تريد حقا حذف هذه الملاحظة و جميع بطاقاتها؟\n%s</string>
   <string name="menu_select">حدد نصا</string>
   <string name="menu_search">البحث في %1$s</string>
-  <string name="menu_mark_note">Mark note</string>
-  <string name="menu_unmark_note">Unmark note</string>
+  <string name="menu_mark_note">أشِّر الملاحظة</string>
+  <string name="menu_unmark_note">الغِ تأشير الملاحظة</string>
   <string name="new_deck">إنشاء داك</string>
   <string name="create">إنشاء</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="new_dynamic_deck">انشئ مجموعة مُفَلتَرة</string>
   <string name="night_mode">وضع ليلي</string>
-  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <string name="directory_inaccessible">لا يمكن الوصول لدليل آنكيدرويد</string>
   <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -140,32 +140,32 @@
   <string name="empty_cram_deck">إفراغ حزمة المراجعة المركزة.\n يرجى الانتظار...</string>
   <string name="custom_study_deck_name">دورة دراسية مخصصة</string>
   <string name="custom_study_deck_exists">الرجاء إعادة تسمية قاعدة الدراسة المخصصة الحالية اولاً.</string>
-  <string name="empty_deck">This deck is empty</string>
-  <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-  <string name="studyoptions_limit_reached">Daily study limit reached</string>
-  <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+  <string name="empty_deck">هذه المجموعة فارغة</string>
+  <string name="studyoptions_empty">هذه المجموعة فارغة. اضغط الزر + لاضافة محتوى جديد.</string>
+  <string name="studyoptions_limit_reached">تم الوصول لحد الدراسة اليومي</string>
+  <string name="studyoptions_empty_schedule">لا توجد بطاقات مُجَدْوَلة للدراسة</string>
   <string name="studyoptions_congrats_finished">تهانينا! لقد انتهيت لهذا الوقت.</string>
   <string name="studyoptions_congrats_more_rev">لقد بلغت حد المراجعة لهذا اليوم، ولكن لا زالت هناك بطاقات تنتظر المراجعة. للذاكرة المثلى، أعد التفكير في زيادة الحد اليومي من قائمة الخيارات.</string>
   <string name="studyoptions_congrats_more_new">هناك المزيد من البطاقات الجديدة المتاحة، ولكن وصلت إلى الحد الأقصى اليومي. يمكنك زيادة الحد الأقصى في الخيارات، ولكن يرجى أن تضع في الاعتبار أن ذلك سيزيد من عبء العمل الخاص بك للمراجعة قصيرة المدى.</string>
   <string name="studyoptions_congrats_custom">للدراسة خارج الجدول الزمني العادي، انقر فوق الزر \"مخصص الدراسة\" أدناه.</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet</string>
-  <string name="sd_card_not_mounted">Device storage not mounted</string>
+  <string name="studyoptions_no_cards_due">لا توجد بطاقات مستحقة بعد</string>
+  <string name="sd_card_not_mounted">تخزين الجهاز غير مُحَمَّل</string>
   <string name="button_sync">مزامنة</string>
-  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-  <string name="continue_sync">Continue sync</string>
-  <string name="sync_cancelled">Sync cancelled</string>
-  <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
+  <string name="cancel_sync_confirm">هل تود إلغاء المزامنة؟</string>
+  <string name="continue_sync">واصِل المزامنة</string>
+  <string name="sync_cancelled">المزامنة أُلغِيت</string>
+  <string name="sync_cancel_message">إلغاء&#8230;\nقد يستغرق الامر بعض الوقت.</string>
   <string name="export">تصدير</string>
-  <string name="export_collection">Export collection</string>
-  <string name="export_deck">Export deck</string>
+  <string name="export_collection">صَدِّر التجميعة</string>
+  <string name="export_deck">صَدِّرِ المجموعة</string>
   <string name="nothing">فارغ</string>
   <!-- Card template editor -->
-  <string name="title_activity_template_editor">Card types</string>
-  <string name="card_template_editor_front">Front template</string>
-  <string name="card_template_editor_back">Back template</string>
-  <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required</string>
+  <string name="title_activity_template_editor">أنواع البطاقة</string>
+  <string name="card_template_editor_front">قالب الجهة الامامية</string>
+  <string name="card_template_editor_back">قالب الجهة الخلفية</string>
+  <string name="card_template_editor_styling">النمط</string>
+  <string name="card_template_editor_menu_delete">احذف</string>
+  <string name="card_template_editor_cant_delete">مطلوب نوع بطاقة واحد على الأقل</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="zero">Delete the “%2$s” card type, and its %1$d cards?</item>
     <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>

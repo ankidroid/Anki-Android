@@ -50,7 +50,6 @@
   <string name="connection_error_message">Đã xảy ra lỗi mạng</string>
   <string name="not_logged_in_title">Đăng nhập AnkiWeb</string>
   <string name="login_create_account_message">Bạn phải đăng nhập tài khoản bên thứ ba để dùng dịch vụ đồng bộ đám mây. Bạn có thể tạo mới ở bước tiếp theo.</string>
-  <string name="no_email_client">Không có ứng dụng email nào</string>
   <!-- MyAccount.java -->
   <string name="username">Địa chỉ email</string>
   <string name="username_repeat">Lặp lại địa chỉ email</string>

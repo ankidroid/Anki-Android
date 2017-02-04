@@ -142,7 +142,7 @@
   <string name="cancel_sync_confirm">آیا می خواهید همگام سازی را متوقف کنید؟</string>
   <string name="continue_sync">ادامه همگام سازی</string>
   <string name="sync_cancelled">همگام سازی لغو شد</string>
-  <string name="sync_cancel_message">در حال لغو کردن...\nممکن اس کمی زمان بر باشد.</string>
+  <string name="sync_cancel_message">در حال لغو کردن...\nممکن است کمی زمان بر باشد.</string>
   <string name="export">صادر کردن</string>
   <string name="export_collection">صادر کردن مجموعه فلش کارتها</string>
   <string name="export_deck">صادر کردن دسته</string>

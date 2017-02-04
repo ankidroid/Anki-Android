@@ -161,9 +161,9 @@
   <string name="confirm_apkg_export">Exportera samling som APKG-fil?</string>
   <string name="confirm_apkg_export_deck">Exportera \"%s\" som APKG-fil?</string>
   <string name="export_in_progress">Exporterar APKG-fil&#8230;</string>
-  <string name="export_successful_title">Vill du skicka APKG-filen med epost?</string>
-  <string name="export_successful">Fil \"%s\" exporterades. Vill du skicka den med epost?</string>
-  <string name="export_email_subject">AnkiDroid exported collection</string>
+  <string name="export_successful_title">Send apkg?</string>
+  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
+  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
   <string name="export_email_text">
         <![CDATA[
         Hi!
@@ -220,4 +220,11 @@
   <string name="decks_rename_exists">Den kortleken existerar redan</string>
   <string name="decks_rename_filtered_nosubdecks">En filtrerad kortlek kan inte ha underkortlekar</string>
   <string name="filtered_deck_name">Filtrerad Kortlek</string>
+  <string name="reminder_title">Do not forget to study today!</string>
+  <plurals name="reminder_text">
+    <item quantity="one">%2$d new card to review in %1$s</item>
+    <item quantity="other">%2$d new cards to review in %1$s</item>
+  </plurals>
+  <!-- Currently only used if exporting APKG fails -->
+  <string name="apk_share_error">Error sharing apkg file</string>
 </resources>

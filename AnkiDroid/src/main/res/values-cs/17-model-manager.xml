@@ -57,7 +57,7 @@
   <string name="model_field_editor_options">Možnosti pole</string>
   <string name="model_field_editor_rename">Přejmenovat pole</string>
   <string name="model_field_editor_reposition_menu">Změna umístění pole</string>
-  <string name="model_field_editor_reposition" formatted="false">Změna umístění pole (zadejte hodnotu %1$d –%2$d)</string>
+  <string name="model_field_editor_reposition">Změna umístění pole (zadejte hodnotu %1$d –%2$d)</string>
   <string name="model_field_editor_changing">Aktualizace polí</string>
   <string name="model_field_editor_sort_field">Seřadit podle tohoto pole</string>
   <string name="model_clone_suffix">kopírovat</string>

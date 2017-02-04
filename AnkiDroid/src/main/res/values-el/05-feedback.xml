@@ -40,6 +40,7 @@
 -->
 <resources>
   <!-- Feedback.java -->
+  <string name="empty_string"></string>
   <string name="error_reporting_choice">Λειτουργία αναφοράς σφαλμάτων</string>
   <string name="feedback_disclaimer">Disclaimer: We don’t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
   <string name="feedback_title">Σχόλια</string>
