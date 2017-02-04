@@ -50,7 +50,6 @@
   <string name="connection_error_message">कोई नेटवर्क त्रुटि हुई</string>
   <string name="not_logged_in_title">AnkiWeb में लॉग इन करें</string>
   <string name="login_create_account_message">क्लाउड समकालन सेवा का उपयोग करने के लिए आपको किसी तीसरा पक्ष खाते में लॉग इन करना होगा। आप अगले चरण में खाता बना सकते हैं।</string>
-  <string name="no_email_client">कोई ईमेल ग्राहक उपलब्ध नहीं</string>
   <!-- MyAccount.java -->
   <string name="username">ईमेल पता</string>
   <string name="username_repeat">ईमेल पता दोहराएँ</string>

@@ -168,8 +168,8 @@
   <string name="confirm_apkg_export_deck">Izvozi \"%s\" kot datoteko apkg?</string>
   <string name="export_in_progress">Izvažanje datoteke apkg &#8230;</string>
   <string name="export_successful_title">Pošlji apkg?</string>
-  <string name="export_successful">Datoteka \"%s\" je bila izvožena. Ali jo želite poslati?</string>
-  <string name="export_email_subject">Izvožena zbirka AnkiDroid</string>
+  <string name="export_successful">Datoteka \"%s\" je bila izvožena. Ali jo želite poslati z drugim programom?</string>
+  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
   <string name="export_email_text">
         <![CDATA[
         Hi!
@@ -245,4 +245,6 @@
     <item quantity="few">%2$d nove kartice za pregled v %1$s</item>
     <item quantity="other">%2$d novih kartic za pregled v %1$s</item>
   </plurals>
+  <!-- Currently only used if exporting APKG fails -->
+  <string name="apk_share_error">Napaka pri deljenju datoteke apkg</string>
 </resources>

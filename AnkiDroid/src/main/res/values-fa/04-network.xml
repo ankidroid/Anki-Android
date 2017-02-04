@@ -50,7 +50,6 @@
   <string name="connection_error_message">خطاي شبكه رخ داده است.</string>
   <string name="not_logged_in_title">ورود به AnkiWeb</string>
   <string name="login_create_account_message">شما برای استفاده از خدمت همگام سازی ابری باید وارد حساب شخص ثالث شوید. در قدم بعدی شما می توانید آن را ایجاد کنید.</string>
-  <string name="no_email_client">هیچ نرم افزار ایمیل رسانی موجود نیست</string>
   <!-- MyAccount.java -->
   <string name="username">نشانی رایانامه</string>
   <string name="username_repeat">تکرار نشانی رایانامه</string>

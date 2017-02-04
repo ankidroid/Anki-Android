@@ -50,7 +50,6 @@
   <string name="connection_error_message">Ein Netzwerkfehler ist aufgetreten.</string>
   <string name="not_logged_in_title">Bei AnkiWeb einloggen</string>
   <string name="login_create_account_message">Sie müssen sich mit einem Anbieterkonto anmelden, um die Cloud-Synchronisierung verwenden zu können. Im nächsten Schritt können Sie ein Konto einrichten.</string>
-  <string name="no_email_client">Kein Email-Client verfügbar</string>
   <!-- MyAccount.java -->
   <string name="username">E-Mail-Adresse</string>
   <string name="username_repeat">E-Mail-Adresse wiederholen</string>

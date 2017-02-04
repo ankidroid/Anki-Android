@@ -71,7 +71,7 @@
   <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>سوال</item>
-    <item>Sort field</item>
+    <item>مرتب کردن فیلد</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>پاسخ</item>
@@ -161,9 +161,9 @@
   <string name="confirm_apkg_export">مجموعه فلش کارت ها با پسوند apkg صادر شوند؟</string>
   <string name="confirm_apkg_export_deck">دسته %s به عنوان یک فایل با پسوند apkg صادر شود؟</string>
   <string name="export_in_progress">در حال صادر کردن فایل apkg&#8230;</string>
-  <string name="export_successful_title">فایل apkg ایمیل شود؟</string>
-  <string name="export_successful">فایل \"%s\" صادر شد. می خواهید آن را ایمیل کنید؟</string>
-  <string name="export_email_subject">AnkiDroid مجموعه را صادر کرد</string>
+  <string name="export_successful_title">Send apkg?</string>
+  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
+  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
   <string name="export_email_text">
 <![CDATA[
         سلام!
@@ -220,9 +220,11 @@
   <string name="decks_rename_exists">این دسته از قبل وجود دارد</string>
   <string name="decks_rename_filtered_nosubdecks">دسته فیلتر شده نمی تواند زیر دسته داشته باشد</string>
   <string name="filtered_deck_name">دسته فیلتر شده</string>
-  <string name="reminder_title">Do not forget to study today!</string>
+  <string name="reminder_title">فراموش نکنید که امروز مطالعه کنید!</string>
   <plurals name="reminder_text">
-    <item quantity="one">%2$d new card to review in %1$s</item>
-    <item quantity="other">%2$d new cards to review in %1$s</item>
+    <item quantity="one">%2$d کارت جدید برای مرور در %1$s</item>
+    <item quantity="other">%2$d کارت جدید برای مرور در %1$s</item>
   </plurals>
+  <!-- Currently only used if exporting APKG fails -->
+  <string name="apk_share_error">Error sharing apkg file</string>
 </resources>

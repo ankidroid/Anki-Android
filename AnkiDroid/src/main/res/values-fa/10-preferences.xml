@@ -203,7 +203,7 @@
   <string name="deck_conf_rev_cards">مرورها</string>
   <string name="deck_conf_lps_cards">خطاها</string>
   <string name="deck_conf_general">عمومی</string>
-  <string name="deck_conf_reminders">Reminders</string>
+  <string name="deck_conf_reminders">یادآورها</string>
   <string name="deck_conf_steps">مراحل (در دقیقه)</string>
   <string name="deck_conf_order">دیگر</string>
   <string name="deck_conf_new_cards_day">کارتهای جدید/روز</string>
@@ -258,6 +258,6 @@
   <string name="deck_conf_cram_reschedule_summ">برنامه ریزی مجدد کارتها براساس جوابهای من در این دسته</string>
   <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
   <string name="deck_conf_cram_steps_summ">تعریف مراحل سفارشی</string>
-  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
-  <string name="deck_conf_reminders_time">Remind at</string>
+  <string name="deck_conf_reminders_enabled">فعال کردن اعلان های یادآوری برای این دسته</string>
+  <string name="deck_conf_reminders_time">یاد آوری در</string>
 </resources>

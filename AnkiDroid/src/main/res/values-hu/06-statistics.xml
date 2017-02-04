@@ -69,22 +69,22 @@
   <string formatted="false" name="stats_percentage_correct">% helyes</string>
   <string name="stats_reviews">Reviews</string>
   <string name="stats_answer_type">Válasz típusa</string>
-  <string name="stats_today_again_count">Again count: &lt;b&gt;%d&lt;/b&gt;</string>
-  <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correct)</string>
-  <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, review: &lt;b&gt;%2$s&lt;/b&gt;, relearn: &lt;b&gt;%3$s&lt;/b&gt;, filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
-  <string name="stats_today_mature_cards">Correct answers on mature cards: %1$d/%2$d (%3$.1f%%)</string>
+  <string name="stats_today_again_count">\"Újra\" válaszok száma &lt;b&gt;%d&lt;/b&gt;</string>
+  <string name="stats_today_correct_count">(az összes kártya &lt;b&gt;%.1f%%&lt;/b&gt;-ára \"Jó\" választ adtál)</string>
+  <string name="stats_today_type_breakdown">&lt;b&gt;%1$s&lt;/b&gt; új kártyát tanultál. Ismételtél &lt;b&gt;%2$s&lt;/b&gt;, újratanultál &lt;b&gt;%3$s&lt;/b&gt; és előre tanultál &lt;b&gt;%4$s&lt;/b&gt; kártyát.</string>
+  <string name="stats_today_mature_cards">%1$d bevésődött kártyából %2$d kártyára adtál helyes választ (ez %3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">No mature cards were studied today</string>
-  <string name="stats_overview_forecast_total">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
-  <string name="stats_overview_forecast_average">Average: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-  <string name="stats_overview_forecast_due_tomorrow">Due tomorrow: &lt;b&gt;%1$d&lt;/b&gt;</string>
-  <string name="stats_overview_days_studied">Days studied: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
-  <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt; reviews</string>
-  <string name="stats_overview_reviews_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-  <string name="stats_overview_reviews_per_day_all">If you studied every day: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-  <string name="stats_overview_time_per_day_studydays">Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day</string>
-  <string name="stats_overview_time_per_day_all">If you studied every day:  &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day</string>
-  <string name="stats_overview_new_cards_per_day">Average: &lt;b&gt;%1$.1f&lt;/b&gt; cards/day</string>
-  <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt; cards</string>
+  <string name="stats_overview_forecast_total">Összesen &lt;b&gt;%1$d&lt;/b&gt; kártyát ismételtél</string>
+  <string name="stats_overview_forecast_average">Ez átlagosan &lt;b&gt;%1$.1f&lt;/b&gt; ismétlés naponta</string>
+  <string name="stats_overview_forecast_due_tomorrow">Holnap &lt;b&gt;%1$d&lt;/b&gt; kártya esedékes</string>
+  <string name="stats_overview_days_studied">%3$d napból %2$d napot tanultál (ez &lt;b&gt;%1$d%%&lt;/b&gt;)</string>
+  <string name="stats_overview_total_reviews">Összesen &lt;b&gt;%1$d&lt;/b&gt; kártyát ismételtél</string>
+  <string name="stats_overview_reviews_per_day_studydays">A tanulással töltött napokon napi &lt;b&gt;%1$.1f&lt;/b&gt; kártyát tanultál</string>
+  <string name="stats_overview_reviews_per_day_all">Naponkénti tanulással &lt;b&gt;%1$.1f&lt;/b&gt; kártya jutott volna 1 napra</string>
+  <string name="stats_overview_time_per_day_studydays">A tanulással töltött napokon napi &lt;b&gt;%1$.1f&lt;/b&gt; percet tanultál</string>
+  <string name="stats_overview_time_per_day_all">Naponkénti tanulással &lt;b&gt;%1$.1f&lt;/b&gt; percet kellett volna tanulnod</string>
+  <string name="stats_overview_new_cards_per_day">Naponként átlagosan &lt;b&gt;%1$.1f&lt;/b&gt; új kártya</string>
+  <string name="stats_overview_total_new_cards">Összesen &lt;b&gt;%1$d&lt;/b&gt; kártya</string>
   <string name="stats_overview_average_interval">"Average interval: "</string>
   <string name="stats_overview_longest_interval">"Longest interval: "</string>
   <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; years</string>
@@ -101,9 +101,9 @@
   <string name="stats_today">Ma</string>
   <string name="stats_overview">Overview</string>
   <string name="stats_forecast">Előrejelzés</string>
-  <string name="stats_review_count">Átnézés számláló</string>
-  <string name="stats_review_time">Átnézési idő</string>
-  <string name="stats_added">Added</string>
+  <string name="stats_review_count">Ismétlések száma</string>
+  <string name="stats_review_time">Tanulással töltött idő</string>
+  <string name="stats_added">Hozzáadott új kártyák</string>
   <string name="stats_review_intervals">Intervals</string>
   <string name="stats_breakdown">Hourly breakdown</string>
   <string name="stats_weekly_breakdown">Weekly breakdown</string>
@@ -139,7 +139,7 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today</item>
-    <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today</item>
+    <item quantity="one">Ma &lt;b&gt;%1$d kártyát&lt;/b&gt; tanultál &lt;b&gt;%2$s&lt;/b&gt; alatt</item>
+    <item quantity="other">Ma &lt;b&gt;%1$d kártyát&lt;/b&gt; tanultál &lt;b&gt;%2$s&lt;/b&gt; alatt</item>
   </plurals>
 </resources>

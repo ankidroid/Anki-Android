@@ -50,7 +50,6 @@
   <string name="connection_error_message">Vyskytla sa chyba siete.</string>
   <string name="not_logged_in_title">Prihlásiť sa do AnkiWeb</string>
   <string name="login_create_account_message">Musíte sa prihlásiť na účet tretej strany, ak chcete použiť synchronizáciu. Takýto účet vytvoríte v nasledujúcom kroku.</string>
-  <string name="no_email_client">Žiadny emailový klient nie je k dispozícii</string>
   <!-- MyAccount.java -->
   <string name="username">E-mailová adresa</string>
   <string name="username_repeat">Zopakovať e-mailovú adresu</string>

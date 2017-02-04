@@ -50,7 +50,6 @@
   <string name="connection_error_message">Ocorreu um erro de rede.</string>
   <string name="not_logged_in_title">Iniciar sessão na AnkiWeb</string>
   <string name="login_create_account_message">Deve iniciar a sessão numa conta de terceiros para usar o serviço de sincronização da nuvem. Pode criar uma no passo seguinte.</string>
-  <string name="no_email_client">Nenhum cliente de e-mail disponível</string>
   <!-- MyAccount.java -->
   <string name="username">Endereço de correio eletrónico</string>
   <string name="username_repeat">Repita o endereço de correio eletrónico</string>

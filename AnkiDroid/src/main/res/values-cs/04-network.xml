@@ -50,7 +50,6 @@
   <string name="connection_error_message">Došlo k síťové chybě.</string>
   <string name="not_logged_in_title">Přihlasit se k AnkiWeb</string>
   <string name="login_create_account_message">Musíte se přihlásit ke svému účtu AnkiWeb, abyste mohli sychronizovat svá data v cloudu. Účet můžete vytvořit v dalším kroku.</string>
-  <string name="no_email_client">Žádný e-mailový klient není k dispozici</string>
   <!-- MyAccount.java -->
   <string name="username">Emailová adresa</string>
   <string name="username_repeat">Zopakujte e-mailovou adresu</string>

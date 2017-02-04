@@ -161,9 +161,9 @@
   <string name="confirm_apkg_export">Exportar a coleção como arquivo apkg?</string>
   <string name="confirm_apkg_export_deck">Exportar \"%s\" como arquivo apkg?</string>
   <string name="export_in_progress">Exportando arquivo apkg...</string>
-  <string name="export_successful_title">E-mail apkg?</string>
-  <string name="export_successful">Arquivo \"%s\" foi exportado. Você quer enviar um e-mail?</string>
-  <string name="export_email_subject">Coleção exportada do AnkiDroid</string>
+  <string name="export_successful_title">Send apkg?</string>
+  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
+  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
   <string name="export_email_text">
 <![CDATA[
          Olá!
@@ -225,4 +225,6 @@
     <item quantity="one">%2$d novo cartão para rever em %1$s</item>
     <item quantity="other">%2$d novos cartões para rever em %1$s</item>
   </plurals>
+  <!-- Currently only used if exporting APKG fails -->
+  <string name="apk_share_error">Error sharing apkg file</string>
 </resources>
