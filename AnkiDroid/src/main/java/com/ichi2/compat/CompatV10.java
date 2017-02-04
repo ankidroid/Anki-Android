@@ -25,11 +25,14 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.Preferences;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ReadText;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
+
+import java.io.File;
 
 import io.requery.android.database.sqlite.SQLiteDatabase;
 import timber.log.Timber;
@@ -195,5 +198,17 @@ public class CompatV10 implements Compat {
     @Override
     public boolean isImmersiveSystemUiVisible(AnkiActivity activity) {
         return false;   // Immersive mode introduced in KitKat
+    }
+
+    @Override
+    public File getExportPath(Context context) {
+        // Fall back on direct file sharing via external storage on older versions of Android
+        File colPath = new File(CollectionHelper.getCollectionPath(context));
+        return new File(colPath.getParent(), "export");
+    }
+
+    @Override
+    public Uri getExportUri(Context context, File file) {
+        return Uri.fromFile(file);
     }
 }

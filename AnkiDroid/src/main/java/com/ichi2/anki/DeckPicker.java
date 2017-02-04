@@ -43,7 +43,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ShareCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -1616,9 +1615,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public void exportApkg(String filename, Long did, boolean includeSched, boolean includeMedia) {
-        // get export path from internal storage
-        File colPath = new File(getCol().getPath());
-        File exportDir = new File(getFilesDir(), "export");
+        // get export path
+        File exportDir = CompatHelper.getCompat().getExportPath(this);
         exportDir.mkdirs();
         File exportPath;
         if (filename != null) {
@@ -1636,6 +1634,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             exportPath = new File(exportDir, "All Decks.apkg");
         } else {
             // full collection export -- use "collection.apkg"
+            File colPath = new File(getCol().getPath());
             exportPath = new File(exportDir, colPath.getName().replace(".anki2", ".apkg"));
         }
         // add input arguments to new generic structure
@@ -1660,19 +1659,18 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Get a URI for the file to be shared via the FileProvider API
         Uri uri;
         try {
-            uri = FileProvider.getUriForFile(DeckPicker.this, "com.ichi2.anki.apkgfileprovider", attachment);
+            uri = CompatHelper.getCompat().getExportUri(DeckPicker.this, attachment);
         } catch (IllegalArgumentException e) {
             Timber.e("Could not generate a valid URI for the apkg file");
             UIUtils.showThemedToast(this, getResources().getString(R.string.apk_share_error), false);
             return;
         }
         Intent shareIntent = ShareCompat.IntentBuilder.from(DeckPicker.this)
-                .setType("text/html")
+                .setType("application/apkg")
                 .setStream(uri)
-                .setSubject(getString(R.string.export_email_subject))
+                .setSubject(getString(R.string.export_email_subject, attachment.getName()))
                 .setHtmlText(getString(R.string.export_email_text))
                 .getIntent();
-        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         if (shareIntent.resolveActivity(getPackageManager()) != null) {
             startActivityWithoutAnimation(shareIntent);
         } else {
