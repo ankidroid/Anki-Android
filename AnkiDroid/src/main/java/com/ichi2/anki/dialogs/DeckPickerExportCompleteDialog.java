@@ -49,13 +49,18 @@ public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
                         File exportFile = new File(exportPath);
                         File colPath = new File(CollectionHelper.getCollectionPath(getContext())).getParentFile();
                         File newExportFile = new File(new File(colPath, "export"), exportFile.getName());
-                        newExportFile.mkdirs();
-                        if (!Files.move(exportFile, newExportFile)) {
-                            Timber.e("Could not move exported apkg file to external storage");
-                            UIUtils.showThemedToast(getContext(), getResources().getString(R.string.apk_share_error), false);
-                        } else {
-                            UIUtils.showThemedToast(getContext(), newExportFile.getAbsolutePath(), false);
+                        // Older Android versions write directly to external storage, so check paths not identical before moving
+                        if (!exportFile.equals(newExportFile)) {
+                            if (!Files.move(exportFile, newExportFile)) {
+                                // Show an error message if the file could not be moved
+                                Timber.e("Could not move exported apkg file to external storage");
+                                UIUtils.showThemedToast(getContext(), getResources().getString(R.string.export_unsuccessful), false);
+                                ((DeckPicker) getActivity()).dismissAllDialogFragments();
+                                return;
+                            }
+                            Timber.i("Moved file %s to %s", exportFile.getAbsolutePath(), newExportFile.getAbsolutePath());
                         }
+                        UIUtils.showThemedToast(getContext(), newExportFile.getAbsolutePath(), false);
                         ((DeckPicker) getActivity()).dismissAllDialogFragments();
                     }
                 })
