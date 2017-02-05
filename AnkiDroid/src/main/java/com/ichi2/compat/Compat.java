@@ -71,7 +71,7 @@ public interface Compat {
     void setStatusBarColor(Window window, int color);
     /** Returns true if the system UI currently visible during immersive mode */
     boolean isImmersiveSystemUiVisible(AnkiActivity activity);
-    File getExportPath(Context context);
+    boolean deleteDatabase(File db);
     Uri getExportUri(Context context, File file);
 }
 

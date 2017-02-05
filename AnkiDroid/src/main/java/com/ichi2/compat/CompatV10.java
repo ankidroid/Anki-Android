@@ -201,10 +201,8 @@ public class CompatV10 implements Compat {
     }
 
     @Override
-    public File getExportPath(Context context) {
-        // Fall back on direct file sharing via external storage on older versions of Android
-        File colPath = new File(CollectionHelper.getCollectionPath(context));
-        return new File(colPath.getParent(), "export");
+    public boolean deleteDatabase(File db) {
+        return db.delete();
     }
 
     @Override
