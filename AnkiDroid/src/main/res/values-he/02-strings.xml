@@ -178,7 +178,7 @@
         Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
         ]]>
     </string>
-  <string name="export_unsuccessful">שגיאה במהלך ייצוא של האוסף</string>
+  <string name="export_unsuccessful">Error exporting apkg file</string>
   <string name="import_hint">מקם את קובץ הapkg בתקייה %s ולחץ על \"אשר\" ליבוא הכרטסיות</string>
   <string name="upgrade_import_no_file_found">לא נמצא קובץ %1$s הניתן ליבוא</string>
   <string name="study_options">אפשרויות החפיסה</string>

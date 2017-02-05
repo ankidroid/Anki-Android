@@ -175,7 +175,7 @@
         Spróbuj ją otworzyć używając jednej z dostępnych <a href="http://ankisrs.net/#download">wersji Anki</a> i ciesz się łatwą i efektywną nauką!
         ]]>
     </string>
-  <string name="export_unsuccessful">Błąd podczas eksportowania kolekcji</string>
+  <string name="export_unsuccessful">Error exporting apkg file</string>
   <string name="import_hint">Aby zaimportować karty, umieść plik apkg w katalogu %s i naciśnij ok</string>
   <string name="upgrade_import_no_file_found">Nie znaleziono żadnych plików do zaimportowania (%1$s)</string>
   <string name="study_options">Opcje talii</string>

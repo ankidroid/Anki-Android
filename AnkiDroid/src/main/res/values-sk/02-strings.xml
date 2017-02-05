@@ -174,7 +174,7 @@
         Toto je Anki balíček kariet odoslaný z <a href="https://ankidroid.org/docs/manual.html">AnkiDroid webstránky</a>.
         Vyskúšajte ho otvoriť za pomocou jednej z nasledovných <a href="http://ankisrs.net/#download">Anki distribúcií</a> a vychutnajte si tak jednoduché a efektívne učenie!
         ]]>    </string>
-  <string name="export_unsuccessful">Pri exportovaní kolekcie sa vyskytla chyba</string>
+  <string name="export_unsuccessful">Error exporting apkg file</string>
   <string name="import_hint">Ak chcete importovať kartičky, umiestnite súbor apkg do adresára %s a stlačte ok</string>
   <string name="upgrade_import_no_file_found">Žiaden importovateľný %1$s súbor nebol nájdený</string>
   <string name="study_options">Nastavenia balíčka</string>

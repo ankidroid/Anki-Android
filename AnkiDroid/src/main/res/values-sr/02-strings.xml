@@ -175,7 +175,7 @@
         Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
         ]]>
     </string>
-  <string name="export_unsuccessful">Грешка у извозу колекције.</string>
+  <string name="export_unsuccessful">Error exporting apkg file</string>
   <string name="import_hint">Да бисте увезли картице, ставите датотеке apkg у фасциклу %s и кликните ОК</string>
   <string name="upgrade_import_no_file_found">Пронађена је неувезена датотека %1$s</string>
   <string name="study_options">Опције шпила</string>

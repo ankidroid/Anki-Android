@@ -172,7 +172,7 @@
         Avaa se käyttämällä jotain olemassa olevaa <a href="http://ankisrs.net/#download">Anki -sovellusta</a> ja nauti helposta ja tehokkaasta opiskelusta!
         ]]>
     </string>
-  <string name="export_unsuccessful">Virhe kokoelmaa tallennettaessa</string>
+  <string name="export_unsuccessful">Error exporting apkg file</string>
   <string name="import_hint">Tuodaksesi kortteja aseta apkg-tiedosto hakemistoon %s ja paina Ok-painiketta</string>
   <string name="upgrade_import_no_file_found">Tuotavaa tiedostoa %1$s ei löytynyt</string>
   <string name="study_options">Pakan asetukset</string>

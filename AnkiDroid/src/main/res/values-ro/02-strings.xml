@@ -175,7 +175,7 @@
         Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
         ]]>
     </string>
-  <string name="export_unsuccessful">Error exporting collection</string>
+  <string name="export_unsuccessful">Error exporting apkg file</string>
   <string name="import_hint">Pentru a importa cărţi, plasaţi fişierul apkg in directorul %s şi apăsaţi ok</string>
   <string name="upgrade_import_no_file_found">Nici un fișier importabil %1$s gasit</string>
   <string name="study_options">Deck options</string>

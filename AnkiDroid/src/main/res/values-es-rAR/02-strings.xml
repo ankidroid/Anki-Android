@@ -172,7 +172,7 @@
         ¡Intenta abrirlo usando una de las distribuciones disponibles de Anki <a href="http://ankisrs.net/#download"> y disfruta de un sencillo y eficiente aprendizaje!
         ]]>
     </string>
-  <string name="export_unsuccessful">Error al exportar colección</string>
+  <string name="export_unsuccessful">Error exporting apkg file</string>
   <string name="import_hint">Para importar tarjetas coloque el archivo apkg en el directorio %s y presione OK</string>
   <string name="upgrade_import_no_file_found">No se ha hallado archivos %1$s para importar</string>
   <string name="study_options">Opciones de mazo</string>

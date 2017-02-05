@@ -172,7 +172,7 @@
         Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
         ]]>
     </string>
-  <string name="export_unsuccessful">Hiba exportálás közben</string>
+  <string name="export_unsuccessful">Error exporting apkg file</string>
   <string name="import_hint">Kártyák importálásához helyezd az apkg fájlt a %s könyvtárba és nyomd meg az OK gombot</string>
   <string name="upgrade_import_no_file_found">Nem importálható %1$s fájlt található</string>
   <string name="study_options">Pakli beállítások</string>

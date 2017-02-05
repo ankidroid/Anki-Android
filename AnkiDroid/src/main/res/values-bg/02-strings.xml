@@ -172,7 +172,7 @@
         Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
         ]]>
     </string>
-  <string name="export_unsuccessful">Грешка при експортиране на колекцията</string>
+  <string name="export_unsuccessful">Error exporting apkg file</string>
   <string name="import_hint">Поставете apkg файла в директорията \"%s\" и докоснете \"OK\", за да импортирате карти</string>
   <string name="upgrade_import_no_file_found">Открит е файл %1$s, който не може да се импортира</string>
   <string name="study_options">Опции за тестето</string>

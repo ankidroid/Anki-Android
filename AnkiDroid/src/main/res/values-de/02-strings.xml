@@ -172,7 +172,7 @@
         Versuche es mit einer der verfügbaren <a href="http://ankisrs.net/#download">Anki-Distributionen</a> zu öffnen und genieße einfaches und effektives Lernen!
         ]]>
     </string>
-  <string name="export_unsuccessful">Fehler beim Exportieren der Sammlung</string>
+  <string name="export_unsuccessful">Error exporting apkg file</string>
   <string name="import_hint">Kopieren Sie die apkg-Datei ins Verzeichnis »%s« und berühren Sie »OK«, um Karten zu importieren</string>
   <string name="upgrade_import_no_file_found">Keine importierbare Datei %1$s gefunden</string>
   <string name="study_options">Stapeloptionen</string>

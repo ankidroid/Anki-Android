@@ -175,7 +175,7 @@
         Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
         ]]>
     </string>
-  <string name="export_unsuccessful">Помилка експортування колекції</string>
+  <string name="export_unsuccessful">Error exporting apkg file</string>
   <string name="import_hint">Щоб імпортувати карти, помістіть apkg файл в каталог %s і натисніть кнопку ok</string>
   <string name="upgrade_import_no_file_found">Ввізного файлу %1$s не знайдено</string>
   <string name="study_options">Параметри колоди</string>

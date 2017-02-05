@@ -175,7 +175,7 @@
        Установите на компьютер приложение <a href="http://ankisrs.net/#download">Anki</a>, чтобы открыть эту колоду и наслаждаться легким и эффективным обучением!
         ]]>
     </string>
-  <string name="export_unsuccessful">Ошибка при экспорте коллекции</string>
+  <string name="export_unsuccessful">Error exporting apkg file</string>
   <string name="import_hint">Чтобы импортировать карты, поместите файл apkg в каталог %s и нажмите «ОК»</string>
   <string name="upgrade_import_no_file_found">Найден неимпортируемый файл %1$s</string>
   <string name="study_options">Опции колоды</string>
