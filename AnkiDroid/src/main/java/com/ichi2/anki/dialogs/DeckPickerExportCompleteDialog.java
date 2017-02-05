@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.os.Message;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
+
+import java.io.File;
 
 public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
     
@@ -50,7 +53,14 @@ public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
 
 
     public String getNotificationMessage() {
-        return res().getString(R.string.export_successful, getArguments().getString("exportPath"));
+        if (CollectionHelper.getCurrentAnkiDroidDirectory(getContext()).equals(CollectionHelper.getDefaultAnkiDroidDirectory())) {
+            // Show a relative path if the collection is stored in the default location
+            File exportFile = new File("AnkiDroid/export/", new File(getArguments().getString("exportPath")).getName());
+            return res().getString(R.string.export_successful, exportFile.getPath());
+        } else {
+            // Show the absolute path if the user has messed with the AnkiDroid directory
+            return res().getString(R.string.export_successful, getArguments().getString("exportPath"));
+        }
     }
 
 
