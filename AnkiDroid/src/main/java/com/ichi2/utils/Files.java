@@ -16,8 +16,8 @@ public class Files {
             Timber.e("%s is not a file", file.getAbsolutePath());
             return false;
         }
-        if (!outfile.isFile()) {
-            Timber.e("%s is not a file", outfile.getAbsolutePath());
+        if (!outfile.getParentFile().exists() && !outfile.getParentFile().mkdirs() || !outfile.getParentFile().isDirectory()) {
+            Timber.e("Could not access directory: %s", outfile.getAbsolutePath());
             return false;
         }
 
