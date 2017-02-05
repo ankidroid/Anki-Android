@@ -169,7 +169,7 @@
   <string name="export_in_progress">Izvažanje datoteke apkg &#8230;</string>
   <string name="export_successful_title">Pošlji apkg?</string>
   <string name="export_successful">Datoteka \"%s\" je bila izvožena. Ali jo želite poslati z drugim programom?</string>
-  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+  <string name="export_email_subject">Izvožene pomnilne kartice AnkiDroid: %s</string>
   <string name="export_email_text">
         <![CDATA[
         Hi!

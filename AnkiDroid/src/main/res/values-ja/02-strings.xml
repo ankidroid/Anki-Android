@@ -156,11 +156,11 @@
   <string name="export_include_schedule">スケジュールを含める</string>
   <string name="export_include_media">メディアファイルを含める</string>
   <string name="confirm_apkg_export">コレクション（全デッキ）を anki形式のファイル \"collection.apkg\" としてエクスポートします。よろしいですか？</string>
-  <string name="confirm_apkg_export_deck">\"%s\" を apkgファイルとしてエクスポートしますか？</string>
+  <string name="confirm_apkg_export_deck">デッキ \"%s\" のデータが入ったAnki用ファイル（*.apkg）を作成します。よろしいですか？</string>
   <string name="export_in_progress">apkgファイルをエクスポートしています...</string>
-  <string name="export_successful_title">Send apkg?</string>
-  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+  <string name="export_successful_title">このファイルを送信しますか？</string>
+  <string name="export_successful">\"%s\" が保存されました。このファイルを他のアプリで送信しますか？</string>
+  <string name="export_email_subject">AnkiDroidがフラッシュカードを送信しました: %s</string>
   <string name="export_email_text">
 <![CDATA[
 こんにちは！
@@ -215,5 +215,5 @@
     <item quantity="other">課題: %2$d枚 （%1$s）</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->
-  <string name="apk_share_error">Error sharing apkg file</string>
+  <string name="apk_share_error">Anki用ファイル（*.apkg）の送信がキャンセルされました</string>
 </resources>
