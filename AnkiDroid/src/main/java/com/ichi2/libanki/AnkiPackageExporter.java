@@ -18,6 +18,8 @@ package com.ichi2.libanki;
 
 import android.content.Context;
 
+import com.ichi2.compat.CompatHelper;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -372,11 +374,8 @@ public final class AnkiPackageExporter extends AnkiExporter {
             }
         }
         // tidy up intermediate files
-        new File(colfile).delete();
-        String p = path.replace(".apkg", ".media.ad.db2");
-        if (new File(p).exists()) {
-            new File(p).delete();
-        }
+        CompatHelper.getCompat().deleteDatabase(new File(colfile));
+        CompatHelper.getCompat().deleteDatabase(new File(path.replace(".apkg", ".media.ad.db2")));
         String tempPath = path.replace(".apkg", ".media");
         File file = new File(tempPath);
         if (file.exists()) {

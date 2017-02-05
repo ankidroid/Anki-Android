@@ -91,9 +91,8 @@ public class CompatV16 extends CompatV15 implements Compat {
     }
 
     @Override
-    public File getExportPath(Context context) {
-        // Use internal storage on newer versions of Android so that we can send with the FileProvider
-        return new File(context.getFilesDir(), "export");
+    public boolean deleteDatabase(File db) {
+        return SQLiteDatabase.deleteDatabase(db);
     }
 
     @Override
