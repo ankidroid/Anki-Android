@@ -168,7 +168,7 @@
 これは、<a href="https://ankidroid.org/docs/manual.html"> AnkiDroid</a> から送信された、Anki用フラッシュカードデッキです。
 <a href="http://ankisrs.net/#download">こちら</a>であなたの端末機器に対応したAnki用ソフトをインストールしてこのデッキを開き、簡単で効率的な学習をお楽しみください！
 ]]>    </string>
-  <string name="export_unsuccessful">Error exporting apkg file</string>
+  <string name="export_unsuccessful">Ankiファイルのエクスポートエラー</string>
   <string name="import_hint">取り込みたいデッキまたはコレクション（全デッキ）のファイル（*. apkg）をあらかじめ \"%s\" に保存した後、この画面で「OK」ボタンをタップしてください。</string>
   <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>
   <string name="study_options">デッキ オプション</string>
