@@ -79,7 +79,7 @@ We realize that this is quite unintuitive for new users, but unfortunately this 
 See the [AnkiDroid user manual](http://ankidroid.org/manual.html#typeInAnswer)
 
 ### My AnkiDroid files are stored on a SD card, how can I point AnkiDroid to them?
-External SD cards are not officially supported by AnkiDroid, and we highly recommend using the storage built into your device. If you really must use an external SD card, please see [this issue on github](https://github.com/ankidroid/Anki-Android/issues/3106).
+External SD cards are not officially supported by AnkiDroid, and we highly recommend using the storage built into your device. If you really must use an external SD card, [this workaround](https://groups.google.com/forum/#!topic/anki-android/Eu7AXSQa6Es) may work for you. Also see [this issue on github](https://github.com/ankidroid/Anki-Android/issues/3106).
 
 ### How do I make changes to my collection with Anki Desktop?
 See the [AnkiDroid user manual](http://ankidroid.org/manual.html#AnkiDesktop)
