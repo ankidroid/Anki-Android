@@ -260,8 +260,12 @@ public class Sound {
             MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
             for (String uri_string : mSoundPaths.get(qa)) {
                 Uri soundUri = Uri.parse(uri_string);
-                metaRetriever.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(), soundUri);
-                length += Long.parseLong(metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+                try {
+                    metaRetriever.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(), soundUri);
+                    length += Long.parseLong(metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+                } catch (IllegalArgumentException iae) {
+                    Timber.e(iae, "metaRetriever - Error setting Data Source for mediaRetriever (media doesn't exist).");
+                }
             }
         }
         return length;
