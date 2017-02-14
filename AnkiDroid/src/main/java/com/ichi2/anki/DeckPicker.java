@@ -1094,7 +1094,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             Resources res = AnkiDroidApp.getAppResources();
             showSimpleNotification(res.getString(R.string.app_name), res.getString(messageResource));
         } else {
-            if (syncMessage.length() == 0) {
+            if (syncMessage == null || syncMessage.length() == 0) {
                 UIUtils.showSimpleSnackbar(this, messageResource, false);
             } else {
                 Resources res = AnkiDroidApp.getAppResources();
