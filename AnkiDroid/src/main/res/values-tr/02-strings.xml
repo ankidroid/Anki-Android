@@ -171,7 +171,7 @@
         Bu, <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>\'den gönderilmiş bir bilgi kartı destesidir.
         İndirdikten sonra mevcut <a href="http://ankisrs.net/#download">Anki dağıtımları</a>nın biriyle açıp kolay ve verimli öğrenmenin tadını çıkarın!        ]]>
     </string>
-  <string name="export_unsuccessful">Error exporting apkg file</string>
+  <string name="export_unsuccessful">Apkg dosyasını kaydederken hata</string>
   <string name="import_hint">İçeri kart aktarmak için, apkg dosyasını %s dizinine yerleştirip Tamam\'a basın</string>
   <string name="upgrade_import_no_file_found">İçeri aktarılabilir %1$s dosyası bulunmuyor</string>
   <string name="study_options">Deste seçenekleri</string>

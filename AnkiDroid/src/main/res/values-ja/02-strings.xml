@@ -160,7 +160,7 @@
   <string name="export_in_progress">apkgファイルをエクスポートしています...</string>
   <string name="export_successful_title">このファイルを送信しますか？</string>
   <string name="export_successful">\"%s\" が保存されました。このファイルを他のアプリで送信しますか？</string>
-  <string name="export_email_subject">AnkiDroidがフラッシュカードを送信しました: %s</string>
+  <string name="export_email_subject">[AnkiDroid] %s</string>
   <string name="export_email_text">
 <![CDATA[
 こんにちは！

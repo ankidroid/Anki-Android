@@ -161,9 +161,9 @@
   <string name="confirm_apkg_export">Esporta collezione come file apkg?</string>
   <string name="confirm_apkg_export_deck">Esporta \"%s\" come file apkg?</string>
   <string name="export_in_progress">Esporto il file apkg&#8230;</string>
-  <string name="export_successful_title">Send apkg?</string>
-  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+  <string name="export_successful_title">Inviare apkg?</string>
+  <string name="export_successful">Il file \"%s\" è stato esportato. Vuoi inviarlo con un\'altra app?</string>
+  <string name="export_email_subject">AnkiDroid ha esportato le carte: %s</string>
   <string name="export_email_text">
         <![CDATA[
         Ciao!
@@ -172,7 +172,7 @@
         Prova ad aprirlo utilizzando una delle <a href="http://ankisrs.net/#download">distribuzioni Anki</a> disponibili ed approfitta di un metodo di studio facile ed efficiente!
         ]]>
     </string>
-  <string name="export_unsuccessful">Error exporting apkg file</string>
+  <string name="export_unsuccessful">Errore nell\'esportazione del file apkg</string>
   <string name="import_hint">Per importare carte, inserisci il file apkg nella cartella %s e premi ok</string>
   <string name="upgrade_import_no_file_found">Nessun file importabile %1$s trovato</string>
   <string name="study_options">Opzioni del mazzo</string>
@@ -226,5 +226,5 @@
     <item quantity="other">%2$d nuove carte da studiare in %1$s</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->
-  <string name="apk_share_error">Error sharing apkg file</string>
+  <string name="apk_share_error">Errore nella condivisione del file apkg</string>
 </resources>
