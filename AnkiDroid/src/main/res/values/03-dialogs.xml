@@ -23,6 +23,7 @@
     <string name="check_db_acknowledge">Database checked</string>
     <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Delete deck</string>
+    <string name="contextmenu_deckpicker_reset_deck_languages">Reset deck languages</string>
     <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
     <string name="delete_deck_title">Delete deck?</string>
     <plurals name="delete_deck_message">

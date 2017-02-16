@@ -2148,6 +2148,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 new DeckTask.TaskData(mFragmented));
     }
 
+    /**
+     * Reset all language data for this deck.
+     */
+    public void resetDeckLanguages() {
+        MetaDB.resetDeckLanguages(this, mContextMenuDid);
+    }
+
     @Override
     public void onAttachedToWindow() {
 
