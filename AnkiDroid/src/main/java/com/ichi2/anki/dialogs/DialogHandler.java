@@ -8,6 +8,7 @@ import android.os.Message;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.async.Connection;
@@ -87,13 +88,15 @@ public class DialogHandler extends Handler {
             ((DeckPicker) mActivity.get()).showDatabaseErrorDialog(msgData.getInt("dialogType"));
         } else if (msg.what == MSG_SHOW_FORCE_FULL_SYNC_DIALOG) {
             // Confirmation dialog for forcing full sync
-            ConfirmationDialog dialog = new ConfirmationDialog () {
+            ConfirmationDialog dialog = new ConfirmationDialog ();
+            Runnable confirm = new Runnable() {
                 @Override
-                public void confirm() {
+                public void run() {
                     // Bypass the check once the user confirms
-                    ((AnkiActivity) getActivity()).getCol().modSchemaNoCheck();
+                    CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance()).modSchemaNoCheck();
                 }
             };
+            dialog.setConfirm(confirm);
             dialog.setArgs(msgData.getString("message"));
             (mActivity.get()).showDialogFragment(dialog);
         } else if (msg.what == MSG_DO_SYNC) {

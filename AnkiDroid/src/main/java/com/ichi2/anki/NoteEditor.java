@@ -683,14 +683,16 @@ public class NoteEditor extends AnkiActivity {
                 mReloadRequired = true;
                 if (mModelChangeCardMap.size() < mEditorNote.cards().size() || mModelChangeCardMap.containsKey(null)) {
                     // If cards will be lost via the new mapping then show a confirmation dialog before proceeding with the change
-                    ConfirmationDialog dialog = new ConfirmationDialog () {
+                    ConfirmationDialog dialog = new ConfirmationDialog ();
+                    dialog.setArgs(res.getString(R.string.confirm_map_cards_to_nothing));
+                    Runnable confirm = new Runnable() {
                         @Override
-                        public void confirm() {
+                        public void run() {
                             // Bypass the check once the user confirms
                             changeNoteTypeWithErrorHandling(oldModel, newModel);
                         }
                     };
-                    dialog.setArgs(res.getString(R.string.confirm_map_cards_to_nothing));
+                    dialog.setConfirm(confirm);
                     showDialogFragment(dialog);
                 } else {
                     // Otherwise go straight to changing note type
@@ -744,9 +746,11 @@ public class NoteEditor extends AnkiActivity {
             changeNoteType(oldModel, newModel);
         } catch (ConfirmModSchemaException e) {
             // Libanki has determined we should ask the user to confirm first
-            ConfirmationDialog dialog = new ConfirmationDialog() {
+            ConfirmationDialog dialog = new ConfirmationDialog();
+            dialog.setArgs(res.getString(R.string.full_sync_confirmation));
+            Runnable confirm = new Runnable() {
                 @Override
-                public void confirm() {
+                public void run() {
                     // Bypass the check once the user confirms
                     getCol().modSchemaNoCheck();
                     try {
@@ -757,7 +761,7 @@ public class NoteEditor extends AnkiActivity {
                     }
                 }
             };
-            dialog.setArgs(res.getString(R.string.full_sync_confirmation));
+            dialog.setConfirm(confirm);
             showDialogFragment(dialog);
         }
     }
@@ -844,26 +848,28 @@ public class NoteEditor extends AnkiActivity {
                 startActivityForResultWithAnimation(intent, REQUEST_ADD, ActivityTransitionAnimation.LEFT);
                 return true;
 
-            case R.id.action_reset_card_progress:
+            case R.id.action_reset_card_progress: {
                 Timber.i("NoteEditor:: Reset progress button pressed");
                 // Show confirmation dialog before resetting card progress
-                ConfirmationDialog dialog = new ConfirmationDialog () {
+                ConfirmationDialog dialog = new ConfirmationDialog();
+                String title = res.getString(R.string.reset_card_dialog_title);
+                String message = res.getString(R.string.reset_card_dialog_message);
+                dialog.setArgs(title, message);
+                Runnable confirm = new Runnable() {
                     @Override
-                    public void confirm() {
+                    public void run() {
                         Timber.i("NoteEditor:: OK button pressed");
-                        getCol().getSched().forgetCards(new long[] { mCurrentEditedCard.getId() });
+                        getCol().getSched().forgetCards(new long[]{mCurrentEditedCard.getId()});
                         getCol().reset();
                         mReloadRequired = true;
                         UIUtils.showThemedToast(NoteEditor.this,
                                 getResources().getString(R.string.reset_card_dialog_acknowledge), true);
                     }
                 };
-                String title = res.getString(R.string.reset_card_dialog_title);
-                String message = res.getString(R.string.reset_card_dialog_message);
-                dialog.setArgs(title, message);
+                dialog.setConfirm(confirm);
                 showDialogFragment(dialog);
                 return true;
-
+            }
             case R.id.action_reschedule_card:
                 Timber.i("NoteEditor:: Reschedule button pressed");
                 showDialogFragment(NoteEditorRescheduleCard.newInstance());
