@@ -2222,15 +2222,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     showSimpleMessageDialog(getResources().getString(R.string.empty_cards_none));
                 } else {
                     String msg = String.format(getResources().getString(R.string.empty_cards_count), cids.size());
-                    ConfirmationDialog dialog = new ConfirmationDialog() {
+                    ConfirmationDialog dialog = new ConfirmationDialog();
+                    dialog.setArgs(msg);
+                    Runnable confirm = new Runnable() {
                         @Override
-                        public void confirm() {
+                        public void run() {
                             getCol().remCards(Utils.arrayList2array(cids));
                             UIUtils.showSimpleSnackbar(DeckPicker.this, String.format(
                                     getResources().getString(R.string.empty_cards_deleted), cids.size()), false);
                         }
                     };
-                    dialog.setArgs(msg);
+                    dialog.setConfirm(confirm);
                     showDialogFragment(dialog);
                 }
 
