@@ -1011,6 +1011,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private void undo() {
         String undoReviewString = getResources().getString(R.string.undo_action_review);
         final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
+        String undoBuryString = getResources().getString(R.string.undo_action_bury_card);
+        final boolean isBury = undoBuryString.equals(getCol().undoName(getResources()));
+        String undoSuspendString = getResources().getString(R.string.undo_action_suspend_card);
+        final boolean isSuspend = undoSuspendString.equals(getCol().undoName(getResources()));
+
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, new DeckTask.TaskListener() {
             @Override
             public void onCancelled() {
@@ -1025,7 +1030,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             @Override
             public void onPostExecute(TaskData result) {
                 hideProgressBar();
-                if (isReview) {
+                if (isReview || isBury || isSuspend) {
                     openReviewer();
                 }
             }
