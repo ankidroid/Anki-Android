@@ -159,14 +159,14 @@
   <string name="confirm_apkg_export_deck">デッキ \"%s\" のデータが入ったAnki用ファイル（*.apkg）を作成します。よろしいですか？</string>
   <string name="export_in_progress">apkgファイルをエクスポートしています...</string>
   <string name="export_successful_title">このファイルを送信しますか？</string>
-  <string name="export_successful">\"%s\" が保存されました。このファイルを他のアプリで送信しますか？</string>
+  <string name="export_successful">デッキのファイルが保存されました。（%s）　このファイルを他のアプリで送信しますか？</string>
   <string name="export_email_subject">[AnkiDroid] %s</string>
   <string name="export_email_text">
 <![CDATA[
 こんにちは！
 <br/> <br/>
-これは、<a href="https://ankidroid.org/docs/manual.html"> AnkiDroid</a> から送信された、Anki用フラッシュカードデッキです。
-<a href="http://ankisrs.net/#download">こちら</a>であなたの端末機器に対応したAnki用ソフトをインストールしてこのデッキを開き、簡単で効率的な学習をお楽しみください！
+このメールには、<a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a> から送信された、Anki用フラッシュカードデッキのファイルが添付されています。
+あなたがお使いの端末に対応したAnki用ソフトを<a href="http://ankisrs.net/#download">Anki公式ページ</a>でインストールしてこのデッキを開き、簡単で効率的な学習をお楽しみください！
 ]]>    </string>
   <string name="export_unsuccessful">Ankiファイルのエクスポートエラー</string>
   <string name="import_hint">取り込みたいデッキまたはコレクション（全デッキ）のファイル（*. apkg）をあらかじめ \"%s\" に保存した後、この画面で「OK」ボタンをタップしてください。</string>

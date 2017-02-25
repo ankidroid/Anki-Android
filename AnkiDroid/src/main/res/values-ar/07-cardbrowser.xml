@@ -41,9 +41,9 @@
 <resources>
   <!-- CardBrowser -->
   <plurals name="card_browser_subtitle">
-    <item quantity="zero">%d cards shown</item>
-    <item quantity="one">%d card shown</item>
-    <item quantity="two">%d cards shown</item>
+    <item quantity="zero">ظاهر %d من البطاقات</item>
+    <item quantity="one">ظاهر %d من البطاقات</item>
+    <item quantity="two">ظاهر %d من البطاقات</item>
     <item quantity="few">%d cards shown</item>
     <item quantity="many">%d cards shown</item>
     <item quantity="other">%d cards shown</item>

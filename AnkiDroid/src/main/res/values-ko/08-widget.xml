@@ -51,7 +51,7 @@
     <item quantity="other">%1$d 카드 묶음</item>
   </plurals>
   <string name="widget_small">작은 화면 AnkiDroid</string>
-  <string name="widget_small_button">AnkiDroid</string>
+  <string name="widget_small_button">안키드로이드</string>
   <plurals name="widget_cards_due">
     <item quantity="other">%d cards due</item>
   </plurals>

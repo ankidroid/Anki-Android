@@ -43,7 +43,7 @@
   <plurals name="card_browser_subtitle">
     <item quantity="one">%d card shown</item>
     <item quantity="few">%d cards shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="other">%d карт показано</item>
   </plurals>
   <string name="card_browser_all_decks">Всі колоди</string>
   <string name="card_browser_delete_card">Видалити запис</string>
@@ -57,8 +57,8 @@
   <string name="card_browser_show_suspended">Фільтрувати відкладені</string>
   <string name="card_browser_search_by_tag">Фільтрувати за міткою</string>
   <string name="card_browser_tags_shown">Мітки: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
+  <string name="card_browser_list_my_searches">Мої запити</string>
+  <string name="card_browser_list_my_searches_save">Зберегти запис</string>
   <string name="card_browser_list_my_searches_title">Choose a saved search</string>
   <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
   <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>

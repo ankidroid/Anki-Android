@@ -90,18 +90,18 @@
   <string name="menu_dismiss_note">延期、保留、削除</string>
   <string name="menu_bury_card">カードを延期</string>
   <string name="menu_bury_note">ノートを延期</string>
-  <string name="menu_suspend_card">カードを保留</string>
+  <string name="menu_suspend_card">カードの表示を中止</string>
   <string name="menu_suspend_note">ノートを保留</string>
   <string name="menu_bury">延期</string>
   <string name="menu_suspend">保留</string>
   <string name="menu_delete_note">ノートを削除</string>
   <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらも全て削除されます。\n%s</string>
   <string name="menu_select">テキストを選択</string>
-  <string name="menu_search">%1$sで探す</string>
+  <string name="menu_search">%1$s で検索</string>
   <string name="menu_mark_note">ノートにマークを付ける</string>
   <string name="menu_unmark_note">ノートのマークをはずす</string>
   <string name="new_deck">デッキを新規作成</string>
-  <string name="create">作成</string>
+  <string name="create">新規作成</string>
   <string name="new_dynamic_deck">フィルターデッキを作成</string>
   <string name="night_mode">ナイトモード</string>
   <string name="directory_inaccessible">AnkiDroid ディレクトリにアクセスできません</string>
@@ -143,7 +143,7 @@
   <string name="export">エクスポート</string>
   <string name="export_collection">エクスポート（全デッキ）</string>
   <string name="export_deck">このデッキをエクスポート</string>
-  <string name="nothing">Nothing</string>
+  <string name="nothing">なし</string>
   <!-- Card template editor -->
   <string name="title_activity_template_editor">カードレイアウト</string>
   <string name="card_template_editor_front">表面のテンプレート</string>

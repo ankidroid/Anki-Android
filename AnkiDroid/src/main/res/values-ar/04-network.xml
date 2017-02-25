@@ -40,9 +40,9 @@
 
 -->
 <resources>
-  <string name="youre_offline">You are offline</string>
-  <string name="sync_error">Sync error</string>
-  <string name="vague_error">Error</string>
+  <string name="youre_offline">أنت غير متصل بالإنترنت</string>
+  <string name="sync_error">خطأ بالمزامنة</string>
+  <string name="vague_error">خطأ</string>
   <string name="retry">إعادة المحاولة</string>
   <string name="cancel">إلغاء</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>

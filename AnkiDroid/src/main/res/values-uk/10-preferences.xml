@@ -40,8 +40,8 @@
 -->
 <resources>
   <!-- generic strings -->
-  <string name="disabled">Disabled</string>
-  <string name="enabled">Enabled</string>
+  <string name="disabled">Вимкнено</string>
+  <string name="enabled">Ввімкнено</string>
   <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Основні налаштування</string>
@@ -51,10 +51,10 @@
   <string name="pref_cat_flashcard">Відображення</string>
   <string name="pref_cat_whiteboard">Дошка</string>
   <string name="pref_cat_automatic_display">Автоматично відображати відповідь</string>
-  <string name="pref_cat_appearance">Appearance</string>
-  <string name="pref_cat_appearance_summ">Change themes and default font</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_appearance">Зовнішній вигляд</string>
+  <string name="pref_cat_appearance_summ">Зміна теми і шрифтів</string>
+  <string name="pref_cat_themes">Теми</string>
+  <string name="pref_cat_fonts">Шрифти</string>
   <string name="pref_cat_gestures">Жести</string>
   <string name="pref_cat_gestures_summ">Використовуйте дотики і проведення пальцем замість кнопок</string>
   <string name="pref_cat_actions">Дії</string>

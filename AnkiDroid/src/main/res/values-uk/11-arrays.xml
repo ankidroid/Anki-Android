@@ -36,30 +36,30 @@
 -->
 <resources>
   <string-array name="error_reporting_choice_labels">
-    <item>Завжди сповіщати</item>
+    <item>Завжди звітувати</item>
     <item>Ніколи не сповіщати</item>
-    <item>Запитати</item>
+    <item>Запитайте мене</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>Жодних дій</item>
+    <item>Ніяких дій</item>
     <item>Показати відповідь</item>
-    <item>Відповідь кнопкою 1</item>
-    <item>Відповідь кнопкою 2</item>
-    <item>Відповідь кнопкою 3</item>
-    <item>Відповідь кнопкою 4</item>
-    <item>Відповісти як рекомендовано (зелений колір)</item>
-    <item>Відповісти краще, ніж рекомендовано</item>
+    <item>Кнопка відповіді 1</item>
+    <item>Кнопка відповіді 2</item>
+    <item>Кнопка відповіді 3</item>
+    <item>Кнопка відповіді 4</item>
+    <item>Рекомендована відповідь (зелений)</item>
+    <item>Краще, ніж рекомендовано</item>
     <item>Скасувати</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
+    <item>Редагувати нотатку</item>
+    <item>Міткувати нотатку</item>
     <item>Пошук виразу</item>
     <item>Приховати картку</item>
     <item>Відкласти картку</item>
-    <item>Delete note</item>
+    <item>Видалити нотатку</item>
     <item>Відтворити медіа</item>
     <item>Перервати навчання</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>Приховати нотатку</item>
+    <item>Відкласти нотатку</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Відкласти картку</item>
@@ -78,7 +78,7 @@
     <item>В порядку додавання</item>
     <item>В порядку черги</item>
     <item>Остання додана іде першою</item>
-    <item>Relative overdueness</item>
+    <item>Відносна затримка</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Використовувати поточну колоду</item>
@@ -94,11 +94,11 @@
     <item>Завжди</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Plain</item>
+    <item>Світлий</item>
+    <item>Звичайний</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
+    <item>Чорний</item>
+    <item>Темний</item>
   </string-array>
 </resources>

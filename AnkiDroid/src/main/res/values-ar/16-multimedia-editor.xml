@@ -35,13 +35,13 @@
 -->
 <resources>
   <!-- Main editor popup menu items -->
-  <string name="multimedia_editor_popup_image">Add image</string>
-  <string name="multimedia_editor_popup_audio">Record audio</string>
-  <string name="multimedia_editor_popup_text">Advanced editor</string>
+  <string name="multimedia_editor_popup_image">إضافة صورة</string>
+  <string name="multimedia_editor_popup_audio">تسجيل مقطع صوتي</string>
+  <string name="multimedia_editor_popup_text">محرر متقدم</string>
   <!-- Translation activity (Glosbe) -->
-  <string name="multimedia_editor_trans_poweredglosbe">Powered by glosbe.com</string>
+  <string name="multimedia_editor_trans_poweredglosbe">بواسطة glosbe.com</string>
   <!-- these are like translate f r o m  and t o  some othe languages -->
-  <string name="multimedia_editor_trans_from">From</string>
+  <string name="multimedia_editor_trans_from">من</string>
   <string name="multimedia_editor_trans_to">To</string>
   <!-- imperative for the button title -->
   <string name="multimedia_editor_trans_translate">Translate</string>

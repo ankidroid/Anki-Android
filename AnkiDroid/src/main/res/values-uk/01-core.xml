@@ -53,8 +53,8 @@
   <string name="studyoptions_eta">Оцінка часу (хв.):</string>
   <string name="studyoptions_start">Почати вивчення</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Expand</string>
-  <string name="collapse">Collapse</string>
+  <string name="expand">Розгорнути</string>
+  <string name="collapse">Згорнути</string>
   <string name="study_more">Вивчати ще</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d картка до (%2$s)</item>

@@ -41,8 +41,8 @@
 <resources>
   <string name="statistics_young">فتية</string>
   <string name="statistics_mature">ناضجة</string>
-  <string name="statistics_young_and_learn">Young+Learn</string>
-  <string name="statistics_unlearned">Unseen</string>
+  <string name="statistics_young_and_learn">غير ناضجة+تتعلم</string>
+  <string name="statistics_unlearned">لم ترى</string>
   <string name="statistics_suspended_and_buried">Suspended+Buried</string>
   <string name="statistics_relearn">إعادة التعلم</string>
   <string name="statistics_learn">تعلم</string>

@@ -164,18 +164,18 @@
   <string name="confirm_apkg_export">Експортувати колекцію як apkg файл?</string>
   <string name="confirm_apkg_export_deck">Експортувати \"%s\" як файл apkg?</string>
   <string name="export_in_progress">Експорт файлу apkg&#8230;</string>
-  <string name="export_successful_title">Send apkg?</string>
-  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+  <string name="export_successful_title">Відправити apkg?</string>
+  <string name="export_successful">Файл “%s” було експортовано. Ви хочете відправити його до іншої програми?</string>
+  <string name="export_email_subject">AnkiDroid експортує картки: %s</string>
   <string name="export_email_text">
         <![CDATA[
-        Hi!
+        Привіт!
         <br/><br/>
-        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        Це дошка карток Anki з <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        Спробуйте відкрити це, використовуючи одну з наявних <a href="http://ankisrs.net/#download">Anki версій </a> і насолоджуйтесь легким і ефективним навчанням!
         ]]>
     </string>
-  <string name="export_unsuccessful">Error exporting apkg file</string>
+  <string name="export_unsuccessful">Помилка експорту apkg файлу</string>
   <string name="import_hint">Щоб імпортувати карти, помістіть apkg файл в каталог %s і натисніть кнопку ok</string>
   <string name="upgrade_import_no_file_found">Ввізного файлу %1$s не знайдено</string>
   <string name="study_options">Параметри колоди</string>
@@ -229,12 +229,12 @@
   <string name="decks_rename_exists">Така колода вже існує</string>
   <string name="decks_rename_filtered_nosubdecks">Фільтрована колода не може мати підмножини</string>
   <string name="filtered_deck_name">Фільтрована колода</string>
-  <string name="reminder_title">Do not forget to study today!</string>
+  <string name="reminder_title">Не забудьте повчити сьогодні!</string>
   <plurals name="reminder_text">
-    <item quantity="one">%2$d new card to review in %1$s</item>
-    <item quantity="few">%2$d new cards to review in %1$s</item>
-    <item quantity="other">%2$d new cards to review in %1$s</item>
+    <item quantity="one">%2$d нові картки для перегляду в %1$s</item>
+    <item quantity="few">%2$d нові картки для перегляду в %1$s</item>
+    <item quantity="other">%2$d нові картки для перегляду в %1$s</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->
-  <string name="apk_share_error">Error sharing apkg file</string>
+  <string name="apk_share_error">Помилка поширення файлу apkg</string>
 </resources>

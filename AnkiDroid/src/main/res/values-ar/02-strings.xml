@@ -40,12 +40,12 @@
 -->
 <resources>
   <!-- How to format a percentage shown in the summary field of a preference -->
-  <string name="preference_summary_percentage">XXX%</string>
+  <string name="preference_summary_percentage">XXX %</string>
   <!-- Navigation drawer strings -->
-  <string name="drawer_open">Open drawer</string>
-  <string name="drawer_close">Close drawer</string>
+  <string name="drawer_open">فتح القائمة</string>
+  <string name="drawer_close">أغلق القائمة</string>
   <string name="CardEditorLaterMessage">حفظ المعلومات لوقت لاحق</string>
-  <string name="CardEditorCardDeck">Card deck:</string>
+  <string name="CardEditorCardDeck">مجموعة البطاقات:</string>
   <string name="CardEditorNoteDeck">Deck:</string>
   <string name="CardEditorModel">Type:</string>
   <string name="CardEditorTags">الوسوم: %1$s</string>

@@ -41,7 +41,7 @@
 <resources>
   <string name="check_db_title">افحص قاعدة البيانات</string>
   <string name="check_db_warning">هذا قد يستغرق وقتا طويلا</string>
-  <string name="check_db_acknowledge">Database checked</string>
+  <string name="check_db_acknowledge">تحقق من قاعدة البيانات</string>
   <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">احذف الرزمة</string>
   <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
