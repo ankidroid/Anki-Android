@@ -446,41 +446,37 @@ public class ModelBrowser extends AnkiActivity {
      */
     private void deleteModelDialog() {
         if (mModelIds.size() > 1) {
+            Runnable confirm = new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        col.modSchema(false);
+                        deleteModel();
+                    } catch (ConfirmModSchemaException e) {
+                        //This should never be reached because modSchema() didn't throw an exception
+                    }
+                    dismissContextMenu();
+                }
+            };
+            Runnable cancel = new Runnable() {
+                @Override
+                public void run() {
+                    dismissContextMenu();
+                }
+            };
+
             try {
                 col.modSchema();
-                ConfirmationDialog d = new ConfirmationDialog() {
-                    public void confirm() {
-                        try {
-                            col.modSchema(false);
-                            deleteModel();
-                        } catch (ConfirmModSchemaException e) {
-                            //This should never be reached because modSchema() didn't throw an exception
-                        }
-                        dismissContextMenu();
-                    }
-                    public void cancel() {
-                        dismissContextMenu();
-                    }
-                };
+                ConfirmationDialog d = new ConfirmationDialog();
                 d.setArgs(getResources().getString(R.string.model_delete_warning));
+                d.setConfirm(confirm);
+                d.setCancel(cancel);
                 ModelBrowser.this.showDialogFragment(d);
             } catch (ConfirmModSchemaException e) {
-                ConfirmationDialog c = new ConfirmationDialog() {
-                    public void confirm() {
-                        try {
-                            col.modSchema(false);
-                            deleteModel();
-                        } catch (ConfirmModSchemaException e) {
-                            //This should never be reached because we gave false argument to modSchema
-                        }
-                        dismissContextMenu();
-                    }
-
-                    public void cancel() {
-                        dismissContextMenu();
-                    }
-                };
+                ConfirmationDialog c = new ConfirmationDialog();
                 c.setArgs(getResources().getString(R.string.full_sync_confirmation));
+                c.setConfirm(confirm);
+                c.setCancel(cancel);
                 showDialogFragment(c);
             }
         }
