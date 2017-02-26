@@ -62,6 +62,12 @@ public class ModelFieldEditor extends AnkiActivity {
     private ModelEditorContextMenu mContextMenu;
     private EditText mFieldNameInput;
 
+    private Runnable mConfirmDialogCancel = new Runnable() {
+        @Override
+        public void run() {
+            dismissContextMenu();
+        }
+    };
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -200,8 +206,11 @@ public class ModelFieldEditor extends AnkiActivity {
                             } catch (ConfirmModSchemaException e) {
 
                                 //Create dialogue to for schema change
-                                ConfirmationDialog c = new ConfirmationDialog() {
-                                    public void confirm() {
+                                ConfirmationDialog c = new ConfirmationDialog();
+                                c.setArgs(getResources().getString(R.string.full_sync_confirmation));
+                                Runnable confirm = new Runnable() {
+                                    @Override
+                                    public void run() {
                                         mCol.modSchemaNoCheck();
                                         String fieldName = mFieldNameInput.getText().toString()
                                                 .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
@@ -209,13 +218,10 @@ public class ModelFieldEditor extends AnkiActivity {
                                                 new DeckTask.TaskData(new Object[]{mMod, fieldName}));
                                         dismissContextMenu();
                                     }
-
-                                    public void cancel() {
-                                        dismissContextMenu();
-                                    }
                                 };
 
-                                c.setArgs(getResources().getString(R.string.full_sync_confirmation));
+                                c.setConfirm(confirm);
+                                c.setCancel(mConfirmDialogCancel);
                                 ModelFieldEditor.this.showDialogFragment(c);
                             }
                             mCol.getModels().update(mMod);
@@ -233,43 +239,34 @@ public class ModelFieldEditor extends AnkiActivity {
      * Processing time scales with number of items
      */
     private void deleteFieldDialog() {
+        Runnable confirm = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mCol.modSchema(false);
+                    deleteField();
+                } catch (ConfirmModSchemaException e) {
+                    //This should never be reached because modSchema() didn't throw an exception
+                }
+                dismissContextMenu();
+            }
+        };
+
+
         if (mFieldLabels.size() < 2) {
             showToast(getResources().getString(R.string.toast_last_field));
         } else {
             try {
                 mCol.modSchema();
-                ConfirmationDialog d = new ConfirmationDialog() {
-                    public void confirm() {
-                        try {
-                            mCol.modSchema(false);
-                            deleteField();
-                        } catch (ConfirmModSchemaException e) {
-                            //This should never be reached because modSchema() didn't throw an exception
-                        }
-                        dismissContextMenu();
-                    }
-                    public void cancel() {
-                        dismissContextMenu();
-                    }
-                };
+                ConfirmationDialog d = new ConfirmationDialog();
                 d.setArgs(getResources().getString(R.string.field_delete_warning));
+                d.setConfirm(confirm);
+                d.setCancel(mConfirmDialogCancel);
                 showDialogFragment(d);
             } catch (ConfirmModSchemaException e) {
-                ConfirmationDialog c = new ConfirmationDialog() {
-                    public void confirm() {
-                        try {
-                            mCol.modSchema(false);
-                            deleteField();
-                        } catch (ConfirmModSchemaException e) {
-                            //This should never be reached because we gave false argument to modSchema
-                        }
-                        dismissContextMenu();
-                    }
-
-                    public void cancel() {
-                        dismissContextMenu();
-                    }
-                };
+                ConfirmationDialog c = new ConfirmationDialog();
+                c.setConfirm(confirm);
+                c.setCancel(mConfirmDialogCancel);
                 c.setArgs(getResources().getString(R.string.full_sync_confirmation));
                 showDialogFragment(c);
             }
@@ -316,8 +313,11 @@ public class ModelFieldEditor extends AnkiActivity {
                             } catch (ConfirmModSchemaException e) {
 
                                 // Handler mod schema confirmation
-                                ConfirmationDialog c = new ConfirmationDialog() {
-                                    public void confirm() {
+                                ConfirmationDialog c = new ConfirmationDialog();
+                                c.setArgs(getResources().getString(R.string.full_sync_confirmation));
+                                Runnable confirm = new Runnable() {
+                                    @Override
+                                    public void run() {
                                         try {
                                             mCol.modSchema(false);
                                             renameField();
@@ -326,13 +326,9 @@ public class ModelFieldEditor extends AnkiActivity {
                                         }
                                         dismissContextMenu();
                                     }
-
-                                    public void cancel() {
-                                        dismissContextMenu();
-                                    }
                                 };
-
-                                c.setArgs(getResources().getString(R.string.full_sync_confirmation));
+                                c.setConfirm(confirm);
+                                c.setCancel(mConfirmDialogCancel);
                                 ModelFieldEditor.this.showDialogFragment(c);
                             }
                         }
@@ -379,8 +375,11 @@ public class ModelFieldEditor extends AnkiActivity {
                             } catch (ConfirmModSchemaException e) {
 
                                 // Handle mod schema confirmation
-                                ConfirmationDialog c = new ConfirmationDialog() {
-                                    public void confirm() {
+                                ConfirmationDialog c = new ConfirmationDialog();
+                                c.setArgs(getResources().getString(R.string.full_sync_confirmation));
+                                Runnable confirm = new Runnable() {
+                                    @Override
+                                    public void run() {
                                         try {
                                             mCol.modSchemaNoCheck();
                                             String newPosition = mFieldNameInput.getText().toString();
@@ -393,12 +392,9 @@ public class ModelFieldEditor extends AnkiActivity {
                                             throw new RuntimeException(e);
                                         }
                                     }
-
-                                    public void cancel() {
-                                        dismissContextMenu();
-                                    }
                                 };
-                                c.setArgs(getResources().getString(R.string.full_sync_confirmation));
+                                c.setConfirm(confirm);
+                                c.setCancel(mConfirmDialogCancel);
                                 ModelFieldEditor.this.showDialogFragment(c);
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
@@ -462,19 +458,19 @@ public class ModelFieldEditor extends AnkiActivity {
                     new DeckTask.TaskData(new Object[]{mMod, mCurrentPos}));
         } catch (ConfirmModSchemaException e) {
             // Handler mMod schema confirmation
-            ConfirmationDialog c = new ConfirmationDialog() {
-                public void confirm() {
+            ConfirmationDialog c = new ConfirmationDialog();
+            c.setArgs(getResources().getString(R.string.full_sync_confirmation));
+            Runnable confirm = new Runnable() {
+                @Override
+                public void run() {
                     mCol.modSchemaNoCheck();
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHANGE_SORT_FIELD, mChangeFieldHandler,
                             new DeckTask.TaskData(new Object[]{mMod, mCurrentPos}));
                     dismissContextMenu();
                 }
-
-                public void cancel() {
-                    dismissContextMenu();
-                }
             };
-            c.setArgs(getResources().getString(R.string.full_sync_confirmation));
+            c.setConfirm(confirm);
+            c.setCancel(mConfirmDialogCancel);
             ModelFieldEditor.this.showDialogFragment(c);
         }
     }
