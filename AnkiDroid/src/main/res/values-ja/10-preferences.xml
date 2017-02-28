@@ -212,9 +212,9 @@
   <string name="deck_conf_start_ease">復習開始時の「易しさ」（復習間隔の伸び率）</string>
   <string name="deck_conf_max_rev">一日あたりの復習カード枚数の上限</string>
   <string name="deck_conf_new_bury">新規の関連カードの学習を延期</string>
-  <string name="deck_conf_new_bury_summ">新規の関連カード（同じノートから作られた別のカード）の学習を翌日まで延期します</string>
+  <string name="deck_conf_new_bury_summ">新規の関連カード（同じノートから作られた別のカード。例：裏表反転カード）の学習を翌日まで延期します</string>
   <string name="deck_conf_rev_bury">関連カードの復習を延期</string>
-  <string name="deck_conf_rev_bury_summ">関連カード（同じノートから作られた別のカード）の復習を翌日まで延期します</string>
+  <string name="deck_conf_rev_bury_summ">関連カード（同じノートから作られた別のカード。例：裏表反転カード）の復習を翌日まで延期します</string>
   <string name="deck_conf_easy_bonus">「簡単」と答えた時のボーナス（復習間隔の伸び率の割増し）</string>
   <string name="deck_conf_ivl_fct">復習ペース（復習間隔の伸び率の増えやすさ）の調整</string>
   <string name="deck_conf_max_ivl">復習間隔の上限</string>

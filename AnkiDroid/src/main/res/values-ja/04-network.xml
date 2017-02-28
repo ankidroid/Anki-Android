@@ -102,7 +102,7 @@
   <string name="sync_writing_db">データベースに変更を記録しています...</string>
   <string name="sync_download_chunk">変更内容をダウンロードしています...</string>
   <string name="sync_upload_chunk">変更内容をアップロードしています...</string>
-  <string name="sync_up_down_size">アップロード: %1$d kb　\nダウンロード: %2$d kb</string>
+  <string name="sync_up_down_size">アップロード: %1$d kB　\nダウンロード: %2$d kB</string>
   <string name="sync_generic_error">エラーが発生しました。後でもう一度実行してください。</string>
   <string name="sync_check_upload_file">アップロード前にファイルを確認しています...</string>
   <string name="sync_check_download_file">ダウンロードしたファイルを確認しています...</string>
