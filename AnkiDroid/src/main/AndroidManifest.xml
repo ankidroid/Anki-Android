@@ -227,6 +227,19 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
+        <activity android:name="com.ichi2.anki.ClozeInserter"
+            android:label="@string/insert_cloze_intent_title">
+            <!--Cannot yet add android:exported="false" here because of this android issue: -->
+            <!--https://code.google.com/p/android/issues/detail?id=199161-->
+            <!--The issue means that our insert cloze option will be visible in every app whichever -->
+            <!--"exported" option we pick, but if we add android:exported="false" then other apps -->
+            <!--where users click this option will crash.-->
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+        </activity>
         <activity android:name="com.ichi2.anki.dialogs.AnkiDroidCrashReportDialog"
             android:theme="@style/Theme.CrashReportDialog"
             android:launchMode="singleInstance"
