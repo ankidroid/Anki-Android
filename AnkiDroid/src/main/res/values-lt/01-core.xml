@@ -40,7 +40,7 @@
 -->
 <resources>
   <!-- Navigation drawer items-->
-  <string name="decks">Kaladė</string>
+  <string name="decks">Kaladės</string>
   <string name="card_browser">Kortelių naršyklė</string>
   <string name="statistics">Statistika</string>
   <string name="settings">Nustatymai</string>
@@ -53,13 +53,13 @@
   <string name="studyoptions_eta">Apskaičiuotas laikas (min):</string>
   <string name="studyoptions_start">Pradėti mokytis</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Expand</string>
-  <string name="collapse">Collapse</string>
+  <string name="expand">Išplėsti</string>
+  <string name="collapse">Sutraukti</string>
   <string name="study_more">Studijuoti daugiau</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="few">%1$d cards due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">%1$d kortelė (%2$s)</item>
+    <item quantity="few">%1$d kortelės (%2$s)</item>
+    <item quantity="other">%1$d kortelės (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minutė liko</item>
@@ -68,9 +68,9 @@
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
-    <item quantity="one">Studijuota %1$d kortelė per %2$s šiandien</item>
-    <item quantity="few">Studied %1$d cards in %2$s today</item>
-    <item quantity="other">Studijuotos %1$d kortelės per %2$s šiandien</item>
+    <item quantity="one">Šiandien studijuota %1$d kortelė, trukmė: %2$s</item>
+    <item quantity="few">Šiandien studijuotos %1$d kortelės, trukmė: %2$s</item>
+    <item quantity="other">Šiandien studijuotos %1$d kortelės, trukmė: %2$s</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">Įvesti atsakymą</string>
@@ -98,7 +98,7 @@
   <string name="menu_bury_note">Paslėpti pastabą</string>
   <string name="menu_suspend_card">Sustabdyti kortelę</string>
   <string name="menu_suspend_note">Sustabdyti pastabą</string>
-  <string name="menu_bury">Bury</string>
+  <string name="menu_bury">Palaidoti</string>
   <string name="menu_suspend">Suspend</string>
   <string name="menu_delete_note">Šalinti pastabą</string>
   <string name="delete_note_message">Tikrai šalinti šią pastabą ir visas jos korteles?\n%s</string>
