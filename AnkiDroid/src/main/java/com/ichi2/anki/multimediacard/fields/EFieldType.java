@@ -26,4 +26,5 @@ public enum EFieldType {
     TEXT, // Just text
     IMAGE, // Just image
     AUDIO, // Just audio
+    AUDIO_CLIP, // Just audio clip
 }

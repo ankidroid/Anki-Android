@@ -20,6 +20,7 @@
 package com.ichi2.anki.servicelayer;
 
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
+import com.ichi2.anki.multimediacard.fields.AudioClipField;
 import com.ichi2.anki.multimediacard.fields.AudioField;
 import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.ImageField;
@@ -77,8 +78,10 @@ public class NoteService {
                 IField field = null;
                 if (value.startsWith("<img")) {
                     field = new ImageField();
-                } else if (value.startsWith("[sound:")) {
+                } else if (value.startsWith("[sound:") && value.contains("rec")) {
                     field = new AudioField();
+                } else if (value.startsWith("[sound:")) {
+                    field = new AudioClipField();
                 } else {
                     field = new TextField();
                 }
@@ -162,6 +165,10 @@ public class NoteService {
 
             case IMAGE:
                 tmpMediaPath = field.getImagePath();
+                break;
+
+            case AUDIO_CLIP:
+                tmpMediaPath = field.getAudioPath();
                 break;
 
             case TEXT:
