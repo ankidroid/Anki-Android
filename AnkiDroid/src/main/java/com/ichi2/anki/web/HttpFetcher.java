@@ -61,7 +61,7 @@ public class HttpFetcher {
             HttpContext localContext = new BasicHttpContext();
             HttpGet httpGet = new HttpGet(address);
             HttpResponse response = httpClient.execute(httpGet, localContext);
-            if (!response.getStatusLine().toString().contains("OK")) {
+            if (response.getStatusLine().getStatusCode() != 200) {
                 return "FAILED";
             }
 
