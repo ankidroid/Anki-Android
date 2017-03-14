@@ -17,7 +17,7 @@
     <string name="multimedia_editor_popup_image">Add image</string>
     <string name="multimedia_editor_popup_audio">Record audio</string>
     <string name="multimedia_editor_popup_text">Advanced editor</string>
-    <string name="multimedia_editor_popup_cloze">Insert cloze</string>
+    <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
 
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Powered by glosbe.com</string>
