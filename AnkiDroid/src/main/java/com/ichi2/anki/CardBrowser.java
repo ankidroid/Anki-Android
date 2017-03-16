@@ -590,10 +590,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 mSearchTerms = "";
                 mSearchView.setQuery(mSearchTerms, false);
                 searchCards();
-                // clear the menu, to recreate the menu
-                menu.clear();
-                // recreate the menu, because 'close' icon of searchView makes the add icon disappear
-                onCreateOptionsMenu(menu);
+                // invalidate options menu so that disappeared icons would appear again
+                supportInvalidateOptionsMenu();
                 return true;
             }
         });
