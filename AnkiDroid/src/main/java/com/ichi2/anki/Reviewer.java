@@ -26,6 +26,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ActionProvider;
 import android.support.v4.view.MenuItemCompat;
@@ -43,12 +44,14 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
+import com.ichi2.libanki.Sched;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
 
 import java.lang.ref.WeakReference;
+import java.text.MessageFormat;
 import java.util.List;
 
 import timber.log.Timber;
@@ -60,6 +63,39 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mPrefFullscreenReview = false;
     private static final int ADD_NOTE = 12;
     private Long mLastSelectedBrowserDid = null;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        Timber.d("onCreate()");
+
+        if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
+            Timber.d("onCreate() :: received Intent with action = %s", getIntent().getAction());
+            selectDeckFromExtra();
+        }
+
+        super.onCreate(savedInstanceState);
+    }
+
+    private void selectDeckFromExtra() {
+        Bundle extras = getIntent().getExtras();
+        long did = extras.getLong("deckId", Long.MIN_VALUE);
+
+        if(did == Long.MIN_VALUE) {
+            // deckId is not set, load default
+            return;
+        }
+
+        Timber.d("selectDeckFromExtra() with deckId = %d", did);
+
+        // Clear the undo history when selecting a new deck
+        if (getCol().getDecks().selected() != did) {
+            getCol().clearUndo();
+        }
+        // Select the deck
+        getCol().getDecks().select(did);
+        // Reset the schedule so that we get the counts for the currently selected deck
+        getCol().getSched().reset();
+    }
 
     @Override
     protected void setTitle() {

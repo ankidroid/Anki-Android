@@ -170,7 +170,7 @@
             android:label="@string/model_editor_label" />
         <activity
             android:name="com.ichi2.anki.Reviewer"
-            android:exported="false"
+            android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".DeckPicker">
@@ -178,6 +178,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ichi2.anki.DeckPicker" />
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.ichi2.anki.VideoPlayer"
