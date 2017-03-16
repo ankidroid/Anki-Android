@@ -93,12 +93,6 @@ git rebase develop
 git push origin my-feature-branch -f
 ```
 
-### Squashing a series of commits down to one
-In general, we ask contributors to ensure that pull requests only contain one commit per major 'task', to make it easier for other developers to understand the commit history. If you have made multiple commits in your feature branch during the development process, you can easily squash it down to one using the `rebase` command in interactive mode.
-
-If you made N commits then usually you would execute the command `git rebase -i HEAD~N` and replace "pick" on the second and subsequent commits with "squash" or "fixup" depending on whether or not you want the commit message to be included, as described in the [git manual](http://git-scm.com/docs/git-rebase#_interactive_mode). If you want to update an existing pull request do a push using the -f flag.
-
-
 ## Running unit tests
 Several unit tests are defined in the `AnkiDroid/androidTest` folder. You can run the tests from within Android Studio by simply right clicking on the test and running it (be sure to choose the icon with the Android symbol if there are multiple options shown), or from the command line using
 ```
