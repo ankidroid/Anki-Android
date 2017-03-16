@@ -570,7 +570,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.card_browser, menu);
         mSaveSearchItem = menu.findItem(R.id.action_save_search);
         mSaveSearchItem.setVisible(false); //the searchview's query always starts empty.
@@ -584,13 +584,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
             }
 
-
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 // SearchView doesn't support empty queries so we always reset the search when collapsing
                 mSearchTerms = "";
                 mSearchView.setQuery(mSearchTerms, false);
                 searchCards();
+                // invalidate options menu so that disappeared icons would appear again
+                supportInvalidateOptionsMenu();
                 return true;
             }
         });
