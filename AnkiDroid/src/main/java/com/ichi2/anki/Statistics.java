@@ -87,7 +87,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         initNavigationDrawer(findViewById(android.R.id.content));
         startLoadingCollection();
     }
-    
+
     @Override
     protected void onCollectionLoaded(Collection col) {
         Timber.d("onCollectionLoaded()");
@@ -538,7 +538,10 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
                     mType = (((Statistics) getActivity()).getTaskHandler()).getStatType();
                     mProgressBar.setVisibility(View.VISIBLE);
                     mChart.setVisibility(View.GONE);
-                    mDeckId = col.getDecks().selected();
+                    if (!isWholeCollection())
+                        mDeckId = col.getDecks().selected();
+                    else
+                        mDeckId = -1;
                     if (mCreateChartTask != null && !mCreateChartTask.isCancelled()) {
                         mCreateChartTask.cancel(true);
                     }
@@ -676,7 +679,10 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
                 mType = (((Statistics) getActivity()).getTaskHandler()).getStatType();
                 mProgressBar.setVisibility(View.VISIBLE);
                 mWebView.setVisibility(View.GONE);
-                mDeckId = col.getDecks().selected();
+                if (!isWholeCollection())
+                    mDeckId = col.getDecks().selected();
+                else
+                    mDeckId = -1;
                 if (mCreateStatisticsOverviewTask != null && !mCreateStatisticsOverviewTask.isCancelled()) {
                     mCreateStatisticsOverviewTask.cancel(true);
                 }
