@@ -24,17 +24,17 @@
 
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:gravity="left"
+    android:gravity="start"
     android:orientation="vertical" >
 
     <TextView
         android:id="@+id/custom_study_details_text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:layout_marginLeft="4dip"
         android:layout_marginRight="4dip"
-        android:gravity="left"
+        android:gravity="start"
         android:text=""
         android:textSize="16sp" />
 
@@ -42,11 +42,12 @@
         android:id="@+id/custom_study_details_text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:layout_marginBottom="16dip"
+        android:layout_marginStart="4dip"
         android:layout_marginLeft="4dip"
         android:layout_weight="4"
-        android:gravity="left|center"
+        android:gravity="start|center"
         android:lines="2"
         android:text=""
         android:textSize="16sp" />
@@ -59,7 +60,7 @@
         android:layout_marginLeft="4dip"
         android:layout_marginRight="4dip"
         android:layout_weight="1"
-        android:gravity="left|bottom"
+        android:gravity="start|bottom"
         android:inputType="number"
         android:text="1"
         tools:ignore="HardcodedText"/>
