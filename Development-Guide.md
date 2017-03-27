@@ -1,12 +1,12 @@
 # Source code
-First, register here on github, and follow the [forking instructions](https://help.github.com/articles/fork-a-repo/) for the Anki-Android repository. If you want to be notified about each new improvement/bugfix, please subscribe to the [commits feed for the development branch](https://github.com/ankidroid/Anki-Android/commits/develop.atom).
+First, register here on github, and follow the [forking instructions](https://help.github.com/articles/fork-a-repo/) for the Anki-Android repository. If you want to be notified about each new improvement/bugfix, please subscribe to the [commits feed for the master branch](https://github.com/ankidroid/Anki-Android/commits/master.atom).
 
 The project has been configured to work "out of the box" with Android Studio, though you first need to set up the Android SDK as follows.
 
 ## Setting up the SDK
 Before you can do anything with AnkiDroid, you should install [Android Studio and the Android SDK](https://developer.android.com/sdk/index.html), and make sure you have the following items checked in the Android SDK manager:
 
-  * Android SDK Build-tools and Android SDK platform (version must match "buildToolsVersion" and "compileSdkVersion" in the project's [build.gradle file](https://github.com/ankidroid/Anki-Android/blob/develop/AnkiDroid/build.gradle))
+  * Android SDK Build-tools and Android SDK platform (version must match "buildToolsVersion" and "compileSdkVersion" in the project's [build.gradle file](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/build.gradle))
   * Android Support Repository (latest version)
   * Android Support Library (latest version)
 
@@ -69,11 +69,11 @@ git remote add upstream https://github.com/ankidroid/Anki-Android.git
 ```
 
 ### Making a new pull request
-Now if want to make a new change to the code base, we create a new 'feature branch' based off the latest version of the develop branch:
+Now if want to make a new change to the code base, we create a new 'feature branch' based off the latest version of the master branch:
 
 ```
-git checkout develop
-git pull upstream develop
+git checkout master
+git pull upstream master
 git checkout -b my-feature-branch
 ```
 
@@ -84,10 +84,10 @@ Now you will be on a new branch called `my-feature-branch` which contains the la
 If changes are made to the AnkiDroid repository that conflict with the changes in your pull request in-between creating the feature branch and your changes getting merged into the main repository, it may be necessary to rebase your code:
 
 ```
-git checkout develop
-git pull upstream develop
+git checkout master
+git pull upstream master
 git checkout my-feature-branch
-git rebase develop
+git rebase master
 # it may be necessary to resolve merge conflicts here
 # if you need to update the existing pull request, you should do a 'force' push
 git push origin my-feature-branch -f
