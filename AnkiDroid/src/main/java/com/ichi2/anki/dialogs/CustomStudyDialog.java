@@ -22,7 +22,9 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -228,7 +230,13 @@ public class CustomStudyDialog extends DialogFragment {
                     public void onPositive(MaterialDialog dialog) {
                         Collection col = CollectionHelper.getInstance().getCol(getActivity());
                         // Get the value selected by user
-                        int n = Integer.parseInt(mEditText.getText().toString());
+                        int n;
+                        try {
+                            n = Integer.parseInt(mEditText.getText().toString());
+                        } catch (Exception ignored) {
+                            n = Integer.MAX_VALUE;
+                        }
+
                         // Set behavior when clicking OK button
                         switch (dialogId) {
                             case CUSTOM_STUDY_NEW:
@@ -288,17 +296,27 @@ public class CustomStudyDialog extends DialogFragment {
                     }
                 });
         final MaterialDialog dialog = builder.build();
-        mEditText.setOnKeyListener(new View.OnKeyListener() {
+        mEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (((EditText) view).getText().length() == 0) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.length() == 0) {
                     dialog.getActionButton(DialogAction.POSITIVE).setEnabled(false);
                 } else {
                     dialog.getActionButton(DialogAction.POSITIVE).setEnabled(true);
                 }
-                return false;
             }
         });
+
         // Show soft keyboard
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         return dialog;
