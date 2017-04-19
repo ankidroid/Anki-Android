@@ -173,8 +173,14 @@ public class Anki2Importer extends Importer {
         mIgnoredGuids = new HashMap<>();
         // iterate over source collection
         ArrayList<Object[]> add = new ArrayList<>();
+        int totalAddSize = 0;
+        final int thresExecAdd = 30000;
         ArrayList<Object[]> update = new ArrayList<>();
+        int totalUpdateSize = 0;
+        final int thresExecUpdate = 10000;
         ArrayList<Long> dirty = new ArrayList<>();
+        int totalDirtySize = 0;
+        final int thresExecDirty = 30000;
         int usn = mDst.usn();
         int dupes = 0;
         ArrayList<String> dupesIgnored = new ArrayList<>();
@@ -186,6 +192,8 @@ public class Anki2Importer extends Importer {
             boolean largeCollection = total > 200;
             int onePercent = total/100;
             int i = 0;
+
+
 
             while (cur.moveToNext()) {
                 // turn the db result into a mutable list
@@ -235,6 +243,31 @@ public class Anki2Importer extends Importer {
                     }
                 }
                 i++;
+
+                // add to col partially, so as to avoid OOM
+                if (add.size() > thresExecAdd){
+                    totalAddSize  += add.size();
+                    mDst.getDb().executeMany("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", add);
+                    add.clear();
+                    Timber.d("add notes: "+totalAddSize);
+                }
+                // add to col partially, so as to avoid OOM
+                if (update.size() > thresExecUpdate){
+                    totalUpdateSize  += update.size();
+                    mDst.getDb().executeMany("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", update);
+                    update.clear();//update = new ArrayList<>();
+                    Timber.d("update notes: "+totalUpdateSize);
+                }
+                // add to col partially, so as to avoid OOM
+                if (dirty.size() > thresExecDirty){
+                    totalDirtySize  += dirty.size();
+                   long[] das = Utils.arrayList2array(dirty);
+                    mDst.updateFieldCache(das);
+                    mDst.getTags().registerNotes(das);
+                    dirty.clear();//dirty = new ArrayList<>();
+                    Timber.d("dirty notes: "+totalDirtySize);
+                }
+
                 if (total != 0 && (!largeCollection || i % onePercent == 0)) {
                     // Calls to publishProgress are reasonably expensive due to res.getString()
                     publishProgress(i * 100 / total, 0, 0);
@@ -248,9 +281,15 @@ public class Anki2Importer extends Importer {
                 cur.close();
             }
         }
+
+        // summarize partial add/update/dirty results for total values
+        totalAddSize = totalAddSize == 0 ? add.size() : add.size() + totalAddSize;
+        totalUpdateSize = totalUpdateSize == 0 ? update.size() : update.size() + totalUpdateSize;
+        totalDirtySize = totalDirtySize == 0 ? dirty.size() : dirty.size() + totalDirtySize;
+
         if (dupes > 0) {
-            int up = update.size();
-            mLog.add(getRes().getString(R.string.import_update_details, update.size(), dupes));
+            int up = totalUpdateSize;
+            mLog.add(getRes().getString(R.string.import_update_details, totalUpdateSize, dupes));
             if (dupesIgnored.size() > 0) {
                 mLog.add(getRes().getString(R.string.import_update_ignored));
                 // TODO: uncomment this and fix above string if we implement a detailed
@@ -260,9 +299,11 @@ public class Anki2Importer extends Importer {
         }
         // export info for calling code
         mDupes = dupes;
-        mAdded = add.size();
-        mUpdated = update.size();
-        // add to col
+        mAdded = totalAddSize;
+        mUpdated = totalUpdateSize;
+        Timber.d("add notes in total: "+totalAddSize);
+        Timber.d("update notes in total: "+totalUpdateSize);
+        // add to col (for last chunk)
         mDst.getDb().executeMany("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", add);
         mDst.getDb().executeMany("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", update);
         long[] das = Utils.arrayList2array(dirty);
@@ -304,7 +345,6 @@ public class Anki2Importer extends Importer {
             }
         }
     }
-
 
     /**
      * Models
@@ -459,7 +499,11 @@ public class Anki2Importer extends Importer {
         }
         // loop through src
         List<Object[]> cards = new ArrayList<>();
+        int totalCardsSize = 0;
+        final int thresExecCards = 10000;
         List<Object[]> revlog = new ArrayList<>();
+        int totalRevlogSize = 0;
+        final int thresExecRevlog = 10000;
         int cnt = 0;
         int usn = mDst.usn();
         long aheadBy = mSrc.getSched().getToday() - mDst.getSched().getToday();
@@ -554,6 +598,20 @@ public class Anki2Importer extends Importer {
                 }
                 cnt += 1;
                 i++;
+                // apply card changes partially
+                if(cards.size() > thresExecCards){
+                    totalCardsSize += cards.size();
+                    mDst.getDb().executeMany("insert or ignore into cards values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", cards);
+                    cards.clear();
+                    Timber.d("add cards: "+totalCardsSize);
+                }
+                // apply revlog changes partially
+                if(revlog.size() > thresExecRevlog){
+                    totalRevlogSize += revlog.size();
+                    mDst.getDb().executeMany("insert or ignore into revlog values (?,?,?,?,?,?,?,?,?)", revlog);
+                    Timber.d("add revlog: "+totalRevlogSize);
+                }
+
                 if (total != 0 && (!largeCollection || i % onePercent == 0)) {
                     publishProgress(100, i * 100 / total, 0);
                 }
@@ -564,7 +622,12 @@ public class Anki2Importer extends Importer {
                 cur.close();
             }
         }
-        // apply
+        // count total values
+        totalCardsSize = totalCardsSize == 0 ? cards.size() : cards.size() + totalCardsSize;
+        totalRevlogSize = totalRevlogSize == 0 ? cards.size() : cards.size() + totalRevlogSize;
+        Timber.d("add cards in total: "+totalCardsSize);
+        Timber.d("add revlog in total: "+totalRevlogSize);
+        // apply (for last chunk)
         mDst.getDb().executeMany("insert or ignore into cards values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", cards);
         mDst.getDb().executeMany("insert or ignore into revlog values (?,?,?,?,?,?,?,?,?)", revlog);
         mLog.add(getRes().getString(R.string.import_complete_count, cnt));
