@@ -127,7 +127,7 @@ CREATE TABLE notes (
 -- revlog is a review history; it has a row for every review you've ever done!
 CREATE TABLE revlog (
     id              integer primary key,
-       -- epoch-seconds timestamp of when you did the review
+       -- epoch-milliseconds timestamp of when you did the review
     cid             integer not null,
        -- cards.id
     usn             integer not null,
