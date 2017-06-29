@@ -239,6 +239,11 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 // Build languages
                 initializeLanguageDialog(screen);
                 break;
+            case "com.ichi2.anki.prefs.sync":
+                listener.addPreferencesFromResource(R.xml.preferences_sync);
+                screen = listener.getPreferenceScreen();
+                initializeLanguageDialog(screen);
+                break;
             case "com.ichi2.anki.prefs.reviewing":
                 listener.addPreferencesFromResource(R.xml.preferences_reviewing);
                 screen = listener.getPreferenceScreen();

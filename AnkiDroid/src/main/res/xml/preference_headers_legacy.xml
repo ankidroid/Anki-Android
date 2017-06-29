@@ -25,6 +25,14 @@
             android:action="com.ichi2.anki.prefs.general" />
     </PreferenceScreen>
 
+    <PreferenceScreen android:title="@string/pref_cat_sync"
+        android:summary="@string/pref_cat_sync_summ">
+        <intent
+            android:targetPackage="com.ichi2.anki"
+            android:targetClass="com.ichi2.anki.Preferences"
+            android:action="com.ichi2.anki.prefs.sync" />
+    </PreferenceScreen>
+
     <!-- Reviewing Preferences -->
     <PreferenceScreen android:title="@string/pref_cat_reviewing"
         android:summary="@string/pref_cat_reviewing_summ" >
