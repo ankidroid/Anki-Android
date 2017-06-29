@@ -30,6 +30,16 @@
             android:value="com.ichi2.anki.prefs.general" />
     </header>
 
+    <!-- Sync Options -->
+    <header
+        android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
+        android:summary="Sync settings"
+        android:title="Syncing">
+        <extra
+            android:name="subscreen"
+            android:value="com.ichi2.anki.prefs.sync" />
+    </header>
+
     <!-- Reviewing Preferences -->
     <header
         android:fragment="com.ichi2.anki.Preferences$SettingsFragment"

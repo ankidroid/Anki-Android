@@ -24,6 +24,8 @@
     <!-- preferences.xml categories-->
     <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">General settings</string>
+    <string name="pref_cat_sync">Syncing</string>
+    <string name="pref_cat_sync_summ">Sync settings</string>
     <string name="pref_cat_reviewing">Reviewing</string>
     <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>
     <string name="pref_cat_reviewer_behaviour">Behavior</string>
