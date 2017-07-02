@@ -179,7 +179,7 @@ Here is an annotated description of the JSONObjects in the models field of the `
                            when adding new notes"
              }
            ],
-    id : "model ID, matches cards.mid",
+    id : "model ID, matches notes.mid",
     latexPost : "String added to end of LaTeX expressions (usually \\end{document})",
     latexPre : "preamble for LaTeX expressions",
     mod : "modification time in milliseconds",
