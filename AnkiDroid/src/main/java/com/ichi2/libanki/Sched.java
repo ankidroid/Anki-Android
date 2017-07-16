@@ -267,12 +267,16 @@ public class Sched {
 
 
     public void unburyCardsForDeck() {
-        String sids = Utils.ids2str(mCol.getDecks().active());
+        unburyCardsForDeck(mCol.getDecks().active());
+    }
+
+    private void unburyCardsForDeck(List<Long> allDecks) {
+        // Refactored to allow unburying an arbitrary deck
+        String sids = Utils.ids2str(allDecks);
         mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where queue = -2 and did in " + sids, 0));
         mCol.getDb().execute("update cards set mod=?,usn=?,queue=type where queue = -2 and did in " + sids,
                 new Object[] { Utils.intNow(), mCol.usn() });
     }
-
 
     /**
      * Rev/lrn/time daily stats *************************************************
@@ -1948,7 +1952,12 @@ public class Sched {
 
 
     public boolean haveBuried() {
-        String sdids = Utils.ids2str(mCol.getDecks().active());
+        return haveBuried(mCol.getDecks().active());
+    }
+
+    private boolean haveBuried(List<Long> allDecks) {
+        // Refactored to allow querying an arbitrary deck
+        String sdids = Utils.ids2str(allDecks);
         int cnt = mCol.getDb().queryScalar(String.format(Locale.US,
                 "select 1 from cards where queue = -2 and did in %s limit 1", sdids));
         return cnt != 0;
@@ -2313,20 +2322,16 @@ public class Sched {
      * The methods below are not in LibAnki.
      * ***********************************************************
      */
-
     public boolean haveBuried(long did) {
-        long odid = mCol.getDecks().selected();
-        mCol.getDecks().select(did);
-        boolean buried = haveBuried();
-        mCol.getDecks().select(odid);
-        return buried;
+        List<Long> all = new ArrayList<>(mCol.getDecks().children(did).values());
+        all.add(did);
+        return haveBuried(all);
     }
 
     public void unburyCardsForDeck(long did) {
-        long odid = mCol.getDecks().selected();
-        mCol.getDecks().select(did);
-        unburyCardsForDeck();
-        mCol.getDecks().select(odid);
+        List<Long> all = new ArrayList<>(mCol.getDecks().children(did).values());
+        all.add(did);
+        unburyCardsForDeck(all);
     }
 
 
