@@ -92,6 +92,9 @@ public class GraphicsWrap {
     }
     
     public void drawArc(float x, float y, float width, float height, float startAngle, float arcAngle){
+        if (arcAngle == 0) {
+            return;
+        }
         Style oldStyle = paint.getStyle();
         paint.setStyle(Style.STROKE);
         RectF rectF = new RectF(x,y,x+width,y+height);
@@ -99,6 +102,9 @@ public class GraphicsWrap {
         paint.setStyle(oldStyle);
     }
     public void fillArc(float x, float y, float width, float height, float startAngle, float arcAngle){
+        if (arcAngle == 0) {
+            return;
+        }
         Style oldStyle = paint.getStyle();
         paint.setStyle(Style.FILL);
         RectF rectF = new RectF(x,y,x+width,y+height);
