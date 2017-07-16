@@ -42,6 +42,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
+import timber.log.Timber;
+
 // fixmes:
 // - make sure users can't set grad interval < 1
 
@@ -895,6 +897,10 @@ public class Decks {
      */
     public void select(long did) {
         try {
+            if (mDecks.get(did) == null) {
+                Timber.i("Requested to select non-existent deck %d", did);
+                return;
+            }
             String name = mDecks.get(did).getString("name");
 
             // current deck
