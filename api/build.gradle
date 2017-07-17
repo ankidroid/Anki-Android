@@ -6,7 +6,7 @@ def version = "1.1.0alpha5"
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '24.0.3'
+    buildToolsVersion '25.0.1'
 
     defaultConfig {
         minSdkVersion 8
