@@ -74,8 +74,8 @@
     <application
         android:name="com.ichi2.anki.AnkiDroidApp"
         android:allowBackup="true"
-        android:icon="@drawable/anki"
-        android:roundIcon="@mipmap/ic_launcher"
+        android:icon="@mipmap/anki"
+        android:roundIcon="@mipmap/anki_round"
         android:label="@string/app_name"
         android:windowSoftInputMode="adjustResize"
         android:largeHeap="true">
