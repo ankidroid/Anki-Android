@@ -23,10 +23,6 @@ licenses:
 jdk:
   - oraclejdk8
 
-branches:
-  except:
-    - master
-
 # Emulator Management: Create, Start and Wait
 before_script:
   - echo no | android create avd --force -n test -t android-21 --sdcard 10M --abi armeabi-v7a
