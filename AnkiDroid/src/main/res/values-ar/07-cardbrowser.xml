@@ -41,9 +41,9 @@
 <resources>
   <!-- CardBrowser -->
   <plurals name="card_browser_subtitle">
-    <item quantity="zero">%d cards shown</item>
-    <item quantity="one">%d card shown</item>
-    <item quantity="two">%d cards shown</item>
+    <item quantity="zero">ظاهر %d من البطاقات</item>
+    <item quantity="one">ظاهر %d من البطاقات</item>
+    <item quantity="two">ظاهر %d من البطاقات</item>
     <item quantity="few">%d cards shown</item>
     <item quantity="many">%d cards shown</item>
     <item quantity="other">%d cards shown</item>
@@ -60,21 +60,21 @@
   <string name="card_browser_show_suspended">تصفية معلقة</string>
   <string name="card_browser_search_by_tag">تصفية بالوسم</string>
   <string name="card_browser_tags_shown">الوسوم: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
+  <string name="card_browser_list_my_searches">ابحاثي</string>
+  <string name="card_browser_list_my_searches_save">حفظ البحث</string>
+  <string name="card_browser_list_my_searches_title">اختر بحث محفوظ</string>
+  <string name="card_browser_list_my_searches_new_name">اسم للبحث الحالي</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">لا يمكنك حفظ بحث دون اسم</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">الاسم موجود</string>
+  <string name="card_browser_list_my_searches_remove_content">حذف \"%1$s\"؟</string>
   <string name="card_browser_change_display_order">غير ترتيب العرض</string>
   <string name="card_browser_change_display_order_title">اختر ترتيب العرض</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
+  <string name="card_browser_change_display_order_reverse">حدد حقل مرتين لتعكس</string>
   <string name="card_details_question">السؤال</string>
   <string name="card_details_answer">الإجابة</string>
   <string name="card_details_due">ينتظر المراجعة</string>
   <string name="card_details_tags">وسوم</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
+  <string name="card_browser_filtering_cards">تصفية البطاقات.. \nPress اضغط زر الخلف للإلغاء</string>
   <string-array name="card_browser_order_labels">
     <item>بلا فرز (أسرع)</item>
     <item>By sort field</item>

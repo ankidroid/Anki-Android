@@ -38,6 +38,7 @@
   <string name="multimedia_editor_popup_image">Додај слику</string>
   <string name="multimedia_editor_popup_audio">Сними звук</string>
   <string name="multimedia_editor_popup_text">Комплетан уредник</string>
+  <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
   <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">Омогућено захваљујући glosbe.com</string>
   <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -63,21 +64,6 @@
   <string name="multimedia_editor_pron_pronunciation_failed">Изговор неуспешан</string>
   <string name="multimedia_editor_word_search_try_lower_case">Пробајте опет са само малим словима</string>
   <string name="multimedia_editor_poweredbeolingus">Омогућено захваљујући Beolingus</string>
-  <!-- Image search activity -->
-  <!-- in progress dialog when loading the image -->
-  <string name="multimedia_editor_imgs_saving_image">Сачување слике</string>
-  <string name="multimedia_editor_imgs_loading_image">Укрцавање слике</string>
-  <string name="multimedia_editor_imgs_no_results">Претрага није нашла ништа</string>
-  <string name="multimedia_editor_imgs_images_found">Слике пронађене</string>
-  <string name="multimedia_editor_imgs_pow_by_google">Омогућено захваљујући Google Image Search</string>
-  <!-- buttons -->
-  <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
-  <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
-  <string name="multimedia_editor_imgs_pick">Изабери</string>
-  <!-- in controller when fails -->
-  <string name="multimedia_editor_imgs_failed">Претрага слика није успешнa</string>
-  <!-- while searching -->
-  <string name="multimedia_editor_imgs_searching_for_images">Претрага слика</string>
   <!-- Field editing general -->
   <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">Текст</string>
@@ -128,7 +114,6 @@
   <string name="title_activity_edit_text">Поље за уређивање</string>
   <string name="title_activity_translation">Превод</string>
   <string name="title_activity_load_pronounciation">Изговор</string>
-  <string name="title_activity_search_image">Гугл претрага слика</string>
   <!-- Network failure -->
   <string name="network_no_connection">Није повезано.</string>
 </resources>

@@ -38,6 +38,7 @@
   <string name="multimedia_editor_popup_image">Thêm hình ảnh</string>
   <string name="multimedia_editor_popup_audio">Ghi âm</string>
   <string name="multimedia_editor_popup_text">Biên tập mở rộng</string>
+  <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
   <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">Được tài trợ bởi glosbe.com</string>
   <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -63,21 +64,6 @@
   <string name="multimedia_editor_pron_pronunciation_failed">Không thể phát âm</string>
   <string name="multimedia_editor_word_search_try_lower_case">Chỉ sử dụng chữ thường</string>
   <string name="multimedia_editor_poweredbeolingus">Được tài trợ bởi Beolingus</string>
-  <!-- Image search activity -->
-  <!-- in progress dialog when loading the image -->
-  <string name="multimedia_editor_imgs_saving_image">Đang lưu ảnh</string>
-  <string name="multimedia_editor_imgs_loading_image">Đang tải ảnh</string>
-  <string name="multimedia_editor_imgs_no_results">Không tìm thấy kết quả</string>
-  <string name="multimedia_editor_imgs_images_found">Tìm thấy hình ảnh</string>
-  <string name="multimedia_editor_imgs_pow_by_google">Được tài trợ bởi Google Image Search</string>
-  <!-- buttons -->
-  <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
-  <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
-  <string name="multimedia_editor_imgs_pick">Chọn</string>
-  <!-- in controller when fails -->
-  <string name="multimedia_editor_imgs_failed">Tìm kiếm hình ảnh không thành công</string>
-  <!-- while searching -->
-  <string name="multimedia_editor_imgs_searching_for_images">Tìm kiếm hình ảnh</string>
   <!-- Field editing general -->
   <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">Văn bản</string>
@@ -128,7 +114,6 @@
   <string name="title_activity_edit_text">Editing field</string>
   <string name="title_activity_translation">Translation</string>
   <string name="title_activity_load_pronounciation">Pronunciation</string>
-  <string name="title_activity_search_image">Google Image Search</string>
   <!-- Network failure -->
   <string name="network_no_connection">No connection</string>
 </resources>

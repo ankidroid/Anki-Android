@@ -40,8 +40,8 @@
 -->
 <resources>
   <!-- generic strings -->
-  <string name="disabled">Disabled</string>
-  <string name="enabled">Enabled</string>
+  <string name="disabled">Вимкнено</string>
+  <string name="enabled">Ввімкнено</string>
   <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Основні налаштування</string>
@@ -51,10 +51,10 @@
   <string name="pref_cat_flashcard">Відображення</string>
   <string name="pref_cat_whiteboard">Дошка</string>
   <string name="pref_cat_automatic_display">Автоматично відображати відповідь</string>
-  <string name="pref_cat_appearance">Appearance</string>
-  <string name="pref_cat_appearance_summ">Change themes and default font</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_appearance">Зовнішній вигляд</string>
+  <string name="pref_cat_appearance_summ">Зміна теми і шрифтів</string>
+  <string name="pref_cat_themes">Теми</string>
+  <string name="pref_cat_fonts">Шрифти</string>
   <string name="pref_cat_gestures">Жести</string>
   <string name="pref_cat_gestures_summ">Використовуйте дотики і проведення пальцем замість кнопок</string>
   <string name="pref_cat_actions">Дії</string>
@@ -68,7 +68,7 @@
   <!-- preferences.xml entries-->
   <string name="whiteboard_stroke_width">Ширина штриха</string>
   <string name="whiteboard_black">Чорні штрихи</string>
-  <string name="whiteboard_black_summ">Uses less memory, unless in night mode</string>
+  <string name="whiteboard_black_summ">Використовує менше пам\'яті, якщо не в нічному режимі</string>
   <string name="write_answers_disable">Disable typing in answer</string>
   <string name="write_answers_disable_summ">Prevents keyboard from appearing on cards containing type-the-answer fields</string>
   <string name="use_input_tag">Type answer into the card</string>
@@ -92,8 +92,8 @@
   <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
   <string name="answer_buttons_position">Answer buttons position</string>
   <string-array name="answer_buttons_position_labels">
-    <item>Top</item>
-    <item>Bottom</item>
+    <item>Вгорі</item>
+    <item>Знизу</item>
   </string-array>
   <string name="gestures">Увімкнути жести</string>
   <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
@@ -118,25 +118,25 @@
   <string name="sync_account">Профіль AnkiWeb</string>
   <string name="sync_account_summ_logged_out">Не ввійшли в систему</string>
   <string name="sync_account_summ_logged_in">%s</string>
-  <string name="automatic_sync_choice">Automatic synchronization</string>
+  <string name="automatic_sync_choice">Автоматична синхронізація</string>
   <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
   <string name="fix_hebrew_text">Виправлення для голосних на івриті</string>
   <string name="fix_hebrew_text_summ">Вирішення проблеми з неправильним відображенням голосних на івриті.</string>
   <string name="fix_hebrew_instructions">Ця настройка обходить RTL(з права наліво) алгоритм Android, щоб правильно відображати текст з голосними на івриті .\n\nДля цього вам також необхідно завантажити шрифт Tohu.ttf і скопіювати його вручну в:\n%s/fonts/\n\nВам не доведеться змінювати свої карти.</string>
   <string name="fix_hebrew_download_font">Завантажити шрифт</string>
-  <string name="day_theme">Day theme</string>
-  <string name="night_theme">Night theme</string>
+  <string name="day_theme">Денна тема</string>
+  <string name="night_theme">Нічна тема</string>
   <string name="default_font">Типовий шрифт</string>
   <string name="override_font">Default font applicability</string>
   <string name="language">Мова</string>
   <string name="language_system">Мова системи</string>
-  <string name="notification_pref">Notifications</string>
-  <string name="notification_pref_title">Notify when</string>
-  <string name="never_notify">Never notify</string>
+  <string name="notification_pref">Сповіщення</string>
+  <string name="notification_pref_title">Повідомити, коли</string>
+  <string name="never_notify">Ніколи</string>
   <string name="notify_when_pending">Pending messages available</string>
   <string name="notification_minimum_cards_due">More than %d cards due</string>
-  <string name="notification_minimum_cards_due_vibrate">Vibrate</string>
+  <string name="notification_minimum_cards_due_vibrate">Вібрація</string>
   <string name="notification_minimum_cards_due_blink">Blink light</string>
   <string name="timeout_answer_text">Автоматичне відкриття відповіді</string>
   <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>

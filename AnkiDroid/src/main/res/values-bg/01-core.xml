@@ -162,5 +162,5 @@
   <string name="card_template_editor_would_delete_note">Изтриването на този тип карти ще доведе до премахване на една или няколко бележки. Моля, първо създайте нов тип карти.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Четене и записване в базата данни AnkiDroid</string>
-  <string name="read_write_permission_description">Позволете на приложението достъп до съществувани бележки, карти, типове бележки и тестета, както и създаване на нови</string>
+  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

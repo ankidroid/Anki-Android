@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">Vibrieren</string>
   <string name="notification_minimum_cards_due_blink">Blinken</string>
   <string name="timeout_answer_text">Antwort automatisch zeigen</string>
-  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
+  <string name="timeout_answer_summ">Zeige Antwort automatisch ohne Benutzereingabe. Verzögerung enthält Zeit für automatisch gespielte Audiodateien.</string>
   <string name="timeout_answer_seconds">Zeit bis zum Zeigen der Antwort</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Zeit, bis die nächste Frage gezeigt wird</string>
@@ -203,7 +203,7 @@
   <string name="deck_conf_rev_cards">Wiederholungen</string>
   <string name="deck_conf_lps_cards">Fehlschläge</string>
   <string name="deck_conf_general">Allgemein</string>
-  <string name="deck_conf_reminders">Reminders</string>
+  <string name="deck_conf_reminders">Erinnerungen</string>
   <string name="deck_conf_steps">Schritte (in Minuten)</string>
   <string name="deck_conf_order">Reihenfolge</string>
   <string name="deck_conf_new_cards_day">Neue Karten/Tag</string>
@@ -256,8 +256,8 @@
   <string name="deck_conf_cram_order">Karten ausgewählt nach</string>
   <string name="deck_conf_cram_reschedule">Neu planen</string>
   <string name="deck_conf_cram_reschedule_summ">Karten basierend auf meinen Antworten in diesem Stapel neu planen</string>
-  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
+  <string name="deck_conf_cram_steps">Benutzerdefinierte Schritte (in Minuten)</string>
   <string name="deck_conf_cram_steps_summ">Benutzerdefinierte Schritte definieren</string>
-  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
-  <string name="deck_conf_reminders_time">Remind at</string>
+  <string name="deck_conf_reminders_enabled">Für diesen Stapel Benachrichtigungen zur Erinnerung aktiveren</string>
+  <string name="deck_conf_reminders_time">Erinnern am</string>
 </resources>

@@ -38,6 +38,7 @@
   <string name="multimedia_editor_popup_image">Přidat obrázek</string>
   <string name="multimedia_editor_popup_audio">Pořídit zvukový záznam</string>
   <string name="multimedia_editor_popup_text">Pokročilý editor</string>
+  <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
   <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">Běží na glosbe.com</string>
   <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -63,21 +64,6 @@
   <string name="multimedia_editor_pron_pronunciation_failed">Výslovnost selhala</string>
   <string name="multimedia_editor_word_search_try_lower_case">Zkuste použít pouze malá písmena</string>
   <string name="multimedia_editor_poweredbeolingus">Běží na Beolingus</string>
-  <!-- Image search activity -->
-  <!-- in progress dialog when loading the image -->
-  <string name="multimedia_editor_imgs_saving_image">Ukládání obrázku</string>
-  <string name="multimedia_editor_imgs_loading_image">Načítání obrázku</string>
-  <string name="multimedia_editor_imgs_no_results">Hledání nevrátilo žádné výsledky</string>
-  <string name="multimedia_editor_imgs_images_found">Obrázky nalezeny</string>
-  <string name="multimedia_editor_imgs_pow_by_google">Běží na Google Image Search</string>
-  <!-- buttons -->
-  <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
-  <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
-  <string name="multimedia_editor_imgs_pick">Vybrat</string>
-  <!-- in controller when fails -->
-  <string name="multimedia_editor_imgs_failed">Hledání obrázku se nezdařilo</string>
-  <!-- while searching -->
-  <string name="multimedia_editor_imgs_searching_for_images">Hledání obrázků</string>
   <!-- Field editing general -->
   <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">Text</string>
@@ -128,7 +114,6 @@
   <string name="title_activity_edit_text">Editační pole</string>
   <string name="title_activity_translation">Překlad</string>
   <string name="title_activity_load_pronounciation">Výslovnost</string>
-  <string name="title_activity_search_image">Hledání obrázků Google</string>
   <!-- Network failure -->
   <string name="network_no_connection">Žádné připojení</string>
 </resources>

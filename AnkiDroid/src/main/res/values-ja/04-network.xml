@@ -102,7 +102,7 @@
   <string name="sync_writing_db">データベースに変更を記録しています...</string>
   <string name="sync_download_chunk">変更内容をダウンロードしています...</string>
   <string name="sync_upload_chunk">変更内容をアップロードしています...</string>
-  <string name="sync_up_down_size">アップロード: %1$d kb　\nダウンロード: %2$d kb</string>
+  <string name="sync_up_down_size">アップロード: %1$d kB　\nダウンロード: %2$d kB</string>
   <string name="sync_generic_error">エラーが発生しました。後でもう一度実行してください。</string>
   <string name="sync_check_upload_file">アップロード前にファイルを確認しています...</string>
   <string name="sync_check_download_file">ダウンロードしたファイルを確認しています...</string>
@@ -111,12 +111,12 @@
   <string name="sync_media_success">メディアの同期が完了しました</string>
   <string name="sync_media_changes_count">%d 個のメディアが変更されアップロードが必要です</string>
   <string name="sync_media_downloaded_count">%d 個のメディアをダウンロードしました</string>
-  <string name="sync_sanity_failed">同期中にコレクションの不整合が発見されました。この問題を解決するためには完全同期が必要です。Ankiweb側と AnkiDroid側（この端末）のいずれのコレクションを保持するかを選択してください。</string>
+  <string name="sync_sanity_failed">同期中にコレクションの不整合が発見されました。この問題を解決するためには完全同期が必要です。Ankiweb側（クラウド）と AnkiDroid側（ローカル）のいずれのコレクションを保持するかを選択してください。</string>
   <string name="sync_media_sanity_failed">メディアの同期が完了しました。しかし、メディアの数がAnkiWeb上のものと一致しません。次にメディアを同期するときには、エラーを修正するために完全同期を行います。</string>
   <string name="sync_media_error">メディアデータの同期中のエラー</string>
   <string name="sync_media_error_check">メディアの同期中にエラーが発生しました。「メディアをチェック」を実行することをおすすめします。</string>
   <string name="sync_sanity_local">ローカル</string>
-  <string name="sync_sanity_remote">リモート</string>
+  <string name="sync_sanity_remote">クラウド</string>
   <string name="force_full_sync_title">完全同期を強制する</string>
   <string name="force_full_sync_summary">次回の同期で、一方向の変更を強制実行します</string>
   <string name="full_sync_confirmation">要求した変更を行うには、次回のコレクションの同期の際にデータベースの完全なアップロードが必要です。他の端末で復習やその他の変更を行ってまだ同期が済んでいない場合、それらの変更は失われます。処理を続けますか？</string>

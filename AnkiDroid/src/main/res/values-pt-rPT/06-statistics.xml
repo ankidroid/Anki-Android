@@ -99,7 +99,7 @@
     <item>Meses</item>
   </string-array>
   <string name="stats_today">Hoje</string>
-  <string name="stats_overview">Overview</string>
+  <string name="stats_overview">Visão geral</string>
   <string name="stats_forecast">Previsão</string>
   <string name="stats_review_count">Contagem de revisões</string>
   <string name="stats_review_time">Tempo de revisão</string>

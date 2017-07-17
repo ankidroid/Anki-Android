@@ -158,5 +158,5 @@
   <string name="card_template_editor_would_delete_note">Xoá bỏ loại thẻ này có thể dẫn đến việc một hay nhiều ghi chú bị xoá. Xin tạo loại thẻ mới trước đã.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Đọc và ghi vào cơ sở dữ liệu AnkiDroid</string>
-  <string name="read_write_permission_description">Cho phép ứng dụng truy cập các ghi chú, thẻ, loại ghi chú và bộ thẻ hiện hữu cũng như tạo mới</string>
+  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

@@ -162,5 +162,5 @@
   <string name="card_template_editor_would_delete_note">Korttityypin poistaminen aiheuttaisi yhden tai useamman kortin poistamisen. Luo uusi korttityyppi.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Lue ja kirjoita AnkiDroidi-tietokantaan</string>
-  <string name="read_write_permission_description">Anna sovellukselle lupa päästä aiemmin luotuihin muistiinpanoihin, kortteihin, korttityyppeihin ja pakkoihin käsiksi ja luoda myöskin uusia</string>
+  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

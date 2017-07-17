@@ -158,18 +158,20 @@
   <string name="confirm_apkg_export">컬렉션을 apkg 파일로 내보낼까요?</string>
   <string name="confirm_apkg_export_deck">\"%s\"를 apkg 파일로 내보낼까요?</string>
   <string name="export_in_progress">apkg 파일 내보내는 중...</string>
-  <string name="export_successful_title">Send apkg?</string>
-  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+  <string name="export_successful_title">Apkg 보내기?</string>
+  <string name="export_successful">파일 \"%s\" 는 보내졌습니다. 다른 앱으로 보내고 싶으십니까?</string>
+  <string name="export_email_subject">AnkiDroid로 보내진 플래시 카드: %s</string>
   <string name="export_email_text">
         <![CDATA[
-        Hi!
+        안녕하세요!
         <br/><br/>
-        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+      이것은 여기에서 보내진 안키 플래시 카드입니다. <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        이 중에서 이용 가능한 것을 사용하여 열어보세요 <a href="http://ankisrs.net/#download">Anki distributions</a> 쉽고 효율적으로 즐겁게 공부하세요!
         ]]>
-    </string>
-  <string name="export_unsuccessful">컬렉션 내보내기 오류</string>
+    
+ 
+Context | Request Context    </string>
+  <string name="export_unsuccessful">Apkg 파일 오류 내보내기</string>
   <string name="import_hint">카드를 가져오려면, %s 폴더로 apkg 파일을 옮긴 후 확인을 눌러주세요</string>
   <string name="upgrade_import_no_file_found">가져올 수 있는 %1$s 파일이 발견되지 않음</string>
   <string name="study_options">카드 묶음 옵션</string>
@@ -211,10 +213,13 @@
   <string name="decks_rename_exists">카드 묶음이 이미 존재합니다</string>
   <string name="decks_rename_filtered_nosubdecks">필터링된 카드 묶음은 하위 카드 묶음을 가질 수 없습니다</string>
   <string name="filtered_deck_name">필터링된 카드 묶음</string>
-  <string name="reminder_title">Do not forget to study today!</string>
+  <string name="reminder_title">오늘의 학습 잊지 마세요!</string>
   <plurals name="reminder_text">
-    <item quantity="other">%2$d new cards to review in %1$s</item>
+    <item quantity="other">Singular Form
+%2$d 새로운 카드 %1$s에서 복습하세요
+Plural Form
+%2$d 새로운 카드들 %1$s에서 복습하세요</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->
-  <string name="apk_share_error">Error sharing apkg file</string>
+  <string name="apk_share_error">Apkg 파일 공유 오류</string>
 </resources>

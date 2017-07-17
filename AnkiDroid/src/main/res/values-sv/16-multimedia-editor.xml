@@ -38,6 +38,7 @@
   <string name="multimedia_editor_popup_image">Lägg till bild</string>
   <string name="multimedia_editor_popup_audio">Spela in ljud</string>
   <string name="multimedia_editor_popup_text">Avancerad redigering</string>
+  <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
   <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">Använder glosbe.com</string>
   <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -63,21 +64,6 @@
   <string name="multimedia_editor_pron_pronunciation_failed">Uttal misslyckades</string>
   <string name="multimedia_editor_word_search_try_lower_case">Försök att använda enbart små bokstäver</string>
   <string name="multimedia_editor_poweredbeolingus">Använder Beolingus</string>
-  <!-- Image search activity -->
-  <!-- in progress dialog when loading the image -->
-  <string name="multimedia_editor_imgs_saving_image">Sparar bild</string>
-  <string name="multimedia_editor_imgs_loading_image">Laddar bild</string>
-  <string name="multimedia_editor_imgs_no_results">Sökning gav inga resultat</string>
-  <string name="multimedia_editor_imgs_images_found">Bilder hittade</string>
-  <string name="multimedia_editor_imgs_pow_by_google">Använder Google Image Search</string>
-  <!-- buttons -->
-  <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
-  <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
-  <string name="multimedia_editor_imgs_pick">Välj</string>
-  <!-- in controller when fails -->
-  <string name="multimedia_editor_imgs_failed">Bildsökning misslyckades</string>
-  <!-- while searching -->
-  <string name="multimedia_editor_imgs_searching_for_images">Söker efter bilder</string>
   <!-- Field editing general -->
   <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">Text</string>
@@ -128,7 +114,6 @@
   <string name="title_activity_edit_text">Redigeringsfält</string>
   <string name="title_activity_translation">Översättning</string>
   <string name="title_activity_load_pronounciation">Uttal</string>
-  <string name="title_activity_search_image">Google Bildsökning</string>
   <!-- Network failure -->
   <string name="network_no_connection">Ingen anslutning.</string>
 </resources>

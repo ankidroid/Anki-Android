@@ -63,5 +63,5 @@
   <!--Model Add Suffixes-->
   <string name="model_browser_add_add">追加: %1$s </string>
   <!--This prefix is used for standard note types-->
-  <string name="model_browser_add_clone">クローン: %1$s </string>
+  <string name="model_browser_add_clone">複製: %1$s </string>
 </resources>

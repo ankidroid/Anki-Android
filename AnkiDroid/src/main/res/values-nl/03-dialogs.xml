@@ -58,7 +58,7 @@
     <item><![CDATA[<h2>%1$s: <br/> Flashcards voor Android</h2>AnkiDroid is een flashcard-app die volledig compatibel met de desktopsoftware <a href=\"%2$s\"> Anki</a>. Zowel in AnkiDroid als in Anki voor desktop kunt u kaarten maken, downloaden en leren en deze gemakkelijk synchroniseren met AnkiWeb.]]></item>
     <item><![CDATA[Om AnkiDroid beter te helpen maken, gelieve de bugs te rapporteren in <a href=\"%1$s\"> de issue tracker</a>; nieuwe ideeën voor functionaliteiten zijn ook zeer welkom. U kunt ook antwoorden vinden op <a href=\"%2$s\"> de wiki</a> of een discussie starten op <a href=\"%3$s\"> het forum</a>.]]></item>
     <item><![CDATA[AnkiDroid is <a href=\"%1$s\"> open bronsoftware<a/>, zodat iedereen wordt aangemoedigd om <a href=\"%2$s\"> bij te dragen</a> :-)]]></item>
-    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
+    <item><![CDATA[Non-ontwikkelaars kunnen ook helpen. U kunt bijvoorbeeld <a href=\"%1$s\"> helpen met het vertalen</a> van AnkiDroid, de wiki bijwerken, screenshots sturen, of over AnkiDroid bloggen.]]></item>
     <item><![CDATA[AnkiDroid is vrijgegeven onder de <a href=\"%1$s\"> GNU-GPL v3 licentie</a> en de broncode is beschikbaar <a href=\"%2$s\"> op GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Voorbeeld</string>
@@ -87,8 +87,8 @@
   <string name="rebuild_custom_study_deck">Bezig de aangepaste studieset te maken.\nEven geduld...</string>
   <string name="importing_collection">Collectie aan het importeren.\nGelieve even te wachten&#8230;</string>
   <string name="import_media_count">Mediabestanden aan het importeren %1$d%%\nGelieve even te wachten&#8230;</string>
-  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
-  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
+  <string name="import_progress">• Importeren notities: %1$d%%\n• Importeren kaarten: %2$d%%\n• Post-processing: %3$d%%</string>
+  <string name="import_update_details">%1$d van de %2$d bestaande notities bijgewerkt.</string>
   <string name="import_update_ignored">Sommige veranderingen zijn genegeerd omdat het notitietype is veranderd</string>
   <string name="import_complete_count">Kaarten geïmporteerd: %d</string>
   <string name="sd_card_full_title">SD-kaart vol</string>

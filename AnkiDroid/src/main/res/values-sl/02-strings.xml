@@ -169,7 +169,7 @@
   <string name="export_in_progress">Izvažanje datoteke apkg &#8230;</string>
   <string name="export_successful_title">Pošlji apkg?</string>
   <string name="export_successful">Datoteka \"%s\" je bila izvožena. Ali jo želite poslati z drugim programom?</string>
-  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+  <string name="export_email_subject">Izvožene pomnilne kartice AnkiDroid: %s</string>
   <string name="export_email_text">
         <![CDATA[
         Hi!
@@ -178,7 +178,7 @@
         Poskusite ga odpreti z eno od razpoložljivih <a href="http://ankisrs.net/#download">distribucij Anki</a> in uživajte v enostavnem in učinkovitem učenju!
         ]]>
     </string>
-  <string name="export_unsuccessful">Napaka pri izvažanju zbirke</string>
+  <string name="export_unsuccessful">Napaka pri izvažanju datoteke apkg</string>
   <string name="import_hint">Vstavite datoteko apkg v mapo \"%s\" in pritisnite \"V redu\", da uvozite kartice</string>
   <string name="upgrade_import_no_file_found">Nobene uvozljive datoteke %1$s ni bilo mogoče najti</string>
   <string name="study_options">Možnosti kompleta</string>

@@ -38,6 +38,7 @@
   <string name="multimedia_editor_popup_image">Resim Ekle</string>
   <string name="multimedia_editor_popup_audio">Ses Kaydet</string>
   <string name="multimedia_editor_popup_text">Gelişmiş Düzenleyici</string>
+  <string name="multimedia_editor_popup_cloze">Boşluk doldurma</string>
   <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">Hizmet glosbe.com tarafından sağlanmaktadır.</string>
   <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -63,21 +64,6 @@
   <string name="multimedia_editor_pron_pronunciation_failed">Telaffuz başarısız</string>
   <string name="multimedia_editor_word_search_try_lower_case">Yalnızca küçük harf kullanarak deneyin</string>
   <string name="multimedia_editor_poweredbeolingus">Hizmet Beolingus tarafından sağlanmaktadır.</string>
-  <!-- Image search activity -->
-  <!-- in progress dialog when loading the image -->
-  <string name="multimedia_editor_imgs_saving_image">Resim kaydediliyor</string>
-  <string name="multimedia_editor_imgs_loading_image">Resim yükleniyor</string>
-  <string name="multimedia_editor_imgs_no_results">Arama sonuç vermedi</string>
-  <string name="multimedia_editor_imgs_images_found">Bulunan resimler</string>
-  <string name="multimedia_editor_imgs_pow_by_google">Hizmet Google Resim Arama tarafından sağlanmaktadır.</string>
-  <!-- buttons -->
-  <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
-  <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
-  <string name="multimedia_editor_imgs_pick">Seç</string>
-  <!-- in controller when fails -->
-  <string name="multimedia_editor_imgs_failed">Resim arama başarısız</string>
-  <!-- while searching -->
-  <string name="multimedia_editor_imgs_searching_for_images">Resim aranıyor</string>
   <!-- Field editing general -->
   <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">Yazı</string>
@@ -128,7 +114,6 @@
   <string name="title_activity_edit_text">Düzenleme Kutusu</string>
   <string name="title_activity_translation">Çeviri</string>
   <string name="title_activity_load_pronounciation">Telaffuz</string>
-  <string name="title_activity_search_image">Google Resim Arama</string>
   <!-- Network failure -->
   <string name="network_no_connection">Bağlantı yok.</string>
 </resources>

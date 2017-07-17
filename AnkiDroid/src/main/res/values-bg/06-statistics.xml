@@ -99,11 +99,11 @@
     <item>Месеци</item>
   </string-array>
   <string name="stats_today">Днес</string>
-  <string name="stats_overview">Overview</string>
+  <string name="stats_overview">Обобщение</string>
   <string name="stats_forecast">Прогноза</string>
   <string name="stats_review_count">Брой преглеждания</string>
   <string name="stats_review_time">Преглед на времето</string>
-  <string name="stats_added">Added</string>
+  <string name="stats_added">Добавено</string>
   <string name="stats_review_intervals">Интервали</string>
   <string name="stats_breakdown">Почасова разбивка</string>
   <string name="stats_weekly_breakdown">Седмична разбивка</string>

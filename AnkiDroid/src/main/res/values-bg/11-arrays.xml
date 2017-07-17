@@ -94,11 +94,11 @@
     <item>Винаги</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Plain</item>
+    <item>Светла</item>
+    <item>Обикновена</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
+    <item>Черна</item>
+    <item>Тъмна</item>
   </string-array>
 </resources>

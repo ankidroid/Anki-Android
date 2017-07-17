@@ -166,5 +166,5 @@
   <string name="card_template_editor_would_delete_note">Брисање тог типа карата довешће до брисања једног или неколико белешки. Направите прво нови тип карата.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Читати и писати у бази података AnkiDroid</string>
-  <string name="read_write_permission_description">Дозволи апликацији да има доступ ка постојећим белешкама, картама, моделима и шпиловима, а такође да креира нове.</string>
+  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

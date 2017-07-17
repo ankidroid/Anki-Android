@@ -42,46 +42,46 @@
   <!-- How to format a percentage shown in the summary field of a preference -->
   <string name="preference_summary_percentage">XXX%</string>
   <!-- Navigation drawer strings -->
-  <string name="drawer_open">Open drawer</string>
-  <string name="drawer_close">Close drawer</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
-  <string name="CardEditorCardDeck">Kortelių malka:</string>
-  <string name="CardEditorNoteDeck">Malka:</string>
+  <string name="drawer_open">Atidaryti meniu</string>
+  <string name="drawer_close">Uždaryti meniu</string>
+  <string name="CardEditorLaterMessage">Vėlesniam naudojimui išsaugota informacija</string>
+  <string name="CardEditorCardDeck">Kortelių rinkinys:</string>
+  <string name="CardEditorNoteDeck">Rinkinys:</string>
   <string name="CardEditorModel">Tipas:</string>
-  <string name="CardEditorTags">Žymos: %1$s</string>
+  <string name="CardEditorTags">Žymės: %1$s</string>
   <string name="CardEditorCards">Kortelės: %1$s</string>
-  <string name="tag_name">Etiketės pavadinimas</string>
-  <string name="add_new_filter_tags">Pridėti/filtruoti žymas</string>
-  <string name="add_tag">Pridėti etiketę</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
-  <string name="filter_tags">Filtruoti žymas</string>
-  <string name="no_tags">You haven’t added any tags yet</string>
-  <string name="sdcard_missing_message">SD kortelė yra nepasiekiama, nes jis yra naudojama kaip USB laikmena. Atjunkite USB, jei norite naudoti savo rinkinius.</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="tag_name">Žymės pavadinimas</string>
+  <string name="add_new_filter_tags">Pridėti/filtruoti žymes</string>
+  <string name="add_tag">Pridėti žymę</string>
+  <string name="check_all_tags">Pažymėti/atžymėti visas žymes</string>
+  <string name="filter_tags">Filtruoti žymes</string>
+  <string name="no_tags">Dar nepridėjote jokių žymių</string>
+  <string name="sdcard_missing_message">Atjungti USB jungtį, siekiant prisijungti prie savo rinkinių</string>
+  <string name="updated_version">Atnaujinta versija %s</string>
   <!-- Reviewer.java -->
-  <string name="enable_whiteboard">Įgalinti piešimo lenta</string>
-  <string name="disable_whiteboard">Išjungti piešimo lenta</string>
-  <string name="show_whiteboard">Rodyti baltą lentą</string>
-  <string name="hide_whiteboard">Paslėpti baltą lentą</string>
+  <string name="enable_whiteboard">Įjungti rašymo lentą</string>
+  <string name="disable_whiteboard">Išjungti rašymo lentą</string>
+  <string name="show_whiteboard">Rodyti rašymo lentą</string>
+  <string name="hide_whiteboard">Slėpti rašymo lentą</string>
   <string name="clear_whiteboard">Išvalyti lentą</string>
   <string name="replay_audio">Pagroti dar kartą</string>
-  <string name="leech_suspend_notification">Card marked as leech and suspended</string>
-  <string name="leech_notification">Card marked as leech</string>
-  <string name="corrupt_font">Corrupt font file %s</string>
+  <string name="leech_suspend_notification">Kortelė pažymėta kaip sunkiai įsimenama, todėl buvo atidėta</string>
+  <string name="leech_notification">Kortelė buvo pažymėta kaip sunkiai įsimenama</string>
+  <string name="corrupt_font">Sugadintas šriftų failas %s</string>
   <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>Klausimas</item>
-    <item>Rūšiuoti lauką</item>
+    <item>Rūšiavimo laukas</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Atsakymas</item>
     <item>Kortelė</item>
-    <item>Malka</item>
-    <item>Pastaba</item>
+    <item>Rinkinys</item>
+    <item>Užrašas</item>
     <item>Klausimas</item>
     <item>Žymos</item>
-    <item>Lapses</item>
-    <item>Kartojimai</item>
+    <item>Dažnai užmirštamos</item>
+    <item>Peržiūros</item>
     <!--
     <item>Changed</item>
     <item>Created</item>
@@ -92,115 +92,115 @@
         -->
   </string-array>
   <!-- Custom study options -->
-  <string name="custom_study_increase_new_limit">Padidinti šiandienos naujų kortelių limitą</string>
-  <string name="custom_study_increase_review_limit">Padidinti šiandienos kartojimo kortelių limitą</string>
-  <string name="custom_study_review_forgotten">Kartoti pamirštas korteles</string>
+  <string name="custom_study_increase_new_limit">Padidinti šiandienos naujų kortelių skaičių</string>
+  <string name="custom_study_increase_review_limit">Padidinti šiandienos peržiūrimų kortelių skaičių</string>
+  <string name="custom_study_review_forgotten">Peržiūrėti pamirštas korteles</string>
   <string name="custom_study_review_ahead">Peržiūrėti į priekį</string>
-  <string name="custom_study_random_selection">Studijuoti atsitiktines korteles</string>
+  <string name="custom_study_random_selection">Studijuoti atsitiktine tvarka atrinktas korteles</string>
   <string name="custom_study_preview_new">Peržiūrėti naujas korteles</string>
-  <string name="custom_study_limit_tags">Limit to particular tags</string>
+  <string name="custom_study_limit_tags">Apriboti iki tam tikrų žymių</string>
   <!-- Card editor -->
-  <string name="cardeditor_title_add_note">Pridėti pastabą</string>
-  <string name="cardeditor_title_edit_card">Keisti pastabą</string>
-  <string name="discard_unsaved_changes">Close and lose current input?</string>
-  <string name="factadder_saving_error">Klaida įrašant pastabą</string>
-  <string name="saving_facts">Įrašoma pastaba</string>
+  <string name="cardeditor_title_add_note">Pridėti užrašą</string>
+  <string name="cardeditor_title_edit_card">Keisti užrašą</string>
+  <string name="discard_unsaved_changes">Uždaryti ir panaikinti įvestą tekstą?</string>
+  <string name="factadder_saving_error">Išsaugoti užrašo nepavyko</string>
+  <string name="saving_facts">Užrašas įrašomas</string>
   <string name="saving_model">Modelis išsaugomas</string>
   <string name="add">Pridėti</string>
   <string name="save">Išsaugoti</string>
-  <string name="close">Užverti</string>
-  <string name="select">Pasirinkti</string>
+  <string name="close">Uždaryti</string>
+  <string name="select">Pažymėti</string>
   <string name="saving_changes">Išsaugomi pakeitimai&#8230;</string>
-  <string name="reordering_cards">Įrašomos kortelės&#8230;</string>
-  <string name="field_remapping">%1$s (from “%2$s”)</string>
-  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+  <string name="reordering_cards">Keičiamas kortelių eiliškumas&#8230;</string>
+  <string name="field_remapping">%1$s (nuo “%2$s”)</string>
+  <string name="confirm_map_cards_to_nothing">Bet kokios tuščios kortelės bus ištrintos. Jei užrašas neturės susijusių kortelių, jis bus ištrintas. Ar tikrai norite tęsti?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
-    <item quantity="few">%1$d cards studied in %2$s</item>
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="one">Per %2$s išmokote %1$d kortelę</item>
+    <item quantity="few">Per %2$s išmokote %1$d korteles</item>
+    <item quantity="other">Per %2$s išmokote %1$d kortelių</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minute</item>
+    <item quantity="one">%1$d minutę</item>
     <item quantity="few">%1$d minutes</item>
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="other">%1$d minučių</item>
   </plurals>
-  <string name="studyoptions_welcome_title">Sveiki atvykę į AnkiDroid</string>
-  <string name="fact_adder_intent_title">AnkiDroid kortelė</string>
-  <string name="card_editor_add_card">Pridėti pastabą</string>
+  <string name="studyoptions_welcome_title">Sveiki apsilankę „AnkiDroid“ programoje</string>
+  <string name="fact_adder_intent_title">„AnkiDroid“ kortelė</string>
+  <string name="card_editor_add_card">Pridėti užrašą</string>
   <string name="card_editor_copy_card">Kopijuoti kortelę</string>
   <string name="card_editor_reset_card">Atkurti pažangą</string>
-  <string name="card_editor_reschedule_card">Reschedule card</string>
+  <string name="card_editor_reschedule_card">Keisti kortelės mokymosi dieną</string>
   <string name="card_editor_preview_card">Peržiūra</string>
-  <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
+  <string name="error_insufficient_memory">Veiksmo atlikti neįmanoma, nes jūsų įrenginyje neužtenka atminties</string>
   <string name="rename">Pervadinti</string>
-  <string name="default_conf_delete_error">The default options group can’t be removed</string>
+  <string name="default_conf_delete_error">Numatytųjų parinkčių grupė negali būti pašalinta</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
-    <item quantity="few">%d cards added</item>
-    <item quantity="other">%d kortelės buvo pridėtos</item>
+    <item quantity="one">Pridėta %d kortelė</item>
+    <item quantity="few">Pridėtos %d kortelės</item>
+    <item quantity="other">Pridėta %d kortelių</item>
   </plurals>
   <string name="help_title">Pagalba</string>
-  <string name="check_db">Patikrinti duomenų bazę</string>
-  <string name="check_media">Check media</string>
+  <string name="check_db">Tikrinti duomenų bazę</string>
+  <string name="check_media">Tikrinti laikmenas</string>
   <string name="empty_cards">Tuščios kortelės</string>
   <string name="check_db_message">Tikrinama duomenų bazė&#8230;</string>
-  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
-  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-  <string name="delete_deck">Ištrinama malka&#8230;</string>
+  <string name="empty_card_warning">Ši kortelė yra tuščia. Naudokite parinktį „Tuščios kortelės“, esančią rinkinių sąrašo meniu.</string>
+  <string name="unknown_type_field_warning">Atsakymo tipas: nežinomas laukelis %s</string>
+  <string name="delete_deck">Rinkinys trinamas&#8230;</string>
   <string name="show_hint">Rodyti %s</string>
-  <string name="info_rate">Įvertinti AnkiDroid</string>
-  <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
+  <string name="info_rate">Įvertinkite „AnkiDroid“</string>
+  <string name="col_load_failed">Įkelti kolekcijos nepavyko.\nNorėdami „AnkiDroid“ uždaryti, grįžkite atgal.</string>
   <string name="import_title">Importuojama</string>
-  <string name="import_select_title">Pasirinkite failą importavimui</string>
+  <string name="import_select_title">Pasirinkite įkeliamą failą</string>
   <string name="import_message_add">Pridėti</string>
-  <string name="import_message_replace_confirm">Tai ištrins dabartinę jūsų kolekciją ir pakeis %s failo duomenimis</string>
-  <string name="import_message_add_confirm">Add “%s” to collection? This may take a long time</string>
-  <string name="import_log_no_apkg">Tai nėra galiojančio apkg failo</string>
-  <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg extension</string>
-  <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
+  <string name="import_message_replace_confirm">Jūsų turima kolekcija bus ištrinta ir pakeista %s failo duomenimis</string>
+  <string name="import_message_add_confirm">Ar norite į kolekciją įtraukti „%s“? Tai gali ilgai užtrukti</string>
+  <string name="import_log_no_apkg">Tai nėra galiojantis apkg failas</string>
+  <string name="import_error_not_apkg_extension">Failas „%s“ neturi .apkg plėtinio</string>
+  <string name="import_error_content_provider">Pažymėto failo „AnkiDroid“ automatiškai įkelti negali. Norėdami sužinoti, kaip „anki“ failus galėtumėte įkelti rankiniu būdu, prašome perskaityti vartotojo vadovą: \n%s</string>
   <string name="import_replacing">Pakeičiama kolekcija&#8230;</string>
-  <string name="export_include_schedule">Įtraukti planavimą</string>
-  <string name="export_include_media">Include media</string>
-  <string name="confirm_apkg_export">Eksportuoti kolekcija kaip apkg failą?</string>
-  <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
-  <string name="export_in_progress">Exporting apkg file&#8230;</string>
-  <string name="export_successful_title">Send apkg?</string>
-  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+  <string name="export_include_schedule">Įtraukti mokymosi laiko planavimą</string>
+  <string name="export_include_media">Įtraukti laikmenas</string>
+  <string name="confirm_apkg_export">Eksportuoti kolekciją kaip apkg failą?</string>
+  <string name="confirm_apkg_export_deck">Eksportuoti „%s“ kaip apkg failą?</string>
+  <string name="export_in_progress">Eksportuojamas apkg failas&#8230;</string>
+  <string name="export_successful_title">Siųsti apkg?</string>
+  <string name="export_successful">Failas „%s“ buvo eksportuotas. Ar norite jį siųsti kita programa?</string>
+  <string name="export_email_subject">Eksportuota „AnkiDroid“ kortelių: %s</string>
   <string name="export_email_text">
         <![CDATA[
-        Hi!
+        Sveiki!
         <br/><br/>
-        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
-        ]]>
+        Tai yra „Anki“ kortelių rinkinys, gautas iš <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        Bandykite jį atidaryti naudodami vieną iš siūlomų <a href="http://ankisrs.net/#download">„Anki“ platinamų programų</a> ir mėgaukitės lengvu ir produktyviu mokymusi!
+        ]]>;
     </string>
-  <string name="export_unsuccessful">Klaida eksportuojant kolekciją</string>
-  <string name="import_hint">Norėdamas importuoti korteles, padėkite apkg failą į aplanką %s ir paspauskite Ok</string>
-  <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
+  <string name="export_unsuccessful">Eksportuoti apkg failo nepavyko</string>
+  <string name="import_hint">Norėdami įkelti korteles, į „%s“ katalogą įkelkite apkg failą ir paspauskite „OK“</string>
+  <string name="upgrade_import_no_file_found">Įkėlimui numatytas %1$s failas nerastas</string>
   <string name="study_options">Rinkinio parinktys</string>
-  <string name="select_tts">Nustatyti TTS kalbą</string>
-  <string name="custom_study">Custom study</string>
+  <string name="select_tts">Nustatyti skaitymo balsu kalbą</string>
+  <string name="custom_study">Individualus mokymasis</string>
   <string name="more_options">Daugiau</string>
-  <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
-  <string name="steps_error">Steps must be numbers greater than 0</string>
-  <string name="steps_min_error">Reikalingas bent vienas etapas</string>
+  <string name="dyn_deck_desc">Tai yra specialus rinkinys, skirtas mokytis papildomai. Peržiūrėjus korteles, jos bus automatiškai grąžintos į savo pagrindinius rinkinius. Ištrynus šį rinkinį iš sąrašo, visos kortelės bus grąžintos į savo pradinį rinkinį.</string>
+  <string name="steps_error">Veiksmų skaičius privalo būti didesnis už 0</string>
+  <string name="steps_min_error">Reikia nurodyti bent vieną veiksmą</string>
   <string name="sched_end">(pabaiga)</string>
-  <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
-  <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow</string>
-  <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-  <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
-  <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+  <string name="sched_unbury_action">Norėdami jas dabar pamatyti, meniu pasirinkite „Ištraukti“</string>
+  <string name="sched_has_buried">Kai kurios susijusios arba paslėptos kortelės buvo nukeltos rytdienai</string>
+  <string name="tag_editor_add_feedback">Norėdami pridėti „%1$s“, spauskite „%2$s“</string>
+  <string name="tag_editor_add_feedback_existing">Pasirinkta esama žymė „%1$s“</string>
+  <string name="lookup_hint">Nukopijavę tekstą, paspauskite ant bet kurios kortelės vietos, kad išvystumėte paieškos piktogramą</string>
   <!-- Time spans -->
   <plurals name="time_span_seconds">
     <item quantity="one">%s sekundė</item>
     <item quantity="few">%s sekundės</item>
-    <item quantity="other">%s sekundės</item>
+    <item quantity="other">%s sekundžių</item>
   </plurals>
   <plurals name="time_span_minutes">
     <item quantity="one">%s minutė</item>
     <item quantity="few">%s minutės</item>
-    <item quantity="other">%s minutės</item>
+    <item quantity="other">%s minučių</item>
   </plurals>
   <plurals name="time_span_hours">
     <item quantity="one">%s valanda</item>
@@ -214,27 +214,27 @@
   </plurals>
   <plurals name="time_span_months">
     <item quantity="one">%s mėnuo</item>
-    <item quantity="few">%s mėnuo</item>
-    <item quantity="other">%s mėnesiai</item>
+    <item quantity="few">%s mėnesiai</item>
+    <item quantity="other">%s mėnesių</item>
   </plurals>
   <plurals name="time_span_years">
     <item quantity="one">%s metai</item>
     <item quantity="few">%s metai</item>
-    <item quantity="other">%s metai</item>
+    <item quantity="other">%s metų</item>
   </plurals>
   <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
   <string name="less_than_time">&lt; %s</string>
-  <string name="decks_rename_exists">Tokia malka jau yra</string>
-  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
-  <string name="filtered_deck_name">Filtruota malka</string>
-  <string name="reminder_title">Do not forget to study today!</string>
+  <string name="decks_rename_exists">Toks rinkinys jau yra</string>
+  <string name="decks_rename_filtered_nosubdecks">Rinktinis rinkinys negali turėti poaplankių</string>
+  <string name="filtered_deck_name">Rinktinis rinkinys</string>
+  <string name="reminder_title">Nepamirškite šiandien pasimokyti!</string>
   <plurals name="reminder_text">
-    <item quantity="one">%2$d new card to review in %1$s</item>
-    <item quantity="few">%2$d new cards to review in %1$s</item>
-    <item quantity="other">%2$d new cards to review in %1$s</item>
+    <item quantity="one">Turite peržiūrėti %2$d naują kortelę per %1$s</item>
+    <item quantity="few">Turite peržiūrėti %2$d naujas korteles per %1$s</item>
+    <item quantity="other">Turite peržiūrėti %2$d naujų kortelių per %1$s</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->
-  <string name="apk_share_error">Error sharing apkg file</string>
+  <string name="apk_share_error">Pasidalinti apkg failo nepavyko</string>
 </resources>

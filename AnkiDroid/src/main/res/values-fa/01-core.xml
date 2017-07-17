@@ -162,5 +162,5 @@
   <string name="card_template_editor_would_delete_note">پاکسازی این نوع کارت ممکن است منجر به پاک شدن یک یا تعدادی یادداشت شود.لطفاً در ابتدا یک نوع کارت بسازید. </string>
   <!-- Permissions -->
   <string name="read_write_permission_label">خواندن و نوشتن داده ها روی AnkiDroid</string>
-  <string name="read_write_permission_description">به برنامه اجازه دهید تا به یادداشتهای موجود،کارت ها، نوع یادداشتها و دسته ها و همچنین ایجاد موارد جدید دسترسی داشته باشد</string>
+  <string name="read_write_permission_description">به یادداشتهای موجود، کارت ها، نوع یادداشتها و دسته ها و همچنین ایجاد موارد جدید دسترسی داشته باشید</string>
 </resources>

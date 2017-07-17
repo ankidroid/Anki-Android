@@ -162,5 +162,5 @@
   <string name="card_template_editor_would_delete_note">Ao eliminar este tipo de cartón poderíanse eliminar unha ou máis notas. Por favor, crea primeiro un novo tipo de cartón.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Ler e escribir na bases de datos do AnkiDroid</string>
-  <string name="read_write_permission_description">Permitir que a aplicación poda acceder as notas, cartóns, modelos e barallas existentes así como crear novos</string>
+  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

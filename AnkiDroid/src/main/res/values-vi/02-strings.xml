@@ -169,7 +169,7 @@
         Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
         ]]>
     </string>
-  <string name="export_unsuccessful">Lỗi khi xuất bộ sưu tập</string>
+  <string name="export_unsuccessful">Error exporting apkg file</string>
   <string name="import_hint">Đưa tệp apkg vào thư mục \"%s\" và bấm \"OK\" để nhập thẻ</string>
   <string name="upgrade_import_no_file_found">Không tìm thấy %1$s tệp có thể nhập</string>
   <string name="study_options">Tuỳ chọn bộ thẻ</string>

@@ -97,11 +97,11 @@
   <string name="menu_delete_note">ノートを削除</string>
   <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらも全て削除されます。\n%s</string>
   <string name="menu_select">テキストを選択</string>
-  <string name="menu_search">%1$sで探す</string>
+  <string name="menu_search">%1$s で検索</string>
   <string name="menu_mark_note">ノートにマークを付ける</string>
   <string name="menu_unmark_note">ノートのマークをはずす</string>
   <string name="new_deck">デッキを新規作成</string>
-  <string name="create">作成</string>
+  <string name="create">新規作成</string>
   <string name="new_dynamic_deck">フィルターデッキを作成</string>
   <string name="night_mode">ナイトモード</string>
   <string name="directory_inaccessible">AnkiDroid ディレクトリにアクセスできません</string>
@@ -125,7 +125,7 @@
   <string name="empty_cram_deck">カードを元のデッキへ戻しています...</string>
   <string name="custom_study_deck_name">カスタム学習セッション</string>
   <string name="custom_study_deck_exists">最初に、既存のカスタム学習デッキの名前を変更してください</string>
-  <string name="empty_deck">このデッキにはカードが入っていません</string>
+  <string name="empty_deck">このデッキにはカードがありません</string>
   <string name="studyoptions_empty">このデッキにはカードが入っていません。「＋」ボタンをタップしてカードを追加してください。</string>
   <string name="studyoptions_limit_reached">既に一日あたりの学習枚数の上限に達しています</string>
   <string name="studyoptions_empty_schedule">このデッキでは、今日このあと予定されている課題はありません</string>
@@ -143,7 +143,7 @@
   <string name="export">エクスポート</string>
   <string name="export_collection">エクスポート（全デッキ）</string>
   <string name="export_deck">このデッキをエクスポート</string>
-  <string name="nothing">Nothing</string>
+  <string name="nothing">なし</string>
   <!-- Card template editor -->
   <string name="title_activity_template_editor">カードレイアウト</string>
   <string name="card_template_editor_front">表面のテンプレート</string>
@@ -158,5 +158,5 @@
   <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、１つ以上のノートが削除されます。まずは新しいカードタイプを追加してください。</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">AnkiDroid データベースの読み書き</string>
-  <string name="read_write_permission_description">このアプリケーションに新規のノート・カード・ノートタイプ・デッキの作成を許可するとともに、既存のノート・カード・ノートタイプ・デッキへのアクセスも許可します</string>
+  <string name="read_write_permission_description">ノート、カード、ノートタイプ、デッキへのアクセスや、それらの新規作成を行います。</string>
 </resources>

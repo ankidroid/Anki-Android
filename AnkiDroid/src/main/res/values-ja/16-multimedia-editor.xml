@@ -36,8 +36,9 @@
 <resources>
   <!-- Main editor popup menu items -->
   <string name="multimedia_editor_popup_image">画像を追加</string>
-  <string name="multimedia_editor_popup_audio">音声を録音</string>
-  <string name="multimedia_editor_popup_text">高機能エディター</string>
+  <string name="multimedia_editor_popup_audio">音声の録音</string>
+  <string name="multimedia_editor_popup_text">高度な編集</string>
+  <string name="multimedia_editor_popup_cloze">穴埋め問題</string>
   <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">Powered by glosbe.com</string>
   <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -53,7 +54,7 @@
   <string name="multimedia_editor_trans_translation_failed">翻訳に失敗しました</string>
   <!-- from controller -->
   <!-- dialog title to ask for translation source -->
-  <string name="multimedia_editor_trans_pick_translation_source">辞書を選ぶ</string>
+  <string name="multimedia_editor_trans_pick_translation_source">辞書を選んでください</string>
   <!-- dialog asking to install ColorDict -->
   <string name="multimedia_editor_trans_install_color_dict">ColorDict を最初にインストール</string>
   <!-- Pronunciation activity (Beolingus) -->
@@ -63,21 +64,6 @@
   <string name="multimedia_editor_pron_pronunciation_failed">発音に失敗しました</string>
   <string name="multimedia_editor_word_search_try_lower_case">小文字のみ使用してください</string>
   <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
-  <!-- Image search activity -->
-  <!-- in progress dialog when loading the image -->
-  <string name="multimedia_editor_imgs_saving_image">画像を保存しています...</string>
-  <string name="multimedia_editor_imgs_loading_image">画像を読み込んでいます...</string>
-  <string name="multimedia_editor_imgs_no_results">検索結果はありません。</string>
-  <string name="multimedia_editor_imgs_images_found">画像が見つかりました</string>
-  <string name="multimedia_editor_imgs_pow_by_google">Powered by Google Image Search</string>
-  <!-- buttons -->
-  <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
-  <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
-  <string name="multimedia_editor_imgs_pick">選択</string>
-  <!-- in controller when fails -->
-  <string name="multimedia_editor_imgs_failed">画像検索の失敗</string>
-  <!-- while searching -->
-  <string name="multimedia_editor_imgs_searching_for_images">画像を検索</string>
   <!-- Field editing general -->
   <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">テキスト</string>
@@ -86,11 +72,11 @@
   <string name="multimedia_editor_field_editing_done">完了</string>
   <!-- Text field editing -->
   <!-- buttons -->
-  <string name="multimedia_editor_text_field_editing_search_label">検索対象</string>
+  <string name="multimedia_editor_text_field_editing_search_label">検索対象:</string>
   <string name="multimedia_editor_text_field_editing_show">画像</string>
   <string name="multimedia_editor_text_field_editing_say">発音</string>
   <string name="multimedia_editor_text_field_editing_clear">消去</string>
-  <string name="multimedia_editor_text_field_editing_clone">クローンの作成</string>
+  <string name="multimedia_editor_text_field_editing_clone">複製</string>
   <string name="multimedia_editor_text_field_editing_translate">翻訳</string>
   <!-- message to user, when there is no text or many words, but the user tries something -->
   <string name="multimedia_editor_text_field_editing_no_text">先にテキストを入力してください</string>
@@ -117,7 +103,7 @@
   <!-- General -->
   <string name="multimedia_editor_progress_wait_title">しばらくお待ちください</string>
   <!-- not a good message, when an unexpected error happens -->
-  <string name="multimedia_editor_something_wrong">申し訳ありませんが、不具合がありました</string>
+  <string name="multimedia_editor_something_wrong">予期しないエラーが発生しました</string>
   <string name="multimedia_editor_attach_mm_content">「%1$s」フィールドにマルチメディアコンテンツを添付</string>
   <string name="multimedia_editor_attach_media">メディアを貼付け</string>
   <!-- Audio view -->
@@ -128,7 +114,6 @@
   <string name="title_activity_edit_text">フィールド編集</string>
   <string name="title_activity_translation">翻訳</string>
   <string name="title_activity_load_pronounciation">発音</string>
-  <string name="title_activity_search_image">Google 画像検索</string>
   <!-- Network failure -->
   <string name="network_no_connection">ネットワークに接続されていません</string>
 </resources>

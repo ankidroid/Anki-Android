@@ -164,9 +164,9 @@
   <string name="confirm_apkg_export">Экспортировать коллекцию в apkg файл?</string>
   <string name="confirm_apkg_export_deck">Экспортировать \"%s\" в apkg файл?</string>
   <string name="export_in_progress">Экспортирую apkg файл&#8230;</string>
-  <string name="export_successful_title">Send apkg?</string>
-  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+  <string name="export_successful_title">Отправить apkg?</string>
+  <string name="export_successful">Файл «%s» был экспортирован. Вы хотите отправить его с помощью другого приложения?</string>
+  <string name="export_email_subject">AnkiDroid экспортировал колоды карточек: %s</string>
   <string name="export_email_text">
         <![CDATA[
         Привет!
@@ -175,7 +175,7 @@
        Установите на компьютер приложение <a href="http://ankisrs.net/#download">Anki</a>, чтобы открыть эту колоду и наслаждаться легким и эффективным обучением!
         ]]>
     </string>
-  <string name="export_unsuccessful">Ошибка при экспорте коллекции</string>
+  <string name="export_unsuccessful">Ошибка экспорта файла apkg</string>
   <string name="import_hint">Чтобы импортировать карты, поместите файл apkg в каталог %s и нажмите «ОК»</string>
   <string name="upgrade_import_no_file_found">Найден неимпортируемый файл %1$s</string>
   <string name="study_options">Опции колоды</string>
@@ -231,12 +231,12 @@
   <string name="decks_rename_exists">Эта колода уже существует</string>
   <string name="decks_rename_filtered_nosubdecks">Фильтрованая колода не может иметь дочерних колод</string>
   <string name="filtered_deck_name">Фильтрованная колода</string>
-  <string name="reminder_title">Do not forget to study today!</string>
+  <string name="reminder_title">Не забудьте о сегодняшнем обучении!</string>
   <plurals name="reminder_text">
-    <item quantity="one">%2$d new card to review in %1$s</item>
+    <item quantity="one">%2$d новых карты для повторения в %1$s</item>
     <item quantity="few">%2$d new cards to review in %1$s</item>
-    <item quantity="other">%2$d new cards to review in %1$s</item>
+    <item quantity="other">%2$d новых карт для повторения в %1$s</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->
-  <string name="apk_share_error">Error sharing apkg file</string>
+  <string name="apk_share_error">Ошибка обмена файлом apkg</string>
 </resources>

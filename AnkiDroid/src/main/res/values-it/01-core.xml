@@ -162,5 +162,5 @@
   <string name="card_template_editor_would_delete_note">Rimuovendo questo tipo di carta, verrebbero eliminate una o più note. Crea dapprima un nuovo tipo di carta.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Leggere e scrivere nel database di AnkiDroid</string>
-  <string name="read_write_permission_description">Consenti all\'applicazione di accedere a note esistenti, carte, modelli e mazzi, nonché di crearne di nuovi.</string>
+  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

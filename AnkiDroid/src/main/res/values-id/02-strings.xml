@@ -169,7 +169,7 @@
         Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
         ]]>
     </string>
-  <string name="export_unsuccessful">Error exporting collection</string>
+  <string name="export_unsuccessful">Error exporting apkg file</string>
   <string name="import_hint">Untuk mengimpor kartu, tempatkan file apkg ke dalam direktori %s dan tekan ok</string>
   <string name="upgrade_import_no_file_found">Tidak ada %1$s file yang dapat di impor ditemukan</string>
   <string name="study_options">Deck options</string>

@@ -162,5 +162,5 @@
   <string name="card_template_editor_would_delete_note">Kartentyp kann nicht gelöscht werden, da dadurch mindestens eine Notiz gelöscht würde.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">AnkiDroid-Datenbank lesen und schreiben</string>
-  <string name="read_write_permission_description">Die Anwendung auf existierende Notizen, Karten, Notiztypen und Stapel zugreifen und neue erstellen lassen</string>
+  <string name="read_write_permission_description">Sowohl Zugriff auf vorhandene Notizen, Karten, Hinweis-Typen und den Decks, als auch das Erstellen von neuen</string>
 </resources>

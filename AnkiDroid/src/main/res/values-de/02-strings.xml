@@ -161,9 +161,9 @@
   <string name="confirm_apkg_export">Sammlung als apkg-Datei exportieren?</string>
   <string name="confirm_apkg_export_deck">»%s« als apkg-Datei exportieren?</string>
   <string name="export_in_progress">Exportiere apkg-Datei&#8230;</string>
-  <string name="export_successful_title">Send apkg?</string>
-  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+  <string name="export_successful_title">Apkg senden?</string>
+  <string name="export_successful">Datei \"%s\" wurde exportiert. Möchten Sie sie mit einer anderen App senden?</string>
+  <string name="export_email_subject">AnkiDroid exportierte Karteikarten: %s</string>
   <string name="export_email_text">
         <![CDATA[
         Hi!
@@ -172,7 +172,7 @@
         Versuche es mit einer der verfügbaren <a href="http://ankisrs.net/#download">Anki-Distributionen</a> zu öffnen und genieße einfaches und effektives Lernen!
         ]]>
     </string>
-  <string name="export_unsuccessful">Fehler beim Exportieren der Sammlung</string>
+  <string name="export_unsuccessful">Fehler beim Exportieren der apkg-Datei</string>
   <string name="import_hint">Kopieren Sie die apkg-Datei ins Verzeichnis »%s« und berühren Sie »OK«, um Karten zu importieren</string>
   <string name="upgrade_import_no_file_found">Keine importierbare Datei %1$s gefunden</string>
   <string name="study_options">Stapeloptionen</string>
@@ -220,11 +220,11 @@
   <string name="decks_rename_exists">Diesen Stapel gibt es schon</string>
   <string name="decks_rename_filtered_nosubdecks">Ein gefilterter Stapel kann keine Unterstapel enthalten.</string>
   <string name="filtered_deck_name">Gefilterter Stapel</string>
-  <string name="reminder_title">Do not forget to study today!</string>
+  <string name="reminder_title">Vergessen Sie nicht heute zu lernen!</string>
   <plurals name="reminder_text">
-    <item quantity="one">%2$d new card to review in %1$s</item>
-    <item quantity="other">%2$d new cards to review in %1$s</item>
+    <item quantity="one">%2$d neue Karte in %1$s zu lernen</item>
+    <item quantity="other">%2$d neue Karten in %1$s zu lernen</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->
-  <string name="apk_share_error">Error sharing apkg file</string>
+  <string name="apk_share_error">Fehler beim Teilen der apkg-Datei</string>
 </resources>

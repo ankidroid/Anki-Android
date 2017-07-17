@@ -53,8 +53,8 @@
   <string name="pref_cat_automatic_display">Автоматично показване отговор</string>
   <string name="pref_cat_appearance">Appearance</string>
   <string name="pref_cat_appearance_summ">Промяна теми и шрифт по подразбиране</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_themes">Теми</string>
+  <string name="pref_cat_fonts">Шрифтове</string>
   <string name="pref_cat_gestures">Жестове</string>
   <string name="pref_cat_gestures_summ">Използване на докосване и плъзване вместо бутони</string>
   <string name="pref_cat_actions">Действия</string>
@@ -90,10 +90,10 @@
   <string name="full_screen_system">Скриване на системните ленти</string>
   <string name="full_screen_complete">Скриване на системните ленти и бутоните за отговори</string>
   <string name="full_screen_error_gestures">Трябва да разрешите жестове, за да скриете бутоните на отговор</string>
-  <string name="answer_buttons_position">Answer buttons position</string>
+  <string name="answer_buttons_position">Място на бутона за отговор</string>
   <string-array name="answer_buttons_position_labels">
-    <item>Top</item>
-    <item>Bottom</item>
+    <item>Отгоре</item>
+    <item>Отдолу</item>
   </string-array>
   <string name="gestures">Разреши жестове</string>
   <string name="gestures_summ">Използване на жестове за такива действия като отговор и редактиране на карти.</string>
@@ -124,8 +124,8 @@
   <string name="fix_hebrew_text_summ">Позволява правилно показване гласните на иврит.</string>
   <string name="fix_hebrew_instructions">Тази настройка заобикаля алгоритъм RTL на Android, за да се покаже правилно гласните в текст на иврит. \n\nЗа да работи правилно, трябва да изтеглите шрифта Tohu.ttf и да го копирате ръчно в \n“%s/fonts/”\n\nНяма нужда да модифицирате картите.</string>
   <string name="fix_hebrew_download_font">Изтегляне на шрифт</string>
-  <string name="day_theme">Day theme</string>
-  <string name="night_theme">Night theme</string>
+  <string name="day_theme">Дневна тема</string>
+  <string name="night_theme">Нощна тема</string>
   <string name="default_font">Шрифт по подразбиране</string>
   <string name="override_font">Използване на шрифт по подразбиране</string>
   <string name="language">Език</string>
@@ -153,8 +153,8 @@
   <string name="show_estimates_summ">Показване на времето за следващото повторение над бутоните за отговор</string>
   <string name="show_progress">Показване на оставащото</string>
   <string name="show_progress_summ">Показване на брояч на оставащите карти</string>
-  <string name="show_eta">Show ETA</string>
-  <string name="show_eta_summ">Show remaining time</string>
+  <string name="show_eta">Покажи ЕТА</string>
+  <string name="show_eta_summ">Показване на оставащото време</string>
   <string name="use_current">Тесте за нови карти</string>
   <string name="new_spread">Нова позиция на картите</string>
   <string name="learn_cutoff">Учене над лимита</string>
@@ -173,10 +173,10 @@
   <string name="enable_api_summary">Нека други приложения, се свържат с AnkiDroid и да четат / записват данни без Ваша намеса</string>
   <string name="custom_buttons">App bar buttons</string>
   <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
-  <string name="custom_buttons_setting_always_show">Always show</string>
+  <string name="custom_buttons_setting_always_show">Винаги показвай</string>
   <string name="custom_buttons_setting_if_room">Show if room</string>
-  <string name="custom_buttons_setting_menu_only">Menu only</string>
-  <string name="reset_custom_buttons">Reset to default</string>
+  <string name="custom_buttons_setting_menu_only">Само менюто</string>
+  <string name="reset_custom_buttons">Възстанови по подразбиране</string>
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Разширена статистика</string>
   <string name="enable_advanced_statistics_title">Разрешаване на разширена статистика</string>
@@ -203,7 +203,7 @@
   <string name="deck_conf_rev_cards">Разглеждания</string>
   <string name="deck_conf_lps_cards">Пропуски</string>
   <string name="deck_conf_general">Общо</string>
-  <string name="deck_conf_reminders">Reminders</string>
+  <string name="deck_conf_reminders">Напомняния</string>
   <string name="deck_conf_steps">Стъпки (в минути)</string>
   <string name="deck_conf_order">Ред</string>
   <string name="deck_conf_new_cards_day">Нови карти на ден</string>

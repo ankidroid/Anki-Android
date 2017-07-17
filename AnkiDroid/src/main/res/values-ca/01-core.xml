@@ -162,5 +162,5 @@
   <string name="card_template_editor_would_delete_note">Treient aquest tipus de carta faria que una o més anotacions s\'eliminessin. Si us plau, creeu un nou tipus de carta.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Llegir i escriure a la base de dades d\'AnkiDroid</string>
-  <string name="read_write_permission_description">Permeteu l\'aplicació ser capaç d\'accedir anotacions, cartes, models, i baralles existens; a més de poder crear-ne noves.</string>
+  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

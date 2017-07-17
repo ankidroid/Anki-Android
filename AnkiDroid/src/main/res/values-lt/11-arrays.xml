@@ -52,7 +52,7 @@
     <item>Atšaukti</item>
     <item>Redaguoti pastabą</item>
     <item>Pažymėti pastabą</item>
-    <item>Lookup expression</item>
+    <item>Ieškoti išsireiškimo</item>
     <item>Paslėpti kortelę</item>
     <item>Sustabdyti kortelę</item>
     <item>Šalinti pastabą</item>
@@ -70,27 +70,27 @@
     <item>Naujos kortelės pridėjimo tvarka</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Pirmiau senesnės</item>
-    <item>Atsitiktinai</item>
-    <item>Didėjantys intervalai</item>
-    <item>Mažėjantys intervalai</item>
-    <item>Daugiausia praėja</item>
-    <item>Pridėjimo tvarka</item>
-    <item>Order due</item>
-    <item>Naujausia pridėta pirmiau</item>
-    <item>Relative overdueness</item>
+    <item>Pirmiau rodyti senesnes</item>
+    <item>Atsitiktine tvarka</item>
+    <item>Didėjančiais intervalais</item>
+    <item>Mažėjančiais intervalais</item>
+    <item>Dažniausiai užmirštamos</item>
+    <item>Pagal pridėjimo eiliškumą</item>
+    <item>Pagal numatytų eiliškumą</item>
+    <item>Pirmiau rodyti vėliausiai pridėtas</item>
+    <item>Labiausiai pradelstos</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Naudoti dabartinę malką</item>
-    <item>Decide by note type</item>
+    <item>Naudoti dabartinį rinkinį</item>
+    <item>Spręsti pagal užrašo tipą</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
+    <item>Maišyti naujas korteles su peržiūrėtomis</item>
     <item>Naujos kortelės po peržiūros</item>
-    <item>New cards before reviews</item>
+    <item>Naujos kortelės bus pateiktos prieš peržiūrėtas</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
+    <item>Kai kortelėse nenurodytas joks šriftas</item>
     <item>Visada</item>
   </string-array>
   <string-array name="day_theme_labels">

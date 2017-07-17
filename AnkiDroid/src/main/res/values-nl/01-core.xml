@@ -53,8 +53,8 @@
   <string name="studyoptions_eta">Geschatte tijd (min):</string>
   <string name="studyoptions_start">Studeer nu</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Expand</string>
-  <string name="collapse">Collapse</string>
+  <string name="expand">Uitklappen</string>
+  <string name="collapse">Inklappen</string>
   <string name="study_more">Studeer meer</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d kaart te gaan (%2$s)</item>
@@ -162,5 +162,5 @@
   <string name="card_template_editor_would_delete_note">Het verwijderen van dit kaarttype zou er mogelijk voor zorgen dat een of meer notities worden verwijderd. Gelieve een nieuw kaarttype eerst te maken.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Lees en schrijf naar de AnkiDroid database</string>
-  <string name="read_write_permission_description">Sta de app toe om bestaande notities, kaarten, kaartypes en leersets te raadplegen alsook nieuwe te maken</string>
+  <string name="read_write_permission_description">toegang tot bestaande notities, kaarten, notitietypen en dekken (ook nieuwe maken)</string>
 </resources>

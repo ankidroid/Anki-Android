@@ -53,8 +53,8 @@
   <string name="studyoptions_eta">Оцінка часу (хв.):</string>
   <string name="studyoptions_start">Почати вивчення</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Expand</string>
-  <string name="collapse">Collapse</string>
+  <string name="expand">Розгорнути</string>
+  <string name="collapse">Згорнути</string>
   <string name="study_more">Вивчати ще</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d картка до (%2$s)</item>
@@ -166,5 +166,5 @@
   <string name="card_template_editor_would_delete_note">Видалення цього типу картки зумовить знищення однієї чи декількох приміток. Будь ласка, створіть спочатку новий тип карток.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Читати і записувати в базу даних AnkiDroid</string>
-  <string name="read_write_permission_description">Дозволити застосунку доступ до існуючих приміток, карток, типів приміток, та колод, а також створення нових</string>
+  <string name="read_write_permission_description">доступ до існуючих приміток, карток, типів приміток та колод, а також створення нових</string>
 </resources>

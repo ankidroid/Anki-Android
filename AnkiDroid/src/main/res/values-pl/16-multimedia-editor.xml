@@ -38,6 +38,7 @@
   <string name="multimedia_editor_popup_image">Dodaj obraz</string>
   <string name="multimedia_editor_popup_audio">Nagraj dźwięk</string>
   <string name="multimedia_editor_popup_text">Zaawansowany edytor</string>
+  <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
   <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">Dostarczone przez glosbe.com</string>
   <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -63,21 +64,6 @@
   <string name="multimedia_editor_pron_pronunciation_failed">Wymowa nie udała się</string>
   <string name="multimedia_editor_word_search_try_lower_case">Spróbuj użyć tylko małych liter</string>
   <string name="multimedia_editor_poweredbeolingus">Dostarczone przez Beolingus</string>
-  <!-- Image search activity -->
-  <!-- in progress dialog when loading the image -->
-  <string name="multimedia_editor_imgs_saving_image">Zapisywanie obrazu</string>
-  <string name="multimedia_editor_imgs_loading_image">Ładowanie obrazu</string>
-  <string name="multimedia_editor_imgs_no_results">Wyszukiwanie nie zwróciło żadnych wyników</string>
-  <string name="multimedia_editor_imgs_images_found">Znalezione obrazy</string>
-  <string name="multimedia_editor_imgs_pow_by_google">Dostarczone przez wyszukiwarkę obrazów Google</string>
-  <!-- buttons -->
-  <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
-  <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
-  <string name="multimedia_editor_imgs_pick">Wybierz</string>
-  <!-- in controller when fails -->
-  <string name="multimedia_editor_imgs_failed">Szukaj obrazu nie powiodło się</string>
-  <!-- while searching -->
-  <string name="multimedia_editor_imgs_searching_for_images">Wyszukiwanie obrazów</string>
   <!-- Field editing general -->
   <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">Tekst</string>
@@ -128,7 +114,6 @@
   <string name="title_activity_edit_text">Pole edycji</string>
   <string name="title_activity_translation">Tłumaczenie</string>
   <string name="title_activity_load_pronounciation">Wymowa</string>
-  <string name="title_activity_search_image">Wyszukiwarka grafiki Google</string>
   <!-- Network failure -->
   <string name="network_no_connection">Brak połączenia</string>
 </resources>

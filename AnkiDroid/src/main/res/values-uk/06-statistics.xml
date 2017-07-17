@@ -41,34 +41,34 @@
 <resources>
   <string name="statistics_young">Молоді</string>
   <string name="statistics_mature">Зрілі</string>
-  <string name="statistics_young_and_learn">Young+Learn</string>
-  <string name="statistics_unlearned">Unseen</string>
-  <string name="statistics_suspended_and_buried">Suspended+Buried</string>
+  <string name="statistics_young_and_learn">Початі+Вивчаємі</string>
+  <string name="statistics_unlearned">Не переглядане</string>
+  <string name="statistics_suspended_and_buried">Приховані+Відкладені</string>
   <string name="statistics_relearn">Перевчити</string>
   <string name="statistics_learn">Вчити</string>
   <string name="statistics_cram">Зубріння</string>
   <string name="stats_cards">Картки</string>
-  <string name="stats_cards_intervals">Cards with given interval</string>
-  <string name="stats_cumulative_cards">Cumulative cards</string>
-  <string name="stats_cumulative_answers">Cumulative answers</string>
-  <string name="stats_cumulative_time_minutes">Cumulative minutes</string>
-  <string name="stats_cumulative_time_hours">Cumulative hours</string>
-  <string name="stats_cumulative">Cumulative</string>
-  <string name="stats_cumulative_percentage">Cumulative percentage</string>
-  <string formatted="false" name="stats_cumulative_correct_percentage">Cumulative correct %</string>
+  <string name="stats_cards_intervals">Картки з заданим інтервалом</string>
+  <string name="stats_cumulative_cards">Сукупність карток</string>
+  <string name="stats_cumulative_answers">Сукупність відповідей</string>
+  <string name="stats_cumulative_time_minutes">Сукупність хвилин</string>
+  <string name="stats_cumulative_time_hours">Сукупність годин</string>
+  <string name="stats_cumulative">Сукупність</string>
+  <string name="stats_cumulative_percentage">Сумарний відсоток</string>
+  <string formatted="false" name="stats_cumulative_correct_percentage">Сумарний вірний %</string>
   <string name="stats_answers">Відповіді</string>
   <string name="stats_minutes">Хвилини</string>
   <string name="stats_hours">Години</string>
-  <string name="stats_percentage">Percentage</string>
-  <string name="stats_period_month">1 month</string>
-  <string name="stats_period_year">1 year</string>
-  <string name="stats_period_lifetime">deck life</string>
-  <string name="stats_deck_collection">collection</string>
-  <string name="stats_time_of_day">Time of day</string>
-  <string name="stats_day_of_week">Day of week</string>
-  <string formatted="false" name="stats_percentage_correct">% correct</string>
+  <string name="stats_percentage">Відсоток</string>
+  <string name="stats_period_month">1 місяць</string>
+  <string name="stats_period_year">1 рік</string>
+  <string name="stats_period_lifetime">колода життя</string>
+  <string name="stats_deck_collection">колекція</string>
+  <string name="stats_time_of_day">Час дня</string>
+  <string name="stats_day_of_week">День неділі</string>
+  <string formatted="false" name="stats_percentage_correct">% правильного</string>
   <string name="stats_reviews">Reviews</string>
-  <string name="stats_answer_type">Answer type</string>
+  <string name="stats_answer_type">Тип відповіді</string>
   <string name="stats_today_again_count">Again count: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correct)</string>
   <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, review: &lt;b&gt;%2$s&lt;/b&gt;, relearn: &lt;b&gt;%3$s&lt;/b&gt;, filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
@@ -85,34 +85,34 @@
   <string name="stats_overview_time_per_day_all">If you studied every day:  &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day</string>
   <string name="stats_overview_new_cards_per_day">Average: &lt;b&gt;%1$.1f&lt;/b&gt; cards/day</string>
   <string name="stats_overview_total_new_cards">Total: &lt;b&gt;%1$d&lt;/b&gt; cards</string>
-  <string name="stats_overview_average_interval">"Average interval: "</string>
-  <string name="stats_overview_longest_interval">"Longest interval: "</string>
-  <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; years</string>
-  <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; months</string>
-  <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; days</string>
-  <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; hours</string>
+  <string name="stats_overview_average_interval">"Середній інтервал: "</string>
+  <string name="stats_overview_longest_interval">"Найдовший інтервал: "</string>
+  <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; років</string>
+  <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; місяців</string>
+  <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; днів</string>
+  <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; годин</string>
   <string name="deck_summary_all_decks">Всі колоди</string>
-  <string name="stats_select_time_scale">Select timescale</string>
+  <string name="stats_select_time_scale">Вибрати шкалу часу</string>
   <string-array name="due_x_axis_title">
     <item>Дні</item>
     <item>Тижні</item>
     <item>Місяці</item>
   </string-array>
-  <string name="stats_today">Today</string>
-  <string name="stats_overview">Overview</string>
+  <string name="stats_today">Сьогодні</string>
+  <string name="stats_overview">Огляд</string>
   <string name="stats_forecast">Прогноз</string>
   <string name="stats_review_count">Лічильник переглядів</string>
   <string name="stats_review_time">Час огдляду</string>
-  <string name="stats_added">Added</string>
-  <string name="stats_review_intervals">Intervals</string>
+  <string name="stats_added">Додано</string>
+  <string name="stats_review_intervals">Інтервали</string>
   <string name="stats_breakdown">Hourly breakdown</string>
   <string name="stats_weekly_breakdown">Weekly breakdown</string>
-  <string name="stats_answer_buttons">Answer buttons</string>
-  <string name="stats_cards_types">Card types</string>
+  <string name="stats_answer_buttons">Кнопки відповіді</string>
+  <string name="stats_cards_types">Типи картки</string>
   <string-array name="stats_day_time_strings">
-    <item>4AM</item>
-    <item>10AM</item>
-    <item>4PM</item>
+    <item>4:00</item>
+    <item>10:00</item>
+    <item>16:00</item>
     <item>10PM</item>
     <item>3AM</item>
   </string-array>

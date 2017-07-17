@@ -51,7 +51,7 @@
   <string name="pref_cat_flashcard">Weergave</string>
   <string name="pref_cat_whiteboard">Schrijfbord</string>
   <string name="pref_cat_automatic_display">Automatische weergave antwoord</string>
-  <string name="pref_cat_appearance">Appearance</string>
+  <string name="pref_cat_appearance">Opmaak</string>
   <string name="pref_cat_appearance_summ">Wijzig thema\'s en standaardlettertype</string>
   <string name="pref_cat_themes">Thema\'s</string>
   <string name="pref_cat_fonts">Lettertypes</string>
@@ -77,7 +77,7 @@
   <string name="text_selection_click_summ">Zet dit aan als tekstselectie via met een lange klik niet werkt</string>
   <string name="dictionary">Opzoeken in woordenlijst</string>
   <string name="reset_languages">Reset talen</string>
-  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
+  <string name="reset_languages_summ">Reset taal-toewijzingen (voor tekst-naar-spraak en woordenboeken) voor alle decks</string>
   <string name="reset_languages_question">Alle taalopdrachten terugzetten?</string>
   <string name="reset_confirmation">Alle staten opnieuw instellen</string>
   <string name="card_zoom">Kaart zoom</string>
@@ -90,10 +90,10 @@
   <string name="full_screen_system">De systeembalken verbergen</string>
   <string name="full_screen_complete">De systeembalken en antwoordknoppen verbergen</string>
   <string name="full_screen_error_gestures">U moet de gebaren inschakelen om de antwoordknoppen te kunnen verbergen</string>
-  <string name="answer_buttons_position">Answer buttons position</string>
+  <string name="answer_buttons_position">Antwoord knoppen positie</string>
   <string-array name="answer_buttons_position_labels">
-    <item>Top</item>
-    <item>Bottom</item>
+    <item>Bovenaan</item>
+    <item>Onderaan</item>
   </string-array>
   <string name="gestures">Bewegingen inschakelen</string>
   <string name="gestures_summ">Bewegingen toewijzen aan acties zoals het beantwoorden en bewerken van kaarten.</string>
@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">Trillen</string>
   <string name="notification_minimum_cards_due_blink">Licht knipperen</string>
   <string name="timeout_answer_text">Automatisch het antwoord tonen</string>
-  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
+  <string name="timeout_answer_summ">Toon antwoord automatisch zonder invoer van de gebruiker. Tijd voor het automatisch spelen van audio files is in rekening gehouden.</string>
   <string name="timeout_answer_seconds">Tijd om het antwoord te tonen</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Tijd om de volgende vraag te tonen</string>
@@ -153,7 +153,7 @@
   <string name="show_estimates_summ">In de antwoordknoppen weergeven wanneer de volgende overhoring is</string>
   <string name="show_progress">Resterende weergeven</string>
   <string name="show_progress_summ">Toon resterend aantal kaarten</string>
-  <string name="show_eta">Show ETA</string>
+  <string name="show_eta">Toon ETA</string>
   <string name="show_eta_summ">Resterende tijd tonen</string>
   <string name="use_current">Set voor nieuwe kaarten</string>
   <string name="new_spread">Positie nieuwe kaart</string>
@@ -171,11 +171,11 @@
   <string name="convert_fen_text_summ">Teken schaakbord met de Forsyth-Edwards notering. Voor de notering gebruik de [fen][/fen] tags.</string>
   <string name="enable_api_title">AnkiDroid API inschakelen</string>
   <string name="enable_api_summary">Laat andere apps verbinding maken met AnkiDroid en gegevens zonder uw tussenkomst lezen/schrijven</string>
-  <string name="custom_buttons">App bar buttons</string>
-  <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
-  <string name="custom_buttons_setting_always_show">Always show</string>
-  <string name="custom_buttons_setting_if_room">Show if room</string>
-  <string name="custom_buttons_setting_menu_only">Menu only</string>
+  <string name="custom_buttons">App bar knoppen</string>
+  <string name="custom_buttons_summary">Aanpassen welke acties worden weergegeven in de app-balk</string>
+  <string name="custom_buttons_setting_always_show">Altijd tonen</string>
+  <string name="custom_buttons_setting_if_room">Toon als er ruimte is</string>
+  <string name="custom_buttons_setting_menu_only">Alleen menu</string>
   <string name="reset_custom_buttons">Standaardinstellingen herstellen</string>
   <!-- Advanced statistics settings -->
   <string name="advanced_statistics_title">Geavanceerde statistieken</string>
@@ -188,7 +188,7 @@
   <string name="custom_sync_server_title">Aangepaste synchronisatie-server</string>
   <string name="custom_sync_server_enable_title">Aangepaste synchronisatie-server gebruiken</string>
   <string name="custom_sync_server_enable_summary">Als u AnkiWeb\'s eigen service niet wilt gebruiken, kunt u hier een alternatieve server opgeven</string>
-  <string name="custom_sync_server_base_url_title">Sync url</string>
+  <string name="custom_sync_server_base_url_title">URL synchroniseren</string>
   <string name="custom_sync_server_media_url_title">Media sync url</string>
   <!-- studyoptions -->
   <string name="studyoptions_limit_select_tags">Selecteer Tags</string>
@@ -203,7 +203,7 @@
   <string name="deck_conf_rev_cards">Overhoringen</string>
   <string name="deck_conf_lps_cards">Missers</string>
   <string name="deck_conf_general">Algemeen</string>
-  <string name="deck_conf_reminders">Reminders</string>
+  <string name="deck_conf_reminders">Herinneringen</string>
   <string name="deck_conf_steps">Stappen (in minuten)</string>
   <string name="deck_conf_order">Volgorde</string>
   <string name="deck_conf_new_cards_day">Nieuwe kaarten/dag</string>
@@ -256,8 +256,8 @@
   <string name="deck_conf_cram_order">kaarten geselecteerd door</string>
   <string name="deck_conf_cram_reschedule">Opnieuw inplannen</string>
   <string name="deck_conf_cram_reschedule_summ">Karaten opnieuw inplannen op basis van mijn antwoorden in deze set</string>
-  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
+  <string name="deck_conf_cram_steps">Aangepaste stappen (in minuten)</string>
   <string name="deck_conf_cram_steps_summ">Aangepaste stapgroottes definiëren</string>
-  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
-  <string name="deck_conf_reminders_time">Remind at</string>
+  <string name="deck_conf_reminders_enabled">Herinnering meldingen voor dit deck inschakelen</string>
+  <string name="deck_conf_reminders_time">Herinneren op</string>
 </resources>

@@ -164,9 +164,9 @@
   <string name="confirm_apkg_export">Exportovať zbierku ako apkg súbor?</string>
   <string name="confirm_apkg_export_deck">Exportovať “%s” ako apkg súbor?</string>
   <string name="export_in_progress">Exportuje sa apkg súbor&#8230;</string>
-  <string name="export_successful_title">Send apkg?</string>
-  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+  <string name="export_successful_title">Odoslať apkg?</string>
+  <string name="export_successful">Súbor “%s” bol exportovaný. Chcete ho odoslať s ďalšou aplikáciou?</string>
+  <string name="export_email_subject">AnkiDroid exportoval kartičky: %s</string>
   <string name="export_email_text">
 <![CDATA[
         Ahoj!
@@ -174,7 +174,7 @@
         Toto je Anki balíček kariet odoslaný z <a href="https://ankidroid.org/docs/manual.html">AnkiDroid webstránky</a>.
         Vyskúšajte ho otvoriť za pomocou jednej z nasledovných <a href="http://ankisrs.net/#download">Anki distribúcií</a> a vychutnajte si tak jednoduché a efektívne učenie!
         ]]>    </string>
-  <string name="export_unsuccessful">Pri exportovaní kolekcie sa vyskytla chyba</string>
+  <string name="export_unsuccessful">Chyba pri exportovaní apkg súboru</string>
   <string name="import_hint">Ak chcete importovať kartičky, umiestnite súbor apkg do adresára %s a stlačte ok</string>
   <string name="upgrade_import_no_file_found">Žiaden importovateľný %1$s súbor nebol nájdený</string>
   <string name="study_options">Nastavenia balíčka</string>
@@ -228,12 +228,12 @@
   <string name="decks_rename_exists">Tento balíček už existuje</string>
   <string name="decks_rename_filtered_nosubdecks">Filtrovaný balíček nemôže mať podbalíčky</string>
   <string name="filtered_deck_name">Filtrovaný balíček</string>
-  <string name="reminder_title">Do not forget to study today!</string>
+  <string name="reminder_title">Nezabudnite dnes študovať!</string>
   <plurals name="reminder_text">
-    <item quantity="one">%2$d new card to review in %1$s</item>
-    <item quantity="few">%2$d new cards to review in %1$s</item>
-    <item quantity="other">%2$d new cards to review in %1$s</item>
+    <item quantity="one">%2$d nová kartička na zopakovanie v %1$s</item>
+    <item quantity="few">%2$d nové kartičky na zopakovanie v %1$s</item>
+    <item quantity="other">%2$d nových kartičiek na zopakovanie v %1$s</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->
-  <string name="apk_share_error">Error sharing apkg file</string>
+  <string name="apk_share_error">Chyba pri zdieľaní apkg súboru</string>
 </resources>

@@ -38,6 +38,7 @@
   <string name="multimedia_editor_popup_image">增加圖片</string>
   <string name="multimedia_editor_popup_audio">錄音</string>
   <string name="multimedia_editor_popup_text">進階編輯器</string>
+  <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
   <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">由 glosbe.com 提供</string>
   <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -63,21 +64,6 @@
   <string name="multimedia_editor_pron_pronunciation_failed">發音無效</string>
   <string name="multimedia_editor_word_search_try_lower_case">請嘗試使用小寫字元</string>
   <string name="multimedia_editor_poweredbeolingus">由 Beolingus 提供支持</string>
-  <!-- Image search activity -->
-  <!-- in progress dialog when loading the image -->
-  <string name="multimedia_editor_imgs_saving_image">儲存圖片中...</string>
-  <string name="multimedia_editor_imgs_loading_image">正在載入圖片</string>
-  <string name="multimedia_editor_imgs_no_results">找不到搜尋結果</string>
-  <string name="multimedia_editor_imgs_images_found">找到圖片</string>
-  <string name="multimedia_editor_imgs_pow_by_google">由 Google 圖片搜尋提供</string>
-  <!-- buttons -->
-  <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
-  <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
-  <string name="multimedia_editor_imgs_pick">選取</string>
-  <!-- in controller when fails -->
-  <string name="multimedia_editor_imgs_failed">圖片搜尋失敗</string>
-  <!-- while searching -->
-  <string name="multimedia_editor_imgs_searching_for_images">搜尋圖片</string>
   <!-- Field editing general -->
   <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">文字</string>
@@ -128,7 +114,6 @@
   <string name="title_activity_edit_text">編輯欄位</string>
   <string name="title_activity_translation">翻譯</string>
   <string name="title_activity_load_pronounciation">發音</string>
-  <string name="title_activity_search_image">Google 圖片搜尋</string>
   <!-- Network failure -->
   <string name="network_no_connection">沒有連線。</string>
 </resources>

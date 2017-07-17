@@ -166,5 +166,5 @@
   <string name="card_template_editor_would_delete_note"> Odstraněním tohoto typu karty můžete způsobit, že jedna nebo         více poznámek budou odstraněny. Nejprve vytvořte nový typ karty.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Čtení a zápis do AnkiDroid databáze</string>
-  <string name="read_write_permission_description">Umožnit aplikaci přístup k poznámkám, kartám, typům karet, balíčkům a k vytvářením nových</string>
+  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

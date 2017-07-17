@@ -170,5 +170,5 @@
   <string name="card_template_editor_would_delete_note">Odstranjevanje te vrste kartice lahko povzroči izbris enega ali več zapiskov. Najprej ustvarite novo vrsto kartice.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Branje in pisanje v podatkovno zbirko AnkiDroid</string>
-  <string name="read_write_permission_description">Omogoči programu dostop do obstoječih zapiskov, kartic, vrst zapiskov in kompletov kot tudi ustvarjanje novih</string>
+  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

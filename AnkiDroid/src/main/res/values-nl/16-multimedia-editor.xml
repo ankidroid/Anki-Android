@@ -38,6 +38,7 @@
   <string name="multimedia_editor_popup_image">Voeg afbeelding toe</string>
   <string name="multimedia_editor_popup_audio">Neem audio op</string>
   <string name="multimedia_editor_popup_text">Geavanceerde editor</string>
+  <string name="multimedia_editor_popup_cloze">Cloze verwijdering</string>
   <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">Aangedreven door glosbe.com</string>
   <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -63,21 +64,6 @@
   <string name="multimedia_editor_pron_pronunciation_failed">Uitspraak mislukt</string>
   <string name="multimedia_editor_word_search_try_lower_case">Probeer alleen kleine letters te gebruiken</string>
   <string name="multimedia_editor_poweredbeolingus">Aangedreven door Beolingus</string>
-  <!-- Image search activity -->
-  <!-- in progress dialog when loading the image -->
-  <string name="multimedia_editor_imgs_saving_image">Afbeelding opslaan</string>
-  <string name="multimedia_editor_imgs_loading_image">Afbeelding laden</string>
-  <string name="multimedia_editor_imgs_no_results">Zoekopdracht heeft geen resultaten opgeleverd</string>
-  <string name="multimedia_editor_imgs_images_found">Afbeeldingen gevonden</string>
-  <string name="multimedia_editor_imgs_pow_by_google">Mogelijk gemaakt door Google Afbeeldingen</string>
-  <!-- buttons -->
-  <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
-  <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
-  <string name="multimedia_editor_imgs_pick">Kies</string>
-  <!-- in controller when fails -->
-  <string name="multimedia_editor_imgs_failed">Afbeeldingen zoeken mislukt</string>
-  <!-- while searching -->
-  <string name="multimedia_editor_imgs_searching_for_images">Afbeeldingen aan het zoeken</string>
   <!-- Field editing general -->
   <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">Tekst</string>
@@ -118,7 +104,7 @@
   <string name="multimedia_editor_progress_wait_title">Wachten</string>
   <!-- not a good message, when an unexpected error happens -->
   <string name="multimedia_editor_something_wrong">Er is iets fout gegaan</string>
-  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the %1$s field</string>
+  <string name="multimedia_editor_attach_mm_content">Multimedia-inhoud toevoegen aan het %1$s-veld</string>
   <string name="multimedia_editor_attach_media">Voeg media toe</string>
   <!-- Audio view -->
   <!-- Message when recording fails -->
@@ -128,7 +114,6 @@
   <string name="title_activity_edit_text">Veld wijzigen</string>
   <string name="title_activity_translation">Vertaling</string>
   <string name="title_activity_load_pronounciation">Uitspraak</string>
-  <string name="title_activity_search_image">Google Afbeeldingen</string>
   <!-- Network failure -->
   <string name="network_no_connection">Geen verbinding</string>
 </resources>

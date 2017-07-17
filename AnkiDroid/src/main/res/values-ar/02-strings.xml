@@ -40,47 +40,47 @@
 -->
 <resources>
   <!-- How to format a percentage shown in the summary field of a preference -->
-  <string name="preference_summary_percentage">XXX%</string>
+  <string name="preference_summary_percentage">XXX %</string>
   <!-- Navigation drawer strings -->
-  <string name="drawer_open">Open drawer</string>
-  <string name="drawer_close">Close drawer</string>
+  <string name="drawer_open">فتح القائمة</string>
+  <string name="drawer_close">أغلق القائمة</string>
   <string name="CardEditorLaterMessage">حفظ المعلومات لوقت لاحق</string>
-  <string name="CardEditorCardDeck">Card deck:</string>
-  <string name="CardEditorNoteDeck">Deck:</string>
-  <string name="CardEditorModel">Type:</string>
+  <string name="CardEditorCardDeck">مجموعة البطاقات:</string>
+  <string name="CardEditorNoteDeck">ورق اللعب:</string>
+  <string name="CardEditorModel">النوع:</string>
   <string name="CardEditorTags">الوسوم: %1$s</string>
-  <string name="CardEditorCards">Cards: %1$s</string>
-  <string name="tag_name">Tag name</string>
-  <string name="add_new_filter_tags">Add/filter tags</string>
-  <string name="add_tag">Add tag</string>
-  <string name="check_all_tags">Check/uncheck all tags</string>
-  <string name="filter_tags">Filter tags</string>
-  <string name="no_tags">You haven’t added any tags yet</string>
+  <string name="CardEditorCards">البطاقات: %1$s</string>
+  <string name="tag_name">اسم الوسم</string>
+  <string name="add_new_filter_tags">اضف/صفي الوسوم</string>
+  <string name="add_tag">اضف وسم</string>
+  <string name="check_all_tags">الاختيار/إلغاء تحديد كافة الوسوم</string>
+  <string name="filter_tags">تصفية الوسوم</string>
+  <string name="no_tags">لم تقم بإضافة أية وسوم بعد</string>
   <string name="sdcard_missing_message">بطاقة التخزين المؤمنة غير متوفرة بسبب أنها مستخدمة كوحدة تخزين USB . افصل USB للوصول إلى رزمك.</string>
-  <string name="updated_version">Updated to version %s</string>
+  <string name="updated_version">تحديث للإصدار %s</string>
   <!-- Reviewer.java -->
-  <string name="enable_whiteboard">Enable whiteboard</string>
-  <string name="disable_whiteboard">Disable whiteboard</string>
+  <string name="enable_whiteboard">تمكين السبورة</string>
+  <string name="disable_whiteboard">تعطيل السبورة</string>
   <string name="show_whiteboard">إظهار  لوح السبورة</string>
   <string name="hide_whiteboard">إخفاء لوح السبورة</string>
   <string name="clear_whiteboard">مسح لوح السبورة</string>
-  <string name="replay_audio">Replay audio</string>
+  <string name="replay_audio">إعادة تشغيل الصوت</string>
   <string name="leech_suspend_notification">البطاقة علمت كسَئُولة و معلقة</string>
   <string name="leech_notification">البطاقة علمت كسَئُولة</string>
   <string name="corrupt_font">ملف خط معطوب %s</string>
   <!-- Browser -->
   <string-array name="browser_column1_headings">
-    <item>Question</item>
-    <item>Sort field</item>
+    <item>سؤال</item>
+    <item>فرز الحقل</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>الجواب</item>
-    <item>Card</item>
-    <item>Deck</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
+    <item>بطاقة</item>
+    <item>ورق اللعب</item>
+    <item>ملاحظة</item>
+    <item>سؤال</item>
+    <item>وسوم</item>
+    <item>هفوات</item>
     <item>ملاحظات</item>
     <!--
     <item>Changed</item>
@@ -92,9 +92,9 @@
         -->
   </string-array>
   <!-- Custom study options -->
-  <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-  <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
-  <string name="custom_study_review_forgotten">Review forgotten cards</string>
+  <string name="custom_study_increase_new_limit">قم بزيادة حد البطاقة الجديدة لليوم</string>
+  <string name="custom_study_increase_review_limit">قم بزيادة حد البطاقة المراجعة لليوم</string>
+  <string name="custom_study_review_forgotten">مراجعة بطاقات المنسيّة</string>
   <string name="custom_study_review_ahead">Review ahead</string>
   <string name="custom_study_random_selection">Study a random selection of cards</string>
   <string name="custom_study_preview_new">Preview new cards</string>
@@ -184,7 +184,7 @@
         Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
         ]]>
     </string>
-  <string name="export_unsuccessful">Error exporting collection</string>
+  <string name="export_unsuccessful">Error exporting apkg file</string>
   <string name="import_hint">لاستيراد البطاقات، ضع الملف apkg في الدليل %s ثم اضغط موافق</string>
   <string name="upgrade_import_no_file_found">لا يوجد غير قابلة للاستيراد %1$s غير موجود</string>
   <string name="study_options">Deck options</string>

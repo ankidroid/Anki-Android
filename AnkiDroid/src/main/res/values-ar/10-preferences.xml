@@ -40,11 +40,11 @@
 -->
 <resources>
   <!-- generic strings -->
-  <string name="disabled">Disabled</string>
-  <string name="enabled">Enabled</string>
+  <string name="disabled">معطل</string>
+  <string name="enabled">مفعل</string>
   <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
-  <string name="pref_cat_general_summ">General settings</string>
+  <string name="pref_cat_general_summ">اعدادات عامة</string>
   <string name="pref_cat_reviewing">مراجعة</string>
   <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>
   <string name="pref_cat_reviewer_behaviour">Behavior</string>

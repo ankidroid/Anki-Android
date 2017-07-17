@@ -41,47 +41,47 @@
 <resources>
   <!-- CardBrowser -->
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="few">%d cards shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">Rodoma %d kortelė</item>
+    <item quantity="few">Rodomos %d kortelės</item>
+    <item quantity="other">Rodoma %d kortelių</item>
   </plurals>
-  <string name="card_browser_all_decks">Visos malkos</string>
-  <string name="card_browser_delete_card">Delete note</string>
-  <string name="card_browser_suspend_card">Sustabdyti kortelę</string>
-  <string name="card_browser_unsuspend_card">Unsuspend card</string>
+  <string name="card_browser_all_decks">Visi rinkiniai</string>
+  <string name="card_browser_delete_card">Ištrinti užrašą</string>
+  <string name="card_browser_suspend_card">Atidėti kortelę</string>
+  <string name="card_browser_unsuspend_card">Atšaukti kortelės atidėjimą</string>
   <string name="card_browser_mark_card">Pažymėti pastabą</string>
   <string name="card_browser_unmark_card">Atžymėti pastabą</string>
-  <string name="delete_card_title">Delete note?</string>
-  <string name="delete_card_message">Delete all cards of this note?\nSearch field: %s</string>
-  <string name="card_browser_show_marked">Filtruoti pažymetas</string>
-  <string name="card_browser_show_suspended">Filter suspended</string>
-  <string name="card_browser_search_by_tag">Filtruoti pagal žymą</string>
+  <string name="delete_card_title">Ar norite užrašą ištrinti?</string>
+  <string name="delete_card_message">Ar norite ištrinti visas šio užrašo korteles?\nPaieškos laukas: %s</string>
+  <string name="card_browser_show_marked">Rodyti pažymėtas</string>
+  <string name="card_browser_show_suspended">Rodyti atidėtas</string>
+  <string name="card_browser_search_by_tag">Rodyti pagal žymą</string>
   <string name="card_browser_tags_shown">Žymos: %1$s</string>
   <string name="card_browser_list_my_searches">Mano paieškos</string>
   <string name="card_browser_list_my_searches_save">Išsaugoti paieška</string>
   <string name="card_browser_list_my_searches_title">Pasirinkite įrašytą paiešką</string>
   <string name="card_browser_list_my_searches_new_name">Dabartinės ieškos pavadinimas</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">Paieškos negalite išsaugoti be pavadinimo</string>
   <string name="card_browser_list_my_searches_new_search_error_dup">Pavadinimas egzistuoja</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
-  <string name="card_browser_change_display_order">Change display order</string>
-  <string name="card_browser_change_display_order_title">Choose display order</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
+  <string name="card_browser_list_my_searches_remove_content">Ar norite ištrinti „%1$s“?</string>
+  <string name="card_browser_change_display_order">Keisti rodymo tvarką</string>
+  <string name="card_browser_change_display_order_title">Pasirinkite rodymo tvarką</string>
+  <string name="card_browser_change_display_order_reverse">Norėdami matyti atvirkštine tvarka, laukelį pasirinkite dukart</string>
   <string name="card_details_question">Klausimas</string>
   <string name="card_details_answer">Atsakymas</string>
-  <string name="card_details_due">Iki</string>
+  <string name="card_details_due">Numatytos</string>
   <string name="card_details_tags">Žymos</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
+  <string name="card_browser_filtering_cards">Kortelės atrenkamos&#8230; \nNorėdami atšaukti, spauskite mygtuką „atgal“</string>
   <string-array name="card_browser_order_labels">
-    <item>No sorting (faster)</item>
-    <item>By sort field</item>
+    <item>Nerūšiuoti (greičiau)</item>
+    <item>Pagal rūšiavimo lauką</item>
     <item>Pagal sukūrimo laiką</item>
+    <item>Pagal redagavimo laiką</item>
     <item>Pagal keitimo laiką</item>
-    <item>Pagal pakeitimo laiką</item>
-    <item>By due time</item>
+    <item>Pagal numatytą laiką</item>
     <item>Pagal intervalą</item>
     <item>Pagal lengvumą</item>
     <item>Pagal peržiūras</item>
-    <item>By lapses</item>
+    <item>Pagal dažniausiai užmirštamas</item>
   </string-array>
 </resources>

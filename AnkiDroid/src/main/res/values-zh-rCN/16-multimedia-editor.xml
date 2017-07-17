@@ -38,6 +38,7 @@
   <string name="multimedia_editor_popup_image">添加图像</string>
   <string name="multimedia_editor_popup_audio">录制音频</string>
   <string name="multimedia_editor_popup_text">高级编辑器</string>
+  <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
   <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">由 glosbe.com 提供支持</string>
   <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -63,21 +64,6 @@
   <string name="multimedia_editor_pron_pronunciation_failed">发音失败</string>
   <string name="multimedia_editor_word_search_try_lower_case">尝试仅使用小写字符</string>
   <string name="multimedia_editor_poweredbeolingus">由Beolingus提供</string>
-  <!-- Image search activity -->
-  <!-- in progress dialog when loading the image -->
-  <string name="multimedia_editor_imgs_saving_image">保存图片……</string>
-  <string name="multimedia_editor_imgs_loading_image">读取图片……</string>
-  <string name="multimedia_editor_imgs_no_results">搜索未返回任何结果</string>
-  <string name="multimedia_editor_imgs_images_found">已找到图像</string>
-  <string name="multimedia_editor_imgs_pow_by_google">谷歌图片搜索提供</string>
-  <!-- buttons -->
-  <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
-  <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
-  <string name="multimedia_editor_imgs_pick">选择</string>
-  <!-- in controller when fails -->
-  <string name="multimedia_editor_imgs_failed">图像搜索失败</string>
-  <!-- while searching -->
-  <string name="multimedia_editor_imgs_searching_for_images">正在搜索图像</string>
   <!-- Field editing general -->
   <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">文字</string>
@@ -128,7 +114,6 @@
   <string name="title_activity_edit_text">编辑字段</string>
   <string name="title_activity_translation">翻译</string>
   <string name="title_activity_load_pronounciation">发音</string>
-  <string name="title_activity_search_image">谷歌图片搜索</string>
   <!-- Network failure -->
   <string name="network_no_connection">无网络连接</string>
 </resources>

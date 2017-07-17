@@ -163,5 +163,5 @@
         d\'une ou de plusieurs notes. Veuillez d\'abord créer un nouveau type de carte.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Lire et écrire dans la base de données d\'AnkiDroid</string>
-  <string name="read_write_permission_description">Permettre à l\'application d\'accéder aux notes actuelles, cartes, modèles et des paquets, ainsi que d\'en créer de nouveaux.</string>
+  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

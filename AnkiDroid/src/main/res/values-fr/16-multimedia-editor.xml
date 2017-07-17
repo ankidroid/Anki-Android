@@ -38,6 +38,7 @@
   <string name="multimedia_editor_popup_image">Ajouter une image</string>
   <string name="multimedia_editor_popup_audio">Enregistrer un son</string>
   <string name="multimedia_editor_popup_text">Éditeur avancé</string>
+  <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
   <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">Propulsé par glosbe.com</string>
   <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -63,21 +64,6 @@
   <string name="multimedia_editor_pron_pronunciation_failed">Échec de la prononciation</string>
   <string name="multimedia_editor_word_search_try_lower_case">Essayez en utilisant uniquement des minuscules</string>
   <string name="multimedia_editor_poweredbeolingus">Propulsé par Beolingus</string>
-  <!-- Image search activity -->
-  <!-- in progress dialog when loading the image -->
-  <string name="multimedia_editor_imgs_saving_image">Sauvegarde de l’image</string>
-  <string name="multimedia_editor_imgs_loading_image">Chargement de l’image</string>
-  <string name="multimedia_editor_imgs_no_results">La recherche n’a pas donné de résultats</string>
-  <string name="multimedia_editor_imgs_images_found">Images trouvées</string>
-  <string name="multimedia_editor_imgs_pow_by_google">Propulsé par Google Recherche d’image</string>
-  <!-- buttons -->
-  <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
-  <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
-  <string name="multimedia_editor_imgs_pick">Choisir</string>
-  <!-- in controller when fails -->
-  <string name="multimedia_editor_imgs_failed">Échec de la recherche d’image</string>
-  <!-- while searching -->
-  <string name="multimedia_editor_imgs_searching_for_images">Recherche d’images</string>
   <!-- Field editing general -->
   <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">Texte</string>
@@ -128,7 +114,6 @@
   <string name="title_activity_edit_text">Champs d’édition</string>
   <string name="title_activity_translation">Traduction</string>
   <string name="title_activity_load_pronounciation">Prononciation</string>
-  <string name="title_activity_search_image">Recherche d’image Google</string>
   <!-- Network failure -->
   <string name="network_no_connection">Pas de connexion.</string>
 </resources>

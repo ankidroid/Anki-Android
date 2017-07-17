@@ -38,6 +38,7 @@
   <string name="multimedia_editor_popup_image">Aggiungi immagine</string>
   <string name="multimedia_editor_popup_audio">Registra audio</string>
   <string name="multimedia_editor_popup_text">Editor avanzato</string>
+  <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
   <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">Tecnologia glosbe.com</string>
   <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -63,21 +64,6 @@
   <string name="multimedia_editor_pron_pronunciation_failed">Pronuncia non riuscita</string>
   <string name="multimedia_editor_word_search_try_lower_case">Prova a utilizzare solo caratteri minuscoli</string>
   <string name="multimedia_editor_poweredbeolingus">Tecnologia Beolingus</string>
-  <!-- Image search activity -->
-  <!-- in progress dialog when loading the image -->
-  <string name="multimedia_editor_imgs_saving_image">Salvataggio immagine</string>
-  <string name="multimedia_editor_imgs_loading_image">Caricamento immagine</string>
-  <string name="multimedia_editor_imgs_no_results">La ricerca non ha restituito nessun risultato</string>
-  <string name="multimedia_editor_imgs_images_found">Immagini trovate</string>
-  <string name="multimedia_editor_imgs_pow_by_google">Tecnologia Google Image Search</string>
-  <!-- buttons -->
-  <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
-  <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
-  <string name="multimedia_editor_imgs_pick">Scegli</string>
-  <!-- in controller when fails -->
-  <string name="multimedia_editor_imgs_failed">Ricerca di immagini non riuscita</string>
-  <!-- while searching -->
-  <string name="multimedia_editor_imgs_searching_for_images">Ricerca di immagini</string>
   <!-- Field editing general -->
   <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">Testo</string>
@@ -128,7 +114,6 @@
   <string name="title_activity_edit_text">Modifico campo</string>
   <string name="title_activity_translation">Traduzione</string>
   <string name="title_activity_load_pronounciation">Pronuncia</string>
-  <string name="title_activity_search_image">Ricerca immagini Google</string>
   <!-- Network failure -->
   <string name="network_no_connection">Nessuna connessione.</string>
 </resources>

@@ -41,13 +41,13 @@
 <resources>
   <!-- Feedback.java -->
   <string name="empty_string"></string>
-  <string name="error_reporting_choice">Error reporting mode</string>
-  <string name="feedback_disclaimer">Disclaimer: We don’t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
-  <string name="feedback_title">Feedback</string>
-  <string name="feedback_default_text">Enter your feedback or information about the nature of any errors you’re reporting.</string>
-  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
-  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
-  <string name="feedback_copy_debug">Copy debug info</string>
-  <string name="feedback_report">Report</string>
-  <string name="feedback_report_automatically">Send error reports automatically</string>
+  <string name="error_reporting_choice">Modul de raportare erori</string>
+  <string name="feedback_disclaimer">Disclaimer: Noi nu colectăm informaţii personale, cum ar fi adresa de e-mail, număr de telefon sau IMEI. Colectam informatii despre aparat, cum ar fi fabricant, model şi versiune de Android, precum și natura erorilor raportate și etapele care au dus la apariția acestora.</string>
+  <string name="feedback_title">Părerile tale</string>
+  <string name="feedback_default_text">Introduceţi feedback-ul sau informaţii despre natura errorii pe care o raportati.</string>
+  <string name="feedback_auto_toast_text">AnkiDroid a întâlnit o problemă; un raport este trimis la dezvoltatori&#8230;</string>
+  <string name="feedback_manual_toast_text">AnkiDroid a întâlnit o problemă; un raport va fi generat&#8230;</string>
+  <string name="feedback_copy_debug">Copiați informațiile de depanare</string>
+  <string name="feedback_report">Raport</string>
+  <string name="feedback_report_automatically">Trimite automat rapoarte de eroare</string>
 </resources>

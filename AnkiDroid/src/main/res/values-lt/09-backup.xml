@@ -39,29 +39,29 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remone some other files.</string>
-  <string name="sd_space_warning">Less than %d MB space on your SD card left.\nFree some space to avoid data loss.</string>
-  <string name="backup_delete">Naikinamos atsarginės kopijos&#8230;</string>
+  <string name="backup_deck_no_space_left">Atsarginė kopija neišsaugota. SD kortelėje nepakanka vietos. Sumažinkite atsarginių kopijų skaičių arba ištrinkite keletą kitų failų.</string>
+  <string name="sd_space_warning">Jūsų SD kortelėje liko mažiau nei %d MB vietos.\nNorėdami neprarasti turimų duomenų, atlaisvinkite šiek tiek vietos.</string>
+  <string name="backup_delete">Trinamos atsarginės kopijos&#8230;</string>
   <string name="backup_restore">Atkurti iš atsarginės kopijos</string>
   <string name="backup_new_collection">Nauja kolekcija</string>
-  <string name="backup_del_collection">Delete collection and create new one</string>
-  <string name="backup_del_collection_question">Delete the collection and create a new one? This will drop all your learning progress and delete all cards.</string>
-  <string name="backup_full_sync_from_server">Full sync from server</string>
-  <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
-  <string name="error_handling_title">Error handling</string>
+  <string name="backup_del_collection">Ištrinti kolekciją ir sukurti naują</string>
+  <string name="backup_del_collection_question">Ar norite ištrinti kolekciją ir sukurti naują? Po to bus sumažinta jūsų mokymosi pažanga ir ištrintos visos kortelės.</string>
+  <string name="backup_full_sync_from_server">Visiškai sinchronizuoti iš serverio</string>
+  <string name="backup_full_sync_from_server_question">Ar norite pakeisti turimą kolekciją esančia „AnkiWeb“ svetainėje? Dėl to sumažės jūsų mokymosi pažanga ir po paskutinio sinchronizavimo pridėta nauja informacija.</string>
+  <string name="error_handling_title">Klaida</string>
   <string name="error_handling_options">Parinktys</string>
   <string name="backup_retry_opening">Atidaryti dar kartą</string>
   <string name="backup_error_menu_repair">Taisyti duomenų bazę</string>
   <string name="backup_repair_deck">Taisyti</string>
   <string name="backup_repair_deck_progress">Duomenų bazė taisoma&#8230;</string>
   <string name="backup_error">Klaida</string>
-  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
-  <string name="backup_restore_select_title">Select backup to restore</string>
-  <string name="backup_restore_no_backups">No backups available on this device. If you have backups on your desktop computer, copy them manually into your AnkiDroid folder.</string>
-  <string name="open_collection_failed_title">Collection not opened</string>
-  <string name="open_collection_failed_message">Database couldn’t be opened. It’s either not a real Anki database or has been corrupted.\n\nTouch “options” for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
-  <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
-  <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
-  <string name="deck_repair_error">Collection couldn’t be repaired</string>
-  <string name="cursor_size_limit_exceeded">The Android size limit for a String in a database has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
+  <string name="backup_invalid_file_error">Pasirinktos atsarginės kopijos failas neveikia</string>
+  <string name="backup_restore_select_title">Norėdami atkurti, pasirinkite atsarginę kopiją</string>
+  <string name="backup_restore_no_backups">Šiame įrenginyje nėra jokių atsarginių kopijų. Jei turite atsarginių kopijų kompiuteryje, nukopijuokite jas rankiniu būdu į „AnkiDroid“ katalogą.</string>
+  <string name="open_collection_failed_title">Neatidaryta kolekcija</string>
+  <string name="open_collection_failed_message">Duomenų bazė neatsidaro. Tai nėra „Anki“ duomenų bazė arba ji yra sugadinta.\n\nNorėdami pamatyti daugiau duomenų bazės atkūrimo parinkčių, paspauskite „Parinktys“, o norėdami gauti daugiau informacijos apie tai, kaip galima pataisyti sugadintas kolekcijas, skaitykite:\n%1$s</string>
+  <string name="corrupt_db_message">Jūsų kolekcija yra sugadinta.\n\nNorėdami atkurti ją iš atsarginės kopijos, spauskite „Parinktys“, o jei tai nepadeda, tuomet peržiūrėkite toliau pateiktus nurodymus, kaip galite duomenų bazė pataisyti rankiniu būdu:\n%1$s</string>
+  <string name="access_collection_failed_message">Jungiantis prie jūsų kolekcijos įvyko klaida. Ją galėjo sukelti nepavojingas pranešimas apie klaidą arba problema gali būti susijusi su pačia kolekcija. \n\nPabandykite patikrinti duomenų bazę arba atkurti ją iš atsarginės kopijos, paspaudę mygtuką „Parinktys“. Jei šį pranešimą rodys ir toliau, prašome išsiųsti pranešimą apie klaidą:\n%1$s</string>
+  <string name="deck_repair_error">Kolekcijos sutaisyti negalima</string>
+  <string name="cursor_size_limit_exceeded">Duomenų bazėje buvo viršytas „Android“ eilutei skirto dydžio limitas. Ištrinkite nenaudojamus užrašų tipus, naudodami kompiuterinę „Anki“ versiją ir atlikite išsamų sinchronizavimą.</string>
 </resources>

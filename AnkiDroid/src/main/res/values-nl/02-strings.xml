@@ -161,18 +161,18 @@
   <string name="confirm_apkg_export">Verzameling exporteren als apkg-bestand?</string>
   <string name="confirm_apkg_export_deck">\"%s\" als apkg-bestand exporteren?</string>
   <string name="export_in_progress">Apkg-bestand exporteren&#8230;</string>
-  <string name="export_successful_title">Send apkg?</string>
-  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+  <string name="export_successful_title">Apkg versturen?</string>
+  <string name="export_successful">Bestand \"%s\" is geëxporteerd. Wilt u het met een andere app versturen?</string>
+  <string name="export_email_subject">AnkiDroid geëxporteerde flashcards: %s</string>
   <string name="export_email_text">
         <![CDATA[
-        Hi!
+        Hallo!
         <br/><br/>
-        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
-        ]]>
+        Dot is een Anki flashcards deck verzonden vam <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        Probeer het te openen met een van de beschikbare Anki distributies <a href="http://ankisrs.net/#download">Anki distributions</a> en geniet van makkelijk en efficiënt leren!
+        ]]>;
     </string>
-  <string name="export_unsuccessful">Exporteren verzameling mislukt</string>
+  <string name="export_unsuccessful">Er is een fout opgetreden met het exporteren van de apkg file.</string>
   <string name="import_hint">Om kaarten te importeren, plaats het apkg-bestand in map %s en klik ok</string>
   <string name="upgrade_import_no_file_found">Geen %1$s bestand gevonden om te importeren</string>
   <string name="study_options">Leerset opties</string>
@@ -220,11 +220,11 @@
   <string name="decks_rename_exists">Deze set bestaat al</string>
   <string name="decks_rename_filtered_nosubdecks">Een gefilterde set kan geen subsets hebben</string>
   <string name="filtered_deck_name">Gefilterde Set</string>
-  <string name="reminder_title">Do not forget to study today!</string>
+  <string name="reminder_title">Vergeet niet om vandaag te studeren!</string>
   <plurals name="reminder_text">
-    <item quantity="one">%2$d new card to review in %1$s</item>
-    <item quantity="other">%2$d new cards to review in %1$s</item>
+    <item quantity="one">%2$d nieuw kaart te reviewen in %1$s</item>
+    <item quantity="other">%2$d nieuwe kaarten te reviewen in %1$s</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->
-  <string name="apk_share_error">Error sharing apkg file</string>
+  <string name="apk_share_error">Fout met het delen van de apkg bestand</string>
 </resources>

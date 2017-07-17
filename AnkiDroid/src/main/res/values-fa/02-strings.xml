@@ -172,7 +172,7 @@
         برای استفاده از آن یکی از عامل های در دسترس <a href="http://ankisrs.net/#download">anki را امتحان کنید</a> و از یادگیری کارآمد و آسان لذت ببرید.
         ]]>
     </string>
-  <string name="export_unsuccessful">خطا در صادر کردن مجموعه</string>
+  <string name="export_unsuccessful">Error exporting apkg file</string>
   <string name="import_hint">برای وارد کردن کارتها, فایل apkg را در مسیر \"%s\" قرار داده و دکمه تایید را فشار دهید</string>
   <string name="upgrade_import_no_file_found">فایل %1$s قابل وارد کردن یافت نشد</string>
   <string name="study_options">گزینه های دسته</string>

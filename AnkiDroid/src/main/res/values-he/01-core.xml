@@ -170,5 +170,5 @@
   <string name="card_template_editor_would_delete_note">הסרת סוג הכרטסיה תגרום לרשימה אחת או יותר להימחק. אנא צור סוג כרטיסיות חדש קודם.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">קרא ושמור לממסד הנתונים של אנקידרוייד</string>
-  <string name="read_write_permission_description">תן לאפליקציה גישה לרשימות, כרטסיות, סוגי רשימות, וחפיסות, וכן גישה ליצור חדשות</string>
+  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

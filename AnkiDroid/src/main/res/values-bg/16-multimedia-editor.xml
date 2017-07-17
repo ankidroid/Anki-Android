@@ -38,6 +38,7 @@
   <string name="multimedia_editor_popup_image">Ново изображение</string>
   <string name="multimedia_editor_popup_audio">Аудиозапис</string>
   <string name="multimedia_editor_popup_text">Разширен редактор</string>
+  <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
   <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">С помощта на glosbe.com</string>
   <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -63,21 +64,6 @@
   <string name="multimedia_editor_pron_pronunciation_failed">Произношение е неуспешно</string>
   <string name="multimedia_editor_word_search_try_lower_case">Опитайте се да използвате само малки букви</string>
   <string name="multimedia_editor_poweredbeolingus">Осъществено чрез Beolingus</string>
-  <!-- Image search activity -->
-  <!-- in progress dialog when loading the image -->
-  <string name="multimedia_editor_imgs_saving_image">Записване на изображение</string>
-  <string name="multimedia_editor_imgs_loading_image">Записване на изображение</string>
-  <string name="multimedia_editor_imgs_no_results">Търсенето не даде резултати</string>
-  <string name="multimedia_editor_imgs_images_found">Намерени снимки</string>
-  <string name="multimedia_editor_imgs_pow_by_google">Осъществява се чрез Google изображения</string>
-  <!-- buttons -->
-  <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
-  <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
-  <string name="multimedia_editor_imgs_pick">Избор</string>
-  <!-- in controller when fails -->
-  <string name="multimedia_editor_imgs_failed">Неуспешно търсене на изображения</string>
-  <!-- while searching -->
-  <string name="multimedia_editor_imgs_searching_for_images">Търсене на изображения</string>
   <!-- Field editing general -->
   <!-- these are button names to convert field type -->
   <string name="multimedia_editor_field_editing_text">Текст</string>
@@ -128,7 +114,6 @@
   <string name="title_activity_edit_text">Редактиране на поле</string>
   <string name="title_activity_translation">Превод</string>
   <string name="title_activity_load_pronounciation">Произношение</string>
-  <string name="title_activity_search_image">Google Image Search</string>
   <!-- Network failure -->
   <string name="network_no_connection">Няма връзка</string>
 </resources>

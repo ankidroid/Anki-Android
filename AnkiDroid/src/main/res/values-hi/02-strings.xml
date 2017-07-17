@@ -172,7 +172,7 @@
         Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
         ]]>
     </string>
-  <string name="export_unsuccessful">Error exporting collection</string>
+  <string name="export_unsuccessful">Error exporting apkg file</string>
   <string name="import_hint">कार्ड को आयात करने के लिए, apkg फ़ाइल %s निर्देशिका में रखें और ठीक दबाएँ</string>
   <string name="upgrade_import_no_file_found">कोई आयातयोग्य %1$s फ़ाइल मिली</string>
   <string name="study_options">Deck options</string>

@@ -162,5 +162,5 @@
   <string name="card_template_editor_would_delete_note">Att ta bort den här korttypen skulle göra att en eller flera noter tas bort. Vänligen skapa en ny korttyp först.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Läs och skriv till AnkiDroid-databasen</string>
-  <string name="read_write_permission_description">Tillåt appen att komma åt existerande noter, kort, nottyper och kortlekar, samt att skapa nya</string>
+  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
 </resources>

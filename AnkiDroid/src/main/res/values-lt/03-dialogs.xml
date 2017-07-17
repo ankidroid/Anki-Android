@@ -40,96 +40,96 @@
 -->
 <resources>
   <string name="check_db_title">Patikrinti duomenų bazę?</string>
-  <string name="check_db_warning">Tai gali užtrukti ilgai</string>
+  <string name="check_db_warning">Tai gali ilgai užtrukti</string>
   <string name="check_db_acknowledge">Duomenų bazė patikrinta</string>
   <string name="check_db_acknowledge_shrunk">Duomenų bazė patikrinta ir optimizuota.\nSumažinta %d kB.</string>
-  <string name="contextmenu_deckpicker_delete_deck">Ištrinti malką</string>
-  <string name="delete_deck_default_deck">Negalima ištrinti numatytosios malkos</string>
-  <string name="delete_deck_title">Ištrinti malką?</string>
+  <string name="contextmenu_deckpicker_delete_deck">Trinti rinkinį</string>
+  <string name="delete_deck_default_deck">Numatytojo rinkinio ištrinti negalima</string>
+  <string name="delete_deck_title">Ištrinti rinkinį?</string>
   <plurals name="delete_deck_message">
-    <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
-    <item quantity="few">Delete all cards in %1$s? It contains %2$d cards.</item>
-    <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+    <item quantity="one">Ar norite ištrinti visas %1$s korteles? Rinkinį sudaro %2$d kortelė.</item>
+    <item quantity="few">Ar norite ištrinti visas %1$s korteles? Rinkinį sudaro %2$d kortelės.</item>
+    <item quantity="other">Ar norite ištrinti visas %1$s korteles? Rinkinį sudaro %2$d kortelių.</item>
   </plurals>
-  <string name="delete_cram_deck_message">Send all cards in %s back to their original decks?</string>
-  <string name="no_tts_available_message">No text-to-speech language available</string>
-  <string name="initializing_tts">Initializing TTS&#8230;</string>
+  <string name="delete_cram_deck_message">Ar norite grąžinti visas %s korteles į jų pradinius rinkinius?</string>
+  <string name="no_tts_available_message">Teksto perskaityti nurodyta kalba negalime</string>
+  <string name="initializing_tts">Pradedamas teksto skaitymas balsu&#8230;</string>
   <string name="tts_no_tts">Nekalbėkite</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
-    <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
-    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
-    <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Atminties kortelės „Android“ sistemai</h2>AnkiDroid tai mokymosi kortelių programa, kurią galite naudoti ir kompiuteriu <a href=\"%2$s\">„Anki“</a>. Medžiagą galite kurti, parsisiųsti ir mokytis naudodami tiek „AnkiDroid“ mobiliąją, tiek „Anki“ kompiuterinę versiją, kurios tarpusavyje yra susinchronizuojamos prisijungus prie „AnkiWeb“ svetainės.]]></item>
+    <item><![CDATA[Norėdami mums padėti tobulinti „AnkiDroid“ programą, prašome pranešti apie pastebėtas klaidas <a href=\"%1$s\">problemų registratoriui</a>. Taip pat laukiame naujų idėjų. Atsakymus į kilusius klausimus rasite <a href=\"%2$s\">wiki</a> svetainėje, o padiskutuoti galite mūsų <a href=\"%3$s\">forume</a>.]]></item>
+    <item><![CDATA[„AnkiDroid“ yra <a href=\"%1$s\">atviroji programa<a/>, todėl kiekvieną skatiname <a href=\"%2$s\">prisidėti</a> prie jos kūrimo ir tobulinimo :-)]]></item>
+    <item><![CDATA[Prisidėti gali ne tik kūrėjai. Pavyzdžiui, galite mums <a href=\"%1$s\">padėti versti</a> „AnkiDroid“ programą, atnaujinti „wiki“ duomenis, atsiųsti ekrano kopijų ar rašyti tinklaraštį apie „AnkiDroid“.]]></item>
+    <item><![CDATA[„AnkiDroid“ yra išleista pagal <a href=\"%1$s\">GNU-GPL v3 licenciją</a>, o pirminį programos tekstą galite rasti <a href=\"%2$s\">„GitHub“</a> svetainėje.]]></item>
   </string-array>
-  <string name="preview_title">Peržiūra</string>
-  <string name="reset_card_dialog_title">Reset card progress</string>
-  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
-  <string name="reset_card_dialog_acknowledge">Card reset</string>
-  <string name="reschedule_card_dialog_title">Reschedule card</string>
-  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
-  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
+  <string name="preview_title">Peržiūrėti</string>
+  <string name="reset_card_dialog_title">Atkurti kortelių eigą</string>
+  <string name="reset_card_dialog_message">Ši kortelė bus įdėta į naujų kortelių eilės pabaigą</string>
+  <string name="reset_card_dialog_acknowledge">Kortelės atkūrimas</string>
+  <string name="reschedule_card_dialog_title">Keisti kortelės mokymosi dieną</string>
+  <string name="reschedule_card_dialog_message">Peržiūrėti kortelę po x dienų:</string>
+  <string name="reschedule_card_dialog_acknowledge">Kortelės mokymosi diena pakeista</string>
   <string name="answering_error_title">Duomenų bazės klaida</string>
-  <string name="answering_error_message">Writing to the collection failed. The databese could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+  <string name="answering_error_message">Įrašyti kolekcijos nepavyko. Duomenų bazė yra galimai sugadinta arba diske nėra pakankamai vietos.\n\nJei tai nutinka dažnai, patikrinkite duomenų bazę, pataisykite kolekciją arba atkurkite ją iš atsarginės kopijos. Norėdami tai padaryti, spauskite „Parinktys“.\n\Taip pat gali būti, kad tai yra „AnkiDroid“ pranešimas apie klaidą. Tokiu atveju, prašome apie šią klaidą mums pranešti, kad galėtume ją patikrinti.</string>
   <string name="answering_error_report">Pranešti apie klaidą</string>
-  <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
+  <string name="repair_deck_dialog">Ar tikrai norite taisyti duomenų bazę?\n\nPrieš tai atliekant, poaplankyje „%s“ bus sukurta kopija.</string>
   <string name="intent_add_saved_information">Išsaugoti duomenys</string>
   <string name="intent_add_clear_all">Išvalyti viską</string>
   <string name="intent_aedict_empty">Kategorija „numatytieji“ yra tuščia</string>
-  <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
-  <string name="custom_study_new_total_new">Naujos kortelės malkoje: %s</string>
-  <string name="custom_study_rev_total_rev">Laukia kortelės malkoje: %s</string>
-  <string name="custom_study_new_extend">Increase today’s new card limit by</string>
-  <string name="custom_study_rev_extend">Increase today’s review limit by</string>
-  <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
+  <string name="intent_aedict_category">Norėdami „AnkiDroid“ programoje pridėti kortelių, pašalinkite visas „Notepad“ kategorijas arba pridėkite vieną, kuri vadintųsi „numatytoji“</string>
+  <string name="custom_study_new_total_new">Naujos rinkinio kortelės: %s</string>
+  <string name="custom_study_rev_total_rev">Mokymuisi paruoštos rinkinio kortelės: %s</string>
+  <string name="custom_study_new_extend">Padidinti šiandienos naujų kortelių skaičių</string>
+  <string name="custom_study_rev_extend">Padidinti šiandienos peržiūrų skaičių</string>
+  <string name="custom_study_forgotten">Peržiūrėti korteles, kurios buvo pamirštos per paskutines x dienų:</string>
   <string name="custom_study_ahead">Kartoti į priekį x dienų:</string>
-  <string name="custom_study_random">Pasirinkti atsitiktines x korteles iš malkos:</string>
-  <string name="custom_study_preview">Preview new cards added in the last x days:</string>
-  <string name="rebuild_custom_study_deck">Rebuilding custom study deck&#8230;</string>
+  <string name="custom_study_random">Atsitiktine tvarka iš rinkinio atrinkti x kortelių:</string>
+  <string name="custom_study_preview">Peržiūrėti naujas korteles, pridėtas per paskutines x dienų:</string>
+  <string name="rebuild_custom_study_deck">Atkuriamas individualaus mokymosi rinkinys&#8230;</string>
   <string name="importing_collection">Importuojama kolekcija&#8230;</string>
-  <string name="import_media_count">Importing media files %1$d%%&#8230;</string>
-  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
-  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
-  <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
+  <string name="import_media_count">Įkeliami laikmenų failai %1$d%%&#8230;</string>
+  <string name="import_progress">• Įkeliami užrašai: %1$d%%\n• Įkeliamos kortelės: %2$d%%\n• Apdorojama: %3$d%%</string>
+  <string name="import_update_details">Atnaujinta %1$d iš %2$d esamų užrašų.</string>
+  <string name="import_update_ignored">Kai kurių atnaujinimų buvo nepaisoma, nes pasikeitė užrašų tipas</string>
   <string name="import_complete_count">Importuota kortelių: %d</string>
   <string name="sd_card_full_title">SD kortelė pilna</string>
   <string name="sd_card_almost_full_title">SD kortelė beveik pilna</string>
   <string name="restore_backup_title">Atkurti atsarginę kopiją?</string>
-  <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
+  <string name="restore_backup">Jūsų rinkinys bus pakeistas senesne kopija. Bus prarasta bet kokia neišsaugota pažanga.</string>
   <string name="dialog_cancel">Atšaukti</string>
   <string name="dialog_ok">Gerai</string>
   <string name="dialog_continue">Tęsti</string>
-  <string name="dialog_positive_create">Sukurti</string>
+  <string name="dialog_positive_create">Kurti</string>
   <string name="dialog_positive_delete">Ištrinti</string>
   <string name="dialog_positive_disable">Išjungti</string>
   <string name="dialog_positive_overwrite">Perrašyti</string>
-  <string name="dialog_positive_remove">Panaikinti</string>
+  <string name="dialog_positive_remove">Pašalinti</string>
   <string name="dialog_positive_repair">Taisyti</string>
   <string name="dialog_positive_replace">Pakeisti</string>
   <string name="dialog_positive_restore">Atkurti</string>
   <string name="dialog_positive_set">Nustatyti</string>
-  <string name="lookup_button_content">Look up</string>
-  <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
+  <string name="lookup_button_content">Ieškoti</string>
+  <string name="dialog_collection_path_not_dir">Nurodytas adresas negalioja</string>
   <!-- Media checking -->
-  <string name="check_media_title">Check media?</string>
-  <string name="check_media_warning">This may take a long time with large media collections</string>
-  <string name="check_media_message">Checking media&#8230;</string>
-  <string name="check_media_acknowledge">Media checked</string>
-  <string name="check_media_failed">Media check failed</string>
-  <string name="check_media_invalid">Files with invalid encoding: %d</string>
-  <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
-  <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
+  <string name="check_media_title">Tikrinti laikmenas?</string>
+  <string name="check_media_warning">Esant dideliems laikmenų rinkiniams tai gali ilgai užtrukti</string>
+  <string name="check_media_message">Tikrinamos laikmenos&#8230;</string>
+  <string name="check_media_acknowledge">Laikmenos patikrintos</string>
+  <string name="check_media_failed">Laikmenų patikrinti nepavyko</string>
+  <string name="check_media_invalid">Failai su neveikiančia koduote: %d</string>
+  <string name="check_media_unused">Laikmenų aplanke esantys failai, kurie nėra naudojami kortelėse: %d</string>
+  <string name="check_media_nohave">Failai, kurie yra naudojami kortelėse, bet kurių nėra laikmenų aplanke: %d</string>
   <string name="check_media_no_unused_missing">Nerasta nenaudojamų ar trūkstamų failų.</string>
-  <string name="check_media_db_updated">Media database rebuilt</string>
+  <string name="check_media_db_updated">Laikmenų duomenų bazė atkurta</string>
   <string name="check_media_delete_unused">Ištrinti nenaudojamus</string>
   <string name="check_media_deleted">Ištrinta failų: %d</string>
   <!-- Tags Dialog Options -->
   <string name="tags_dialog_option_all_cards">Visos kortelės</string>
-  <string name="tags_dialog_option_new_cards">Nauja</string>
-  <string name="tags_dialog_option_due_cards">Iki</string>
+  <string name="tags_dialog_option_new_cards">Naujos</string>
+  <string name="tags_dialog_option_due_cards">Numatytos</string>
   <!-- Empty cards -->
   <string name="emtpy_cards_finding">Ieškomos tuščios kortelės&#8230;</string>
-  <string name="empty_cards_none">Nėra tuščių kortelių</string>
-  <string name="empty_cards_count">Korteles ištrinti: %d</string>
+  <string name="empty_cards_none">Tuščių kortelių nėra</string>
+  <string name="empty_cards_count">Trinti paruoštos kortelės: %d</string>
   <string name="empty_cards_deleted">Ištrintos kortelės: %d</string>
 </resources>

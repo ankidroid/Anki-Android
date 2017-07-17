@@ -94,11 +94,11 @@
     <item>Altijd</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Plain</item>
+    <item>Licht</item>
+    <item>Eenvoudig</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
+    <item>Zwart</item>
+    <item>Donker</item>
   </string-array>
 </resources>
