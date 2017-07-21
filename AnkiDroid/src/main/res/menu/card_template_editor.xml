@@ -9,7 +9,7 @@
     <item
         android:id="@+id/action_confirm"
         android:icon="@drawable/ic_done_white_24dp"
-        android:title="@string/dialog_ok"
+        android:title="@string/save"
         ankidroid:showAsAction="ifRoom"
         android:visible="true"/>
     <item
