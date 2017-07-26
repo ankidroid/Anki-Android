@@ -145,6 +145,7 @@ CREATE TABLE revlog (
     time            integer not null,
        -- how many milliseconds your review took, up to 60000 (60s)
     type            integer not null
+       --  0=learn, 1=review, 2=relearn, 3=cram
 );
 
 
