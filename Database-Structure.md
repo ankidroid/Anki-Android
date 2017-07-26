@@ -135,7 +135,8 @@ CREATE TABLE revlog (
         --   See the description in the cards table for more info
     ease            integer not null,
        -- which button you pushed to score your recall. 
-       --   1(wrong), 2(hard), 3(ok), 4(easy)
+       -- review:  1(wrong), 2(hard), 3(ok), 4(easy)
+       -- learn/relearn:   1(wrong), 2(ok), 3(easy)
     ivl             integer not null,
        -- interval
     lastIvl         integer not null,
