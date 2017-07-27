@@ -29,10 +29,13 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,6 +49,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -78,6 +82,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -121,37 +126,42 @@ public class CardBrowser extends NavigationDrawerActivity implements
     // Should match order of R.array.card_browser_order_labels
     public static final int CARD_ORDER_NONE = 0;
     private static final String[] fSortTypes = new String[] {
-        "",
-        "noteFld",
-        "noteCrt",
-        "noteMod",
-        "cardMod",
-        "cardDue",
-        "cardIvl",
-        "cardEase",
-        "cardReps",
-        "cardLapses"};
+            "",
+            "noteFld",
+            "noteCrt",
+            "noteMod",
+            "cardMod",
+            "cardDue",
+            "cardIvl",
+            "cardEase",
+            "cardReps",
+            "cardLapses"};
     // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings.
     // Note: the last 6 are currently hidden
     private static final String[] COLUMN1_KEYS = {"question", "sfld"};
     private static final String[] COLUMN2_KEYS = {"answer",
-        "card",
-        "deck",
-        "note",
-        "question",
-        "tags",
-        "lapses",
-        "reviews",
-        "changed",
-        "created",
-        "due",
-        "ease",
-        "edited",
-        "interval"};
+            "card",
+            "deck",
+            "note",
+            "question",
+            "tags",
+            "lapses",
+            "reviews",
+            "changed",
+            "created",
+            "due",
+            "ease",
+            "edited",
+            "interval"};
     private long mLastRenderStart = 0;
     private DeckDropDownAdapter mDropDownAdapter;
     private Spinner mActionBarSpinner;
+    private TextView mActionBarTitle;
     private boolean mReloadRequired = false;
+    private boolean mInMultiSelectMode = false;
+    private HashSet<Integer> mCheckedCardPositions = new HashSet<>();
+    private int mNumCardsChecked = 0;
+    private Menu mActionBarMenu;
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -161,7 +171,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private MaterialDialog.ListCallback mContextMenuListener = new MaterialDialog.ListCallback() {
         @Override
         public void onSelection(MaterialDialog materialDialog, View view, int which,
-        CharSequence charSequence) {
+                                CharSequence charSequence) {
             if (getCards().size() == 0) {
                 // Don't do anything if mCards empty
                 searchCards();
@@ -218,110 +228,110 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private MaterialDialog.ListCallbackSingleChoice mOrderDialogListener =
             new MaterialDialog.ListCallbackSingleChoice() {
-        @Override
-        public boolean onSelection(MaterialDialog materialDialog, View view, int which,
-                CharSequence charSequence) {
-            if (which != mOrder) {
-                mOrder = which;
-                mOrderAsc = false;
-                try {
-                    if (mOrder == 0) {
-                        getCol().getConf().put("sortType", fSortTypes[1]);
-                        AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
-                                .putBoolean("cardBrowserNoSorting", true)
-                                .commit();
-                    } else {
-                        getCol().getConf().put("sortType", fSortTypes[mOrder]);
-                        AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
-                                .putBoolean("cardBrowserNoSorting", false)
-                                .commit();
+                @Override
+                public boolean onSelection(MaterialDialog materialDialog, View view, int which,
+                                           CharSequence charSequence) {
+                    if (which != mOrder) {
+                        mOrder = which;
+                        mOrderAsc = false;
+                        try {
+                            if (mOrder == 0) {
+                                getCol().getConf().put("sortType", fSortTypes[1]);
+                                AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
+                                        .putBoolean("cardBrowserNoSorting", true)
+                                        .commit();
+                            } else {
+                                getCol().getConf().put("sortType", fSortTypes[mOrder]);
+                                AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
+                                        .putBoolean("cardBrowserNoSorting", false)
+                                        .commit();
+                            }
+                            // default to descending for non-text fields
+                            if (fSortTypes[mOrder].equals("noteFld")) {
+                                mOrderAsc = true;
+                            }
+                            getCol().getConf().put("sortBackwards", mOrderAsc);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        searchCards();
+                    } else if (which != CARD_ORDER_NONE) {
+                        mOrderAsc = !mOrderAsc;
+                        try {
+                            getCol().getConf().put("sortBackwards", mOrderAsc);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        Collections.reverse(mCards);
+                        updateList();
                     }
-                    // default to descending for non-text fields
-                    if (fSortTypes[mOrder].equals("noteFld")) {
-                        mOrderAsc = true;
-                    }
-                    getCol().getConf().put("sortBackwards", mOrderAsc);
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
+                    return true;
                 }
-                searchCards();
-            } else if (which != CARD_ORDER_NONE) {
-                mOrderAsc = !mOrderAsc;
-                try {
-                    getCol().getConf().put("sortBackwards", mOrderAsc);
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-                Collections.reverse(mCards);
-                updateList();
-            }
-            return true;
-        }
-    };
+            };
 
     private CardBrowserMySearchesDialog.MySearchesDialogListener mMySearchesDialogListener =
             new CardBrowserMySearchesDialog.MySearchesDialogListener() {
-        @Override
-        public void OnSelection(String searchName) {
-            JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
-            if (savedFiltersObj != null) {
-                mSearchTerms = savedFiltersObj.optString(searchName);
-                mSearchView.setQuery(mSearchTerms, false);
-                MenuItemCompat.expandActionView(mSearchItem);
-                searchCards();
-            }
-        }
-
-        @Override
-        public void OnRemoveSearch(String searchName) {
-            try {
-                JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
-                if (savedFiltersObj != null && savedFiltersObj.has(searchName)) {
-                    savedFiltersObj.remove(searchName);
-                    getCol().getConf().put("savedFilters", savedFiltersObj);
-                    getCol().flush();
-                    if (savedFiltersObj.length() == 0) {
-                        mMySearchesItem.setVisible(false);
+                @Override
+                public void OnSelection(String searchName) {
+                    JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+                    if (savedFiltersObj != null) {
+                        mSearchTerms = savedFiltersObj.optString(searchName);
+                        mSearchView.setQuery(mSearchTerms, false);
+                        MenuItemCompat.expandActionView(mSearchItem);
+                        searchCards();
                     }
                 }
 
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
+                @Override
+                public void OnRemoveSearch(String searchName) {
+                    try {
+                        JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+                        if (savedFiltersObj != null && savedFiltersObj.has(searchName)) {
+                            savedFiltersObj.remove(searchName);
+                            getCol().getConf().put("savedFilters", savedFiltersObj);
+                            getCol().flush();
+                            if (savedFiltersObj.length() == 0) {
+                                mMySearchesItem.setVisible(false);
+                            }
+                        }
 
-        @Override
-        public void OnSaveSearch(String searchName, String searchTerms) {
-            if (TextUtils.isEmpty(searchName)) {
-                UIUtils.showThemedToast(CardBrowser.this,
-                        getString(R.string.card_browser_list_my_searches_new_search_error_empty_name), true);
-                return;
-            }
-            try {
-                JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
-                boolean should_save = false;
-                if (savedFiltersObj == null) {
-                    savedFiltersObj = new JSONObject();
-                    savedFiltersObj.put(searchName, searchTerms);
-                    should_save = true;
-                } else if (!savedFiltersObj.has(searchName)) {
-                    savedFiltersObj.put(searchName, searchTerms);
-                    should_save = true;
-                } else {
-                    UIUtils.showThemedToast(CardBrowser.this,
-                            getString(R.string.card_browser_list_my_searches_new_search_error_dup), true);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-                if (should_save) {
-                    getCol().getConf().put("savedFilters", savedFiltersObj);
-                    getCol().flush();
-                    mSearchView.setQuery("", false);
-                    mMySearchesItem.setVisible(true);
+
+                @Override
+                public void OnSaveSearch(String searchName, String searchTerms) {
+                    if (TextUtils.isEmpty(searchName)) {
+                        UIUtils.showThemedToast(CardBrowser.this,
+                                getString(R.string.card_browser_list_my_searches_new_search_error_empty_name), true);
+                        return;
+                    }
+                    try {
+                        JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+                        boolean should_save = false;
+                        if (savedFiltersObj == null) {
+                            savedFiltersObj = new JSONObject();
+                            savedFiltersObj.put(searchName, searchTerms);
+                            should_save = true;
+                        } else if (!savedFiltersObj.has(searchName)) {
+                            savedFiltersObj.put(searchName, searchTerms);
+                            should_save = true;
+                        } else {
+                            UIUtils.showThemedToast(CardBrowser.this,
+                                    getString(R.string.card_browser_list_my_searches_new_search_error_dup), true);
+                        }
+                        if (should_save) {
+                            getCol().getConf().put("savedFilters", savedFiltersObj);
+                            getCol().flush();
+                            mSearchView.setQuery("", false);
+                            mMySearchesItem.setVisible(true);
+                        }
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    };
+            };
 
 
     private void onSearch() {
@@ -364,6 +374,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         registerExternalStorageListener();
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+
+        // Load reference to action bar title
+        mActionBarTitle = (TextView) findViewById(R.id.toolbar_title);
 
         // Add drop-down menu to select deck to action bar.
         mDropDownDecks = getCol().getDecks().allSorted();
@@ -503,13 +516,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 mPositionInCardsList = position;
-                Map<String, String> card = getCards().get(mPositionInCardsList);
-                int flags = Integer.parseInt(card.get("flags"));
-                String cardName = card.get("sfld");
-                boolean isMarked = (flags == 2 || flags == 3);
-                boolean isSuspended = (flags == 1 || flags == 3);
-                showDialogFragment(CardBrowserContextMenu
-                        .newInstance(cardName, isMarked, isSuspended, mContextMenuListener));
+                mCheckedCardPositions.add(position);
+//                Map<String, String> card = getCards().get(mPositionInCardsList);
+//                int flags = Integer.parseInt(card.get("flags"));
+//                String cardName = card.get("sfld");
+//                boolean isMarked = (flags == 2 || flags == 3);
+//                boolean isSuspended = (flags == 1 || flags == 3);
+                loadMultiSelectMode();
+//                showDialogFragment(CardBrowserContextMenu
+//                        .newInstance(cardName, isMarked, isSuspended, mContextMenuListener));
                 return true;
             }
         });
@@ -522,7 +537,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // set the currently selected deck
         selectDropDownItem(getDeckPositionFromDeckId(getIntent().getLongExtra("defaultDeckId", -1)));
     }
-
 
     @Override
     protected void onStop() {
@@ -550,8 +564,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @Override
     public void onBackPressed() {
+
         if (isDrawerOpen()) {
             super.onBackPressed();
+        } else if (mInMultiSelectMode) {
+            endMultiSelectMode();
         } else {
             Timber.i("Back key pressed");
             Intent data = new Intent();
@@ -562,7 +579,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             closeCardBrowser(RESULT_OK, data);
         }
     }
-    
+
     @Override
     protected void onResume() {
         Timber.d("onResume()");
@@ -573,53 +590,87 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
-        getMenuInflater().inflate(R.menu.card_browser, menu);
-        mSaveSearchItem = menu.findItem(R.id.action_save_search);
-        mSaveSearchItem.setVisible(false); //the searchview's query always starts empty.
-        mMySearchesItem = menu.findItem(R.id.action_list_my_searches);
-        JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
-        mMySearchesItem.setVisible(savedFiltersObj != null && savedFiltersObj.length() > 0);
-        mSearchItem = menu.findItem(R.id.action_search);
-        MenuItemCompat.setOnActionExpandListener(mSearchItem, new MenuItemCompat.OnActionExpandListener() {
-            @Override
-            public boolean onMenuItemActionExpand(MenuItem item) {
-                return true;
-            }
+        mActionBarMenu = menu;
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (!mInMultiSelectMode) {
+            // restore drawer click listener and icon
+            getDrawerToggle().setDrawerIndicatorEnabled(true);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((DrawerLayout) findViewById(R.id.drawer_layout)).openDrawer(Gravity.LEFT);
+                }
+            });
+            getMenuInflater().inflate(R.menu.card_browser, menu);
+            mSaveSearchItem = menu.findItem(R.id.action_save_search);
+            mSaveSearchItem.setVisible(false); //the searchview's query always starts empty.
+            mMySearchesItem = menu.findItem(R.id.action_list_my_searches);
+            JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+            mMySearchesItem.setVisible(savedFiltersObj != null && savedFiltersObj.length() > 0);
+            mSearchItem = menu.findItem(R.id.action_search);
+            MenuItemCompat.setOnActionExpandListener(mSearchItem, new MenuItemCompat.OnActionExpandListener() {
+                @Override
+                public boolean onMenuItemActionExpand(MenuItem item) {
+                    return true;
+                }
 
-            @Override
-            public boolean onMenuItemActionCollapse(MenuItem item) {
-                // SearchView doesn't support empty queries so we always reset the search when collapsing
-                mSearchTerms = "";
-                mSearchView.setQuery(mSearchTerms, false);
-                searchCards();
-                // invalidate options menu so that disappeared icons would appear again
-                supportInvalidateOptionsMenu();
-                return true;
-            }
-        });
-        mSearchView = (SearchView) MenuItemCompat.getActionView(mSearchItem);
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                mSaveSearchItem.setVisible(!TextUtils.isEmpty(newText));
-                return true;
-            }
+                @Override
+                public boolean onMenuItemActionCollapse(MenuItem item) {
+                    // SearchView doesn't support empty queries so we always reset the search when collapsing
+                    mSearchTerms = "";
+                    mSearchView.setQuery(mSearchTerms, false);
+                    searchCards();
+                    // invalidate options menu so that disappeared icons would appear again
+                    supportInvalidateOptionsMenu();
+                    return true;
+                }
+            });
+            mSearchView = (SearchView) MenuItemCompat.getActionView(mSearchItem);
+            mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    mSaveSearchItem.setVisible(!TextUtils.isEmpty(newText));
+                    return true;
+                }
 
 
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                onSearch();
-                mSearchView.clearFocus();
-                return true;
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    onSearch();
+                    //noinspection RestrictedApi
+                    mSearchView.clearFocus();
+                    return true;
+                }
+            });
+            mSearchView.setOnSearchClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Provide SearchView with the previous search terms
+                    mSearchView.setQuery(mSearchTerms, false);
+                    }
+            });
+        } else {
+            // multi-select mode
+            getMenuInflater().inflate(R.menu.card_browser_multiselect, menu);
+
+            // hide hamburger icon
+            getDrawerToggle().setDrawerIndicatorEnabled(false);
+            // change the action when clicking the home button
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    endMultiSelectMode();
+                }
+            });
+            // display the home button as a back arrow
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+
+            // if more than one item is selected, can't preview:
+            if (mCheckedCardPositions.size() > 1) {
+                mActionBarMenu.findItem(R.id.action_preview).setVisible(false);
             }
-        });
-        mSearchView.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Provide SearchView with the previous search terms
-                mSearchView.setQuery(mSearchTerms, false);
-            }
-        });
+        }
 
         // Maybe we were called from ACTION_PROCESS_TEXT.
         // In that case we already fill in the search.
@@ -643,7 +694,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return true;
         }
         switch (item.getItemId()) {
-
+            case android.R.id.home:
+                endMultiSelectMode();
+                return true;
             case R.id.action_add_card_from_card_browser:
                 Intent intent = new Intent(CardBrowser.this, NoteEditor.class);
                 intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD);
@@ -745,7 +798,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private void showTagsDialog() {
         TagsDialog dialog = com.ichi2.anki.dialogs.TagsDialog.newInstance(
-            TagsDialog.TYPE_FILTER_BY_TAG, new ArrayList<String>(), new ArrayList<>(getCol().getTags().all()));
+                TagsDialog.TYPE_FILTER_BY_TAG, new ArrayList<String>(), new ArrayList<>(getCol().getTags().all()));
         dialog.setTagsDialogListener(new TagsDialogListener() {
             @Override
             public void onPositive(List<String> selectedTags, int option) {
@@ -1082,7 +1135,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onPostExecute(TaskData result) {            
+        public void onPostExecute(TaskData result) {
             if (result != null && mCards != null) {
                 Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfuly");
                 updateList();
@@ -1092,7 +1145,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             hideProgressBar();
         }
-        
+
         @Override
         public void onCancelled(){
             Timber.d("doInBackgroundSearchCards onCancelled() called");
@@ -1200,7 +1253,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         private Typeface mCustomTypeface = null;
         private LayoutInflater mInflater;
 
-
         public MultiColumnListAdapter(Context context, int resource, String[] from, int[] to, String colorFlagKey,
                                       int fontSizeScalePcent, String customFont) {
             mResource = resource;
@@ -1234,7 +1286,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
 
-        private void bindView(int position, View v) {
+        private void bindView(final int position, final View v) {
             // Draw the content in the columns
             View[] columns = (View[]) v.getTag();
             final Map<String, String> dataSet = getCards().get(position);
@@ -1245,13 +1297,50 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 TextView col = (TextView) columns[i];
                 // set font for column
                 setFont(col);
-                // set background color for column
-                col.setBackgroundColor(colors[colorIdx]);
                 // set text for column
                 col.setText(dataSet.get(mFromKeys[i]));
             }
+            // set card's background color
+            final int unselectedColor = colors[colorIdx];
+            final int selectedColor = 0xFFFFBB99;
+            v.setBackgroundColor(unselectedColor);
+            // setup checkbox to change color in multi-select mode
+            final CheckBox checkBox = (CheckBox) v.findViewById(R.id.card_checkbox);
+            // if in multi-select mode, be sure to show the checkboxes
+            if(mInMultiSelectMode) {
+                checkBox.setVisibility(View.VISIBLE);
+                if (mCheckedCardPositions.contains(position)) {
+                    checkBox.setChecked(true);
+                } else {
+                    checkBox.setChecked(false);
+                }
+            } else {
+                checkBox.setChecked(false);
+                checkBox.setVisibility(View.GONE);
+            }
+            // change color if checkbox is checked
+            if (checkBox.isChecked()) {
+                v.setBackgroundColor(selectedColor);
+            }
+            // change bg color on check changed
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (checkBox.isChecked()) {
+                        mCheckedCardPositions.add(position);
+                        v.setBackgroundColor(selectedColor);
+                    } else {
+                        mCheckedCardPositions.remove(position);
+                        v.setBackgroundColor(unselectedColor);
+                    }
+                    mActionBarTitle.setText(mCheckedCardPositions.size() + "");
+                    // make sure "preview" option only shows with 2+ cards checked
+                    if (mCheckedCardPositions.size() < 3) {
+                        supportInvalidateOptionsMenu();
+                    }
+                }
+            });
         }
-
 
         private void setFont(TextView v) {
             // Set the font and font size for a TextView v
@@ -1356,4 +1445,35 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
+    /*
+     * Turn on Multi-Select Mode so that the user can select multiple cards at once.
+     */
+    private void loadMultiSelectMode() {
+        // set in multi-select mode
+        mInMultiSelectMode = true;
+        // update adapter so checkbox gets displayed
+        mCardsAdapter.notifyDataSetChanged();
+        // show title and hide spinner
+        mActionBarTitle.setVisibility(View.VISIBLE);
+        mActionBarTitle.setText(mCheckedCardPositions.size() + "");
+        mActionBarSpinner.setVisibility(View.GONE);
+        // reload the actionbar using the multi-select mode actionbar
+        supportInvalidateOptionsMenu();
+    }
+
+    /*
+     * Turn off Multi-Select Mode and return to normal state
+     */
+    private void endMultiSelectMode() {
+        // clear all selected cards from list
+        mCheckedCardPositions.clear();
+        // turn of multi-select mode
+        mInMultiSelectMode = false;
+        // update adapter to remove check boxes
+        mCardsAdapter.notifyDataSetChanged();
+        // update action bar
+        supportInvalidateOptionsMenu();
+        mActionBarSpinner.setVisibility(View.VISIBLE);
+        mActionBarTitle.setVisibility(View.GONE);
+    }
 }

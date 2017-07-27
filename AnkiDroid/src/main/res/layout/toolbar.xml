@@ -11,6 +11,13 @@
         app:navigationIcon="?attr/homeAsUpIndicator"
         android:background="?attr/colorPrimary"
         android:theme="@style/ActionBarStyle">
+        <TextView
+			android:id="@+id/toolbar_title"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+			android:textColor="@color/white"
+			android:textSize="20sp"
+            android:visibility="gone"/>
         <Spinner
             android:id="@+id/toolbar_spinner"
             android:background="?attr/selectableItemBackground"
