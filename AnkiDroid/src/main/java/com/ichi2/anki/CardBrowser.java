@@ -57,7 +57,6 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.dialogs.CardBrowserContextMenu;
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog;
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
@@ -159,8 +158,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private TextView mActionBarTitle;
     private boolean mReloadRequired = false;
     private boolean mInMultiSelectMode = false;
+    private boolean mIsSuspendCardFinished = false;
     private HashSet<Integer> mCheckedCardPositions = new HashSet<>();
-    private int mNumCardsChecked = 0;
     private Menu mActionBarMenu;
 
     /**
@@ -168,7 +167,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
      */
     private BroadcastReceiver mUnmountReceiver = null;
 
-    private MaterialDialog.ListCallback mContextMenuListener = new MaterialDialog.ListCallback() {
+/*    private MaterialDialog.ListCallback mContextMenuListener = new MaterialDialog.ListCallback() {
         @Override
         public void onSelection(MaterialDialog materialDialog, View view, int which,
                                 CharSequence charSequence) {
@@ -223,7 +222,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     startActivityWithoutAnimation(previewer);
             }
         }
-    };
+    };*/
 
 
     private MaterialDialog.ListCallbackSingleChoice mOrderDialogListener =
@@ -515,7 +514,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mCardsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                mPositionInCardsList = position;
+//                mPositionInCardsList = position;
                 mCheckedCardPositions.add(position);
 //                Map<String, String> card = getCards().get(mPositionInCardsList);
 //                int flags = Integer.parseInt(card.get("flags"));
@@ -743,6 +742,123 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             case R.id.action_search_by_tag:
                 showTagsDialog();
+                return true;
+
+            case R.id.action_delete_card:
+                if (mInMultiSelectMode) {
+                    Resources res = getResources();
+                    new MaterialDialog.Builder(CardBrowser.this)
+                            .title(res.getString(R.string.delete_card_title))
+                            .iconAttr(R.attr.dialogErrorIcon)
+                            .content(res.getString(R.string.delete_card_message, getCards().get(mPositionInCardsList)
+                                    .get("sfld")))
+                            .positiveText(res.getString(R.string.dialog_positive_delete))
+                            .negativeText(res.getString(R.string.dialog_cancel))
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    for (int cardPosition : mCheckedCardPositions) {
+                                        final Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
+                                        deleteNote(card);
+                                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS,
+                                                mDeleteNoteHandler,
+                                                new DeckTask.TaskData(new Object[]{card, Collection.DismissType.DELETE_NOTE}));
+                                    }
+                                    mCheckedCardPositions.clear();
+                                }
+                            })
+                            .build().show();
+                }
+                return true;
+
+            case R.id.action_mark_card:
+                for (int cardPosition : mCheckedCardPositions) {
+                    Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
+                    onMark(card);
+                    updateCardInList(card, null);
+                }
+                mCheckedCardPositions.clear();
+                return true;
+
+            case R.id.action_suspend_card:
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int cardPosition : mCheckedCardPositions) {
+                            // make sure correct card is selected
+                            mPositionInCardsList = cardPosition;
+                            final Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
+                            mReloadRequired = currentCardInUseByReviewer();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    DeckTask.launchDeckTask(
+                                            DeckTask.TASK_TYPE_DISMISS,
+                                            new DeckTask.TaskListener() {
+                                                @Override
+                                                public void onPreExecute() {
+
+                                                }
+
+                                                @Override
+                                                public void onPostExecute(TaskData result) {
+                                                    if (result.getBoolean()) {
+                                                        updateCardInList(getCol().getCard(Long.parseLong(getCards().get(mPositionInCardsList).get("id"))), null);
+                                                    } else {
+                                                        closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
+                                                    }
+                                                    mIsSuspendCardFinished = true;
+                                                    hideProgressBar();
+                                                }
+
+                                                @Override
+                                                public void onProgressUpdate(TaskData... values) {
+
+                                                }
+
+                                                @Override
+                                                public void onCancelled() {
+
+                                                }
+                                            },
+                                            new DeckTask.TaskData(new Object[]{card, Collection.DismissType.SUSPEND_CARD}));
+                                }
+                            });
+
+                            // make sure card was suspended before continuing on
+                            while (!mIsSuspendCardFinished) {
+                                try {
+                                    Thread.sleep(10);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            mIsSuspendCardFinished = false;
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mCardsAdapter.notifyDataSetChanged();
+                                }
+                            });
+                        }
+                        mCheckedCardPositions.clear();
+                    }
+                };
+//                Handler handler = new Handler();
+//                handler.post(runnable);
+
+                Thread thread = new Thread(runnable);
+                thread.start();
+                return true;
+
+            case R.id.action_preview:
+                for (int cardPosition : mCheckedCardPositions) {
+                    Intent previewer = new Intent(CardBrowser.this, Previewer.class);
+                    previewer.putExtra("index", cardPosition);
+                    previewer.putExtra("cardList", getCardIds());
+                    startActivityWithoutAnimation(previewer);
+                    break;
+                }
                 return true;
 
             default:
@@ -1086,6 +1202,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             } else {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
+            mIsSuspendCardFinished = true;
             hideProgressBar();
         }
 
