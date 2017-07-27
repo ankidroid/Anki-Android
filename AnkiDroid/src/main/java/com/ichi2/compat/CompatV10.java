@@ -63,7 +63,7 @@ public class CompatV10 implements Compat {
             public void onUtteranceCompleted(String utteranceId) {
                 if (ReadText.sTextQueue.size() > 0) {
                     String[] text = ReadText.sTextQueue.remove(0);
-                    ReadText.speak(text[0], text[1]);
+                    ReadText.speak(text[0], text[1], TextToSpeech.QUEUE_FLUSH);
                 }
             }
         });

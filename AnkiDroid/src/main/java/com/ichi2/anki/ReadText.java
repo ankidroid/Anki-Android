@@ -49,20 +49,20 @@ public class ReadText {
 
     // private boolean mTtsReady = false;
 
-    public static void speak(String text, String loc) {
-        int result = mTts.setLanguage(new Locale(loc));
+    public static void speak(String text, String loc, int queueMode) {
+        int result = mTts.setLanguage(localeFromStringIgnoringScriptAndExtensions(loc));
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
             Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message)
                     +" ("+loc+")", Toast.LENGTH_LONG).show();
             Timber.e("Error loading locale " + loc);
         } else {
-            if (mTts.isSpeaking()) {
+            if (mTts.isSpeaking() && queueMode == TextToSpeech.QUEUE_FLUSH) {
                 Timber.d("tts engine appears to be busy... clearing queue");
                 stopTts();
                 //sTextQueue.add(new String[] { text, loc });
             }
             Timber.d("tts text '%s' to be played for locale (%s)",text, loc);
-            mTts.speak(mTextToSpeak, TextToSpeech.QUEUE_FLUSH, mTtsParams);
+            mTts.speak(mTextToSpeak, queueMode, mTtsParams);
         }
     }
 
@@ -118,7 +118,7 @@ public class ReadText {
                             String locale = dialogIds.get(which);
                             Timber.d("ReadText.selectTts() user chose locale '%s'", locale);
                             if (!locale.equals(NO_TTS)) {
-                                speak(mTextToSpeak, locale);
+                                speak(mTextToSpeak, locale, TextToSpeech.QUEUE_FLUSH);
                             }
                             String language = getLanguage(mDid, mOrd, mQuestionAnswer);
                             if (language.equals("")) { // No language stored
@@ -142,34 +142,110 @@ public class ReadText {
     }
 
 
-    public static void textToSpeech(String text, long did, int ord, int qa) {
+    /**
+     * Read the given text using an appropriate TTS voice.
+     *
+     * The voice is chosen as follows:
+     *
+     * 1. If localeCode is a non-empty string representing a locale in the format returned
+     *    by Locale.toString(), and a voice matching the language of this locale (and ideally,
+     *    but not necessarily, also the country and variant of the locale) is available, then this
+     *    voice is used.
+     * 2. Otherwise, if the database contains a saved language for the given 'did', 'ord' and 'qa'
+     *    arguments, and a TTS voice matching that language is available, then this voice is used
+     *    (unless the saved language is NO_TTS, in which case the text is not read at all).
+     * 3. Otherwise, the user is asked to select a language from among those for which a voice is
+     *    available.
+     *
+     * @param queueMode TextToSpeech.QUEUE_ADD or TextToSpeech.QUEUE_FLUSH.
+     */
+    public static void textToSpeech(String text, long did, int ord, int qa, String localeCode,
+                                    int queueMode) {
         mTextToSpeak = text;
         mQuestionAnswer = qa;
         mDid = did;
         mOrd = ord;
-        Timber.d("ReadText.textToSpeech() method started for string '%s'", text);
-        // get the user's existing language preference
-        String language = getLanguage(mDid, mOrd, mQuestionAnswer);
-        Timber.d("ReadText.textToSpeech() method found language choice '%s'", language);
-        // rebuild the language list if it's empty
-        if (availableTtsLocales.isEmpty()) {
-            buildAvailableLanguages();
-        }
-        // Check, if stored language is available
-        for (int i = 0; i < availableTtsLocales.size(); i++) {
-            if (language.equals(NO_TTS)) {
-                // user has chosen not to read the text
-                return;
-            } else if (language.equals(availableTtsLocales.get(i).getISO3Language())) {
-                speak(mTextToSpeak, language);
-                return;
+        Timber.d("ReadText.textToSpeech() method started for string '%s', locale '%s'", text, localeCode);
+
+        final String originalLocaleCode = localeCode;
+
+        if (!localeCode.isEmpty()) {
+            if (!isLanguageAvailable(localeCode)) {
+                localeCode = "";
             }
+        }
+        if (localeCode.isEmpty()) {
+            // get the user's existing language preference
+            localeCode = getLanguage(mDid, mOrd, mQuestionAnswer);
+            Timber.d("ReadText.textToSpeech() method found language choice '%s'", localeCode);
+        }
+
+        if (localeCode.equals(NO_TTS)) {
+            // user has chosen not to read the text
+            return;
+        }
+        if (!localeCode.isEmpty() && isLanguageAvailable(localeCode)) {
+            speak(mTextToSpeak, localeCode, queueMode);
+            return;
         }
 
         // Otherwise ask the user what language they want to use
+        if (!originalLocaleCode.isEmpty()) {
+            // (after notifying them first that no TTS voice was found for the locale
+            // they originally requested)
+            Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message)
+                    + " (" + originalLocaleCode + ")", Toast.LENGTH_LONG).show();
+        }
         selectTts(mTextToSpeak, mDid, mOrd, mQuestionAnswer);
     }
 
+    /**
+     * Convert a string representation of a locale, in the format returned by Locale.toString(),
+     * into a Locale object, disregarding any script and extensions fields (i.e. using solely the
+     * language, country and variant fields).
+     *
+     * Returns a Locale object constructed from an empty string if the input string is null, empty
+     * or contains more than 3 fields separated by underscores.
+     */
+    private static Locale localeFromStringIgnoringScriptAndExtensions(String localeCode)
+    {
+        if (localeCode == null) {
+            return new Locale("");
+        }
+
+        localeCode = stripScriptAndExtensions(localeCode);
+
+        String[] fields = localeCode.split("_");
+        switch (fields.length) {
+            case 1:
+                return new Locale(fields[0]);
+            case 2:
+                return new Locale(fields[0], fields[1]);
+            case 3:
+                return new Locale(fields[0], fields[1], fields[2]);
+            default:
+                return new Locale("");
+        }
+    }
+
+    private static String stripScriptAndExtensions(String localeCode)
+    {
+        int hashPos = localeCode.indexOf('#');
+        if (hashPos >= 0) {
+            localeCode = localeCode.substring(0, hashPos);
+        }
+        return localeCode;
+    }
+
+    /**
+     * Returns true if the TTS engine supports the language of the locale represented by localeCode
+     * (which should be in the format returned by Locale.toString()), false otherwise.
+     */
+    private static boolean isLanguageAvailable(String localeCode)
+    {
+        return mTts.isLanguageAvailable(localeFromStringIgnoringScriptAndExtensions(localeCode)) >=
+                TextToSpeech.LANG_AVAILABLE;
+    }
 
     public static void initializeTts(Context context) {
         // Store weak reference to Activity to prevent memory leak

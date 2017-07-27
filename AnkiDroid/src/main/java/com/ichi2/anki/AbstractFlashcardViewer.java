@@ -39,6 +39,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.ActionBar;
@@ -98,6 +99,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -106,6 +108,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import timber.log.Timber;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 
 public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
@@ -2254,6 +2259,40 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
     }
 
+    /**
+     * Snippet of text accompanied by its locale code (if known).
+     */
+    private static class LocalisedText
+    {
+        private String text;
+        private String localeCode;
+
+        /** Construct an object representing a snippet of text in an unknown locale. */
+        public LocalisedText(String text_) {
+            text = text_;
+            localeCode = "";
+        }
+
+        /** Construct an object representing a snippet of text in a particular locale.
+         *
+         * @param localeCode_ A string representation of a locale in the format returned by
+         *                    Locale.toString().
+         */
+        public LocalisedText(String text_, String localeCode_) {
+            text = text_;
+            localeCode = localeCode_;
+        }
+
+        public String getText()
+        {
+            return text;
+        }
+
+        public String getLocaleCode()
+        {
+            return localeCode;
+        }
+    }
 
     /**
      * Reads the text (using TTS) for the given side of a card.
@@ -2262,15 +2301,67 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * @param cardSide The side of the current card to play TTS for
      */
     private static void readCardText(final Card card, final int cardSide) {
+        int qa;
+        String html;
         if (Sound.SOUNDS_QUESTION == cardSide) {
-            ReadText.textToSpeech(Utils.stripHTML(card.q(true)), getDeckIdForCard(card), card.getOrd(),
-                    Sound.SOUNDS_QUESTION);
+            html = card.q(true);
+            qa = Sound.SOUNDS_QUESTION;
         } else if (Sound.SOUNDS_ANSWER == cardSide) {
-            ReadText.textToSpeech(Utils.stripHTML(card.getPureAnswer()), getDeckIdForCard(card),
-                    card.getOrd(), Sound.SOUNDS_ANSWER);
+            html = card.getPureAnswer();
+            qa = Sound.SOUNDS_ANSWER;
+        } else {
+            Timber.w("Unrecognised cardSide");
+            return;
+        }
+
+        long deckId = getDeckIdForCard(card);
+        int ord = card.getOrd();
+        boolean isFirstText = true;
+        for (LocalisedText textToRead : getTextsToRead(html)) {
+            if (!textToRead.getText().isEmpty()) {
+                ReadText.textToSpeech(textToRead.getText(), deckId, ord, qa,
+                                      textToRead.getLocaleCode(),
+                                      isFirstText ? TextToSpeech.QUEUE_FLUSH : TextToSpeech.QUEUE_ADD);
+                isFirstText = false;
+            }
         }
     }
 
+    /**
+     * Returns the list of text snippets contained in the given HTML fragment that should be read
+     * using the Android text-to-speech engine, together with the languages they are in.
+     *
+     * Each returned LocalisedText object contains the text extracted from a &lt;tts&gt; element
+     * whose 'service' attribute is set to 'android', and the localeCode taken from the 'voice'
+     * attribute of that element. This holds unless the HTML fragment contains no such &lt;tts&gt;
+     * elements; in that case the function returns a single LocalisedText object containing the
+     * text extracted from the whole HTML fragment, with the localeCode set to an empty string.
+     */
+    private static ArrayList<LocalisedText> getTextsToRead(String html) {
+        ArrayList<LocalisedText> textsToRead = new ArrayList<LocalisedText>();
+
+        Element elem = Jsoup.parseBodyFragment(html).body();
+        parseTtsElements(elem, textsToRead);
+        if (textsToRead.size() == 0) {
+            // No <tts service="android"> elements found: return the text of the whole HTML fragment
+            textsToRead.add(new LocalisedText(elem.text()));
+        }
+
+        return textsToRead;
+    }
+
+    private static void parseTtsElements(Element element, ArrayList<LocalisedText> textsToRead) {
+        if (element.tagName().equalsIgnoreCase("tts")) {
+            if (element.attr("service").equalsIgnoreCase("android")) {
+                textsToRead.add(new LocalisedText(element.text(), element.attr("voice")));
+                return; // ignore any children
+            }
+        }
+
+        for (Element child : element.children()) {
+            parseTtsElements(child, textsToRead);
+        }
+    }
 
     /**
      * Shows the dialogue for selecting TTS for the current card and cardside.
