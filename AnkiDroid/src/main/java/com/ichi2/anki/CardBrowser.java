@@ -167,64 +167,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
      */
     private BroadcastReceiver mUnmountReceiver = null;
 
-/*    private MaterialDialog.ListCallback mContextMenuListener = new MaterialDialog.ListCallback() {
-        @Override
-        public void onSelection(MaterialDialog materialDialog, View view, int which,
-                                CharSequence charSequence) {
-            if (getCards().size() == 0) {
-                // Don't do anything if mCards empty
-                searchCards();
-                return;
-            }
-            final Card card = getCol().getCard(Long.parseLong(getCards().get(mPositionInCardsList).get("id")));
-            switch (which) {
-                case CardBrowserContextMenu.CONTEXT_MENU_MARK:
-                    onMark(card);
-                    updateCardInList(card, null);
-                    return;
-
-                case CardBrowserContextMenu.CONTEXT_MENU_SUSPEND:
-                    if (currentCardInUseByReviewer()) {
-                        mReloadRequired = true;
-                    }
-                    DeckTask.launchDeckTask(
-                            DeckTask.TASK_TYPE_DISMISS,
-                            mSuspendCardHandler,
-                            new DeckTask.TaskData(new Object[]{card, Collection.DismissType.SUSPEND_CARD}));
-                    return;
-
-                case CardBrowserContextMenu.CONTEXT_MENU_DELETE:
-                    Resources res = getResources();
-                    new MaterialDialog.Builder(CardBrowser.this)
-                            .title(res.getString(R.string.delete_card_title))
-                            .iconAttr(R.attr.dialogErrorIcon)
-                            .content(res.getString(R.string.delete_card_message, getCards().get(mPositionInCardsList)
-                                    .get("sfld")))
-                            .positiveText(res.getString(R.string.dialog_positive_delete))
-                            .negativeText(res.getString(R.string.dialog_cancel))
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    deleteNote(card);
-                                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS,
-                                            mDeleteNoteHandler,
-                                            new DeckTask.TaskData(new Object[]{card, Collection.DismissType.DELETE_NOTE}));
-                                }
-                            })
-                            .build().show();
-                    return;
-
-                case CardBrowserContextMenu.CONTEXT_MENU_DETAILS:
-                    Long cardId = Long.parseLong(getCards().get(mPositionInCardsList).get("id"));
-                    Intent previewer = new Intent(CardBrowser.this, Previewer.class);
-                    previewer.putExtra("index", mPositionInCardsList);
-                    previewer.putExtra("cardList", getCardIds());
-                    startActivityWithoutAnimation(previewer);
-            }
-        }
-    };*/
-
-
     private MaterialDialog.ListCallbackSingleChoice mOrderDialogListener =
             new MaterialDialog.ListCallbackSingleChoice() {
                 @Override
@@ -514,16 +456,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mCardsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-//                mPositionInCardsList = position;
                 mCheckedCardPositions.add(position);
-//                Map<String, String> card = getCards().get(mPositionInCardsList);
-//                int flags = Integer.parseInt(card.get("flags"));
-//                String cardName = card.get("sfld");
-//                boolean isMarked = (flags == 2 || flags == 3);
-//                boolean isSuspended = (flags == 1 || flags == 3);
                 loadMultiSelectMode();
-//                showDialogFragment(CardBrowserContextMenu
-//                        .newInstance(cardName, isMarked, isSuspended, mContextMenuListener));
                 return true;
             }
         });
@@ -844,8 +778,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                         mCheckedCardPositions.clear();
                     }
                 };
-//                Handler handler = new Handler();
-//                handler.post(runnable);
 
                 Thread thread = new Thread(runnable);
                 thread.start();
