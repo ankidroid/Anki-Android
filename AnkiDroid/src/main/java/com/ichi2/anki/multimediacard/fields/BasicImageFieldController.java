@@ -29,6 +29,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
+import android.support.v4.content.FileProvider;
 import android.util.DisplayMetrics;
 
 import android.view.View;
@@ -119,7 +120,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                     storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
                     image = File.createTempFile("img_" + timeStamp, ".jpg", storageDir);
                     mTempCameraImagePath = image.getPath();
-                    Uri uriSavedImage = Uri.fromFile(image);
+                    Uri uriSavedImage = FileProvider.getUriForFile(mActivity,
+                            mActivity.getApplicationContext().getPackageName() + ".apkgfileprovider",
+                            image);
 
                     cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
                     mActivity.startActivityForResult(cameraIntent, ACTIVITY_TAKE_PICTURE);
