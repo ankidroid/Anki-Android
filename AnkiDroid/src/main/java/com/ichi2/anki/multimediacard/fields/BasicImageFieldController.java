@@ -26,12 +26,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.support.v4.content.FileProvider;
 import android.util.DisplayMetrics;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -117,7 +115,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 File storageDir;
                 String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(new Date());
                 try {
-                    storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                    storageDir = mActivity.getCacheDir();
                     image = File.createTempFile("img_" + timeStamp, ".jpg", storageDir);
                     mTempCameraImagePath = image.getPath();
                     Uri uriSavedImage = FileProvider.getUriForFile(mActivity,
