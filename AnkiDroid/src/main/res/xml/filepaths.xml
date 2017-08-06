@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
     <external-path path="AnkiDroid/export/" name="export-directory" />
+    <cache-path path="/" name="cache-directory" />
 </paths>
