@@ -1513,9 +1513,107 @@ public class Sched {
 
 
     private int _adjRevIvl(Card card, int idealIvl) {
-        if (mSpreadRev) {
-            idealIvl = _fuzzedIvl(idealIvl);
+        JSONObject anki_conf = mCol.getConf();
+        JSONObject deck_conf = mCol.getDecks().confForDid(card.getDid());
+        try {
+            if (deck_conf.getInt("dyn") == 1) {
+                deck_conf = mCol.getDecks().confForDid(card.getODid());
+            }
+            boolean normal = true;
+            int ivl_min = 0;
+            int ivl_max = 0;
+            if (card.getQueue() == 1) {
+                JSONObject new_conf = deck_conf.getJSONObject("new");
+                int grad_ivl = new_conf.getJSONArray("ints").getInt(0);
+                int easy_ivl = new_conf.getJSONArray("ints").getInt(1);
+                if (idealIvl == grad_ivl) {
+                    if (new_conf.has("LBGIMinBefore")) {
+                        if (new_conf.getInt("LBGIMinBefore") != -1 && new_conf.getInt("LBGIMinAfter") != -1) {
+                            ivl_min = Math.max(new_conf.getInt("LBGIMinBefore"), 1);
+                            ivl_max = new_conf.getInt("LBGIMinAfter");
+                            normal = false;
+                        }
+                    }
+                } else if (idealIvl == easy_ivl) {
+                    if (new_conf.has("LBEIMinBefore")) {
+                        if (new_conf.getInt("LBEIMinBefore") != -1 && new_conf.getInt("LBEIMinAfter") != -1) {
+                            ivl_min = Math.max(new_conf.getInt("LBEIMinBefore"), 1);
+                            ivl_max = new_conf.getInt("LBEIMinAfter");
+                            normal = false;
+                        }
+                    }
+                }
+            }
+            if (normal) {
+                ivl_min = (int) (idealIvl - Math.min(anki_conf.getInt("LBMaxBefore"), idealIvl * anki_conf.getDouble("LBPercentBefore")));
+                ivl_max = (int) (idealIvl + Math.min(anki_conf.getInt("LBMaxAfter"), idealIvl * anki_conf.getDouble("LBPercentAfter")));
+                ivl_min = Math.max(Math.min(ivl_min, idealIvl - anki_conf.getInt("LBMinBefore")), 1);
+                ivl_max = Math.max(ivl_max, idealIvl + anki_conf.getInt("LBMinAfter"));
+            }
+            double max_due = 1.0;
+            double min_due = Double.MAX_VALUE;
+            double max_ease = 0.0;
+            double min_ease = Double.MAX_VALUE;
+            ArrayList<ArrayList<Integer>> cards_due = new ArrayList<ArrayList<Integer>>();
+            for (int i = ivl_min; i <= ivl_max; i++) {
+                int due = getToday() + i;
+                String s = String.format("select count() from cards where due = %d and nid = %d and queue = 2", due, card.getNid());
+                int siblings = mCol.getDb().queryScalar(s);
+                s = String.format("select factor from cards where due = %d and queue = 2", due);
+                List<Integer> cards = mCol.getDb().queryColumn(Integer.class, s, 0);
+                max_due = Math.max(max_due, cards.size());
+                min_due = Math.min(min_due, cards.size());
+                int ease = 0;
+                for (int c = 0; c < cards.size(); c++) {
+                    ease += cards.get(c);
+                }
+                if (cards.size() != 0) {
+                    ease /= cards.size();
+                }
+                max_ease = Math.max(max_ease, ease);
+                min_ease = Math.min(min_ease, ease);
+                ArrayList<Integer> res = new ArrayList<Integer>();
+                res.add(i);
+                res.add(cards.size());
+                res.add(ease);
+                res.add(siblings);
+                cards_due.add(res);
+            }
+            ArrayList<Integer> lowest = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, Integer.MAX_VALUE));
+            for (int c = 0; c < cards_due.size(); c++) {
+                double workload;
+                double rel_ease;
+                if (max_due == min_due) {
+                    workload = 1;
+                } else {
+                    workload = (cards_due.get(c).get(1) - min_due) / (max_due - min_due);
+                }
+                if (cards_due.get(c).get(1) == 0) {
+                    rel_ease = 0;
+                } else {
+                    if (max_ease == min_ease) {
+                        rel_ease = 1;
+                    } else {
+                        rel_ease = (max_ease - cards_due.get(c).get(2)) / (max_ease - min_ease);
+                    }
+                }
+                double total_ease = anki_conf.getDouble("LBWorkload") * workload + (1 - anki_conf.getDouble("LBWorkload")) * rel_ease;
+                if (cards_due.get(c).get(3) > 0) {
+                    total_ease += 1;
+                }
+                total_ease *= 10000; // cause we got a double but I want it to be an int...4 digits is precise enough
+                cards_due.get(c).add((int) total_ease);
+                if (lowest.get(4) > cards_due.get(c).get(4)) {
+                    lowest = cards_due.get(c);
+                }
+            }
+            idealIvl = lowest.get(0);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
+        /*if (mSpreadRev) {
+            idealIvl = _fuzzedIvl(idealIvl);
+        }*/
         return idealIvl;
     }
 
