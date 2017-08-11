@@ -150,7 +150,7 @@
   <string name="vertical_centering_summ">コンテンツを上下方向に中央揃えします</string>
   <string name="pref_backup_max">保管するバックアップの世代数</string>
   <string name="show_estimates">回答ボタンに復習間隔を表示</string>
-  <string name="show_estimates_summ">回答ボタンの中に、次の復習までの間隔を表示します</string>
+  <string name="show_estimates_summ">次の復習までの間隔を回答ボタンの中に表示します</string>
   <string name="show_progress">残りのカード枚数を表示</string>
   <string name="show_progress_summ">画面左上に、残りのカード枚数を表示します（青: 新規、赤: 基本学習および再学習、緑: 復習）</string>
   <string name="show_eta">推定学習時間を表示</string>

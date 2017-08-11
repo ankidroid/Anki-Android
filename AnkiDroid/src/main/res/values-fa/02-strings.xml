@@ -161,9 +161,9 @@
   <string name="confirm_apkg_export">مجموعه فلش کارت ها با پسوند apkg صادر شوند؟</string>
   <string name="confirm_apkg_export_deck">دسته %s به عنوان یک فایل با پسوند apkg صادر شود؟</string>
   <string name="export_in_progress">در حال صادر کردن فایل apkg&#8230;</string>
-  <string name="export_successful_title">Send apkg?</string>
-  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+  <string name="export_successful_title">فایل apkg ارسال شود؟</string>
+  <string name="export_successful">فایل \"%s\" صادر شد. آیا می خواهید آن را با برنامه دیگری نیز ارسال کنید؟</string>
+  <string name="export_email_subject">فلش کارت های صادر شده: %s</string>
   <string name="export_email_text">
 <![CDATA[
         سلام!
@@ -172,7 +172,7 @@
         برای استفاده از آن یکی از عامل های در دسترس <a href="http://ankisrs.net/#download">anki را امتحان کنید</a> و از یادگیری کارآمد و آسان لذت ببرید.
         ]]>
     </string>
-  <string name="export_unsuccessful">Error exporting apkg file</string>
+  <string name="export_unsuccessful">هنگام صادر کردن پرونده apkg خطایی رخ داد</string>
   <string name="import_hint">برای وارد کردن کارتها, فایل apkg را در مسیر \"%s\" قرار داده و دکمه تایید را فشار دهید</string>
   <string name="upgrade_import_no_file_found">فایل %1$s قابل وارد کردن یافت نشد</string>
   <string name="study_options">گزینه های دسته</string>
@@ -226,5 +226,5 @@
     <item quantity="other">%2$d کارت جدید برای مرور در %1$s</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->
-  <string name="apk_share_error">Error sharing apkg file</string>
+  <string name="apk_share_error">اشتراک گذاری فایل apkg با خطا مواجه شد</string>
 </resources>

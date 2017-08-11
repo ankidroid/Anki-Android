@@ -51,7 +51,7 @@
   </plurals>
   <string name="delete_cram_deck_message"> %s のすべてのカードを元のデッキに戻してもよろしいですか？</string>
   <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
-  <string name="initializing_tts">テキスト読み上げ機能を初期化しています...</string>
+  <string name="initializing_tts">テキスト読み上げ機能（TTS）を初期化しています...</string>
   <string name="tts_no_tts">音声なし</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、PCソフトウェア<a href=\"%2$s\">Anki</a>と完全互換のフラッシュカードアプリです。AnkiDroidとAnkiのどちらでも教材を作成し、ダウンロードし、学習し、無料のオンラインサービスAnkiWebを介して簡単に双方を同期することができます。]]></item>
@@ -126,8 +126,8 @@
   <string name="tags_dialog_option_new_cards">新規</string>
   <string name="tags_dialog_option_due_cards">予定日時後</string>
   <!-- Empty cards -->
-  <string name="emtpy_cards_finding">無効なカード（カードの表側が表示できないカード）を検索しています&#8230;</string>
-  <string name="empty_cards_none">無効なカードはありません</string>
-  <string name="empty_cards_count">無効なカードが%d枚見つかりました。削除しますか？</string>
+  <string name="emtpy_cards_finding">白紙カード（表側に何も表示されないカード）がないか確認しています&#8230;</string>
+  <string name="empty_cards_none">白紙カードはありません</string>
+  <string name="empty_cards_count">白紙カードが%d枚見つかりました。削除しますか？</string>
   <string name="empty_cards_deleted">%d枚のカードを削除しました</string>
 </resources>

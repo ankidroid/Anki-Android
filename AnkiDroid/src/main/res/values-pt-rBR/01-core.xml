@@ -162,5 +162,5 @@
   <string name="card_template_editor_would_delete_note">Excluir este tipo de cartão resultaria na remoção de uma ou mais notas. Por favor, crie primeiro um novo tipo de cartão.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Ler e escrever para o banco de dados do AnkiDroid</string>
-  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="read_write_permission_description">acessar as notas, cartas, modelos, e baralhos existentes, bem como criar novos</string>
 </resources>

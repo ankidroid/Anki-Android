@@ -150,7 +150,7 @@
   <string name="card_template_editor_back">裏面のテンプレート</string>
   <string name="card_template_editor_styling">書式</string>
   <string name="card_template_editor_menu_delete">削除</string>
-  <string name="card_template_editor_cant_delete">カードは少なくとも１種類必要です。</string>
+  <string name="card_template_editor_cant_delete">カードタイプは少なくとも１種類必要です。</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="other">カードタイプ \'%2$s\' とそのカード %1$d 枚を削除しますか？</item>
   </plurals>

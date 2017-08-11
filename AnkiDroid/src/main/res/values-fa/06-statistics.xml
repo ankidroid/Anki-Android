@@ -69,7 +69,7 @@
   <string formatted="false" name="stats_percentage_correct">% درست</string>
   <string name="stats_reviews">مرورها</string>
   <string name="stats_answer_type">نوع پاسخ</string>
-  <string name="stats_today_again_count">تعداد اشتباهات: &lt;b&gt;%d&lt;/b&gt;</string>
+  <string name="stats_today_again_count">شمارش دوباره: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; درست)</string>
   <string name="stats_today_type_breakdown">یادگیری: &lt;b&gt;%1$s&lt;/b&gt;, مرور: &lt;b&gt;%2$s&lt;/b&gt;, یادگیری دوباره: &lt;b&gt;%3$s&lt;/b&gt;, فيلتر شده: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">پاسخ‌های صحیح به کارت‌های تثبیت شده: %1$d/%2$d (%3$.1f%%)</string>
