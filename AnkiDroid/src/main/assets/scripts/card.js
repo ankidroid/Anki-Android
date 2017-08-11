@@ -99,9 +99,6 @@ window.onload = function() {
     window.scrollTo(0,0);
     resizeImages();
     window.location.href = "#answer";
-    /* Prevent the <hr> tag being read out as "splitter" by TalkBack
-       when the answer is revealed. */
-    document.getElementById("answer").aria-hidden = "true";
 };
 
 var onPageFinished = function() {
