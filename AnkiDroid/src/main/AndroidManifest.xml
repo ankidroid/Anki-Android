@@ -120,6 +120,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="application/apkg"/>
+                <data android:mimeType="application/vnd.anki"/>
                 <data android:mimeType="application/x-apkg"/>
                 <data android:mimeType="application/octet-stream" android:scheme="content"/>
                 <data android:mimeType="application/zip" android:scheme="content"/>
