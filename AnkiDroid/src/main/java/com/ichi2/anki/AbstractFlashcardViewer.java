@@ -2301,14 +2301,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * @param cardSide The side of the current card to play TTS for
      */
     private static void readCardText(final Card card, final int cardSide) {
-        int qa;
-        String html;
+        String cardSideContent;
         if (Sound.SOUNDS_QUESTION == cardSide) {
-            html = card.q(true);
-            qa = Sound.SOUNDS_QUESTION;
+            cardSideContent = card.q(true);
         } else if (Sound.SOUNDS_ANSWER == cardSide) {
-            html = card.getPureAnswer();
-            qa = Sound.SOUNDS_ANSWER;
+            cardSideContent = card.getPureAnswer();
         } else {
             Timber.w("Unrecognised cardSide");
             return;
@@ -2317,9 +2314,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         long deckId = getDeckIdForCard(card);
         int ord = card.getOrd();
         boolean isFirstText = true;
-        for (LocalisedText textToRead : getTextsToRead(html)) {
+        for (LocalisedText textToRead : getTextsToRead(cardSideContent)) {
             if (!textToRead.getText().isEmpty()) {
-                ReadText.textToSpeech(textToRead.getText(), deckId, ord, qa,
+                ReadText.textToSpeech(textToRead.getText(), deckId, ord, cardSide,
                                       textToRead.getLocaleCode(),
                                       isFirstText ? TextToSpeech.QUEUE_FLUSH : TextToSpeech.QUEUE_ADD);
                 isFirstText = false;
