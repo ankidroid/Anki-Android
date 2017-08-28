@@ -32,7 +32,7 @@ CREATE TABLE cards (
      --   due: integer day, relative to the collection's creation time
      --   learning: integer timestamp
     ivl             integer not null,
-      -- interval (used in SRS algorithm). Negative = seconds, possitive = days
+      -- interval (used in SRS algorithm). Negative = seconds, positive = days
     factor          integer not null,
       -- factor (used in SRS algorithm)
     reps            integer not null,
