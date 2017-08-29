@@ -42,6 +42,13 @@ From the Anki website:
 ### Is there an auto-sync feature?
 Yes, it's disabled by default though so please see the [section in the manual](https://ankidroid.org/docs/manual.html#_ankidroid) about the automatic synchronization preference.
 
+### Why do my cards display incorrectly?
+The most common reason for this is an incorrect card [template](https://apps.ankiweb.net/docs/manual.html#cards-and-templates). This might happen if a user inadvertently edits an existing template, the wrong template is used at the time of card creation, or in rare cases a user's database might get corrupted.
+
+A basic understanding of how Anki works is required to fix this problem, as editing card templates is not particularly beginner friendly. The actual editing is most easily done using Anki Desktop, so please carefully check through [the basics](https://apps.ankiweb.net/docs/manual.html#the-basics) section and the [intro videos](https://apps.ankiweb.net/docs/manual.html#intro-videos) in the Anki Desktop manual. If you don't have a computer handy where you can install Anki Desktop, it is also possible to [edit your templates from AnkiDroid](https://docs.ankidroid.org/manual.html#customizingCardLayout), but it might be difficult on a small handheld device.
+
+Note: If you are simply having issues showing foreign characters or images, see the [custom fonts](https://github.com/ankidroid/Anki-Android/wiki/FAQ#instead-of-the-correct-character-to-display-a-square-is-shown-why-is-that) and [media](https://github.com/ankidroid/Anki-Android/wiki/FAQ#why-doesnt-my-sound-or-image-work-on-ankidroid) section instead.
+
 ### Why do I get an error about the timezone when I try to sync?
 AnkiWeb requires both the time and the timezone to be set correctly in order to synchronize properly. For most users, enabling "Automatic date & time" and "Automatic time zone" in the main Android date & time settings is enough to ensure that sync works correctly.
 
