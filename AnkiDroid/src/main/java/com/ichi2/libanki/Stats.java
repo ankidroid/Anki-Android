@@ -940,6 +940,7 @@ public class Stats {
 
         int pd = _periodDays();
         if (pd > 0) {
+            pd = Math.round( pd / 7 ) * 7;
             lim += " and id > " + ((mCol.getSched().getDayCutoff() - (SECONDS_PER_DAY * pd)) * 1000);
         }
 
