@@ -20,6 +20,7 @@ package com.ichi2.anki;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -30,6 +31,7 @@ import android.view.ViewConfiguration;
 
 import com.ichi2.anki.dialogs.AnkiDroidCrashReportDialog;
 import com.ichi2.anki.exception.StorageAccessException;
+import com.ichi2.anki.services.BootService;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.LanguageUtil;
 
@@ -198,6 +200,7 @@ public class AnkiDroidApp extends Application {
                 }
             }
         }
+        startService(new Intent(this, BootService.class));
     }
 
 

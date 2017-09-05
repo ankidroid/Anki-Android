@@ -4,6 +4,8 @@ import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.receiver.ReminderReceiver;
@@ -15,14 +17,21 @@ import org.json.JSONObject;
 import java.util.Calendar;
 
 public class BootService extends IntentService {
+
+    private AlarmManager mAlarmManager;
+
     public BootService() {
         super("BootService");
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        mAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        scheduleDeckReminder();
+        scheduleNotification();
+    }
 
+    private void scheduleDeckReminder() {
         try {
             for (JSONObject deck : CollectionHelper.getInstance().getCol(this).getDecks().all()) {
                 Collection col = CollectionHelper.getInstance().getCol(this);
@@ -49,7 +58,7 @@ public class BootService extends IntentService {
                         calendar.set(Calendar.MINUTE, reminder.getJSONArray("time").getInt(1));
                         calendar.set(Calendar.SECOND, 0);
 
-                        alarmManager.setInexactRepeating(
+                        mAlarmManager.setInexactRepeating(
                                 AlarmManager.RTC_WAKEUP,
                                 calendar.getTimeInMillis(),
                                 AlarmManager.INTERVAL_DAY,
@@ -61,5 +70,27 @@ public class BootService extends IntentService {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void scheduleNotification() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        if (Integer.parseInt(sp.getString("minimumCardsDueForNotification", "1000001")) == 1000001)
+            return;
+
+        final Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, sp.getInt("dayOffset", 0));
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+        final PendingIntent notificationIntent =
+                PendingIntent.getBroadcast(this, 0, new Intent(this, ReminderReceiver.class), 0);
+        mAlarmManager.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP,
+                calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY,
+                notificationIntent
+        );
+
+        // TODO: need to cancel alarm when notifications are disabled
     }
 }
