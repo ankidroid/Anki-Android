@@ -3,6 +3,7 @@ package com.ichi2.anki.services;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -24,7 +25,6 @@ public class BootService extends IntentService {
      * so we need to make sure that it isn't run twice.
      */
     private static boolean sWasRun = false;
-    private AlarmManager mAlarmManager;
 
     public BootService() {
         super("BootService");
@@ -35,13 +35,13 @@ public class BootService extends IntentService {
         if (sWasRun)
             return;
 
-        mAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         scheduleDeckReminder();
-        scheduleNotification();
+        scheduleNotification(this);
         sWasRun = true;
     }
 
     private void scheduleDeckReminder() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         try {
             for (JSONObject deck : CollectionHelper.getInstance().getCol(this).getDecks().all()) {
                 Collection col = CollectionHelper.getInstance().getCol(this);
@@ -68,7 +68,7 @@ public class BootService extends IntentService {
                         calendar.set(Calendar.MINUTE, reminder.getJSONArray("time").getInt(1));
                         calendar.set(Calendar.SECOND, 0);
 
-                        mAlarmManager.setInexactRepeating(
+                        alarmManager.setInexactRepeating(
                                 AlarmManager.RTC_WAKEUP,
                                 calendar.getTimeInMillis(),
                                 AlarmManager.INTERVAL_DAY,
@@ -82,9 +82,10 @@ public class BootService extends IntentService {
         }
     }
 
-    private void scheduleNotification() {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        if (Integer.parseInt(sp.getString("minimumCardsDueForNotification", "1000001")) == 1000001)
+    public static void scheduleNotification(Context context) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        if (Integer.parseInt(sp.getString("minimumCardsDueForNotification", "1000001")) <= 1000000)
             return;
 
         final Calendar calendar = Calendar.getInstance();
@@ -92,8 +93,8 @@ public class BootService extends IntentService {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         final PendingIntent notificationIntent =
-                PendingIntent.getBroadcast(this, 0, new Intent(this, NotificationReceiver.class), 0);
-        mAlarmManager.setInexactRepeating(
+                PendingIntent.getBroadcast(context, 0, new Intent(context, NotificationReceiver.class), 0);
+        alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY,

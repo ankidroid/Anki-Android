@@ -21,6 +21,8 @@
 package com.ichi2.anki;
 
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -48,6 +50,8 @@ import android.view.WindowManager.BadTokenException;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.anki.receiver.NotificationReceiver;
+import com.ichi2.anki.services.BootService;
 import com.ichi2.libanki.hooks.AdvancedStatistics;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
@@ -520,15 +524,22 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     date.set(Calendar.HOUR_OF_DAY, hours);
                     getCol().setCrt(date.getTimeInMillis() / 1000);
                     getCol().setMod();
-                    // TODO: need to change notification time
+                    BootService.scheduleNotification(this);
                     break;
                 }
                 case "minimumCardsDueForNotification": {
                     ListPreference listpref = (ListPreference) screen.findPreference("minimumCardsDueForNotification");
                     if (listpref != null) {
                         updateNotificationPreference(listpref);
+                        if (Integer.valueOf(listpref.getValue()) < 1000000) {
+                            BootService.scheduleNotification(this);
+                        } else {
+                            PendingIntent intent = PendingIntent.getBroadcast(this, 0,
+                                    new Intent(this, NotificationReceiver.class), 0);
+                            final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                            alarmManager.cancel(intent);
+                        }
                     }
-                    // TODO: may need to enable/disable notifications
                     break;
                 }
                 case "reportErrorMode": {
