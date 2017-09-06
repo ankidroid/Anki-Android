@@ -520,6 +520,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     date.set(Calendar.HOUR_OF_DAY, hours);
                     getCol().setCrt(date.getTimeInMillis() / 1000);
                     getCol().setMod();
+                    // TODO: need to change notification time
                     break;
                 }
                 case "minimumCardsDueForNotification": {
@@ -527,6 +528,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     if (listpref != null) {
                         updateNotificationPreference(listpref);
                     }
+                    // TODO: may need to enable/disable notifications
                     break;
                 }
                 case "reportErrorMode": {

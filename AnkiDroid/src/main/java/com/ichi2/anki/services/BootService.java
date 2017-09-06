@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.ichi2.anki.CollectionHelper;
+import com.ichi2.anki.receiver.NotificationReceiver;
 import com.ichi2.anki.receiver.ReminderReceiver;
 import com.ichi2.libanki.Collection;
 
@@ -18,6 +19,11 @@ import java.util.Calendar;
 
 public class BootService extends IntentService {
 
+    /**
+     * This service is also run when the app is started (from {@link com.ichi2.anki.AnkiDroidApp},
+     * so we need to make sure that it isn't run twice.
+     */
+    private static boolean sWasRun = false;
     private AlarmManager mAlarmManager;
 
     public BootService() {
@@ -26,9 +32,13 @@ public class BootService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        if (sWasRun)
+            return;
+
         mAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         scheduleDeckReminder();
         scheduleNotification();
+        sWasRun = true;
     }
 
     private void scheduleDeckReminder() {
@@ -81,16 +91,13 @@ public class BootService extends IntentService {
         calendar.set(Calendar.HOUR_OF_DAY, sp.getInt("dayOffset", 0));
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-
         final PendingIntent notificationIntent =
-                PendingIntent.getBroadcast(this, 0, new Intent(this, ReminderReceiver.class), 0);
+                PendingIntent.getBroadcast(this, 0, new Intent(this, NotificationReceiver.class), 0);
         mAlarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY,
                 notificationIntent
         );
-
-        // TODO: need to cancel alarm when notifications are disabled
     }
 }
