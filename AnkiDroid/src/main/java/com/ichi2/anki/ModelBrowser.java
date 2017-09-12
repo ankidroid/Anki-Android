@@ -507,7 +507,7 @@ public class ModelBrowser extends AnkiActivity {
                                         JSONObject model = mModels.get(mModelListPosition);
                                         String deckName = mModelNameInput.getText().toString()
                                                 .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
-                                        getCol().getDecks().id(deckName, true);
+                                        getCol().getDecks().id(deckName, false);
                                         if (deckName.length() > 0) {
                                             try {
                                                 model.put("name", deckName);
