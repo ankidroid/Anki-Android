@@ -57,7 +57,7 @@ Once you have improved the code, commit it and send a pull request to [AnkiDroid
 If you have trouble with Git, you can paste the changed files as text to the [forum](http://groups.google.com/group/anki-android) or github issue tracker.
 
 ## Git workflow
-Git can be a bit complicated to use in the beginning. This section describes the workflow that we recommend for regular contributors. The following assumes that you're [using SSH to authenticate with github](https://help.github.com/articles/generating-a-new-ssh-key/) (highly recommended) and that you've forked the AnkiDroid repository. We'll assume that you're using either linux or the [linux subsystem for Windows](https://msdn.microsoft.com/en-us/commandline/wsl/about) to complete the following.
+Git can be a bit complicated to use in the beginning. This section describes the workflow that we recommend for regular contributors. The following assumes that you're using either linux, or the [linux subsystem for Windows](https://msdn.microsoft.com/en-us/commandline/wsl/about). We also assume you're [using SSH to authenticate with github](https://help.github.com/articles/generating-a-new-ssh-key/) (highly recommended) and that you've already forked the AnkiDroid repository on github.
 
 ### Inital setup (one time)
 First let's set up our local repository
