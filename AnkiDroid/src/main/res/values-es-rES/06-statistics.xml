@@ -139,7 +139,7 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">Has estudiado &lt;b&gt;%1$d tarjeta&lt;b&gt; en &lt;b&gt;%2$s&lt;/b&gt; hoy.</item>
+    <item quantity="one">Has estudiado &lt;b&gt;%1$d tarjeta&lt;/b&gt; en &lt;b&gt;%2$s&lt;/b&gt; hoy</item>
     <item quantity="other">Has estudiado &lt;b&gt;%1$d tarjetas&lt;b&gt; en &lt;b&gt;%2$s&lt;/b&gt; hoy.</item>
   </plurals>
 </resources>

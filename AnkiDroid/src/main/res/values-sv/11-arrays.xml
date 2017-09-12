@@ -50,16 +50,16 @@
     <item>Rekommenderat svar (grön)</item>
     <item>Svar bättre än rekommenderat</item>
     <item>Ångra</item>
-    <item>Editera not</item>
-    <item>Markera not</item>
+    <item>Redigera not</item>
+    <item>Märk not</item>
     <item>Sökutryck</item>
-    <item>Dölj kort</item>
-    <item>Åsidosätt kort</item>
+    <item>Göm kort</item>
+    <item>Uteslut kort</item>
     <item>Ta bort not</item>
     <item>Spela upp media</item>
     <item>Avbryt inlärning</item>
-    <item>Dölj not</item>
-    <item>Lås not</item>
+    <item>Göm not</item>
+    <item>Uteslut not</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Åsidosätt kort</item>
@@ -78,7 +78,7 @@
     <item>Ordningen de lades till</item>
     <item>Efter förfallotid</item>
     <item>Senast tillagda först</item>
-    <item>Relativ försenhet</item>
+    <item>Relativ försening innan repetition</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Använd nuvarande kortlek</item>
@@ -95,7 +95,7 @@
   </string-array>
   <string-array name="day_theme_labels">
     <item>Ljus</item>
-    <item>Simpel</item>
+    <item>Enkel</item>
   </string-array>
   <string-array name="night_theme_labels">
     <item>Svart</item>

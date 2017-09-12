@@ -24,11 +24,11 @@
   <string name="model_browser_label">Hantera nottyper</string>
   <string name="model_editor_label">Hantera fält</string>
   <!--Toasts-->
-  <string name="toast_last_model">Du kan inte ta bort din senaste modell</string>
+  <string name="toast_last_model">Du kan inte ta bort din sista modell</string>
   <string name="toast_last_field">Nottyper måste ha åtminstone ett fält</string>
   <string name="toast_empty_name">Du måste ange ett namn</string>
   <string name="toast_duplicate_field">Fältnamnet används redan</string>
-  <string name="toast_out_of_range">Du måste ange ett korrekt värde</string>
+  <string name="toast_out_of_range">Du måste ange ett giltigt värde</string>
   <!--Plurals-->
   <plurals name="model_browser_types_available">
     <item quantity="one">%d nottyp tillgänglig</item>
@@ -65,5 +65,5 @@
   <!--Model Add Suffixes-->
   <string name="model_browser_add_add">Lägg till: %1$s </string>
   <!--This prefix is used for standard note types-->
-  <string name="model_browser_add_clone">Kopiera: %1$s </string>
+  <string name="model_browser_add_clone">Klona: %1$s </string>
 </resources>

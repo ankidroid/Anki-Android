@@ -10,7 +10,7 @@ Lägg till material genom skrivbordsprogrammet Anki eller direkt via AnkiDroid. 
 
 ★ Huvudfunktioner:
 • fungerande innehåll för flashkort: text, bilder, ljud och LaTeX
-• intervallbaserad repetition (supermemo 2 algoritm)
+• intervallbaserad repetition (supermemo 2-algoritm)
 • text-till-tal-integration
 • mer än 6000 tillgängliga kortlekar
 • widget som visar dina framsteg
@@ -19,9 +19,9 @@ Lägg till material genom skrivbordsprogrammet Anki eller direkt via AnkiDroid. 
 • öppen källkod
 
 ★ Ytterligare funktioner:
-• skriv svar (frivilligt)
+• skriv svar (tillval)
 • whiteboard
-• korteditor
+• redigera/lägg till kort
 • kortutforskare
 • layout för surfplattor
 • importera befintliga kortlekar (via Anki Desktop)
@@ -34,4 +34,4 @@ Lägg till material genom skrivbordsprogrammet Anki eller direkt via AnkiDroid. 
 • dynamisk hantering av kortlekar
 • nattläge
 • översatt till 27 språk
-•Alla tidigare versioner av AnkiDroid kan hämtas från webbsidan
+• Alla tidigare versioner av AnkiDroid kan hämtas från webbsidan

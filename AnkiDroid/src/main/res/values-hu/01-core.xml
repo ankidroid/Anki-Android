@@ -53,7 +53,7 @@
   <string name="studyoptions_eta">Becsült idő (perc):</string>
   <string name="studyoptions_start">Gyakorlás</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Expand</string>
+  <string name="expand">Nagyítás</string>
   <string name="collapse">Collapse</string>
   <string name="study_more">Tanulj többet</string>
   <plurals name="deckpicker_title">
@@ -152,7 +152,7 @@
   <string name="card_template_editor_front">Front template</string>
   <string name="card_template_editor_back">Back template</string>
   <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
+  <string name="card_template_editor_menu_delete">Törlés</string>
   <string name="card_template_editor_cant_delete">At least one card type is required</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>

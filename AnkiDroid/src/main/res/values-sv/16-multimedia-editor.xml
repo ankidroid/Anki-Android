@@ -38,7 +38,7 @@
   <string name="multimedia_editor_popup_image">Lägg till bild</string>
   <string name="multimedia_editor_popup_audio">Spela in ljud</string>
   <string name="multimedia_editor_popup_text">Avancerad redigering</string>
-  <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
+  <string name="multimedia_editor_popup_cloze">Lucktest</string>
   <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">Använder glosbe.com</string>
   <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -98,13 +98,13 @@
   <!-- General word search and failures -->
   <string name="multimedia_editor_error_word_not_found">Ordet hittades inte</string>
   <!-- failure when contacting glosbe or similar -->
-  <string name="multimedia_editor_trans_getting_failure">Att få översättning misslyckades</string>
+  <string name="multimedia_editor_trans_getting_failure">Hämtning av översättning misslyckades</string>
   <string name="multimedia_editor_searching_word">Sök efter ord</string>
   <!-- General -->
   <string name="multimedia_editor_progress_wait_title">Vänta</string>
   <!-- not a good message, when an unexpected error happens -->
-  <string name="multimedia_editor_something_wrong">Tyvärr, någonting gick fel</string>
-  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the %1$s field</string>
+  <string name="multimedia_editor_something_wrong">Någonting gick fel</string>
+  <string name="multimedia_editor_attach_mm_content">Lägg till multimedia-innehåll till fältet %1$s</string>
   <string name="multimedia_editor_attach_media">Bifoga media</string>
   <!-- Audio view -->
   <!-- Message when recording fails -->
@@ -115,5 +115,5 @@
   <string name="title_activity_translation">Översättning</string>
   <string name="title_activity_load_pronounciation">Uttal</string>
   <!-- Network failure -->
-  <string name="network_no_connection">Ingen anslutning.</string>
+  <string name="network_no_connection">Ingen anslutning</string>
 </resources>

@@ -112,7 +112,7 @@
   <string name="select">Välj</string>
   <string name="saving_changes">Sparar ändringar...</string>
   <string name="reordering_cards">Ändrar ordning på korten...</string>
-  <string name="field_remapping">%1$s (från \'%2$s\')</string>
+  <string name="field_remapping">%1$s (från \"%2$s\")</string>
   <string name="confirm_map_cards_to_nothing">Alla kort som inte mappar till något kommer att tas bort. Om en anteckning inte har några kvarvarande kort, kommer den att tas bort. Är du säker på att du vill fortsätta?</string>
   <plurals name="timebox_reached">
     <item quantity="one">Studera %1$d kort i %2$s</item>
@@ -161,18 +161,18 @@
   <string name="confirm_apkg_export">Exportera samling som APKG-fil?</string>
   <string name="confirm_apkg_export_deck">Exportera \"%s\" som APKG-fil?</string>
   <string name="export_in_progress">Exporterar APKG-fil&#8230;</string>
-  <string name="export_successful_title">Send apkg?</string>
-  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+  <string name="export_successful_title">Skicka apkg?</string>
+  <string name="export_successful">Filen ”%s” har exporterats. Vill du skicka den med en annan app?</string>
+  <string name="export_email_subject">AnkiDroid exporterade flashcards: %s</string>
   <string name="export_email_text">
         <![CDATA[
-        Hi!
+        Hej!
         <br/><br/>
-        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        Detta är en kortlek med Anki-flashcards som skickats från <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        Testa att öppna den med någon av de tillgängliga <a href="http://ankisrs.net/#download"> Anki-distributionerna</a> och njut av ett enkelt och effektivt lärande!
         ]]>
     </string>
-  <string name="export_unsuccessful">Error exporting apkg file</string>
+  <string name="export_unsuccessful">Fel vid export apkg-fil</string>
   <string name="import_hint">För att importera kort, placera apkg-filen i katalogen %s och tryck på ok</string>
   <string name="upgrade_import_no_file_found">Ingen importerbar %1$s fil hittad</string>
   <string name="study_options">Kortleksalternativ</string>
@@ -220,11 +220,11 @@
   <string name="decks_rename_exists">Den kortleken existerar redan</string>
   <string name="decks_rename_filtered_nosubdecks">En filtrerad kortlek kan inte ha underkortlekar</string>
   <string name="filtered_deck_name">Filtrerad Kortlek</string>
-  <string name="reminder_title">Do not forget to study today!</string>
+  <string name="reminder_title">Glöm inte att studera idag!</string>
   <plurals name="reminder_text">
-    <item quantity="one">%2$d new card to review in %1$s</item>
-    <item quantity="other">%2$d new cards to review in %1$s</item>
+    <item quantity="one">%2$d nytt kort att granska i %1$s</item>
+    <item quantity="other">%2$d nya kort att granska i %1$s</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->
-  <string name="apk_share_error">Error sharing apkg file</string>
+  <string name="apk_share_error">Fel vid delning av apkg-fil</string>
 </resources>

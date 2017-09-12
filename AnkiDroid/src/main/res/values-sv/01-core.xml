@@ -48,13 +48,13 @@
   <string name="send_feedback">Skicka feedback</string>
   <string name="studyoptions_title">Kortleksöversikt</string>
   <string name="studyoptions_due_today">Aktuella idag:</string>
-  <string name="studyoptions_new_total">Nya kort totalt:</string>
+  <string name="studyoptions_new_total">Totalt antal nya kort:</string>
   <string name="studyoptions_total_cards">Totalt antal kort:</string>
   <string name="studyoptions_eta">Uppskattad tid (min):</string>
   <string name="studyoptions_start">Plugga nu</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Expand</string>
-  <string name="collapse">Collapse</string>
+  <string name="expand">Fäll ut</string>
+  <string name="collapse">Fäll ihop</string>
   <string name="study_more">Studera mer</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d kort i kö (%2$s)</item>
@@ -162,5 +162,5 @@
   <string name="card_template_editor_would_delete_note">Att ta bort den här korttypen skulle göra att en eller flera noter tas bort. Vänligen skapa en ny korttyp först.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Läs och skriv till AnkiDroid-databasen</string>
-  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="read_write_permission_description">åtkomst till befintliga noter, kort, nottyper och kortlekar, samt att skapa nya</string>
 </resources>
