@@ -74,10 +74,11 @@ Now if want to make a new change to the code base, we create a new 'feature bran
 ```
 git fetch --all --prune
 git checkout -b my-feature-branch upstream/master
+# make your changes to the source code
+git push origin HEAD
 ```
 
-Now you will be on a new branch called `my-feature-branch` which contains the latest AnkiDroid code. Make your changes to the code, then do a `git push`. On navigating to the [main AnkiDroid repository](https://github.com/ankidroid/Anki-Android), github will pop up a message asking you if you want to create a new pull request based on the branch that you just pushed.
-
+On navigating to the [main AnkiDroid repository](https://github.com/ankidroid/Anki-Android), github will now pop up a message asking you if you want to create a new pull request based on the branch that you just pushed.
 
 ### Dealing with merge conflicts
 If changes are made to the AnkiDroid repository that conflict with the changes in your pull request in-between creating the feature branch and your changes getting merged into the main repository, it may be necessary to rebase your code:
@@ -87,7 +88,7 @@ git fetch --all --prune
 git rebase upstream/master
 # it may be necessary to resolve merge conflicts here
 # if you need to update the existing pull request, you should do a 'force' push
-git push origin my-feature-branch -f
+git push origin HEAD -f
 ```
 
 ## Running unit tests
