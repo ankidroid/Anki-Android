@@ -285,7 +285,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
                 return;
             }
 
-            mPronunciationAddress = BeolingusParser.getPronounciationAddressFromTranslation(mTranslation, mSource);
+            mPronunciationAddress = BeolingusParser.getPronunciationAddressFromTranslation(mTranslation, mSource);
 
             if (mPronunciationAddress.contentEquals("no")) {
 
