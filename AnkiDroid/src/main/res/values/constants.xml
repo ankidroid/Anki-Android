@@ -126,17 +126,17 @@
     <string name="link_translation">http://crowdin.net/project/ankidroid</string>
     <string name="link_wikipedia_open_source">http://en.wikipedia.org/wiki/Open_source_software</string>
     <string name="link_contribution">https://github.com/ankidroid/Anki-Android/wiki/Contributing</string>
-    <string name="link_help">https://ankidroid.org/docs/help.html</string>
-    <string name="link_manual">https://ankidroid.org/docs/manual.html</string>
-    <string name="link_help_ja">https://ankidroid.org/docs/help-ja.html</string>
-    <string name="link_manual_ja">https://ankidroid.org/docs/manual-ja.html</string>
-    <string name="link_manual_getting_started">https://ankidroid.org/docs/manual.html#gettingStarted</string>
+    <string name="link_help">https://docs.ankidroid.org/help.html</string>
+    <string name="link_manual">https://docs.ankidroid.org/manual.html</string>
+    <string name="link_help_ja">https://docs.ankidroid.org/help-ja.html</string>
+    <string name="link_manual_ja">https://docs.ankidroid.org/manual-ja.html</string>
+    <string name="link_manual_getting_started">https://docs.ankidroid.org/manual.html#gettingStarted</string>
     <string name="link_hebrew_font">https://github.com/ankidroid/Anki-Android/releases/download/tohu-font/Tohu.ttf</string>
     <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
     <string name="repair_deck">http://ankisrs.net/docs/manual.html#corrupt-collections</string>
     <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>
     <string name="register_url">https://ankiweb.net/account/register</string>
-    <string name="changelog_url">https://ankidroid.org/docs/changelog.html</string>
+    <string name="changelog_url">https://docs.ankidroid.org/changelog.html</string>
 
     <string-array name="leech_action_values">
         <item>0</item>
