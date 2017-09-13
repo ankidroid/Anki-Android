@@ -349,6 +349,8 @@ public class AnkiDroidApp extends Application {
     public static String getFeedbackUrl() {
         if (isCurrentLanguage("ja")) {
             return sInstance.getResources().getString(R.string.link_help_ja);
+        } else if (isCurrentLanguage("zh")) {
+            return sInstance.getResources().getString(R.string.link_help_zh);
         } else {
             return sInstance.getResources().getString(R.string.link_help);
         }
@@ -361,6 +363,8 @@ public class AnkiDroidApp extends Application {
     public static String getManualUrl() {
         if (isCurrentLanguage("ja")) {
             return sInstance.getResources().getString(R.string.link_manual_ja);
+        } else if (isCurrentLanguage("zh")) {
+            return sInstance.getResources().getString(R.string.link_manual_zh);
         } else {
             return sInstance.getResources().getString(R.string.link_manual);
         }
