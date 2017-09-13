@@ -38,7 +38,6 @@ import timber.log.Timber;
 public final class WidgetStatus {
 
     private static boolean sSmallWidgetEnabled = false;
-    private static boolean sNotificationEnabled = false;
     private static AsyncTask<Context, Void, Context> sUpdateDeckStatusAsyncTask;
 
 
@@ -53,9 +52,8 @@ public final class WidgetStatus {
     public static void update(Context context) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         sSmallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false);
-        sNotificationEnabled = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "1000001")) < 1000000;
-        if ((sSmallWidgetEnabled || sNotificationEnabled)
-                && ((sUpdateDeckStatusAsyncTask == null) || (sUpdateDeckStatusAsyncTask.getStatus() == AsyncTask.Status.FINISHED))) {
+        if (sSmallWidgetEnabled &&
+                ((sUpdateDeckStatusAsyncTask == null) || (sUpdateDeckStatusAsyncTask.getStatus() == AsyncTask.Status.FINISHED))) {
             Timber.d("WidgetStatus.update(): updating");
             sUpdateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();
             sUpdateDeckStatusAsyncTask.execute(context);
@@ -106,11 +104,6 @@ public final class WidgetStatus {
             if (sSmallWidgetEnabled) {
                 Intent intent;
                 intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);
-                context.startService(intent);
-            }
-            if (sNotificationEnabled) {
-                Intent intent;
-                intent = new Intent(context, NotificationService.class);
                 context.startService(intent);
             }
         }
