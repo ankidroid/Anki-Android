@@ -32,8 +32,9 @@ public class BootService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (sWasRun)
+        if (sWasRun) {
             return;
+        }
 
         scheduleDeckReminder();
         scheduleNotification(this);
@@ -85,8 +86,9 @@ public class BootService extends IntentService {
     public static void scheduleNotification(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        if (Integer.parseInt(sp.getString("minimumCardsDueForNotification", "1000001")) <= 1000000)
+        if (Integer.parseInt(sp.getString("minimumCardsDueForNotification", "1000001")) <= 1000000) {
             return;
+        }
 
         final Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, sp.getInt("dayOffset", 0));
