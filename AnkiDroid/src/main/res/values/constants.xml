@@ -130,6 +130,8 @@
     <string name="link_manual">https://docs.ankidroid.org/manual.html</string>
     <string name="link_help_ja">https://docs.ankidroid.org/help-ja.html</string>
     <string name="link_manual_ja">https://docs.ankidroid.org/manual-ja.html</string>
+    <string name="link_help_zh">https://docs.ankidroid.org/help-zh.html</string>
+    <string name="link_manual_zh">https://docs.ankidroid.org/manual-zh.html</string>
     <string name="link_manual_getting_started">https://docs.ankidroid.org/manual.html#gettingStarted</string>
     <string name="link_hebrew_font">https://github.com/ankidroid/Anki-Android/releases/download/tohu-font/Tohu.ttf</string>
     <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
