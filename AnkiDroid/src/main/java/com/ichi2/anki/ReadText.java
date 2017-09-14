@@ -76,9 +76,9 @@ public class ReadText {
      * Ask the user what language they want.
      *
      * @param text The text to be read
-     * @param did The deck id
-     * @param ord The card template ordinal
-     * @param qa The card question or card answer
+     * @param did  The deck id
+     * @param ord  The card template ordinal
+     * @param qa   The card question or card answer
      */
     public static void selectTts(String text, long did, int ord, int qa) {
         mTextToSpeak = text;
@@ -144,9 +144,9 @@ public class ReadText {
 
     /**
      * Read the given text using an appropriate TTS voice.
-     *
+     * <p>
      * The voice is chosen as follows:
-     *
+     * <p>
      * 1. If localeCode is a non-empty string representing a locale in the format returned
      *    by Locale.toString(), and a voice matching the language of this locale (and ideally,
      *    but not necessarily, also the country and variant of the locale) is available, then this
@@ -203,12 +203,11 @@ public class ReadText {
      * Convert a string representation of a locale, in the format returned by Locale.toString(),
      * into a Locale object, disregarding any script and extensions fields (i.e. using solely the
      * language, country and variant fields).
-     *
+     * <p>
      * Returns a Locale object constructed from an empty string if the input string is null, empty
      * or contains more than 3 fields separated by underscores.
      */
-    private static Locale localeFromStringIgnoringScriptAndExtensions(String localeCode)
-    {
+    private static Locale localeFromStringIgnoringScriptAndExtensions(String localeCode) {
         if (localeCode == null) {
             return new Locale("");
         }
@@ -228,8 +227,7 @@ public class ReadText {
         }
     }
 
-    private static String stripScriptAndExtensions(String localeCode)
-    {
+    private static String stripScriptAndExtensions(String localeCode) {
         int hashPos = localeCode.indexOf('#');
         if (hashPos >= 0) {
             localeCode = localeCode.substring(0, hashPos);
@@ -241,8 +239,7 @@ public class ReadText {
      * Returns true if the TTS engine supports the language of the locale represented by localeCode
      * (which should be in the format returned by Locale.toString()), false otherwise.
      */
-    private static boolean isLanguageAvailable(String localeCode)
-    {
+    private static boolean isLanguageAvailable(String localeCode) {
         return mTts.isLanguageAvailable(localeFromStringIgnoringScriptAndExtensions(localeCode)) >=
                 TextToSpeech.LANG_AVAILABLE;
     }

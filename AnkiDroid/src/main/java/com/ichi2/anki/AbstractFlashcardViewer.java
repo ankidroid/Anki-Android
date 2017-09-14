@@ -2262,18 +2262,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /**
      * Snippet of text accompanied by its locale code (if known).
      */
-    private static class LocalisedText
-    {
+    private static class LocalisedText {
         private String text;
         private String localeCode;
 
-        /** Construct an object representing a snippet of text in an unknown locale. */
+        /**
+         * Construct an object representing a snippet of text in an unknown locale.
+         */
         public LocalisedText(String text_) {
             text = text_;
             localeCode = "";
         }
 
-        /** Construct an object representing a snippet of text in a particular locale.
+        /**
+         * Construct an object representing a snippet of text in a particular locale.
          *
          * @param localeCode_ A string representation of a locale in the format returned by
          *                    Locale.toString().
@@ -2283,13 +2285,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             localeCode = localeCode_;
         }
 
-        public String getText()
-        {
+        public String getText() {
             return text;
         }
 
-        public String getLocaleCode()
-        {
+        public String getLocaleCode() {
             return localeCode;
         }
     }
@@ -2297,7 +2297,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /**
      * Reads the text (using TTS) for the given side of a card.
      *
-     * @param card The card to play TTS for
+     * @param card     The card to play TTS for
      * @param cardSide The side of the current card to play TTS for
      */
     private static void readCardText(final Card card, final int cardSide) {
@@ -2317,8 +2317,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         for (LocalisedText textToRead : getTextsToRead(cardSideContent)) {
             if (!textToRead.getText().isEmpty()) {
                 ReadText.textToSpeech(textToRead.getText(), deckId, ord, cardSide,
-                                      textToRead.getLocaleCode(),
-                                      isFirstText ? TextToSpeech.QUEUE_FLUSH : TextToSpeech.QUEUE_ADD);
+                        textToRead.getLocaleCode(),
+                        isFirstText ? TextToSpeech.QUEUE_FLUSH : TextToSpeech.QUEUE_ADD);
                 isFirstText = false;
             }
         }
@@ -2327,7 +2327,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /**
      * Returns the list of text snippets contained in the given HTML fragment that should be read
      * using the Android text-to-speech engine, together with the languages they are in.
-     *
+     * <p>
      * Each returned LocalisedText object contains the text extracted from a &lt;tts&gt; element
      * whose 'service' attribute is set to 'android', and the localeCode taken from the 'voice'
      * attribute of that element. This holds unless the HTML fragment contains no such &lt;tts&gt;
@@ -2368,8 +2368,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             if (!sDisplayAnswer) {
                 ReadText.selectTts(Utils.stripHTML(mCurrentCard.q(true)), getDeckIdForCard(mCurrentCard), mCurrentCard.getOrd(),
                         Sound.SOUNDS_QUESTION);
-            }
-            else {
+            } else {
                 ReadText.selectTts(Utils.stripHTML(mCurrentCard.getPureAnswer()), getDeckIdForCard(mCurrentCard),
                         mCurrentCard.getOrd(), Sound.SOUNDS_ANSWER);
             }
