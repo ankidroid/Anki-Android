@@ -102,6 +102,7 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -2262,35 +2263,35 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /**
      * Snippet of text accompanied by its locale code (if known).
      */
-    private static class LocalisedText {
-        private String text;
-        private String localeCode;
+    private static final class LocalisedText {
+        private String mText;
+        private String mLocaleCode;
 
         /**
          * Construct an object representing a snippet of text in an unknown locale.
          */
-        public LocalisedText(String text_) {
-            text = text_;
-            localeCode = "";
+        public LocalisedText(String text) {
+            mText = text;
+            mLocaleCode = "";
         }
 
         /**
          * Construct an object representing a snippet of text in a particular locale.
          *
-         * @param localeCode_ A string representation of a locale in the format returned by
+         * @param localeCode A string representation of a locale in the format returned by
          *                    Locale.toString().
          */
-        public LocalisedText(String text_, String localeCode_) {
-            text = text_;
-            localeCode = localeCode_;
+        public LocalisedText(String text, String localeCode) {
+            mText = text;
+            mLocaleCode = localeCode;
         }
 
         public String getText() {
-            return text;
+            return mText;
         }
 
         public String getLocaleCode() {
-            return localeCode;
+            return mLocaleCode;
         }
     }
 
@@ -2334,8 +2335,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * elements; in that case the function returns a single LocalisedText object containing the
      * text extracted from the whole HTML fragment, with the localeCode set to an empty string.
      */
-    private static ArrayList<LocalisedText> getTextsToRead(String html) {
-        ArrayList<LocalisedText> textsToRead = new ArrayList<LocalisedText>();
+    private static List<LocalisedText> getTextsToRead(String html) {
+        List<LocalisedText> textsToRead = new ArrayList<>();
 
         Element elem = Jsoup.parseBodyFragment(html).body();
         parseTtsElements(elem, textsToRead);
@@ -2347,7 +2348,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         return textsToRead;
     }
 
-    private static void parseTtsElements(Element element, ArrayList<LocalisedText> textsToRead) {
+    private static void parseTtsElements(Element element, List<LocalisedText> textsToRead) {
         if (element.tagName().equalsIgnoreCase("tts")) {
             if (element.attr("service").equalsIgnoreCase("android")) {
                 textsToRead.add(new LocalisedText(element.text(), element.attr("voice")));
