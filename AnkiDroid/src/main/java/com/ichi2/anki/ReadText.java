@@ -141,6 +141,27 @@ public class ReadText {
         }, delay);
     }
 
+    /**
+     * Read a card side using a TTS service.
+     *
+     * @param cardSide         Card side to be read; Sound.SOUNDS_QUESTION or Sound.SOUNDS_ANSWER.
+     * @param cardSideContents Contents of the card side to be read, in HTML format. If it contains
+     *                         any &lt;tts service="android"&gt; elements, only their contents is
+     *                         read; otherwise, all text is read. See TtsParser for more details.
+     * @param did              Index of the deck containing the card.
+     * @param ord              The card template ordinal.
+     */
+    public static void readCardSide(int cardSide, String cardSideContents, long did, int ord) {
+        boolean isFirstText = true;
+        for (TtsParser.LocalisedText textToRead : TtsParser.getTextsToRead(cardSideContents)) {
+            if (!textToRead.getText().isEmpty()) {
+                textToSpeech(textToRead.getText(), did, ord, cardSide,
+                        textToRead.getLocaleCode(),
+                        isFirstText ? TextToSpeech.QUEUE_FLUSH : TextToSpeech.QUEUE_ADD);
+                isFirstText = false;
+            }
+        }
+    }
 
     /**
      * Read the given text using an appropriate TTS voice.
@@ -159,8 +180,8 @@ public class ReadText {
      *
      * @param queueMode TextToSpeech.QUEUE_ADD or TextToSpeech.QUEUE_FLUSH.
      */
-    public static void textToSpeech(String text, long did, int ord, int qa, String localeCode,
-                                    int queueMode) {
+    private static void textToSpeech(String text, long did, int ord, int qa, String localeCode,
+                                     int queueMode) {
         mTextToSpeak = text;
         mQuestionAnswer = qa;
         mDid = did;
