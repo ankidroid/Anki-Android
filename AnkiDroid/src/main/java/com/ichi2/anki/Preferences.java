@@ -460,6 +460,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         try {
             PreferenceScreen screen = listener.getPreferenceScreen();
             Preference pref = screen.findPreference(key);
+            if (pref == null) {
+                return;
+            }
             // Handle special cases
             switch (key) {
                 case "timeoutAnswer": {
