@@ -460,6 +460,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         try {
             PreferenceScreen screen = listener.getPreferenceScreen();
             Preference pref = screen.findPreference(key);
+            if (pref == null) {
+                Timber.e("Preferences: no preference found for the key: %s", key);
+                return;
+            }
             // Handle special cases
             switch (key) {
                 case "timeoutAnswer": {
