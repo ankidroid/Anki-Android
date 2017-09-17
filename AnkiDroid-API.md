@@ -8,6 +8,7 @@ Starting From AnkiDroid v2.5, notes can be added directly to AnkiDroid's databas
 ### List of apps that support the Instant-Add API
 Please add your app to this list if it supports the instant-add API
 * [Aedict3](https://play.google.com/store/apps/details?id=sk.baka.aedict3)
+* [AnkiEditor](https://github.com/jkennethcarino/AnkiEditor)
 * [AnkiMate](https://play.google.com/store/apps/details?id=com.ryannm.android.autoanki)
 * [Bildkortsappen](https://github.com/rabinv/bildkortsappen)
 * [Hanping Chinese Dicitonary Pro](https://play.google.com/store/apps/details?id=com.embermitre.hanping.app.pro)
