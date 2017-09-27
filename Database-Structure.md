@@ -240,3 +240,53 @@ Here is an annotated description of the JSONObjects in the decks field of the `c
     desc: "deck description"
 }
 ```
+
+# Decks JSONObjects
+Here is an annotated description of the JSONObjects in the dconf field of the `col` table:
+
+```java
+{
+"model id (epoch time in milliseconds)" :
+    {
+        autoplay : "whether the audio associated to a question should be
+played when the question is shown"
+        dyn : "Whether this deck is dynamic. Not present by default in decks.py"
+        id : "deck ID (automatically generated long). Not present by default in decks.py"
+        lapse : {
+            "The configuration for lapse cards."
+            delays : "The list of successive delay between the learning steps of the new cards, as explained in the manual."
+            leechAction : "What to do to leech cards. 0 for suspend, 1 for mark. Numbers according to the order in which the choices appear in aqt/dconf.ui"
+            leechFails : "the number of lapses authorized before doing leechAction."
+            minInt: "a lower limit to the new interval after a leech"
+            mult : "percent by which to multiply the current interval when a card goes has lapsed"
+        }
+        maxTaken : "The number of seconds after which to stop the timer"
+        mod : "Last modification time"
+        name : "The name of the configuration"
+        new : {
+            "The configuration for new cards."
+            bury : "Whether to bury cards related to new cards answered"
+            delays : "The list of successive delay between the learning steps of the new cards, as explained in the manual."
+            initialFactor : "The initial ease factor"
+            ints : "The list of delays according to the button pressed while leaving the learning mode. Good, easy and unused. In the GUI, the first two elements corresponds to Graduating Interval and Easy interval"
+            order : "In which order new cards must be shown. NEW_CARDS_RANDOM = 0 and NEW_CARDS_DUE = 1."
+            perDay : "Maximal number of new cards shown per day."
+            separate : "Seems to be unused in the code."
+                
+        }
+        replayq : "whether the audio associated to a question should be played when the answer is shown"
+        rev : {
+            "The configuration for review cards."
+            bury : "Whether to bury cards related to new cards answered"
+            ease4 : "the number to add to the easyness when the easy button is pressed"
+            fuzz : "The new interval is multiplied by a random number between -fuzz and fuzz"
+            ivlFct : "multiplication factor applied to the intervals Anki generates"
+            maxIvl : "the maximal interval for review"
+            minSpace : "not currently used according to decks.py code's comment"
+            perDay : "Numbers of cards to review per day"
+        }
+        timer : "whether timer should be shown (1) or not (0)"
+        usn : "See usn in cards table for details."
+    }
+}
+```
