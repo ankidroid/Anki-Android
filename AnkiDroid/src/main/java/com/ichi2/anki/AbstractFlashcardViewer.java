@@ -856,6 +856,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         restorePreferences();
         super.onCreate(savedInstanceState);
         setContentView(getContentViewAttr(mPrefFullscreenReview));
+
+        // Make ACTION_PROCESS_TEXT for in-app searching possible on > Android 4.0
+        getDelegate().setHandleNativeActionModesEnabled(true);
+
         View mainView = findViewById(android.R.id.content);
         initNavigationDrawer(mainView);
         // Open collection asynchronously
@@ -914,7 +918,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         updateScreenCounts();
         supportInvalidateOptionsMenu();
     }
-
 
     // Saves deck each time Reviewer activity loses focus
     @Override
