@@ -617,6 +617,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 mSearchView.setQuery(mSearchTerms, false);
             }
         });
+
+        // Maybe we were called from ACTION_PROCESS_TEXT.
+        // In that case we already fill in the search.
+        Intent i = getIntent();
+        if (i.getAction() == Intent.ACTION_PROCESS_TEXT) {
+            CharSequence search = i.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT);
+            assert search != null;
+            Timber.d("CardBrowser :: Called with search intent", search);
+            mSearchView.setQuery(search, true);
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
