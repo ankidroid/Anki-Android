@@ -69,6 +69,15 @@ public interface Compat {
     void flushWebViewCookies();
     void setHTML5MediaAutoPlay(WebSettings settings, Boolean allow);
     void setStatusBarColor(Window window, int color);
+
+    /**
+     * Returns the text given by a ACTION_PROCESS_TEXT intent.
+     * Should really be a static method, but that requires API 24 (?)
+     * @param intent current intent
+     * @return the text or an empty CharSequence if no ACTION_PROCESS_TEXT intent
+     */
+    CharSequence onCardBrowserActionProcessTextIntent(Intent intent);
+
     /** Returns true if the system UI currently visible during immersive mode */
     boolean isImmersiveSystemUiVisible(AnkiActivity activity);
     boolean deleteDatabase(File db);

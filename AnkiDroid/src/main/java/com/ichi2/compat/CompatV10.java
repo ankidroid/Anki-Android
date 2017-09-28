@@ -196,6 +196,12 @@ public class CompatV10 implements Compat {
     }
 
     @Override
+    public CharSequence onCardBrowserActionProcessTextIntent(Intent intent) {
+        // ACTION_PROCESS_TEXT exists from API 23
+        return "";
+    }
+
+    @Override
     public boolean isImmersiveSystemUiVisible(AnkiActivity activity) {
         return false;   // Immersive mode introduced in KitKat
     }
