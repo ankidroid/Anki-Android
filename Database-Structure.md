@@ -81,7 +81,7 @@ CREATE TABLE col (
     dconf           text not null,
       -- json array of json objects containing the deck options
     tags            text not null
-      -- a cache of tags used in the collection (probably for autocomplete etc)
+      -- a cache of tags used in the collection (This list is displayed in the browser. Potentially at other place)
 );
 
 -- Contains deleted cards, notes, and decks that need to be synced. 
