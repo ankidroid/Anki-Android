@@ -22,8 +22,8 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.ichi2.anki"
           android:installLocation="auto"
-          android:versionCode="20900110"
-          android:versionName="2.9alpha10">
+          android:versionCode="20900111"
+          android:versionName="2.9alpha11">
 
     <!--
         The version number is of the form:
