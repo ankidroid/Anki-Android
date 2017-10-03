@@ -12,9 +12,6 @@
         <item
             android:id="@+id/menu_multimedia_text"
             android:title="@string/multimedia_editor_popup_text"/>
-        <item
-            android:id="@+id/menu_multimedia_cloze"
-            android:title="@string/multimedia_editor_popup_cloze"/>
     </group>
 
 </menu>
