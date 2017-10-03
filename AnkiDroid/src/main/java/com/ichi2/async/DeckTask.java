@@ -721,7 +721,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         long did = params[0].getLong();
         col.getDecks().rem(did, true);
-
         return new TaskData(true);
     }
 

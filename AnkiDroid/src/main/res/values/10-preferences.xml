@@ -186,7 +186,6 @@
     <string name="deck_conf_rev_cards">Reviews</string>
     <string name="deck_conf_lps_cards">Lapses</string>
     <string name="deck_conf_general">General</string>
-    <string name="deck_conf_reminders">Reminders</string>
     <string name="deck_conf_steps">Steps (in minutes)</string>
     <string name="deck_conf_order">Order</string>
     <string name="deck_conf_new_cards_day">New cards/day</string>
@@ -241,6 +240,4 @@
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
     <string name="deck_conf_cram_steps_summ">Define custom steps</string>
-    <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
-    <string name="deck_conf_reminders_time">Remind at</string>
 </resources>
