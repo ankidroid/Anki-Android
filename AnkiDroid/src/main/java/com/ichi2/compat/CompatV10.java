@@ -25,7 +25,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.Preferences;
 import com.ichi2.anki.R;
@@ -193,12 +192,6 @@ public class CompatV10 implements Compat {
     @Override
     public void setStatusBarColor(Window window, int color) {
         // Not settable before API 21 so do nothing
-    }
-
-    @Override
-    public CharSequence onCardBrowserActionProcessTextIntent(Intent intent) {
-        // ACTION_PROCESS_TEXT exists from API 23
-        return "";
     }
 
     @Override
