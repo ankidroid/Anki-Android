@@ -32,6 +32,8 @@ public class CompatHelper {
 
         if (isNookHdOrHdPlus() && getSdkVersion() == 15) {
             mCompat = new CompatV15NookHdOrHdPlus();
+        } else if (getSdkVersion() >= 23) {
+            mCompat = new CompatV23();
         } else if (getSdkVersion() >= 21) {
             mCompat = new CompatV21();
         } else if (getSdkVersion() >= 19) {

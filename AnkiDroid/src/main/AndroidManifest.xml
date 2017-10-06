@@ -152,7 +152,7 @@
         </activity>
         <activity
             android:name="com.ichi2.anki.CardBrowser"
-            android:exported="false"
+            android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="Card Browser"
             android:parentActivityName=".DeckPicker">
@@ -160,6 +160,11 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ichi2.anki.DeckPicker" />
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
         </activity>
         <activity
         android:name=".ModelBrowser"

@@ -62,6 +62,8 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
+import com.ichi2.compat.Compat;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
@@ -618,6 +620,19 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 mSearchView.setQuery(mSearchTerms, false);
             }
         });
+
+        // Maybe we were called from ACTION_PROCESS_TEXT.
+        // In that case we already fill in the search.
+        Intent intent = getIntent();
+        Compat compat = CompatHelper.getCompat();
+        if (intent.getAction() == compat.ACTION_PROCESS_TEXT) {
+            CharSequence search = intent.getCharSequenceExtra(compat.EXTRA_PROCESS_TEXT);
+            if (search != null && search.length() != 0) {
+                Timber.d("CardBrowser :: Called with search intent: %s", search.toString());
+                mSearchView.setQuery(search, true);
+            }
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 

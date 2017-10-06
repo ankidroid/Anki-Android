@@ -54,6 +54,11 @@ import io.requery.android.database.sqlite.SQLiteDatabase;
  * unless the behaviour is supposed to be different there.
  */
 public interface Compat {
+
+    /* Mock the Intent PROCESS_TEXT constants introduced in API 23. */
+    public static final String ACTION_PROCESS_TEXT = "android.intent.action.PROCESS_TEXT";
+    public static final String EXTRA_PROCESS_TEXT = "android.intent.extra.PROCESS_TEXT";
+
     String detagged(String txt);
     void setTtsOnUtteranceProgressListener(TextToSpeech tts);
     void disableDatabaseWriteAheadLogging(SQLiteDatabase db);
@@ -69,6 +74,7 @@ public interface Compat {
     void flushWebViewCookies();
     void setHTML5MediaAutoPlay(WebSettings settings, Boolean allow);
     void setStatusBarColor(Window window, int color);
+
     /** Returns true if the system UI currently visible during immersive mode */
     boolean isImmersiveSystemUiVisible(AnkiActivity activity);
     boolean deleteDatabase(File db);
