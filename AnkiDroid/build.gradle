@@ -2,13 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.github.triplet.play'
 def homePath = System.properties['user.home']
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.1'
-
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.ichi2.anki"
-        minSdkVersion 10
-        targetSdkVersion 25
+        minSdkVersion 21
+        targetSdkVersion 26
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
     }
@@ -32,10 +31,11 @@ android {
         }
     }
     useLibrary 'org.apache.http.legacy'
-
     dexOptions {
         // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
         preDexLibraries = preDexEnabled && !travisBuild
+    }
+    productFlavors {
     }
 }
 
@@ -47,7 +47,7 @@ play {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:25.1.0'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
     compile 'com.android.support:design:25.1.0'
@@ -62,15 +62,14 @@ dependencies {
     compile 'ch.acra:acra:4.6.2'
     compile 'com.jakewharton.timber:timber:2.7.1'
     compile 'com.google.code.gson:gson:2.4'
-    compile project(":api")
-
+    compile project(':api')
     testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:1.10.19' // v1 while PowerMock does not fully support v2.
+    testCompile 'org.mockito:mockito-core:1.10.19'
+    // v1 while PowerMock does not fully support v2.
     testCompile 'org.powermock:powermock-core:1.6.5'
     testCompile 'org.powermock:powermock-module-junit4:1.6.5'
     testCompile 'org.powermock:powermock-api-mockito:1.6.5'
     testCompile 'org.hamcrest:hamcrest-all:1.3'
-
 }
 
 apply from: "testconfig.gradle"

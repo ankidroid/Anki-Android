@@ -5,12 +5,11 @@ def artifactId = "api"
 def version = "1.1.0alpha5"
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.1'
-
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
     defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 25
+        minSdkVersion 21
+        targetSdkVersion 26
         versionCode 11015   // 4th digit: 1=alpha, 2=beta, 3=official
         versionName version
     }
@@ -20,10 +19,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
 }
 
 // Borrowed from here:
