@@ -1,3 +1,6 @@
+# android studio settings ignore file
+gradle.properties
+
 # built application files
 *.apk
 *.ap_
