@@ -8,7 +8,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion '26.0.2'
     defaultConfig {
-        minSdkVersion 5
+        minSdkVersion 8
         targetSdkVersion 25
         versionCode 11015   // 4th digit: 1=alpha, 2=beta, 3=official
         versionName version
