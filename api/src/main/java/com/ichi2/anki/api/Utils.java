@@ -17,19 +17,21 @@
 
 package com.ichi2.anki.api;
 
+import android.support.annotation.VisibleForTesting;
 import android.text.Html;
-import android.text.TextUtils;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * Utilities class for the API
  */
-class Utils {
+public class Utils {
     // Regex pattern used in removing tags from text before checksum
     private static final Pattern stylePattern = Pattern.compile("(?s)<style.*?>.*?</style>");
     private static final Pattern scriptPattern = Pattern.compile("(?s)<script.*?>.*?</script>");
@@ -38,15 +40,17 @@ class Utils {
     private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
 
 
+    @VisibleForTesting
     static String joinFields(String[] list) {
-        return list != null ? TextUtils.join("\u001f", list): null;
+        return list != null ? join("\u001f", list) : null;
     }
 
-
+    @VisibleForTesting
     static String[] splitFields(String fields) {
-        return fields != null? fields.split("\\x1f", -1): null;
+        return fields != null ? fields.split("\\x1f", -1) : null;
     }
 
+    @VisibleForTesting
     static String joinTags(Set<String> tags) {
         if (tags == null || tags.isEmpty()) {
             return "";
@@ -54,9 +58,10 @@ class Utils {
         for (String t : tags) {
             t.replaceAll(" ", "_");
         }
-        return TextUtils.join(" ", tags);
+        return join(" ", tags);
     }
 
+    @VisibleForTesting
     static String[] splitTags(String tags) {
         if (tags == null) {
             return null;
@@ -64,6 +69,7 @@ class Utils {
         return tags.trim().split("\\s+");
     }
 
+    @VisibleForTesting
     static Long fieldChecksum(String data) {
         data = stripHTMLMedia(data);
         try {
@@ -71,14 +77,14 @@ class Utils {
             byte[] digest = md.digest(data.getBytes("UTF-8"));
             BigInteger biginteger = new BigInteger(1, digest);
             String result = biginteger.toString(16);
-            
+
             // pad checksum to 40 bytes, as is done in the main AnkiDroid code
             if (result.length() < 40) {
                 String zeroes = "0000000000000000000000000000000000000000";
                 result = zeroes.substring(0, zeroes.length() - result.length()) + result;
             }
-            
-            return Long.valueOf(result.substring(0, 8), 16);            
+
+            return Long.valueOf(result.substring(0, 8), 16);
         } catch (Exception e) {
             // This is guaranteed to never happen
             throw new IllegalStateException("Error making field checksum with SHA1 algorithm and UTF-8 encoding", e);
@@ -108,6 +114,7 @@ class Utils {
      * This should only affect substrings of the form &something; and not tags.
      * Internet rumour says that Html.fromHtml() doesn't cover all cases, but it doesn't get less
      * vague than that.
+     *
      * @param html The HTML escaped text
      * @return The text with its HTML entities unescaped.
      */
@@ -123,4 +130,32 @@ class Utils {
         htmlEntities.appendTail(sb);
         return sb.toString();
     }
+
+    static String join(CharSequence delimiter, Object[] tokens) {
+        StringBuilder sb = new StringBuilder();
+        boolean firstTime = true;
+        for (Object token : tokens) {
+            if (firstTime) {
+                firstTime = false;
+            } else {
+                sb.append(delimiter);
+            }
+            sb.append(token);
+        }
+        return sb.toString();
+    }
+
+    static String join(CharSequence delimiter, Iterable tokens) {
+        StringBuilder sb = new StringBuilder();
+        Iterator<?> it = tokens.iterator();
+        if (it.hasNext()) {
+            sb.append(it.next());
+            while (it.hasNext()) {
+                sb.append(delimiter);
+                sb.append(it.next());
+            }
+        }
+        return sb.toString();
+    }
+
 }
