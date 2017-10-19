@@ -23,6 +23,8 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.annotation:annotation:1.0.0'
+    testImplementation 'junit:junit:4.12'
 }
 
 // Borrowed from here:
