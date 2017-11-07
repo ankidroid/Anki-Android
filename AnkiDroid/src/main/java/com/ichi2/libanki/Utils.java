@@ -27,9 +27,6 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.text.Html;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki.CollectionHelper;
@@ -43,14 +40,12 @@ import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -70,13 +65,11 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.TimeZone;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.Deflater;
@@ -698,34 +691,39 @@ public class Utils {
      * @throws IOException
      */
     public static void writeToFile(InputStream source, String destination) throws IOException {
-        Timber.d("Creating new file... = %s", destination);
-        new File(destination).createNewFile();
+        File f = new File(destination);
+        try {
+            Timber.d("Creating new file... = %s", destination);
+            f.createNewFile();
 
-        long startTimeMillis = System.currentTimeMillis();
-        OutputStream output = new BufferedOutputStream(new FileOutputStream(destination));
+            long startTimeMillis = System.currentTimeMillis();
+            OutputStream output = new BufferedOutputStream(new FileOutputStream(destination));
 
-        // Transfer bytes, from source to destination.
-        byte[] buf = new byte[CHUNK_SIZE];
-        long sizeBytes = 0;
-        int len;
-        if (source == null) {
-            Timber.e("writeToFile :: source is null!");
-        }
-        while ((len = source.read(buf)) >= 0) {
-            output.write(buf, 0, len);
-            sizeBytes += len;
-        }
-        long endTimeMillis = System.currentTimeMillis();
+            // Transfer bytes, from source to destination.
+            byte[] buf = new byte[CHUNK_SIZE];
+            long sizeBytes = 0;
+            int len;
+            if (source == null) {
+                Timber.e("writeToFile :: source is null!");
+            }
+            while ((len = source.read(buf)) >= 0) {
+                output.write(buf, 0, len);
+                sizeBytes += len;
+            }
+            long endTimeMillis = System.currentTimeMillis();
 
-        Timber.d("Finished writeToFile!");
-        long durationSeconds = (endTimeMillis - startTimeMillis) / 1000;
-        long sizeKb = sizeBytes / 1024;
-        long speedKbSec = 0;
-        if (endTimeMillis != startTimeMillis) {
-            speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis);
+            Timber.d("Finished writeToFile!");
+            long durationSeconds = (endTimeMillis - startTimeMillis) / 1000;
+            long sizeKb = sizeBytes / 1024;
+            long speedKbSec = 0;
+            if (endTimeMillis != startTimeMillis) {
+                speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis);
+            }
+            Timber.d("Utils.writeToFile: Size: %d Kb, Duration: %d s, Speed: %d Kb/s", sizeKb, durationSeconds, speedKbSec);
+            output.close();
+        } catch (IOException e) {
+            throw new IOException(f.getName() + ": " + e.getLocalizedMessage(), e);
         }
-        Timber.d("Utils.writeToFile: Size: %d Kb, Duration: %d s, Speed: %d Kb/s", sizeKb, durationSeconds, speedKbSec);
-        output.close();
     }
 
 
