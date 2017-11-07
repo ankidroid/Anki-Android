@@ -53,6 +53,7 @@ public class Whiteboard extends View {
     private float mX;
     private float mY;
 
+    private boolean currentlyDrawing = false;
     private boolean mInvertedColors = false;
     private boolean mMonochrome = true;
     private boolean mUndoModeActive = false;
@@ -104,31 +105,44 @@ public class Whiteboard extends View {
 
 
     /**
-     * Handle touch screen motion events.
-     * 
+     * Handle motion events to draw using the touch screen. Only simple touch events are processed,
+     * a multitouch event aborts to current stroke.
+     *
      * @param event The motion event.
-     * @return True if the event was handled, false otherwise.
+     * @return True if the event was handled, false otherwise or when drawing was aborted due to
+     *              detection of a multitouch event.
      */
-    public boolean handleTouchEvent(MotionEvent event) {
+    public boolean handleDrawEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
 
-        switch (event.getAction()) {
+        switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                touchStart(x, y);
+                drawStart(x, y);
                 invalidate();
                 return true;
             case MotionEvent.ACTION_MOVE:
-                for (int i = 0; i < event.getHistorySize(); i++) {
-                    touchMove(event.getHistoricalX(i), event.getHistoricalY(i));
+                if (currentlyDrawing) {
+                    for (int i = 0; i < event.getHistorySize(); i++) {
+                        drawAlong(event.getHistoricalX(i), event.getHistoricalY(i));
+                    }
+                    drawAlong(x, y);
+                    invalidate();
+                    return true;
                 }
-                touchMove(x, y);
-                invalidate();
-                return true;
+                return false;
             case MotionEvent.ACTION_UP:
-                touchUp();
-                invalidate();
-                return true;
+                if (currentlyDrawing) {
+                    drawFinish();
+                    invalidate();
+                    return true;
+                }
+                return false;
+            case MotionEvent.ACTION_POINTER_DOWN:
+                if (currentlyDrawing) {
+                    drawAbort();
+                }
+                return false;
             default:
                 return false;
         }
@@ -191,8 +205,8 @@ public class Whiteboard extends View {
         }
     }
 
-
-    private void touchStart(float x, float y) {
+    private void drawStart(float x, float y) {
+        currentlyDrawing = true;
         mPath.reset();
         mPath.moveTo(x, y);
         mX = x;
@@ -200,7 +214,7 @@ public class Whiteboard extends View {
     }
 
 
-    private void touchMove(float x, float y) {
+    private void drawAlong(float x, float y) {
         float dx = Math.abs(x - mX);
         float dy = Math.abs(y - mY);
         if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
@@ -211,10 +225,11 @@ public class Whiteboard extends View {
     }
 
 
-    private void touchUp() {
+    private void drawFinish() {
+        currentlyDrawing = false;
         PathMeasure pm = new PathMeasure(mPath, false);
         mPath.lineTo(mX, mY);
-        if(pm.getLength() > 0){
+        if (pm.getLength() > 0) {
             mCanvas.drawPath(mPath, mPaint);
             mUndo.add(mPath);
         } else {
@@ -227,6 +242,12 @@ public class Whiteboard extends View {
         if (mUndo.size() == 1 && mActivity.get() != null) {
             mActivity.get().supportInvalidateOptionsMenu();
         }
+    }
+
+
+    private void drawAbort() {
+        drawFinish();
+        undo();
     }
 
 

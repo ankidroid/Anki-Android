@@ -229,7 +229,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private View mMainLayout;
     private View mLookUpIcon;
     private FrameLayout mCardContainer;
-    private WebView mCard;
+    protected WebView mCard;
     private WebView mNextCard;
     private FrameLayout mCardFrame;
     private FrameLayout mTouchLayer;
