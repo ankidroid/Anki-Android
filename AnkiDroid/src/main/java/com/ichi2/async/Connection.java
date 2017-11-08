@@ -407,7 +407,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     } else {
                         AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-mediaSync");
                     }
-                    mediaError = e.getLocalizedMessage();
+                    mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error) + "\n\n" + e.getLocalizedMessage();
                 }
             }
             if (noChanges && (!media || noMediaChanges)) {
