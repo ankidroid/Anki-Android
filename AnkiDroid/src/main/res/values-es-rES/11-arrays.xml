@@ -67,7 +67,7 @@
   </string-array>
   <string-array name="new_order_labels">
     <item>Tarjetas nuevas en orden aleatorio</item>
-    <item>Tarjetas nuevas en orden de adición</item>
+    <item>Tarjetas nuevas en orden añadido</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
     <item>Más antiguas primero</item>
@@ -75,7 +75,7 @@
     <item>Intervalos crecientes</item>
     <item>Intervalos decrecientes</item>
     <item>Más atrasadas</item>
-    <item>Orden de adición</item>
+    <item>En el orden añadido</item>
     <item>Orden programado</item>
     <item>Últimas añadidas primero</item>
     <item>Sobreprogramación relativa</item>

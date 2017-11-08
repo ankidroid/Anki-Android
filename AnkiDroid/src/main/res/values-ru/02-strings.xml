@@ -233,8 +233,8 @@
   <string name="filtered_deck_name">Фильтрованная колода</string>
   <string name="reminder_title">Не забудьте о сегодняшнем обучении!</string>
   <plurals name="reminder_text">
-    <item quantity="one">%2$d новых карты для повторения в %1$s</item>
-    <item quantity="few">%2$d new cards to review in %1$s</item>
+    <item quantity="one">%2$d новая карта для повторения в %1$s</item>
+    <item quantity="few">%2$d новых карточки для повторения в %1$s</item>
     <item quantity="other">%2$d новых карт для повторения в %1$s</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->

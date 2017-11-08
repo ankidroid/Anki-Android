@@ -159,14 +159,14 @@
   <string name="confirm_apkg_export_deck">将“%s”导出为akpg文件？</string>
   <string name="export_in_progress">正在导出apkg文件&#8230;</string>
   <string name="export_successful_title">发送apkg文件吗？</string>
-  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+  <string name="export_successful">文件 “%s” 导出完毕，您想用其他 app 发送它吗？</string>
+  <string name="export_email_subject">AnkiDroid 导出卡片： %s</string>
   <string name="export_email_text">
-        <![CDATA[
-        Hi!
+<![CDATA[
+        嗨！
         <br/><br/>
-        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        这是从 <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a> 分享的 Anki 记忆牌组。
+        使用任一 <a href="http://ankisrs.net/#download">Anki 客户端</a>打开它，享受轻松高效的学习吧！
         ]]>
     </string>
   <string name="export_unsuccessful">导出apkg文件时出错</string>
@@ -213,7 +213,7 @@
   <string name="filtered_deck_name">筛选牌组</string>
   <string name="reminder_title">不要忘记今天去学习 ！</string>
   <plurals name="reminder_text">
-    <item quantity="other">%2$d new cards to review in %1$s</item>
+    <item quantity="other">%2$d 新卡片在 %1$s 待复习</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->
   <string name="apk_share_error">共享 apkg 文件时出错</string>
