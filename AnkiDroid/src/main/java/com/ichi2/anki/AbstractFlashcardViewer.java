@@ -2257,23 +2257,25 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
     }
 
-
     /**
      * Reads the text (using TTS) for the given side of a card.
      *
-     * @param card The card to play TTS for
+     * @param card     The card to play TTS for
      * @param cardSide The side of the current card to play TTS for
      */
     private static void readCardText(final Card card, final int cardSide) {
+        final String cardSideContent;
         if (Sound.SOUNDS_QUESTION == cardSide) {
-            ReadText.textToSpeech(Utils.stripHTML(card.q(true)), getDeckIdForCard(card), card.getOrd(),
-                    Sound.SOUNDS_QUESTION);
+            cardSideContent = card.q(true);
         } else if (Sound.SOUNDS_ANSWER == cardSide) {
-            ReadText.textToSpeech(Utils.stripHTML(card.getPureAnswer()), getDeckIdForCard(card),
-                    card.getOrd(), Sound.SOUNDS_ANSWER);
+            cardSideContent = card.getPureAnswer();
+        } else {
+            Timber.w("Unrecognised cardSide");
+            return;
         }
-    }
 
+        ReadText.readCardSide(cardSide, cardSideContent, getDeckIdForCard(card), card.getOrd());
+    }
 
     /**
      * Shows the dialogue for selecting TTS for the current card and cardside.
@@ -2283,8 +2285,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             if (!sDisplayAnswer) {
                 ReadText.selectTts(Utils.stripHTML(mCurrentCard.q(true)), getDeckIdForCard(mCurrentCard), mCurrentCard.getOrd(),
                         Sound.SOUNDS_QUESTION);
-            }
-            else {
+            } else {
                 ReadText.selectTts(Utils.stripHTML(mCurrentCard.getPureAnswer()), getDeckIdForCard(mCurrentCard),
                         mCurrentCard.getOrd(), Sound.SOUNDS_ANSWER);
             }

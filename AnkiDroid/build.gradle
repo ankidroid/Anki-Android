@@ -62,6 +62,7 @@ dependencies {
     compile 'ch.acra:acra:4.6.2'
     compile 'com.jakewharton.timber:timber:2.7.1'
     compile 'com.google.code.gson:gson:2.4'
+    compile 'org.jsoup:jsoup:1.10.3'
     compile project(":api")
 
     testCompile 'junit:junit:4.12'

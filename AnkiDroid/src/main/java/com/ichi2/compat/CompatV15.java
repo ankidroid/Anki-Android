@@ -17,7 +17,7 @@ public class CompatV15 extends CompatV12 implements Compat {
             public void onDone(String arg0) {
                 if (ReadText.sTextQueue.size() > 0) {
                     String[] text = ReadText.sTextQueue.remove(0);
-                    ReadText.speak(text[0], text[1]);
+                    ReadText.speak(text[0], text[1], TextToSpeech.QUEUE_FLUSH);
                 }
             }
             @Override
