@@ -21,6 +21,8 @@ package com.ichi2.libanki;
 import com.ichi2.libanki.hooks.Hook;
 import com.ichi2.libanki.hooks.Hooks;
 
+import org.json.JSONObject;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,24 +54,20 @@ public class LaTeX {
 
     /**
      * Convert HTML with embedded latex tags to image links.
-     * NOTE: Unlike the original python version of this method, only two parameters are required
-     * in AnkiDroid. The omitted parameters are used to generate LaTeX images. AnkiDroid does not
-     * support the generation of LaTeX media and the provided parameters are sufficient for all
-     * other cases.
      * NOTE: _imgLink produces an alphanumeric filename so there is no need to escape the replacement string.
      */
-    public static String mungeQA(String html, Collection col) {
+    public static String mungeQA(String html, Collection col, JSONObject model) {
         StringBuffer sb = new StringBuffer();
         Matcher matcher = sStandardPattern.matcher(html);
         while (matcher.find()) {
-            matcher.appendReplacement(sb, _imgLink(col, matcher.group(1)));
+            matcher.appendReplacement(sb, _imgLink(col, matcher.group(1), model));
         }
         matcher.appendTail(sb);
 
         matcher = sExpressionPattern.matcher(sb.toString());
         sb = new StringBuffer();
         while (matcher.find()) {
-            matcher.appendReplacement(sb, _imgLink(col, "$" + matcher.group(1) + "$"));
+            matcher.appendReplacement(sb, _imgLink(col, "$" + matcher.group(1) + "$", model));
         }
         matcher.appendTail(sb);
 
@@ -77,7 +75,7 @@ public class LaTeX {
         sb = new StringBuffer();
         while (matcher.find()) {
             matcher.appendReplacement(sb,
-                    _imgLink(col, "\\begin{displaymath}" + matcher.group(1) + "\\end{displaymath}"));
+                    _imgLink(col, "\\begin{displaymath}" + matcher.group(1) + "\\end{displaymath}", model));
         }
         matcher.appendTail(sb);
 
@@ -88,9 +86,15 @@ public class LaTeX {
     /**
      * Return an img link for LATEX.
      */
-    private static String _imgLink(Collection col, String latex) {
+    private static String _imgLink(Collection col, String latex, JSONObject model) {
         String txt = _latexFromHtml(col, latex);
-        String fname = "latex-" + Utils.checksum(txt) + ".png";
+
+        String ext = "png";
+        if (model.optBoolean("latexsvg", false)) {
+            ext = "svg";
+        }
+
+        String fname = "latex-" + Utils.checksum(txt) + "." + ext;
         return "<img class=latex src=\"" + fname + "\">";
     }
 
@@ -107,7 +111,7 @@ public class LaTeX {
     public class LaTeXFilter extends Hook {
         @Override
         public Object runFilter(Object arg, Object... args) {
-            return LaTeX.mungeQA((String) arg, (Collection) args[4]);
+            return LaTeX.mungeQA((String) arg, (Collection) args[4], (JSONObject) args[2]);
         }
     }
 

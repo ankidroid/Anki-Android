@@ -300,7 +300,7 @@ public class Media {
 
         for (String s : strings) {
             // handle latex
-            s =  LaTeX.mungeQA(s, mCol);
+            s =  LaTeX.mungeQA(s, mCol, model);
             // extract filenames
             Matcher m;
             for (Pattern p : mRegexps) {
