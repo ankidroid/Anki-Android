@@ -2080,8 +2080,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * @param dy amount to be scrolled
      */
     public void scrollCurrentCardBy(int dy) {
-        boolean beforeIceCreamSandwich = CompatHelper.getSdkVersion() < 14;
-        if (dy != 0 && (beforeIceCreamSandwich ? true : mCard.canScrollVertically(dy))) {
+        if (dy != 0 && mCard.canScrollVertically(dy)) {
             mCard.scrollBy(0, dy);
         }
     }
