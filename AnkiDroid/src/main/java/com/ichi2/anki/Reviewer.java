@@ -27,7 +27,6 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ActionProvider;
 import android.support.v4.view.MenuItemCompat;
@@ -64,7 +63,6 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mPrefFullscreenReview = false;
     private static final int ADD_NOTE = 12;
     private Long mLastSelectedBrowserDid = null;
-    private MultiTouchBehindWhiteBoard mMultiTouchBehindWhiteBoard = new MultiTouchBehindWhiteBoard();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -504,10 +502,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                     // Bypass whiteboard listener when it's hidden or fullscreen immersive mode is temporarily suspended
                     return getGestureDetector().onTouchEvent(event);
                 }
-                if (mWhiteboard.handleDrawEvent(event)) {
-                    return true;
-                }
-                return handleEventBehindWhiteBoard(event);
+                return mWhiteboard.handleTouchEvent(event);
             }
         });
         mWhiteboard.setEnabled(true);
@@ -524,32 +519,6 @@ public class Reviewer extends AbstractFlashcardViewer {
             if (!mHasDrawerSwipeConflicts) {
                 enableDrawerSwipe();
             }
-        }
-    }
-
-    // Parse multitouch input to scroll the card behind the whiteboard or click on elements
-    private boolean handleEventBehindWhiteBoard(MotionEvent event) {
-        int pointerCount = event.getPointerCount();
-
-        switch (event.getActionMasked()) {
-            case MotionEvent.ACTION_POINTER_DOWN:
-                if (pointerCount == 2) {
-                    mMultiTouchBehindWhiteBoard.reinitialize(event);
-                    return true;
-                }
-                return false;
-            case MotionEvent.ACTION_MOVE:
-                if (pointerCount == 2) {
-                    return mMultiTouchBehindWhiteBoard.tryScroll(event);
-                }
-                return false;
-            case MotionEvent.ACTION_POINTER_UP:
-                if (pointerCount == 2) {
-                    return mMultiTouchBehindWhiteBoard.tryClick(event);
-                }
-                return false;
-            default:
-                return false;
         }
     }
 
@@ -718,87 +687,6 @@ public class Reviewer extends AbstractFlashcardViewer {
                 default:
                     return false;
             }
-        }
-    }
-
-    /**
-     * Keeps track of coordinates from MotionEvents in order to pass two finger scrolling or a tap
-     * with a second finger through the WhiteBoard to the Card displayed behind it
-     */
-    private class MultiTouchBehindWhiteBoard {
-        private final static float TAP_TOLERANCE = 5.0f;
-        private float x0;
-        private float y0;
-        private float x;
-        private float y;
-        private int pointerId;
-        private boolean withinTapTolerance;
-
-        // call this with an ACTION_POINTER_DOWN event to start a new round of detecting drag or tap
-        private void reinitialize(MotionEvent event) {
-            withinTapTolerance = true;
-            pointerId = event.getPointerId(event.getActionIndex());
-            x0 = event.getX(event.findPointerIndex(pointerId));
-            y0 = event.getY(event.findPointerIndex(pointerId));
-        }
-
-        private boolean update(MotionEvent event) {
-            int pointerIndex = event.findPointerIndex(pointerId);
-            if (pointerIndex > -1) {
-                x = event.getX(pointerIndex);
-                y = event.getY(pointerIndex);
-                float dx = Math.abs(x0 - x);
-                float dy = Math.abs(y0 - y);
-                if (dx >= TAP_TOLERANCE || dy >= TAP_TOLERANCE) {
-                    withinTapTolerance = false;
-                }
-                return true;
-            }
-            return false;
-        }
-
-        // call this with an ACTION_POINTER_UP event to check whether it matches a tap
-        // if so, forward a click action and return true
-        private boolean tryClick(MotionEvent event) {
-            if (pointerId == event.getPointerId(event.getActionIndex())) {
-                update(event);
-                if (withinTapTolerance) {
-                    // assemble suitable ACTION_DOWN and ACTION_UP events based on the current event
-                    // and forward them to the WebView's handler
-                    MotionEvent eDown = MotionEvent.obtain(SystemClock.uptimeMillis(),
-                            SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, x, y,
-                            event.getPressure(), event.getSize(), event.getMetaState(),
-                            event.getXPrecision(), event.getYPrecision(), 0,
-                            event.getEdgeFlags());
-                    mCard.dispatchTouchEvent(eDown);
-
-                    MotionEvent eUp = MotionEvent.obtain(eDown.getDownTime(),
-                            SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, x, y,
-                            event.getPressure(), event.getSize(), event.getMetaState(),
-                            event.getXPrecision(), event.getYPrecision(), 0,
-                            event.getEdgeFlags());
-                    mCard.dispatchTouchEvent(eUp);
-
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        // call this with an ACTION_MOVE event to check whether it exceeds the threshold for a tap
-        // in this case perform a scroll action
-        private boolean tryScroll(MotionEvent event) {
-            if (update(event) && !withinTapTolerance) {
-                int dy = (int) (y0 - y);
-                boolean beforeIceCreamSandwich = CompatHelper.getSdkVersion() < 14;
-                if (dy != 0 && (beforeIceCreamSandwich ? true : mCard.canScrollVertically(dy))) {
-                    mCard.scrollBy(0, dy);
-                    x0 = x;
-                    y0 = y;
-                }
-                return true;
-            }
-            return false;
         }
     }
 }

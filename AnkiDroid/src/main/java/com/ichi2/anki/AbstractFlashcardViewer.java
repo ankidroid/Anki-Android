@@ -229,7 +229,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private View mMainLayout;
     private View mLookUpIcon;
     private FrameLayout mCardContainer;
-    protected WebView mCard;
+    private WebView mCard;
     private WebView mNextCard;
     private FrameLayout mCardFrame;
     private FrameLayout mTouchLayer;
@@ -2072,6 +2072,37 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
             }
         }
+    }
+
+
+    /** Scroll the currently shown flashcard vertically
+     *
+     * @param dy amount to be scrolled
+     */
+    public void scrollCurrentCardBy(int dy) {
+        boolean beforeIceCreamSandwich = CompatHelper.getSdkVersion() < 14;
+        if (dy != 0 && (beforeIceCreamSandwich ? true : mCard.canScrollVertically(dy))) {
+            mCard.scrollBy(0, dy);
+        }
+    }
+
+
+    /** Tap onto the currently shown flashcard at position x and y
+     *
+     * @param x horizontal position of the event
+     * @param y vertical position of the event
+     */
+    public void tapOnCurrentCard(int x, int y) {
+        // assemble suitable ACTION_DOWN and ACTION_UP events and forward them to the card's handler
+        MotionEvent eDown = MotionEvent.obtain(SystemClock.uptimeMillis(),
+                SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, x, y,
+                1, 1, 0, 1, 1, 0, 0);
+        mCard.dispatchTouchEvent(eDown);
+
+        MotionEvent eUp = MotionEvent.obtain(eDown.getDownTime(),
+                SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, x, y,
+                1, 1, 0, 1, 1, 0, 0);
+        mCard.dispatchTouchEvent(eUp);
     }
 
 

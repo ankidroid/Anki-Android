@@ -48,20 +48,27 @@ public class Whiteboard extends View {
     private Canvas mCanvas;
     private Path mPath;
     private Paint mBitmapPaint;
-    private WeakReference<AnkiActivity> mActivity;
+    private WeakReference<AbstractFlashcardViewer> mCardViewer;
 
     private float mX;
     private float mY;
+    private float mSecondFingerX0;
+    private float mSecondFingerY0;
+    private float mSecondFingerX;
+    private float mSecondFingerY;
 
-    private boolean currentlyDrawing = false;
+    private int mSecondFingerPointerId;
+
+    private boolean mSecondFingerWithinTapTolerance;
+    private boolean mCurrentlyDrawing = false;
     private boolean mInvertedColors = false;
     private boolean mMonochrome = true;
     private boolean mUndoModeActive = false;
 
 
-    public Whiteboard(AnkiActivity context, boolean inverted, boolean monochrome) {
-        super(context, null);
-        mActivity = new WeakReference<>(context);
+    public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
+        super(cardViewer, null);
+        mCardViewer = new WeakReference<>(cardViewer);
         mInvertedColors = inverted;
         mMonochrome = monochrome;
 
@@ -70,13 +77,13 @@ public class Whiteboard extends View {
             if (mMonochrome) {
                 foregroundColor = Color.BLACK;
             } else {
-                foregroundColor = ContextCompat.getColor(context, R.color.wb_fg_color);
+                foregroundColor = ContextCompat.getColor(cardViewer, R.color.wb_fg_color);
             }
         } else {
             if (mMonochrome) {
                 foregroundColor = Color.WHITE;
             } else {
-                foregroundColor = ContextCompat.getColor(context, R.color.wb_fg_color_inv);
+                foregroundColor = ContextCompat.getColor(cardViewer, R.color.wb_fg_color_inv);
             }
         }
 
@@ -87,7 +94,7 @@ public class Whiteboard extends View {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        int wbStrokeWidth = AnkiDroidApp.getSharedPrefs(context).getInt("whiteBoardStrokeWidth", 6);
+        int wbStrokeWidth = AnkiDroidApp.getSharedPrefs(cardViewer).getInt("whiteBoardStrokeWidth", 6);
         mPaint.setStrokeWidth((float) wbStrokeWidth);
         createBitmap();
         mPath = new Path();
@@ -104,6 +111,17 @@ public class Whiteboard extends View {
     }
 
 
+    /** Handle motion events to draw using the touch screen or to interact with the flashcard behind
+     * the whiteboard by using a second finger.
+     *
+     * @param event The motion event.
+     * @return True if the event was handled, false otherwise
+     */
+    public boolean handleTouchEvent(MotionEvent event) {
+        return handleDrawEvent(event) || handleMultiTouchEvent(event);
+    }
+
+
     /**
      * Handle motion events to draw using the touch screen. Only simple touch events are processed,
      * a multitouch event aborts to current stroke.
@@ -112,7 +130,7 @@ public class Whiteboard extends View {
      * @return True if the event was handled, false otherwise or when drawing was aborted due to
      *              detection of a multitouch event.
      */
-    public boolean handleDrawEvent(MotionEvent event) {
+    private boolean handleDrawEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
 
@@ -122,7 +140,7 @@ public class Whiteboard extends View {
                 invalidate();
                 return true;
             case MotionEvent.ACTION_MOVE:
-                if (currentlyDrawing) {
+                if (mCurrentlyDrawing) {
                     for (int i = 0; i < event.getHistorySize(); i++) {
                         drawAlong(event.getHistoricalX(i), event.getHistoricalY(i));
                     }
@@ -132,20 +150,38 @@ public class Whiteboard extends View {
                 }
                 return false;
             case MotionEvent.ACTION_UP:
-                if (currentlyDrawing) {
+                if (mCurrentlyDrawing) {
                     drawFinish();
                     invalidate();
                     return true;
                 }
                 return false;
             case MotionEvent.ACTION_POINTER_DOWN:
-                if (currentlyDrawing) {
+                if (mCurrentlyDrawing) {
                     drawAbort();
                 }
                 return false;
             default:
                 return false;
         }
+    }
+
+    // Parse multitouch input to scroll the card behind the whiteboard or click on elements
+    private boolean handleMultiTouchEvent(MotionEvent event) {
+        if (event.getPointerCount() == 2) {
+            switch (event.getActionMasked()) {
+                case MotionEvent.ACTION_POINTER_DOWN:
+                    reinitializeSecondFinger(event);
+                    return true;
+                case MotionEvent.ACTION_MOVE:
+                    return trySecondFingerScroll(event);
+                case MotionEvent.ACTION_POINTER_UP:
+                    return trySecondFingerClick(event);
+                default:
+                    return false;
+            }
+        }
+        return false;
     }
 
 
@@ -157,8 +193,8 @@ public class Whiteboard extends View {
         mBitmap.eraseColor(0);
         mUndo.clear();
         invalidate();
-        if (mActivity.get() != null) {
-            mActivity.get().supportInvalidateOptionsMenu();
+        if (mCardViewer.get() != null) {
+            mCardViewer.get().supportInvalidateOptionsMenu();
         }
     }
 
@@ -169,8 +205,8 @@ public class Whiteboard extends View {
     public void undo() {
         mUndo.pop();
         mUndo.apply();
-        if (undoSize() == 0 && mActivity.get() != null) {
-            mActivity.get().supportInvalidateOptionsMenu();
+        if (undoSize() == 0 && mCardViewer.get() != null) {
+            mCardViewer.get().supportInvalidateOptionsMenu();
         }
     }
 
@@ -206,7 +242,7 @@ public class Whiteboard extends View {
     }
 
     private void drawStart(float x, float y) {
-        currentlyDrawing = true;
+        mCurrentlyDrawing = true;
         mPath.reset();
         mPath.moveTo(x, y);
         mX = x;
@@ -226,7 +262,7 @@ public class Whiteboard extends View {
 
 
     private void drawFinish() {
-        currentlyDrawing = false;
+        mCurrentlyDrawing = false;
         PathMeasure pm = new PathMeasure(mPath, false);
         mPath.lineTo(mX, mY);
         if (pm.getLength() > 0) {
@@ -239,8 +275,8 @@ public class Whiteboard extends View {
         mUndoModeActive = true;
         // kill the path so we don't double draw
         mPath.reset();
-        if (mUndo.size() == 1 && mActivity.get() != null) {
-            mActivity.get().supportInvalidateOptionsMenu();
+        if (mUndo.size() == 1 && mCardViewer.get() != null) {
+            mCardViewer.get().supportInvalidateOptionsMenu();
         }
     }
 
@@ -248,6 +284,61 @@ public class Whiteboard extends View {
     private void drawAbort() {
         drawFinish();
         undo();
+    }
+
+
+    // call this with an ACTION_POINTER_DOWN event to start a new round of detecting drag or tap with
+    // a second finger
+    private void reinitializeSecondFinger(MotionEvent event) {
+        mSecondFingerWithinTapTolerance = true;
+        mSecondFingerPointerId = event.getPointerId(event.getActionIndex());
+        mSecondFingerX0 = event.getX(event.findPointerIndex(mSecondFingerPointerId));
+        mSecondFingerY0 = event.getY(event.findPointerIndex(mSecondFingerPointerId));
+    }
+
+    private boolean updateSecondFinger(MotionEvent event) {
+        int pointerIndex = event.findPointerIndex(mSecondFingerPointerId);
+        if (pointerIndex > -1) {
+            mSecondFingerX = event.getX(pointerIndex);
+            mSecondFingerY = event.getY(pointerIndex);
+            float dx = Math.abs(mSecondFingerX0 - mSecondFingerX);
+            float dy = Math.abs(mSecondFingerY0 - mSecondFingerY);
+            if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
+                mSecondFingerWithinTapTolerance = false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    // call this with an ACTION_POINTER_UP event to check whether it matches a tap of the second finger
+    // if so, forward a click action and return true
+    private boolean trySecondFingerClick(MotionEvent event) {
+        if (mSecondFingerPointerId == event.getPointerId(event.getActionIndex())) {
+            updateSecondFinger(event);
+            AbstractFlashcardViewer cardViewer = mCardViewer.get();
+            if (mSecondFingerWithinTapTolerance && cardViewer != null) {
+                cardViewer.tapOnCurrentCard((int) mSecondFingerX, (int) mSecondFingerY);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // call this with an ACTION_MOVE event to check whether it is within the threshold for a tap of the second finger
+    // in this case perform a scroll action
+    private boolean trySecondFingerScroll(MotionEvent event) {
+        if (updateSecondFinger(event) && !mSecondFingerWithinTapTolerance) {
+            int dy = (int) (mSecondFingerY0 - mSecondFingerY);
+            AbstractFlashcardViewer cardViewer = mCardViewer.get();
+            if (dy != 0 && cardViewer != null) {
+                cardViewer.scrollCurrentCardBy(dy);
+                mSecondFingerX0 = mSecondFingerX;
+                mSecondFingerY0 = mSecondFingerY;
+            }
+            return true;
+        }
+        return false;
     }
 
 
