@@ -1,18 +1,16 @@
 # Source code
-First, register here on github, and follow the [forking instructions](https://help.github.com/articles/fork-a-repo/) for the Anki-Android repository. If you want to be notified about each new improvement/bugfix, please subscribe to the [commits feed for the master branch](https://github.com/ankidroid/Anki-Android/commits/master.atom).
+First, register here on github, and follow the [instructions](https://help.github.com/articles/fork-a-repo/) on github on the Anki-Android repository to fork and clone the code. If you want to be notified about each new improvement/bugfix, please subscribe to the [commits feed for the master branch](https://github.com/ankidroid/Anki-Android/commits/master.atom).
 
-The project has been configured to work "out of the box" with Android Studio, though you first need to set up the Android SDK as follows.
+## Android Studio
+The next step is to install [Android Studio and the Android SDK](https://developer.android.com/sdk/index.html). Open Android Studio and choose "Open Project", then select the folder where you earlier cloned the github repository to (we will refer to this folder as `%AnkiDroidRoot%`).
 
-## Setting up the SDK
-Before you can do anything with AnkiDroid, you should install [Android Studio and the Android SDK](https://developer.android.com/sdk/index.html), and make sure you have the following items checked in the Android SDK manager:
+On opening the project it should start to build and should eventually prompt you to install the following missing SDK components. Install them one by one as you get prompted:
 
   * Android SDK Build-tools and Android SDK platform (version must match "buildToolsVersion" and "compileSdkVersion" in the project's [build.gradle file](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/build.gradle))
   * Android Support Repository (latest version)
   * Android Support Library (latest version)
 
-## Opening in Android Studio
-After forking and cloning the Anki-Android git repository, open Android Studio and choose "Open Project", then select the folder which you cloned the github repository to (we will refer to this folder as `%AnkiDroidRoot%`). The project should start without error, and build automatically.
-
+After installing all these dependencies, the project should build successfully.
 
 ## Files: Where to find what
  * `/AnkiDroid/src/main/` is the root directory for the main project (`%root`)
@@ -24,6 +22,9 @@ After forking and cloning the Anki-Android git repository, open Android Studio a
  * `%root/res/values/` contains app strings, whiteboard colors, and a basic HTML template for flashcards.
  * `%root/res/layout/` contains the GUI layouts for most screens.
  * `%root/res/drawable-****/` contains the icons used throughout the app at [various resolutions](https://www.google.com/design/spec/style/icons.html).
+
+## Connecting your device to Android studio via abd
+In order to run a custom build of AnkiDroid on your device or attach the debugger, you'll need to connect your device over the adb protocol. Open your Android device, and [enable](https://developer.android.com/studio/debug/dev-options.html) developer options and `USB debugging`. Finally when you connect your device to your computer over USB, it should get recognized by Android Studio and you should start to see output from it in the logcat section of Android studio.
 
 ## Running AnkiDroid from within Android studio
 Connect your device to your computer, or [setup an emulator](https://developer.android.com/tools/devices/managing-avds.html), then select `Run -> Run 'AnkiDroid'` from the menu in Android Studio. This will compile a version of AnkiDroid suitable for testing (i.e. signed with a debug key), and pop up a window where you can select the device or emulator that you want to install and run the code on. See the main [Android developer documentation](https://developer.android.com/tools/building/building-studio.html) for more detailed information.
