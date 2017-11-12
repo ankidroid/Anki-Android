@@ -12,7 +12,16 @@ On opening the project it should start to build and should eventually prompt you
 
 After installing all these dependencies, the project should build successfully.
 
-## Files: Where to find what
+## Connecting your device to Android studio via abd
+In order to run a custom build of AnkiDroid on your device or attach the debugger, you'll need to connect your device over the adb protocol. Open your Android device, and [enable](https://developer.android.com/studio/debug/dev-options.html) developer options and `USB debugging`. Finally when you connect your device to your computer over USB, it should get recognized by Android Studio and you should start to see output from it in the logcat section of Android studio.
+
+## Running AnkiDroid from within Android studio
+Connect your device to your computer, or [setup an emulator](https://developer.android.com/tools/devices/managing-avds.html), then select `Run -> Run 'AnkiDroid'` from the menu in Android Studio. This will compile a version of AnkiDroid suitable for testing (i.e. signed with a debug key), and pop up a window where you can select the device or emulator that you want to install and run the code on. See the main [Android developer documentation](https://developer.android.com/tools/building/building-studio.html) for more detailed information.
+
+An apk file signed with a standard "debug" key will be generated named `"AnkiDroid-debug.apk"` in:
+`%AnkiDroidRoot%/AnkiDroid/build/outputs/apk/`
+
+## AnkiDroid source code overview: Where to find what
  * `/AnkiDroid/src/main/` is the root directory for the main project (`%root`)
  * `%root/java/com/ichi2/anki/` is the directory containing the main AnkiDroid source code.
  * `%root/java/com/ichi2/anki/DeckPicker.java` is the code which runs when first booting into AnkiDroid.
@@ -22,15 +31,6 @@ After installing all these dependencies, the project should build successfully.
  * `%root/res/values/` contains app strings, whiteboard colors, and a basic HTML template for flashcards.
  * `%root/res/layout/` contains the GUI layouts for most screens.
  * `%root/res/drawable-****/` contains the icons used throughout the app at [various resolutions](https://www.google.com/design/spec/style/icons.html).
-
-## Connecting your device to Android studio via abd
-In order to run a custom build of AnkiDroid on your device or attach the debugger, you'll need to connect your device over the adb protocol. Open your Android device, and [enable](https://developer.android.com/studio/debug/dev-options.html) developer options and `USB debugging`. Finally when you connect your device to your computer over USB, it should get recognized by Android Studio and you should start to see output from it in the logcat section of Android studio.
-
-## Running AnkiDroid from within Android studio
-Connect your device to your computer, or [setup an emulator](https://developer.android.com/tools/devices/managing-avds.html), then select `Run -> Run 'AnkiDroid'` from the menu in Android Studio. This will compile a version of AnkiDroid suitable for testing (i.e. signed with a debug key), and pop up a window where you can select the device or emulator that you want to install and run the code on. See the main [Android developer documentation](https://developer.android.com/tools/building/building-studio.html) for more detailed information.
-
-An apk file signed with a standard "debug" key will be generated named `"AnkiDroid-debug.apk"` in:
-`%AnkiDroidRoot%/AnkiDroid/build/outputs/apk/`
 
 ## Making "parallel" builds
 If you want to run several different versions of AnkiDroid side by side (e.g. as described in the [FAQ on using profiles](https://github.com/ankidroid/Anki-Android/wiki/FAQ#how-to-use-different-anki-profiles)), you need to edit the package ID (from com.ichi2.anki) in the following places so that every version of AnkiDroid that you install has a unique ID:
