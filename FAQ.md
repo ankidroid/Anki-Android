@@ -210,7 +210,7 @@ If that doesn't work then please check if the media works correctly on both Anki
 If you have checked that you have correctly done a media sync, and that the media is playing correctly on both Anki Desktop and AnkiWeb but not on AnkiDroid, then use a file manager (see below) to check that the media files exist in your `AnkiDroid/collection.media` folder. If the media files do not exist then obviously AnkiDroid cannot play them. You can try manually copying them from Anki Desktop as a last resort.
 
 ### Which file manager should I use?
-Most devices using Android 6 and above come with a built-in file explorer (something like: settings -> storage and memory -> Explore). If your device does not have a built-in explorer, you can use any file manager that you like. For example here is a [list](https://www.tomsguide.com/us/pictures-story/518-best-android-file-managers.html) of various different file explorers. We personally recommend using a free and open source (FOSS) file manager like [Simple Explorer](http://forum.xda-developers.com/showthread.php?t=2330864).
+Most devices using Android 6 and above come with a built-in file explorer (something like: `settings -> storage and memory -> Explore`). If your device does not have a built-in explorer, you can use any file manager that you like, for example see [here](https://www.tomsguide.com/us/pictures-story/518-best-android-file-managers.html) for a list of various recommended file explorers. We personally recommend using a free and open source (FOSS) file manager like [Simple Explorer](http://forum.xda-developers.com/showthread.php?t=2330864).
 
 ### But still AnkiDroid does not play my media!
 
