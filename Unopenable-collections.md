@@ -3,7 +3,7 @@
 Try this first:
 1. Uninstall AnkiDroid -> reboot your device -> reinstall AnkiDroid
 1. Open AnkiDroid again
-1. If the app still crashes then submit a crash report when prompted, and proceed with the steps below.
+1. If the app still crashes then submit a crash report if prompted, and proceed with the steps below
 
 If the above didn't work, then you will need to provide us with some information:
 1. Open a [file manager](https://github.com/ankidroid/Anki-Android/wiki/FAQ#which-file-manager-should-i-use) and navigate to the `AnkiDroid` folder
