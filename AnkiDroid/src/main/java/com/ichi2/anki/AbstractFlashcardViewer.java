@@ -2075,6 +2075,36 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
+    /** Scroll the currently shown flashcard vertically
+     *
+     * @param dy amount to be scrolled
+     */
+    public void scrollCurrentCardBy(int dy) {
+        if (dy != 0 && mCard.canScrollVertically(dy)) {
+            mCard.scrollBy(0, dy);
+        }
+    }
+
+
+    /** Tap onto the currently shown flashcard at position x and y
+     *
+     * @param x horizontal position of the event
+     * @param y vertical position of the event
+     */
+    public void tapOnCurrentCard(int x, int y) {
+        // assemble suitable ACTION_DOWN and ACTION_UP events and forward them to the card's handler
+        MotionEvent eDown = MotionEvent.obtain(SystemClock.uptimeMillis(),
+                SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, x, y,
+                1, 1, 0, 1, 1, 0, 0);
+        mCard.dispatchTouchEvent(eDown);
+
+        MotionEvent eUp = MotionEvent.obtain(eDown.getDownTime(),
+                SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, x, y,
+                1, 1, 0, 1, 1, 0, 0);
+        mCard.dispatchTouchEvent(eUp);
+    }
+
+
     /**
      * getAnswerFormat returns the answer part of this card's template as entered by user, without any parsing
      */
