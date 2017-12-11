@@ -183,7 +183,7 @@ public class Collection {
             // Read in deck table columns
             cursor = mDb.getDatabase().rawQuery(
                     "SELECT crt, mod, scm, dty, usn, ls, " +
-                    "conf, models, decks, dconf, tags FROM col", null);
+                    "conf, decks, dconf, tags FROM col", null);
             if (!cursor.moveToFirst()) {
                 return;
             }
@@ -198,16 +198,47 @@ public class Collection {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            mModels.load(cursor.getString(7));
-            mDecks.load(cursor.getString(8), cursor.getString(9));
-            mTags.load(cursor.getString(10));
+            mDecks.load(cursor.getString(7), cursor.getString(8));
+            mTags.load(cursor.getString(9));
         } finally {
             if (cursor != null) {
                 cursor.close();
             }
         }
+        loadModels();
     }
 
+    public void loadModels() {
+        int pos = 1;
+        int chunk = 256*1024;
+        String buf = "";
+
+        while (true) {
+            Cursor cursor = null;
+            try {
+                cursor = mDb.getDatabase().rawQuery(
+                        "SELECT substr(models, ?, ?) FROM col",
+                        new String[]{Integer.toString(pos), Integer.toString(chunk)});
+                if (!cursor.moveToFirst()) {
+                    return;
+                }
+                String res = cursor.getString(0);
+                if (res.length() == 0) {
+                      break;
+                }
+                buf += res;
+                if (res.length() < chunk) {
+                    break;
+                }
+                pos += chunk;
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
+        }
+        mModels.load(buf);
+    }
 
     /**
      * Mark DB modified. DB operations and the deck/tag/model managers do this automatically, so this is only necessary
