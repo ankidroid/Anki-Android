@@ -213,7 +213,7 @@ public class Collection {
     public String loadColumn(String columnName) {
         int pos = 1;
         int chunk = 256*1024;
-        String buf = "";
+        StringBuffer buf = new StringBuffer("");
 
         while (true) {
             Cursor cursor = null;
@@ -222,13 +222,13 @@ public class Collection {
                         "SELECT substr(" + columnName + ", ?, ?) FROM col",
                         new String[]{Integer.toString(pos), Integer.toString(chunk)});
                 if (!cursor.moveToFirst()) {
-                    return buf;
+                    return buf.toString();
                 }
                 String res = cursor.getString(0);
                 if (res.length() == 0) {
                       break;
                 }
-                buf += res;
+                buf.append(res);
                 if (res.length() < chunk) {
                     break;
                 }
@@ -239,7 +239,7 @@ public class Collection {
                 }
             }
         }
-        return buf;
+        return buf.toString();
     }
 
     /**
