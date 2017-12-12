@@ -179,11 +179,12 @@ public class Collection {
 
     public void load() {
         Cursor cursor = null;
+        String deckConf = "";
         try {
             // Read in deck table columns
             cursor = mDb.getDatabase().rawQuery(
                     "SELECT crt, mod, scm, dty, usn, ls, " +
-                    "conf, decks, dconf, tags FROM col", null);
+                    "conf, dconf, tags FROM col", null);
             if (!cursor.moveToFirst()) {
                 return;
             }
@@ -198,17 +199,18 @@ public class Collection {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            mDecks.load(cursor.getString(7), cursor.getString(8));
-            mTags.load(cursor.getString(9));
+            deckConf = cursor.getString(7);
+            mTags.load(cursor.getString(8));
         } finally {
             if (cursor != null) {
                 cursor.close();
             }
         }
-        loadModels();
+        mModels.load(loadColumn("models"));
+        mDecks.load(loadColumn("decks"), deckConf);
     }
 
-    public void loadModels() {
+    public String loadColumn(String columnName) {
         int pos = 1;
         int chunk = 256*1024;
         String buf = "";
@@ -217,10 +219,10 @@ public class Collection {
             Cursor cursor = null;
             try {
                 cursor = mDb.getDatabase().rawQuery(
-                        "SELECT substr(models, ?, ?) FROM col",
+                        "SELECT substr(" + columnName + ", ?, ?) FROM col",
                         new String[]{Integer.toString(pos), Integer.toString(chunk)});
                 if (!cursor.moveToFirst()) {
-                    return;
+                    return buf;
                 }
                 String res = cursor.getString(0);
                 if (res.length() == 0) {
@@ -237,7 +239,7 @@ public class Collection {
                 }
             }
         }
-        mModels.load(buf);
+        return buf;
     }
 
     /**
