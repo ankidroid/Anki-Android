@@ -17,4 +17,4 @@ sed -i '' "s/applicationId \"$OLD_ID/applicationId \"$NEW_ID/g" AnkiDroid/build.
 sed -i '' "s/android:authorities=\"$OLD_ID/android:authorities=\"$NEW_ID/g" $ROOT$MANIFEST
 sed -i '' "s/permission android:name=\"$OLD_ID.permission/permission android:name=\"$NEW_ID.permission/g" $ROOT$MANIFEST
 find $ROOT/res/xml -type f -exec sed -i '' "s/android:targetPackage=\"$OLD_ID\"/android:targetPackage=\"$NEW_ID\"/g"  {} \;
-
+sed -i '' "s/android:defaultValue=\"\/sdcard\/$OLD_NAME/android:defaultValue=\"\/sdcard\/$NEW_NAME/g" $ROOT/res/xml/preferences_advanced.xml
