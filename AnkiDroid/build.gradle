@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.github.triplet.play'
 def homePath = System.properties['user.home']
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.1'
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "com.ichi2.anki"
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 26
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
     }
@@ -48,11 +48,11 @@ play {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:appcompat-v7:26.1.0'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
-    compile 'com.android.support:design:25.1.0'
-    compile 'com.android.support:customtabs:25.1.0'
-    compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'com.android.support:design:26.1.0'
+    compile 'com.android.support:customtabs:26.1.0'
+    compile 'com.android.support:recyclerview-v7:26.1.0'
     compile 'io.requery:sqlite-android:3.16.0'
     compile('com.afollestad.material-dialogs:core:0.8.6.2@aar') {
         //exclude group: 'com.android.support'  // uncomment to force our local support lib version
