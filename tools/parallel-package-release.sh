@@ -9,6 +9,8 @@
 # If those assumptions are met, this script will generate 3 parallel builds that should be the same as your current checkout
 # They will be placed in the parent directory ('..') as 'AnkiDroid-<version>.parallel.<A B or C>.apk'
 
+# It takes 3 arguments - the tag name to use for the build (e.g. '2.9alpha16'), then your keystore password and key password
+
 TAG=$1
 STOREPASS=$2
 KEYPASS=$3
@@ -26,5 +28,5 @@ for BUILD in $BUILDNAMES; do
     LCBUILD=`tr '[:upper:]' '[:lower:]' <<< $BUILD`
     ./tools/parallel-package-name.sh com.ici2.anki.$LCBUILD AnkiDroid.$BUILD
     ./gradlew assembleRelease
-    cp AnkiDroid/build/outputs/apk/AnkiDroid-release.apk ../AnkiDroid-2.9alpha16.parallel.$BUILD.apk
+    cp AnkiDroid/build/outputs/apk/AnkiDroid-release.apk ../AnkiDroid-$TAG.parallel.$BUILD.apk
 done
