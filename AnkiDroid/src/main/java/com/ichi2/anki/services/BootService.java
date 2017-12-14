@@ -35,6 +35,9 @@ public class BootService extends IntentService {
         if (sWasRun) {
             return;
         }
+        if (!CollectionHelper.hasStorageAccessPermission(this)) {
+            return;
+        }
 
         scheduleDeckReminder();
         scheduleNotification(this);
