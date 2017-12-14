@@ -70,7 +70,6 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
         }
 
         switch (mType) {
-            case DIALOG_CURSOR_SIZE_LIMIT_EXCEEDED:
             case DIALOG_LOAD_FAILED:
                 // Collection failed to load; give user the option of either choosing from repair options, or closing
                 // the activity
@@ -369,8 +368,6 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 return res().getString(R.string.restore_backup);
             case DIALOG_FULL_SYNC_FROM_SERVER:
                 return res().getString(R.string.backup_full_sync_from_server_question);
-            case DIALOG_CURSOR_SIZE_LIMIT_EXCEEDED:
-                return res().getString(R.string.cursor_size_limit_exceeded);
             default:
                 return getArguments().getString("dialogMessage");
         }
@@ -396,8 +393,6 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 return res().getString(R.string.restore_backup_title);
             case DIALOG_FULL_SYNC_FROM_SERVER:
                 return res().getString(R.string.backup_full_sync_from_server);
-            case DIALOG_CURSOR_SIZE_LIMIT_EXCEEDED:
-                return res().getString(R.string.open_collection_failed_title);
             default:
                 return res().getString(R.string.answering_error_title);
         }        
