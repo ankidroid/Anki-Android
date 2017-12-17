@@ -117,21 +117,6 @@ public class CollectionHelper {
     }
 
     /**
-     * Checks whether or not the Android 1MB limit for the cursor size was exceeded
-     * @param context
-     * @return
-     */
-    public synchronized boolean exceededCursorSizeLimit(Context context) {
-        try {
-            getCol(context);
-        } catch (IllegalStateException e) {
-            return true;
-        }
-        return false;
-    }
-
-
-    /**
      * Close the {@link Collection}, optionally saving
      * @param save whether or not save before closing
      */
