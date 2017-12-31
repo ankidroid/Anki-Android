@@ -2064,6 +2064,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mIsSelecting = false;
         updateCard(enrichWithQADiv(answer, true));
         showEaseButtons();
+
+        // Stop review timer and answer timer
+        pauseTimer();
+
         // If the user wants to show the next question automatically
         if (mPrefUseTimer) {
             long delay = mWaitQuestionSecond * 1000 + mUseTimerDynamicMS;
