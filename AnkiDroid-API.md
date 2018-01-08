@@ -13,6 +13,7 @@ Please add your app to this list if it supports the instant-add API
 * [Bildkortsappen](https://github.com/rabinv/bildkortsappen)
 * [Hanping Chinese Dicitonary Pro](https://play.google.com/store/apps/details?id=com.embermitre.hanping.app.pro)
 * [Hanping Cantonese Dicitonary](https://play.google.com/store/apps/details?id=com.embermitre.hanping.cantodict.app.pro)
+* [Word of the day](https://play.google.com/store/apps/details?id=me.siavash.android.wotd)
 
 ### Gradle dependency
 First things first, you should add the following dependency to your module's `build.gradle` file:
