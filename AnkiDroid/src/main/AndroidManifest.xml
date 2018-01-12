@@ -381,6 +381,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+
+        <meta-data android:name="com.ebizu.APPLICATION_ID" android:value="com.ichi2.anki" />
+
     </application>
 
 </manifest>

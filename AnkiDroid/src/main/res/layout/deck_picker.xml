@@ -3,11 +3,12 @@
     android:id="@+id/root_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
+
     <RelativeLayout
         android:id="@+id/deckpicker_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <include layout="@layout/toolbar" />
 
@@ -29,15 +30,44 @@
                 android:paddingBottom="72dp"
                 android:scrollbars="vertical" />
         </android.support.v4.widget.SwipeRefreshLayout>
-        <TextView
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="login"
+                android:text="Login" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="start"
+                android:text="Start" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="stop"
+                android:text="Stop" />
+        </LinearLayout>
+
+        <TextView
             android:id="@+id/today_stats_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
             android:layout_marginBottom="4dp"
-            android:gravity="center"/>
+            android:gravity="center" />
     </RelativeLayout>
-    <include layout="@layout/anki_progress"/>
-    <include layout="@layout/floating_add_button"/>
+
+    <include layout="@layout/anki_progress" />
+
+    <include layout="@layout/floating_add_button" />
 </android.support.design.widget.CoordinatorLayout>

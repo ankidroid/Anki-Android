@@ -29,6 +29,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ViewConfiguration;
 
+import com.ebizu.sdk.publisher.Config;
+import com.ebizu.sdk.publisher.EbizuPublisher;
 import com.ichi2.anki.dialogs.AnkiDroidCrashReportDialog;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
@@ -152,6 +154,8 @@ public class AnkiDroidApp extends Application {
 
         // Initialize crash reporting module
         ACRA.init(this);
+
+        EbizuPublisher.getInstance().init(this, false, Config.PRODUCTION);
 
         // Setup logging and crash reporting
         if (BuildConfig.DEBUG) {

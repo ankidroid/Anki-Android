@@ -1,2 +1,2 @@
-include ':api'
+include ':api', ':ebizupublishersdk-release'
 include ':AnkiDroid'
