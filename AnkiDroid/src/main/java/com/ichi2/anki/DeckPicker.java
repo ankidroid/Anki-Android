@@ -34,15 +34,18 @@ import android.content.res.Resources;
 import android.database.SQLException;
 import android.graphics.PixelFormat;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ShareCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -58,6 +61,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ebizu.sdk.publisher.EbizuPublisher;
+import com.ebizu.sdk.publisher.models.EbizuUser;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -119,7 +124,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public static final int RESULT_MEDIA_EJECTED = 202;
     public static final int RESULT_DB_ERROR = 203;
 
-
     /**
      * Available options performed by other activities (request codes for onActivityResult())
      */
@@ -138,6 +142,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public static final long AUTOMATIC_SYNC_MIN_INTERVAL = 600000;
 
     private static final int SWIPE_TO_SYNC_TRIGGER_DISTANCE = 400;
+    private static final int LOCATION_PERMISSIONS_REQUEST = 1234;
 
     private MaterialDialog mProgressDialog;
     private View mStudyoptionsFrame;
@@ -175,6 +180,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * deck.
      */
     private long mFocusedDeck;
+
+    private BroadcastReceiver permissionNotAvailableReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Toast.makeText(context,"Location Permission Not Granted",Toast.LENGTH_LONG).show();
+        }
+    };
 
 
 
@@ -363,6 +375,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Then set theme and content view
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen);
+        Toast.makeText(this,"Haha",Toast.LENGTH_LONG).show();
         View mainView = findViewById(android.R.id.content);
 
         // check, if tablet layout
@@ -445,6 +458,38 @@ public class DeckPicker extends NavigationDrawerActivity implements
             } else {
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
             }
+        }
+        checkPermissionForLocation();
+    }
+
+    public void login(View view){
+        EbizuUser ebizuUser = new EbizuUser();
+        ebizuUser.setCity("Bandung");
+        ebizuUser.setCountry("Indonesia");
+        ebizuUser.setDateOfBirth("1990-01-01"); // format should YYYY-MM-DD
+        ebizuUser.setEmail("email@mail.com");
+        ebizuUser.setGender("Male");
+        ebizuUser.setName("User Full Name");
+        EbizuPublisher.getInstance().login(this,ebizuUser);
+    }
+
+    public void start(View view){
+        checkPermissionForLocation();
+    }
+
+    public void stop(View view){
+        EbizuPublisher.getInstance().stop(this);
+    }
+
+    private void checkPermissionForLocation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if ((ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) && (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSIONS_REQUEST);
+            } else {
+                EbizuPublisher.getInstance().start(this);
+            }
+        } else {
+            EbizuPublisher.getInstance().start(this);
         }
     }
 
@@ -705,6 +750,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 intent.setData(uri);
                 startActivityWithoutAnimation(intent);
             }
+        }else if (requestCode == LOCATION_PERMISSIONS_REQUEST) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                EbizuPublisher.getInstance().start(this);
+            } else {
+                Toast.makeText(DeckPicker.this, "Location permission denied", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -722,6 +773,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             updateDeckList();
             setTitle(getResources().getString(R.string.app_name));
         }
+        LocalBroadcastManager.getInstance(this).registerReceiver(permissionNotAvailableReceiver, new IntentFilter(EbizuPublisher.PERMISSION_NOT_AVAILABLE));
     }
 
 
@@ -744,6 +796,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.d("onPause()");
         mActivityPaused = true;
         super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(permissionNotAvailableReceiver);
     }
 
 
