@@ -18,6 +18,7 @@
 
 package com.ichi2.anki;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -566,7 +567,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     return true;
                 }
 
-
+                @SuppressLint("RestrictedApi")
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     onSearch();
@@ -691,13 +692,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
                             .onPositive(new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    List<Card> cards = new ArrayList<>();
                                     for (int cardPosition : mCheckedCardPositions) {
                                         final Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
+                                        cards.add(card);
                                         deleteNote(card);
-                                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS,
-                                                mDeleteNoteHandler,
-                                                new DeckTask.TaskData(new Object[]{card, Collection.DismissType.DELETE_NOTE}));
                                     }
+                                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI,
+                                            mDeleteNoteHandler,
+                                            new DeckTask.TaskData(new Object[]{cards.toArray(new Card[cards.size()]), Collection.DismissType.DELETE_NOTE}));
                                     mCheckedCardPositions.clear();
                                 }
                             })
@@ -1494,7 +1497,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-    /*
+    /**
      * Turn on Multi-Select Mode so that the user can select multiple cards at once.
      */
     private void loadMultiSelectMode() {
@@ -1504,13 +1507,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mCardsAdapter.notifyDataSetChanged();
         // show title and hide spinner
         mActionBarTitle.setVisibility(View.VISIBLE);
-        mActionBarTitle.setText(mCheckedCardPositions.size() + "");
+        mActionBarTitle.setText(String.valueOf(mCheckedCardPositions.size()));
         mActionBarSpinner.setVisibility(View.GONE);
         // reload the actionbar using the multi-select mode actionbar
         supportInvalidateOptionsMenu();
     }
 
-    /*
+    /**
      * Turn off Multi-Select Mode and return to normal state
      */
     private void endMultiSelectMode() {
