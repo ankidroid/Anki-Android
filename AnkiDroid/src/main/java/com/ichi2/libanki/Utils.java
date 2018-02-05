@@ -692,38 +692,55 @@ public class Utils {
      */
     public static void writeToFile(InputStream source, String destination) throws IOException {
         File f = new File(destination);
-        try {
-            Timber.d("Creating new file... = %s", destination);
-            f.createNewFile();
+        Timber.d("Creating new file... = %s", destination);
+        // sometimes this fails and works on retries (hardware issue?)
+        final int retries = 5;
+        int retryCnt = 0;
+        boolean created = false;
+        while (!created && retryCnt++ < retries) {
+            try {
+                created = f.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
 
-            long startTimeMillis = System.currentTimeMillis();
-            OutputStream output = new BufferedOutputStream(new FileOutputStream(destination));
-
-            // Transfer bytes, from source to destination.
-            byte[] buf = new byte[CHUNK_SIZE];
-            long sizeBytes = 0;
-            int len;
-            if (source == null) {
-                Timber.e("writeToFile :: source is null!");
+                if (retryCnt == retries) {
+                    throw new IOException(f.getName() + ": " + e.getLocalizedMessage(), e);
+                } else {
+                    Timber.e("IOException while creating file, retrying...");
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                }
             }
-            while ((len = source.read(buf)) >= 0) {
-                output.write(buf, 0, len);
-                sizeBytes += len;
-            }
-            long endTimeMillis = System.currentTimeMillis();
-
-            Timber.d("Finished writeToFile!");
-            long durationSeconds = (endTimeMillis - startTimeMillis) / 1000;
-            long sizeKb = sizeBytes / 1024;
-            long speedKbSec = 0;
-            if (endTimeMillis != startTimeMillis) {
-                speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis);
-            }
-            Timber.d("Utils.writeToFile: Size: %d Kb, Duration: %d s, Speed: %d Kb/s", sizeKb, durationSeconds, speedKbSec);
-            output.close();
-        } catch (IOException e) {
-            throw new IOException(f.getName() + ": " + e.getLocalizedMessage(), e);
         }
+
+        long startTimeMillis = System.currentTimeMillis();
+        OutputStream output = new BufferedOutputStream(new FileOutputStream(destination));
+
+        // Transfer bytes, from source to destination.
+        byte[] buf = new byte[CHUNK_SIZE];
+        long sizeBytes = 0;
+        int len;
+        if (source == null) {
+            Timber.e("writeToFile :: source is null!");
+        }
+        while ((len = source.read(buf)) >= 0) {
+            output.write(buf, 0, len);
+            sizeBytes += len;
+        }
+        long endTimeMillis = System.currentTimeMillis();
+
+        Timber.d("Finished writeToFile!");
+        long durationSeconds = (endTimeMillis - startTimeMillis) / 1000;
+        long sizeKb = sizeBytes / 1024;
+        long speedKbSec = 0;
+        if (endTimeMillis != startTimeMillis) {
+            speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis);
+        }
+        Timber.d("Utils.writeToFile: Size: %d Kb, Duration: %d s, Speed: %d Kb/s", sizeKb, durationSeconds, speedKbSec);
+        output.close();
     }
 
 
