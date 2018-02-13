@@ -23,9 +23,9 @@ CREATE TABLE cards (
       --   value of -1 indicates changes that need to be pushed to server. 
       --   usn < server usn indicates changes that need to be pulled from server.
     type            integer not null,
-      -- 0=new, 1=learning, 2=due
+      -- 0=new, 1=learning, 2=due, 3=filtered
     queue           integer not null,
-      -- Same as type, but -1=suspended, -2=user buried, -3=sched buried
+      -- -3=sched buried, -2=user buried, -1=suspended, 0=new, 1=learning, 2=due, 3=in learning, next rev in at least a day
     due             integer not null,
      -- Due is used differently for different card types: 
      --   new: note id or random int
