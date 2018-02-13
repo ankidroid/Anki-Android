@@ -25,7 +25,9 @@ CREATE TABLE cards (
     type            integer not null,
       -- 0=new, 1=learning, 2=due, 3=filtered
     queue           integer not null,
-      -- -3=sched buried, -2=user buried, -1=suspended, 0=new, 1=learning, 2=due, 3=in learning, next rev in at least a day
+      -- -3=sched buried, -2=user buried, -1=suspended,
+      -- 0=new, 1=learning, 2=due (as for type)
+      -- 3=in learning, next rev in at least a day after the previous review
     due             integer not null,
      -- Due is used differently for different card types: 
      --   new: note id or random int
@@ -228,13 +230,15 @@ Here is an annotated description of the JSONObjects in the decks field of the `c
     usn: "usn: Update sequence number: used in same way as other usn vales in db", 
     collapsed: "true when deck is collapsed", 
     browserCollapsed: "true when deck collapsed in browser", 
-    newToday: "two number array used somehow for custom study", 
-    timeToday: "two number array used somehow for custom study", 
+    newToday: "two number. First one currently not used. Second is the negation (-)
+               of the number of new cards added today by custom study", 
+    timeToday: "two number array used somehow for custom study. Currently unused in the code", 
     dyn: "1 if dynamic (AKA filtered) deck", 
     extendNew: "extended new card limit (for custom study)", 
     conf: "id of option group from dconf in `col` table", 
-    revToday: "two number array used somehow for custom study", 
-    lrnToday: "two number array used somehow for custom study", 
+    revToday: "two number. First one currently not used. Second is the negation (-)
+               of the number of review cards added today by custom study", 
+    lrnToday: "two number array used somehow for custom study. Currently unused in the code", 
     id: "deck ID (automatically generated long)", 
     mod: "last modification time", 
     desc: "deck description"
