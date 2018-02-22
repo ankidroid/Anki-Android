@@ -9,7 +9,7 @@ android:
     - tools
     - platform-tools
     - build-tools-24.0.3
-    - build-tools-26.0.2
+    - build-tools-26.0.3
     - android-22
     - android-26
     - extra-android-support
