@@ -28,6 +28,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ViewConfiguration;
+import android.webkit.CookieManager;
 
 import com.ichi2.anki.dialogs.AnkiDroidCrashReportDialog;
 import com.ichi2.anki.exception.StorageAccessException;
@@ -176,7 +177,7 @@ public class AnkiDroidApp extends Application {
         setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
 
         // Configure WebView to allow file scheme pages to access cookies.
-        CompatHelper.getCompat().enableCookiesForFileSchemePages();
+        CookieManager.setAcceptFileSchemeCookies(true);
 
         // Prepare Cookies to be synchronized between RAM and permanent storage.
         CompatHelper.getCompat().prepareWebViewCookies(this.getApplicationContext());

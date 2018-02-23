@@ -401,23 +401,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         });
 
-        // Setup the FloatingActionButtons
-        mActionsMenu = (FloatingActionsMenu) findViewById(R.id.add_content_menu);
-        if (mActionsMenu != null) {
-            mActionsMenu.findViewById(R.id.fab_expand_menu_button).setContentDescription(getString(R.string.menu_add));
-            configureFloatingActionsMenu();
-        } else {
-            // FloatingActionsMenu only works properly on Android 14+ so fallback on a context menu below API 14
-            Timber.w("Falling back on design support library FloatingActionButton");
-            android.support.design.widget.FloatingActionButton addButton;
-            addButton = (android.support.design.widget.FloatingActionButton)findViewById(R.id.add_note_action);
-            addButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CompatHelper.getCompat().supportAddContentMenu(DeckPicker.this);
-                }
-            });
-        }
+        // Setup the FloatingActionButtons, should work everywhere with min API >= 15
+        mActionsMenu = findViewById(R.id.add_content_menu);
+        mActionsMenu.findViewById(R.id.fab_expand_menu_button).setContentDescription(getString(R.string.menu_add));
+        configureFloatingActionsMenu();
 
         mReviewSummaryTextView = (TextView) findViewById(R.id.today_stats_text_view);
 
@@ -439,7 +426,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 onSdCardNotMounted();
             } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(this)) {
                 // AnkiDroid directory inaccessible
-                Intent i = CompatHelper.getCompat().getPreferenceSubscreenIntent(this, "com.ichi2.anki.prefs.advanced");
+                Intent i = Preferences.getPreferenceSubscreenIntent(this, "com.ichi2.anki.prefs.advanced");
                 startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE);
                 Toast.makeText(this, R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
             } else {
@@ -2183,27 +2170,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     /**
-     * FAB can't be animated to move out of the way of the snackbar button on API < 11
+     * There was pre-honeycomb override here, removed now, just instantiate regular callback
      */
-    Snackbar.Callback mSnackbarShowHideCallback = new Snackbar.Callback() {
-        @Override
-        public void onDismissed(Snackbar snackbar, int event) {
-            if (!CompatHelper.isHoneycomb()) {
-                final android.support.design.widget.FloatingActionButton b;
-                b = (android.support.design.widget.FloatingActionButton) findViewById(R.id.add_note_action);
-                b.setEnabled(true);
-            }
-        }
-
-        @Override
-        public void onShown(Snackbar snackbar) {
-            if (!CompatHelper.isHoneycomb()) {
-                final android.support.design.widget.FloatingActionButton b;
-                b = (android.support.design.widget.FloatingActionButton) findViewById(R.id.add_note_action);
-                b.setEnabled(false);
-            }
-        }
-    };
+    Snackbar.Callback mSnackbarShowHideCallback = new Snackbar.Callback();
 
     public void handleEmptyCards() {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_FIND_EMPTY_CARDS, new DeckTask.Listener() {
