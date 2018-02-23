@@ -20,10 +20,10 @@
 
 package com.ichi2.anki;
 
-import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -38,6 +38,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
@@ -115,19 +116,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
         super.onCreate(savedInstanceState);
 
-        // Legacy code using intents instead of PreferenceFragments
-        String action = getIntent().getAction();
-        if (!CompatHelper.isHoneycomb()) {
-            if (action == null) {
-                // Headers screen
-                addPreferencesFromResource(R.xml.preference_headers_legacy);
-            } else {
-                initSubscreen(action, this);
-            }
-            // Set the text for the summary of each of the preferences
-            initAllPreferences(getPreferenceScreen());
-        }
-
         // Add a home button to the actionbar
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -161,35 +149,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
         return false;
     }
-
-
-    @SuppressWarnings("deprecation")
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // Legacy code to register listener when not using PreferenceFragment
-        if (!CompatHelper.isHoneycomb() && getPreferenceScreen() != null) {
-            getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
-        }
-    }
-
-
-    @SuppressWarnings("deprecation")
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Legacy code to register listener when not using PreferenceFragment
-        if (!CompatHelper.isHoneycomb() && getPreferenceScreen() != null) {
-            SharedPreferences prefs = getPreferenceScreen().getSharedPreferences();
-            prefs.registerOnSharedPreferenceChangeListener(this);
-            // syncAccount's summary can change while preferences are still open (user logs
-            // in from preferences screen), so we need to update it here.
-            updatePreference(prefs, "syncAccount", this);
-            updatePreference(prefs, "custom_sync_server_link", this);
-            updatePreference(prefs, "advanced_statistics_link", this);
-        }
-    }
-
 
     @Override
     public boolean onKeyDown(int keyCode, @NonNull KeyEvent event) {
@@ -234,6 +193,16 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     // Class methods
     // ----------------------------------------------------------------------------
 
+    public static Intent getPreferenceSubscreenIntent(Context context, String subscreen) {
+        Intent i = new Intent(context, Preferences.class);
+        i.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, "com.ichi2.anki.Preferences$SettingsFragment");
+        Bundle extras = new Bundle();
+        extras.putString("subscreen", subscreen);
+        i.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS, extras);
+        i.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
+        return i;
+    }
+
     private void initSubscreen(String action, PreferenceContext listener) {
         PreferenceScreen screen;
         switch (action) {
@@ -265,7 +234,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 Preference customButtonsPreference = screen.findPreference("custom_buttons_link");
                 customButtonsPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                     public boolean onPreferenceClick(Preference preference) {
-                        Intent i = CompatHelper.getCompat().getPreferenceSubscreenIntent(Preferences.this,
+                        Intent i = getPreferenceSubscreenIntent(Preferences.this,
                                 "com.ichi2.anki.prefs.custom_buttons");
                         startActivity(i);
                         return true;
@@ -330,7 +299,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 Preference customSyncServerPreference = screen.findPreference("custom_sync_server_link");
                 customSyncServerPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                     public boolean onPreferenceClick(Preference preference) {
-                        Intent i = CompatHelper.getCompat().getPreferenceSubscreenIntent(Preferences.this,
+                        Intent i = getPreferenceSubscreenIntent(Preferences.this,
                                 "com.ichi2.anki.prefs.custom_sync_server");
                         startActivity(i);
                         return true;
@@ -340,7 +309,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 Preference advancedStatisticsPreference = screen.findPreference("advanced_statistics_link");
                 advancedStatisticsPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                     public boolean onPreferenceClick(Preference preference) {
-                        Intent i = CompatHelper.getCompat().getPreferenceSubscreenIntent(Preferences.this,
+                        Intent i = getPreferenceSubscreenIntent(Preferences.this,
                                 "com.ichi2.anki.prefs.advanced_statistics");
                         startActivity(i);
                         return true;
@@ -724,19 +693,12 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             CheckBoxPreference fixHebrewText = (CheckBoxPreference) screen.findPreference("fixHebrewText");
             CheckBoxPreference safeDisplayMode = (CheckBoxPreference) screen.findPreference("safeDisplay");
             CompatHelper.removeHiddenPreferences(this.getApplicationContext());
-            if (CompatHelper.isHoneycomb()) {
-                workarounds.removePreference(longclickWorkaround);
-            }
-            if (CompatHelper.getSdkVersion() >= 13) {
-                workarounds.removePreference(safeDisplayMode);
-            }
-            if (CompatHelper.getSdkVersion() >= 15) {
-                workarounds.removePreference(writeAnswersDisable);
-                workarounds.removePreference(inputWorkaround);
-            } else {
-                // For older Androids we never use the input tag anyway.
-                workarounds.removePreference(useInputTag);
-            }
+
+            workarounds.removePreference(longclickWorkaround);
+            workarounds.removePreference(safeDisplayMode);
+            workarounds.removePreference(writeAnswersDisable);
+            workarounds.removePreference(inputWorkaround);
+
             if (CompatHelper.getSdkVersion() >= 16) {
                 workarounds.removePreference(fixHebrewText);
             }

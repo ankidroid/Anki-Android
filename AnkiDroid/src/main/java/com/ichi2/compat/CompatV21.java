@@ -11,6 +11,7 @@ import android.webkit.CookieManager;
 /** Implementation of {@link Compat} for SDK level 21 */
 @TargetApi(21)
 public class CompatV21 extends CompatV19 implements Compat {
+
     @Override
     public void setSelectableBackground(View view) {
         // Ripple effect
@@ -22,9 +23,7 @@ public class CompatV21 extends CompatV19 implements Compat {
 
     // On API level 21 and higher, CookieManager will be set automatically, so there is nothing to do here.
     @Override
-    public void prepareWebViewCookies(Context context) {
-
-    }
+    public void prepareWebViewCookies(Context context) {}
 
     // A data of cookies may be lost when an application exists just after it was written.
     // On API level 21 and higher, this problem can be solved by using CookieManager.flush().

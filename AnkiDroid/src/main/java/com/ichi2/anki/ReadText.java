@@ -20,12 +20,12 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.view.View;
 
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.compat.CompatHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -286,7 +286,21 @@ public class ReadText {
                 } else {
                     Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
                 }
-                CompatHelper.getCompat().setTtsOnUtteranceProgressListener(mTts);
+                mTts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                    @Override
+                    public void onDone(String arg0) {
+                        if (ReadText.sTextQueue.size() > 0) {
+                            String[] text = ReadText.sTextQueue.remove(0);
+                            ReadText.speak(text[0], text[1], TextToSpeech.QUEUE_FLUSH);
+                        }
+                    }
+                    @Override
+                    public void onError(String arg0) {
+                    }
+                    @Override
+                    public void onStart(String arg0) {
+                    }
+                });
             }
         });
         mTtsParams = new HashMap<>();
