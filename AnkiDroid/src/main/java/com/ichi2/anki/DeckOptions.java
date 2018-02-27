@@ -323,7 +323,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 calendar.set(Calendar.MINUTE, reminder.getJSONArray("time").getInt(1));
                                 calendar.set(Calendar.SECOND, 0);
 
-                                alarmManager.setInexactRepeating(
+                                alarmManager.setRepeating(
                                         AlarmManager.RTC_WAKEUP,
                                         calendar.getTimeInMillis(),
                                         AlarmManager.INTERVAL_DAY,
@@ -356,7 +356,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             calendar.set(Calendar.MINUTE, reminder.getJSONArray("time").getInt(1));
                             calendar.set(Calendar.SECOND, 0);
 
-                            alarmManager.setInexactRepeating(
+                            alarmManager.setRepeating(
                                     AlarmManager.RTC_WAKEUP,
                                     calendar.getTimeInMillis(),
                                     AlarmManager.INTERVAL_DAY,
