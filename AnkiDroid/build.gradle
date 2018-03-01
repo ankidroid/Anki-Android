@@ -6,7 +6,7 @@ android {
     buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.ichi2.anki"
-        minSdkVersion 26
+        minSdkVersion 14
         targetSdkVersion 26
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
