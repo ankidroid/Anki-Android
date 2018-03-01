@@ -7,7 +7,6 @@ def version = "1.1.0alpha5"
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
-
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 26
@@ -20,10 +19,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
 }
 
 // Borrowed from here:
