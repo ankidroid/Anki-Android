@@ -185,9 +185,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mPrefShowETA;
     private boolean mShowTimer;
     protected boolean mPrefWhiteboard;
-    private boolean mShowTypeAnswerField;
-    private boolean mInputWorkaround;
-    private boolean mLongClickWorkaround;
     private int mPrefFullscreenReview;
     private int mCardZoom;
     private int mImageZoom;
@@ -363,8 +360,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void run() {
             Timber.i("AbstractFlashcardViewer:: onEmulatedLongClick");
-            // Show hint about lookup function if dictionary available and Webview version supports text selection
-            if (!mDisableClipboard && Lookup.isAvailable() && CompatHelper.isHoneycomb()) {
+            // Show hint about lookup function if dictionary available
+            if (!mDisableClipboard && Lookup.isAvailable()) {
                 String lookupHint = getResources().getString(R.string.lookup_hint);
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, lookupHint, false);
             }
@@ -434,7 +431,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             if (gestureDetector.onTouchEvent(event)) {
                 return true;
             }
-            if (!mDisableClipboard && !mLongClickWorkaround) {
+            if (!mDisableClipboard) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         mTouchStarted = true;
@@ -458,31 +455,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 }
             } catch (NullPointerException e) {
                 Timber.e(e, "Error on dispatching touch event");
-                if (mInputWorkaround) {
-                    Timber.e(e, "Error on using InputWorkaround");
-                    AnkiDroidApp.getSharedPrefs(getBaseContext()).edit().putBoolean("inputWorkaround", false).commit();
-                    AbstractFlashcardViewer.this.finishWithoutAnimation();
-                }
             }
             return false;
         }
     };
-
-    private View.OnLongClickListener mLongClickListener = new View.OnLongClickListener() {
-
-        @Override
-        public boolean onLongClick(View view) {
-            if (mIsSelecting) {
-                return false;
-            }
-            Timber.i("AbstractFlashcardViewer:: onLongClick");
-            Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            vibratorManager.vibrate(50);
-            longClickHandler.postDelayed(startLongClickAction, 300);
-            return true;
-        }
-    };
-
 
     protected DeckTask.TaskListener mDismissCardHandler = new DeckTask.TaskListener() {
         @Override
@@ -720,7 +696,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
         StringBuilder sb = new StringBuilder();
         if (mUseInputTag) {
-            // These functions are definde in the JavaScript file assets/scripts/card.js. We get the text back in
+            // These functions are defined in the JavaScript file assets/scripts/card.js. We get the text back in
             // shouldOverrideUrlLoading() in createWebView() in this file.
             sb.append("<center>\n<input type=text name=typed id=typeans onfocus=\"taFocus();\" " +
                       "onblur=\"taBlur(this);\" onKeyPress=\"return taKey(this, event)\" autocomplete=\"off\" ");
@@ -733,7 +709,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             sb.append(">\n</center>\n");
         } else {
             sb.append("<span id=typeans class=\"typePrompt");
-            if (!mShowTypeAnswerField) {
+            if (mUseInputTag) {
                 sb.append(" typeOff");
             }
             sb.append("\">........</span>");
@@ -755,9 +731,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         DiffEngine diffEngine = new DiffEngine();
         StringBuilder sb = new StringBuilder();
         sb.append("<div");
-        if (!mUseInputTag && !mShowTypeAnswerField) {
-            sb.append(" class=\"typeOff\"");
-        }
         sb.append("><code id=typeans>");
         if (!TextUtils.isEmpty(userAnswer)) {
             // The user did type something.
@@ -776,7 +749,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 sb.append(diffedStrings[1]);
             }
         } else {
-            if (mShowTypeAnswerField) {
+            if (!mUseInputTag) {
                 sb.append(DiffEngine.wrapMissing(correctAnswer));
             } else {
                 sb.append(correctAnswer);
@@ -1337,9 +1310,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
         mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
         mTouchLayer.setOnTouchListener(mGestureListener);
-        if (!mDisableClipboard && mLongClickWorkaround) {
-            mTouchLayer.setOnLongClickListener(mLongClickListener);
-        }
         if (!mDisableClipboard) {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         }
@@ -1467,10 +1437,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         WebView webView = new MyWebView(this);
         webView.setWillNotCacheDrawing(true);
         webView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
-        if (CompatHelper.isHoneycomb()) {
-            // Disable the on-screen zoom buttons for API > 11
-            webView.getSettings().setDisplayZoomControls(false);
-        }
+        webView.getSettings().setDisplayZoomControls(false);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setSupportZoom(true);
         // Start at the most zoomed-out level
@@ -1745,18 +1712,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
         mPrefShowETA = preferences.getBoolean("showETA", true);
-        mUseInputTag = preferences.getBoolean("useInputTag", false) && (CompatHelper.getSdkVersion() >= 15);
-        mShowTypeAnswerField = (!preferences.getBoolean("writeAnswersDisable", false)) && !mUseInputTag;
-        // On newer Androids, ignore this setting, which sholud be hidden in the prefs anyway.
+        mUseInputTag = preferences.getBoolean("useInputTag", false);
+        // On newer Androids, ignore this setting, which should be hidden in the prefs anyway.
         mDisableClipboard = preferences.getString("dictionary", "0").equals("0");
-        mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
         // mDeckFilename = preferences.getString("deckFilename", "");
         mNightMode = preferences.getBoolean("invertedColors", false);
         mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0"));
         mCardZoom = preferences.getInt("cardZoom", 100);
         mImageZoom = preferences.getInt("imageZoom", 100);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
-        mInputWorkaround = preferences.getBoolean("inputWorkaround", false);
         mSpeakText = preferences.getBoolean("tts", false);
         mPrefSafeDisplay = preferences.getBoolean("safeDisplay", false);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
@@ -1792,10 +1756,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mCustomButtons.put(R.id.action_bury, Integer.parseInt(preferences.getString("customButtonBury", "0")));
         mCustomButtons.put(R.id.action_suspend, Integer.parseInt(preferences.getString("customButtonSuspend", "0")));
         mCustomButtons.put(R.id.action_delete, Integer.parseInt(preferences.getString("customButtonDelete", "0")));
-
-        if (mLongClickWorkaround) {
-            mGestureLongclick = GESTURE_LOOKUP;
-        }
 
         if (preferences.getBoolean("keepScreenOn", false)) {
             this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -2404,7 +2364,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      *         field to query
      */
     private boolean typeAnswer() {
-        return mShowTypeAnswerField && null != mTypeCorrect;
+        return !mUseInputTag && null != mTypeCorrect;
     }
 
 
@@ -2552,10 +2512,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * Returns true if we should update the content of a single {@link WebView} (called quick update) instead of switch
      * between two instances.
      * <p>
-     * Webview switching is needed in some versions of Android when using custom fonts because of a memory leak in
-     * WebView.
-     * <p>
-     * It is also needed to solve a refresh issue on Nook devices.
+     * This is needed to solve a refresh issue on Nook devices.
      *
      * @return true if we should use a single WebView
      */
@@ -2696,17 +2653,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         public MyWebView(Context context) {
             super(context);
         }
-
-
-        @Override
-        public boolean onCheckIsTextEditor() {
-            if (mInputWorkaround) {
-                return true;
-            } else {
-                return super.onCheckIsTextEditor();
-            }
-        }
-
 
         @Override
         protected void onScrollChanged(int horiz, int vert, int oldHoriz, int oldVert) {
