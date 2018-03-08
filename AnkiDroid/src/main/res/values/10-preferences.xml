@@ -49,12 +49,8 @@
     <string name="whiteboard_stroke_width">Stroke width</string>
     <string name="whiteboard_black">Black strokes</string>
     <string name="whiteboard_black_summ">Uses less memory, unless in night mode</string>
-    <string name="write_answers_disable">Disable typing in answer</string>
-    <string name="write_answers_disable_summ">Prevents keyboard from appearing on cards containing type-the-answer fields</string>
     <string name="use_input_tag">Type answer into the card</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
-    <string name="text_selection_click">Long press workaround</string>
-    <string name="text_selection_click_summ">Enable this if you are not able to select text with a long press</string>
     <string name="dictionary">Lookup dictionary</string>
     <string name="reset_languages">Reset languages</string>
     <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
@@ -126,7 +122,7 @@
     <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Select language</string>
     <string name="safe_display">Safe display mode</string>
-    <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink and older devices using custom fonts may require this.</string>
+    <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
     <string name="vertical_centering">Center align</string>
     <string name="vertical_centering_summ">Center the content of cards vertically</string>
     <string name="pref_backup_max">Max number of backups</string>
@@ -144,8 +140,6 @@
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Start of next day</string>
     <string name="day_offset_summ">XXX hours past midnight</string>
-    <string name="input_workaround">Input workaround</string>
-    <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
     <string name="pref_keep_screen_on">Keep screen on</string>
     <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
     <string name="convert_fen_text">Chess notation support</string>

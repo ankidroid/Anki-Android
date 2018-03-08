@@ -685,20 +685,13 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
         PreferenceCategory workarounds = (PreferenceCategory) screen.findPreference("category_workarounds");
         if (workarounds != null) {
-            CheckBoxPreference writeAnswersDisable = (CheckBoxPreference) screen.findPreference("writeAnswersDisable");
-            CheckBoxPreference useInputTag = (CheckBoxPreference) screen.findPreference("useInputTag");
-            CheckBoxPreference inputWorkaround = (CheckBoxPreference) screen.findPreference("inputWorkaround");
-            CheckBoxPreference longclickWorkaround =
-                (CheckBoxPreference) screen.findPreference("textSelectionLongclickWorkaround");
             CheckBoxPreference fixHebrewText = (CheckBoxPreference) screen.findPreference("fixHebrewText");
             CheckBoxPreference safeDisplayMode = (CheckBoxPreference) screen.findPreference("safeDisplay");
             CompatHelper.removeHiddenPreferences(this.getApplicationContext());
 
-            workarounds.removePreference(longclickWorkaround);
-            workarounds.removePreference(safeDisplayMode);
-            workarounds.removePreference(writeAnswersDisable);
-            workarounds.removePreference(inputWorkaround);
-
+            if (!CompatHelper.isNook()) {
+                workarounds.removePreference(safeDisplayMode);
+            }
             if (CompatHelper.getSdkVersion() >= 16) {
                 workarounds.removePreference(fixHebrewText);
             }

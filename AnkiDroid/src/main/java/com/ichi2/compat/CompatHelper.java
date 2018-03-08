@@ -52,11 +52,6 @@ public class CompatHelper {
         return Build.VERSION.SDK_INT;
     }
 
-
-    /** Determine if the device is running API level 11 or higher. */
-    public static boolean isHoneycomb() {
-        return getSdkVersion() >= Build.VERSION_CODES.HONEYCOMB;
-    }
     /** Determine if the device is running API level 21 or higher. */
     public static boolean isLollipop() {
         return getSdkVersion() >= Build.VERSION_CODES.LOLLIPOP;
@@ -115,10 +110,9 @@ public class CompatHelper {
 
     public static void removeHiddenPreferences(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        if (getSdkVersion() >= 15) {
-            preferences.edit().remove("longclickWorkaround").commit();
+
+        if (getSdkVersion() >= 15 && !isNook()) {
             preferences.edit().remove("safeDisplay").commit();
-            preferences.edit().remove("inputWorkaround").commit();
         }
         if (getSdkVersion() >= 16) {
             preferences.edit().remove("fixHebrewText").commit();

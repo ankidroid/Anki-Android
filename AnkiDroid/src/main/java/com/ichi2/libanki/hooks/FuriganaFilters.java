@@ -24,12 +24,7 @@ import java.util.regex.Pattern;
 public class FuriganaFilters {
     private static final Pattern r = Pattern.compile(" ?([^ >]+?)\\[(.+?)\\]");
 
-    // Since there is no ruby tag support in Android before 3.0 (SDK version 11), we must use an alternative
-    // approach to align the elements. Anki does the same thing in aqt/qt.py for earlier versions of qt.
-    // The fallback approach relies on CSS in the file /assets/ruby.css
-    private static final String RUBY = CompatHelper.isHoneycomb() ? "<ruby><rb>$1</rb><rt>$2</rt></ruby>"
-            : "<span class='legacy_ruby_rb'><span class='legacy_ruby_rt'>$2</span>$1</span>";
-
+    private static final String RUBY = "<ruby><rb>$1</rb><rt>$2</rt></ruby>";
 
     public void install(Hooks h) {
         h.addHook("fmod_kanji", new Kanji());
