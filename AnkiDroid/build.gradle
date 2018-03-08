@@ -3,7 +3,7 @@ apply plugin: 'com.github.triplet.play'
 def homePath = System.properties['user.home']
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '26.0.3'
 
     defaultConfig {
         applicationId "com.ichi2.anki"
@@ -61,7 +61,7 @@ dependencies {
     compile 'com.getbase:floatingactionbutton:1.10.1'
     compile 'ch.acra:acra:4.6.2'
     compile 'com.jakewharton.timber:timber:2.7.1'
-    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.google.code.gson:gson:2.8.2'
     compile 'org.jsoup:jsoup:1.10.3'
     compile project(":api")
 
