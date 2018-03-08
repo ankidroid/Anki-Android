@@ -15,6 +15,10 @@
         android:enabled="false"
         android:title="@string/card_editor_copy_card"/>
     <item
+        android:id="@+id/action_reposition_card"
+        android:title="@string/card_editor_reposition_card"
+        android:visible="false"/>
+    <item
         android:id="@+id/action_reset_card_progress"
         android:title="@string/card_editor_reset_card"
         android:visible="false"/>

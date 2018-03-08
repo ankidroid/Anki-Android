@@ -43,6 +43,9 @@
     </string-array>
 
     <string name="preview_title">Preview</string>
+    <string name="reposition_card_dialog_title">Reposition new card</string>
+    <string name="reposition_card_dialog_message">Start position:</string>
+    <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
     <string name="reset_card_dialog_title">Reset card progress</string>
     <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
     <string name="reset_card_dialog_acknowledge">Card reset</string>

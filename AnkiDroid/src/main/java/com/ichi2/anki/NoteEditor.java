@@ -53,6 +53,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.NoteEditorRescheduleCard;
+import com.ichi2.anki.dialogs.NoteEditorRepositionCard;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
@@ -806,7 +807,9 @@ public class NoteEditor extends AnkiActivity {
             menu.findItem(R.id.action_add_card_from_card_editor).setVisible(true);
             menu.findItem(R.id.action_reset_card_progress).setVisible(true);
             menu.findItem(R.id.action_reschedule_card).setVisible(true);
-            menu.findItem(R.id.action_reset_card_progress).setVisible(true);
+            if (mCurrentEditedCard.getType() == Card.TYPE_NEW) {
+                menu.findItem(R.id.action_reposition_card).setVisible(true);
+            }
         }
         if (mEditFields != null) {
             for (int i = 0; i < mEditFields.size(); i++) {
@@ -873,6 +876,10 @@ public class NoteEditor extends AnkiActivity {
             case R.id.action_reschedule_card:
                 Timber.i("NoteEditor:: Reschedule button pressed");
                 showDialogFragment(NoteEditorRescheduleCard.newInstance());
+                return true;
+            case R.id.action_reposition_card:
+                Timber.i("NoteEditor:: Reposition button pressed");
+                showDialogFragment(NoteEditorRepositionCard.newInstance());
                 return true;
 
             default:
@@ -981,6 +988,14 @@ public class NoteEditor extends AnkiActivity {
                 getResources().getString(R.string.reschedule_card_dialog_acknowledge), true);
     }
 
+    public void onRepositionCard(int position) {
+        Timber.i("Reposition card");
+        getCol().getSched().sortCards(new long[] { mCurrentEditedCard.getId() }, position, 1, false, true);
+        getCol().reset();
+        mReloadRequired = true;
+        UIUtils.showThemedToast(NoteEditor.this,
+                getResources().getString(R.string.reposition_card_dialog_acknowledge), true);
+    }
 
     private void showTagsDialog() {
         if (mSelectedTags == null) {
