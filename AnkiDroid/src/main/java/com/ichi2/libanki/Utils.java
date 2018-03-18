@@ -684,29 +684,24 @@ public class Utils {
         return bos.toByteArray();
     }
 
-
     /**
-     * Utility method to write to a file.
-     * Throws the exception, so we can report it in syncing log
-     * @throws IOException
+     * Calls {@link #writeToFileImpl(InputStream, String)} and handles IOExceptions
+     * @throws IOException Rethrows exception after a set number of retries
      */
     public static void writeToFile(InputStream source, String destination) throws IOException {
-        File f = new File(destination);
-        Timber.d("Creating new file... = %s", destination);
         // sometimes this fails and works on retries (hardware issue?)
         final int retries = 5;
         int retryCnt = 0;
-        boolean created = false;
-        while (!created && retryCnt++ < retries) {
+        boolean success = false;
+        while (!success && retryCnt++ < retries) {
             try {
-                created = f.createNewFile();
+                writeToFileImpl(source, destination);
+                success = true;
             } catch (IOException e) {
-                e.printStackTrace();
-
                 if (retryCnt == retries) {
-                    throw new IOException(f.getName() + ": " + e.getLocalizedMessage(), e);
+                    throw e;
                 } else {
-                    Timber.e("IOException while creating file, retrying...");
+                    Timber.e("IOException while writing to file, retrying...");
                     try {
                         Thread.sleep(200);
                     } catch (InterruptedException e1) {
@@ -715,32 +710,47 @@ public class Utils {
                 }
             }
         }
+    }
 
-        long startTimeMillis = System.currentTimeMillis();
-        OutputStream output = new BufferedOutputStream(new FileOutputStream(destination));
+    /**
+     * Utility method to write to a file.
+     * Throws the exception, so we can report it in syncing log
+     * @throws IOException
+     */
+    public static void writeToFileImpl(InputStream source, String destination) throws IOException {
+        File f = new File(destination);
+        try {
+            Timber.d("Creating new file... = %s", destination);
+            f.createNewFile();
 
-        // Transfer bytes, from source to destination.
-        byte[] buf = new byte[CHUNK_SIZE];
-        long sizeBytes = 0;
-        int len;
-        if (source == null) {
-            Timber.e("writeToFile :: source is null!");
-        }
-        while ((len = source.read(buf)) >= 0) {
-            output.write(buf, 0, len);
-            sizeBytes += len;
-        }
-        long endTimeMillis = System.currentTimeMillis();
+            long startTimeMillis = System.currentTimeMillis();
+            OutputStream output = new BufferedOutputStream(new FileOutputStream(destination));
 
-        Timber.d("Finished writeToFile!");
-        long durationSeconds = (endTimeMillis - startTimeMillis) / 1000;
-        long sizeKb = sizeBytes / 1024;
-        long speedKbSec = 0;
-        if (endTimeMillis != startTimeMillis) {
-            speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis);
+            // Transfer bytes, from source to destination.
+            byte[] buf = new byte[CHUNK_SIZE];
+            long sizeBytes = 0;
+            int len;
+            if (source == null) {
+                Timber.e("writeToFile :: source is null!");
+            }
+            while ((len = source.read(buf)) >= 0) {
+                output.write(buf, 0, len);
+                sizeBytes += len;
+            }
+            long endTimeMillis = System.currentTimeMillis();
+
+            Timber.d("Finished writeToFile!");
+            long durationSeconds = (endTimeMillis - startTimeMillis) / 1000;
+            long sizeKb = sizeBytes / 1024;
+            long speedKbSec = 0;
+            if (endTimeMillis != startTimeMillis) {
+                speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis);
+            }
+            Timber.d("Utils.writeToFile: Size: %d Kb, Duration: %d s, Speed: %d Kb/s", sizeKb, durationSeconds, speedKbSec);
+            output.close();
+        } catch (IOException e) {
+            throw new IOException(f.getName() + ": " + e.getLocalizedMessage(), e);
         }
-        Timber.d("Utils.writeToFile: Size: %d Kb, Duration: %d s, Speed: %d Kb/s", sizeKb, durationSeconds, speedKbSec);
-        output.close();
     }
 
 
