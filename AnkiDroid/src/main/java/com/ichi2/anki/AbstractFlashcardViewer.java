@@ -179,6 +179,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private BroadcastReceiver mUnmountReceiver = null;
 
     /**
+     * Broadcast informing us of conditions when the timer should be paused
+     */
+    private BroadcastReceiver mPauseTimerReceiver = null;
+
+    /**
      * Variables to hold preferences
      */
     private boolean mPrefHideDueCount;
@@ -254,6 +259,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected LinearLayout mEase4Layout;
     protected RelativeLayout mTopBarLayout;
     private Chronometer mCardTimer;
+    private boolean mCardTimerPaused;
     protected Whiteboard mWhiteboard;
     private ClipboardManager mClipboard;
 
@@ -889,6 +895,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mBaseUrl = Utils.getBaseUrl(col.getMedia().dir());
 
         registerExternalStorageListener();
+        registerPauseTimerListener();
 
         mUseQuickUpdate = shouldUseQuickUpdate();
 
@@ -930,7 +937,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         longClickHandler.removeCallbacks(longClickTestRunnable);
         longClickHandler.removeCallbacks(startLongClickAction);
 
-        pauseTimer();
         mSoundPlayer.stopSounds();
 
         // Prevent loss of data in Cookies
@@ -960,6 +966,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
+        }
+        if (mPauseTimerReceiver != null) {
+            unregisterReceiver(mPauseTimerReceiver);
         }
         // WebView.destroy() should be called after the end of use
         // http://developer.android.com/reference/android/webkit/WebView.html#destroy()
@@ -1144,21 +1153,47 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
     }
 
+    /**
+     * Detect conditions which pause the timer.
+     * Bringing another app to the foreground will typically not pause the timer
+     * for several reasons:
+     *   - parity with Anki desktop
+     *   - accurate time-keeping for study flows which include switching to other apps (dictionaries etc)
+     */
+    private void registerPauseTimerListener() {
+        if (mPauseTimerReceiver == null) {
+            mPauseTimerReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    pauseTimer();
+                }
+            };
+            IntentFilter intentFilter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+            intentFilter.addAction(Intent.ACTION_ANSWER);
+            intentFilter.addAction(Intent.ACTION_CALL_BUTTON);
+            intentFilter.addAction(Intent.ACTION_CAMERA_BUTTON);
+            intentFilter.addAction(Intent.ACTION_NEW_OUTGOING_CALL);
 
-    private void pauseTimer() {
-        if (mCurrentCard != null) {
-            mCurrentCard.stopTimer();
-        }
-        // We also stop the UI timer so it doesn't trigger the tick listener while paused. Letting
-        // it run would trigger the time limit condition (red, stopped timer) in the background.
-        if (mCardTimer != null) {
-            mCardTimer.stop();
+            registerReceiver(mPauseTimerReceiver, intentFilter);
         }
     }
 
+    private void pauseTimer() {
+        if (!mCardTimerPaused) {
+            if (mCurrentCard != null) {
+                mCurrentCard.stopTimer();
+            }
+            // We also stop the UI timer so it doesn't trigger the tick listener while paused. Letting
+            // it run would trigger the time limit condition (red, stopped timer) in the background.
+            if (mCardTimer != null) {
+                mCardTimer.stop();
+            }
+            mCardTimerPaused = true;
+        }
+    }
 
     private void resumeTimer() {
-        if (mCurrentCard != null) {
+        if (mCardTimerPaused && mCurrentCard != null) {
             // Resume the card timer first. It internally accounts for the time gap between
             // suspend and resume.
             mCurrentCard.resumeTimer();
@@ -1169,6 +1204,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             if ((SystemClock.elapsedRealtime() - mCardTimer.getBase()) < mCurrentCard.timeLimit()) {
                 mCardTimer.start();
             }
+            mCardTimerPaused = false;
         }
     }
 
@@ -1928,6 +1964,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         mCardTimer.setBase(SystemClock.elapsedRealtime());
         mCardTimer.start();
+        mCardTimerPaused = false;
 
         // Stop and highlight the timer if it reaches the time limit.
         getTheme().resolveAttribute(R.attr.maxTimerColor, typedValue, true);
