@@ -1,3 +1,27 @@
+### Table of Contents
+* [**Source code**](#Source-code)
+  - [Android Studio](#Android-Studio)
+  - [AnkiDroid source code overview: Where to find what](#ankidroid-source-code-overview-where-to-find-what)
+  - [Making parallel builds](#making-parallel-builds)
+  - [Issues to get started with](#issues-to-get-started-with)
+  - [Submit Improvements](#submit-improvements)
+  - [Git workflow](#git-workflow)
+  - [Inital setup (one time)](#inital-setup-one-time)
+  - [Making a new pull request](#making-a-new-pull-request)
+  - [Dealing with merge conflicts](#dealing-with-merge-conflicts)
+  - [Running unit tests](#running-unit-tests)
+  - [Compiling from the command line](#compiling-from-the-command-line)
+  - [Anki database structure](#anki-database-structure)
+  - [Branching Model](#branching-model)
+  - [Localization Administration](#localization-administration)
+* [Other development tools](#other-development-tools)
+* [Checking database modifications](#checking-database-modifications)
+* [To do from time to time](#to-do-from-time-to-time)
+  - [Licenses](#licenses)
+  - [Download localized strings](#download-localized-strings)
+  - [Alternative markets](#download-localized-strings)
+---
+
 # Source code
 First, register here on github, and follow the [instructions](https://help.github.com/articles/fork-a-repo/) on github on the Anki-Android repository to fork and clone the code. If you want to be notified about each new improvement/bugfix, please subscribe to the [commits feed for the master branch](https://github.com/ankidroid/Anki-Android/commits/master.atom).
 
