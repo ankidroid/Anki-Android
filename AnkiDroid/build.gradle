@@ -3,7 +3,6 @@ apply plugin: 'com.github.triplet.play'
 def homePath = System.properties['user.home']
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.3'
 
     defaultConfig {
         applicationId "com.ichi2.anki"
