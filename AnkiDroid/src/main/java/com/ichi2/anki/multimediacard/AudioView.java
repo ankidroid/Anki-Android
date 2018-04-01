@@ -20,15 +20,13 @@
 package com.ichi2.anki.multimediacard;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
-import android.os.Build;
 
+import android.support.v7.widget.AppCompatImageButton;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.ichi2.anki.R;
@@ -210,7 +208,7 @@ public class AudioView extends LinearLayout {
         }
     }
 
-    protected class PlayPauseButton extends ImageButton {
+    protected class PlayPauseButton extends AppCompatImageButton {
         OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -310,7 +308,7 @@ public class AudioView extends LinearLayout {
         }
     }
 
-    protected class StopButton extends ImageButton {
+    protected class StopButton extends AppCompatImageButton {
         OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -353,9 +351,8 @@ public class AudioView extends LinearLayout {
 
     }
 
-    protected class RecordButton extends ImageButton {
+    protected class RecordButton extends AppCompatImageButton {
         OnClickListener onClickListener = new View.OnClickListener() {
-            @TargetApi(Build.VERSION_CODES.GINGERBREAD_MR1)
             @Override
             public void onClick(View v) {
                 // Since mAudioPath is not compulsory, we check if it exists
@@ -367,23 +364,24 @@ public class AudioView extends LinearLayout {
                     case IDLE: // If not already recorded or not already played
                     case STOPPED: // if already recorded or played
                         boolean highSampling = false;
-                        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-                        if (currentapiVersion >= android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
-                            try {
-                                // try high quality AAC @ 44.1kHz / 192kbps first
-                                mRecorder = initMediaRecorder();
-                                mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-                                mRecorder.setAudioChannels(2);
-                                mRecorder.setAudioSamplingRate(44100);
-                                mRecorder.setAudioEncodingBitRate(192000);
-                                mRecorder.prepare();
-                                mRecorder.start();
-                                highSampling = true;
-                            } catch (Exception e) {
-                            }
+                        try {
+                            // try high quality AAC @ 44.1kHz / 192kbps first
+                            // can throw IllegalArgumentException if codec isn't supported
+                            mRecorder = initMediaRecorder();
+                            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+                            mRecorder.setAudioChannels(2);
+                            mRecorder.setAudioSamplingRate(44100);
+                            mRecorder.setAudioEncodingBitRate(192000);
+                            // this can also throw IOException if output path is invalid
+                            mRecorder.prepare();
+                            mRecorder.start();
+                            highSampling = true;
+                        } catch (Exception e) {
+                            // in all cases, fall back to low sampling
                         }
 
                         if (!highSampling) {
+                            // if we are here, either the codec didn't work or output file was invalid
                             // fall back on default
                             try {
                                 mRecorder = initMediaRecorder();
@@ -393,6 +391,7 @@ public class AudioView extends LinearLayout {
                                 mRecorder.start();
 
                             } catch (Exception e) {
+                                // either output file failed or codec didn't work, in any case fail out
                                 Timber.e("RecordButton.onClick() :: error recording to " + mAudioPath + "\n" +e.getMessage());
                                 showToast(gtxt(R.string.multimedia_editor_audio_view_recording_failed));
                                 mStatus = Status.STOPPED;

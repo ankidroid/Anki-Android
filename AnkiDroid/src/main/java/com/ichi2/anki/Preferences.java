@@ -30,7 +30,6 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -126,8 +125,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     }
 
 
-    // Called only on Honeycomb and later
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.preference_headers, target);
@@ -751,7 +748,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     // Inner classes
     // ----------------------------------------------------------------------------
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class SettingsFragment extends PreferenceFragment implements PreferenceContext, OnSharedPreferenceChangeListener {
         @Override
         public void onCreate(Bundle savedInstanceState) {
