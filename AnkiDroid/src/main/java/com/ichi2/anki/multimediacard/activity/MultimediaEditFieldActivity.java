@@ -96,13 +96,6 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         mFieldIndex = this.getIntent().getIntExtra(EXTRA_FIELD_INDEX, 0);
 
         recreateEditingUi();
-
-        // Handling absence of the action bar!
-        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-        if (currentapiVersion <= android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
-            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinearLayoutForSpareMenuFieldEdit);
-            createSpareMenu(linearLayout);
-        }
     }
 
 
