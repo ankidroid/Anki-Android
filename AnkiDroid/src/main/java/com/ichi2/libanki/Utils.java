@@ -136,7 +136,7 @@ public class Utils {
      * @param time_s The time to format, in seconds
      * @return The time quantity string. Something like "3 s" or "1.7 yr".
      */
-    public static String timeQuantity(Context context, int time_s) {
+    public static String timeQuantity(Context context, long time_s) {
         Resources res = context.getResources();
         // N.B.: the integer s, min, h, d and (one decimal, rounded by format) double for month, year is
         // hard-coded. See also 01-core.xml
