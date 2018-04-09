@@ -187,6 +187,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected boolean mPrefWhiteboard;
     private boolean mShowTypeAnswerField;
     private boolean mInputWorkaround;
+    private boolean mShowKeyboard;
     private boolean mLongClickWorkaround;
     private int mPrefFullscreenReview;
     private int mCardZoom;
@@ -644,7 +645,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
             // set the correct mark/unmark icon on action bar
             refreshActionBar();
-            findViewById(R.id.root_layout).requestFocus();
+
+            //we are focusing root_layout, which I think may have been by design to hide the
+            //virtual keyboard.
+            //if we change focus to mAnswerField we have a solution to Issue #4699
+            if (mShowKeyboard) {
+                mAnswerField.performClick();
+            } else {
+                findViewById(R.id.root_layout).requestFocus();
+            }
         }
 
 
@@ -1686,7 +1695,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mEase4Layout.setVisibility(View.GONE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
         if (typeAnswer()) {
-            mAnswerField.requestFocus();
+            //note: previously this call did nothing as it was followed by a call to
+            //focus the root_layout
+            if (mShowKeyboard) {
+                mAnswerField.requestFocus();
+            }
         } else {
             mFlipCardLayout.requestFocus();
         }
@@ -1757,6 +1770,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mImageZoom = preferences.getInt("imageZoom", 100);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mInputWorkaround = preferences.getBoolean("inputWorkaround", false);
+        mShowKeyboard = preferences.getBoolean("alwaysShowVirtKb", false);
         mSpeakText = preferences.getBoolean("tts", false);
         mPrefSafeDisplay = preferences.getBoolean("safeDisplay", false);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);

@@ -52,6 +52,10 @@
             android:title="@string/time_limit"
             app:max="9999"
             app:min="0" />
+        <CheckBoxPreference
+            android:key="alwaysShowVirtKb"
+            android:summary="@string/show_virt_kybd"
+            android:title="@string/show_virt_kybd_summ" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_flashcard" >
         <Preference
