@@ -1428,6 +1428,33 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         mAnswerField = (EditText) findViewById(R.id.answer_field);
 
+        mAnswerField.setOnFocusChangeListener( new View.OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (mShowKeyboard) {
+                    if (hasFocus) {
+                        //use SHOW_IMPLICIT here auto-hides virtual keyboard when hardware keyboard attached
+                        ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(view,
+                                InputMethodManager.SHOW_IMPLICIT);
+                    } else {
+                        ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
+                                view.getWindowToken(), 0);
+                    }
+                }
+            }
+        });
+
+        mAnswerField.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View clickedView)
+            {
+                clickedView.clearFocus();
+                clickedView.requestFocus();
+            }
+        });
+
         mLookUpIcon = findViewById(R.id.lookup_button);
         mLookUpIcon.setVisibility(View.GONE);
         mLookUpIcon.setOnClickListener(new OnClickListener() {
