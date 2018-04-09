@@ -72,11 +72,13 @@
                         app:popupTheme="@style/ActionBar.Popup"/>
                 </LinearLayout>
 
+                <!-- Front/Back/Attach views added in NoteEditor.populateEditFields(..) -->
                 <LinearLayout
                     android:id="@+id/CardEditorEditFieldsLayout"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:focusable="true"
                     android:padding="@dimen/keyline_1" />
 
                 <LinearLayout
