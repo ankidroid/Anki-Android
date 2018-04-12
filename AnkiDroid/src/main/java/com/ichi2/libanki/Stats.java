@@ -764,8 +764,8 @@ public class Stats {
         }
         mFirstElement = 0;
         mMaxElements = list.size() - 1;
-        mAverage = Utils.timeSpan(context, (int) Math.round(avg * SECONDS_PER_DAY));
-        mLongest = Utils.timeSpan(context, (int) Math.round(max_ * SECONDS_PER_DAY));
+        mAverage = Utils.timeSpan(context, (long) Math.round(avg * SECONDS_PER_DAY));
+        mLongest = Utils.timeSpan(context, (long) Math.round(max_ * SECONDS_PER_DAY));
 
         //some adjustments to not crash the chartbuilding with emtpy data
         if (mMaxElements == 0) {
