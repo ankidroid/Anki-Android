@@ -1293,6 +1293,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (buttonNumber < ease) {
             return;
         }
+
+        Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibratorManager.vibrate(50);
+
         // Set the dots appearing below the toolbar
         switch (ease) {
             case EASE_1:
