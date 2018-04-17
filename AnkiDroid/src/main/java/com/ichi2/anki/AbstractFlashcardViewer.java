@@ -1294,14 +1294,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             return;
         }
 
-        Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibratorManager.vibrate(50);
+        boolean vibrateAnswerCorrect = true;
 
         // Set the dots appearing below the toolbar
         switch (ease) {
             case EASE_1:
                 mChosenAnswer.setText("\u2022");
                 mChosenAnswer.setTextColor(ContextCompat.getColor(this, R.color.material_red_500));
+                vibrateAnswerCorrect = false;
                 break;
             case EASE_2:
                 mChosenAnswer.setText("\u2022\u2022");
@@ -1319,6 +1319,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mChosenAnswer.setText("\u2022\u2022\u2022\u2022");
                 mChosenAnswer.setTextColor(ContextCompat.getColor(this, R.color.material_light_blue_500));
                 break;
+        }
+
+
+        Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if(vibrateAnswerCorrect) {
+            // correct answer, use a double vibration pattern
+            long[] pattern = {0, 50, 100, 50};
+            vibratorManager.vibrate(pattern, -1);
+        } else {
+            // wrong answer
+            vibratorManager.vibrate(100);
         }
 
         // remove chosen answer hint after a while
