@@ -1329,7 +1329,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             vibratorManager.vibrate(pattern, -1);
         } else {
             // wrong answer
-            vibratorManager.vibrate(100);
+            vibratorManager.vibrate(50);
         }
 
         // remove chosen answer hint after a while
