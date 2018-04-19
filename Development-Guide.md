@@ -2,7 +2,6 @@
 * [**Source code**](#Source-code)
   - [Android Studio](#Android-Studio)
   - [AnkiDroid source code overview: Where to find what](#ankidroid-source-code-overview-where-to-find-what)
-  - [Making parallel builds](#making-parallel-builds)
   - [Issues to get started with](#issues-to-get-started-with)
   - [Submit Improvements](#submit-improvements)
   - [Git workflow](#git-workflow)
@@ -11,6 +10,8 @@
   - [Dealing with merge conflicts](#dealing-with-merge-conflicts)
   - [Running unit tests](#running-unit-tests)
   - [Compiling from the command line](#compiling-from-the-command-line)
+  - [Handling translations](#handling-translations)
+  - [Making parallel builds](#making-parallel-builds)
   - [Anki database structure](#anki-database-structure)
   - [Branching Model](#branching-model)
   - [Localization Administration](#localization-administration)
@@ -128,7 +129,7 @@ gradlew.bat assembleDebug
 An apk file signed with a standard "debug" key will be generated named `"AnkiDroid-debug.apk"` in:
 `%AnkiDroidRoot%/AnkiDroid/build/outputs/apk/`
 
-## Dealing with translations
+## Handling translations
 As described in the [contributing wiki](https://github.com/ankidroid/Anki-Android/wiki/Contributing#translate-ankidroid), AnkiDroid localization is done through the Crowdin platform. Developers should basically ignore the translations, working only with the English strings, and one of the project owners will handle the syncing of the translations. The process works as follows:
 
 * Developers can freely add, delete, or modify strings in English and commit to git
