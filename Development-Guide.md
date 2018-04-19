@@ -56,20 +56,6 @@ An apk file signed with a standard "debug" key will be generated named `"AnkiDro
  * `%root/res/layout/` contains the GUI layouts for most screens.
  * `%root/res/drawable-****/` contains the icons used throughout the app at [various resolutions](https://www.google.com/design/spec/style/icons.html).
 
-## Making "parallel" builds
-If you want to run several different versions of AnkiDroid side by side (e.g. as described in the [FAQ on using profiles](https://github.com/ankidroid/Anki-Android/wiki/FAQ#how-to-use-different-anki-profiles)), you need to edit the package ID (from com.ichi2.anki) in the following places so that every version of AnkiDroid that you install has a unique ID:
-
-* `applicationId` in `AnkiDroid/build.gradle`
-*  `android:authorities="com.ichi2.anki.flashcards"` and `com.ichi2.anki.permission.READ_WRITE_DATABASE` in `%AnkiDroidRoot/AndroidManifest.xml`
-* `android:targetPackage="com.ichi2.anki"` in `%AnkiDroidRoot/res/xml/*`
-* and optionally the application name `<string name="app_name">A.AnkiDroid</string>` in `%AnkiDroidRoot/res/values/constants.xml`
-
-There is a convenient bash script that automates this process, which you can run from a bash shell from the top level AnkiDroid directory as follows:
-
-`./tools/parallel-package-name.sh com.ichi2.anki.a AnkiDroid.A`
-
-After running the script you need to compile the source code to a .apk file as explained elsewhere in this guide. Note that these alternate builds will not work with the [AnkiDroid API](https://github.com/ankidroid/Anki-Android/wiki/AnkiDroid-API) as the API expects the standard ID.
-
 ## Issues to get started with
 If you are a new developer looking to contribute something to AnkiDroid, but you don't know what work to get started with, please take a look and see if there's anything that you'd like to work on in the issue tracker. In particular, [issues with the label "HelpWanted"](https://github.com/ankidroid/Anki-Android/labels/HelpWanted) are tasks that have been specially highlighted as work that we'd really like to have done, but don't have time to do ourselves. 
 
@@ -141,6 +127,29 @@ gradlew.bat assembleDebug
 
 An apk file signed with a standard "debug" key will be generated named `"AnkiDroid-debug.apk"` in:
 `%AnkiDroidRoot%/AnkiDroid/build/outputs/apk/`
+
+## Dealing with translations
+As described in the [contributing wiki](https://github.com/ankidroid/Anki-Android/wiki/Contributing#translate-ankidroid), AnkiDroid localization is done through the Crowdin platform. Developers should basically ignore the translations, working only with the English strings, and one of the project owners will handle the syncing of the translations. The process works as follows:
+
+* Developers can freely add, delete, or modify strings in English and commit to git
+* A project owner will run a script that pushes those changes to the crowdin platform
+* Translators will see any new untranslated strings on crowdin and submit their translations
+* Before release a project owner will run another script which pulls all the current translations from crowdin and overwrites the existing files
+* These new files are then committed and pushed to github
+
+## Making "parallel" builds
+If you want to run several different versions of AnkiDroid side by side (e.g. as described in the [FAQ on using profiles](https://github.com/ankidroid/Anki-Android/wiki/FAQ#how-to-use-different-anki-profiles)), you need to edit the package ID (from com.ichi2.anki) in the following places so that every version of AnkiDroid that you install has a unique ID:
+
+* `applicationId` in `AnkiDroid/build.gradle`
+*  `android:authorities="com.ichi2.anki.flashcards"` and `com.ichi2.anki.permission.READ_WRITE_DATABASE` in `%AnkiDroidRoot/AndroidManifest.xml`
+* `android:targetPackage="com.ichi2.anki"` in `%AnkiDroidRoot/res/xml/*`
+* and optionally the application name `<string name="app_name">A.AnkiDroid</string>` in `%AnkiDroidRoot/res/values/constants.xml`
+
+There is a convenient bash script that automates this process, which you can run from a bash shell from the top level AnkiDroid directory as follows:
+
+`./tools/parallel-package-name.sh com.ichi2.anki.a AnkiDroid.A`
+
+After running the script you need to compile the source code to a .apk file as explained elsewhere in this guide. Note that these alternate builds will not work with the [AnkiDroid API](https://github.com/ankidroid/Anki-Android/wiki/AnkiDroid-API) as the API expects the standard ID.
 
 ## Anki database structure
 See the [[separate wiki page|Database-Structure]] for a description of the database structure
