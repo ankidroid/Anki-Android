@@ -438,8 +438,8 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     @Override
-    public void fillFlashcard() {
-        super.fillFlashcard();
+    public void fillFlashcard(CardDisplay cardDisplay) {
+        super.fillFlashcard(cardDisplay);
         if (!sDisplayAnswer) {
             if (mShowWhiteboard && mWhiteboard != null) {
                 mWhiteboard.clear();
@@ -449,10 +449,10 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     @Override
-    public void displayCardQuestion() {
+    public void displayCardQuestion(CardDisplay cardDisplay) {
         // show timer, if activated in the deck's preferences
         initTimer();
-        super.displayCardQuestion();
+        super.displayCardQuestion(cardDisplay);
     }
 
     @Override

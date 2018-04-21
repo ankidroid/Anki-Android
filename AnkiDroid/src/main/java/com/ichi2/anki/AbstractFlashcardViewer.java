@@ -264,6 +264,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected Card mCurrentCard;
     private int mCurrentEase;
 
+    protected CardDisplay mCurrentCardDisplay;
+    private CardDisplay mFollowingCardDisplay;
+
     private boolean mButtonHeightSet = false;
 
     private boolean mConfigurationChanged = false;
@@ -561,7 +564,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 if (cardChanged) {
                     updateTypeAnswerInfo();
                 }
-                displayCardQuestion();
+                displayCardQuestion(mCurrentCardDisplay);
                 mCurrentCard.startTimer();
                 initTimer();
             }
@@ -607,7 +610,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 return;
             }
 
-            mCurrentCard = values[0].getCard();
+
+            mCurrentCardDisplay = new CardDisplay(values[0].getCard(), true);
+            mFollowingCardDisplay = new CardDisplay(values[0].getFollowingCard(), false);
+            mCurrentCard = mCurrentCardDisplay.getCard();
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
                 mNoMoreCards = true;
@@ -616,7 +622,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 updateTypeAnswerInfo();
                 hideProgressBar();
                 AbstractFlashcardViewer.this.unblockControls();
-                AbstractFlashcardViewer.this.displayCardQuestion();
+                AbstractFlashcardViewer.this.displayCardQuestion(mCurrentCardDisplay);
+                if( mUseViewPager) {
+                    AbstractFlashcardViewer.this.displayCardQuestion(mFollowingCardDisplay);
+                }
             }
 
             // Since reps are incremented on fetch of next card, we will miss counting the
@@ -1100,7 +1109,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                         new DeckTask.TaskData(mCurrentCard, true));
             } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
                 // nothing was changed by the note editor so just redraw the card
-                fillFlashcard();
+                fillFlashcard(mCurrentCardDisplay);
             }
         } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
             getCol().getSched().reset();
@@ -1976,7 +1985,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    protected void displayCardQuestion() {
+    protected void displayCardQuestion(CardDisplay cardDisplay) {
         Timber.d("displayCardQuestion()");
         sDisplayAnswer = false;
 
@@ -1984,10 +1993,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         String question;
         String displayString = "";
-        if (mCurrentCard.isEmpty()) {
+        if (cardDisplay.getCard().isEmpty()) {
             displayString = getResources().getString(R.string.empty_card_warning);
         } else {
-            question = mCurrentCard.q();
+            question = cardDisplay.getCard().q();
             question = getCol().getMedia().escapeImages(question);
             question = typeAnsQuestionFilter(question);
 
@@ -2005,7 +2014,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
         }
 
-        updateCard(displayString);
+        updateCard(cardDisplay, displayString);
         hideEaseButtons();
 
         // If the user wants to show the answer automatically
@@ -2093,7 +2102,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
 
         mIsSelecting = false;
-        updateCard(enrichWithQADiv(answer, true));
+        updateCard(mCurrentCardDisplay, enrichWithQADiv(answer, true));
         showEaseButtons();
         // If the user wants to show the next question automatically
         if (mPrefUseTimer) {
@@ -2168,30 +2177,31 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    private void updateCard(String content) {
+    private void updateCard(CardDisplay cardDisplay, String content) {
         Timber.d("updateCard()");
 
         mUseTimerDynamicMS = 0;
 
         // Add CSS for font color and font size
-        if (mCurrentCard == null) {
+        if (cardDisplay.getCard() == null) {
             mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
         }
 
-        if (sDisplayAnswer) {
-            addAnswerSounds(content);
-        } else {
-            // reset sounds each time first side of card is displayed, which may happen repeatedly without ever
-            // leaving the card (such as when edited)
-            mSoundPlayer.resetSounds();
-            mAnswerSoundsAdded = false;
-            mSoundPlayer.addSounds(mBaseUrl, content, Sound.SOUNDS_QUESTION);
-            if (mPrefUseTimer && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
-                addAnswerSounds(mCurrentCard.a());
+        if( cardDisplay.isCurrentCard() ) {
+            if (sDisplayAnswer) {
+                addAnswerSounds(content);
+            } else {
+                // reset sounds each time first side of card is displayed, which may happen repeatedly without ever
+                // leaving the card (such as when edited)
+                mSoundPlayer.resetSounds();
+                mAnswerSoundsAdded = false;
+                mSoundPlayer.addSounds(mBaseUrl, content, Sound.SOUNDS_QUESTION);
+                if (mPrefUseTimer && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
+                    addAnswerSounds(mCurrentCard.a());
+                }
             }
+            content = Sound.expandSounds(mBaseUrl, content);
         }
-
-        content = Sound.expandSounds(mBaseUrl, content);
 
         // In order to display the bold style correctly, we have to change
         // font-weight to 700
@@ -2231,16 +2241,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
 
         content = SmpToHtmlEntity(content);
-        mCardContent = new SpannedString(mCardTemplate.replace("::content::", content)
-                .replace("::style::", style.toString()).replace("::class::", cardClass));
+        cardDisplay.setContent(new SpannedString(mCardTemplate.replace("::content::", content)
+                .replace("::style::", style.toString()).replace("::class::", cardClass)));
         Timber.d("base url = %s", mBaseUrl);
 
-        if (SAVE_CARD_CONTENT) {
+        if (SAVE_CARD_CONTENT && cardDisplay.isCurrentCard()) {
             try {
                 FileOutputStream f = new FileOutputStream(new File(CollectionHelper.getCurrentAnkiDroidDirectory(this),
                         "card.html"));
                 try {
-                    f.write(mCardContent.toString().getBytes());
+                    f.write(cardDisplay.getContent().toString().getBytes());
                 } finally {
                     f.close();
                 }
@@ -2248,7 +2258,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 Timber.d(e, "failed to save card");
             }
         }
-        fillFlashcard();
+        fillFlashcard(cardDisplay);
 
         if (!mConfigurationChanged) {
             playSounds(false); // Play sounds if appropriate
@@ -2387,41 +2397,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    public void fillFlashcard() {
+    public void fillFlashcard(CardDisplay cardDisplay) {
         Timber.d("fillFlashcard()");
         Timber.d("base url = %s", mBaseUrl);
 
         if(mUseViewPager) {
             Timber.v("using ViewPager");
-
-            /*
-            mCard = createWebView();
-
-            CompatHelper.getCompat().setHTML5MediaAutoPlay(mNextCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
-            mCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
-            Timber.v("mCardContent.toString(): %s", mCardContent.toString());
-            mCard.setVisibility(View.VISIBLE);
-
-
-            int numChildrenBefore = mCardPager.getChildCount();
-            mCardPager.addView(mCard, mCardPager.getChildCount(), ViewGroup.LayoutParams.MATCH_PARENT);
-            int numChildrenAfter = mCardPager.getChildCount();
-
-            int currentItem = mCardPager.getCurrentItem();
-            //int nextItem = currentItem + 1;
-            // Timber.v("Setting Item to %d", nextItem);
-            //mCardPager.setCurrentItem(nextItem, true);
-
-            Timber.v("numChildrenBefore: %d numChildrenAfter: %d currentItem: %d", numChildrenBefore, numChildrenAfter, currentItem);
-
-            mCardPager.setVisibility(View.VISIBLE);
-            mCardFrame.setVisibility(View.GONE);
-
-            Timber.v("mCardPager.getRight(): %s getBottom(): %s", mCardPager.getRight(), mCardPager.getBottom());
-            Timber.v("mCard.getRight(): %s getBottom(): %s", mCard.getRight(), mCard.getBottom());
-            */
-
-            mPagerAdapter.setCardContent(mCardContent);
+            mPagerAdapter.setCardContent(cardDisplay.getContent(), cardDisplay.isCurrentCard());
 
 
         } else if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
@@ -2773,7 +2755,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            WebView card = m_currentWebView;
+            WebView card;
+            if( position == 0)
+                card = m_currentWebView;
+            else
+                card = m_followingView;
             container.addView(card);
             return card;
         }
@@ -2785,9 +2771,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public int getCount() {
+            int total = 0;
             if( m_currentWebView != null )
-                return 1;
-            return 0;
+                total += 1;
+            if( m_followingView != null)
+                total += 1;
+            return total;
         }
 
         @Override
@@ -2796,18 +2785,27 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
 
 
-        public void setCardContent(Spanned cardContent) {
-            if (m_currentWebView == null)
-            {
-                // initialize the web view
-                m_currentWebView = createWebView();
-                CompatHelper.getCompat().setHTML5MediaAutoPlay(m_currentWebView.getSettings(), true);
+        public void setCardContent(Spanned cardContent, boolean isCurrentCard) {
+            if (isCurrentCard) {
+                if (m_currentWebView == null) {
+                    // initialize the web view
+                    m_currentWebView = createWebView();
+                    CompatHelper.getCompat().setHTML5MediaAutoPlay(m_currentWebView.getSettings(), true);
+                }
+                m_currentWebView.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent.toString(), "text/html", "utf-8", null);
+            } else {
+                if (m_followingView == null) {
+                    // initialize the web view
+                    m_followingView = createWebView();
+                    CompatHelper.getCompat().setHTML5MediaAutoPlay(m_followingView.getSettings(), true);
+                }
+                m_followingView.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent.toString(), "text/html", "utf-8", null);
             }
-            m_currentWebView.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent.toString(), "text/html", "utf-8", null);
             notifyDataSetChanged();
         }
 
         private WebView m_currentWebView = null;
+        private WebView m_followingView = null;
     }
 
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189 */
