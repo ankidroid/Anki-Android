@@ -2402,8 +2402,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Timber.d("base url = %s", mBaseUrl);
 
         if(mUseViewPager) {
-            Timber.v("using ViewPager");
-            mPagerAdapter.setCardContent(cardDisplay.getContent(), cardDisplay.isCurrentCard());
+            Timber.v("using ViewPager, isCurrentCard: %s displayAnswer: %s", cardDisplay.isCurrentCard(), sDisplayAnswer);
+            mPagerAdapter.setCardContent(cardDisplay.getContent(), cardDisplay.isCurrentCard(), sDisplayAnswer);
 
 
         } else if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
@@ -2755,13 +2755,34 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            WebView card;
-            if( position == 0)
-                card = m_currentWebView;
-            else
-                card = m_followingView;
+            Timber.v("FlashCardViewPagerAdapter.instantiateItem position: %d answerMode(): %s", position, answerMode());
+
+            WebView card = null;
+
+            if( answerMode() )
+            {
+                if( position == 0)
+                    card = m_prevView;
+                if( position == 2 )
+                    card = m_nextView;
+                if( position == 1)
+                    card = m_currentView;
+            } else {
+                card = m_currentView;
+            }
+
             container.addView(card);
             return card;
+        }
+
+        @Override
+        public int getItemPosition (Object object) {
+            if( answerMode() && object == m_currentView) {
+                // report that the position of the "current" card has changed (used to be zero, will now be one)
+                return PagerAdapter.POSITION_NONE;
+            }
+            return PagerAdapter.POSITION_UNCHANGED;
+
         }
 
         @Override
@@ -2772,10 +2793,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public int getCount() {
             int total = 0;
-            if( m_currentWebView != null )
+            if( m_currentView != null )
                 total += 1;
-            if( m_followingView != null)
-                total += 1;
+            if( answerMode() )
+                total += 2;
             return total;
         }
 
@@ -2784,28 +2805,42 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             return view == o;
         }
 
+        private boolean answerMode() {
+            return mShowingAnswer && m_prevView != null && m_nextView != null;
+        }
 
-        public void setCardContent(Spanned cardContent, boolean isCurrentCard) {
+        public void setCardContent(Spanned cardContent, boolean isCurrentCard, boolean displayAnswer) {
             if (isCurrentCard) {
-                if (m_currentWebView == null) {
+                if (m_currentView == null) {
                     // initialize the web view
-                    m_currentWebView = createWebView();
-                    CompatHelper.getCompat().setHTML5MediaAutoPlay(m_currentWebView.getSettings(), true);
+                    m_currentView = createWebView();
+                    CompatHelper.getCompat().setHTML5MediaAutoPlay(m_currentView.getSettings(), true);
                 }
-                m_currentWebView.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent.toString(), "text/html", "utf-8", null);
-            } else {
-                if (m_followingView == null) {
-                    // initialize the web view
-                    m_followingView = createWebView();
-                    CompatHelper.getCompat().setHTML5MediaAutoPlay(m_followingView.getSettings(), true);
-                }
-                m_followingView.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent.toString(), "text/html", "utf-8", null);
+                m_currentView.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent.toString(), "text/html", "utf-8", null);
             }
+
+            if (! isCurrentCard) {
+                Timber.v("displaying prev/next cards");
+
+                m_prevView = createWebView();
+                CompatHelper.getCompat().setHTML5MediaAutoPlay(m_prevView .getSettings(), true);
+                m_prevView.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent.toString(), "text/html", "utf-8", null);
+
+                m_nextView = createWebView();
+                CompatHelper.getCompat().setHTML5MediaAutoPlay(m_nextView  .getSettings(), true);
+                m_nextView .loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent.toString(), "text/html", "utf-8", null);
+
+            }
+
+            mShowingAnswer = displayAnswer;
+
             notifyDataSetChanged();
         }
 
-        private WebView m_currentWebView = null;
-        private WebView m_followingView = null;
+        private WebView m_prevView = null;
+        private WebView m_currentView = null;
+        private WebView m_nextView = null;
+        private boolean mShowingAnswer = false;
     }
 
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189 */
