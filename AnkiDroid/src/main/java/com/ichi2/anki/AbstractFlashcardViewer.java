@@ -41,6 +41,8 @@ import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.text.ClipboardManager;
 import android.text.SpannableString;
@@ -231,6 +233,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private FrameLayout mCardContainer;
     private WebView mCard;
     private WebView mNextCard;
+    private ViewPager mCardPager;
+    private FlashCardViewPagerAdapter mPagerAdapter;
     private FrameLayout mCardFrame;
     private FrameLayout mTouchLayer;
     private TextView mTextBarNew;
@@ -281,6 +285,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * bug in some versions of Android.
      */
     private boolean mUseQuickUpdate = false;
+
+    /**
+     * Use ViewPager for flashcards
+     */
+    private boolean mUseViewPager = true;
 
     /**
      * Swipe Detection
@@ -1349,11 +1358,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
 
         mTopBarLayout = (RelativeLayout) findViewById(R.id.top_bar);
+        mCardPager = (ViewPager) findViewById(R.id.flashcard_pager);
         mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
         mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
-        mTouchLayer.setOnTouchListener(mGestureListener);
-        if (!mDisableClipboard && mLongClickWorkaround) {
-            mTouchLayer.setOnLongClickListener(mLongClickListener);
+
+        if( ! mUseViewPager) {
+            mTouchLayer.setOnTouchListener(mGestureListener);
+            if (!mDisableClipboard && mLongClickWorkaround) {
+                mTouchLayer.setOnLongClickListener(mLongClickListener);
+            }
+        } else {
+            mPagerAdapter = new FlashCardViewPagerAdapter();
+            mCardPager.setAdapter(mPagerAdapter);
         }
         if (!mDisableClipboard) {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -2364,7 +2380,42 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public void fillFlashcard() {
         Timber.d("fillFlashcard()");
         Timber.d("base url = %s", mBaseUrl);
-        if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
+
+        if(mUseViewPager) {
+            Timber.v("using ViewPager");
+
+            /*
+            mCard = createWebView();
+
+            CompatHelper.getCompat().setHTML5MediaAutoPlay(mNextCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
+            mCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
+            Timber.v("mCardContent.toString(): %s", mCardContent.toString());
+            mCard.setVisibility(View.VISIBLE);
+
+
+            int numChildrenBefore = mCardPager.getChildCount();
+            mCardPager.addView(mCard, mCardPager.getChildCount(), ViewGroup.LayoutParams.MATCH_PARENT);
+            int numChildrenAfter = mCardPager.getChildCount();
+
+            int currentItem = mCardPager.getCurrentItem();
+            //int nextItem = currentItem + 1;
+            // Timber.v("Setting Item to %d", nextItem);
+            //mCardPager.setCurrentItem(nextItem, true);
+
+            Timber.v("numChildrenBefore: %d numChildrenAfter: %d currentItem: %d", numChildrenBefore, numChildrenAfter, currentItem);
+
+            mCardPager.setVisibility(View.VISIBLE);
+            mCardFrame.setVisibility(View.GONE);
+
+            Timber.v("mCardPager.getRight(): %s getBottom(): %s", mCardPager.getRight(), mCardPager.getBottom());
+            Timber.v("mCard.getRight(): %s getBottom(): %s", mCard.getRight(), mCard.getBottom());
+            */
+
+            mPagerAdapter.isReady();
+            mPagerAdapter.notifyDataSetChanged();
+
+
+        } else if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
             CompatHelper.getCompat().setHTML5MediaAutoPlay(mNextCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
             mNextCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
             mNextCard.setVisibility(View.VISIBLE);
@@ -2575,7 +2626,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * @return true if we should use a single WebView
      */
     private boolean shouldUseQuickUpdate() {
-        return !mPrefSafeDisplay;
+        // return !mPrefSafeDisplay;
+        return false;
     }
 
 
@@ -2703,6 +2755,49 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     protected void refreshActionBar() {
         supportInvalidateOptionsMenu();
+    }
+
+    class FlashCardViewPagerAdapter extends PagerAdapter {
+
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            WebView card = createWebView();
+
+            CompatHelper.getCompat().setHTML5MediaAutoPlay(mNextCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
+            card.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
+            Timber.v("mCardContent.toString(): %s", mCardContent.toString());
+            card.setVisibility(View.VISIBLE);
+
+            container.addView(card);
+
+            return card;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View)object);
+        }
+
+        @Override
+        public int getCount() {
+            if( mReady )
+                return 2;
+            return 0;
+        }
+
+
+        @Override
+        public boolean isViewFromObject(View view, Object o) {
+            return view == o;
+        }
+
+        public void isReady()
+        {
+            mReady = true;
+        }
+
+        private boolean mReady = false;
     }
 
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189 */
