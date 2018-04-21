@@ -2103,6 +2103,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
             }
         }
+
+        Timber.d("displayCardAnswer() end");
     }
 
 
@@ -2251,6 +2253,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (!mConfigurationChanged) {
             playSounds(false); // Play sounds if appropriate
         }
+
+        Timber.d("updateCard() end");
     }
 
 
@@ -2279,6 +2283,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      *            pressing the keyboard shortcut R on the desktop
      */
     protected void playSounds(boolean doAudioReplay) {
+        Timber.v("playSounds()");
+
         boolean replayQuestion = getConfigForCurrentCard().optBoolean("replayq", true);
 
         if (getConfigForCurrentCard().optBoolean("autoplay", false) || doAudioReplay) {
@@ -2291,10 +2297,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     // only when all of the above are true will question be played with answer, to match desktop
                     mSoundPlayer.playSounds(Sound.SOUNDS_QUESTION_AND_ANSWER);
                 } else if (sDisplayAnswer) {
+                    Timber.v("playSounds() before play");
                     mSoundPlayer.playSounds(Sound.SOUNDS_ANSWER);
                     if (mPrefUseTimer) {
                         mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(Sound.SOUNDS_ANSWER);
                     }
+                    Timber.v("playSounds() after play");
                 } else { // question is displayed
                     mSoundPlayer.playSounds(Sound.SOUNDS_QUESTION);
                     // If the user wants to show the answer automatically
@@ -2316,6 +2324,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 }
             }
         }
+
+        Timber.v("playSounds() end");
     }
 
     /**
@@ -2411,8 +2421,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             Timber.v("mCard.getRight(): %s getBottom(): %s", mCard.getRight(), mCard.getBottom());
             */
 
-            mPagerAdapter.isReady();
-            mPagerAdapter.notifyDataSetChanged();
+            mPagerAdapter.setCardContent(mCardContent);
 
 
         } else if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
@@ -2435,6 +2444,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (!sDisplayAnswer) {
             updateForNewCard();
         }
+
+        Timber.v("fillFlashcard() end");
     }
 
 
@@ -2762,15 +2773,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            WebView card = createWebView();
-
-            CompatHelper.getCompat().setHTML5MediaAutoPlay(mNextCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
-            card.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
-            Timber.v("mCardContent.toString(): %s", mCardContent.toString());
-            card.setVisibility(View.VISIBLE);
-
+            WebView card = m_currentWebView;
             container.addView(card);
-
             return card;
         }
 
@@ -2781,23 +2785,29 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public int getCount() {
-            if( mReady )
-                return 2;
+            if( m_currentWebView != null )
+                return 1;
             return 0;
         }
-
 
         @Override
         public boolean isViewFromObject(View view, Object o) {
             return view == o;
         }
 
-        public void isReady()
-        {
-            mReady = true;
+
+        public void setCardContent(Spanned cardContent) {
+            if (m_currentWebView == null)
+            {
+                // initialize the web view
+                m_currentWebView = createWebView();
+                CompatHelper.getCompat().setHTML5MediaAutoPlay(m_currentWebView.getSettings(), true);
+            }
+            m_currentWebView.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent.toString(), "text/html", "utf-8", null);
+            notifyDataSetChanged();
         }
 
-        private boolean mReady = false;
+        private WebView m_currentWebView = null;
     }
 
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189 */
