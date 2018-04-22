@@ -1459,6 +1459,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 }
                 private int mCurrentPosition = 1;
             });
+
+            mQuestionCardPager.setVisibility(View.VISIBLE);
+            mAnswerCardPager.setVisibility(View.VISIBLE);
+            mQuestionCardPager.bringToFront();
         }
         if (!mDisableClipboard) {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -2131,16 +2135,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     public void showQuestionCardPager() {
-        mQuestionCardPager.setVisibility(View.VISIBLE);
-        mAnswerCardPager.setVisibility(View.INVISIBLE);
+        //mQuestionCardPager.setVisibility(View.VISIBLE);
+        //mAnswerCardPager.setVisibility(View.INVISIBLE);
+        mQuestionCardPager.bringToFront();
 
         // center the answer pager
         mAnswerCardPager.setCurrentItem(1);
     }
 
     public void showAnswerCardPager() {
-        mQuestionCardPager.setVisibility(View.INVISIBLE);
-        mAnswerCardPager.setVisibility(View.VISIBLE);
+        //mQuestionCardPager.setVisibility(View.INVISIBLE);
+        //mAnswerCardPager.setVisibility(View.VISIBLE);
+        mAnswerCardPager.bringToFront();
 
         // center the question pager
         mQuestionCardPager.setCurrentItem(1);
