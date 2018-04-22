@@ -233,8 +233,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private FrameLayout mCardContainer;
     private WebView mCard;
     private WebView mNextCard;
-    private ViewPager mCardPager;
-    private FlashCardViewPagerAdapter mPagerAdapter;
+    private ViewPager mQuestionCardPager;
+    private ViewPager mAnswerCardPager;
+    private FlashCardViewPagerAdapter mQuestionPagerAdapter;
+    private FlashCardViewPagerAdapter mAnswerPagerAdapter;
     private FrameLayout mCardFrame;
     private FrameLayout mTouchLayer;
     private TextView mTextBarNew;
@@ -1367,7 +1369,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
 
         mTopBarLayout = (RelativeLayout) findViewById(R.id.top_bar);
-        mCardPager = (ViewPager) findViewById(R.id.flashcard_pager);
+        mQuestionCardPager = (ViewPager) findViewById(R.id.flashcard_question_pager);
+        mAnswerCardPager = (ViewPager) findViewById(R.id.flashcard_answer_pager);
         mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
         mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
 
@@ -1377,9 +1380,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mTouchLayer.setOnLongClickListener(mLongClickListener);
             }
         } else {
-            mPagerAdapter = new FlashCardViewPagerAdapter();
-            mCardPager.setAdapter(mPagerAdapter);
-            // mCardPager.setPageTransformer(true, new ZoomOutPageTransformer());
+            mQuestionPagerAdapter = new FlashCardViewPagerAdapter();
+            mQuestionCardPager.setAdapter(mQuestionPagerAdapter);
+            mQuestionCardPager.setCurrentItem(1);
+
+            mAnswerPagerAdapter = new FlashCardViewPagerAdapter();
+            mAnswerCardPager.setAdapter(mAnswerPagerAdapter );
+            mAnswerCardPager.setCurrentItem(1);
         }
         if (!mDisableClipboard) {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -2403,13 +2410,31 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Timber.d("base url = %s", mBaseUrl);
 
         if(mUseViewPager) {
+
             Timber.v("using ViewPager, isCurrentCard: %s displayAnswer: %s", cardDisplay.isCurrentCard(), sDisplayAnswer);
-            mPagerAdapter.setCardContent(cardDisplay.getContent(), cardDisplay.isCurrentCard(), sDisplayAnswer);
+
             if(sDisplayAnswer)
             {
-                mCardPager.setCurrentItem(1);
-            }
+                mAnswerPagerAdapter.setCardContent(cardDisplay.getContent(), cardDisplay.isCurrentCard(), sDisplayAnswer);
+                mQuestionCardPager.setVisibility(View.INVISIBLE);
+                mAnswerCardPager.setVisibility(View.VISIBLE);
 
+                // center the question ViewPager
+                mQuestionCardPager.setCurrentItem(1);
+            } else {
+                if(cardDisplay.isCurrentCard()) {
+                    mQuestionPagerAdapter.setCardContent(cardDisplay.getContent(), cardDisplay.isCurrentCard(), sDisplayAnswer);
+                } else {
+                    // we have the next question, set it as the non-current card on the answer pager
+                    // it will display as the card on either side of the "current" one
+                    mAnswerPagerAdapter.setCardContent(cardDisplay.getContent(), cardDisplay.isCurrentCard(), sDisplayAnswer);
+                }
+                mQuestionCardPager.setVisibility(View.VISIBLE);
+                mAnswerCardPager.setVisibility(View.INVISIBLE);
+
+                // center the answer ViewPager
+                mAnswerCardPager.setCurrentItem(1);
+            }
 
         } else if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
             CompatHelper.getCompat().setHTML5MediaAutoPlay(mNextCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
@@ -2839,18 +2864,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             return card;
         }
 
-        /*
-        @Override
-        public int getItemPosition (Object object) {
-            if( answerMode() && object == m_currentView) {
-                // report that the position of the "current" card has changed (used to be zero, will now be one)
-                return PagerAdapter.POSITION_NONE;
-            }
-            return PagerAdapter.POSITION_UNCHANGED;
-
-        }
-        */
-
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View)object);
@@ -2870,22 +2883,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             return mShowingAnswer && m_prevView != null && m_nextView != null;
         }
 
-        public void setCardContent(Spanned cardContent, boolean isCurrentCard, boolean displayAnswer) {
+        public void setCardContent(Spanned cardContent, boolean isCenter, boolean displayAnswer) {
 
-            Timber.v("FlashCardViewPagerAdapter.setCardContent() isCurrentCard: %s displayAnswer: %s cardContent: %s", isCurrentCard, displayAnswer, cardContent);
+            Timber.v("FlashCardViewPagerAdapter.setCardContent() isCenter: %s displayAnswer: %s cardContent: %s", isCenter, displayAnswer, cardContent);
 
-            if (isCurrentCard) {
+            if (isCenter) {
                 m_currentView.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent.toString(), "text/html", "utf-8", null);
             }
 
-            if (! isCurrentCard) {
+            if (! isCenter) {
                 m_prevView.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent.toString(), "text/html", "utf-8", null);
                 m_nextView .loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent.toString(), "text/html", "utf-8", null);
             }
 
             mShowingAnswer = displayAnswer;
 
-            notifyDataSetChanged();
         }
 
         private WebView m_prevView = null;

@@ -59,8 +59,14 @@
         android:contentDescription="@string/lookup_button_content" />
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/flashcard_pager"
+        android:id="@+id/flashcard_answer_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible" />
+        android:layout_height="match_parent" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/flashcard_question_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
 </FrameLayout>
