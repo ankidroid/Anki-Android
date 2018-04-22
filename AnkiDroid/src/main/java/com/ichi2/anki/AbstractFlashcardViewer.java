@@ -645,9 +645,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 hideProgressBar();
                 AbstractFlashcardViewer.this.unblockControls();
                 AbstractFlashcardViewer.this.displayCardQuestion(mCurrentCardDisplay);
-                if( mUseViewPager) {
-                    AbstractFlashcardViewer.this.displayCardQuestion(mFollowingCardDisplay);
-                }
             }
 
             // Since reps are incremented on fetch of next card, we will miss counting the
@@ -1403,6 +1400,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mQuestionPagerAdapter = new FlashCardViewPagerAdapter();
             mQuestionCardPager.setAdapter(mQuestionPagerAdapter);
             mQuestionCardPager.setCurrentItem(1);
+            //mQuestionCardPager.setPageTransformer(true, new DepthPageTransformer());
 
             mQuestionCardPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
@@ -1433,6 +1431,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mAnswerPagerAdapter = new FlashCardViewPagerAdapter();
             mAnswerCardPager.setAdapter(mAnswerPagerAdapter );
             mAnswerCardPager.setCurrentItem(1);
+            //mAnswerCardPager.setPageTransformer(true, new ZoomOutPageTransformer());
             mAnswerCardPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -1460,9 +1459,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 private int mCurrentPosition = 1;
             });
 
+            mQuestionCardPager.bringToFront();
             mQuestionCardPager.setVisibility(View.VISIBLE);
             mAnswerCardPager.setVisibility(View.VISIBLE);
-            mQuestionCardPager.bringToFront();
         }
         if (!mDisableClipboard) {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -2898,6 +2897,43 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 view.setAlpha(MIN_ALPHA +
                         (scaleFactor - MIN_SCALE) /
                                 (1 - MIN_SCALE) * (1 - MIN_ALPHA));
+
+            } else { // (1,+Infinity]
+                // This page is way off-screen to the right.
+                view.setAlpha(0);
+            }
+        }
+    }
+
+    public class DepthPageTransformer implements ViewPager.PageTransformer {
+        private static final float MIN_SCALE = 0.75f;
+
+        public void transformPage(View view, float position) {
+            int pageWidth = view.getWidth();
+
+            if (position < -1) { // [-Infinity,-1)
+                // This page is way off-screen to the left.
+                view.setAlpha(0);
+
+            } else if (position <= 0) { // [-1,0]
+                // Use the default slide transition when moving to the left page
+                view.setAlpha(1);
+                view.setTranslationX(0);
+                view.setScaleX(1);
+                view.setScaleY(1);
+
+            } else if (position <= 1) { // (0,1]
+                // Fade the page out.
+                view.setAlpha(1 - position);
+
+                // Counteract the default slide transition
+                view.setTranslationX(pageWidth * -position);
+
+                // Scale the page down (between MIN_SCALE and 1)
+                float scaleFactor = MIN_SCALE
+                        + (1 - MIN_SCALE) * (1 - Math.abs(position));
+                view.setScaleX(scaleFactor);
+                view.setScaleY(scaleFactor);
 
             } else { // (1,+Infinity]
                 // This page is way off-screen to the right.

@@ -28,8 +28,11 @@ public class CardDisplay {
      * Render Question and Answer content
      */
     public void renderCard(Collection collection, boolean prefCenterVertically, ReviewerExtRegistry extensions, int cardZoom, int imageZoom, boolean nightMode, String cardTemplate, String baseUrl) {
-        if( getCard() == null)
+        if( getCard() == null) {
+            setQuestionContent(new SpannedString(""));
+            setAnswerContent(new SpannedString(""));
             return;
+        }
 
         // render question
         String question = getCard().q();
