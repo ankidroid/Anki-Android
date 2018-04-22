@@ -632,8 +632,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mFollowingCardDisplay = new CardDisplay(card1, false);
             }
 
-            mCurrentCardDisplay.renderCard(getCol(), mPrefCenterVertically, mExtensions, mCardZoom, mImageZoom, mNightMode, mCardTemplate);
-            mFollowingCardDisplay.renderCard(getCol(), mPrefCenterVertically, mExtensions, mCardZoom, mImageZoom, mNightMode, mCardTemplate);
+            mCurrentCardDisplay.renderCard(getCol(), mPrefCenterVertically, mExtensions, mCardZoom, mImageZoom, mNightMode, mCardTemplate, mBaseUrl);
+            mFollowingCardDisplay.renderCard(getCol(), mPrefCenterVertically, mExtensions, mCardZoom, mImageZoom, mNightMode, mCardTemplate, mBaseUrl);
 
             mCurrentCard = mCurrentCardDisplay.getCard();
             if (mCurrentCard == null) {
@@ -2329,7 +2329,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     addAnswerSounds(cardDisplay.getCard().a());
                 }
             }
-            content = Sound.expandSounds(mBaseUrl, content);
+
         }
 
         // rendering of card content has been moved to CardDisplay

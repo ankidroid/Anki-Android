@@ -6,6 +6,7 @@ import android.text.SpannedString;
 import com.ichi2.anki.reviewer.ReviewerExtRegistry;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Sound;
 import com.ichi2.themes.HtmlColors;
 
 import timber.log.Timber;
@@ -26,7 +27,7 @@ public class CardDisplay {
     /**
      * Render Question and Answer content
      */
-    public void renderCard(Collection collection, boolean prefCenterVertically, ReviewerExtRegistry extensions, int cardZoom, int imageZoom, boolean nightMode, String cardTemplate) {
+    public void renderCard(Collection collection, boolean prefCenterVertically, ReviewerExtRegistry extensions, int cardZoom, int imageZoom, boolean nightMode, String cardTemplate, String baseUrl) {
         if( getCard() == null)
             return;
 
@@ -34,16 +35,19 @@ public class CardDisplay {
         String question = getCard().q();
         question = collection.getMedia().escapeImages(question);
         String questionContent = AbstractFlashcardViewer.enrichWithQADiv(question, false);
-        setQuestionContent(commonContentProcessing(questionContent, prefCenterVertically, extensions, cardZoom, imageZoom, nightMode, cardTemplate));
+        setQuestionContent(commonContentProcessing(questionContent, prefCenterVertically, extensions, cardZoom, imageZoom, nightMode, cardTemplate, baseUrl));
         // render answer
         String answer = getCard().a();
         answer = collection.getMedia().escapeImages(answer);
         String answerContent = AbstractFlashcardViewer.enrichWithQADiv(answer, true);
-        setAnswerContent(commonContentProcessing(answerContent, prefCenterVertically, extensions, cardZoom, imageZoom, nightMode, cardTemplate));
+        setAnswerContent(commonContentProcessing(answerContent, prefCenterVertically, extensions, cardZoom, imageZoom, nightMode, cardTemplate, baseUrl));
     }
 
-    private Spanned commonContentProcessing(String content, boolean prefCenterVertically, ReviewerExtRegistry extensions, int cardZoom, int imageZoom, boolean nightMode, String cardTemplate)
+    private Spanned commonContentProcessing(String content, boolean prefCenterVertically, ReviewerExtRegistry extensions, int cardZoom, int imageZoom, boolean nightMode, String cardTemplate, String baseUrl)
     {
+
+        content = Sound.expandSounds(baseUrl, content);
+
         // In order to display the bold style correctly, we have to change
         // font-weight to 700
         content = content.replace("font-weight:600;", "font-weight:700;");
