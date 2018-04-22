@@ -1379,6 +1379,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         } else {
             mPagerAdapter = new FlashCardViewPagerAdapter();
             mCardPager.setAdapter(mPagerAdapter);
+            // mCardPager.setPageTransformer(true, new ZoomOutPageTransformer());
         }
         if (!mDisableClipboard) {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -2197,7 +2198,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mAnswerSoundsAdded = false;
                 mSoundPlayer.addSounds(mBaseUrl, content, Sound.SOUNDS_QUESTION);
                 if (mPrefUseTimer && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
-                    addAnswerSounds(mCurrentCard.a());
+                    addAnswerSounds(cardDisplay.getCard().a());
                 }
             }
             content = Sound.expandSounds(mBaseUrl, content);
@@ -2208,7 +2209,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         content = content.replace("font-weight:600;", "font-weight:700;");
 
         // CSS class for card-specific styling
-        String cardClass = "card card" + (mCurrentCard.getOrd() + 1);
+        String cardClass = "card card" + (cardDisplay.getCard().getOrd() + 1);
 
         if (mPrefCenterVertically) {
             cardClass += " vertically_centered";
@@ -2235,7 +2236,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             cardClass += " night_mode";
             // If card styling doesn't contain any mention of the night_mode class then do color inversion as fallback
             // TODO: find more robust solution that won't match unrelated classes like "night_mode_old"
-            if (!mCurrentCard.css().contains(".night_mode")) {
+            if (!cardDisplay.getCard().css().contains(".night_mode")) {
                 content = HtmlColors.invertColors(content);
             }
         }
@@ -2404,6 +2405,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if(mUseViewPager) {
             Timber.v("using ViewPager, isCurrentCard: %s displayAnswer: %s", cardDisplay.isCurrentCard(), sDisplayAnswer);
             mPagerAdapter.setCardContent(cardDisplay.getContent(), cardDisplay.isCurrentCard(), sDisplayAnswer);
+            if(sDisplayAnswer)
+            {
+                mCardPager.setCurrentItem(1);
+            }
 
 
         } else if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
@@ -2750,7 +2755,61 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         supportInvalidateOptionsMenu();
     }
 
+    public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
+        private static final float MIN_SCALE = 0.85f;
+        private static final float MIN_ALPHA = 0.5f;
+
+        public void transformPage(View view, float position) {
+            int pageWidth = view.getWidth();
+            int pageHeight = view.getHeight();
+
+            if (position < -1) { // [-Infinity,-1)
+                // This page is way off-screen to the left.
+                view.setAlpha(0);
+
+            } else if (position <= 1) { // [-1,1]
+                // Modify the default slide transition to shrink the page as well
+                float scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position));
+                float vertMargin = pageHeight * (1 - scaleFactor) / 2;
+                float horzMargin = pageWidth * (1 - scaleFactor) / 2;
+                if (position < 0) {
+                    view.setTranslationX(horzMargin - vertMargin / 2);
+                } else {
+                    view.setTranslationX(-horzMargin + vertMargin / 2);
+                }
+
+                // Scale the page down (between MIN_SCALE and 1)
+                view.setScaleX(scaleFactor);
+                view.setScaleY(scaleFactor);
+
+                // Fade the page relative to its size.
+                view.setAlpha(MIN_ALPHA +
+                        (scaleFactor - MIN_SCALE) /
+                                (1 - MIN_SCALE) * (1 - MIN_ALPHA));
+
+            } else { // (1,+Infinity]
+                // This page is way off-screen to the right.
+                view.setAlpha(0);
+            }
+        }
+    }
+
     class FlashCardViewPagerAdapter extends PagerAdapter {
+
+        public FlashCardViewPagerAdapter() {
+            m_currentView = createWebView();
+            CompatHelper.getCompat().setHTML5MediaAutoPlay(m_currentView.getSettings(), true);
+            m_currentView.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", "", "text/html", "utf-8", null);
+
+            m_prevView = createWebView();
+            CompatHelper.getCompat().setHTML5MediaAutoPlay(m_prevView.getSettings(), true);
+            m_prevView.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", "", "text/html", "utf-8", null);
+
+            m_nextView = createWebView();
+            CompatHelper.getCompat().setHTML5MediaAutoPlay(m_nextView.getSettings(), true);
+            m_nextView.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", "", "text/html", "utf-8", null);
+
+        }
 
 
         @Override
@@ -2759,22 +2818,28 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
             WebView card = null;
 
-            if( answerMode() )
+            switch( position)
             {
-                if( position == 0)
+                case 0:
                     card = m_prevView;
-                if( position == 2 )
-                    card = m_nextView;
-                if( position == 1)
+                    break;
+                case 1:
                     card = m_currentView;
-            } else {
-                card = m_currentView;
+                    break;
+                case 2:
+                    card = m_nextView;
+                    break;
+                default:
+                    break;
             }
 
             container.addView(card);
+            // card.setVisibility(View.VISIBLE);
+
             return card;
         }
 
+        /*
         @Override
         public int getItemPosition (Object object) {
             if( answerMode() && object == m_currentView) {
@@ -2784,6 +2849,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             return PagerAdapter.POSITION_UNCHANGED;
 
         }
+        */
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
@@ -2792,12 +2858,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public int getCount() {
-            int total = 0;
-            if( m_currentView != null )
-                total += 1;
-            if( answerMode() )
-                total += 2;
-            return total;
+            return 3;
         }
 
         @Override
@@ -2810,26 +2871,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
 
         public void setCardContent(Spanned cardContent, boolean isCurrentCard, boolean displayAnswer) {
+
+            Timber.v("FlashCardViewPagerAdapter.setCardContent() isCurrentCard: %s displayAnswer: %s cardContent: %s", isCurrentCard, displayAnswer, cardContent);
+
             if (isCurrentCard) {
-                if (m_currentView == null) {
-                    // initialize the web view
-                    m_currentView = createWebView();
-                    CompatHelper.getCompat().setHTML5MediaAutoPlay(m_currentView.getSettings(), true);
-                }
                 m_currentView.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent.toString(), "text/html", "utf-8", null);
             }
 
             if (! isCurrentCard) {
-                Timber.v("displaying prev/next cards");
-
-                m_prevView = createWebView();
-                CompatHelper.getCompat().setHTML5MediaAutoPlay(m_prevView .getSettings(), true);
                 m_prevView.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent.toString(), "text/html", "utf-8", null);
-
-                m_nextView = createWebView();
-                CompatHelper.getCompat().setHTML5MediaAutoPlay(m_nextView  .getSettings(), true);
                 m_nextView .loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent.toString(), "text/html", "utf-8", null);
-
             }
 
             mShowingAnswer = displayAnswer;
