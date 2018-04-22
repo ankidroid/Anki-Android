@@ -455,9 +455,13 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                     newCard._getQA(true);
                 }
 
-                Card followingCard = getCard(sched);
-                if( followingCard != null )
-                    followingCard._getQA();
+                Card followingCard = null;
+                if( oldCard == null ) {
+                    // first time we are requesting a card, request an extra one so that it can be rendered
+                    followingCard = getCard(sched);
+                    if (followingCard != null)
+                        followingCard._getQA();
+                }
 
                 publishProgress(new TaskData(newCard, followingCard));
                 db.getDatabase().setTransactionSuccessful();
