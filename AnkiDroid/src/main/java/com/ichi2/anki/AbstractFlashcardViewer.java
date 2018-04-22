@@ -399,16 +399,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private View.OnClickListener mFlipCardListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Timber.i("AbstractFlashcardViewer:: Show answer button pressed");
-            // Ignore what is most likely an accidental double-tap.
-            if (SystemClock.elapsedRealtime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
-                return;
-            }
-            mLastClickTime = SystemClock.elapsedRealtime();
-            mTimeoutHandler.removeCallbacks(mShowAnswerTask);
-            displayCardAnswer();
+            showAnswerClicked();
         }
     };
+
+    public void showAnswerClicked()
+    {
+        Timber.i("AbstractFlashcardViewer:: Show answer button pressed");
+        // Ignore what is most likely an accidental double-tap.
+        if (SystemClock.elapsedRealtime() - mLastClickTime < DOUBLE_TAP_IGNORE_THRESHOLD) {
+            return;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
+        mTimeoutHandler.removeCallbacks(mShowAnswerTask);
+        displayCardAnswer();
+    }
 
     private View.OnClickListener mSelectEaseHandler = new View.OnClickListener() {
         @Override
@@ -1383,6 +1388,33 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mQuestionPagerAdapter = new FlashCardViewPagerAdapter();
             mQuestionCardPager.setAdapter(mQuestionPagerAdapter);
             mQuestionCardPager.setCurrentItem(1);
+
+            mQuestionCardPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                }
+                @Override
+                public void onPageSelected(int position) {
+                    mCurrentPosition = position;
+                }
+                @Override
+                public void onPageScrollStateChanged(int state) {
+                    if(ViewPager.SCROLL_STATE_IDLE == state){
+                        //Scrolling finished. Do something.
+                        if(mCurrentPosition != 1)
+                        {
+                            // user scrolled to one of the sides
+                            Timber.v("Question Pager: scrolled to one of the sides");
+
+                            // show answer
+                            showAnswerClicked();
+
+                        }
+                    }
+                }
+
+                private int mCurrentPosition = 1;
+            });
 
             mAnswerPagerAdapter = new FlashCardViewPagerAdapter();
             mAnswerCardPager.setAdapter(mAnswerPagerAdapter );
