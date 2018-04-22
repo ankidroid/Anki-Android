@@ -235,6 +235,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private WebView mNextCard;
     private ViewPager mQuestionCardPager;
     private ViewPager mAnswerCardPager;
+    private boolean mShowingQuestionCardPager = true;
+    private boolean mPagerFlipPending = false;
     private FlashCardViewPagerAdapter mQuestionPagerAdapter;
     private FlashCardViewPagerAdapter mAnswerPagerAdapter;
     private FrameLayout mCardFrame;
@@ -617,9 +619,22 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 return;
             }
 
+            Card card1 = values[0].getCard();
+            Card card2 = values[0].getFollowingCard();
 
-            mCurrentCardDisplay = new CardDisplay(values[0].getCard(), true);
-            mFollowingCardDisplay = new CardDisplay(values[0].getFollowingCard(), false);
+            if( mCurrentCardDisplay == null) {
+                // this is the first time we're getting a card
+                mCurrentCardDisplay = new CardDisplay(card1, true);
+                mFollowingCardDisplay = new CardDisplay(card2, false);
+            } else {
+                // this is not the first card. promote following card to current card
+                mCurrentCardDisplay = new CardDisplay(mFollowingCardDisplay.getCard(), true);
+                mFollowingCardDisplay = new CardDisplay(card1, false);
+            }
+
+            mCurrentCardDisplay.renderCard(getCol(), mPrefCenterVertically, mExtensions, mCardZoom, mImageZoom, mNightMode, mCardTemplate);
+            mFollowingCardDisplay.renderCard(getCol(), mPrefCenterVertically, mExtensions, mCardZoom, mImageZoom, mNightMode, mCardTemplate);
+
             mCurrentCard = mCurrentCardDisplay.getCard();
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
@@ -1412,13 +1427,38 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                         }
                     }
                 }
-
                 private int mCurrentPosition = 1;
             });
 
             mAnswerPagerAdapter = new FlashCardViewPagerAdapter();
             mAnswerCardPager.setAdapter(mAnswerPagerAdapter );
             mAnswerCardPager.setCurrentItem(1);
+            mAnswerCardPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                }
+                @Override
+                public void onPageSelected(int position) {
+                    mCurrentPosition = position;
+                }
+                @Override
+                public void onPageScrollStateChanged(int state) {
+                    if(ViewPager.SCROLL_STATE_IDLE == state){
+                        //Scrolling finished. Do something.
+                        if(mCurrentPosition == 0)
+                        {
+                            Timber.v("Answer Pager: user scrolled left, card not memorized");
+                            answerCard(EASE_1);
+
+                        } else if(mCurrentPosition == 2)
+                        {
+                            Timber.v("Answer Pager: user scrolled right, card memorized");
+                            answerCard(getRecommendedEase(false));
+                        }
+                    }
+                }
+                private int mCurrentPosition = 1;
+            });
         }
         if (!mDisableClipboard) {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -1653,6 +1693,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             public void onPageFinished(WebView view, String url) {
                 Timber.d("onPageFinished triggered");
                 view.loadUrl("javascript:onPageFinished();");
+                webViewPageFinished();
             }
         });
         // Set transparent color to prevent flashing white when night mode enabled
@@ -2066,9 +2107,44 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
         }
 
+        if(mUseViewPager)
+        {
+
+            // only update the non-visible pages
+
+            // set the answer on the sides
+            mQuestionPagerAdapter.setCardContent(mCurrentCardDisplay.getAnswerContent(), false);
+            // set the answer on the middle of the answer ViewPager
+            mAnswerPagerAdapter.setCardContent(mCurrentCardDisplay.getAnswerContent(), true);
+
+            showQuestionCardPager();
+
+            if(! mQuestionPagerAdapter.getFirstQuestionDisplayed())
+            {
+                // first time we're showing a question, set the question on the middle page
+                mQuestionPagerAdapter.setCardContent(mCurrentCardDisplay.getQuestionContent(), true);
+            }
+        }
+
         Timber.i("AbstractFlashcardViewer:: Question successfully shown for card id %d", mCurrentCard.getId());
     }
 
+
+    public void showQuestionCardPager() {
+        mQuestionCardPager.setVisibility(View.VISIBLE);
+        mAnswerCardPager.setVisibility(View.INVISIBLE);
+
+        // center the answer pager
+        mAnswerCardPager.setCurrentItem(1);
+    }
+
+    public void showAnswerCardPager() {
+        mQuestionCardPager.setVisibility(View.INVISIBLE);
+        mAnswerCardPager.setVisibility(View.VISIBLE);
+
+        // center the question pager
+        mQuestionCardPager.setCurrentItem(1);
+    }
 
     /**
      * Clean up the correct answer text, so it can be used for the comparison with the typed text
@@ -2151,6 +2227,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mTimeoutHandler.removeCallbacks(mShowQuestionTask);
                 mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
             }
+        }
+
+        if(mUseViewPager)
+        {
+
+            // only update the non-visible pages
+
+            // display the next question
+            mQuestionPagerAdapter.setCardContent(mFollowingCardDisplay.getQuestionContent(), true);
+            mAnswerPagerAdapter.setCardContent(mFollowingCardDisplay.getQuestionContent(), false);
+
+            // change visibility of pagers
+            showAnswerCardPager();
         }
 
         Timber.d("displayCardAnswer() end");
@@ -2243,54 +2332,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             content = Sound.expandSounds(mBaseUrl, content);
         }
 
-        // In order to display the bold style correctly, we have to change
-        // font-weight to 700
-        content = content.replace("font-weight:600;", "font-weight:700;");
-
-        // CSS class for card-specific styling
-        String cardClass = "card card" + (cardDisplay.getCard().getOrd() + 1);
-
-        if (mPrefCenterVertically) {
-            cardClass += " vertically_centered";
-        }
-
-        Timber.d("content card = \n %s", content);
-        StringBuilder style = new StringBuilder();
-        mExtensions.updateCssStyle(style);
-
-        // Zoom cards
-        if (mCardZoom != 100) {
-            style.append(String.format("body { zoom: %s }\n", mCardZoom / 100.0));
-        }
-
-        // Zoom images
-        if (mImageZoom != 100) {
-            style.append(String.format("img { zoom: %s }\n", mImageZoom / 100.0));
-        }
-
-        Timber.d("::style::", style);
-
-        if (mNightMode) {
-            // Enable the night-mode class
-            cardClass += " night_mode";
-            // If card styling doesn't contain any mention of the night_mode class then do color inversion as fallback
-            // TODO: find more robust solution that won't match unrelated classes like "night_mode_old"
-            if (!cardDisplay.getCard().css().contains(".night_mode")) {
-                content = HtmlColors.invertColors(content);
-            }
-        }
-
-        content = SmpToHtmlEntity(content);
-        cardDisplay.setContent(new SpannedString(mCardTemplate.replace("::content::", content)
-                .replace("::style::", style.toString()).replace("::class::", cardClass)));
-        Timber.d("base url = %s", mBaseUrl);
+        // rendering of card content has been moved to CardDisplay
 
         if (SAVE_CARD_CONTENT && cardDisplay.isCurrentCard()) {
             try {
                 FileOutputStream f = new FileOutputStream(new File(CollectionHelper.getCurrentAnkiDroidDirectory(this),
                         "card.html"));
                 try {
-                    f.write(cardDisplay.getContent().toString().getBytes());
+                    f.write(cardDisplay.getQuestionContent().toString().getBytes());
                 } finally {
                     f.close();
                 }
@@ -2315,7 +2364,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * @param text
      * @return
      */
-    private String SmpToHtmlEntity(String text) {
+    public static String SmpToHtmlEntity(String text) {
         StringBuffer sb = new StringBuffer();
         Matcher m = Pattern.compile("([^\u0000-\uFFFF])").matcher(text);
         while (m.find()) {
@@ -2443,13 +2492,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         if(mUseViewPager) {
 
+            // don't do anything here. updating of webviews is done in displayCardQuestion/displayCardAnswer
+            /*
             Timber.v("using ViewPager, isCurrentCard: %s displayAnswer: %s", cardDisplay.isCurrentCard(), sDisplayAnswer);
 
             if(sDisplayAnswer)
             {
                 mAnswerPagerAdapter.setCardContent(cardDisplay.getContent(), cardDisplay.isCurrentCard(), sDisplayAnswer);
-                mQuestionCardPager.setVisibility(View.INVISIBLE);
-                mAnswerCardPager.setVisibility(View.VISIBLE);
 
                 // center the question ViewPager
                 mQuestionCardPager.setCurrentItem(1);
@@ -2461,12 +2510,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     // it will display as the card on either side of the "current" one
                     mAnswerPagerAdapter.setCardContent(cardDisplay.getContent(), cardDisplay.isCurrentCard(), sDisplayAnswer);
                 }
-                mQuestionCardPager.setVisibility(View.VISIBLE);
-                mAnswerCardPager.setVisibility(View.INVISIBLE);
 
                 // center the answer ViewPager
                 mAnswerCardPager.setCurrentItem(1);
             }
+
+            */
 
         } else if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
             CompatHelper.getCompat().setHTML5MediaAutoPlay(mNextCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
@@ -2505,7 +2554,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * @param isAnswer if true then the class attribute is set to "answer", "question" otherwise.
      * @return
      */
-    private static String enrichWithQADiv(String content, boolean isAnswer) {
+    public static String enrichWithQADiv(String content, boolean isAnswer) {
         StringBuilder sb = new StringBuilder();
         sb.append("<div class=\"");
         if (isAnswer) {
@@ -2871,7 +2920,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            Timber.v("FlashCardViewPagerAdapter.instantiateItem position: %d answerMode(): %s", position, answerMode());
+            // Timber.v("FlashCardViewPagerAdapter.instantiateItem position: %d answerMode(): %s", position, answerMode());
 
             WebView card = null;
 
@@ -2911,16 +2960,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             return view == o;
         }
 
-        private boolean answerMode() {
-            return mShowingAnswer && m_prevView != null && m_nextView != null;
-        }
+        public void setCardContent(Spanned cardContent, boolean isCenter) {
 
-        public void setCardContent(Spanned cardContent, boolean isCenter, boolean displayAnswer) {
-
-            Timber.v("FlashCardViewPagerAdapter.setCardContent() isCenter: %s displayAnswer: %s cardContent: %s", isCenter, displayAnswer, cardContent);
+            Timber.v("FlashCardViewPagerAdapter.setCardContent() isCenter: %s cardContent: %s", isCenter, cardContent);
 
             if (isCenter) {
                 m_currentView.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent.toString(), "text/html", "utf-8", null);
+                m_firstQuestionDisplayed = true;
             }
 
             if (! isCenter) {
@@ -2928,14 +2974,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 m_nextView .loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent.toString(), "text/html", "utf-8", null);
             }
 
-            mShowingAnswer = displayAnswer;
-
         }
+
+        public boolean getFirstQuestionDisplayed() { return m_firstQuestionDisplayed; }
 
         private WebView m_prevView = null;
         private WebView m_currentView = null;
         private WebView m_nextView = null;
-        private boolean mShowingAnswer = false;
+        private boolean m_firstQuestionDisplayed = false;
+
+    }
+
+    public void webViewPageFinished()
+    {
+        Timber.v("webViewPageFinished");
     }
 
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189 */
