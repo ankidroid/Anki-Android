@@ -1359,6 +1359,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
 
 
+        // disable vibration for now
+        /*
         Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         if(vibrateAnswerCorrect) {
             // correct answer, use a double vibration pattern
@@ -1368,6 +1370,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             // wrong answer
             vibratorManager.vibrate(50);
         }
+        */
 
         // remove chosen answer hint after a while
         mTimerHandler.removeCallbacks(removeChosenAnswerText);
@@ -2140,6 +2143,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         // center the answer pager
         mAnswerCardPager.setCurrentItem(1);
+
     }
 
     public void showAnswerCardPager() {
