@@ -231,6 +231,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private View mMainLayout;
     private View mLookUpIcon;
     private FrameLayout mCardContainer;
+    private FrameLayout mFlashcardWebViews;
     private WebView mCard;
     private WebView mNextCard;
     private ViewPager mQuestionCardPager;
@@ -475,7 +476,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
             try {
                 if (event != null) {
-                    mCard.dispatchTouchEvent(event);
+                    // dispatch event to the framelayout which contains the main webview, and also the viewpagers
+                    // the topmost child will consume the events
+                    mFlashcardWebViews.dispatchTouchEvent(event);
                 }
             } catch (NullPointerException e) {
                 Timber.e(e, "Error on dispatching touch event");
@@ -1387,6 +1390,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void initLayout() {
         mMainLayout = findViewById(R.id.main_layout);
         mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
+        mFlashcardWebViews = (FrameLayout) findViewById(R.id.flashcard_webviews);
 
         mTopBarLayout = (RelativeLayout) findViewById(R.id.top_bar);
         mQuestionCardPager = (ViewPager) findViewById(R.id.flashcard_question_pager);
@@ -1394,11 +1398,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
         mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
 
+        mTouchLayer.setOnTouchListener(mGestureListener);
+        if (!mDisableClipboard && mLongClickWorkaround) {
+            mTouchLayer.setOnLongClickListener(mLongClickListener);
+        }
         if( ! mUseViewPager) {
-            mTouchLayer.setOnTouchListener(mGestureListener);
-            if (!mDisableClipboard && mLongClickWorkaround) {
-                mTouchLayer.setOnLongClickListener(mLongClickListener);
-            }
+            mCardFrame.bringToFront();
         } else {
             mQuestionPagerAdapter = new FlashCardViewPagerAdapter();
             mQuestionCardPager.setAdapter(mQuestionPagerAdapter);
@@ -3090,6 +3095,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            if( mUseViewPager ){
+                // we are using ViewPagers with WebViews inside, don't consume the fling event, this should be interpreted by the ViewPager
+                return false;
+            }
+
             // Go back to immersive mode if the user had temporarily exited it (and then execute swipe gesture)
             if (mPrefFullscreenReview > 0 &&
                     CompatHelper.getCompat().isImmersiveSystemUiVisible(AbstractFlashcardViewer.this)) {
