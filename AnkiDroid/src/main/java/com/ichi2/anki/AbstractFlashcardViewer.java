@@ -1702,8 +1702,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 webViewPageFinished();
             }
         });
-        // Set transparent color to prevent flashing white when night mode enabled
-        webView.setBackgroundColor(Color.argb(1, 0, 0, 0));
+        if (!mUseViewPager) {
+            // Set transparent color to prevent flashing white when night mode enabled
+            webView.setBackgroundColor(Color.argb(1, 0, 0, 0));
+        }
         return webView;
     }
 
