@@ -49,6 +49,7 @@
   <plurals name="delete_deck_message">
     <item quantity="one">Удалить карту из колоды %1$s? Содержится %2$d карта.</item>
     <item quantity="few">Удалить все карты из колоды %1$s? Содержится %2$d карты.</item>
+    <item quantity="many">Delete all cards in %1$s? It contains %2$d cards.</item>
     <item quantity="other">Удалить все карты из колоды %1$s? Содержится %2$d карт.</item>
   </plurals>
   <string name="delete_cram_deck_message">Вы уверены, что хотите отправить все карты из %s в их оригинальные колоды?</string>
@@ -73,7 +74,7 @@
   <string name="answering_error_message">Произошла ошибка при записи в коллекцию. Это может быть связано с тем, что база данных была ранее повреждена или что недостаточно места на диске.\n\nЕсли это случается часто, попробуйте проверить базу данных, восстановить коллекцию или восстановить из резервной копии. Нажмите для этого на «Настройки».\n\nОднако, дело может быть в ошибке  AnkiDroid; Пожалуйста, сообщите об ошибке, чтобы мы могли проверить это.</string>
   <string name="answering_error_report">Сообщить об ошибке</string>
   <string name="repair_deck_dialog">Вы действительно хотите восстановить базу данных?\n\nДо начала восстановления, копия базы даннх будет помещена в папку \'%s\'.</string>
-  <string name="intent_add_saved_information">Сохранённые данные</string>
+  <string name="intent_add_saved_information">Сохраненные данные</string>
   <string name="intent_add_clear_all">Очистить все</string>
   <string name="intent_aedict_empty">Категория «по умолчанию» является пустой</string>
   <string name="intent_aedict_category">При добавлении карты AnkiDroid удаляет все категории блокнота или добавляет одну с именем «default»</string>
@@ -95,7 +96,7 @@
   <string name="sd_card_full_title">SD карта переполнена</string>
   <string name="sd_card_almost_full_title">SD карта почти заполнена</string>
   <string name="restore_backup_title">Восстановить резервную копию?</string>
-  <string name="restore_backup">Ваша коллекция будет заменена более старой копией. Несохранённый прогресс будет потерян.</string>
+  <string name="restore_backup">Ваша коллекция будет заменена более старой копией. Несохраненный прогресс будет потерян.</string>
   <string name="dialog_cancel">Отменить</string>
   <string name="dialog_ok">OK</string>
   <string name="dialog_continue">Продолжить</string>

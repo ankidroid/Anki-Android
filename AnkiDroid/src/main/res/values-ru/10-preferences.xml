@@ -67,7 +67,7 @@
   <string name="about_version">Версия: </string>
   <!-- preferences.xml entries-->
   <string name="whiteboard_stroke_width">Толщина штриха</string>
-  <string name="whiteboard_black">Чёрные штрихи</string>
+  <string name="whiteboard_black">Черные штрихи</string>
   <string name="whiteboard_black_summ">Использует меньше памяти, если не в ночном режиме</string>
   <string name="write_answers_disable">Отключить ввод ответа</string>
   <string name="write_answers_disable_summ">Блокировать появление клавиатуры в картах, содержащих поле \"введите ответ\"</string>
@@ -156,7 +156,7 @@
   <string name="show_estimates">Показать кнопку времени</string>
   <string name="show_estimates_summ">Отображать время следующего повторения над кнопками ответа</string>
   <string name="show_progress">Показать оставшиеся</string>
-  <string name="show_progress_summ">Показывать счётчик оставшихся карт</string>
+  <string name="show_progress_summ">Показывать количество оставшихся карт</string>
   <string name="show_eta">Показывать ETA</string>
   <string name="show_eta_summ">Показывать оставшееся время</string>
   <string name="use_current">Колода для новых карточек</string>
@@ -206,6 +206,7 @@
   <plurals name="deck_conf_group_summ">
     <item quantity="one">конфигурация \"%1$s\" используется %2$d (раз)</item>
     <item quantity="few">конфигурация \"%1$s\" используется %2$d (раза)</item>
+    <item quantity="many">%1$s\n%2$d decks use this group</item>
     <item quantity="other">конфигурация \"%1$s\" используется %2$d (раз)</item>
   </plurals>
   <string name="deck_conf_new_cards">Новые карты</string>
@@ -214,7 +215,7 @@
   <string name="deck_conf_general">Общие</string>
   <string name="deck_conf_reminders">Напоминания</string>
   <string name="deck_conf_steps">Шаги (в минутах)</string>
-  <string name="deck_conf_order">Очерёдность</string>
+  <string name="deck_conf_order">Порядок</string>
   <string name="deck_conf_new_cards_day">Новых карт в день</string>
   <string name="deck_conf_graduating_ivl">Интервал - Хорошо</string>
   <string name="deck_conf_days">XXX дн.</string>
@@ -254,6 +255,7 @@
   <plurals name="deck_conf_set_subdecks_summ">
     <item quantity="one">%s подколода будет использовать конфигурацию</item>
     <item quantity="few">%s подколоды будут использовать конфигурацию</item>
+    <item quantity="many">%s subdecks will use this group</item>
     <item quantity="other">%s подколод будут использовать конфигурацию</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Установить для всех подколод</string>

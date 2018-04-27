@@ -49,7 +49,7 @@
   <string name="pref_cat_reviewing_summ">No hay configuración de revisor específica de mazo</string>
   <string name="pref_cat_reviewer_behaviour">Comportamiento</string>
   <string name="pref_cat_flashcard">Pantalla</string>
-  <string name="pref_cat_whiteboard">Pizarra blanca</string>
+  <string name="pref_cat_whiteboard">Pizarra</string>
   <string name="pref_cat_automatic_display">Mostrar respuesta automáticamente</string>
   <string name="pref_cat_appearance">Apariencia</string>
   <string name="pref_cat_appearance_summ">Cambiar temas y fuente predeterminada</string>
@@ -77,7 +77,7 @@
   <string name="text_selection_click_summ">Activa esta opción si no eres capaz de iniciar la selección de texto mediante un clic largo</string>
   <string name="dictionary">Diccionario de búsqueda</string>
   <string name="reset_languages">Restablecer idiomas</string>
-  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
+  <string name="reset_languages_summ">Reajuste de asignaciones de idioma (para texto a voz y diccionarios) para todos los mazos</string>
   <string name="reset_languages_question">¿Restablecer todas las asignaciones de idiomas?</string>
   <string name="reset_confirmation">Restablecer todos los estados</string>
   <string name="card_zoom">Zoom de la tarjeta</string>
@@ -90,10 +90,10 @@
   <string name="full_screen_system">Ocultar las barras de sistema</string>
   <string name="full_screen_complete">Ocultar las barras de sistema y los botones de respuesta</string>
   <string name="full_screen_error_gestures">Hay que habilitar los gestos para ocultar los botones de respuesta</string>
-  <string name="answer_buttons_position">Answer buttons position</string>
+  <string name="answer_buttons_position">Posición de botones de respuesta</string>
   <string-array name="answer_buttons_position_labels">
-    <item>Top</item>
-    <item>Bottom</item>
+    <item>Arriba</item>
+    <item>Abajo</item>
   </string-array>
   <string name="gestures">Habilitar gestos</string>
   <string name="gestures_summ">Asignar gestos a acciones tales como contestar o editar tarjetas.</string>
@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">Vibración</string>
   <string name="notification_minimum_cards_due_blink">Parpadeo de luz</string>
   <string name="timeout_answer_text">Visualización automática de la respuesta</string>
-  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
+  <string name="timeout_answer_summ">Mostrar respuesta automáticamente sin intervención del usuario. El retraso incluye tiempo para reproduciones automáticas de archivos de audio.</string>
   <string name="timeout_answer_seconds">Tiempo para mostrar respuesta</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Tiempo para mostrar la siguiente pregunta</string>
@@ -153,7 +153,7 @@
   <string name="show_estimates_summ">Mostrar el próximo repaso en los botones de respuesta</string>
   <string name="show_progress">Mostrar restante</string>
   <string name="show_progress_summ">Mostrar contador de tarjetas restantes</string>
-  <string name="show_eta">Show ETA</string>
+  <string name="show_eta">Mostrar tiempo restante</string>
   <string name="show_eta_summ">Mostrar el tiempo restante</string>
   <string name="use_current">Mazo para las nuevas tarjetas</string>
   <string name="new_spread">Posición de nuevas tarjetas</string>
@@ -203,7 +203,7 @@
   <string name="deck_conf_rev_cards">Repasos</string>
   <string name="deck_conf_lps_cards">Lapsos</string>
   <string name="deck_conf_general">General</string>
-  <string name="deck_conf_reminders">Reminders</string>
+  <string name="deck_conf_reminders">Recordatorios</string>
   <string name="deck_conf_steps">Pasos (en minutos)</string>
   <string name="deck_conf_order">Orden</string>
   <string name="deck_conf_new_cards_day">Nuevas tarjetas/día</string>
@@ -256,8 +256,8 @@
   <string name="deck_conf_cram_order">tarjetas seleccionadas por</string>
   <string name="deck_conf_cram_reschedule">Reprogramar</string>
   <string name="deck_conf_cram_reschedule_summ">Reprogramar tarjetas en base a mis respuestas en este mazo</string>
-  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
+  <string name="deck_conf_cram_steps">Pasos personalizados (en minutos)</string>
   <string name="deck_conf_cram_steps_summ">Definir pasos personalizados</string>
-  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
-  <string name="deck_conf_reminders_time">Remind at</string>
+  <string name="deck_conf_reminders_enabled">Activar notificaciones de recordatorio para este mazo</string>
+  <string name="deck_conf_reminders_time">Recordar en</string>
 </resources>

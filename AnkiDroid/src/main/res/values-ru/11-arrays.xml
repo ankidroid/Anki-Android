@@ -47,7 +47,7 @@
     <item>Кнопка ответа 2</item>
     <item>Кнопка ответа 3</item>
     <item>Кнопка ответа 4</item>
-    <item>Рекомендованный ответ (зелёный)</item>
+    <item>Рекомендуемый ответ (зеленый)</item>
     <item>Лучше, чем рекомендованный</item>
     <item>Откат</item>
     <item>Редактировать заметку</item>
@@ -99,6 +99,6 @@
   </string-array>
   <string-array name="night_theme_labels">
     <item>Чёрный</item>
-    <item>Тёмный</item>
+    <item>Темный</item>
   </string-array>
 </resources>

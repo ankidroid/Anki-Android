@@ -43,6 +43,7 @@
   <plurals name="card_browser_subtitle">
     <item quantity="one">Отобрана %d заметка</item>
     <item quantity="few">Отобрана %d заметки</item>
+    <item quantity="many">%d cards shown</item>
     <item quantity="other">Отобрана %d заметок</item>
   </plurals>
   <string name="card_browser_all_decks">Все колоды</string>

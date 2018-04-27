@@ -75,7 +75,7 @@
   <string name="intent_add_saved_information">Données sauvegardées</string>
   <string name="intent_add_clear_all">Effacer tout</string>
   <string name="intent_aedict_empty">La catégorie \'default\' est vide</string>
-  <string name="intent_aedict_category">Pour ajouter des cartes à AnkiDroid, enlevez toutes les catégories du Bloc-notes, ou créez une catégorie \'default\'</string>
+  <string name="intent_aedict_category">Pour ajouter des cartes à AnkiDroid, enlevez toutes les catégories du Bloc-notes, ou créez une catégorie « default »</string>
   <string name="custom_study_new_total_new">Nouvelles cartes dans le paquet : %s</string>
   <string name="custom_study_rev_total_rev">À revoir dans ce paquet : %s</string>
   <string name="custom_study_new_extend">Augmenter la limite de nouvelles cartes pour aujourd\'hui de</string>
@@ -90,7 +90,7 @@
   <string name="import_progress">• Importation de notes : %1$d%%\n• importation de cartes : %2$d%%\n• post-traitement : %3$d%%</string>
   <string name="import_update_details">Mise à jour de %1$d de %2$d notes existantes.</string>
   <string name="import_update_ignored">Certaines mises à jour ont été ignorées parce que le type de note a changé</string>
-  <string name="import_complete_count">Cartes supprimées : %d</string>
+  <string name="import_complete_count">Cartes importées : %d</string>
   <string name="sd_card_full_title">Carte SD pleine</string>
   <string name="sd_card_almost_full_title">Carte SD presque pleine</string>
   <string name="restore_backup_title">Restaurer la sauvegarde ?</string>

@@ -47,11 +47,13 @@
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">%1$d карта для повтора в %2$s</item>
     <item quantity="few">%1$d карты для повтора в %2$s</item>
+    <item quantity="many">%1$d cards due in %2$s</item>
     <item quantity="other">%1$d карт для повтора в %2$s</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">%1$d колода</item>
     <item quantity="few">%1$d колоды</item>
+    <item quantity="many">%1$d decks</item>
     <item quantity="other">%1$d колод</item>
   </plurals>
   <string name="widget_small">AnkiDroid Small</string>
@@ -59,11 +61,13 @@
   <plurals name="widget_cards_due">
     <item quantity="one">%d карта в очереди</item>
     <item quantity="few">%d карты в очереди</item>
+    <item quantity="many">%d cards due</item>
     <item quantity="other">%d карт в очереди</item>
   </plurals>
   <plurals name="widget_eta">
     <item quantity="one">Осталась %d минута</item>
     <item quantity="few">Осталось %d минуты</item>
+    <item quantity="many">%d minutes remaining</item>
     <item quantity="other">Осталось %d минут</item>
   </plurals>
   <string name="widget_add_note">Добавить заметку</string>

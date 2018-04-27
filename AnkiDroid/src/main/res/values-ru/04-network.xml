@@ -88,7 +88,7 @@
   <string name="sync_no_changes_message">Не найдено изменений.</string>
   <string name="sync_database_acknowledge">Коллекция синхронизирована</string>
   <string name="sync_log_error_specific">Ошибка синхронизации, тип: %1$s, сообщение: %2$s</string>
-  <string name="sync_corrupt_database">Ваша база данных повреждена. Пожалуйста исправьте её прежде чем повторить попытку синхронизации.\n\nСмотрите %s о восстановлении базы данных.</string>
+  <string name="sync_corrupt_database">Ваша база данных повреждена. Пожалуйста исправьте ее прежде чем повторить попытку синхронизации.\n\nСмотрите %s о восстановлении базы данных.</string>
   <string name="sync_too_busy">Сервер перегружен. Попробуйте еще раз позже.</string>
   <string name="sync_remote_db_error">Скачанная база данных была повреждена. Пожалуйста, попробуйте еще раз.</string>
   <string name="sync_overwrite_error">Текущая коллекция не может быть перезаписана загруженным файлом.</string>

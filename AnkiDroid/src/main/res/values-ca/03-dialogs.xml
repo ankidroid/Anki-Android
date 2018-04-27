@@ -58,7 +58,7 @@
     <item><![CDATA[<h2>%1$s: <br/> Flashcards per Android</h2>AnkiDroid és una aplicació de flashcards que és totalment compatible amb el programari d\'escriptori <a href=\"%2$s\"> Anki</a>. Podeu crear, descarregar i aprendre sobre aquest material en tant AnkiDroid o Anki i sincronitzar-los fàcilment amb AnkiWeb.]]></item>
     <item><![CDATA[Per ajudar-nos a fer millor la AnkiDroid, si us plau informeu els errors al <a href=\"%1$s\"> buscador d\'incidències</a>; noves idees són molt benvingudes. Trobeu respostes a la <a href=\"%2$s\"> wiki</a> o comenceu un debat al <a href=\"%3$s\"> fòrum</a>.]]></item>
     <item><![CDATA[AnkiDroid és <a href=\"%1$s\"> programari de font oberta <a/>, així que tothom es animat a <a href=\"%2$s\"> ser col·laborador</a> :-)]]></item>
-    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
+    <item><![CDATA[Le spersones que no saben programar també poden ajudar. Per exemple, pots <a href=\"%1$s\"> ajudar a traduir</a> AnkiDroid, actualitzar la wiki, proporcionar captures de pantalla o escriure en blog sobre AnkiDroid.]]></item>
     <item><![CDATA[AnkiDroid és alliberat sota la <a href=\"%1$s\"> llicència de GNU-GPL v3</a> i el codi font està disponible <a href=\"%2$s\"> a GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Previsualització</string>
@@ -87,10 +87,10 @@
   <string name="rebuild_custom_study_deck">S\'està reconstruïnt el paquet d\'estudi personalitzat. \nUn moment si us plau...</string>
   <string name="importing_collection">S\'està important la col. lecció. \nUn moment si us plau ...</string>
   <string name="import_media_count">S\'estant importació els continguts multimèdia %1$d%%\nun moment si us plau...</string>
-  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
-  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
-  <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
-  <string name="import_complete_count">Cards imported: %d</string>
+  <string name="import_progress">• Important notes: %1$d%%\n• important targetes: %2$d%%\n• post-processant: %3$d%%</string>
+  <string name="import_update_details">S\'ha actualitzat %1$d de %2$d notes existents.</string>
+  <string name="import_update_ignored">Algunes actualitzacions han estat ignorades perquè el tipus de nota ha canviat</string>
+  <string name="import_complete_count">Targetes importades: %d</string>
   <string name="sd_card_full_title">Targeta SD plena</string>
   <string name="sd_card_almost_full_title">Targeta SD gairebé plena</string>
   <string name="restore_backup_title">Restaurar la còpia de seguretat?</string>
@@ -127,8 +127,8 @@
   <string name="tags_dialog_option_new_cards">Nou</string>
   <string name="tags_dialog_option_due_cards">Venciment</string>
   <!-- Empty cards -->
-  <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
-  <string name="empty_cards_none">No empty cards</string>
-  <string name="empty_cards_count">Cards to delete: %d</string>
-  <string name="empty_cards_deleted">Cards deleted: %d</string>
+  <string name="emtpy_cards_finding">Trobar targetes buides&#8230;</string>
+  <string name="empty_cards_none">No hi ha targetes buides</string>
+  <string name="empty_cards_count">Targetes per eliminar: %d</string>
+  <string name="empty_cards_deleted">Targetes eliminades: %d</string>
 </resources>

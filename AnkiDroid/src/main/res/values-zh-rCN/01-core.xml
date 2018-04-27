@@ -125,12 +125,12 @@
   <string name="empty_cram_deck">清空强记模式牌组。\n请稍等&#8230;</string>
   <string name="custom_study_deck_name">自定义学习的进程</string>
   <string name="custom_study_deck_exists">请先重命名现有的自定义学习牌组。</string>
-  <string name="empty_deck">这个牌组是空的~</string>
+  <string name="empty_deck">这个牌组是空的.</string>
   <string name="studyoptions_empty">这个牌组是空的，请点击 + 按钮来添加内容。</string>
   <string name="studyoptions_limit_reached">达到每日学习限制</string>
   <string name="studyoptions_empty_schedule">计划中没有需要学习的卡片</string>
-  <string name="studyoptions_congrats_finished">恭喜！你已经完成了今天的学习任务。</string>
-  <string name="studyoptions_congrats_more_rev">已达到今天的复习数量限制，但仍有一些卡片需要复习。为了能有更好的记忆效果，请考虑在牌组选项中增加每天的复习数量。</string>
+  <string name="studyoptions_congrats_finished">恭喜！你已经完成了目前的学习任务。</string>
+  <string name="studyoptions_congrats_more_rev">已达到今天的复习数量限制，但仍有一些卡片需要复习。你可以选择在牌组选项中增加复习数量。</string>
   <string name="studyoptions_congrats_more_new">还有新卡牌待学习，但已达到每日上限。您可以增加设置中的每日学习上限，不过请留意，这会增加您短期的复习工作量。</string>
   <string name="studyoptions_congrats_custom">若要在正常计划之外学习，请点击下面的自定义学习按钮。</string>
   <string name="studyoptions_no_cards_due">没有卡片待复习。</string>

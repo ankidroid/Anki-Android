@@ -67,7 +67,7 @@
   </string-array>
   <string-array name="new_order_labels">
     <item>Tarjetas nuevas en orden aleatorio</item>
-    <item>Tarjetas nuevas en orden añadido</item>
+    <item>Tarjetas nuevas en orden de adición</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
     <item>Más antiguas primero</item>

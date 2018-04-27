@@ -117,11 +117,13 @@
   <plurals name="timebox_reached">
     <item quantity="one">%1$d карта изучена за %2$s сек</item>
     <item quantity="few">%1$d карты изучены за %2$s сек</item>
+    <item quantity="many">%1$d cards studied in %2$s</item>
     <item quantity="other">%1$d карт изучены за %2$s сек</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
     <item quantity="one">%1$d мин.</item>
     <item quantity="few">%1$d мин.</item>
+    <item quantity="many">%1$d minutes</item>
     <item quantity="other">%1$d мин.</item>
   </plurals>
   <string name="studyoptions_welcome_title">Добро пожаловать в AnkiDroid</string>
@@ -137,6 +139,7 @@
   <plurals name="factadder_cards_added">
     <item quantity="one">%d карта добавлена</item>
     <item quantity="few">%d карты добавлены</item>
+    <item quantity="many">%d cards added</item>
     <item quantity="other">%d карт добавлены</item>
   </plurals>
   <string name="help_title">Справка</string>
@@ -197,31 +200,37 @@
   <plurals name="time_span_seconds">
     <item quantity="one">%s сек.</item>
     <item quantity="few">%s сек.</item>
+    <item quantity="many">%s seconds</item>
     <item quantity="other">%s сек.</item>
   </plurals>
   <plurals name="time_span_minutes">
     <item quantity="one">%s мин.</item>
     <item quantity="few">%s мин.</item>
+    <item quantity="many">%s minutes</item>
     <item quantity="other">%s мин.</item>
   </plurals>
   <plurals name="time_span_hours">
     <item quantity="one">%s ч.</item>
     <item quantity="few">%s ч.</item>
+    <item quantity="many">%s hours</item>
     <item quantity="other">%s ч.</item>
   </plurals>
   <plurals name="time_span_days">
     <item quantity="one">%s дн.</item>
     <item quantity="few">%s дн.</item>
+    <item quantity="many">%s days</item>
     <item quantity="other">%s дн.</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="one">%s мес.</item>
+    <item quantity="one">%s месяц</item>
     <item quantity="few">%s мес.</item>
+    <item quantity="many">%s months</item>
     <item quantity="other">%s мес.</item>
   </plurals>
   <plurals name="time_span_years">
     <item quantity="one">%s год</item>
     <item quantity="few">%s года</item>
+    <item quantity="many">%s years</item>
     <item quantity="other">%s лет</item>
   </plurals>
   <!-- The reason for making a simple “< x” translatable are RTL
@@ -235,6 +244,7 @@
   <plurals name="reminder_text">
     <item quantity="one">%2$d новая карта для повторения в %1$s</item>
     <item quantity="few">%2$d новых карточки для повторения в %1$s</item>
+    <item quantity="many">%2$d new cards to review in %1$s</item>
     <item quantity="other">%2$d новых карт для повторения в %1$s</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->

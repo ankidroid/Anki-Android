@@ -49,6 +49,7 @@
   <plurals name="delete_deck_message">
     <item quantity="one">Usunąć wszystkie karty z %1$s? Jest tam %2$d karta.</item>
     <item quantity="few">Usunąć wszystkie karty z %1$s? Jest tam %2$d kart.</item>
+    <item quantity="many">Delete all cards in %1$s? It contains %2$d cards.</item>
     <item quantity="other">Usunąć wszystkie karty z %1$s? Jest tam %2$d kart.</item>
   </plurals>
   <string name="delete_cram_deck_message">Czy na pewno chcesz wysłać wszystkie karty w %s z powrotem do ich pierwotnych talii?</string>

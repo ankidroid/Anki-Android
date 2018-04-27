@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">Wibracje</string>
   <string name="notification_minimum_cards_due_blink">Migotanie</string>
   <string name="timeout_answer_text">Automatyczne wyświetlanie odpowiedzi</string>
-  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
+  <string name="timeout_answer_summ">Pokaż odpowiedź automatycznie bez interakcji z użytkownikiem. Opóźnienie czas automatycznego odtwarzania plików dźwiękowych.</string>
   <string name="timeout_answer_seconds">Czas do pokazania odpowiedzi</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Czas do pokazania kolejnego pytania</string>
@@ -198,6 +198,7 @@
   <plurals name="deck_conf_group_summ">
     <item quantity="one">Tej grupy używa %1$s\n%2$d talia</item>
     <item quantity="few">Tej grupy używa(ją) %1$s\n%2$d talia(e)</item>
+    <item quantity="many">%1$s\n%2$d decks use this group</item>
     <item quantity="other">Tej grupy używają %1$s\n%2$d talie</item>
   </plurals>
   <string name="deck_conf_new_cards">Nowe karty</string>
@@ -246,6 +247,7 @@
   <plurals name="deck_conf_set_subdecks_summ">
     <item quantity="one">Tej grupy używa Sub-talia %s</item>
     <item quantity="few">Tej grupy używa(ją) Sub-talia(e) %s</item>
+    <item quantity="many">%s subdecks will use this group</item>
     <item quantity="other">Tej grupy używają Sub-talie %s</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Ustaw dla wszystkich sub-talii</string>
@@ -258,7 +260,7 @@
   <string name="deck_conf_cram_order">karty zaznaczone przez</string>
   <string name="deck_conf_cram_reschedule">Kolejkuj ponownie</string>
   <string name="deck_conf_cram_reschedule_summ">Kolejkuj karty ponownie bazując na moich odpowiedziach w tej talii</string>
-  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
+  <string name="deck_conf_cram_steps">Własne kroki (w minutach)</string>
   <string name="deck_conf_cram_steps_summ">Zdefiniuj własne kroki</string>
   <string name="deck_conf_reminders_enabled">Włącz powiadomienia dla tej talii</string>
   <string name="deck_conf_reminders_time">Przypomnij o</string>

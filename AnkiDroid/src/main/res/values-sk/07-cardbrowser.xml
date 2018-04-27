@@ -43,6 +43,7 @@
   <plurals name="card_browser_subtitle">
     <item quantity="one">%d zobrazená kartička</item>
     <item quantity="few">%d zobrazené kartičky</item>
+    <item quantity="many">%d cards shown</item>
     <item quantity="other">%d zobrazených kartičiek</item>
   </plurals>
   <string name="card_browser_all_decks">Všetky balíčky</string>
