@@ -120,6 +120,14 @@ Sometimes when using the [AnkiWeb cloud sync service](https://ankidroid.org/docs
 
 In some very rare cases the AnkiDroid database can get corrupted, usually due to some error with the file system, or users trying to use a removable SD card (which is **not** officially supported). In such cases AnkiDroid will guide you through the steps that you can take to restore your data, but if you make a mistake here by choosing the wrong option you can always restore from one of the [automatic backups](https://ankidroid.org/docs/manual.html#backups).
 
+4) Change in device storage configuration
+
+By default, AnkiDroid stores its data in your device's default *user storage area* (the same place where your photos and downloads go). Note that this location is different from where your applications are installed, so uninstalling and reinstalling AnkiDroid will generally **not** have any affect your on your flashcard data. In the event that the AnkiDroid directory is changed to a new place without any existing flashcard data, a new empty collection will be created there, which may appear to you as if all of your flashcards have been lost.
+
+While unlikely, it's possible that somehow the storage configuration on your device was changed such that the default storage location mentioned above changed, and that your flashcard data is still remaining in the old location. You may also have inadvertently manually changed the AnkiDroid directory in the past (e.g. to a removable SD card?), which could be causing you problems now.
+
+In any case, if you have multiple partitions in your device, you might like to take a look around with a file explorer to see if you can find two folders in different locations named "AnkiDroid". If you do find a second location, it may have your flashcard data in it, and you can restore one of the backups from there. Note that we strongly recommend **not to** change it, but you can find the current location that AnkiDroid expects to find your data in `AnkiDroid settings > Advanced > AnkiDroid directory`. 
+
 ### Help! My collection is corrupted!
 Database corruption can occasionally happen for a small minority of users for reasons unknown to us. If this happens to you, we recommend taking the following course of action:
 
