@@ -47,7 +47,6 @@ import android.support.v7.app.ActionBar;
 import android.text.ClipboardManager;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.SpannedString;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
 import android.util.TypedValue;
@@ -87,7 +86,6 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
-import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
 
@@ -298,9 +296,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mUseQuickUpdate = false;
 
     /**
-     * Use ViewPager for flashcards
+     * Use ViewPager for flashcards to support swiping
      */
-    private boolean mUseViewPager = true;
+    private boolean mPrefUseViewPager = false;
 
     /**
      * Swipe Detection
@@ -1405,7 +1403,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (!mDisableClipboard && mLongClickWorkaround) {
             mTouchLayer.setOnLongClickListener(mLongClickListener);
         }
-        if( ! mUseViewPager) {
+        if( !mPrefUseViewPager) {
             mQuestionCardPager.setVisibility(View.INVISIBLE);
             mAnswerCardPager.setVisibility(View.INVISIBLE);
             mCardFrame.bringToFront();
@@ -1716,7 +1714,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 view.loadUrl("javascript:onPageFinished();");
             }
         });
-        if (!mUseViewPager) {
+        if (!mPrefUseViewPager) {
             // Set transparent color to prevent flashing white when night mode enabled
             webView.setBackgroundColor(Color.argb(1, 0, 0, 0));
         }
@@ -1908,6 +1906,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
         mPrefCenterVertically = preferences.getBoolean("centerVertically", false);
+        mPrefUseViewPager = preferences.getBoolean("useViewPager", false);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
         if (mGesturesEnabled) {
@@ -2132,7 +2131,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
         }
 
-        if(mUseViewPager)
+        if(mPrefUseViewPager)
         {
             // the "answer" ViewPager is currently displayed, however the user has scrolled to either side, indicating
             // they want to move on the next question.
@@ -2266,7 +2265,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
         }
 
-        if(mUseViewPager)
+        if(mPrefUseViewPager)
         {
 
             // only update the non-visible pages
@@ -2525,7 +2524,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Timber.d("base url = %s", mBaseUrl);
 
         // when using ViewPager, updating of webviews is done in displayCardQuestion/displayCardAnswer
-        if(! mUseViewPager) {
+        if(!mPrefUseViewPager) {
 
             // determine which card content we should show
             String cardContent = mCurrentCardDisplay.getQuestionContent().toString();
@@ -2879,7 +2878,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
     /**
-     * This objects manages data for the two ViewPagers when mUseViewPager is true. We use 3 WebViews, one in the middle
+     * This objects manages data for the two ViewPagers when mPrefUseViewPager is true. We use 3 WebViews, one in the middle
      * showing the main content, and two to the sides, which display the "next" content after swiping.
      */
     class FlashCardViewPagerAdapter extends PagerAdapter {
@@ -3024,7 +3023,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if( mUseViewPager ){
+            if(mPrefUseViewPager){
                 // we are using ViewPagers with WebViews inside, don't consume the fling event, this should be interpreted by the ViewPager
                 return false;
             }
