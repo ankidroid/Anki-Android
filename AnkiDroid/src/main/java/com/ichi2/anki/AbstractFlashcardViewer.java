@@ -581,7 +581,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 if (cardChanged) {
                     updateTypeAnswerInfo();
                 }
-                displayCardQuestion(mCurrentCardDisplay);
+                displayCardQuestion();
                 mCurrentCard.startTimer();
                 initTimer();
             }
@@ -661,7 +661,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 updateTypeAnswerInfo();
                 hideProgressBar();
                 AbstractFlashcardViewer.this.unblockControls();
-                AbstractFlashcardViewer.this.displayCardQuestion(mCurrentCardDisplay);
+                AbstractFlashcardViewer.this.displayCardQuestion();
             }
 
             // Since reps are incremented on fetch of next card, we will miss counting the
@@ -1147,7 +1147,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                         new DeckTask.TaskData(mCurrentCard, true));
             } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
                 // nothing was changed by the note editor so just redraw the card
-                fillFlashcard(mCurrentCardDisplay);
+                fillFlashcard();
             }
         } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
             getCol().getSched().reset();
@@ -2085,7 +2085,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    protected void displayCardQuestion(CardDisplay cardDisplay) {
+    protected void displayCardQuestion() {
         Timber.d("displayCardQuestion()");
         sDisplayAnswer = false;
 
@@ -2093,10 +2093,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         String question;
         String displayString = "";
-        if (cardDisplay.getCard().isEmpty()) {
+        if (mCurrentCard.isEmpty()) {
             displayString = getResources().getString(R.string.empty_card_warning);
         } else {
-            question = cardDisplay.getCard().q();
+            question = mCurrentCard.q();
             question = getCol().getMedia().escapeImages(question);
             question = typeAnsQuestionFilter(question);
 
@@ -2114,7 +2114,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
         }
 
-        updateCard(cardDisplay, displayString);
+        updateCard(displayString);
         hideEaseButtons();
 
         // If the user wants to show the answer automatically
@@ -2240,7 +2240,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
 
         mIsSelecting = false;
-        updateCard(mCurrentCardDisplay, enrichWithQADiv(answer, true));
+        updateCard(enrichWithQADiv(answer, true));
         showEaseButtons();
         // If the user wants to show the next question automatically
         if (mPrefUseTimer) {
@@ -2328,40 +2328,38 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    private void updateCard(CardDisplay cardDisplay, String content) {
+    private void updateCard(String content) {
         Timber.d("updateCard()");
 
         mUseTimerDynamicMS = 0;
 
         // Add CSS for font color and font size
-        if (cardDisplay.getCard() == null) {
+        if (mCurrentCard == null) {
             mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
         }
 
-        if( cardDisplay.isCurrentCard() ) {
-            if (sDisplayAnswer) {
-                addAnswerSounds(content);
-            } else {
-                // reset sounds each time first side of card is displayed, which may happen repeatedly without ever
-                // leaving the card (such as when edited)
-                mSoundPlayer.resetSounds();
-                mAnswerSoundsAdded = false;
-                mSoundPlayer.addSounds(mBaseUrl, content, Sound.SOUNDS_QUESTION);
-                if (mPrefUseTimer && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
-                    addAnswerSounds(cardDisplay.getCard().a());
-                }
+        if (sDisplayAnswer) {
+            addAnswerSounds(content);
+        } else {
+            // reset sounds each time first side of card is displayed, which may happen repeatedly without ever
+            // leaving the card (such as when edited)
+            mSoundPlayer.resetSounds();
+            mAnswerSoundsAdded = false;
+            mSoundPlayer.addSounds(mBaseUrl, content, Sound.SOUNDS_QUESTION);
+            if (mPrefUseTimer && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
+                addAnswerSounds(mCurrentCard.a());
             }
-
         }
+
 
         // rendering of card content has been moved to CardDisplay
 
-        if (SAVE_CARD_CONTENT && cardDisplay.isCurrentCard()) {
+        if (SAVE_CARD_CONTENT) {
             try {
                 FileOutputStream f = new FileOutputStream(new File(CollectionHelper.getCurrentAnkiDroidDirectory(this),
                         "card.html"));
                 try {
-                    f.write(cardDisplay.getQuestionContent().toString().getBytes());
+                    f.write(mCardContent.toString().getBytes());
                 } finally {
                     f.close();
                 }
@@ -2369,7 +2367,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 Timber.d(e, "failed to save card");
             }
         }
-        fillFlashcard(cardDisplay);
+        fillFlashcard();
 
         if (!mConfigurationChanged) {
             playSounds(false); // Play sounds if appropriate
@@ -2508,51 +2506,28 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    public void fillFlashcard(CardDisplay cardDisplay) {
+    public void fillFlashcard() {
         Timber.d("fillFlashcard()");
         Timber.d("base url = %s", mBaseUrl);
 
-        if(mUseViewPager) {
-
-            // don't do anything here. updating of webviews is done in displayCardQuestion/displayCardAnswer
-            /*
-            Timber.v("using ViewPager, isCurrentCard: %s displayAnswer: %s", cardDisplay.isCurrentCard(), sDisplayAnswer);
-
-            if(sDisplayAnswer)
-            {
-                mAnswerPagerAdapter.setCardContent(cardDisplay.getContent(), cardDisplay.isCurrentCard(), sDisplayAnswer);
-
-                // center the question ViewPager
-                mQuestionCardPager.setCurrentItem(1);
-            } else {
-                if(cardDisplay.isCurrentCard()) {
-                    mQuestionPagerAdapter.setCardContent(cardDisplay.getContent(), cardDisplay.isCurrentCard(), sDisplayAnswer);
-                } else {
-                    // we have the next question, set it as the non-current card on the answer pager
-                    // it will display as the card on either side of the "current" one
-                    mAnswerPagerAdapter.setCardContent(cardDisplay.getContent(), cardDisplay.isCurrentCard(), sDisplayAnswer);
-                }
-
-                // center the answer ViewPager
-                mAnswerCardPager.setCurrentItem(1);
+        // when using ViewPager, updating of webviews is done in displayCardQuestion/displayCardAnswer
+        if(! mUseViewPager) {
+            if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
+                CompatHelper.getCompat().setHTML5MediaAutoPlay(mNextCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
+                mNextCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
+                mNextCard.setVisibility(View.VISIBLE);
+                mCardFrame.removeView(mCard);
+                destroyWebView(mCard);
+                mCard = mNextCard;
+                mNextCard = createWebView();
+                mNextCard.setVisibility(View.GONE);
+                mCardFrame.addView(mNextCard, 0);
+            } else if (mCard != null) {
+                CompatHelper.getCompat().setHTML5MediaAutoPlay(mCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
+                mCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
             }
-
-            */
-
-        } else if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
-            CompatHelper.getCompat().setHTML5MediaAutoPlay(mNextCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
-            mNextCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
-            mNextCard.setVisibility(View.VISIBLE);
-            mCardFrame.removeView(mCard);
-            destroyWebView(mCard);
-            mCard = mNextCard;
-            mNextCard = createWebView();
-            mNextCard.setVisibility(View.GONE);
-            mCardFrame.addView(mNextCard, 0);
-        } else if (mCard != null) {
-            CompatHelper.getCompat().setHTML5MediaAutoPlay(mCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
-            mCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
         }
+
         if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
             switchTopBarVisibility(View.VISIBLE);
         }
