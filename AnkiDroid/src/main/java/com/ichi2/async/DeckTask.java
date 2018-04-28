@@ -457,7 +457,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
                 Card followingCard = null;
                 if( oldCard == null ) {
-                    // first time we are requesting a card, request an extra one so that it can be rendered
+                    // first time we are requesting a card, request an extra one so that it can be rendered ahead of time
                     followingCard = getCard(sched);
                     if (followingCard != null)
                         followingCard._getQA();
