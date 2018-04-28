@@ -188,12 +188,20 @@ public class Sched {
 
 
     public int[] counts() {
-        return counts(null);
+        return counts(null, null);
     }
 
 
-    public int[] counts(Card card) {
+    public int[] counts(Card card, Card followingCard) {
         int[] counts = {mNewCount, mLrnCount, mRevCount};
+        // this is the current card the user is reviewing
+        incrementCountsForCard(card, counts);
+        // this is the card queued up next
+        incrementCountsForCard(followingCard, counts);
+        return counts;
+    }
+
+    private void incrementCountsForCard(Card card, int[] counts) {
         if (card != null) {
             int idx = countIdx(card);
             if (idx == 1) {
@@ -202,7 +210,6 @@ public class Sched {
                 counts[idx] += 1;
             }
         }
-        return counts;
     }
 
 

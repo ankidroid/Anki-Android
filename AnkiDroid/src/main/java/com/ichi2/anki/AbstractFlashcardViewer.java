@@ -267,6 +267,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private ClipboardManager mClipboard;
 
     protected Card mCurrentCard;
+    // on first starting to review, we will get an extra card, this is to allow pre-rendering of the following
+    // card when using ViewPager. We need to take this following card into account when updating review counts.
+    private Card mFollowingCard;
     private int mCurrentEase;
 
     protected CardDisplay mCurrentCardDisplay;
@@ -639,6 +642,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mFollowingCardDisplay.renderCard(getCol(), mPrefCenterVertically, mExtensions, mCardZoom, mImageZoom, mNightMode, mCardTemplate, mBaseUrl);
 
             mCurrentCard = mCurrentCardDisplay.getCard();
+            mFollowingCard = mFollowingCardDisplay.getCard(); // this could be null
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
                 mNoMoreCards = true;
@@ -1983,7 +1987,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void updateScreenCounts() {
         ActionBar actionBar = getSupportActionBar();
         if (mCurrentCard == null) return;
-        int[] counts = mSched.counts(mCurrentCard);
+
+        // because we got a card in advance when starting to review, we need to take both cards into account
+        // mFollowingCard could be null, that's OK.
+        int[] counts = mSched.counts(mCurrentCard, mFollowingCard);;
 
         if (actionBar != null) {
             try {
