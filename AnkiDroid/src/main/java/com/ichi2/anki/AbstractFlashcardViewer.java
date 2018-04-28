@@ -2159,9 +2159,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
+    /**
+     * Bring the Question ViewPager to the front
+     */
     public void showQuestionCardPager() {
-        //mQuestionCardPager.setVisibility(View.VISIBLE);
-        //mAnswerCardPager.setVisibility(View.INVISIBLE);
         mQuestionCardPager.bringToFront();
 
         // center the answer pager
@@ -2169,9 +2170,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     }
 
+    /**
+     * bring the Answer ViewPager to the front
+     */
     public void showAnswerCardPager() {
-        //mQuestionCardPager.setVisibility(View.INVISIBLE);
-        //mAnswerCardPager.setVisibility(View.VISIBLE);
         mAnswerCardPager.bringToFront();
 
         // center the question pager

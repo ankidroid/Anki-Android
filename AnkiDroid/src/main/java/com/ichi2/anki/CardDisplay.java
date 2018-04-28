@@ -11,6 +11,9 @@ import com.ichi2.themes.HtmlColors;
 
 import timber.log.Timber;
 
+/**
+ * Encapsulates a Card and renders the Question and Answer strings
+ */
 public class CardDisplay {
 
     public CardDisplay(Card card, boolean isCurrentCard)
