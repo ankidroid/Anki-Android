@@ -1408,10 +1408,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if( ! mUseViewPager) {
             mCardFrame.bringToFront();
         } else {
+            // using ViewPagers. there is one pager for "question", one for "answer"
+            // they are brought to the front alternatively, giving the user the impression
+            // they can continuously swipe through the cards to reveal the answer and rate cards
+
+            // this ViewPager contains a question in the middle, and the answer on the sides
             mQuestionPagerAdapter = new FlashCardViewPagerAdapter();
             mQuestionCardPager.setAdapter(mQuestionPagerAdapter);
-            mQuestionCardPager.setCurrentItem(1);
-            //mQuestionCardPager.setPageTransformer(true, new DepthPageTransformer());
+            mQuestionCardPager.setCurrentItem(1); // show center page
 
             mQuestionCardPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
@@ -1439,10 +1443,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 private int mCurrentPosition = 1;
             });
 
+            // this ViewPager contains the answer to the previous card in the middle, and the next question on the sides
             mAnswerPagerAdapter = new FlashCardViewPagerAdapter();
             mAnswerCardPager.setAdapter(mAnswerPagerAdapter );
-            mAnswerCardPager.setCurrentItem(1);
-            //mAnswerCardPager.setPageTransformer(true, new ZoomOutPageTransformer());
+            mAnswerCardPager.setCurrentItem(1); // show center page
             mAnswerCardPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
