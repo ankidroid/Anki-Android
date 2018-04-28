@@ -270,6 +270,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     // on first starting to review, we will get an extra card, this is to allow pre-rendering of the following
     // card when using ViewPager. We need to take this following card into account when updating review counts.
     private Card mFollowingCard;
+    // the card we received from the scheduler previously
+    private Card mPreviousCard;
     private int mCurrentEase;
 
     protected CardDisplay mCurrentCardDisplay;
@@ -629,13 +631,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             Card card2 = values[0].getFollowingCard();
 
             if( mCurrentCardDisplay == null) {
-                // this is the first time we're getting a card
+                // this is the first time we're getting a card, both card1 and card2 should be set
                 mCurrentCardDisplay = new CardDisplay(card1, true);
                 mFollowingCardDisplay = new CardDisplay(card2, false);
             } else {
                 // this is not the first card. promote following card to current card
-                mCurrentCardDisplay = new CardDisplay(mFollowingCardDisplay.getCard(), true);
-                mFollowingCardDisplay = new CardDisplay(card1, false);
+
+                // do we have a following card ?
+                if( mFollowingCardDisplay.getCard() != null) {
+                    mCurrentCardDisplay = new CardDisplay(mFollowingCardDisplay.getCard(), true);
+                    if( card1 != null) {
+                        mFollowingCardDisplay = new CardDisplay(card1, false);
+                    }
+                }
             }
 
             mCurrentCardDisplay.renderCard(getCol(), mPrefCenterVertically, mExtensions, mCardZoom, mImageZoom, mNightMode, mCardTemplate, mBaseUrl);
@@ -643,8 +651,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
             mCurrentCard = mCurrentCardDisplay.getCard();
             mFollowingCard = mFollowingCardDisplay.getCard(); // this could be null
-            if (mCurrentCard == null) {
-                // If the card is null means that there are no more cards scheduled for review.
+
+            if (card1 == null && mPreviousCard == null) {
+                // the latest card we got from the scheduler is null, and the current card is also null.
+                // stop review session
                 mNoMoreCards = true;
             } else {
                 // Start reviewing next card
@@ -671,6 +681,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, timeboxMessage, true);
                 getCol().startTimebox();
             }
+
+            mPreviousCard = card1;
         }
 
 

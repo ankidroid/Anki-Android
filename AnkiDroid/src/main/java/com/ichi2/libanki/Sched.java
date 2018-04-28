@@ -197,7 +197,8 @@ public class Sched {
         // this is the current card the user is reviewing
         incrementCountsForCard(card, counts);
         // this is the card queued up next
-        incrementCountsForCard(followingCard, counts);
+        if(card != null && followingCard != null && card.getId() != followingCard.getId())
+            incrementCountsForCard(followingCard, counts);
         return counts;
     }
 
