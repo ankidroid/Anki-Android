@@ -1711,7 +1711,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             public void onPageFinished(WebView view, String url) {
                 Timber.d("onPageFinished triggered");
                 view.loadUrl("javascript:onPageFinished();");
-                webViewPageFinished();
             }
         });
         if (!mUseViewPager) {
@@ -3021,11 +3020,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         private WebView m_nextView = null;
         private boolean m_firstQuestionDisplayed = false;
 
-    }
-
-    public void webViewPageFinished()
-    {
-        Timber.v("webViewPageFinished");
     }
 
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189 */
