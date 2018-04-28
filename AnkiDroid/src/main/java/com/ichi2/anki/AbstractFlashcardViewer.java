@@ -236,8 +236,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private WebView mNextCard;
     private ViewPager mQuestionCardPager;
     private ViewPager mAnswerCardPager;
-    private boolean mShowingQuestionCardPager = true;
-    private boolean mPagerFlipPending = false;
     private FlashCardViewPagerAdapter mQuestionPagerAdapter;
     private FlashCardViewPagerAdapter mAnswerPagerAdapter;
     private FrameLayout mCardFrame;
@@ -627,6 +625,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 return;
             }
 
+            // we receive a first card, and a following card the first time this callback is called.
+            // this allows us to render the following card ahead of time, for the ViewPager display
             Card card1 = values[0].getCard();
             Card card2 = values[0].getFollowingCard();
 
@@ -636,8 +636,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mFollowingCardDisplay = new CardDisplay(card2, false);
             } else {
                 // this is not the first card. promote following card to current card
-
-                // do we have a following card ?
+                // do we have a following card ? otherwise, keep current contents
                 if( mFollowingCardDisplay.getCard() != null) {
                     mCurrentCardDisplay = new CardDisplay(mFollowingCardDisplay.getCard(), true);
                     if( card1 != null) {
@@ -646,6 +645,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 }
             }
 
+            // render question and answer strings for both current and following cards
             mCurrentCardDisplay.renderCard(getCol(), mPrefCenterVertically, mExtensions, mCardZoom, mImageZoom, mNightMode, mCardTemplate, mBaseUrl);
             mFollowingCardDisplay.renderCard(getCol(), mPrefCenterVertically, mExtensions, mCardZoom, mImageZoom, mNightMode, mCardTemplate, mBaseUrl);
 
