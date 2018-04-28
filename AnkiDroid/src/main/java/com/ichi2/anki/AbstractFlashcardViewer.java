@@ -1378,19 +1378,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
 
 
-        // disable vibration for now
-        /*
-        Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        if(vibrateAnswerCorrect) {
-            // correct answer, use a double vibration pattern
-            long[] pattern = {0, 50, 100, 50};
-            vibratorManager.vibrate(pattern, -1);
-        } else {
-            // wrong answer
-            vibratorManager.vibrate(50);
-        }
-        */
-
         // remove chosen answer hint after a while
         mTimerHandler.removeCallbacks(removeChosenAnswerText);
         mTimerHandler.postDelayed(removeChosenAnswerText, mShowChosenAnswerLength);
