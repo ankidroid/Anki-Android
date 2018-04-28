@@ -2131,8 +2131,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         if(mUseViewPager)
         {
+            // the "answer" ViewPager is currently displayed, however the user has scrolled to either side, indicating
+            // they want to move on the next question.
 
-            // only update the non-visible pages
+            // we can update the "side" pages of the question pager, leaving the middle page untouched
+            // then we display that "question" ViewPager
+
+            // we can also update the "middle" page of the "answer" ViewPager, since it's also not being displayed right now.
+
+            // in summary, we can update any page which is currently not visible
 
             // set the answer on the sides
             mQuestionPagerAdapter.setCardContent(mCurrentCardDisplay.getAnswerContent(), false);
@@ -2354,7 +2361,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
         }
 
-
         // rendering of card content has been moved to CardDisplay
 
         if (SAVE_CARD_CONTENT) {
@@ -2515,9 +2521,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         // when using ViewPager, updating of webviews is done in displayCardQuestion/displayCardAnswer
         if(! mUseViewPager) {
+
+            // determine which card content we should show
+            String cardContent = mCurrentCardDisplay.getQuestionContent().toString();
+            if( sDisplayAnswer ) {
+                cardContent = mCurrentCardDisplay.getAnswerContent().toString();
+            }
+
             if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
                 CompatHelper.getCompat().setHTML5MediaAutoPlay(mNextCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
-                mNextCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
+                mNextCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent, "text/html", "utf-8", null);
                 mNextCard.setVisibility(View.VISIBLE);
                 mCardFrame.removeView(mCard);
                 destroyWebView(mCard);
@@ -2527,7 +2540,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mCardFrame.addView(mNextCard, 0);
             } else if (mCard != null) {
                 CompatHelper.getCompat().setHTML5MediaAutoPlay(mCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
-                mCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
+                mCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent, "text/html", "utf-8", null);
             }
         }
 
@@ -2730,8 +2743,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * @return true if we should use a single WebView
      */
     private boolean shouldUseQuickUpdate() {
-        // return !mPrefSafeDisplay;
-        return false;
+        return !mPrefSafeDisplay;
     }
 
 
@@ -2861,85 +2873,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         supportInvalidateOptionsMenu();
     }
 
-    public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
-        private static final float MIN_SCALE = 0.85f;
-        private static final float MIN_ALPHA = 0.5f;
-
-        public void transformPage(View view, float position) {
-            int pageWidth = view.getWidth();
-            int pageHeight = view.getHeight();
-
-            if (position < -1) { // [-Infinity,-1)
-                // This page is way off-screen to the left.
-                view.setAlpha(0);
-
-            } else if (position <= 1) { // [-1,1]
-                // Modify the default slide transition to shrink the page as well
-                float scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position));
-                float vertMargin = pageHeight * (1 - scaleFactor) / 2;
-                float horzMargin = pageWidth * (1 - scaleFactor) / 2;
-                if (position < 0) {
-                    view.setTranslationX(horzMargin - vertMargin / 2);
-                } else {
-                    view.setTranslationX(-horzMargin + vertMargin / 2);
-                }
-
-                // Scale the page down (between MIN_SCALE and 1)
-                view.setScaleX(scaleFactor);
-                view.setScaleY(scaleFactor);
-
-                // Fade the page relative to its size.
-                view.setAlpha(MIN_ALPHA +
-                        (scaleFactor - MIN_SCALE) /
-                                (1 - MIN_SCALE) * (1 - MIN_ALPHA));
-
-            } else { // (1,+Infinity]
-                // This page is way off-screen to the right.
-                view.setAlpha(0);
-            }
-        }
-    }
-
-    public class DepthPageTransformer implements ViewPager.PageTransformer {
-        private static final float MIN_SCALE = 0.75f;
-
-        public void transformPage(View view, float position) {
-            int pageWidth = view.getWidth();
-
-            if (position < -1) { // [-Infinity,-1)
-                // This page is way off-screen to the left.
-                view.setAlpha(0);
-
-            } else if (position <= 0) { // [-1,0]
-                // Use the default slide transition when moving to the left page
-                view.setAlpha(1);
-                view.setTranslationX(0);
-                view.setScaleX(1);
-                view.setScaleY(1);
-
-            } else if (position <= 1) { // (0,1]
-                // Fade the page out.
-                view.setAlpha(1 - position);
-
-                // Counteract the default slide transition
-                view.setTranslationX(pageWidth * -position);
-
-                // Scale the page down (between MIN_SCALE and 1)
-                float scaleFactor = MIN_SCALE
-                        + (1 - MIN_SCALE) * (1 - Math.abs(position));
-                view.setScaleX(scaleFactor);
-                view.setScaleY(scaleFactor);
-
-            } else { // (1,+Infinity]
-                // This page is way off-screen to the right.
-                view.setAlpha(0);
-            }
-        }
-    }
-
+    /**
+     * This objects manages data for the two ViewPagers when mUseViewPager is true. We use 3 WebViews, one in the middle
+     * showing the main content, and two to the sides, which display the "next" content after swiping.
+     */
     class FlashCardViewPagerAdapter extends PagerAdapter {
 
         public FlashCardViewPagerAdapter() {
+            // create all 3 webviews
+
             m_currentView = createWebView();
             CompatHelper.getCompat().setHTML5MediaAutoPlay(m_currentView.getSettings(), true);
             m_currentView.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", "", "text/html", "utf-8", null);
@@ -2957,7 +2899,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            // Timber.v("FlashCardViewPagerAdapter.instantiateItem position: %d answerMode(): %s", position, answerMode());
+            // add the correct webview to the viewgroup, based on position
 
             WebView card = null;
 
@@ -2977,7 +2919,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
 
             container.addView(card);
-            // card.setVisibility(View.VISIBLE);
 
             return card;
         }
@@ -2989,6 +2930,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public int getCount() {
+            // we only ever have 3 pages
             return 3;
         }
 
@@ -3000,6 +2942,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         public void setCardContent(Spanned cardContent, boolean isCenter) {
 
             Timber.v("FlashCardViewPagerAdapter.setCardContent() isCenter: %s cardContent: %s", isCenter, cardContent);
+
+            // the content in the center is the "main" item, the content on the sides is always the same, because we want to show
+            // the same card, regardless of whether the user swipes left or right
 
             if (isCenter) {
                 m_currentView.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", cardContent.toString(), "text/html", "utf-8", null);
