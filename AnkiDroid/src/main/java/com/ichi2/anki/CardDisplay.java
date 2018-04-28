@@ -16,16 +16,12 @@ import timber.log.Timber;
  */
 public class CardDisplay {
 
-    public CardDisplay(Card card, boolean isCurrentCard)
+    public CardDisplay(Card card)
     {
         mCard = card;
-        mIsCurrentCard = isCurrentCard;
     }
 
     public Card getCard() { return mCard; }
-
-    public boolean isCurrentCard() { return mIsCurrentCard; }
-
 
     /**
      * Render Question and Answer content
@@ -111,5 +107,4 @@ public class CardDisplay {
     private Spanned mCardQuestionContent;
     private Spanned mCardAnswerContent;
 
-    private boolean mIsCurrentCard; // true for current card, false for following
 }

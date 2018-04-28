@@ -632,15 +632,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
             if( mCurrentCardDisplay == null) {
                 // this is the first time we're getting a card, both card1 and card2 should be set
-                mCurrentCardDisplay = new CardDisplay(card1, true);
-                mFollowingCardDisplay = new CardDisplay(card2, false);
+                mCurrentCardDisplay = new CardDisplay(card1);
+                mFollowingCardDisplay = new CardDisplay(card2);
             } else {
                 // this is not the first card. promote following card to current card
                 // do we have a following card ? otherwise, keep current contents
                 if( mFollowingCardDisplay.getCard() != null) {
-                    mCurrentCardDisplay = new CardDisplay(mFollowingCardDisplay.getCard(), true);
+                    mCurrentCardDisplay = new CardDisplay(mFollowingCardDisplay.getCard());
                     if( card1 != null) {
-                        mFollowingCardDisplay = new CardDisplay(card1, false);
+                        mFollowingCardDisplay = new CardDisplay(card1);
                     }
                 }
             }
