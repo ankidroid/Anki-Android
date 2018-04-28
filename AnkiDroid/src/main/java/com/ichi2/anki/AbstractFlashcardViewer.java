@@ -1406,6 +1406,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mTouchLayer.setOnLongClickListener(mLongClickListener);
         }
         if( ! mUseViewPager) {
+            mQuestionCardPager.setVisibility(View.INVISIBLE);
+            mAnswerCardPager.setVisibility(View.INVISIBLE);
             mCardFrame.bringToFront();
         } else {
             // using ViewPagers. there is one pager for "question", one for "answer"
@@ -1477,6 +1479,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mQuestionCardPager.bringToFront();
             mQuestionCardPager.setVisibility(View.VISIBLE);
             mAnswerCardPager.setVisibility(View.VISIBLE);
+            mCardFrame.setVisibility(View.INVISIBLE);
         }
         if (!mDisableClipboard) {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
