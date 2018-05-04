@@ -50,8 +50,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
@@ -589,18 +591,25 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             try {
                 switch (type) {
                     case DELETE_NOTE:
-                        // list of all ids to pass to remNotes method
-                        long[] cardIds = new long[cards.length];
+                        // list of all ids to pass to remNotes method.
+                        // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
+                        Set<Long> noteIds = new HashSet<>();
                         // collect undo information
-                        int position = 0;
                         for (Card card : cards) {
                             Note note = card.note();
-                            cardIds[position++] = note.getId();
-                            ArrayList<Card> allCs = note.cards();
-                            col.markUndo(type, new Object[] { note, allCs, card.getId() });
+                            if (noteIds.add(note.getId())) {
+                                // if we already saw this note, we don't need to do this
+                                ArrayList<Card> allCs = note.cards();
+                                col.markUndo(type, new Object[]{note, allCs, card.getId()});
+                            }
                         }
                         // delete note
-                        col.remNotes(cardIds);
+                        long[] uniqueNoteIds = new long[noteIds.size()];
+                        // unboxing...
+                        int pos = 0;
+                        for (Long id : noteIds)
+                            uniqueNoteIds[pos++] = id;
+                        col.remNotes(uniqueNoteIds);
                         sHadCardQueue = true;
                         break;
                 }

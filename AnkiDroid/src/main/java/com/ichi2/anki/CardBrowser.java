@@ -86,6 +86,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import timber.log.Timber;
@@ -696,8 +697,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
                                     for (int cardPosition : mCheckedCardPositions) {
                                         final Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
                                         cards.add(card);
-                                        deleteNote(card);
                                     }
+
+                                    deleteNotes(cards);
+
                                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI,
                                             mDeleteNoteHandler,
                                             new DeckTask.TaskData(new Object[]{cards.toArray(new Card[cards.size()]), Collection.DismissType.DELETE_NOTE}));
@@ -1097,23 +1100,34 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private void deleteNote(Card card) {
+    private void deleteNotes(List<Card> cards) {
         if (currentCardInUseByReviewer()) {
             mReloadRequired = true;
         }
-        ArrayList<Card> cards = card.note().cards();
-        int pos;
-        for (Card c : cards) {
-            pos = getPosition(getCards(), c.getId());
-            if (pos >= 0 && pos < getCards().size()) {
-                getCards().remove(pos);
+
+        // need set because multiple cards of the same note might have been selected
+        Set<Integer> uniquePos = new HashSet<>();
+        for (Card card : cards)
+        {
+            ArrayList<Card> partialCards = card.note().cards();
+            partialCards.add(card);
+            int pos;
+            for (Card c : partialCards)
+            {
+                pos = getPosition(getCards(), c.getId());
+                if (pos >= 0 && pos < getCards().size()) {
+                    uniquePos.add(pos);
+                }
             }
         }
-        // Delete itself if not deleted
-        pos = getPosition(getCards(), card.getId());
-        if (pos >= 0 && pos < getCards().size()) {
-            getCards().remove(pos);
-        }
+
+        List<Integer> posList = new ArrayList<>(uniquePos);
+        // sort in descending order so we can delete all
+        Collections.sort(posList, Collections.reverseOrder());
+
+        for (int delPos : posList)
+            getCards().remove(delPos);
+
         updateList();
     }
 
