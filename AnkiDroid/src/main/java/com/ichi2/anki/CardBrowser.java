@@ -164,6 +164,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private HashSet<Integer> mCheckedCardPositions = new HashSet<>();
     private Menu mActionBarMenu;
 
+
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -466,8 +467,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mCardsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                mCheckedCardPositions.add(position);
                 loadMultiSelectMode();
+
+                // click on whole cell triggers select
+                CheckBox cb = (CheckBox) view.findViewById(R.id.card_checkbox);
+                cb.toggle();
+                mCardsAdapter.onCheck(position, view);
+
+                mCardsAdapter.notifyDataSetChanged();
                 return true;
             }
         });
@@ -1515,8 +1522,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         // set in multi-select mode
         mInMultiSelectMode = true;
-        // update adapter so checkbox gets displayed
-        mCardsAdapter.notifyDataSetChanged();
         // show title and hide spinner
         mActionBarTitle.setVisibility(View.VISIBLE);
         mActionBarTitle.setText(String.valueOf(mCheckedCardPositions.size()));
