@@ -701,8 +701,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     new MaterialDialog.Builder(CardBrowser.this)
                             .title(res.getString(R.string.delete_card_title))
                             .iconAttr(R.attr.dialogErrorIcon)
-                            .content(res.getString(R.string.delete_card_message, getCards().get(mPositionInCardsList)
-                                    .get("sfld")))
+                            .content(res.getString(R.string.delete_card_mult_message))
                             .positiveText(res.getString(R.string.dialog_positive_delete))
                             .negativeText(res.getString(R.string.dialog_cancel))
                             .onPositive(new MaterialDialog.SingleButtonCallback() {
