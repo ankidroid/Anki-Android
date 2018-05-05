@@ -590,10 +590,36 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             col.getDb().getDatabase().beginTransaction();
             try {
                 switch (type) {
+
+                    case SUSPEND_NOTE:  // not used in card browser yet
+                        // collect undo information
+                        Set<Long> noteIds = new HashSet<>();
+                        List<Card> allCards = new ArrayList<>();
+                        // collect undo information
+                        for (Card card : cards) {
+                            Note note = card.note();
+                            if (noteIds.add(note.getId())) {
+                                // if we already saw this note, we don't need to do this
+                                List<Card> allCs = note.cards();
+                                col.markUndo(type, new Object[]{note, allCs, card.getId()});
+                                allCards.addAll(allCs);
+                            }
+                        }
+
+                        // suspend
+                        long[] cids = new long[allCards.size()];
+                        for (int i = 0; i < allCards.size(); i++) {
+                            cids[i] = allCards.get(i).getId();
+                        }
+                        sched.suspendCards(cids);
+
+                        sHadCardQueue = true;
+                        break;
+
                     case DELETE_NOTE:
                         // list of all ids to pass to remNotes method.
                         // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
-                        Set<Long> noteIds = new HashSet<>();
+                        noteIds = new HashSet<>();
                         // collect undo information
                         for (Card card : cards) {
                             Note note = card.note();
