@@ -593,15 +593,22 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                     case SUSPEND_CARD:
                         // collect undo information
                         long[] cids = new long[cards.length];
+                        boolean hasUnsuspended = false;
                         for (int i = 0; i < cards.length; i++) {
                             Card card = cards[i];
                             col.markUndo(type, new Object[]{card});
                             cids[i] = card.getId();
+                            if (card.getQueue() != -1)
+                                hasUnsuspended = true;
                         }
 
-                        // TODO toggle
-                        // suspend card
-                        sched.suspendCards(cids);
+                        // if at least one card is unsuspended -> suspend all
+                        // otherwise unsuspend all
+                        if (hasUnsuspended) {
+                            sched.suspendCards(cids);
+                        } else {
+                            sched.unsuspendCards(cids);
+                        }
 
                         sHadCardQueue = true;
                         break;
