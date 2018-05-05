@@ -444,15 +444,23 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mCardsListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // load up the card selected on the list
-                mPositionInCardsList = position;
-                long cardId = Long.parseLong(getCards().get(mPositionInCardsList).get("id"));
-                sCardBrowserCard = getCol().getCard(cardId);
-                // start note editor using the card we just loaded
-                Intent editCard = new Intent(CardBrowser.this, NoteEditor.class);
-                editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT);
-                editCard.putExtra(NoteEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
-                startActivityForResultWithAnimation(editCard, EDIT_CARD, ActivityTransitionAnimation.LEFT);
+                if (mInMultiSelectMode)
+                {
+                    // click on whole cell triggers select
+                    CheckBox cb = (CheckBox) view.findViewById(R.id.card_checkbox);
+                    cb.toggle();
+                    mCardsAdapter.onCheck(position, view);
+                } else {
+                    // load up the card selected on the list
+                    mPositionInCardsList = position;
+                    long cardId = Long.parseLong(getCards().get(mPositionInCardsList).get("id"));
+                    sCardBrowserCard = getCol().getCard(cardId);
+                    // start note editor using the card we just loaded
+                    Intent editCard = new Intent(CardBrowser.this, NoteEditor.class);
+                    editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT);
+                    editCard.putExtra(NoteEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
+                    startActivityForResultWithAnimation(editCard, EDIT_CARD, ActivityTransitionAnimation.LEFT);
+                }
             }
         });
         mCardsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -1367,18 +1375,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (checkBox.isChecked()) {
-                        mCheckedCardPositions.add(position);
-                        v.setBackgroundColor(selectedColor);
-                    } else {
-                        mCheckedCardPositions.remove(position);
-                        v.setBackgroundColor(unselectedColor);
-                    }
-                    mActionBarTitle.setText(mCheckedCardPositions.size() + "");
-                    // make sure "preview" option only shows with 2+ cards checked
-                    if (mCheckedCardPositions.size() < 3) {
-                        supportInvalidateOptionsMenu();
-                    }
+                    onCheck(position, v);
                 }
             });
         }
@@ -1448,8 +1445,31 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public long getItemId(int position) {
             return position;
         }
-    }
 
+        private void onCheck(int position, View cell) {
+            CheckBox checkBox = (CheckBox) cell.findViewById(R.id.card_checkbox);
+            final Map<String, String> dataSet = getCards().get(position);
+            final int colorIdx = mCardsAdapter.getColor(dataSet.get(mCardsAdapter.mColorFlagKey));
+            int[] colors = Themes.getColorFromAttr(CardBrowser.this, new int[]{android.R.attr.colorBackground,
+                    R.attr.markedColor, R.attr.suspendedColor, R.attr.markedColor});
+            final int unselectedColor = colors[colorIdx];
+            final int selectedColor = 0xFFFFBB99;
+
+            if (checkBox.isChecked()) {
+                mCheckedCardPositions.add(position);
+                cell.setBackgroundColor(selectedColor);
+            } else {
+                mCheckedCardPositions.remove(position);
+                cell.setBackgroundColor(unselectedColor);
+            }
+            mActionBarTitle.setText(mCheckedCardPositions.size() + "");
+            // make sure "preview" option only shows with 2+ cards checked
+            if (mCheckedCardPositions.size() < 3) {
+                supportInvalidateOptionsMenu();
+            }
+
+        }
+    }
 
     private List<Map<String, String>> getCards() {
         if (mCards == null) {
@@ -1490,6 +1510,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * Turn on Multi-Select Mode so that the user can select multiple cards at once.
      */
     private void loadMultiSelectMode() {
+        if (mInMultiSelectMode)
+            return;
+
         // set in multi-select mode
         mInMultiSelectMode = true;
         // update adapter so checkbox gets displayed
