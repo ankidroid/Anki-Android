@@ -590,6 +590,21 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             col.getDb().getDatabase().beginTransaction();
             try {
                 switch (type) {
+                    case SUSPEND_CARD:
+                        // collect undo information
+                        long[] cids = new long[cards.length];
+                        for (int i = 0; i < cards.length; i++) {
+                            Card card = cards[i];
+                            col.markUndo(type, new Object[]{card});
+                            cids[i] = card.getId();
+                        }
+
+                        // TODO toggle
+                        // suspend card
+                        sched.suspendCards(cids);
+
+                        sHadCardQueue = true;
+                        break;
 
                     case SUSPEND_NOTE:  // not used in card browser yet
                         // collect undo information
@@ -607,7 +622,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         }
 
                         // suspend
-                        long[] cids = new long[allCards.size()];
+                        cids = new long[allCards.size()];
                         for (int i = 0; i < allCards.size(); i++) {
                             cids[i] = allCards.get(i).getId();
                         }

@@ -721,72 +721,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
 
             case R.id.action_suspend_card:
-                Runnable runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        for (int cardPosition : mCheckedCardPositions) {
-                            // make sure correct card is selected
-                            mPositionInCardsList = cardPosition;
-                            final Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
-                            mReloadRequired = currentCardInUseByReviewer();
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    DeckTask.launchDeckTask(
-                                            DeckTask.TASK_TYPE_DISMISS,
-                                            new DeckTask.TaskListener() {
-                                                @Override
-                                                public void onPreExecute() {
 
-                                                }
+                List<Card> cards = new ArrayList<>();
+                for (int cardPosition : mCheckedCardPositions) {
+                    final Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
+                    cards.add(card);
+                }
 
-                                                @Override
-                                                public void onPostExecute(TaskData result) {
-                                                    if (result.getBoolean()) {
-                                                        updateCardInList(getCol().getCard(Long.parseLong(getCards().get(mPositionInCardsList).get("id"))), null);
-                                                    } else {
-                                                        closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
-                                                    }
-                                                    mIsSuspendCardFinished = true;
-                                                    hideProgressBar();
-                                                }
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI,
+                        mSuspendCardHandler,
+                        new DeckTask.TaskData(new Object[]{cards.toArray(new Card[cards.size()]), Collection.DismissType.SUSPEND_CARD}));
 
-                                                @Override
-                                                public void onProgressUpdate(TaskData... values) {
-
-                                                }
-
-                                                @Override
-                                                public void onCancelled() {
-
-                                                }
-                                            },
-                                            new DeckTask.TaskData(new Object[]{card, Collection.DismissType.SUSPEND_CARD}));
-                                }
-                            });
-
-                            // make sure card was suspended before continuing on
-                            while (!mIsSuspendCardFinished) {
-                                try {
-                                    Thread.sleep(10);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            mIsSuspendCardFinished = false;
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mCardsAdapter.notifyDataSetChanged();
-                                }
-                            });
-                        }
-                        mCheckedCardPositions.clear();
-                    }
-                };
-
-                Thread thread = new Thread(runnable);
-                thread.start();
                 return true;
 
             case R.id.action_preview:
@@ -987,37 +932,62 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return 0;
     }
 
-
-    private void updateCardInList(Card card, String updatedCardTags) {
-        Note note = card.note();
-        int pos;
-        for (Card c : note.cards()) {
-            // get position in the mCards search results HashMap
-            pos = getPosition(getCards(), c.getId());
-            if (pos < 0 || pos >= getCards().size()) {
-                continue;
-            }
-            // update tags
-            if (updatedCardTags != null) {
-                getCards().get(pos).put("tags", updatedCardTags);
-            }
-            // update sfld
-            String sfld = note.getSFld();
-            getCards().get(pos).put("sfld", sfld);
-            // update Q & A etc
-            updateSearchItemQA(getCards().get(pos), c);
-            // update deck
-            String deckName;
-            try {
-                deckName = getCol().getDecks().get(card.getDid()).getString("name");
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-            getCards().get(pos).put("deck", deckName);
-            // update flags (marked / suspended / etc) which determine color
-            String flags = Integer.toString((c.getQueue() == -1 ? 1 : 0) + (note.hasTag("marked") ? 2 : 0));
-            getCards().get(pos).put("flags", flags);
+    // convenience method for updateCardsInList(...)
+    private void updateCardInList(Card card, String updatedCardTags){
+        List<Card> cards = new ArrayList<>();
+        cards.add(card);
+        if (updatedCardTags != null) {
+            Map<Long, String> updatedCardTagsMult = new HashMap<>();
+            updatedCardTagsMult.put(card.getNid(), updatedCardTags);
+            updateCardsInList(cards, updatedCardTagsMult);
+        } else
+        {
+            updateCardsInList(cards, null);
         }
+    }
+
+    /**
+     * @param cards Cards that were changed
+     * @param updatedCardTags Mapping note id -> updated tags
+     */
+    private void updateCardsInList(List<Card> cards, Map<Long, String> updatedCardTags) {
+        Set<Long> noteIds = new HashSet<>();    // only used to check for duplicates
+        // collect undo information
+        for (Card card : cards) {
+            Note note = card.note();
+            if (noteIds.add(note.getId())) {
+                int pos;
+                for (Card c : note.cards()) {
+                    // get position in the mCards search results HashMap
+                    pos = getPosition(getCards(), c.getId());
+                    if (pos < 0 || pos >= getCards().size()) {
+                        continue;
+                    }
+                    // update tags
+                    if (updatedCardTags != null) {
+                        getCards().get(pos).put("tags", updatedCardTags.get(note.getId()));
+                    }
+                    // update sfld
+                    String sfld = note.getSFld();
+                    getCards().get(pos).put("sfld", sfld);
+                    // update Q & A etc
+                    updateSearchItemQA(getCards().get(pos), c);
+                    // update deck
+                    String deckName;
+                    try {
+                        // TODO why card.getDid instead of c.getDid() before? Cards of the same note can be in different decks.
+                        deckName = getCol().getDecks().get(c.getDid()).getString("name");
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                    getCards().get(pos).put("deck", deckName);
+                    // update flags (marked / suspended / etc) which determine color
+                    String flags = Integer.toString((c.getQueue() == -1 ? 1 : 0) + (note.hasTag("marked") ? 2 : 0));
+                    getCards().get(pos).put("flags", flags);
+                }
+            }
+        }
+
         updateList();
     }
 
@@ -1147,12 +1117,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (result.getBoolean()) {
-                updateCardInList(getCol().getCard(Long.parseLong(getCards().get(mPositionInCardsList).get("id"))), null);
+                List<Card> cards = new ArrayList<>();
+                for (int pos : mCheckedCardPositions)
+                    cards.add(getCol().getCard(Long.parseLong(getCards().get(pos).get("id"))));
+                updateCardsInList(cards, null);
             } else {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
             mIsSuspendCardFinished = true;
             hideProgressBar();
+
+            mCheckedCardPositions.clear();
         }
 
 
