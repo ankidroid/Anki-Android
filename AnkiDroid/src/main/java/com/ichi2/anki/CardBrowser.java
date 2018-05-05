@@ -727,17 +727,20 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
 
             case R.id.action_mark_card:
+                List<Card> cards = new ArrayList<>();
                 for (int cardPosition : mCheckedCardPositions) {
                     Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
                     onMark(card);
-                    updateCardInList(card, null);
+                    cards.add(card);
                 }
+                updateCardsInList(cards, null);
+
                 mCheckedCardPositions.clear();
                 return true;
 
             case R.id.action_suspend_card:
 
-                List<Card> cards = new ArrayList<>();
+                cards = new ArrayList<>();
                 for (int cardPosition : mCheckedCardPositions) {
                     final Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
                     cards.add(card);
