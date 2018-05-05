@@ -124,7 +124,9 @@ public class Sched {
                 _burySiblings(card);
             }
             mReps += 1;
-            card.startTimer();
+
+            // don't start timer here, timer will be started when user shows the card question
+
             return card;
         }
         return null;

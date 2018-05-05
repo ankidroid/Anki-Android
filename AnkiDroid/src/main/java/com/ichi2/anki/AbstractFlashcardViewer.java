@@ -595,7 +595,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     updateTypeAnswerInfo();
                 }
                 displayCardQuestion();
-                mCurrentCard.startTimer();
+
                 initTimer();
             }
             hideProgressBar();
@@ -1366,14 +1366,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             return;
         }
 
-        boolean vibrateAnswerCorrect = true;
 
         // Set the dots appearing below the toolbar
         switch (ease) {
             case EASE_1:
                 mChosenAnswer.setText("\u2022");
                 mChosenAnswer.setTextColor(ContextCompat.getColor(this, R.color.material_red_500));
-                vibrateAnswerCorrect = false;
                 break;
             case EASE_2:
                 mChosenAnswer.setText("\u2022\u2022");
@@ -2111,6 +2109,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void displayCardQuestion() {
         Timber.d("displayCardQuestion()");
         sDisplayAnswer = false;
+
+        // start card timer
+        mCurrentCard.startTimer();
 
         setInterface();
 
