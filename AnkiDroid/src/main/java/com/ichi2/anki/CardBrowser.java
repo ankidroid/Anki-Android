@@ -286,14 +286,38 @@ public class CardBrowser extends NavigationDrawerActivity implements
         searchCards();
     }
 
-    private void onMark(Card card) {
-        Note note = card.note();
-        if (note.hasTag("marked")) {
-            note.delTag("marked");
-        } else {
-            note.addTag("marked");
+    private void onMark(List<Card> cards) {
+        Set<Long> noteIds = new HashSet<>();    // only used to check for duplicates
+        List<Note> notes = new ArrayList<>();
+        boolean hasUnmarked = false;
+        for (Card card : cards)
+        {
+            if (noteIds.add(card.getNid())){
+                Note n = card.note();
+                notes.add(n);
+                if (!n.hasTag("marked"))
+                    hasUnmarked = true;
+            }
         }
-        note.flush();
+
+        // mark all as marked iff there is at least one unmarked
+        if (hasUnmarked)
+        {
+            for (Note note : notes)
+            {
+                if (!note.hasTag("marked"))
+                {
+                    note.addTag("marked");
+                    note.flush();
+                }
+            }
+        } else {
+            for (Note note : notes)
+            {
+                note.delTag("marked");
+                note.flush();
+            }
+        }
     }
 
     @Override
@@ -729,9 +753,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 List<Card> cards = new ArrayList<>();
                 for (int cardPosition : mCheckedCardPositions) {
                     Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
-                    onMark(card);
                     cards.add(card);
                 }
+                onMark(cards);
                 updateCardsInList(cards, null);
 
                 mCheckedCardPositions.clear();
@@ -1168,6 +1192,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             hideProgressBar();
+            mActionBarTitle.setText(Integer.toString(mCheckedCardPositions.size()));
         }
 
 
