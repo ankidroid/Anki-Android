@@ -549,7 +549,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             boolean cardChanged = false;
-            if (mCurrentCard != values[0].getCard()) {
+
+            CardDisplay newCardDisplay = new CardDisplay(values[0].getCard());
+
+            // check whether current card has changed
+            if (!mCurrentCardDisplay.getQuestionContent().equals(newCardDisplay.getQuestionContent()) ||
+                !mCurrentCardDisplay.getAnswerContent().equals(newCardDisplay.getAnswerContent()))
+            {
                 /*
                  * Before updating mCurrentCard, we check whether it is changing or not. If the current card changes,
                  * then we need to display it as a new card, without showing the answer.
@@ -557,7 +563,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 sDisplayAnswer = false;
                 cardChanged = true;  // Keep track of that so we can run a bit of new-card code
             }
+
             mCurrentCard = values[0].getCard();
+
+            Timber.v("UpdateCardHandler, cardChanged: %s", cardChanged);
+
+            if(cardChanged) {
+                mCurrentCardDisplay = new CardDisplay(mCurrentCard);
+                mCurrentCardDisplay.renderCard(getCol(), mPrefCenterVertically, mExtensions, mCardZoom, mImageZoom, mNightMode, mCardTemplate, mBaseUrl);
+                // force a display refresh when we call displayCardQuestion
+                mCurrentCardDisplay.setForceDisplayRefresh();
+            }
+
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
                 mNoMoreCards = true;
@@ -632,6 +649,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 // this is the first time we're getting a card, both card1 and card2 should be set
                 mCurrentCardDisplay = new CardDisplay(card1);
                 mFollowingCardDisplay = new CardDisplay(card2);
+                mCurrentCardDisplay.setForceDisplayRefresh();
             } else {
                 // this is not the first card. promote following card to current card
                 // do we have a following card ? otherwise, keep current contents
@@ -2150,7 +2168,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
             showQuestionCardPager();
 
-            if(! mQuestionPagerAdapter.getFirstQuestionDisplayed())
+            // force refreshing of the center card under certain circumstances
+            if(mCurrentCardDisplay.getForceDisplayRefresh())
             {
                 // first time we're showing a question, set the question on the middle page
                 mQuestionPagerAdapter.setCardContent(mCurrentCardDisplay.getQuestionContent(), true);

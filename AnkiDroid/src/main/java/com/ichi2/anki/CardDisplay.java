@@ -100,11 +100,21 @@ public class CardDisplay {
         mCardAnswerContent = content;
     }
 
+    public void setForceDisplayRefresh() {
+        mForceDisplayRefresh = true;
+    }
+
+    public boolean getForceDisplayRefresh() {
+        return mForceDisplayRefresh;
+    }
+
     public Spanned getQuestionContent() { return mCardQuestionContent; }
     public Spanned getAnswerContent() { return mCardAnswerContent; }
 
     private Card mCard;
     private Spanned mCardQuestionContent;
     private Spanned mCardAnswerContent;
+
+    private boolean mForceDisplayRefresh = false;
 
 }
