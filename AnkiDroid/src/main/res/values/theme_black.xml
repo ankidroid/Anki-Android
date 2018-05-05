@@ -68,6 +68,7 @@
         <item name="stats_cumulative">@color/material_grey_800</item>
         <!-- Browser colors -->
         <item name="suspendedColor">#A8A634</item>
+        <item name="selectedColor">#a86634</item>
         <item name="markedColor">#391080</item>
         <!-- Note editor colors -->
         <item name="duplicateColor">#855</item>

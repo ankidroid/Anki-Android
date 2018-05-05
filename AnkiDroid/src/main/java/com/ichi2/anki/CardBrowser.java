@@ -1360,7 +1360,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             // set card's background color
             final int unselectedColor = colors[colorIdx];
-            final int selectedColor = 0xFFFFBB99;
+            final int selectedColor = Themes.getColorFromAttr(CardBrowser.this, R.attr.selectedColor);
             v.setBackgroundColor(unselectedColor);
             // setup checkbox to change color in multi-select mode
             final CheckBox checkBox = (CheckBox) v.findViewById(R.id.card_checkbox);
@@ -1462,7 +1462,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             int[] colors = Themes.getColorFromAttr(CardBrowser.this, new int[]{android.R.attr.colorBackground,
                     R.attr.markedColor, R.attr.suspendedColor, R.attr.markedColor});
             final int unselectedColor = colors[colorIdx];
-            final int selectedColor = 0xFFFFBB99;
+            final int selectedColor = Themes.getColorFromAttr(CardBrowser.this, R.attr.selectedColor);
 
             if (checkBox.isChecked()) {
                 mCheckedCardPositions.add(position);
