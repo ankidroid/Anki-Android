@@ -30,10 +30,29 @@
     android:layout_margin="0dip">
 
     <FrameLayout
-        android:layout_gravity="center"
-        android:id="@+id/flashcard"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:id="@+id/flashcard_webviews"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/flashcard_question_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v4.view.ViewPager>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/flashcard_answer_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <FrameLayout
+            android:id="@+id/flashcard"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
     <FrameLayout
         android:layout_gravity="center"
         android:id="@+id/touch_layer"
@@ -57,4 +76,5 @@
         android:src="@drawable/ic_lookup"
         android:visibility="gone"
         android:contentDescription="@string/lookup_button_content" />
+
 </FrameLayout>

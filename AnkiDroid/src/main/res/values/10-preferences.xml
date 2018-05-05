@@ -75,6 +75,8 @@
         <item>Top</item>
         <item>Bottom</item>
     </string-array>
+    <string name="useviewpager">Enable Card Swiping</string>
+    <string name="gestures_useviewpager">Swipe card to reveal back and answer (left for not correct, right for correct)</string>
     <string name="gestures">Enable gestures</string>
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
     <string name="gestures_swipe_up">Swipe up</string>

@@ -454,7 +454,16 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                     // render cards before locking database
                     newCard._getQA(true);
                 }
-                publishProgress(new TaskData(newCard));
+
+                Card followingCard = null;
+                if( oldCard == null ) {
+                    // first time we are requesting a card, request an extra one so that it can be rendered ahead of time
+                    followingCard = getCard(sched);
+                    if (followingCard != null)
+                        followingCard._getQA();
+                }
+
+                publishProgress(new TaskData(newCard, followingCard));
                 db.getDatabase().setTransactionSuccessful();
             } finally {
                 db.getDatabase().endTransaction();
@@ -1351,6 +1360,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     public static class TaskData {
         private Card mCard;
+        private Card mFollowingCard;
         private Note mNote;
         private int mInteger;
         private String mMsg;
@@ -1390,6 +1400,12 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
         public TaskData(Card card) {
             mCard = card;
+        }
+
+        public TaskData(Card card, Card followingCard)
+        {
+            mCard = card;
+            mFollowingCard = followingCard;
         }
 
 
@@ -1504,6 +1520,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             return mCard;
         }
 
+        public Card getFollowingCard() { return mFollowingCard; }
 
         public Note getNote() {
             return mNote;

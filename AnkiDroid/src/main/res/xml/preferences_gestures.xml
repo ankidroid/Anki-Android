@@ -28,6 +28,12 @@
     <CheckBoxPreference
         android:defaultValue="false"
         android:disableDependentsState="false"
+        android:key="useViewPager"
+        android:summary="@string/gestures_useviewpager"
+        android:title="@string/useviewpager" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:disableDependentsState="false"
         android:key="gestures"
         android:summary="@string/gestures_summ"
         android:title="@string/gestures" />
