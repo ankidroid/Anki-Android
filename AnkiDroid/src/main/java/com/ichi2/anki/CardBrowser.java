@@ -1471,12 +1471,18 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 mCheckedCardPositions.remove(position);
                 cell.setBackgroundColor(unselectedColor);
             }
-            mActionBarTitle.setText(mCheckedCardPositions.size() + "");
-            // make sure "preview" option only shows with 2+ cards checked
-            if (mCheckedCardPositions.size() < 3) {
-                supportInvalidateOptionsMenu();
-            }
 
+            if (mCheckedCardPositions.isEmpty())
+            {
+                // when 0 are selected: end selection mode
+                endMultiSelectMode();
+            } else {
+                mActionBarTitle.setText(Integer.toString(mCheckedCardPositions.size()));
+                // make sure "preview" option only shows with 2+ cards checked
+                if (mCheckedCardPositions.size() < 3) {
+                    supportInvalidateOptionsMenu();
+                }
+            }
         }
     }
 
