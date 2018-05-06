@@ -1393,6 +1393,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 } else {
                     checkBox.setChecked(false);
                 }
+                // this prevents checkboxes from showing an animation from selected -> unselected when
+                // checkbox was selected, then selection mode was ended and now restarted
+                checkBox.jumpDrawablesToCurrentState();
             } else {
                 checkBox.setChecked(false);
                 checkBox.setVisibility(View.GONE);
