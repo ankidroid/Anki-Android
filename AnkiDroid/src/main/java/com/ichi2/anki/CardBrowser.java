@@ -723,7 +723,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 if (mInMultiSelectMode) {
                     Resources res = getResources();
                     new MaterialDialog.Builder(CardBrowser.this)
-                            .title(res.getString(R.string.delete_card_title))
+                            .title(res.getString(R.string.delete_cards_title))
                             .iconAttr(R.attr.dialogErrorIcon)
                             .content(res.getString(R.string.delete_card_mult_message))
                             .positiveText(res.getString(R.string.dialog_positive_delete))
