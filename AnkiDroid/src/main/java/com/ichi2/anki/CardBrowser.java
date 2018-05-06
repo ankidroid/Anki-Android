@@ -758,7 +758,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 onMark(cards);
                 updateCardsInList(cards, null);
 
-                mCheckedCardPositions.clear();
                 return true;
 
             case R.id.action_suspend_card:
@@ -1167,8 +1166,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             mIsSuspendCardFinished = true;
             hideProgressBar();
-
-            mCheckedCardPositions.clear();
         }
 
 
@@ -1384,9 +1381,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 col.setText(dataSet.get(mFromKeys[i]));
             }
             // set card's background color
-            final int unselectedColor = colors[colorIdx];
-            final int selectedColor = Themes.getColorFromAttr(CardBrowser.this, R.attr.selectedColor);
-            v.setBackgroundColor(unselectedColor);
+            final int backgroundColor = colors[colorIdx];
+            v.setBackgroundColor(backgroundColor);
             // setup checkbox to change color in multi-select mode
             final CheckBox checkBox = (CheckBox) v.findViewById(R.id.card_checkbox);
             // if in multi-select mode, be sure to show the checkboxes
@@ -1400,10 +1396,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             } else {
                 checkBox.setChecked(false);
                 checkBox.setVisibility(View.GONE);
-            }
-            // change color if checkbox is checked
-            if (checkBox.isChecked()) {
-                v.setBackgroundColor(selectedColor);
             }
             // change bg color on check changed
             checkBox.setOnClickListener(new View.OnClickListener() {
@@ -1482,19 +1474,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         private void onCheck(int position, View cell) {
             CheckBox checkBox = (CheckBox) cell.findViewById(R.id.card_checkbox);
-            final Map<String, String> dataSet = getCards().get(position);
-            final int colorIdx = mCardsAdapter.getColor(dataSet.get(mCardsAdapter.mColorFlagKey));
-            int[] colors = Themes.getColorFromAttr(CardBrowser.this, new int[]{android.R.attr.colorBackground,
-                    R.attr.markedColor, R.attr.suspendedColor, R.attr.markedColor});
-            final int unselectedColor = colors[colorIdx];
-            final int selectedColor = Themes.getColorFromAttr(CardBrowser.this, R.attr.selectedColor);
 
             if (checkBox.isChecked()) {
                 mCheckedCardPositions.add(position);
-                cell.setBackgroundColor(selectedColor);
             } else {
                 mCheckedCardPositions.remove(position);
-                cell.setBackgroundColor(unselectedColor);
             }
 
             if (mCheckedCardPositions.isEmpty())
