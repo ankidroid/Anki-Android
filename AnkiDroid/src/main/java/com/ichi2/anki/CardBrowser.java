@@ -19,8 +19,10 @@
 package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -667,6 +669,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (getDrawerToggle().onOptionsItemSelected(item)) {
             return true;
         }
+
+        final List<Card> cards = new ArrayList<>();
+
         switch (item.getItemId()) {
             case android.R.id.home:
                 endMultiSelectMode();
@@ -750,7 +755,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
 
             case R.id.action_mark_card:
-                List<Card> cards = new ArrayList<>();
                 for (int cardPosition : mCheckedCardPositions) {
                     Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
                     cards.add(card);
@@ -761,8 +765,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
 
             case R.id.action_suspend_card:
-
-                cards = new ArrayList<>();
                 for (int cardPosition : mCheckedCardPositions) {
                     final Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
                     cards.add(card);
@@ -771,6 +773,79 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI,
                         mSuspendCardHandler,
                         new DeckTask.TaskData(new Object[]{cards.toArray(new Card[cards.size()]), Collection.DismissType.SUSPEND_CARD}));
+
+                return true;
+
+            case R.id.action_change_deck:
+                AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+                builderSingle.setTitle("Move all to deck");
+
+                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_deck_item);
+                for (JSONObject deck : mDropDownDecks) {
+                    try {
+                        arrayAdapter.add(deck.getString("name"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        long newDid;
+                        try {
+                            newDid = mDropDownDecks.get(which).getLong("id");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            return;
+                        }
+
+                        for (int cardPosition : mCheckedCardPositions) {
+                            final Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
+                            cards.add(card);
+                        }
+
+                        List<Card> changedCards = new ArrayList<>();
+                        for (Card card : cards) {
+                            if (card.getDid() != newDid) {
+                                changedCards.add(card);
+                                mReloadRequired = true;
+                            }
+                        }
+
+                        if (changedCards.isEmpty())
+                        {
+                            endMultiSelectMode();
+                            mCardsAdapter.notifyDataSetChanged();
+                            return;
+                        }
+
+                        long[] changedCardIds = new long[changedCards.size()];
+                        for (int i = 0; i < changedCards.size(); i++) {
+                            changedCardIds[i] = changedCards.get(i).getId();
+                        }
+                        getCol().getSched().remFromDyn(changedCardIds);
+
+                        for (Card card : changedCards)
+                        {
+                            card.load();
+                            // then set the card ID to the new deck
+                            card.setDid(newDid);
+                        }
+
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACTS_MULTI, mChangeMultiHandler,
+                                new DeckTask.TaskData(new Object[]{changedCards.toArray(new Card[changedCards.size()]), false}));
+                        }
+                });
+                builderSingle.show();
 
                 return true;
 
@@ -1058,6 +1133,39 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void onCancelled() {
         }
     };
+
+    private DeckTask.TaskListener mChangeMultiHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+            showProgressBar();
+        }
+
+
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+            updateCardInList(values[0].getCard(), values[0].getString());
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            Timber.d("Card Browser - mUpdateCardHandler.onPostExecute()");
+            if (!result.getBoolean()) {
+                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
+            }
+            hideProgressBar();
+
+            searchCards();
+            endMultiSelectMode();
+            mCardsAdapter.notifyDataSetChanged();
+        }
+
+
+        @Override
+        public void onCancelled() {
+        }
+    };
+
 
     public static void updateSearchItemQA(Map<String, String> item, Card c) {
         // render question and answer

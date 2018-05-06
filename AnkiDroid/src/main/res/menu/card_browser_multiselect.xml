@@ -16,6 +16,10 @@
         android:title="@string/card_browser_suspend_card"/>
 
     <item
+        android:id="@+id/action_change_deck"
+        android:title="@string/card_browser_change_deck"/>
+
+    <item
         android:id="@+id/action_preview"
         android:title="@string/card_editor_preview_card"/>
 

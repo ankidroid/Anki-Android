@@ -71,6 +71,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_ANSWER_CARD = 3;
     public static final int TASK_TYPE_ADD_FACT = 6;
     public static final int TASK_TYPE_UPDATE_FACT = 7;
+    public static final int TASK_TYPE_UPDATE_FACTS_MULTI = 9;
     public static final int TASK_TYPE_UNDO = 8;
     public static final int TASK_TYPE_DISMISS = 11;
     public static final int TASK_TYPE_DISMISS_MULTI = 12;
@@ -248,6 +249,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_UPDATE_FACT:
                 return doInBackgroundUpdateNote(params);
+
+            case TASK_TYPE_UPDATE_FACTS_MULTI:
+                return doInBackgroundUpdateNotes(params);
 
             case TASK_TYPE_UNDO:
                 return doInBackgroundUndo(params);
@@ -427,6 +431,38 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 } else {
                     publishProgress(new TaskData(editCard, editNote.stringTags()));
                 }
+                col.getDb().getDatabase().setTransactionSuccessful();
+            } finally {
+                col.getDb().getDatabase().endTransaction();
+            }
+        } catch (RuntimeException e) {
+            Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating fact");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
+            return new TaskData(false);
+        }
+        return new TaskData(true);
+    }
+
+    // same as doInBackgroundUpdateNote but for multiple notes
+    private TaskData doInBackgroundUpdateNotes(TaskData[] params) {
+        Timber.d("doInBackgroundUpdateNotes");
+        // Save the note
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Object[] data = params[0].getObjArray();
+        Card[] cards = (Card[]) data[0];
+
+        try {
+            col.getDb().getDatabase().beginTransaction();
+            try {
+                for (Card card : cards) {
+                    Note note = card.note();
+                    // TODO: undo integration
+                    note.flush();
+                    // flush card too, in case, did has been changed
+                    card.flush();
+                    publishProgress(new TaskData(card, note.stringTags()));
+                }
+
                 col.getDb().getDatabase().setTransactionSuccessful();
             } finally {
                 col.getDb().getDatabase().endTransaction();
