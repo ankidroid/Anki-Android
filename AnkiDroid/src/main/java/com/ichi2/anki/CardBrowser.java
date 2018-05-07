@@ -642,10 +642,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
 
-            // if more than one item is selected, can't preview:
             if (mCheckedCardPositions.size() > 1) {
                 mActionBarMenu.findItem(R.id.action_preview).setVisible(false);
             }
+
+            updateMultiselectMenu();
         }
 
         // Maybe we were called from ACTION_PROCESS_TEXT.
@@ -661,6 +662,48 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void updateMultiselectMenu() {
+        if (mActionBarMenu == null || mActionBarMenu.findItem(R.id.action_suspend_card) == null)
+            return;
+
+        if (!mCheckedCardPositions.isEmpty()) {
+            // mark/suspend toggle behaviour: find out which action will happen
+            boolean hasUnsuspended = false;
+            boolean hasUnmarked = false;
+            int count = 0;
+            boolean performanceBreak = false;
+            for (int cardPosition : mCheckedCardPositions) {
+                Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
+                hasUnsuspended = hasUnsuspended || card.getQueue() != -1;
+                hasUnmarked = hasUnmarked || !card.note().hasTag("marked");
+                if (hasUnsuspended && hasUnmarked)
+                    break;
+                if (count++ > 20) {
+                    // evaluating too many cards/notes could cause too big of a delay
+                    performanceBreak = true;
+                    break;
+                }
+            }
+
+            if (performanceBreak)
+            {
+                // just display a more general string
+                mActionBarMenu.findItem(R.id.action_suspend_card).setTitle(getString(R.string.card_browser_toggle_suspend_card));
+                mActionBarMenu.findItem(R.id.action_mark_card).setTitle(getString(R.string.card_browser_toggle_mark_card));
+            } else {
+                if (hasUnsuspended)
+                    mActionBarMenu.findItem(R.id.action_suspend_card).setTitle(getString(R.string.card_browser_suspend_card));
+                else
+                    mActionBarMenu.findItem(R.id.action_suspend_card).setTitle(getString(R.string.card_browser_unsuspend_card));
+
+                if (hasUnmarked)
+                    mActionBarMenu.findItem(R.id.action_mark_card).setTitle(getString(R.string.card_browser_mark_card));
+                else
+                    mActionBarMenu.findItem(R.id.action_mark_card).setTitle(getString(R.string.card_browser_unmark_card));
+            }
+        }
     }
 
 
@@ -761,6 +804,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 }
                 onMark(cards);
                 updateCardsInList(cards, null);
+
+                updateMultiselectMenu();
 
                 return true;
 
@@ -1273,6 +1318,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
             mIsSuspendCardFinished = true;
+
+            updateMultiselectMenu();
+
             hideProgressBar();
         }
 
@@ -1591,6 +1639,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             } else {
                 mCheckedCardPositions.remove(position);
             }
+
+            updateMultiselectMenu();
 
             if (mCheckedCardPositions.isEmpty())
             {
