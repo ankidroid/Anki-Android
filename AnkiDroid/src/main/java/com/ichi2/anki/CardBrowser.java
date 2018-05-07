@@ -691,17 +691,25 @@ public class CardBrowser extends NavigationDrawerActivity implements
             {
                 // just display a more general string
                 mActionBarMenu.findItem(R.id.action_suspend_card).setTitle(getString(R.string.card_browser_toggle_suspend_card));
+                mActionBarMenu.findItem(R.id.action_suspend_card).setIcon(R.drawable.ic_action_suspend);
                 mActionBarMenu.findItem(R.id.action_mark_card).setTitle(getString(R.string.card_browser_toggle_mark_card));
+                mActionBarMenu.findItem(R.id.action_mark_card).setIcon(R.drawable.ic_star_outline_white_24dp);
             } else {
-                if (hasUnsuspended)
+                if (hasUnsuspended) {
                     mActionBarMenu.findItem(R.id.action_suspend_card).setTitle(getString(R.string.card_browser_suspend_card));
-                else
+                    mActionBarMenu.findItem(R.id.action_suspend_card).setIcon(R.drawable.ic_action_suspend);
+                } else {
                     mActionBarMenu.findItem(R.id.action_suspend_card).setTitle(getString(R.string.card_browser_unsuspend_card));
+                    mActionBarMenu.findItem(R.id.action_suspend_card).setIcon(R.drawable.ic_action_unsuspend);
+                }
 
-                if (hasUnmarked)
+                if (hasUnmarked) {
                     mActionBarMenu.findItem(R.id.action_mark_card).setTitle(getString(R.string.card_browser_mark_card));
-                else
+                    mActionBarMenu.findItem(R.id.action_mark_card).setIcon(R.drawable.ic_star_outline_white_24dp);
+                } else {
                     mActionBarMenu.findItem(R.id.action_mark_card).setTitle(getString(R.string.card_browser_unmark_card));
+                    mActionBarMenu.findItem(R.id.action_mark_card).setIcon(R.drawable.ic_star_white_24dp);
+                }
             }
         }
     }

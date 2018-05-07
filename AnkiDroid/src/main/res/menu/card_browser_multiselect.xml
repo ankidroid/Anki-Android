@@ -4,15 +4,19 @@
     <item
         android:id="@+id/action_delete_card"
         android:icon="@drawable/ic_delete_white_24dp"
-        android:title="@string/card_browser_delete_card"
-        ankidroid:showAsAction="ifRoom"/>
+        android:title="@string/card_browser_delete_card" />
 
 	<item
+        ankidroid:showAsAction="ifRoom"
         android:id="@+id/action_mark_card"
+        android:icon="@drawable/ic_star_outline_white_24dp"
         android:title="@string/card_browser_mark_card"/>
 
+
     <item
+        ankidroid:showAsAction="ifRoom"
         android:id="@+id/action_suspend_card"
+        android:icon="@drawable/ic_action_suspend"
         android:title="@string/card_browser_suspend_card"/>
 
     <item
