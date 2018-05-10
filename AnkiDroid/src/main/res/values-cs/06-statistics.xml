@@ -99,11 +99,11 @@
     <item>Měsíce</item>
   </string-array>
   <string name="stats_today">Dnes</string>
-  <string name="stats_overview">Overview</string>
+  <string name="stats_overview">Přehled</string>
   <string name="stats_forecast">Předpověď</string>
   <string name="stats_review_count">Počet opakování</string>
   <string name="stats_review_time">Čas opakování</string>
-  <string name="stats_added">Added</string>
+  <string name="stats_added">Přidané</string>
   <string name="stats_review_intervals">Intervaly</string>
   <string name="stats_breakdown">Hodinový přehled</string>
   <string name="stats_weekly_breakdown">Týdenní přehled</string>
@@ -141,6 +141,7 @@
   <plurals name="stats_today_cards">
     <item quantity="one">Dnes studována &lt;b&gt;%1$d karta&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;.</item>
     <item quantity="few">Dnes studováno &lt;b&gt;%1$d karty&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;.</item>
+    <item quantity="many">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today</item>
     <item quantity="other">Dnes studováno &lt;b&gt;%1$d karet&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;.</item>
   </plurals>
 </resources>

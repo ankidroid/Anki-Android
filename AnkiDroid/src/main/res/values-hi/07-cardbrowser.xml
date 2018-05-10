@@ -70,16 +70,16 @@
   <string name="card_details_answer">जवाब</string>
   <string name="card_details_due">बाकी</string>
   <string name="card_details_tags">टैग</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
+  <string name="card_browser_filtering_cards">कार्ड फ़िल्टर कर रहा है... \nPress वापस रद्द करने के लिए बटन</string>
   <string-array name="card_browser_order_labels">
-    <item>No sorting (faster)</item>
+    <item>कोई सॉर्टिंग (तेज़)</item>
     <item>क्रम फ़ील्ड से</item>
     <item>निर्माण के समय से</item>
     <item>संपादित समय से</item>
     <item>बदले समय से</item>
     <item>नियत समय से</item>
     <item>अंतराल से</item>
-    <item>By ease</item>
+    <item>आसानी से</item>
     <item>समीक्षाओं से</item>
     <item>चूकों से</item>
   </string-array>

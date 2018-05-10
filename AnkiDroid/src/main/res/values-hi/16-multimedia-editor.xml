@@ -38,7 +38,7 @@
   <string name="multimedia_editor_popup_image">चित्र जोड़ें</string>
   <string name="multimedia_editor_popup_audio">ध्वनि रिकॉर्ड करें</string>
   <string name="multimedia_editor_popup_text">उन्नत संपादक</string>
-  <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
+  <string name="multimedia_editor_popup_cloze">क्लोज़ विलोपन</string>
   <!-- Translation activity (Glosbe) -->
   <string name="multimedia_editor_trans_poweredglosbe">Glosbe.com द्वारा संचालित</string>
   <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -79,41 +79,41 @@
   <string name="multimedia_editor_text_field_editing_clone">से जुड़वाँ बनाएँ</string>
   <string name="multimedia_editor_text_field_editing_translate">अनुवाद</string>
   <!-- message to user, when there is no text or many words, but the user tries something -->
-  <string name="multimedia_editor_text_field_editing_no_text">Input some text first</string>
-  <string name="multimedia_editor_text_field_editing_many_words">Dictionary usually expects one word</string>
+  <string name="multimedia_editor_text_field_editing_no_text">इनपुट कुछ पाठ पहले</string>
+  <string name="multimedia_editor_text_field_editing_many_words">शब्दकोश सामांयत: एक शब्द की अपेक्षा करता है</string>
   <!-- message when cloning -->
-  <string name="multimedia_editor_text_field_editing_clone_source">Take from</string>
+  <string name="multimedia_editor_text_field_editing_clone_source">से ले</string>
   <!-- Multimedia card editor activity -->
   <!-- for buttons -->
   <!-- delete confirmation -->
   <!-- Image editing -->
   <!-- for buttons -->
-  <string name="multimedia_editor_image_field_editing_galery">Gallery</string>
-  <string name="multimedia_editor_image_field_editing_photo">Camera</string>
+  <string name="multimedia_editor_image_field_editing_galery">गैलरी</string>
+  <string name="multimedia_editor_image_field_editing_photo">कैमरा</string>
   <!-- General -->
   <!-- message on the progress dialog for the user to wait, means process -->
-  <string name="multimedia_editor_general_downloading">Downloading</string>
+  <string name="multimedia_editor_general_downloading">डाउनलोड हो रहा है...</string>
   <!-- when process finishes -->
-  <string name="multimedia_editor_general_done">Done</string>
+  <string name="multimedia_editor_general_done">समाप्त</string>
   <!-- General word search and failures -->
-  <string name="multimedia_editor_error_word_not_found">The word was not found</string>
+  <string name="multimedia_editor_error_word_not_found">शब्द नहीं मिला</string>
   <!-- failure when contacting glosbe or similar -->
-  <string name="multimedia_editor_trans_getting_failure">Getting translation failed</string>
-  <string name="multimedia_editor_searching_word">Searching the word</string>
+  <string name="multimedia_editor_trans_getting_failure">अनुवाद प्राप्त करना विफल रहा</string>
+  <string name="multimedia_editor_searching_word">शब्द खोज</string>
   <!-- General -->
-  <string name="multimedia_editor_progress_wait_title">Wait</string>
+  <string name="multimedia_editor_progress_wait_title">प्रतीक्षा करें</string>
   <!-- not a good message, when an unexpected error happens -->
-  <string name="multimedia_editor_something_wrong">Something went wrong</string>
-  <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the %1$s field</string>
-  <string name="multimedia_editor_attach_media">Attach media</string>
+  <string name="multimedia_editor_something_wrong">कुछ गलत हो गया</string>
+  <string name="multimedia_editor_attach_mm_content">%1$s फ़ील्ड में मल्टीमीडिया सामग्री अनुलग्न करें</string>
+  <string name="multimedia_editor_attach_media">मीडिया अनुलग्न करें</string>
   <!-- Audio view -->
   <!-- Message when recording fails -->
-  <string name="multimedia_editor_audio_view_recording_failed">Recording failed</string>
-  <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
+  <string name="multimedia_editor_audio_view_recording_failed">रिकॉर्डिंग विफल</string>
+  <string name="multimedia_editor_audio_view_playing_failed">बजाना विफल रहा</string>
   <!-- Activity titles -->
-  <string name="title_activity_edit_text">Editing field</string>
-  <string name="title_activity_translation">Translation</string>
-  <string name="title_activity_load_pronounciation">Pronunciation</string>
+  <string name="title_activity_edit_text">संपादन फ़ील्ड</string>
+  <string name="title_activity_translation">अनुवाद</string>
+  <string name="title_activity_load_pronounciation">उच्चारण</string>
   <!-- Network failure -->
-  <string name="network_no_connection">No connection</string>
+  <string name="network_no_connection">कोई कनेक्शन नहीं है</string>
 </resources>

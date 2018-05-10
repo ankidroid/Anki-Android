@@ -43,43 +43,43 @@
   <plurals name="card_browser_subtitle">
     <item quantity="other">%d cards shown</item>
   </plurals>
-  <string name="card_browser_all_decks">All decks</string>
-  <string name="card_browser_delete_card">Delete note</string>
-  <string name="card_browser_suspend_card">Gantung kad</string>
-  <string name="card_browser_unsuspend_card">Jangan gantung kad</string>
-  <string name="card_browser_mark_card">Mark note</string>
-  <string name="card_browser_unmark_card">Unmark note</string>
-  <string name="delete_card_title">Delete note?</string>
-  <string name="delete_card_message">Delete all cards of this note?\nSearch field: %s</string>
-  <string name="card_browser_show_marked">Filter marked</string>
-  <string name="card_browser_show_suspended">Filter suspended</string>
-  <string name="card_browser_search_by_tag">Filter by tag</string>
-  <string name="card_browser_tags_shown">Tag: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
+  <string name="card_browser_all_decks">Semua deck</string>
+  <string name="card_browser_delete_card">Hapus catatan</string>
+  <string name="card_browser_suspend_card">Tangguhkan kartu</string>
+  <string name="card_browser_unsuspend_card">Unsuspend card</string>
+  <string name="card_browser_mark_card">Mark catatan</string>
+  <string name="card_browser_unmark_card">Hapus tanda catatan</string>
+  <string name="delete_card_title">Hapus catatan?</string>
+  <string name="delete_card_message">Hapus semua kartu dari catatan ini? \ n Bidang pencarian: % s</string>
+  <string name="card_browser_show_marked">Filter ditandai</string>
+  <string name="card_browser_show_suspended">Filter ditangguhkan</string>
+  <string name="card_browser_search_by_tag">Filter menurut tag</string>
+  <string name="card_browser_tags_shown">Tags: %1$s</string>
+  <string name="card_browser_list_my_searches">Pencarian saya</string>
+  <string name="card_browser_list_my_searches_save">Simpan pencarian</string>
+  <string name="card_browser_list_my_searches_title">Pilih pencarian tersimpan</string>
+  <string name="card_browser_list_my_searches_new_name">Nama untuk pencarian saat ini</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">Anda tidak dapat menyimpan pencarian tanpa nama</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Nama ada</string>
+  <string name="card_browser_list_my_searches_remove_content">Hapus \" % 1 $ s \"?</string>
   <string name="card_browser_change_display_order">Ubah urutan tampilan</string>
   <string name="card_browser_change_display_order_title">Pilih urutan tampilan</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
+  <string name="card_browser_change_display_order_reverse">Pilih bidang dua kali untuk membalikkan</string>
   <string name="card_details_question">Soalan</string>
   <string name="card_details_answer">Jawapan</string>
   <string name="card_details_due">Lewat</string>
-  <string name="card_details_tags">Tag</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
+  <string name="card_details_tags">Tags</string>
+  <string name="card_browser_filtering_cards">Menyaring kartu... \ n Tekan tombol kembali untuk membatalkan</string>
   <string-array name="card_browser_order_labels">
-    <item>No sorting (faster)</item>
-    <item>By sort field</item>
-    <item>By created time</item>
-    <item>By edited time</item>
-    <item>By changed time</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
-    <item>By reviews</item>
+    <item>Tidak ada pemilahan (lebih cepat)</item>
+    <item>Dengan bidang sortir</item>
+    <item>Dengan waktu yang dibuat</item>
+    <item>Dengan waktu diedit</item>
+    <item>Dengan waktu yang berubah</item>
+    <item>Dengan karena waktu</item>
+    <item>Dengan interval</item>
+    <item>Dengan mudah</item>
+    <item>Dengan review</item>
     <item>By lapses</item>
   </string-array>
 </resources>

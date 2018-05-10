@@ -22,7 +22,7 @@
 <resources>
   <!--Menu Labels-->
   <string name="model_browser_label">Gestionar tipos de nota</string>
-  <string name="model_editor_label">Gestionar campos</string>
+  <string name="model_editor_label">Administrar campos</string>
   <!--Toasts-->
   <string name="toast_last_model">No se puede borrar el último modelo</string>
   <string name="toast_last_field">Los tipos de nota deben tener por lo menos un campo</string>
@@ -54,8 +54,8 @@
   <string name="model_field_editor_delete">Borrar campo</string>
   <string name="model_field_editor_options">Opciones de campo</string>
   <string name="model_field_editor_rename">Renombrar campo</string>
-  <string name="model_field_editor_reposition_menu">Recolocar campo</string>
-  <string name="model_field_editor_reposition">Recolocar campo (introduce un valor %1$d-%2$d)</string>
+  <string name="model_field_editor_reposition_menu">Campo de reposición</string>
+  <string name="model_field_editor_reposition">Campo de reposición (introducir un valor %1$d-%2$d)</string>
   <string name="model_field_editor_changing">Actualizando campos</string>
   <string name="model_field_editor_sort_field">Ordenar por este campo</string>
   <string name="model_clone_suffix">copiar</string>

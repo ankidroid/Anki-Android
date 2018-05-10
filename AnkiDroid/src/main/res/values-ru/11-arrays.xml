@@ -38,59 +38,59 @@
   <string-array name="error_reporting_choice_labels">
     <item>Всегда сообщать</item>
     <item>Никогда не сообщать</item>
-    <item>Спросите меня</item>
+    <item>Спрашивать меня</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>Нет действия</item>
+    <item>Без действия</item>
     <item>Показать ответ</item>
     <item>Кнопка ответа 1</item>
     <item>Кнопка ответа 2</item>
     <item>Кнопка ответа 3</item>
     <item>Кнопка ответа 4</item>
     <item>Рекомендованный ответ (зелёный)</item>
-    <item>Лучше, чем рекомендованный</item>
-    <item>Откат</item>
-    <item>Редактировать заметку</item>
-    <item>Отметить заметку</item>
-    <item>Поиск выражения</item>
-    <item>Отложить заметку</item>
-    <item>Скрыть карту</item>
+    <item>Лучше рекомендованного ответа</item>
+    <item>Отменить</item>
+    <item>Редактировать запись</item>
+    <item>Отметить запись</item>
+    <item>Посмотреть выражение</item>
+    <item>Отложить карточку</item>
+    <item>Исключить карточку</item>
     <item>Удалить запись</item>
-    <item>Воспроизвести Media</item>
+    <item>Воспроизвести медиафайл</item>
     <item>Прервать обучение</item>
-    <item>Отложить заметку</item>
-    <item>Скрыть заметку</item>
+    <item>Отложить запись</item>
+    <item>Исключить запись</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Отложить карту</item>
-    <item>Только метка</item>
+    <item>Исключить карточку</item>
+    <item>Добавить метку</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Новые в случайном порядке</item>
-    <item>Новые в порядке их добавления</item>
+    <item>Новые карточки в порядке добавления</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Старейшие первыми</item>
-    <item>Случайно</item>
-    <item>По увеличению интервалов</item>
-    <item>По уменьшению интервалов</item>
-    <item>Количество пропусков</item>
-    <item>В порядке добавления</item>
-    <item>В порядке просмотра</item>
-    <item>Последние добавленные первыми</item>
-    <item>Относительно задержки</item>
+    <item>давно не повторяемые</item>
+    <item> случайные</item>
+    <item>увеличению интервалов</item>
+    <item>уменьшению интервалов</item>
+    <item>самые сложные</item>
+    <item>по порядку добавления</item>
+    <item>по расписанию повторения</item>
+    <item>последние добавленные</item>
+    <item>по просрочке</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Использовать текущую колоду</item>
-    <item>Выбор по типу заметки</item>
+    <item>Решать по типу записи</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Перемешать новые карты и повторяемые</item>
-    <item>Новые после повторяемых</item>
+    <item>Перемешать новые и повторяемые</item>
+    <item>Повторяемые до новых</item>
     <item>Новые до повторяемых</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>Если не задан шрифт в карточках</item>
+    <item>Если в карточке не указан шрифт</item>
     <item>Всегда</item>
   </string-array>
   <string-array name="day_theme_labels">

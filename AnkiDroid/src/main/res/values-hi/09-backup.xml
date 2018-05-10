@@ -57,10 +57,10 @@
   <string name="backup_error">त्रुटि</string>
   <string name="backup_invalid_file_error">चयनित बैकअप फ़ाइल अमान्य था</string>
   <string name="backup_restore_select_title">पुनर्स्थापित करने के लिए बैकअप चुनें</string>
-  <string name="backup_restore_no_backups">No backups available on this device. If you have backups on your desktop computer, copy them manually into your AnkiDroid folder.</string>
+  <string name="backup_restore_no_backups">इस डिवाइस पर कोई बैकअप उपलब्ध नहीं है । यदि आप अपने डेस्कटॉप कंप्यूटर पर बैकअप है, उंहें अपने AnkiDroid फ़ोल्डर में मैंयुअल रूप से प्रतिलिपि बनाएं ।</string>
   <string name="open_collection_failed_title">संग्रह नहीं खोला गया</string>
-  <string name="open_collection_failed_message">Database couldn’t be opened. It’s either not a real Anki database or has been corrupted.\n\nTouch “options” for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
-  <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
+  <string name="open_collection_failed_message">डेटाबेस खोला नहीं जा सका । यह या तो एक वास्तविक अंकि डेटाबेस नहीं है या दूषित हो गया है. \ n \ nTouch \"विकल्प\" डेटाबेस पुनर्स्थापित करने के लिए विभिंन विकल्पों के लिए, या दूषित संग्रह को सुधारने के बारे में अधिक जानकारी के लिए देखें: \ n%1$s</string>
+  <string name="corrupt_db_message">आपका संग्रह दूषित हो गया है । \ n \ nTouch \"विकल्प\" बैकअप से पुनर्स्थापित करने के लिए, या कि काम नहीं करता है, तो मैन्युअल रूप से डेटाबेस को सुधारने के लिए निम्न निर्देश देखें: \ n%1$s</string>
   <string name="access_collection_failed_message">अपने संग्रह तक पहुँचते समय कोई त्रुटि हुई। यह एक हानिरहित दोष से हो सकता है, या इसके साथ एक समस्या हो सकती है। \n\nडेटाबेस जाँच आज़माएँ, या \"विकल्प\" बटन दबाकर बैकअप से पुनर्स्थापित करें। आप यह संदेश बार-बार देख रहे हैं, कृपया एक दोष सूचना दर्ज करें: \n%1$s</string>
   <string name="deck_repair_error">संग्रह सुधारा नहीं कर सका</string>
   <string name="cursor_size_limit_exceeded">डेटाबेस में स्ट्रिंग के लिए एंड्रॉइड की आकार सीमा पार हो गई है। Anki डेस्कटॉप का उपयोग कर सारे अनुपयोगी नोट प्रकार हटाएँ, फिर एक पूर्ण समकालन करें।</string>

@@ -33,11 +33,13 @@
   <plurals name="model_browser_types_available">
     <item quantity="one">dostupný %d typ poznámky</item>
     <item quantity="few">%d note types available</item>
+    <item quantity="many">%d note types available</item>
     <item quantity="other">%d note types available</item>
   </plurals>
   <plurals name="model_browser_of_type">
     <item quantity="one">%d poznámka</item>
     <item quantity="few">%d notes</item>
+    <item quantity="many">%d notes</item>
     <item quantity="other">%d poznámek</item>
   </plurals>
   <!--Button Values-->

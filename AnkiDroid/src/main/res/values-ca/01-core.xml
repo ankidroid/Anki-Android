@@ -80,8 +80,8 @@
   <string name="menu_import">Importar</string>
   <string name="undo">Desfés</string>
   <string name="undo_action_review">revisió final</string>
-  <string name="undo_action_bury_card">bury card</string>
-  <string name="undo_action_bury_note">bury note</string>
+  <string name="undo_action_bury_card">enterrar carta</string>
+  <string name="undo_action_bury_note">enterrar nota</string>
   <string name="undo_action_suspend_card">Suspèn la fitxa</string>
   <string name="undo_action_suspend_note">suspèn la nota</string>
   <string name="undo_action_delete">Suprimeix la nota</string>
@@ -95,8 +95,8 @@
   <string name="menu_bury_note">Enterra la nota</string>
   <string name="menu_suspend_card">Suspèn la fitxa</string>
   <string name="menu_suspend_note">Suspen la nota</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">Enterrar</string>
+  <string name="menu_suspend">Suspendre</string>
   <string name="menu_delete_note">Suprimeix la nota</string>
   <string name="delete_note_message">Segur que voleu suprimir aquesta nota i tots les seves fitxes?\n%s</string>
   <string name="menu_select">Selecciona text</string>
@@ -142,7 +142,7 @@
   <string name="cancel_sync_confirm">Voleu cancel·lar la sincronització?</string>
   <string name="continue_sync">Continua la sincronització</string>
   <string name="sync_cancelled">Sincronització cancel·lada</string>
-  <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
+  <string name="sync_cancel_message">Cancelant...\nThis pot trigar una estona.</string>
   <string name="export">Exportar</string>
   <string name="export_collection">Exporta la col·lecció</string>
   <string name="export_deck">Exporta el paquet</string>
@@ -158,9 +158,9 @@
     <item quantity="one">Voleu eliminar el tipus de carta \"%2$s\", i la seva %1$d carta?</item>
     <item quantity="other">Voleu eliminar el tipus de carta \"%2$s\", i les seves %1$d cartes?</item>
   </plurals>
-  <string name="invalid_template">A card could not be generated</string>
+  <string name="invalid_template">Una carta no s\'ha pogut generar</string>
   <string name="card_template_editor_would_delete_note">Treient aquest tipus de carta faria que una o més anotacions s\'eliminessin. Si us plau, creeu un nou tipus de carta.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Llegir i escriure a la base de dades d\'AnkiDroid</string>
-  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="read_write_permission_description">accés a notes, targetes, tipus de nota i malls existents, així com crear-ne de nous</string>
 </resources>

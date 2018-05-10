@@ -59,17 +59,20 @@
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d kartička na preskúšanie (%2$s)</item>
     <item quantity="few">%1$d kartičky na preskúšanie (%2$s)</item>
+    <item quantity="many">%1$d cards due (%2$s)</item>
     <item quantity="other">%1$d kartičiek na preskúšanie (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">zostáva %d minúta</item>
     <item quantity="few">zostávajú %d minúty</item>
+    <item quantity="many">%d minutes left</item>
     <item quantity="other">zostáva %d minút</item>
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
     <item quantity="one">Dnes naučená %1$d kartička počas %2$s</item>
     <item quantity="few">Dnes naučené %1$d kartičky počas %2$s</item>
+    <item quantity="many">Studied %1$d cards in %2$s today</item>
     <item quantity="other">Dnes naučených %1$d kartičiek počas %2$s</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
@@ -160,6 +163,7 @@
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">Vymazať “%2$s” typ kartičky a jeho %1$d kartičku?</item>
     <item quantity="few">Vymazať “%2$s” typy kartičiek a ich %1$d kartičky?</item>
+    <item quantity="many">Delete the “%2$s” card type, and its %1$d cards?</item>
     <item quantity="other">Vymazať “%2$s” typov kartičiek a ich %1$d kartičiek?</item>
   </plurals>
   <string name="invalid_template">Kartičku nie je možné vygenerovať</string>

@@ -40,21 +40,21 @@
 -->
 <resources>
   <!-- generic strings -->
-  <string name="disabled">Disabled</string>
-  <string name="enabled">Enabled</string>
+  <string name="disabled">Deshabilitat</string>
+  <string name="enabled">Habilitat</string>
   <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Configuració general</string>
   <string name="pref_cat_reviewing">Revisió</string>
-  <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>
+  <string name="pref_cat_reviewing_summ">Configuracions de revisió no específiques de malls</string>
   <string name="pref_cat_reviewer_behaviour">Comportament</string>
   <string name="pref_cat_flashcard">Pantalla</string>
   <string name="pref_cat_whiteboard">Pissarra</string>
   <string name="pref_cat_automatic_display">Mostra la resposta automàticament</string>
-  <string name="pref_cat_appearance">Appearance</string>
-  <string name="pref_cat_appearance_summ">Change themes and default font</string>
-  <string name="pref_cat_themes">Themes</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_appearance">Aparença</string>
+  <string name="pref_cat_appearance_summ">Canviar els temes i la font per defecte</string>
+  <string name="pref_cat_themes">Temes</string>
+  <string name="pref_cat_fonts">Tipus de lletra</string>
   <string name="pref_cat_gestures">Gestos</string>
   <string name="pref_cat_gestures_summ">Utilitzar lliscades i tocs en lloc de botons</string>
   <string name="pref_cat_actions">Accions</string>
@@ -71,29 +71,29 @@
   <string name="whiteboard_black_summ">Utilitza menys memòria, llevat que estigui en el mode de nit</string>
   <string name="write_answers_disable">Desactiva l\'escriptura en la resposta</string>
   <string name="write_answers_disable_summ">Impedeix que el teclat apareixi en les cartes que contenen camps per escriure la resposta</string>
-  <string name="use_input_tag">Type answer into the card</string>
-  <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
-  <string name="text_selection_click">Solució de premsa llarga</string>
+  <string name="use_input_tag">Tipus de resposta a la targeta</string>
+  <string name="use_input_tag_summ">Utilitzar un quadre d\'entrada de text dins de la targeta per escriure la resposta</string>
+  <string name="text_selection_click">Solució de clic perllongat</string>
   <string name="text_selection_click_summ">Activeu aquesta opció si no podeu seleccionar text amb un clic perllongat</string>
   <string name="dictionary">Diccionari de cerca</string>
   <string name="reset_languages">Reinicialització de llengües</string>
-  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
+  <string name="reset_languages_summ">Restablir les assignacions de llengua (per text a discurs i diccionaris) per tots els malls</string>
   <string name="reset_languages_question">Voleu reiniciar les assignacions de tots el idiomes?</string>
   <string name="reset_confirmation">Restablir tots els estats</string>
   <string name="card_zoom">Zoom de carta</string>
   <string name="image_zoom">Zoom d\'imatge</string>
   <string name="button_size">Mida de botó de resposta</string>
   <string name="card_browser_font_size">Tamany de lletra al cercador de targetes</string>
-  <string name="col_path">AnkiDroid directory</string>
+  <string name="col_path">Directori de l\'AnkiDroid</string>
   <string name="fullscreen_review">Mode de pantalla completa</string>
-  <string name="full_screen_off">Off</string>
-  <string name="full_screen_system">Hide the system bars</string>
-  <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-  <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
-  <string name="answer_buttons_position">Answer buttons position</string>
+  <string name="full_screen_off">Desactivat</string>
+  <string name="full_screen_system">Amagar les barres del sistema</string>
+  <string name="full_screen_complete">Amagar les barres del sistema i els botons de resposta</string>
+  <string name="full_screen_error_gestures">Has d\'habilitar els gestos per poder amagar els botons de resposta</string>
+  <string name="answer_buttons_position">Posició dels botons de resposta</string>
   <string-array name="answer_buttons_position_labels">
-    <item>Top</item>
-    <item>Bottom</item>
+    <item>A dalt</item>
+    <item>A baix</item>
   </string-array>
   <string name="gestures">Activa gestos</string>
   <string name="gestures_summ">Assignar gestos a accions com cartes de resposta i d\'edició.</string>
@@ -124,8 +124,8 @@
   <string name="fix_hebrew_text_summ">Solució per a mostra correctament les vocals de l\'Hebreu.</string>
   <string name="fix_hebrew_instructions">Aquesta configuració evita l\'algorisme d\'Android per mostrar el text hebraic amb vocals correctament.\n\nPer que funcioni, heu de baixar el tipus de lletra Tohu.ttf i copiar-lo manualment a:\n%s/fonts/\n\nNo haureu de modificar les vostres fitxes.</string>
   <string name="fix_hebrew_download_font">Descarrega el tipus de lletra</string>
-  <string name="day_theme">Day theme</string>
-  <string name="night_theme">Night theme</string>
+  <string name="day_theme">Tema diürn</string>
+  <string name="night_theme">Tema nocturn</string>
   <string name="default_font">Tipus de lletra per omissió</string>
   <string name="override_font">Aplicabilitat de tipus de lletra per defecte</string>
   <string name="language">Idioma</string>
@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">Vibra</string>
   <string name="notification_minimum_cards_due_blink">Parpellejar el llum</string>
   <string name="timeout_answer_text">Visualització automàtica de la resposta</string>
-  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
+  <string name="timeout_answer_summ">Mostra la resposta automàticament sense aportació d\'usuari. El retard inclou el temps de les reproduccions automàtiques d\'arxius d\'àudio.</string>
   <string name="timeout_answer_seconds">Temps per mostrar la resposta</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">Temps per mostrar la següent pregunta</string>
@@ -153,8 +153,8 @@
   <string name="show_estimates_summ">Mostra el temps de la pròxima revisió al botons de resposta</string>
   <string name="show_progress">Mostra el romanent</string>
   <string name="show_progress_summ">Mostra el recompte de cartes restants</string>
-  <string name="show_eta">Show ETA</string>
-  <string name="show_eta_summ">Show remaining time</string>
+  <string name="show_eta">Mostra el temps restant</string>
+  <string name="show_eta_summ">Mostra el temps restant</string>
   <string name="use_current">Paquet per a cartes noves</string>
   <string name="new_spread">Nova posició de la carta</string>
   <string name="learn_cutoff">Informeu-vos de límit per davant</string>
@@ -164,32 +164,32 @@
   <string name="day_offset">Inici de l\'endemà</string>
   <string name="day_offset_summ">XXX hores passada la mitjanit</string>
   <string name="input_workaround">Solució d\'entrada</string>
-  <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
+  <string name="input_workaround_summ">SOlució per a centrar-se problemes en HTML caixes d\'introducció de dades. Provoca problemes en diversos dispositius.</string>
   <string name="pref_keep_screen_on">Mantenir la pantalla encesa</string>
   <string name="pref_keep_screen_on_summ">Desactiva la pantalla de bloqueig</string>
   <string name="convert_fen_text">Suport de notació d\'escacs</string>
-  <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
+  <string name="convert_fen_text_summ">Dibuixar el tauler d\'escacs de notació Forsyth-Edwards. S\'ha de justificar la notació en etiquetes [fen][/fen].</string>
   <string name="enable_api_title">Activa l\'API de l\'AnkiDroid</string>
   <string name="enable_api_summary">Deixar altres apps connectar-se a AnkiDroid i llegir / escriure dades sense la seva intervenció</string>
-  <string name="custom_buttons">App bar buttons</string>
-  <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
-  <string name="custom_buttons_setting_always_show">Always show</string>
-  <string name="custom_buttons_setting_if_room">Show if room</string>
-  <string name="custom_buttons_setting_menu_only">Menu only</string>
-  <string name="reset_custom_buttons">Reset to default</string>
+  <string name="custom_buttons">Butons de la barra lateral</string>
+  <string name="custom_buttons_summary">Personalitzar quines accions apareixen a la barra lateral</string>
+  <string name="custom_buttons_setting_always_show">Mostrar sempre</string>
+  <string name="custom_buttons_setting_if_room">Mostrar si hi ha espai</string>
+  <string name="custom_buttons_setting_menu_only">Només el menú</string>
+  <string name="reset_custom_buttons">Restableix als valors per defecte</string>
   <!-- Advanced statistics settings -->
-  <string name="advanced_statistics_title">Advanced statistics</string>
-  <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
-  <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
-  <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
-  <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
-  <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+  <string name="advanced_statistics_title">Estadístiques avançades</string>
+  <string name="enable_advanced_statistics_title">Permetre estadístiques avançades</string>
+  <string name="enable_advanced_statistics_summ">Mostra la previsió d\'estadístiques basades en un càlcul o simulació de futures repasos (activat) o sobre els futurs repasos ja programats (desactivat).</string>
+  <string name="advanced_forecast_stats_compute_n_days_title">Computa els n primers dies, simula els restants</string>
+  <string name="advanced_forecast_stats_compute_precision_title">Precisió de la computació</string>
+  <string name="advanced_forecast_stats_mc_n_iterations_title">Nombre d\'iteracions de la simulació</string>
   <!-- Custom sync server settings -->
-  <string name="custom_sync_server_title">Custom sync server</string>
-  <string name="custom_sync_server_enable_title">Use custom sync server</string>
-  <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
-  <string name="custom_sync_server_base_url_title">Sync url</string>
-  <string name="custom_sync_server_media_url_title">Media sync url</string>
+  <string name="custom_sync_server_title">Servidor de sincronització personalitzat</string>
+  <string name="custom_sync_server_enable_title">Utilitzar un servidor de sincronització personalitzat</string>
+  <string name="custom_sync_server_enable_summary">Si no vols utilitzar el servei de AnkiWeb patentada podeu especificar un servidor alternatiu aquí</string>
+  <string name="custom_sync_server_base_url_title">Url de sincronització</string>
+  <string name="custom_sync_server_media_url_title">Url de sincronització de multimèdia</string>
   <!-- studyoptions -->
   <string name="studyoptions_limit_select_tags">Trieu les etiquetes</string>
   <!-- Deck configurations -->
@@ -203,7 +203,7 @@
   <string name="deck_conf_rev_cards">Revisions</string>
   <string name="deck_conf_lps_cards">Intervals</string>
   <string name="deck_conf_general">General</string>
-  <string name="deck_conf_reminders">Reminders</string>
+  <string name="deck_conf_reminders">Recordatoris</string>
   <string name="deck_conf_steps">Passos (en minuts)</string>
   <string name="deck_conf_order">Ordre</string>
   <string name="deck_conf_new_cards_day">Noves fitxes per dia</string>
@@ -256,8 +256,8 @@
   <string name="deck_conf_cram_order">fitxes triades per</string>
   <string name="deck_conf_cram_reschedule">Torna a planificar</string>
   <string name="deck_conf_cram_reschedule_summ">Torna a planificar les fitxes en base a les meves respostes en aquest paquet</string>
-  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
+  <string name="deck_conf_cram_steps">Passos personalitzats (en minuts)</string>
   <string name="deck_conf_cram_steps_summ">Defines els passos personalitzats</string>
-  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
-  <string name="deck_conf_reminders_time">Remind at</string>
+  <string name="deck_conf_reminders_enabled">Habilitar les notificacions de recordatori per a aquest mall</string>
+  <string name="deck_conf_reminders_time">Recordar a</string>
 </resources>

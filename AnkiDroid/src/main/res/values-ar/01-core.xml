@@ -178,5 +178,5 @@
   <string name="card_template_editor_would_delete_note">سوف يسبب حذف نوع هذه البطاقة حذف ملاحظة أو أكثر. الرجاء انشاء نوع بطاقة جديدة أولاً.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">القراءة والكتابة إلى قاعدة البيانات أنكيدرويد</string>
-  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="read_write_permission_description">حصل على ملاحظات، وبطاقات، وأنواع الملاحظات، ورزما وأنشأ جديدة</string>
 </resources>

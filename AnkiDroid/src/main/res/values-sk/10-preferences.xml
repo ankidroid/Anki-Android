@@ -199,6 +199,7 @@
   <plurals name="deck_conf_group_summ">
     <item quantity="one">%1$s\n%2$d balíček používa túto skupinu</item>
     <item quantity="few">%1$s\n%2$d balíčky používajú túto skupinu</item>
+    <item quantity="many">%1$s\n%2$d decks use this group</item>
     <item quantity="other">%1$s\n%2$d balíčkov používa túto skupinu</item>
   </plurals>
   <string name="deck_conf_new_cards">Nové kartičky</string>
@@ -247,6 +248,7 @@
   <plurals name="deck_conf_set_subdecks_summ">
     <item quantity="one">%s podbalíček použije túto skupinu</item>
     <item quantity="few">%s podbalíčky použijú túto skupinu</item>
+    <item quantity="many">%s subdecks will use this group</item>
     <item quantity="other">%s podbalíčkov použije túto skupinu</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Nastaviť pre všetky podbalíčky</string>

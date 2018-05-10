@@ -49,7 +49,7 @@
   <string name="statistics_cram">مطالعه فشرده</string>
   <string name="stats_cards">کارتها</string>
   <string name="stats_cards_intervals">کارت ها با وقفه داده شده</string>
-  <string name="stats_cumulative_cards">Cumulative cards</string>
+  <string name="stats_cumulative_cards">کارت های تجمعی</string>
   <string name="stats_cumulative_answers">Cumulative answers</string>
   <string name="stats_cumulative_time_minutes">Cumulative minutes</string>
   <string name="stats_cumulative_time_hours">Cumulative hours</string>
