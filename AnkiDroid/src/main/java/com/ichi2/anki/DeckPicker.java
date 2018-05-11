@@ -785,11 +785,25 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-
     private void finishWithAnimation() {
         super.finishWithAnimation(ActivityTransitionAnimation.DOWN);
     }
 
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch(keyCode) {
+
+            case KeyEvent.KEYCODE_A:
+                addNote();
+                break;
+
+            case KeyEvent.KEYCODE_B:
+                openCardBrowser();
+                break;
+        }
+
+        return super.onKeyUp(keyCode, event);
+    }
 
     // ----------------------------------------------------------------------------
     // CUSTOM METHODS
@@ -1087,7 +1101,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         }
     }
-
 
     @Override
     public void showImportDialog(int id) {
