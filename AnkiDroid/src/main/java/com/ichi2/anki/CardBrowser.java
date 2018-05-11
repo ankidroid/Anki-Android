@@ -29,6 +29,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -105,6 +106,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private MenuItem mSearchItem;
     private MenuItem mSaveSearchItem;
     private MenuItem mMySearchesItem;
+
+    private Snackbar mUndoSnackbar;
 
     public static Card sCardBrowserCard;
 
@@ -718,6 +721,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return true;
         }
 
+        // dismiss undo-snackbar if shown to avoid race condition
+        // (when another operation will be performed on the model, it will undo the latest operation)
+        if (mUndoSnackbar != null && mUndoSnackbar.isShown())
+            mUndoSnackbar.dismiss();
+
         final List<Card> cards = new ArrayList<>();
 
         switch (item.getItemId()) {
@@ -791,7 +799,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     mCardsAdapter.notifyDataSetChanged();
 
                     // snackbar to offer undo
-                    UIUtils.showSnackbar(CardBrowser.this, R.string.deleted_message, false, R.string.undo, new View.OnClickListener() {
+                    mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, R.string.deleted_message, false, R.string.undo, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             // undo delete
