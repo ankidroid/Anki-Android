@@ -908,13 +908,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
 
             case R.id.action_preview:
-                for (int cardPosition : mCheckedCardPositions) {
-                    Intent previewer = new Intent(CardBrowser.this, Previewer.class);
-                    previewer.putExtra("index", cardPosition);
-                    previewer.putExtra("cardList", getCardIds());
-                    startActivityWithoutAnimation(previewer);
-                    break;
-                }
+                int cardPosition = mCheckedCardPositions.iterator().next();
+                Intent previewer = new Intent(CardBrowser.this, Previewer.class);
+                previewer.putExtra("index", cardPosition);
+                previewer.putExtra("cardList", getCardIds());
+                startActivityWithoutAnimation(previewer);
+
                 return true;
 
             default:
