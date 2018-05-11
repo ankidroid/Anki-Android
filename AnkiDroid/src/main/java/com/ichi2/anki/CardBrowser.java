@@ -118,6 +118,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private int mColumn1Index;
     private int mColumn2Index;
 
+    private long mNewDid;   // for change_deck
+
     private static final int BACKGROUND_NORMAL = 0;
     private static final int BACKGROUND_MARKED = 1;
     private static final int BACKGROUND_SUSPENDED = 2;
@@ -797,16 +799,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     mCheckedCardPositions.clear();
                     endMultiSelectMode();
                     mCardsAdapter.notifyDataSetChanged();
-
-                    // snackbar to offer undo
-                    mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, R.string.deleted_message, false, R.string.undo, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // undo delete
-                            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
-                        }
-                    }, mCardsListView);
-
                 }
                 return true;
 
@@ -858,9 +850,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        long newDid;
                         try {
-                            newDid = mDropDownDecks.get(which).getLong("id");
+                            mNewDid = mDropDownDecks.get(which).getLong("id");
                         } catch (JSONException e) {
                             e.printStackTrace();
                             return;
@@ -873,7 +864,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
                         List<Card> changedCards = new ArrayList<>();
                         for (Card card : cards) {
-                            if (card.getDid() != newDid) {
+                            if (card.getDid() != mNewDid) {
                                 changedCards.add(card);
                                 mReloadRequired = true;
                             }
@@ -887,17 +878,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                         }
 
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mChangeMultiHandler,
-                                new DeckTask.TaskData(new Object[]{changedCards.toArray(new Card[changedCards.size()]), Collection.DismissType.CHANGE_DECK_MULTI, newDid}));
-
-                        // snackbar to offer undo
-                        String deckName = getCol().getDecks().name(newDid);
-                        mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, String.format(getString(R.string.changed_deck_message), deckName), false, R.string.undo, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                // undo delete
-                                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
-                            }
-                        }, mCardsListView, null);
+                                new DeckTask.TaskData(new Object[]{changedCards.toArray(new Card[changedCards.size()]), Collection.DismissType.CHANGE_DECK_MULTI, mNewDid}));
                     }
                 });
                 builderSingle.show();
@@ -1211,6 +1192,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
             searchCards();
             endMultiSelectMode();
             mCardsAdapter.notifyDataSetChanged();
+
+            // snackbar to offer undo
+            String deckName = getCol().getDecks().name(mNewDid);
+            mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, String.format(getString(R.string.changed_deck_message), deckName), false, R.string.undo, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // undo delete
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
+                }
+            }, mCardsListView, null);
         }
 
 
@@ -1356,6 +1347,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void onPostExecute(DeckTask.TaskData result) {
             hideProgressBar();
             mActionBarTitle.setText(Integer.toString(mCheckedCardPositions.size()));
+
+            // snackbar to offer undo
+            mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, R.string.deleted_message, false, R.string.undo, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // undo delete
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
+                }
+            }, mCardsListView);
         }
 
 
