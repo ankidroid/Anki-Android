@@ -26,11 +26,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -57,7 +55,6 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog;
@@ -777,31 +774,31 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             case R.id.action_delete_card:
                 if (mInMultiSelectMode) {
-                    Resources res = getResources();
-                    new MaterialDialog.Builder(CardBrowser.this)
-                            .title(res.getString(R.string.delete_cards_title))
-                            .iconAttr(R.attr.dialogErrorIcon)
-                            .content(res.getString(R.string.delete_card_mult_message))
-                            .positiveText(res.getString(R.string.dialog_positive_delete))
-                            .negativeText(res.getString(R.string.dialog_cancel))
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    List<Card> cards = new ArrayList<>();
-                                    for (int cardPosition : mCheckedCardPositions) {
-                                        final Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
-                                        cards.add(card);
-                                    }
+                    cards.clear();
+                    for (int cardPosition : mCheckedCardPositions) {
+                        final Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
+                        cards.add(card);
+                    }
 
-                                    deleteNotes(cards);
+                    removeNotesView(cards);
 
-                                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI,
-                                            mDeleteNoteHandler,
-                                            new DeckTask.TaskData(new Object[]{cards.toArray(new Card[cards.size()]), Collection.DismissType.DELETE_NOTE}));
-                                    mCheckedCardPositions.clear();
-                                }
-                            })
-                            .build().show();
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI,
+                            mDeleteNoteHandler,
+                            new DeckTask.TaskData(new Object[]{cards.toArray(new Card[cards.size()]), Collection.DismissType.DELETE_NOTE_MULTI}));
+
+                    mCheckedCardPositions.clear();
+                    endMultiSelectMode();
+                    mCardsAdapter.notifyDataSetChanged();
+
+                    // snackbar to offer undo
+                    UIUtils.showSnackbar(CardBrowser.this, R.string.deleted_message, false, R.string.undo, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // undo delete
+                            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
+                        }
+                    }, mCardsListView);
+
                 }
                 return true;
 
@@ -1174,7 +1171,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            Timber.d("Card Browser - mUpdateCardHandler.onPostExecute()");
+            Timber.d("Card Browser - mChangeMultiHandler.onPostExecute()");
             if (!result.getBoolean()) {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
@@ -1270,8 +1267,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return s;
     }
 
-
-    private void deleteNotes(List<Card> cards) {
+    /**
+     * Removes corresponding notes from view. Doesn't delete them in model (database).
+     */
+    private void removeNotesView(List<Card> cards) {
         if (currentCardInUseByReviewer()) {
             mReloadRequired = true;
         }
@@ -1362,6 +1361,39 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
+    private DeckTask.TaskListener mUndoHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+            showProgressBar();
+        }
+
+
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            Timber.d("Card Browser - mUndoHandler.onPostExecute()");
+            if (!result.getBoolean()) {
+                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
+            }
+            hideProgressBar();
+
+            // reload whole view
+            // TODO could instead undo removeNotesView() for better performance
+            searchCards();
+            endMultiSelectMode();
+            mCardsAdapter.notifyDataSetChanged();
+        }
+
+
+        @Override
+        public void onCancelled() {
+        }
+    };
+
     private DeckTask.TaskListener mSearchCardsHandler = new DeckTask.TaskListener() {
         @Override
         public void onProgressUpdate(TaskData... values) {
@@ -1384,7 +1416,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfuly");
                 updateList();
                 if (!mSearchView.isIconified()) {
-                    UIUtils.showSimpleSnackbar(CardBrowser.this, getSubtitleText(), false);
+                    UIUtils.showSimpleSnackbar(CardBrowser.this, getSubtitleText(), true);
                 }
             }
             hideProgressBar();

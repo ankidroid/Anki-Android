@@ -38,6 +38,7 @@
     <string name="delete_cards_title">Delete notes?</string>
     <string name="delete_card_message">Delete all cards of this note?\nSearch field: %s</string>
     <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
+    <string name="deleted_message">Notes deleted</string>
     <string name="card_browser_show_marked">Filter marked</string>
     <string name="card_browser_show_suspended">Filter suspended</string>
     <string name="card_browser_search_by_tag">Filter by tag</string>

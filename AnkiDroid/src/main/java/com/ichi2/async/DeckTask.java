@@ -674,25 +674,30 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         sHadCardQueue = true;
                         break;
 
-                    case DELETE_NOTE:
+                    case DELETE_NOTE_MULTI:
                         // list of all ids to pass to remNotes method.
                         // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
-                        noteIds = new HashSet<>();
+                        Map<Long, Note> notes = new HashMap<>();
+                        List<Card> allCards2 = new ArrayList<>();
                         // collect undo information
                         for (Card card : cards) {
                             Note note = card.note();
-                            if (noteIds.add(note.getId())) {
-                                // if we already saw this note, we don't need to do this
-                                ArrayList<Card> allCs = note.cards();
-                                col.markUndo(type, new Object[]{note, allCs, card.getId()});
-                            }
+                            notes.put(note.getId(), note);
+                            allCards2.addAll(note.cards());
                         }
                         // delete note
-                        long[] uniqueNoteIds = new long[noteIds.size()];
+                        long[] uniqueNoteIds = new long[notes.size()];
+                        Note[] notesArr = new Note[notes.size()];
                         // unboxing...
                         int pos = 0;
-                        for (Long id : noteIds)
-                            uniqueNoteIds[pos++] = id;
+                        for (Long id : notes.keySet()) {
+                            uniqueNoteIds[pos] = id;
+                            notesArr[pos] = notes.get(id);
+                            pos++;
+                        }
+
+                        col.markUndo(type, new Object[] {notesArr, allCards2});
+
                         col.remNotes(uniqueNoteIds);
                         sHadCardQueue = true;
                         break;
@@ -716,19 +721,17 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Sched sched = col.getSched();
         try {
             col.getDb().getDatabase().beginTransaction();
-            Card newCard;
+            Card newCard = null;
             try {
                 long cid = col.undo();
-                if (cid != 0) {
+                if (cid != 0 && cid != -1) {
                     // a review was undone,
                     newCard = col.getCard(cid);
                     newCard.startTimer();
                     col.reset();
                     col.getSched().decrementCounts(newCard);
                     sHadCardQueue = true;
-                } else {
-                    // TODO: do not fetch new card if a non review operation has
-                    // been undone
+                } else if (cid != -1){
                     col.reset();
                     newCard = getCard(sched);
                 }

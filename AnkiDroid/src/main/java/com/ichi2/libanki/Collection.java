@@ -115,7 +115,8 @@ public class Collection {
         BURY_NOTE(R.string.undo_action_bury_note),
         SUSPEND_CARD(R.string.undo_action_suspend_card),
         SUSPEND_NOTE(R.string.undo_action_suspend_note),
-        DELETE_NOTE(R.string.undo_action_delete);
+        DELETE_NOTE(R.string.undo_action_delete),
+        DELETE_NOTE_MULTI(R.string.undo_action_delete_multi);
 
         public int undoNameId;
 
@@ -1278,6 +1279,22 @@ public class Collection {
                 mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
                 return (Long) data[3];
 
+            case DELETE_NOTE_MULTI:
+                // undo all of these at once instead of one-by-one
+                ids = new ArrayList<>();
+                List<Card> allCards = (ArrayList<Card>) data[2];
+                Note[] notes3 = (Note[]) data[1];
+                for (Note n3 : notes3) {
+                    n3.flush(n3.getMod(), false);
+                    ids.add(n3.getId());
+                }
+                for (Card c3 : allCards){
+                    c3.flush(false);
+                    ids.add(c3.getId());
+                }
+                mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
+                return -1;  // don't fetch new card
+
             case BURY_CARD:
                 for (Card cc : (ArrayList<Card>) data[2]) {
                     cc.flush(false);
@@ -1309,6 +1326,8 @@ public class Collection {
     	case DELETE_NOTE:
     		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
     		break;
+        case DELETE_NOTE_MULTI:
+            mUndo.add(new Object[]{type, o[0], o[1]});
     	}
     	while (mUndo.size() > UNDO_SIZE_MAX) {
     		mUndo.removeFirst();
