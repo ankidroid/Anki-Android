@@ -116,7 +116,8 @@ public class Collection {
         SUSPEND_CARD(R.string.undo_action_suspend_card),
         SUSPEND_NOTE(R.string.undo_action_suspend_note),
         DELETE_NOTE(R.string.undo_action_delete),
-        DELETE_NOTE_MULTI(R.string.undo_action_delete_multi);
+        DELETE_NOTE_MULTI(R.string.undo_action_delete_multi),
+        CHANGE_DECK_MULTI(R.string.undo_action_change_deck_multi);
 
         public int undoNameId;
 
@@ -1295,6 +1296,20 @@ public class Collection {
                 mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
                 return -1;  // don't fetch new card
 
+            case CHANGE_DECK_MULTI:
+                Card[] cards = (Card[]) data[1];
+                long[] originalDid = (long[]) data[2];
+                // move cards to original deck
+                for (int i = 0; i < cards.length; i++) {
+                    Card card = cards[i];
+                    card.load();
+                    card.setDid(originalDid[i]);
+                    Note note = card.note();
+                    note.flush();
+                    card.flush();
+                }
+                return -1;  // don't fetch new card
+
             case BURY_CARD:
                 for (Card cc : (ArrayList<Card>) data[2]) {
                     cc.flush(false);
@@ -1328,7 +1343,11 @@ public class Collection {
     		break;
         case DELETE_NOTE_MULTI:
             mUndo.add(new Object[]{type, o[0], o[1]});
-    	}
+            break;
+        case CHANGE_DECK_MULTI:
+            mUndo.add(new Object[]{type, o[0], o[1]});
+            break;
+        }
     	while (mUndo.size() > UNDO_SIZE_MAX) {
     		mUndo.removeFirst();
     	}

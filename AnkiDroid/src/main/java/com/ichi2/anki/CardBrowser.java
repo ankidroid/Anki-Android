@@ -886,22 +886,19 @@ public class CardBrowser extends NavigationDrawerActivity implements
                             return;
                         }
 
-                        long[] changedCardIds = new long[changedCards.size()];
-                        for (int i = 0; i < changedCards.size(); i++) {
-                            changedCardIds[i] = changedCards.get(i).getId();
-                        }
-                        getCol().getSched().remFromDyn(changedCardIds);
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mChangeMultiHandler,
+                                new DeckTask.TaskData(new Object[]{changedCards.toArray(new Card[changedCards.size()]), Collection.DismissType.CHANGE_DECK_MULTI, newDid}));
 
-                        for (Card card : changedCards)
-                        {
-                            card.load();
-                            // then set the card ID to the new deck
-                            card.setDid(newDid);
-                        }
-
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACTS_MULTI, mChangeMultiHandler,
-                                new DeckTask.TaskData(new Object[]{changedCards.toArray(new Card[changedCards.size()]), false}));
-                        }
+                        // snackbar to offer undo
+                        String deckName = getCol().getDecks().name(newDid);
+                        mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, String.format(getString(R.string.changed_deck_message), deckName), false, R.string.undo, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // undo delete
+                                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
+                            }
+                        }, mCardsListView, null);
+                    }
                 });
                 builderSingle.show();
 
@@ -1172,7 +1169,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-            updateCardInList(values[0].getCard(), values[0].getString());
         }
 
 

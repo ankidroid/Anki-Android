@@ -616,6 +616,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
         return new TaskData(true);
     }
+
+
     private TaskData doInBackgroundDismissNotes(TaskData... params) {
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         Sched sched = col.getSched();
@@ -700,6 +702,33 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
                         col.remNotes(uniqueNoteIds);
                         sHadCardQueue = true;
+                        break;
+                    case CHANGE_DECK_MULTI:
+                        long newDid = (long) data[2];
+                        long[] changedCardIds = new long[cards.length];
+                        for (int i = 0; i < cards.length; i++) {
+                            changedCardIds[i] = cards[i].getId();
+                        }
+                        col.getSched().remFromDyn(changedCardIds);
+
+                        long[] originalDids = new long[cards.length];
+
+                        for (int i = 0; i < cards.length; i++) {
+                            Card card = cards[i];
+                            card.load();
+                            // save original did for undo
+                            originalDids[i] = card.getDid();
+                            // then set the card ID to the new deck
+                            card.setDid(newDid);
+                            Note note = card.note();
+                            note.flush();
+                            // flush card too, in case, did has been changed
+                            card.flush();
+                        }
+
+                        // mark undo for all at once
+                        col.markUndo(type, new Object[] {cards, originalDids});
+
                         break;
                 }
                 publishProgress(new TaskData(getCard(col.getSched()), 0));
