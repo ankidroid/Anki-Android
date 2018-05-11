@@ -1150,12 +1150,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
+            updateCardInList(values[0].getCard(), values[0].getString());
         }
 
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            Timber.d("Card Browser - mChangeMultiHandler.onPostExecute()");
+            Timber.d("Card Browser - mUpdateCardHandler.onPostExecute()");
             if (!result.getBoolean()) {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
@@ -1177,13 +1178,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-            updateCardInList(values[0].getCard(), values[0].getString());
         }
 
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            Timber.d("Card Browser - mUpdateCardHandler.onPostExecute()");
+            Timber.d("Card Browser - mChangeMultiHandler.onPostExecute()");
             if (!result.getBoolean()) {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
