@@ -134,7 +134,7 @@
   <string name="studyoptions_empty_schedule">Sem cartões programados para estudar</string>
   <string name="studyoptions_congrats_finished">Parabéns! Você terminou por enquanto.</string>
   <string name="studyoptions_congrats_more_rev">O limite de hoje foi atingido, mas ainda existem cartões para serem revistos. Você pode aumentar o limite nas opções.</string>
-  <string name="studyoptions_congrats_more_new">O limite de hoje foi atingido. Ainda existem novos cartões; você pode aumentar o limite nas opçòes, mas isso irá aumentar a sua carga de revisões a curto prazo.</string>
+  <string name="studyoptions_congrats_more_new">O limite de hoje foi atingido. Ainda existem novos cartões; você pode aumentar o limite nas opções, mas isso irá aumentar a sua carga de revisões a curto prazo.</string>
   <string name="studyoptions_congrats_custom">Para estudar fora do agendamento normal, toque no botão \"Estudo personalizado\".</string>
   <string name="studyoptions_no_cards_due">Nenhum cartão está programado por enquanto.</string>
   <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>

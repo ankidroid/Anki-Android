@@ -41,79 +41,79 @@
 <resources>
   <!-- Navigation drawer items-->
   <string name="decks">Колоды</string>
-  <string name="card_browser">Обозреватель карт</string>
+  <string name="card_browser">Обозреватель карточек</string>
   <string name="statistics">Статистика</string>
   <string name="settings">Настройки</string>
   <string name="help">Помощь</string>
   <string name="send_feedback">Отправить отзыв</string>
   <string name="studyoptions_title">Обзор колоды</string>
-  <string name="studyoptions_due_today">Материал на сегодня:</string>
-  <string name="studyoptions_new_total">Всего новых карт:</string>
-  <string name="studyoptions_total_cards">Всего карт:</string>
-  <string name="studyoptions_eta">Вероятно займёт (мин):</string>
-  <string name="studyoptions_start">Начать обучение</string>
+  <string name="studyoptions_due_today">На сегодня:</string>
+  <string name="studyoptions_new_total">Всего новых карточек:</string>
+  <string name="studyoptions_total_cards">Всего карточек:</string>
+  <string name="studyoptions_eta">Расчётное время (мин.):</string>
+  <string name="studyoptions_start">Учить</string>
   <!-- DeckPicker.java -->
   <string name="expand">Развернуть</string>
   <string name="collapse">Свернуть</string>
-  <string name="study_more">Продолжить обучение</string>
+  <string name="study_more">Учить ещё</string>
   <plurals name="deckpicker_title">
     <item quantity="one">На сегодня %1$d карточка (%2$s)</item>
     <item quantity="few">На сегодня %1$d карточки (%2$s)</item>
-    <item quantity="many">%1$d cards due (%2$s)</item>
+    <item quantity="many">На сегодня %1$d карточек (%2$s)</item>
     <item quantity="other">На сегодня %1$d карточек (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d минута осталась</item>
-    <item quantity="few">%d минуты осталось</item>
-    <item quantity="many">%d minutes left</item>
-    <item quantity="other">%d минут осталось</item>
+    <item quantity="one">Осталась %d минута</item>
+    <item quantity="few">Осталось %d минуты</item>
+    <item quantity="many">Осталось %d минут</item>
+    <item quantity="other">Осталось %d минут</item>
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
-    <item quantity="one">Сегодня изучена %1$d карта за %2$s</item>
-    <item quantity="few">Сегодня изучены %1$d карты за %2$s</item>
-    <item quantity="many">Studied %1$d cards in %2$s today</item>
-    <item quantity="other">Сегодня изучено %1$d карт за %2$s</item>
+    <item quantity="one">Сегодня изучена %1$d карточка в %2$s</item>
+    <item quantity="few">Сегодня изучены %1$d карточки в %2$s</item>
+    <item quantity="many">Сегодня изучено %1$d карточек в %2$s</item>
+    <item quantity="other">Сегодня изучено %1$d карточек в %2$s</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
-  <string name="type_answer_hint">Напечатайте ответ</string>
+  <string name="type_answer_hint">Введите ответ</string>
   <string name="show_answer">Показать ответ</string>
   <string name="ease_button_again">Снова</string>
   <string name="ease_button_hard">Трудно</string>
   <string name="ease_button_good">Хорошо</string>
   <string name="ease_button_easy">Легко</string>
   <string name="studyoptions_congrats_undo">Отменить %s</string>
-  <string name="menu_import">Импорт коллекции</string>
+  <string name="menu_import">Импортировать</string>
   <string name="undo">Отменить</string>
-  <string name="undo_action_review">Последнее повторение</string>
+  <string name="undo_action_review">последний просмотр</string>
   <string name="undo_action_bury_card">отложить карточку</string>
   <string name="undo_action_bury_note">отложить запись</string>
-  <string name="undo_action_suspend_card">Отложить карту</string>
-  <string name="undo_action_suspend_note">отложить заметку</string>
-  <string name="undo_action_delete">Удалить заметку</string>
+  <string name="undo_action_suspend_card">исключить карточку</string>
+  <string name="undo_action_suspend_note">исключить запись</string>
+  <string name="undo_action_delete">удалить запись</string>
   <string name="unbury">Вернуть</string>
   <string name="rename_deck">Переименовать колоду</string>
   <string name="menu_add">Добавить</string>
   <string name="menu_add_note">Добавить запись</string>
   <string name="menu_my_account">Учётная запись синхронизации</string>
-  <string name="menu_dismiss_note">Спрятать / Удалить</string>
+  <string name="menu_dismiss_note">Спрятать или удалить</string>
   <string name="menu_bury_card">Отложить карточку</string>
   <string name="menu_bury_note">Отложить запись</string>
   <string name="menu_suspend_card">Исключить карточку</string>
   <string name="menu_suspend_note">Исключить запись</string>
   <string name="menu_bury">Отложить</string>
   <string name="menu_suspend">Исключить</string>
-  <string name="menu_delete_note">Удалить заметку</string>
-  <string name="delete_note_message">Удалить эту заметку и все связанные карточки?\n%s</string>
+  <string name="menu_delete_note">Удалить запись</string>
+  <string name="delete_note_message">Удалить эту запись и все связанные карточки?\n%s</string>
   <string name="menu_select">Выделить текст</string>
-  <string name="menu_search">Поиск в %1$s</string>
-  <string name="menu_mark_note">Пометить запись</string>
+  <string name="menu_search">Посмотреть в %1$s</string>
+  <string name="menu_mark_note">Отметить запись</string>
   <string name="menu_unmark_note">Снять отметку</string>
   <string name="new_deck">Создать колоду</string>
   <string name="create">Создать</string>
   <string name="new_dynamic_deck">Создать фильтрованную колоду</string>
   <string name="night_mode">Ночной режим</string>
-  <string name="directory_inaccessible">Недоступен каталог AnkiDroid</string>
+  <string name="directory_inaccessible">Папка AnkiDroid недоступна</string>
   <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -122,53 +122,53 @@
         alphabet.
     -->
   <string name="time_quantity_seconds">%d с</string>
-  <string name="time_quantity_minutes">%d мин</string>
-  <string name="time_quantity_hours">%d ч</string>
-  <string name="time_quantity_days">%d д</string>
-  <string name="time_quantity_months">%.1f м</string>
-  <string name="time_quantity_years">%.1f г</string>
+  <string name="time_quantity_minutes">%d мин.</string>
+  <string name="time_quantity_hours">%d ч.</string>
+  <string name="time_quantity_days">%d дн.</string>
+  <string name="time_quantity_months">%.1f мес.</string>
+  <string name="time_quantity_years">%.1f г.</string>
   <!-- or "%.1f a" -->
   <string name="rebuild_cram_deck">Колода для зубрёжки перестраивается...</string>
   <string name="rebuild_cram_label">Перестроить</string>
   <string name="empty_cram_label">Очистить</string>
   <string name="empty_cram_deck">Колода для зубрёжки очищается...</string>
-  <string name="custom_study_deck_name">Специальная учебная сессия</string>
-  <string name="custom_study_deck_exists">Пожалуйста, сначала переименуйте существующие специальные колоды.</string>
+  <string name="custom_study_deck_name">Дополнительная учебная сессия</string>
+  <string name="custom_study_deck_exists">Сначала переименуйте существующую дополнительную колоду</string>
   <string name="empty_deck">Эта колода пуста</string>
-  <string name="studyoptions_empty">Эта колода пуста. Нажмите кнопку +, чтобы добавить новое содержимое.</string>
-  <string name="studyoptions_limit_reached">Дневной лимит обучения достигнут</string>
-  <string name="studyoptions_empty_schedule">Нет запланированых к изучению карточек</string>
-  <string name="studyoptions_congrats_finished">Поздравляем! На сегодня задание выполнено.</string>
+  <string name="studyoptions_empty">Эта колода пуста. Нажмите кнопку +, чтобы добавить что-нибудь.</string>
+  <string name="studyoptions_limit_reached">На сегодня всё</string>
+  <string name="studyoptions_empty_schedule">Нет запланированых карточек</string>
+  <string name="studyoptions_congrats_finished">Ура! На сегодня всё.</string>
   <string name="studyoptions_congrats_more_rev">Вы достигли дневного лимита, но ещё остались карточки для повторения. Вы можете увеличить лимит в настройках.</string>
-  <string name="studyoptions_congrats_more_new">Вы достигли дневного лимита, но еще остались новые карточки. Вы можете увеличить лимит в настройках, и тогда увеличится объем повторения в ближайшие дни.</string>
-  <string name="studyoptions_congrats_custom">Чтобы изменить привычный график изучения колоды, нажмите \"Дополнительное обучение\" ниже.</string>
-  <string name="studyoptions_no_cards_due">Нет карт в очереди.</string>
-  <string name="sd_card_not_mounted">Карта памяти не смонтирована</string>
-  <string name="button_sync">Синхронизация</string>
+  <string name="studyoptions_congrats_more_new">Вы достигли дневного лимита, но ещё остались новые карточки. Вы можете увеличить лимит в настройках, и тогда увеличится объём повторения в ближайшие дни.</string>
+  <string name="studyoptions_congrats_custom">Для обучения вне плана, нажмите кнопку \"Дополнительное обучение\"</string>
+  <string name="studyoptions_no_cards_due">Нет карточек на сегодня</string>
+  <string name="sd_card_not_mounted">Карта памяти не установлена</string>
+  <string name="button_sync">Синхронизировать</string>
   <string name="cancel_sync_confirm">Отменить синхронизацию?</string>
   <string name="continue_sync">Продолжить синхронизацию</string>
   <string name="sync_cancelled">Синхронизация отменена</string>
   <string name="sync_cancel_message">Отмена...\nЭто может занять некоторое время.</string>
-  <string name="export">Экспорт</string>
-  <string name="export_collection">Экспорт коллекции</string>
+  <string name="export">Экспортировать</string>
+  <string name="export_collection">Экспортировать</string>
   <string name="export_deck">Экспортировать колоду</string>
   <string name="nothing">Ничего</string>
   <!-- Card template editor -->
-  <string name="title_activity_template_editor">Шаблоны карт</string>
+  <string name="title_activity_template_editor">Типы карточек</string>
   <string name="card_template_editor_front">Шаблон лицевой стороны</string>
   <string name="card_template_editor_back">Шаблон обратной стороны</string>
-  <string name="card_template_editor_styling">Дизайн</string>
+  <string name="card_template_editor_styling">Стилизация</string>
   <string name="card_template_editor_menu_delete">Удалить</string>
-  <string name="card_template_editor_cant_delete">Нужен хотя бы один тип карточки</string>
+  <string name="card_template_editor_cant_delete">Нужен хотя бы один тип карточек</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Удалить тип данных \'%2$s\' и %1$d карту этого типа?</item>
-    <item quantity="few">Удалить  тип данных \'%2$s\' и %1$d карты этого типа?</item>
-    <item quantity="many">Delete the “%2$s” card type, and its %1$d cards?</item>
-    <item quantity="other">Удалить тип данных \'%2$s\' и %1$d карт этого типа?</item>
+    <item quantity="one">Удалить тип “%2$s” и его %1$d карточку?</item>
+    <item quantity="few">Удалить тип “%2$s” и его %1$d карточки?</item>
+    <item quantity="many">Удалить тип “%2$s” и его %1$d карточек?</item>
+    <item quantity="other">Удалить тип “%2$s” и его %1$d карточек?</item>
   </plurals>
   <string name="invalid_template">Невозможно сгенерировать карточку</string>
-  <string name="card_template_editor_would_delete_note"> Сначала создайте новый тип карточки, так как удаление этого типа приведёт к удалению одной или нескольких записей. </string>
+  <string name="card_template_editor_would_delete_note">Удаление этого типа приведёт к удалению некоторых записей. Пожалуйста, сначала создайте новый тип карточек.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Чтение и запись в базу данных AnkiDroid</string>
-  <string name="read_write_permission_description">доступ к записям, карточкам, типам записей и колодам, а также создание новых</string>
+  <string name="read_write_permission_description">доступ к колодам, карточкам, записям, их типам, а также создание новых</string>
 </resources>
