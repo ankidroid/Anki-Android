@@ -685,13 +685,40 @@ public class Utils {
         return bos.toByteArray();
     }
 
+    /**
+     * Calls {@link #writeToFileImpl(InputStream, String)} and handles IOExceptions
+     * @throws IOException Rethrows exception after a set number of retries
+     */
+    public static void writeToFile(InputStream source, String destination) throws IOException {
+        // sometimes this fails and works on retries (hardware issue?)
+        final int retries = 5;
+        int retryCnt = 0;
+        boolean success = false;
+        while (!success && retryCnt++ < retries) {
+            try {
+                writeToFileImpl(source, destination);
+                success = true;
+            } catch (IOException e) {
+                if (retryCnt == retries) {
+                    throw e;
+                } else {
+                    Timber.e("IOException while writing to file, retrying...");
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Utility method to write to a file.
      * Throws the exception, so we can report it in syncing log
      * @throws IOException
      */
-    public static void writeToFile(InputStream source, String destination) throws IOException {
+    public static void writeToFileImpl(InputStream source, String destination) throws IOException {
         File f = new File(destination);
         try {
             Timber.d("Creating new file... = %s", destination);
