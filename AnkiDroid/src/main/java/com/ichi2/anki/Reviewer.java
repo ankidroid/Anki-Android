@@ -364,19 +364,19 @@ public class Reviewer extends AbstractFlashcardViewer {
         char keyPressed = (char) event.getUnicodeChar();
         if (mAnswerField != null && !mAnswerField.isFocused()) {
 	        if (sDisplayAnswer) {
-	            if (keyPressed == '1') {
+	            if (keyPressed == '1' || keyCode == KeyEvent.KEYCODE_BUTTON_Y) {
 	                answerCard(EASE_1);
 	                return true;
 	            }
-	            if (keyPressed == '2') {
+	            if (keyPressed == '2' || keyCode == KeyEvent.KEYCODE_BUTTON_X) {
 	                answerCard(EASE_2);
 	                return true;
 	            }
-	            if (keyPressed == '3') {
+	            if (keyPressed == '3' || keyCode == KeyEvent.KEYCODE_BUTTON_B) {
 	                answerCard(EASE_3);
 	                return true;
 	            }
-	            if (keyPressed == '4') {
+	            if (keyPressed == '4' || keyCode == KeyEvent.KEYCODE_BUTTON_A) {
 	                answerCard(EASE_4);
 	                return true;
 	            }
@@ -385,6 +385,12 @@ public class Reviewer extends AbstractFlashcardViewer {
 	                return true;
 	            }
 	        }
+                if (keyCode == KeyEvent.KEYCODE_BUTTON_Y || keyCode == KeyEvent.KEYCODE_BUTTON_X
+                        || keyCode == KeyEvent.KEYCODE_BUTTON_B || keyCode == KeyEvent.KEYCODE_BUTTON_A)
+                {
+                    displayCardAnswer();
+                    return true;
+                }
 	        if (keyPressed == 'e') {
 	            editCard();
 	            return true;
