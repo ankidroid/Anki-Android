@@ -385,11 +385,12 @@ public class Reviewer extends AbstractFlashcardViewer {
 	                return true;
 	            }
 	        }
-                if (keyCode == KeyEvent.KEYCODE_BUTTON_Y || keyCode == KeyEvent.KEYCODE_BUTTON_X
-                        || keyCode == KeyEvent.KEYCODE_BUTTON_B || keyCode == KeyEvent.KEYCODE_BUTTON_A)
-                {
-                    displayCardAnswer();
-                    return true;
+                else {
+                    if (keyCode == KeyEvent.KEYCODE_BUTTON_Y || keyCode == KeyEvent.KEYCODE_BUTTON_X
+                            || keyCode == KeyEvent.KEYCODE_BUTTON_B || keyCode == KeyEvent.KEYCODE_BUTTON_A) {
+                        displayCardAnswer();
+                        return true;
+                    }
                 }
 	        if (keyPressed == 'e') {
 	            editCard();
