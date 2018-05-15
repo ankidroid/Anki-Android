@@ -226,7 +226,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private View mLookUpIcon;
     private FrameLayout mCardContainer;
     private WebView mCard;
-    private WebView mNextCard;
     private FrameLayout mCardFrame;
     private FrameLayout mTouchLayer;
     private TextView mTextBarNew;
@@ -924,7 +923,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // http://developer.android.com/reference/android/webkit/WebView.html#destroy()
         mCardFrame.removeAllViews();
         destroyWebView(mCard);
-        destroyWebView(mNextCard);
     }
 
 
