@@ -196,7 +196,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected boolean mSpeakText;
     protected boolean mDisableClipboard = false;
     protected boolean mNightMode = false;
-    private boolean mPrefSafeDisplay;
     protected boolean mPrefUseTimer;
     private boolean mPrefCenterVertically;
     protected boolean mUseInputTag;
@@ -267,17 +266,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * of this time to ignore accidental button presses.
      */
     private long mLastClickTime;
-
-
-
-
-    /**
-     * Whether to use a single {@link WebView} and update its content.
-     * <p>
-     * If false, we will instead use two WebViews and switch them when changing the content. This is needed because of a
-     * bug in some versions of Android.
-     */
-    private boolean mUseQuickUpdate = false;
 
     /**
      * Swipe Detection
@@ -862,8 +850,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mBaseUrl = Utils.getBaseUrl(col.getMedia().dir());
 
         registerExternalStorageListener();
-
-        mUseQuickUpdate = shouldUseQuickUpdate();
 
         initLayout();
 
@@ -1722,7 +1708,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mImageZoom = preferences.getInt("imageZoom", 100);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mSpeakText = preferences.getBoolean("tts", false);
-        mPrefSafeDisplay = preferences.getBoolean("safeDisplay", false);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
         mWaitAnswerSecond = preferences.getInt("timeoutAnswerSeconds", 20);
         mWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
@@ -1780,11 +1765,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mCard == null) {
             mCard = createWebView();
             mCardFrame.addView(mCard);
-            if (!mUseQuickUpdate) {
-                mNextCard = createWebView();
-                mNextCard.setVisibility(View.GONE);
-                mCardFrame.addView(mNextCard, 0);
-            }
         }
         if (mCard.getVisibility() != View.VISIBLE) {
             mCard.setVisibility(View.VISIBLE);
@@ -2309,17 +2289,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public void fillFlashcard() {
         Timber.d("fillFlashcard()");
         Timber.d("base url = %s", mBaseUrl);
-        if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
-            CompatHelper.getCompat().setHTML5MediaAutoPlay(mNextCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
-            mNextCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
-            mNextCard.setVisibility(View.VISIBLE);
-            mCardFrame.removeView(mCard);
-            destroyWebView(mCard);
-            mCard = mNextCard;
-            mNextCard = createWebView();
-            mNextCard.setVisibility(View.GONE);
-            mCardFrame.addView(mNextCard, 0);
-        } else if (mCard != null) {
+        if (mCard != null) {
             CompatHelper.getCompat().setHTML5MediaAutoPlay(mCard.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
             mCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
         }
@@ -2506,20 +2476,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             throw new AssertionError(e);
         }
     }
-
-
-    /**
-     * Returns true if we should update the content of a single {@link WebView} (called quick update) instead of switch
-     * between two instances.
-     * <p>
-     * This is needed to solve a refresh issue on Nook devices.
-     *
-     * @return true if we should use a single WebView
-     */
-    private boolean shouldUseQuickUpdate() {
-        return !mPrefSafeDisplay;
-    }
-
 
     protected void executeCommand(int which) {
         switch (which) {

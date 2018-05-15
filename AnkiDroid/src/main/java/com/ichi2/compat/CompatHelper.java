@@ -88,10 +88,6 @@ public class CompatHelper {
         return android.os.Build.MODEL.equalsIgnoreCase("bntv400") && android.os.Build.BRAND.equals("NOOK");
     }
 
-    public static boolean isNook() {
-        return android.os.Build.MODEL.equalsIgnoreCase("nook") || android.os.Build.DEVICE.equalsIgnoreCase("nook");
-    }
-
     public static boolean isChromebook() {
         return android.os.Build.BRAND.equalsIgnoreCase("chromium") || android.os.Build.MANUFACTURER.equalsIgnoreCase("chromium");
     }
@@ -110,10 +106,6 @@ public class CompatHelper {
 
     public static void removeHiddenPreferences(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-
-        if (getSdkVersion() >= 15 && !isNook()) {
-            preferences.edit().remove("safeDisplay").commit();
-        }
         if (getSdkVersion() >= 16) {
             preferences.edit().remove("fixHebrewText").commit();
         }
