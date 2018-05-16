@@ -88,7 +88,7 @@
   <string name="custom_study_preview">Посмотреть новые за сколько дней:</string>
   <string name="rebuild_custom_study_deck">Дополнительная колода пересобирается&#8230;</string>
   <string name="importing_collection">Коллекция импортируется&#8230;</string>
-  <string name="import_media_count">Импортируются медиафайлы %1$d%&#8230;</string>
+  <string name="import_media_count">Импортируются медиафайлы %1$d%%&#8230;</string>
   <string name="import_progress">• Записей: %1$d%%\n• Карточек: %2$d%%\n• Обработка: %3$d%%</string>
   <string name="import_update_details">Обновлено %1$d из %2$d существующих записей.</string>
   <string name="import_update_ignored">Некоторые обновления проигнорированы, потому что изменился тип записи</string>
