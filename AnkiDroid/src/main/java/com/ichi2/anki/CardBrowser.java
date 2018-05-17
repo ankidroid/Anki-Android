@@ -131,33 +131,33 @@ public class CardBrowser extends NavigationDrawerActivity implements
     // Should match order of R.array.card_browser_order_labels
     public static final int CARD_ORDER_NONE = 0;
     private static final String[] fSortTypes = new String[] {
-            "",
-            "noteFld",
-            "noteCrt",
-            "noteMod",
-            "cardMod",
-            "cardDue",
-            "cardIvl",
-            "cardEase",
-            "cardReps",
-            "cardLapses"};
+        "",
+        "noteFld",
+        "noteCrt",
+        "noteMod",
+        "cardMod",
+        "cardDue",
+        "cardIvl",
+        "cardEase",
+        "cardReps",
+        "cardLapses"};
     // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings.
     // Note: the last 6 are currently hidden
     private static final String[] COLUMN1_KEYS = {"question", "sfld"};
     private static final String[] COLUMN2_KEYS = {"answer",
-            "card",
-            "deck",
-            "note",
-            "question",
-            "tags",
-            "lapses",
-            "reviews",
-            "changed",
-            "created",
-            "due",
-            "ease",
-            "edited",
-            "interval"};
+        "card",
+        "deck",
+        "note",
+        "question",
+        "tags",
+        "lapses",
+        "reviews",
+        "changed",
+        "created",
+        "due",
+        "ease",
+        "edited",
+        "interval"};
     private long mLastRenderStart = 0;
     private DeckDropDownAdapter mDropDownAdapter;
     private Spinner mActionBarSpinner;
@@ -176,110 +176,110 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private MaterialDialog.ListCallbackSingleChoice mOrderDialogListener =
             new MaterialDialog.ListCallbackSingleChoice() {
-                @Override
-                public boolean onSelection(MaterialDialog materialDialog, View view, int which,
-                                           CharSequence charSequence) {
-                    if (which != mOrder) {
-                        mOrder = which;
-                        mOrderAsc = false;
-                        try {
-                            if (mOrder == 0) {
-                                getCol().getConf().put("sortType", fSortTypes[1]);
-                                AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
-                                        .putBoolean("cardBrowserNoSorting", true)
-                                        .commit();
-                            } else {
-                                getCol().getConf().put("sortType", fSortTypes[mOrder]);
-                                AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
-                                        .putBoolean("cardBrowserNoSorting", false)
-                                        .commit();
-                            }
-                            // default to descending for non-text fields
-                            if (fSortTypes[mOrder].equals("noteFld")) {
-                                mOrderAsc = true;
-                            }
-                            getCol().getConf().put("sortBackwards", mOrderAsc);
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                        searchCards();
-                    } else if (which != CARD_ORDER_NONE) {
-                        mOrderAsc = !mOrderAsc;
-                        try {
-                            getCol().getConf().put("sortBackwards", mOrderAsc);
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                        Collections.reverse(mCards);
-                        updateList();
+        @Override
+        public boolean onSelection(MaterialDialog materialDialog, View view, int which,
+                CharSequence charSequence) {
+            if (which != mOrder) {
+                mOrder = which;
+                mOrderAsc = false;
+                try {
+                    if (mOrder == 0) {
+                        getCol().getConf().put("sortType", fSortTypes[1]);
+                        AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
+                                .putBoolean("cardBrowserNoSorting", true)
+                                .commit();
+                    } else {
+                        getCol().getConf().put("sortType", fSortTypes[mOrder]);
+                        AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
+                                .putBoolean("cardBrowserNoSorting", false)
+                                .commit();
                     }
-                    return true;
+                    // default to descending for non-text fields
+                    if (fSortTypes[mOrder].equals("noteFld")) {
+                        mOrderAsc = true;
+                    }
+                    getCol().getConf().put("sortBackwards", mOrderAsc);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
                 }
-            };
+                searchCards();
+            } else if (which != CARD_ORDER_NONE) {
+                mOrderAsc = !mOrderAsc;
+                try {
+                    getCol().getConf().put("sortBackwards", mOrderAsc);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                Collections.reverse(mCards);
+                updateList();
+            }
+            return true;
+        }
+    };
 
     private CardBrowserMySearchesDialog.MySearchesDialogListener mMySearchesDialogListener =
             new CardBrowserMySearchesDialog.MySearchesDialogListener() {
-                @Override
-                public void OnSelection(String searchName) {
-                    JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
-                    if (savedFiltersObj != null) {
-                        mSearchTerms = savedFiltersObj.optString(searchName);
-                        mSearchView.setQuery(mSearchTerms, false);
-                        MenuItemCompat.expandActionView(mSearchItem);
-                        searchCards();
+        @Override
+        public void OnSelection(String searchName) {
+            JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+            if (savedFiltersObj != null) {
+                mSearchTerms = savedFiltersObj.optString(searchName);
+                mSearchView.setQuery(mSearchTerms, false);
+                MenuItemCompat.expandActionView(mSearchItem);
+                searchCards();
+            }
+        }
+
+        @Override
+        public void OnRemoveSearch(String searchName) {
+            try {
+                JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+                if (savedFiltersObj != null && savedFiltersObj.has(searchName)) {
+                    savedFiltersObj.remove(searchName);
+                    getCol().getConf().put("savedFilters", savedFiltersObj);
+                    getCol().flush();
+                    if (savedFiltersObj.length() == 0) {
+                        mMySearchesItem.setVisible(false);
                     }
                 }
 
-                @Override
-                public void OnRemoveSearch(String searchName) {
-                    try {
-                        JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
-                        if (savedFiltersObj != null && savedFiltersObj.has(searchName)) {
-                            savedFiltersObj.remove(searchName);
-                            getCol().getConf().put("savedFilters", savedFiltersObj);
-                            getCol().flush();
-                            if (savedFiltersObj.length() == 0) {
-                                mMySearchesItem.setVisible(false);
-                            }
-                        }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
+        @Override
+        public void OnSaveSearch(String searchName, String searchTerms) {
+            if (TextUtils.isEmpty(searchName)) {
+                UIUtils.showThemedToast(CardBrowser.this,
+                        getString(R.string.card_browser_list_my_searches_new_search_error_empty_name), true);
+                return;
+            }
+            try {
+                JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+                boolean should_save = false;
+                if (savedFiltersObj == null) {
+                    savedFiltersObj = new JSONObject();
+                    savedFiltersObj.put(searchName, searchTerms);
+                    should_save = true;
+                } else if (!savedFiltersObj.has(searchName)) {
+                    savedFiltersObj.put(searchName, searchTerms);
+                    should_save = true;
+                } else {
+                    UIUtils.showThemedToast(CardBrowser.this,
+                            getString(R.string.card_browser_list_my_searches_new_search_error_dup), true);
                 }
-
-                @Override
-                public void OnSaveSearch(String searchName, String searchTerms) {
-                    if (TextUtils.isEmpty(searchName)) {
-                        UIUtils.showThemedToast(CardBrowser.this,
-                                getString(R.string.card_browser_list_my_searches_new_search_error_empty_name), true);
-                        return;
-                    }
-                    try {
-                        JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
-                        boolean should_save = false;
-                        if (savedFiltersObj == null) {
-                            savedFiltersObj = new JSONObject();
-                            savedFiltersObj.put(searchName, searchTerms);
-                            should_save = true;
-                        } else if (!savedFiltersObj.has(searchName)) {
-                            savedFiltersObj.put(searchName, searchTerms);
-                            should_save = true;
-                        } else {
-                            UIUtils.showThemedToast(CardBrowser.this,
-                                    getString(R.string.card_browser_list_my_searches_new_search_error_dup), true);
-                        }
-                        if (should_save) {
-                            getCol().getConf().put("savedFilters", savedFiltersObj);
-                            getCol().flush();
-                            mSearchView.setQuery("", false);
-                            mMySearchesItem.setVisible(true);
-                        }
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
+                if (should_save) {
+                    getCol().getConf().put("savedFilters", savedFiltersObj);
+                    getCol().flush();
+                    mSearchView.setQuery("", false);
+                    mMySearchesItem.setVisible(true);
                 }
-            };
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    };
 
 
     private void onSearch() {
@@ -294,8 +294,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         Set<Long> noteIds = new HashSet<>();    // only used to check for duplicates
         List<Note> notes = new ArrayList<>();
         boolean hasUnmarked = false;
-        for (Card card : cards)
-        {
+        for (Card card : cards) {
             if (noteIds.add(card.getNid())){
                 Note n = card.note();
                 notes.add(n);
@@ -305,19 +304,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         // mark all as marked iff there is at least one unmarked
-        if (hasUnmarked)
-        {
-            for (Note note : notes)
-            {
-                if (!note.hasTag("marked"))
-                {
+        if (hasUnmarked) {
+            for (Note note : notes) {
+                if (!note.hasTag("marked")) {
                     note.addTag("marked");
                     note.flush();
                 }
             }
         } else {
-            for (Note note : notes)
-            {
+            for (Note note : notes) {
                 note.delTag("marked");
                 note.flush();
             }
@@ -473,8 +468,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mCardsListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (mInMultiSelectMode)
-                {
+                if (mInMultiSelectMode) {
                     // click on whole cell triggers select
                     CheckBox cb = (CheckBox) view.findViewById(R.id.card_checkbox);
                     cb.toggle();
@@ -625,7 +619,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 public void onClick(View v) {
                     // Provide SearchView with the previous search terms
                     mSearchView.setQuery(mSearchTerms, false);
-                    }
+                }
             });
         } else {
             // multi-select mode
@@ -689,8 +683,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 }
             }
 
-            if (performanceBreak)
-            {
+            if (performanceBreak) {
                 // just display a more general string
                 mActionBarMenu.findItem(R.id.action_suspend_card).setTitle(getString(R.string.card_browser_toggle_suspend_card));
                 mActionBarMenu.findItem(R.id.action_suspend_card).setIcon(R.drawable.ic_action_suspend);
@@ -870,8 +863,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                             }
                         }
 
-                        if (changedCards.isEmpty())
-                        {
+                        if (changedCards.isEmpty()) {
                             endMultiSelectMode();
                             mCardsAdapter.notifyDataSetChanged();
                             return;
@@ -1090,8 +1082,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             Map<Long, String> updatedCardTagsMult = new HashMap<>();
             updatedCardTagsMult.put(card.getNid(), updatedCardTags);
             updateCardsInList(cards, updatedCardTagsMult);
-        } else
-        {
+        } else {
             updateCardsInList(cards, null);
         }
     }
@@ -1271,13 +1262,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         // need set because multiple cards of the same note might have been selected
         Set<Integer> uniquePos = new HashSet<>();
-        for (Card card : cards)
-        {
+        for (Card card : cards) {
             ArrayList<Card> partialCards = card.note().cards();
             partialCards.add(card);
             int pos;
-            for (Card c : partialCards)
-            {
+            for (Card c : partialCards) {
                 pos = getPosition(getCards(), c.getId());
                 if (pos >= 0 && pos < getCards().size()) {
                     uniquePos.add(pos);
@@ -1685,8 +1674,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             updateMultiselectMenu();
 
-            if (mCheckedCardPositions.isEmpty())
-            {
+            if (mCheckedCardPositions.isEmpty()) {
                 // when 0 are selected: end selection mode
                 endMultiSelectMode();
             } else {
