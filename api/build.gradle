@@ -6,11 +6,10 @@ def version = "1.1.0alpha5"
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.3'
 
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 26
+        targetSdkVersion 25
         versionCode 11015   // 4th digit: 1=alpha, 2=beta, 3=official
         versionName version
     }
@@ -23,7 +22,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    api fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 // Borrowed from here:
@@ -64,9 +63,11 @@ task zipRelease(type: Zip) {
     archiveName "release-${version}.zip"
 }
 
-task generateRelease << {
-    println "Release ${version} can be found at ${localReleaseDest}/"
-    println "Release ${version} zipped can be found ${buildDir}/release-${version}.zip"
+task generateRelease {
+    doLast {
+        println "Release ${version} can be found at ${localReleaseDest}/"
+        println "Release ${version} zipped can be found ${buildDir}/release-${version}.zip"
+    }
 }
 
 generateRelease.dependsOn(uploadArchives)

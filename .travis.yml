@@ -8,13 +8,15 @@ android:
   components:
     - tools
     - platform-tools
-    - build-tools-24.0.3
-    - build-tools-26.0.3
-    - android-22
+    - build-tools-27.0.3
+    # Android API-16 is required to use the emulator with API 16
+    - android-16
+    # Our current build target
     - android-26
-    - extra-android-support
     - extra-android-m2repository
-    - sys-img-armeabi-v7a-android-22
+    # Android Emulator API 16 benchmarks as fastest:
+    #   https://medium.com/zendesk-engineering/speeding-up-android-builds-on-travis-ci-1bb4cdbd9c62
+    - sys-img-armeabi-v7a-android-16
 
 licenses:
     - 'android-sdk-preview-license-.+'
@@ -26,8 +28,8 @@ jdk:
 
 # Emulator Management: Create, Start and Wait
 before_script:
-  - echo no | android create avd --force -n test -t android-22 --sdcard 10M --abi armeabi-v7a
-  - emulator -avd test -no-skin -no-audio -no-window &
+  - echo no | android create avd --force -n test -t android-16 --sdcard 10M --abi armeabi-v7a
+  - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
 
