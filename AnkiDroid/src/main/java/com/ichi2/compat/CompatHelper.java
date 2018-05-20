@@ -42,14 +42,8 @@ public class CompatHelper {
             mCompat = new CompatV17();
         } else if (getSdkVersion() >= 16) {
             mCompat = new CompatV16();
-        } else if (getSdkVersion() >= 15) {
-            mCompat = new CompatV15();
-        } else if (getSdkVersion() >= 11) {
-            mCompat = new CompatV11();
-        } else if (getSdkVersion() >= 12) {
-            mCompat = new CompatV12();
         } else {
-            mCompat = new CompatV10();
+            mCompat = new CompatV15();
         }
     }
 
@@ -58,11 +52,6 @@ public class CompatHelper {
         return Build.VERSION.SDK_INT;
     }
 
-
-    /** Determine if the device is running API level 11 or higher. */
-    public static boolean isHoneycomb() {
-        return getSdkVersion() >= Build.VERSION_CODES.HONEYCOMB;
-    }
     /** Determine if the device is running API level 21 or higher. */
     public static boolean isLollipop() {
         return getSdkVersion() >= Build.VERSION_CODES.LOLLIPOP;
@@ -99,12 +88,6 @@ public class CompatHelper {
         return android.os.Build.MODEL.equalsIgnoreCase("bntv400") && android.os.Build.BRAND.equals("NOOK");
     }
 
-
-    public static boolean isNook() {
-        return android.os.Build.MODEL.equalsIgnoreCase("nook") || android.os.Build.DEVICE.equalsIgnoreCase("nook");
-    }
-
-
     public static boolean isChromebook() {
         return android.os.Build.BRAND.equalsIgnoreCase("chromium") || android.os.Build.MANUFACTURER.equalsIgnoreCase("chromium");
     }
@@ -123,15 +106,6 @@ public class CompatHelper {
 
     public static void removeHiddenPreferences(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        if (isHoneycomb()){
-            preferences.edit().remove("longclickWorkaround").commit();
-        }
-        if (getSdkVersion() >= 13) {
-            preferences.edit().remove("safeDisplay").commit();
-        }
-        if (getSdkVersion() >= 15) {
-            preferences.edit().remove("inputWorkaround").commit();
-        }
         if (getSdkVersion() >= 16) {
             preferences.edit().remove("fixHebrewText").commit();
         }

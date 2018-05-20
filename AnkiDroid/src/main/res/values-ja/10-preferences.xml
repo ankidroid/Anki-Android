@@ -58,8 +58,8 @@
   <string name="pref_cat_gestures">ジェスチャー</string>
   <string name="pref_cat_gestures_summ">よく使うボタン操作をタップやスワイプにも割り当てます</string>
   <string name="pref_cat_actions">アクション</string>
-  <string name="pref_cat_advanced">拡張機能</string>
-  <string name="pref_cat_advanced_summ">最適化と実験的な機能</string>
+  <string name="pref_cat_advanced">その他</string>
+  <string name="pref_cat_advanced_summ">高度な最適化設定、実験的機能、AnkiDroidについて</string>
   <string name="pref_cat_performance">パフォーマンス</string>
   <string name="pref_cat_workarounds">回避策</string>
   <string name="pref_cat_plugins">プラグイン</string>

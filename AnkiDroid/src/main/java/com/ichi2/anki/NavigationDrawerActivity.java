@@ -22,6 +22,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -35,7 +36,6 @@ import android.view.View;
 import android.widget.CompoundButton;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.Themes;
 
 import timber.log.Timber;
@@ -107,7 +107,7 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
                     Timber.i("StudyOptionsFragment:: Night mode was disabled");
                     preferences.edit().putBoolean("invertedColors", false).commit();
                 }
-                CompatHelper.getCompat().restartActivityInvalidateBackstack(NavigationDrawerActivity.this);
+                restartActivityInvalidateBackstack(NavigationDrawerActivity.this);
             }
         });
         // ActionBarDrawerToggle ties together the the proper interactions
@@ -233,14 +233,14 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
                     finishWithoutAnimation();
                 } else if (mOldTheme != Themes.getCurrentTheme(getApplicationContext())) {
                     // The current theme was changed, so need to reload the stack with the new theme
-                    CompatHelper.getCompat().restartActivityInvalidateBackstack(NavigationDrawerActivity.this);
+                    restartActivityInvalidateBackstack(this);
                 } else {
                     restartActivity();
                 }
             } else {
                 // collection path has changed so kick the user back to the DeckPicker
                 CollectionHelper.getInstance().closeCollection(true);
-                CompatHelper.getCompat().restartActivityInvalidateBackstack(this);
+                restartActivityInvalidateBackstack(this);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -333,5 +333,18 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
 
     public boolean isDrawerOpen() {
         return mDrawerLayout.isDrawerOpen(GravityCompat.START);
+    }
+
+    /**
+     * Restart the activity and discard old backstack, creating it new from the heirarchy in the manifest
+     */
+    protected void restartActivityInvalidateBackstack(AnkiActivity activity) {
+        Timber.i("AnkiActivity -- restartActivityInvalidateBackstack()");
+        Intent intent = new Intent();
+        intent.setClass(activity, activity.getClass());
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(activity);
+        stackBuilder.addNextIntentWithParentStack(intent);
+        stackBuilder.startActivities(new Bundle());
+        activity.finishWithoutAnimation();
     }
 }

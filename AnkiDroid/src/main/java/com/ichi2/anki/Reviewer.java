@@ -331,10 +331,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         } else {
             menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.enable_whiteboard);
         }
-        if (!CompatHelper.isHoneycomb() && !mDisableClipboard) {
-            menu.findItem(R.id.action_search_dictionary).setVisible(true).setEnabled(!(mPrefWhiteboard && mShowWhiteboard))
-                    .setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
-        }
         if (getCol().getDecks().isDyn(getParentDid())) {
             menu.findItem(R.id.action_open_deck_options).setVisible(false);
         }
@@ -368,19 +364,19 @@ public class Reviewer extends AbstractFlashcardViewer {
         char keyPressed = (char) event.getUnicodeChar();
         if (mAnswerField != null && !mAnswerField.isFocused()) {
 	        if (sDisplayAnswer) {
-	            if (keyPressed == '1') {
+	            if (keyPressed == '1' || keyCode == KeyEvent.KEYCODE_BUTTON_Y) {
 	                answerCard(EASE_1);
 	                return true;
 	            }
-	            if (keyPressed == '2') {
+	            if (keyPressed == '2' || keyCode == KeyEvent.KEYCODE_BUTTON_X) {
 	                answerCard(EASE_2);
 	                return true;
 	            }
-	            if (keyPressed == '3') {
+	            if (keyPressed == '3' || keyCode == KeyEvent.KEYCODE_BUTTON_B) {
 	                answerCard(EASE_3);
 	                return true;
 	            }
-	            if (keyPressed == '4') {
+	            if (keyPressed == '4' || keyCode == KeyEvent.KEYCODE_BUTTON_A) {
 	                answerCard(EASE_4);
 	                return true;
 	            }
@@ -389,6 +385,13 @@ public class Reviewer extends AbstractFlashcardViewer {
 	                return true;
 	            }
 	        }
+                else {
+                    if (keyCode == KeyEvent.KEYCODE_BUTTON_Y || keyCode == KeyEvent.KEYCODE_BUTTON_X
+                            || keyCode == KeyEvent.KEYCODE_BUTTON_B || keyCode == KeyEvent.KEYCODE_BUTTON_A) {
+                        displayCardAnswer();
+                        return true;
+                    }
+                }
 	        if (keyPressed == 'e') {
 	            editCard();
 	            return true;

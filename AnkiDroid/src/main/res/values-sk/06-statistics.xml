@@ -141,6 +141,7 @@
   <plurals name="stats_today_cards">
     <item quantity="one">Dnes preštudovaná: &lt;b&gt;%1$d kartička&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;</item>
     <item quantity="few">Dnes preštudované: &lt;b&gt;%1$d kartičky&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;</item>
+    <item quantity="many">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today</item>
     <item quantity="other">Dnes preštudovaných: &lt;b&gt;%1$d kartičiek&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;</item>
   </plurals>
 </resources>

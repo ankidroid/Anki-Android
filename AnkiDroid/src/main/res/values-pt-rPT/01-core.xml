@@ -54,7 +54,7 @@
   <string name="studyoptions_start">Estudar</string>
   <!-- DeckPicker.java -->
   <string name="expand">Expandir</string>
-  <string name="collapse">Collapse</string>
+  <string name="collapse">Ocultar</string>
   <string name="study_more">Estudar mais</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d ficha pendente (%2$s)</item>
@@ -162,5 +162,5 @@
   <string name="card_template_editor_would_delete_note">Ao remover este tipo de ficha resultará na eliminação de uma ou mais notas. Por favor, crie primeiro um novo tipo de ficha.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">Ler e escrever na base de dados do AnkiDroid</string>
-  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="read_write_permission_description">aceder às notas, fichas, modelos e baralhos existentes, bem como criar novos</string>
 </resources>

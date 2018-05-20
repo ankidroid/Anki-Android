@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 384 384" enable-background="new 0 0 384 384" xml:space="preserve">
+<rect y="185" fill="#787878" width="384.3" height="199"/>
+<g>
+	
+		<image overflow="visible" opacity="0.75" width="421" height="228" xlink:href="74DC40A2.png"  transform="matrix(1 0 0 1 -18 -15)">
+	</image>
+	<g>
+		<rect fill="#323232" width="384.3" height="192"/>
+	</g>
+</g>
+<g id="bottom_text" opacity="0.3">
+	<image overflow="visible" opacity="0.75" width="79" height="87" xlink:href="74DC40A6.png"  transform="matrix(1 0 0 1 113 185)">
+	</image>
+	<g>
+		<g>
+			<g>
+				<rect x="131.8" y="200.2" fill="#FFFFFF" width="40" height="6"/>
+				<rect x="131.8" y="222.9" fill="#FFFFFF" width="20" height="6"/>
+				<rect x="131.3" y="244.4" fill="#FFFFFF" width="42" height="6"/>
+			</g>
+			<g>
+				<rect x="131.8" y="200.2" width="40" height="6"/>
+				<rect x="131.8" y="222.9" width="20" height="6"/>
+				<rect x="131.3" y="244.4" width="42" height="6"/>
+			</g>
+		</g>
+	</g>
+</g>
+<g id="top_text" opacity="0.2">
+	<g>
+		<rect x="131.8" y="123.6" width="69.5" height="6"/>
+		<rect x="131.8" y="144.3" width="22.4" height="6"/>
+		<rect x="132.3" y="165.8" width="36.8" height="6"/>
+		<rect x="161.9" y="144.3" width="22.4" height="6"/>
+	</g>
+	<g>
+		<rect x="131.8" y="123.6" fill="#FFFFFF" width="69.5" height="6"/>
+		<rect x="131.8" y="144.3" fill="#FFFFFF" width="22.4" height="6"/>
+		<rect x="132.3" y="165.8" fill="#FFFFFF" width="36.8" height="6"/>
+		<rect x="161.9" y="144.3" fill="#FFFFFF" width="22.4" height="6"/>
+	</g>
+</g>
+</svg>

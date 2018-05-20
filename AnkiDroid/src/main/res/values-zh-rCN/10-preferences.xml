@@ -46,12 +46,12 @@
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">常用设置</string>
   <string name="pref_cat_reviewing">复习</string>
-  <string name="pref_cat_reviewing_summ">非牌组复习界面设置</string>
+  <string name="pref_cat_reviewing_summ">复习通用设置</string>
   <string name="pref_cat_reviewer_behaviour">行为</string>
   <string name="pref_cat_flashcard">显示</string>
   <string name="pref_cat_whiteboard">白板</string>
   <string name="pref_cat_automatic_display">自动显示答案</string>
-  <string name="pref_cat_appearance">皮肤</string>
+  <string name="pref_cat_appearance">外观</string>
   <string name="pref_cat_appearance_summ">更改主题和默认字体</string>
   <string name="pref_cat_themes">主题</string>
   <string name="pref_cat_fonts">字体</string>
@@ -60,7 +60,7 @@
   <string name="pref_cat_actions">动作</string>
   <string name="pref_cat_advanced">高级设置</string>
   <string name="pref_cat_advanced_summ">优化和实验性的功能</string>
-  <string name="pref_cat_performance">成绩</string>
+  <string name="pref_cat_performance">性能</string>
   <string name="pref_cat_workarounds">变通方法</string>
   <string name="pref_cat_plugins">插件</string>
   <string name="about_title">关于</string>
@@ -82,7 +82,7 @@
   <string name="reset_confirmation">重置所有状态</string>
   <string name="card_zoom">卡片缩放</string>
   <string name="image_zoom">图片缩放</string>
-  <string name="button_size">显示答案按钮大小</string>
+  <string name="button_size">“显示答案”按钮大小</string>
   <string name="card_browser_font_size">卡片浏览器字体缩放</string>
   <string name="col_path">AnkiDroid路径</string>
   <string name="fullscreen_review">全屏显示</string>
@@ -90,10 +90,10 @@
   <string name="full_screen_system">隐藏系统状态栏</string>
   <string name="full_screen_complete">隐藏系统状态栏和回答按钮</string>
   <string name="full_screen_error_gestures">您必须启用手势操作才能隐藏回答按钮</string>
-  <string name="answer_buttons_position">Answer buttons position</string>
+  <string name="answer_buttons_position">显示答案按钮位置</string>
   <string-array name="answer_buttons_position_labels">
-    <item>Top</item>
-    <item>Bottom</item>
+    <item>顶部</item>
+    <item>底部</item>
   </string-array>
   <string name="gestures">启用手势</string>
   <string name="gestures_summ">为回答或编辑卡片等动作指定手势。</string>
@@ -138,7 +138,7 @@
   <string name="notification_minimum_cards_due_vibrate">振动</string>
   <string name="notification_minimum_cards_due_blink">呼吸灯</string>
   <string name="timeout_answer_text">自动显示答案</string>
-  <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
+  <string name="timeout_answer_summ">无需用户输入自动显示答案。延迟时间包括自动播放音频文件的时间。</string>
   <string name="timeout_answer_seconds">显示答案时间</string>
   <string name="timeout_answer_seconds_summ">XXX 秒</string>
   <string name="timeout_question_seconds">显示下一个问题时间</string>
@@ -153,8 +153,8 @@
   <string name="show_estimates_summ">在答案按钮上方显示下次复习的时间</string>
   <string name="show_progress">显示剩余数量</string>
   <string name="show_progress_summ">显示剩余卡片数量</string>
-  <string name="show_eta">Show ETA</string>
-  <string name="show_eta_summ">Show remaining time</string>
+  <string name="show_eta">显示预计完成时间</string>
+  <string name="show_eta_summ">显示剩余时间</string>
   <string name="use_current">新牌组</string>
   <string name="new_spread">新卡片位置</string>
   <string name="learn_cutoff">提前学习的限制</string>
@@ -202,8 +202,8 @@
   <string name="deck_conf_rev_cards">复习</string>
   <string name="deck_conf_lps_cards">失误</string>
   <string name="deck_conf_general">常规</string>
-  <string name="deck_conf_reminders">Reminders</string>
-  <string name="deck_conf_steps">步骤（以分钟为单位）</string>
+  <string name="deck_conf_reminders">提醒</string>
+  <string name="deck_conf_steps">步伐(以分钟计)</string>
   <string name="deck_conf_order">顺序</string>
   <string name="deck_conf_new_cards_day">新卡片/天</string>
   <string name="deck_conf_graduating_ivl">毕业时间间隔</string>
@@ -254,8 +254,8 @@
   <string name="deck_conf_cram_order">卡片选择标准</string>
   <string name="deck_conf_cram_reschedule">重新安排学习进度</string>
   <string name="deck_conf_cram_reschedule_summ">按当前牌组的回答重排卡牌</string>
-  <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
-  <string name="deck_conf_cram_steps_summ">自定义步骤</string>
-  <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
-  <string name="deck_conf_reminders_time">Remind at</string>
+  <string name="deck_conf_cram_steps">自定义步伐(以分钟计)</string>
+  <string name="deck_conf_cram_steps_summ">自定义步伐</string>
+  <string name="deck_conf_reminders_enabled">为此牌组启用提醒通知</string>
+  <string name="deck_conf_reminders_time">提醒时间</string>
 </resources>

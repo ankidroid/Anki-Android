@@ -47,11 +47,13 @@
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">%1$d karta do przejrzenia w %2$s</item>
     <item quantity="few">%1$d kart do przejrzenia w %2$s</item>
+    <item quantity="many">%1$d cards due in %2$s</item>
     <item quantity="other">%1$d kart do przejrzenia w %2$s</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">%1$d talia</item>
     <item quantity="few">%1$d talie</item>
+    <item quantity="many">%1$d decks</item>
     <item quantity="other">%1$d talie</item>
   </plurals>
   <string name="widget_small">AnkiDroid Mały</string>
@@ -59,11 +61,13 @@
   <plurals name="widget_cards_due">
     <item quantity="one">%d karta do przejrzenia</item>
     <item quantity="few">%d karty do przejrzenia</item>
+    <item quantity="many">%d cards due</item>
     <item quantity="other">%d kart do przejrzenia</item>
   </plurals>
   <plurals name="widget_eta">
     <item quantity="one">Pozostała %d minuta</item>
     <item quantity="few">Pozostały %d minuty</item>
+    <item quantity="many">%d minutes remaining</item>
     <item quantity="other">Pozostało %d minut</item>
   </plurals>
   <string name="widget_add_note">Dodaj notatkę</string>

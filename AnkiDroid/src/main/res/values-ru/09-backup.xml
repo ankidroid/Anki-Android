@@ -39,29 +39,29 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_deck_no_space_left">Резервное копирование не выполнено из-за недостатка свободного места на SD карте.\n\nОсвободите место на карте или уменьшите число резервных копий.</string>
-  <string name="sd_space_warning">Осталось меньше %d МБ на вашей SD-карте.\nОсвободите немного места, чтобы избежать потери данных.</string>
-  <string name="backup_delete">Удаление резервных копий.\nПожалуйста подождите...</string>
+  <string name="backup_deck_no_space_left">Не удалось сохранить резервную копию из-за нехватки места в хранилище. Уменьшите количество копий или удалите какие-нибудь файлы.</string>
+  <string name="sd_space_warning">В хранилище меньше %d МБ.\nОсвободите немного места, чтобы не потерять данные.</string>
+  <string name="backup_delete">Резервные копии удаляются&#8230;</string>
   <string name="backup_restore">Восстановить из резервной копии</string>
   <string name="backup_new_collection">Новая коллекция</string>
-  <string name="backup_del_collection">Удаление коллекции и создание новой</string>
-  <string name="backup_del_collection_question">Вы действительно хотите удалить коллекцию и создать новую? Это удалит всю информацию о прогрессе обучения и все карты!</string>
+  <string name="backup_del_collection">Удалить коллекцию и создать новую</string>
+  <string name="backup_del_collection_question">Удалить коллекцию и создать новую? Все карточки и статистика обучения будут удалены.</string>
   <string name="backup_full_sync_from_server">Полная синхронизация с сервера</string>
-  <string name="backup_full_sync_from_server_question">Вы действительно хотите переписать Вашу коллекцию коллекцией, которая будет получена из AnkiWeb? Это может стереть весь ваш учебный прогресс и добавленную информацию с момента последней синхронизации!</string>
-  <string name="error_handling_title">Обработка ошибок</string>
+  <string name="backup_full_sync_from_server_question">Перезаписать вашу коллекцию версией с AnkiWeb? Все новые данные и статистика обучения со времени последней синхронизации будут удалены.</string>
+  <string name="error_handling_title">Обработка ошибки</string>
   <string name="error_handling_options">Параметры</string>
-  <string name="backup_retry_opening">Повторить открытие</string>
-  <string name="backup_error_menu_repair">Восстановить базу данных</string>
-  <string name="backup_repair_deck">Восстановление</string>
-  <string name="backup_repair_deck_progress">Восстановление базы данных.\nПожалуйста, подождите...</string>
+  <string name="backup_retry_opening">Открыть снова</string>
+  <string name="backup_error_menu_repair">Исправить базу данных</string>
+  <string name="backup_repair_deck">Исправить</string>
+  <string name="backup_repair_deck_progress">База данных исправляется&#8230;</string>
   <string name="backup_error">Ошибка</string>
-  <string name="backup_invalid_file_error">Выбранный файл резервной копии неверен</string>
-  <string name="backup_restore_select_title">Выберите резервную копию для восстановления</string>
-  <string name="backup_restore_no_backups">Нет резервных копий этой коллекции на этом устройстве. Если у вас есть резервные копии на настольном компьютере, пожалуйста, скопируйте их в ручную в рабочую папку программы AnkiDroid</string>
-  <string name="open_collection_failed_title">Коллекция не открыта</string>
-  <string name="open_collection_failed_message">База данных не может быть открыта. База данных повреждена или имеет неправильный формат.\n\nНажмите \'Параметры\', чтобы выбрать вариант восстановления базы данных. Информация по восстановлению поврежденных коллекций доступна по адресу:\n%1$s</string>
-  <string name="corrupt_db_message">К сожалению, ваша коллекция повреждена. \n\nВыберите в меню пункт \"Восстановить из резервной копии\". Если это не поможет, обратитесь к следующей инструкции для ручного восстановления: \n%1$s</string>
-  <string name="access_collection_failed_message">Произошла ошибка при доступе к вашей коллекции. \n\nПопробуйте запустить проверку базы данных или восстановление из резервной копии. Если это не поможет, пожалуйста, отправьте сообщение об ошибке: \n%1$s</string>
-  <string name="deck_repair_error">Коллекция не может быть исправлена</string>
-  <string name="cursor_size_limit_exceeded">Превышена предельная длина строки в базе данных. Удалите все неиспользуемые типы заметок используя Anki Desktop, а затем выполните полную синхронизацию.</string>
+  <string name="backup_invalid_file_error">Выбран неверный файл резервной копии</string>
+  <string name="backup_restore_select_title">Выберите резервную копию</string>
+  <string name="backup_restore_no_backups">На устройстве нет резервных копий. Если они есть на вашем компьютере, скопируйте их в папку AnkiDroid.</string>
+  <string name="open_collection_failed_title">Коллекция не открылась</string>
+  <string name="open_collection_failed_message">База данных не открывается: или это не база данных Anki, или она повреждена.\n\nНажмите \"Параметры\" для восстановления. Для дополнительной информации о повреждённых коллекциях см. \n%1$s</string>
+  <string name="corrupt_db_message">Ваша коллекция повреждена.\n\nНажмите \"Параметры\" для восстановления из резервной копии или прочитайте, как восстановить базу данных вручную: \n%1$s</string>
+  <string name="access_collection_failed_message">При доступе к коллекции произошла ошибка.\n\nПопробуйте проверить базу данных или восстановить её из резервной копии, нажав \"Параметры\". Если ничего не изменится, отправьте сообщение об ошибке:\n%1$s</string>
+  <string name="deck_repair_error">Не получается восстановить коллекцию</string>
+  <string name="cursor_size_limit_exceeded">Превышен лимит для строк в базе данных Android. С помощью Anki на компьютере удалите неиспользуемые типы записей и сделайте полную синхронизацию.</string>
 </resources>

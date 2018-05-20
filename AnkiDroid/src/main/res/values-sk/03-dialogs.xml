@@ -49,6 +49,7 @@
   <plurals name="delete_deck_message">
     <item quantity="one">Vymazať všetky kartičky v balíčku %1$s? Obsahuje %2$d kartičku.</item>
     <item quantity="few">Vymazať všetky kartičky v balíčku %1$s? Obsahuje %2$d kartičky.</item>
+    <item quantity="many">Delete all cards in %1$s? It contains %2$d cards.</item>
     <item quantity="other">Vymazať všetky kartičky v balíčku %1$s? Obsahuje %2$d kartičiek.</item>
   </plurals>
   <string name="delete_cram_deck_message">Vrátiť všetky kartičky v %s späť do ich pôvodných balíčkov?</string>

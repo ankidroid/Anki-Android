@@ -139,10 +139,10 @@
   <string name="studyoptions_no_cards_due">Ni karta binah gakiusan.</string>
   <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Galeik</string>
-  <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-  <string name="continue_sync">Continue sync</string>
+  <string name="cancel_sync_confirm">Wileizu þo fraqiþan galeikein?</string>
+  <string name="continue_sync">Þairhwis galeikon</string>
   <string name="sync_cancelled">Sync cancelled</string>
-  <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
+  <string name="sync_cancel_message">Fraqiþando&#8230;\nǶeila wairþai mahts ist.</string>
   <string name="export">Usbair</string>
   <string name="export_collection">Export collection</string>
   <string name="export_deck">Export deck</string>

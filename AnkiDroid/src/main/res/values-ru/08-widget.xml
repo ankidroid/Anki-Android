@@ -40,32 +40,36 @@
 -->
 <resources>
   <!-- Widget -->
-  <string name="widget_minimum_cards_due_notification_ticker_title">Есть карты для повтора</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">повтор %d карт</string>
-  <string name="widget_no_cards_due">Карт для повтора нет</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Карточек на сегодня</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">На сегодня %d карточек в AnkiDroid</string>
+  <string name="widget_no_cards_due">На сегодня нет карточек</string>
   <string name="widget_loading">Виджет загружается&#8230;</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d карта для повтора в %2$s</item>
-    <item quantity="few">%1$d карты для повтора в %2$s</item>
-    <item quantity="other">%1$d карт для повтора в %2$s</item>
+    <item quantity="one">На сегодня %1$d карточка в %2$s</item>
+    <item quantity="few">На сегодня %1$d карточки в %2$s</item>
+    <item quantity="many">На сегодня %1$d карточек в %2$s</item>
+    <item quantity="other">На сегодня %1$d карточек в %2$s</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">%1$d колода</item>
     <item quantity="few">%1$d колоды</item>
+    <item quantity="many">%1$d колод</item>
     <item quantity="other">%1$d колод</item>
   </plurals>
-  <string name="widget_small">AnkiDroid Small</string>
+  <string name="widget_small">Малый AnkiDroid</string>
   <string name="widget_small_button">AnkiDroid</string>
   <plurals name="widget_cards_due">
-    <item quantity="one">%d карта в очереди</item>
-    <item quantity="few">%d карты в очереди</item>
-    <item quantity="other">%d карт в очереди</item>
+    <item quantity="one">На сегодня %d карточка</item>
+    <item quantity="few">На сегодня %d карточки</item>
+    <item quantity="many">На сегодня %d карточек</item>
+    <item quantity="other">На сегодня %d карточек</item>
   </plurals>
   <plurals name="widget_eta">
-    <item quantity="one">Осталась %d минута</item>
+    <item quantity="one">Осталось %d минута</item>
     <item quantity="few">Осталось %d минуты</item>
+    <item quantity="many">Осталось %d минут</item>
     <item quantity="other">Осталось %d минут</item>
   </plurals>
-  <string name="widget_add_note">Добавить заметку</string>
-  <string name="widget_add_note_button">Добавить новую заметку AnkiDroid</string>
+  <string name="widget_add_note">Добавить запись</string>
+  <string name="widget_add_note_button">Добавить запись в AnkiDroid</string>
 </resources>

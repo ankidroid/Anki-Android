@@ -19,11 +19,9 @@
 
 package com.ichi2.libanki;
 
-import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.os.Build;
 import android.widget.Toast;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -57,29 +55,19 @@ public class DB {
     /**
      * Open a database connection to an ".anki" SQLite file.
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public DB(String ankiFilename) {
-        // Since API 11 we can provide a custom error handler which doesn't delete the database on corruption
-        if (CompatHelper.isHoneycomb()) {
-            mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null,
+        mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null,
                     (SQLiteDatabase.OPEN_READWRITE + SQLiteDatabase.CREATE_IF_NECESSARY)
                             | SQLiteDatabase.NO_LOCALIZED_COLLATORS, new MyDbErrorHandler());
-        } else {
-            mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null,
-                    (SQLiteDatabase.OPEN_READWRITE + SQLiteDatabase.CREATE_IF_NECESSARY)
-                            | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
-        }
 
-        if (mDatabase != null) {
-            // TODO: we can remove this eventually once everyone has stopped using old AnkiDroid clients with WAL
-            CompatHelper.getCompat().disableDatabaseWriteAheadLogging(mDatabase);
-            mDatabase.rawQuery("PRAGMA synchronous = 2", null);
-        }
-        // getDatabase().beginTransactionNonExclusive();
+        // TODO: remove this once everyone has stopped using old AnkiDroid clients with WAL (API >= 16)
+        CompatHelper.getCompat().disableDatabaseWriteAheadLogging(mDatabase);
+        mDatabase.rawQuery("PRAGMA synchronous = 2", null);
+
+
         mMod = false;
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public class MyDbErrorHandler implements DatabaseErrorHandler {
         @Override
         public void onCorruption(SQLiteDatabase db) {
