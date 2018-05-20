@@ -40,9 +40,7 @@ public class CompatV16 extends CompatV15 implements Compat {
         return Html.escapeHtml(txt);
     }
 
-    /*
-    *  Update dimensions of widget from V16 on (elder versions do not support widget measuring)
-    */
+    // Update dimensions of widget from V16 on (elder versions do not support widget measuring)
     @Override
     public void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls) {
         AppWidgetManager manager = AppWidgetManager.getInstance(context);

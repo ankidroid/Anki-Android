@@ -89,14 +89,14 @@
   <string name="full_screen_off">Devre Dışı</string>
   <string name="full_screen_system">Sistem çubuklarını gizle</string>
   <string name="full_screen_complete">Sistem çubuklarını ve cevap butonlarını gizle</string>
-  <string name="full_screen_error_gestures">Cevap butonlarını devre dışı bırakmak için desenleri açmalısınız</string>
+  <string name="full_screen_error_gestures">Cevap butonlarını gizlemek için el hareketlerini açmalısınız</string>
   <string name="answer_buttons_position">Cevap düğmelerinin yeri</string>
   <string-array name="answer_buttons_position_labels">
     <item>Yukarıda</item>
     <item>Aşağıda</item>
   </string-array>
-  <string name="gestures">Jestleri etkinleştir</string>
-  <string name="gestures_summ">Cevap verme ve kart düzenleme gibi eylemlere jestler ata.</string>
+  <string name="gestures">El hareketlerini etkinleştir</string>
+  <string name="gestures_summ">Cevap verme ve kart düzenleme gibi eylemlere el hareketleri ata.</string>
   <string name="gestures_swipe_up">Yukarı sürükleme</string>
   <string name="gestures_swipe_down">Aşağı sürükleme</string>
   <string name="gestures_swipe_left">Sola sürükleme</string>
@@ -111,17 +111,17 @@
   <string name="double_scrolling_gap">Hızlı kaydırma</string>
   <string name="double_scrolling_gap_summ">eOkuyucu\'yla kaydırma mesafesini iki katına çıkarmak istiyorsanız bunu etkinleştirin</string>
   <string name="swipe_sensitivity">Kaydırma duyarlılığı</string>
-  <string name="tts">Metin okuma</string>
+  <string name="tts">Metin seslendirme</string>
   <string name="tts_summ">Ses dosyası bulunmuyorsa soruyu ve cevabı sesli okur</string>
   <string name="sync_fetch_missing_media">Eşitlemede medyayı aktar</string>
   <string name="sync_fetch_missing_media_summ">Eşitlerken eksik medyayı otomatik olarak aktar</string>
   <string name="sync_account">AnkiWeb hesabı</string>
   <string name="sync_account_summ_logged_out">Giriş yapılmamış</string>
   <string name="sync_account_summ_logged_in">%s</string>
-  <string name="automatic_sync_choice">Otomatik senkronizasyon</string>
-  <string name="automatic_sync_choice_summ">Uygulama açılış/kapanışında son senkronizasyon 10 dakikadan daha önceydiyse otomatik olarak senkronize et.</string>
+  <string name="automatic_sync_choice">Otomatik eşleme</string>
+  <string name="automatic_sync_choice_summ">Uygulama açılış/kapanışında son eşleme 10 dakikadan daha önce idiyse otomatik olarak eşle.</string>
   <string name="fix_hebrew_text">İbranice ünlüler için düzeltme</string>
-  <string name="fix_hebrew_text_summ">İbrânice sesli harflerin düzgün gözükmesi için çözüm</string>
+  <string name="fix_hebrew_text_summ">İbranice sesli harflerin düzgün gözükmesi için çözüm.</string>
   <string name="fix_hebrew_instructions">Bu ayar İbrânice yazılarda sesli harflerin düzgün gösterilmesi için Android\'in RTL algoritmasını atlar.\n\nBunun işe yaraması için, Tohu.tff fontunu indirip kendiniz şu klasöre kopyalamanız gerekiyor:\n%s/fonts/\n\nKartlarınızda bir değişiklik yapmanız gerekmez.</string>
   <string name="fix_hebrew_download_font">Font İndir</string>
   <string name="day_theme">Gündüz teması</string>

@@ -41,8 +41,8 @@
 <resources>
   <!-- CardBrowser -->
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">%d δεδειγμένη κάρτα</item>
+    <item quantity="other">%d δεδειγμένες κάρτες</item>
   </plurals>
   <string name="card_browser_all_decks">Όλες οι τράπουλες</string>
   <string name="card_browser_delete_card">Διαγραφή σημείωσης</string>
@@ -50,37 +50,37 @@
   <string name="card_browser_unsuspend_card">Επαναφορά κάρτας</string>
   <string name="card_browser_mark_card">Μαρκάρισμα σημείωσης</string>
   <string name="card_browser_unmark_card">Ξεμαρκάρισμα σημείωσης</string>
-  <string name="delete_card_title">Διαγραφή σημείωσης</string>
+  <string name="delete_card_title">Διαγραφή σημείωσης;</string>
   <string name="delete_card_message">Είστε βέβαιοι για τη διαγραφή αυτής της σημείωσης;\nΑναζήτηση πεδίου: %s</string>
   <string name="card_browser_show_marked">Δείξε μαρκαρισμένες</string>
   <string name="card_browser_show_suspended">Δείξε ανεσταλμένες</string>
   <string name="card_browser_search_by_tag">Δείξε κατά ετικέτα</string>
   <string name="card_browser_tags_shown">Ετικέτες: %1$s</string>
-  <string name="card_browser_list_my_searches">My searches</string>
-  <string name="card_browser_list_my_searches_save">Save search</string>
-  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-  <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-  <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
+  <string name="card_browser_list_my_searches">Οι αναζητήσεις μου</string>
+  <string name="card_browser_list_my_searches_save">Αποθήκευση αναζήτησης</string>
+  <string name="card_browser_list_my_searches_title">Επιλέξτε μια αποθηκευμένη αναζήτηση</string>
+  <string name="card_browser_list_my_searches_new_name">Όνομα για την τρέχουσα αναζήτηση</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">Δεν μπορείτε να αποθηκεύσετε μια αναζήτηση χωρίς όνομα</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Το όνομα υπάρχει</string>
+  <string name="card_browser_list_my_searches_remove_content">Διαγραφή του «%1$s»;</string>
   <string name="card_browser_change_display_order">Αλλαγή σειράς εμφάνισης</string>
   <string name="card_browser_change_display_order_title">Επιλέξτε τη σειρά εμφάνισης</string>
   <string name="card_browser_change_display_order_reverse">Επιλέξτε ένα πεδίο δύο φορές για να αντιστρέψετε.</string>
   <string name="card_details_question">Ερώτηση</string>
   <string name="card_details_answer">Απάντηση</string>
-  <string name="card_details_due">Δέον χρόνος</string>
+  <string name="card_details_due">Προγρ/μένος</string>
   <string name="card_details_tags">Ετικέτες</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
+  <string name="card_browser_filtering_cards">Φιλτράρισμα καρτών... \nΠιέστε το κουμπί πίσω για ακύρωση</string>
   <string-array name="card_browser_order_labels">
     <item>Χωρίς ταξινόμηση (γρήγορο)</item>
-    <item>By sort field</item>
-    <item>Με το χρόνο δημιουργίας</item>
-    <item>Με το χρόνο σύνταξης</item>
-    <item>Με το χρόνο αλλαγής</item>
-    <item>Με το χρόνο οφειλής</item>
-    <item>Με το μεσοδιάστημα</item>
-    <item>Με την ευκολία</item>
-    <item>Με την επαναλήψεις</item>
-    <item>Με τις αστοχίες</item>
+    <item>Κατά πεδίου ταξινόμησης</item>
+    <item>Κατά χρόνο δημιουργίας</item>
+    <item>Κατά χρόνο σύνταξης</item>
+    <item>Κατά χρόνο αλλαγής</item>
+    <item>Κατά προγρ/μένο χρόνο</item>
+    <item>Κατά μεσοδιάστημα</item>
+    <item>Κατά ευκολία</item>
+    <item>Κατά επαναλήψεις</item>
+    <item>Κατά αστοχίες</item>
   </string-array>
 </resources>

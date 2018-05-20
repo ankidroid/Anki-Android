@@ -67,7 +67,7 @@
   </string-array>
   <string-array name="new_order_labels">
     <item>नए पत्ते यादृच्छिक क्रम में</item>
-    <item>New cards in order added</item>
+    <item>क्रम में नए कार्ड जोड़े गए</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
     <item>सबसे पुराना देखा पहले</item>
@@ -76,29 +76,29 @@
     <item>घटते अंतराल</item>
     <item>सर्वाधिक चूका</item>
     <item>जोड़ने का क्रम</item>
-    <item>Order due</item>
+    <item>आदेश बाकी</item>
     <item>नवीनतम जोड़ा गया पहले</item>
-    <item>Relative overdueness</item>
+    <item>सापेक्षिक विलम्ब</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>वर्तमान डेक का उपयोग करें</item>
-    <item>Decide by note type</item>
+    <item>नोट प्रकार द्वारा तय</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>नए कार्ड और समीक्षाएं मिक्स</item>
+    <item>समीक्षा के बाद नए कार्ड</item>
+    <item>समीक्षा से पहले नए कार्ड</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>जब स्पैनिश पर कोई फ़ॉंट निर्दिष्ट नहीं है</item>
+    <item>हमेशा</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Plain</item>
+    <item>उजाला</item>
+    <item>सादा</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
+    <item>काला</item>
+    <item>अंधेरा</item>
   </string-array>
 </resources>

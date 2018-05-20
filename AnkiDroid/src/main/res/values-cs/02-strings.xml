@@ -45,7 +45,7 @@
   <string name="drawer_open">Otevřít zásuvku</string>
   <string name="drawer_close">Zavřít zásuvku</string>
   <string name="CardEditorLaterMessage">Uložené informace na později</string>
-  <string name="CardEditorCardDeck">Balíček karty:</string>
+  <string name="CardEditorCardDeck">Balíček karet:</string>
   <string name="CardEditorNoteDeck">Balíček:</string>
   <string name="CardEditorModel">Typ poznámky:</string>
   <string name="CardEditorTags">Štítky: %1$s</string>
@@ -97,7 +97,7 @@
   <string name="custom_study_review_forgotten">Opakovat zapomenuté karty</string>
   <string name="custom_study_review_ahead">Opakovat dopředu</string>
   <string name="custom_study_random_selection">Studovat náhodný výběr karet</string>
-  <string name="custom_study_preview_new">Zkoušení nových karet</string>
+  <string name="custom_study_preview_new">Náhled nových karet</string>
   <string name="custom_study_limit_tags">Omezit podle štítků</string>
   <!-- Card editor -->
   <string name="cardeditor_title_add_note">Přidat poznámku</string>
@@ -117,11 +117,13 @@
   <plurals name="timebox_reached">
     <item quantity="one">%1$d karta studována za %2$s</item>
     <item quantity="few">%1$d karty studovány za %2$s</item>
+    <item quantity="many">%1$d cards studied in %2$s</item>
     <item quantity="other">%1$d karet studováno za %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
     <item quantity="one">%1$d minuta</item>
     <item quantity="few">%1$d minuty</item>
+    <item quantity="many">%1$d minutes</item>
     <item quantity="other">%1$d minut</item>
   </plurals>
   <string name="studyoptions_welcome_title">Vítejte v AnkiDroid</string>
@@ -137,6 +139,7 @@
   <plurals name="factadder_cards_added">
     <item quantity="one">přidána %d karta</item>
     <item quantity="few">přidány %d karty</item>
+    <item quantity="many">%d cards added</item>
     <item quantity="other">přidáno %d karet</item>
   </plurals>
   <string name="help_title">Nápověda</string>
@@ -195,31 +198,37 @@
   <plurals name="time_span_seconds">
     <item quantity="one">%s sekunda</item>
     <item quantity="few">%s sekundy</item>
+    <item quantity="many">%s seconds</item>
     <item quantity="other">%s sekund</item>
   </plurals>
   <plurals name="time_span_minutes">
     <item quantity="one">%s minuta</item>
     <item quantity="few">%s minuty</item>
+    <item quantity="many">%s minutes</item>
     <item quantity="other">%s minut</item>
   </plurals>
   <plurals name="time_span_hours">
     <item quantity="one">%s hodina</item>
     <item quantity="few">%s hodiny</item>
+    <item quantity="many">%s hours</item>
     <item quantity="other">%s hodin</item>
   </plurals>
   <plurals name="time_span_days">
     <item quantity="one">%s den</item>
     <item quantity="few">%s deny</item>
+    <item quantity="many">%s days</item>
     <item quantity="other">%s dnů</item>
   </plurals>
   <plurals name="time_span_months">
     <item quantity="one">%s měsíc</item>
     <item quantity="few">%s měsíce</item>
+    <item quantity="many">%s months</item>
     <item quantity="other">%s měsíců</item>
   </plurals>
   <plurals name="time_span_years">
     <item quantity="one">%s rok</item>
     <item quantity="few">%s roky</item>
+    <item quantity="many">%s years</item>
     <item quantity="other">%s let</item>
   </plurals>
   <!-- The reason for making a simple “< x” translatable are RTL
@@ -233,8 +242,9 @@
   <plurals name="reminder_text">
     <item quantity="one">%2$d new card to review in %1$s</item>
     <item quantity="few">%2$d new cards to review in %1$s</item>
+    <item quantity="many">%2$d new cards to review in %1$s</item>
     <item quantity="other">%2$d new cards to review in %1$s</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->
-  <string name="apk_share_error">Error sharing apkg file</string>
+  <string name="apk_share_error">Chyba sdílení souboru apkg</string>
 </resources>

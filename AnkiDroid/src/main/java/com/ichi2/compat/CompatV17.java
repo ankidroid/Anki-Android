@@ -4,8 +4,6 @@ package com.ichi2.compat;
 import android.annotation.TargetApi;
 import android.webkit.WebSettings;
 
-import timber.log.Timber;
-
 /** Implementation of {@link Compat} for SDK level 17 */
 @TargetApi(17)
 public class CompatV17 extends CompatV16 implements Compat {

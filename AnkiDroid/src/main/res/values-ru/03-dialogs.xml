@@ -39,62 +39,63 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">Проверка базы данных</string>
+  <string name="check_db_title">Проверить базу данных?</string>
   <string name="check_db_warning">Это может занять много времени</string>
-  <string name="check_db_acknowledge">База проверена</string>
-  <string name="check_db_acknowledge_shrunk">База проверена и оптимизирована.\nСжато на %d кБ.</string>
+  <string name="check_db_acknowledge">База данных проверена</string>
+  <string name="check_db_acknowledge_shrunk">База проверена, оптимизирована\nи сжата на %d кБ.</string>
   <string name="contextmenu_deckpicker_delete_deck">Удалить колоду</string>
-  <string name="delete_deck_default_deck">Нельзя удалить основную колоду</string>
-  <string name="delete_deck_title">Удалить колоду</string>
+  <string name="delete_deck_default_deck">Нельзя удалить колоду по умолчанию</string>
+  <string name="delete_deck_title">Удалить колоду?</string>
   <plurals name="delete_deck_message">
-    <item quantity="one">Удалить карту из колоды %1$s? Содержится %2$d карта.</item>
-    <item quantity="few">Удалить все карты из колоды %1$s? Содержится %2$d карты.</item>
-    <item quantity="other">Удалить все карты из колоды %1$s? Содержится %2$d карт.</item>
+    <item quantity="one">Удалить все карточки в %1$s? В ней %2$d карточка.</item>
+    <item quantity="few">Удалить все карточки в %1$s? В ней %2$d карточки.</item>
+    <item quantity="many">Удалить все карточки в %1$s? В ней %2$d карточек.</item>
+    <item quantity="other">Удалить все карточки в %1$s? В ней %2$d карточек.</item>
   </plurals>
-  <string name="delete_cram_deck_message">Вы уверены, что хотите отправить все карты из %s в их оригинальные колоды?</string>
-  <string name="no_tts_available_message">Функция преобразования текста в речь недоступна</string>
-  <string name="initializing_tts">Инициализация синтеза речи...</string>
+  <string name="delete_cram_deck_message">Вернуть все карточки в их колоды?</string>
+  <string name="no_tts_available_message">Синтез речи недоступен</string>
+  <string name="initializing_tts">Запускается синтез речи&#8230;</string>
   <string name="tts_no_tts">Не произносить</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s: <br/> Flashcards для Android</h2>AnkiDroid является flashcard приложением, которое полностью совместимо с версией для настольных компьютеров <a href=\"%2$s\"> Anki</a>. Можно создавать, загружать и изучать учебные заметки на AnkiDroid или Anki Desktop а так же легко синхронизировать их используя AnkiWeb.]]></item>
-    <item><![CDATA[Чтобы помочь нам сделать AnkiDroid лучше, пожалуйста, сообщайте об ошибках <a href=\"%1$s\">в баг-трекере</a>; новые идеи также приветствуются. Ищите ответы на <a href=\"%2$s\">вики</a> или начните дискуссию на <a href=\"%3$s\">форуме</a>.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Учебные карточки для Android</h2>AnkiDroid — это приложение для повторения карточек, которое полностью совместимо с версией для настольных компьютеров <a href=\"%2$s\"> Anki</a>. Создавайте, загружайте и учите карточки в AnkiDroid или Anki Desktop, и синхронизируйте их через AnkiWeb.]]></item>
+    <item><![CDATA[Чтобы помочь нам сделать AnkiDroid лучше, пожалуйста, сообщайте об ошибках <a href=\"%1$s\">в баг-трекере</a>. Новые идеи также приветствуются. Ищите ответы в <a href=\"%2$s\">вики</a> или начните обсуждение на <a href=\"%3$s\">форуме</a>.]]></item>
     <item><![CDATA[AnkiDroid — это <a href=\"%1$s\">программное обеспечение с открытым исходным кодом<a/>, поэтому любой желающий может <a href=\"%2$s\">внести свой вклад</a> :-)]]></item>
-    <item><![CDATA[Не-разработчики тоже могут помочь. Например, вы можете <a href=\"%1$s\">помочь с переводом</a> AnkiDroid, обновить вики, предоставить скриншоты, <a href=\"%2$s\">внести пожертвования</a> для Anki Desktop, или написать в блоге об AnkiDroid.]]></item>
-    <item><![CDATA[AnkiDroid выпускается под <a href=\"%1$s\">лицензией GNU-GPL v3</a> и исходный код доступен <a href=\"%2$s\">на GitHub</a>.]]></item>
+    <item><![CDATA[Неразработчики тоже могут помочь. Например, вы можете <a href=\"%1$s\">помочь с переводом</a> AnkiDroid, обновить вики, предоставить скриншоты или написать в блоге об AnkiDroid.]]></item>
+    <item><![CDATA[AnkiDroid выпускается под <a href=\"%1$s\">лицензией GNU-GPL v3</a>, и исходный код доступен <a href=\"%2$s\">на GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Предпросмотр</string>
-  <string name="reset_card_dialog_title">Сброс учебного прогресса карты</string>
-  <string name="reset_card_dialog_message">Эта карта будет помещена в конец очереди новых карт.</string>
+  <string name="reset_card_dialog_title">Сбросить состояние карточек</string>
+  <string name="reset_card_dialog_message">Эта карточка будет помещена в конец очереди новых карт</string>
   <string name="reset_card_dialog_acknowledge">Сброс карт</string>
   <string name="reschedule_card_dialog_title">Изменить расписание карты</string>
-  <string name="reschedule_card_dialog_message">Изменить расписание для обзора через x дней:</string>
-  <string name="reschedule_card_dialog_acknowledge">Расписание карты изменено</string>
-  <string name="answering_error_title">Ошибка базы данных</string>
-  <string name="answering_error_message">Произошла ошибка при записи в коллекцию. Это может быть связано с тем, что база данных была ранее повреждена или что недостаточно места на диске.\n\nЕсли это случается часто, попробуйте проверить базу данных, восстановить коллекцию или восстановить из резервной копии. Нажмите для этого на «Настройки».\n\nОднако, дело может быть в ошибке  AnkiDroid; Пожалуйста, сообщите об ошибке, чтобы мы могли проверить это.</string>
+  <string name="reschedule_card_dialog_message">Через сколько дней запланировать повторение:</string>
+  <string name="reschedule_card_dialog_acknowledge">Расписание карточки изменено</string>
+  <string name="answering_error_title">Ошибка в базе данных</string>
+  <string name="answering_error_message">Произошла ошибка при записи в коллекцию. База данных может быть повреждена, или недостаточно места в хранилище.\n\nЕсли это случается часто, попробуйте проверить базу данных, починить коллекцию или восстановить её из резервной копии. Для этого нажмите \"Настройки\".\n\nТем не менее, это может быть ошибка в AnkiDroid. Пожалуйста, сообщите об ошибке, чтобы мы могли проверить это.</string>
   <string name="answering_error_report">Сообщить об ошибке</string>
-  <string name="repair_deck_dialog">Вы действительно хотите восстановить базу данных?\n\nДо начала восстановления, копия базы даннх будет помещена в папку \'%s\'.</string>
-  <string name="intent_add_saved_information">Сохранённые данные</string>
-  <string name="intent_add_clear_all">Очистить все</string>
-  <string name="intent_aedict_empty">Категория «по умолчанию» является пустой</string>
-  <string name="intent_aedict_category">При добавлении карты AnkiDroid удаляет все категории блокнота или добавляет одну с именем «default»</string>
-  <string name="custom_study_new_total_new">Новых  карт  в колоде: %s</string>
-  <string name="custom_study_rev_total_rev">Требуют повторения: %s</string>
-  <string name="custom_study_new_extend">Увеличить сегодняшний лимит новых карт на (шт.)</string>
-  <string name="custom_study_rev_extend">Увеличить сегодняшний лимит карт для повторения на (шт.)</string>
-  <string name="custom_study_forgotten">Отобрать забытые карты за последние дни (кол-во дней)</string>
-  <string name="custom_study_ahead">Отобрать карты вперед на несколько дней  (кол-во дней)</string>
-  <string name="custom_study_random">Выбрать случайные карты из колоды (шт.)</string>
-  <string name="custom_study_preview">Выбрать новые карты, добавленные за последние дни (кол-во дней)</string>
-  <string name="rebuild_custom_study_deck">Пересборка специальной колоды.\nПожалуйста, подождите...</string>
-  <string name="importing_collection">Импортирование коллекции.\nПожалуйста подождите&#8230;</string>
-  <string name="import_media_count">Импорт Media файлов %1$d%%\nПожалуйста подождите&#8230;</string>
-  <string name="import_progress">• Импорт заметок: %1$d%%\n• Импорт карт: %2$d%%\n• Пост-процессинг: %3$d%%</string>
-  <string name="import_update_details">Обновлено %1$d из %2$d существующих заметок.</string>
-  <string name="import_update_ignored">Некоторые обновления были проигнорированы, потому что изменился тип данных заметки</string>
-  <string name="import_complete_count">Импортировано карт: %d</string>
-  <string name="sd_card_full_title">SD карта переполнена</string>
-  <string name="sd_card_almost_full_title">SD карта почти заполнена</string>
-  <string name="restore_backup_title">Восстановить резервную копию?</string>
+  <string name="repair_deck_dialog">Вы действительно хотите починить базу данных?\n\nПеред восстановлением копия базы данных будет помещена в папку \'%s\'.</string>
+  <string name="intent_add_saved_information">Сохраненные данные</string>
+  <string name="intent_add_clear_all">Очистить всё</string>
+  <string name="intent_aedict_empty">Категория по умолчанию пуста</string>
+  <string name="intent_aedict_category">Чтобы добавить карточки в AnkiDroid, удалите все категории Notepad или создайте категорию \"default\"</string>
+  <string name="custom_study_new_total_new">Новых карточек в колоде: %s</string>
+  <string name="custom_study_rev_total_rev">Запланировано для повторения: %s</string>
+  <string name="custom_study_new_extend">Добавить новых на сегодня</string>
+  <string name="custom_study_rev_extend">Добавить повторяемых на сегодня</string>
+  <string name="custom_study_forgotten">Забытые за сколько дней повторить:</string>
+  <string name="custom_study_ahead">На сколько дней просмотреть вперёд:</string>
+  <string name="custom_study_random">Сколько случайных карточек отобрать:</string>
+  <string name="custom_study_preview">Посмотреть новые за сколько дней:</string>
+  <string name="rebuild_custom_study_deck">Дополнительная колода пересобирается&#8230;</string>
+  <string name="importing_collection">Коллекция импортируется&#8230;</string>
+  <string name="import_media_count">Импортируются медиафайлы %1$d%%&#8230;</string>
+  <string name="import_progress">• Записей: %1$d%%\n• Карточек: %2$d%%\n• Обработка: %3$d%%</string>
+  <string name="import_update_details">Обновлено %1$d из %2$d существующих записей.</string>
+  <string name="import_update_ignored">Некоторые обновления проигнорированы, потому что изменился тип записи</string>
+  <string name="import_complete_count">Импортировано карточек: %d</string>
+  <string name="sd_card_full_title">В хранилище нет места</string>
+  <string name="sd_card_almost_full_title">В хранилище почти нет места</string>
+  <string name="restore_backup_title">Восстановить из резервной копии?</string>
   <string name="restore_backup">Ваша коллекция будет заменена более старой копией. Несохранённый прогресс будет потерян.</string>
   <string name="dialog_cancel">Отменить</string>
   <string name="dialog_ok">OK</string>
@@ -108,28 +109,28 @@
   <string name="dialog_positive_replace">Заменить</string>
   <string name="dialog_positive_restore">Восстановить</string>
   <string name="dialog_positive_set">Установить</string>
-  <string name="lookup_button_content">искать</string>
-  <string name="dialog_collection_path_not_dir">Указанный путь не является допустимым каталогом</string>
+  <string name="lookup_button_content">Посмотреть в словаре</string>
+  <string name="dialog_collection_path_not_dir">Указанный путь не является допустимой папкой</string>
   <!-- Media checking -->
-  <string name="check_media_title">Проверить Media?</string>
-  <string name="check_media_warning">На это может потребоваться значительное время для больших коллекций</string>
-  <string name="check_media_message">Проверка Media&#8230;</string>
-  <string name="check_media_acknowledge">Media проверено</string>
-  <string name="check_media_failed">Ошибка проверки Media</string>
+  <string name="check_media_title">Проверить медиафайлы?</string>
+  <string name="check_media_warning">Это может занять много времени, если медиафайлов много</string>
+  <string name="check_media_message">Медиафайлы проверяются&#8230;</string>
+  <string name="check_media_acknowledge">Медиафайлы проверены</string>
+  <string name="check_media_failed">Не удалось проверить медиафайлы</string>
   <string name="check_media_invalid">Файлы с недопустимой кодировкой: %d</string>
-  <string name="check_media_unused">Файлы находятся в каталоге с Media данными, но не используются ни в одной карте: %d</string>
+  <string name="check_media_unused">Медиафайлы, не прикреплённые к карточкам: %d</string>
   <string name="check_media_nohave">Ссылок на отсутствующие медиафайлы: %d</string>
   <string name="check_media_no_unused_missing">Неиспользуемые и отсутствующие файлы не найдены.</string>
-  <string name="check_media_db_updated">База данных Media перестроена.</string>
+  <string name="check_media_db_updated">База данных медиафайлов перестроена</string>
   <string name="check_media_delete_unused">Удалить неиспользуемые</string>
   <string name="check_media_deleted">Удалено файлов: %d</string>
   <!-- Tags Dialog Options -->
-  <string name="tags_dialog_option_all_cards">Все карты</string>
+  <string name="tags_dialog_option_all_cards">Все карточки</string>
   <string name="tags_dialog_option_new_cards">Новые</string>
   <string name="tags_dialog_option_due_cards">К просмотру</string>
   <!-- Empty cards -->
-  <string name="emtpy_cards_finding">Поиск пустых карт&#8230;</string>
+  <string name="emtpy_cards_finding">Поиск пустых карточек&#8230;</string>
   <string name="empty_cards_none">Нет пустых карт</string>
-  <string name="empty_cards_count">Карт к удалению: %d</string>
-  <string name="empty_cards_deleted">Удалено карт: %d</string>
+  <string name="empty_cards_count">Карточек к удалению: %d</string>
+  <string name="empty_cards_deleted">Удалено карточек: %d</string>
 </resources>

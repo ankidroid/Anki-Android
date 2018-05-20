@@ -136,7 +136,7 @@ public class Utils {
      * @param time_s The time to format, in seconds
      * @return The time quantity string. Something like "3 s" or "1.7 yr".
      */
-    public static String timeQuantity(Context context, int time_s) {
+    public static String timeQuantity(Context context, long time_s) {
         Resources res = context.getResources();
         // N.B.: the integer s, min, h, d and (one decimal, rounded by format) double for month, year is
         // hard-coded. See also 01-core.xml
@@ -163,11 +163,12 @@ public class Utils {
      * @param time_s The time to format, in seconds
      * @return The formatted, localized time string. The time is always an integer.
      */
-    public static String timeSpan(Context context, int time_s) {
+    public static String timeSpan(Context context, long time_s) {
         int time_x;  // Time in unit x
         Resources res = context.getResources();
         if (Math.abs(time_s) < TIME_MINUTE ) {
-            return res.getQuantityString(R.plurals.time_span_seconds, time_s, time_s);
+            time_x = (int) time_s;
+            return res.getQuantityString(R.plurals.time_span_seconds, time_x, time_x);
         } else if (Math.abs(time_s) < TIME_HOUR) {
             time_x = (int) Math.round(time_s/TIME_MINUTE);
             return res.getQuantityString(R.plurals.time_span_minutes, time_x, time_x);
@@ -193,7 +194,7 @@ public class Utils {
      * @param time_s The time to format, in seconds
      * @return The formatted, localized time string. The time is always a float.
      */
-    public static String roundedTimeSpan(Context context, int time_s) {
+    public static String roundedTimeSpan(Context context, long time_s) {
         if (Math.abs(time_s) < TIME_DAY) {
             return context.getResources().getString(R.string.stats_overview_hours, time_s/TIME_HOUR);
         } else if (Math.abs(time_s) < TIME_MONTH) {
@@ -684,13 +685,40 @@ public class Utils {
         return bos.toByteArray();
     }
 
+    /**
+     * Calls {@link #writeToFileImpl(InputStream, String)} and handles IOExceptions
+     * @throws IOException Rethrows exception after a set number of retries
+     */
+    public static void writeToFile(InputStream source, String destination) throws IOException {
+        // sometimes this fails and works on retries (hardware issue?)
+        final int retries = 5;
+        int retryCnt = 0;
+        boolean success = false;
+        while (!success && retryCnt++ < retries) {
+            try {
+                writeToFileImpl(source, destination);
+                success = true;
+            } catch (IOException e) {
+                if (retryCnt == retries) {
+                    throw e;
+                } else {
+                    Timber.e("IOException while writing to file, retrying...");
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Utility method to write to a file.
      * Throws the exception, so we can report it in syncing log
      * @throws IOException
      */
-    public static void writeToFile(InputStream source, String destination) throws IOException {
+    public static void writeToFileImpl(InputStream source, String destination) throws IOException {
         File f = new File(destination);
         try {
             Timber.d("Creating new file... = %s", destination);

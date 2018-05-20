@@ -222,22 +222,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     protected void setPreviewImage(String imagePath, int maxsize) {
         if (imagePath != null && !imagePath.equals("")) {
-            // Caused bug on API <= 7
-            // mImagePreview.setImageURI(Uri.fromFile(new File(imagePath)));
-
-            // fix but crashes with out of memory
-            // mImagePreview.setImageURI(Uri.parse(new File(imagePath).toString()));
-
-            // fix for both
             File f = new File(imagePath);
-
             Bitmap b = BitmapUtil.decodeFile(f, maxsize);
-
-            int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-            if (currentapiVersion >= android.os.Build.VERSION_CODES.ECLAIR) {
-                b = ExifUtil.rotateFromCamera(f, b);
-            }
-
+            b = ExifUtil.rotateFromCamera(f, b);
             mImagePreview.setImageBitmap(b);
         }
     }

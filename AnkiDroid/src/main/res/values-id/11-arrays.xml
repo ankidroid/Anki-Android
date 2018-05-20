@@ -36,69 +36,69 @@
 -->
 <resources>
   <string-array name="error_reporting_choice_labels">
-    <item>Selalu lapor</item>
-    <item>Jangan lapor</item>
-    <item>Tanya saya</item>
+    <item>selalu laporkan</item>
+    <item>tidak pernah melaporkan</item>
+    <item>tanya aku</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>Tiada tindakan</item>
-    <item>Tampilkan jawaban</item>
-    <item>Tombol jawaban 1</item>
-    <item>Tombol jawaban 2</item>
-    <item>Tombol jawaban 3</item>
+    <item>tidak ada tindakan</item>
+    <item>perlihatkan Jawaban</item>
+    <item>tombol jawab 1</item>
+    <item>tombol jawab 1</item>
+    <item>tombol jawab 1</item>
     <item>Tombol jawaban 4</item>
-    <item>Jawaban direkomendasikan (hijau)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
-    <item>Edit note</item>
-    <item>Mark note</item>
-    <item>Ekspresi Carian</item>
-    <item>Pendam kad</item>
-    <item>Tangguh kad</item>
-    <item>Delete note</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
-    <item>Bury note</item>
-    <item>Suspend note</item>
+    <item>jawaban yang direkomendasikan (hijau)</item>
+    <item>jawab lebih baik dari yang dianjurkan</item>
+    <item>Membuka</item>
+    <item>edit catatan</item>
+    <item>catat catatan</item>
+    <item>ekspresi lookup</item>
+    <item>kartu penguburan</item>
+    <item>kartu suspend</item>
+    <item>hapus catatan</item>
+    <item>media bermain</item>
+    <item>tentang belajar</item>
+    <item>mengubur catatan</item>
+    <item>Tunggu catatan</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Tangguhkan kartu</item>
-    <item>Hanya tag</item>
+    <item>kartu suspend</item>
+    <item>hanya tag</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>Kartu-kartu yang baru secara acak</item>
-    <item>New cards in order added</item>
+    <item>kartu baru dalam urutan acak</item>
+    <item>kartu baru dalam rangka ditambahkan</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Tertua pertama dilihat</item>
+    <item>tertua terlihat pertama</item>
     <item>Acak</item>
     <item>Meningkatkan interval</item>
     <item>Mengurangi interval</item>
-    <item>Most lapsed</item>
-    <item>Urutan ditambahkan</item>
-    <item>Order due</item>
-    <item>Latest added first</item>
-    <item>Relative overdueness</item>
+    <item>paling banyak</item>
+    <item>pesanan ditambahkan</item>
+    <item>Pesanan jatuh tempo</item>
+    <item>Yang terakhir ditambahkan lebih dulu</item>
+    <item>Kelebihan relatif</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
-    <item>Decide by note type</item>
+    <item>Gunakan dek saat ini</item>
+    <item>memutuskan dengan jenis catatan</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>Campur kartu dan ulasan baru</item>
+    <item>kartu baru setelah diperiksa</item>
+    <item>kartu baru sebelum ditinjau</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>Bila tidak ada font yang ditentukan pada flashcards</item>
+    <item>Selalu</item>
   </string-array>
   <string-array name="day_theme_labels">
-    <item>Light</item>
-    <item>Plain</item>
+    <item>Cahaya</item>
+    <item>polos</item>
   </string-array>
   <string-array name="night_theme_labels">
-    <item>Black</item>
-    <item>Dark</item>
+    <item>hitam</item>
+    <item>Gelap</item>
   </string-array>
 </resources>

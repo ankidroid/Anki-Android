@@ -34,4 +34,4 @@ Añade contenido mediante la aplicación de escritorio Anki o directamente media
 • manejo de mazos dinámicos
 • modo noche
 • traducido a 27 idiomas
-• todas las versiones anteriores de AnkiDroid pueden descargarse desde el sitio Web
+• Todas las versiones anteriores de AnkiDroid se pueden descargar del sitio web

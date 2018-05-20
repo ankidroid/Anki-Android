@@ -48,14 +48,14 @@
   <string name="statistics_learn">Uczone</string>
   <string name="statistics_cram">Zakuwane</string>
   <string name="stats_cards">Karty</string>
-  <string name="stats_cards_intervals">Liczba kart według interwału</string>
-  <string name="stats_cumulative_cards">Karty narastająco</string>
-  <string name="stats_cumulative_answers">Odpowiedzi narastająco</string>
-  <string name="stats_cumulative_time_minutes">Minuty narastająco</string>
-  <string name="stats_cumulative_time_hours">Godziny narastająco</string>
-  <string name="stats_cumulative">Narastająco</string>
-  <string name="stats_cumulative_percentage">Procent narastająco</string>
-  <string formatted="false" name="stats_cumulative_correct_percentage">Procent poprawnych narastająco</string>
+  <string name="stats_cards_intervals">Liczba kart według przerwy</string>
+  <string name="stats_cumulative_cards">Karty łącznie</string>
+  <string name="stats_cumulative_answers">Odpowiedzi łącznie</string>
+  <string name="stats_cumulative_time_minutes">Minuty łącznie</string>
+  <string name="stats_cumulative_time_hours">Godziny łącznie</string>
+  <string name="stats_cumulative">Łącznie</string>
+  <string name="stats_cumulative_percentage">Procent łącznie</string>
+  <string formatted="false" name="stats_cumulative_correct_percentage">Procent poprawnych łącznie</string>
   <string name="stats_answers">Odpowiedzi</string>
   <string name="stats_minutes">Minuty</string>
   <string name="stats_hours">Godziny</string>
@@ -76,13 +76,13 @@
   <string name="stats_today_no_mature_cards">Dojrzałe karty nie były dziś pokazywane.</string>
   <string name="stats_overview_forecast_total">Razem powtórek: &lt;b&gt;%1$d&lt;/b&gt;</string>
   <string name="stats_overview_forecast_average">Średnia: &lt;b&gt;%1$.1f&lt;/b&gt; powtórek/dzień</string>
-  <string name="stats_overview_forecast_due_tomorrow">Na jutro: &lt; b &gt;%1$d &lt; /b &gt;</string>
-  <string name="stats_overview_days_studied">Dni nauki: &lt; b &gt;%1$d%% &lt; /b &gt; (%2$d %3$d)</string>
+  <string name="stats_overview_forecast_due_tomorrow">Na jutro: &lt;b&gt;%1$d&lt;/b&gt;</string>
+  <string name="stats_overview_days_studied">Dni nauki: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d z %3$d)</string>
   <string name="stats_overview_total_reviews">Razem powtórek: &lt;b&gt;%1$d&lt;/b&gt;</string>
   <string name="stats_overview_reviews_per_day_studydays">Średnia dla dni nauki: &lt;b&gt;%1$.1f&lt;/b&gt; powtórek/dzień</string>
-  <string name="stats_overview_reviews_per_day_all">Przy codziennej nauce: %1$.1f &lt; /b &gt; &lt; b &gt; powtórek/dzień</string>
+  <string name="stats_overview_reviews_per_day_all">Przy codziennej nauce: &lt;b&gt;%1$.1f&lt;/b&gt; powtórek/dzień</string>
   <string name="stats_overview_time_per_day_studydays">Średnia dla dni nauki: &lt;b&gt;%1$.1f&lt;/b&gt; min/dzień</string>
-  <string name="stats_overview_time_per_day_all">Przy codziennej nauce: %1$.1f &lt; /b &gt; &lt; b &gt; min/dzień</string>
+  <string name="stats_overview_time_per_day_all">Przy codziennej nauce: &lt;b&gt;%1$.1f&lt;/b&gt; min/dzień</string>
   <string name="stats_overview_new_cards_per_day">Średnia: &lt;b&gt;%1$.1f&lt;/b&gt; kart/dzień</string>
   <string name="stats_overview_total_new_cards">Razem kart: &lt;b&gt;%1$d&lt;/b&gt;</string>
   <string name="stats_overview_average_interval">"Średni odstęp czasu: "</string>
@@ -104,7 +104,7 @@
   <string name="stats_review_count">Liczba powtórek</string>
   <string name="stats_review_time">Czas powtórek</string>
   <string name="stats_added">Dodano</string>
-  <string name="stats_review_intervals">Interwały</string>
+  <string name="stats_review_intervals">Przerwy</string>
   <string name="stats_breakdown">Rozkład godzinowy</string>
   <string name="stats_weekly_breakdown">Rozkład po dniach tygodnia</string>
   <string name="stats_answer_buttons">Przyciski odpowiedzi</string>
@@ -141,6 +141,7 @@
   <plurals name="stats_today_cards">
     <item quantity="one">Dziś przerobiono &lt;b&gt;%1$d kartę&lt;/b&gt; w &lt;b&gt;%2$s&lt;/b&gt;</item>
     <item quantity="few">Dziś przerobiono &lt;b&gt;%1$d kart&lt;/b&gt; w &lt;b&gt;%2$s&lt;/b&gt;</item>
+    <item quantity="many">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today</item>
     <item quantity="other">Dziś przerobiono &lt;b&gt;%1$d kart&lt;/b&gt; w &lt;b&gt;%2$s&lt;/b&gt;</item>
   </plurals>
 </resources>

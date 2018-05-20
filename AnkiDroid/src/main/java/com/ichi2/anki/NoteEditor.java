@@ -37,6 +37,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -549,6 +550,52 @@ public class NoteEditor extends AnkiActivity {
         }
     }
 
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch(keyCode) {
+
+            //some hardware keybds swap between mobile/desktop mode...
+            //when in mobile mode KEYCODE_NUMPAD_ENTER & KEYCODE_ENTER are equiv. but
+            //both need to be captured for desktop keybds
+            case KeyEvent.KEYCODE_NUMPAD_ENTER:
+            case KeyEvent.KEYCODE_ENTER:
+                if (event.isCtrlPressed()) {
+                    saveNote();
+                }
+                break;
+
+            case KeyEvent.KEYCODE_D:
+                if (event.isCtrlPressed()) {
+                    //null check in case Spinner is moved into options menu in the future
+                    if (mNoteDeckSpinner != null) {
+                        mNoteDeckSpinner.performClick();
+                    }
+                }
+                break;
+
+            case KeyEvent.KEYCODE_L:
+                if (event.isCtrlPressed()) {
+                    showCardTemplateEditor();
+                }
+                break;
+
+            case KeyEvent.KEYCODE_N:
+                if (event.isCtrlPressed()) {
+                    if (mNoteTypeSpinner != null) {
+                        mNoteTypeSpinner.performClick();
+                    }
+                }
+                break;
+
+            case KeyEvent.KEYCODE_T:
+                if (event.isCtrlPressed() && event.isShiftPressed()) {
+                    showTagsDialog();
+                }
+                break;
+        }
+
+        return super.onKeyUp(keyCode, event);
+    }
 
     private void fetchIntentInformation(Intent intent) {
         Bundle extras = intent.getExtras();
