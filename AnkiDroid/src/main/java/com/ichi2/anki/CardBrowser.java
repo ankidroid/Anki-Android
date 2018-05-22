@@ -763,7 +763,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             case R.id.action_change_deck: {
                 AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-                builderSingle.setTitle("Move all to deck");
+                builderSingle.setTitle(getString(R.string.move_all_to_deck));
 
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_deck_item);
                 for (JSONObject deck : mDropDownDecks) {
@@ -774,7 +774,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     }
                 }
 
-                builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                builderSingle.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

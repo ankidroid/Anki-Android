@@ -71,6 +71,7 @@
     <string name="undo_action_delete">delete note</string>
     <string name="undo_action_delete_multi">delete notes</string>
     <string name="undo_action_change_deck_multi">change decks</string>
+    <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">Unbury</string>
     <string name="rename_deck">Rename deck</string>
     <string name="menu_add">Add</string>
