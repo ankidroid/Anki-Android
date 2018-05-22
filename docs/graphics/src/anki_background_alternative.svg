@@ -5,9 +5,7 @@
 <style type="text/css">
 	.st0{fill:#787878;}
 	.st1{fill:#323232;}
-	.st2{opacity:0.3;}
-	.st3{fill:#FFFFFF;}
-	.st4{opacity:0.2;}
+	.st2{fill:#FFFFFF;}
 </style>
 <rect y="185" class="st0" width="384.3" height="199"/>
 <g>
@@ -18,37 +16,30 @@
 		<rect y="-0.4" class="st1" width="384.3" height="186.3"/>
 	</g>
 </g>
-<g id="bottom_text" class="st2">
-	
-		<image style="overflow:visible;opacity:0.75;enable-background:new    ;" width="79" height="87" xlink:href="74DC40A6.png"  transform="matrix(1 0 0 1 113 185)">
-	</image>
+<rect x="131.8" y="200.2" class="st2" width="40" height="6"/>
+<rect x="131.8" y="222.9" class="st2" width="20" height="6"/>
+<rect x="131.3" y="244.4" class="st2" width="42" height="6"/>
+<g>
 	<g>
-		<g>
-			<g>
-				<rect x="131.8" y="200.2" class="st3" width="40" height="6"/>
-				<rect x="131.8" y="222.9" class="st3" width="20" height="6"/>
-				<rect x="131.3" y="244.4" class="st3" width="42" height="6"/>
-			</g>
-			<g>
-				<rect x="131.8" y="200.2" width="40" height="6"/>
-				<rect x="131.8" y="222.9" width="20" height="6"/>
-				<rect x="131.3" y="244.4" width="42" height="6"/>
-			</g>
-		</g>
+		<rect x="131.8" y="200.2" class="st1" width="40" height="6"/>
+	</g>
+	<g>
+		<rect x="131.8" y="222.9" class="st1" width="20" height="6"/>
+	</g>
+	<g>
+		<rect x="131.3" y="244.4" class="st1" width="42" height="6"/>
 	</g>
 </g>
-<g id="top_text" class="st4">
-	<g>
-		<rect x="131.8" y="123.6" width="69.5" height="6"/>
-		<rect x="131.8" y="144.3" width="22.4" height="6"/>
-		<rect x="132.3" y="165.8" width="36.8" height="6"/>
-		<rect x="161.9" y="144.3" width="22.4" height="6"/>
-	</g>
-	<g>
-		<rect x="131.8" y="123.6" class="st3" width="69.5" height="6"/>
-		<rect x="131.8" y="144.3" class="st3" width="22.4" height="6"/>
-		<rect x="132.3" y="165.8" class="st3" width="36.8" height="6"/>
-		<rect x="161.9" y="144.3" class="st3" width="22.4" height="6"/>
-	</g>
+<g>
+	<rect x="131.8" y="123.6" width="69.5" height="6"/>
+	<rect x="131.8" y="144.3" width="22.4" height="6"/>
+	<rect x="132.3" y="165.8" width="36.8" height="6"/>
+	<rect x="161.9" y="144.3" width="22.4" height="6"/>
+</g>
+<g>
+	<rect x="131.8" y="123.6" class="st0" width="69.5" height="6"/>
+	<rect x="131.8" y="144.3" class="st0" width="22.4" height="6"/>
+	<rect x="132.3" y="165.8" class="st0" width="36.8" height="6"/>
+	<rect x="161.9" y="144.3" class="st0" width="22.4" height="6"/>
 </g>
 </svg>
