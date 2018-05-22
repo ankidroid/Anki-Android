@@ -665,47 +665,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return;
 
         if (!mCheckedCardPositions.isEmpty()) {
-            // mark/suspend toggle behaviour: find out which action will happen
-            boolean hasUnsuspended = false;
-            boolean hasUnmarked = false;
-            int count = 0;
-            boolean performanceBreak = false;
-            for (int cardPosition : mCheckedCardPositions) {
-                Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
-                hasUnsuspended = hasUnsuspended || card.getQueue() != -1;
-                hasUnmarked = hasUnmarked || !card.note().hasTag("marked");
-                if (hasUnsuspended && hasUnmarked)
-                    break;
-                if (count++ > 20) {
-                    // evaluating too many cards/notes could cause too big of a delay
-                    performanceBreak = true;
-                    break;
-                }
-            }
-
-            if (performanceBreak) {
-                // just display a more general string
-                mActionBarMenu.findItem(R.id.action_suspend_card).setTitle(getString(R.string.card_browser_toggle_suspend_card));
-                mActionBarMenu.findItem(R.id.action_suspend_card).setIcon(R.drawable.ic_action_suspend);
-                mActionBarMenu.findItem(R.id.action_mark_card).setTitle(getString(R.string.card_browser_toggle_mark_card));
-                mActionBarMenu.findItem(R.id.action_mark_card).setIcon(R.drawable.ic_star_outline_white_24dp);
-            } else {
-                if (hasUnsuspended) {
-                    mActionBarMenu.findItem(R.id.action_suspend_card).setTitle(getString(R.string.card_browser_suspend_card));
-                    mActionBarMenu.findItem(R.id.action_suspend_card).setIcon(R.drawable.ic_action_suspend);
-                } else {
-                    mActionBarMenu.findItem(R.id.action_suspend_card).setTitle(getString(R.string.card_browser_unsuspend_card));
-                    mActionBarMenu.findItem(R.id.action_suspend_card).setIcon(R.drawable.ic_action_unsuspend);
-                }
-
-                if (hasUnmarked) {
-                    mActionBarMenu.findItem(R.id.action_mark_card).setTitle(getString(R.string.card_browser_mark_card));
-                    mActionBarMenu.findItem(R.id.action_mark_card).setIcon(R.drawable.ic_star_outline_white_24dp);
-                } else {
-                    mActionBarMenu.findItem(R.id.action_mark_card).setTitle(getString(R.string.card_browser_unmark_card));
-                    mActionBarMenu.findItem(R.id.action_mark_card).setIcon(R.drawable.ic_star_white_24dp);
-                }
-            }
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHECK_CARD_SELECTION,
+                    mCheckSelectedCardsHandler,
+                    new DeckTask.TaskData(new Object[]{mCheckedCardPositions, getCards()}));
         }
     }
 
@@ -1451,6 +1413,49 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onCancelled() {
             hideProgressBar();
+        }
+    };
+
+    private DeckTask.TaskListener mCheckSelectedCardsHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+            showProgressBar();
+        }
+
+
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            hideProgressBar();
+
+            Object[] resultArr = result.getObjArray();
+            boolean hasUnsuspended = (boolean) resultArr[0];
+            boolean hasUnmarked = (boolean) resultArr[1];
+
+            if (hasUnsuspended) {
+                mActionBarMenu.findItem(R.id.action_suspend_card).setTitle(getString(R.string.card_browser_suspend_card));
+                mActionBarMenu.findItem(R.id.action_suspend_card).setIcon(R.drawable.ic_action_suspend);
+            } else {
+                mActionBarMenu.findItem(R.id.action_suspend_card).setTitle(getString(R.string.card_browser_unsuspend_card));
+                mActionBarMenu.findItem(R.id.action_suspend_card).setIcon(R.drawable.ic_action_unsuspend);
+            }
+
+            if (hasUnmarked) {
+                mActionBarMenu.findItem(R.id.action_mark_card).setTitle(getString(R.string.card_browser_mark_card));
+                mActionBarMenu.findItem(R.id.action_mark_card).setIcon(R.drawable.ic_star_outline_white_24dp);
+            } else {
+                mActionBarMenu.findItem(R.id.action_mark_card).setTitle(getString(R.string.card_browser_unmark_card));
+                mActionBarMenu.findItem(R.id.action_mark_card).setIcon(R.drawable.ic_star_white_24dp);
+            }
+        }
+
+
+        @Override
+        public void onCancelled() {
         }
     };
 

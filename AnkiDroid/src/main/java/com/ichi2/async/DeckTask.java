@@ -103,6 +103,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_CHANGE_SORT_FIELD = 46;
     public static final int TASK_TYPE_SAVE_MODEL = 47;
     public static final int TASK_TYPE_FIND_EMPTY_CARDS = 48;
+    public static final int TASK_TYPE_CHECK_CARD_SELECTION = 49;
 
     /**
      * A reference to the application context to use to fetch the current Collection object.
@@ -341,6 +342,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 return doInBackgroundSaveModel(params);
             case TASK_TYPE_FIND_EMPTY_CARDS:
                 return doInBackGroundFindEmptyCards(params);
+            case TASK_TYPE_CHECK_CARD_SELECTION:
+                return doInBackgroundCheckCardSelection(params);
 
             default:
                 Timber.e("unknown task type: %d", mType);
@@ -1396,6 +1399,29 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         List<Long> cids = col.emptyCids();
         return new TaskData(new Object[] { cids});
+    }
+
+    /**
+     * Goes through selected cards and checks selected and marked attribute
+     * @return If there are unselected cards, if there are unmarked cards
+     */
+    public TaskData doInBackgroundCheckCardSelection(TaskData... params) {
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Object[] objects = params[0].getObjArray();
+        Set<Integer> checkedCardPositions = (Set<Integer>) objects[0];
+        List<Map<String, String>> cards = (List<Map<String, String>>) objects[1];
+
+        boolean hasUnsuspended = false;
+        boolean hasUnmarked = false;
+        for (int cardPosition : checkedCardPositions) {
+            Card card = col.getCard(Long.parseLong(cards.get(cardPosition).get("id")));
+            hasUnsuspended = hasUnsuspended || card.getQueue() != -1;
+            hasUnmarked = hasUnmarked || !card.note().hasTag("marked");
+            if (hasUnsuspended && hasUnmarked)
+                break;
+        }
+
+        return new TaskData(new Object[] { hasUnsuspended, hasUnmarked});
     }
 
     /**
