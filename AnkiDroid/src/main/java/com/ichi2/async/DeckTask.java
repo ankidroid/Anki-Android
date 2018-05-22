@@ -26,6 +26,7 @@ import com.google.gson.stream.JsonReader;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CardBrowser;
+import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -47,6 +48,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -659,20 +661,10 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                     }
 
                     case SUSPEND_NOTE: {// not used in card browser yet
-                        // collect undo information
-                        Set<Long> noteIds = new HashSet<>();
-                        List<Card> allCards = new ArrayList<>();
-                        // collect undo information
-                        for (Card card : cards) {
-                            Note note = card.note();
-                            if (noteIds.add(note.getId())) {
-                                // if we already saw this note, we don't need to do this
-                                List<Card> allCs = note.cards();
-                                col.markUndo(type, new Object[]{note, allCs, card.getId()});
-                                allCards.addAll(allCs);
-                            }
-                        }
+                        // TODO collect undo information
 
+                        List<Note> notes = CardUtils.getUniqueNotes(Arrays.asList(cards));
+                        List<Card> allCards = CardUtils.getAllCards(notes);
                         // suspend
                         long[] cids = new long[allCards.size()];
                         for (int i = 0; i < allCards.size(); i++) {
@@ -687,23 +679,16 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                     case DELETE_NOTE_MULTI: {
                         // list of all ids to pass to remNotes method.
                         // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
-                        Map<Long, Note> notes = new HashMap<>();
-                        List<Card> allCards = new ArrayList<>();
-                        // collect undo information
-                        for (Card card : cards) {
-                            Note note = card.note();
-                            notes.put(note.getId(), note);
-                            allCards.addAll(note.cards());
-                        }
+                        List<Note> notes = CardUtils.getUniqueNotes(Arrays.asList(cards));
+                        List<Card> allCards = CardUtils.getAllCards(notes);
                         // delete note
                         long[] uniqueNoteIds = new long[notes.size()];
                         Note[] notesArr = new Note[notes.size()];
                         // unboxing...
-                        int pos = 0;
-                        for (Long id : notes.keySet()) {
-                            uniqueNoteIds[pos] = id;
-                            notesArr[pos] = notes.get(id);
-                            pos++;
+                        for (int i = 0; i < notes.size(); i++) {
+                            Note note = notes.get(i);
+                            uniqueNoteIds[i] = note.getId();
+                            notesArr[i] = note;
                         }
 
                         col.markUndo(type, new Object[] {notesArr, allCards});

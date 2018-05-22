@@ -291,32 +291,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private void onMark(List<Card> cards) {
-        Set<Long> noteIds = new HashSet<>();    // only used to check for duplicates
-        List<Note> notes = new ArrayList<>();
-        boolean hasUnmarked = false;
-        for (Card card : cards) {
-            if (noteIds.add(card.getNid())){
-                Note n = card.note();
-                notes.add(n);
-                if (!n.hasTag("marked"))
-                    hasUnmarked = true;
-            }
-        }
-
-        // mark all as marked iff there is at least one unmarked
-        if (hasUnmarked) {
-            for (Note note : notes) {
-                if (!note.hasTag("marked")) {
-                    note.addTag("marked");
-                    note.flush();
-                }
-            }
-        } else {
-            for (Note note : notes) {
-                note.delTag("marked");
-                note.flush();
-            }
-        }
+        List<Note> notes = CardUtils.getUniqueNotes(cards);
+        boolean hasUnmarked = CardUtils.hasUnmarked(notes);
+        CardUtils.markAll(notes, hasUnmarked);
     }
 
     @Override
@@ -1060,41 +1037,35 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * @param updatedCardTags Mapping note id -> updated tags
      */
     private void updateCardsInList(List<Card> cards, Map<Long, String> updatedCardTags) {
-        Set<Long> noteIds = new HashSet<>();    // only used to check for duplicates
-        // collect undo information
-        for (Card card : cards) {
-            Note note = card.note();
-            if (noteIds.add(note.getId())) {
-                int pos;
-                for (Card c : note.cards()) {
-                    // get position in the mCards search results HashMap
-                    pos = getPosition(getCards(), c.getId());
-                    if (pos < 0 || pos >= getCards().size()) {
-                        continue;
-                    }
-                    // update tags
-                    if (updatedCardTags != null) {
-                        getCards().get(pos).put("tags", updatedCardTags.get(note.getId()));
-                    }
-                    // update sfld
-                    String sfld = note.getSFld();
-                    getCards().get(pos).put("sfld", sfld);
-                    // update Q & A etc
-                    updateSearchItemQA(getCards().get(pos), c);
-                    // update deck
-                    String deckName;
-                    try {
-                        // TODO why card.getDid instead of c.getDid() before? Cards of the same note can be in different decks.
-                        deckName = getCol().getDecks().get(c.getDid()).getString("name");
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                    getCards().get(pos).put("deck", deckName);
-                    // update flags (marked / suspended / etc) which determine color
-                    String flags = Integer.toString((c.getQueue() == -1 ? 1 : 0) + (note.hasTag("marked") ? 2 : 0));
-                    getCards().get(pos).put("flags", flags);
-                }
+        List<Card> allCards = CardUtils.getAllCards(CardUtils.getUniqueNotes(cards));
+        for (Card c : allCards) {
+            Note note = c.note();
+            // get position in the mCards search results HashMap
+            int pos = getPosition(getCards(), c.getId());
+            if (pos < 0 || pos >= getCards().size()) {
+                continue;
             }
+            // update tags
+            if (updatedCardTags != null) {
+                getCards().get(pos).put("tags", updatedCardTags.get(c.getNid()));
+            }
+            // update sfld
+            String sfld = note.getSFld();
+            getCards().get(pos).put("sfld", sfld);
+            // update Q & A etc
+            updateSearchItemQA(getCards().get(pos), c);
+            // update deck
+            String deckName;
+            try {
+                // TODO why card.getDid instead of c.getDid() before? Cards of the same note can be in different decks.
+                deckName = getCol().getDecks().get(c.getDid()).getString("name");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            getCards().get(pos).put("deck", deckName);
+            // update flags (marked / suspended / etc) which determine color
+            String flags = Integer.toString((c.getQueue() == -1 ? 1 : 0) + (note.hasTag("marked") ? 2 : 0));
+            getCards().get(pos).put("flags", flags);
         }
 
         updateList();
