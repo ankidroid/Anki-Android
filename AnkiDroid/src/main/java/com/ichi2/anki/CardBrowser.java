@@ -615,10 +615,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
 
-            if (mCheckedCardPositions.size() > 1) {
-                mActionBarMenu.findItem(R.id.action_preview).setVisible(false);
-            }
-
             updateMultiselectMenu();
         }
 
@@ -640,6 +636,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void updateMultiselectMenu() {
         if (mActionBarMenu == null || mActionBarMenu.findItem(R.id.action_suspend_card) == null)
             return;
+
+        // only show preview option when exactly one card is selected
+        mActionBarMenu.findItem(R.id.action_preview).setVisible(mCheckedCardPositions.size() == 1);
 
         if (!mCheckedCardPositions.isEmpty()) {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHECK_CARD_SELECTION,
@@ -1661,10 +1660,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 endMultiSelectMode();
             } else {
                 mActionBarTitle.setText(Integer.toString(mCheckedCardPositions.size()));
-                // make sure "preview" option only shows with 2+ cards checked
-                if (mCheckedCardPositions.size() < 3) {
-                    supportInvalidateOptionsMenu();
-                }
             }
         }
     }
