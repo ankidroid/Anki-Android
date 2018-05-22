@@ -296,6 +296,38 @@ public class CardBrowser extends NavigationDrawerActivity implements
         CardUtils.markAll(notes, hasUnmarked);
     }
 
+    private void changeDeck(int selectedDeck) {
+        List<Card> cards = new ArrayList<>();
+        try {
+            mNewDid = mDropDownDecks.get(selectedDeck).getLong("id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        for (int cardPosition : mCheckedCardPositions) {
+            final Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
+            cards.add(card);
+        }
+
+        List<Card> changedCards = new ArrayList<>();
+        for (Card card : cards) {
+            if (card.getDid() != mNewDid) {
+                changedCards.add(card);
+                mReloadRequired = true;
+            }
+        }
+
+        if (changedCards.isEmpty()) {
+            endMultiSelectMode();
+            mCardsAdapter.notifyDataSetChanged();
+            return;
+        }
+
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mChangeMultiHandler,
+                new DeckTask.TaskData(new Object[]{changedCards.toArray(new Card[changedCards.size()]), Collection.DismissType.CHANGE_DECK_MULTI, mNewDid}));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -784,35 +816,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        try {
-                            mNewDid = mDropDownDecks.get(which).getLong("id");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            return;
-                        }
-
-                        for (int cardPosition : mCheckedCardPositions) {
-                            final Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
-                            cards.add(card);
-                        }
-
-                        List<Card> changedCards = new ArrayList<>();
-                        for (Card card : cards) {
-                            if (card.getDid() != mNewDid) {
-                                changedCards.add(card);
-                                mReloadRequired = true;
-                            }
-                        }
-
-                        if (changedCards.isEmpty()) {
-                            endMultiSelectMode();
-                            mCardsAdapter.notifyDataSetChanged();
-                            return;
-                        }
-
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mChangeMultiHandler,
-                                new DeckTask.TaskData(new Object[]{changedCards.toArray(new Card[changedCards.size()]), Collection.DismissType.CHANGE_DECK_MULTI, mNewDid}));
+                        changeDeck(which);
                     }
                 });
                 builderSingle.show();
