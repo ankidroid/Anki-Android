@@ -689,19 +689,21 @@ public class CardBrowser extends NavigationDrawerActivity implements
             case android.R.id.home:
                 endMultiSelectMode();
                 return true;
-            case R.id.action_add_card_from_card_browser:
+            case R.id.action_add_card_from_card_browser: {
                 Intent intent = new Intent(CardBrowser.this, NoteEditor.class);
                 intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD);
                 startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
                 return true;
+            }
 
-            case R.id.action_save_search:
+            case R.id.action_save_search: {
                 String searchTerms = mSearchView.getQuery().toString();
                 showDialogFragment(CardBrowserMySearchesDialog.newInstance(null, mMySearchesDialogListener,
                         searchTerms, CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE));
                 return true;
+            }
 
-            case R.id.action_list_my_searches:
+            case R.id.action_list_my_searches: {
                 JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
                 HashMap<String, String> savedFilters = new HashMap<>();
                 if (savedFiltersObj != null) {
@@ -714,6 +716,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 showDialogFragment(CardBrowserMySearchesDialog.newInstance(savedFilters, mMySearchesDialogListener,
                         "", CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_LIST));
                 return true;
+            }
+
             case R.id.action_sort_by_size:
                 showDialogFragment(CardBrowserOrderDialog
                         .newInstance(mOrder, mOrderAsc, mOrderDialogListener));
@@ -781,7 +785,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
                 return true;
 
-            case R.id.action_change_deck:
+            case R.id.action_change_deck: {
                 AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
                 builderSingle.setTitle("Move all to deck");
 
@@ -838,8 +842,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 builderSingle.show();
 
                 return true;
+            }
 
-            case R.id.action_preview:
+            case R.id.action_preview: {
                 int cardPosition = mCheckedCardPositions.iterator().next();
                 Intent previewer = new Intent(CardBrowser.this, Previewer.class);
                 previewer.putExtra("index", cardPosition);
@@ -847,6 +852,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 startActivityWithoutAnimation(previewer);
 
                 return true;
+            }
 
             default:
                 return super.onOptionsItemSelected(item);

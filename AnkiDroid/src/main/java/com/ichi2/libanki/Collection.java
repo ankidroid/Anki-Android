@@ -1228,7 +1228,7 @@ public class Collection {
     public long undo() {
     	Object[] data = mUndo.removeLast();
     	switch ((DismissType) data[0]) {
-            case REVIEW:
+            case REVIEW: {
                 Card c = (Card) data[1];
                 // remove leech tag if it didn't have it before
                 Boolean wasLeech = (Boolean) data[2];
@@ -1250,6 +1250,7 @@ public class Collection {
                 mSched._updateStats(c, type, -1);
                 mSched.setReps(mSched.getReps() - 1);
                 return c.getId();
+            }
 
             case BURY_NOTE:
                 for (Card cc : (ArrayList<Card>) data[2]) {
@@ -1257,10 +1258,11 @@ public class Collection {
                 }
                 return (Long) data[3];
 
-            case SUSPEND_CARD:
+            case SUSPEND_CARD: {
                 Card suspendedCard = (Card) data[1];
                 suspendedCard.flush(false);
                 return suspendedCard.getId();
+            }
 
             case SUSPEND_NOTE:
                 for (Card ccc : (ArrayList<Card>) data[1]) {
@@ -1268,35 +1270,37 @@ public class Collection {
                 }
                 return (Long) data[2];
 
-            case DELETE_NOTE:
+            case DELETE_NOTE: {
                 ArrayList<Long> ids = new ArrayList<>();
-                Note note2 = (Note) data[1];
-                note2.flush(note2.getMod(), false);
-                ids.add(note2.getId());
-                for (Card c4 : (ArrayList<Card>) data[2]) {
-                    c4.flush(false);
-                    ids.add(c4.getId());
+                Note note = (Note) data[1];
+                note.flush(note.getMod(), false);
+                ids.add(note.getId());
+                for (Card c : (ArrayList<Card>) data[2]) {
+                    c.flush(false);
+                    ids.add(c.getId());
                 }
                 mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
                 return (Long) data[3];
+            }
 
-            case DELETE_NOTE_MULTI:
+            case DELETE_NOTE_MULTI: {
                 // undo all of these at once instead of one-by-one
-                ids = new ArrayList<>();
+                ArrayList<Long> ids = new ArrayList<>();
                 List<Card> allCards = (ArrayList<Card>) data[2];
-                Note[] notes3 = (Note[]) data[1];
-                for (Note n3 : notes3) {
-                    n3.flush(n3.getMod(), false);
-                    ids.add(n3.getId());
+                Note[] notes = (Note[]) data[1];
+                for (Note n : notes) {
+                    n.flush(n.getMod(), false);
+                    ids.add(n.getId());
                 }
-                for (Card c3 : allCards){
-                    c3.flush(false);
-                    ids.add(c3.getId());
+                for (Card c : allCards) {
+                    c.flush(false);
+                    ids.add(c.getId());
                 }
                 mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
                 return -1;  // don't fetch new card
+            }
 
-            case CHANGE_DECK_MULTI:
+            case CHANGE_DECK_MULTI: {
                 Card[] cards = (Card[]) data[1];
                 long[] originalDid = (long[]) data[2];
                 // move cards to original deck
@@ -1309,6 +1313,7 @@ public class Collection {
                     card.flush();
                 }
                 return -1;  // don't fetch new card
+            }
 
             case BURY_CARD:
                 for (Card cc : (ArrayList<Card>) data[2]) {

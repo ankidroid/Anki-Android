@@ -586,7 +586,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         }
                         sHadCardQueue = true;
                         break;
-                    case SUSPEND_NOTE:
+                    case SUSPEND_NOTE: {
                         // collect undo information
                         ArrayList<Card> cards = note.cards();
                         long[] cids = new long[cards.size()];
@@ -598,7 +598,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         sched.suspendCards(cids);
                         sHadCardQueue = true;
                         break;
-                    case DELETE_NOTE:
+                    }
+
+                    case DELETE_NOTE: {
                         // collect undo information
                         ArrayList<Card> allCs = note.cards();
                         col.markUndo(type, new Object[] { note, allCs, card.getId() });
@@ -606,6 +608,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         col.remNotes(new long[] { note.getId() });
                         sHadCardQueue = true;
                         break;
+                    }
                 }
                 publishProgress(new TaskData(getCard(col.getSched()), 0));
                 col.getDb().getDatabase().setTransactionSuccessful();
@@ -631,7 +634,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             col.getDb().getDatabase().beginTransaction();
             try {
                 switch (type) {
-                    case SUSPEND_CARD:
+                    case SUSPEND_CARD: {
                         // collect undo information
                         long[] cids = new long[cards.length];
                         boolean hasUnsuspended = false;
@@ -653,8 +656,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
                         sHadCardQueue = true;
                         break;
+                    }
 
-                    case SUSPEND_NOTE:  // not used in card browser yet
+                    case SUSPEND_NOTE: {// not used in card browser yet
                         // collect undo information
                         Set<Long> noteIds = new HashSet<>();
                         List<Card> allCards = new ArrayList<>();
@@ -670,7 +674,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         }
 
                         // suspend
-                        cids = new long[allCards.size()];
+                        long[] cids = new long[allCards.size()];
                         for (int i = 0; i < allCards.size(); i++) {
                             cids[i] = allCards.get(i).getId();
                         }
@@ -678,17 +682,18 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
                         sHadCardQueue = true;
                         break;
+                    }
 
-                    case DELETE_NOTE_MULTI:
+                    case DELETE_NOTE_MULTI: {
                         // list of all ids to pass to remNotes method.
                         // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
                         Map<Long, Note> notes = new HashMap<>();
-                        List<Card> allCards2 = new ArrayList<>();
+                        List<Card> allCards = new ArrayList<>();
                         // collect undo information
                         for (Card card : cards) {
                             Note note = card.note();
                             notes.put(note.getId(), note);
-                            allCards2.addAll(note.cards());
+                            allCards.addAll(note.cards());
                         }
                         // delete note
                         long[] uniqueNoteIds = new long[notes.size()];
@@ -701,12 +706,14 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                             pos++;
                         }
 
-                        col.markUndo(type, new Object[] {notesArr, allCards2});
+                        col.markUndo(type, new Object[] {notesArr, allCards});
 
                         col.remNotes(uniqueNoteIds);
                         sHadCardQueue = true;
                         break;
-                    case CHANGE_DECK_MULTI:
+                    }
+
+                    case CHANGE_DECK_MULTI: {
                         long newDid = (long) data[2];
                         long[] changedCardIds = new long[cards.length];
                         for (int i = 0; i < cards.length; i++) {
@@ -733,6 +740,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         col.markUndo(type, new Object[] {cards, originalDids});
 
                         break;
+                    }
                 }
                 publishProgress(new TaskData(getCard(col.getSched()), 0));
                 col.getDb().getDatabase().setTransactionSuccessful();
