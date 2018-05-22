@@ -54,3 +54,4 @@ tools/crowdin_key.txt
 .idea/vcs.xml
 AnkiDroid/debug/output.json
 AnkiDroid/release/output.json
+gradle.properties
