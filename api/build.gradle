@@ -35,7 +35,6 @@ def localReleaseDest = "${buildDir}/release/${version}"
 task androidJavadocs(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    options.addBooleanOption('html5', true)
 }
 
 task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
