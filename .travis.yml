@@ -26,10 +26,11 @@ licenses:
 jdk:
   - oraclejdk8
 
-# Emulator Management: Create, Start and Wait
+# Emulator Management: Create, Start and prep our tests while we Wait
 before_script:
   - echo no | android create avd --force -n test -t android-16 --sdcard 10M --abi armeabi-v7a
   - emulator -avd test -no-audio -no-window &
+  - ./gradlew assembleDebug assembleDebugAndroidTest
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
 
@@ -41,7 +42,7 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
-script: ./gradlew :AnkiDroid:connectedCheck
+script: ./gradlew test :AnkiDroid:connectedCheck
 
 notifications:
   email:
