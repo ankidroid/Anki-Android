@@ -6,12 +6,14 @@ env:
 
 android:
   components:
+    # New Gradle requires API 27 pieces, so we have to update the SDK tools first
     - tools
     - platform-tools
+    # Install API 27 build tools to conform with new gradle
     - build-tools-27.0.3
     # Android API-16 is required to use the emulator with API 16
     - android-16
-    # Our current build target
+    # Our current compileSdkVersion APIs are required
     - android-26
     - extra-android-m2repository
     # Android Emulator API 16 benchmarks as fastest:
@@ -30,7 +32,9 @@ jdk:
 before_script:
   - echo no | android create avd --force -n test -t android-16 --sdcard 10M --abi armeabi-v7a
   - emulator -avd test -no-audio -no-window &
-  - ./gradlew assembleDebug assembleDebugAndroidTest
+  # Run local unit tests and warm up the connectCheck compile cache while emulator starts
+  - ./gradlew test :AnkiDroid:assembleDebug :AnkiDroid:assembleDebugAndroidTest
+  # Now make the sure the emulator is fully started before proceeding
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
 
