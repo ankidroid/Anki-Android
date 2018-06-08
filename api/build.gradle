@@ -35,6 +35,12 @@ def localReleaseDest = "${buildDir}/release/${version}"
 task androidJavadocs(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+
+    // Java 10 wants you to choose between html4 and html5. We are html5 clean and should use it.
+    // But in JDK < 10 the option isn't there and it breaks the build. This handles both.
+    if(JavaVersion.current() >= JavaVersion.VERSION_1_10){
+        options.addBooleanOption('html5', true)
+    }
 }
 
 task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
