@@ -537,10 +537,10 @@ public class NoteEditor extends AnkiActivity {
             Timber.i("NoteEditor:: Edit note activity successfully started with card id %d", mCurrentEditedCard.getId());
         }
 
-        //set focus to FieldEditText 'front' on startup like Anki desktop
-        if (mEditFields != null) {
-            FieldEditText front = mEditFields.getFirst();
-            front.requestFocus();
+        //set focus to FieldEditText 'first' on startup like Anki desktop
+        if (mEditFields != null && !mEditFields.isEmpty()) {
+            FieldEditText first = mEditFields.getFirst();
+            first.requestFocus();
         }
     }
 
