@@ -572,16 +572,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         mActionBarMenu = menu;
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (!mInMultiSelectMode) {
             // restore drawer click listener and icon
-            getDrawerToggle().setDrawerIndicatorEnabled(true);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((DrawerLayout) findViewById(R.id.drawer_layout)).openDrawer(Gravity.LEFT);
-                }
-            });
+            restoreDrawerIcon();
             getMenuInflater().inflate(R.menu.card_browser, menu);
             mSaveSearchItem = menu.findItem(R.id.action_save_search);
             mSaveSearchItem.setVisible(false); //the searchview's query always starts empty.
@@ -633,20 +626,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         } else {
             // multi-select mode
             getMenuInflater().inflate(R.menu.card_browser_multiselect, menu);
-
-            // hide hamburger icon
-            getDrawerToggle().setDrawerIndicatorEnabled(false);
-            // change the action when clicking the home button
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    endMultiSelectMode();
-                }
-            });
-            // display the home button as a back arrow
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
-
+            showBackIcon();
             updateMultiselectMenu();
         }
 
@@ -663,6 +643,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    // (template method overridden)
+    protected void onNavigationPressed() {
+        if (mInMultiSelectMode)
+            endMultiSelectMode();
+        else
+            super.onNavigationPressed();
     }
 
     private void updateMultiselectMenu() {

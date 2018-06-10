@@ -84,11 +84,7 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mNavButtonGoesBack) {
-                        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-                    } else {
-                        mDrawerLayout.openDrawer(Gravity.LEFT);
-                    }
+                    onNavigationPressed();
                 }
             });
         }
@@ -258,6 +254,18 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
         }
     }
 
+    /**
+     * Called, when navigation button of the action bar is pressed.
+     * Design pattern: template method. Subclasses can override this to define their own behaviour.
+     */
+    protected void onNavigationPressed() {
+        if (mNavButtonGoesBack) {
+            finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+        } else {
+            mDrawerLayout.openDrawer(Gravity.LEFT);
+        }
+    }
+
     @Override
     public boolean onNavigationItemSelected(final MenuItem item) {
         // Don't do anything if user selects already selected position
@@ -329,6 +337,13 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         mNavButtonGoesBack = true;
+    }
+
+    protected void restoreDrawerIcon() {
+        if (mDrawerToggle != null) {
+            getDrawerToggle().setDrawerIndicatorEnabled(true);
+        }
+        mNavButtonGoesBack = false;
     }
 
     public boolean isDrawerOpen() {
