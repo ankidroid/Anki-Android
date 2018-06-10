@@ -777,7 +777,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI,
                         mSuspendCardHandler,
-                        new DeckTask.TaskData(new Object[]{cards.toArray(new Card[cards.size()]), Collection.DismissType.SUSPEND_CARD}));
+                        new DeckTask.TaskData(new Object[]{cards.toArray(new Card[cards.size()]), Collection.DismissType.SUSPEND_CARD_MULTI}));
 
                 return true;
 

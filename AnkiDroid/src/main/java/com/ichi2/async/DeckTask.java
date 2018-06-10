@@ -636,16 +636,20 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             col.getDb().getDatabase().beginTransaction();
             try {
                 switch (type) {
-                    case SUSPEND_CARD: {
+                    case SUSPEND_CARD_MULTI: {
                         // collect undo information
                         long[] cids = new long[cards.length];
+                        boolean[] originalSuspended = new boolean[cards.length];
                         boolean hasUnsuspended = false;
                         for (int i = 0; i < cards.length; i++) {
                             Card card = cards[i];
-                            col.markUndo(type, new Object[]{card});
                             cids[i] = card.getId();
-                            if (card.getQueue() != -1)
+                            if (card.getQueue() != -1) {
                                 hasUnsuspended = true;
+                                originalSuspended[i] = false;
+                            } else {
+                                originalSuspended[i] = true;
+                            }
                         }
 
                         // if at least one card is unsuspended -> suspend all
@@ -655,6 +659,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         } else {
                             sched.unsuspendCards(cids);
                         }
+
+                        // mark undo for all at once
+                        col.markUndo(type, new Object[] {cards, originalSuspended});
 
                         sHadCardQueue = true;
                         break;

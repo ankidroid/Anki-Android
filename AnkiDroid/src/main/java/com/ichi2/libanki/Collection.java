@@ -114,6 +114,7 @@ public class Collection {
         BURY_CARD(R.string.undo_action_bury_card),
         BURY_NOTE(R.string.undo_action_bury_note),
         SUSPEND_CARD(R.string.undo_action_suspend_card),
+        SUSPEND_CARD_MULTI(R.string.undo_action_suspend_card),
         SUSPEND_NOTE(R.string.undo_action_suspend_note),
         DELETE_NOTE(R.string.undo_action_delete),
         DELETE_NOTE_MULTI(R.string.undo_action_delete_multi),
@@ -305,7 +306,7 @@ public class Collection {
 //        _markOp(name);
         mLastSave = Utils.now();
     }
-    
+
 
     /** make sure we don't accidentally bump mod time */
     public void lock() {
@@ -1264,6 +1265,33 @@ public class Collection {
                 return suspendedCard.getId();
             }
 
+            case SUSPEND_CARD_MULTI: {
+                Card[] cards = (Card[]) data[1];
+                boolean[] originalSuspended = (boolean[]) data[2];
+                List<Long> toSuspendIds = new ArrayList<>();
+                List<Long> toUnsuspendIds = new ArrayList<>();
+                for (int i = 0; i < cards.length; i++) {
+                    Card card = cards[i];
+                    if (originalSuspended[i])
+                        toSuspendIds.add(card.getId());
+                    else
+                        toUnsuspendIds.add(card.getId());
+                }
+
+                // unboxing
+                long[] toSuspendIdsArray = new long[toSuspendIds.size()];
+                long[] toUnsuspendIdsArray = new long[toUnsuspendIds.size()];
+                for (int i = 0; i < toSuspendIds.size(); i++)
+                    toSuspendIdsArray[i] = toSuspendIds.get(i);
+                for (int i = 0; i < toUnsuspendIds.size(); i++)
+                    toUnsuspendIdsArray[i] = toUnsuspendIds.get(i);
+
+                getSched().suspendCards(toSuspendIdsArray);
+                getSched().unsuspendCards(toUnsuspendIdsArray);
+
+                return -1;  // don't fetch new card
+            }
+
             case SUSPEND_NOTE:
                 for (Card ccc : (ArrayList<Card>) data[1]) {
                     ccc.flush(false);
@@ -1327,35 +1355,38 @@ public class Collection {
 
 
     public void markUndo(DismissType type, Object[] o) {
-    	switch(type) {
-    	case REVIEW:
-    		mUndo.add(new Object[]{type, ((Card)o[0]).clone(), o[1]});
-    		break;
-        case BURY_CARD:
-            mUndo.add(new Object[]{type, o[0], o[1], o[2]});
-            break;
-        case BURY_NOTE:
-            mUndo.add(new Object[]{type, o[0], o[1], o[2]});
-            break;
-        case SUSPEND_CARD:
-            mUndo.add(new Object[]{type, ((Card)o[0]).clone()});
-            break;
-        case SUSPEND_NOTE:
-            mUndo.add(new Object[]{type, o[0], o[1]});
-            break;
-    	case DELETE_NOTE:
-    		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
-    		break;
-        case DELETE_NOTE_MULTI:
-            mUndo.add(new Object[]{type, o[0], o[1]});
-            break;
-        case CHANGE_DECK_MULTI:
-            mUndo.add(new Object[]{type, o[0], o[1]});
-            break;
+        switch (type) {
+            case REVIEW:
+                mUndo.add(new Object[]{type, ((Card) o[0]).clone(), o[1]});
+                break;
+            case BURY_CARD:
+                mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+                break;
+            case BURY_NOTE:
+                mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+                break;
+            case SUSPEND_CARD:
+                mUndo.add(new Object[]{type, ((Card) o[0]).clone()});
+                break;
+            case SUSPEND_CARD_MULTI:
+                mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
+            case SUSPEND_NOTE:
+                mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
+            case DELETE_NOTE:
+                mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+                break;
+            case DELETE_NOTE_MULTI:
+                mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
+            case CHANGE_DECK_MULTI:
+                mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
         }
-    	while (mUndo.size() > UNDO_SIZE_MAX) {
-    		mUndo.removeFirst();
-    	}
+        while (mUndo.size() > UNDO_SIZE_MAX) {
+            mUndo.removeFirst();
+        }
     }
 
 
