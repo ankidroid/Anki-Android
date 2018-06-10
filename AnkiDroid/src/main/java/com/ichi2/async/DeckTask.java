@@ -52,7 +52,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -664,6 +663,26 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         col.markUndo(type, new Object[] {cards, originalSuspended});
 
                         sHadCardQueue = true;
+                        break;
+                    }
+
+                    case MARK_NOTE_MULTI: {
+                        List<Note> notes = CardUtils.getUniqueNotes(Arrays.asList(cards));
+                        // collect undo information
+                        List<Note> originalMarked = new ArrayList<>();
+                        List<Note> originalUnmarked = new ArrayList<>();
+
+                        for (Note n : notes) {
+                            if (n.hasTag("marked"))
+                                originalMarked.add(n);
+                            else
+                                originalUnmarked.add(n);
+                        }
+
+                        CardUtils.markAll(notes, !originalUnmarked.isEmpty());
+
+                        // mark undo for all at once
+                        col.markUndo(type, new Object[] {originalMarked, originalUnmarked});
                         break;
                     }
 

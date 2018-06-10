@@ -289,12 +289,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         searchCards();
     }
 
-    private void onMark(List<Card> cards) {
-        List<Note> notes = CardUtils.getUniqueNotes(cards);
-        boolean hasUnmarked = CardUtils.hasUnmarked(notes);
-        CardUtils.markAll(notes, hasUnmarked);
-    }
-
     private void changeDeck(int selectedDeck) {
         List<Card> cards = new ArrayList<>();
         try {
@@ -762,12 +756,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
                     cards.add(card);
                 }
-                onMark(cards);
-                updateCardsInList(cards, null);
-
-                updateMultiselectMenu();
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI,
+                        mMarkCardHandler,
+                        new DeckTask.TaskData(new Object[]{cards.toArray(new Card[cards.size()]), Collection.DismissType.MARK_NOTE_MULTI}));
 
                 return true;
+
 
             case R.id.action_suspend_card:
                 for (int cardPosition : mCheckedCardPositions) {
@@ -1238,6 +1232,40 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
             mIsSuspendCardFinished = true;
+
+            updateMultiselectMenu();
+
+            hideProgressBar();
+        }
+
+
+        @Override
+        public void onCancelled() {
+        }
+    };
+
+    private DeckTask.TaskListener mMarkCardHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+            showProgressBar();
+        }
+
+
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            if (result.getBoolean()) {
+                List<Card> cards = new ArrayList<>();
+                for (int pos : mCheckedCardPositions)
+                    cards.add(getCol().getCard(Long.parseLong(getCards().get(pos).get("id"))));
+                updateCardsInList(cards, null);
+            } else {
+                closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
+            }
 
             updateMultiselectMenu();
 

@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -118,7 +119,8 @@ public class Collection {
         SUSPEND_NOTE(R.string.undo_action_suspend_note),
         DELETE_NOTE(R.string.undo_action_delete),
         DELETE_NOTE_MULTI(R.string.undo_action_delete_multi),
-        CHANGE_DECK_MULTI(R.string.undo_action_change_deck_multi);
+        CHANGE_DECK_MULTI(R.string.undo_action_change_deck_multi),
+        MARK_NOTE_MULTI(R.string.card_browser_mark_card);
 
         public int undoNameId;
 
@@ -1298,6 +1300,14 @@ public class Collection {
                 }
                 return (Long) data[2];
 
+            case MARK_NOTE_MULTI: {
+                List<Note> originalMarked = (List<Note>) data[1];
+                List<Note> originalUnmarked = (List<Note>) data[2];
+                CardUtils.markAll(originalMarked, true);
+                CardUtils.markAll(originalUnmarked, false);
+                return -1;  // don't fetch new card
+            }
+
             case DELETE_NOTE: {
                 ArrayList<Long> ids = new ArrayList<>();
                 Note note = (Note) data[1];
@@ -1369,6 +1379,9 @@ public class Collection {
                 mUndo.add(new Object[]{type, ((Card) o[0]).clone()});
                 break;
             case SUSPEND_CARD_MULTI:
+                mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
+            case MARK_NOTE_MULTI:
                 mUndo.add(new Object[]{type, o[0], o[1]});
                 break;
             case SUSPEND_NOTE:
