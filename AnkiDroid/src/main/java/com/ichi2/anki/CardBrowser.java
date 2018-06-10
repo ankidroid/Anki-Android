@@ -31,13 +31,10 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -167,6 +164,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private boolean mIsSuspendCardFinished = false;
     private HashSet<Integer> mCheckedCardPositions = new HashSet<>();
     private Menu mActionBarMenu;
+
+    private final int SNACKBAR_DURATION = 8000;
 
 
     /**
@@ -1117,7 +1116,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             // snackbar to offer undo
             String deckName = getCol().getDecks().name(mNewDid);
-            mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, String.format(getString(R.string.changed_deck_message), deckName), false, R.string.undo, new View.OnClickListener() {
+            mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, String.format(getString(R.string.changed_deck_message), deckName), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // undo delete
@@ -1269,13 +1268,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mActionBarTitle.setText(Integer.toString(mCheckedCardPositions.size()));
 
             // snackbar to offer undo
-            mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, R.string.deleted_message, false, R.string.undo, new View.OnClickListener() {
+            mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, getString(R.string.deleted_message), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // undo delete
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
                 }
-            }, mCardsListView);
+            }, mCardsListView, null);
         }
 
 

@@ -61,8 +61,17 @@ public class UIUtils {
         return showSnackbar(activity, mainText, shortLength, actionTextResource, listener, root, callback);
     }
 
-
     public static Snackbar showSnackbar(Activity activity, String mainText, boolean shortLength,
+                                        int actionTextResource, View.OnClickListener listener, View root,
+                                        Snackbar.Callback callback) {
+        return showSnackbar(activity, mainText, shortLength ? -1 : -2, actionTextResource, listener, root, callback);
+    }
+
+    /**
+     *
+     * @param lengthCode if -1, LENGTH_SHORT is used, if -2, LENGTH_LONG, and otherwise that number of milliseconds is used.
+     */
+    public static Snackbar showSnackbar(Activity activity, String mainText, int lengthCode,
                                 int actionTextResource, View.OnClickListener listener, View root,
                                 Snackbar.Callback callback) {
         if (root == null) {
@@ -72,7 +81,14 @@ public class UIUtils {
                 return null;
             }
         }
-        int length = shortLength ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG;
+        int length;
+        switch (lengthCode) {
+            case -1: length = Snackbar.LENGTH_SHORT;
+            break;
+            case -2: length = Snackbar.LENGTH_LONG;
+            break;
+            default: length = lengthCode;
+        }
         Snackbar sb = Snackbar.make(root, mainText, length);
         if (listener != null) {
             sb.setAction(actionTextResource, listener);
