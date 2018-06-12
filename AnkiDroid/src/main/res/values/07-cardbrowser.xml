@@ -72,4 +72,6 @@
         <item>By reviews</item>
         <item>By lapses</item>
     </string-array>
+    <string name="card_browser_select_all">Select all</string>
+    <string name="card_browser_select_none">Select none</string>
 </resources>

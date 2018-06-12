@@ -474,7 +474,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     // click on whole cell triggers select
                     CheckBox cb = (CheckBox) view.findViewById(R.id.card_checkbox);
                     cb.toggle();
-                    mCardsAdapter.onCheck(position, view);
+                    onCheck(position, view);
                 } else {
                     // load up the card selected on the list
                     mPositionInCardsList = position;
@@ -496,7 +496,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 // click on whole cell triggers select
                 CheckBox cb = (CheckBox) view.findViewById(R.id.card_checkbox);
                 cb.toggle();
-                mCardsAdapter.onCheck(position, view);
+                onCheck(position, view);
 
                 mCardsAdapter.notifyDataSetChanged();
                 return true;
@@ -665,6 +665,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     mCheckSelectedCardsHandler,
                     new DeckTask.TaskData(new Object[]{mCheckedCardPositions, getCards()}));
         }
+
+        if (mCheckedCardPositions.size() < getCards().size())
+            mActionBarMenu.findItem(R.id.action_select_all).setTitle(R.string.card_browser_select_all);
+        else
+            mActionBarMenu.findItem(R.id.action_select_all).setTitle(R.string.card_browser_select_none);
     }
 
 
@@ -816,6 +821,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 if (getCol().undoAvailable()) {
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
                 }
+                return true;
+            case R.id.action_select_all:
+                onCheckAll();
                 return true;
 
             case R.id.action_preview: {
@@ -1677,24 +1685,38 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return position;
         }
 
-        private void onCheck(int position, View cell) {
-            CheckBox checkBox = (CheckBox) cell.findViewById(R.id.card_checkbox);
+    }
 
-            if (checkBox.isChecked()) {
-                mCheckedCardPositions.add(position);
-            } else {
-                mCheckedCardPositions.remove(position);
-            }
+    private void onCheck(int position, View cell) {
+        CheckBox checkBox = (CheckBox) cell.findViewById(R.id.card_checkbox);
 
-            updateMultiselectMenu();
-
-            if (mCheckedCardPositions.isEmpty()) {
-                // when 0 are selected: end selection mode
-                endMultiSelectMode();
-            } else {
-                mActionBarTitle.setText(Integer.toString(mCheckedCardPositions.size()));
-            }
+        if (checkBox.isChecked()) {
+            mCheckedCardPositions.add(position);
+        } else {
+            mCheckedCardPositions.remove(position);
         }
+
+        updateMultiselectMenu();
+
+        if (mCheckedCardPositions.isEmpty()) {
+            // when 0 are selected: end selection mode
+            endMultiSelectMode();
+        } else {
+            mActionBarTitle.setText(Integer.toString(mCheckedCardPositions.size()));
+        }
+    }
+
+    private void onCheckAll() {
+        boolean all = mCheckedCardPositions.size() < getCards().size();
+        if (all) {
+            for (int i = 0; i < mCards.size(); i++)
+                mCheckedCardPositions.add(i);
+        } else {
+            mCheckedCardPositions.clear();
+        }
+        updateMultiselectMenu();
+        mActionBarTitle.setText(Integer.toString(mCheckedCardPositions.size()));
+        mCardsAdapter.notifyDataSetChanged();
     }
 
     private List<Map<String, String>> getCards() {

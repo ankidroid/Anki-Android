@@ -28,6 +28,10 @@
         android:title="@string/card_editor_preview_card"/>
 
     <item
+        android:id="@+id/action_select_all"
+        android:title="@string/card_browser_select_all"/>
+
+    <item
         ankidroid:showAsAction="ifRoom"
         android:id="@+id/action_undo"
         android:title="@string/undo"
