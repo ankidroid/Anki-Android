@@ -685,23 +685,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         col.markUndo(type, new Object[] {originalMarked, originalUnmarked});
                         break;
                     }
-
-                    case SUSPEND_NOTE: {// not used in card browser yet
-                        // TODO collect undo information
-
-                        List<Note> notes = CardUtils.getUniqueNotes(Arrays.asList(cards));
-                        List<Card> allCards = CardUtils.getAllCards(notes);
-                        // suspend
-                        long[] cids = new long[allCards.size()];
-                        for (int i = 0; i < allCards.size(); i++) {
-                            cids[i] = allCards.get(i).getId();
-                        }
-                        sched.suspendCards(cids);
-
-                        sHadCardQueue = true;
-                        break;
-                    }
-
+                    
                     case DELETE_NOTE_MULTI: {
                         // list of all ids to pass to remNotes method.
                         // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
