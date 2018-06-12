@@ -115,12 +115,12 @@ public class Collection {
         BURY_CARD(R.string.undo_action_bury_card),
         BURY_NOTE(R.string.undo_action_bury_note),
         SUSPEND_CARD(R.string.undo_action_suspend_card),
-        SUSPEND_CARD_MULTI(R.string.undo_action_suspend_card),
+        SUSPEND_CARD_MULTI(R.string.card_browser_toggle_suspend_card),
         SUSPEND_NOTE(R.string.undo_action_suspend_note),
         DELETE_NOTE(R.string.undo_action_delete),
         DELETE_NOTE_MULTI(R.string.undo_action_delete_multi),
         CHANGE_DECK_MULTI(R.string.undo_action_change_deck_multi),
-        MARK_NOTE_MULTI(R.string.card_browser_mark_card);
+        MARK_NOTE_MULTI(R.string.card_browser_toggle_mark_card);
 
         public int undoNameId;
 

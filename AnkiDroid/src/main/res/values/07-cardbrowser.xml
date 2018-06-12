@@ -28,11 +28,11 @@
     <string name="card_browser_all_decks">All decks</string>
     <string name="card_browser_delete_card">Delete notes</string>
     <string name="card_browser_suspend_card">Suspend cards</string>
-    <string name="card_browser_toggle_suspend_card">(Un)suspend cards</string>
+    <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
     <string name="card_browser_change_deck">Change deck</string>
     <string name="card_browser_unsuspend_card">Unsuspend cards</string>
     <string name="card_browser_mark_card">Mark notes</string>
-    <string name="card_browser_toggle_mark_card">(Un)mark notes</string>
+    <string name="card_browser_toggle_mark_card">(un)mark notes</string>
     <string name="card_browser_unmark_card">Unmark notes</string>
     <string name="delete_card_title">Delete note?</string>
     <string name="delete_cards_title">Delete notes?</string>
@@ -40,7 +40,7 @@
     <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
     <string name="deleted_message">Notes deleted</string>
     <string name="changed_deck_message">Moved to %s</string>
-    <string name="card_browser_suspended_cards">(Un)suspended cards</string>
+    <string name="card_browser_suspended_cards">(un)suspended cards</string>
     <string name="card_browser_show_marked">Filter marked</string>
     <string name="card_browser_show_suspended">Filter suspended</string>
     <string name="card_browser_search_by_tag">Filter by tag</string>

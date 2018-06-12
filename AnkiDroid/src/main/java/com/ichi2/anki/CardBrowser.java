@@ -623,6 +623,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
             updateMultiselectMenu();
         }
 
+        if (mActionBarMenu != null && mActionBarMenu.findItem(R.id.action_undo) != null) {
+            MenuItem undo =  mActionBarMenu.findItem(R.id.action_undo);
+            undo.setVisible(getCol().undoAvailable());
+            undo.setTitle(getResources().getString(R.string.studyoptions_congrats_undo, getCol().undoName(getResources())));
+        }
+
         // Maybe we were called from ACTION_PROCESS_TEXT.
         // In that case we already fill in the search.
         Intent intent = getIntent();
@@ -805,6 +811,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
                 return true;
             }
+
+            case R.id.action_undo:
+                if (getCol().undoAvailable()) {
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
+                }
+                return true;
 
             case R.id.action_preview: {
                 int cardPosition = mCheckedCardPositions.iterator().next();
@@ -1107,13 +1119,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
             searchCards();
             endMultiSelectMode();
             mCardsAdapter.notifyDataSetChanged();
+            invalidateOptionsMenu();    // maybe the availability of undo changed
 
             // snackbar to offer undo
             String deckName = getCol().getDecks().name(mNewDid);
             mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, String.format(getString(R.string.changed_deck_message), deckName), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // undo delete
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
                 }
             }, mCardsListView, null);
@@ -1234,8 +1246,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mIsSuspendCardFinished = true;
 
             updateMultiselectMenu();
-
             hideProgressBar();
+            invalidateOptionsMenu();    // maybe the availability of undo changed
         }
 
 
@@ -1268,8 +1280,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
 
             updateMultiselectMenu();
-
             hideProgressBar();
+            invalidateOptionsMenu();    // maybe the availability of undo changed
         }
 
 
@@ -1295,11 +1307,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
             hideProgressBar();
             mActionBarTitle.setText(Integer.toString(mCheckedCardPositions.size()));
 
+            invalidateOptionsMenu();    // maybe the availability of undo changed
+
             // snackbar to offer undo
             mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, getString(R.string.deleted_message), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // undo delete
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler);
                 }
             }, mCardsListView, null);
@@ -1332,10 +1345,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
             hideProgressBar();
 
             // reload whole view
-            // TODO could instead undo removeNotesView() for better performance
             searchCards();
             endMultiSelectMode();
             mCardsAdapter.notifyDataSetChanged();
+            invalidateOptionsMenu();    // maybe the availability of undo changed
         }
 
 
