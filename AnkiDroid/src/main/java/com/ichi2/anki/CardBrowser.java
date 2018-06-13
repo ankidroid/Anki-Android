@@ -647,15 +647,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @Override
     // (template method overridden)
     protected void onNavigationPressed() {
-        if (mInMultiSelectMode)
+        if (mInMultiSelectMode) {
             endMultiSelectMode();
-        else
+        } else {
             super.onNavigationPressed();
+        }
     }
 
     private void updateMultiselectMenu() {
-        if (mActionBarMenu == null || mActionBarMenu.findItem(R.id.action_suspend_card) == null)
+        if (mActionBarMenu == null || mActionBarMenu.findItem(R.id.action_suspend_card) == null) {
             return;
+        }
 
         // only show preview option when exactly one card is selected
         mActionBarMenu.findItem(R.id.action_preview).setVisible(mCheckedCardPositions.size() == 1);
@@ -666,10 +668,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     new DeckTask.TaskData(new Object[]{mCheckedCardPositions, getCards()}));
         }
 
-        if (mCheckedCardPositions.size() < getCards().size())
+        if (mCheckedCardPositions.size() < getCards().size()) {
             mActionBarMenu.findItem(R.id.action_select_all).setTitle(R.string.card_browser_select_all);
-        else
+        } else {
             mActionBarMenu.findItem(R.id.action_select_all).setTitle(R.string.card_browser_select_none);
+        }
     }
 
 
