@@ -64,36 +64,10 @@ public class UIUtils {
     public static Snackbar showSnackbar(Activity activity, String mainText, boolean shortLength,
                                         int actionTextResource, View.OnClickListener listener, View root,
                                         Snackbar.Callback callback) {
-        if (root == null) {
-            root = activity.findViewById(android.R.id.content);
-            if (root == null) {
-                Timber.e("Could not show Snackbar due to null View");
-                return null;
-            }
-        }
-        int length = shortLength ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG;
-        Snackbar sb = Snackbar.make(root, mainText, length);
-        if (listener != null) {
-            sb.setAction(actionTextResource, listener);
-        }
-        if (callback != null) {
-            sb.setCallback(callback);
-        }
-        // Make the text white to avoid interference from our theme colors.
-        View view = sb.getView();
-        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        TextView action = (TextView) view.findViewById(android.support.design.R.id.snackbar_action);
-        if (tv != null && action != null) {
-            tv.setTextColor(Color.WHITE);
-            action.setTextColor(ContextCompat.getColor(activity, R.color.material_light_blue_500));
-            tv.setMaxLines(2);  // prevent tablets from truncating to 1 line
-        }
-        sb.show();
-
-        return sb;
+        return showSnackbar(activity, mainText, shortLength ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG, actionTextResource, listener, root, callback);
     }
 
-    public static Snackbar showSnackbar(Activity activity, String mainText, int lengthMs,
+    public static Snackbar showSnackbar(Activity activity, String mainText, int length,
                                 int actionTextResource, View.OnClickListener listener, View root,
                                 Snackbar.Callback callback) {
         if (root == null) {
@@ -103,7 +77,7 @@ public class UIUtils {
                 return null;
             }
         }
-        Snackbar sb = Snackbar.make(root, mainText, lengthMs);
+        Snackbar sb = Snackbar.make(root, mainText, length);
         if (listener != null) {
             sb.setAction(actionTextResource, listener);
         }
