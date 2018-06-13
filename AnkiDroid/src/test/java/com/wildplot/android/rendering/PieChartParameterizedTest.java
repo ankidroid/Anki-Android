@@ -24,19 +24,19 @@ import java.util.Collection;
 
 import static com.wildplot.android.rendering.PieChartTest.createRectangleMock;
 import static java.util.Arrays.asList;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyFloat;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.floatThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyFloat;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.floatThat;
 import static org.mockito.Mockito.inOrder;
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(PowerMockRunner.class)
-@PowerMockRunnerDelegate(value = Parameterized.class)
-@PrepareForTest({RectangleWrap.class, GraphicsWrap.class, ColorWrap.class,
-        android.graphics.Color.class})
+@PowerMockRunnerDelegate(Parameterized.class)
+@PrepareForTest({RectangleWrap.class, GraphicsWrap.class, ColorWrap.class, PlotSheet.class,
+        Color.class})
 @SuppressWarnings("WeakerAccess")
 public class PieChartParameterizedTest {
     private static final double PRECISION = 2 * 1E-3F;
