@@ -64,14 +64,36 @@ public class UIUtils {
     public static Snackbar showSnackbar(Activity activity, String mainText, boolean shortLength,
                                         int actionTextResource, View.OnClickListener listener, View root,
                                         Snackbar.Callback callback) {
-        return showSnackbar(activity, mainText, shortLength ? -1 : -2, actionTextResource, listener, root, callback);
+        if (root == null) {
+            root = activity.findViewById(android.R.id.content);
+            if (root == null) {
+                Timber.e("Could not show Snackbar due to null View");
+                return null;
+            }
+        }
+        int length = shortLength ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG;
+        Snackbar sb = Snackbar.make(root, mainText, length);
+        if (listener != null) {
+            sb.setAction(actionTextResource, listener);
+        }
+        if (callback != null) {
+            sb.setCallback(callback);
+        }
+        // Make the text white to avoid interference from our theme colors.
+        View view = sb.getView();
+        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        TextView action = (TextView) view.findViewById(android.support.design.R.id.snackbar_action);
+        if (tv != null && action != null) {
+            tv.setTextColor(Color.WHITE);
+            action.setTextColor(ContextCompat.getColor(activity, R.color.material_light_blue_500));
+            tv.setMaxLines(2);  // prevent tablets from truncating to 1 line
+        }
+        sb.show();
+
+        return sb;
     }
 
-    /**
-     *
-     * @param lengthCode if -1, LENGTH_SHORT is used, if -2, LENGTH_LONG, and otherwise that number of milliseconds is used.
-     */
-    public static Snackbar showSnackbar(Activity activity, String mainText, int lengthCode,
+    public static Snackbar showSnackbar(Activity activity, String mainText, int lengthMs,
                                 int actionTextResource, View.OnClickListener listener, View root,
                                 Snackbar.Callback callback) {
         if (root == null) {
@@ -81,15 +103,7 @@ public class UIUtils {
                 return null;
             }
         }
-        int length;
-        switch (lengthCode) {
-            case -1: length = Snackbar.LENGTH_SHORT;
-            break;
-            case -2: length = Snackbar.LENGTH_LONG;
-            break;
-            default: length = lengthCode;
-        }
-        Snackbar sb = Snackbar.make(root, mainText, length);
+        Snackbar sb = Snackbar.make(root, mainText, lengthMs);
         if (listener != null) {
             sb.setAction(actionTextResource, listener);
         }
