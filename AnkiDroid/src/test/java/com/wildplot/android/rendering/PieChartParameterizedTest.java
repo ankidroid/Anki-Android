@@ -14,6 +14,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.mockito.InOrder;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.modules.junit4.PowerMockRunnerDelegate;
@@ -61,6 +62,7 @@ public class PieChartParameterizedTest {
     @Before
     public void setUp() throws Exception {
         mockStatic(android.graphics.Color.class);
+        MockitoAnnotations.initMocks(this);
         when(Color.argb(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(0);
         when(plot.getFrameThickness()).thenReturn(new float[]{0, 0, 0, 0});
 
