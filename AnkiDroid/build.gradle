@@ -64,11 +64,11 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.10.3'
     api project(":api")
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:1.10.19' // v1 while PowerMock does not fully support v2.
-    testImplementation 'org.powermock:powermock-core:1.6.5'
-    testImplementation 'org.powermock:powermock-module-junit4:1.6.5'
-    testImplementation 'org.powermock:powermock-api-mockito:1.6.5'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.2.0'
+    testImplementation 'org.mockito:mockito-core:2.18.3'
+    testImplementation 'org.powermock:powermock-core:2.0.0-beta.5'
+    testImplementation 'org.powermock:powermock-module-junit4:2.0.0-beta.5'
+    testImplementation 'org.powermock:powermock-api-mockito2:2.0.0-beta.5'
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
 
 }
