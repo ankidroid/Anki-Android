@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -40,6 +41,7 @@ public class PieChartTest {
     @Before
     public void setUp() throws Exception {
         mockStatic(android.graphics.Color.class);
+        MockitoAnnotations.initMocks(this);
         when(Color.argb(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(0);
         when(plot.getFrameThickness()).thenReturn(new float[]{0, 0, 0, 0});
 
