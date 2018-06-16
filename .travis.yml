@@ -1,37 +1,70 @@
 language: android
+
 sudo: false
+
+jdk:
+  - oraclejdk8
+
 env:
   global:
     - ADB_INSTALL_TIMEOUT=8
+    - ABI=armeabi-v7a
+    - EMU_FLAVOR=default # use google_apis flavor if no default flavor emulator
+    # PATH order is incredibly important. e.g. the 'emulator' script exists in more than one place!
+    - ANDROID_HOME=/usr/local/android-sdk
+    - TOOLS=${ANDROID_HOME}/tools
+    - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
+  matrix:
+   - API=15
+   - API=16 AUDIO=-no-audio
+   - API=17
+   - API=18
+   - API=19
+   # API 20 doesn't have an emulator
+   - API=21
+   - API=22
+   - API=23 EMU_FLAVOR=google_apis
+   - API=24
+   - API=25 EMU_FLAVOR=google_apis
+   # API >= 26 don't have arm emulators, and Travis doesn't support x86
+
+matrix:
+  fast_finish: true # We can report success without waiting for these
+  allow_failures:
+    - env: API=15  # sometimes emulator hangs, sometimes not - possibly fixable
+    - env: API=23 EMU_FLAVOR=google_apis # has permission errors
+    - env: API=24                        # has permission errors
+    - env: API=25 EMU_FLAVOR=google_apis # has permission errors
 
 android:
   components:
+    # installing things this way vs 'sdkmanager' is deprecated, should move to sdkmanager over time
     - tools
     - platform-tools
-    - build-tools-27.0.3
-    # Android API-16 is required to use the emulator with API 16
-    - android-16
-    # Our current build target
-    - android-26
+    - tools              # a second time per Travis official docs, necessary for newest versions
+    - build-tools-27.0.3 # Automated dependency from gradle - gradle will drive the changes
+    - android-$API       # We need the API of the emulator we will run
+    - android-26         # We need the API of the current build target
     - extra-android-m2repository
-    # Android Emulator API 16 benchmarks as fastest:
-    #   https://medium.com/zendesk-engineering/speeding-up-android-builds-on-travis-ci-1bb4cdbd9c62
-    - sys-img-armeabi-v7a-android-16
 
 licenses:
     - 'android-sdk-preview-license-.+'
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
 
-jdk:
-  - oraclejdk8
-
 # Emulator Management: Create, Start and Wait
+install:
+  - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid harmless sdkmanager warning
+  - echo yes | sdkmanager tools # 'emulator' is deprecated, 'avdmanager' is current, this installs it
+  - echo yes | sdkmanager "system-images;android-$API;$EMU_FLAVOR;$ABI" # install our emulator
+  - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
+  - emulator -avd test -engine classic -no-window $AUDIO -camera-back none -camera-front none -selinux permissive -qemu -m 512 &
+
 before_script:
-  - echo no | android create avd --force -n test -t android-16 --sdcard 10M --abi armeabi-v7a
-  - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
+
+script: ./gradlew test :AnkiDroid:connectedCheck
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -40,8 +73,6 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
-
-script: ./gradlew :AnkiDroid:connectedCheck
 
 notifications:
   email:
