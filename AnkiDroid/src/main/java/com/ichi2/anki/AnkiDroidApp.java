@@ -18,6 +18,7 @@
 
 package com.ichi2.anki;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,8 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.ViewConfiguration;
 import android.webkit.CookieManager;
@@ -50,6 +53,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import timber.log.Timber;
+import static timber.log.Timber.DebugTree;
 
 /**
  * Application class.
@@ -157,7 +161,7 @@ public class AnkiDroidApp extends Application {
         // Setup logging and crash reporting
         if (BuildConfig.DEBUG) {
             // Enable verbose error logging and do method tracing to put the Class name as log tag
-            Timber.plant(new Timber.DebugTree());
+            Timber.plant(new DebugTree());
             // Disable crash reporting
             setAcraReportingMode(FEEDBACK_REPORT_NEVER);
             preferences.edit().putString("reportErrorMode", FEEDBACK_REPORT_NEVER).commit();
@@ -165,7 +169,6 @@ public class AnkiDroidApp extends Application {
             String [] logcatArgs = { "-t", "300", "-v", "long", "ACRA:S"};
             ACRA.getConfig().setLogcatArguments(logcatArgs);
         } else {
-            // Disable verbose error logging and use fixed log tag "AnkiDroid"
             Timber.plant(new ProductionCrashReportingTree());
             // Enable or disable crash reporting based on user setting
             setAcraReportingMode(preferences.getString("reportErrorMode", FEEDBACK_REPORT_ASK));
@@ -381,66 +384,77 @@ public class AnkiDroidApp extends Application {
         return pref.equals(l) || pref.equals("") && Locale.getDefault().getLanguage().equals(l);
     }
 
-    /** A tree which logs necessary data for crash reporting. */
-    public static class ProductionCrashReportingTree extends Timber.HollowTree {
-        private static final ThreadLocal<String> NEXT_TAG = new ThreadLocal<>();
-        private static final Pattern ANONYMOUS_CLASS = Pattern.compile("\\$\\d+$");
+    /**
+     * A tree which logs necessary data for crash reporting.
+     *
+     * Requirements:
+     * 1) ignore verbose and debug log levels
+     * 2) use the fixed AnkiDroidApp.TAG log tag (ACRA filters logcat for it when reporting errors)
+     * 3) dynamically discover the class name and prepend it to the message for warn and error
+     */
+    @SuppressLint("LogNotTimber")
+    public static class ProductionCrashReportingTree extends Timber.Tree {
 
-        @Override public void e(String message, Object... args) {
-            Log.e(TAG, createTag() + "/ " + formatString(message, args)); // Just add to the log.
-        }
+        // ----  BEGIN copied from Timber.DebugTree because DebugTree.getTag() is package private ----
 
-        @Override public void e(Throwable t, String message, Object... args) {
-            Log.e(TAG, createTag() + "/ " + formatString(message, args), t); // Just add to the log.
-        }
+        private static final int CALL_STACK_INDEX = 6;
+        private static final Pattern ANONYMOUS_CLASS = Pattern.compile("(\\$\\d+)+$");
 
-        @Override public void w(String message, Object... args) {
-            Log.w(TAG, createTag() + "/ " + formatString(message, args)); // Just add to the log.
-        }
 
-        @Override public void w(Throwable t, String message, Object... args) {
-            Log.w(TAG, createTag() + "/ " + formatString(message, args), t); // Just add to the log.
-        }
-
-        @Override public void i(String message, Object... args) {
-            // Skip createTag() to improve  performance. message should be descriptive enough without it
-            Log.i(TAG, formatString(message, args)); // Just add to the log.
-        }
-
-        @Override public void i(Throwable t, String message, Object... args) {
-            // Skip createTag() to improve  performance. message should be descriptive enough without it
-            Log.i(TAG, formatString(message, args), t); // Just add to the log.
-        }
-
-        // Ignore logs below INFO level --> Non-overridden methods go to HollowTree
-
-        static String formatString(String message, Object... args) {
-            // If no varargs are supplied, treat it as a request to log the string without formatting.
-            try {
-                return args.length == 0 ? message : String.format(message, args);
-            } catch (Exception e) {
-                return message;
-            }
-        }
-
-        private static String createTag() {
-            String tag = NEXT_TAG.get();
-            if (tag != null) {
-                NEXT_TAG.remove();
-                return tag;
-            }
-
-            StackTraceElement[] stackTrace = new Throwable().getStackTrace();
-            if (stackTrace.length < 6) {
-                throw new IllegalStateException(
-                        "Synthetic stacktrace didn't have enough elements: are you using proguard?");
-            }
-            tag = stackTrace[5].getClassName();
+        /**
+         * Extract the tag which should be used for the message from the {@code element}. By default
+         * this will use the class name without any anonymous class suffixes (e.g., {@code Foo$1}
+         * becomes {@code Foo}).
+         * <p>
+         * Note: This will not be called if an API with a manual tag was called with a non-null tag
+         */
+        @Nullable
+        String createStackElementTag(@NonNull StackTraceElement element) {
+            String tag = element.getClassName();
             Matcher m = ANONYMOUS_CLASS.matcher(tag);
             if (m.find()) {
                 tag = m.replaceAll("");
             }
             return tag.substring(tag.lastIndexOf('.') + 1);
+        }
+
+
+        final String getTag() {
+
+            // DO NOT switch this to Thread.getCurrentThread().getStackTrace(). The test will pass
+            // because Robolectric runs them on the JVM but on Android the elements are different.
+            StackTraceElement[] stackTrace = new Throwable().getStackTrace();
+            if (stackTrace.length <= CALL_STACK_INDEX) {
+                throw new IllegalStateException(
+                        "Synthetic stacktrace didn't have enough elements: are you using proguard?");
+            }
+            return createStackElementTag(stackTrace[CALL_STACK_INDEX]);
+        }
+        // ----  END copied from Timber.DebugTree because DebugTree.getTag() is package private ----
+
+
+
+        @Override
+        protected void log(int priority, String tag, @NonNull String message, Throwable t) {
+
+            switch (priority) {
+                case Log.VERBOSE:
+                case Log.DEBUG:
+                    break;
+
+                case Log.INFO:
+                    Log.i(AnkiDroidApp.TAG, message, t);
+                    break;
+
+                case Log.WARN:
+                    Log.w(AnkiDroidApp.TAG, getTag() + "/ " + message, t);
+                    break;
+
+                case Log.ERROR:
+                case Log.ASSERT:
+                    Log.e(AnkiDroidApp.TAG, getTag() + "/ " + message, t);
+                    break;
+            }
         }
     }
 }
