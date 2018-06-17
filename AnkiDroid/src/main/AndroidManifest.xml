@@ -373,6 +373,14 @@
         </provider>
 
         <provider
+            android:name=".provider.StatsProvider"
+            android:authorities="com.ichi2.anki.stats"
+            android:enabled="true"
+            android:exported="true" >
+            <meta-data android:name="com.ichi2.anki.provider.spec" android:value="1" />
+        </provider>
+
+        <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.ichi2.anki.apkgfileprovider"
             android:grantUriPermissions="true"

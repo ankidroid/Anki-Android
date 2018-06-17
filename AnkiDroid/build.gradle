@@ -36,6 +36,7 @@ android {
         // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
         preDexLibraries = preDexEnabled && !travisBuild
     }
+    buildToolsVersion '26.1.0'
 }
 
 
