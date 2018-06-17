@@ -1,6 +1,33 @@
 This document contains a brief description of the Anki2 database structure. 
 
 Thanks to @sartak and @fasiha for [starting to make this](https://gist.github.com/sartak/3921255).
+Additional thanks to @bibstha for [more documentation](https://github.com/bibstha/Anki-Android/wiki/Anki2-database-documentation)
+
+# Anki database structure
+
+Anki uses one single sqlite database to store information of multiple decks, templates, fields and cards. This file can be found inside the Anki package file (.apkg file) with the extension anki2.
+
+Extracting example.apkg we have the following structure.
+
+	.
+	├── example
+	│   ├── example.anki2
+	│   └── media
+	└── example.apkg
+
+In linux *sqliteman* can be used to read and modify the .anki2 files.
+
+# Terminology
+
+Anki contains bascially the following types:
+
+1. Cards
+2. Decks
+3. Notes
+4. Templates
+5. Collection
+
+More information on what these represent are clearly explained in http://ankisrs.net/docs/manual.html#basics.
 
 # Database schema
 ```sql
