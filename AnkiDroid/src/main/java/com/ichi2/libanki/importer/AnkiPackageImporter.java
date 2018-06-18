@@ -53,6 +53,7 @@ public class AnkiPackageImporter extends Anki2Importer {
         publishProgress(0, 0, 0);
         File tempDir = new File(new File(mCol.getPath()).getParent(), "tmpzip");
         Collection tmpCol; //self.col into Anki.
+        Timber.d("Attempting to import package " + mFile);
         try {
             // We extract the zip contents into a temporary directory and do a little more
             // validation than the desktop client to ensure the extracted collection is an apkg.
@@ -64,6 +65,18 @@ public class AnkiPackageImporter extends Anki2Importer {
                 if (mZip.getEntry(colname) == null) {
                     colname = CollectionHelper.COLLECTION_FILENAME;
                 }
+
+                // Make sure we have sufficient free space
+                long uncompressedSize = Utils.calculateUncompressedSize(mZip);
+                Timber.d("Total uncompressed size will be: " + uncompressedSize);
+                long availableSpace = Utils.determineBytesAvailable(mCol.getPath());
+                Timber.d("Total available size is:         " + availableSpace);
+                if (uncompressedSize > availableSpace) {
+                    Timber.e("Not enough space to unzip, need " + uncompressedSize + ", available " + availableSpace);
+                    mLog.add(getRes().getString(R.string.import_log_insufficient_space, uncompressedSize, availableSpace));
+                    return;
+                }
+
                 Utils.unzipFiles(mZip, tempDir.getAbsolutePath(), new String[]{colname, "media"}, null);
             } catch (IOException e) {
                 Timber.e(e, "Failed to unzip apkg.");
@@ -138,6 +151,9 @@ public class AnkiPackageImporter extends Anki2Importer {
                 }
             }
         } finally {
+            long availableSpace = Utils.determineBytesAvailable(mCol.getPath());
+            Timber.d("Total available size is: " + availableSpace);
+
             // Clean up our temporary files
             if (tempDir.exists()) {
                 BackupManager.removeDir(tempDir);
