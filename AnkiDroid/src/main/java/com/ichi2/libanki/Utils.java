@@ -19,6 +19,7 @@
 
 package com.ichi2.libanki;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +30,7 @@ import android.net.Uri;
 import android.text.Spanned;
 
 import androidx.annotation.NonNull;
+import android.os.StatFs;
 
 import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki.CollectionHelper;
@@ -58,6 +60,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -138,6 +141,7 @@ public class Utils {
      * @return The time quantity string. Something like "3 s" or "1.7
      * yr". Only months and year have a number after the decimal.
      */
+    @SuppressLint("StringFormatInvalid")
     public static String timeQuantity(Context context, long time_s) {
         Resources res = context.getResources();
         // N.B.: the integer s, min, h, d and (one decimal, rounded by format) double for month, year is
@@ -709,6 +713,36 @@ public class Utils {
      */
     public static boolean isInside(@NonNull File file, @NonNull File dir) throws IOException {
         return file.getCanonicalPath().startsWith(dir.getCanonicalPath());
+    }
+
+    /**
+     * Given a ZipFile, iterate through the ZipEntries to determine the total uncompressed size
+     * TODO warning: vulnerable to resource exhaustion attack if entries contain spoofed sizes
+     *
+     * @param zipFile ZipFile of unknown total uncompressed size
+     * @return total uncompressed size of zipFile
+     */
+    public static long calculateUncompressedSize(ZipFile zipFile) {
+
+        long totalUncompressedSize = 0;
+        Enumeration<ZipArchiveEntry> e = zipFile.getEntries();
+        while (e.hasMoreElements()) {
+            ZipArchiveEntry ze = e.nextElement();
+            totalUncompressedSize += ze.getSize();
+        }
+
+        return totalUncompressedSize;
+    }
+
+
+    /**
+     * Determine available storage space
+     *
+     * @param path the filesystem path you need free space information on
+     * @return long indicating the bytes available for that path
+     */
+    public static long determineBytesAvailable(String path) {
+        return CompatHelper.getCompat().getAvailableBytes(new StatFs(path));
     }
 
 
