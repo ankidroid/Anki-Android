@@ -180,7 +180,7 @@ public final class AddContentApi {
     /**
      * Get the number of notes that exist for the specified model ID
      * @param mid id of the model to be used
-     * @return number of notes that exist with that model ID
+     * @return number of notes that exist with that model ID or -1 if there was a problem
      */
     public int getNoteCount(long mid) {
         Cursor cursor = getCompat().queryNotes(mid);
@@ -219,7 +219,7 @@ public final class AddContentApi {
     /**
      * Get the contents of a note with known ID
      * @param noteId the ID of the note to find
-     * @return object containing the contents of note with noteID
+     * @return object containing the contents of note with noteID or null if there was a problem
      */
     public NoteInfo getNote(long noteId) {
         Uri noteUri = Uri.withAppendedPath(Note.CONTENT_URI, Long.toString(noteId));
