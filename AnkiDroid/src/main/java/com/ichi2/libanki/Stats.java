@@ -19,6 +19,8 @@ package com.ichi2.libanki;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -37,6 +39,7 @@ import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
+import io.requery.android.database.sqlite.SQLiteDatabase;
 import timber.log.Timber;
 
 
@@ -1153,19 +1156,11 @@ public class Stats {
         ArrayList<double[]> list = new ArrayList<>();
         double[] pieData;
         Cursor cur = null;
-        String query = "select " +
-                "sum(case when queue=2 and ivl >= 21 then 1 else 0 end), -- mtr\n" +
-                "sum(case when queue in (1,3) or (queue=2 and ivl < 21) then 1 else 0 end), -- yng/lrn\n" +
-                "sum(case when queue=0 then 1 else 0 end), -- new\n" +
-                "sum(case when queue<0 then 1 else 0 end) -- susp\n" +
-                "from cards where did in " + _limit();
-        Timber.d("CardsTypes query: %s", query);
 
         try {
-            cur = mCol.getDb()
-                    .getDatabase()
-                    .rawQuery(query, null);
-
+            SQLiteDatabase db = mCol.getDb()
+                    .getDatabase();
+            cur = getCardTypesStats(db, _limit());
             cur.moveToFirst();
             pieData = new double[]{ cur.getDouble(0), cur.getDouble(1), cur.getDouble(2), cur.getDouble(3) };
         } finally {
@@ -1261,6 +1256,30 @@ public class Stats {
             cumulativeValues[i] = cumulativeValues[i - 1] + nonCumulative[i];
         }
         return cumulativeValues;
+    }
+
+    public static Cursor getCardTypesStats(@NonNull SQLiteDatabase db) {
+        return getCardTypesStats(db, null);
+    }
+
+    /*
+       Returns Cursor that points to number of mature cards, number of young cards, number of new cards, number of suspended cards
+
+       Param limit as specified in Stats._limit(). Leave null for no limit.
+     */
+    public static Cursor getCardTypesStats(@NonNull SQLiteDatabase db, @Nullable String limit) {
+        String query = "select " +
+                "sum(case when queue=2 and ivl >= 21 then 1 else 0 end), -- mtr\n" +
+                "sum(case when queue in (1,3) or (queue=2 and ivl < 21) then 1 else 0 end), -- yng/lrn\n" +
+                "sum(case when queue=0 then 1 else 0 end), -- new\n" +
+                "sum(case when queue<0 then 1 else 0 end) -- susp\n";
+
+        if(limit == null) {
+            query += "from cards where did in " + limit;
+        }
+
+        Timber.d("CardsTypes query: %s", query);
+        return db.rawQuery(query, null);
     }
 
     private int _periodDays() {

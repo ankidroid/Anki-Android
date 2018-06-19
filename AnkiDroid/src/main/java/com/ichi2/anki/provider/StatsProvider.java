@@ -1,8 +1,6 @@
 /***************************************************************************************
  *                                                                                      *
- * Copyright (c) 2015 Frank Oltmanns <frank.oltmanns@gmail.com>                         *
- * Copyright (c) 2015 Timothy Rae <timothy.rae@gmail.com>                               *
- * Copyright (c) 2016 Mark Carter <mark@marcardar.com>                                  *
+ * Copyright (c) 2018 Marcin Moskała <marcinmoskala@gmail.com>                          *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -29,10 +27,16 @@ import android.support.annotation.Nullable;
 
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Stats;
+
+import io.requery.android.database.sqlite.SQLiteDatabase;
+import timber.log.Timber;
 
 /**
- *
- */
+ * Supported URIs:
+ * .../cardcount (number of different types of cards respectively mature, young, new and suspended)
+ * <p/>
+ **/
 public class StatsProvider extends ContentProvider {
     private static final UriMatcher uriMatcher = buildUriMatcher();
 
@@ -40,7 +44,7 @@ public class StatsProvider extends ContentProvider {
 
     Collection mCollection;
 
-    private static String CART_TYPES_COUNT_TYPE = "vnd.android.cursor.item/vnd.com.ichi2.anki.cardcount";
+    private static String CARD_TYPES_COUNT_TYPE = "vnd.android.cursor.item/vnd.com.ichi2.anki.cardcount";
 
     @Nullable
     @Override
@@ -48,7 +52,7 @@ public class StatsProvider extends ContentProvider {
         int match = uriMatcher.match(uri);
         switch (match) {
             case CARD_TYPES_COUNT:
-                return CART_TYPES_COUNT_TYPE;
+                return CARD_TYPES_COUNT_TYPE;
             default:
                 throw new IllegalArgumentException("Unknown URI : " + uri);
         }
@@ -56,26 +60,32 @@ public class StatsProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        switch (uriMatcher.match(uri)) {
-            case CARD_TYPES_COUNT:
-                return makeCardsTypesCursor();
-            default:
-                return null;
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        try {
+            switch (uriMatcher.match(uri)) {
+                case CARD_TYPES_COUNT:
+                    return makeCardsTypesCursor();
+            }
+        } catch (Throwable error) {
+            Timber.e(error, "Failed to quary StatsProvider");
         }
+        return null;
     }
 
+    // Cannot insert stats
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
         return null;
     }
 
+    // Cannot delete stats
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
         return 0;
     }
 
+    // Cannot modify stats
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
         return 0;
@@ -83,7 +93,7 @@ public class StatsProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        mCollection = CollectionHelper.getInstance().getCol(getContext());
+        mCollection = CollectionHelper.getInstance().getColSafe(getContext());
         return true;
     }
 
@@ -95,15 +105,25 @@ public class StatsProvider extends ContentProvider {
 
     // Cursor contains counts for all cards that are mature, young, new and suspended.
     private Cursor makeCardsTypesCursor() {
-        String query = "select " +
-                "sum(case when queue=2 and ivl >= 21 then 1 else 0 end), -- mtr\n" +
-                "sum(case when queue in (1,3) or (queue=2 and ivl < 21) then 1 else 0 end), -- yng/lrn\n" +
-                "sum(case when queue=0 then 1 else 0 end), -- new\n" +
-                "sum(case when queue<0 then 1 else 0 end) -- susp\n" +
-                "from cards";
+        SQLiteDatabase db = getDbOrNull();
+        if (db == null) {
+            initCollection();
+            db = getDbOrNull();
+        }
+        if (db == null) {
+            return null;
+        }
+        return Stats.getCardTypesStats(db);
+    }
 
-        return mCollection.getDb()
-                .getDatabase()
-                .rawQuery(query, null);
+    private void initCollection() {
+        mCollection = CollectionHelper.getInstance().getColSafe(getContext());
+    }
+
+    private @Nullable SQLiteDatabase getDbOrNull() {
+        if(mCollection == null || mCollection.getDb() == null) {
+            return null;
+        }
+        return mCollection.getDb().getDatabase();
     }
 }
