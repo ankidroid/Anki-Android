@@ -629,7 +629,13 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         Sched sched = col.getSched();
         Object[] data = params[0].getObjArray();
-        Card[] cards = (Card[]) data[0];
+        Long[] cardIds = (Long[]) data[0];
+        // query cards
+        Card[] cards = new Card[cardIds.length];
+        for (int i = 0; i < cardIds.length; i++) {
+            cards[i] = col.getCard(cardIds[i]);
+        }
+
         Collection.DismissType type = (Collection.DismissType) data[1];
         try {
             col.getDb().getDatabase().beginTransaction();
@@ -705,6 +711,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
                         col.remNotes(uniqueNoteIds);
                         sHadCardQueue = true;
+                        // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
+                        publishProgress(new TaskData(allCards.toArray(new Card[allCards.size()])));
                         break;
                     }
 
@@ -737,7 +745,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         break;
                     }
                 }
-                publishProgress(new TaskData(getCard(col.getSched()), 0));
                 col.getDb().getDatabase().setTransactionSuccessful();
             } finally {
                 col.getDb().getDatabase().endTransaction();
@@ -747,7 +754,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSuspendCard");
             return new TaskData(false);
         }
-        return new TaskData(true);
+        // pass cards back so more actions can be performed by the caller
+        // (querying the cards again is unnecessarily expensive)
+        return new TaskData(true, cards);
     }
 
 
@@ -1623,6 +1632,10 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             mBool = bool;
         }
 
+        public TaskData(boolean bool, Object[] obj) {
+            mBool = bool;
+            mObjects = obj;
+        }
 
         public TaskData(String string, boolean bool) {
             mMsg = string;

@@ -77,6 +77,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -288,35 +289,33 @@ public class CardBrowser extends NavigationDrawerActivity implements
         searchCards();
     }
 
+    private Long[] getSelectedCardIds() {
+        Long[] ids = new Long[mCheckedCardPositions.size()];
+        int count = 0;
+        for (int cardPosition : mCheckedCardPositions) {
+            ids[count++] = Long.valueOf(mCards.get(cardPosition).get("id"));
+        }
+        return ids;
+    }
+
     private void changeDeck(int selectedDeck) {
-        List<Card> cards = new ArrayList<>();
+        Long[] ids = getSelectedCardIds();
         try {
             mNewDid = mDropDownDecks.get(selectedDeck).getLong("id");
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
 
-        for (int cardPosition : mCheckedCardPositions) {
-            final Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
-            cards.add(card);
-        }
+        mReloadRequired = true;
 
-        List<Card> changedCards = new ArrayList<>();
-        for (Card card : cards) {
-            if (card.getDid() != mNewDid) {
-                changedCards.add(card);
-                mReloadRequired = true;
-            }
-        }
-
-        if (changedCards.isEmpty()) {
+        if (ids.length == 0) {
             endMultiSelectMode();
             mCardsAdapter.notifyDataSetChanged();
             return;
         }
 
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mChangeDeckHandler,
-                new DeckTask.TaskData(new Object[]{changedCards.toArray(new Card[changedCards.size()]), Collection.DismissType.CHANGE_DECK_MULTI, mNewDid}));
+                new DeckTask.TaskData(new Object[]{ids, Collection.DismissType.CHANGE_DECK_MULTI, mNewDid}));
     }
 
     @Override
@@ -683,8 +682,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (mUndoSnackbar != null && mUndoSnackbar.isShown())
             mUndoSnackbar.dismiss();
 
-        final List<Card> cards = new ArrayList<>();
-
         switch (item.getItemId()) {
             case android.R.id.home:
                 endMultiSelectMode();
@@ -743,17 +740,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             case R.id.action_delete_card:
                 if (mInMultiSelectMode) {
-                    cards.clear();
-                    for (int cardPosition : mCheckedCardPositions) {
-                        final Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
-                        cards.add(card);
-                    }
-
-                    removeNotesView(cards);
-
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI,
                             mDeleteNoteHandler,
-                            new DeckTask.TaskData(new Object[]{cards.toArray(new Card[cards.size()]), Collection.DismissType.DELETE_NOTE_MULTI}));
+                            new DeckTask.TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.DELETE_NOTE_MULTI}));
 
                     mCheckedCardPositions.clear();
                     endMultiSelectMode();
@@ -762,26 +751,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
 
             case R.id.action_mark_card:
-                for (int cardPosition : mCheckedCardPositions) {
-                    Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
-                    cards.add(card);
-                }
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI,
                         mMarkCardHandler,
-                        new DeckTask.TaskData(new Object[]{cards.toArray(new Card[cards.size()]), Collection.DismissType.MARK_NOTE_MULTI}));
+                        new DeckTask.TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.MARK_NOTE_MULTI}));
 
                 return true;
 
 
             case R.id.action_suspend_card:
-                for (int cardPosition : mCheckedCardPositions) {
-                    final Card card = getCol().getCard(Long.parseLong(getCards().get(cardPosition).get("id")));
-                    cards.add(card);
-                }
-
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI,
                         mSuspendCardHandler,
-                        new DeckTask.TaskData(new Object[]{cards.toArray(new Card[cards.size()]), Collection.DismissType.SUSPEND_CARD_MULTI}));
+                        new DeckTask.TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.SUSPEND_CARD_MULTI}));
 
                 return true;
 
@@ -1196,27 +1176,22 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     /**
-     * Removes corresponding notes from view. Doesn't delete them in model (database).
+     * Removes cards from view. Doesn't delete them in model (database).
      */
-    private void removeNotesView(List<Card> cards) {
+    private void removeNotesView(Card[] cards) {
         if (currentCardInUseByReviewer()) {
             mReloadRequired = true;
         }
 
         // need set because multiple cards of the same note might have been selected
-        Set<Integer> uniquePos = new HashSet<>();
+        List<Integer> posList = new ArrayList<>();
         for (Card card : cards) {
-            ArrayList<Card> partialCards = card.note().cards();
-            partialCards.add(card);
-            for (Card c : partialCards) {
-                int pos = getPosition(getCards(), c.getId());
-                if (pos >= 0 && pos < getCards().size()) {
-                    uniquePos.add(pos);
-                }
+            int pos = getPosition(getCards(), card.getId());
+            if (pos >= 0 && pos < getCards().size()) {
+                posList.add(pos);
             }
         }
 
-        List<Integer> posList = new ArrayList<>(uniquePos);
         // sort in descending order so we can delete all
         Collections.sort(posList, Collections.reverseOrder());
 
@@ -1243,10 +1218,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (result.getBoolean()) {
-                List<Card> cards = new ArrayList<>();
-                for (int pos : mCheckedCardPositions)
-                    cards.add(getCol().getCard(Long.parseLong(getCards().get(pos).get("id"))));
-                updateCardsInList(cards, null);
+                Card[] cards = (Card[]) result.getObjArray();
+                updateCardsInList(Arrays.asList(cards), null);
             } else {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
@@ -1276,10 +1249,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (result.getBoolean()) {
-                List<Card> cards = new ArrayList<>();
-                for (int pos : mCheckedCardPositions)
-                    cards.add(getCol().getCard(Long.parseLong(getCards().get(pos).get("id"))));
-                updateCardsInList(cards, null);
+                Card[] cards = (Card[]) result.getObjArray();
+                updateCardsInList(Arrays.asList(cards), null);
             } else {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
@@ -1304,6 +1275,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
+            Card[] cards = (Card[]) values[0].getObjArray();
+            removeNotesView(cards);
         }
 
 
