@@ -26,24 +26,20 @@ public class CardUtils {
     /**
      * @return List of corresponding notes without duplicates, even if the input list has multiple cards of the same note.
      */
-    public static List<Note> getUniqueNotes(List<Card> cards) {
-        Set<Long> noteIds = new HashSet<>();    // only used to check for duplicates
-        List<Note> notes = new ArrayList<>();
+    public static Set<Note> getNotes(List<Card> cards) {
+        Set<Note> notes = new HashSet<>();
 
         for (Card card : cards) {
-            if (noteIds.add(card.getNid())) {
-                Note n = card.note();
-                notes.add(n);
-            }
+            notes.add(card.note());
         }
 
         return notes;
     }
 
     /**
-     * @return All cards of all notes (will contain duplicates if notes are not unique)
+     * @return All cards of all notes
      */
-    public static List<Card> getAllCards(List<Note> notes) {
+    public static List<Card> getAllCards(Set<Note> notes) {
         List<Card> allCards = new ArrayList<>();
         for (Note note : notes) {
             allCards.addAll(note.cards());

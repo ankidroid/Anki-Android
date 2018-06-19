@@ -43,8 +43,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -84,7 +82,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 import timber.log.Timber;
@@ -1019,7 +1016,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * @param updatedCardTags Mapping note id -> updated tags
      */
     private void updateCardsInList(List<Card> cards, Map<Long, String> updatedCardTags) {
-        List<Card> allCards = CardUtils.getAllCards(CardUtils.getUniqueNotes(cards));
+        List<Card> allCards = CardUtils.getAllCards(CardUtils.getNotes(cards));
         for (Card c : allCards) {
             Note note = c.note();
             // get position in the mCards search results HashMap

@@ -673,7 +673,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                     }
 
                     case MARK_NOTE_MULTI: {
-                        List<Note> notes = CardUtils.getUniqueNotes(Arrays.asList(cards));
+                        Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
                         // collect undo information
                         List<Note> originalMarked = new ArrayList<>();
                         List<Note> originalUnmarked = new ArrayList<>();
@@ -685,7 +685,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                                 originalUnmarked.add(n);
                         }
 
-                        CardUtils.markAll(notes, !originalUnmarked.isEmpty());
+                        CardUtils.markAll(new ArrayList<>(notes), !originalUnmarked.isEmpty());
 
                         // mark undo for all at once
                         col.markUndo(type, new Object[] {originalMarked, originalUnmarked});
@@ -695,16 +695,17 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                     case DELETE_NOTE_MULTI: {
                         // list of all ids to pass to remNotes method.
                         // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
-                        List<Note> notes = CardUtils.getUniqueNotes(Arrays.asList(cards));
+                        Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
                         List<Card> allCards = CardUtils.getAllCards(notes);
                         // delete note
                         long[] uniqueNoteIds = new long[notes.size()];
                         Note[] notesArr = new Note[notes.size()];
                         // unboxing...
-                        for (int i = 0; i < notes.size(); i++) {
-                            Note note = notes.get(i);
-                            uniqueNoteIds[i] = note.getId();
-                            notesArr[i] = note;
+                        int count = 0;
+                        for (Note note : notes) {
+                            uniqueNoteIds[count] = note.getId();
+                            notesArr[count] = note;
+                            count++;
                         }
 
                         col.markUndo(type, new Object[] {notesArr, allCards});
