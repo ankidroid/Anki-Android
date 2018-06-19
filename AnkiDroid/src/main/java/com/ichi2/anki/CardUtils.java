@@ -13,16 +13,6 @@ import java.util.Set;
  */
 public class CardUtils {
 
-    public static boolean hasUnmarked(List<Note> notes) {
-        for (Note n : notes) {
-            if (!n.hasTag("marked"))
-                return true;
-        }
-
-        return false;
-    }
-
-
     /**
      * @return List of corresponding notes without duplicates, even if the input list has multiple cards of the same note.
      */
