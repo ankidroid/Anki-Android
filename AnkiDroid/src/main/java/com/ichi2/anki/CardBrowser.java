@@ -161,7 +161,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private TextView mActionBarTitle;
     private boolean mReloadRequired = false;
     private boolean mInMultiSelectMode = false;
-    private boolean mIsSuspendCardFinished = false;
     private HashSet<Integer> mCheckedCardPositions = new HashSet<>();
     private Menu mActionBarMenu;
 
@@ -294,8 +293,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         try {
             mNewDid = mDropDownDecks.get(selectedDeck).getLong("id");
         } catch (JSONException e) {
-            e.printStackTrace();
-            return;
+            throw new RuntimeException(e);
         }
 
         for (int cardPosition : mCheckedCardPositions) {
@@ -317,7 +315,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return;
         }
 
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mChangeMultiHandler,
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mChangeDeckHandler,
                 new DeckTask.TaskData(new Object[]{changedCards.toArray(new Card[changedCards.size()]), Collection.DismissType.CHANGE_DECK_MULTI, mNewDid}));
     }
 
@@ -538,7 +536,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @Override
     public void onBackPressed() {
-
         if (isDrawerOpen()) {
             super.onBackPressed();
         } else if (mInMultiSelectMode) {
@@ -645,7 +642,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     @Override
-    // (template method overridden)
     protected void onNavigationPressed() {
         if (mInMultiSelectMode) {
             endMultiSelectMode();
@@ -1107,7 +1103,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private DeckTask.TaskListener mChangeMultiHandler = new DeckTask.TaskListener() {
+    private DeckTask.TaskListener mChangeDeckHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
             showProgressBar();
@@ -1121,7 +1117,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            Timber.d("Card Browser - mChangeMultiHandler.onPostExecute()");
+            Timber.d("Card Browser - mChangeDeckHandler.onPostExecute()");
             if (!result.getBoolean()) {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
@@ -1212,9 +1208,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         for (Card card : cards) {
             ArrayList<Card> partialCards = card.note().cards();
             partialCards.add(card);
-            int pos;
             for (Card c : partialCards) {
-                pos = getPosition(getCards(), c.getId());
+                int pos = getPosition(getCards(), c.getId());
                 if (pos >= 0 && pos < getCards().size()) {
                     uniquePos.add(pos);
                 }
@@ -1225,8 +1220,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // sort in descending order so we can delete all
         Collections.sort(posList, Collections.reverseOrder());
 
-        for (int delPos : posList)
+        for (int delPos : posList) {
             getCards().remove(delPos);
+        }
 
         updateList();
     }
@@ -1254,8 +1250,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             } else {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
-            mIsSuspendCardFinished = true;
-
             updateMultiselectMenu();
             hideProgressBar();
             invalidateOptionsMenu();    // maybe the availability of undo changed
@@ -1712,8 +1706,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void onCheckAll() {
         boolean all = mCheckedCardPositions.size() < getCards().size();
         if (all) {
-            for (int i = 0; i < mCards.size(); i++)
+            for (int i = 0; i < mCards.size(); i++) {
                 mCheckedCardPositions.add(i);
+            }
         } else {
             mCheckedCardPositions.clear();
         }

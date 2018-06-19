@@ -685,7 +685,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         col.markUndo(type, new Object[] {originalMarked, originalUnmarked});
                         break;
                     }
-                    
+
                     case DELETE_NOTE_MULTI: {
                         // list of all ids to pass to remNotes method.
                         // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
