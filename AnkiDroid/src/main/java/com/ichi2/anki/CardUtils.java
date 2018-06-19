@@ -64,4 +64,12 @@ public class CardUtils {
             }
         }
     }
+
+    public static long[] unbox(Long[] array) {
+        long[] primitive = new long[array.length];
+        for (int i = 0; i < array.length; i++) {
+            primitive[i] = array[i];
+        }
+        return primitive;
+    }
 }

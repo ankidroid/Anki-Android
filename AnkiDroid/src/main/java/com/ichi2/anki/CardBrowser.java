@@ -654,9 +654,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return;
         }
 
-        // only show preview option when exactly one card is selected
-        mActionBarMenu.findItem(R.id.action_preview).setVisible(mCheckedCardPositions.size() == 1);
-
         if (!mCheckedCardPositions.isEmpty()) {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHECK_CARD_SELECTION,
                     mCheckSelectedCardsHandler,
@@ -808,8 +805,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             case R.id.action_preview: {
                 int cardPosition = mCheckedCardPositions.iterator().next();
                 Intent previewer = new Intent(CardBrowser.this, Previewer.class);
-                previewer.putExtra("index", cardPosition);
-                previewer.putExtra("cardList", getCardIds());
+                previewer.putExtra("index", 0);
+                previewer.putExtra("cardList", CardUtils.unbox(getSelectedCardIds()));
                 startActivityWithoutAnimation(previewer);
 
                 return true;
