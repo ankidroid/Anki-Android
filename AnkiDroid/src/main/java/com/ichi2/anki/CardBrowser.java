@@ -109,6 +109,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     public static Card sCardBrowserCard;
 
+    // card that was clicked (not marked)
     private int mPositionInCardsList;
 
     private int mOrder;
@@ -847,17 +848,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // if reloadRequired flag was sent from note editor then reload card list
             searchCards();
             // keep track of changes for reviewer
-            if (currentCardInUseByReviewer()) {
+            if (cardInUseByReviewer(mPositionInCardsList)) {
                 mReloadRequired = true;
             }
         }
     }
 
-    private boolean currentCardInUseByReviewer() {
-        if (getIntent().hasExtra("currentCard") && getCards().size() > mPositionInCardsList
-                && getCards().get(mPositionInCardsList) != null) {
+    private boolean cardInUseByReviewer(int cardPos) {
+        if (getIntent().hasExtra("currentCard") && getCards().size() > cardPos
+                && getCards().get(cardPos) != null) {
             long reviewerCard = getIntent().getExtras().getLong("currentCard");
-            long selectedCard = Long.parseLong(getCards().get(mPositionInCardsList).get("id"));
+            long selectedCard = Long.parseLong(getCards().get(cardPos).get("id"));
             return selectedCard == reviewerCard;
         }
         return false;
@@ -1176,14 +1177,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * Removes cards from view. Doesn't delete them in model (database).
      */
     private void removeNotesView(Card[] cards) {
-        if (currentCardInUseByReviewer()) {
-            mReloadRequired = true;
-        }
-
         // need set because multiple cards of the same note might have been selected
         List<Integer> posList = new ArrayList<>();
         for (Card card : cards) {
             int pos = getPosition(getCards(), card.getId());
+            if (cardInUseByReviewer(pos)) {
+                mReloadRequired = true;
+            }
             if (pos >= 0 && pos < getCards().size()) {
                 posList.add(pos);
             }
