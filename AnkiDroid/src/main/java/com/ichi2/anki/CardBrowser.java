@@ -287,8 +287,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         searchCards();
     }
 
-    private Long[] getSelectedCardIds() {
-        Long[] ids = new Long[mCheckedCardPositions.size()];
+    private long[] getSelectedCardIds() {
+        long[] ids = new long[mCheckedCardPositions.size()];
         int count = 0;
         for (int cardPosition : mCheckedCardPositions) {
             ids[count++] = Long.valueOf(mCards.get(cardPosition).get("id"));
@@ -297,7 +297,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private void changeDeck(int selectedDeck) {
-        Long[] ids = getSelectedCardIds();
+        long[] ids = getSelectedCardIds();
         try {
             mNewDid = mDropDownDecks.get(selectedDeck).getLong("id");
         } catch (JSONException e) {
@@ -805,7 +805,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 Intent previewer = new Intent(CardBrowser.this, Previewer.class);
                 previewer.putExtra("index", 0);
                 if (mInMultiSelectMode) {
-                    previewer.putExtra("cardList", CardUtils.unbox(getSelectedCardIds()));
+                    previewer.putExtra("cardList", getSelectedCardIds());
                 } else {
                     previewer.putExtra("cardList", getAllCardIds());
                 }

@@ -629,7 +629,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         Sched sched = col.getSched();
         Object[] data = params[0].getObjArray();
-        Long[] cardIds = (Long[]) data[0];
+        long[] cardIds = (long[]) data[0];
         // query cards
         Card[] cards = new Card[cardIds.length];
         for (int i = 0; i < cardIds.length; i++) {

@@ -52,15 +52,7 @@ public class CardUtils {
         }
     }
 
-    public static long[] unbox(Long[] array) {
-        long[] primitive = new long[array.length];
-        for (int i = 0; i < array.length; i++) {
-            primitive[i] = array[i];
-        }
-        return primitive;
-    }
-
-    public static boolean isIn(Long[] array, long val) {
+    public static boolean isIn(long[] array, long val) {
         for (long v : array) {
             if (v == val) {
                 return true;
