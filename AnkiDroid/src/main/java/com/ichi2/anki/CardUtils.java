@@ -4,6 +4,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Note;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,7 +17,7 @@ public class CardUtils {
     /**
      * @return List of corresponding notes without duplicates, even if the input list has multiple cards of the same note.
      */
-    public static Set<Note> getNotes(List<Card> cards) {
+    public static Set<Note> getNotes(Collection<Card> cards) {
         Set<Note> notes = new HashSet<>();
 
         for (Card card : cards) {

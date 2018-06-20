@@ -699,12 +699,10 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         List<Card> allCards = CardUtils.getAllCards(notes);
                         // delete note
                         long[] uniqueNoteIds = new long[notes.size()];
-                        Note[] notesArr = new Note[notes.size()];
-                        // unboxing...
+                        Note[] notesArr = notes.toArray(new Note[notes.size()]);
                         int count = 0;
                         for (Note note : notes) {
                             uniqueNoteIds[count] = note.getId();
-                            notesArr[count] = note;
                             count++;
                         }
 
