@@ -58,4 +58,13 @@ public class CardUtils {
         }
         return primitive;
     }
+
+    public static boolean isIn(Long[] array, long val) {
+        for (long v : array) {
+            if (v == val) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -107,7 +107,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     public static Card sCardBrowserCard;
 
     // card that was clicked (not marked)
-    private int mPositionInCardsList;
+    private long mCurrentCardId;
 
     private int mOrder;
     private boolean mOrderAsc;
@@ -304,12 +304,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
             throw new RuntimeException(e);
         }
 
-        mReloadRequired = true;
-
         if (ids.length == 0) {
             endMultiSelectMode();
             mCardsAdapter.notifyDataSetChanged();
             return;
+        }
+
+        if (CardUtils.isIn(ids, getReviewerCardId())) {
+            mReloadRequired = true;
         }
 
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mChangeDeckHandler,
@@ -462,7 +464,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         cardsColumn2Spinner.setSelection(mColumn2Index);
 
 
-        mCardsListView.setOnItemClickListener(new OnItemClickListener() {
+        mCardsListView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (mInMultiSelectMode) {
@@ -472,9 +474,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     onCheck(position, view);
                 } else {
                     // load up the card selected on the list
-                    mPositionInCardsList = position;
-                    long cardId = Long.parseLong(getCards().get(mPositionInCardsList).get("id"));
-                    sCardBrowserCard = getCol().getCard(cardId);
+                    mCurrentCardId = Long.parseLong(getCards().get(position).get("id"));
+                    sCardBrowserCard = getCol().getCard(mCurrentCardId);
                     // start note editor using the card we just loaded
                     Intent editCard = new Intent(CardBrowser.this, NoteEditor.class);
                     editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT);
@@ -483,7 +484,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 }
             }
         });
-        mCardsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+        mCardsListView.setOnItemLongClickListener(new ListView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 loadMultiSelectMode();
@@ -844,21 +845,19 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (requestCode == EDIT_CARD &&  data!=null && data.hasExtra("reloadRequired")) {
             // if reloadRequired flag was sent from note editor then reload card list
             searchCards();
-            // keep track of changes for reviewer
-            if (cardInUseByReviewer(mPositionInCardsList)) {
+            // in use by reviewer?
+            if (getReviewerCardId() == mCurrentCardId) {
                 mReloadRequired = true;
             }
         }
     }
 
-    private boolean cardInUseByReviewer(int cardPos) {
-        if (getIntent().hasExtra("currentCard") && getCards().size() > cardPos
-                && getCards().get(cardPos) != null) {
-            long reviewerCard = getIntent().getExtras().getLong("currentCard");
-            long selectedCard = Long.parseLong(getCards().get(cardPos).get("id"));
-            return selectedCard == reviewerCard;
+    private long getReviewerCardId() {
+        if (getIntent().hasExtra("currentCard")) {
+            return getIntent().getExtras().getLong("currentCard");
+        } else {
+            return -1;
         }
-        return false;
     }
 
     private void showTagsDialog() {
@@ -1178,9 +1177,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void removeNotesView(Card[] cards) {
         // need set because multiple cards of the same note might have been selected
         List<Integer> posList = new ArrayList<>();
+        long reviewerCardId = getReviewerCardId();
         for (Card card : cards) {
             int pos = getPosition(getCards(), card.getId());
-            if (cardInUseByReviewer(pos)) {
+            if (card.getId() == reviewerCardId) {
                 mReloadRequired = true;
             }
             if (pos >= 0 && pos < getCards().size()) {
