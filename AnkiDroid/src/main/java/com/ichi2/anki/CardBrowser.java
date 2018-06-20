@@ -802,10 +802,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
 
             case R.id.action_preview: {
-                int cardPosition = mCheckedCardPositions.iterator().next();
                 Intent previewer = new Intent(CardBrowser.this, Previewer.class);
                 previewer.putExtra("index", 0);
-                previewer.putExtra("cardList", CardUtils.unbox(getSelectedCardIds()));
+                if (mInMultiSelectMode) {
+                    previewer.putExtra("cardList", CardUtils.unbox(getSelectedCardIds()));
+                } else {
+                    previewer.putExtra("cardList", getAllCardIds());
+                }
                 startActivityWithoutAnimation(previewer);
 
                 return true;
@@ -1694,7 +1697,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return mCards;
     }
 
-    private long[] getCardIds() {
+    private long[] getAllCardIds() {
         long[] l = new long[mCards.size()];
         for (int i = 0; i < mCards.size(); i++) {
             l[i] = Long.parseLong(mCards.get(i).get("id"));

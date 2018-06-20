@@ -38,4 +38,8 @@
         android:title="@string/undo"
         android:icon="@drawable/ic_undo_white_24dp"/>
 
+    <item
+        android:id="@+id/action_preview"
+        android:title="@string/card_editor_preview_card"/>
+
 </menu>
