@@ -45,6 +45,8 @@ public class TagsDialog extends DialogFragment {
     public static final int TYPE_ADD_TAG = 0;
     public static final int TYPE_FILTER_BY_TAG = 1;
     public static final int TYPE_CUSTOM_STUDY_TAGS = 2;
+    public static final int TYPE_SINGLE_TAG = 3; //single tag select
+    public static final int TYPE_NEW_NAME_TAG = 4; //new name tag
 
     private static final String DIALOG_TYPE_KEY = "dialog_type";
     private static final String CHECKED_TAGS_KEY = "checked_tags";
@@ -68,6 +70,7 @@ public class TagsDialog extends DialogFragment {
     private TextView mNoTagsTextView;
     private RecyclerView mTagsListRecyclerView;
     private RadioGroup mOptionsGroup;
+    private String mSnackStartMessage = "";
 
     private MaterialDialog mDialog;
 
@@ -148,6 +151,16 @@ public class TagsDialog extends DialogFragment {
                 mOptionsGroup.setVisibility(View.GONE);
                 mPositiveText = getString(R.string.dialog_ok);
                 break;
+            case TYPE_SINGLE_TAG:
+                mDialogTitle = getResources().getString(R.string.card_details_tag_select);
+                mOptionsGroup.setVisibility(View.GONE);
+                mPositiveText = getString(R.string.select);
+                break;
+            case TYPE_NEW_NAME_TAG:
+                mDialogTitle = getResources().getString(R.string.card_details_new_tag_select);
+                mOptionsGroup.setVisibility(View.GONE);
+                mPositiveText = getString(R.string.select);
+                break;
             default:
                 mDialogTitle = getResources().getString(R.string.studyoptions_limit_select_tags);
                 mPositiveText = getString(R.string.select);
@@ -170,6 +183,13 @@ public class TagsDialog extends DialogFragment {
 
         mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         return mDialog;
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        if (!mSnackStartMessage.isEmpty())
+            showSnackBar(mSnackStartMessage);
     }
 
     private void adjustToolbar(View tagsDialogView) {
@@ -269,6 +289,14 @@ public class TagsDialog extends DialogFragment {
             case TYPE_ADD_TAG:
                 mToolbarSearchView.setQueryHint(getString(R.string.add_new_filter_tags));
                 break;
+            case TYPE_NEW_NAME_TAG:
+                mToolbarAddItem.setVisible(true);
+                checkAllItem.setVisible(false);
+                break;
+            case TYPE_SINGLE_TAG:
+                checkAllItem.setVisible(false);
+                mToolbarAddItem.setVisible(false);
+                break;
             default:
                 mToolbarAddItem.setVisible(false);
         }
@@ -293,9 +321,17 @@ public class TagsDialog extends DialogFragment {
             }
             mTagsArrayAdapter.notifyDataSetChanged();
             // Show a snackbar to let the user know the tag was added successfully
-            UIUtils.showSnackbar(getActivity(), feedbackText, false, -1, null,
-                    mDialog.getView().findViewById(R.id.tags_dialog_snackbar), null);
+            showSnackBar(feedbackText);
         }
+    }
+
+    private void showSnackBar(String message){
+        UIUtils.showSnackbar(getActivity(), message, false, -1, null,
+                mDialog.getView().findViewById(R.id.tags_dialog_snackbar), null);
+    }
+
+    public void setStartSnackMessage(String message){
+        mSnackStartMessage = message;
     }
 
     public void setTagsDialogListener(TagsDialogListener selectedTagsListener) {
@@ -312,6 +348,7 @@ public class TagsDialog extends DialogFragment {
         }
 
         public ArrayList<String> mTagsList;
+        private int mPrevPosition = -1;
 
         public  TagsArrayAdapter() {
             mTagsList = new ArrayList<>();
@@ -337,7 +374,7 @@ public class TagsDialog extends DialogFragment {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.tags_item_list_dialog, parent, false);
 
-            ViewHolder vh = new ViewHolder((CheckedTextView) v.findViewById(R.id.tags_dialog_tag_item));
+            final ViewHolder vh = new ViewHolder((CheckedTextView) v.findViewById(R.id.tags_dialog_tag_item));
             vh.mTagItemCheckedTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -345,7 +382,17 @@ public class TagsDialog extends DialogFragment {
                     ctv.toggle();
                     String tag = ctv.getText().toString();
                     if (ctv.isChecked() && !mCurrentTags.contains(tag)) {
-                        mCurrentTags.add(tag);
+                        switch (mType) {
+                            case TYPE_SINGLE_TAG:
+                            case TYPE_NEW_NAME_TAG:
+                                mCurrentTags.clear();
+                                mCurrentTags.add(tag);
+                                if (mPrevPosition >= 0) notifyItemChanged(mPrevPosition);
+                                mPrevPosition = vh.getAdapterPosition();
+                                break;
+                            default:
+                                mCurrentTags.add(tag);
+                        }
                     } else if (!ctv.isChecked() && mCurrentTags.contains(tag)) {
                         mCurrentTags.remove(tag);
                     }

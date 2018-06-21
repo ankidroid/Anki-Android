@@ -23,6 +23,9 @@
         android:id="@+id/action_sort_by_size"
         android:title="@string/card_browser_change_display_order"/>
     <item
+        android:id="@+id/action_rename_tag"
+        android:title="@string/card_browser_rename_tag"/>
+    <item
         android:id="@+id/action_show_marked"
         android:title="@string/card_browser_show_marked"/>
     <item
@@ -31,5 +34,8 @@
     <item
         android:id="@+id/action_search_by_tag"
         android:title="@string/card_browser_search_by_tag"/>
+    <item
+        android:id="@+id/action_show_all"
+        android:title="@string/card_browser_show_all"/>
 
 </menu>

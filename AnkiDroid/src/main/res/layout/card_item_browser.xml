@@ -5,6 +5,14 @@
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground">
 
+    <CheckBox
+        android:id="@+id/card_mark"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:layout_weight="0"
+        />
     <TextView
         android:id="@+id/card_sfld"
         android:layout_width="0dip"

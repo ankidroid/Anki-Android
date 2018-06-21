@@ -1051,6 +1051,7 @@ public class Finder {
                 int queue = cur.getInt(3);
                 String tags = cur.getString(4);
                 map.put("flags", Integer.toString((queue == -1 ? 1 : 0) + (tags.matches(".*[Mm]arked.*") ? 2 : 0)));
+                map.put("mark", tags.matches(".*[Mm]arked.*") ? "true" : "false");
                 map.put("tags", tags);
                 res.add(map);
                 // add placeholder for question and answer
