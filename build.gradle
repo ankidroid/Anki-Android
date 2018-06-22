@@ -4,6 +4,9 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.3'
@@ -17,6 +20,9 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
     }
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {

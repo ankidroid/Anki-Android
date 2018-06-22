@@ -7,7 +7,8 @@ jdk:
 
 env:
   global:
-    - ADB_INSTALL_TIMEOUT=8
+    - export QEMU_AUDIO_DRV=none # Avoid emulator hangs. Anyway, if an emulator makes a sound does anyone hear it?
+    - ADB_INSTALL_TIMEOUT=20  # Emulator timeout in minutes. Gradle files have equivalent setting.
     - ABI=armeabi-v7a
     - EMU_FLAVOR=default # use google_apis flavor if no default flavor emulator
     # PATH order is incredibly important. e.g. the 'emulator' script exists in more than one place!
@@ -16,7 +17,7 @@ env:
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
   matrix:
    - API=15
-   - API=16 AUDIO=-no-audio
+   - API=16
    - API=17
    - API=18
    - API=19
@@ -31,10 +32,9 @@ env:
 matrix:
   fast_finish: true # We can report success without waiting for these
   allow_failures:
-    - env: API=15  # sometimes emulator hangs, sometimes not - possibly fixable
-    - env: API=23 EMU_FLAVOR=google_apis # has permission errors
-    - env: API=24                        # has permission errors
-    - env: API=25 EMU_FLAVOR=google_apis # has permission errors
+    - env: API=15                        # sometimes emulator hangs, possibly fixable
+    - env: API=23 EMU_FLAVOR=google_apis # Flaky: 'Skipping device 'test(AVD)' for 'AnkiDroid:': Unknown API Level'
+    - env: API=25 EMU_FLAVOR=google_apis # emulator startup timeout - possibly fixable
 
 android:
   components:
@@ -58,13 +58,21 @@ install:
   - echo yes | sdkmanager tools # 'emulator' is deprecated, 'avdmanager' is current, this installs it
   - echo yes | sdkmanager "system-images;android-$API;$EMU_FLAVOR;$ABI" # install our emulator
   - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
-  - emulator -avd test -engine classic -no-window $AUDIO -camera-back none -camera-front none -selinux permissive -qemu -m 512 &
+  - emulator -avd test -no-skin -no-window -camera-back none -camera-front none -selinux permissive -qemu -m 512 &
 
 before_script:
-  - android-wait-for-emulator
+  # Try once with a huge timeout, it will succeed fast or just wait trying
+  # Note "travis_wait" generates an ugly log line when it stops waiting, but it can be ignored
+  # Reference: https://github.com/travis-ci/travis-ci/issues/5441
+  # Example: '/home/travis/build.sh: line NNN:  NNN Terminated              travis_jigger $! $timeout $cmd
+  - travis_wait 20 android-wait-for-emulator || yes
+  # Try one more time, succeeding fast while maybe allowing success if first fixed 360s in emulator was hit
+  - travis_wait 20 android-wait-for-emulator
   - adb shell input keyevent 82 &
 
-script: ./gradlew test :AnkiDroid:connectedCheck
+script:
+  # We need a travis_wait here also, or some emulators timeout during the package install (!)
+  - travis_wait ./gradlew test :AnkiDroid:connectedCheck --stacktrace
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
