@@ -65,14 +65,14 @@ before_script:
   # Note "travis_wait" generates an ugly log line when it stops waiting, but it can be ignored
   # Reference: https://github.com/travis-ci/travis-ci/issues/5441
   # Example: '/home/travis/build.sh: line NNN:  NNN Terminated              travis_jigger $! $timeout $cmd
-  - travis_wait 20 android-wait-for-emulator || yes
+  - android-wait-for-emulator || yes
   # Try one more time, succeeding fast while maybe allowing success if first fixed 360s in emulator was hit
   - travis_wait 20 android-wait-for-emulator
   - adb shell input keyevent 82 &
 
 script:
   # We need a travis_wait here also, or some emulators timeout during the package install (!)
-  - travis_wait ./gradlew test :AnkiDroid:connectedCheck --stacktrace
+  - ./gradlew test :AnkiDroid:connectedCheck --stacktrace
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
