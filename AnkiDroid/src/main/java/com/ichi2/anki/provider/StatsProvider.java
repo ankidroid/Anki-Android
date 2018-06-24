@@ -27,6 +27,7 @@ import android.support.annotation.Nullable;
 
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Stats;
 
 import io.requery.android.database.sqlite.SQLiteDatabase;
@@ -121,9 +122,14 @@ public class StatsProvider extends ContentProvider {
     }
 
     private @Nullable SQLiteDatabase getDbOrNull() {
-        if(mCollection == null || mCollection.getDb() == null) {
+        Collection col = mCollection;
+        if(col == null) {
             return null;
         }
-        return mCollection.getDb().getDatabase();
+        DB db = mCollection.getDb();
+        if(db == null) {
+            return null;
+        }
+        return db.getDatabase();
     }
 }
