@@ -966,14 +966,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private int getPosition(List<Map<String, String>> list, long cardId) {
-        String cardid = Long.toString(cardId);
+    private Map<Long, Integer> getPositionMap(List<Map<String, String>> list) {
+        Map<Long, Integer> positions = new HashMap<>();
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).get("id").equals(cardid)) {
-                return i;
-            }
+            positions.put(Long.valueOf(list.get(i).get("id")), i);
         }
-        return -1;
+        return positions;
     }
 
 
@@ -1018,10 +1016,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * @param updatedCardTags Mapping note id -> updated tags
      */
     private void updateCardsInList(List<Card> cards, Map<Long, String> updatedCardTags) {
+        Map<Long, Integer> idToPos = getPositionMap(getCards());
         for (Card c : cards) {
             Note note = c.note();
             // get position in the mCards search results HashMap
-            int pos = getPosition(getCards(), c.getId());
+            int pos = idToPos.containsKey(c.getId()) ? idToPos.get(c.getId()) : -1;
             if (pos < 0 || pos >= getCards().size()) {
                 continue;
             }
@@ -1178,8 +1177,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void removeNotesView(Card[] cards) {
         List<Integer> posList = new ArrayList<>();
         long reviewerCardId = getReviewerCardId();
+        Map<Long, Integer> idToPos = getPositionMap(getCards());
         for (Card card : cards) {
-            int pos = getPosition(getCards(), card.getId());
+            int pos = idToPos.containsKey(card.getId()) ? idToPos.get(card.getId()) : -1;
             if (card.getId() == reviewerCardId) {
                 mReloadRequired = true;
             }
