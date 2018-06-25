@@ -40,13 +40,13 @@
 -->
 <resources>
   <!-- Navigation drawer items-->
-  <string name="decks">Paquets</string>
+  <string name="decks">Jeux de cartes</string>
   <string name="card_browser">Navigateur de cartes</string>
   <string name="statistics">Statistiques</string>
   <string name="settings">Paramètres</string>
   <string name="help">Aide</string>
   <string name="send_feedback">Envoyer un commentaire</string>
-  <string name="studyoptions_title">Aperçu du paquet</string>
+  <string name="studyoptions_title">Aperçu du jeu de cartes</string>
   <string name="studyoptions_due_today">Prévues aujourd’hui :</string>
   <string name="studyoptions_new_total">Cartes inédites :</string>
   <string name="studyoptions_total_cards">Total cartes :</string>
@@ -74,7 +74,7 @@
   <string name="show_answer">Afficher la réponse</string>
   <string name="ease_button_again">Encore</string>
   <string name="ease_button_hard">Difficile</string>
-  <string name="ease_button_good">Bon</string>
+  <string name="ease_button_good">Bien</string>
   <string name="ease_button_easy">Facile</string>
   <string name="studyoptions_congrats_undo">Annuler %s</string>
   <string name="menu_import">Importer</string>
@@ -86,7 +86,7 @@
   <string name="undo_action_suspend_note">suspendre la note</string>
   <string name="undo_action_delete">supprimer la note</string>
   <string name="unbury">Déterrer</string>
-  <string name="rename_deck">Renommer le paquet</string>
+  <string name="rename_deck">Renommer le jeu</string>
   <string name="menu_add">Ajouter</string>
   <string name="menu_add_note">Ajouter une note</string>
   <string name="menu_my_account">Compte de synchronisation</string>

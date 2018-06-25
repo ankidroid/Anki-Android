@@ -44,7 +44,7 @@
   <string name="statistics_young_and_learn">復習(未熟)＋基本学習</string>
   <string name="statistics_unlearned">未学習(新規)</string>
   <string name="statistics_suspended_and_buried">保留＋延期</string>
-  <string name="statistics_relearn">再学習</string>
+  <string name="statistics_relearn">再基本学習</string>
   <string name="statistics_learn">基本学習</string>
   <string name="statistics_cram">フィルター学習</string>
   <string name="stats_cards">枚数</string>
@@ -71,7 +71,7 @@
   <string name="stats_answer_type">回答の種類</string>
   <string name="stats_today_again_count">忘却回数: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(正解率: &lt;b&gt;%.1f%%&lt;/b&gt;)</string>
-  <string name="stats_today_type_breakdown">基本学習: &lt;b&gt;%1$s&lt;/b&gt;　復習: &lt;b&gt;%2$s&lt;/b&gt;　再学習: &lt;b&gt;%3$s&lt;/b&gt;　フィルター学習: &lt;b&gt;%4$s&lt;/b&gt;</string>
+  <string name="stats_today_type_breakdown">基本学習: &lt;b&gt;%1$s&lt;/b&gt;　復習: &lt;b&gt;%2$s&lt;/b&gt;　再基本学習: &lt;b&gt;%3$s&lt;/b&gt;　フィルター学習: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">復習(熟知)の正解率: %3$.1f%% (%1$d/%2$d)</string>
   <string name="stats_today_no_mature_cards">復習(熟知)の正解率: -- (未復習)</string>
   <string name="stats_overview_forecast_total">合計: &lt;b&gt;%1$d&lt;/b&gt;枚</string>

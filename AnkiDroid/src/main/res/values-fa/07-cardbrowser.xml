@@ -73,7 +73,7 @@
   <string name="card_browser_filtering_cards">در حال فیلتر کردن کارتها... \nبرای لغو دکمه برگشت را بزنید</string>
   <string-array name="card_browser_order_labels">
     <item>مرتب سازی نکن (سریعتر)</item>
-    <item>By sort field</item>
+    <item>مرتب‌سازی براساس فیلد</item>
     <item>به وسیله زمان ایجاد</item>
     <item>به وسیله زمان ویرایش</item>
     <item>به وسیله زمان تغییر</item>
