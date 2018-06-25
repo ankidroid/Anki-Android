@@ -668,6 +668,11 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         // mark undo for all at once
                         col.markUndo(type, new Object[] {cards, originalSuspended});
 
+                        // reload cards because they'll be passed back to caller
+                        for (Card c : cards) {
+                            c.load();
+                        }
+
                         sHadCardQueue = true;
                         break;
                     }
@@ -689,6 +694,12 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
                         // mark undo for all at once
                         col.markUndo(type, new Object[] {originalMarked, originalUnmarked});
+
+                        // reload cards because they'll be passed back to caller
+                        for (Card c : cards) {
+                            c.load();
+                        }
+
                         break;
                     }
 
