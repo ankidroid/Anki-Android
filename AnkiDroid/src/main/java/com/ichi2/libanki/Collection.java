@@ -1274,19 +1274,22 @@ public class Collection {
                 List<Long> toUnsuspendIds = new ArrayList<>();
                 for (int i = 0; i < cards.length; i++) {
                     Card card = cards[i];
-                    if (originalSuspended[i])
+                    if (originalSuspended[i]) {
                         toSuspendIds.add(card.getId());
-                    else
+                    } else {
                         toUnsuspendIds.add(card.getId());
+                    }
                 }
 
                 // unboxing
                 long[] toSuspendIdsArray = new long[toSuspendIds.size()];
                 long[] toUnsuspendIdsArray = new long[toUnsuspendIds.size()];
-                for (int i = 0; i < toSuspendIds.size(); i++)
+                for (int i = 0; i < toSuspendIds.size(); i++) {
                     toSuspendIdsArray[i] = toSuspendIds.get(i);
-                for (int i = 0; i < toUnsuspendIds.size(); i++)
+                }
+                for (int i = 0; i < toUnsuspendIds.size(); i++) {
                     toUnsuspendIdsArray[i] = toUnsuspendIds.get(i);
+                }
 
                 getSched().suspendCards(toSuspendIdsArray);
                 getSched().unsuspendCards(toUnsuspendIdsArray);

@@ -1018,8 +1018,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * @param updatedCardTags Mapping note id -> updated tags
      */
     private void updateCardsInList(List<Card> cards, Map<Long, String> updatedCardTags) {
-        List<Card> allCards = CardUtils.getAllCards(CardUtils.getNotes(cards));
-        for (Card c : allCards) {
+        for (Card c : cards) {
             Note note = c.note();
             // get position in the mCards search results HashMap
             int pos = getPosition(getCards(), c.getId());
@@ -1038,7 +1037,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // update deck
             String deckName;
             try {
-                // TODO why card.getDid instead of c.getDid() before? Cards of the same note can be in different decks.
                 deckName = getCol().getDecks().get(c.getDid()).getString("name");
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -1178,7 +1176,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * Removes cards from view. Doesn't delete them in model (database).
      */
     private void removeNotesView(Card[] cards) {
-        // need set because multiple cards of the same note might have been selected
         List<Integer> posList = new ArrayList<>();
         long reviewerCardId = getReviewerCardId();
         for (Card card : cards) {
@@ -1249,7 +1246,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void onPostExecute(DeckTask.TaskData result) {
             if (result.getBoolean()) {
                 Card[] cards = (Card[]) result.getObjArray();
-                updateCardsInList(Arrays.asList(cards), null);
+                updateCardsInList(CardUtils.getAllCards(CardUtils.getNotes(Arrays.asList(cards))), null);
                 updateMultiselectMenu();
                 hideProgressBar();
                 invalidateOptionsMenu();    // maybe the availability of undo changed
