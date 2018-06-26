@@ -86,6 +86,7 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="stats_cumulative">@color/stats_cumulative</item>
         <!-- Browser colors -->
         <item name="suspendedColor">#FFFFB2</item>
+        <item name="selectedColor">#FFFFBB99</item>
         <item name="markedColor">#D9B2E9</item>
         <!-- Note editor colors -->
         <item name="duplicateColor">#fcc</item>
