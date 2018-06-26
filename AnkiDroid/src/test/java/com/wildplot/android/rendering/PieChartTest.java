@@ -52,12 +52,12 @@ public class PieChartTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void constructorShouldThrowIfSizesMismatch() throws Exception {
+    public void testConstructorShouldThrowIfSizesMismatch() throws Exception {
         new PieChart(plot, new double[]{1, 1}, new ColorWrap[]{ColorWrap.RED});
     }
 
     @Test
-    public void paintShouldNotDrawAnythingIfValuesAreZero() throws Exception {
+    public void testPaintShouldNotDrawAnythingIfValuesAreZero() throws Exception {
         pieChart = new PieChart(plot, new double[]{0, 0}, new ColorWrap[]{
                 ColorWrap.RED, ColorWrap.GREEN});
         pieChart.paint(graphics);
@@ -66,7 +66,7 @@ public class PieChartTest {
     }
 
     @Test
-    public void paintShouldDrawFullRedCircleIfOneValue() throws Exception {
+    public void testPaintShouldDrawFullRedCircleIfOneValue() throws Exception {
         pieChart = new PieChart(plot, new double[]{1.}, new ColorWrap[]{
                 ColorWrap.RED});
         RectangleWrap r = createRectangleMock(100, 100);
@@ -79,7 +79,7 @@ public class PieChartTest {
     }
 
     @Test
-    public void paintShouldDrawTwoSectorsWithGivenColors() throws Exception {
+    public void testPaintShouldDrawTwoSectorsWithGivenColors() throws Exception {
         pieChart = new PieChart(plot, new double[]{1, 1}, new ColorWrap[]{
                 ColorWrap.RED, ColorWrap.GREEN});
         RectangleWrap r = createRectangleMock(100, 100);
