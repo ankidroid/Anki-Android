@@ -960,7 +960,7 @@ public class CardContentProvider extends ContentProvider {
                     col.save();
                     return ContentUris.withAppendedId(uri, t.getInt("ord"));
                 } catch (ConfirmModSchemaException e) {
-                    throw new IllegalArgumentException("Unable to add template", e);
+                    throw new IllegalArgumentException("Unable to add template without user requesting/accepting full-sync", e);
                 } catch (JSONException e) {
                     throw new IllegalArgumentException("Unable to get ord from new template", e);
                 }
