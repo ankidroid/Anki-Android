@@ -25,10 +25,19 @@ android {
         }
     }
     buildTypes {
+        debug {
+            debuggable true
+            // A free test acralyzer instance that allows report writes and dashboard reads without auth
+            // ...or you can create your own following acralyzer docs
+            // To test ACRA you will also need to manually/temporarily change AnkiDroidApp#onCreate
+            // View at https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acralyzer/_design/acralyzer/index.html#/dashboard/
+            buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
         }
     }
     useLibrary 'org.apache.http.legacy'
@@ -59,7 +68,10 @@ dependencies {
         transitive = true
     }
     implementation 'com.getbase:floatingactionbutton:1.10.1'
-    implementation 'ch.acra:acra:4.6.2'
+    implementation('ch.acra:acra:4.11') {
+        // This will be solved if we move all the android stuff to 27.1.1
+        exclude group: 'com.android.support'
+    }
     implementation 'com.jakewharton.timber:timber:4.7.0'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'org.jsoup:jsoup:1.10.3'

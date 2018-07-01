@@ -40,10 +40,10 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.LanguageUtil;
 
 import org.acra.ACRA;
-import org.acra.ACRAConfigurationException;
 import org.acra.ReportField;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
+import org.acra.config.ConfigurationBuilder;
 import org.acra.sender.HttpSender;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,14 +62,13 @@ import static timber.log.Timber.DebugTree;
         reportDialogClass = AnkiDroidCrashReportDialog.class,
         httpMethod = HttpSender.Method.PUT,
         reportType = HttpSender.Type.JSON,
-        formUri = "https://ankidroid.org/acra/report",
+        formUri = BuildConfig.ACRA_URL,
         mode = ReportingInteractionMode.DIALOG,
         resDialogCommentPrompt =  R.string.empty_string,
         resDialogTitle =  R.string.feedback_title,
         resDialogText =  R.string.feedback_default_text,
         resToastText = R.string.feedback_auto_toast_text,
         resDialogPositiveButtonText = R.string.feedback_report,
-        additionalSharedPreferences = {"com.ichi2.anki"},
         excludeMatchingSharedPreferencesKeys = {"username","hkey"},
         customReportContent = {
             ReportField.REPORT_ID,
@@ -118,6 +117,9 @@ import static timber.log.Timber.DebugTree;
 public class AnkiDroidApp extends Application {
 
     public static final String XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki";
+
+    // ACRA constants used for stored preferences
+    public static final String FEEDBACK_REPORT_KEY = "reportErrorMode";
     public static final String FEEDBACK_REPORT_ASK = "2";
     public static final String FEEDBACK_REPORT_NEVER = "1";
     public static final String FEEDBACK_REPORT_ALWAYS = "0";
@@ -145,6 +147,28 @@ public class AnkiDroidApp extends Application {
      */
     public static final int CHECK_PREFERENCES_AT_VERSION = 20500225;
 
+    /** Our ACRA configuration, initialized during onCreate() */
+    private ConfigurationBuilder acraConfigBuilder = new ConfigurationBuilder(this);
+
+
+    /**
+     * Get the ACRA ConfigurationBuilder - use this followed by setting it to modify the config
+     * @return ConfigurationBuilder for the current ACRA config
+     */
+    public ConfigurationBuilder getAcraConfigBuilder() {
+        return acraConfigBuilder;
+    }
+
+
+    /**
+     * Set the ACRA ConfigurationBuilder and <b>re-initialize the ACRA system</b> with the contents
+     * @param acraConfigBuilder the full ACRA config to initialize ACRA with
+     */
+    public void setAcraConfigBuilder(ConfigurationBuilder acraConfigBuilder) {
+        this.acraConfigBuilder = acraConfigBuilder;
+        ACRA.init(this, acraConfigBuilder);
+    }
+
 
     /**
      * On application creation.
@@ -155,26 +179,23 @@ public class AnkiDroidApp extends Application {
         // Get preferences
         SharedPreferences preferences = getSharedPrefs(this);
 
-        // Initialize crash reporting module
-        ACRA.init(this);
-
         // Setup logging and crash reporting
         if (BuildConfig.DEBUG) {
             // Enable verbose error logging and do method tracing to put the Class name as log tag
             Timber.plant(new DebugTree());
-            // Disable crash reporting
-            setAcraReportingMode(FEEDBACK_REPORT_NEVER);
-            preferences.edit().putString("reportErrorMode", FEEDBACK_REPORT_NEVER).commit();
-            // Use a wider logcat filter incase crash reporting manually re-enabled
-            String [] logcatArgs = { "-t", "300", "-v", "long", "ACRA:S"};
-            ACRA.getConfig().setLogcatArguments(logcatArgs);
+
+            // If you need to test ACRA to make sure it's working, switch which of these is commented
+            // and do a local build then trigger a crash
+            // Note that you need to disable advanced profiling in Android Studio for API < 26 for the
+            // Crash Dialog to work or you'll get a masking error
+            // https://stackoverflow.com/questions/49830593/null-pointer-exception-in-inputconnection-finishcomposingtext-method
+            //setAcraTestACRAConfig(preferences);
+            setDebugACRAConfig(preferences);
         } else {
             Timber.plant(new ProductionCrashReportingTree());
-            // Enable or disable crash reporting based on user setting
-            setAcraReportingMode(preferences.getString("reportErrorMode", FEEDBACK_REPORT_ASK));
+            setProductionACRAConfig(preferences);
         }
         Timber.tag(TAG);
-
 
         sInstance = this;
         setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
@@ -320,30 +341,64 @@ public class AnkiDroidApp extends Application {
 
 
     /**
-     * Set the reporting mode for ACRA based on the value of the reportErrorMode preference
-     * @param value value of reportErrorMode preference
+     * Turns ACRA reporting off completely and persists it to shared prefs
+     * But expands logcat search in case developer manually re-enables it
+     *
+     * @param prefs SharedPreferences object the reporting state is persisted in
+     */
+    public void setDebugACRAConfig(SharedPreferences prefs) {
+        // Disable crash reporting
+        setAcraReportingMode(FEEDBACK_REPORT_NEVER);
+        prefs.edit().putString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_NEVER).apply();
+        // Use a wider logcat filter in case crash reporting manually re-enabled
+        String [] logcatArgs = { "-t", "300", "-v", "long", "ACRA:S"};
+        setAcraConfigBuilder(getAcraConfigBuilder().setLogcatArguments(logcatArgs));
+    }
+
+
+    /**
+     * Puts ACRA Reporting mode into user-specified mode, with default of "ask first"
+     *
+     * @param prefs SharedPreferences object the reporting state is persisted in
+     */
+    public void setProductionACRAConfig(SharedPreferences prefs) {
+        // Enable or disable crash reporting based on user setting
+        setAcraReportingMode(prefs.getString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK));
+    }
+
+
+    /**
+     * Puts ACRA Reporting mode into "ask" every time, overrides user choice
+     */
+    public void setAcraTestACRAConfig(SharedPreferences prefs) {
+        prefs.edit().putString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK).apply();
+        setAcraReportingMode(FEEDBACK_REPORT_ASK);
+    }
+
+
+    /**
+     * Set the reporting mode for ACRA based on the value of the FEEDBACK_REPORT_KEY preference
+     * @param value value of FEEDBACK_REPORT_KEY preference
      */
     public void setAcraReportingMode(String value) {
-        SharedPreferences.Editor editor = ACRA.getACRASharedPreferences().edit();
+        SharedPreferences.Editor editor = getSharedPrefs(this).edit();
         // Set the ACRA disable value
         if (value.equals(FEEDBACK_REPORT_NEVER)) {
-            editor.putBoolean("acra.disable", true);
+            editor.putBoolean(ACRA.PREF_DISABLE_ACRA, true);
         } else {
-            editor.putBoolean("acra.disable", false);
+            editor.putBoolean(ACRA.PREF_DISABLE_ACRA, false);
             // Switch between auto-report via toast and manual report via dialog
-            try {
-                if (value.equals(FEEDBACK_REPORT_ALWAYS)) {
-                    ACRA.getConfig().setMode(ReportingInteractionMode.TOAST);
-                    ACRA.getConfig().setResToastText(R.string.feedback_auto_toast_text);
-                } else if (value.equals(FEEDBACK_REPORT_ASK)) {
-                    ACRA.getConfig().setMode(ReportingInteractionMode.DIALOG);
-                    ACRA.getConfig().setResToastText(R.string.feedback_manual_toast_text);
-                }
-            } catch (ACRAConfigurationException e) {
-                Timber.e("Could not set ACRA report mode");
+            if (value.equals(FEEDBACK_REPORT_ALWAYS)) {
+                setAcraConfigBuilder(getAcraConfigBuilder()
+                        .setReportingInteractionMode(ReportingInteractionMode.TOAST)
+                        .setResToastText(R.string.feedback_auto_toast_text));
+            } else if (value.equals(FEEDBACK_REPORT_ASK)) {
+                setAcraConfigBuilder(getAcraConfigBuilder()
+                        .setReportingInteractionMode(ReportingInteractionMode.DIALOG)
+                        .setResToastText(R.string.feedback_manual_toast_text));
             }
         }
-        editor.commit();
+        editor.apply();
     }
 
     /**
