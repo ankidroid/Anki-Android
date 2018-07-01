@@ -15,7 +15,10 @@
  ****************************************************************************************/
 package com.ichi2.anki.tests.libanki;
 
-import android.test.AndroidTestCase;
+import android.Manifest;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.GrantPermissionRule;
+import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.Suppress;
 
 import com.ichi2.anki.BackupManager;
@@ -24,21 +27,36 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Note;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 
 /**
  * Unit tests for {@link Media}.
  */
-public class MediaTest extends AndroidTestCase {
+@RunWith(AndroidJUnit4.class)
+public class MediaTest {
+
+    @Rule
+    public GrantPermissionRule mRuntimePermissionRule =
+            GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+
+    @Test
     public void testAdd() throws IOException {
         // open new empty collection
-        Collection d = Shared.getEmptyCol(getContext());
-        File dir = Shared.getTestDir(getContext());
+        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
+        File dir = Shared.getTestDir(InstrumentationRegistry.getTargetContext());
         BackupManager.removeDir(dir);
         dir.mkdirs();
         File path = new File(dir, "foo.jpg");
@@ -59,8 +77,9 @@ public class MediaTest extends AndroidTestCase {
     }
 
 
+    @Test
     public void testStrings() throws IOException {
-        Collection d = Shared.getEmptyCol(getContext());
+        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
         Long mid = d.getModels().getModels().entrySet().iterator().next().getKey();
         List<String> expected;
         List<String> actual;
@@ -113,12 +132,13 @@ public class MediaTest extends AndroidTestCase {
         assertEquals("<img src=\"foo%20bar.jpg\">", d.getMedia().escapeImages("<img src=\"foo bar.jpg\">"));
     }
 
+    @Test
     public void testDeckIntegration() throws IOException {
-        Collection d = Shared.getEmptyCol(getContext());
+        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
         // create a media dir
         d.getMedia().dir();
         // Put a file into it
-        File file = new File(Shared.getTestDir(getContext()), "fake.png");
+        File file = new File(Shared.getTestDir(InstrumentationRegistry.getTargetContext()), "fake.png");
         file.createNewFile();
         d.getMedia().addFile(file);
         // add a note which references it
@@ -161,13 +181,14 @@ public class MediaTest extends AndroidTestCase {
         return d.getMedia().getDb().queryColumn(String.class, "select fname from media where csum is null", 0);
     }
 
+    @Test
     public void testChanges() throws IOException {
-        Collection d = Shared.getEmptyCol(getContext());
+        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
         assertTrue(d.getMedia()._changed() != null);
         assertTrue(added(d).size() == 0);
         assertTrue(removed(d).size() == 0);
         // add a file
-        File dir = Shared.getTestDir(getContext());
+        File dir = Shared.getTestDir(InstrumentationRegistry.getTargetContext());
         File path = new File(dir, "foo.jpg");
         FileOutputStream os;
         os = new FileOutputStream(path, false);
@@ -200,8 +221,9 @@ public class MediaTest extends AndroidTestCase {
     }
 
 
+    @Test
     public void testIllegal() throws IOException {
-        Collection d = Shared.getEmptyCol(getContext());
+        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
         String aString = "a:b|cd\\e/f\0g*h";
         String good = "abcdefgh";
         assertTrue(d.getMedia().stripIllegal(aString).equals(good));

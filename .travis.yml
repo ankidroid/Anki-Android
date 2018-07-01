@@ -33,7 +33,6 @@ matrix:
   allow_failures:
     - env: API=15  # sometimes emulator hangs, sometimes not - possibly fixable
     - env: API=23 EMU_FLAVOR=google_apis # has permission errors
-    - env: API=24                        # has permission errors
     - env: API=25 EMU_FLAVOR=google_apis # has permission errors
 
 android:
