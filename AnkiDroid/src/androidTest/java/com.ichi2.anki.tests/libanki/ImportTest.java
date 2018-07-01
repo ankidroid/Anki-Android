@@ -16,7 +16,10 @@
 package com.ichi2.anki.tests.libanki;
 
 
-import android.test.AndroidTestCase;
+import android.Manifest;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.GrantPermissionRule;
+import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.Suppress;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -32,6 +35,9 @@ import com.ichi2.libanki.importer.TextImporter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,13 +45,36 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-public class ImportTest extends AndroidTestCase {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+@RunWith(AndroidJUnit4.class)
+public class ImportTest {
+
+    @Rule
+    public GrantPermissionRule mRuntimePermissionRule =
+            GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+    // testAnki2Mediadupes() failed on Travis API=22 EMU_FLAVOR=default ABI=armeabi-v7a
+    //com.ichi2.anki.tests.libanki.ImportTest > testAnki2Mediadupes[test(AVD) - 5.1.1] FAILED
+    // error:
+    //android.database.sqlite.SQLiteReadOnlyDatabaseException: attempt to write a readonly database (code 1032)
+    //at io.requery.android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+    //        :AnkiDroid:connectedDebugAndroidTest FAILED
+    //
+    // Error code 1032 is https://www.sqlite.org/rescode.html#readonly_dbmoved - which should be impossible
+    //
+    // I was unable to reproduce it on the same emulator locally, even with thousands of iterations.
+    // Allowing it to re-run now, 3 times, in case it flakes again.
+    @Rule
+    public RetryRule retry = new RetryRule(10);
+
+    @Test
     public void testAnki2Mediadupes() throws IOException, JSONException {
         List<String> expected;
         List<String> actual;
 
-        Collection tmp = Shared.getEmptyCol(getContext());
+        Collection tmp = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
         // add a note that references a sound
         Note n = tmp.newNote();
         n.setItem("Front", "[sound:foo.mp3]");
@@ -58,7 +87,7 @@ public class ImportTest extends AndroidTestCase {
         os.close();
         tmp.close();
         // it should be imported correctly into an empty deck
-        Collection empty = Shared.getEmptyCol(getContext());
+        Collection empty = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
         Importer imp = new Anki2Importer(empty, tmp.getPath());
         imp.run();
         expected = Arrays.asList("foo.mp3");
@@ -103,12 +132,13 @@ public class ImportTest extends AndroidTestCase {
         assertTrue(n.getFields()[0].contains("_"));
     }
 
+    @Test
     public void testApkg() throws IOException {
         List<String> expected;
         List<String> actual;
 
-        Collection tmp = Shared.getEmptyCol(getContext());
-        String apkg = Shared.getTestFilePath(getContext(), "media.apkg");
+        Collection tmp = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
+        String apkg = Shared.getTestFilePath(InstrumentationRegistry.getTargetContext(), "media.apkg");
         Importer imp = new AnkiPackageImporter(tmp, apkg);
         expected = Arrays.asList();
         actual = Arrays.asList(new File(tmp.getMedia().dir()).list());
@@ -138,11 +168,12 @@ public class ImportTest extends AndroidTestCase {
         assertTrue(new File(tmp.getMedia().dir()).list().length == 2);
     }
 
+    @Test
     public void testAnki2Diffmodels() throws IOException {
         // create a new empty deck
-        Collection dst = Shared.getEmptyCol(getContext());
+        Collection dst = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
         // import the 1 card version of the model
-        String tmp = Shared.getTestFilePath(getContext(), "diffmodels2-1.apkg");
+        String tmp = Shared.getTestFilePath(InstrumentationRegistry.getTargetContext(), "diffmodels2-1.apkg");
         AnkiPackageImporter imp = new AnkiPackageImporter(dst, tmp);
         imp.setDupeOnSchemaChange(true);
         imp.run();
@@ -153,7 +184,7 @@ public class ImportTest extends AndroidTestCase {
         imp.run();
         assertTrue(before == dst.noteCount());
         // then the 2 card version
-        tmp = Shared.getTestFilePath(getContext(), "diffmodels2-2.apkg");
+        tmp = Shared.getTestFilePath(InstrumentationRegistry.getTargetContext(), "diffmodels2-2.apkg");
         imp = new AnkiPackageImporter(dst, tmp);
         imp.setDupeOnSchemaChange(true);
         imp.run();
@@ -171,17 +202,18 @@ public class ImportTest extends AndroidTestCase {
         assertTrue(dst.cardCount() == 3);
     }
 
+    @Test
     public void testAnki2DiffmodelTemplates() throws IOException, JSONException {
         // different from the above as this one tests only the template text being
         // changed, not the number of cards/fields
-        Collection dst = Shared.getEmptyCol(getContext());
+        Collection dst = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
         // import the first version of the model
-        String tmp = Shared.getTestFilePath(getContext(), "diffmodeltemplates-1.apkg");
+        String tmp = Shared.getTestFilePath(InstrumentationRegistry.getTargetContext(), "diffmodeltemplates-1.apkg");
         AnkiPackageImporter imp = new AnkiPackageImporter(dst, tmp);
         imp.setDupeOnSchemaChange(true);
         imp.run();
         // then the version with updated template
-        tmp = Shared.getTestFilePath(getContext(), "diffmodeltemplates-2.apkg");
+        tmp = Shared.getTestFilePath(InstrumentationRegistry.getTargetContext(), "diffmodeltemplates-2.apkg");
         imp = new AnkiPackageImporter(dst, tmp);
         imp.setDupeOnSchemaChange(true);
         imp.run();
@@ -193,10 +225,11 @@ public class ImportTest extends AndroidTestCase {
         assertTrue(dst.findTemplates(tnote).get(0).getString("qfmt").contains("Changed Front Template"));
     }
 
+    @Test
     public void testAnki2Updates() throws IOException {
         // create a new empty deck
-        Collection dst = Shared.getEmptyCol(getContext());
-        String tmp = Shared.getTestFilePath(getContext(), "update1.apkg");
+        Collection dst = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
+        String tmp = Shared.getTestFilePath(InstrumentationRegistry.getTargetContext(), "update1.apkg");
         AnkiPackageImporter imp = new AnkiPackageImporter(dst, tmp);
         imp.run();
         assertTrue(imp.getDupes() == 0);
@@ -211,7 +244,7 @@ public class ImportTest extends AndroidTestCase {
         // importing a newer note should update
         assertTrue(dst.noteCount() == 1);
         assertTrue(dst.getDb().queryString("select flds from notes").startsWith("hello"));
-        tmp = Shared.getTestFilePath(getContext(), "update2.apkg");
+        tmp = Shared.getTestFilePath(InstrumentationRegistry.getTargetContext(), "update2.apkg");
         imp = new AnkiPackageImporter(dst, tmp);
         imp.run();
         assertTrue(imp.getDupes()== 1);
@@ -220,11 +253,11 @@ public class ImportTest extends AndroidTestCase {
         assertTrue(dst.getDb().queryString("select flds from notes").startsWith("goodbye"));
     }
 
-    // Remove @Suppress when csv importer is implemented
+    // Exchange @Suppress for @Test when csv importer is implemented
     @Suppress
     public void testCsv() throws IOException {
-        Collection deck = Shared.getEmptyCol(getContext());
-        String file = Shared.getTestFilePath(getContext(), "text-2fields.txt");
+        Collection deck = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
+        String file = Shared.getTestFilePath(InstrumentationRegistry.getTargetContext(), "text-2fields.txt");
         TextImporter i = new TextImporter(deck, file);
         i.initMapping();
         i.run();
@@ -257,10 +290,10 @@ public class ImportTest extends AndroidTestCase {
         deck.close();
     }
 
-    // Remove @Suppress when csv importer is implemented
+    // Exchange @Suppress for @Test when csv importer is implemented
     @Suppress
     public void testCsv2() throws  IOException, ConfirmModSchemaException {
-        Collection deck = Shared.getEmptyCol(getContext());
+        Collection deck = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
         Models mm = deck.getModels();
         JSONObject m = mm.current();
         JSONObject f = mm.newField("Three");
@@ -272,7 +305,7 @@ public class ImportTest extends AndroidTestCase {
         n.setItem("Three", "3");
         deck.addNote(n);
         // an update with unmapped fields should not clobber those fields
-        String file = Shared.getTestFilePath(getContext(), "text-update.txt");
+        String file = Shared.getTestFilePath(InstrumentationRegistry.getTargetContext(), "text-update.txt");
         TextImporter i = new TextImporter(deck, file);
         i.initMapping();
         i.run();
@@ -287,14 +320,14 @@ public class ImportTest extends AndroidTestCase {
      * Custom tests for AnkiDroid.
      */
 
-
+    @Test
     public void testDupeIgnore() throws IOException {
         // create a new empty deck
-        Collection dst = Shared.getEmptyCol(getContext());
-        String tmp = Shared.getTestFilePath(getContext(), "update1.apkg");
+        Collection dst = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
+        String tmp = Shared.getTestFilePath(InstrumentationRegistry.getTargetContext(), "update1.apkg");
         AnkiPackageImporter imp = new AnkiPackageImporter(dst, tmp);
         imp.run();
-        tmp = Shared.getTestFilePath(getContext(), "update3.apkg");
+        tmp = Shared.getTestFilePath(InstrumentationRegistry.getTargetContext(), "update3.apkg");
         imp = new AnkiPackageImporter(dst, tmp);
         imp.run();
         // there is a dupe, but it was ignored
