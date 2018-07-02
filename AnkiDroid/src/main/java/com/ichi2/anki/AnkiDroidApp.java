@@ -102,7 +102,7 @@ import static timber.log.Timber.DebugTree;
             //ReportField.SETTINGS_SECURE,
             //ReportField.SETTINGS_GLOBAL,
             ReportField.SHARED_PREFERENCES,
-            ReportField.APPLICATION_LOG,
+            //ReportField.APPLICATION_LOG,
             ReportField.MEDIA_CODEC_LIST,
             ReportField.THREAD_DETAILS
             //ReportField.USER_IP
@@ -194,12 +194,12 @@ public class AnkiDroidApp extends Application {
             // Enable verbose error logging and do method tracing to put the Class name as log tag
             Timber.plant(new DebugTree());
 
-            // If you need to test ACRA to make sure it's working, switch which of these is commented
+            // If you need to test ACRA to make sure it's working, switch which of these lines are commented
             // and do a local build then trigger a crash
             // Note that you need to disable advanced profiling in Android Studio for API < 26 for the
             // Crash Dialog to work or you'll get a masking error
             // https://stackoverflow.com/questions/49830593/null-pointer-exception-in-inputconnection-finishcomposingtext-method
-            //setAcraTestACRAConfig(preferences);
+            //setAcraTestACRAConfig(preferences); Timber.plant(new ProductionCrashReportingTree());
             setDebugACRAConfig(preferences);
         } else {
             Timber.plant(new ProductionCrashReportingTree());
