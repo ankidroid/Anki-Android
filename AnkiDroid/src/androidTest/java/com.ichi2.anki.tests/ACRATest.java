@@ -1,5 +1,5 @@
 package com.ichi2.anki.tests;
-;
+
 import android.Manifest;
 import android.app.Instrumentation;
 import android.support.test.rule.GrantPermissionRule;
@@ -9,9 +9,11 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
 import org.acra.ACRA;
-import org.acra.ReportingInteractionMode;
 import org.acra.collections.ImmutableList;
-import org.acra.config.ACRAConfiguration;
+import org.acra.config.Configuration;
+import org.acra.config.CoreConfiguration;
+import org.acra.config.DialogConfiguration;
+import org.acra.config.ToastConfiguration;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,8 +21,13 @@ import org.junit.runner.RunWith;
 
 import android.support.test.InstrumentationRegistry;
 
+import java.util.Iterator;
+import java.util.List;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class ACRATest {
@@ -38,6 +45,7 @@ public class ACRATest {
     public void setUp() {
         Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
         app = (AnkiDroidApp) instrumentation.getTargetContext().getApplicationContext();
+        app.onCreate();
     }
 
     @Test
@@ -46,7 +54,7 @@ public class ACRATest {
         // Debug mode overrides all saved state so no setup needed
         app.setDebugACRAConfig(AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()));
         assertArrayEquals("Debug logcat arguments not set correctly",
-                app.getAcraConfigBuilder().build().logcatArguments().toArray(),
+                app.getAcraCoreConfigBuilder().build().logcatArguments().toArray(),
                 new ImmutableList<>(debugLogcatArguments).toArray());
         verifyDebugACRAPreferences();
     }
@@ -82,7 +90,7 @@ public class ACRATest {
     private void verifyProductionLogcat() throws Exception {
         assertArrayEquals("Production logcat arguments not set correctly",
                 new ImmutableList<>(prodLogcatArguments).toArray(),
-                app.getAcraConfigBuilder().build().logcatArguments().toArray());
+                app.getAcraCoreConfigBuilder().build().logcatArguments().toArray());
     }
 
     @Test
@@ -95,10 +103,25 @@ public class ACRATest {
         app.setProductionACRAConfig(AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()));
         verifyACRANotDisabled();
 
-        ACRAConfiguration config = app.getAcraConfigBuilder().build();
-        assertEquals(ReportingInteractionMode.DIALOG, config.reportingInteractionMode());
-        assertEquals(R.string.feedback_manual_toast_text, config.resToastText());
-    }
+        CoreConfiguration config = app.getAcraCoreConfigBuilder().build();
+
+        for (Configuration configuration : config.pluginConfigurations()) {
+
+            // Make sure the toast is configured correctly
+            if (configuration.getClass().toString().contains("Toast")) {
+                assertEquals(app.getResources().getString(R.string.feedback_manual_toast_text),
+                        ((ToastConfiguration)configuration).text());
+                assertTrue("Toast is not enabled",
+                        ((ToastConfiguration)configuration).enabled());
+            }
+
+            // Make sure the dialog is set to pop up
+            if (configuration.getClass().toString().contains("Dialog")) {
+                assertTrue("Dialog is not enabled",
+                        ((DialogConfiguration)configuration).enabled());
+            }
+        }
+   }
 
 
     private void verifyACRANotDisabled() {
@@ -117,8 +140,22 @@ public class ACRATest {
         app.setProductionACRAConfig(AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()));
         verifyACRANotDisabled();
 
-        ACRAConfiguration config = app.getAcraConfigBuilder().build();
-        assertEquals(ReportingInteractionMode.TOAST, config.reportingInteractionMode());
-        assertEquals(R.string.feedback_auto_toast_text, config.resToastText());
+        CoreConfiguration config = app.getAcraCoreConfigBuilder().build();
+        for (Configuration configuration : config.pluginConfigurations()) {
+
+            // Make sure the toast is configured correctly
+            if (configuration.getClass().toString().contains("Toast")) {
+                assertEquals(app.getResources().getString(R.string.feedback_auto_toast_text),
+                        ((ToastConfiguration)configuration).text());
+                assertTrue("Toast is not enabled",
+                        ((ToastConfiguration)configuration).enabled());
+            }
+
+            // Make sure the dialog is disabled
+            if (configuration.getClass().toString().contains("Dialog")) {
+                assertFalse("Dialog is still enabled",
+                        ((DialogConfiguration)configuration).enabled());
+            }
+        }
     }
 }

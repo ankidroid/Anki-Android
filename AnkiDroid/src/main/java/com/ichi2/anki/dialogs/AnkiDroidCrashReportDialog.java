@@ -28,8 +28,10 @@ import android.widget.EditText;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
-import org.acra.config.ACRAConfiguration;
 import org.acra.config.ACRAConfigurationException;
+import org.acra.config.CoreConfigurationBuilder;
+import org.acra.config.DialogConfiguration;
+import org.acra.config.DialogConfigurationBuilder;
 import org.acra.dialog.BaseCrashReportDialog;
 
 import timber.log.Timber;
@@ -48,14 +50,12 @@ public class AnkiDroidCrashReportDialog extends BaseCrashReportDialog implements
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
 
         try {
-            ACRAConfiguration acraConfig = AnkiDroidApp.getInstance().getAcraConfigBuilder().build();
-            int resourceId = acraConfig.resDialogTitle();
-            if(resourceId != 0) {
-                dialogBuilder.setTitle(resourceId);
-            }
-            dialogBuilder.setPositiveButton(getText(acraConfig.resDialogPositiveButtonText()), AnkiDroidCrashReportDialog.this);
-            dialogBuilder.setNegativeButton(getText(acraConfig.resDialogNegativeButtonText()), AnkiDroidCrashReportDialog.this);
+            CoreConfigurationBuilder builder = AnkiDroidApp.getInstance().getAcraCoreConfigBuilder();
+            DialogConfiguration dialogConfig =
+                    (DialogConfiguration)builder.getPluginConfigurationBuilder((DialogConfigurationBuilder.class)).build();
 
+            dialogBuilder.setPositiveButton(dialogConfig.positiveButtonText(), AnkiDroidCrashReportDialog.this);
+            dialogBuilder.setNegativeButton(dialogConfig.negativeButtonText(), AnkiDroidCrashReportDialog.this);
         }
         catch (ACRAConfigurationException ace) {
             Timber.e(ace, "Unable to initialize ACRA while creating ACRA dialog?");

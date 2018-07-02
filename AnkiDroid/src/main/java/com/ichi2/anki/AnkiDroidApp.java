@@ -41,9 +41,13 @@ import com.ichi2.utils.LanguageUtil;
 
 import org.acra.ACRA;
 import org.acra.ReportField;
-import org.acra.ReportingInteractionMode;
-import org.acra.annotation.ReportsCrashes;
-import org.acra.config.ConfigurationBuilder;
+import org.acra.annotation.AcraCore;
+import org.acra.annotation.AcraDialog;
+import org.acra.annotation.AcraHttpSender;
+import org.acra.annotation.AcraToast;
+import org.acra.config.CoreConfigurationBuilder;
+import org.acra.config.DialogConfigurationBuilder;
+import org.acra.config.ToastConfigurationBuilder;
 import org.acra.sender.HttpSender;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,19 +62,10 @@ import static timber.log.Timber.DebugTree;
 /**
  * Application class.
  */
-@ReportsCrashes(
-        reportDialogClass = AnkiDroidCrashReportDialog.class,
-        httpMethod = HttpSender.Method.PUT,
-        reportType = HttpSender.Type.JSON,
-        formUri = BuildConfig.ACRA_URL,
-        mode = ReportingInteractionMode.DIALOG,
-        resDialogCommentPrompt =  R.string.empty_string,
-        resDialogTitle =  R.string.feedback_title,
-        resDialogText =  R.string.feedback_default_text,
-        resToastText = R.string.feedback_auto_toast_text,
-        resDialogPositiveButtonText = R.string.feedback_report,
+@AcraCore(
+        buildConfigClass = org.acra.dialog.BuildConfig.class,
         excludeMatchingSharedPreferencesKeys = {"username","hkey"},
-        customReportContent = {
+        reportContent = {
             ReportField.REPORT_ID,
             ReportField.APP_VERSION_CODE,
             ReportField.APP_VERSION_NAME,
@@ -114,6 +109,20 @@ import static timber.log.Timber.DebugTree;
         },
         logcatArguments = { "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S" }
 )
+@AcraDialog(
+        reportDialogClass = AnkiDroidCrashReportDialog.class,
+        resCommentPrompt =  R.string.empty_string,
+        resTitle =  R.string.feedback_title,
+        resText =  R.string.feedback_default_text,
+        resPositiveButtonText = R.string.feedback_report
+)
+@AcraHttpSender(
+        httpMethod = HttpSender.Method.PUT,
+        uri = BuildConfig.ACRA_URL
+)
+@AcraToast(
+        resText = R.string.feedback_auto_toast_text
+)
 public class AnkiDroidApp extends Application {
 
     public static final String XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki";
@@ -147,26 +156,26 @@ public class AnkiDroidApp extends Application {
      */
     public static final int CHECK_PREFERENCES_AT_VERSION = 20500225;
 
-    /** Our ACRA configuration, initialized during onCreate() */
-    private ConfigurationBuilder acraConfigBuilder = new ConfigurationBuilder(this);
+    /** Our ACRA configurations, initialized during onCreate() */
+    private CoreConfigurationBuilder acraCoreConfigBuilder;
 
 
     /**
      * Get the ACRA ConfigurationBuilder - use this followed by setting it to modify the config
      * @return ConfigurationBuilder for the current ACRA config
      */
-    public ConfigurationBuilder getAcraConfigBuilder() {
-        return acraConfigBuilder;
+    public CoreConfigurationBuilder getAcraCoreConfigBuilder() {
+        return acraCoreConfigBuilder;
     }
 
 
     /**
      * Set the ACRA ConfigurationBuilder and <b>re-initialize the ACRA system</b> with the contents
-     * @param acraConfigBuilder the full ACRA config to initialize ACRA with
+     * @param acraCoreConfigBuilder the full ACRA config to initialize ACRA with
      */
-    public void setAcraConfigBuilder(ConfigurationBuilder acraConfigBuilder) {
-        this.acraConfigBuilder = acraConfigBuilder;
-        ACRA.init(this, acraConfigBuilder);
+    public void setAcraConfigBuilder(CoreConfigurationBuilder acraCoreConfigBuilder) {
+        this.acraCoreConfigBuilder = acraCoreConfigBuilder;
+        ACRA.init(this, acraCoreConfigBuilder);
     }
 
 
@@ -180,6 +189,7 @@ public class AnkiDroidApp extends Application {
         SharedPreferences preferences = getSharedPrefs(this);
 
         // Setup logging and crash reporting
+        acraCoreConfigBuilder = new CoreConfigurationBuilder(this);
         if (BuildConfig.DEBUG) {
             // Enable verbose error logging and do method tracing to put the Class name as log tag
             Timber.plant(new DebugTree());
@@ -352,7 +362,7 @@ public class AnkiDroidApp extends Application {
         prefs.edit().putString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_NEVER).apply();
         // Use a wider logcat filter in case crash reporting manually re-enabled
         String [] logcatArgs = { "-t", "300", "-v", "long", "ACRA:S"};
-        setAcraConfigBuilder(getAcraConfigBuilder().setLogcatArguments(logcatArgs));
+        setAcraConfigBuilder(getAcraCoreConfigBuilder().setLogcatArguments(logcatArgs));
     }
 
 
@@ -388,15 +398,17 @@ public class AnkiDroidApp extends Application {
         } else {
             editor.putBoolean(ACRA.PREF_DISABLE_ACRA, false);
             // Switch between auto-report via toast and manual report via dialog
+            CoreConfigurationBuilder builder = getAcraCoreConfigBuilder();
             if (value.equals(FEEDBACK_REPORT_ALWAYS)) {
-                setAcraConfigBuilder(getAcraConfigBuilder()
-                        .setReportingInteractionMode(ReportingInteractionMode.TOAST)
-                        .setResToastText(R.string.feedback_auto_toast_text));
+                // Toast text defaults to always, we just need to disable the dialog
+                builder.getPluginConfigurationBuilder(DialogConfigurationBuilder.class)
+                        .setEnabled(false);
             } else if (value.equals(FEEDBACK_REPORT_ASK)) {
-                setAcraConfigBuilder(getAcraConfigBuilder()
-                        .setReportingInteractionMode(ReportingInteractionMode.DIALOG)
-                        .setResToastText(R.string.feedback_manual_toast_text));
+                // Both are enabled via annotation, just need to alter toast text
+                builder.getPluginConfigurationBuilder(ToastConfigurationBuilder.class)
+                        .setResText(R.string.feedback_manual_toast_text);
             }
+            setAcraConfigBuilder(builder);
         }
         editor.apply();
     }
