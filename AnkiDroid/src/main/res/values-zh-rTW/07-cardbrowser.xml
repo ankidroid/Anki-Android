@@ -72,7 +72,7 @@
   <string name="card_browser_filtering_cards">正在篩選卡片&#8230;\n按下返回鍵取消</string>
   <string-array name="card_browser_order_labels">
     <item>不要排序(較快)</item>
-    <item>By sort field</item>
+    <item>按字段名稱排序</item>
     <item>依建立時間</item>
     <item>依編輯時間</item>
     <item>依變更時間</item>

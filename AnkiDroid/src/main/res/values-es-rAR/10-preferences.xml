@@ -40,26 +40,26 @@
 -->
 <resources>
   <!-- generic strings -->
-  <string name="disabled">Desactivado</string>
-  <string name="enabled">Activado</string>
+  <string name="disabled">Deshabilitado</string>
+  <string name="enabled">Habilitado</string>
   <!-- preferences.xml categories-->
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Ajustes generales</string>
-  <string name="pref_cat_reviewing">Revisión</string>
+  <string name="pref_cat_reviewing">Repasando</string>
   <string name="pref_cat_reviewing_summ">Configuración de repasos sin especificación de mazo</string>
   <string name="pref_cat_reviewer_behaviour">Comportamiento</string>
-  <string name="pref_cat_flashcard">Pantalla</string>
+  <string name="pref_cat_flashcard">Mostrar</string>
   <string name="pref_cat_whiteboard">Pizarra</string>
   <string name="pref_cat_automatic_display">Mostrar automáticamente la respuesta</string>
   <string name="pref_cat_appearance">Apariencia</string>
-  <string name="pref_cat_appearance_summ">Cambia los temas y la fuente por defecto</string>
+  <string name="pref_cat_appearance_summ">Cambiar temas y fuente predeterminada</string>
   <string name="pref_cat_themes">Temas</string>
   <string name="pref_cat_fonts">Fuentes</string>
   <string name="pref_cat_gestures">Gestos</string>
   <string name="pref_cat_gestures_summ">Usar toques y deslizamientos en lugar de botones</string>
   <string name="pref_cat_actions">Acciones</string>
   <string name="pref_cat_advanced">Avanzado</string>
-  <string name="pref_cat_advanced_summ">Características experimentales y optimización</string>
+  <string name="pref_cat_advanced_summ">Optimización y características experimentales</string>
   <string name="pref_cat_performance">Rendimiento</string>
   <string name="pref_cat_workarounds">Soluciones</string>
   <string name="pref_cat_plugins">Plugins</string>
@@ -78,7 +78,7 @@
   <string name="dictionary">Diccionario de búsqueda</string>
   <string name="reset_languages">Restablecer idiomas</string>
   <string name="reset_languages_summ">Resetear disposiciones de idioma (para texto a voz y diccionarios) para todos los mazos</string>
-  <string name="reset_languages_question">¿Restablecer todas las tareas de idioma?</string>
+  <string name="reset_languages_question">¿Restablecer todas las asignaciones de idiomas?</string>
   <string name="reset_confirmation">Restablecer todos los estados</string>
   <string name="card_zoom">Zoom de la tarjeta</string>
   <string name="image_zoom">Zoom de la imagen</string>

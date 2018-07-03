@@ -107,7 +107,7 @@
   <string name="saving_facts">儲存筆記中</string>
   <string name="saving_model">儲存模組</string>
   <string name="add">新增</string>
-  <string name="save">Save</string>
+  <string name="save">存儲</string>
   <string name="close">關閉</string>
   <string name="select">選擇</string>
   <string name="saving_changes">正在儲存設定&#8230;</string>
@@ -136,15 +136,15 @@
   <string name="help_title">說明</string>
   <string name="check_db">檢查資料庫</string>
   <string name="check_media">檢查媒體</string>
-  <string name="empty_cards">Empty cards</string>
+  <string name="empty_cards">空白卡片</string>
   <string name="check_db_message">檢查資料庫。\n請稍後...</string>
-  <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
+  <string name="empty_card_warning">這張卡片是空的。請使用牌組列表界面右上角菜單中的“空白卡片”選項來查找空白卡片。</string>
   <string name="unknown_type_field_warning">輸入答案：未知的表格 %s</string>
   <string name="delete_deck">刪除牌組中...\n請稍候</string>
   <string name="show_hint">顯示%s</string>
   <string name="info_rate">評價AnkiDroid</string>
   <string name="col_load_failed">載入收藏時發生錯誤。\n按返回鍵來關閉 AnkiDroid</string>
-  <string name="import_title">Importing</string>
+  <string name="import_title">正在導入……</string>
   <string name="import_select_title">選擇欲匯入的檔案</string>
   <string name="import_message_add">新增</string>
   <string name="import_message_replace_confirm">這將會刪除你現有的收藏並以%s的內容取代，你確定嗎？</string>
@@ -152,28 +152,27 @@
   <string name="import_log_no_apkg">請不是有效的apkg檔</string>
   <string name="import_error_not_apkg_extension">檔案 \"%s\" 的副檔名不是 .apkg</string>
   <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考使用者手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
-  <string name="import_replacing">Replacing collection&#8230;</string>
+  <string name="import_replacing">正在導入牌組集合&#8230;&#8230;</string>
   <string name="export_include_schedule">包含進度</string>
   <string name="export_include_media">包含媒體</string>
   <string name="confirm_apkg_export">將收藏匯出成 apkg 檔案嗎？</string>
   <string name="confirm_apkg_export_deck">將 \"%s\" 匯出成 apkg 檔案嗎？</string>
   <string name="export_in_progress">正在匯出 apkg 檔案&#8230;</string>
-  <string name="export_successful_title">Send apkg?</string>
-  <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-  <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+  <string name="export_successful_title">發送apkg文件嗎？</string>
+  <string name="export_successful">文件 “%s” 導出完畢，您想用其他 app 發送它嗎？</string>
+  <string name="export_email_subject">AnkiDroid 導出卡片： %s</string>
   <string name="export_email_text">
-        <![CDATA[
-        Hi!
+<![CDATA[
+        你好！
         <br/><br/>
-        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
-        ]]>
-    </string>
-  <string name="export_unsuccessful">Error exporting apkg file</string>
+        這是從 <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a> 分享的 Anki 記憶牌組。
+        使用任一 <a href="http://ankisrs.net/#download">Anki 客戶端</a>打開它，享受輕鬆高效的學習吧！
+        ]]>    </string>
+  <string name="export_unsuccessful">導出apkg文件時出錯</string>
   <string name="import_hint">若你要匯入卡片，請將 apkg 檔案放在「%s」目錄下，然後按OK</string>
   <string name="upgrade_import_no_file_found">找不到可匯入的%1$s檔案</string>
   <string name="study_options">牌組選項</string>
-  <string name="select_tts">Set TTS language</string>
+  <string name="select_tts">設置 TTS 語言</string>
   <string name="custom_study">自訂學習</string>
   <string name="more_options">更多</string>
   <string name="dyn_deck_desc">這是專門用來進行額外學習進度的牌組。卡片在你複習完以後會自動回歸原本的牌組。如果在牌組列表中刪除這個牌組，其他剩下的卡片也會回歸它們原本的牌組。</string>
@@ -208,13 +207,13 @@
          languages which apparently use the other symbol to mean less
          than. -->
   <string name="less_than_time">&lt;%s</string>
-  <string name="decks_rename_exists">That deck already exists</string>
-  <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
+  <string name="decks_rename_exists">該牌組已存在</string>
+  <string name="decks_rename_filtered_nosubdecks">篩選牌組不能有子牌組</string>
   <string name="filtered_deck_name">篩選牌組</string>
-  <string name="reminder_title">Do not forget to study today!</string>
+  <string name="reminder_title">不要忘記今天去學習 ！</string>
   <plurals name="reminder_text">
-    <item quantity="other">%2$d new cards to review in %1$s</item>
+    <item quantity="other">%2$d 新卡片在 %1$s 待複習</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->
-  <string name="apk_share_error">Error sharing apkg file</string>
+  <string name="apk_share_error">共享 apkg 文件時出錯</string>
 </resources>

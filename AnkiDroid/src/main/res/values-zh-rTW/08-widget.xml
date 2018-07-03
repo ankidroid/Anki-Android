@@ -53,11 +53,11 @@
   <string name="widget_small">AnkiDroid 小型</string>
   <string name="widget_small_button">AnkiDroid</string>
   <plurals name="widget_cards_due">
-    <item quantity="other">%d cards due</item>
+    <item quantity="other">%d 張卡片待複習</item>
   </plurals>
   <plurals name="widget_eta">
-    <item quantity="other">%d minutes remaining</item>
+    <item quantity="other">剩餘 %d 分鐘</item>
   </plurals>
   <string name="widget_add_note">增加筆記</string>
-  <string name="widget_add_note_button">Add new AnkiDroid note</string>
+  <string name="widget_add_note_button">添加新的筆記</string>
 </resources>
