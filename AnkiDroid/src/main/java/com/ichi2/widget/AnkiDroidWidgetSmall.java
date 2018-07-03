@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.IBinder;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -149,14 +150,18 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                         updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE);
                         updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE);
                         updateViews.setTextViewText(R.id.widget_due, Integer.toString(dueCardsCount));
-                        updateViews.setContentDescription(R.id.widget_due, getResources().getQuantityString(R.plurals.widget_cards_due, dueCardsCount, dueCardsCount));
+                        if (Build.VERSION.SDK_INT > 15) {
+                            updateViews.setContentDescription(R.id.widget_due, getResources().getQuantityString(R.plurals.widget_cards_due, dueCardsCount, dueCardsCount));
+                        }
                     }
                     if (eta <= 0 || dueCardsCount <= 0) {
                         updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE);
                     } else {
                         updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE);
                         updateViews.setTextViewText(R.id.widget_eta, Integer.toString(eta));
-                        updateViews.setContentDescription(R.id.widget_eta, getResources().getQuantityString(R.plurals.widget_eta, eta, eta));
+                        if (Build.VERSION.SDK_INT > 15) {
+                            updateViews.setContentDescription(R.id.widget_eta, getResources().getQuantityString(R.plurals.widget_eta, eta, eta));
+                        }
                     }
                 }
             }
