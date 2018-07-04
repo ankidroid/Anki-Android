@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Kontur genişliği</string>
   <string name="whiteboard_black">Siyah konturlar</string>
   <string name="whiteboard_black_summ">Daha az hafıza kullanır, gece modu hariç</string>
-  <string name="write_answers_disable">Cevabı yazmayı devredışı bırak</string>
-  <string name="write_answers_disable_summ">\"Cevabı yaz\" alanları içeren kartlarda klavyenin çıkmasını engeller</string>
   <string name="use_input_tag">Cevabı karta yaz</string>
   <string name="use_input_tag_summ">Cevabı yazmak için kartın içinde bir metin giriş kutusu kullan</string>
-  <string name="text_selection_click">Uzun basma çözümü</string>
-  <string name="text_selection_click_summ">Uzun basarak yazı seçemiyorsanız bunu etkinleştirin</string>
   <string name="dictionary">Sözlüğe bak</string>
   <string name="reset_languages">Dilleri sıfırla</string>
   <string name="reset_languages_summ">Bütün desteler için dil atamalarını sıfırla (metin okuma ve sözlükler için)</string>
@@ -145,7 +141,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Dil Seç</string>
   <string name="safe_display">Güvenli görüntü modu</string>
-  <string name="safe_display_summ">Bütün animasyonları devredışı bırak ve kartları çizmek için daha güvenli yöntem kullan. E-ink ve farklı fontlar kullanan eski cihazlar için gerekli olabilir.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Ortaya hizala</string>
   <string name="vertical_centering_summ">Kartların içeriğini dikey olarak ortala</string>
   <string name="pref_backup_max">En fazla yedek sayısı</string>
@@ -163,8 +159,6 @@
   <string name="time_limit_summ">XXX dk</string>
   <string name="day_offset">Sonraki günün başlangıcı</string>
   <string name="day_offset_summ">Geceyarısından XXX saat sonra</string>
-  <string name="input_workaround">Giriş çözümü</string>
-  <string name="input_workaround_summ">HTML giriş kutularında odaklama sorunları için geçici çözüm. Bazı cihazlarda sorunlara yol açar.</string>
   <string name="pref_keep_screen_on">Ekranı açık tut</string>
   <string name="pref_keep_screen_on_summ">Ekran zaman aşımını devredışı bırak</string>
   <string name="convert_fen_text">Satranç gösterimi desteği</string>

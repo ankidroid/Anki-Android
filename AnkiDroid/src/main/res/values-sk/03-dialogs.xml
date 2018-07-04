@@ -64,6 +64,9 @@
     <item><![CDATA[AnkiDroid je vydaný pod <a href=\"%1$s\">licenciou GNU-GPL v3</a> a jeho zdrojový kód je dostupný na stránke <a href=\"%2$s\">GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Náhľad</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">Vynulovať zaznamenaný priebeh v učení kartičky</string>
   <string name="reset_card_dialog_message">Táto kartička bude umiestnená na posledné miesto v poradí nových kartičiek</string>
   <string name="reset_card_dialog_acknowledge">Obnoviť kartičku</string>

@@ -57,10 +57,13 @@
     <item><![CDATA[<h2>%1$s:<br/>給 Android 的 Flashcard</h2>AnkiDroid 是完全相容桌面版本的 flashcard 應用程式 <a href=\"%2$s\">Anki</a>。 你可以任意在 AnkiDroid 或是桌面版 Anki 上新增、下載和學習東西，並使用 AnkiWeb 輕鬆同步這些記錄。]]></item>
     <item><![CDATA[為了協助我們讓 AnkiDroid 更好，請到 <a href=\"%1$s\">issue tracker</a> 回報錯誤; 任何有關新功能的點子也很歡迎。在 <a href=\"%2$s\">wiki</a> 尋找答案或是在<a href=\"%3$s\">論壇</a>參與討論。]]></item>
     <item><![CDATA[AnkiDroid 是<a href=\"%1$s\">自由軟體<a/>，所以我們鼓勵任何人<a href=\"%2$s\">成爲貢獻者</a> :-)]]></item>
-    <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
+    <item><![CDATA[非開發者亦可幫助。例如，你可以<a href=\"%1$s\">幫助翻譯</a>AnkiDroid、更新wiki、提供屏幕截圖，或寫關於AnkiDroid的博客。]]></item>
     <item><![CDATA[AnkiDroid 在 <a href=\"%1$s\">GNU-GPL v3 授權</a>下釋出且你可在<a href=\"%2$s\">GitHub</a> 上取得其程式碼]]></item>
   </string-array>
   <string name="preview_title">預覽</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">重置卡片進度</string>
   <string name="reset_card_dialog_message">這張卡片將被放在新卡片佇列的最後面。</string>
   <string name="reset_card_dialog_acknowledge">重置卡片</string>
@@ -86,10 +89,10 @@
   <string name="rebuild_custom_study_deck">重建自訂學習的牌組。\n請稍後...</string>
   <string name="importing_collection">匯入收藏中&#8230;</string>
   <string name="import_media_count">匯入媒體檔案 %1$d%%\n 請稍後......</string>
-  <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
-  <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
-  <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
-  <string name="import_complete_count">Cards imported: %d</string>
+  <string name="import_progress">正在導入筆記: %1$d%%\n• 正在導入卡牌: %2$d%%\n• 正在後期處理: %3$d%%</string>
+  <string name="import_update_details">現有筆記%2$d條，已更新%1$d條。</string>
+  <string name="import_update_ignored">忽略了某些更新，因為這些筆記的類型已改變</string>
+  <string name="import_complete_count">卡牌已導入：%d</string>
   <string name="sd_card_full_title">SD 卡空間已滿</string>
   <string name="sd_card_almost_full_title">SD 卡空間快滿</string>
   <string name="restore_backup_title">回復備份嗎？</string>
@@ -126,8 +129,8 @@
   <string name="tags_dialog_option_new_cards">新增</string>
   <string name="tags_dialog_option_due_cards">到期</string>
   <!-- Empty cards -->
-  <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
-  <string name="empty_cards_none">No empty cards</string>
-  <string name="empty_cards_count">Cards to delete: %d</string>
-  <string name="empty_cards_deleted">Cards deleted: %d</string>
+  <string name="emtpy_cards_finding">正在查找空白卡牌&#8230;&#8230;</string>
+  <string name="empty_cards_none">沒有空白卡牌</string>
+  <string name="empty_cards_count">將要刪除卡牌：%d</string>
+  <string name="empty_cards_deleted">已刪除卡牌：%d</string>
 </resources>

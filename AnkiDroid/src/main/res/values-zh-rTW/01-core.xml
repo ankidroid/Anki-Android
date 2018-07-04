@@ -53,8 +53,8 @@
   <string name="studyoptions_eta">估計時間(分鐘):</string>
   <string name="studyoptions_start">開始學習</string>
   <!-- DeckPicker.java -->
-  <string name="expand">Expand</string>
-  <string name="collapse">Collapse</string>
+  <string name="expand">展開</string>
+  <string name="collapse">折疊</string>
   <string name="study_more">再學習一些</string>
   <plurals name="deckpicker_title">
     <item quantity="other">%1$d 張卡片到期 (%2$s)</item>
@@ -77,11 +77,14 @@
   <string name="menu_import">匯入</string>
   <string name="undo">復原</string>
   <string name="undo_action_review">上次複習</string>
-  <string name="undo_action_bury_card">bury card</string>
+  <string name="undo_action_bury_card">隱藏卡片</string>
   <string name="undo_action_bury_note">掩埋註解</string>
   <string name="undo_action_suspend_card">長久擱置卡片</string>
   <string name="undo_action_suspend_note">長久擱置筆記</string>
   <string name="undo_action_delete">刪除筆記</string>
+  <string name="undo_action_delete_multi">delete notes</string>
+  <string name="undo_action_change_deck_multi">change decks</string>
+  <string name="move_all_to_deck">Move all to deck</string>
   <string name="unbury">取消暫時隱藏</string>
   <string name="rename_deck">重新命名牌組</string>
   <string name="menu_add">新增</string>
@@ -92,8 +95,8 @@
   <string name="menu_bury_note">暫時隱藏筆記</string>
   <string name="menu_suspend_card">長久擱置卡片</string>
   <string name="menu_suspend_note">長久擱置筆記</string>
-  <string name="menu_bury">Bury</string>
-  <string name="menu_suspend">Suspend</string>
+  <string name="menu_bury">隱藏</string>
+  <string name="menu_suspend">暫停</string>
   <string name="menu_delete_note">刪除筆記</string>
   <string name="delete_note_message">真的要刪除這個筆記跟它的卡片嗎？\n%s</string>
   <string name="menu_select">選擇文字</string>
@@ -139,7 +142,7 @@
   <string name="cancel_sync_confirm">你要取消同步嗎？</string>
   <string name="continue_sync">繼續同步</string>
   <string name="sync_cancelled">同步已取消</string>
-  <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
+  <string name="sync_cancel_message">正在取消&#8230;\n這可能需要一點時間。</string>
   <string name="export">匯出</string>
   <string name="export_collection">匯出收藏</string>
   <string name="export_deck">匯出牌組</string>
@@ -154,9 +157,9 @@
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="other">刪除卡片種類 \"%2$s\"，和它的 %1$d 張卡片？</item>
   </plurals>
-  <string name="invalid_template">A card could not be generated</string>
+  <string name="invalid_template">無法生成卡片</string>
   <string name="card_template_editor_would_delete_note">移除這個卡片種類將會導致一或多個筆記被刪除。請先新增一個卡片種類。</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">讀寫 AnkiDroid 資料庫</string>
-  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="read_write_permission_description">瀏覽現有的筆記、 卡片、 筆記類型和牌組，或者自己動手創建新的~</string>
 </resources>

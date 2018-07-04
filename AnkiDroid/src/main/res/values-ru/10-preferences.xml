@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Толщина линни</string>
   <string name="whiteboard_black">Черные линии</string>
   <string name="whiteboard_black_summ">Использует меньше памяти, если не в ночном режиме</string>
-  <string name="write_answers_disable">Отключить ввод ответа</string>
-  <string name="write_answers_disable_summ">Отключает показ клавиатуры для карточек с вводом ответа</string>
   <string name="use_input_tag">Ввод ответа на карточке</string>
   <string name="use_input_tag_summ">Добавляет на карточку поле ввода для ответа</string>
-  <string name="text_selection_click">Исправление долгого нажания</string>
-  <string name="text_selection_click_summ">Включите, если не удаётся выделить текст длинным нажатием</string>
   <string name="dictionary">Посмотреть в словаре</string>
   <string name="reset_languages">Сбросить языки</string>
   <string name="reset_languages_summ">Сбрасывает сопоставленные всем колодам языки</string>
@@ -145,7 +141,7 @@
   <string name="timeout_question_seconds_summ">XXX с</string>
   <string name="select_locale_title">Выберите язык</string>
   <string name="safe_display">Статический режим экрана</string>
-  <string name="safe_display_summ">Отключает анимацию и использует безопасную отрисовку. Может понадобиться для старых устройств и экранов с электронными чернилами.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Выравнивать по центру</string>
   <string name="vertical_centering_summ">Выравнивает содержимое карточек по вертикали</string>
   <string name="pref_backup_max">Число резервных копий</string>
@@ -163,8 +159,6 @@
   <string name="time_limit_summ">XXX мин.</string>
   <string name="day_offset">Начало следующего дня</string>
   <string name="day_offset_summ">XXX ч. утра</string>
-  <string name="input_workaround">Исправление ввода</string>
-  <string name="input_workaround_summ">Исправления фокусировки на HTML-полях ввода. На некоторых устройствах вызывает проблемы.</string>
   <string name="pref_keep_screen_on">Не выключать экран</string>
   <string name="pref_keep_screen_on_summ">Отключает спящий режим экрана</string>
   <string name="convert_fen_text">Поддержка шахматной нотации</string>

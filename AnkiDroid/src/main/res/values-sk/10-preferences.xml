@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Hrúbka ťahu</string>
   <string name="whiteboard_black">Čierne ťahy</string>
   <string name="whiteboard_black_summ">Využije menej pamäte, ak nie je v nočnom režime</string>
-  <string name="write_answers_disable">Zablokovať písanie odpovede</string>
-  <string name="write_answers_disable_summ">Zabraňuje objavovaniu sa klávesnice na kartičkách, ktoré si vyžadujú napísanie odpovede do poľa</string>
   <string name="use_input_tag">Napíšte odpoveď do kartičky</string>
   <string name="use_input_tag_summ">Odpoveď vložte do textového poľa kartičky</string>
-  <string name="text_selection_click">Riešenie dlhého stisku</string>
-  <string name="text_selection_click_summ">Zapnite, ak nemôžete začať s voľbou textu cez dlhé kliknutie</string>
   <string name="dictionary">Slovník</string>
   <string name="reset_languages">Obnoviť jazyky</string>
   <string name="reset_languages_summ">Zrušiť pridelenie jazyka (pre prevod textu na reč a slovníky) pre všetky balíčky</string>
@@ -146,7 +142,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Zvoliť jazyk</string>
   <string name="safe_display">Režim bezpečného zobrazenia</string>
-  <string name="safe_display_summ">Zakázať všetky animácie a použiť bezpečnejšie metódy pre vykresľovanie kartičiek. E-ink a staršie zariadenia používajúce vlastné písma toto môžu vyžadovať.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Zarovnanie na stred</string>
   <string name="vertical_centering_summ">Vycentrovať obsah kartičiek vertikálne</string>
   <string name="pref_backup_max">Maximálny počet záloh</string>
@@ -164,8 +160,6 @@
   <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">Začiatok ďalšieho dňa</string>
   <string name="day_offset_summ">Počet hodín po polnoci: XXX</string>
-  <string name="input_workaround">Riešenia zadávania</string>
-  <string name="input_workaround_summ">Riešenie problémov so vstupnými poliami HTLM. Spôsobuje problémy na niektorých zariadeniach.</string>
   <string name="pref_keep_screen_on">Nevypínať obrazovku</string>
   <string name="pref_keep_screen_on_summ">Zakázať vypínanie obrazovky</string>
   <string name="convert_fen_text">Podpora šachového zápisu</string>

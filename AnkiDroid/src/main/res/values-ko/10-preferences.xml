@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">획 두께</string>
   <string name="whiteboard_black">검은 획</string>
   <string name="whiteboard_black_summ">야간 모드가 아니라면 메모리를 적게 사용</string>
-  <string name="write_answers_disable">정답 타이핑 사용 안함</string>
-  <string name="write_answers_disable_summ">\'정답 입력\' 필드가 있는 카드에서 키보드가 나타나는 것을 방지</string>
   <string name="use_input_tag">카드에 정답 입력</string>
   <string name="use_input_tag_summ">카드 안의 텍스트 입력 상자에다가 정답을 입력하도록 사용</string>
-  <string name="text_selection_click">길게 누름과 관련된 차선책</string>
-  <string name="text_selection_click_summ">긴 클릭을 통해서 텍스트를 선택할 수 없는 경우 이 항목을 활성화</string>
   <string name="dictionary">색인 사전</string>
   <string name="reset_languages">언어 재설정</string>
   <string name="reset_languages_summ">모든 카드 묶음에 할당된 언어(사전과 TTS) 초기화</string>
@@ -145,7 +141,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">언어 선택</string>
   <string name="safe_display">안전한 디스플레이 모드</string>
-  <string name="safe_display_summ">모든 애니메이션을 해제하고, 카드를 표시하는 안전한 방법을 사용합니다. 임의의 글꼴을 사용하는 E-ink 및 구형 기기들은 이 설정이 필요할 수 있습니다.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">가운데 정렬</string>
   <string name="vertical_centering_summ">카드의 내용을 세로로 중앙에 배치</string>
   <string name="pref_backup_max">최대 백업 개수</string>
@@ -163,8 +159,6 @@
   <string name="time_limit_summ">XXX 분</string>
   <string name="day_offset">다음 날의 시작</string>
   <string name="day_offset_summ">자정으로부터 지난 XXX 시간</string>
-  <string name="input_workaround">입력 방식 차선책</string>
-  <string name="input_workaround_summ">HTML 입력 박스를 선택할 수 없는 문제와 관련된 차선책입니다. 일부 기기에서 문제를 일으킬 수 있습니다.</string>
   <string name="pref_keep_screen_on">화면 계속 유지</string>
   <string name="pref_keep_screen_on_summ">화면 시간 제한 해제</string>
   <string name="convert_fen_text">체스 표기법 지원</string>

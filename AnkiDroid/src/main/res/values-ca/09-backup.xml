@@ -59,9 +59,7 @@
   <string name="backup_restore_select_title">Seleccioneu la còpia de seguretat que voleu restaurar</string>
   <string name="backup_restore_no_backups">No hi ha còpies de seguretat disponibles d\'aquesta coŀlecció en aquest dispositiu. Si teniu més còpies a l\'ordinador, si us plau, copieu-les manualment a la carpeta d\'AnkiDroid</string>
   <string name="open_collection_failed_title">No es pot obrir la col·lecció</string>
-  <string name="open_collection_failed_message">No s\'ha pogur obrir la base de dades. O no és una base de dades de Anki real o ha estat encorrumpuda.\n\nApreti \"Opcions\" per a diferents opcions de restaurar la base de dades, o per a més informació sobre la reparació de col·leccions encorrumpudes veieu: \n%1$s</string>
   <string name="corrupt_db_message">La col·lecció s\'ha danyat.\n\nApreti \"Opcions\" per restaurar des d\'una còpia de seguretat, o si això no funciona, vegeu les instruccions següents per a reparar manualment la base de dades: \n%1$s</string>
   <string name="access_collection_failed_message">S\'ha produït un error al accedir a la seva col·lecció. Això pot haver estat causat per un error inofensiu, o hi pot haver un problema amb això. \n\nProvi fent una comprovació de base de dades, o restaurar des de un backup prement el botó \"Opcions\". Si continueu veient aquest missatge, si us plau creeu un informe d\'error: \n%1$s</string>
   <string name="deck_repair_error">No ha estat possible reparar la col·lecció</string>
-  <string name="cursor_size_limit_exceeded">S\'ha excedit el límit de mida per a una cadena en una base de dades a Android. Suprimeix qualsevol tipus de nota sense utilitzar a la versió d\'escriptori d\'Anki, aleshores fes una sincronització complerta.</string>
 </resources>

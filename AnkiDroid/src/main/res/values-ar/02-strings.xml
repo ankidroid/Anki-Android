@@ -134,6 +134,7 @@
   <string name="fact_adder_intent_title">بطاقة آنكيدرويد</string>
   <string name="card_editor_add_card">أضف ملاحظة</string>
   <string name="card_editor_copy_card">انسخ البطاقة</string>
+  <string name="card_editor_reposition_card">Reposition</string>
   <string name="card_editor_reset_card">أعد تعيين التقدم</string>
   <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Preview</string>

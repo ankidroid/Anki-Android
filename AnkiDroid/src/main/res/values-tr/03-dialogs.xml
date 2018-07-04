@@ -62,6 +62,9 @@
     <item><![CDATA[AnkiDroid GNU-GPL v3 <a href=\"%1$s\"> lisansı altında çıkartılmıştır </a> kaynak kodlarına <a href=\"%2$s\"> GitHub\'dan ulaşabilirsiniz</a>.]]></item>
   </string-array>
   <string name="preview_title">Önizleme</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">Kart ilerlemesini sıfırla</string>
   <string name="reset_card_dialog_message">Bu kart yeni kart sırasının sonuna koyulacak.</string>
   <string name="reset_card_dialog_acknowledge">Kartı sıfırla</string>

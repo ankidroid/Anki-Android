@@ -46,13 +46,21 @@
     <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">Сви шпилови</string>
-  <string name="card_browser_delete_card">Избриши белешку</string>
-  <string name="card_browser_suspend_card">Откажи картицу</string>
-  <string name="card_browser_unsuspend_card">Врати из отказаних</string>
-  <string name="card_browser_mark_card">Означи белешку</string>
-  <string name="card_browser_unmark_card">Уклони ознаку белешке</string>
+  <string name="card_browser_delete_card">Delete notes</string>
+  <string name="card_browser_suspend_card">Suspend cards</string>
+  <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
+  <string name="card_browser_change_deck">Change deck</string>
+  <string name="card_browser_unsuspend_card">Unsuspend cards</string>
+  <string name="card_browser_mark_card">Mark notes</string>
+  <string name="card_browser_toggle_mark_card">(un)mark notes</string>
+  <string name="card_browser_unmark_card">Unmark notes</string>
   <string name="delete_card_title">Избриши белешку?</string>
+  <string name="delete_cards_title">Delete notes?</string>
   <string name="delete_card_message">Да ли заиста желите брисање свих картица ове белешке?\nПретрага поља: %s</string>
+  <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
+  <string name="deleted_message">Notes deleted</string>
+  <string name="changed_deck_message">Moved to %s</string>
+  <string name="card_browser_suspended_cards">(un)suspended cards</string>
   <string name="card_browser_show_marked">Филтер је означен</string>
   <string name="card_browser_show_suspended">Филтер је заустављен</string>
   <string name="card_browser_search_by_tag">Филтрирај по ознаци</string>
@@ -84,4 +92,6 @@
     <item>по броју прегледа</item>
     <item>по круговима</item>
   </string-array>
+  <string name="card_browser_select_all">Select all</string>
+  <string name="card_browser_select_none">Select none</string>
 </resources>

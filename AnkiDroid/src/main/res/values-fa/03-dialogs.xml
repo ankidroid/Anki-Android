@@ -62,6 +62,9 @@
     <item><![CDATA[این برنامه تحت مجوز <a href=\"%1$s\">GNU-GPL v3</a>منتشر شده است و منبع کدها قابل دسترسی است <a href=\"%2$s\">در GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">پیش نمایش</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">بازنشانی پیشرفت کارت</string>
   <string name="reset_card_dialog_message">این کارت در انتهاي ردیف کارت جدید قرار خواهد گرفت</string>
   <string name="reset_card_dialog_acknowledge">کارت تنظیم مجدد شد</string>

@@ -124,6 +124,7 @@
   <string name="fact_adder_intent_title">Kad AnkiDroid</string>
   <string name="card_editor_add_card">Tambahkan catatan</string>
   <string name="card_editor_copy_card">Salin kad</string>
+  <string name="card_editor_reposition_card">Reposition</string>
   <string name="card_editor_reset_card">Set semula aktivitas</string>
   <string name="card_editor_reschedule_card">Kartu penjadwal ulang</string>
   <string name="card_editor_preview_card">Pratinjau</string>

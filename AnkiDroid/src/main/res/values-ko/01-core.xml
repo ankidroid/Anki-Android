@@ -82,6 +82,9 @@
   <string name="undo_action_suspend_card">카드 미루기</string>
   <string name="undo_action_suspend_note">노트 비활성화하기</string>
   <string name="undo_action_delete">노트 삭제</string>
+  <string name="undo_action_delete_multi">delete notes</string>
+  <string name="undo_action_change_deck_multi">change decks</string>
+  <string name="move_all_to_deck">Move all to deck</string>
   <string name="unbury">집어넣었던 카드 꺼내기</string>
   <string name="rename_deck">카드 묶음 이름 바꾸기</string>
   <string name="menu_add">추가</string>

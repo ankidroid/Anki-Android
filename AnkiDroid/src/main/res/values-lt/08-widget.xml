@@ -47,11 +47,13 @@
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">%2$s rinkiniuose numatyta %1$d kortelė</item>
     <item quantity="few">%2$s rinkiniuose numatytos %1$d kortelės</item>
+    <item quantity="many">%1$d cards due in %2$s</item>
     <item quantity="other">%2$s rinkiniuose numatytų %1$d kortelių</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">%1$d rinkinys</item>
     <item quantity="few">%1$d rinkiniai</item>
+    <item quantity="many">%1$d decks</item>
     <item quantity="other">%1$d rinkinių</item>
   </plurals>
   <string name="widget_small">Mažas „AnkiDroid“</string>
@@ -59,11 +61,13 @@
   <plurals name="widget_cards_due">
     <item quantity="one">Numatyta %d kortelė</item>
     <item quantity="few">Numatytos %d kortelės</item>
+    <item quantity="many">%d cards due</item>
     <item quantity="other">Numatyta %d kortelių</item>
   </plurals>
   <plurals name="widget_eta">
     <item quantity="one">Liko %d minutė</item>
     <item quantity="few">Liko %d minutės</item>
+    <item quantity="many">%d minutes remaining</item>
     <item quantity="other">Liko %d minučių</item>
   </plurals>
   <string name="widget_add_note">Pridėti užrašą</string>

@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Ширина капи</string>
   <string name="whiteboard_black">Црни капи</string>
   <string name="whiteboard_black_summ">Користи мање меморије, осим у ноћном режиму</string>
-  <string name="write_answers_disable">Онемогући куцање одговора</string>
-  <string name="write_answers_disable_summ">Спречава појаву тастатуре на картицама које садрже поље \"укуцајте одговор\"</string>
   <string name="use_input_tag">Type answer into the card</string>
   <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
-  <string name="text_selection_click">Исправљање грешке дугог притискања</string>
-  <string name="text_selection_click_summ">Укључите, ако не успевате да почнете означавање текста преко дугог притиска</string>
   <string name="dictionary">Кориснички речник</string>
   <string name="reset_languages">Ресетуј језике</string>
   <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
@@ -146,7 +142,7 @@
   <string name="timeout_question_seconds_summ">XXX с</string>
   <string name="select_locale_title">Изаберите језик</string>
   <string name="safe_display">Безбедан режим приказивања</string>
-  <string name="safe_display_summ">Онемогући свe анимацијe и користи безбедну методу за приказивања картица. E-ink и старије уређаје које користе посебне фонтове можда захтевају ово.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Центрирај вертикално</string>
   <string name="vertical_centering_summ">Центрирај садржај картица вертикално</string>
   <string name="pref_backup_max">Максималан број резервне датотеке</string>
@@ -164,8 +160,6 @@
   <string name="time_limit_summ">XXX мин</string>
   <string name="day_offset">Почетак следећег дана</string>
   <string name="day_offset_summ">XXX сати после поноћ</string>
-  <string name="input_workaround">Трик са пољима уноса</string>
-  <string name="input_workaround_summ">Решење проблема са HTML пољима уноса. Решење је проблематично на више уређаја.</string>
   <string name="pref_keep_screen_on">Држи екран укљученим</string>
   <string name="pref_keep_screen_on_summ">Онемогући спавање екрана</string>
   <string name="convert_fen_text">Подршка шаховских бележака</string>

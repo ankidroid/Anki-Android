@@ -45,13 +45,21 @@
     <item quantity="other">Показани са %d карти</item>
   </plurals>
   <string name="card_browser_all_decks">Всички тестета</string>
-  <string name="card_browser_delete_card">Изтрий бележка</string>
-  <string name="card_browser_suspend_card">Прекрати картата</string>
-  <string name="card_browser_unsuspend_card">Отблокирам карта</string>
-  <string name="card_browser_mark_card">Маркирай бележка</string>
-  <string name="card_browser_unmark_card">Размаркирай бележка</string>
+  <string name="card_browser_delete_card">Delete notes</string>
+  <string name="card_browser_suspend_card">Suspend cards</string>
+  <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
+  <string name="card_browser_change_deck">Change deck</string>
+  <string name="card_browser_unsuspend_card">Unsuspend cards</string>
+  <string name="card_browser_mark_card">Mark notes</string>
+  <string name="card_browser_toggle_mark_card">(un)mark notes</string>
+  <string name="card_browser_unmark_card">Unmark notes</string>
   <string name="delete_card_title">Изтриване на бележка?</string>
+  <string name="delete_cards_title">Delete notes?</string>
   <string name="delete_card_message">Изтриване на всички карти от тази бележка? \nПоле за търсене: %s</string>
+  <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
+  <string name="deleted_message">Notes deleted</string>
+  <string name="changed_deck_message">Moved to %s</string>
+  <string name="card_browser_suspended_cards">(un)suspended cards</string>
   <string name="card_browser_show_marked">Филтриране на маркираните</string>
   <string name="card_browser_show_suspended">Филтърът е спрян</string>
   <string name="card_browser_search_by_tag">Филтриране по етикет</string>
@@ -83,4 +91,6 @@
     <item>По прегледи</item>
     <item>По пропуски</item>
   </string-array>
+  <string name="card_browser_select_all">Select all</string>
+  <string name="card_browser_select_none">Select none</string>
 </resources>

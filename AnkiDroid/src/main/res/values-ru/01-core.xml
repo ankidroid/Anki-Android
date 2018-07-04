@@ -91,6 +91,9 @@
   <string name="undo_action_suspend_card">исключить карточку</string>
   <string name="undo_action_suspend_note">исключить запись</string>
   <string name="undo_action_delete">удалить запись</string>
+  <string name="undo_action_delete_multi">delete notes</string>
+  <string name="undo_action_change_deck_multi">change decks</string>
+  <string name="move_all_to_deck">Move all to deck</string>
   <string name="unbury">Вернуть</string>
   <string name="rename_deck">Переименовать колоду</string>
   <string name="menu_add">Добавить</string>

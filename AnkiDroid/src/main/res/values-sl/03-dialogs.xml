@@ -64,6 +64,9 @@
     <item><![CDATA[AnkiDroid je izdan pod <a href=\"%1$s\">dovoljenjem GNU-GPL v3</a> in izvorna koda je na voljo <a href=\"%2$s\">na GitHubu</a>.]]></item>
   </string-array>
   <string name="preview_title">Predogled</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">Ponastavi napredek kartice</string>
   <string name="reset_card_dialog_message">Ta kartica bo postavljena na konec čakalne vrste novih kartic</string>
   <string name="reset_card_dialog_acknowledge">Ponastavitev kartice</string>

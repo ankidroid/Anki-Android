@@ -59,9 +59,7 @@
   <string name="backup_restore_select_title">Pilih salinan</string>
   <string name="backup_restore_no_backups">Tidak ada backup yang tersedia pada perangkat ini. Jika Anda memiliki backup di komputer desktop Anda, salin secara manual ke dalam folder AnkiDroid Anda.</string>
   <string name="open_collection_failed_title">File cadangan yang dipilih tidak valid1</string>
-  <string name="open_collection_failed_message">Database tidak bisa dibuka Ini bukan database Anki yang sebenarnya atau telah rusak. \ n \ n Sentuh \"opsi\" untuk berbagai opsi untuk memulihkan basis data, atau untuk informasi lebih lanjut tentang memperbaiki koleksi yang rusak lihat: \ n % 1 $ s</string>
   <string name="corrupt_db_message">Koleksi Anda telah rusak \ n \ n Sentuh \"pilihan\" untuk memulihkan dari cadangan, atau jika tidak berhasil, lihat petunjuk berikut untuk memperbaiki database secara manual: \ n % 1 $ s</string>
   <string name="access_collection_failed_message">Terjadi kesalahan saat mengakses koleksi Anda. Ini mungkin disebabkan oleh bug yang tidak berbahaya, atau mungkin ada masalah dengan hal itu. \ n \ n Coba menjalankan database cek, atau memulihkan dari cadangan dengan menekan tombol “pilihan” tombol. Jika Anda terus melihat pesan ini, kirimkan laporan bug: \ n % 1 $ s</string>
   <string name="deck_repair_error">Koleksi tidak dapat diperbaiki</string>
-  <string name="cursor_size_limit_exceeded">Batas ukuran Android untuk String dalam database telah terlampaui. Hapus semua jenis catatan yang tidak terpakai menggunakan desktop Anki, lalu lakukan sinkronisasi penuh.</string>
 </resources>

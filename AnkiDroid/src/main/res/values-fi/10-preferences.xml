@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Viivan leveys</string>
   <string name="whiteboard_black">Mustat viivat</string>
   <string name="whiteboard_black_summ">Käyttää vähemmän muistia, mutta ei silloin, kun yötila on päällä</string>
-  <string name="write_answers_disable">Ota vastauksen kirjoittaminen pois käytöstä</string>
-  <string name="write_answers_disable_summ">Estää näppäimistöä tulemasta esille korteissa, joissa on \'kirjoita vastaus\'-kenttiä</string>
   <string name="use_input_tag">Kirjoita vastaus korttiin</string>
   <string name="use_input_tag_summ">Kirjoita vastaus kortin sisällä olevaan vastauskenttään</string>
-  <string name="text_selection_click">Korjaa pitkät painallukset</string>
-  <string name="text_selection_click_summ">Ota käyttöön, jos et pysty aloittamaan tekstivalintaa pitkällä painalluksella</string>
   <string name="dictionary">Sanakirja</string>
   <string name="reset_languages">Palauta kielet</string>
   <string name="reset_languages_summ">Palauta kielimääritykset (tekstissä puheeksi ja sanakirjoissa) kaikissa pakoissa</string>
@@ -145,7 +141,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Valitse kieli</string>
   <string name="safe_display">Turvallinen näyttötila</string>
-  <string name="safe_display_summ">Ota kaikki animaatiot pois käytöstä ja käytä turvallisempaa menetelmää korttien piirtämiseen. E-ink laitteet ja vanhat laitteet joissa käytetään erikoisempia kirjasintyyppejä voivat vaatia tämän.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Tasaa keskelle</string>
   <string name="vertical_centering_summ">Keskitä korttien sisältö pystysuunnassa</string>
   <string name="pref_backup_max">Varmuuskopioiden enimmäismäärä</string>
@@ -163,8 +159,6 @@
   <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">Seuraava päivä alkaa</string>
   <string name="day_offset_summ">XXX tuntia yli puolenyön</string>
-  <string name="input_workaround">Korjaus tekstinsyöttöön</string>
-  <string name="input_workaround_summ">Korjaus fokusointiongelmiin HTML-tekstinsyöttölaatikoissa. Aiheuttaa ongelmia useilla laitteilla.</string>
   <string name="pref_keep_screen_on">Pidä näyttö päällä</string>
   <string name="pref_keep_screen_on_summ">Poista näytön aikakatkaisu</string>
   <string name="convert_fen_text">Tuki shakkinotaatiolle</string>

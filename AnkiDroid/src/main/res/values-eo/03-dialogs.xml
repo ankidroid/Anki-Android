@@ -62,6 +62,9 @@
     <item><![CDATA[AnkiDroid estas eldonita laŭ la <a href=\"%1$s\">permesilo GNU-GPL v3</a> kaj ĝia fontkodo estas disponebla ĉe <a href=\"%2$s\">GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Antaŭrigardo</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">Nuligi progreson de karto</string>
   <string name="reset_card_dialog_message">Tiu ĉi karto estos movita al la fino de vico de novaj kartoj</string>
   <string name="reset_card_dialog_acknowledge">Nuligis karton</string>

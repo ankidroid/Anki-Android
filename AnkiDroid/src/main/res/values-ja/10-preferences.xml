@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">線の太さ</string>
   <string name="whiteboard_black">黒色の線</string>
   <string name="whiteboard_black_summ">カラーの線ではなく黒色の線を描き、メモリを節約します（ナイトモードでは白色の線になります）</string>
-  <string name="write_answers_disable">タイピング解答設定を無効にする</string>
-  <string name="write_answers_disable_summ">解答入力フィールドがある場合にカード上にキーボードを表示させなくします</string>
   <string name="use_input_tag">カード内にキーボード入力で解答する</string>
   <string name="use_input_tag_summ">解答をキーボード入力で行うよう設定されているカードの内部に文字入力欄を表示します</string>
-  <string name="text_selection_click">長押しの 回避策</string>
-  <string name="text_selection_click_summ">もし、長押しタップでテキストの選択が出来ない場合、これを有効にしてください。</string>
   <string name="dictionary">検索辞書</string>
   <string name="reset_languages">言語設定をリセット</string>
   <string name="reset_languages_summ">すべてのデッキの（テキスト読み上げ用および辞書用の）言語設定をリセットします</string>
@@ -145,7 +141,7 @@
   <string name="timeout_question_seconds_summ">XXX 秒</string>
   <string name="select_locale_title">言語を選択</string>
   <string name="safe_display">安全表示モード</string>
-  <string name="safe_display_summ">アニメーションを無効化し、より安全な方法で描画します。電子ペーパーや古い機器でカスタムフォントを使用する際にお試しください</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">上下中央揃え</string>
   <string name="vertical_centering_summ">コンテンツを上下方向に中央揃えします</string>
   <string name="pref_backup_max">保管するバックアップの世代数</string>
@@ -163,8 +159,6 @@
   <string name="time_limit_summ">XXX 分</string>
   <string name="day_offset">日付更新時刻</string>
   <string name="day_offset_summ">XXX 時</string>
-  <string name="input_workaround">回避方法を入力</string>
-  <string name="input_workaround_summ">HTMLの入力ボックスへ、フォーカスが移動した時の問題を回避します。いくつかのデバイスで問題が発生しています。</string>
   <string name="pref_keep_screen_on">スクリーンをオンのままにする</string>
   <string name="pref_keep_screen_on_summ">画面の自動オフを無効にします</string>
   <string name="convert_fen_text">チェス表記のサポート</string>

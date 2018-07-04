@@ -126,6 +126,7 @@
   <string name="fact_adder_intent_title">AnkiDroid-kort</string>
   <string name="card_editor_add_card">Lägg till not</string>
   <string name="card_editor_copy_card">Kopiera kort</string>
+  <string name="card_editor_reposition_card">Reposition</string>
   <string name="card_editor_reset_card">Återställ framsteg</string>
   <string name="card_editor_reschedule_card">Schemalägg kort på nytt</string>
   <string name="card_editor_preview_card">Förhandsgranska</string>

@@ -62,6 +62,9 @@
     <item><![CDATA[Ankidroid distribúese baixo <a href=\"%1$s\">licenza GNU-GPL v3</a> e o código fonte está dispoñible <a href=\"%2$s\">no GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Vista previa</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">Reiniciar o progreso do cartón</string>
   <string name="reset_card_dialog_message">Este cartón colocarase ao final da nova cola.</string>
   <string name="reset_card_dialog_acknowledge">Reiniciar cartón</string>

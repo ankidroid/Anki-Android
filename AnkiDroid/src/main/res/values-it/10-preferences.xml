@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Spessore tratto</string>
   <string name="whiteboard_black">Tratti monocromatici</string>
   <string name="whiteboard_black_summ">Utilizza meno memoria, ma non funziona in modalità notte</string>
-  <string name="write_answers_disable">Disabilita digitazione della risposta</string>
-  <string name="write_answers_disable_summ">Impedisce alla tastiera di apparire su carte contenenti campi di immissione della risposta</string>
   <string name="use_input_tag">Digita la risposta nella carta</string>
   <string name="use_input_tag_summ">Utilizza una casella di inserimento testo nella carta per digitare la risposta</string>
-  <string name="text_selection_click">Soluzione problema click lungo</string>
-  <string name="text_selection_click_summ">Attiva questo se non sei in grado di iniziare la selezione di testo con un clic lungo</string>
   <string name="dictionary">Ricerca nel dizionario</string>
   <string name="reset_languages">Reimposta le lingue</string>
   <string name="reset_languages_summ">Reimposta le assegnazioni di lingua (per text to speech e dizionari) per tutti i mazzi</string>
@@ -145,7 +141,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Scegli la lingua</string>
   <string name="safe_display">Modalità visualizzazione sicura</string>
-  <string name="safe_display_summ">Disattiva tutte le animazioni e utilizza il metodo più sicuro per disegnare le carte. E-ink e vecchi dispositivi che utilizzano font personalizzati possono richiedere questo.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Allinea al centro</string>
   <string name="vertical_centering_summ">Centra verticalmente il contenuto delle carte</string>
   <string name="pref_backup_max">Numero massimo di backup</string>
@@ -163,8 +159,6 @@
   <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">Inizio del giorno successivo</string>
   <string name="day_offset_summ">XXX ore dopo mezzanotte</string>
-  <string name="input_workaround">Soluzione per input</string>
-  <string name="input_workaround_summ">Soluzione per problemi di messa a fuoco su caselle di input HTML. Causa problemi su diversi dispositivi.</string>
   <string name="pref_keep_screen_on">Mantieni schermo acceso</string>
   <string name="pref_keep_screen_on_summ">Disabilita il timeout dello schermo</string>
   <string name="convert_fen_text">Supporto per la notazione scacchistica</string>

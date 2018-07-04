@@ -124,6 +124,7 @@
   <string name="fact_adder_intent_title">AnkiDroid 카드</string>
   <string name="card_editor_add_card">노트 추가</string>
   <string name="card_editor_copy_card">카드 복사</string>
+  <string name="card_editor_reposition_card">Reposition</string>
   <string name="card_editor_reset_card">학습 진도 재설정</string>
   <string name="card_editor_reschedule_card">카드 일정 다시 조정하기</string>
   <string name="card_editor_preview_card">미리보기</string>
