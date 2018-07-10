@@ -1903,7 +1903,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             if (typeAnswer()) {
                 mAnswerField.setVisibility(View.VISIBLE);
             } else {
-                mAnswerField.setVisibility(View.INVISIBLE);
+                mAnswerField.setVisibility(View.GONE);
             }
 
             displayString = enrichWithQADiv(question, false);
