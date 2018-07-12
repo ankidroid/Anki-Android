@@ -109,7 +109,7 @@ http://www.wazu.jp/gallery/Fonts_Korean.html
 
 # Others
 Many fonts can be found at the link below, they seem to be freely distributable, but the specific license information is often unavailable:
+http://www.wazu.jp/
 
 # Comments
 * The Hebrew fonts "Asakim" and "Stop Motion" are stylized fonts, not suitable for study. They should be removed.
-http://www.wazu.jp/
