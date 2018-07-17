@@ -44,13 +44,21 @@
     <item quantity="other">已顯示 %d 張卡片</item>
   </plurals>
   <string name="card_browser_all_decks">所有牌組</string>
-  <string name="card_browser_delete_card">刪除筆記</string>
-  <string name="card_browser_suspend_card">長久擱置卡片</string>
-  <string name="card_browser_unsuspend_card">取消長久擱置卡片</string>
-  <string name="card_browser_mark_card">標記筆記</string>
-  <string name="card_browser_unmark_card">解除筆記的標記</string>
+  <string name="card_browser_delete_card">Delete notes</string>
+  <string name="card_browser_suspend_card">Suspend cards</string>
+  <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
+  <string name="card_browser_change_deck">Change deck</string>
+  <string name="card_browser_unsuspend_card">Unsuspend cards</string>
+  <string name="card_browser_mark_card">Mark notes</string>
+  <string name="card_browser_toggle_mark_card">(un)mark notes</string>
+  <string name="card_browser_unmark_card">Unmark notes</string>
   <string name="delete_card_title">刪除筆記？</string>
+  <string name="delete_cards_title">Delete notes?</string>
   <string name="delete_card_message">你確定要刪除本筆記的所有卡片嗎？\n搜尋欄位：%s</string>
+  <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
+  <string name="deleted_message">Notes deleted</string>
+  <string name="changed_deck_message">Moved to %s</string>
+  <string name="card_browser_suspended_cards">(un)suspended cards</string>
   <string name="card_browser_show_marked">篩選有標記的卡片</string>
   <string name="card_browser_show_suspended">篩選出擱置的卡片</string>
   <string name="card_browser_search_by_tag">按標籤篩選</string>
@@ -72,7 +80,7 @@
   <string name="card_browser_filtering_cards">正在篩選卡片&#8230;\n按下返回鍵取消</string>
   <string-array name="card_browser_order_labels">
     <item>不要排序(較快)</item>
-    <item>By sort field</item>
+    <item>按字段名稱排序</item>
     <item>依建立時間</item>
     <item>依編輯時間</item>
     <item>依變更時間</item>
@@ -82,4 +90,6 @@
     <item>依複習次數</item>
     <item>依忘記次數</item>
   </string-array>
+  <string name="card_browser_select_all">Select all</string>
+  <string name="card_browser_select_none">Select none</string>
 </resources>

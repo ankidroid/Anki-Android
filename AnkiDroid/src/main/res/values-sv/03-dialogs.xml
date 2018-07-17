@@ -62,6 +62,9 @@
     <item><![CDATA[AnkiDroid är släppt under <a href=\"%1$s\">GNU-GPL v3 licensen</a> och all källkod finns tillgänglig <a href=\"%2$s\">på GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Förhandsgranskning</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">Nollställ inlärningsdata för kort</string>
   <string name="reset_card_dialog_message">Detta kort kommer att placeras sist i kön för nya kort.</string>
   <string name="reset_card_dialog_acknowledge">Nollställning av kort</string>

@@ -59,17 +59,20 @@
   <plurals name="deckpicker_title">
     <item quantity="one">Reikia pasikartoti %1$d kortelę (%2$s)</item>
     <item quantity="few">Reikia pasikartoti %1$d korteles (%2$s)</item>
+    <item quantity="many">%1$d cards due (%2$s)</item>
     <item quantity="other">Reikia pasikartoti %1$d kortelių (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">Liko %d minutė</item>
     <item quantity="few">Liko %d minutės</item>
+    <item quantity="many">%d minutes left</item>
     <item quantity="other">Liko %d minučių</item>
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
     <item quantity="one">Šiandien išmokote %1$d kortelę per %2$s</item>
     <item quantity="few">Šiandien išmokote %1$d korteles per %2$s</item>
+    <item quantity="many">Studied %1$d cards in %2$s today</item>
     <item quantity="other">Šiandien išmokote %1$d kortelių per %2$s</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
@@ -88,6 +91,9 @@
   <string name="undo_action_suspend_card">atidėti kortelę</string>
   <string name="undo_action_suspend_note">atidėti užrašą</string>
   <string name="undo_action_delete">ištrinti užrašą</string>
+  <string name="undo_action_delete_multi">delete notes</string>
+  <string name="undo_action_change_deck_multi">change decks</string>
+  <string name="move_all_to_deck">Move all to deck</string>
   <string name="unbury">Ištraukti</string>
   <string name="rename_deck">Pervadinti malką</string>
   <string name="menu_add">Pridėti</string>
@@ -160,6 +166,7 @@
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">Ar tikrai ištrinti “%2$s” kortelių tipą ir su juo susijusią %1$d kortelę?</item>
     <item quantity="few">Ar tikrai ištrinti “%2$s” kortelių tipą ir su juo susijusias %1$d korteles?</item>
+    <item quantity="many">Delete the “%2$s” card type, and its %1$d cards?</item>
     <item quantity="other">Ar tikrai ištrinti “%2$s” kortelių tipą ir su juo susijusias %1$d kortelių?</item>
   </plurals>
   <string name="invalid_template">Kortelės sukurti nepavyko</string>

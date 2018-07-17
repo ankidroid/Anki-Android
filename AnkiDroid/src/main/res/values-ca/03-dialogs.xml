@@ -62,6 +62,9 @@
     <item><![CDATA[AnkiDroid és alliberat sota la <a href=\"%1$s\"> llicència de GNU-GPL v3</a> i el codi font està disponible <a href=\"%2$s\"> a GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Previsualització</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">Reinicia el progrés de les fitxes</string>
   <string name="reset_card_dialog_message">Aquesta carta es posarà al final de la cua de les cartes noves.</string>
   <string name="reset_card_dialog_acknowledge">Reinicialització de la carta</string>

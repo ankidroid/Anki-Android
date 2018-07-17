@@ -41,7 +41,7 @@
 <resources>
   <!-- Navigation drawer items-->
   <string name="decks">חפיסות</string>
-  <string name="card_browser">חיפוש</string>
+  <string name="card_browser">דפדוף בכרטיסים</string>
   <string name="statistics">סטטיסטיקה</string>
   <string name="settings">הגדרות</string>
   <string name="help">עזרה</string>
@@ -91,6 +91,9 @@
   <string name="undo_action_suspend_card">להשעות כרטיס</string>
   <string name="undo_action_suspend_note">להשעות רשומה</string>
   <string name="undo_action_delete">למחוק רשומה</string>
+  <string name="undo_action_delete_multi">delete notes</string>
+  <string name="undo_action_change_deck_multi">change decks</string>
+  <string name="move_all_to_deck">Move all to deck</string>
   <string name="unbury">לחלץ</string>
   <string name="rename_deck">ערוך שם חפיסה</string>
   <string name="menu_add">הוסף</string>
@@ -100,11 +103,11 @@
   <string name="menu_bury_card">לקבור קלף</string>
   <string name="menu_bury_note">לקבור הערה</string>
   <string name="menu_suspend_card">השהה כרטיס</string>
-  <string name="menu_suspend_note">לעצור הערה</string>
+  <string name="menu_suspend_note">להשעות הערה</string>
   <string name="menu_bury">הסתר</string>
   <string name="menu_suspend">השהה</string>
   <string name="menu_delete_note">למחוק הערה</string>
-  <string name="delete_note_message">אתה בטוח שברצונך למחוק את הערה זאת וכל קלפיה?‏\n%s</string>
+  <string name="delete_note_message">אתה בטוח שברצונך למחוק את ההערה הזו ואת כל הקלפים שלה?‏\n%s</string>
   <string name="menu_select">בחירת טקסט</string>
   <string name="menu_search">חפש ב%1$s</string>
   <string name="menu_mark_note">סמן הערה</string>
@@ -170,5 +173,5 @@
   <string name="card_template_editor_would_delete_note">הסרת סוג הכרטסיה תגרום לרשימה אחת או יותר להימחק. אנא צור סוג כרטיסיות חדש קודם.</string>
   <!-- Permissions -->
   <string name="read_write_permission_label">קרא ושמור לממסד הנתונים של אנקידרוייד</string>
-  <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+  <string name="read_write_permission_description">תן לאפליקציה גישה להערות, כרטיסים, סוגי הערות, וחפיסות, וכן גישה ליצור חדשים</string>
 </resources>

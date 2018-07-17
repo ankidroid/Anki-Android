@@ -126,6 +126,7 @@
   <string name="fact_adder_intent_title">AnkiDroid-kort</string>
   <string name="card_editor_add_card">Legg til notat</string>
   <string name="card_editor_copy_card">Kopier kort</string>
+  <string name="card_editor_reposition_card">Reposition</string>
   <string name="card_editor_reset_card">Tilbakestill fremdrift</string>
   <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Preview</string>

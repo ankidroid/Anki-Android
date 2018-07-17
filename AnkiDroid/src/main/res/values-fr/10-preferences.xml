@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Largeur des traits</string>
   <string name="whiteboard_black">Traits noirs</string>
   <string name="whiteboard_black_summ">Utilise moins de mémoire, mais ne fonctionne pas en mode nuit</string>
-  <string name="write_answers_disable">Désactiver la saisie de la réponse</string>
-  <string name="write_answers_disable_summ">Éviter au clavier d’apparaître contenant un champ « taper la réponse »</string>
   <string name="use_input_tag">Saisir la réponse dans la carte</string>
   <string name="use_input_tag_summ">Utiliser la saisie de la réponse directement dans la carte</string>
-  <string name="text_selection_click">Solution alternative pour les appuis longs</string>
-  <string name="text_selection_click_summ">Sélectionnez ceci si vous ne pouvez pas commencer une sélection de texte avec une pression longue</string>
   <string name="dictionary">Dictionnaire de recherche</string>
   <string name="reset_languages">Réinitialiser les langages</string>
   <string name="reset_languages_summ">Réinitialiser les paramètres de langue (pour le TTS et les dictionnaires) pour tous les paquets de cartes</string>
@@ -145,7 +141,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Sélectionnez la langue</string>
   <string name="safe_display">Mode d’affichage protégé</string>
-  <string name="safe_display_summ">Désactiver toutes les animations et utiliser le mode sécurisé pour afficher les cartes. L\'encre électronique et les anciens appareils qui utilisent des polices personnalisées peuvent nécessiter ceci.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Aligner au centre</string>
   <string name="vertical_centering_summ">Centrer verticalement le contenu des cartes</string>
   <string name="pref_backup_max">Nombre de sauvegarde max</string>
@@ -163,8 +159,6 @@
   <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">Début du jour suivant</string>
   <string name="day_offset_summ">XXX heures après minuit</string>
-  <string name="input_workaround">Contournement pour les zones de texte</string>
-  <string name="input_workaround_summ">Solution de contournement pour le focus HTML sur les zones de texte. Pose problèmes sur plusieurs appareils.</string>
   <string name="pref_keep_screen_on">Garder l’écran allumé</string>
   <string name="pref_keep_screen_on_summ">Désactiver l’extinction aromatique de l’écran</string>
   <string name="convert_fen_text">Support de la notation algébrique (échecs)</string>

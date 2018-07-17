@@ -61,6 +61,9 @@
     <item><![CDATA[AnkiDroid는 <a href=\"%1$s\">GNU GPL v3 라이센스</a> 하에 배포되고 있습니다. 소스 코드는 <a href=\"%2$s\">GitHub</a>에서 확인할 수 있습니다.]]></item>
   </string-array>
   <string name="preview_title">미리보기</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">카드 학습 진행 재설정</string>
   <string name="reset_card_dialog_message">이 카드는 새 카드 대기열의 맨 마지막에 배치됩니다.</string>
   <string name="reset_card_dialog_acknowledge">카드 초기화</string>

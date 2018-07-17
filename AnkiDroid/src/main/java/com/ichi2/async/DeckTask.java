@@ -26,6 +26,7 @@ import com.google.gson.stream.JsonReader;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CardBrowser;
+import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -47,11 +48,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
@@ -69,8 +72,10 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_ANSWER_CARD = 3;
     public static final int TASK_TYPE_ADD_FACT = 6;
     public static final int TASK_TYPE_UPDATE_FACT = 7;
+    public static final int TASK_TYPE_UPDATE_FACTS_MULTI = 9;
     public static final int TASK_TYPE_UNDO = 8;
     public static final int TASK_TYPE_DISMISS = 11;
+    public static final int TASK_TYPE_DISMISS_MULTI = 12;
     public static final int TASK_TYPE_CHECK_DATABASE = 14;
     public static final int TASK_TYPE_REPAIR_DECK = 20;
     public static final int TASK_TYPE_LOAD_DECK_COUNTS = 22;
@@ -99,6 +104,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_CHANGE_SORT_FIELD = 46;
     public static final int TASK_TYPE_SAVE_MODEL = 47;
     public static final int TASK_TYPE_FIND_EMPTY_CARDS = 48;
+    public static final int TASK_TYPE_CHECK_CARD_SELECTION = 49;
 
     /**
      * A reference to the application context to use to fetch the current Collection object.
@@ -246,6 +252,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             case TASK_TYPE_UPDATE_FACT:
                 return doInBackgroundUpdateNote(params);
 
+            case TASK_TYPE_UPDATE_FACTS_MULTI:
+                return doInBackgroundUpdateNotes(params);
+
             case TASK_TYPE_UNDO:
                 return doInBackgroundUndo(params);
 
@@ -254,6 +263,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_DISMISS:
                 return doInBackgroundDismissNote(params);
+
+            case TASK_TYPE_DISMISS_MULTI:
+                return doInBackgroundDismissNotes(params);
 
             case TASK_TYPE_CHECK_DATABASE:
                 return doInBackgroundCheckDatabase(params);
@@ -331,6 +343,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 return doInBackgroundSaveModel(params);
             case TASK_TYPE_FIND_EMPTY_CARDS:
                 return doInBackGroundFindEmptyCards(params);
+            case TASK_TYPE_CHECK_CARD_SELECTION:
+                return doInBackgroundCheckCardSelection(params);
 
             default:
                 Timber.e("unknown task type: %d", mType);
@@ -421,6 +435,38 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 } else {
                     publishProgress(new TaskData(editCard, editNote.stringTags()));
                 }
+                col.getDb().getDatabase().setTransactionSuccessful();
+            } finally {
+                col.getDb().getDatabase().endTransaction();
+            }
+        } catch (RuntimeException e) {
+            Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating fact");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
+            return new TaskData(false);
+        }
+        return new TaskData(true);
+    }
+
+    // same as doInBackgroundUpdateNote but for multiple notes
+    private TaskData doInBackgroundUpdateNotes(TaskData[] params) {
+        Timber.d("doInBackgroundUpdateNotes");
+        // Save the note
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Object[] data = params[0].getObjArray();
+        Card[] cards = (Card[]) data[0];
+
+        try {
+            col.getDb().getDatabase().beginTransaction();
+            try {
+                for (Card card : cards) {
+                    Note note = card.note();
+                    // TODO: undo integration
+                    note.flush();
+                    // flush card too, in case, did has been changed
+                    card.flush();
+                    publishProgress(new TaskData(card, note.stringTags()));
+                }
+
                 col.getDb().getDatabase().setTransactionSuccessful();
             } finally {
                 col.getDb().getDatabase().endTransaction();
@@ -541,7 +587,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         }
                         sHadCardQueue = true;
                         break;
-                    case SUSPEND_NOTE:
+                    case SUSPEND_NOTE: {
                         // collect undo information
                         ArrayList<Card> cards = note.cards();
                         long[] cids = new long[cards.size()];
@@ -553,7 +599,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         sched.suspendCards(cids);
                         sHadCardQueue = true;
                         break;
-                    case DELETE_NOTE:
+                    }
+
+                    case DELETE_NOTE: {
                         // collect undo information
                         ArrayList<Card> allCs = note.cards();
                         col.markUndo(type, new Object[] { note, allCs, card.getId() });
@@ -561,6 +609,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         col.remNotes(new long[] { note.getId() });
                         sHadCardQueue = true;
                         break;
+                    }
                 }
                 publishProgress(new TaskData(getCard(col.getSched()), 0));
                 col.getDb().getDatabase().setTransactionSuccessful();
@@ -576,24 +625,167 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     }
 
 
+    private TaskData doInBackgroundDismissNotes(TaskData... params) {
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Sched sched = col.getSched();
+        Object[] data = params[0].getObjArray();
+        long[] cardIds = (long[]) data[0];
+        // query cards
+        Card[] cards = new Card[cardIds.length];
+        for (int i = 0; i < cardIds.length; i++) {
+            cards[i] = col.getCard(cardIds[i]);
+        }
+
+        Collection.DismissType type = (Collection.DismissType) data[1];
+        try {
+            col.getDb().getDatabase().beginTransaction();
+            try {
+                switch (type) {
+                    case SUSPEND_CARD_MULTI: {
+                        // collect undo information
+                        long[] cids = new long[cards.length];
+                        boolean[] originalSuspended = new boolean[cards.length];
+                        boolean hasUnsuspended = false;
+                        for (int i = 0; i < cards.length; i++) {
+                            Card card = cards[i];
+                            cids[i] = card.getId();
+                            if (card.getQueue() != -1) {
+                                hasUnsuspended = true;
+                                originalSuspended[i] = false;
+                            } else {
+                                originalSuspended[i] = true;
+                            }
+                        }
+
+                        // if at least one card is unsuspended -> suspend all
+                        // otherwise unsuspend all
+                        if (hasUnsuspended) {
+                            sched.suspendCards(cids);
+                        } else {
+                            sched.unsuspendCards(cids);
+                        }
+
+                        // mark undo for all at once
+                        col.markUndo(type, new Object[] {cards, originalSuspended});
+
+                        // reload cards because they'll be passed back to caller
+                        for (Card c : cards) {
+                            c.load();
+                        }
+
+                        sHadCardQueue = true;
+                        break;
+                    }
+
+                    case MARK_NOTE_MULTI: {
+                        Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
+                        // collect undo information
+                        List<Note> originalMarked = new ArrayList<>();
+                        List<Note> originalUnmarked = new ArrayList<>();
+
+                        for (Note n : notes) {
+                            if (n.hasTag("marked"))
+                                originalMarked.add(n);
+                            else
+                                originalUnmarked.add(n);
+                        }
+
+                        CardUtils.markAll(new ArrayList<>(notes), !originalUnmarked.isEmpty());
+
+                        // mark undo for all at once
+                        col.markUndo(type, new Object[] {originalMarked, originalUnmarked});
+
+                        // reload cards because they'll be passed back to caller
+                        for (Card c : cards) {
+                            c.load();
+                        }
+
+                        break;
+                    }
+
+                    case DELETE_NOTE_MULTI: {
+                        // list of all ids to pass to remNotes method.
+                        // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
+                        Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
+                        List<Card> allCards = CardUtils.getAllCards(notes);
+                        // delete note
+                        long[] uniqueNoteIds = new long[notes.size()];
+                        Note[] notesArr = notes.toArray(new Note[notes.size()]);
+                        int count = 0;
+                        for (Note note : notes) {
+                            uniqueNoteIds[count] = note.getId();
+                            count++;
+                        }
+
+                        col.markUndo(type, new Object[] {notesArr, allCards});
+
+                        col.remNotes(uniqueNoteIds);
+                        sHadCardQueue = true;
+                        // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
+                        publishProgress(new TaskData(allCards.toArray(new Card[allCards.size()])));
+                        break;
+                    }
+
+                    case CHANGE_DECK_MULTI: {
+                        long newDid = (long) data[2];
+                        long[] changedCardIds = new long[cards.length];
+                        for (int i = 0; i < cards.length; i++) {
+                            changedCardIds[i] = cards[i].getId();
+                        }
+                        col.getSched().remFromDyn(changedCardIds);
+
+                        long[] originalDids = new long[cards.length];
+
+                        for (int i = 0; i < cards.length; i++) {
+                            Card card = cards[i];
+                            card.load();
+                            // save original did for undo
+                            originalDids[i] = card.getDid();
+                            // then set the card ID to the new deck
+                            card.setDid(newDid);
+                            Note note = card.note();
+                            note.flush();
+                            // flush card too, in case, did has been changed
+                            card.flush();
+                        }
+
+                        // mark undo for all at once
+                        col.markUndo(type, new Object[] {cards, originalDids});
+
+                        break;
+                    }
+                }
+                col.getDb().getDatabase().setTransactionSuccessful();
+            } finally {
+                col.getDb().getDatabase().endTransaction();
+            }
+        } catch (RuntimeException e) {
+            Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSuspendCard");
+            return new TaskData(false);
+        }
+        // pass cards back so more actions can be performed by the caller
+        // (querying the cards again is unnecessarily expensive)
+        return new TaskData(true, cards);
+    }
+
+
     private TaskData doInBackgroundUndo(TaskData... params) {
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         Sched sched = col.getSched();
         try {
             col.getDb().getDatabase().beginTransaction();
-            Card newCard;
+            Card newCard = null;
             try {
                 long cid = col.undo();
-                if (cid != 0) {
+                if (cid != 0 && cid != -1) {
                     // a review was undone,
                     newCard = col.getCard(cid);
                     newCard.startTimer();
                     col.reset();
                     col.getSched().decrementCounts(newCard);
                     sHadCardQueue = true;
-                } else {
-                    // TODO: do not fetch new card if a non review operation has
-                    // been undone
+                } else if (cid != -1){
                     col.reset();
                     newCard = getCard(sched);
                 }
@@ -1232,6 +1424,29 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     }
 
     /**
+     * Goes through selected cards and checks selected and marked attribute
+     * @return If there are unselected cards, if there are unmarked cards
+     */
+    public TaskData doInBackgroundCheckCardSelection(TaskData... params) {
+        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Object[] objects = params[0].getObjArray();
+        Set<Integer> checkedCardPositions = (Set<Integer>) objects[0];
+        List<Map<String, String>> cards = (List<Map<String, String>>) objects[1];
+
+        boolean hasUnsuspended = false;
+        boolean hasUnmarked = false;
+        for (int cardPosition : checkedCardPositions) {
+            Card card = col.getCard(Long.parseLong(cards.get(cardPosition).get("id")));
+            hasUnsuspended = hasUnsuspended || card.getQueue() != -1;
+            hasUnmarked = hasUnmarked || !card.note().hasTag("marked");
+            if (hasUnsuspended && hasUnmarked)
+                break;
+        }
+
+        return new TaskData(new Object[] { hasUnsuspended, hasUnmarked});
+    }
+
+    /**
      * Listener for the status and result of a {@link DeckTask}.
      * <p>
      * Its methods are guaranteed to be invoked on the main thread.
@@ -1427,6 +1642,10 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             mBool = bool;
         }
 
+        public TaskData(boolean bool, Object[] obj) {
+            mBool = bool;
+            mObjects = obj;
+        }
 
         public TaskData(String string, boolean bool) {
             mMsg = string;

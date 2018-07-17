@@ -30,13 +30,13 @@ public class UIUtils {
      * @param mainTextResource
      * @param shortLength
      */
-    public static void showSimpleSnackbar(Activity activity, int mainTextResource, boolean shortLength) {
+    public static Snackbar showSimpleSnackbar(Activity activity, int mainTextResource, boolean shortLength) {
         View root = activity.findViewById(R.id.root_layout);
-        showSnackbar(activity, mainTextResource, shortLength, -1, null, root);
+        return showSnackbar(activity, mainTextResource, shortLength, -1, null, root);
     }
-    public static void showSimpleSnackbar(Activity activity, String mainText, boolean shortLength) {
+    public static Snackbar showSimpleSnackbar(Activity activity, String mainText, boolean shortLength) {
         View root = activity.findViewById(R.id.root_layout);
-        showSnackbar(activity, mainText, shortLength, -1, null, root, null);
+        return showSnackbar(activity, mainText, shortLength, -1, null, root, null);
     }
 
     /**
@@ -45,33 +45,38 @@ public class UIUtils {
      * @param shortLength whether or not to use long length
      * @param actionTextResource resource for the text string shown as the action
      * @param listener listener for the action (if null no action shown)
-     * @oaram root View Snackbar will attach to. Should be CoordinatorLayout for swipe-to-dismiss to work.
+     * @param root View Snackbar will attach to. Should be CoordinatorLayout for swipe-to-dismiss to work.
+     * @return Snackbar object
      */
-    public static void showSnackbar(Activity activity, int mainTextResource, boolean shortLength,
+    public static Snackbar showSnackbar(Activity activity, int mainTextResource, boolean shortLength,
                                 int actionTextResource, View.OnClickListener listener, View root) {
-        showSnackbar(activity, mainTextResource,shortLength,actionTextResource,listener,root, null);
+        return showSnackbar(activity, mainTextResource,shortLength,actionTextResource,listener,root, null);
     }
 
 
-    public static void showSnackbar(Activity activity, int mainTextResource, boolean shortLength,
+    public static Snackbar showSnackbar(Activity activity, int mainTextResource, boolean shortLength,
                                 int actionTextResource, View.OnClickListener listener, View root,
                                 Snackbar.Callback callback) {
         String mainText = activity.getResources().getString(mainTextResource);
-        showSnackbar(activity, mainText, shortLength, actionTextResource, listener, root, callback);
+        return showSnackbar(activity, mainText, shortLength, actionTextResource, listener, root, callback);
     }
 
+    public static Snackbar showSnackbar(Activity activity, String mainText, boolean shortLength,
+                                        int actionTextResource, View.OnClickListener listener, View root,
+                                        Snackbar.Callback callback) {
+        return showSnackbar(activity, mainText, shortLength ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG, actionTextResource, listener, root, callback);
+    }
 
-    public static void showSnackbar(Activity activity, String mainText, boolean shortLength,
+    public static Snackbar showSnackbar(Activity activity, String mainText, int length,
                                 int actionTextResource, View.OnClickListener listener, View root,
                                 Snackbar.Callback callback) {
         if (root == null) {
             root = activity.findViewById(android.R.id.content);
             if (root == null) {
                 Timber.e("Could not show Snackbar due to null View");
-                return;
+                return null;
             }
         }
-        int length = shortLength ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG;
         Snackbar sb = Snackbar.make(root, mainText, length);
         if (listener != null) {
             sb.setAction(actionTextResource, listener);
@@ -89,6 +94,8 @@ public class UIUtils {
             tv.setMaxLines(2);  // prevent tablets from truncating to 1 line
         }
         sb.show();
+
+        return sb;
     }
 
 

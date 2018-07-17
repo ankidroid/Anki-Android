@@ -126,6 +126,7 @@
   <string name="fact_adder_intent_title">AnkiDroid Kártya</string>
   <string name="card_editor_add_card">Jegyzet hozzáadása</string>
   <string name="card_editor_copy_card">Kártya másolása</string>
+  <string name="card_editor_reposition_card">Reposition</string>
   <string name="card_editor_reset_card">Reset folyamat</string>
   <string name="card_editor_reschedule_card">Kártya átütemezés</string>
   <string name="card_editor_preview_card">Előnézet</string>

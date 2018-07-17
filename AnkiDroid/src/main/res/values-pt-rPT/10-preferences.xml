@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Espessura do traço</string>
   <string name="whiteboard_black">Traços pretos</string>
   <string name="whiteboard_black_summ">Usa menos memória, exceto quando no modo noturno</string>
-  <string name="write_answers_disable">Desativar escrita na resposta</string>
-  <string name="write_answers_disable_summ">Impede que o teclado apareça em fichas contendo campos \'escreva a resposta\'</string>
   <string name="use_input_tag">Escrever a resposta na ficha</string>
   <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
-  <string name="text_selection_click">Solução alternativa para toque longo</string>
-  <string name="text_selection_click_summ">Ative isto se não conseguir selecionar o texto com um toque longo</string>
   <string name="dictionary">Procurar dicionário</string>
   <string name="reset_languages">Reiniciar idiomas</string>
   <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
@@ -146,7 +142,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Selecionar Idioma</string>
   <string name="safe_display">Modo de visualização segura</string>
-  <string name="safe_display_summ">Desativar todas as animações e usar modo mais seguro para desenhar as fichas. Dispositivos e-ink ou mais antigos usando tipos de letra personalizados poderão necessitar desta opção.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Alinhar ao centro</string>
   <string name="vertical_centering_summ">Centrar o conteúdo das fichas verticalmente</string>
   <string name="pref_backup_max">Número máximo de cópias de segurança</string>
@@ -164,8 +160,6 @@
   <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">Início do dia seguinte</string>
   <string name="day_offset_summ">XXX horas após a meia-noite</string>
-  <string name="input_workaround">Solução alternativa de entrada</string>
-  <string name="input_workaround_summ">Solução alternativa para focar os problemas nas caixas de entrada HTML. Causa problemas em vários dispositivos.</string>
   <string name="pref_keep_screen_on">Manter o ecrã aceso</string>
   <string name="pref_keep_screen_on_summ">Desativar o tempo limite de ecrã</string>
   <string name="convert_fen_text">Suporte para notação de xadrez</string>

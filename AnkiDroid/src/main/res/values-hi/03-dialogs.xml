@@ -62,6 +62,9 @@
     <item><![CDATA[AnkiDroid <a href=\"%1$s\"> v3 GNU-GPL लाइसेंस</a> के तहत जारी किया गया है और स्रोत कोड <a href=\"%2$s\"> GitHub पर</a>उपलब्ध है।]]></item>
   </string-array>
   <string name="preview_title">पूर्वावलोकन</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">पत्ता प्रगति रीसेट करें</string>
   <string name="reset_card_dialog_message">इस पत्ते को नए पत्तों के कतार के अंत में रखा जाएगा</string>
   <string name="reset_card_dialog_acknowledge">पत्ता रीसेट हुआ</string>

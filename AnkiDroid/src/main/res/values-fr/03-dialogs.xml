@@ -62,6 +62,9 @@
     <item><![CDATA[AnkiDroid est distribué sous la <a href=\"%1$s\">licence GNU-GPL v3</a> et le code source est disponible <a href=\"%2$s\">sur GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Aperçu</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">Réinitialiser les progrès de la carte</string>
   <string name="reset_card_dialog_message">Cette carte sera placée à la fin de la nouvelle file de cartes.</string>
   <string name="reset_card_dialog_acknowledge">Carte réinitialisée</string>

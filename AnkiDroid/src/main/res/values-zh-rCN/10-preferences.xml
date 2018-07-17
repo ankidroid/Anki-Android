@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">笔画粗细</string>
   <string name="whiteboard_black">黑色笔迹</string>
   <string name="whiteboard_black_summ">在非夜间模式中占用更少内存</string>
-  <string name="write_answers_disable">禁用键入答案</string>
-  <string name="write_answers_disable_summ">在包括“输入答案”字段的卡片中，禁止弹出键盘</string>
   <string name="use_input_tag">在卡片中输入答案</string>
   <string name="use_input_tag_summ">在卡片中使用一个文本框里输入答案</string>
-  <string name="text_selection_click">长按解决方案</string>
-  <string name="text_selection_click_summ">如果您不能够通过长点击选择文本，启用此选项。</string>
   <string name="dictionary">查找字典</string>
   <string name="reset_languages">重设语言</string>
   <string name="reset_languages_summ">重置指定牌组语言(TTS和字典)</string>
@@ -145,7 +141,7 @@
   <string name="timeout_question_seconds_summ">XXX 秒</string>
   <string name="select_locale_title">选择语言</string>
   <string name="safe_display">安全显示模式</string>
-  <string name="safe_display_summ">禁用所有动画并使用安全模式绘制卡牌。E-ink和使用自定义字体的旧设备可能需要这样。</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">居中对齐</string>
   <string name="vertical_centering_summ">垂直居中卡片内容</string>
   <string name="pref_backup_max">最大备份数量</string>
@@ -163,8 +159,6 @@
   <string name="time_limit_summ">XXX 分钟</string>
   <string name="day_offset">下一天开始的时间</string>
   <string name="day_offset_summ">午夜过后的XXX小时</string>
-  <string name="input_workaround">输入解决方案</string>
-  <string name="input_workaround_summ">解决HTML输入框焦点问题的方案，这个问题存在于某些设备上。</string>
   <string name="pref_keep_screen_on">保持屏幕常亮</string>
   <string name="pref_keep_screen_on_summ">禁用屏幕超时</string>
   <string name="convert_fen_text">国际象棋标注支持</string>

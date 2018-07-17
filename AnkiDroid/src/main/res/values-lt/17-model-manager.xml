@@ -33,11 +33,13 @@
   <plurals name="model_browser_types_available">
     <item quantity="one">Yra %d užrašo tipas</item>
     <item quantity="few">Yra %d užrašo tipai</item>
+    <item quantity="many">%d note types available</item>
     <item quantity="other">Yra %d užrašų tipų</item>
   </plurals>
   <plurals name="model_browser_of_type">
     <item quantity="one">%d užrašas</item>
     <item quantity="few">%d užrašai</item>
+    <item quantity="many">%d notes</item>
     <item quantity="other">%d užrašų</item>
   </plurals>
   <!--Button Values-->

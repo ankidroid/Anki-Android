@@ -61,6 +61,9 @@
     <item><![CDATA[AnkiDroid được phát hành theo <a href=\"%1$s\">Giấy phép GNU-GPL v3</a> và mã nguồn có <a href=\"%2$s\">trên GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Xem trước</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">Đặt lại tiến trình thẻ</string>
   <string name="reset_card_dialog_message">Thẻ này sẽ được đặt ở cuối hàng đợi thẻ mới</string>
   <string name="reset_card_dialog_acknowledge">Thiết lập lại thẻ</string>

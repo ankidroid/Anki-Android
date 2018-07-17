@@ -26,6 +26,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.text.Html;
 
 import com.ichi2.anki.AnkiFont;
@@ -631,6 +632,11 @@ public class Utils {
                         name = zipEntryToFilenameMap.get(name);
                     }
                     File destFile = new File(dir, name);
+                    if (!isInside(destFile, dir)) {
+                        Timber.e("Refusing to decompress invalid path: " + destFile.getCanonicalPath());
+                        throw new IOException("File is outside extraction target directory.");
+                    }
+
                     if (!ze.isDirectory()) {
                         Timber.i("uncompress %s", name);
                         zis = new BufferedInputStream(zipFile.getInputStream(ze));
@@ -653,6 +659,18 @@ public class Utils {
                 zis.close();
             }
         }
+    }
+
+    /**
+     * Checks to see if a given file path resides inside a given directory.
+     * Useful for protection against path traversal attacks prior to creating the file
+     * @param file the file with an uncertain filesystem location
+     * @param dir the directory that should contain the file
+     * @return true if the file path is inside the directory
+     * @exception IOException if there are security or filesystem issues determining the paths
+     */
+    public static boolean isInside(@NonNull File file, @NonNull File dir) throws IOException {
+        return file.getCanonicalPath().startsWith(dir.getCanonicalPath());
     }
 
     /**

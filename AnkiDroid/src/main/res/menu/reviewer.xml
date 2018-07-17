@@ -46,7 +46,7 @@
     <item
         android:id="@+id/action_suspend"
         android:title="@string/menu_suspend"
-        android:icon="@drawable/ic_lock_outline_white_24dp" />
+        android:icon="@drawable/ic_action_suspend" />
     <item
         android:id="@+id/action_delete"
         android:title="@string/menu_delete_note"

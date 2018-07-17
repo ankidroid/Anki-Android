@@ -40,8 +40,8 @@
 -->
 <resources>
   <!-- Navigation drawer items-->
-  <string name="decks">デッキリスト</string>
-  <string name="card_browser">カードブラウザ</string>
+  <string name="decks">デッキ</string>
+  <string name="card_browser">ブラウザ</string>
   <string name="statistics">統計</string>
   <string name="settings">設定</string>
   <string name="help">ヘルプ</string>
@@ -82,6 +82,9 @@
   <string name="undo_action_suspend_card">カードを保留</string>
   <string name="undo_action_suspend_note">ノートを保留</string>
   <string name="undo_action_delete">ノートの削除</string>
+  <string name="undo_action_delete_multi">delete notes</string>
+  <string name="undo_action_change_deck_multi">change decks</string>
+  <string name="move_all_to_deck">Move all to deck</string>
   <string name="unbury">延期を解除</string>
   <string name="rename_deck">このデッキの名前を変更</string>
   <string name="menu_add">ノートを追加</string>

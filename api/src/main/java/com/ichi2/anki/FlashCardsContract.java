@@ -16,7 +16,7 @@ import android.net.Uri;
  * notes and cards. To find out more about notes and cards, see
  * <a href="http://ankisrs.net/docs/manual.html#the-basics">the basics section in the Anki manual.</a>
  * </p>
- * <p/>
+ * <p></p>
  * <p>
  * In short, you can think of cards as instances of notes, with the limitation that the number of
  * instances and their names are pre-defined.
@@ -27,9 +27,9 @@ import android.net.Uri;
  * English speaker to learn Japanese), or just "front" and "back" (for a generic front side and back
  * side of a card, without saying anything about the purpose).
  * </p>
- * <p/>
+ * <p></p>
  * Note and card information is accessed in the following way:
- * </p>
+ * <p></p>
  * <ul>
  * <li>
  * Each row from the {@link Note} provider represents a note that is stored in the AnkiDroid database.
@@ -59,11 +59,11 @@ import android.net.Uri;
  * in the {@link Model} description.
  * </li>
  * </ul>
- * <p/>
+ * <p></p>
  * The AnkiDroid Flashcard content provider supports the following operation on it's URIs:
- * <p/>
- * <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="URIs and Operations supported by CardContentProvider">
- * <caption><span>URIs and operations</span><span class="tabEnd">&nbsp;</span></caption>
+ * <p></p>
+ * <table class="memberSummary" border="">
+ * <caption><span>URIs and operations andsupported by CardContentProvider</span><span class="tabEnd">&nbsp;</span></caption>
  * <tr>
  * <th class="colFirst" scope="col">URI</th>
  * <th class="colLast" scope="col">Description</th>
@@ -130,7 +130,7 @@ public class FlashCardsContract {
      * in the sql database. E.g. "mid = 12345678" could be used to limit to a particular model ID.
      * The {@code selection} parameter is an optional search string for the Anki browser. The syntax is described
      * <a href="http://ankisrs.net/docs/manual.html#searching">in the search section of the Anki manual</a>.
-     * <p/>
+     * <p>
      * <p>
      * Example for querying notes with a certain tag:
      * <pre>
@@ -143,7 +143,7 @@ public class FlashCardsContract {
      *                                        );
      *     </code>
      * </pre>
-     * </p>
+     * <p>
      * Example for querying notes with a certain note id with direct URI:
      * <pre>
      *     <code>
@@ -156,7 +156,7 @@ public class FlashCardsContract {
      *                                        );
      *     </code>
      * </pre>
-     * <p/>
+     * <p>
      * In order to insert a new note (the cards for this note will be added to the default deck)
      * the {@link #CONTENT_URI} must be used together with a model (see {@link Model})
      * ID, e.g.
@@ -168,12 +168,12 @@ public class FlashCardsContract {
      *         Uri newNoteUri = cr.insert(FlashCardsContract.Note.CONTENT_URI, values);
      *     </code>
      * </pre>
-     * <p/>
+     * <p>
      *
-     * <p/>
+     * <p>
      * A note consists of the following columns:
-     * <p/>
-     * <table class="jd-sumtable">
+     * <p>
+     * <table class="jd-sumtable"><caption>Note column description</caption>
      * <tr>
      * <th>Type</th><th>Name</th><th>access</th><th>description</th>
      * </tr>
@@ -257,7 +257,7 @@ public class FlashCardsContract {
          * <pre>
          *         Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
          *     </pre>
-         * </p>
+         * <p>
          *
          * <p>
          * If the URI is appended by the note ID and then the keyword "data", it is possible to
@@ -267,8 +267,8 @@ public class FlashCardsContract {
          *         Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
          *         Uri dataUri = Uri.withAppendedPath(noteUri, "data");
          *     </pre>
-         * </p>
-         * </p>
+         * <p>
+         * <p>
          *
          * For examples on how to use the URI for queries see class description.
          */
@@ -330,7 +330,7 @@ public class FlashCardsContract {
 
     /**
      * A model describes what cards look like.
-     * <table class="jd-sumtable">
+     * <table class="jd-sumtable"><caption>Card model description</caption>
      * <tr>
      * <th>Type</th><th>Name</th><th>access</th><th>description</th>
      * </tr>
@@ -346,6 +346,7 @@ public class FlashCardsContract {
      * <td>Name of the model.
      * </td>
      * </tr>
+     * <tr>
      * <td>String</td>
      * <td>{@link #CSS}</td>
      * <td>CSS styling code which is shared across all the templates</td>
@@ -394,7 +395,7 @@ public class FlashCardsContract {
      * <td>Code to go at the front of LaTeX renderings in Anki Desktop</td>
      * </tr>
      * </table>
-     * <p/>
+     * <p>
      * It's possible to query all models at once like this
      * <p>
      * <pre>
@@ -408,7 +409,7 @@ public class FlashCardsContract {
      *                                     );
      *     </code>
      *     </pre>
-     * </p>
+     * <p>
      *
      * It's also possible to access a specific model like this:
      * <p>
@@ -424,7 +425,7 @@ public class FlashCardsContract {
      *                                     );
      *     </code>
      *     </pre>
-     * </p>
+     * <p>
      *
      * Instead of specifying the model ID, it's also possible to get the currently active model using the following URI:
      * <p>
@@ -433,7 +434,7 @@ public class FlashCardsContract {
      *          Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, FlashCardsContract.Model.CURRENT_MODEL_ID);
      *      </code>
      * </pre>
-     * </p>
+     * <p>
      */
     public static class Model {
         /**
@@ -493,8 +494,8 @@ public class FlashCardsContract {
     /**
      * Card template for a model. A template defines how to render the fields of a note into the actual HTML that
      * makes up a flashcard. A model can define multiple card templates, for example a Forward and Reverse Card could
-     * be defined with the forward card allowing to review a word from Japanese->English (e.g. 犬 -> dog), and the
-     * reverse card allowing review in the "reverse" direction (e.g dog -> 犬). When a Note is inserted, a Card will
+     * be defined with the forward card allowing to review a word from Japanese-&gt;English (e.g. 犬 -&gt; dog), and the
+     * reverse card allowing review in the "reverse" direction (e.g dog -&gt; 犬). When a Note is inserted, a Card will
      * be generated for each active CardTemplate which is defined.
      */
     public static class CardTemplate {
@@ -572,11 +573,11 @@ public class FlashCardsContract {
 
     /**
      * A card is an instance of a note.
-     * <p/>
+     * <p>
      * If the URI of a note is appended by the keyword "cards", it is possible to
      * access all the cards that are associated with this note:
      * <p>
-     * <pre>
+     *     <pre>
      *     <code>
      *         Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
      *         Uri cardsUri = Uri.withAppendedPath(noteUri, "cards");
@@ -588,11 +589,11 @@ public class FlashCardsContract {
      *                                     );
      *     </code>
      *     </pre>
-     * </p>
+     * <p>
      * If it is furthermore appended by the cards ordinal (see {@link #CARD_ORD}) it's possible to
      * directly access a specific card.
      * <p>
-     * <pre>
+     *     <pre>
      *     <code>
      *         Uri noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
      *         Uri cardsUri = Uri.withAppendedPath(noteUri, "cards");
@@ -605,10 +606,10 @@ public class FlashCardsContract {
      *                                     );
      *     </code>
      *     </pre>
-     * </p>
+     * <p>
      *
      * A card consists of the following columns:
-     * <table class="jd-sumtable">
+     * <table class="jd-sumtable"><caption>Card column description</caption>
      * <tr>
      * <th>Type</th><th>Name</th><th>access</th><th>description</th>
      * </tr>
@@ -775,10 +776,10 @@ public class FlashCardsContract {
 
     /**
      * A ReviewInfo contains information about a card that is scheduled for review.
-     * <p/>
-     * To access the next scheduled card(s), a simple query with the {@link #CONTENT_URI} can be used.<br/>
+     * <p></p>
+     * To access the next scheduled card(s), a simple query with the {@link #CONTENT_URI} can be used.<br>
      * Arguments:
-     * <table class="jd-sumtable">
+     * <table class="jd-sumtable"><caption>ReviewInfo information table</caption>
      * <tr>
      * <th>Type</th><th>Name</th><th>default value</th><th>description</th>
      * </tr>
@@ -814,10 +815,10 @@ public class FlashCardsContract {
      *                              );
      * </code>
      * </pre>
-     * </p>
+     * <p></p>
      *
      * A ReviewInfo consists of the following columns:
-     * <table class="jd-sumtable">
+     * <table class="jd-sumtable"><caption>ReviewInfo column information</caption>
      * <tr>
      * <th>Type</th><th>Name</th><th>access</th><th>description</th>
      * </tr>
@@ -846,7 +847,7 @@ public class FlashCardsContract {
      * <td>JSONArray</td>
      * <td>{@link #NEXT_REVIEW_TIMES}</td>
      * <td>read-only</td>
-     * <td>A JSONArray containing when the card will be scheduled for review for all ease identifiers available.<br/>
+     * <td>A JSONArray containing when the card will be scheduled for review for all ease identifiers available.<br>
      * The number of entries in this array must equal the number of buttons in {@link #BUTTON_COUNT}.
      * </td>
      * </tr>
@@ -877,16 +878,16 @@ public class FlashCardsContract {
      * </tr>
      * </table>
      *
-     * The only writable column is the {@link #EASE}, which is used for answering a card.<br/>
+     * The only writable column is the {@link #EASE}, which is used for answering a card.<br>
      * Answering a card can be done as shown in this example
      * <pre>
      *    <code>ContentResolver cr = getContentResolver();
      *    Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
      *    ContentValues values = new ContentValues();
-     *    long noteId = 123456789; //<- insert real note id here
-     *    int cardOrd = 0;   //<- insert real card ord here
-     *    int ease = AbstractFlashcardViewer.EASE_3; //<- insert real ease here
-     *    long timeTaken = System.currentTimeMillis() - cardStartTime; //<- insert real time taken here
+     *    long noteId = 123456789; //&lt;-- insert real note id here
+     *    int cardOrd = 0;   //&lt;-- insert real card ord here
+     *    int ease = AbstractFlashcardViewer.EASE_3; //&lt;-- insert real ease here
+     *    long timeTaken = System.currentTimeMillis() - cardStartTime; //&lt;-- insert real time taken here
      *
      *    values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);
      *    values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd);
@@ -960,12 +961,12 @@ public class FlashCardsContract {
 
     /**
      * A Deck contains information about a deck contained in the users deck list.
-     * <p/>
+     * <p></p>
      * To request a list of all decks the URI {@link #CONTENT_ALL_URI} can be used.
-     * To request the currently selected deck the URI {@link #CONTENT_SELECTED_URI} can be used.<br/>
+     * To request the currently selected deck the URI {@link #CONTENT_SELECTED_URI} can be used.<br>
      *
      * A Deck consists of the following columns:
-     * <table class="jd-sumtable">
+     * <table class="jd-sumtable"><caption>Columns available in a Deck</caption>
      * <tr>
      * <th>Type</th><th>Name</th><th>access</th><th>description</th>
      * </tr>
@@ -1011,7 +1012,7 @@ public class FlashCardsContract {
      *     <code>
      *     Cursor decksCursor = getContentResolver().query(FlashCardsContract.Deck.CONTENT_ALL_URI, null, null, null, null);
      *     if (decksCursor.moveToFirst()) {
-     *      HashMap<Long,String> decks = new HashMap<Long,String>();
+     *      HashMap&lt;Long,String&gt; decks = new HashMap&lt;Long,String&gt;();
      *      do {
      *          long deckID = decksCursor.getLong(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID));
      *          String deckName = decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME));
@@ -1031,7 +1032,7 @@ public class FlashCardsContract {
      *
      * <pre>
      *     <code>
-     *     long deckId = 123456 //<-- insert real deck ID here
+     *     long deckId = 123456 //&lt;-- insert real deck ID here
      *     Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(deckId));
      *              Cursor decksCursor = getContentResolver().query(deckUri, null, null, null, null);
      *
@@ -1063,7 +1064,7 @@ public class FlashCardsContract {
      * Updating the selected deck can be done as shown in this example
      * <pre>
      *     <code>
-     *       long deckId = 123456; //<- insert real deck id here
+     *       long deckId = 123456; //&gt;-- insert real deck id here
      *
      *       ContentResolver cr = getContentResolver();
      *       Uri selectDeckUri = FlashCardsContract.Deck.CONTENT_SELECTED_URI;

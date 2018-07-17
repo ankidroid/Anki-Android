@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 def groupId = "com.ichi2.anki"
 def artifactId = "api"
-def version = "1.1.0alpha5"
+def version = "1.1.0alpha6"
 
 android {
     compileSdkVersion 26
@@ -10,7 +10,7 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 25
-        versionCode 11015   // 4th digit: 1=alpha, 2=beta, 3=official
+        versionCode 11016   // 4th digit: 1=alpha, 2=beta, 3=official
         versionName version
     }
     buildTypes {
@@ -35,6 +35,12 @@ def localReleaseDest = "${buildDir}/release/${version}"
 task androidJavadocs(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+
+    // Java 10 wants you to choose between html4 and html5. We are html5 clean and should use it.
+    // But in JDK < 10 the option isn't there and it breaks the build. This handles both.
+    if(JavaVersion.current() >= JavaVersion.VERSION_1_10){
+        options.addBooleanOption('html5', true)
+    }
 }
 
 task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {

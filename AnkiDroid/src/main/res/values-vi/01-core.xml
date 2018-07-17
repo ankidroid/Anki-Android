@@ -82,6 +82,9 @@
   <string name="undo_action_suspend_card">tạm dừng thẻ</string>
   <string name="undo_action_suspend_note">tạm dừng ghi chú</string>
   <string name="undo_action_delete">xoá ghi chú</string>
+  <string name="undo_action_delete_multi">delete notes</string>
+  <string name="undo_action_change_deck_multi">change decks</string>
+  <string name="move_all_to_deck">Move all to deck</string>
   <string name="unbury">Bỏ tạm ẩn</string>
   <string name="rename_deck">Đổi tên bộ thẻ</string>
   <string name="menu_add">Thêm</string>

@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Largura do trazo</string>
   <string name="whiteboard_black">Trazos negros</string>
   <string name="whiteboard_black_summ">Empregar menos memoria agás no modo noite</string>
-  <string name="write_answers_disable">Desactivar escritura nas respostas</string>
-  <string name="write_answers_disable_summ">Evitar a aparición do teclado nos cartóns con campos para escribir a resposta</string>
   <string name="use_input_tag">Escribir resposta no cartón</string>
   <string name="use_input_tag_summ">Empregar unha caixa de texto dentro do cartón para escribir a resposta</string>
-  <string name="text_selection_click">Solución no premido longo</string>
-  <string name="text_selection_click_summ">Activar no caso de que non podas seleccionar texto cun toque longo</string>
   <string name="dictionary">Dicionario de busca</string>
   <string name="reset_languages">Restabelecer idiomas</string>
   <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
@@ -146,7 +142,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Seleccionar idioma</string>
   <string name="safe_display">Safe display mode</string>
-  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink and older devices using custom fonts may require this.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Aliñar ao centro</string>
   <string name="vertical_centering_summ">Centrar o contido dos cartóns verticalmente</string>
   <string name="pref_backup_max">Número máximo de copias de seguranza</string>
@@ -164,8 +160,6 @@
   <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">Comezo do vindeiro día</string>
   <string name="day_offset_summ">XXX horas despois da media noite</string>
-  <string name="input_workaround">Input workaround</string>
-  <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
   <string name="pref_keep_screen_on">Manter a pantalla acesa</string>
   <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
   <string name="convert_fen_text">Chess notation support</string>

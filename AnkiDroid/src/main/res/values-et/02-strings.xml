@@ -126,6 +126,7 @@
   <string name="fact_adder_intent_title">AnkiDroid kaart</string>
   <string name="card_editor_add_card">Add note</string>
   <string name="card_editor_copy_card">Kopeeri kaart</string>
+  <string name="card_editor_reposition_card">Reposition</string>
   <string name="card_editor_reset_card">Lähtestamise progress</string>
   <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Eelvaade</string>

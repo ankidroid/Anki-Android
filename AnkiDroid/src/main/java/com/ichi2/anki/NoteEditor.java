@@ -196,7 +196,6 @@ public class NoteEditor extends AnkiActivity {
                     .show(NoteEditor.this, "", res.getString(R.string.saving_facts), false);
         }
 
-
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             int count = values[0].getInt();
@@ -537,6 +536,12 @@ public class NoteEditor extends AnkiActivity {
 
         if (!mAddNote && mCurrentEditedCard != null) {
             Timber.i("NoteEditor:: Edit note activity successfully started with card id %d", mCurrentEditedCard.getId());
+        }
+
+        //set focus to FieldEditText 'first' on startup like Anki desktop
+        if (mEditFields != null && !mEditFields.isEmpty()) {
+            FieldEditText first = mEditFields.getFirst();
+            first.requestFocus();
         }
     }
 

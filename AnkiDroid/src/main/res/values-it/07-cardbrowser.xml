@@ -45,13 +45,21 @@
     <item quantity="other">%d carte mostrate</item>
   </plurals>
   <string name="card_browser_all_decks">Tutti i mazzi</string>
-  <string name="card_browser_delete_card">Elimina nota</string>
-  <string name="card_browser_suspend_card">Sospendi carta</string>
-  <string name="card_browser_unsuspend_card">Riattiva carta</string>
-  <string name="card_browser_mark_card">Contrassegna nota</string>
-  <string name="card_browser_unmark_card">Togli contrassegno nota</string>
+  <string name="card_browser_delete_card">Delete notes</string>
+  <string name="card_browser_suspend_card">Suspend cards</string>
+  <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
+  <string name="card_browser_change_deck">Change deck</string>
+  <string name="card_browser_unsuspend_card">Unsuspend cards</string>
+  <string name="card_browser_mark_card">Mark notes</string>
+  <string name="card_browser_toggle_mark_card">(un)mark notes</string>
+  <string name="card_browser_unmark_card">Unmark notes</string>
   <string name="delete_card_title">Elimina nota</string>
+  <string name="delete_cards_title">Delete notes?</string>
   <string name="delete_card_message">Vuoi veramente eliminare tutte le carte di questa nota?\nCampo di ricerca: %s</string>
+  <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
+  <string name="deleted_message">Notes deleted</string>
+  <string name="changed_deck_message">Moved to %s</string>
+  <string name="card_browser_suspended_cards">(un)suspended cards</string>
   <string name="card_browser_show_marked">Filtra contrassegnate</string>
   <string name="card_browser_show_suspended">Filtra sospese</string>
   <string name="card_browser_search_by_tag">Filtra per etichetta</string>
@@ -83,4 +91,6 @@
     <item>Per ripetizioni</item>
     <item>Per errori</item>
   </string-array>
+  <string name="card_browser_select_all">Select all</string>
+  <string name="card_browser_select_none">Select none</string>
 </resources>

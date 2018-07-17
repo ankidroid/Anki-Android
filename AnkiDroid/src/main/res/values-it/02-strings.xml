@@ -126,6 +126,7 @@
   <string name="fact_adder_intent_title">Carta AnkiDroid</string>
   <string name="card_editor_add_card">Aggiungi nota</string>
   <string name="card_editor_copy_card">Copia carta</string>
+  <string name="card_editor_reposition_card">Reposition</string>
   <string name="card_editor_reset_card">Reimposta progresso</string>
   <string name="card_editor_reschedule_card">Rischedula</string>
   <string name="card_editor_preview_card">Anteprima</string>

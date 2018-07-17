@@ -91,6 +91,9 @@
   <string name="undo_action_suspend_card">vyřadit kartu</string>
   <string name="undo_action_suspend_note">vyřadit poznámku</string>
   <string name="undo_action_delete">odstranit poznámku</string>
+  <string name="undo_action_delete_multi">delete notes</string>
+  <string name="undo_action_change_deck_multi">change decks</string>
+  <string name="move_all_to_deck">Move all to deck</string>
   <string name="unbury">Zruš přeskočení</string>
   <string name="rename_deck">Přejmenovat balíček</string>
   <string name="menu_add">Přidat</string>

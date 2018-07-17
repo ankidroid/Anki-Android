@@ -59,9 +59,7 @@
   <string name="backup_restore_select_title">Norėdami atkurti, pasirinkite atsarginę kopiją</string>
   <string name="backup_restore_no_backups">Šiame įrenginyje nėra jokių atsarginių kopijų. Jei turite atsarginių kopijų kompiuteryje, nukopijuokite jas rankiniu būdu į „AnkiDroid“ katalogą.</string>
   <string name="open_collection_failed_title">Neatidaryta kolekcija</string>
-  <string name="open_collection_failed_message">Duomenų bazė neatsidaro. Tai nėra „Anki“ duomenų bazė arba ji yra sugadinta.\n\nNorėdami pamatyti daugiau duomenų bazės atkūrimo parinkčių, paspauskite „Parinktys“, o norėdami gauti daugiau informacijos apie tai, kaip galima pataisyti sugadintas kolekcijas, skaitykite:\n%1$s</string>
   <string name="corrupt_db_message">Jūsų kolekcija yra sugadinta.\n\nNorėdami atkurti ją iš atsarginės kopijos, spauskite „Parinktys“, o jei tai nepadeda, tuomet peržiūrėkite toliau pateiktus nurodymus, kaip galite duomenų bazė pataisyti rankiniu būdu:\n%1$s</string>
   <string name="access_collection_failed_message">Jungiantis prie jūsų kolekcijos įvyko klaida. Ją galėjo sukelti nepavojingas pranešimas apie klaidą arba problema gali būti susijusi su pačia kolekcija. \n\nPabandykite patikrinti duomenų bazę arba atkurti ją iš atsarginės kopijos, paspaudę mygtuką „Parinktys“. Jei šį pranešimą rodys ir toliau, prašome išsiųsti pranešimą apie klaidą:\n%1$s</string>
   <string name="deck_repair_error">Kolekcijos sutaisyti negalima</string>
-  <string name="cursor_size_limit_exceeded">Duomenų bazėje buvo viršytas „Android“ eilutei skirto dydžio limitas. Ištrinkite nenaudojamus užrašų tipus, naudodami kompiuterinę „Anki“ versiją ir atlikite išsamų sinchronizavimą.</string>
 </resources>

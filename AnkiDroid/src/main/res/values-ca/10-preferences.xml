@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Amplada del traç</string>
   <string name="whiteboard_black">Traços negres</string>
   <string name="whiteboard_black_summ">Utilitza menys memòria, llevat que estigui en el mode de nit</string>
-  <string name="write_answers_disable">Desactiva l\'escriptura en la resposta</string>
-  <string name="write_answers_disable_summ">Impedeix que el teclat apareixi en les cartes que contenen camps per escriure la resposta</string>
   <string name="use_input_tag">Tipus de resposta a la targeta</string>
   <string name="use_input_tag_summ">Utilitzar un quadre d\'entrada de text dins de la targeta per escriure la resposta</string>
-  <string name="text_selection_click">Solució de clic perllongat</string>
-  <string name="text_selection_click_summ">Activeu aquesta opció si no podeu seleccionar text amb un clic perllongat</string>
   <string name="dictionary">Diccionari de cerca</string>
   <string name="reset_languages">Reinicialització de llengües</string>
   <string name="reset_languages_summ">Restablir les assignacions de llengua (per text a discurs i diccionaris) per tots els malls</string>
@@ -145,7 +141,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Seleccioneu l\'idioma</string>
   <string name="safe_display">Mode d\'exhibició segur</string>
-  <string name="safe_display_summ">Desactivar totes les animacions i utilitzi mètode més segur per a cartesde dibuix. E-ink i mecanismes més vells utilitzant fonts personalitzades puguin necessitar això.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Alinear al centre</string>
   <string name="vertical_centering_summ">Centra verticalment el contingut de cartes</string>
   <string name="pref_backup_max">Màxim número de còpies de seguretat</string>
@@ -163,8 +159,6 @@
   <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">Inici de l\'endemà</string>
   <string name="day_offset_summ">XXX hores passada la mitjanit</string>
-  <string name="input_workaround">Solució d\'entrada</string>
-  <string name="input_workaround_summ">SOlució per a centrar-se problemes en HTML caixes d\'introducció de dades. Provoca problemes en diversos dispositius.</string>
   <string name="pref_keep_screen_on">Mantenir la pantalla encesa</string>
   <string name="pref_keep_screen_on_summ">Desactiva la pantalla de bloqueig</string>
   <string name="convert_fen_text">Suport de notació d\'escacs</string>

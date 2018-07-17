@@ -372,4 +372,19 @@ public class Note implements Cloneable {
     public List<String> getTags() {
         return mTags;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Note note = (Note) o;
+
+        return mId == note.mId;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (mId ^ (mId >>> 32));
+    }
 }
