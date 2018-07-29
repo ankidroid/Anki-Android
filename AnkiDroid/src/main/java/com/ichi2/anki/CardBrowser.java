@@ -28,7 +28,9 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
@@ -161,6 +163,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private boolean mReloadRequired = false;
     private boolean mInMultiSelectMode = false;
     private HashSet<Integer> mCheckedCardPositions = new HashSet<>();
+    private int mLastSelectedPosition;
     private Menu mActionBarMenu;
 
     private final int SNACKBAR_DURATION = 8000;
@@ -486,14 +489,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
         });
         mCardsListView.setOnItemLongClickListener(new ListView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long id) {
+                mLastSelectedPosition = position;
                 loadMultiSelectMode();
 
                 // click on whole cell triggers select
                 CheckBox cb = (CheckBox) view.findViewById(R.id.card_checkbox);
                 cb.toggle();
                 onCheck(position, view);
-
+                recenterListView(view);
                 mCardsAdapter.notifyDataSetChanged();
                 return true;
             }
@@ -1723,12 +1727,31 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     /**
+     * The views expand / contract when switching between multi-select mode so we manually
+     * adjust so that the vertical position of the given view is maintained
+     */
+    private void recenterListView(@NonNull View view) {
+        final int position = mCardsListView.getPositionForView(view);
+        // Get the current vertical position of the top of the selected view
+        final int top = view.getTop();
+        final Handler handler = new Handler();
+        // Post to event queue with some delay to give time for the UI to update the layout
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Scroll to the same vertical position before the layout was changed
+                mCardsListView.setSelectionFromTop(position, top);
+            }
+        }, 10);
+    }
+
+    /**
      * Turn on Multi-Select Mode so that the user can select multiple cards at once.
      */
     private void loadMultiSelectMode() {
-        if (mInMultiSelectMode)
+        if (mInMultiSelectMode) {
             return;
-
+        }
         // set in multi-select mode
         mInMultiSelectMode = true;
         // show title and hide spinner
@@ -1743,10 +1766,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * Turn off Multi-Select Mode and return to normal state
      */
     private void endMultiSelectMode() {
-        // clear all selected cards from list
         mCheckedCardPositions.clear();
-        // turn of multi-select mode
         mInMultiSelectMode = false;
+        // If view which was originally selected when entering multi-select is visible then maintain its position
+        View view = mCardsListView.getChildAt(mLastSelectedPosition - mCardsListView.getFirstVisiblePosition());
+        if (view != null) {
+            recenterListView(view);
+        }
         // update adapter to remove check boxes
         mCardsAdapter.notifyDataSetChanged();
         // update action bar
