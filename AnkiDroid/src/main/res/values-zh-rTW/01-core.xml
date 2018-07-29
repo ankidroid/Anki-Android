@@ -82,9 +82,9 @@
   <string name="undo_action_suspend_card">長久擱置卡片</string>
   <string name="undo_action_suspend_note">長久擱置筆記</string>
   <string name="undo_action_delete">刪除筆記</string>
-  <string name="undo_action_delete_multi">delete notes</string>
-  <string name="undo_action_change_deck_multi">change decks</string>
-  <string name="move_all_to_deck">Move all to deck</string>
+  <string name="undo_action_delete_multi">刪除筆記</string>
+  <string name="undo_action_change_deck_multi">更改牌組</string>
+  <string name="move_all_to_deck">全部移動到牌組</string>
   <string name="unbury">取消暫時隱藏</string>
   <string name="rename_deck">重新命名牌組</string>
   <string name="menu_add">新增</string>

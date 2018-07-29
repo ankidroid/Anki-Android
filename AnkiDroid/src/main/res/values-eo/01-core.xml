@@ -57,8 +57,8 @@
   <string name="collapse">Maletendi</string>
   <string name="study_more">Lerni pli</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="other">%1$d kartoj por lerni (%2$s)</item>
+    <item quantity="one">%1$d lernenda karto (%2$s)</item>
+    <item quantity="other">%1$d lernendaj kartoj (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">ankoraŭ %d minuto</item>
@@ -66,8 +66,8 @@
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
-    <item quantity="one">hodiaŭ lernis %1$d karton dum %2$s</item>
-    <item quantity="other">Studied %1$d cards in %2$s today</item>
+    <item quantity="one">Hodiaŭ vi lernis %1$d karton dum %2$s</item>
+    <item quantity="other">Hodiaŭ vi lernis %1$d kartojn dum %2$s</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
   <string name="type_answer_hint">entajpu respondon</string>
@@ -78,17 +78,17 @@
   <string name="ease_button_easy">facilege</string>
   <string name="studyoptions_congrats_undo">malfari %s</string>
   <string name="menu_import">Enporti</string>
-  <string name="undo">malfari</string>
+  <string name="undo">Malfari</string>
   <string name="undo_action_review">lasta ripeto</string>
   <string name="undo_action_bury_card">prokrasti karton</string>
   <string name="undo_action_bury_note">prokrasti noton</string>
   <string name="undo_action_suspend_card">forlasi karton</string>
   <string name="undo_action_suspend_note">forlasi noton</string>
   <string name="undo_action_delete">forigi noton</string>
-  <string name="undo_action_delete_multi">delete notes</string>
-  <string name="undo_action_change_deck_multi">change decks</string>
-  <string name="move_all_to_deck">Move all to deck</string>
-  <string name="unbury">restarigi</string>
+  <string name="undo_action_delete_multi">forigi notojn</string>
+  <string name="undo_action_change_deck_multi">ŝanĝi kartarojn</string>
+  <string name="move_all_to_deck">Movi ĉiujn al kartaro</string>
+  <string name="unbury">Restarigi</string>
   <string name="rename_deck">Renomi kartaron</string>
   <string name="menu_add">Aldoni</string>
   <string name="menu_add_note">Aldoni noton</string>
@@ -159,7 +159,7 @@
   <string name="card_template_editor_cant_delete">Almenaŭ unu karto estas postulata</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">Ĉu forigi la tipon de kartoj “%2$s” kaj ĝian %1$d karton?</item>
-    <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+    <item quantity="other">Ĉu vi volas forigi la kartotipon “%2$s” kaj ĝiajn %1$d kartojn?</item>
   </plurals>
   <string name="invalid_template">Ne povas krei karton</string>
   <string name="card_template_editor_would_delete_note">Forigado de tiu ĉi tipo de kartoj povas ankaŭ forigi kelka(j)n noto(j)n. Unue kreu novan tipon de kartoj.</string>

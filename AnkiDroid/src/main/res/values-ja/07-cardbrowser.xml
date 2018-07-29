@@ -44,21 +44,21 @@
     <item quantity="other">%d枚のカード</item>
   </plurals>
   <string name="card_browser_all_decks">すべてのデッキ</string>
-  <string name="card_browser_delete_card">Delete notes</string>
-  <string name="card_browser_suspend_card">Suspend cards</string>
-  <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
-  <string name="card_browser_change_deck">Change deck</string>
-  <string name="card_browser_unsuspend_card">Unsuspend cards</string>
-  <string name="card_browser_mark_card">Mark notes</string>
-  <string name="card_browser_toggle_mark_card">(un)mark notes</string>
-  <string name="card_browser_unmark_card">Unmark notes</string>
+  <string name="card_browser_delete_card">ノートを削除</string>
+  <string name="card_browser_suspend_card">カードを保留</string>
+  <string name="card_browser_toggle_suspend_card">カードの保留／保留解除</string>
+  <string name="card_browser_change_deck">デッキを変更</string>
+  <string name="card_browser_unsuspend_card">カードの保留を解除</string>
+  <string name="card_browser_mark_card">ノートにマーク</string>
+  <string name="card_browser_toggle_mark_card">マーク／マーク解除</string>
+  <string name="card_browser_unmark_card">ノートのマークをはずす</string>
   <string name="delete_card_title">ノートの削除</string>
-  <string name="delete_cards_title">Delete notes?</string>
+  <string name="delete_cards_title">ノートを削除しますか？</string>
   <string name="delete_card_message">このノートから作られたカードを全て削除してもよろしいですか？\n検索フィールド: %s</string>
   <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
-  <string name="deleted_message">Notes deleted</string>
-  <string name="changed_deck_message">Moved to %s</string>
-  <string name="card_browser_suspended_cards">(un)suspended cards</string>
+  <string name="deleted_message">ノートを削除しました</string>
+  <string name="changed_deck_message">%sにカードを移動しました</string>
+  <string name="card_browser_suspended_cards">保留の操作</string>
   <string name="card_browser_show_marked">マーク付きカードを抽出</string>
   <string name="card_browser_show_suspended">保留カードを抽出</string>
   <string name="card_browser_search_by_tag">タグやカードの状態による抽出</string>
@@ -90,6 +90,6 @@
     <item>学習回数順</item>
     <item>忘却回数順</item>
   </string-array>
-  <string name="card_browser_select_all">Select all</string>
-  <string name="card_browser_select_none">Select none</string>
+  <string name="card_browser_select_all">すべて選択</string>
+  <string name="card_browser_select_none">選択をすべて解除</string>
 </resources>
