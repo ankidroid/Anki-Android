@@ -34,7 +34,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -48,7 +47,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -1526,22 +1524,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
 
-        /**
-         * @param marginsDp Left, top, right and bottom margins in dp
-         * @param v View to change
-         */
-        private void setMargin(int[] marginsDp, View v) {
-            // convert dp to pixels
-            int[] marginsPx = new int[marginsDp.length];
-            DisplayMetrics dm = getResources().getDisplayMetrics();
-            for (int i = 0; i < marginsPx.length; i++) {
-                marginsPx[i] = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, marginsDp[i], dm);
-            }
-            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) v.getLayoutParams();
-            lp.setMargins(marginsPx[0], marginsPx[1], marginsPx[2], marginsPx[3]);
-            v.setLayoutParams(lp);
-        }
-
         public View getView(int position, View convertView, ViewGroup parent) {
             // Get the main container view if it doesn't already exist, and call bindView
             View v;
@@ -1574,13 +1556,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 setFont(col);
                 // set text for column
                 col.setText(dataSet.get(mFromKeys[i]));
-                if (mInMultiSelectMode) {
-                    // set smaller margins so cells have about the same height
-                    // even though extra space for the checkbox is needed
-                    setMargin(new int[] {3, 0, 3, 0}, col);
-                } else {
-                    setMargin(new int[] {12, 0, 12, 5}, col);
-                }
             }
             // set card's background color
             final int backgroundColor = colors[colorIdx];
