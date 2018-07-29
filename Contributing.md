@@ -121,11 +121,7 @@ Summary of the workflow:
 
 
 # Crash reporting system
-Prior to AnkiDroid version 2.4, crash reports were collected by an app we called "Triage", and reports were publicly viewable at <a href='http://ankidroid-triage.appspot.com'>http://ankidroid-triage.appspot.com</a>. However this tool had a number of shortcomings, and from version 2.4 we now use the <a href='https://github.com/ACRA/acra'>Acra</a> library to send the crash reports to our private server which is running Acralyzer.<br>
-<br>
-Crash reports can be viewed <a href='https://ankidroid.org/couchdb/acralyzer/_design/acralyzer/index.html#/reports-browser/ankidroid'>here</a>, however a password is required in order to protect the privacy of our users, since the crash reports can contain logcat and user comments where private information could potentially be revealed.<br>
-<br>
-Non-core developers wishing to get a stacktrace or logcat for a specific issue should request this in the appropriate thread on the issue tracker, and someone from the AnkiDroid team will post the relevant information. Developers wishing to browse / search through the crash report database can request a password by emailing one of the core developers.<br>
+It's sometimes possible for core and non-core developers to help with troubleshooting an error by looking at crash reports. You can [find Crash Reports details here](https://github.com/ankidroid/Anki-Android/wiki/Crash-Reports)
 <br>
 
 # Markets
