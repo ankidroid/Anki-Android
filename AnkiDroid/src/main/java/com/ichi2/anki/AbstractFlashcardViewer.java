@@ -1899,9 +1899,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             question = typeAnsQuestionFilter(question);
 
             Timber.d("question: '%s'", question);
-            // If the user wants to write the answer
+            // Show text entry based on if the user wants to write the answer
             if (typeAnswer()) {
                 mAnswerField.setVisibility(View.VISIBLE);
+            } else {
+                mAnswerField.setVisibility(View.GONE);
             }
 
             displayString = enrichWithQADiv(question, false);
