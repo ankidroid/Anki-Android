@@ -27,10 +27,7 @@ android {
     buildTypes {
         debug {
             debuggable true
-            // A free test acralyzer instance that allows report writes and dashboard reads without auth
-            // ...or you can create your own following acralyzer docs
-            // To test ACRA you will also need to manually/temporarily change AnkiDroidApp#onCreate
-            // View at https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acralyzer/_design/acralyzer/index.html#/dashboard/
+            // Check Crash Reports page on developer wiki for info on ACRA testing
             buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
         }
         release {

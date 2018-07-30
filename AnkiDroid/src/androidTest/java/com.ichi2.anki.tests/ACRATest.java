@@ -2,6 +2,7 @@ package com.ichi2.anki.tests;
 
 import android.Manifest;
 import android.app.Instrumentation;
+import android.content.SharedPreferences;
 import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -21,8 +22,7 @@ import org.junit.runner.RunWith;
 
 import android.support.test.InstrumentationRegistry;
 
-import java.util.Iterator;
-import java.util.List;
+import java.lang.reflect.Method;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -52,7 +52,9 @@ public class ACRATest {
     public void testDebugConfiguration() throws Exception {
 
         // Debug mode overrides all saved state so no setup needed
-        app.setDebugACRAConfig(AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()));
+        Method method = app.getClass().getDeclaredMethod("setDebugACRAConfig", SharedPreferences.class);
+        method.setAccessible(true);
+        method.invoke(app, AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()));
         assertArrayEquals("Debug logcat arguments not set correctly",
                 app.getAcraCoreConfigBuilder().build().logcatArguments().toArray(),
                 new ImmutableList<>(debugLogcatArguments).toArray());
@@ -78,7 +80,9 @@ public class ACRATest {
                 .putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, AnkiDroidApp.FEEDBACK_REPORT_NEVER).commit();
 
         // If the user disabled it, then it's the debug case except the logcat args
-        app.setProductionACRAConfig(AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()));
+        Method method = app.getClass().getDeclaredMethod("setProductionACRAConfig", SharedPreferences.class);
+        method.setAccessible(true);
+        method.invoke(app, AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()));
 
         // ACRA protects itself from re-.init() and with our BuildConfig.BUILD_DEBUG check
         // it is impossible to reinitialize as a production build, so we can't verify this
@@ -100,7 +104,9 @@ public class ACRATest {
                 .putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, AnkiDroidApp.FEEDBACK_REPORT_ASK).commit();
 
         // If the user is set to ask, then it's production, with interaction mode dialog
-        app.setProductionACRAConfig(AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()));
+        Method method = app.getClass().getDeclaredMethod("setProductionACRAConfig", SharedPreferences.class);
+        method.setAccessible(true);
+        method.invoke(app, AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()));
         verifyACRANotDisabled();
 
         CoreConfiguration config = app.getAcraCoreConfigBuilder().build();
@@ -137,7 +143,9 @@ public class ACRATest {
                 .putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, AnkiDroidApp.FEEDBACK_REPORT_ALWAYS).commit();
 
         // If the user is set to always, then it's production, with interaction mode toast
-        app.setProductionACRAConfig(AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()));
+        Method method = app.getClass().getDeclaredMethod("setProductionACRAConfig", SharedPreferences.class);
+        method.setAccessible(true);
+        method.invoke(app, AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()));
         verifyACRANotDisabled();
 
         CoreConfiguration config = app.getAcraCoreConfigBuilder().build();

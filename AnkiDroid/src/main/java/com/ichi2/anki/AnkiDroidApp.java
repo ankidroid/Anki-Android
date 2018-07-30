@@ -194,11 +194,7 @@ public class AnkiDroidApp extends Application {
             // Enable verbose error logging and do method tracing to put the Class name as log tag
             Timber.plant(new DebugTree());
 
-            // If you need to test ACRA to make sure it's working, switch which of these lines are commented
-            // and do a local build then trigger a crash
-            // Note that you need to disable advanced profiling in Android Studio for API < 26 for the
-            // Crash Dialog to work or you'll get a masking error
-            // https://stackoverflow.com/questions/49830593/null-pointer-exception-in-inputconnection-finishcomposingtext-method
+            // To test ACRA switch which of these lines are commented, do a local build, trigger a crash
             //setAcraTestACRAConfig(preferences); Timber.plant(new ProductionCrashReportingTree());
             setDebugACRAConfig(preferences);
         } else {
@@ -356,7 +352,7 @@ public class AnkiDroidApp extends Application {
      *
      * @param prefs SharedPreferences object the reporting state is persisted in
      */
-    public void setDebugACRAConfig(SharedPreferences prefs) {
+    private void setDebugACRAConfig(SharedPreferences prefs) {
         // Disable crash reporting
         setAcraReportingMode(FEEDBACK_REPORT_NEVER);
         prefs.edit().putString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_NEVER).apply();
@@ -371,7 +367,7 @@ public class AnkiDroidApp extends Application {
      *
      * @param prefs SharedPreferences object the reporting state is persisted in
      */
-    public void setProductionACRAConfig(SharedPreferences prefs) {
+    private void setProductionACRAConfig(SharedPreferences prefs) {
         // Enable or disable crash reporting based on user setting
         setAcraReportingMode(prefs.getString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK));
     }
@@ -380,7 +376,7 @@ public class AnkiDroidApp extends Application {
     /**
      * Puts ACRA Reporting mode into "ask" every time, overrides user choice
      */
-    public void setAcraTestACRAConfig(SharedPreferences prefs) {
+    private void setAcraTestACRAConfig(SharedPreferences prefs) {
         prefs.edit().putString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK).apply();
         setAcraReportingMode(FEEDBACK_REPORT_ASK);
     }
