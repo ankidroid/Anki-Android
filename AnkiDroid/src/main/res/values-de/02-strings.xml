@@ -68,6 +68,9 @@
   <string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgesetzt</string>
   <string name="leech_notification">Karte als Lernbremse markiert</string>
   <string name="corrupt_font">Fehlerhafte Schriftartdatei %s</string>
+  <string name="pref_cat_sync">Synchronisieren</string>
+  <string name="pref_cat_sync_summ">Synchronisierungs Einstellungen</string>
+
   <!-- Browser -->
   <string-array name="browser_column1_headings">
     <item>Frage</item>
