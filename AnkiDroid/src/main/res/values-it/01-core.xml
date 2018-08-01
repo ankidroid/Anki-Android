@@ -85,9 +85,9 @@
   <string name="undo_action_suspend_card">sospendi carta</string>
   <string name="undo_action_suspend_note">sospendi nota</string>
   <string name="undo_action_delete">elimina nota</string>
-  <string name="undo_action_delete_multi">delete notes</string>
-  <string name="undo_action_change_deck_multi">change decks</string>
-  <string name="move_all_to_deck">Move all to deck</string>
+  <string name="undo_action_delete_multi">elimina note</string>
+  <string name="undo_action_change_deck_multi">cambia mazzi</string>
+  <string name="move_all_to_deck">Sposta tutto nel mazzo</string>
   <string name="unbury">Disseppellisci</string>
   <string name="rename_deck">Rinomina mazzo</string>
   <string name="menu_add">Aggiungi</string>

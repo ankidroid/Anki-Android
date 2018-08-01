@@ -168,7 +168,7 @@ build()
 zipname = 'ankidroid.zip'
 
 print "Downloading Crowdin file"
-urllib.urlretrieve('http://crowdin.net/download/project/ankidroid.zip',zipname)
+urllib.urlretrieve('https://crowdin.com/backend/download/project/ankidroid.zip',zipname)
 
 zip = zipfile.ZipFile(zipname, "r")
 

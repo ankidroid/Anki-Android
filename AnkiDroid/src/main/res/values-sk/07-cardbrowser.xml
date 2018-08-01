@@ -47,8 +47,8 @@
     <item quantity="other">%d zobrazených kartičiek</item>
   </plurals>
   <string name="card_browser_all_decks">Všetky balíčky</string>
-  <string name="card_browser_delete_card">Delete notes</string>
-  <string name="card_browser_suspend_card">Suspend cards</string>
+  <string name="card_browser_delete_card">Odstrániť poznámku</string>
+  <string name="card_browser_suspend_card">Pozastaviť kartu</string>
   <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
   <string name="card_browser_change_deck">Change deck</string>
   <string name="card_browser_unsuspend_card">Unsuspend cards</string>

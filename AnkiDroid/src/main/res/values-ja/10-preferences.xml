@@ -202,7 +202,7 @@
   <string name="deck_conf_new_cards_day">一日あたりの新規カード出題枚数の上限</string>
   <string name="deck_conf_graduating_ivl">全ステップ回答後の初回表示（最初の復習）までの間隔</string>
   <string name="deck_conf_days">XXX 日</string>
-  <string name="deck_conf_easy_ivl">「簡単」と回答後の初回表示（最初の復習）までの間隔</string>
+  <string name="deck_conf_easy_ivl">「簡単」と回答（基本学習を切り上げ）をしてから最初の復習までの間隔</string>
   <string name="deck_conf_start_ease">復習開始時の「易しさ」（復習間隔の伸び率）</string>
   <string name="deck_conf_max_rev">一日あたりの復習カード枚数の上限</string>
   <string name="deck_conf_new_bury">新規の関連カードの学習を延期</string>
@@ -212,11 +212,11 @@
   <string name="deck_conf_easy_bonus">「簡単」と答えた時のボーナス（復習間隔の伸び率の割増し）</string>
   <string name="deck_conf_ivl_fct">復習ペース（復習間隔の伸び率の増えやすさ）の調整</string>
   <string name="deck_conf_max_ivl">復習間隔の上限</string>
-  <string name="deck_conf_new_lps_ivl">再基本学習後に再開する復習の間隔（前回比）</string>
-  <string name="deck_conf_min_ivl">再基本学習後に再開する復習の間隔の下限</string>
-  <string name="deck_conf_leech_thres">無駄（習得困難）カードと判定する基準</string>
+  <string name="deck_conf_new_lps_ivl">再基本学習後に再開される復習の間隔（前回比）</string>
+  <string name="deck_conf_min_ivl">再基本学習後に再開される復習の間隔の下限</string>
+  <string name="deck_conf_leech_thres">無駄（定着困難）カードと判定する基準</string>
   <string name="deck_conf_fails">XXX 回 忘却（復習カードに「もう一度」と回答）した時</string>
-  <string name="deck_conf_leech_action">無駄（習得困難）カードへの処置</string>
+  <string name="deck_conf_leech_action">無駄（定着困難）カードへの処置</string>
   <string name="deck_conf_max_time">統計に利用する解答時間の最大値</string>
   <string name="deck_conf_seconds">XXX 秒</string>
   <string name="deck_conf_timer">タイマーを表示</string>

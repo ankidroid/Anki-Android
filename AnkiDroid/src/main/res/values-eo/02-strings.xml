@@ -115,18 +115,18 @@
   <string name="field_remapping">%1$s (de “%2$s”)</string>
   <string name="confirm_map_cards_to_nothing">Ĉiuj senasignitaj kartoj estos forigitaj. Se noto ne havas restajn kartojn, ĝi ankaŭ perdiĝos. Ĉu vi certe volas pluigi?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
+    <item quantity="one">Lernis %1$d karton dum %2$s</item>
     <item quantity="other">Lernis %1$d kartojn dum %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minute</item>
+    <item quantity="one">%1$d minuto</item>
     <item quantity="other">%1$d minutoj</item>
   </plurals>
   <string name="studyoptions_welcome_title">Bonvenon al AnkiDroid</string>
   <string name="fact_adder_intent_title">AnkiDroid-karto</string>
   <string name="card_editor_add_card">Aldoni noton</string>
   <string name="card_editor_copy_card">Kopii karton</string>
-  <string name="card_editor_reposition_card">Reposition</string>
+  <string name="card_editor_reposition_card">Repozicii</string>
   <string name="card_editor_reset_card">Nuligi progreson</string>
   <string name="card_editor_reschedule_card">Replani karton</string>
   <string name="card_editor_preview_card">Antaŭrigardi</string>
@@ -135,7 +135,7 @@
   <string name="default_conf_delete_error">Ne povas forigi implicitan grupon de agordoj</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">aldonis %d karton</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="other">%d kartoj estas aldonitaj</item>
   </plurals>
   <string name="help_title">Helpo</string>
   <string name="check_db">Kontroli datumbazon</string>
@@ -191,27 +191,27 @@
   <string name="lookup_hint">Post kopii la tekston, frapetu ie sur la karto por montri la piktogramon de serĉo</string>
   <!-- Time spans -->
   <plurals name="time_span_seconds">
-    <item quantity="one">%s second</item>
+    <item quantity="one">%s sekundo</item>
     <item quantity="other">%s sekundoj</item>
   </plurals>
   <plurals name="time_span_minutes">
     <item quantity="one">%s minuto</item>
-    <item quantity="other">%s minutes</item>
+    <item quantity="other">%s minutoj</item>
   </plurals>
   <plurals name="time_span_hours">
-    <item quantity="one">%s hour</item>
+    <item quantity="one">%s horo</item>
     <item quantity="other">%s horoj</item>
   </plurals>
   <plurals name="time_span_days">
-    <item quantity="one">%s day</item>
+    <item quantity="one">%s tago</item>
     <item quantity="other">%s tagoj</item>
   </plurals>
   <plurals name="time_span_months">
-    <item quantity="one">%s month</item>
+    <item quantity="one">%s monato</item>
     <item quantity="other">%s monatoj</item>
   </plurals>
   <plurals name="time_span_years">
-    <item quantity="one">%s year</item>
+    <item quantity="one">%s jaro</item>
     <item quantity="other">%s jaroj</item>
   </plurals>
   <!-- The reason for making a simple “< x” translatable are RTL
