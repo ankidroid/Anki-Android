@@ -272,7 +272,7 @@ Here is an annotated description of the JSONObjects in the decks field of the `c
 }
 ```
 
-# Decks JSONObjects
+# DConf JSONObjects
 Here is an annotated description of the JSONObjects in the dconf field of the `col` table:
 
 ```java
