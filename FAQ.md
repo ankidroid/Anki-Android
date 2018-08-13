@@ -122,7 +122,7 @@ In some very rare cases the AnkiDroid database can get corrupted, usually due to
 
 4) Change in device storage configuration
 
-By default, AnkiDroid stores its data in your device's default *user storage area* (the same place where your photos and downloads go). Note that this location is different from where your applications are installed, so uninstalling and reinstalling AnkiDroid will generally **not** have any affect your on your flashcard data. In the event that the AnkiDroid directory is changed to a new place without any existing flashcard data, a new empty collection will be created there, which may appear to you as if all of your flashcards have been lost.
+By default, AnkiDroid stores its data in your device's default *user storage area* (the same place where your photos and downloads go). Note that this location is different from where your applications are installed, so uninstalling and reinstalling AnkiDroid will generally **not** have any effect on your flashcard data. In the event that the AnkiDroid directory is changed to a new place without any existing flashcard data, a new empty collection will be created there, which may appear to you as if all of your flashcards have been lost.
 
 While unlikely, it's possible that somehow the storage configuration on your device was changed such that the default storage location mentioned above changed, and that your flashcard data is still remaining in the old location. You may also have inadvertently manually changed the AnkiDroid directory in the past (e.g. to a removable SD card?), which could be causing you problems now.
 
