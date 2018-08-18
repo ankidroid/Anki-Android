@@ -60,13 +60,13 @@ dependencies {
     }
     implementation 'com.getbase:floatingactionbutton:1.10.1'
     implementation 'ch.acra:acra:4.6.2'
-    implementation 'com.jakewharton.timber:timber:4.7.0'
-    implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'org.jsoup:jsoup:1.10.3'
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'org.jsoup:jsoup:1.11.3'
     api project(":api")
 
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.2.0'
-    testImplementation 'org.mockito:mockito-core:2.18.3'
+    testImplementation 'org.mockito:mockito-core:2.21.0'
     testImplementation 'org.powermock:powermock-core:2.0.0-beta.5'
     testImplementation 'org.powermock:powermock-module-junit4:2.0.0-beta.5'
     testImplementation 'org.powermock:powermock-api-mockito2:2.0.0-beta.5'
