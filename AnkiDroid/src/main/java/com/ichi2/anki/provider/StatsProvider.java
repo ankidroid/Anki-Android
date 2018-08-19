@@ -43,7 +43,7 @@ public class StatsProvider extends ContentProvider {
 
     private static final int CARD_TYPES_COUNT = 100;
 
-    Collection mCollection;
+    private Collection mCollection;
 
     private static String CARD_TYPES_COUNT_TYPE = "vnd.android.cursor.item/vnd.com.ichi2.anki.cardcount";
 
@@ -66,6 +66,8 @@ public class StatsProvider extends ContentProvider {
             switch (uriMatcher.match(uri)) {
                 case CARD_TYPES_COUNT:
                     return makeCardsTypesCursor();
+                default:
+                    return null;
             }
         } catch (Throwable error) {
             Timber.e(error, "Failed to quary StatsProvider");
