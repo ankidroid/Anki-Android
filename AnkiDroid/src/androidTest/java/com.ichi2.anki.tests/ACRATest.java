@@ -15,6 +15,7 @@ import org.acra.config.Configuration;
 import org.acra.config.CoreConfiguration;
 import org.acra.config.DialogConfiguration;
 import org.acra.config.ToastConfiguration;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -141,9 +142,9 @@ public class ACRATest {
 
         // If the user is set to always, then it's production, with interaction mode toast
         // will be useful with ACRA 5.2.0
-        Method method = app.getClass().getDeclaredMethod("setProductionACRAConfig", SharedPreferences.class);
-        method.setAccessible(true);
-        method.invoke(app, AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()));
+        Method setProductionACRAConfig = app.getClass().getDeclaredMethod("setProductionACRAConfig", SharedPreferences.class);
+        setProductionACRAConfig.setAccessible(true);
+        setProductionACRAConfig.invoke(app, AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()));
 
         // The same class/method combo is only sent once, so we face a new method each time (should test that system later)
         Exception crash = new Exception("testCrashReportSend at " + System.currentTimeMillis());
@@ -151,10 +152,21 @@ public class ACRATest {
                 new StackTraceElement("Class", "Method" + (int)System.currentTimeMillis(), "File", (int)System.currentTimeMillis())
         };
         crash.setStackTrace(trace);
+
+        // get the current hash, get the reports, make sure our hash is not in there
+        Method getExceptionHash = app.getClass().getDeclaredMethod("getExceptionHash", Throwable.class);
+        getExceptionHash.setAccessible(true);
+        String exceptionHash = (String)getExceptionHash.invoke(app, crash);
+        JSONObject sentReports = new JSONObject(AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext())
+                .getString("sentExceptionReports", "{}"));
+        assertFalse("Sent reports contains the exception already", sentReports.has(exceptionHash));
+
+        // After ACRA 5.2.0 you should be able to go to the debug acralyzer and see the report
         AnkiDroidApp.sendExceptionReport(crash, "testing ACRA send");
 
-        // After ACRA 5.2.0 you should be able to go to the debug acralyzer and see this
-
+        sentReports = new JSONObject(AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext())
+                .getString("sentExceptionReports", "{}"));
+        assertTrue("Sent reports should contain the exception", sentReports.has(exceptionHash));
     }
 
 
