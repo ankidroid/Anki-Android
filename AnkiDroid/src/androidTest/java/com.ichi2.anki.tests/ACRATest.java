@@ -24,6 +24,8 @@ import android.support.test.InstrumentationRegistry;
 
 import java.lang.reflect.Method;
 
+import timber.log.Timber;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -38,7 +40,7 @@ public class ACRATest {
     private AnkiDroidApp app = null;
 
     private String[] debugLogcatArguments = { "-t", "300", "-v", "long", "ACRA:S"};
-    private String[] prodLogcatArguments = { "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S" };
+    //private String[] prodLogcatArguments = { "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S" };
 
 
     @Before
@@ -85,17 +87,16 @@ public class ACRATest {
         method.invoke(app, AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()));
 
         // ACRA protects itself from re-.init() and with our BuildConfig.BUILD_DEBUG check
-        // it is impossible to reinitialize as a production build, so we can't verify this
-        // right now
+        // it is impossible to reinitialize as a production build until ACRA 5.2.0
         //verifyProductionLogcat();
         verifyDebugACRAPreferences();
     }
 
-    private void verifyProductionLogcat() throws Exception {
-        assertArrayEquals("Production logcat arguments not set correctly",
-                new ImmutableList<>(prodLogcatArguments).toArray(),
-                app.getAcraCoreConfigBuilder().build().logcatArguments().toArray());
-    }
+    //private void verifyProductionLogcat() throws Exception {
+    //    assertArrayEquals("Production logcat arguments not set correctly",
+    //            new ImmutableList<>(prodLogcatArguments).toArray(),
+    //            app.getAcraCoreConfigBuilder().build().logcatArguments().toArray());
+    //}
 
     @Test
     public void testProductionConfigurationUserAsk() throws Exception {
@@ -127,7 +128,34 @@ public class ACRATest {
                         ((DialogConfiguration)configuration).enabled());
             }
         }
-   }
+    }
+
+    @Test
+    public void testCrashReportSend() throws Exception {
+        // To test ACRA switch on  reporting, plant a production tree, and trigger a report
+        Timber.plant(new AnkiDroidApp.ProductionCrashReportingTree());
+
+        // set up as if the user had prefs saved to full auto
+        AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()).edit()
+                .putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, AnkiDroidApp.FEEDBACK_REPORT_ALWAYS).commit();
+
+        // If the user is set to always, then it's production, with interaction mode toast
+        // will be useful with ACRA 5.2.0
+        Method method = app.getClass().getDeclaredMethod("setProductionACRAConfig", SharedPreferences.class);
+        method.setAccessible(true);
+        method.invoke(app, AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()));
+
+        // The same class/method combo is only sent once, so we face a new method each time (should test that system later)
+        Exception crash = new Exception("testCrashReportSend at " + System.currentTimeMillis());
+        StackTraceElement[] trace = new StackTraceElement[] {
+                new StackTraceElement("Class", "Method" + (int)System.currentTimeMillis(), "File", (int)System.currentTimeMillis())
+        };
+        crash.setStackTrace(trace);
+        AnkiDroidApp.sendExceptionReport(crash, "testing ACRA send");
+
+        // After ACRA 5.2.0 you should be able to go to the debug acralyzer and see this
+
+    }
 
 
     private void verifyACRANotDisabled() {
@@ -135,6 +163,7 @@ public class ACRATest {
                 false,
                 AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()).getBoolean(ACRA.PREF_DISABLE_ACRA, false));
     }
+
 
     @Test
     public void testProductionConfigurationUserAlways() throws Exception {
