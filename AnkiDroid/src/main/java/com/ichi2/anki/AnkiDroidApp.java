@@ -194,8 +194,6 @@ public class AnkiDroidApp extends Application {
             // Enable verbose error logging and do method tracing to put the Class name as log tag
             Timber.plant(new DebugTree());
 
-            // To test ACRA switch which of these lines are commented, do a local build, trigger a crash
-            //setAcraTestACRAConfig(preferences); Timber.plant(new ProductionCrashReportingTree());
             setDebugACRAConfig(preferences);
         } else {
             Timber.plant(new ProductionCrashReportingTree());
@@ -370,15 +368,6 @@ public class AnkiDroidApp extends Application {
     private void setProductionACRAConfig(SharedPreferences prefs) {
         // Enable or disable crash reporting based on user setting
         setAcraReportingMode(prefs.getString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK));
-    }
-
-
-    /**
-     * Puts ACRA Reporting mode into "ask" every time, overrides user choice
-     */
-    private void setAcraTestACRAConfig(SharedPreferences prefs) {
-        prefs.edit().putString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK).apply();
-        setAcraReportingMode(FEEDBACK_REPORT_ASK);
     }
 
 
