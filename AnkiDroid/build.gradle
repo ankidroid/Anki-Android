@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.github.triplet.play'
+apply plugin: 'jacoco'
+
 def homePath = System.properties['user.home']
 android {
     compileSdkVersion 26
@@ -29,6 +31,7 @@ android {
             debuggable true
             // Check Crash Reports page on developer wiki for info on ACRA testing
             buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
+            testCoverageEnabled true
         }
         release {
             minifyEnabled true
@@ -38,6 +41,16 @@ android {
         }
     }
     useLibrary 'org.apache.http.legacy'
+
+    testOptions {
+        // we should use orchestrator, but app data shared on /sdcard makes it unstable
+        //execution 'ANDROID_TEST_ORCHESTRATOR'
+        animationsDisabled true
+
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 
     dexOptions {
         // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
@@ -54,6 +67,36 @@ play {
     serviceAccountEmail = '294046724212-r3bef6kl46pb9gk0h1pl5rcjmpfrdpjl@developer.gserviceaccount.com'
     pk12File = file("${homePath}/src/583631bdd16d.p12")
     track = 'alpha'
+}
+
+jacoco {
+    toolVersion = "$jacocoVersion"
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+}
+
+// Our merge report task
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+
+    reports {
+        xml.enabled = true
+        xml.destination = "${buildDir}/reports/jacoco/report.xml"
+        html.enabled = true
+        html.destination = "${buildDir}/reports/jacoco"
+    }
+
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/debug/compileDebugJavaWithJavac/classes", excludes: fileFilter)
+    def mainSrc = "$project.projectDir/src/main/java"
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+    executionData = fileTree(dir: project.buildDir, includes: [
+            'jacoco/testDebugUnitTest.exec',
+            'outputs/code-coverage/connected/**/*.ec'
+    ])
 }
 
 dependencies {
