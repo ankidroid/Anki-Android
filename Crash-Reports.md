@@ -1,8 +1,8 @@
 ## Overview
 
-Prior to AnkiDroid version 2.4, crash reports were collected by an app we called "Triage", and reports were publicly viewable at http://ankidroid-triage.appspot.com. However this tool had a number of shortcomings, and from version 2.4 we now use the Acra library to send the crash reports to our private server which is running Acralyzer.
+AnkiDroid uses the Acra library to send crash reports to a private server which is running a forked version of [Acralyzer](https://github.com/ankidroid/acralyzer).
 
-Crash reports can be viewed here, however a password is required in order to protect the privacy of our users, since the crash reports can contain logcat and user comments where private information could potentially be revealed.
+Crash reports can be viewed on acralyzer, however a password is required in order to protect the privacy of our users, since the crash reports can contain logcat and user comments where private information could potentially be revealed.
 
 ### Contributing
 Non-core developers wishing to get a stacktrace or logcat for a specific issue should request this in the appropriate thread on the issue tracker, and someone from the AnkiDroid team will post the relevant information. Developers wishing to browse / search through the crash report database can request a password by emailing one of the core developers.
@@ -14,12 +14,12 @@ Any time the library is updated or the usage is changed, the developer making th
 
 Note that if you are testing crashes you have a few things to do:
 
--  you need to disable advanced profiling in Android Studio for API < 26 for the Crash Dialog to work or you'll get [a masking error](https://stackoverflow.com/questions/49830593/null-pointer-exception-in-inputconnection-finishcomposingtext-method)
--  you need to alter the [AnkiDroidApp#onCreate method](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/java/com/ichi2/anki/AnkiDroidApp.java#L162) so that the ACRA testing config is loaded (otherwise since it is a debug build, ACRA reports won't be generated)    
+- Just until Android Studio 3.2 is released: you need to disable advanced profiling in Android Studio for API < 26 for the Crash Dialog to work or you'll get [a masking error](https://stackoverflow.com/questions/49830593/null-pointer-exception-in-inputconnection-finishcomposingtext-method)
+-  you need to open the Settings in the App, go to General Settings, and change the Error Reporting Mode to something other than "Never" (otherwise since it is a debug build, ACRA reports won't be generated)    
 -  you need some guaranteed crash bug (either add one, or use an existing one) so that you can trigger a crash at will. For debug builds it might make sense to add an advanced option that explicitly triggers a crash for testing purposes 
 -  you need an acralyzer application set up somewhere you can see the reports, and you should configure debug builds to use it. Note that this work has been done as of 20180730 (and is linked below), it will hopefully stay up for a while at this address. If not, you can follow the instructions on setting up acralyzer below
 
-You can read about my experience upgrading AnkiDroid's ACRA, as well as future ACRA testing directions, [in a related ACRA thread here](https://github.com/ACRA/acra/commit/05e9a5384a981f905913b524f323108838154fe7#commitcomment-29569186) if you are interested.
+You can read about the recent experience upgrading AnkiDroid's ACRA, as well as future ACRA testing directions, [in a related ACRA thread here](https://github.com/ACRA/acra/commit/05e9a5384a981f905913b524f323108838154fe7#commitcomment-29569186) if you are interested.
 
 There are some other [future changes to ACRA](https://github.com/ACRA/acra/pull/680) which may help users of the library test, but they aren't scheduled to be available until ACRA 5.2.x
 
