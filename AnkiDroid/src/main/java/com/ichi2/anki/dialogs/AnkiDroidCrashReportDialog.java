@@ -28,8 +28,13 @@ import android.widget.EditText;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
-import org.acra.ACRA;
-import org.acra.BaseCrashReportDialog;
+import org.acra.config.ACRAConfigurationException;
+import org.acra.config.CoreConfigurationBuilder;
+import org.acra.config.DialogConfiguration;
+import org.acra.config.DialogConfigurationBuilder;
+import org.acra.dialog.BaseCrashReportDialog;
+
+import timber.log.Timber;
 
 public class AnkiDroidCrashReportDialog extends BaseCrashReportDialog implements DialogInterface.OnClickListener, DialogInterface.OnDismissListener {
     private static final String STATE_COMMENT = "comment";
@@ -39,21 +44,23 @@ public class AnkiDroidCrashReportDialog extends BaseCrashReportDialog implements
     AlertDialog mDialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void init(Bundle savedInstanceState) {
+        super.init(savedInstanceState);
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        int resourceId = ACRA.getConfig().resDialogTitle();
-        if(resourceId != 0) {
-            dialogBuilder.setTitle(resourceId);
+
+        try {
+            CoreConfigurationBuilder builder = AnkiDroidApp.getInstance().getAcraCoreConfigBuilder();
+            DialogConfiguration dialogConfig =
+                    (DialogConfiguration)builder.getPluginConfigurationBuilder((DialogConfigurationBuilder.class)).build();
+
+            dialogBuilder.setPositiveButton(dialogConfig.positiveButtonText(), AnkiDroidCrashReportDialog.this);
+            dialogBuilder.setNegativeButton(dialogConfig.negativeButtonText(), AnkiDroidCrashReportDialog.this);
         }
-        resourceId = ACRA.getConfig().resDialogIcon();
-        if(resourceId != 0) {
-            dialogBuilder.setIcon(resourceId);
+        catch (ACRAConfigurationException ace) {
+            Timber.e(ace, "Unable to initialize ACRA while creating ACRA dialog?");
         }
         dialogBuilder.setView(buildCustomView(savedInstanceState));
-        dialogBuilder.setPositiveButton(getText(ACRA.getConfig().resDialogPositiveButtonText()), AnkiDroidCrashReportDialog.this);
-        dialogBuilder.setNegativeButton(getText(ACRA.getConfig().resDialogNegativeButtonText()), AnkiDroidCrashReportDialog.this);
 
         mDialog = dialogBuilder.create();
         mDialog.setCanceledOnTouchOutside(false);
@@ -92,7 +99,7 @@ public class AnkiDroidCrashReportDialog extends BaseCrashReportDialog implements
             preferences.edit().putBoolean("autoreportCheckboxValue", autoReport).commit();
             // Set the autoreport value to true if ticked
             if (autoReport) {
-                preferences.edit().putString("reportErrorMode", AnkiDroidApp.FEEDBACK_REPORT_ALWAYS).commit();
+                preferences.edit().putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, AnkiDroidApp.FEEDBACK_REPORT_ALWAYS).commit();
                 AnkiDroidApp.getInstance().setAcraReportingMode(AnkiDroidApp.FEEDBACK_REPORT_ALWAYS);
             }
             // Send the crash report

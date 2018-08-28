@@ -240,6 +240,7 @@
         </activity>
         <activity android:name="com.ichi2.anki.dialogs.AnkiDroidCrashReportDialog"
             android:theme="@style/Theme.CrashReportDialog"
+            android:process=":acra"
             android:launchMode="singleInstance"
             android:excludeFromRecents="true"
             android:finishOnTaskLaunch="true" />
