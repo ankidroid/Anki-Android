@@ -173,7 +173,7 @@ public class AnkiDroidApp extends Application {
      * Set the ACRA ConfigurationBuilder and <b>re-initialize the ACRA system</b> with the contents
      * @param acraCoreConfigBuilder the full ACRA config to initialize ACRA with
      */
-    public void setAcraConfigBuilder(CoreConfigurationBuilder acraCoreConfigBuilder) {
+    private void setAcraConfigBuilder(CoreConfigurationBuilder acraCoreConfigBuilder) {
         this.acraCoreConfigBuilder = acraCoreConfigBuilder;
         ACRA.init(this, acraCoreConfigBuilder);
     }
