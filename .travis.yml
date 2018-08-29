@@ -31,20 +31,22 @@ env:
 matrix:
   fast_finish: true # We can report success without waiting for these
   allow_failures:
-    - env: API=15  # sometimes emulator hangs, sometimes not - possibly fixable
+    - env: API=15 # sometimes emulator hangs, sometimes not - possibly fixable
     - env: API=23 EMU_FLAVOR=google_apis # has permission errors
-    - env: API=25 EMU_FLAVOR=google_apis # has permission errors
+    - env: API=25 EMU_FLAVOR=google_apis # has permission errors, emulator timeout
+
+jobs:
+  include:
+    # The test stage is implicit, we only need to define a post-test stage for codacy finalization
+    - stage: finalize_coverage
+      env: FINALIZE_COVERAGE=TRUE API=NONE
+      install: skip
+      script: echo finalize codacy coverage uploads
 
 android:
   components:
-    # installing things this way vs 'sdkmanager' is deprecated, should move to sdkmanager over time
+    # installing tools to start, then use `sdkmanager` below to get the rest
     - tools
-    - platform-tools
-    - tools              # a second time per Travis official docs, necessary for newest versions
-    - build-tools-27.0.3 # Automated dependency from gradle - gradle will drive the changes
-    - android-$API       # We need the API of the emulator we will run
-    - android-26         # We need the API of the current build target
-    - extra-android-m2repository
 
 licenses:
     - 'android-sdk-preview-license-.+'
@@ -54,16 +56,26 @@ licenses:
 # Emulator Management: Create, Start and Wait
 install:
   - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid harmless sdkmanager warning
-  - echo yes | sdkmanager tools # 'emulator' is deprecated, 'avdmanager' is current, this installs it
-  - echo yes | sdkmanager "system-images;android-$API;$EMU_FLAVOR;$ABI" # install our emulator
+  - echo y | sdkmanager "platform-tools" >/dev/null
+  - echo y | sdkmanager "tools" >/dev/null # A second time per Travis docs, gets latest versions
+  - echo y | sdkmanager "build-tools;28.0.2" >/dev/null # Implicit gradle dependency - gradle drives changes
+  - echo y | sdkmanager "platforms;android-$API" >/dev/null # We need the API of the emulator we will run
+  - echo y | sdkmanager "platforms;android-26" >/dev/null # We need the API of the current compileSdkVersion from gradle.properties
+  - echo y | sdkmanager "extras;android;m2repository" >/dev/null
+  - echo y | sdkmanager "system-images;android-$API;$EMU_FLAVOR;$ABI" >/dev/null # install our emulator
   - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
-  - emulator -avd test -engine classic -no-window $AUDIO -camera-back none -camera-front none -selinux permissive -qemu -m 512 &
-
-before_script:
+  - emulator -avd test -engine classic -no-window $AUDIO -camera-back none -camera-front none -selinux permissive -qemu -m 1536 &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
 
-script: ./gradlew test :AnkiDroid:connectedCheck
+script:
+  - ./gradlew jacocoTestReport
+
+# Codacy integration, partials for all APIs, then an optional finalize
+after_success:
+  - wget --progress=dot:giga -O ~/codacy-coverage-reporter-assembly-latest.jar https://oss.sonatype.org/service/local/repositories/releases/content/com/codacy/codacy-coverage-reporter/4.0.2/codacy-coverage-reporter-4.0.2-assembly.jar
+  - if [[ ( "$API" != "NONE" ) ]]; then java -jar ~/codacy-coverage-reporter-assembly-latest.jar report -l Java -r AnkiDroid/build/reports/jacoco/report.xml --partial; fi
+  - if [[ ( "$FINALIZE_COVERAGE" == "TRUE" ) ]]; then java -jar ~/codacy-coverage-reporter-assembly-latest.jar final; fi
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
