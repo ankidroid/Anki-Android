@@ -91,7 +91,8 @@ public class CompatHelper {
     }
 
     public static boolean isChromebook() {
-        return android.os.Build.BRAND.equalsIgnoreCase("chromium") || android.os.Build.MANUFACTURER.equalsIgnoreCase("chromium");
+        return android.os.Build.BRAND.equalsIgnoreCase("chromium") || android.os.Build.MANUFACTURER.equalsIgnoreCase("chromium")
+                || Build.DEVICE.equalsIgnoreCase("novato_cheets");
     }
 
     public static boolean isKindle() {
