@@ -532,7 +532,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Hide import, export, and restore backup on ChromeOS as users
         // don't have access to the file system.
         if (CompatHelper.isChromebook()) {
-            menu.findItem(R.id.action_restore_backup).setVisible(false);
             menu.findItem(R.id.action_import).setVisible(false);
             menu.findItem(R.id.action_export).setVisible(false);
         }
