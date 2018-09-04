@@ -19,15 +19,18 @@
 
 package com.ichi2.anki.multimediacard.fields;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -37,7 +40,6 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
 import com.ichi2.anki.R;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
 
@@ -123,14 +125,26 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                             image);
 
                     cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
-                    mActivity.startActivityForResult(cameraIntent, ACTIVITY_TAKE_PICTURE);
+                    if (cameraIntent.resolveActivity(context.getPackageManager()) != null) {
+                        mActivity.startActivityForResult(cameraIntent, ACTIVITY_TAKE_PICTURE);
+                    }
+                    else {
+                        Timber.w("Device has a camera, but no app to handle ACTION_IMAGE_CAPTURE Intent");
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
-        // Chromebooks do not support camera capture yet.
-        if (CompatHelper.isChromebook()) {
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            mBtnCamera.setVisibility(View.INVISIBLE);
+        }
+
+        // Some hardware has no camera or reports yes but has zero (e.g., cheap devices, and Chromebook emulator)
+        if ((!context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA) &&
+                !context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT)) ||
+                (android.hardware.Camera.getNumberOfCameras() < 1)) {
             mBtnCamera.setVisibility(View.INVISIBLE);
         }
 
