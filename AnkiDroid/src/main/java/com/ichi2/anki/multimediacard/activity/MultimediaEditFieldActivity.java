@@ -62,6 +62,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
     private static final String BUNDLE_KEY_SHUT_OFF = "key.edit.field.shut.off";
     private static final int REQUEST_AUDIO_PERMISSION = 0;
+    private static final int REQUEST_CAMERA_PERMISSION = 1;
 
     IField mField;
     IMultimediaEditableNote mNote;
@@ -125,6 +126,13 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             return;
         }
 
+        // Request permission to record if audio field
+        if (mField instanceof ImageField && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
+                    REQUEST_CAMERA_PERMISSION);
+            return;
+        }
         mFieldController.setField(mField);
         mFieldController.setFieldIndex(mFieldIndex);
         mFieldController.setNote(mNote);
@@ -315,6 +323,10 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     public void onRequestPermissionsResult (int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == REQUEST_AUDIO_PERMISSION && permissions.length == 1) {
             // TODO:  Disable the record button / show some feedback to the user
+            recreateEditingUi();
+        }
+        if (requestCode == REQUEST_CAMERA_PERMISSION && permissions.length == 1) {
+            // We check permissions to set visibility on the camera button, just recreate
             recreateEditingUi();
         }
     }
