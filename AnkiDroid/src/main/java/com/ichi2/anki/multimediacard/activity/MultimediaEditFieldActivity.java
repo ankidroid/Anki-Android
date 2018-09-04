@@ -126,7 +126,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             return;
         }
 
-        // Request permission to record if audio field
+        // Request permission to use the camera if image field
         if (mField instanceof ImageField && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
                 PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
