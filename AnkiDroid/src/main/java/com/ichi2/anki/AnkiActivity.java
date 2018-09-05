@@ -351,13 +351,25 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
     /**
+     * Calls {@link #showAsyncDialogFragment(AsyncDialogFragment, NotificationChannels.Channel)} internally, using the channel
+     * {@link NotificationChannels.Channel#GENERAL}
+     *
+     * @param newFragment  the AsyncDialogFragment you want to show
+     */
+    public void showAsyncDialogFragment(AsyncDialogFragment newFragment) {
+        showAsyncDialogFragment(newFragment, NotificationChannels.Channel.GENERAL);
+    }
+
+
+    /**
      * Global method to show a dialog fragment including adding it to back stack and handling the case where the dialog
      * is shown from an async task, by showing the message in the notification bar if the activity was stopped before the
      * AsyncTask completed
      *
      * @param newFragment  the AsyncDialogFragment you want to show
+     * @param channel the NotificationChannels.Channel to use for the notification
      */
-    public void showAsyncDialogFragment(AsyncDialogFragment newFragment) {
+    public void showAsyncDialogFragment(AsyncDialogFragment newFragment, NotificationChannels.Channel channel) {
         try {
             showDialogFragment(newFragment);
         } catch (IllegalStateException e) {
@@ -366,7 +378,7 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
             // Show a basic notification to the user in the notification bar in the meantime
             String title = newFragment.getNotificationTitle();
             String message = newFragment.getNotificationMessage();
-            showSimpleNotification(title, message);
+            showSimpleNotification(title, message, channel);
         }
     }
 
@@ -407,7 +419,7 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
 
-    public void showSimpleNotification(String title, String message) {
+    public void showSimpleNotification(String title, String message, NotificationChannels.Channel channel) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
         // Don't show notification if disabled in preferences
         if (Integer.parseInt(prefs.getString("minimumCardsDueForNotification", "0")) <= 1000000) {
@@ -417,7 +429,8 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
                 ticker = message;
             }
             // Build basic notification
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this,
+                    NotificationChannels.getId(channel))
                     .setSmallIcon(R.drawable.ic_stat_notify)
                     .setContentTitle(title)
                     .setContentText(message)

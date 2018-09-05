@@ -71,5 +71,6 @@ public interface Compat {
     boolean isImmersiveSystemUiVisible(AnkiActivity activity);
     boolean deleteDatabase(File db);
     Uri getExportUri(Context context, File file);
+    void setupNotificationChannel(Context context, String id, String name);
 }
 

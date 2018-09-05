@@ -28,11 +28,15 @@ import android.support.v4.content.IntentCompat;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.R;
 import com.ichi2.widget.WidgetStatus;
 
 import timber.log.Timber;
 
+/**
+ * This Service handles notifications for general work due
+ */
 public class NotificationService extends Service {
 
     /** The notification service to show notifications of due cards. */
@@ -60,7 +64,13 @@ public class NotificationService extends Service {
         if (dueCardsCount >= minCardsDue) {
             // Build basic notification
             String cardsDueText = getString(R.string.widget_minimum_cards_due_notification_ticker_text, dueCardsCount);
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+
+            // This generates a log warning "Use of stream types is deprecated..."
+            // The NotificationCompat code uses setSound() no matter what we do and triggers it.
+            NotificationCompat.Builder builder =
+                    new NotificationCompat.Builder(this,
+                            NotificationChannels.getId(NotificationChannels.Channel.GENERAL))
+                    .setCategory(NotificationCompat.CATEGORY_REMINDER)
                     .setSmallIcon(R.drawable.ic_stat_notify)
                     .setColor(ContextCompat.getColor(context, R.color.material_light_blue_700))
                     .setContentTitle(cardsDueText)
