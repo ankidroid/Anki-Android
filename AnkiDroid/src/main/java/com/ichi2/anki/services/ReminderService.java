@@ -1,3 +1,17 @@
+/***************************************************************************************
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
+
 package com.ichi2.anki.services;
 
 import android.app.AlarmManager;
@@ -12,10 +26,14 @@ import android.support.v4.content.ContextCompat;
 
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.IntentHandler;
+import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.R;
 import com.ichi2.anki.receiver.ReminderReceiver;
 import com.ichi2.libanki.Sched;
 
+/**
+ * This service handles notifications for each deck when work is due
+ */
 public class ReminderService extends IntentService {
     public static final String EXTRA_DECK_ID = "EXTRA_DECK_ID";
 
@@ -62,11 +80,14 @@ public class ReminderService extends IntentService {
         final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
         if (notificationManager.areNotificationsEnabled()) {
-            final Notification notification = new NotificationCompat.Builder(this)
+            final Notification notification =
+                    new NotificationCompat.Builder(this,
+                            NotificationChannels.getId(NotificationChannels.Channel.DECK_REMINDERS))
+                    .setCategory(NotificationCompat.CATEGORY_REMINDER)
                     .setContentTitle(this.getString(R.string.reminder_title))
                     .setContentText(this.getResources().getQuantityString(
                             R.plurals.reminder_text,
-                            deckDue.newCount,
+                            total,
                             CollectionHelper.getInstance().getCol(this).getDecks().name(deckId),
                             total
                     ))

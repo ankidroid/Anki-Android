@@ -10,6 +10,7 @@ import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.R;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Utils;
@@ -109,9 +110,9 @@ public class DialogHandler extends Handler {
             } else {
                 String err = res.getString(R.string.sync_error);
                 if (limited) {
-                    mActivity.get().showSimpleNotification(err, res.getString(R.string.sync_too_busy));
+                    mActivity.get().showSimpleNotification(err, res.getString(R.string.sync_too_busy), NotificationChannels.Channel.SYNC);
                 } else {
-                    mActivity.get().showSimpleNotification(err, res.getString(R.string.youre_offline));
+                    mActivity.get().showSimpleNotification(err, res.getString(R.string.youre_offline), NotificationChannels.Channel.SYNC);
                 }
             }
             mActivity.get().finishWithoutAnimation();

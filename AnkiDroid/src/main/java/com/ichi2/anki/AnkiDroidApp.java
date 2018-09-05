@@ -203,6 +203,7 @@ public class AnkiDroidApp extends Application {
 
         sInstance = this;
         setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
+        NotificationChannels.setup(getApplicationContext());
 
         // Configure WebView to allow file scheme pages to access cookies.
         CookieManager.setAcceptFileSchemeCookies(true);
@@ -317,7 +318,7 @@ public class AnkiDroidApp extends Application {
     /**
      * Sets the user language.
      *
-     * @param localeCode The locale code of the language to set
+     * @param localeCode The locale code of the language to set, system language if empty
      */
     public static void setLanguage(String localeCode) {
         Configuration config = getInstance().getResources().getConfiguration();

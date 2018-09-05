@@ -113,4 +113,7 @@ public class CompatV15 implements Compat {
     public Uri getExportUri(Context context, File file) {
         return Uri.fromFile(file);
     }
+
+    @Override
+    public void setupNotificationChannel(Context context, String id, String name) { /* pre-API26, do nothing */ }
 }

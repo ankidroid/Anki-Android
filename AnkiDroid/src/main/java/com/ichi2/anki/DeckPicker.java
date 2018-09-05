@@ -1072,7 +1072,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public void showSyncErrorDialog(int id, String message) {
         AsyncDialogFragment newFragment = SyncErrorDialog.newInstance(id, message);
-        showAsyncDialogFragment(newFragment);
+        showAsyncDialogFragment(newFragment, NotificationChannels.Channel.SYNC);
     }
 
     /**
@@ -1091,7 +1091,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private void showSyncLogMessage(int messageResource, String syncMessage) {
         if (mActivityPaused) {
             Resources res = AnkiDroidApp.getAppResources();
-            showSimpleNotification(res.getString(R.string.app_name), res.getString(messageResource));
+            showSimpleNotification(res.getString(R.string.app_name),
+                    res.getString(messageResource),
+                    NotificationChannels.Channel.SYNC);
         } else {
             if (syncMessage == null || syncMessage.length() == 0) {
                 UIUtils.showSimpleSnackbar(this, messageResource, false);

@@ -219,6 +219,7 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
         // Update language
         AnkiDroidApp.setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
+        NotificationChannels.setup(getApplicationContext());
         // Restart the activity on preference change
         if (requestCode == REQUEST_PREFERENCES_UPDATE) {
             if (mOldColPath!=null && CollectionHelper.getCurrentAnkiDroidDirectory(this).equals(mOldColPath)) {
