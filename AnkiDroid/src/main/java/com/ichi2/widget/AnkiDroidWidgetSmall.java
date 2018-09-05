@@ -83,6 +83,10 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         /** The cached estimated reviewing time. */
         private int eta;
 
+        public void doUpdate(Context context) {
+            AppWidgetManager.getInstance(context)
+                    .updateAppWidget(new ComponentName(context, AnkiDroidWidgetSmall.class), buildUpdate(context, true));
+        }
 
         @Override
         public void onStart(Intent intent, int startId) {

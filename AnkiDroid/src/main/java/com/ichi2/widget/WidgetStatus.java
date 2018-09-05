@@ -23,7 +23,6 @@ import android.util.Pair;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.MetaDB;
-import com.ichi2.anki.services.NotificationService;
 import com.ichi2.async.BaseAsyncTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Sched;
@@ -102,9 +101,7 @@ public final class WidgetStatus {
             Timber.d("WidgetStatus.UpdateDeckStatusAsyncTask.onPostExecute()");
             MetaDB.storeSmallWidgetStatus(context, sSmallWidgetStatus);
             if (sSmallWidgetEnabled) {
-                Intent intent;
-                intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);
-                context.startService(intent);
+                new AnkiDroidWidgetSmall.UpdateService().doUpdate(context);
             }
         }
 

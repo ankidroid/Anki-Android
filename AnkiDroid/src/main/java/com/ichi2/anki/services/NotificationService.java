@@ -16,12 +16,11 @@ package com.ichi2.anki.services;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.IntentCompat;
@@ -34,41 +33,27 @@ import com.ichi2.widget.WidgetStatus;
 
 import timber.log.Timber;
 
-/**
- * This Service handles notifications for general work due
- */
-public class NotificationService extends Service {
-
-    /** The notification service to show notifications of due cards. */
-    private NotificationManager mNotificationManager;
+public class NotificationService extends BroadcastReceiver {
 
     /** The id of the notification for due cards. */
     private static final int WIDGET_NOTIFY_ID = 1;
 
-
     @Override
-    public void onCreate() {
-        super.onCreate();
-        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-    }
-
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public void onReceive(Context context, Intent intent) {
         Timber.i("NotificationService: OnStartCommand");
+        NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Context context = getApplicationContext();
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         int minCardsDue = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "25"));
         int dueCardsCount = WidgetStatus.fetchDue(context);
         if (dueCardsCount >= minCardsDue) {
             // Build basic notification
-            String cardsDueText = getString(R.string.widget_minimum_cards_due_notification_ticker_text, dueCardsCount);
+            String cardsDueText = context.getString(R.string.widget_minimum_cards_due_notification_ticker_text, dueCardsCount);
 
             // This generates a log warning "Use of stream types is deprecated..."
             // The NotificationCompat code uses setSound() no matter what we do and triggers it.
             NotificationCompat.Builder builder =
-                    new NotificationCompat.Builder(this,
+                    new NotificationCompat.Builder(context,
                             NotificationChannels.getId(NotificationChannels.Channel.GENERAL))
                     .setCategory(NotificationCompat.CATEGORY_REMINDER)
                     .setSmallIcon(R.drawable.ic_stat_notify)
@@ -89,17 +74,10 @@ public class NotificationService extends Service {
                     PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(resultPendingIntent);
             // mId allows you to update the notification later on.
-            mNotificationManager.notify(WIDGET_NOTIFY_ID, builder.build());
+            manager.notify(WIDGET_NOTIFY_ID, builder.build());
         } else {
             // Cancel the existing notification, if any.
-            mNotificationManager.cancel(WIDGET_NOTIFY_ID);
+            manager.cancel(WIDGET_NOTIFY_ID);
         }
-        return START_STICKY;
-    }
-
-
-    @Override
-    public IBinder onBind(Intent arg0) {
-        return null;
     }
 }
