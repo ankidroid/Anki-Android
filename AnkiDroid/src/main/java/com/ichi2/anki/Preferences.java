@@ -50,8 +50,8 @@ import android.view.WindowManager.BadTokenException;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.receiver.NotificationReceiver;
 import com.ichi2.anki.services.BootService;
+import com.ichi2.anki.services.NotificationService;
 import com.ichi2.libanki.hooks.AdvancedStatistics;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
@@ -505,7 +505,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             BootService.scheduleNotification(this);
                         } else {
                             PendingIntent intent = PendingIntent.getBroadcast(this, 0,
-                                    new Intent(this, NotificationReceiver.class), 0);
+                                    new Intent(this, NotificationService.class), 0);
                             final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                             alarmManager.cancel(intent);
                         }

@@ -230,7 +230,7 @@ public class AnkiDroidApp extends Application {
                 }
             }
         }
-        startService(new Intent(this, BootService.class));
+        new BootService().onReceive(this, new Intent(this, BootService.class));
     }
 
 

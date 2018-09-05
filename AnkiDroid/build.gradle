@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "com.ichi2.anki"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 26
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'

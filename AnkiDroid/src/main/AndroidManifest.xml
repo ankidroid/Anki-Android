@@ -260,8 +260,6 @@
             android:configChanges="locale"
             android:label="@string/preview_title" />
 
-        <service android:name="com.ichi2.anki.services.NotificationService" />
-
         <!-- small widget -->
         <receiver
             android:name="com.ichi2.widget.AnkiDroidWidgetSmall"
@@ -307,23 +305,21 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receiver.NotificationReceiver"
+        <receiver android:name=".services.NotificationService"
             android:enabled="true"
             android:exported="false" />
         <receiver
-            android:name=".receiver.ReminderReceiver"
+            android:name=".services.ReminderService"
             android:enabled="true"
             android:exported="false" />
         <receiver
-            android:name=".receiver.BootReceiver"
+            android:name=".services.BootService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <service android:name=".services.ReminderService" android:exported="false"/>
-        <service android:name=".services.BootService" android:exported="false"/>
 
         <activity
             android:exported="false"
