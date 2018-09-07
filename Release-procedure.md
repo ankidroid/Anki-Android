@@ -39,6 +39,17 @@ Title and Description for each language:
 
 Send an email to the mailing list announcing the new version, link to APK, new features, localizations, and thanking the developers, translators, testers.
 
+## Chrome Web Store
+
+This makes the new build available to Chromebook users that do not have access to the Play Store. You must be a member of the google group "AnkiDroid Web Store Publishers".
+* Download the release (e.g., "AnkiDroid-2.8.4.apk") from the [Releases page](https://github.com/ankidroid/Anki-Android/releases)
+* Grab [the APK to CRX conversion script](https://storage.cloud.google.com/arc-sdk/apk_to_crx-54.5021.629.0.zip)
+* Use [the release script in the chromeos tools directory](https://github.com/ankidroid/Anki-Android/blob/master/tools/chromeos/release.sh) to transform the APK to the CRX file needed for ChromeOS
+  * ` ./release.sh <FULL PATH TO THE APK-TO-CRX SCRIPT>/apk_to_crx.py <FULL PATH TO THE APK>/AnkiDroid-2.8.4.apk`
+* Go to the [Chrome Web Store developer dashboard](https://chrome.google.com/webstore/developer/dashboard)
+* Upload the new crx file and publish it, with any notes that seem necessary
+
+
 ## Prepare for next cycle
   * Click http://code.google.com/p/ankidroid/issues/list?q=status%3AFixedInDev then click Select All, unselect the ones that are for a next version, then in "Actions" select "Bulk edit". Set status to "Fixed" and message "Fixed in version 0.6, available on Google Play", "Send email" checked.
 
