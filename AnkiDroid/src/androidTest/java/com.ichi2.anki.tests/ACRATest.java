@@ -92,20 +92,11 @@ public class ACRATest {
         AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()).edit()
                 .putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, AnkiDroidApp.FEEDBACK_REPORT_NEVER).commit();
 
-        // If the user disabled it, then it's the debug case except the logcat args
+        // ACRA initializes production logcat via annotation and we can't mock Build.DEBUG
+        // That means we are restricted from verifying production logcat args and this is the debug case again
         setAcraConfig("Production", AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()));
-
-        // ACRA protects itself from re-.init() and with our BuildConfig.BUILD_DEBUG check
-        // it is impossible to reinitialize as a production build until ACRA 5.2.0
-        //verifyProductionLogcat();
         verifyDebugACRAPreferences();
     }
-
-    //private void verifyProductionLogcat() throws Exception {
-    //    assertArrayEquals("Production logcat arguments not set correctly",
-    //            new ImmutableList<>(prodLogcatArguments).toArray(),
-    //            app.getAcraCoreConfigBuilder().build().logcatArguments().toArray());
-    //}
 
     @Test
     public void testProductionConfigurationUserAsk() throws Exception {
