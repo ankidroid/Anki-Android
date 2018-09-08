@@ -15,7 +15,7 @@ env:
     - TOOLS=${ANDROID_HOME}/tools
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
   matrix:
-   - API=15
+   #- API=15 # fails consistently but can run locally
    - API=16 AUDIO=-no-audio
    - API=17
    - API=18
@@ -23,17 +23,18 @@ env:
    # API 20 doesn't have an emulator
    - API=21
    - API=22
-   - API=23 EMU_FLAVOR=google_apis
+   #- API=23 EMU_FLAVOR=google_apis # fails consistently but can run local
    - API=24
-   - API=25 EMU_FLAVOR=google_apis
+   #- API=25 EMU_FLAVOR=google_apis # fails consistently but can run local
    # API >= 26 don't have arm emulators, and Travis doesn't support x86
 
-matrix:
-  fast_finish: true # We can report success without waiting for these
-  allow_failures:
-    - env: API=15 # sometimes emulator hangs, sometimes not - possibly fixable
-    - env: API=23 EMU_FLAVOR=google_apis # has permission errors
-    - env: API=25 EMU_FLAVOR=google_apis # has permission errors, emulator timeout
+# All failing emulators are disabled now, but leaving this in for future work enabling them
+#matrix:
+#  fast_finish: true # We can report success without waiting for these
+#  allow_failures:
+#    - env: API=15 # sometimes emulator hangs, sometimes not - possibly fixable
+#    - env: API=23 EMU_FLAVOR=google_apis # has permission errors
+#    - env: API=25 EMU_FLAVOR=google_apis # has permission errors, emulator timeout
 
 jobs:
   include:
