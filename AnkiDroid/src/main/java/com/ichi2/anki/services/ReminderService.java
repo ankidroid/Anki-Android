@@ -39,7 +39,7 @@ public class ReminderService extends BroadcastReceiver {
 
         final long deckId = intent.getLongExtra(EXTRA_DECK_ID, 0);
 
-        if (null == CollectionHelper.getInstance().getCol(context).getDecks().get(deckId, false)) {
+        if (CollectionHelper.getInstance().getCol(context).getDecks().get(deckId, false) == null) {
             final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
             final PendingIntent reminderIntent = PendingIntent.getBroadcast(
