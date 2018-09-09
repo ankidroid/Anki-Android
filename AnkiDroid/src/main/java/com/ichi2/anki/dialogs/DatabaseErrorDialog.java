@@ -13,7 +13,6 @@ import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
-import com.ichi2.compat.CompatHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -120,7 +119,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                             }
                         })
                         .show();
-                dialog.getCustomView().findViewById(R.id.buttonDefaultNegative).setEnabled(
+                dialog.getCustomView().findViewById(R.id.md_buttonDefaultNegative).setEnabled(
                         ((DeckPicker) getActivity()).hasErrorFiles());
                 return dialog;
 
