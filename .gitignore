@@ -50,3 +50,6 @@ Thumbs.db
 # Crowdin files
 ankidroid.zip
 tools/crowdin_key.txt
+
+# Codacy remnant
+.codacy.json
