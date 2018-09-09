@@ -36,7 +36,6 @@ import com.ichi2.anki.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 /**
  * RecyclerView.Adapter class copied almost completely from the Material Dialogs library example
@@ -90,9 +89,9 @@ public class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.Bu
 
     class ButtonVH extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        final TextView title;
-        final ImageButton button;
-        final ButtonItemAdapter adapter;
+        private final TextView title;
+        private final ImageButton button;
+        private final ButtonItemAdapter adapter;
 
         ButtonVH(View itemView, ButtonItemAdapter adapter) {
             super(itemView);
