@@ -54,17 +54,8 @@ import com.ichi2.anki.R;
                     .content(getArguments().getString("message"))
                     .positiveText(res.getString(R.string.dialog_ok))
                     .negativeText(res.getString(R.string.dialog_cancel))
-                    .callback(new MaterialDialog.ButtonCallback() {
-                        @Override
-                        public void onPositive(MaterialDialog dialog) {
-                            mConfirm.run();
-                        }
-
-                        @Override
-                        public void onNegative(MaterialDialog dialog) {
-                            mCancel.run();
-                        }
-                    })
+                    .onPositive((dialog, which) -> mConfirm.run())
+                    .onNegative((dialog, which) -> mCancel.run())
                     .show();
         }
     }

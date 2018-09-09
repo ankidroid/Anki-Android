@@ -32,18 +32,11 @@ public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
                 .iconAttr(R.attr.dialogSendIcon)
                 .positiveText(R.string.dialog_ok)
                 .negativeText(R.string.dialog_cancel)
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        ((DeckPicker) getActivity()).dismissAllDialogFragments();
-                        ((DeckPicker) getActivity()).emailFile(exportPath);
-                    }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        ((DeckPicker) getActivity()).dismissAllDialogFragments();
-                    }
+                .onPositive((dialog, which) -> {
+                    ((DeckPicker) getActivity()).dismissAllDialogFragments();
+                    ((DeckPicker) getActivity()).emailFile(exportPath);
                 })
+                .onNegative((dialog, which) -> ((DeckPicker) getActivity()).dismissAllDialogFragments())
                 .show();
     }
     

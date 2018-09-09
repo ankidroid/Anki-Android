@@ -24,12 +24,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
@@ -236,13 +233,12 @@ public class NoteEditor extends AnkiActivity {
             } else if (!mEditFields.isEmpty()) {
                 mEditFields.getFirst().requestFocus();
             }
-            if (!mCloseAfter) {
-                if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                    try {
-                        mProgressDialog.dismiss();
-                    } catch (IllegalArgumentException e) {
-                        Timber.e(e, "Note Editor: Error on dismissing progress dialog");
-                    }
+            if (!mCloseAfter && (mProgressDialog != null) && mProgressDialog.isShowing()) {
+                try {
+                    mProgressDialog.dismiss();
+                }
+                catch (IllegalArgumentException e) {
+                    Timber.e(e, "Note Editor: Error on dismissing progress dialog");
                 }
             }
         }
@@ -338,8 +334,6 @@ public class NoteEditor extends AnkiActivity {
         Intent intent = getIntent();
         Timber.d("onCollectionLoaded: caller: %d", mCaller);
 
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-
         registerExternalStorageListener();
 
         View mainView = findViewById(android.R.id.content);
@@ -404,7 +398,7 @@ public class NoteEditor extends AnkiActivity {
                 mAddNote = true;
                 break;
 
-            case CALLER_CARDEDITOR_INTENT_ADD:
+            case CALLER_CARDEDITOR_INTENT_ADD: {
                 fetchIntentInformation(intent);
                 if (mSourceText == null) {
                     finishWithoutAnimation();
@@ -415,6 +409,9 @@ public class NoteEditor extends AnkiActivity {
                     return;
                 }
                 mAddNote = true;
+                break;
+            }
+            default:
                 break;
         }
 
@@ -570,11 +567,9 @@ public class NoteEditor extends AnkiActivity {
                 break;
 
             case KeyEvent.KEYCODE_D:
-                if (event.isCtrlPressed()) {
-                    //null check in case Spinner is moved into options menu in the future
-                    if (mNoteDeckSpinner != null) {
+                //null check in case Spinner is moved into options menu in the future
+                if (event.isCtrlPressed() && (mNoteDeckSpinner != null)) {
                         mNoteDeckSpinner.performClick();
-                    }
                 }
                 break;
 
@@ -585,10 +580,8 @@ public class NoteEditor extends AnkiActivity {
                 break;
 
             case KeyEvent.KEYCODE_N:
-                if (event.isCtrlPressed()) {
-                    if (mNoteTypeSpinner != null) {
+                if (event.isCtrlPressed() && (mNoteTypeSpinner != null)) {
                         mNoteTypeSpinner.performClick();
-                    }
                 }
                 break;
 
@@ -596,6 +589,8 @@ public class NoteEditor extends AnkiActivity {
                 if (event.isCtrlPressed() && event.isShiftPressed()) {
                     showTagsDialog();
                 }
+                break;
+            default:
                 break;
         }
 
@@ -892,7 +887,7 @@ public class NoteEditor extends AnkiActivity {
                 return true;
 
             case R.id.action_add_card_from_card_editor:
-            case R.id.action_copy_card:
+            case R.id.action_copy_card: {
                 Timber.i("NoteEditor:: Copy or add card button pressed");
                 Intent intent = new Intent(NoteEditor.this, NoteEditor.class);
                 intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR);
@@ -902,7 +897,7 @@ public class NoteEditor extends AnkiActivity {
                 }
                 startActivityForResultWithAnimation(intent, REQUEST_ADD, ActivityTransitionAnimation.LEFT);
                 return true;
-
+            }
             case R.id.action_reset_card_progress: {
                 Timber.i("NoteEditor:: Reset progress button pressed");
                 // Show confirmation dialog before resetting card progress
@@ -979,12 +974,9 @@ public class NoteEditor extends AnkiActivity {
                 .content(R.string.discard_unsaved_changes)
                 .positiveText(R.string.dialog_ok)
                 .negativeText(R.string.dialog_cancel)
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        Timber.i("NoteEditor:: OK button pressed to confirm discard changes");
-                        closeNoteEditor();
-                    }
+                .onPositive((dialog, which) -> {
+                    Timber.i("NoteEditor:: OK button pressed to confirm discard changes");
+                    closeNoteEditor();
                 })
                 .build().show();
     }
@@ -1055,7 +1047,7 @@ public class NoteEditor extends AnkiActivity {
         }
         ArrayList<String> tags = new ArrayList<>(getCol().getTags().all());
         ArrayList<String> selTags = new ArrayList<>(mSelectedTags);
-        TagsDialog dialog = com.ichi2.anki.dialogs.TagsDialog.newInstance(TagsDialog.TYPE_ADD_TAG, selTags,
+        TagsDialog dialog = TagsDialog.newInstance(TagsDialog.TYPE_ADD_TAG, selTags,
                 tags);
         dialog.setTagsDialogListener(new TagsDialogListener() {
             @Override
@@ -1095,12 +1087,13 @@ public class NoteEditor extends AnkiActivity {
         }
 
         switch (requestCode) {
-            case REQUEST_ADD:
+            case REQUEST_ADD: {
                 if (resultCode != RESULT_CANCELED) {
                     mChanged = true;
                 }
                 break;
-            case REQUEST_MULTIMEDIA_EDIT:
+            }
+            case REQUEST_MULTIMEDIA_EDIT: {
                 if (resultCode != RESULT_CANCELED) {
                     Collection col = getCol();
                     Bundle extras = data.getExtras();
@@ -1128,11 +1121,16 @@ public class NoteEditor extends AnkiActivity {
                     mChanged = true;
                 }
                 break;
-            case REQUEST_TEMPLATE_EDIT:
+            }
+            case REQUEST_TEMPLATE_EDIT: {
                 if (resultCode == RESULT_OK) {
                     mReloadRequired = true;
                 }
                 updateCards(mEditorNote.model());
+                break;
+            }
+            default:
+                break;
         }
     }
 
@@ -1218,42 +1216,43 @@ public class NoteEditor extends AnkiActivity {
                     PopupMenuWithIcons popup = new PopupMenuWithIcons(NoteEditor.this, v, false);
                     MenuInflater inflater = popup.getMenuInflater();
                     inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());
-                    popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
-                            NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
-                            IField field;
-                            switch (item.getItemId()) {
-                                case R.id.menu_multimedia_audio:
-                                    Timber.i("NoteEditor:: Record audio button pressed");
-                                    field = new AudioField();
-                                    mNote.setField(index, field);
-                                    startMultimediaFieldEditor(index, mNote, field);
-                                    return true;
-                                case R.id.menu_multimedia_photo:
-                                    Timber.i("NoteEditor:: Add image button pressed");
-                                    field = new ImageField();
-                                    mNote.setField(index, field);
-                                    startMultimediaFieldEditor(index, mNote, field);
-                                    return true;
-                                case R.id.menu_multimedia_text:
-                                    Timber.i("NoteEditor:: Advanced editor button pressed");
-                                    field = new TextField();
-                                    field.setText(mEditFields.get(index).getText().toString());
-                                    mNote.setField(index, field);
-                                    startMultimediaFieldEditor(index, mNote, field);
-                                    return true;
-                                case R.id.menu_multimedia_cloze:
-                                    FieldEditText fieldEditText = mEditFields.get(index);
-                                    String text = fieldEditText.getText().toString();
-                                    int selectionStart = fieldEditText.getSelectionStart();
-                                    int selectionEnd = fieldEditText.getSelectionEnd();
-                                    fieldEditText.setText(insertClozeAround(text, selectionStart, selectionEnd));
-                                    return true;
-                                default:
-                                    return false;
+                    popup.setOnMenuItemClickListener(item -> {
+                        IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
+                        NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
+                        IField field;
+                        switch (item.getItemId()) {
+                            case R.id.menu_multimedia_audio: {
+                                Timber.i("NoteEditor:: Record audio button pressed");
+                                field = new AudioField();
+                                mNote.setField(index, field);
+                                startMultimediaFieldEditor(index, mNote, field);
+                                return true;
                             }
+                            case R.id.menu_multimedia_photo: {
+                                Timber.i("NoteEditor:: Add image button pressed");
+                                field = new ImageField();
+                                mNote.setField(index, field);
+                                startMultimediaFieldEditor(index, mNote, field);
+                                return true;
+                            }
+                            case R.id.menu_multimedia_text: {
+                                Timber.i("NoteEditor:: Advanced editor button pressed");
+                                field = new TextField();
+                                field.setText(mEditFields.get(index).getText().toString());
+                                mNote.setField(index, field);
+                                startMultimediaFieldEditor(index, mNote, field);
+                                return true;
+                            }
+                            case R.id.menu_multimedia_cloze: {
+                                FieldEditText fieldEditText = mEditFields.get(index);
+                                String text = fieldEditText.getText().toString();
+                                int selectionStart = fieldEditText.getSelectionStart();
+                                int selectionEnd = fieldEditText.getSelectionEnd();
+                                fieldEditText.setText(insertClozeAround(text, selectionStart, selectionEnd));
+                                return true;
+                            }
+                            default:
+                                return false;
                         }
                     });
                     popup.show();
@@ -1270,50 +1269,44 @@ public class NoteEditor extends AnkiActivity {
 
 
     private void setRemapButtonListener(ImageButton remapButton, final int newFieldIndex) {
-        remapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Timber.i("NoteEditor:: Remap button pressed for new field %d", newFieldIndex);
-                // Show list of fields from the original note which we can map to
-                PopupMenu popup = new PopupMenu(NoteEditor.this, v);
-                final String[][] items = mEditorNote.items();
-                for (int i = 0; i < items.length; i++) {
-                    popup.getMenu().add(Menu.NONE, i, Menu.NONE, items[i][0]);
-                }
-                // Add "nothing" at the end of the list
-                popup.getMenu().add(Menu.NONE, items.length, Menu.NONE, R.string.nothing);
-                popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        // Get menu item id
-                        Integer idx = item.getItemId();
-                        Timber.i("NoteEditor:: User chose to remap to old field %d", idx);
-                        // Retrieve any existing mappings between newFieldIndex and idx
-                        Integer previousMapping = getKeyByValue(mModelChangeFieldMap, newFieldIndex);
-                        Integer mappingConflict = mModelChangeFieldMap.get(idx);
-                        // Update the mapping depending on any conflicts
-                        if (idx == items.length && previousMapping != null) {
-                            // Remove the previous mapping if None selected
-                            mModelChangeFieldMap.remove(previousMapping);
-                        } else if (idx < items.length && mappingConflict != null && previousMapping != null && newFieldIndex != mappingConflict) {
-                            // Swap the two mappings if there was a conflict and previous mapping
-                            mModelChangeFieldMap.put(previousMapping, mappingConflict);
-                            mModelChangeFieldMap.put(idx, newFieldIndex);
-                        } else if (idx < items.length && mappingConflict != null) {
-                            // Set the conflicting field to None if no previous mapping to swap into it
-                            mModelChangeFieldMap.remove(previousMapping);
-                            mModelChangeFieldMap.put(idx, newFieldIndex);
-                        } else if (idx < items.length) {
-                            // Can simply set the new mapping if no conflicts
-                            mModelChangeFieldMap.put(idx, newFieldIndex);
-                        }
-                        // Reload the fields                     
-                        updateFieldsFromMap(getCurrentlySelectedModel());
-                        return true;
-                    }
-                });
-                popup.show();
+        remapButton.setOnClickListener(v -> {
+            Timber.i("NoteEditor:: Remap button pressed for new field %d", newFieldIndex);
+            // Show list of fields from the original note which we can map to
+            PopupMenu popup = new PopupMenu(NoteEditor.this, v);
+            final String[][] items = mEditorNote.items();
+            for (int i = 0; i < items.length; i++) {
+                popup.getMenu().add(Menu.NONE, i, Menu.NONE, items[i][0]);
             }
+            // Add "nothing" at the end of the list
+            popup.getMenu().add(Menu.NONE, items.length, Menu.NONE, R.string.nothing);
+            popup.setOnMenuItemClickListener(item -> {
+                // Get menu item id
+                Integer idx = item.getItemId();
+                Timber.i("NoteEditor:: User chose to remap to old field %d", idx);
+                // Retrieve any existing mappings between newFieldIndex and idx
+                Integer previousMapping = getKeyByValue(mModelChangeFieldMap, newFieldIndex);
+                Integer mappingConflict = mModelChangeFieldMap.get(idx);
+                // Update the mapping depending on any conflicts
+                if (idx == items.length && previousMapping != null) {
+                    // Remove the previous mapping if None selected
+                    mModelChangeFieldMap.remove(previousMapping);
+                } else if (idx < items.length && mappingConflict != null && previousMapping != null && newFieldIndex != mappingConflict) {
+                    // Swap the two mappings if there was a conflict and previous mapping
+                    mModelChangeFieldMap.put(previousMapping, mappingConflict);
+                    mModelChangeFieldMap.put(idx, newFieldIndex);
+                } else if (idx < items.length && mappingConflict != null) {
+                    // Set the conflicting field to None if no previous mapping to swap into it
+                    mModelChangeFieldMap.remove(previousMapping);
+                    mModelChangeFieldMap.put(idx, newFieldIndex);
+                } else if (idx < items.length) {
+                    // Can simply set the new mapping if no conflicts
+                    mModelChangeFieldMap.put(idx, newFieldIndex);
+                }
+                // Reload the fields
+                updateFieldsFromMap(getCurrentlySelectedModel());
+                return true;
+            });
+            popup.show();
         });
     }
 

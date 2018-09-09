@@ -30,9 +30,9 @@ public class CardBrowserMySearchesDialog extends DialogFragment {
     private String mCurrentSearchTerms;
 
     public interface MySearchesDialogListener {
-        public void OnSelection(String searchName);
-        public void OnRemoveSearch(String searchName);
-        public void OnSaveSearch(String searchName, String searchTerms);
+        void onSelection(String searchName);
+        void onRemoveSearch(String searchName);
+        void onSaveSearch(String searchName, String searchTerms);
     }
 
     public static CardBrowserMySearchesDialog newInstance(HashMap<String, String> savedFilters,
@@ -64,20 +64,14 @@ public class CardBrowserMySearchesDialog extends DialogFragment {
             mButtonItemAdapter = new ButtonItemAdapter(mSavedFilterKeys);
             mButtonItemAdapter.notifyAdapterDataSetChanged(); //so the values are sorted.
             mButtonItemAdapter.setCallbacks(
-                    new ButtonItemAdapter.ItemCallback() {
-                        @Override
-                        public void onItemClicked(String searchName) {
-                            Timber.d("item clicked: %s", searchName);
-                            mMySearchesDialogListener.OnSelection(searchName);
-                            getDialog().dismiss();
-                        }
+                    searchName -> {
+                        Timber.d("item clicked: %s", searchName);
+                        mMySearchesDialogListener.onSelection(searchName);
+                        getDialog().dismiss();
                     },
-                    new ButtonItemAdapter.ButtonCallback() {
-                        @Override
-                        public void onButtonClicked(String searchName) {
-                            Timber.d("button clicked: %s", searchName);
-                            removeSearch(searchName);
-                        }
+                    searchName -> {
+                        Timber.d("button clicked: %s", searchName);
+                        removeSearch(searchName);
                     });
 
             builder.title(res.getString(R.string.card_browser_list_my_searches_title))
@@ -87,12 +81,9 @@ public class CardBrowserMySearchesDialog extends DialogFragment {
             builder.title(getString(R.string.card_browser_list_my_searches_save))
                    .positiveText(getString(android.R.string.ok))
                    .negativeText(getString(R.string.cancel))
-                   .input(R.string.card_browser_list_my_searches_new_name, R.string.empty_string, new MaterialDialog.InputCallback() {
-                       @Override
-                       public void onInput(MaterialDialog dialog, CharSequence text) {
-                           Timber.d("Saving search with title/terms: %s/%s", text, mCurrentSearchTerms);
-                           mMySearchesDialogListener.OnSaveSearch(text.toString(), mCurrentSearchTerms);
-                       }
+                   .input(R.string.card_browser_list_my_searches_new_name, R.string.empty_string, (dialog, text) -> {
+                       Timber.d("Saving search with title/terms: %s/%s", text, mCurrentSearchTerms);
+                       mMySearchesDialogListener.onSaveSearch(text.toString(), mCurrentSearchTerms);
                    });
         }
         MaterialDialog dialog = builder.build();
@@ -116,18 +107,15 @@ public class CardBrowserMySearchesDialog extends DialogFragment {
                 .content(res.getString(R.string.card_browser_list_my_searches_remove_content, searchName))
                 .positiveText(res.getString(android.R.string.ok))
                 .negativeText(res.getString(R.string.cancel))
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        mMySearchesDialogListener.OnRemoveSearch(searchName);
-                        mSavedFilters.remove(searchName);
-                        mSavedFilterKeys.remove(searchName);
-                        mButtonItemAdapter.remove(searchName);
-                        mButtonItemAdapter.notifyAdapterDataSetChanged();
-                        dialog.dismiss();
-                        if (mSavedFilters.size() == 0) {
-                            getDialog().dismiss();
-                        }
+                .onPositive((dialog, which) -> {
+                    mMySearchesDialogListener.onRemoveSearch(searchName);
+                    mSavedFilters.remove(searchName);
+                    mSavedFilterKeys.remove(searchName);
+                    mButtonItemAdapter.remove(searchName);
+                    mButtonItemAdapter.notifyAdapterDataSetChanged();
+                    dialog.dismiss();
+                    if (mSavedFilters.size() == 0) {
+                        getDialog().dismiss();
                     }
                 }).show();
     }

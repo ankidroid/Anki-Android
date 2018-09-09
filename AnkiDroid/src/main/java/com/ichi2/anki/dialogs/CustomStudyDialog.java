@@ -25,7 +25,6 @@ import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -225,76 +224,75 @@ public class CustomStudyDialog extends DialogFragment {
                 .customView(v, true)
                 .positiveText(res.getString(R.string.dialog_ok))
                 .negativeText(res.getString(R.string.dialog_cancel))
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        Collection col = CollectionHelper.getInstance().getCol(getActivity());
-                        // Get the value selected by user
-                        int n;
-                        try {
-                            n = Integer.parseInt(mEditText.getText().toString());
-                        } catch (Exception ignored) {
-                            n = Integer.MAX_VALUE;
-                        }
-
-                        // Set behavior when clicking OK button
-                        switch (dialogId) {
-                            case CUSTOM_STUDY_NEW:
-                                try {
-                                    AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendNew", n).commit();
-                                    JSONObject deck = col.getDecks().get(did);
-                                    deck.put("extendNew", n);
-                                    col.getDecks().save(deck);
-                                    col.getSched().extendLimits(n, 0);
-                                    onLimitsExtended(jumpToReviewer);
-                                } catch (JSONException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                break;
-                            case CUSTOM_STUDY_REV:
-                                try {
-                                    AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendRev", n).commit();
-                                    JSONObject deck = col.getDecks().get(did);
-                                    deck.put("extendRev", n);
-                                    col.getDecks().save(deck);
-                                    col.getSched().extendLimits(0, n);
-                                    onLimitsExtended(jumpToReviewer);
-                                } catch (JSONException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                break;
-                            case CUSTOM_STUDY_FORGOT:
-                                JSONArray ar = new JSONArray();
-                                try {
-                                    ar.put(0, 1);
-                                    createCustomStudySession(ar, new Object[]{String.format(Locale.US,
-                                            "rated:%d:1", n), Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM}, false);
-                                } catch (JSONException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                break;
-                            case CUSTOM_STUDY_AHEAD:
-                                createCustomStudySession(new JSONArray(), new Object[]{String.format(Locale.US,
-                                        "prop:due<=%d", n), Consts.DYN_MAX_SIZE, Consts.DYN_DUE}, true);
-                                break;
-                            case CUSTOM_STUDY_RANDOM:
-                                createCustomStudySession(new JSONArray(),
-                                        new Object[]{"", n, Consts.DYN_RANDOM}, true);
-                                break;
-                            case CUSTOM_STUDY_PREVIEW:
-                                createCustomStudySession(new JSONArray(), new Object[]{"is:new added:" +
-                                        Integer.toString(n), Consts.DYN_MAX_SIZE, Consts.DYN_OLDEST}, false);
-                                break;
-                            default:
-                                break;
-                        }
+                .onPositive((dialog, which) -> {
+                    Collection col = CollectionHelper.getInstance().getCol(getActivity());
+                    // Get the value selected by user
+                    int n;
+                    try {
+                        n = Integer.parseInt(mEditText.getText().toString());
+                    } catch (Exception ignored) {
+                        n = Integer.MAX_VALUE;
                     }
 
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        ((AnkiActivity) getActivity()).dismissAllDialogFragments();
+                    // Set behavior when clicking OK button
+                    switch (dialogId) {
+                        case CUSTOM_STUDY_NEW: {
+                            try {
+                                AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendNew", n).commit();
+                                JSONObject deck = col.getDecks().get(did);
+                                deck.put("extendNew", n);
+                                col.getDecks().save(deck);
+                                col.getSched().extendLimits(n, 0);
+                                onLimitsExtended(jumpToReviewer);
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                            break;
+                        }
+                        case CUSTOM_STUDY_REV: {
+                            try {
+                                AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendRev", n).commit();
+                                JSONObject deck = col.getDecks().get(did);
+                                deck.put("extendRev", n);
+                                col.getDecks().save(deck);
+                                col.getSched().extendLimits(0, n);
+                                onLimitsExtended(jumpToReviewer);
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                            break;
+                        }
+                        case CUSTOM_STUDY_FORGOT: {
+                            JSONArray ar = new JSONArray();
+                            try {
+                                ar.put(0, 1);
+                                createCustomStudySession(ar, new Object[] {String.format(Locale.US,
+                                        "rated:%d:1", n), Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM}, false);
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                            break;
+                        }
+                        case CUSTOM_STUDY_AHEAD: {
+                            createCustomStudySession(new JSONArray(), new Object[] {String.format(Locale.US,
+                                    "prop:due<=%d", n), Consts.DYN_MAX_SIZE, Consts.DYN_DUE}, true);
+                            break;
+                        }
+                        case CUSTOM_STUDY_RANDOM: {
+                            createCustomStudySession(new JSONArray(),
+                                    new Object[] {"", n, Consts.DYN_RANDOM}, true);
+                            break;
+                        }
+                        case CUSTOM_STUDY_PREVIEW: {
+                            createCustomStudySession(new JSONArray(), new Object[] {"is:new added:" +
+                                    Integer.toString(n), Consts.DYN_MAX_SIZE, Consts.DYN_OLDEST}, false);
+                            break;
+                        }
+                        default:
+                            break;
                     }
-                });
+                })
+                .onNegative((dialog, which) -> ((AnkiActivity) getActivity()).dismissAllDialogFragments());
         final MaterialDialog dialog = builder.build();
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -366,6 +364,8 @@ public class CustomStudyDialog extends DialogFragment {
                 // Special custom study options to show when extending the daily study limits is not applicable
                 return new int[] {CUSTOM_STUDY_FORGOT, CUSTOM_STUDY_AHEAD, CUSTOM_STUDY_RANDOM,
                         CUSTOM_STUDY_PREVIEW, CUSTOM_STUDY_TAGS, DECK_OPTIONS};
+            default:
+                break;
         }
         return null;
     }

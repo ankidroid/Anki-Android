@@ -526,7 +526,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (!result.getBoolean()) {
-                // RuntimeException occured on update cards
+                // RuntimeException occurred on update cards
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
                 return;
             }
@@ -1208,12 +1208,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                         Utils.stripHTML(mCurrentCard.q(true))))
                 .positiveText(res.getString(R.string.dialog_positive_delete))
                 .negativeText(res.getString(R.string.dialog_cancel))
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
-                        dismiss(Collection.DismissType.DELETE_NOTE);
-                    }
+                .onPositive((dialog, which) -> {
+                    Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
+                    dismiss(Collection.DismissType.DELETE_NOTE);
                 })
                 .build().show();
     }
@@ -1542,8 +1539,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     protected void showEaseButtons() {
-        Resources res = getResources();
-
         // hide flipcard button
         mFlipCardLayout.setVisibility(View.GONE);
 
@@ -1614,6 +1609,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mNext3.setTextColor(textColor[2]);
                 mEase4Layout.setVisibility(View.VISIBLE);
                 mEase3Layout.requestFocus();
+                break;
         }
 
         // Show next review time
@@ -1908,10 +1904,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
             displayString = enrichWithQADiv(question, false);
 
-            if (mSpeakText) {
+            //if (mSpeakText) {
                 // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
                 // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());
-            }
+            //}
         }
 
         updateCard(displayString);
@@ -1940,8 +1936,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (answer == null || answer.equals("")) {
             return "";
         }
-        answer = answer.trim();
-        Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(answer));
+        Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(answer.trim()));
         String answerText = matcher.replaceAll("");
         matcher = sBrPattern.matcher(answerText);
         answerText = matcher.replaceAll("\n");
@@ -2764,15 +2759,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      */
     private String removeFrontSideAudio(String answerContent) {
         String answerFormat = getAnswerFormat();
+        String newAnswerContent = answerContent;
         if (answerFormat.contains("{{FrontSide}}")) { // possible audio removal necessary
             String frontSideFormat = mCurrentCard._getQA(false).get("q");
             Matcher audioReferences = Sound.sSoundPattern.matcher(frontSideFormat);
             // remove the first instance of audio contained in "{{FrontSide}}"
             while (audioReferences.find()) {
-                answerContent = answerContent.replaceFirst(Pattern.quote(audioReferences.group()), "");
+                newAnswerContent = answerContent.replaceFirst(Pattern.quote(audioReferences.group()), "");
             }
         }
-        return answerContent;
+        return newAnswerContent;
     }
 
     /**

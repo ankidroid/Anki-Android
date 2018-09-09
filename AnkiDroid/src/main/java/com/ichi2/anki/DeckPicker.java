@@ -24,7 +24,6 @@ package com.ichi2.anki;
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -157,7 +156,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private EditText mDialogEditText;
 
     // flag asking user to do a full sync which is used in upgrade path
-    boolean mRecommendFullSync = false;
+    private boolean mRecommendFullSync = false;
 
     // flag keeping track of when the app has been paused
     private boolean mActivityPaused = false;
@@ -239,7 +238,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     };
 
-    DeckTask.TaskListener mImportAddListener = new DeckTask.TaskListener() {
+    private DeckTask.TaskListener mImportAddListener = new DeckTask.TaskListener() {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
@@ -271,7 +270,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     };
 
-    DeckTask.TaskListener mImportReplaceListener = new DeckTask.TaskListener() {
+    private DeckTask.TaskListener mImportReplaceListener = new DeckTask.TaskListener() {
         @SuppressWarnings("unchecked")
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
@@ -313,7 +312,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     };
 
-    DeckTask.TaskListener mExportListener = new DeckTask.TaskListener() {
+    private DeckTask.TaskListener mExportListener = new DeckTask.TaskListener() {
 
         @Override
         public void onPreExecute() {
@@ -472,14 +471,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         .title(R.string.new_deck)
                         .positiveText(R.string.dialog_ok)
                         .customView(mDialogEditText, true)
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                String deckName = mDialogEditText.getText().toString();
-                                Timber.i("DeckPicker:: Creating new deck...");
-                                getCol().getDecks().id(deckName, true);
-                                updateDeckList();
-                            }
+                        .onPositive((dialog, which) -> {
+                            String deckName = mDialogEditText.getText().toString();
+                            Timber.i("DeckPicker:: Creating new deck...");
+                            getCol().getDecks().id(deckName, true);
+                            updateDeckList();
                         })
                         .negativeText(R.string.dialog_cancel)
                         .show();
@@ -562,7 +558,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 showImportDialog(ImportDialog.DIALOG_IMPORT_HINT);
                 return true;
 
-            case R.id.action_new_filtered_deck:
+            case R.id.action_new_filtered_deck: {
                 Timber.i("DeckPicker:: New filtered deck button pressed");
                 mDialogEditText = new EditText(DeckPicker.this);
                 ArrayList<String> names = getCol().getDecks().allNames();
@@ -579,18 +575,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         .customView(mDialogEditText, true)
                         .positiveText(res.getString(R.string.create))
                         .negativeText(res.getString(R.string.dialog_cancel))
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                String filteredDeckName = mDialogEditText.getText().toString();
-                                Timber.i("DeckPicker:: Creating filtered deck...");
-                                getCol().getDecks().newDyn(filteredDeckName);
-                                openStudyOptions(true);
-                            }
+                        .onPositive((dialog, which) -> {
+                            String filteredDeckName = mDialogEditText.getText().toString();
+                            Timber.i("DeckPicker:: Creating filtered deck...");
+                            getCol().getDecks().newDyn(filteredDeckName);
+                            openStudyOptions(true);
                         })
                         .show();
                 return true;
-
+            }
             case R.id.action_check_database:
                 Timber.i("DeckPicker:: Check database button pressed");
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_DATABASE_CHECK);
@@ -606,22 +599,23 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 handleEmptyCards();
                 return true;
 
-            case R.id.action_model_browser_open:
+            case R.id.action_model_browser_open: {
                 Timber.i("DeckPicker:: Model browser button pressed");
                 Intent noteTypeBrowser = new Intent(this, ModelBrowser.class);
                 startActivityForResultWithAnimation(noteTypeBrowser, 0, ActivityTransitionAnimation.LEFT);
                 return true;
-
+            }
             case R.id.action_restore_backup:
                 Timber.i("DeckPicker:: Restore from backup button pressed");
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_RESTORE_BACKUP);
                 return true;
 
-            case R.id.action_export:
+            case R.id.action_export: {
                 Timber.i("DeckPicker:: Export collection button pressed");
                 String msg = getResources().getString(R.string.confirm_apkg_export);
                 showDialogFragment(ExportDialog.newInstance(msg));
                 return true;
+            }
             default:
                 return super.onOptionsItemSelected(item);
 
@@ -798,6 +792,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             case KeyEvent.KEYCODE_B:
                 openCardBrowser();
+                break;
+
+            default:
                 break;
         }
 
@@ -1344,40 +1341,34 @@ public class DeckPicker extends NavigationDrawerActivity implements
                                 false);
 
                 // Override the back key so that the user can cancel a sync which is in progress
-                mProgressDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-                    @Override
-                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                        // Make sure our method doesn't get called twice
-                        if (event.getAction()!=KeyEvent.ACTION_DOWN) {
-                            return true;
-                        }
+                mProgressDialog.setOnKeyListener((dialog, keyCode, event) -> {
+                    // Make sure our method doesn't get called twice
+                    if (event.getAction()!=KeyEvent.ACTION_DOWN) {
+                        return true;
+                    }
 
-                        if (keyCode == KeyEvent.KEYCODE_BACK && Connection.isCancellable() &&
-                                !Connection.getIsCancelled()) {
-                            // If less than 2s has elapsed since sync started then don't ask for confirmation
-                            if (System.currentTimeMillis() - syncStartTime < 2000) {
-                                Connection.cancel();
-                                mProgressDialog.setContent(R.string.sync_cancel_message);
-                                return true;
-                            }
-                            // Show confirmation dialog to check if the user wants to cancel the sync
-                            MaterialDialog.Builder builder = new MaterialDialog.Builder(mProgressDialog.getContext());
-                            builder.content(R.string.cancel_sync_confirm)
-                                    .cancelable(false)
-                                    .positiveText(R.string.dialog_ok)
-                                    .negativeText(R.string.continue_sync)
-                                    .callback(new MaterialDialog.ButtonCallback() {
-                                        @Override
-                                        public void onPositive(MaterialDialog dialog) {
-                                            mProgressDialog.setContent(R.string.sync_cancel_message);
-                                            Connection.cancel();
-                                        }
-                                    });
-                            builder.show();
+                    if (keyCode == KeyEvent.KEYCODE_BACK && Connection.isCancellable() &&
+                            !Connection.getIsCancelled()) {
+                        // If less than 2s has elapsed since sync started then don't ask for confirmation
+                        if (System.currentTimeMillis() - syncStartTime < 2000) {
+                            Connection.cancel();
+                            mProgressDialog.setContent(R.string.sync_cancel_message);
                             return true;
-                        } else {
-                            return false;
                         }
+                        // Show confirmation dialog to check if the user wants to cancel the sync
+                        MaterialDialog.Builder builder = new MaterialDialog.Builder(mProgressDialog.getContext());
+                        builder.content(R.string.cancel_sync_confirm)
+                                .cancelable(false)
+                                .positiveText(R.string.dialog_ok)
+                                .negativeText(R.string.continue_sync)
+                                .onPositive((inner_dialog, which) -> {
+                                    mProgressDialog.setContent(R.string.sync_cancel_message);
+                                    Connection.cancel();
+                                });
+                        builder.show();
+                        return true;
+                    } else {
+                        return false;
                     }
                 });
             }
@@ -1972,32 +1963,25 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 .customView(mDialogEditText, true)
                 .positiveText(res.getString(R.string.rename))
                 .negativeText(res.getString(R.string.dialog_cancel))
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        String newName = mDialogEditText.getText().toString().replaceAll("\"", "");
-                        Collection col = getCol();
-                        if (!TextUtils.isEmpty(newName) && !newName.equals(currentName)) {
-                            try {
-                                col.getDecks().rename(col.getDecks().get(did), newName);
-                            } catch (DeckRenameException e) {
-                                // We get a localized string from libanki to explain the error
-                                UIUtils.showThemedToast(DeckPicker.this, e.getLocalizedMessage(res), false);
-                            }
-                        }
-                        dismissAllDialogFragments();
-                        mDeckListAdapter.notifyDataSetChanged();
-                        updateDeckList();
-                        if (mFragmented) {
-                            loadStudyOptionsFragment(false);
+                .onPositive((dialog, which) -> {
+                    String newName = mDialogEditText.getText().toString().replaceAll("\"", "");
+                    Collection col = getCol();
+                    if (!TextUtils.isEmpty(newName) && !newName.equals(currentName)) {
+                        try {
+                            col.getDecks().rename(col.getDecks().get(did), newName);
+                        } catch (DeckRenameException e) {
+                            // We get a localized string from libanki to explain the error
+                            UIUtils.showThemedToast(DeckPicker.this, e.getLocalizedMessage(res), false);
                         }
                     }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        dismissAllDialogFragments();
+                    dismissAllDialogFragments();
+                    mDeckListAdapter.notifyDataSetChanged();
+                    updateDeckList();
+                    if (mFragmented) {
+                        loadStudyOptionsFragment(false);
                     }
                 })
+                .onNegative((dialog, which) -> dismissAllDialogFragments())
                 .build().show();
     }
 
@@ -2108,7 +2092,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     /**
      * Show progress bars and rebuild deck list on completion
      */
-    DeckTask.TaskListener mSimpleProgressListener = new DeckTask.TaskListener() {
+    private DeckTask.TaskListener mSimpleProgressListener = new DeckTask.TaskListener() {
 
         @Override
         public void onPreExecute() {
@@ -2186,7 +2170,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     /**
      * There was pre-honeycomb override here, removed now, just instantiate regular callback
      */
-    Snackbar.Callback mSnackbarShowHideCallback = new Snackbar.Callback();
+    private Snackbar.Callback mSnackbarShowHideCallback = new Snackbar.Callback();
 
     public void handleEmptyCards() {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_FIND_EMPTY_CARDS, new DeckTask.Listener() {

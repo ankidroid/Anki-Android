@@ -161,7 +161,7 @@ public class IntentHandler extends Activity {
         Bundle msgData = new Bundle();
         msgData.putString("importPath", path);
         handlerMessage.setData(msgData);
-        if (filename.equals("collection.apkg")) {
+        if ("collection.apkg".equals(filename)) {
             // Show confirmation dialog asking to confirm import with replace when file called "collection.apkg"
             handlerMessage.what = DialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG;
         } else {
