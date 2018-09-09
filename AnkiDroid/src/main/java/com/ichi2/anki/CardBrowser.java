@@ -872,7 +872,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private void showTagsDialog() {
-        TagsDialog dialog = com.ichi2.anki.dialogs.TagsDialog.newInstance(
+        TagsDialog dialog = TagsDialog.newInstance(
                 TagsDialog.TYPE_FILTER_BY_TAG, new ArrayList<String>(), new ArrayList<>(getCol().getTags().all()));
         dialog.setTagsDialogListener(new TagsDialogListener() {
             @Override
@@ -1477,11 +1477,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // Show the progress bar if scrolling to given position requires rendering of the question / answer
             int lastVisibleItem = firstVisibleItem + visibleItemCount;
             int size = getCards().size();
-            if (size > 0 && firstVisibleItem < size && lastVisibleItem - 1 < size) {
+            if ((size > 0) && (firstVisibleItem < size) && ((lastVisibleItem - 1) < size)) {
                 String firstAns = getCards().get(firstVisibleItem).get("answer");
                 // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
                 String lastAns = getCards().get(lastVisibleItem - 1).get("answer");
-                if (firstAns != null && firstAns.equals("") || lastAns != null && lastAns.equals("")) {
+                if (firstAns != null && "".equals(firstAns) || lastAns != null && lastAns.equals("")) {
                     showProgressBar();
                     // Also start rendering the items on the screen every 300ms while scrolling
                     long currentTime = SystemClock.elapsedRealtime ();

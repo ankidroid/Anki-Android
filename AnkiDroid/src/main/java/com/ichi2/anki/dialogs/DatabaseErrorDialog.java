@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class DatabaseErrorDialog extends AsyncDialogFragment {
-    private int mType = 0;
     private int[] mRepairValues;
     private File[] mBackups;
 
@@ -54,7 +53,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mType = getArguments().getInt("dialogType");
+        int mType = getArguments().getInt("dialogType");
         Resources res = getResources();
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
         builder.cancelable(true)
@@ -189,6 +188,8 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                                     case 5:
                                         ((DeckPicker) getActivity())
                                                 .showDatabaseErrorDialog(DIALOG_NEW_COLLECTION);
+                                    default:
+                                        throw new RuntimeException("Unknown dialog selection: " + mRepairValues[which]);
                                 }
                             }
                         })

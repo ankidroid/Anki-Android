@@ -7,20 +7,12 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.ui.ButtonItemAdapter;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 
 import timber.log.Timber;
@@ -30,18 +22,18 @@ public class CardBrowserMySearchesDialog extends DialogFragment {
     public static int CARD_BROWSER_MY_SEARCHES_TYPE_LIST = 0; //list searches dialog
     public static int CARD_BROWSER_MY_SEARCHES_TYPE_SAVE = 1; //save searches dialog
 
-    public interface MySearchesDialogListener {
-        public void OnSelection(String searchName);
-        public void OnRemoveSearch(String searchName);
-        public void OnSaveSearch(String searchName, String searchTerms);
-    }
-
     private static MySearchesDialogListener mMySearchesDialogListener;
 
     private ButtonItemAdapter mButtonItemAdapter;
     private HashMap<String, String> mSavedFilters;
     private ArrayList<String> mSavedFilterKeys;
     private String mCurrentSearchTerms;
+
+    public interface MySearchesDialogListener {
+        public void OnSelection(String searchName);
+        public void OnRemoveSearch(String searchName);
+        public void OnSaveSearch(String searchName, String searchTerms);
+    }
 
     public static CardBrowserMySearchesDialog newInstance(HashMap<String, String> savedFilters,
                                                           MySearchesDialogListener mySearchesDialogListener,
