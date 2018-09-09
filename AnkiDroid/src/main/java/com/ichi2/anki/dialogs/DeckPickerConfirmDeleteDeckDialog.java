@@ -31,18 +31,11 @@ public class DeckPickerConfirmDeleteDeckDialog extends DialogFragment {
                 .positiveText(res.getString(R.string.dialog_positive_delete))
                 .negativeText(res.getString(R.string.dialog_cancel))
                 .cancelable(true)
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        ((DeckPicker) getActivity()).deleteContextMenuDeck();
-                        ((DeckPicker) getActivity()).dismissAllDialogFragments();
-                    }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        ((DeckPicker) getActivity()).dismissAllDialogFragments();
-                    }
+                .onPositive((dialog, which) -> {
+                    ((DeckPicker) getActivity()).deleteContextMenuDeck();
+                    ((DeckPicker) getActivity()).dismissAllDialogFragments();
                 })
+                .onNegative((dialog, which) -> ((DeckPicker) getActivity()).dismissAllDialogFragments())
                 .build();
 
     }

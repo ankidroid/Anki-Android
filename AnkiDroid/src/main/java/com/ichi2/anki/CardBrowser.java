@@ -220,7 +220,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private CardBrowserMySearchesDialog.MySearchesDialogListener mMySearchesDialogListener =
             new CardBrowserMySearchesDialog.MySearchesDialogListener() {
         @Override
-        public void OnSelection(String searchName) {
+        public void onSelection(String searchName) {
             Timber.d("OnSelection using search named: %s", searchName);
             JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
             Timber.d("SavedFilters are %s", savedFiltersObj.toString());
@@ -234,7 +234,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         @Override
-        public void OnRemoveSearch(String searchName) {
+        public void onRemoveSearch(String searchName) {
             Timber.d("OnRemoveSelection using search named: %s", searchName);
             try {
                 JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
@@ -253,7 +253,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         @Override
-        public void OnSaveSearch(String searchName, String searchTerms) {
+        public void onSaveSearch(String searchName, String searchTerms) {
             if (TextUtils.isEmpty(searchName)) {
                 UIUtils.showThemedToast(CardBrowser.this,
                         getString(R.string.card_browser_list_my_searches_new_search_error_empty_name), true);
@@ -1481,7 +1481,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 String firstAns = getCards().get(firstVisibleItem).get("answer");
                 // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
                 String lastAns = getCards().get(lastVisibleItem - 1).get("answer");
-                if (firstAns != null && "".equals(firstAns) || lastAns != null && lastAns.equals("")) {
+                if ("".equals(firstAns) || "".equals(lastAns)) {
                     showProgressBar();
                     // Also start rendering the items on the screen every 300ms while scrolling
                     long currentTime = SystemClock.elapsedRealtime ();

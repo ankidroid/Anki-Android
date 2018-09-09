@@ -235,8 +235,6 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
     private void enableIntentAnimation(Intent intent) {
         if (animationDisabled()) {
             disableIntentAnimation(intent);
-        } else {
-            // Nothing for now
         }
     }
 
