@@ -221,9 +221,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
             new CardBrowserMySearchesDialog.MySearchesDialogListener() {
         @Override
         public void OnSelection(String searchName) {
+            Timber.d("OnSelection using search named: %s", searchName);
             JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+            Timber.d("SavedFilters are %s", savedFiltersObj.toString());
             if (savedFiltersObj != null) {
                 mSearchTerms = savedFiltersObj.optString(searchName);
+                Timber.d("OnSelection using search terms: %s", mSearchTerms);
                 mSearchView.setQuery(mSearchTerms, false);
                 MenuItemCompat.expandActionView(mSearchItem);
                 searchCards();
@@ -232,6 +235,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void OnRemoveSearch(String searchName) {
+            Timber.d("OnRemoveSelection using search named: %s", searchName);
             try {
                 JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
                 if (savedFiltersObj != null && savedFiltersObj.has(searchName)) {
