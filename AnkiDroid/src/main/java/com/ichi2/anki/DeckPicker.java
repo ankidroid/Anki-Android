@@ -44,6 +44,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -92,7 +93,6 @@ import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.themes.StyledProgressDialog;
-import com.ichi2.ui.DividerItemDecoration;
 import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
 
@@ -377,11 +377,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
         setTitle(getResources().getString(R.string.app_name));
 
         mRecyclerView = (RecyclerView) findViewById(R.id.files);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this));
 
-        // specify a LinearLayoutManager for the RecyclerView
+        // specify a LinearLayoutManager and set up item dividers for the RecyclerView
         mRecyclerViewLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mRecyclerViewLayoutManager);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, mRecyclerViewLayoutManager.getOrientation()));
 
         // create and set an adapter for the RecyclerView
         mDeckListAdapter = new DeckAdapter(getLayoutInflater(), this);
