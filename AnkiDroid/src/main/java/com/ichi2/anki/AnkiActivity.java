@@ -447,7 +447,7 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
             }
             // Creates an explicit intent for an Activity in your app
             Intent resultIntent = new Intent(this, DeckPicker.class);
-            resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+            resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(resultPendingIntent);
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

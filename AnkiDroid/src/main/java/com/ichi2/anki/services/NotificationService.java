@@ -23,7 +23,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.IntentCompat;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
@@ -69,7 +68,7 @@ public class NotificationService extends BroadcastReceiver {
             }
             // Creates an explicit intent for an Activity in your app
             Intent resultIntent = new Intent(context, DeckPicker.class);
-            resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+            resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(resultPendingIntent);
