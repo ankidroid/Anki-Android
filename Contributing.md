@@ -127,8 +127,9 @@ It's sometimes possible for core and non-core developers to help with troublesho
 # Markets
 
 <table><thead><th> <b>Market</b> </th><th> <b>Maintainer</b> </th><th> <b>AnkiDroid Version</b> </th><th> <b>Status</b> </th><th> <b>Downloads</b> </th></thead><tbody>
-<tr><td> <a href='https://play.google.com/store/apps/details?id=com.ichi2.anki'>Google Play</a> </td><td> Nicolas Raoul and Tim </td><td> 2.4                      </td><td> Published     </td><td> 1,379,647        </td></tr>
+<tr><td> <a href='https://play.google.com/store/apps/details?id=com.ichi2.anki'>Google Play</a> </td><td> Nicolas Raoul and Tim </td><td> 2.8.x                      </td><td> Published     </td><td> 1,379,647        </td></tr>
 <tr><td> Amazon AppStore </td><td> Tim               </td><td> 2.4                      </td><td> Published     </td><td> 10,014           </td></tr>
+<tr><td>[Chrome Web Store](https://chrome.google.com/webstore/detail/ankidroid-flashcards/ckmbkodkbmkmdjdimeiddeljndcneifo)</td><td>@mikehardy</td><td>2.8.4</td><td>Published</td><td>16,130 on 20180911</td></tr>
 <tr><td> <a href='http://www.appslib.com/'>AppsLib</a> </td><td> Mike Morrison     </td><td> 2.3.2                    </td><td> Published     </td><td> 1,157 (all versions) </td></tr>
 <tr><td> <a href='http://ankidroid.store.aptoide.com/app/market/com.ichi2.anki/20400107/7588240/AnkiDroid%20Flashcards'>Aptoide</a> </td><td> Nicolas Raoul     </td><td> 2.4alpha7                </td><td> Published     </td><td> 0                </td></tr>
 <tr><td> <a href='http://fastapp.com/~usergen_90ea90105b978ab58d51d0076ecfcb3c'>FastApp</a> </td><td> Mike Morrison     </td><td> Referrer to Google's market </td><td> 0.6 info published; 0.7 info submitted; FastApp appears to be down as of Nov. 2014 </td><td> Unknown          </td></tr>
