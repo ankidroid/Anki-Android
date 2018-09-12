@@ -44,6 +44,7 @@ import org.acra.ReportField;
 import org.acra.annotation.AcraCore;
 import org.acra.annotation.AcraDialog;
 import org.acra.annotation.AcraHttpSender;
+import org.acra.annotation.AcraLimiter;
 import org.acra.annotation.AcraToast;
 import org.acra.config.CoreConfigurationBuilder;
 import org.acra.config.DialogConfigurationBuilder;
@@ -122,6 +123,10 @@ import static timber.log.Timber.DebugTree;
 )
 @AcraToast(
         resText = R.string.feedback_auto_toast_text
+)
+@AcraLimiter(
+        exceptionClassLimit = 1000,
+        stacktraceLimit = 1
 )
 public class AnkiDroidApp extends Application {
 
