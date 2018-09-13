@@ -40,7 +40,6 @@ import org.acra.annotation.AcraDialog;
 import org.acra.annotation.AcraHttpSender;
 import org.acra.annotation.AcraLimiter;
 import org.acra.annotation.AcraToast;
-import org.acra.config.ACRAConfigurationException;
 import org.acra.config.CoreConfigurationBuilder;
 import org.acra.config.DialogConfigurationBuilder;
 import org.acra.config.ToastConfigurationBuilder;
