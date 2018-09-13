@@ -28,7 +28,6 @@ import android.net.Uri;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.AndroidTestCase;
 import android.util.Log;
 
 import com.ichi2.anki.AbstractFlashcardViewer;

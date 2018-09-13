@@ -11,8 +11,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.IOException;
-
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -26,7 +24,7 @@ public class CollectionTest {
             GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
     @Test
-    public void testOpenCollection() throws IOException {
+    public void testOpenCollection() {
         assertNotNull("Collection could not be opened",
                 CollectionHelper.getInstance().getCol(InstrumentationRegistry.getTargetContext()));
     }

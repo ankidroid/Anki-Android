@@ -17,17 +17,17 @@
 package com.ichi2.anki.tests;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.text.TextUtils;
 
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.hooks.Hooks;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Shared methods for unit tests.
@@ -39,7 +39,7 @@ public class Shared {
         // Provide a string instead of an actual File. Storage.Collection won't populate the DB
         // if the file already exists (it assumes it's an existing DB).
         String path = f.getAbsolutePath();
-        f.delete();
+        assertTrue(f.delete());
         return Storage.Collection(context, path);
     }
 
@@ -59,14 +59,16 @@ public class Shared {
      * @param name An additional suffix to ensure the test directory is only used by a particular resource.
      * @return See getTestDir.
      */
-    public static File getTestDir(Context context, String name) {
+    private static File getTestDir(Context context, String name) {
         if (!TextUtils.isEmpty(name)) {
             name = "-" + name;
         }
         File dir = new File(context.getCacheDir(), "testfiles" + name);
-        dir.mkdir();
+        if (!dir.exists()) {
+            assertTrue(dir.mkdir());
+        }
         for (File f : dir.listFiles()) {
-            f.delete();
+            assertTrue(f.delete());
         }
         return dir;
     }

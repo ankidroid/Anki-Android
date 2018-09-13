@@ -19,7 +19,6 @@ import android.Manifest;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.suitebuilder.annotation.Suppress;
 
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.tests.Shared;
@@ -35,6 +34,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -58,7 +58,7 @@ public class MediaTest {
         Collection d = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
         File dir = Shared.getTestDir(InstrumentationRegistry.getTargetContext());
         BackupManager.removeDir(dir);
-        dir.mkdirs();
+        assertTrue(dir.mkdirs());
         File path = new File(dir, "foo.jpg");
         FileOutputStream os;
         os = new FileOutputStream(path, false);
@@ -84,12 +84,12 @@ public class MediaTest {
         List<String> expected;
         List<String> actual;
 
-        expected = Arrays.asList();
+        expected = Collections.emptyList();
         actual = d.getMedia().filesInStr(mid, "aoeu");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
 
-        expected = Arrays.asList("foo.jpg");
+        expected = Collections.singletonList("foo.jpg");
         actual = d.getMedia().filesInStr(mid, "aoeu<img src='foo.jpg'>ao");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
@@ -99,7 +99,7 @@ public class MediaTest {
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
 
-        expected = Arrays.asList("foo.jpg");
+        expected = Collections.singletonList("foo.jpg");
         actual = d.getMedia().filesInStr(mid, "aoeu<img src=foo.jpg style=bar>ao");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
@@ -109,7 +109,7 @@ public class MediaTest {
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
 
-        expected = Arrays.asList("foo.jpg");
+        expected = Collections.singletonList("foo.jpg");
         actual = d.getMedia().filesInStr(mid, "aoeu<img src=\"foo.jpg\">ao");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
@@ -119,7 +119,7 @@ public class MediaTest {
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
 
-        expected = Arrays.asList("foo.mp3");
+        expected = Collections.singletonList("foo.mp3");
         actual = d.getMedia().filesInStr(mid, "aou[sound:foo.mp3]aou");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
@@ -139,7 +139,7 @@ public class MediaTest {
         d.getMedia().dir();
         // Put a file into it
         File file = new File(Shared.getTestDir(InstrumentationRegistry.getTargetContext()), "fake.png");
-        file.createNewFile();
+        assertTrue(file.createNewFile());
         d.getMedia().addFile(file);
         // add a note which references it
         Note f = d.newNote();
@@ -160,23 +160,20 @@ public class MediaTest {
         List<List<String>> ret = d.getMedia().check();
         List<String> expected;
         List<String> actual;
-        expected = Arrays.asList("fake2.png");
+        expected = Collections.singletonList("fake2.png");
         actual = ret.get(0);
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
-        expected = Arrays.asList("foo.jpg");
+        expected = Collections.singletonList("foo.jpg");
         actual = ret.get(1);
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
     }
 
-
-    @Suppress
     private List<String> added(Collection d) {
         return d.getMedia().getDb().queryColumn(String.class, "select fname from media where csum is not null", 0);
     }
 
-    @Suppress
     private List<String> removed(Collection d) {
         return d.getMedia().getDb().queryColumn(String.class, "select fname from media where csum is null", 0);
     }
@@ -214,7 +211,7 @@ public class MediaTest {
         assertTrue(added(d).size() == 2);
         assertTrue(removed(d).size() == 0);
         // deletions should get noticed too
-        path.delete();
+        assertTrue(path.delete());
         d.getMedia().findChanges(true);
         assertTrue(added(d).size() == 1);
         assertTrue(removed(d).size() == 1);
