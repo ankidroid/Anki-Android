@@ -15,6 +15,13 @@
 # of file handles in your user session and enjoy very strange behavior (Chrome extensions crashing, 
 # terminals behaving strangely etc)
 
+SLEEP=$1
+if [ "$SLEEP" == "" ];
+  then SLEEP=10
+else
+  SLEEP=0
+fi
+
 
 for AVD in `emulator -list-avds`; do
   echo -n Found $AVD...
@@ -55,5 +62,5 @@ for AVD in `emulator -list-avds`; do
 
   #$ANDROID_SDK/tools/mksdcard -l sdcard 100M $SDCARD
   $ANDROID_SDK/emulator/emulator $NORMAL_ARGS $EXTRA_ARGS @$AVD &
-  sleep 10
+  sleep $SLEEP
 done
