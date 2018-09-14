@@ -921,7 +921,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
         // WebView.destroy() should be called after the end of use
         // http://developer.android.com/reference/android/webkit/WebView.html#destroy()
-        mCardFrame.removeAllViews();
+        if (mCardFrame != null) {
+            mCardFrame.removeAllViews();
+        }
         destroyWebView(mCard);
     }
 
