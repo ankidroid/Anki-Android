@@ -70,7 +70,9 @@ CREATE TABLE cards (
       -- the number of times the card went from a "was answered correctly" 
       --   to "was answered incorrectly" state
     left            integer not null,
-      -- reps left till graduation
+      -- of the form a*1000+b, with:
+      -- b the number of reps left till graduation
+      -- a the number of reps left today
     odue            integer not null,
       -- original due: only used when the card is currently in filtered deck
     odid            integer not null,
