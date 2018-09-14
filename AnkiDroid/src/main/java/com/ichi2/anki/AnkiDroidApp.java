@@ -275,39 +275,20 @@ public class AnkiDroidApp extends Application {
 
 
     public static void sendExceptionReport(Throwable e, String origin, String additionalInfo) {
-        //CustomExceptionHandler.getInstance().uncaughtException(null, e, origin, additionalInfo);
-        SharedPreferences prefs = getSharedPrefs(getInstance());
-        // Only send report if we have not sent an identical report before
-        try {
-            JSONObject sentReports = new JSONObject(prefs.getString("sentExceptionReports", "{}"));
-            String hash = getExceptionHash(e);
-            if (sentReports.has(hash)) {
-                Timber.i("The exception report with hash %s has already been sent from this device", hash);
-                return;
-            } else {
-                sentReports.put(hash, true);
-                prefs.edit().putString("sentExceptionReports", sentReports.toString()).apply();
-            }
-        } catch (JSONException e1) {
-            Timber.i(e1, "Could not get cache of sent exception reports");
-        }
         ACRA.getErrorReporter().putCustomData("origin", origin);
         ACRA.getErrorReporter().putCustomData("additionalInfo", additionalInfo);
         ACRA.getErrorReporter().handleException(e);
     }
 
-    private static String getExceptionHash(Throwable th) {
-        final StringBuilder res = new StringBuilder();
-        Throwable cause = th;
-        while (cause != null) {
-            final StackTraceElement[] stackTraceElements = cause.getStackTrace();
-            for (final StackTraceElement e : stackTraceElements) {
-                res.append(e.getClassName());
-                res.append(e.getMethodName());
-            }
-            cause = cause.getCause();
-        }
-        return Integer.toHexString(res.toString().hashCode());
+
+    /**
+     * If you want to make sure that the next exception of any time is posted, you need to clear limiter data
+     *
+     * There is an enhancement request in ACRA to do this via API, until then they blessed deleting file directly
+     * @param context
+     */
+    public static void deleteACRALimiterData(Context context) {
+        context.getFileStreamPath("ACRA-limiter.json").delete();
     }
 
 
