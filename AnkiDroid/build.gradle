@@ -13,6 +13,11 @@ android {
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+
+        // filter out binaries to reduce APK size. Requery > 3.24.0 should allow removal of this
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
     }
     lintOptions {
         abortOnError false
