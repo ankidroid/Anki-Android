@@ -18,6 +18,10 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
+        // This enables long timeouts required on slow ARM emulators, e.g. Travis
+        adbOptions {
+            timeOutInMs 10 * 60 * 1000  // 10 minutes
+        }
     }
     lintOptions {
         abortOnError false
