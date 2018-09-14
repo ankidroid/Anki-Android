@@ -10,11 +10,14 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
 import org.acra.ACRA;
+import org.acra.builder.ReportBuilder;
 import org.acra.collections.ImmutableList;
 import org.acra.config.Configuration;
 import org.acra.config.CoreConfiguration;
+import org.acra.config.LimitingReportAdministrator;
 import org.acra.config.ToastConfiguration;
-import org.json.JSONObject;
+import org.acra.data.CrashReportData;
+import org.acra.data.CrashReportDataFactory;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -127,7 +130,7 @@ public class ACRATest {
     }
 
     @Test
-    public void testCrashReportSend() throws Exception {
+    public void testCrashReportLimit() throws Exception {
         // To test ACRA switch on  reporting, plant a production tree, and trigger a report
         Timber.plant(new AnkiDroidApp.ProductionCrashReportingTree());
 
@@ -146,20 +149,32 @@ public class ACRATest {
         };
         crash.setStackTrace(trace);
 
-        // get the current hash, get the reports, make sure our hash is not in there
-        Method getExceptionHash = app.getClass().getDeclaredMethod("getExceptionHash", Throwable.class);
-        getExceptionHash.setAccessible(true);
-        String exceptionHash = (String)getExceptionHash.invoke(app, crash);
-        JSONObject sentReports = new JSONObject(AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext())
-                .getString("sentExceptionReports", "{}"));
-        assertFalse("Sent reports contains the exception already", sentReports.has(exceptionHash));
+        // one send should work
+        CrashReportData crashData = new CrashReportDataFactory(InstrumentationRegistry.getTargetContext(),
+                AnkiDroidApp.getInstance().getAcraCoreConfigBuilder().build()).createCrashData(new ReportBuilder().exception(crash));
 
-        // After ACRA 5.2.0 you should be able to go to the debug acralyzer and see the report
-        AnkiDroidApp.sendExceptionReport(crash, "testing ACRA send");
+        assertTrue(new LimitingReportAdministrator().shouldSendReport(
+                InstrumentationRegistry.getTargetContext(),
+                AnkiDroidApp.getInstance().getAcraCoreConfigBuilder().build(),
+                crashData)
+        );
 
-        sentReports = new JSONObject(AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext())
-                .getString("sentExceptionReports", "{}"));
-        assertTrue("Sent reports should contain the exception", sentReports.has(exceptionHash));
+        // A second send should not work
+        assertFalse(new LimitingReportAdministrator().shouldSendReport(
+                InstrumentationRegistry.getTargetContext(),
+                AnkiDroidApp.getInstance().getAcraCoreConfigBuilder().build(),
+                crashData)
+        );
+
+        // Now let's clear data
+        AnkiDroidApp.deleteACRALimiterData(InstrumentationRegistry.getTargetContext());
+
+        // A third send should work again
+        assertTrue(new LimitingReportAdministrator().shouldSendReport(
+                InstrumentationRegistry.getTargetContext(),
+                AnkiDroidApp.getInstance().getAcraCoreConfigBuilder().build(),
+                crashData)
+        );
     }
 
 

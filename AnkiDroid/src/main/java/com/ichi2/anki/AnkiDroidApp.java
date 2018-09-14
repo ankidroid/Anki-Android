@@ -44,13 +44,12 @@ import org.acra.ReportField;
 import org.acra.annotation.AcraCore;
 import org.acra.annotation.AcraDialog;
 import org.acra.annotation.AcraHttpSender;
+import org.acra.annotation.AcraLimiter;
 import org.acra.annotation.AcraToast;
 import org.acra.config.CoreConfigurationBuilder;
 import org.acra.config.DialogConfigurationBuilder;
 import org.acra.config.ToastConfigurationBuilder;
 import org.acra.sender.HttpSender;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -122,6 +121,10 @@ import static timber.log.Timber.DebugTree;
 )
 @AcraToast(
         resText = R.string.feedback_auto_toast_text
+)
+@AcraLimiter(
+        exceptionClassLimit = 1000,
+        stacktraceLimit = 1
 )
 public class AnkiDroidApp extends Application {
 
@@ -279,39 +282,20 @@ public class AnkiDroidApp extends Application {
 
 
     public static void sendExceptionReport(Throwable e, String origin, String additionalInfo) {
-        //CustomExceptionHandler.getInstance().uncaughtException(null, e, origin, additionalInfo);
-        SharedPreferences prefs = getSharedPrefs(getInstance());
-        // Only send report if we have not sent an identical report before
-        try {
-            JSONObject sentReports = new JSONObject(prefs.getString("sentExceptionReports", "{}"));
-            String hash = getExceptionHash(e);
-            if (sentReports.has(hash)) {
-                Timber.i("The exception report with hash %s has already been sent from this device", hash);
-                return;
-            } else {
-                sentReports.put(hash, true);
-                prefs.edit().putString("sentExceptionReports", sentReports.toString()).apply();
-            }
-        } catch (JSONException e1) {
-            Timber.i(e1, "Could not get cache of sent exception reports");
-        }
         ACRA.getErrorReporter().putCustomData("origin", origin);
         ACRA.getErrorReporter().putCustomData("additionalInfo", additionalInfo);
         ACRA.getErrorReporter().handleException(e);
     }
 
-    private static String getExceptionHash(Throwable th) {
-        final StringBuilder res = new StringBuilder();
-        Throwable cause = th;
-        while (cause != null) {
-            final StackTraceElement[] stackTraceElements = cause.getStackTrace();
-            for (final StackTraceElement e : stackTraceElements) {
-                res.append(e.getClassName());
-                res.append(e.getMethodName());
-            }
-            cause = cause.getCause();
-        }
-        return Integer.toHexString(res.toString().hashCode());
+
+    /**
+     * If you want to make sure that the next exception of any time is posted, you need to clear limiter data
+     *
+     * There is an enhancement request in ACRA to do this via API, until then they blessed deleting file directly
+     * @param context
+     */
+    public static void deleteACRALimiterData(Context context) {
+        context.getFileStreamPath("ACRA-limiter.json").delete();
     }
 
 

@@ -126,6 +126,9 @@ dependencies {
     implementation('ch.acra:acra-toast:5.2.0') {
         exclude group: 'com.android.support'
     }
+    implementation('ch.acra:acra-limiter:5.2.0') {
+        exclude group: 'com.android.support'
+    }
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'org.jsoup:jsoup:1.11.3'

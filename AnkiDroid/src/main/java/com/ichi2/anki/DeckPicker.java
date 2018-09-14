@@ -893,7 +893,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             }
             preferences.edit().putInt("lastUpgradeVersion", current).commit();
-            preferences.edit().remove("sentExceptionReports").commit();     // clear cache of sent exception reports
+
+            // New version, clear out old exception report limits
+            AnkiDroidApp.deleteACRALimiterData(this);
+
             // Delete the media database made by any version before 2.3 beta due to upgrade errors.
             // It is rebuilt on the next sync or media check
             if (previous < 20300200) {
