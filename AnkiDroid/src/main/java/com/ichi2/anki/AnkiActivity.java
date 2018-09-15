@@ -36,6 +36,8 @@ import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.Themes;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import timber.log.Timber;
 
 public class AnkiActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Collection>,
@@ -43,6 +45,15 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public final int SIMPLE_NOTIFICATION_ID = 0;
     public static final int REQUEST_REVIEW = 901;
+
+    /** Do we need to notify callbacks from the {@link #onLoadFinished(Loader, Collection)} method? */
+    private final AtomicBoolean mNotifyLoaderCallbacks = new AtomicBoolean(true);
+
+    /**
+     * Is the collection initialized? if this is false, you need to reinitialize
+     * From MVP template https://github.com/benoitletondor/Android-Studio-MVP-template/blob/master/MVPBoilerplate/root/src/app_package/classes/BaseActivity.java.ftl#L58
+     */
+    protected AtomicBoolean mNeedToInitializeCollection = new AtomicBoolean(true);
 
     private DialogHandler mHandler = new DialogHandler(this);
 
@@ -64,6 +75,11 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onStart() {
         super.onStart();
         mCustomTabActivityHelper.bindCustomTabsService(this);
+        if (mNeedToInitializeCollection.get()) {
+            Timber.d("Still need to initialize collection with callbacks");
+            mNotifyLoaderCallbacks.set(true);
+        }
+        mNeedToInitializeCollection.set(false);
     }
 
     @Override
@@ -280,7 +296,10 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(Loader<Collection> loader, Collection col) {
         hideProgressBar();
         if (col != null && colIsOpen()) {
-            onCollectionLoaded(col);
+            if (mNotifyLoaderCallbacks.compareAndSet(true, false)) {
+                Timber.d("Callbacks need notification, calling onCollectionLoaded()");
+                onCollectionLoaded(col);
+            }
         } else {
             onCollectionLoadError();
         }
@@ -289,7 +308,7 @@ public class AnkiActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoaderReset(Loader<Collection> arg0) {
-        // We don't currently retain any references, so no need to free any data here
+        mNeedToInitializeCollection.set(true);
     }
 
 
