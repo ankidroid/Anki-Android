@@ -94,6 +94,7 @@ import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
+import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -360,8 +361,16 @@ public class DeckPicker extends NavigationDrawerActivity implements
         boolean colOpen = firstCollectionOpen();
 
         // Then set theme and content view
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.homescreen);
+        try {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.homescreen);
+        }
+        catch (LinkageError e) {
+            // semi-frequently we crash here, implying an ABI change in view libraries during app use
+            // these library classes are cached in support libraries, a full process restart can clear them
+            AnkiDroidApp.sendExceptionReport(e, "setContentView() seems to have an ABI change in-flight?");
+            ProcessPhoenix.triggerRebirth(this);
+        }
         View mainView = findViewById(android.R.id.content);
 
         // check, if tablet layout

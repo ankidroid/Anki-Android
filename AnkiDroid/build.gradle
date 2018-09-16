@@ -117,6 +117,7 @@ dependencies {
     implementation 'android.arch.persistence:db:1.1.1'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
+    implementation 'com.jakewharton:process-phoenix:2.0.0'
     implementation('ch.acra:acra-http:5.2.0') {
         exclude group: 'com.android.support'
     }
