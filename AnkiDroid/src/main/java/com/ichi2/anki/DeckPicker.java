@@ -823,7 +823,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 getCol().modSchema();
             } catch (ConfirmModSchemaException e) {
                 // If libanki determines it's necessary to confirm the full sync then show a confirmation dialog
-                // We have to show the dialog via the DialogHandler since this method is called via a Loader
+                // We have to show the dialog via the DialogHandler since this method is called via an async task
                 Resources res = getResources();
                 Message handlerMessage = Message.obtain();
                 handlerMessage.what = DialogHandler.MSG_SHOW_FORCE_FULL_SYNC_DIALOG;
@@ -841,11 +841,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
         automaticSync();
     }
 
-    @Override
-    protected void onCollectionLoadError() {
+    private void showCollectionErrorDialog() {
         getDialogHandler().sendEmptyMessage(DialogHandler.MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG);
     }
-
 
     public void addNote() {
         Intent intent = new Intent(DeckPicker.this, NoteEditor.class);
@@ -1144,7 +1142,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
                 if (result == null || !result.getBoolean()) {
                     UIUtils.showThemedToast(DeckPicker.this, getResources().getString(R.string.deck_repair_error), true);
-                    onCollectionLoadError();
+                    showCollectionErrorDialog();
                 }
             }
 
@@ -1871,7 +1869,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
                 if (result == null) {
                     Timber.e("null result loading deck counts");
-                    onCollectionLoadError();
+                    showCollectionErrorDialog();
                     return;
                 }
                 List<Sched.DeckDueTreeNode> nodes = (List<Sched.DeckDueTreeNode>) result.getObjArray()[0];
