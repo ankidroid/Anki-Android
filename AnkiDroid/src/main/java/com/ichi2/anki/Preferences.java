@@ -141,20 +141,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                onBackPressed();
                 return true;
         }
         return false;
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, @NonNull KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Timber.i("Preferences:: onBackPressed()");
-            closePreferences();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
     @Override
