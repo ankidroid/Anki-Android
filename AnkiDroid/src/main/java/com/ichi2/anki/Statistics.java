@@ -91,6 +91,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     @Override
     protected void onCollectionLoaded(Collection col) {
         Timber.d("onCollectionLoaded()");
+        super.onCollectionLoaded(col);
         SlidingTabLayout slidingTabLayout;
         // Add drop-down menu to select deck to action bar.
         mDropDownDecks = getCol().getDecks().allSorted();
