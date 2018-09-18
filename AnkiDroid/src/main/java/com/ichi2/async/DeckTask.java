@@ -217,14 +217,14 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 // We have been interrupted, return immediately.
-                Timber.e(e, "interrupted while waiting for previous task: %d", mPreviousTask.mType);
+                Timber.d(e, "interrupted while waiting for previous task: %d", mPreviousTask.mType);
                 return null;
             } catch (ExecutionException e) {
                 // Ignore failures in the previous task.
                 Timber.e(e, "previously running task failed with exception: %d", mPreviousTask.mType);
             } catch (CancellationException e) {
                 // Ignore cancellation of previous task
-                Timber.e(e, "previously running task was cancelled: %d", mPreviousTask.mType);
+                Timber.d(e, "previously running task was cancelled: %d", mPreviousTask.mType);
             }
         }
         sLatestInstance = this;

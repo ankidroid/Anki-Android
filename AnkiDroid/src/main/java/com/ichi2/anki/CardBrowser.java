@@ -567,6 +567,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
+        Timber.d("onCreateOptionsMenu()");
         mActionBarMenu = menu;
         if (!mInMultiSelectMode) {
             // restore drawer click listener and icon
@@ -1359,9 +1360,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onPostExecute(TaskData result) {
             if (result != null && mCards != null) {
-                Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfuly");
+                Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfully");
                 updateList();
-                if (!mSearchView.isIconified()) {
+                if ((mSearchView != null) && !mSearchView.isIconified()) {
                     UIUtils.showSimpleSnackbar(CardBrowser.this, getSubtitleText(), true);
                 }
             }
