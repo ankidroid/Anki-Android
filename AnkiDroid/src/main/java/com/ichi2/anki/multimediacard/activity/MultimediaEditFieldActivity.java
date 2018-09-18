@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.widget.Toolbar;
@@ -186,6 +187,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
             case R.id.multimedia_edit_field_to_audio_clip:
                 Timber.i("To audio clip button pressed");
+                mFieldController.onFocusLost();
                 toAudioClipField();
                 supportInvalidateOptionsMenu();
                 return true;
@@ -290,7 +292,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     }
 
 
-    public void onRequestPermissionsResult (int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_AUDIO_PERMISSION && permissions.length == 1) {
             // TODO:  Disable the record button / show some feedback to the user
             recreateEditingUi();

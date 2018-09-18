@@ -62,8 +62,7 @@ public class BasicAudioRecordingFieldController extends FieldControllerBase impl
             try {
                 Collection col = CollectionHelper.getInstance().getCol(context);
                 File storingDirectory = new File(col.getMedia().dir());
-                File file = File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory);
-                tempAudioPath = file.getAbsolutePath();
+                tempAudioPath = File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).getAbsolutePath();
             } catch (IOException e) {
                 Timber.e(e, "Could not create temporary audio file.");
                 tempAudioPath = null;
@@ -74,6 +73,7 @@ public class BasicAudioRecordingFieldController extends FieldControllerBase impl
                 R.drawable.av_stop, R.drawable.av_rec, R.drawable.av_rec_stop, tempAudioPath);
         mAudioView.setOnRecordingFinishEventListener(v -> {
             // currentFilePath.setText("Recording done, you can preview it. Hit save after finish");
+            // FIXME is this okay if it is still null?
             mField.setAudioPath(tempAudioPath);
             mField.setHasTemporaryMedia(true);
         });
