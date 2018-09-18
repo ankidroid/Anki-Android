@@ -1194,6 +1194,7 @@ public class NoteEditor extends AnkiActivity {
                                 field = new AudioClipField();
                                 mNote.setField(index, field);
                                 startMultimediaFieldEditor(index, mNote, field);
+                                return true;
                             }
                             case R.id.menu_multimedia_photo: {
                                 Timber.i("NoteEditor:: Add image button pressed");
