@@ -517,6 +517,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Timber.d("onCreateOptionsMenu()");
         getMenuInflater().inflate(R.menu.deck_picker, menu);
         boolean sdCardAvailable = AnkiDroidApp.isSdCardMounted();
         menu.findItem(R.id.action_sync).setEnabled(sdCardAvailable);
@@ -673,6 +674,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void onRequestPermissionsResult (int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == REQUEST_STORAGE_PERMISSION && permissions.length == 1) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                invalidateOptionsMenu();
                 showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(this), 0);
             } else {
                 // User denied access to the SD card so show error toast and finish activity
