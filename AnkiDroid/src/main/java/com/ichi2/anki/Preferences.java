@@ -281,6 +281,19 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     startActivity(i);
                     return true;
                 });
+                // Make it possible to test crash reporting, but only for DEBUG builds
+                if (BuildConfig.DEBUG) {
+                    Timber.i("Debug mode, allowing for test crashes");
+                    Preference triggerTestCrashPreference = new Preference(this);
+                    triggerTestCrashPreference.setKey("trigger_crash_preference");
+                    triggerTestCrashPreference.setTitle("Trigger test crash");
+                    triggerTestCrashPreference.setSummary("Touch here for an immediate test crash");
+                    triggerTestCrashPreference.setOnPreferenceClickListener(preference -> {
+                        Timber.w("Crash triggered on purpose from advanced preferences in debug mode");
+                        throw new RuntimeException("This is a test crash");
+                    });
+                    screen.addPreference(triggerTestCrashPreference);
+                }
                 // Force full sync option
                 Preference fullSyncPreference = screen.findPreference("force_full_sync");
                 fullSyncPreference.setOnPreferenceClickListener(preference -> {
