@@ -54,6 +54,8 @@ public class AnkiDroidCrashReportDialog extends BaseCrashReportDialog implements
             DialogConfiguration dialogConfig =
                     (DialogConfiguration)builder.getPluginConfigurationBuilder((DialogConfigurationBuilder.class)).build();
 
+            dialogBuilder.setIcon(dialogConfig.resIcon());
+            dialogBuilder.setTitle(dialogConfig.title());
             dialogBuilder.setPositiveButton(dialogConfig.positiveButtonText(), AnkiDroidCrashReportDialog.this);
             dialogBuilder.setNegativeButton(dialogConfig.negativeButtonText(), AnkiDroidCrashReportDialog.this);
         }
