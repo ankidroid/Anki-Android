@@ -114,7 +114,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * <p>
      * Set this to true for debugging only.
      */
-    private static final boolean SAVE_CARD_CONTENT = false;
+    private static final boolean SAVE_CARD_CONTENT = BuildConfig.DEBUG;
 
     /**
      * Result codes that are returned when this activity finishes.
@@ -1760,6 +1760,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
         if (mCard == null) {
             mCard = createWebView();
+            // On your desktop use chrome://inspect to connect to emulator WebViews
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                if (BuildConfig.DEBUG) WebView.setWebContentsDebuggingEnabled(true);
+            }
             mCardFrame.addView(mCard);
         }
         if (mCard.getVisibility() != View.VISIBLE) {
@@ -2122,7 +2126,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             style.append(String.format("img { zoom: %s }\n", mImageZoom / 100.0));
         }
 
-        Timber.d("::style::", style);
+        Timber.d("::style:: / %s", style);
 
         if (mNightMode) {
             // Enable the night-mode class
