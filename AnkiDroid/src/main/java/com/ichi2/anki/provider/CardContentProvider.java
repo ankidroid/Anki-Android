@@ -618,6 +618,8 @@ public class CardContentProvider extends ContentProvider {
                 long noteID = -1;
                 int ease = -1;
                 long timeTaken = -1;
+                int bury = -1;
+                int suspend = -1;
                 for (Map.Entry<String, Object> entry : valueSet) {
                     String key = entry.getKey();
 
@@ -629,12 +631,24 @@ public class CardContentProvider extends ContentProvider {
                         ease = values.getAsInteger(key);
                     }else if (key.equals(FlashCardsContract.ReviewInfo.TIME_TAKEN)) {
                         timeTaken = values.getAsLong(key);
+                    } else if (key.equals(FlashCardsContract.ReviewInfo.BURY)) {
+                        bury = values.getAsInteger(key);
+                    } else if (key.equals(FlashCardsContract.ReviewInfo.SUSPEND)) {
+                        suspend = values.getAsInteger(key);
                     }
                 }
                 if (cardOrd != -1 && noteID != -1) {
                     Card cardToAnswer = getCard(noteID, cardOrd, col);
                     if(cardToAnswer != null) {
-                        answerCard(col, col.getSched(), cardToAnswer, ease, timeTaken);
+                        if( bury == 1 ) {
+                            // bury card
+                            buryOrSuspendCard(col, col.getSched(), cardToAnswer, true);
+                        } else if (suspend == 1) {
+                            // suspend card
+                            buryOrSuspendCard(col, col.getSched(), cardToAnswer, false);
+                        } else {
+                            answerCard(col, col.getSched(), cardToAnswer, ease, timeTaken);
+                        }
                         updated++;
                     }else{
                         Timber.e("Requested card with noteId %d and cardOrd %d was not found. Either the provided " +
@@ -1167,6 +1181,32 @@ public class CardContentProvider extends ContentProvider {
         } catch (RuntimeException e) {
             Timber.e(e, "answerCard - RuntimeException on answering card");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAnswerCard");
+            return;
+        }
+    }
+
+
+    private void buryOrSuspendCard(Collection col, Sched sched, Card card, boolean bury) {
+        try {
+            DB db = col.getDb();
+            db.getDatabase().beginTransaction();
+            try {
+                if (card != null) {
+                    if(bury) {
+                        // bury
+                        sched.buryCards(new long[] {card.getId()});
+                    } else {
+                        // suspend
+                        sched.suspendCards(new long[] {card.getId()});
+                    }
+                }
+                db.getDatabase().setTransactionSuccessful();
+            } finally {
+                db.getDatabase().endTransaction();
+            }
+        } catch (RuntimeException e) {
+            Timber.e(e, "buryOrSuspendCard - RuntimeException on burying or suspending card");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundBurySuspendCard");
             return;
         }
     }
