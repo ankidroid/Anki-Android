@@ -3,7 +3,7 @@ package com.ichi2.anki.widgets;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import android.content.Context;
-import android.support.v7.widget.PopupMenu;
+import androidx.appcompat.widget.PopupMenu;
 import android.view.View;
 
 /**

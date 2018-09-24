@@ -36,14 +36,14 @@
             android:text="@string/tags_dialog_option_due_cards"/>
     </RadioGroup>
 
-    <android.support.v7.widget.RecyclerView android:id="@+id/tags_dialog_tags_list"
-        android:scrollbars="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/tags_dialog_options_radiogroup"
-        android:layout_below="@id/tags_dialog_toolbar"/>
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/tags_dialog_tags_list"
+                                               android:scrollbars="vertical"
+                                               android:layout_width="fill_parent"
+                                               android:layout_height="wrap_content"
+                                               android:layout_above="@id/tags_dialog_options_radiogroup"
+                                               android:layout_below="@id/tags_dialog_toolbar"/>
 
-    <android.support.design.widget.CoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

@@ -1,10 +1,6 @@
 package com.ichi2.libanki;
 
-import junit.framework.Assert;
-
-//import net.lachlanmckee.timberjunit.TimberTestRule;
-
-//import org.junit.Rule;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
@@ -15,10 +11,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class UtilsTest {
-
-    // This depends on a Timber upgrade that should be pursued separately
-    //@Rule
-    //public TimberTestRule logAllAlwaysRule = TimberTestRule.logAllAlways();
 
     @Test
     public void testZipWithPathTraversal() {

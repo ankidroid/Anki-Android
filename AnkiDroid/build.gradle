@@ -12,7 +12,7 @@ android {
         targetSdkVersion 28
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
         // filter out binaries to reduce APK size. Requery > 3.24.0 should allow removal of this
         ndk {
@@ -108,14 +108,13 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    def support_lib_version = '28.0.0'
-    implementation "com.android.support:appcompat-v7:$support_lib_version"
+    implementation 'androidx.appcompat:appcompat:1.0.0'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
-    implementation "com.android.support:design:$support_lib_version"
-    implementation "com.android.support:customtabs:$support_lib_version"
-    implementation "com.android.support:recyclerview-v7:$support_lib_version"
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.browser:browser:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'io.requery:sqlite-android:3.24.0'
-    implementation 'android.arch.persistence:db:1.1.1'
+    implementation 'androidx.sqlite:sqlite:2.0.0-rc01'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
     implementation('ch.acra:acra-http:5.2.0') {
@@ -144,17 +143,17 @@ dependencies {
     testImplementation 'net.lachlanmckee:timber-junit-rule:1.0.1'
 
     androidTestImplementation 'com.azimolabs.conditionwatcher:conditionwatcher:0.2'
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.2') {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0-alpha4') {
         exclude group: 'com.android.support'
     }
-    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2', {
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0-alpha4', {
         exclude group: 'com.android.support'
     }
-    androidTestImplementation('com.android.support.test:runner:1.0.2') {
+    androidTestImplementation('androidx.test:runner:1.1.0-alpha4') {
         exclude group: 'com.android.support'
     }
-    androidTestImplementation('com.android.support.test:rules:1.0.2') {
+    androidTestImplementation('androidx.test:rules:1.1.0-alpha4') {
         exclude group: 'com.android.support'
     }
-    androidTestUtil 'com.android.support.test:orchestrator:1.0.2'
+    androidTestUtil 'androidx.test:orchestrator:1.1.0-alpha4'
 }
