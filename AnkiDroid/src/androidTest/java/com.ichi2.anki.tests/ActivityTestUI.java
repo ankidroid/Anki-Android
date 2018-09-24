@@ -164,8 +164,8 @@ public class ActivityTestUI {
                         childAtPosition(
                                 withId(android.R.id.list_container),
                                 0)))
-                .atPosition(16);
-        linearLayout2.perform(click());
+                .atPosition(15);
+        linearLayout2.perform(scrollTo(), click());
 
         ViewInteraction appCompatImageButton6 = onView(
                 allOf(withContentDescription("Navigate up"),
@@ -236,11 +236,6 @@ public class ActivityTestUI {
 
         ViewInteraction appCompatTextView6 = onView(
                 allOf(withId(R.id.title), withText("Manage note types"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.support.v7.view.menu.ListMenuItemView")),
-                                        0),
-                                0),
                         isDisplayed()));
         appCompatTextView6.perform(click());
 
