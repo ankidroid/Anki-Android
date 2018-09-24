@@ -16,9 +16,9 @@
 package com.ichi2.anki.tests.libanki;
 
 import android.Manifest;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.rule.GrantPermissionRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.rule.GrantPermissionRule;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.tests.Shared;

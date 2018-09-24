@@ -31,8 +31,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static org.junit.Assert.assertTrue;
 
 /**

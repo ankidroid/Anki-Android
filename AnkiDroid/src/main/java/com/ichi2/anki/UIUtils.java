@@ -4,8 +4,8 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -86,8 +86,8 @@ public class UIUtils {
         }
         // Make the text white to avoid interference from our theme colors.
         View view = sb.getView();
-        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        TextView action = (TextView) view.findViewById(android.support.design.R.id.snackbar_action);
+        TextView tv = (TextView) view.findViewById(com.google.android.material.R.id.snackbar_text);
+        TextView action = (TextView) view.findViewById(com.google.android.material.R.id.snackbar_action);
         if (tv != null && action != null) {
             tv.setTextColor(Color.WHITE);
             action.setTextColor(ContextCompat.getColor(activity, R.color.material_light_blue_500));

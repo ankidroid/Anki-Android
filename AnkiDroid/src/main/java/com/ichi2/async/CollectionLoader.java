@@ -1,7 +1,7 @@
 package com.ichi2.async;
 
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
 import android.os.AsyncTask;
 
 import com.ichi2.anki.AnkiDroidApp;

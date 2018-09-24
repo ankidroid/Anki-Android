@@ -1,7 +1,7 @@
 package com.ichi2.anki.dialogs;
 import android.content.res.Resources;
 import android.os.Message;
-import android.support.v4.app.DialogFragment;
+import androidx.fragment.app.DialogFragment;
 
 import com.ichi2.anki.AnkiDroidApp;
 
