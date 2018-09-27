@@ -12,12 +12,13 @@ Making changes to AnkiDroid's use of ACRA should be tested carefully since this 
 
 Any time the library is updated or the usage is changed, the developer making those changes should take care to test what happens when the application crashes and verify that a report is posted to the crash report server and contains all the relevant details.
 
-Note that if you are testing crashes you have a few things to do:
+**Note:** If you work on [our custom crash report dialog](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/java/com/ichi2/anki/dialogs/AnkiDroidCrashReportDialog.java) your editor will most likely have a problem with the import statements. We have converted to androidx [using the "Jetifier"](https://developer.android.com/topic/libraries/support-library/androidx-overview), which transforms dependent libraries that are on the old android.support libraries. [ACRA is not on androidx and will have a hard time converting](https://github.com/ACRA/acra/pull/698) so waiting on them is not ideal. Until they do, that file will have error notifications on import statements, but compilation and error-reporting work fine.
 
-- Just until Android Studio 3.2 is released: you need to disable advanced profiling in Android Studio for API < 26 for the Crash Dialog to work or you'll get [a masking error](https://stackoverflow.com/questions/49830593/null-pointer-exception-in-inputconnection-finishcomposingtext-method)
--  you need to open the Settings in the App, go to General Settings, and change the Error Reporting Mode to something other than "Never" (otherwise since it is a debug build, ACRA reports won't be generated)    
--  you need some guaranteed crash bug (either add one, or use an existing one) so that you can trigger a crash at will. For debug builds it might make sense to add an advanced option that explicitly triggers a crash for testing purposes 
--  you need an acralyzer application set up somewhere you can see the reports, and you should configure debug builds to use it. Note that this work has been done as of 20180730 (and is linked below), it will hopefully stay up for a while at this address. If not, you can follow the instructions on setting up acralyzer below
+## Steps to test:
+
+1.  Open the Settings in the App, go to General Settings, and change the Error Reporting Mode to something other than "Never" (otherwise since it is a debug build, ACRA reports won't be generated)    
+1.  Get access to an acralyzer application so you can see the reports. Configure debug builds to use it. Note that this work has been done as of 20180730 (and is linked below), it will hopefully stay up for a while at this address. If not, you can follow the instructions on setting up acralyzer below
+1.  Open "advanced" settings in the app, scroll all the way to the bottom, you should see a "Trigger test crash" entry in debug builds. If you touch that, the app crashes with a unique exception trace each time so you can test that crash reporting is working on the report collection server. If it wasn't a unique exception only the first exception report would go through because of the ACRALimiter configuration
 
 You can read about the recent experience upgrading AnkiDroid's ACRA, as well as future ACRA testing directions, [in a related ACRA thread here](https://github.com/ACRA/acra/commit/05e9a5384a981f905913b524f323108838154fe7#commitcomment-29569186) if you are interested.
 
