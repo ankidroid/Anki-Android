@@ -36,6 +36,10 @@ import org.acra.dialog.BaseCrashReportDialog;
 
 import timber.log.Timber;
 
+/**
+ * This file will appear to have static type errors because BaseCrashReportDialog extends android.support.XXX
+ * instead of androidx.XXX . Details at {@see https://github.com/ankidroid/Anki-Android/wiki/Crash-Reports}
+ */
 public class AnkiDroidCrashReportDialog extends BaseCrashReportDialog implements DialogInterface.OnClickListener, DialogInterface.OnDismissListener {
     private static final String STATE_COMMENT = "comment";
     CheckBox mAlwaysReportCheckBox;
