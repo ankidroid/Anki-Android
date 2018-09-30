@@ -78,7 +78,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         sIsCancellable = false;
         Context context = AnkiDroidApp.getInstance().getApplicationContext();
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Connection");
+        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                AnkiDroidApp.getAppResources().getString(R.string.app_name) + ":Connection");
     }
 
     private static Connection launchConnectionTask(TaskListener listener, Payload data) {
