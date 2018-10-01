@@ -1,4 +1,4 @@
-package com.ichi2.anki.tests;
+package com.ichi2.anki.uitests;
 
 
 import android.Manifest;
@@ -15,6 +15,7 @@ import android.view.ViewParent;
 import com.azimolabs.conditionwatcher.ConditionWatcher;
 import com.ichi2.anki.IntentHandler;
 import com.ichi2.anki.R;
+import com.ichi2.anki.tests.Shared;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -35,12 +36,14 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withSubstring;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
 @LargeTest
+@SuppressWarnings("PMD.ExcessiveMethodLength")
 @RunWith(AndroidJUnit4.class)
 public class ActivityTestUI {
 
@@ -290,14 +293,8 @@ public class ActivityTestUI {
                         isDisplayed()));
         floatingActionButton.perform(click());
 
-        ViewInteraction appCompatTextView = onView(
-                allOf(withId(R.id.CardEditorCardsText), withText("Cards: Card 1"),
-                        childAtPosition(
-                                allOf(withId(R.id.CardEditorCardsButton),
-                                        childAtPosition(
-                                                withClassName(is("android.widget.LinearLayout")),
-                                                0)),
-                                0)));
+        ConditionWatcher.waitForCondition(new Shared.ViewItemWaitingInstruction(R.id.CardEditorCardsText));
+        ViewInteraction appCompatTextView = onView(allOf(withId(R.id.CardEditorCardsText), withSubstring("Cards: Card 1")));
         appCompatTextView.perform(scrollTo(), click());
 
         ViewInteraction actionMenuItemView = onView(
