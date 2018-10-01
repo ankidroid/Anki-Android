@@ -104,16 +104,22 @@ public class Previewer extends AbstractFlashcardViewer {
     private View.OnClickListener mSelectScrollHandler = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (!mShowingAnswer) {
-                displayCardAnswer();
-            } else {
-                if (view.getId() == R.id.flashcard_layout_ease1) {
-                    mIndex--;
-                } else if (view.getId() == R.id.flashcard_layout_ease2) {
+            if (mShowingAnswer) {
+                // If we are showing the answer, any click will show a question...
+                if (view.getId() == R.id.flashcard_layout_ease2) {
+                    // ...but if they clicked "forward" we need to move to the next card first
                     mIndex++;
+                    mCurrentCard = getCol().getCard(mCardList[mIndex]);
                 }
-                mCurrentCard = getCol().getCard(mCardList[mIndex]);
                 displayCardQuestion();
+            } else {
+                // If we are showing the question, any click will show an answer...
+                if (view.getId() == R.id.flashcard_layout_ease1) {
+                    // ...but if they clicked "reverse" we need to go to the previous card first
+                    mIndex--;
+                    mCurrentCard = getCol().getCard(mCardList[mIndex]);
+                }
+                displayCardAnswer();
             }
         }
     };
@@ -153,8 +159,7 @@ public class Previewer extends AbstractFlashcardViewer {
         mEase2Layout.setOnClickListener(mSelectScrollHandler);
         mEase2Layout.setBackgroundResource(background[0]);
 
-
-        if (mIndex == 0 && mShowingAnswer) {
+        if (mIndex == 0 && !mShowingAnswer) {
             mEase1Layout.setEnabled(false);
             mNext1.setText("-");
         } else {
