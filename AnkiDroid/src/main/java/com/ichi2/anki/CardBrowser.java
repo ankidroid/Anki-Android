@@ -103,6 +103,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private MenuItem mSearchItem;
     private MenuItem mSaveSearchItem;
     private MenuItem mMySearchesItem;
+    private MenuItem mPreviewItem;
 
     private Snackbar mUndoSnackbar;
 
@@ -509,9 +510,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        // initialize mSearchTerms to a default value
-        mSearchTerms = "";
-
         // set the currently selected deck
         selectDropDownItem(getDeckPositionFromDeckId(getIntent().getLongExtra("defaultDeckId", -1)));
     }
@@ -645,6 +643,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         }
 
+        mPreviewItem = menu.findItem(R.id.action_preview);
+        updatePreviewMenuItem();
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -655,6 +655,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
         } else {
             super.onNavigationPressed();
         }
+    }
+
+    private void updatePreviewMenuItem() {
+        if (mPreviewItem == null) {
+            return;
+        }
+        mPreviewItem.setVisible(getCards().size() > 0);
     }
 
     private void updateMultiselectMenu() {
@@ -937,11 +944,32 @@ public class CardBrowser extends NavigationDrawerActivity implements
         searchCards();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save current search terms
+        savedInstanceState.putString("mSearchTerms", mSearchTerms);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mSearchTerms = savedInstanceState.getString("mSearchTerms");
+        searchCards();
+    }
+
     private void searchCards() {
         // cancel the previous search & render tasks if still running
         DeckTask.cancelTask(DeckTask.TASK_TYPE_SEARCH_CARDS);
         DeckTask.cancelTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA);
         String searchText;
+        if (mSearchTerms == null) {
+            mSearchTerms = "";
+        }
+        if (!"".equals(mSearchTerms) && (mSearchView != null)) {
+            mSearchView.setQuery(mSearchTerms, false);
+            MenuItemCompat.expandActionView(mSearchItem);
+        }
         if (mSearchTerms.contains("deck:")) {
             searchText = mSearchTerms;
         } else {
@@ -964,6 +992,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void updateList() {
         mCardsAdapter.notifyDataSetChanged();
         mDropDownAdapter.notifyDataSetChanged();
+        updatePreviewMenuItem();
     }
 
     /**
@@ -1329,6 +1358,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 searchCards();
                 endMultiSelectMode();
                 mCardsAdapter.notifyDataSetChanged();
+                updatePreviewMenuItem();
                 invalidateOptionsMenu();    // maybe the availability of undo changed
             } else {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
@@ -1366,6 +1396,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     UIUtils.showSimpleSnackbar(CardBrowser.this, getSubtitleText(), true);
                 }
             }
+            updatePreviewMenuItem();
             hideProgressBar();
         }
 
@@ -1449,6 +1480,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void onCancelled() {
+            // do nothing
         }
     };
 
@@ -1526,7 +1558,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mToIds = to;
             mColorFlagKey = colorFlagKey;
             mFontSizeScalePcent = fontSizeScalePcent;
-            if (!customFont.equals("")) {
+            if (!"".equals(customFont)) {
                 mCustomTypeface = AnkiFont.getTypeface(context, customFont);
             }
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
