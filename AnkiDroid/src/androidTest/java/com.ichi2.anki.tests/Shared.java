@@ -74,8 +74,12 @@ public class Shared {
         /** Get the current activity so, to inspect for View ids */
         private Activity getCurrentActivity() {
             final Activity[] activity = new Activity[1];
-            onView(isRoot()).check((view, noViewFoundException) ->
-                    activity[0] = scanForActivity(view.findViewById(android.R.id.content).getContext()));
+            onView(isRoot()).check((view, noViewFoundException) -> {
+                    View content = view.findViewById(android.R.id.content);
+                    if (content != null) {
+                        activity[0] = scanForActivity(content.getContext());
+                    }
+            });
             return activity[0];
         }
 
@@ -115,10 +119,11 @@ public class Shared {
      * @return See getTestDir.
      */
     private static File getTestDir(Context context, String name) {
+        String suffix = "";
         if (!TextUtils.isEmpty(name)) {
-            name = "-" + name;
+            suffix = "-" + name;
         }
-        File dir = new File(context.getCacheDir(), "testfiles" + name);
+        File dir = new File(context.getCacheDir(), "testfiles" + suffix);
         if (!dir.exists()) {
             assertTrue(dir.mkdir());
         }
