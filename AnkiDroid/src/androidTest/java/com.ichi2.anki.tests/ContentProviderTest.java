@@ -46,6 +46,7 @@ import com.ichi2.libanki.Utils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -787,6 +788,10 @@ public class ContentProviderTest {
         long deckId = mTestDeckIds[0];
         col.getDecks().select(deckId);
         Card card = col.getSched().getCard();
+        long cardId = card.getId();
+
+        // the card starts out being new
+        assertEquals("card is initial new", Card.TYPE_NEW, card.getQueue());
 
         ContentResolver cr = InstrumentationRegistry.getTargetContext().getContentResolver();
         Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
@@ -794,10 +799,12 @@ public class ContentProviderTest {
         long noteId = card.note().getId();
         int cardOrd = card.getOrd();
         int ease = AbstractFlashcardViewer.EASE_3; //<- insert real ease here
+        long timeTaken = 5000; // 5 seconds
 
         values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);
         values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd);
         values.put(FlashCardsContract.ReviewInfo.EASE, ease);
+        values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken);
         int updateCount = cr.update(reviewInfoUri, values, null, null);
         assertEquals("Check if update returns 1", 1, updateCount);
         col.getSched().reset();
@@ -809,6 +816,157 @@ public class ContentProviderTest {
         }else{
             //We expected this
         }
+
+        // lookup the card after update, ensure it's not new anymore
+        Card cardAfterReview = col.getCard(cardId);
+        assertEquals("card is now type rev", Card.TYPE_REV, cardAfterReview.getQueue());
+
+    }
+
+
+    /**
+     * Test burying a card through the ReviewInfo endpoint
+     */
+    @Test
+    public void testBuryCard(){
+        // get the first card due
+        // ----------------------
+        Collection col;
+        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getTargetContext());
+        long deckId = mTestDeckIds[0];
+        col.getDecks().select(deckId);
+        Card card = col.getSched().getCard();
+
+        // verify that the card is not already user-buried
+        Assert.assertNotEquals("Card is not user-buried before test", Card.QUEUE_USER_BRD, card.getQueue());
+
+        // retain the card id, we will lookup the card after the update
+        long cardId = card.getId();
+
+        // bury it through the API
+        // -----------------------
+        ContentResolver cr = InstrumentationRegistry.getTargetContext().getContentResolver();
+        Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
+        ContentValues values = new ContentValues();
+        long noteId = card.note().getId();
+        int cardOrd = card.getOrd();
+        int bury = 1;
+
+        values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);
+        values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd);
+        values.put(FlashCardsContract.ReviewInfo.BURY, bury);
+
+        int updateCount = cr.update(reviewInfoUri, values, null, null);
+        assertEquals("Check if update returns 1", 1, updateCount);
+
+        // verify that it did get buried
+        // -----------------------------
+
+        Card cardAfterUpdate = col.getCard(cardId);
+        assertEquals("Card is user-buried", Card.QUEUE_USER_BRD, cardAfterUpdate.getQueue());
+
+        // cleanup, unbury cards
+        // ---------------------
+
+        col.getSched().unburyCards();
+    }
+
+    /**
+     * Test suspending a card through the ReviewInfo endpoint
+     */
+    @Test
+    public void testSuspendCard(){
+
+        // get the first card due
+        // ----------------------
+        Collection col;
+        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getTargetContext());
+        long deckId = mTestDeckIds[0];
+        col.getDecks().select(deckId);
+        Card card = col.getSched().getCard();
+
+        // verify that the card is not already suspended
+        Assert.assertNotEquals("Card is not suspended before test", Card.QUEUE_SUSP, card.getQueue());
+
+        // retain the card id, we will lookup the card after the update
+        long cardId = card.getId();
+
+        // suspend it through the API
+        // --------------------------
+        ContentResolver cr = InstrumentationRegistry.getTargetContext().getContentResolver();
+        Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
+        ContentValues values = new ContentValues();
+        long noteId = card.note().getId();
+        int cardOrd = card.getOrd();
+        int suspend = 1;
+
+        values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);
+        values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd);
+        values.put(FlashCardsContract.ReviewInfo.SUSPEND, suspend);
+
+        int updateCount = cr.update(reviewInfoUri, values, null, null);
+        assertEquals("Check if update returns 1", 1, updateCount);
+
+        // verify that it did get suspended
+        // --------------------------------
+
+        Card cardAfterUpdate = col.getCard(cardId);
+        assertEquals("Card is suspended", Card.QUEUE_SUSP, cardAfterUpdate.getQueue());
+
+        // cleanup, unsuspend card and reschedule
+        // --------------------------------------
+
+        col.getSched().unsuspendCards(new long[]{cardId});
+        col.getSched().reset();
+    }
+
+
+    /**
+     * Update tags on a note
+     */
+    @Test
+    public void testUpdateTags() {
+        // get the first card due
+        // ----------------------
+        Collection col;
+        col = CollectionHelper.getInstance().getCol(InstrumentationRegistry.getTargetContext());
+        long deckId = mTestDeckIds[0];
+        col.getDecks().select(deckId);
+        Card card = col.getSched().getCard();
+        Note note = card.note();
+        long noteId = note.getId();
+
+        // make sure the tag is what we expect initially
+        // ---------------------------------------------
+
+        List<String> tagList = note.getTags();
+        assertEquals("only one tag", 1, tagList.size());
+        assertEquals("check tag value", TEST_TAG, tagList.get(0));
+
+        // update tags
+        // -----------
+        String tag1 = TEST_TAG;
+        String tag2 = "mynewtag";
+
+        ContentResolver cr = InstrumentationRegistry.getTargetContext().getContentResolver();
+        Uri updateNoteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
+        ContentValues values = new ContentValues();
+        values.put(FlashCardsContract.Note.TAGS, tag1 + " " + tag2);
+        int updateCount = cr.update(updateNoteUri, values, null, null);
+
+        assertEquals("updateCount is 1", 1, updateCount);
+
+
+        // lookup the note now and verify tags
+        // -----------------------------------
+
+        Note noteAfterUpdate = col.getNote(noteId);
+        List<String> newTagList = noteAfterUpdate.getTags();
+        assertEquals("two tags", 2, newTagList.size());
+        assertEquals("check first tag", TEST_TAG, newTagList.get(0));
+        assertEquals("check second tag", tag2, newTagList.get(1));
+
+
     }
 
     private Collection reopenCol() {

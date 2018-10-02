@@ -169,6 +169,16 @@ public class FlashCardsContract {
      *     </code>
      * </pre>
      * <p>
+     * <p>
+     * Updating tags for a note can be done this way:
+     * <pre>
+     *     <code>
+             Uri updateNoteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
+             ContentValues values = new ContentValues();
+             values.put(FlashCardsContract.Note.TAGS, tag1 + " " + tag2);
+             int updateCount = cr.update(updateNoteUri, values, null, null);
+     *     </code>
+     * </pre>
      *
      * <p>
      * A note consists of the following columns:
@@ -214,13 +224,13 @@ public class FlashCardsContract {
      * <tr>
      * <td>long</td>
      * <td>{@link #TAGS}</td>
-     * <td>read-only</td>
+     * <td>read-write</td>
      * <td>NoteTag of this note. NoteTag are separated  by spaces.</td>
      * </tr>
      * <tr>
      * <td>String</td>
      * <td>{@link #FLDS}</td>
-     * <td>read-only</td>
+     * <td>read-write</td>
      * <td>Fields of this note. Fields are separated by "\\x1f"</td>
      * </tr>
      * <tr>
@@ -876,10 +886,24 @@ public class FlashCardsContract {
      * <td>The it took to answer the card (in milliseconds). Used when answering the card.
      * </td>
      * </tr>
+     * <tr>
+     * <td>int</td>
+     * <td>{@link #BURY}</td>
+     * <td>write-only</td>
+     * <td>Set to 1 to bury the card. Mutually exclusive with setting EASE/TIME_TAKEN/SUSPEND
+     * </td>
+     * </tr>
+     * <tr>
+     * <td>int</td>
+     * <td>{@link #SUSPEND}</td>
+     * <td>write-only</td>
+     * <td>Set to 1 to suspend the card. Mutually exclusive with setting EASE/TIME_TAKEN/BURY
+     * </td>
+     * </tr>
      * </table>
      *
-     * The only writable column is the {@link #EASE}, which is used for answering a card.<br>
-     * Answering a card can be done as shown in this example
+     * <p>
+     * Answering a card can be done as shown in this example. Don't set BURY/SUSPEND when answering a card.
      * <pre>
      *    <code>ContentResolver cr = getContentResolver();
      *    Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
@@ -896,6 +920,31 @@ public class FlashCardsContract {
      *    cr.update(reviewInfoUri, values, null, null);
      *    </code>
      * </pre>
+     * </p>
+     *
+     * <p>
+     * Burying or suspending a card can be done this way. Don't set EASE/TIME_TAKEN when burying/suspending a card
+     * <pre>
+     *    <code>
+     *    ContentResolver cr = getContentResolver();
+     *    Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
+     *    ContentValues values = new ContentValues();
+     *    long noteId = card.note().getId();
+     *    int cardOrd = card.getOrd();
+     *
+     *    values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);
+     *    values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd);
+     *
+     *    // use this to bury a card
+     *    values.put(FlashCardsContract.ReviewInfo.BURY, 1);
+     *
+     *    // if you want to suspend, use this instead
+     *    // values.put(FlashCardsContract.ReviewInfo.SUSPEND, 1);
+     *
+     *    int updateCount = cr.update(reviewInfoUri, values, null, null);
+     *    </code>
+     * </pre>
+     * </p>
      */
     public static class ReviewInfo {
 
@@ -942,6 +991,16 @@ public class FlashCardsContract {
          */
 
         public static final String TIME_TAKEN = "time_taken";
+
+        /**
+         * Write-only field, allows burying of a card when set to 1
+         */
+        public static final String BURY = "buried";
+
+        /**
+         * Write-only field, allows suspending of a card when set to 1
+         */
+        public static final String SUSPEND = "suspended";
 
         public static final String[] DEFAULT_PROJECTION = {
                 NOTE_ID,
