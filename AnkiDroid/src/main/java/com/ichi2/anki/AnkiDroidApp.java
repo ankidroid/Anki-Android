@@ -33,11 +33,12 @@ import android.util.Log;
 import android.view.ViewConfiguration;
 import android.webkit.CookieManager;
 
-import com.ichi2.anki.dialogs.AnkiDroidCrashReportDialog;
+import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.LanguageUtil;
+import com.ichi2.anki.analytics.UsageAnalytics;
 
 import org.acra.ACRA;
 import org.acra.ReportField;
@@ -205,6 +206,12 @@ public class AnkiDroidApp extends Application {
         }
         Timber.tag(TAG);
 
+        // analytics after ACRA, they both install UncaughtExceptionHandlers but Analytics chains while ACRA does not
+        UsageAnalytics.initialize(this);
+        if (BuildConfig.DEBUG) {
+            UsageAnalytics.setDryRun(true);
+        }
+
         sInstance = this;
         setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
         NotificationChannels.setup(getApplicationContext());
@@ -283,6 +290,7 @@ public class AnkiDroidApp extends Application {
 
 
     public static void sendExceptionReport(Throwable e, String origin, String additionalInfo) {
+        UsageAnalytics.sendAnalyticsException(e, false);
         ACRA.getErrorReporter().putCustomData("origin", origin);
         ACRA.getErrorReporter().putCustomData("additionalInfo", additionalInfo);
         ACRA.getErrorReporter().handleException(e);
@@ -292,8 +300,8 @@ public class AnkiDroidApp extends Application {
     /**
      * If you want to make sure that the next exception of any time is posted, you need to clear limiter data
      *
-     * There is an enhancement request in ACRA to do this via API, until then they blessed deleting file directly
-     * @param context
+     * ACRA 5.3.x has API to do this, and cleans on version upgrade by default, until then they blessed deleting file
+     * @param context the context leading to the directory with ACRA limiter data
      */
     public static void deleteACRALimiterData(Context context) {
         context.getFileStreamPath("ACRA-limiter.json").delete();

@@ -61,6 +61,7 @@ import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
 import com.ichi2.ui.SeekBarPreference;
 import com.ichi2.utils.LanguageUtil;
+import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.VersionUtils;
 
 import org.json.JSONException;
@@ -105,7 +106,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Themes.setThemeLegacy(this);
-
         super.onCreate(savedInstanceState);
 
         // Add a home button to the actionbar
@@ -496,8 +496,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 case AnkiDroidApp.FEEDBACK_REPORT_KEY: {
                     String value = prefs.getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "");
                     AnkiDroidApp.getInstance().setAcraReportingMode(value);
-                    // If the user changed error reporting, make sure future reports have a chance to pose
+                    // If the user changed error reporting, make sure future reports have a chance to post
                     AnkiDroidApp.deleteACRALimiterData(this);
+                    // We also need to re-chain our UncaughtExceptionHandlers
+                    UsageAnalytics.reInitialize();
                     break;
                 }
                 case "syncAccount": {
@@ -735,6 +737,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             String subscreen = getArguments().getString("subscreen");
+            UsageAnalytics.sendAnalyticsScreenView(subscreen.replaceFirst("^com.ichi2.anki.", ""));
             ((Preferences) getActivity()).initSubscreen(subscreen, this);
             ((Preferences) getActivity()).initAllPreferences(getPreferenceScreen());
         }

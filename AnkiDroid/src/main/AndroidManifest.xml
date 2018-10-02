@@ -244,7 +244,7 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity android:name="com.ichi2.anki.dialogs.AnkiDroidCrashReportDialog"
+        <activity android:name="com.ichi2.anki.analytics.AnkiDroidCrashReportDialog"
             android:theme="@style/Theme.CrashReportDialog"
             android:process=":acra"
             android:launchMode="singleInstance"

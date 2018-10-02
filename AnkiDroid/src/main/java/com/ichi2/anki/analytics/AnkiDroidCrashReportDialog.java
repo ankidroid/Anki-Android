@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.dialogs;
+package com.ichi2.anki.analytics;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -42,10 +42,8 @@ import timber.log.Timber;
  */
 public class AnkiDroidCrashReportDialog extends BaseCrashReportDialog implements DialogInterface.OnClickListener, DialogInterface.OnDismissListener {
     private static final String STATE_COMMENT = "comment";
-    CheckBox mAlwaysReportCheckBox;
-    EditText mUserComment;
-
-    AlertDialog mDialog;
+    private CheckBox mAlwaysReportCheckBox;
+    private EditText mUserComment;
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -68,7 +66,7 @@ public class AnkiDroidCrashReportDialog extends BaseCrashReportDialog implements
         }
         dialogBuilder.setView(buildCustomView(savedInstanceState));
 
-        mDialog = dialogBuilder.create();
+        AlertDialog mDialog = dialogBuilder.create();
         mDialog.setCanceledOnTouchOutside(false);
         mDialog.setOnDismissListener(this);
         mDialog.show();
