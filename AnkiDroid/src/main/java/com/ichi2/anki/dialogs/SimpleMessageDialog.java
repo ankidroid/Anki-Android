@@ -32,6 +32,7 @@ public class SimpleMessageDialog extends AsyncDialogFragment {
 
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
+        // FIXME this should be super.onCreateDialog(Bundle), no?
         super.onCreate(savedInstanceState);
         return new MaterialDialog.Builder(getActivity())
                 .title(getNotificationTitle())

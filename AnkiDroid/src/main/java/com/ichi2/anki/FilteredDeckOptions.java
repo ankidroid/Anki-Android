@@ -39,6 +39,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
+import com.ichi2.anki.analytics.UsageAnalytics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -352,6 +353,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     protected void onCreate(Bundle icicle) {
         Themes.setThemeLegacy(this);
         super.onCreate(icicle);
+        UsageAnalytics.sendAnalyticsScreenView(this);
 
         mCol = CollectionHelper.getInstance().getCol(this);
         if (mCol == null) {

@@ -4,13 +4,13 @@ package com.ichi2.anki.dialogs;
 import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.Bundle;
-import androidx.fragment.app.DialogFragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
+import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
-public class DeckPickerConfirmDeleteDeckDialog extends DialogFragment {
+public class DeckPickerConfirmDeleteDeckDialog extends AnalyticsDialogFragment {
     public static DeckPickerConfirmDeleteDeckDialog newInstance(String dialogMessage) {
         DeckPickerConfirmDeleteDeckDialog f = new DeckPickerConfirmDeleteDeckDialog();
         Bundle args = new Bundle();

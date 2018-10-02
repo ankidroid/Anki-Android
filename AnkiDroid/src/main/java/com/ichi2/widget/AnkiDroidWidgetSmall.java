@@ -32,6 +32,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.IntentHandler;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.anki.analytics.UsageAnalytics;
 
 import timber.log.Timber;
 
@@ -55,6 +56,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         Timber.d("SmallWidget: Widget enabled");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetSmallEnabled", true).commit();
+        UsageAnalytics.sendAnalyticsEvent(this.getClass().getSimpleName(), "enabled");
     }
 
 
@@ -64,6 +66,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         Timber.d("SmallWidget: Widget disabled");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetSmallEnabled", false).commit();
+        UsageAnalytics.sendAnalyticsEvent(this.getClass().getSimpleName(), "disabled");
     }
 
     @Override

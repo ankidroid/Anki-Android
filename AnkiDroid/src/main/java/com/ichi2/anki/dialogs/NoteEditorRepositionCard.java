@@ -2,14 +2,14 @@
 package com.ichi2.anki.dialogs;
 
 import android.os.Bundle;
-import androidx.fragment.app.DialogFragment;
 import android.text.InputType;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.NoteEditor;
 import com.ichi2.anki.R;
+import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
-public class NoteEditorRepositionCard extends DialogFragment {
+public class NoteEditorRepositionCard extends AnalyticsDialogFragment {
     public static NoteEditorRepositionCard newInstance() {
         return new NoteEditorRepositionCard();
     }

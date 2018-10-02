@@ -3,18 +3,18 @@ package com.ichi2.anki.dialogs;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import androidx.fragment.app.DialogFragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.libanki.Utils;
 
 import java.io.File;
 import java.util.List;
 
-public class ImportDialog extends DialogFragment {
+public class ImportDialog extends AnalyticsDialogFragment {
 
     public static final int DIALOG_IMPORT_HINT = 0;
     public static final int DIALOG_IMPORT_SELECT = 1;
