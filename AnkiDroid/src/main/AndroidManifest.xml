@@ -83,6 +83,7 @@
         android:roundIcon="@mipmap/anki_round"
         android:label="@string/app_name"
         android:windowSoftInputMode="adjustResize"
+        android:usesCleartextTraffic="true"
         android:largeHeap="true">
         <activity
             android:name="com.ichi2.anki.IntentHandler"
