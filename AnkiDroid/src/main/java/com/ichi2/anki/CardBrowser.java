@@ -1015,24 +1015,26 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     /**
      * Get the index in the deck spinner for a given deck ID
-     * @param did the id of a deck
+     * @param did the id of a deck, -1 if none selected
      * @return the corresponding index in the deck spinner, or 0 if not found
      */
     private int getDeckPositionFromDeckId(long did) {
-        for (int dropDownDeckIdx = 0; dropDownDeckIdx < mDropDownDecks.size(); dropDownDeckIdx++) {
-            JSONObject deck = mDropDownDecks.get(dropDownDeckIdx);
-            long cdid;
-            try {
-                cdid = deck.getLong("id");
-            } catch (JSONException e) {
-                throw new RuntimeException();
-            }
-            if (cdid == did) {
-                // NOTE: mDropDownDecks.get(0) is the first deck, whereas index 0 in mActionBarSpinner is "All Decks"
-                return dropDownDeckIdx + 1;
+        if (did != -1) {
+            for (int dropDownDeckIdx = 0; dropDownDeckIdx < mDropDownDecks.size(); dropDownDeckIdx++) {
+                JSONObject deck = mDropDownDecks.get(dropDownDeckIdx);
+                long cdid;
+                try {
+                    cdid = deck.getLong("id");
+                } catch (JSONException e) {
+                    throw new RuntimeException();
+                }
+                if (cdid == did) {
+                    // NOTE: mDropDownDecks.get(0) is the first deck, whereas index 0 in mActionBarSpinner is "All Decks"
+                    return dropDownDeckIdx + 1;
+                }
             }
         }
-        // Fall back on "All Decks" if did wasn't found
+        // Fall back on "All Decks" if no did or did wasn't found
         return 0;
     }
 
