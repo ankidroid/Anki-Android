@@ -20,6 +20,7 @@
 package com.ichi2.anki.multimediacard.fields;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -159,6 +160,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // ignore RESULT_CANCELED but handle image select and take
+        if (resultCode == Activity.RESULT_CANCELED) {
+            return;
+        }
         if (requestCode == ACTIVITY_SELECT_IMAGE) {
             Uri selectedImage = data.getData();
             // Timber.d(selectedImage.toString());
