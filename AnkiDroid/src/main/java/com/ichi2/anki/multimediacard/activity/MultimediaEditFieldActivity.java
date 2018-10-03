@@ -30,9 +30,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.R;
@@ -64,9 +62,9 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     private static final int REQUEST_AUDIO_PERMISSION = 0;
     private static final int REQUEST_CAMERA_PERMISSION = 1;
 
-    IField mField;
-    IMultimediaEditableNote mNote;
-    int mFieldIndex;
+    private IField mField;
+    private IMultimediaEditableNote mNote;
+    private int mFieldIndex;
 
     private IFieldController mFieldController;
 
@@ -85,7 +83,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
         setContentView(R.layout.multimedia_edit_field_activity);
         View mainView = findViewById(android.R.id.content);
-        Toolbar toolbar = (Toolbar) mainView.findViewById(R.id.toolbar);
+        Toolbar toolbar = mainView.findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
@@ -108,6 +106,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
 
     private void recreateEditingUi() {
+        Timber.d("recreateEditingUi()");
 
         IControllerFactory controllerFactory = BasicControllerFactory.getInstance();
 
@@ -138,7 +137,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         mFieldController.setNote(mNote);
         mFieldController.setEditingActivity(this);
 
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinearLayoutInScrollViewFieldEdit);
+        LinearLayout linearLayout = findViewById(R.id.LinearLayoutInScrollViewFieldEdit);
 
         linearLayout.removeAllViews();
 
@@ -149,6 +148,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Timber.d("onCreateOptionsMenu() - mField.getType() = %s", mField.getType());
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_edit_text, menu);
         menu.findItem(R.id.multimedia_edit_field_to_text).setVisible(mField.getType() != EFieldType.TEXT);
@@ -193,53 +193,6 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     }
 
 
-    private void createSpareMenu(LinearLayout linearLayout) {
-
-        LayoutParams pars = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1);
-
-        Button toTextButton = new Button(this);
-        toTextButton.setText(gtxt(R.string.multimedia_editor_field_editing_text));
-        toTextButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                toTextField();
-            }
-
-        });
-        linearLayout.addView(toTextButton, pars);
-
-        Button toImageButton = new Button(this);
-        toImageButton.setText(gtxt(R.string.multimedia_editor_field_editing_image));
-        toImageButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                toImageField();
-            }
-
-        });
-        linearLayout.addView(toImageButton, pars);
-
-        Button toAudioButton = new Button(this);
-        toAudioButton.setText(gtxt(R.string.multimedia_editor_field_editing_audio));
-        toAudioButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                toAudioField();
-            }
-
-        });
-        linearLayout.addView(toAudioButton, pars);
-
-        Button doneButton = new Button(this);
-        doneButton.setText(gtxt(R.string.multimedia_editor_field_editing_done));
-        doneButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                done();
-            }
-
-        });
-        linearLayout.addView(doneButton, pars);
-
-    }
-
-
     protected void done() {
 
         mFieldController.onDone();
@@ -281,7 +234,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
         setResult(RESULT_OK, resultData);
 
-        finish();
+        finishWithoutAnimation();
     }
 
 
@@ -312,6 +265,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Timber.d("onActivityResult()");
         if (mFieldController != null) {
             mFieldController.onActivityResult(requestCode, resultCode, data);
         }
@@ -345,11 +299,6 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             mFieldController.onDestroy();
         }
 
-    }
-
-
-    private String gtxt(int id) {
-        return getText(id).toString();
     }
 
 

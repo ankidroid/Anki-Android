@@ -32,31 +32,12 @@ import java.util.ArrayList;
 
 public class MultimediaEditableNote implements IMultimediaEditableNote {
     private static final long serialVersionUID = -6161821367135636659L;
-    boolean mIsModified = false;
-
-    ArrayList<IField> mFields;
+    private boolean mIsModified = false;
+    private ArrayList<IField> mFields;
     private long mModelId;
 
 
-    public void circularSwap() {
-        if (mFields == null) {
-            return;
-        }
-
-        if (mFields.size() <= 1) {
-            return;
-        }
-
-        ArrayList<IField> newFields = new ArrayList<>();
-        newFields.add(mFields.get(mFields.size() - 1));
-        newFields.addAll(mFields);
-        newFields.remove(mFields.size());
-
-        mFields = newFields;
-    }
-
-
-    void setThisModified() {
+    private void setThisModified() {
         mIsModified = true;
     }
 
