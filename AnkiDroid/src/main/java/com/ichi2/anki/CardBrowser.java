@@ -511,7 +511,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         // set the currently selected deck
-        selectDropDownItem(getDeckPositionFromDeckId(getIntent().getLongExtra("defaultDeckId", -1)));
+        selectDropDownItem(getDeckPositionFromDeckId(getIntent().getLongExtra("selectedDeck", -1)));
     }
 
     @Override
