@@ -317,6 +317,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+        supportInvalidateOptionsMenu();
     }
 
 
