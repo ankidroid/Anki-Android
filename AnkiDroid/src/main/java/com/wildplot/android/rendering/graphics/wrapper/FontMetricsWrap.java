@@ -18,21 +18,20 @@ package com.wildplot.android.rendering.graphics.wrapper;
 public class FontMetricsWrap {
     private GraphicsWrap g;
 
+
     public FontMetricsWrap(GraphicsWrap g) {
         super();
         this.g = g;
     }
-    
-    public float stringWidth(String text){
+
+
+    public float stringWidth(String text) {
         return g.getPaint().measureText(text);
-        
+
     }
+
 
     public float getHeight() {
-        return g.getPaint().getTextSize();
-    }
-
-    public float getHeight(boolean foo) {
         return g.getPaint().getTextSize();
     }
 }

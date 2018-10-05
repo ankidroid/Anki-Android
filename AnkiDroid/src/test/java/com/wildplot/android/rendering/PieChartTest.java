@@ -31,15 +31,15 @@ import static org.powermock.api.mockito.PowerMockito.when;
 public class PieChartTest {
     private static final double PRECISION = 1E-3F;
     @Mock
-    GraphicsWrap graphics;
+    private GraphicsWrap graphics;
 
     @Mock
-    PlotSheet plot;
+    private PlotSheet plot;
 
-    PieChart pieChart;
+    private PieChart pieChart;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         mockStatic(android.graphics.Color.class);
         MockitoAnnotations.initMocks(this);
         when(Color.argb(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(0);
@@ -52,12 +52,12 @@ public class PieChartTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void constructorShouldThrowIfSizesMismatch() throws Exception {
+    public void constructorShouldThrowIfSizesMismatch() {
         new PieChart(plot, new double[]{1, 1}, new ColorWrap[]{ColorWrap.RED});
     }
 
     @Test
-    public void paintShouldNotDrawAnythingIfValuesAreZero() throws Exception {
+    public void paintShouldNotDrawAnythingIfValuesAreZero() {
         pieChart = new PieChart(plot, new double[]{0, 0}, new ColorWrap[]{
                 ColorWrap.RED, ColorWrap.GREEN});
         pieChart.paint(graphics);
@@ -66,7 +66,7 @@ public class PieChartTest {
     }
 
     @Test
-    public void paintShouldDrawFullRedCircleIfOneValue() throws Exception {
+    public void paintShouldDrawFullRedCircleIfOneValue() {
         pieChart = new PieChart(plot, new double[]{1.}, new ColorWrap[]{
                 ColorWrap.RED});
         RectangleWrap r = createRectangleMock(100, 100);
@@ -79,7 +79,7 @@ public class PieChartTest {
     }
 
     @Test
-    public void paintShouldDrawTwoSectorsWithGivenColors() throws Exception {
+    public void paintShouldDrawTwoSectorsWithGivenColors() {
         pieChart = new PieChart(plot, new double[]{1, 1}, new ColorWrap[]{
                 ColorWrap.RED, ColorWrap.GREEN});
         RectangleWrap r = createRectangleMock(100, 100);

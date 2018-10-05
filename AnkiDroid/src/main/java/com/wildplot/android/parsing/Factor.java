@@ -16,38 +16,48 @@
 package com.wildplot.android.parsing;
 
 
-
 public class Factor implements TreeElement {
     private TopLevelParser parser;
-    public static enum FactorType { PLUS_FACTOR, MINUS_FACTOR, POW, INVALID}
+
+
+
+    public enum FactorType {PLUS_FACTOR, MINUS_FACTOR, POW, INVALID}
+
+
+
     private FactorType factorType = FactorType.INVALID;
     private Factor factor;
     private Pow pow;
-    
-    public Factor(String factorString, TopLevelParser parser){
+
+
+    public Factor(String factorString, TopLevelParser parser) {
         this.parser = parser;
-        if(!TopLevelParser.stringHasValidBrackets(factorString)){
+        if (!TopLevelParser.stringHasValidBrackets(factorString)) {
             this.factorType = FactorType.INVALID;
             return;
         }
         boolean isReady;
 
         isReady = initAsPlusFactor(factorString);
-        if(!isReady)
+        if (!isReady) {
             isReady = initAsMinusFactor(factorString);
-        if(!isReady)
+        }
+        if (!isReady) {
             isReady = initAsPow(factorString);
-        if(!isReady)
+        }
+        if (!isReady) {
             this.factorType = FactorType.INVALID;
+        }
     }
 
-    private boolean initAsPlusFactor(String factorString){
-        if(factorString.length() > 0 && factorString.charAt(0) == '+'){
+
+    private boolean initAsPlusFactor(String factorString) {
+        if (factorString.length() > 0 && factorString.charAt(0) == '+') {
             boolean isValidFactor;
             String leftSubString = factorString.substring(1, factorString.length());
             Factor leftFactor = new Factor(leftSubString, parser);
             isValidFactor = leftFactor.getFactorType() != FactorType.INVALID;
-            if(isValidFactor){
+            if (isValidFactor) {
                 this.factorType = FactorType.PLUS_FACTOR;
                 this.factor = leftFactor;
                 return true;
@@ -57,13 +67,14 @@ public class Factor implements TreeElement {
         return false;
     }
 
-    private boolean initAsMinusFactor(String factorString){
-        if(factorString.length() > 0 && factorString.charAt(0) == '-'){
+
+    private boolean initAsMinusFactor(String factorString) {
+        if (factorString.length() > 0 && factorString.charAt(0) == '-') {
             boolean isValidFactor;
             String leftSubString = factorString.substring(1, factorString.length());
             Factor leftFactor = new Factor(leftSubString, parser);
             isValidFactor = leftFactor.getFactorType() != FactorType.INVALID;
-            if(isValidFactor){
+            if (isValidFactor) {
                 this.factorType = FactorType.MINUS_FACTOR;
                 this.factor = leftFactor;
                 return true;
@@ -73,10 +84,11 @@ public class Factor implements TreeElement {
         return false;
     }
 
-    private boolean initAsPow(String factorString){
+
+    private boolean initAsPow(String factorString) {
         Pow pow = new Pow(factorString, parser);
         boolean isValidPow = pow.getPowType() != Pow.PowType.INVALID;
-        if(isValidPow){
+        if (isValidPow) {
             this.factorType = FactorType.POW;
             this.pow = pow;
             return true;
@@ -84,11 +96,13 @@ public class Factor implements TreeElement {
         return false;
     }
 
+
     public FactorType getFactorType() {
         return factorType;
     }
 
-    public double getValue() throws ExpressionFormatException{
+
+    public double getValue() throws ExpressionFormatException {
         switch (factorType) {
             case PLUS_FACTOR:
                 return factor.getValue();
@@ -103,8 +117,9 @@ public class Factor implements TreeElement {
 
     }
 
+
     @Override
-    public boolean isVariable() throws ExpressionFormatException{
+    public boolean isVariable() throws ExpressionFormatException {
         switch (factorType) {
             case PLUS_FACTOR:
             case MINUS_FACTOR:
