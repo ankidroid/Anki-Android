@@ -85,6 +85,9 @@
   <string name="undo_action_suspend_card">suspender ficha</string>
   <string name="undo_action_suspend_note">suspender nota</string>
   <string name="undo_action_delete">eliminar nota</string>
+  <string name="undo_action_delete_multi">delete notes</string>
+  <string name="undo_action_change_deck_multi">change decks</string>
+  <string name="move_all_to_deck">Move all to deck</string>
   <string name="unbury">Mostrar</string>
   <string name="rename_deck">Renomear baralho</string>
   <string name="menu_add">Adicionar</string>

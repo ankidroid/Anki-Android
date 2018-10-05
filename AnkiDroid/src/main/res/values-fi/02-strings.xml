@@ -126,6 +126,7 @@
   <string name="fact_adder_intent_title">AnkiDroid-kortti</string>
   <string name="card_editor_add_card">Lisää merkintä</string>
   <string name="card_editor_copy_card">Kopioi kortti</string>
+  <string name="card_editor_reposition_card">Reposition</string>
   <string name="card_editor_reset_card">Tyhjennä edistyminen</string>
   <string name="card_editor_reschedule_card">Toista kortti</string>
   <string name="card_editor_preview_card">Esikatselu</string>

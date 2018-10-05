@@ -27,9 +27,9 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ActionProvider;
-import android.support.v4.view.MenuItemCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ActionProvider;
+import androidx.core.view.MenuItemCompat;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,14 +44,12 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
-import com.ichi2.libanki.Sched;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
 
 import java.lang.ref.WeakReference;
-import java.text.MessageFormat;
 import java.util.List;
 
 import timber.log.Timber;
@@ -342,10 +340,10 @@ public class Reviewer extends AbstractFlashcardViewer {
         MenuItemCompat.setActionProvider(menu.findItem(R.id.action_suspend), new SuspendProvider(this));
         MenuItemCompat.setActionProvider(menu.findItem(R.id.action_bury), new BuryProvider(this));
         if (dismissNoteAvailable(DismissType.SUSPEND_NOTE)) {
-            menu.findItem(R.id.action_suspend).setIcon(R.drawable.ic_lock_outline_white_24px_dropdown);
+            menu.findItem(R.id.action_suspend).setIcon(R.drawable.ic_action_suspend_dropdown);
             menu.findItem(R.id.action_suspend).setTitle(R.string.menu_suspend);
         } else {
-            menu.findItem(R.id.action_suspend).setIcon(R.drawable.ic_lock_outline_white_24dp);
+            menu.findItem(R.id.action_suspend).setIcon(R.drawable.ic_action_suspend);
             menu.findItem(R.id.action_suspend).setTitle(R.string.menu_suspend_card);
         }
         if (dismissNoteAvailable(DismissType.BURY_NOTE)) {

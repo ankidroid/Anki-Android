@@ -3,7 +3,7 @@ package com.ichi2.anki.dialogs;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import androidx.fragment.app.DialogFragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
@@ -54,17 +54,8 @@ import com.ichi2.anki.R;
                     .content(getArguments().getString("message"))
                     .positiveText(res.getString(R.string.dialog_ok))
                     .negativeText(res.getString(R.string.dialog_cancel))
-                    .callback(new MaterialDialog.ButtonCallback() {
-                        @Override
-                        public void onPositive(MaterialDialog dialog) {
-                            mConfirm.run();
-                        }
-
-                        @Override
-                        public void onNegative(MaterialDialog dialog) {
-                            mCancel.run();
-                        }
-                    })
+                    .onPositive((dialog, which) -> mConfirm.run())
+                    .onNegative((dialog, which) -> mCancel.run())
                     .show();
         }
     }

@@ -59,9 +59,7 @@
   <string name="backup_restore_select_title">請選擇要還原的備份檔案</string>
   <string name="backup_restore_no_backups">裝置上沒有可用來還原收藏的備份檔案，如果你的電腦上有備份檔，請手動複製到你的 AnkiDroid 資料夾裡。</string>
   <string name="open_collection_failed_title">無法打開收藏</string>
-  <string name="open_collection_failed_message">Database couldn’t be opened. It’s either not a real Anki database or has been corrupted.\n\nTouch “options” for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
-  <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
-  <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
+  <string name="corrupt_db_message">您的集合已損壞。 \n\n請點擊\"選項\"從備份還原，如果依然無法正常工作，請參閱手動修復數據庫: \n%1$s</string>
+  <string name="access_collection_failed_message">訪問您的集合時出現錯誤。它可能由無害的 bug或其他問題造成。 \n\n嘗試點擊\"選項\"按鈕運行檢查數據庫，或從備份還原。如果您仍然看到此消息，請提交bug報告: \n%1$s</string>
   <string name="deck_repair_error">無法修復收藏</string>
-  <string name="cursor_size_limit_exceeded">The Android size limit for a String in a database has been exceeded. Delete any unused note types using Anki desktop, then do a full sync.</string>
 </resources>

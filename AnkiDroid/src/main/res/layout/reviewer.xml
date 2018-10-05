@@ -1,4 +1,4 @@
-<android.support.v4.widget.DrawerLayout
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="fill_parent"
@@ -7,7 +7,7 @@
     <!-- First child of DrawerLayout assumed to be main content, others are drawers.
      We use a Coordinator layout as root View for main content as it allows snackbars
      to be swiped off screen. Other behaviors can also be added in the future if necessary -->
-    <android.support.design.widget.CoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/root_layout"
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                      android:layout_height="match_parent"/>
             <include layout="@layout/reviewer_answer_buttons"/>
         </RelativeLayout>
-    </android.support.design.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <!-- Left navigation drawer -->
     <include layout="@layout/navigation_drawer" />
-</android.support.v4.widget.DrawerLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

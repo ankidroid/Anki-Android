@@ -10,7 +10,7 @@
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search_white_24dp"
         android:title="@string/downloaddeck_search"
-        ankidroid:actionViewClass="android.support.v7.widget.SearchView"
+        ankidroid:actionViewClass="androidx.appcompat.widget.SearchView"
         ankidroid:showAsAction="always|collapseActionView"/>
 
     <item
@@ -31,5 +31,15 @@
     <item
         android:id="@+id/action_search_by_tag"
         android:title="@string/card_browser_search_by_tag"/>
+
+    <item
+        ankidroid:showAsAction="ifRoom"
+        android:id="@+id/action_undo"
+        android:title="@string/undo"
+        android:icon="@drawable/ic_undo_white_24dp"/>
+
+    <item
+        android:id="@+id/action_preview"
+        android:title="@string/card_editor_preview_card"/>
 
 </menu>

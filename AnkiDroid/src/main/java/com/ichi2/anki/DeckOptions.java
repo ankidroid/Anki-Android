@@ -28,7 +28,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -42,7 +41,6 @@ import android.view.MenuItem;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.anki.receiver.ReminderReceiver;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.services.ReminderService;
 import com.ichi2.async.DeckTask;
@@ -310,7 +308,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             final PendingIntent reminderIntent = PendingIntent.getBroadcast(
                                     getApplicationContext(),
                                     (int) mDeck.getLong("id"),
-                                    new Intent(getApplicationContext(), ReminderReceiver.class).putExtra
+                                    new Intent(getApplicationContext(), ReminderService.class).putExtra
                                             (ReminderService.EXTRA_DECK_ID, mDeck.getLong("id")),
                                     0
                             );
@@ -343,7 +341,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             final PendingIntent reminderIntent = PendingIntent.getBroadcast(
                                     getApplicationContext(),
                                     (int) mDeck.getLong("id"),
-                                    new Intent(getApplicationContext(), ReminderReceiver.class).putExtra
+                                    new Intent(getApplicationContext(), ReminderService.class).putExtra
                                             (ReminderService.EXTRA_DECK_ID, mDeck.getLong("id")),
                                     0
                             );

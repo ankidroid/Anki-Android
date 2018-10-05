@@ -49,13 +49,21 @@
     <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">كل الرزم</string>
-  <string name="card_browser_delete_card">احذف الملاحظة</string>
-  <string name="card_browser_suspend_card">علق البطاقة</string>
-  <string name="card_browser_unsuspend_card">ألغ تعليق البطاقة</string>
-  <string name="card_browser_mark_card">علم الملاحظة</string>
-  <string name="card_browser_unmark_card">ألغي تعليم الملاحظة</string>
+  <string name="card_browser_delete_card">Delete notes</string>
+  <string name="card_browser_suspend_card">Suspend cards</string>
+  <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
+  <string name="card_browser_change_deck">Change deck</string>
+  <string name="card_browser_unsuspend_card">Unsuspend cards</string>
+  <string name="card_browser_mark_card">Mark notes</string>
+  <string name="card_browser_toggle_mark_card">(un)mark notes</string>
+  <string name="card_browser_unmark_card">Unmark notes</string>
   <string name="delete_card_title">احذف الملاحظة</string>
+  <string name="delete_cards_title">Delete notes?</string>
   <string name="delete_card_message">حقا تريد حذف كل البطاقات في هذه الملاحظة؟\nحقل البحث: %s</string>
+  <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
+  <string name="deleted_message">Notes deleted</string>
+  <string name="changed_deck_message">Moved to %s</string>
+  <string name="card_browser_suspended_cards">(un)suspended cards</string>
   <string name="card_browser_show_marked">تصفية معلمة</string>
   <string name="card_browser_show_suspended">تصفية معلقة</string>
   <string name="card_browser_search_by_tag">تصفية بالوسم</string>
@@ -87,4 +95,6 @@
     <item>By reviews</item>
     <item>By lapses</item>
   </string-array>
+  <string name="card_browser_select_all">Select all</string>
+  <string name="card_browser_select_none">Select none</string>
 </resources>

@@ -21,14 +21,14 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.SwitchCompat;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.app.TaskStackBuilder;
+import androidx.core.view.GravityCompat;
+import androidx.core.view.MenuItemCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -84,11 +84,7 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mNavButtonGoesBack) {
-                        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-                    } else {
-                        mDrawerLayout.openDrawer(Gravity.LEFT);
-                    }
+                    onNavigationPressed();
                 }
             });
         }
@@ -223,6 +219,7 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
         // Update language
         AnkiDroidApp.setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
+        NotificationChannels.setup(getApplicationContext());
         // Restart the activity on preference change
         if (requestCode == REQUEST_PREFERENCES_UPDATE) {
             if (mOldColPath!=null && CollectionHelper.getCurrentAnkiDroidDirectory(this).equals(mOldColPath)) {
@@ -255,6 +252,18 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
             mDrawerLayout.closeDrawers();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    /**
+     * Called, when navigation button of the action bar is pressed.
+     * Design pattern: template method. Subclasses can override this to define their own behaviour.
+     */
+    protected void onNavigationPressed() {
+        if (mNavButtonGoesBack) {
+            finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+        } else {
+            mDrawerLayout.openDrawer(Gravity.LEFT);
         }
     }
 
@@ -329,6 +338,13 @@ public class NavigationDrawerActivity extends AnkiActivity implements Navigation
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         mNavButtonGoesBack = true;
+    }
+
+    protected void restoreDrawerIcon() {
+        if (mDrawerToggle != null) {
+            getDrawerToggle().setDrawerIndicatorEnabled(true);
+        }
+        mNavButtonGoesBack = false;
     }
 
     public boolean isDrawerOpen() {

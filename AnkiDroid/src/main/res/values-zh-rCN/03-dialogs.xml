@@ -61,6 +61,9 @@
     <item><![CDATA[AnkiDroid 在<a href=\"%1$s\"> GNU GPL v3 许可证</a>下发布。源代码在<a href=\"%2$s\">GitHub</a>上提供。]]></item>
   </string-array>
   <string name="preview_title">预览</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">重设卡片进度</string>
   <string name="reset_card_dialog_message">这张卡片将被置于新卡片队列的末尾。</string>
   <string name="reset_card_dialog_acknowledge">重置卡片</string>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root_layout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                     android:id="@+id/root_layout"
+                                                     android:layout_width="fill_parent"
+                                                     android:layout_height="fill_parent">
     <RelativeLayout
         android:id="@+id/deckpicker_view"
         android:layout_width="fill_parent"
@@ -11,14 +11,14 @@
 
         <include layout="@layout/toolbar" />
 
-        <android.support.v4.widget.SwipeRefreshLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/pull_to_sync_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/today_stats_text_view"
             android:layout_below="@+id/toolbar">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/files"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
                 android:focusable="true"
                 android:paddingBottom="72dp"
                 android:scrollbars="vertical" />
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,4 +40,4 @@
     </RelativeLayout>
     <include layout="@layout/anki_progress"/>
     <include layout="@layout/floating_add_button"/>
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

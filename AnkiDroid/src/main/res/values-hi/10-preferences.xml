@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">अंकन की चौड़ाई</string>
   <string name="whiteboard_black">काले लिखावट</string>
   <string name="whiteboard_black_summ">रात मोड में जब तक कम स्मृति का उपयोग करता है</string>
-  <string name="write_answers_disable">उत्तर में टाइपिंग अक्षम करें</string>
-  <string name="write_answers_disable_summ">कुंजीपटल को प्रकार-उत्तर फ़ील्ड वाले कार्ड पर प्रकट होने से रोकता है</string>
   <string name="use_input_tag">पत्ता में उत्तर दर्ज करें</string>
   <string name="use_input_tag_summ">जवाब में टाइप करने के लिए कार्ड के अंदर एक पाठ इनपुट बॉक्स का उपयोग करें</string>
-  <string name="text_selection_click">लंबा स्पर्श वैकल्पिक हल</string>
-  <string name="text_selection_click_summ">यदि आप एक लंबी प्रेस के साथ पाठ का चयन करने में सक्षम नहीं है यह सक्षम करें</string>
   <string name="dictionary">शब्दकोष खोजें</string>
   <string name="reset_languages">भाषाएँ रीसेट करें</string>
   <string name="reset_languages_summ">सभी डेक के लिए भाषा असाइनमेंट (पाठ के लिए वाक् और शब्दकोशों के लिए) रीसेट करें</string>
@@ -145,7 +141,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">भाषा चुनें</string>
   <string name="safe_display">सुरक्षित प्रदर्शन मोड</string>
-  <string name="safe_display_summ">सभी एनिमेशन अक्षम और ड्राइंग कार्ड के लिए सुरक्षित विधि का उपयोग करें । ई-इंक और पुराने डिवाइस कस्टम फ़ॉन्ट का उपयोग कर इस की आवश्यकता हो सकती है ।</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">मध्य संरेखित करें</string>
   <string name="vertical_centering_summ">कार्ड की सामग्री को अनुलंब रूप से केंद्रित करना</string>
   <string name="pref_backup_max">बैकअप की अधिकतम संख्या</string>
@@ -163,8 +159,6 @@
   <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">अगले दिन की शुरुआत</string>
   <string name="day_offset_summ">XXX घंटे पिछले आधी रात</string>
-  <string name="input_workaround">इनपुट समाधान</string>
-  <string name="input_workaround_summ">HTML इनपुट बक्सों पर ध्यान केंद्रित समस्याओं के लिए समाधान । कई उपकरणों पर समस्याओं का कारण बनता है ।</string>
   <string name="pref_keep_screen_on">स्क्रीन चालू रखें</string>
   <string name="pref_keep_screen_on_summ">स्क्रीन टाइमआउट अक्षम करें</string>
   <string name="convert_fen_text">शतरंज संकेतन समर्थन</string>

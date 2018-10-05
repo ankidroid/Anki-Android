@@ -5,13 +5,23 @@
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground">
 
+    <CheckBox
+        android:id="@+id/card_checkbox"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:visibility="gone"
+        android:gravity= "center_vertical"/>
+
     <TextView
         android:id="@+id/card_sfld"
         android:layout_width="0dip"
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:paddingLeft="3dp"
-        android:paddingRight="3dp" />
+        android:paddingRight="3dp"
+        android:gravity= "center_vertical"/>
 
     <TextView
         android:id="@+id/card_column2"
@@ -19,6 +29,7 @@
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:paddingLeft="3dp"
-        android:paddingRight="3dp"/>
+        android:paddingRight="3dp"
+        android:gravity= "center_vertical"/>
 
 </LinearLayout>

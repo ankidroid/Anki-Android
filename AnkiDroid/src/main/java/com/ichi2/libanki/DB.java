@@ -57,8 +57,8 @@ public class DB {
      */
     public DB(String ankiFilename) {
         mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null,
-                    (SQLiteDatabase.OPEN_READWRITE + SQLiteDatabase.CREATE_IF_NECESSARY)
-                            | SQLiteDatabase.NO_LOCALIZED_COLLATORS, new MyDbErrorHandler());
+                    (SQLiteDatabase.OPEN_READWRITE | SQLiteDatabase.CREATE_IF_NECESSARY),
+                    new MyDbErrorHandler());
 
         // TODO: remove this once everyone has stopped using old AnkiDroid clients with WAL (API >= 16)
         CompatHelper.getCompat().disableDatabaseWriteAheadLogging(mDatabase);

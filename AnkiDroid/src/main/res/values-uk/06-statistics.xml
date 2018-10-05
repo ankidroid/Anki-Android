@@ -141,6 +141,7 @@
   <plurals name="stats_today_cards">
     <item quantity="one">Переглянуто &lt;b&gt;%1$d карту&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
     <item quantity="few">Переглянуто &lt;b&gt;%1$d карти&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
+    <item quantity="many">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today</item>
     <item quantity="other">Переглянуто &lt;b&gt;%1$d карт&lt;/b&gt; за &lt;b&gt;%2$s&lt;/b&gt;</item>
   </plurals>
 </resources>

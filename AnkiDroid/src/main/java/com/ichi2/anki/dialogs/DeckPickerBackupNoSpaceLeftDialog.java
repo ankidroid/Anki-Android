@@ -1,10 +1,8 @@
 package com.ichi2.anki.dialogs;
 
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import androidx.fragment.app.DialogFragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.BackupManager;
@@ -27,19 +25,9 @@ public class DeckPickerBackupNoSpaceLeftDialog extends DialogFragment {
                 .title(res.getString(R.string.sd_card_almost_full_title))
                 .content(res.getString(R.string.sd_space_warning, space/1024/1024))
                 .positiveText(res.getString(R.string.dialog_ok))
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        ((DeckPicker) getActivity()).finishWithoutAnimation();
-                    }
-                })
+                .onPositive((dialog, which) -> ((DeckPicker) getActivity()).finishWithoutAnimation())
                 .cancelable(true)
-                .cancelListener(new OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        ((DeckPicker) getActivity()).finishWithoutAnimation();
-                    }
-                })
+                .cancelListener(dialog -> ((DeckPicker) getActivity()).finishWithoutAnimation())
                 .show();
     }
 }

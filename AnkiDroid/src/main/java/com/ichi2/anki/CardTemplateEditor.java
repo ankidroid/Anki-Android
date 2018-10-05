@@ -21,12 +21,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -47,7 +47,6 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
-import com.ichi2.themes.Themes;
 import com.ichi2.ui.SlidingTabLayout;
 
 import org.json.JSONArray;
@@ -257,15 +256,12 @@ public class CardTemplateEditor extends AnkiActivity {
                 .content(R.string.discard_unsaved_changes)
                 .positiveText(R.string.dialog_ok)
                 .negativeText(R.string.dialog_cancel)
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        Timber.i("TemplateEditor:: OK button pressed to confirm discard changes");
-                        getCol().getModels().update(CardTemplateEditor.this.mModelBackup);
-                        getCol().getModels().flush();
-                        getCol().reset();
-                        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-                    }
+                .onPositive((dialog, which) -> {
+                    Timber.i("TemplateEditor:: OK button pressed to confirm discard changes");
+                    getCol().getModels().update(CardTemplateEditor.this.mModelBackup);
+                    getCol().getModels().flush();
+                    getCol().reset();
+                    finishWithAnimation(ActivityTransitionAnimation.RIGHT);
                 })
                 .build().show();
     }
@@ -296,7 +292,7 @@ public class CardTemplateEditor extends AnkiActivity {
     // ----------------------------------------------------------------------------
 
     /**
-     * A {@link android.support.v4.app.FragmentPagerAdapter} that returns a fragment corresponding to
+     * A {@link androidx.core.app.FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the tabs.
      */
     public class TemplatePagerAdapter extends FragmentPagerAdapter {
@@ -362,10 +358,10 @@ public class CardTemplateEditor extends AnkiActivity {
 
 
     public static class CardTemplateFragment extends Fragment{
-        EditText mFront;
-        EditText mCss;
-        EditText mBack;
-        JSONObject mModel;
+        private EditText mFront;
+        private EditText mCss;
+        private EditText mBack;
+        private JSONObject mModel;
         public static CardTemplateFragment newInstance(int position, long modelId, long noteId) {
             CardTemplateFragment f = new CardTemplateFragment();
             Bundle args = new Bundle();

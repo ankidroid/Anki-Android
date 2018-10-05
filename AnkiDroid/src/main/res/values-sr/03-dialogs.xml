@@ -63,6 +63,9 @@
     <item><![CDATA[AnkiDroid је објављен под <a href=\"%1$s\">GNU-GPL v3 лиценцом</a> и изворни код је доступан <a href=\"%2$s\">овде</a>.]]></item>
   </string-array>
   <string name="preview_title">Преглед</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">Ресетовање прогреса учења карте</string>
   <string name="reset_card_dialog_message">Ова картице ће бити постављена на крај реда нових картица.</string>
   <string name="reset_card_dialog_acknowledge">Ресетовање картице</string>

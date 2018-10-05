@@ -117,17 +117,20 @@
   <plurals name="timebox_reached">
     <item quantity="one">Per %2$s išmokote %1$d kortelę</item>
     <item quantity="few">Per %2$s išmokote %1$d korteles</item>
+    <item quantity="many">%1$d cards studied in %2$s</item>
     <item quantity="other">Per %2$s išmokote %1$d kortelių</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
     <item quantity="one">%1$d minutę</item>
     <item quantity="few">%1$d minutes</item>
+    <item quantity="many">%1$d minutes</item>
     <item quantity="other">%1$d minučių</item>
   </plurals>
   <string name="studyoptions_welcome_title">Sveiki apsilankę „AnkiDroid“ programoje</string>
   <string name="fact_adder_intent_title">„AnkiDroid“ kortelė</string>
   <string name="card_editor_add_card">Pridėti užrašą</string>
   <string name="card_editor_copy_card">Kopijuoti kortelę</string>
+  <string name="card_editor_reposition_card">Reposition</string>
   <string name="card_editor_reset_card">Atkurti pažangą</string>
   <string name="card_editor_reschedule_card">Keisti kortelės mokymosi dieną</string>
   <string name="card_editor_preview_card">Peržiūra</string>
@@ -137,6 +140,7 @@
   <plurals name="factadder_cards_added">
     <item quantity="one">Pridėta %d kortelė</item>
     <item quantity="few">Pridėtos %d kortelės</item>
+    <item quantity="many">%d cards added</item>
     <item quantity="other">Pridėta %d kortelių</item>
   </plurals>
   <string name="help_title">Pagalba</string>
@@ -195,31 +199,37 @@
   <plurals name="time_span_seconds">
     <item quantity="one">%s sekundė</item>
     <item quantity="few">%s sekundės</item>
+    <item quantity="many">%s seconds</item>
     <item quantity="other">%s sekundžių</item>
   </plurals>
   <plurals name="time_span_minutes">
     <item quantity="one">%s minutė</item>
     <item quantity="few">%s minutės</item>
+    <item quantity="many">%s minutes</item>
     <item quantity="other">%s minučių</item>
   </plurals>
   <plurals name="time_span_hours">
     <item quantity="one">%s valanda</item>
     <item quantity="few">%s valandos</item>
+    <item quantity="many">%s hours</item>
     <item quantity="other">%s valandų</item>
   </plurals>
   <plurals name="time_span_days">
     <item quantity="one">%s diena</item>
     <item quantity="few">%s dienos</item>
+    <item quantity="many">%s days</item>
     <item quantity="other">%s dienų</item>
   </plurals>
   <plurals name="time_span_months">
     <item quantity="one">%s mėnuo</item>
     <item quantity="few">%s mėnesiai</item>
+    <item quantity="many">%s months</item>
     <item quantity="other">%s mėnesių</item>
   </plurals>
   <plurals name="time_span_years">
     <item quantity="one">%s metai</item>
     <item quantity="few">%s metai</item>
+    <item quantity="many">%s years</item>
     <item quantity="other">%s metų</item>
   </plurals>
   <!-- The reason for making a simple “< x” translatable are RTL
@@ -233,6 +243,7 @@
   <plurals name="reminder_text">
     <item quantity="one">Turite peržiūrėti %2$d naują kortelę per %1$s</item>
     <item quantity="few">Turite peržiūrėti %2$d naujas korteles per %1$s</item>
+    <item quantity="many">%2$d new cards to review in %1$s</item>
     <item quantity="other">Turite peržiūrėti %2$d naujų kortelių per %1$s</item>
   </plurals>
   <!-- Currently only used if exporting APKG fails -->

@@ -39,9 +39,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GestureDetectorCompat;
-import android.support.v7.app.ActionBar;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GestureDetectorCompat;
+import androidx.appcompat.app.ActionBar;
 import android.text.ClipboardManager;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -114,7 +114,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * <p>
      * Set this to true for debugging only.
      */
-    private static final boolean SAVE_CARD_CONTENT = false;
+    private static final boolean SAVE_CARD_CONTENT = BuildConfig.DEBUG;
 
     /**
      * Result codes that are returned when this activity finishes.
@@ -526,7 +526,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (!result.getBoolean()) {
-                // RuntimeException occured on update cards
+                // RuntimeException occurred on update cards
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
                 return;
             }
@@ -921,7 +921,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
         // WebView.destroy() should be called after the end of use
         // http://developer.android.com/reference/android/webkit/WebView.html#destroy()
-        mCardFrame.removeAllViews();
+        if (mCardFrame != null) {
+            mCardFrame.removeAllViews();
+        }
         destroyWebView(mCard);
     }
 
@@ -1208,12 +1210,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                         Utils.stripHTML(mCurrentCard.q(true))))
                 .positiveText(res.getString(R.string.dialog_positive_delete))
                 .negativeText(res.getString(R.string.dialog_cancel))
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
-                        dismiss(Collection.DismissType.DELETE_NOTE);
-                    }
+                .onPositive((dialog, which) -> {
+                    Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
+                    dismiss(Collection.DismissType.DELETE_NOTE);
                 })
                 .build().show();
     }
@@ -1542,8 +1541,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     protected void showEaseButtons() {
-        Resources res = getResources();
-
         // hide flipcard button
         mFlipCardLayout.setVisibility(View.GONE);
 
@@ -1614,6 +1611,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mNext3.setTextColor(textColor[2]);
                 mEase4Layout.setVisibility(View.VISIBLE);
                 mEase3Layout.requestFocus();
+                break;
         }
 
         // Show next review time
@@ -1762,6 +1760,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
         if (mCard == null) {
             mCard = createWebView();
+            // On your desktop use chrome://inspect to connect to emulator WebViews
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                if (BuildConfig.DEBUG) WebView.setWebContentsDebuggingEnabled(true);
+            }
             mCardFrame.addView(mCard);
         }
         if (mCard.getVisibility() != View.VISIBLE) {
@@ -1899,17 +1901,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             question = typeAnsQuestionFilter(question);
 
             Timber.d("question: '%s'", question);
-            // If the user wants to write the answer
+            // Show text entry based on if the user wants to write the answer
             if (typeAnswer()) {
                 mAnswerField.setVisibility(View.VISIBLE);
+            } else {
+                mAnswerField.setVisibility(View.GONE);
             }
 
             displayString = enrichWithQADiv(question, false);
 
-            if (mSpeakText) {
+            //if (mSpeakText) {
                 // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
                 // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());
-            }
+            //}
         }
 
         updateCard(displayString);
@@ -1938,8 +1942,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (answer == null || answer.equals("")) {
             return "";
         }
-        answer = answer.trim();
-        Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(answer));
+        Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(answer.trim()));
         String answerText = matcher.replaceAll("");
         matcher = sBrPattern.matcher(answerText);
         answerText = matcher.replaceAll("\n");
@@ -2123,7 +2126,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             style.append(String.format("img { zoom: %s }\n", mImageZoom / 100.0));
         }
 
-        Timber.d("::style::", style);
+        Timber.d("::style:: / %s", style);
 
         if (mNightMode) {
             // Enable the night-mode class
@@ -2762,15 +2765,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      */
     private String removeFrontSideAudio(String answerContent) {
         String answerFormat = getAnswerFormat();
+        String newAnswerContent = answerContent;
         if (answerFormat.contains("{{FrontSide}}")) { // possible audio removal necessary
             String frontSideFormat = mCurrentCard._getQA(false).get("q");
             Matcher audioReferences = Sound.sSoundPattern.matcher(frontSideFormat);
             // remove the first instance of audio contained in "{{FrontSide}}"
             while (audioReferences.find()) {
-                answerContent = answerContent.replaceFirst(Pattern.quote(audioReferences.group()), "");
+                newAnswerContent = answerContent.replaceFirst(Pattern.quote(audioReferences.group()), "");
             }
         }
-        return answerContent;
+        return newAnswerContent;
     }
 
     /**

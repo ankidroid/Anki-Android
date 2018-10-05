@@ -18,10 +18,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -96,23 +95,6 @@ public class MyAccount extends AnkiActivity {
         }
     }
 
-
-    // Commented awaiting the resolution of the next issue: http://code.google.com/p/anki/issues/detail?id=1932
-    // private boolean isUsernameAndPasswordValid(String username, String password) {
-    // return isLoginFieldValid(username) && isLoginFieldValid(password);
-    // }
-    //
-    //
-    // private boolean isLoginFieldValid(String loginField) {
-    // boolean loginFieldValid = false;
-    //
-    // if (loginField.length() >= 2 && loginField.matches("[A-Za-z0-9]+")) {
-    // loginFieldValid = true;
-    // }
-    //
-    // return loginFieldValid;
-    // }
-
     private void saveUserInformation(String username, String hkey) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         Editor editor = preferences.edit();
@@ -129,12 +111,6 @@ public class MyAccount extends AnkiActivity {
 
         String username = mUsername.getText().toString().trim(); // trim spaces, issue 1586
         String password = mPassword.getText().toString();
-
-        /*
-         * Commented awaiting the resolution of the next issue: http://code.google.com/p/anki/issues/detail?id=1932
-         * if(isUsernameAndPasswordValid(username, password)) { Connection.login(loginListener, new
-         * Connection.Payload(new Object[] {username, password})); } else { mInvalidUserPassAlert.show(); }
-         */
 
         if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
             Connection.login(loginListener, new Connection.Payload(new Object[]{username, password}));

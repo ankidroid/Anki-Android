@@ -23,7 +23,6 @@ import android.util.Pair;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.MetaDB;
-import com.ichi2.anki.services.NotificationService;
 import com.ichi2.async.BaseAsyncTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Sched;
@@ -48,6 +47,9 @@ public final class WidgetStatus {
 
     /**
      * Request the widget to update its status.
+     * TODO Mike - we can reduce battery usage by widget users by removing updatePeriodMillis from metadata
+     *             and replacing it with an alarm we set so device doesn't wake to update the widget, see:
+     *             https://developer.android.com/guide/topics/appwidgets/#MetaData
      */
     public static void update(Context context) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
@@ -102,9 +104,7 @@ public final class WidgetStatus {
             Timber.d("WidgetStatus.UpdateDeckStatusAsyncTask.onPostExecute()");
             MetaDB.storeSmallWidgetStatus(context, sSmallWidgetStatus);
             if (sSmallWidgetEnabled) {
-                Intent intent;
-                intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);
-                context.startService(intent);
+                new AnkiDroidWidgetSmall.UpdateService().doUpdate(context);
             }
         }
 

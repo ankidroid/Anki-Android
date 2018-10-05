@@ -17,7 +17,7 @@
 package com.ichi2.anki;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -78,7 +78,6 @@ public class ModelFieldEditor extends AnkiActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.model_field_editor);
-        startLoadingCollection();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mFieldLabelView = (ListView) findViewById(R.id.note_type_editor_fields);
@@ -87,11 +86,11 @@ public class ModelFieldEditor extends AnkiActivity {
             setSupportActionBar(toolbar);
         }
 
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(R.string.model_field_editor_title);
             getSupportActionBar().setSubtitle(getIntent().getStringExtra("title"));
         }
+        startLoadingCollection();
     }
 
 
@@ -120,6 +119,7 @@ public class ModelFieldEditor extends AnkiActivity {
 
     @Override
     protected void onCollectionLoaded(Collection col) {
+        super.onCollectionLoaded(col);
         this.mCol = col;
         setupLabels();
         createfieldLabels();

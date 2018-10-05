@@ -88,6 +88,9 @@
   <string name="undo_action_suspend_card">откажи карту</string>
   <string name="undo_action_suspend_note">откажи белешку</string>
   <string name="undo_action_delete">избриши белешку</string>
+  <string name="undo_action_delete_multi">delete notes</string>
+  <string name="undo_action_change_deck_multi">change decks</string>
+  <string name="move_all_to_deck">Move all to deck</string>
   <string name="unbury">Откриј</string>
   <string name="rename_deck">Преименуј шпил</string>
   <string name="menu_add">Додај</string>

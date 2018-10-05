@@ -27,9 +27,9 @@ import java.util.Locale;
 public class LanguageUtil {
 
     /** A list of all languages supported by AnkiDroid */
-    public static final String[] APP_LANGUAGES = { "ar", "bg", "ca", "cs", "de", "el", "es-AR", "es-ES", "et", "fa",
+    public static final String[] APP_LANGUAGES = { "ar", "bg", "ca", "cs", "de", "el", "en", "eo", "es-AR", "es-ES", "et", "fa",
             "fi", "fr", "got", "gl", "hi", "hu", "id", "it", "ja", "ko", "lt", "nl", "no", "pl", "pt_PT", "pt_BR", "ro", "ru",
-            "sk", "sl", "sr", "sv", "th", "tr", "uk", "vi", "zh_CN", "zh_TW", "en" };
+            "sk", "sl", "sr", "sv", "th", "tr", "uk", "vi", "zh_CN", "zh_TW" };
 
 
     /**

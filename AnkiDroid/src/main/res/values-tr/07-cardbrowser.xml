@@ -45,13 +45,21 @@
     <item quantity="other">%d kart gösteriliyor</item>
   </plurals>
   <string name="card_browser_all_decks">Bütün desteler</string>
-  <string name="card_browser_delete_card">Notu sil</string>
-  <string name="card_browser_suspend_card">Kartı askıya al</string>
-  <string name="card_browser_unsuspend_card">Kartı devreye sok</string>
-  <string name="card_browser_mark_card">Notu işâretle</string>
-  <string name="card_browser_unmark_card">İşâreti kaldır</string>
+  <string name="card_browser_delete_card">Delete notes</string>
+  <string name="card_browser_suspend_card">Suspend cards</string>
+  <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
+  <string name="card_browser_change_deck">Change deck</string>
+  <string name="card_browser_unsuspend_card">Unsuspend cards</string>
+  <string name="card_browser_mark_card">Mark notes</string>
+  <string name="card_browser_toggle_mark_card">(un)mark notes</string>
+  <string name="card_browser_unmark_card">Unmark notes</string>
   <string name="delete_card_title">Notu sil</string>
+  <string name="delete_cards_title">Delete notes?</string>
   <string name="delete_card_message">Bu nottaki bütün kartlar gerçekten silinsin mi?\nArama alanı: %s</string>
+  <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
+  <string name="deleted_message">Notes deleted</string>
+  <string name="changed_deck_message">Moved to %s</string>
+  <string name="card_browser_suspended_cards">(un)suspended cards</string>
   <string name="card_browser_show_marked">İşâretlileri göster</string>
   <string name="card_browser_show_suspended">Askıdakileri göster</string>
   <string name="card_browser_search_by_tag">Etikete göre filtrele</string>
@@ -83,4 +91,6 @@
     <item>İncelemelere göre</item>
     <item>Süresi dolana göre</item>
   </string-array>
+  <string name="card_browser_select_all">Select all</string>
+  <string name="card_browser_select_none">Select none</string>
 </resources>

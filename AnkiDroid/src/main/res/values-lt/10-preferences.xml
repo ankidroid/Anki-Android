@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Linijos plotis</string>
   <string name="whiteboard_black">Juodos linijos</string>
   <string name="whiteboard_black_summ">Naudoja mažiau atminties, nebent įjungtas naktinis režimas</string>
-  <string name="write_answers_disable">Išjungti atsakymo įvedimą klaviatūra</string>
-  <string name="write_answers_disable_summ">Neleidžia įsijungti klaviatūrai kortelėse, kuriose galima įvesti atsakymą</string>
   <string name="use_input_tag">Įvesti atsakymą į kortelę</string>
   <string name="use_input_tag_summ">Norėdami įvesti atsakymą į kortelę naudokite teksto įvesties laukelį</string>
-  <string name="text_selection_click">Ilgas paspaudimas</string>
-  <string name="text_selection_click_summ">Įjunkite tai, jei teksto negalite pažymėti ilgu paspaudimu</string>
   <string name="dictionary">Ieškoti žodyne</string>
   <string name="reset_languages">Iš naujo nustatyti kalbas</string>
   <string name="reset_languages_summ">Atkurti kalbų nustatymus (teksto vertimui kalba ir žodynams) visuose rinkiniuose</string>
@@ -146,7 +142,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Pasirinkite kalbą</string>
   <string name="safe_display">Ribotoji ekrano veiksena</string>
-  <string name="safe_display_summ">Išjungti visas animacijas ir naudoti saugesnį kortelių piešimo būdą. To gali reikėti „E-ink“ ir senesniems įrenginiams, kuriuose naudojami individualūs šriftai.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Centrinis lygiavimas</string>
   <string name="vertical_centering_summ">Kortelių turinį vertikaliai išdėstyti centre</string>
   <string name="pref_backup_max">Didžiausias atsarginių kopijų skaičius</string>
@@ -164,8 +160,6 @@
   <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">Sekančios dienos pradžia</string>
   <string name="day_offset_summ">XXX val. po vidurnakčio</string>
-  <string name="input_workaround">Alternatyvus įvesties būdas</string>
-  <string name="input_workaround_summ">HTML įvesties laukelių problemos išeitis. Kai kuriuose įrenginiuose neveikia.</string>
   <string name="pref_keep_screen_on">Laikyti ekraną įjungtą</string>
   <string name="pref_keep_screen_on_summ">Išjungti ekrano užgesimui skirtą laiką</string>
   <string name="convert_fen_text">Šachmatų žymėjimo pagalba</string>
@@ -199,6 +193,7 @@
   <plurals name="deck_conf_group_summ">
     <item quantity="one">Šią grupę naudoja %1$s\n%2$d rinkinys</item>
     <item quantity="few">Šią grupę naudoja %1$s\n%2$d rinkiniai</item>
+    <item quantity="many">%1$s\n%2$d decks use this group</item>
     <item quantity="other">Šią grupę naudoja %1$s\n%2$d rinkinių</item>
   </plurals>
   <string name="deck_conf_new_cards">Naujos kortelės</string>
@@ -247,6 +242,7 @@
   <plurals name="deck_conf_set_subdecks_summ">
     <item quantity="one">Šią grupę naudos %s poaplankis</item>
     <item quantity="few">Šią grupę naudos %s poaplankiai</item>
+    <item quantity="many">%s subdecks will use this group</item>
     <item quantity="other">Šią grupę naudos %s poaplankių</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Taikyti visiems poaplankiams</string>

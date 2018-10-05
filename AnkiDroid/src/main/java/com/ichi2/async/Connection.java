@@ -18,11 +18,14 @@
 
 package com.ichi2.async;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.PowerManager;
+import androidx.core.content.ContextCompat;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
@@ -75,7 +78,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         sIsCancellable = false;
         Context context = AnkiDroidApp.getInstance().getApplicationContext();
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Connection");
+        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                AnkiDroidApp.getAppResources().getString(R.string.app_name) + ":Connection");
     }
 
     private static Connection launchConnectionTask(TaskListener listener, Payload data) {
@@ -124,7 +128,10 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     protected void onPreExecute() {
         super.onPreExecute();
         // Acquire the wake lock before syncing to ensure CPU remains on until the sync completes.
-        mWakeLock.acquire();
+        if (ContextCompat.checkSelfPermission(AnkiDroidApp.getInstance().getApplicationContext(),
+                Manifest.permission.WAKE_LOCK) == PackageManager.PERMISSION_GRANTED) {
+            mWakeLock.acquire();
+        }
         if (mListener != null) {
             mListener.onPreExecute();
         }
@@ -138,7 +145,9 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     protected void onPostExecute(Payload data) {
         super.onPostExecute(data);
         // Sync has ended so release the wake lock
-        mWakeLock.release();
+        if (mWakeLock.isHeld()) {
+            mWakeLock.release();
+        }
         if (mListener != null) {
             mListener.onPostExecute(data);
         }

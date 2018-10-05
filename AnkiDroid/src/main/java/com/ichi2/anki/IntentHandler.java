@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.OpenableColumns;
-import android.support.v4.content.IntentCompat;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -141,7 +140,7 @@ public class IntentHandler extends Activity {
             // otherwise go to previous task
             reloadIntent.setAction(Intent.ACTION_MAIN);
             reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+            reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivityIfNeeded(reloadIntent, 0);
             finishWithFade();
         }
@@ -162,7 +161,7 @@ public class IntentHandler extends Activity {
         Bundle msgData = new Bundle();
         msgData.putString("importPath", path);
         handlerMessage.setData(msgData);
-        if (filename.equals("collection.apkg")) {
+        if ("collection.apkg".equals(filename)) {
             // Show confirmation dialog asking to confirm import with replace when file called "collection.apkg"
             handlerMessage.what = DialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG;
         } else {

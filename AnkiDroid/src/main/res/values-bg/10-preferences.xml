@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Ширина на щриха</string>
   <string name="whiteboard_black">Черни щрихи</string>
   <string name="whiteboard_black_summ">Използва по-малко памет, освен в нощен режим</string>
-  <string name="write_answers_disable">Забраняване на въвеждане в отговора</string>
-  <string name="write_answers_disable_summ">Предотвратява появяването на клавиатура за карти, съдържащи полета тип отговор</string>
   <string name="use_input_tag">Пиши отговорът в картата</string>
   <string name="use_input_tag_summ">Използване на текстово поле за въвеждане на отговора в картата</string>
-  <string name="text_selection_click">Заобикаляне на дългото натискане</string>
-  <string name="text_selection_click_summ">Активирайте това, ако не сте в състояние да започне избора на текст чрез дълго кликане</string>
   <string name="dictionary">Речник за справка</string>
   <string name="reset_languages">Нулиране на езици</string>
   <string name="reset_languages_summ">Начално състояние на езикови задачи (за текст в реч и речници) за всички колоди</string>
@@ -145,7 +141,7 @@
   <string name="timeout_question_seconds_summ">ХХХ с</string>
   <string name="select_locale_title">Изберете език</string>
   <string name="safe_display">Безопасен режим на дисплея</string>
-  <string name="safe_display_summ">Изключване на анимацията и използване на други методи за изчертаване на картите. Може да е полезно за стари устройства и за устройства с e-ink.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Центриране</string>
   <string name="vertical_centering_summ">Вертикално центриране съдържанието на картата</string>
   <string name="pref_backup_max">Максимален брой на резервните копия</string>
@@ -163,8 +159,6 @@
   <string name="time_limit_summ">XXX мин</string>
   <string name="day_offset">Началото от следващия ден</string>
   <string name="day_offset_summ">XXX часа след полунощ</string>
-  <string name="input_workaround">Въвеждане на поправки</string>
-  <string name="input_workaround_summ">Кръпки за проблеми, касаещи полета за въвеждане на HTML. Предизвиква проблеми на някои устройства.</string>
   <string name="pref_keep_screen_on">Запазване на екрана включен</string>
   <string name="pref_keep_screen_on_summ">Изключване изчакването на екрана</string>
   <string name="convert_fen_text">Поддръжка на шахматна нотация</string>

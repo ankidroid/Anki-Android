@@ -126,6 +126,7 @@
   <string name="fact_adder_intent_title">AnkiDroid Kartı</string>
   <string name="card_editor_add_card">Not ekle</string>
   <string name="card_editor_copy_card">Kartı kopyala</string>
+  <string name="card_editor_reposition_card">Reposition</string>
   <string name="card_editor_reset_card">İlerlemeyi sıfırla</string>
   <string name="card_editor_reschedule_card">Kartın zamanını değiştir</string>
   <string name="card_editor_preview_card">Önizle</string>

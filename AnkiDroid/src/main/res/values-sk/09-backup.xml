@@ -59,9 +59,7 @@
   <string name="backup_restore_select_title">Zvoľte zálohu pre obnovu</string>
   <string name="backup_restore_no_backups">Na tomto zariadení nie sú k dispozícii žiadne zálohy. Ak máte zálohy na svojom počítači, skopírujte ich manuálne do priečinku AnkiDroid.</string>
   <string name="open_collection_failed_title">Zbierka neotvorená</string>
-  <string name="open_collection_failed_message">Databázu nebolo možné otvoriť. Buď nejde o databázu Anki alebo je databáza poškodená.\n\nŤuknite na “Možnosti” pre obnovenie databázy. Pre ďalšie informácie o oprave poškodených zbierok pozrite:\n%1$s</string>
   <string name="corrupt_db_message">Vaša zbierka bola poškodená.\n\nŤuknite na “Možnosti” pre obnovenie zo zálohy. Ak to nepomôže, postupujte podľa nasledovných pokynov pre manuálnu opravu databázy:\n%1$s</string>
   <string name="access_collection_failed_message">Počas prístupu k vašej zbierke sa vyskytla chyba. Mohlo to byť spôsobené chybou v aplikácii, alebo ide o problém s vašou kolekciou. \n\nPokúste sa spustiť kontrolu databázy alebo obnovu zo zálohy ťuknutím na tlačítko “Možnosti”. V prípade, že sa toto oznámenie objaví znova, zašlite nám, prosím, správu:\n%1$s</string>
   <string name="deck_repair_error">Zbierku nebolo možné opraviť</string>
-  <string name="cursor_size_limit_exceeded">Veľkosť textového reťazca v databáze bola prekročená. Vymažte niektoré nepoužívané typy poznámok prostredníctvom desktopovej verzie Anki, potom uskutočnite úplnú synchronizáciu.</string>
 </resources>

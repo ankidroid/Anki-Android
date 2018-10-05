@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?android:attr/colorBackground"
-        android:fitsSystemWindows="true">
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                           android:id="@+id/drawer_layout"
+                                           android:layout_width="match_parent"
+                                           android:layout_height="match_parent"
+                                           android:background="?android:attr/colorBackground"
+                                           android:fitsSystemWindows="true">
     <LinearLayout
             android:id="@+id/deckpicker_view"
             android:layout_width="fill_parent"
@@ -22,5 +22,5 @@
                      android:layout_height="fill_parent"/>
     </LinearLayout>
     <include layout="@layout/navigation_drawer" />
-</android.support.v4.widget.DrawerLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
 

@@ -4,7 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.net.Uri;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -113,4 +113,7 @@ public class CompatV15 implements Compat {
     public Uri getExportUri(Context context, File file) {
         return Uri.fromFile(file);
     }
+
+    @Override
+    public void setupNotificationChannel(Context context, String id, String name) { /* pre-API26, do nothing */ }
 }

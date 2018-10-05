@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Ширина штриха</string>
   <string name="whiteboard_black">Чорні штрихи</string>
   <string name="whiteboard_black_summ">Використовує менше пам\'яті, якщо не в нічному режимі</string>
-  <string name="write_answers_disable">Відключити введення відповіді</string>
-  <string name="write_answers_disable_summ">Блокувати поява клавіатури в картах, що містять полі \"введіть відповідь\"</string>
   <string name="use_input_tag">Вводіть відповідь на карті</string>
   <string name="use_input_tag_summ">Використовувати введення тексту для введення відповіді</string>
-  <string name="text_selection_click">Виправлення помилки довгого затиснення</string>
-  <string name="text_selection_click_summ">Увімкніть, якщо ви не можете розпочати виділення тексту довгим натисненням</string>
   <string name="dictionary">Подивитися у словнику</string>
   <string name="reset_languages">Скинути мови</string>
   <string name="reset_languages_summ">Скинути присвоєння мов (для озвучування текстів і словників) для всіх колод</string>
@@ -146,7 +142,7 @@
   <string name="timeout_question_seconds_summ">XXX сек.</string>
   <string name="select_locale_title">Виберіть мову</string>
   <string name="safe_display">Статичний режим екрану</string>
-  <string name="safe_display_summ">Відключити всю анімацію і використовувати інші методи відтворення карт. Може знадобитися для старих пристроїв і пристроїв на E-ink.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Вирівнювання по центру</string>
   <string name="vertical_centering_summ">Центрувати вміст карт вертикально</string>
   <string name="pref_backup_max">Максимальне число резервних копій</string>
@@ -164,8 +160,6 @@
   <string name="time_limit_summ">XXX хв.</string>
   <string name="day_offset">Початок наступного дня</string>
   <string name="day_offset_summ">XXX г. ранку</string>
-  <string name="input_workaround">Введення виправлень</string>
-  <string name="input_workaround_summ">Латка для проблем, що стосуються блоків для введення в HTML . Призводить до проблем на деяких пристроях.</string>
   <string name="pref_keep_screen_on">Не вимикати екран</string>
   <string name="pref_keep_screen_on_summ">Відключити таймаут екрану</string>
   <string name="convert_fen_text">Підтримка шахової нотації</string>
@@ -203,6 +197,7 @@
   <plurals name="deck_conf_group_summ">
     <item quantity="one">конфігурація \"%1$s\" використовується %2$d (раз)</item>
     <item quantity="few">конфігурація \"%1$s\" використовується %2$d (раза)</item>
+    <item quantity="many">%1$s\n%2$d decks use this group</item>
     <item quantity="other">конфігурація \"%1$s\" використовується %2$d (раз)</item>
   </plurals>
   <string name="deck_conf_new_cards">Нові картки</string>
@@ -251,6 +246,7 @@
   <plurals name="deck_conf_set_subdecks_summ">
     <item quantity="one">%s підколода використовуватиме конфігурацію</item>
     <item quantity="few">%s підколоди використовуватимуть конфігурацію</item>
+    <item quantity="many">%s subdecks will use this group</item>
     <item quantity="other">%s підколод використовуватимуть конфігурацію</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Установити для усіх підколод</string>

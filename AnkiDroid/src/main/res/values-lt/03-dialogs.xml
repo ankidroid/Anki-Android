@@ -49,6 +49,7 @@
   <plurals name="delete_deck_message">
     <item quantity="one">Ar norite ištrinti visas %1$s korteles? Rinkinį sudaro %2$d kortelė.</item>
     <item quantity="few">Ar norite ištrinti visas %1$s korteles? Rinkinį sudaro %2$d kortelės.</item>
+    <item quantity="many">Delete all cards in %1$s? It contains %2$d cards.</item>
     <item quantity="other">Ar norite ištrinti visas %1$s korteles? Rinkinį sudaro %2$d kortelių.</item>
   </plurals>
   <string name="delete_cram_deck_message">Ar norite grąžinti visas %s korteles į jų pradinius rinkinius?</string>
@@ -63,6 +64,9 @@
     <item><![CDATA[„AnkiDroid“ yra išleista pagal <a href=\"%1$s\">GNU-GPL v3 licenciją</a>, o pirminį programos tekstą galite rasti <a href=\"%2$s\">„GitHub“</a> svetainėje.]]></item>
   </string-array>
   <string name="preview_title">Peržiūrėti</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">Atkurti kortelių eigą</string>
   <string name="reset_card_dialog_message">Ši kortelė bus įdėta į naujų kortelių eilės pabaigą</string>
   <string name="reset_card_dialog_acknowledge">Kortelės atkūrimas</string>

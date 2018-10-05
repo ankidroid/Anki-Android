@@ -24,7 +24,7 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.text.ClipboardManager;
 import android.util.TypedValue;
 import android.view.KeyEvent;

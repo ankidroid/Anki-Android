@@ -1,15 +1,27 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.github.triplet.play'
+apply plugin: 'jacoco'
+
 def homePath = System.properties['user.home']
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "com.ichi2.anki"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 28
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
+        // filter out binaries to reduce APK size. Requery > 3.25.1 should allow removal of this
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+        // This enables long timeouts required on slow ARM emulators, e.g. Travis
+        adbOptions {
+            timeOutInMs 10 * 60 * 1000  // 10 minutes
+        }
     }
     lintOptions {
         abortOnError false
@@ -24,17 +36,38 @@ android {
         }
     }
     buildTypes {
+        debug {
+            debuggable true
+            // Check Crash Reports page on developer wiki for info on ACRA testing
+            buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
+            testCoverageEnabled true
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
         }
     }
     useLibrary 'org.apache.http.legacy'
 
+    testOptions {
+        // we should use orchestrator, but app data shared on /sdcard makes it unstable
+        //execution 'ANDROID_TEST_ORCHESTRATOR'
+        animationsDisabled true
+
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
     dexOptions {
         // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
         preDexLibraries = preDexEnabled && !travisBuild
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -45,30 +78,73 @@ play {
     track = 'alpha'
 }
 
+// Our merge report task
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+
+    reports {
+        xml.enabled = true
+    }
+
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/debug/compileDebugJavaWithJavac/classes", excludes: fileFilter)
+    def mainSrc = "$project.projectDir/src/main/java"
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+    executionData = fileTree(dir: project.buildDir, includes: [
+            'jacoco/testDebugUnitTest.exec',
+            'outputs/code-coverage/connected/**/*.ec'
+    ])
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
-    implementation 'com.android.support:design:26.1.0'
-    implementation 'com.android.support:customtabs:26.1.0'
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
-    implementation 'io.requery:sqlite-android:3.16.0'
-    implementation('com.afollestad.material-dialogs:core:0.8.6.2@aar') {
-        //exclude group: 'com.android.support'  // uncomment to force our local support lib version
-        transitive = true
-    }
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.browser:browser:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'io.requery:sqlite-android:3.25.1'
+    implementation 'androidx.sqlite:sqlite:2.0.0'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
-    implementation 'ch.acra:acra:4.6.2'
-    implementation 'com.jakewharton.timber:timber:2.7.1'
-    implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'org.jsoup:jsoup:1.10.3'
+    implementation('ch.acra:acra-http:5.2.0') {
+        exclude group: 'com.android.support'
+    }
+    implementation('ch.acra:acra-dialog:5.2.0') {
+        exclude group: 'com.android.support'
+    }
+    implementation('ch.acra:acra-toast:5.2.0') {
+        exclude group: 'com.android.support'
+    }
+    implementation('ch.acra:acra-limiter:5.2.0') {
+        exclude group: 'com.android.support'
+    }
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'org.jsoup:jsoup:1.11.3'
     api project(":api")
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:1.10.19' // v1 while PowerMock does not fully support v2.
-    testImplementation 'org.powermock:powermock-core:1.6.5'
-    testImplementation 'org.powermock:powermock-module-junit4:1.6.5'
-    testImplementation 'org.powermock:powermock-api-mockito:1.6.5'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.3.1'
+    testImplementation 'org.mockito:mockito-core:2.22.0'
+    testImplementation 'org.powermock:powermock-core:2.0.0-beta.5'
+    testImplementation 'org.powermock:powermock-module-junit4:2.0.0-beta.5'
+    testImplementation 'org.powermock:powermock-api-mockito2:2.0.0-beta.5'
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
+    testImplementation 'net.lachlanmckee:timber-junit-rule:1.0.1'
 
+    androidTestImplementation 'com.azimolabs.conditionwatcher:conditionwatcher:0.2'
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0-alpha4') {
+        exclude group: 'com.android.support'
+    }
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0-alpha4', {
+        exclude group: 'com.android.support'
+    }
+    androidTestImplementation('androidx.test:runner:1.1.0-alpha4') {
+        exclude group: 'com.android.support'
+    }
+    androidTestImplementation('androidx.test:rules:1.1.0-alpha4') {
+        exclude group: 'com.android.support'
+    }
+    androidTestUtil 'androidx.test:orchestrator:1.1.0-alpha4'
 }

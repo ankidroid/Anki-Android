@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Streckbredd</string>
   <string name="whiteboard_black">Monokroma streck</string>
   <string name="whiteboard_black_summ">Använder mindre arbetsminne, men fungerar inte i nattläge</string>
-  <string name="write_answers_disable">Stäng av att skriva in svar</string>
-  <string name="write_answers_disable_summ">Stoppar tangentbord från att dyka upp på kort med \'skriv in svar\'-fält</string>
   <string name="use_input_tag">Skriv svar i kortet</string>
   <string name="use_input_tag_summ">Använd en textinmatningsruta i kortet för att skriva in svaret</string>
-  <string name="text_selection_click">Långklicksfix</string>
-  <string name="text_selection_click_summ">Aktivera detta om du inte kan påbörja textmarkering via långt klick</string>
   <string name="dictionary">Ordbok</string>
   <string name="reset_languages">Nollställ språk</string>
   <string name="reset_languages_summ">Återställ språk inställningar (för text till tal och orböcker) för alla kortlekar</string>
@@ -145,7 +141,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Välj språk</string>
   <string name="safe_display">Säkert visningsläge</string>
-  <string name="safe_display_summ">Stäng av alla animationer och använd en säkrare metod för att rita kort. E-ink och äldre enheter med egna typsnitt kan kräva detta.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Centrera</string>
   <string name="vertical_centering_summ">Vertikal centrering av kortinnehåll</string>
   <string name="pref_backup_max">Max antal säkerhetskopior</string>
@@ -163,8 +159,6 @@
   <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">Starttid för nästa dag</string>
   <string name="day_offset_summ">XXX timmar efter midnatt</string>
-  <string name="input_workaround">Specialfunktion för att skriva</string>
-  <string name="input_workaround_summ">Specialfunktion för fokuseringsproblem på HTML-inmatningsfält. Orsakar problem på många enheter.</string>
   <string name="pref_keep_screen_on">Håll skärm på</string>
   <string name="pref_keep_screen_on_summ">Inaktivera skärmtimeout</string>
   <string name="convert_fen_text">Stöd för schack-notation</string>

@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Lijnbreedte</string>
   <string name="whiteboard_black">Zwarte lijnen</string>
   <string name="whiteboard_black_summ">Gebruikt minder geheugen, tenzij in de nachtmodus</string>
-  <string name="write_answers_disable">Uitschakelen antwoord typen</string>
-  <string name="write_answers_disable_summ">Voorkomt de toetsenbordweergave op kaarten met type-het-antwoord velden</string>
   <string name="use_input_tag">Typ het antwoord op de kaart</string>
   <string name="use_input_tag_summ">Een tekstinvoervak gebruiken op de kaart om het antwoord te typen</string>
-  <string name="text_selection_click">Alternatief lang drukken</string>
-  <string name="text_selection_click_summ">Zet dit aan als tekstselectie via met een lange klik niet werkt</string>
   <string name="dictionary">Opzoeken in woordenlijst</string>
   <string name="reset_languages">Reset talen</string>
   <string name="reset_languages_summ">Reset taal-toewijzingen (voor tekst-naar-spraak en woordenboeken) voor alle decks</string>
@@ -145,7 +141,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Taal selecteren</string>
   <string name="safe_display">Veilige weergavemodus</string>
-  <string name="safe_display_summ">Alle animaties uitschakelen en veilige modus gebruiken om kaarten te tonen. Sommige E-inkt en oudere apparaten met aangepaste lettertypen vereisen dit.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Uitlijnen in het midden</string>
   <string name="vertical_centering_summ">De inhoud van kaarten verticaal centreren</string>
   <string name="pref_backup_max">Maximum aantal back-ups</string>
@@ -163,8 +159,6 @@
   <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">Een dag begint</string>
   <string name="day_offset_summ">XXX uur na middernacht</string>
-  <string name="input_workaround">Alternatieve input</string>
-  <string name="input_workaround_summ">Alternatief voor problemen met selecteren van HTML invoervelden. Veroorzaakt problemen op verschillende apparaten.</string>
   <string name="pref_keep_screen_on">Scherm aanlaten</string>
   <string name="pref_keep_screen_on_summ">Schermtimeout uitschakelen</string>
   <string name="convert_fen_text">Schaaknotaties</string>

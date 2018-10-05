@@ -216,8 +216,8 @@
 
     <string name="reminder_title">Do not forget to study today!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d new card to review in %1$s</item>
-        <item quantity="other">%2$d new cards to review in %1$s</item>
+        <item quantity="one">%2$d card to review in %1$s</item>
+        <item quantity="other">%2$d cards to review in %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Error sharing apkg file</string>

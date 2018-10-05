@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">عرض حاشیه</string>
   <string name="whiteboard_black">حاشیه‌های تک‌رنگ</string>
   <string name="whiteboard_black_summ">حافظه کمتری استفاده می‌کند، اما در حالت شب کار نمی‌کند</string>
-  <string name="write_answers_disable">غیر فعال کردن تایپ پاسخ</string>
-  <string name="write_answers_disable_summ">جلوگیری از ظاهر شدن صفحه کلید برای کارتهایی که شامل فیلد جواب را بنویسید باشند</string>
   <string name="use_input_tag">پاسخ را در کارت بنویسید</string>
   <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
-  <string name="text_selection_click">راه‌حل کلیک طولانی</string>
-  <string name="text_selection_click_summ">اگر از طریق کلیک طولانی نمی توانید متن را انتخاب کنید این را انجام دهید</string>
   <string name="dictionary">فرهنگ لغت برای مراجعه</string>
   <string name="reset_languages">بازنشانی زبان‌ها</string>
   <string name="reset_languages_summ">تنظیم مجدد زبان ( برای تبدیل متن به گفتار و فرهنگ لغت ها) برای تمامی دسته ها</string>
@@ -145,7 +141,7 @@
   <string name="timeout_question_seconds_summ">XXX ثانیه</string>
   <string name="select_locale_title">زبان را انتخاب کنید</string>
   <string name="safe_display">حالت نمایش محتاطانه</string>
-  <string name="safe_display_summ">غیرفعال کردن همه انیمیشن‌ها و استفاده از حالت محتاطانه‌تر برای نمایش کارت‌ها. این گزینه برای دستگاههای با جوهر الکترونیکی و قدیمی که فونت سفارشی استفاده می‌کنند ممکن است لازم باشد.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">تراز در وسط</string>
   <string name="vertical_centering_summ">تراز کردن محتوای کارت‌ها بصورت عمودی در وسط</string>
   <string name="pref_backup_max">حداکثر تعداد پشتیبان‌ها</string>
@@ -163,8 +159,6 @@
   <string name="time_limit_summ">XXX دقیقه</string>
   <string name="day_offset">شروع روز بعد</string>
   <string name="day_offset_summ">XXX ساعت پس از نیمه شب</string>
-  <string name="input_workaround">راه‌حل ورودی</string>
-  <string name="input_workaround_summ">راه‌حلی برای برطرف کردن مشکلات در ورودی‌های HTML. باعث ایجاد مشکلاتی در برخی دستگاه‌ها می‌شود</string>
   <string name="pref_keep_screen_on">روشن نگه‌داشتن صفحه</string>
   <string name="pref_keep_screen_on_summ">غیرفعال کردن زمان خاموش شدن صفحه نمایش</string>
   <string name="convert_fen_text">پشتیبانی از ثبت حرکات شطرنج</string>

@@ -36,6 +36,9 @@ public class BaseAsyncTask<Params, Progress, Result> extends AsyncTask<Params, P
         // thread.
         //
         // See https://code.google.com/p/android/issues/detail?id=20915
+        // This may be removed once targetSdkVersion is >= API16 / Build.VERSION_CODES >= JELLY_BEAN
+        // https://issuetracker.google.com/issues/36934261#comment21 (which is the same issue above, redirected)
+        // https://developer.android.com/reference/android/os/AsyncTask#threading-rules
         if (DEBUG) {
             MethodLogger.log();
         }

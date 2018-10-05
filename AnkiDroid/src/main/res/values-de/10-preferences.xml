@@ -69,12 +69,8 @@
   <string name="whiteboard_stroke_width">Pinselbreite</string>
   <string name="whiteboard_black">Schwarzer Pinsel</string>
   <string name="whiteboard_black_summ">Spart Hauptspeicher, außer im Nachtmodus</string>
-  <string name="write_answers_disable">Eingeben der Antwort ausschalten</string>
-  <string name="write_answers_disable_summ">Verhindert, dass die Tastatur bei Karten mit »Antwort eingeben« Feldern erscheint</string>
   <string name="use_input_tag">Antwort in Karte eintippen</string>
   <string name="use_input_tag_summ">Ein Texteingabefeld in der Karte benutzen, in das die Antwort getippt werden kann</string>
-  <string name="text_selection_click">Abhilfe für langes Drücken</string>
-  <string name="text_selection_click_summ">Falls der Langklick zum Textauswählen nicht funktioniert</string>
   <string name="dictionary">Nachschlagen in Wörterbuch</string>
   <string name="reset_languages">Sprachen zurücksetzen</string>
   <string name="reset_languages_summ">Festgelegte Sprachen (für Vorlesen und Wörterbücher) für alle Stapel zurücksetzen</string>
@@ -145,7 +141,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Sprache wählen</string>
   <string name="safe_display">Sicherer Anzeigemodus</string>
-  <string name="safe_display_summ">Animationen deaktivieren und Karten mit sichererer Methode darstellen. E-Ink-Geräte und ältere Geräte, die benutzerdefinierte Schriftarten verwenden, können dies benötigen.</string>
+  <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
   <string name="vertical_centering">Zentriert</string>
   <string name="vertical_centering_summ">Den Inhalt der Karten vertikal zentrieren</string>
   <string name="pref_backup_max">Maximale Anzahl an Sicherungen</string>
@@ -163,8 +159,6 @@
   <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">Anfang des nächsten Tages</string>
   <string name="day_offset_summ">XXX Stunden nach Mitternacht</string>
-  <string name="input_workaround">Eingabeabhilfe</string>
-  <string name="input_workaround_summ">Abhilfe für die Fokussierungsprobleme auf HTML Eingabefeldern. Verursacht Probleme auf verschiedenen Geräten.</string>
   <string name="pref_keep_screen_on">Bildschirm nicht ausschalten</string>
   <string name="pref_keep_screen_on_summ">Bildschirm-Timeout deaktivieren</string>
   <string name="convert_fen_text">Unterstützung für Schach-Notation</string>

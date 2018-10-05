@@ -69,7 +69,7 @@ function taBlur(itag) {
     window.location.href = "typeblurtext:" + itag.value;
 }
 
-/* Look at the text enterend into the input box and send the text on a return */
+/* Look at the text entered into the input box and send the text on a return */
 function taKey(itag, e) {
     var keycode;
     if (window.event) {

@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -114,8 +115,12 @@ public class Collection {
         BURY_CARD(R.string.undo_action_bury_card),
         BURY_NOTE(R.string.undo_action_bury_note),
         SUSPEND_CARD(R.string.undo_action_suspend_card),
+        SUSPEND_CARD_MULTI(R.string.card_browser_toggle_suspend_card),
         SUSPEND_NOTE(R.string.undo_action_suspend_note),
-        DELETE_NOTE(R.string.undo_action_delete);
+        DELETE_NOTE(R.string.undo_action_delete),
+        DELETE_NOTE_MULTI(R.string.undo_action_delete_multi),
+        CHANGE_DECK_MULTI(R.string.undo_action_change_deck_multi),
+        MARK_NOTE_MULTI(R.string.card_browser_toggle_mark_card);
 
         public int undoNameId;
 
@@ -303,7 +308,7 @@ public class Collection {
 //        _markOp(name);
         mLastSave = Utils.now();
     }
-    
+
 
     /** make sure we don't accidentally bump mod time */
     public void lock() {
@@ -1226,7 +1231,7 @@ public class Collection {
     public long undo() {
     	Object[] data = mUndo.removeLast();
     	switch ((DismissType) data[0]) {
-            case REVIEW:
+            case REVIEW: {
                 Card c = (Card) data[1];
                 // remove leech tag if it didn't have it before
                 Boolean wasLeech = (Boolean) data[2];
@@ -1248,6 +1253,7 @@ public class Collection {
                 mSched._updateStats(c, type, -1);
                 mSched.setReps(mSched.getReps() - 1);
                 return c.getId();
+            }
 
             case BURY_NOTE:
                 for (Card cc : (ArrayList<Card>) data[2]) {
@@ -1255,10 +1261,41 @@ public class Collection {
                 }
                 return (Long) data[3];
 
-            case SUSPEND_CARD:
+            case SUSPEND_CARD: {
                 Card suspendedCard = (Card) data[1];
                 suspendedCard.flush(false);
                 return suspendedCard.getId();
+            }
+
+            case SUSPEND_CARD_MULTI: {
+                Card[] cards = (Card[]) data[1];
+                boolean[] originalSuspended = (boolean[]) data[2];
+                List<Long> toSuspendIds = new ArrayList<>();
+                List<Long> toUnsuspendIds = new ArrayList<>();
+                for (int i = 0; i < cards.length; i++) {
+                    Card card = cards[i];
+                    if (originalSuspended[i]) {
+                        toSuspendIds.add(card.getId());
+                    } else {
+                        toUnsuspendIds.add(card.getId());
+                    }
+                }
+
+                // unboxing
+                long[] toSuspendIdsArray = new long[toSuspendIds.size()];
+                long[] toUnsuspendIdsArray = new long[toUnsuspendIds.size()];
+                for (int i = 0; i < toSuspendIds.size(); i++) {
+                    toSuspendIdsArray[i] = toSuspendIds.get(i);
+                }
+                for (int i = 0; i < toUnsuspendIds.size(); i++) {
+                    toUnsuspendIdsArray[i] = toUnsuspendIds.get(i);
+                }
+
+                getSched().suspendCards(toSuspendIdsArray);
+                getSched().unsuspendCards(toUnsuspendIdsArray);
+
+                return -1;  // don't fetch new card
+            }
 
             case SUSPEND_NOTE:
                 for (Card ccc : (ArrayList<Card>) data[1]) {
@@ -1266,17 +1303,58 @@ public class Collection {
                 }
                 return (Long) data[2];
 
-            case DELETE_NOTE:
+            case MARK_NOTE_MULTI: {
+                List<Note> originalMarked = (List<Note>) data[1];
+                List<Note> originalUnmarked = (List<Note>) data[2];
+                CardUtils.markAll(originalMarked, true);
+                CardUtils.markAll(originalUnmarked, false);
+                return -1;  // don't fetch new card
+            }
+
+            case DELETE_NOTE: {
                 ArrayList<Long> ids = new ArrayList<>();
-                Note note2 = (Note) data[1];
-                note2.flush(note2.getMod(), false);
-                ids.add(note2.getId());
-                for (Card c4 : (ArrayList<Card>) data[2]) {
-                    c4.flush(false);
-                    ids.add(c4.getId());
+                Note note = (Note) data[1];
+                note.flush(note.getMod(), false);
+                ids.add(note.getId());
+                for (Card c : (ArrayList<Card>) data[2]) {
+                    c.flush(false);
+                    ids.add(c.getId());
                 }
                 mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
                 return (Long) data[3];
+            }
+
+            case DELETE_NOTE_MULTI: {
+                // undo all of these at once instead of one-by-one
+                ArrayList<Long> ids = new ArrayList<>();
+                List<Card> allCards = (ArrayList<Card>) data[2];
+                Note[] notes = (Note[]) data[1];
+                for (Note n : notes) {
+                    n.flush(n.getMod(), false);
+                    ids.add(n.getId());
+                }
+                for (Card c : allCards) {
+                    c.flush(false);
+                    ids.add(c.getId());
+                }
+                mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
+                return -1;  // don't fetch new card
+            }
+
+            case CHANGE_DECK_MULTI: {
+                Card[] cards = (Card[]) data[1];
+                long[] originalDid = (long[]) data[2];
+                // move cards to original deck
+                for (int i = 0; i < cards.length; i++) {
+                    Card card = cards[i];
+                    card.load();
+                    card.setDid(originalDid[i]);
+                    Note note = card.note();
+                    note.flush();
+                    card.flush();
+                }
+                return -1;  // don't fetch new card
+            }
 
             case BURY_CARD:
                 for (Card cc : (ArrayList<Card>) data[2]) {
@@ -1290,29 +1368,41 @@ public class Collection {
 
 
     public void markUndo(DismissType type, Object[] o) {
-    	switch(type) {
-    	case REVIEW:
-    		mUndo.add(new Object[]{type, ((Card)o[0]).clone(), o[1]});
-    		break;
-        case BURY_CARD:
-            mUndo.add(new Object[]{type, o[0], o[1], o[2]});
-            break;
-        case BURY_NOTE:
-            mUndo.add(new Object[]{type, o[0], o[1], o[2]});
-            break;
-        case SUSPEND_CARD:
-            mUndo.add(new Object[]{type, ((Card)o[0]).clone()});
-            break;
-        case SUSPEND_NOTE:
-            mUndo.add(new Object[]{type, o[0], o[1]});
-            break;
-    	case DELETE_NOTE:
-    		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
-    		break;
-    	}
-    	while (mUndo.size() > UNDO_SIZE_MAX) {
-    		mUndo.removeFirst();
-    	}
+        switch (type) {
+            case REVIEW:
+                mUndo.add(new Object[]{type, ((Card) o[0]).clone(), o[1]});
+                break;
+            case BURY_CARD:
+                mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+                break;
+            case BURY_NOTE:
+                mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+                break;
+            case SUSPEND_CARD:
+                mUndo.add(new Object[]{type, ((Card) o[0]).clone()});
+                break;
+            case SUSPEND_CARD_MULTI:
+                mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
+            case MARK_NOTE_MULTI:
+                mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
+            case SUSPEND_NOTE:
+                mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
+            case DELETE_NOTE:
+                mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+                break;
+            case DELETE_NOTE_MULTI:
+                mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
+            case CHANGE_DECK_MULTI:
+                mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
+        }
+        while (mUndo.size() > UNDO_SIZE_MAX) {
+            mUndo.removeFirst();
+        }
     }
 
 
@@ -1510,7 +1600,7 @@ public class Collection {
         if (problems.size() > 0) {
             modSchemaNoCheck();
         }
-        // TODO: report problems
+        logProblems(problems);
         return (oldSize - newSize) / 1024;
     }
 
@@ -1527,6 +1617,27 @@ public class Collection {
      * Logging
      * ***********************************************************
      */
+
+    /**
+     * Track database corruption problems - AcraLimiter should quench it if it's a torrent
+     * but we will take care to limit possible data usage by limiting count we send regardless
+     *
+     * @param integrityCheckProblems list of problems, the first 10 will be logged and sent via ACRA
+     */
+    private void logProblems(ArrayList integrityCheckProblems) {
+
+        if (integrityCheckProblems.size() > 0) {
+            StringBuffer additionalInfo = new StringBuffer();
+            for (int i = 0; ((i < 10) && (integrityCheckProblems.size() > i)); i++) {
+                additionalInfo.append(integrityCheckProblems.get(i)).append("\n");
+            }
+            AnkiDroidApp.sendExceptionReport(
+                    new Exception("Problem list (limited to first 10)"), "Collection.fixIntegrity()", additionalInfo.toString());
+            Timber.i("fixIntegrity() Problem list (limited to first 10):\n%s", additionalInfo);
+        } else {
+            Timber.i("fixIntegrity() no problems found");
+        }
+    }
 
     public void log(Object... args) {
         if (!mDebugLog) {

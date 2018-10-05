@@ -64,6 +64,9 @@
     <item><![CDATA[AnkiDroid выпускается под <a href=\"%1$s\">лицензией GNU-GPL v3</a>, и исходный код доступен <a href=\"%2$s\">на GitHub</a>.]]></item>
   </string-array>
   <string name="preview_title">Предпросмотр</string>
+  <string name="reposition_card_dialog_title">Reposition new card</string>
+  <string name="reposition_card_dialog_message">Start position:</string>
+  <string name="reposition_card_dialog_acknowledge">Card repositioned</string>
   <string name="reset_card_dialog_title">Сбросить состояние карточек</string>
   <string name="reset_card_dialog_message">Эта карточка будет помещена в конец очереди новых карт</string>
   <string name="reset_card_dialog_acknowledge">Сброс карт</string>

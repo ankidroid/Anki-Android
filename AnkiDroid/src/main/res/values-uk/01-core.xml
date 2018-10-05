@@ -59,17 +59,20 @@
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d картка до (%2$s)</item>
     <item quantity="few">%1$d карток до (%2$s)</item>
+    <item quantity="many">%1$d cards due (%2$s)</item>
     <item quantity="other">%1$d карток до (%2$s)</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">Залишилася %d хвилина</item>
     <item quantity="few">Залишилося %d хвилин</item>
+    <item quantity="many">%d minutes left</item>
     <item quantity="other">Залишилося %d хвилин</item>
   </plurals>
   <!-- The deck picker via AnkiStatsTaskHandler.java -->
   <plurals name="studied_cards_today">
     <item quantity="one">Вивчена %1$d карта з %2$s сьогодні</item>
     <item quantity="few">Вивчено %1$d карт з %2$s сьогодні</item>
+    <item quantity="many">Studied %1$d cards in %2$s today</item>
     <item quantity="other">Вивчено %1$d карт з %2$s сьогодні</item>
   </plurals>
   <!-- flashcard_portrait.xml -->
@@ -88,6 +91,9 @@
   <string name="undo_action_suspend_card">Відкласти картку</string>
   <string name="undo_action_suspend_note">Призупинити примітку</string>
   <string name="undo_action_delete">Видалити примітку</string>
+  <string name="undo_action_delete_multi">delete notes</string>
+  <string name="undo_action_change_deck_multi">change decks</string>
+  <string name="move_all_to_deck">Move all to deck</string>
   <string name="unbury">Скасувати зрушення</string>
   <string name="rename_deck">Переназвати колоду</string>
   <string name="menu_add">Додати</string>
@@ -160,6 +166,7 @@
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">Видалити “%2$s” тип картки та %1$d картку, що належить до нього?</item>
     <item quantity="few">Видалити “%2$s” тип картки та %1$d картку, що належить до нього?</item>
+    <item quantity="many">Delete the “%2$s” card type, and its %1$d cards?</item>
     <item quantity="other">Видалити “%2$s” тип картки та %1$d карток, що належать до нього?</item>
   </plurals>
   <string name="invalid_template">Картка не може бути створена</string>

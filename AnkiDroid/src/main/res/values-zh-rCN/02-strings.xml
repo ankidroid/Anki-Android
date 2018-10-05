@@ -124,6 +124,7 @@
   <string name="fact_adder_intent_title">AnkiDroid卡片</string>
   <string name="card_editor_add_card">添加笔记</string>
   <string name="card_editor_copy_card">复制卡片</string>
+  <string name="card_editor_reposition_card">Reposition</string>
   <string name="card_editor_reset_card">重设学习进度</string>
   <string name="card_editor_reschedule_card">重设学习进度</string>
   <string name="card_editor_preview_card">预览</string>
