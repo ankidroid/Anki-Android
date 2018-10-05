@@ -936,12 +936,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             if (previous < upgradeDbVersion || previous < upgradePrefsVersion) {
                 if (previous < upgradePrefsVersion && current >= upgradePrefsVersion) {
-                    Timber.d("Upgrading preferences");
+                    Timber.i("showStartupScreensAndDialogs() running upgradePreferences()");
                     CompatHelper.removeHiddenPreferences(this.getApplicationContext());
                     upgradePreferences(previous);
                 }
                 // Integrity check loads asynchronously and then restart deckpicker when finished
                 if (previous < upgradeDbVersion && current >= upgradeDbVersion) {
+                    Timber.i("showStartupScreensAndDialogs() running integrityCheck()");
                     integrityCheck();
                 } else if (previous < upgradePrefsVersion && current >= upgradePrefsVersion) {
                     // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
