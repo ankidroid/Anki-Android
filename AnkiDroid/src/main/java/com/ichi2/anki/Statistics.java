@@ -71,9 +71,9 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private AnkiStatsTaskHandler mTaskHandler = null;
+    private long mDeckId;
     private ArrayList<JSONObject> mDropDownDecks;
     private Spinner mActionBarSpinner;
-    private boolean mIsWholeCollection = false;
     private static boolean sIsSubtitle;
 
 
@@ -133,32 +133,9 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         supportInvalidateOptionsMenu();
         mSectionsPagerAdapter.notifyDataSetChanged();
 
-        // set the currently selected deck
-        String currentDeckName;
-        try {
-            currentDeckName = getCol().getDecks().current().getString("name");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        if (mIsWholeCollection) {
-            selectDropDownItem(0);
-        } else {
-            for (int dropDownDeckIdx = 0; dropDownDeckIdx < mDropDownDecks.size(); dropDownDeckIdx++) {
-                JSONObject deck = mDropDownDecks.get(dropDownDeckIdx);
-                String deckName;
-                try {
-                    deckName = deck.getString("name");
-                } catch (JSONException e) {
-                    throw new RuntimeException();
-                }
-                if (deckName.equals(currentDeckName)) {
-                    selectDropDownItem(dropDownDeckIdx + 1);
-                    break;
-                }
-            }
-        }
+        // Default to libanki's selected deck
+        selectDeckById(getCol().getDecks().selected());
     }
-
 
     @Override
     protected void onResume() {
@@ -240,23 +217,36 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     }
 
 
-    public void selectDropDownItem(int position) {
+    private void selectDropDownItem(int position) {
         mActionBarSpinner.setSelection(position);
         if (position == 0) {
-            mIsWholeCollection = true;
+            mDeckId = Stats.ALL_DECKS_ID;
         } else {
-            mIsWholeCollection = false;
             JSONObject deck = mDropDownDecks.get(position - 1);
             try {
-                getCol().getDecks().select(deck.getLong("id"));
+                mDeckId = deck.getLong("id");
             } catch (JSONException e) {
                 Timber.e(e, "Could not get ID from deck");
             }
         }
-        mTaskHandler.setIsWholeCollection(mIsWholeCollection);
+        mTaskHandler.setDeckId(mDeckId);
         mSectionsPagerAdapter.notifyDataSetChanged();
     }
 
+    // Iterates the drop down decks, and selects the one matching the given id
+    private boolean selectDeckById(long deckId) {
+        for (int dropDownDeckIdx = 0; dropDownDeckIdx < mDropDownDecks.size(); dropDownDeckIdx++) {
+            try {
+                if (mDropDownDecks.get(dropDownDeckIdx).getLong("id") == deckId) {
+                    selectDropDownItem(dropDownDeckIdx + 1);
+                    return true;
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException();
+            }
+        }
+        return false;
+    }
 
     /**
      * @return text to be used in the subtitle of the drop-down deck selector
@@ -279,6 +269,8 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     public SectionsPagerAdapter getSectionsPagerAdapter() {
         return mSectionsPagerAdapter;
     }
+
+    private long getDeckId() { return mDeckId; }
 
 
     /**
@@ -458,8 +450,8 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             mIsCreated = true;
             mActivityPager = ((Statistics) getActivity()).getViewPager();
             mActivitySectionPagerAdapter = ((Statistics) getActivity()).getSectionsPagerAdapter();
-            mDeckId = CollectionHelper.getInstance().getCol(getActivity()).getDecks().selected();
-            if (!isWholeCollection()) {
+            mDeckId = ((Statistics) getActivity()).getDeckId();
+            if (mDeckId != Stats.ALL_DECKS_ID) {
                 try {
                     Collection col = CollectionHelper.getInstance().getCol(getActivity());
                     List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::", -1));
@@ -533,27 +525,19 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
                 Collection col = CollectionHelper.getInstance().getCol(getActivity());
                 if (mHeight != height || mWidth != width ||
                         mType != (((Statistics) getActivity()).getTaskHandler()).getStatType() ||
-                        mDeckId != col.getDecks().selected() || isWholeCollection()) {
+                        mDeckId != ((Statistics) getActivity()).getDeckId()) {
                     mHeight = height;
                     mWidth = width;
                     mType = (((Statistics) getActivity()).getTaskHandler()).getStatType();
                     mProgressBar.setVisibility(View.VISIBLE);
                     mChart.setVisibility(View.GONE);
-                    if (!isWholeCollection())
-                        mDeckId = col.getDecks().selected();
-                    else
-                        mDeckId = -1;
+                    mDeckId = ((Statistics) getActivity()).getDeckId();
                     if (mCreateChartTask != null && !mCreateChartTask.isCancelled()) {
                         mCreateChartTask.cancel(true);
                     }
                     createChart();
                 }
             }
-        }
-
-
-        private boolean isWholeCollection() {
-            return ((Statistics) getActivity()).mIsWholeCollection;
         }
 
 
@@ -627,8 +611,8 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             mActivityPager = ((Statistics) getActivity()).getViewPager();
             mActivitySectionPagerAdapter = ((Statistics) getActivity()).getSectionsPagerAdapter();
             Collection col = CollectionHelper.getInstance().getCol(getActivity());
-            if (!isWholeCollection()) {
-                mDeckId = col.getDecks().selected();
+            mDeckId = ((Statistics) getActivity()).getDeckId();
+            if (mDeckId != Stats.ALL_DECKS_ID) {
                 try {
                     List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::"));
                     if (sIsSubtitle) {
@@ -648,12 +632,6 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             }
             return rootView;
         }
-
-
-        private boolean isWholeCollection() {
-            return ((Statistics) getActivity()).mIsWholeCollection;
-        }
-
 
         private void createStatisticOverview(){
             AnkiStatsTaskHandler handler = (((Statistics)getActivity()).getTaskHandler());
@@ -676,14 +654,11 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             }
             Collection col = CollectionHelper.getInstance().getCol(getActivity());
             if (mType != (((Statistics) getActivity()).getTaskHandler()).getStatType() ||
-                    mDeckId != col.getDecks().selected() || isWholeCollection()) {
+                    mDeckId != ((Statistics) getActivity()).getDeckId()) {
                 mType = (((Statistics) getActivity()).getTaskHandler()).getStatType();
                 mProgressBar.setVisibility(View.VISIBLE);
                 mWebView.setVisibility(View.GONE);
-                if (!isWholeCollection())
-                    mDeckId = col.getDecks().selected();
-                else
-                    mDeckId = -1;
+                mDeckId = ((Statistics) getActivity()).getDeckId();
                 if (mCreateStatisticsOverviewTask != null && !mCreateStatisticsOverviewTask.isCancelled()) {
                     mCreateStatisticsOverviewTask.cancel(true);
                 }
