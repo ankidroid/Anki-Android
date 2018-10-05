@@ -335,7 +335,7 @@ public class NoteEditor extends AnkiActivity {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         Intent intent = getIntent();
-        Timber.d("onCollectionLoaded: caller: %d", mCaller);
+        Timber.d("NoteEditor() onCollectionLoaded: caller: %d", mCaller);
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
@@ -534,7 +534,7 @@ public class NoteEditor extends AnkiActivity {
         });
 
         if (!mAddNote && mCurrentEditedCard != null) {
-            Timber.i("NoteEditor:: Edit note activity successfully started with card id %d", mCurrentEditedCard.getId());
+            Timber.i("onCollectionLoaded() Edit note activity successfully started with card id %d", mCurrentEditedCard.getId());
         }
     }
 
@@ -1008,12 +1008,14 @@ public class NoteEditor extends AnkiActivity {
         // Pass the model ID
         try {
             intent.putExtra("modelId", getCurrentlySelectedModel().getLong("id"));
+            Timber.d("showCardTemplateEditor() for model %s", intent.getLongExtra("modelId", -1L));
         } catch (JSONException e) {
            throw new RuntimeException(e);
         }
         // Also pass the card ID if not adding new note
         if (!mAddNote) {
             intent.putExtra("noteId", mCurrentEditedCard.note().getId());
+            Timber.d("showCardTemplateEditor() with note %s", mCurrentEditedCard.note().getId());
         }
         startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, ActivityTransitionAnimation.LEFT);
     }
@@ -1021,6 +1023,7 @@ public class NoteEditor extends AnkiActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Timber.d("onActivityResult() with request/result: %s/%s", requestCode, resultCode);
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == DeckPicker.RESULT_DB_ERROR) {
@@ -1065,6 +1068,9 @@ public class NoteEditor extends AnkiActivity {
                 if (resultCode == RESULT_OK) {
                     mReloadRequired = true;
                 }
+                // rebuild the model post-template-edit so we get the correct number of cards
+                Timber.d("onActivityResult() template edit - reloading model");
+                mEditorNote.reloadModel();
                 updateCards(mEditorNote.model());
         }
     }
@@ -1407,10 +1413,12 @@ public class NoteEditor extends AnkiActivity {
 
     /** Update the list of card templates for current note type */
     private void updateCards(JSONObject model) {
+        Timber.d("updateCards()");
         try {
             JSONArray tmpls = model.getJSONArray("tmpls");
             String cardsList = "";
             // Build comma separated list of card names
+            Timber.d("updateCards() template count is %s", tmpls.length());
             for (int i = 0; i < tmpls.length(); i++) {
                 String name = tmpls.getJSONObject(i).optString("name");
                 // If more than one card then make currently selected card underlined
