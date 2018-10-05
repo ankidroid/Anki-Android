@@ -43,7 +43,7 @@ public class AnkiStatsTaskHandler {
     private Collection mCollectionData;
     private float mStandardTextSize = 10f;
     private Stats.AxisType mStatType = Stats.AxisType.TYPE_MONTH;
-    private boolean mIsWholeCollection = false;
+    private long mDeckId;
     private static Lock sLock = new ReentrantLock();
 
 
@@ -52,8 +52,8 @@ public class AnkiStatsTaskHandler {
         mCollectionData = collection;
     }
 
-    public void setIsWholeCollection(boolean wholeCollection) {
-        mIsWholeCollection = wholeCollection;
+    public void setDeckId(long deckId) {
+        mDeckId = deckId;
     }
 
     public static AnkiStatsTaskHandler getInstance() {
@@ -104,7 +104,7 @@ public class AnkiStatsTaskHandler {
                 mImageView = (ChartView) params[0];
                 mProgressBar = (ProgressBar) params[1];
                 ChartBuilder chartBuilder = new ChartBuilder(mImageView, mCollectionData,
-                        mIsWholeCollection, mChartType);
+                        mDeckId, mChartType);
                 return chartBuilder.renderChart(mStatType);
             } finally {
                 sLock.unlock();
@@ -152,7 +152,7 @@ public class AnkiStatsTaskHandler {
                 }
                 mWebView = (WebView) params[0];
                 mProgressBar = (ProgressBar) params[1];
-                OverviewStatsBuilder overviewStatsBuilder = new OverviewStatsBuilder(mWebView, mCollectionData, mIsWholeCollection, mStatType);
+                OverviewStatsBuilder overviewStatsBuilder = new OverviewStatsBuilder(mWebView, mCollectionData, mDeckId, mStatType);
                 return overviewStatsBuilder.createInfoHtmlString();
             } finally {
                 sLock.unlock();

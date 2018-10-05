@@ -42,7 +42,7 @@ public class ChartBuilder {
     private static final double Y_AXIS_STRETCH_FACTOR = 1.05;
 
     private final Stats.ChartType mChartType;
-    private boolean mIsWholeCollection = false;
+    private long mDeckId;
     private ChartView mChartView;
     private Collection mCollectionData;
 
@@ -59,15 +59,15 @@ public class ChartBuilder {
     private double mMcount;
     private boolean mDynamicAxis;
 
-    public ChartBuilder(ChartView chartView, Collection collectionData, boolean isWholeCollection, Stats.ChartType chartType){
+    public ChartBuilder(ChartView chartView, Collection collectionData, long deckId, Stats.ChartType chartType){
         mChartView = chartView;
         mCollectionData = collectionData;
-        mIsWholeCollection = isWholeCollection;
+        mDeckId = deckId;
         mChartType = chartType;
     }
 
     private void calcStats(Stats.AxisType type){
-        Stats stats = new Stats(mCollectionData, mIsWholeCollection);
+        Stats stats = new Stats(mCollectionData, mDeckId);
         switch (mChartType){
             case FORECAST:
                 stats.calculateDue(mChartView.getContext(), type);

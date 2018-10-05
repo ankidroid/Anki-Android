@@ -63,6 +63,7 @@ public class Stats {
 
     private Collection mCol;
     private boolean mWholeCollection;
+    private long mDeckId;
     private boolean mDynamicAxis = false;
     private double[][] mSeriesList;
 
@@ -87,12 +88,13 @@ public class Stats {
     private double mPeak;
     private double mMcount;
 
+    public static final double SECONDS_PER_DAY = 86400.0;
+    public static final long ALL_DECKS_ID = 0L;
 
-    public static double SECONDS_PER_DAY = 86400.0;
-
-    public Stats(Collection col, boolean wholeCollection) {
+    public Stats(Collection col, long did) {
         mCol = col;
-        mWholeCollection = wholeCollection;
+        mWholeCollection = (did == ALL_DECKS_ID);
+        mDeckId = did;
     }
 
     public double[][] getSeriesList() {
@@ -109,7 +111,7 @@ public class Stats {
             title = AnkiDroidApp.getInstance().getResources().getString(R.string.card_browser_all_decks);
         } else {
             try {
-                title = mCol.getDecks().current().getString("name");
+                title = mCol.getDecks().get(mDeckId).getString("name");
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -1205,9 +1207,22 @@ public class Stats {
      */
 
     private String _limit() {
-        if (mWholeCollection) {
+        return deckLimit(mDeckId, mCol);
+    }
+
+
+    /**
+     * Note: NOT in libanki
+     * Return a string of deck ids for the provided deck and its children, suitable for an SQL query
+     * @param deckId the deck id to filter on, or ALL_DECKS_ID for all decks
+     * @param col collection
+     * @return
+     */
+    public static String deckLimit(Long deckId, Collection col) {
+        if (deckId == ALL_DECKS_ID) {
+            // All decks
             ArrayList<Long> ids = new ArrayList<>();
-            for (JSONObject d : mCol.getDecks().all()) {
+            for (JSONObject d : col.getDecks().all()) {
                 try {
                     ids.add(d.getLong("id"));
                 } catch (JSONException e) {
@@ -1216,16 +1231,19 @@ public class Stats {
             }
             return Utils.ids2str(Utils.arrayList2array(ids));
         } else {
-            return mCol.getSched()._deckLimit();
+            // The given deck id and its children
+            ArrayList<Long> ids = new ArrayList<>();
+            ids.add(deckId);
+            ids.addAll(col.getDecks().children(deckId).values());
+            return Utils.ids2str(ids);
         }
     }
-
 
     private String _getDeckFilter() {
         if (mWholeCollection) {
             return "";
         } else {
-            return "cid IN (SELECT id FROM cards WHERE did IN " + Utils.ids2str(mCol.getDecks().active()) + ")";
+            return "cid IN (SELECT id FROM cards WHERE did IN " + _limit() + ")";
         }
     }
 
