@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import timber.log.Timber;
+
 
 public class Note implements Cloneable {
 
@@ -88,6 +90,7 @@ public class Note implements Cloneable {
 
 
     public void load() {
+        Timber.d("load()");
         Cursor cursor = null;
         try {
             cursor = mCol.getDb().getDatabase()
@@ -111,6 +114,10 @@ public class Note implements Cloneable {
                 cursor.close();
             }
         }
+    }
+
+    public void reloadModel() {
+        mModel = mCol.getModels().get(mMid);
     }
 
 
