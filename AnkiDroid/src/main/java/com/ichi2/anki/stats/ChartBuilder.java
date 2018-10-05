@@ -265,7 +265,7 @@ public class ChartBuilder {
 
             Lines lines = new Lines(hiddenPlotSheet, cumulative, usedColor);
             lines.setSize(3f);
-            lines.setShadow(5f, 2f, 2f, ColorWrap.BLACK);
+            lines.setShadow(2f, 2f, ColorWrap.BLACK);
             if (!mHasColoredCumulative) {
                 lines.setName(name);
             }

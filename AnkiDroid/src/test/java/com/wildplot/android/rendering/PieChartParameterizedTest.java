@@ -42,7 +42,7 @@ import static org.powermock.api.mockito.PowerMockito.when;
 public class PieChartParameterizedTest {
     private static final double PRECISION = 2 * 1E-3F;
 
-    @Parameter(0)
+    @Parameter()
     public double[] values;
     @Parameter(1)
     public double[] startAngles;
@@ -60,7 +60,7 @@ public class PieChartParameterizedTest {
     PieChart pieChart;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         mockStatic(android.graphics.Color.class);
         MockitoAnnotations.initMocks(this);
         when(Color.argb(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(0);
@@ -77,7 +77,7 @@ public class PieChartParameterizedTest {
     }
 
     @Test
-    public void testPaintDrawsAllArcs() throws Exception {
+    public void testPaintDrawsAllArcs() {
         pieChart.paint(graphics);
         // ordered verification is used to prevent failures when there are tiny adjacent sectors
         InOrder inOrder = inOrder(graphics);
@@ -134,8 +134,7 @@ public class PieChartParameterizedTest {
     }
 
     private static Object[] createParameters(double[] values) {
-        PieChartTestParametersBuilder builder = new PieChartTestParametersBuilder(values,
-                PieChart.FIRST_SECTOR_OFFSET);
+        PieChartTestParametersBuilder builder = new PieChartTestParametersBuilder(values, -90);
         return new Object[] {
                 values,
                 builder.getStartAngles(),

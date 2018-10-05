@@ -27,54 +27,58 @@ public class LegendDrawable implements Drawable, Legendable {
     private boolean mNameIsSet = false;
 
 
-
     private ColorWrap color = ColorWrap.BLACK;
+
 
     @Override
     public void paint(GraphicsWrap g) {
 
     }
 
+
     @Override
     public boolean isOnFrame() {
         return false;
     }
 
-    @Override
-    public void abortAndReset() {
-
-    }
 
     @Override
     public boolean isClusterable() {
         return false;
     }
 
+
     @Override
     public boolean isCritical() {
         return false;
     }
+
 
     @Override
     public ColorWrap getColor() {
         return color;
     }
 
+
     @Override
     public String getName() {
         return mName;
     }
+
 
     @Override
     public boolean nameIsSet() {
         return mNameIsSet;
     }
 
-    public void setName(String name){
+
+    public void setName(String name) {
         mName = name;
         mNameIsSet = true;
     }
-    public void setColor(ColorWrap color){
+
+
+    public void setColor(ColorWrap color) {
         this.color = color;
     }
 }

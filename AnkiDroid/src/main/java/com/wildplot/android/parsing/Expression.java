@@ -16,92 +16,107 @@
 package com.wildplot.android.parsing;
 
 
-public class Expression implements TreeElement{
+public class Expression implements TreeElement {
     private TopLevelParser parser;
-    public static enum ExpressionType { EXP_PLUS_TERM, EXP_MINUS_TERM, TERM, INVALID}
+
+
+
+    public enum ExpressionType {EXP_PLUS_TERM, EXP_MINUS_TERM, TERM, INVALID}
+
+
+
     private ExpressionType expressionType = ExpressionType.INVALID;
     private Expression expression = null;
     private Term term = null;
 
-    
-    public Expression(String expressionString, TopLevelParser parser){
+
+    public Expression(String expressionString, TopLevelParser parser) {
         this.parser = parser;
-        if(!TopLevelParser.stringHasValidBrackets(expressionString)){
+        if (!TopLevelParser.stringHasValidBrackets(expressionString)) {
             this.expressionType = ExpressionType.INVALID;
             return;
         }
 
         boolean isReady = initAsExpPlusOrMinusTerm(expressionString);
-        if(!isReady)
+        if (!isReady) {
             isReady = initAsTerm(expressionString);
-        if(!isReady)
+        }
+        if (!isReady) {
             this.expressionType = ExpressionType.INVALID;
-        
+        }
+
     }
-    
-    private boolean initAsExpPlusOrMinusTerm(String expressionString){
+
+
+    private boolean initAsExpPlusOrMinusTerm(String expressionString) {
         int bracketChecker = 0;
-        for(int i = 0; i< expressionString.length(); i++){
-            if(expressionString.charAt(i) == '('){
+        for (int i = 0; i < expressionString.length(); i++) {
+            if (expressionString.charAt(i) == '(') {
                 bracketChecker++;
             }
-            if(expressionString.charAt(i) == ')'){
+            if (expressionString.charAt(i) == ')') {
                 bracketChecker--;
             }
 
-            if((expressionString.charAt(i) == '+' || expressionString.charAt(i) == '-') && bracketChecker == 0){
+            if ((expressionString.charAt(i) == '+' || expressionString.charAt(i) == '-') && bracketChecker == 0) {
                 String leftSubString = expressionString.substring(0, i);
-                if(!TopLevelParser.stringHasValidBrackets(leftSubString))
+                if (!TopLevelParser.stringHasValidBrackets(leftSubString)) {
                     continue;
+                }
                 Expression leftExpression = new Expression(leftSubString, parser);
                 boolean isValidFirstPartExpression = leftExpression.getExpressionType() != ExpressionType.INVALID;
-                
-                if(!isValidFirstPartExpression)
-                    continue;
 
-                String rightSubString = expressionString.substring(i+1, expressionString.length());
-                if(!TopLevelParser.stringHasValidBrackets(rightSubString))
+                if (!isValidFirstPartExpression) {
                     continue;
+                }
+
+                String rightSubString = expressionString.substring(i + 1, expressionString.length());
+                if (!TopLevelParser.stringHasValidBrackets(rightSubString)) {
+                    continue;
+                }
 
                 Term rightTerm = new Term(rightSubString, parser);
                 boolean isValidSecondPartTerm = rightTerm.getTermType() != Term.TermType.INVALID;
-                
-                if(isValidSecondPartTerm){
-                    if(expressionString.charAt(i) == '+'){
+
+                if (isValidSecondPartTerm) {
+                    if (expressionString.charAt(i) == '+') {
                         this.expressionType = ExpressionType.EXP_PLUS_TERM;
                     } else {
                         this.expressionType = ExpressionType.EXP_MINUS_TERM;
                     }
 
-                    this.expression=leftExpression;
-                    this.term=rightTerm;
+                    this.expression = leftExpression;
+                    this.term = rightTerm;
                     return true;
                 }
-                
+
             }
         }
         return false;
     }
 
-    private boolean initAsTerm(String expressionString){
-        if(!TopLevelParser.stringHasValidBrackets(expressionString))
+
+    private boolean initAsTerm(String expressionString) {
+        if (!TopLevelParser.stringHasValidBrackets(expressionString)) {
             return false;
+        }
         Term term = new Term(expressionString, parser);
         boolean isValidTerm = term.getTermType() != Term.TermType.INVALID;
-        if(isValidTerm){
+        if (isValidTerm) {
             this.expressionType = ExpressionType.TERM;
             this.term = term;
             return true;
         }
         return false;
     }
-    
-    
-    public ExpressionType getExpressionType(){
+
+
+    public ExpressionType getExpressionType() {
         return expressionType;
     }
 
-    public double getValue() throws ExpressionFormatException{
+
+    public double getValue() throws ExpressionFormatException {
         switch (expressionType) {
             case EXP_PLUS_TERM:
                 return expression.getValue() + term.getValue();
@@ -114,6 +129,7 @@ public class Expression implements TreeElement{
                 throw new ExpressionFormatException("could not parse Expression");
         }
     }
+
 
     @Override
     public boolean isVariable() {

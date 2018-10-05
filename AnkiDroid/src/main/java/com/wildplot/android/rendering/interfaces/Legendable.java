@@ -18,7 +18,10 @@ package com.wildplot.android.rendering.interfaces;
 import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
 
 public interface Legendable {
-    public ColorWrap getColor();
-    public String getName();
-    public boolean nameIsSet();
+
+    ColorWrap getColor();
+
+    String getName();
+
+    boolean nameIsSet();
 }
