@@ -16,7 +16,7 @@
 package com.ichi2.anki.tests.libanki;
 
 import android.Manifest;
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
 import androidx.test.runner.AndroidJUnit4;
 
@@ -38,12 +38,15 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 
 /**
  * Unit tests for {@link Media}.
  */
+@SuppressWarnings("deprecation")
 @RunWith(AndroidJUnit4.class)
 public class MediaTest {
 
@@ -55,8 +58,8 @@ public class MediaTest {
     @Test
     public void testAdd() throws IOException {
         // open new empty collection
-        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
-        File dir = Shared.getTestDir(InstrumentationRegistry.getTargetContext());
+        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        File dir = Shared.getTestDir(InstrumentationRegistry.getInstrumentation().getTargetContext());
         BackupManager.removeDir(dir);
         assertTrue(dir.mkdirs());
         File path = new File(dir, "foo.jpg");
@@ -79,7 +82,7 @@ public class MediaTest {
 
     @Test
     public void testStrings() throws IOException {
-        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
+        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
         Long mid = d.getModels().getModels().entrySet().iterator().next().getKey();
         List<String> expected;
         List<String> actual;
@@ -134,11 +137,11 @@ public class MediaTest {
 
     @Test
     public void testDeckIntegration() throws IOException {
-        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
+        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
         // create a media dir
         d.getMedia().dir();
         // Put a file into it
-        File file = new File(Shared.getTestDir(InstrumentationRegistry.getTargetContext()), "fake.png");
+        File file = new File(Shared.getTestDir(InstrumentationRegistry.getInstrumentation().getTargetContext()), "fake.png");
         assertTrue(file.createNewFile());
         d.getMedia().addFile(file);
         // add a note which references it
@@ -180,12 +183,12 @@ public class MediaTest {
 
     @Test
     public void testChanges() throws IOException {
-        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
-        assertTrue(d.getMedia()._changed() != null);
-        assertTrue(added(d).size() == 0);
-        assertTrue(removed(d).size() == 0);
+        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        assertNotNull(d.getMedia()._changed());
+        assertEquals(added(d).size(), 0);
+        assertEquals(removed(d).size(), 0);
         // add a file
-        File dir = Shared.getTestDir(InstrumentationRegistry.getTargetContext());
+        File dir = Shared.getTestDir(InstrumentationRegistry.getInstrumentation().getTargetContext());
         File path = new File(dir, "foo.jpg");
         FileOutputStream os;
         os = new FileOutputStream(path, false);
@@ -195,42 +198,42 @@ public class MediaTest {
         // should have been logged
         d.getMedia().findChanges();
         assertTrue(added(d).size() > 0);
-        assertTrue(removed(d).size() == 0);
+        assertEquals(removed(d).size(), 0);
         // if we modify it, the cache won't notice
         os = new FileOutputStream(path, true);
         os.write("world".getBytes());
         os.close();
-        assertTrue(added(d).size() == 1);
-        assertTrue(removed(d).size() == 0);
+        assertEquals(added(d).size(), 1);
+        assertEquals(removed(d).size(), 0);
         // but if we add another file, it will
         path = new File(path.getAbsolutePath()+"2");
         os = new FileOutputStream(path, true);
         os.write("yo".getBytes());
         os.close();
         d.getMedia().findChanges(true);
-        assertTrue(added(d).size() == 2);
-        assertTrue(removed(d).size() == 0);
+        assertEquals(added(d).size(), 2);
+        assertEquals(removed(d).size(), 0);
         // deletions should get noticed too
         assertTrue(path.delete());
         d.getMedia().findChanges(true);
-        assertTrue(added(d).size() == 1);
-        assertTrue(removed(d).size() == 1);
+        assertEquals(added(d).size(), 1);
+        assertEquals(removed(d).size(), 1);
     }
 
 
     @Test
     public void testIllegal() throws IOException {
-        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getTargetContext());
+        Collection d = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
         String aString = "a:b|cd\\e/f\0g*h";
         String good = "abcdefgh";
-        assertTrue(d.getMedia().stripIllegal(aString).equals(good));
+        assertEquals(d.getMedia().stripIllegal(aString), good);
         for (int i = 0; i < aString.length(); i++) {
             char c = aString.charAt(i);
             boolean bad = d.getMedia().hasIllegal("something" + c + "morestring");
             if (bad) {
-                assertTrue(good.indexOf(c) == -1);
+                assertEquals(good.indexOf(c), -1);
             } else {
-                assertTrue(good.indexOf(c) != -1);
+                assertNotEquals(good.indexOf(c), -1);
             }
         }
     }
