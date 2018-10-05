@@ -1,7 +1,7 @@
 package com.ichi2.anki.tests;
 
 import android.Manifest;
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
 import androidx.test.runner.AndroidJUnit4;
 
@@ -16,6 +16,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * This test case verifies that the directory initialization works even if the app is not yet fully initialized.
  */
+@SuppressWarnings("deprecation")
 @RunWith(AndroidJUnit4.class)
 public class CollectionTest {
 
@@ -26,6 +27,6 @@ public class CollectionTest {
     @Test
     public void testOpenCollection() {
         assertNotNull("Collection could not be opened",
-                CollectionHelper.getInstance().getCol(InstrumentationRegistry.getTargetContext()));
+                CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext()));
     }
 }

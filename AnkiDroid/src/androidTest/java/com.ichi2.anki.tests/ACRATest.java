@@ -34,6 +34,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+@SuppressWarnings("deprecation")
 @RunWith(AndroidJUnit4.class)
 public class ACRATest {
 
@@ -78,8 +79,7 @@ public class ACRATest {
     }
 
     private void verifyDebugACRAPreferences() {
-        assertEquals("ACRA was not disabled correctly",
-                true,
+        assertTrue("ACRA was not disabled correctly",
                 AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext())
                         .getBoolean(ACRA.PREF_DISABLE_ACRA, true));
         assertEquals("ACRA feedback was not turned off correctly",
@@ -179,8 +179,7 @@ public class ACRATest {
 
 
     private void verifyACRANotDisabled() {
-        assertEquals("ACRA was not enabled correctly",
-                false,
+        assertFalse("ACRA was not enabled correctly",
                 AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getTargetContext()).getBoolean(ACRA.PREF_DISABLE_ACRA, false));
     }
 

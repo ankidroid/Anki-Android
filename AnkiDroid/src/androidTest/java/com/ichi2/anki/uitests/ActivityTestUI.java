@@ -25,7 +25,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
@@ -43,7 +43,7 @@ import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
 @LargeTest
-@SuppressWarnings("PMD.ExcessiveMethodLength")
+@SuppressWarnings({"PMD.ExcessiveMethodLength", "deprecation"})
 @RunWith(AndroidJUnit4.class)
 public class ActivityTestUI {
 
@@ -171,12 +171,6 @@ public class ActivityTestUI {
 
         ViewInteraction appCompatImageButton6 = onView(
                 allOf(withContentDescription("Navigate up"),
-                        childAtPosition(
-                                allOf(withId(R.id.toolbar),
-                                        childAtPosition(
-                                                withClassName(is("android.widget.LinearLayout")),
-                                                0)),
-                                0),
                         isDisplayed()));
         appCompatImageButton6.perform(click());
 
