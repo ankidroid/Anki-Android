@@ -55,7 +55,7 @@ public class UsageAnalytics {
             Timber.d("tid = %s", context.getString(R.string.ga_trackingId));
             GoogleAnalyticsConfig gaConfig = new GoogleAnalyticsConfig()
                     .setBatchingEnabled(true)
-                    .setBatchSize(5);
+                    .setBatchSize(1); // until this handles application termination we will lose hits
             sAnalytics = GoogleAnalytics.builder()
                     .withTrackingId(context.getString(R.string.ga_trackingId))
                     .withConfig(gaConfig)
