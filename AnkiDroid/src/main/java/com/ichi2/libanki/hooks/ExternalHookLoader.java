@@ -7,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -40,7 +39,6 @@ public class ExternalHookLoader {
      * @param String dexFilename : name of the package file in hooks folder -- e.g. "ChessFilter.jar"
      * @param String className: full name of class to load from package -- e.g. "com.testplugin.ChessFilter"
      */
-    @SuppressLint("NewApi")
 	public HookPlugin importExternalHook(String dexFilename, String className) {
         // filename of the hook which is currently being loaded
         final File dexExternalStoragePath = new File(mHookFolderPath, dexFilename);

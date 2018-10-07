@@ -34,12 +34,16 @@ public class CompatHelper {
             mCompat = new CompatV15NookHdOrHdPlus();
         } else if (getSdkVersion() >= 26) {
             mCompat = new CompatV26();
+        } else if (getSdkVersion() >= 24) {
+            mCompat = new CompatV24();
         } else if (getSdkVersion() >= 23) {
             mCompat = new CompatV23();
         } else if (getSdkVersion() >= 21) {
             mCompat = new CompatV21();
         } else if (getSdkVersion() >= 19) {
             mCompat = new CompatV19();
+        } else if (getSdkVersion() >= 18) {
+            mCompat = new CompatV18();
         } else if (getSdkVersion() >= 17) {
             mCompat = new CompatV17();
         } else if (getSdkVersion() >= 16) {
@@ -82,21 +86,21 @@ public class CompatHelper {
     }
 
     private boolean isNookHdPlus() {
-        return android.os.Build.BRAND.equals("NOOK") && android.os.Build.PRODUCT.equals("HDplus")
+        return "NOOK".equals(Build.BRAND) && "HDplus".equals(Build.PRODUCT)
                 && android.os.Build.DEVICE.equals("ovation");
     }
 
     private boolean isNookHd () {
-        return android.os.Build.MODEL.equalsIgnoreCase("bntv400") && android.os.Build.BRAND.equals("NOOK");
+        return "bntv400".equalsIgnoreCase(Build.MODEL) && "NOOK".equals(Build.BRAND);
     }
 
     public static boolean isChromebook() {
-        return android.os.Build.BRAND.equalsIgnoreCase("chromium") || android.os.Build.MANUFACTURER.equalsIgnoreCase("chromium")
+        return "chromium".equalsIgnoreCase(Build.BRAND) || "chromium".equalsIgnoreCase(Build.MANUFACTURER)
                 || Build.DEVICE.equalsIgnoreCase("novato_cheets");
     }
 
     public static boolean isKindle() {
-        return Build.BRAND.equalsIgnoreCase("amazon") || Build.MANUFACTURER.equalsIgnoreCase("amazon");
+        return "amazon".equalsIgnoreCase(Build.BRAND) || "amazon".equalsIgnoreCase(Build.MANUFACTURER);
     }
 
     public static boolean hasKanaAndEmojiKeys() {
@@ -110,7 +114,7 @@ public class CompatHelper {
     public static void removeHiddenPreferences(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         if (getSdkVersion() >= 16) {
-            preferences.edit().remove("fixHebrewText").commit();
+            preferences.edit().remove("fixHebrewText").apply();
         }
     }
 }

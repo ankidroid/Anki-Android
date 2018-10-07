@@ -20,7 +20,6 @@
 package com.ichi2.anki.multimediacard.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
@@ -65,7 +64,8 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
     private String mTranslationAddress;
 
-    private ProgressDialog progressDialog = null;
+    @SuppressWarnings("deprecation") // tracked in github as #5020
+    private android.app.ProgressDialog progressDialog = null;
 
     private String mPronunciationAddress;
 
@@ -155,11 +155,12 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     }
 
 
+    @SuppressWarnings("deprecation") // ProgressDialog change tracked in github as #5020
     private void showProgressDialog(String message) {
 
         dismissCarefullyProgressDialog();
 
-        progressDialog = ProgressDialog.show(this, gtxt(R.string.multimedia_editor_progress_wait_title), message, true,
+        progressDialog = android.app.ProgressDialog.show(this, gtxt(R.string.multimedia_editor_progress_wait_title), message, true,
                 false);
         progressDialog.setCancelable(true);
         progressDialog.setOnCancelListener(this);

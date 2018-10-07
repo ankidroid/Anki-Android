@@ -18,12 +18,10 @@
 
 package com.ichi2.anki;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,9 +31,9 @@ import androidx.core.view.MenuItemCompat;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -271,7 +269,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     private void setCustomButtons(Menu menu) {
         for(int itemId : mCustomButtons.keySet()) {
             if(mCustomButtons.get(itemId) != MENU_DISABLED) {
-                MenuItemCompat.setShowAsAction(menu.findItem(itemId), mCustomButtons.get(itemId));
+                menu.findItem(itemId).setShowAsAction(mCustomButtons.get(itemId));
             }
             else {
                 menu.findItem(itemId).setVisible(false);
@@ -280,12 +278,10 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
 
-    @SuppressLint("NewApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // NOTE: This is called every time a new question is shown via invalidate options menu
         getMenuInflater().inflate(R.menu.reviewer, menu);
-        Resources res = getResources();
         setCustomButtons(menu);
         if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
             menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white_24dp);
@@ -490,21 +486,19 @@ public class Reviewer extends AbstractFlashcardViewer {
     private void createWhiteboard() {
         mWhiteboard = new Whiteboard(this, mNightMode, mBlackWhiteboard);
         FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(
-                android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.FILL_PARENT);
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mWhiteboard.setLayoutParams(lp2);
-        FrameLayout fl = (FrameLayout) findViewById(R.id.whiteboard);
+        FrameLayout fl = findViewById(R.id.whiteboard);
         fl.addView(mWhiteboard);
 
-        mWhiteboard.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (!mShowWhiteboard || (mPrefFullscreenReview
-                        && CompatHelper.getCompat().isImmersiveSystemUiVisible(Reviewer.this))) {
-                    // Bypass whiteboard listener when it's hidden or fullscreen immersive mode is temporarily suspended
-                    return getGestureDetector().onTouchEvent(event);
-                }
-                return mWhiteboard.handleTouchEvent(event);
+        mWhiteboard.setOnTouchListener((v, event) -> {
+            if (!mShowWhiteboard || (mPrefFullscreenReview
+                    && CompatHelper.getCompat().isImmersiveSystemUiVisible(Reviewer.this))) {
+                // Bypass whiteboard listener when it's hidden or fullscreen immersive mode is temporarily suspended
+                v.performClick();
+                return getGestureDetector().onTouchEvent(event);
             }
+            return mWhiteboard.handleTouchEvent(event);
         });
         mWhiteboard.setEnabled(true);
     }

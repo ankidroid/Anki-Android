@@ -21,15 +21,6 @@ package com.ichi2.anki.web;
 
 import android.content.Context;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,10 +31,11 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 /**
- * Helper class to donwload from web.
+ * Helper class to download from web.
  * <p>
- * Used in AsyncTasks in Translation and Pronunication activities, and more...
+ * Used in AsyncTasks in Translation and Pronunciation activities, and more...
  */
+@SuppressWarnings("deprecation") // tracking HTTP transport change in github already
 public class HttpFetcher {
 
     public static String fetchThroughHttp(String address) {
@@ -54,13 +46,13 @@ public class HttpFetcher {
     public static String fetchThroughHttp(String address, String encoding) {
 
         try {
-            HttpClient httpClient = new DefaultHttpClient();
-			HttpParams params = httpClient.getParams();
-			HttpConnectionParams.setConnectionTimeout(params, 10000);
-			HttpConnectionParams.setSoTimeout(params, 60000);
-            HttpContext localContext = new BasicHttpContext();
-            HttpGet httpGet = new HttpGet(address);
-            HttpResponse response = httpClient.execute(httpGet, localContext);
+            org.apache.http.client.HttpClient httpClient = new org.apache.http.impl.client.DefaultHttpClient();
+            org.apache.http.params.HttpParams params = httpClient.getParams();
+            org.apache.http.params.HttpConnectionParams.setConnectionTimeout(params, 10000);
+            org.apache.http.params.HttpConnectionParams.setSoTimeout(params, 60000);
+            org.apache.http.protocol.HttpContext localContext = new org.apache.http.protocol.BasicHttpContext();
+            org.apache.http.client.methods.HttpGet httpGet = new org.apache.http.client.methods.HttpGet(address);
+            org.apache.http.HttpResponse response = httpClient.execute(httpGet, localContext);
             if (response.getStatusLine().getStatusCode() != 200) {
                 return "FAILED";
             }

@@ -4,13 +4,16 @@ import android.annotation.TargetApi;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+
 import androidx.core.app.NotificationCompat;
 
 import timber.log.Timber;
 
 /** Implementation of {@link Compat} for SDK level 26 */
 @TargetApi(26)
-public class CompatV26 extends CompatV23 implements Compat {
+public class CompatV26 extends CompatV24 implements Compat {
 
     /**
      * In Oreo and higher, you must create a channel for all notifications.
@@ -31,5 +34,14 @@ public class CompatV26 extends CompatV23 implements Compat {
         notificationChannel.setShowBadge(true);
         notificationChannel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         manager.createNotificationChannel(notificationChannel);
+    }
+
+    @Override
+    public void vibrate(Context context, long durationMillis) {
+        Vibrator vibratorManager = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibratorManager != null) {
+            VibrationEffect effect = VibrationEffect.createOneShot(durationMillis, VibrationEffect.DEFAULT_AMPLITUDE);
+            vibratorManager.vibrate(effect);
+        }
     }
 }

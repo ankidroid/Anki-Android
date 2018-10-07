@@ -27,7 +27,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
-import androidx.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
@@ -67,7 +66,7 @@ import static org.junit.Assert.fail;
  * These tests should cover all supported operations for each URI.
  */
 @SuppressWarnings("deprecation")
-@RunWith(AndroidJUnit4.class)
+@RunWith(androidx.test.runner.AndroidJUnit4.class)
 public class ContentProviderTest {
 
     @Rule

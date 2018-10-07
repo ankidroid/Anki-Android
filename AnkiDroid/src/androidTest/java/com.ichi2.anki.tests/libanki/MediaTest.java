@@ -18,7 +18,6 @@ package com.ichi2.anki.tests.libanki;
 import android.Manifest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.tests.Shared;
@@ -47,7 +46,7 @@ import static org.junit.Assert.assertTrue;
  * Unit tests for {@link Media}.
  */
 @SuppressWarnings("deprecation")
-@RunWith(AndroidJUnit4.class)
+@RunWith(androidx.test.runner.AndroidJUnit4.class)
 public class MediaTest {
 
     @Rule

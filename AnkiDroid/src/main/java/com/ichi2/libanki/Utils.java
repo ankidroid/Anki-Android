@@ -27,12 +27,11 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.net.Uri;
 import androidx.annotation.NonNull;
-import android.text.Html;
 
 import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
-import com.ichi2.utils.LanguageUtil;
+import com.ichi2.compat.CompatHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,9 +40,7 @@ import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -58,7 +55,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.text.Normalizer;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,7 +69,6 @@ import java.util.Random;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -84,8 +79,6 @@ public class Utils {
     public static final Locale ENGLISH_LOCALE = new Locale("en_US");
 
     public static final int CHUNK_SIZE = 32768;
-
-    private static NumberFormat mCurrentPercentageFormat;
 
     // These are doubles on purpose because we want a rounded, not integer result later.
     private static final double TIME_MINUTE = 60.0;  // seconds
@@ -114,7 +107,7 @@ public class Utils {
     private static final String ALL_CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final String BASE91_EXTRA_CHARS = "!#$%&()*+,-./:;<=>?@[]^_`{|}~";
 
-    public static final int FILE_COPY_BUFFER_SIZE = 2048;
+    private static final int FILE_COPY_BUFFER_SIZE = 2048;
 
     /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
     public static double now() {
@@ -212,21 +205,6 @@ public class Utils {
      * ***********************************************************************************************
      */
 
-    /**
-     * @return double with percentage sign
-     */
-    public static String fmtPercentage(Double value) {
-    return fmtPercentage(value, 0);
-    }
-    public static String fmtPercentage(Double value, int point) {
-        // only retrieve the percentage format the first time
-        if (mCurrentPercentageFormat == null) {
-            mCurrentPercentageFormat = NumberFormat.getPercentInstance(LanguageUtil.getLocale());
-        }
-        return mCurrentPercentageFormat.format(value);
-    }
-
-    // Removed fmtDouble(). Was used only by other functions here. We now use getString() with localized formatting now.
 
     /**
      * HTML
@@ -273,7 +251,7 @@ public class Utils {
         Matcher htmlEntities = htmlEntitiesPattern.matcher(html);
         StringBuffer sb = new StringBuffer();
         while (htmlEntities.find()) {
-            htmlEntities.appendReplacement(sb, Html.fromHtml(htmlEntities.group()).toString());
+            htmlEntities.appendReplacement(sb, CompatHelper.getCompat().fromHtml(htmlEntities.group()).toString());
         }
         htmlEntities.appendTail(sb);
         return sb.toString();
@@ -398,7 +376,7 @@ public class Utils {
 
 
     // used in ankiweb
-    public static String base62(int num, String extra) {
+    private static String base62(int num, String extra) {
         String table = ALL_CHARACTERS + extra;
         int len = table.length();
         String buf = "";
@@ -412,7 +390,7 @@ public class Utils {
     }
 
     // all printable characters minus quotes, backslash and separators
-    public static String base91(int num) {
+    private static String base91(int num) {
         return base62(num, BASE91_EXTRA_CHARS);
     }
 
@@ -498,7 +476,7 @@ public class Utils {
     public static String checksum(String data) {
         String result = "";
         if (data != null) {
-            MessageDigest md = null;
+            MessageDigest md;
             byte[] digest = null;
             try {
                 md = MessageDigest.getInstance("SHA1");
@@ -573,11 +551,6 @@ public class Utils {
 
     public static String fileChecksum(File file) {
         return fileChecksum(file.getAbsolutePath());
-    }
-
-    /** Replace HTML line break tags with new lines. */
-    public static String replaceLineBreak(String text) {
-        return text.replaceAll("<br(\\s*\\/*)>", "\n");
     }
 
 
@@ -673,35 +646,6 @@ public class Utils {
         return file.getCanonicalPath().startsWith(dir.getCanonicalPath());
     }
 
-    /**
-     * Compress data.
-     * @param bytesToCompress is the byte array to compress.
-     * @return a compressed byte array.
-     * @throws java.io.IOException
-     */
-    public static byte[] compress(byte[] bytesToCompress, int comp) throws IOException {
-        // Compressor with highest level of compression.
-        Deflater compressor = new Deflater(comp, true);
-        // Give the compressor the data to compress.
-        compressor.setInput(bytesToCompress);
-        compressor.finish();
-
-        // Create an expandable byte array to hold the compressed data.
-        // It is not necessary that the compressed data will be smaller than
-        // the uncompressed data.
-        ByteArrayOutputStream bos = new ByteArrayOutputStream(bytesToCompress.length);
-
-        // Compress the data
-        byte[] buf = new byte[65536];
-        while (!compressor.finished()) {
-            bos.write(buf, 0, compressor.deflate(buf));
-        }
-
-        bos.close();
-
-        // Get the compressed data
-        return bos.toByteArray();
-    }
 
     /**
      * Calls {@link #writeToFileImpl(InputStream, String)} and handles IOExceptions
@@ -734,9 +678,8 @@ public class Utils {
     /**
      * Utility method to write to a file.
      * Throws the exception, so we can report it in syncing log
-     * @throws IOException
      */
-    public static void writeToFileImpl(InputStream source, String destination) throws IOException {
+    private static void writeToFileImpl(InputStream source, String destination) throws IOException {
         File f = new File(destination);
         try {
             Timber.d("Creating new file... = %s", destination);
@@ -793,18 +736,6 @@ public class Utils {
     }
 
 
-    public static void printDate(String name, double date) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
-        df.setTimeZone(TimeZone.getTimeZone("GMT"));
-        Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
-        cal.setTimeInMillis((long)date * 1000);
-        Timber.d("Value of %s: %s", name, cal.getTime().toGMTString());
-    }
-
-
-    // Use DateUtil.formatElapsedTime((long) value) instead of doubleToTime.
-    // public static String doubleToTime(double value) { ...}
-
     /**
      * Indicates whether the specified action can be used as an intent. This method queries the package manager for
      * installed packages that can respond to an intent with the specified action. If no suitable package is found, this
@@ -848,16 +779,6 @@ public class Utils {
      * @param array The input with type Long[]
      * @return The output with type long[]
      */
-    public static long[] toPrimitive(Long[] array) {
-        if (array == null) {
-            return null;
-        }
-        long[] results = new long[array.length];
-        for (int i = 0; i < array.length; i++) {
-            results[i] = array[i];
-        }
-        return results;
-    }
     public static long[] toPrimitive(Collection<Long> array) {
         if (array == null) {
             return null;
@@ -919,7 +840,7 @@ public class Utils {
             String filePath = fontsList[i].getAbsolutePath();
             String filePathExtension = splitFilename(filePath)[1];
             for (String fontExtension : FONT_FILE_EXTENSIONS) {
-                // Go through the list of allowed extensios.
+                // Go through the list of allowed extensions.
                 if (filePathExtension.equalsIgnoreCase(fontExtension)) {
                     // This looks like a font file.
                     AnkiFont font = AnkiFont.createAnkiFont(context, filePath, false);
@@ -951,12 +872,7 @@ public class Utils {
         int deckCount = 0;
         File[] deckList = null;
         if (dir.exists() && dir.isDirectory()) {
-            deckList = dir.listFiles(new FileFilter(){
-                @Override
-                public boolean accept(File pathname) {
-                    return pathname.isFile() && pathname.getName().endsWith(".apkg");
-                }
-            });
+            deckList = dir.listFiles(pathname -> pathname.isFile() && pathname.getName().endsWith(".apkg"));
             deckCount = deckList.length;
         }
         List<File> decks = new ArrayList<>();
@@ -1057,7 +973,7 @@ public class Utils {
      * @return the unescaped text
      */
     public static String unescape(String htmlText) {
-        return Html.fromHtml(htmlText).toString();
+        return CompatHelper.getCompat().fromHtml(htmlText).toString();
     }
 
 

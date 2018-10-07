@@ -29,7 +29,6 @@ import android.os.Bundle;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 
@@ -67,6 +66,7 @@ import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.async.DeckTask;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
@@ -690,10 +690,7 @@ public class NoteEditor extends AnkiActivity {
             return true;
         }
         // changed tags?
-        if (mTagsEdited) {
-            return true;
-        }
-        return false;
+        return mTagsEdited;
     }
 
 
@@ -1508,7 +1505,7 @@ public class NoteEditor extends AnkiActivity {
             if (!mAddNote && tmpls.length() < mEditorNote.model().getJSONArray("tmpls").length()) {
                 cardsList = "<font color='red'>" + cardsList + "</font>";
             }
-            mCardsButton.setText(Html.fromHtml(getResources().getString(R.string.CardEditorCards, cardsList)));
+            mCardsButton.setText(CompatHelper.getCompat().fromHtml(getResources().getString(R.string.CardEditorCards, cardsList)));
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

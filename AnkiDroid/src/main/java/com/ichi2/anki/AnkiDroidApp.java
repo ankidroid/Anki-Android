@@ -305,6 +305,7 @@ public class AnkiDroidApp extends Application {
      *
      * @param localeCode The locale code of the language to set, system language if empty
      */
+    @SuppressWarnings("deprecation") // Tracked as #4729 in github
     public static void setLanguage(String localeCode) {
         Configuration config = getInstance().getResources().getConfiguration();
         Locale newLocale = LanguageUtil.getLocale(localeCode);

@@ -4,16 +4,15 @@ package com.ichi2.anki;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.widget.EditText;
 import android.widget.TextView;
+import androidx.appcompat.widget.AppCompatEditText;
 
 import com.ichi2.themes.Themes;
 
 
-public class FieldEditText extends EditText {
+public class FieldEditText extends AppCompatEditText {
 
     public static final String NEW_LINE = System.getProperty("line.separator");
-    public static final String NL_MARK = "newLineMark";
 
     private String mName;
     private int mOrd;
@@ -32,12 +31,6 @@ public class FieldEditText extends EditText {
 
     public FieldEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-    }
-
-
-    public FieldEditText(Context context, int ord, String name, String content) {
-        super(context);
-        init(ord, name, content);
     }
 
 

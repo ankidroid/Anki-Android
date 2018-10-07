@@ -27,8 +27,6 @@ public class UIUtils {
     /**
      * Show a simple Toast-like Snackbar with no actions.
      * To enable swipe-to-dismiss, the Activity layout should include a CoordinatorLayout with id "root_layout"
-     * @param mainTextResource
-     * @param shortLength
      */
     public static Snackbar showSimpleSnackbar(Activity activity, int mainTextResource, boolean shortLength) {
         View root = activity.findViewById(R.id.root_layout);
@@ -82,12 +80,12 @@ public class UIUtils {
             sb.setAction(actionTextResource, listener);
         }
         if (callback != null) {
-            sb.setCallback(callback);
+            sb.addCallback(callback);
         }
         // Make the text white to avoid interference from our theme colors.
         View view = sb.getView();
-        TextView tv = (TextView) view.findViewById(com.google.android.material.R.id.snackbar_text);
-        TextView action = (TextView) view.findViewById(com.google.android.material.R.id.snackbar_action);
+        TextView tv = view.findViewById(com.google.android.material.R.id.snackbar_text);
+        TextView action = view.findViewById(com.google.android.material.R.id.snackbar_action);
         if (tv != null && action != null) {
             tv.setTextColor(Color.WHITE);
             action.setTextColor(ContextCompat.getColor(activity, R.color.material_light_blue_500));

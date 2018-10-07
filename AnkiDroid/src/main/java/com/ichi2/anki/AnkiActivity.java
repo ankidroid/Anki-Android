@@ -1,7 +1,6 @@
 
 package com.ichi2.anki;
 
-import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -451,7 +450,6 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
 
     // Restart the activity
-    @SuppressLint("NewApi")
     public void restartActivity() {
         Timber.i("AnkiActivity -- restartActivity()");
         Intent intent = new Intent();

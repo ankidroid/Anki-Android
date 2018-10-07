@@ -19,7 +19,6 @@
 
 package com.ichi2.anki.multimediacard.activity;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
@@ -72,7 +71,8 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
     private LanguagesListerGlosbe mLanguageLister;
     private Spinner mSpinnerFrom;
     private Spinner mSpinnerTo;
-    private ProgressDialog progressDialog = null;
+    @SuppressWarnings("deprecation") // tracked in github as #5020
+    private android.app.ProgressDialog progressDialog = null;
     private String mWebServiceAddress;
     private ArrayList<String> mPossibleTranslations;
     private String mLangCodeTo;
@@ -189,13 +189,14 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
     }
 
 
+    @SuppressWarnings("deprecation") // ProgressDialog change tracked in github as #5020
     protected void translate() {
         if(!Connection.isOnline()) {
             showToast(gtxt(R.string.network_no_connection));
             return;
         }
 
-        progressDialog = ProgressDialog.show(this, getText(R.string.multimedia_editor_progress_wait_title),
+        progressDialog = android.app.ProgressDialog.show(this, getText(R.string.multimedia_editor_progress_wait_title),
                 getText(R.string.multimedia_editor_trans_translating_online), true, false);
 
         progressDialog.setCancelable(true);

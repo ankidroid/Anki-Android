@@ -37,7 +37,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.text.TextUtils;
@@ -142,6 +141,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     }
 
     @Override
+    @SuppressWarnings("deprecation") // Tracked as #5019 on github - convert to fragments
     protected MaterialDialog onCreateDialog(int id) {
         Resources res = getResources();
         MaterialDialog.Builder builder = new MaterialDialog.Builder(this);
@@ -402,6 +402,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
      * @param key key in prefs which is being updated
      * @param listener PreferenceActivity of PreferenceFragment which is hosting the preference
      */
+    @SuppressWarnings("deprecation") // Tracked as #5019 on github - convert to fragments
     private void updatePreference(SharedPreferences prefs, String key, PreferenceContext listener) {
         try {
             PreferenceScreen screen = listener.getPreferenceScreen();
@@ -728,7 +729,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     // Inner classes
     // ----------------------------------------------------------------------------
 
-    public static class SettingsFragment extends PreferenceFragment implements PreferenceContext, OnSharedPreferenceChangeListener {
+    @SuppressWarnings("deprecation") // Tracked as #5019 on github
+    public static class SettingsFragment extends android.preference.PreferenceFragment implements PreferenceContext, OnSharedPreferenceChangeListener {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);

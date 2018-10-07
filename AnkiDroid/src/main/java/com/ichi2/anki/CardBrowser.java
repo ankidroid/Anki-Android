@@ -18,7 +18,6 @@
 
 package com.ichi2.anki;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -32,7 +31,6 @@ import android.os.Handler;
 import android.os.SystemClock;
 import androidx.annotation.NonNull;
 import com.google.android.material.snackbar.Snackbar;
-import androidx.core.view.MenuItemCompat;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import android.text.TextUtils;
@@ -229,7 +227,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 mSearchTerms = savedFiltersObj.optString(searchName);
                 Timber.d("OnSelection using search terms: %s", mSearchTerms);
                 mSearchView.setQuery(mSearchTerms, false);
-                MenuItemCompat.expandActionView(mSearchItem);
+                mSearchItem.expandActionView();
                 searchCards();
             }
         }
@@ -577,7 +575,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
             mMySearchesItem.setVisible(savedFiltersObj != null && savedFiltersObj.length() > 0);
             mSearchItem = menu.findItem(R.id.action_search);
-            MenuItemCompat.setOnActionExpandListener(mSearchItem, new MenuItemCompat.OnActionExpandListener() {
+            mSearchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
                 @Override
                 public boolean onMenuItemActionExpand(MenuItem item) {
                     return true;
@@ -594,7 +592,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     return true;
                 }
             });
-            mSearchView = (SearchView) MenuItemCompat.getActionView(mSearchItem);
+            mSearchView = (SearchView) mSearchItem.getActionView();
             mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextChange(String newText) {
@@ -602,11 +600,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     return true;
                 }
 
-                @SuppressLint("RestrictedApi")
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     onSearch();
-                    //noinspection RestrictedApi
                     mSearchView.clearFocus();
                     return true;
                 }
@@ -968,7 +964,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         if (!"".equals(mSearchTerms) && (mSearchView != null)) {
             mSearchView.setQuery(mSearchTerms, false);
-            MenuItemCompat.expandActionView(mSearchItem);
+            mSearchItem.expandActionView();
         }
         if (mSearchTerms.contains("deck:")) {
             searchText = mSearchTerms;

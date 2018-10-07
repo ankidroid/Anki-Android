@@ -77,7 +77,7 @@ public class BasicAudioFieldController extends FieldControllerBase implements IF
             mField.setAudioPath(tempAudioPath);
             mField.setHasTemporaryMedia(true);
         });
-        layout.addView(mAudioView, LinearLayout.LayoutParams.FILL_PARENT);
+        layout.addView(mAudioView, LinearLayout.LayoutParams.MATCH_PARENT);
     }
 
 

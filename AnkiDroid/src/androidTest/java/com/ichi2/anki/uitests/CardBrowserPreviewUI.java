@@ -8,7 +8,6 @@ import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.rule.GrantPermissionRule;
-import androidx.test.runner.AndroidJUnit4;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -43,15 +42,13 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
 @androidx.test.filters.LargeTest
 @SuppressWarnings({"PMD.ExcessiveMethodLength", "deprecation"})
-@RunWith(AndroidJUnit4.class)
+@RunWith(androidx.test.runner.AndroidJUnit4.class)
 public class CardBrowserPreviewUI {
 
     @Rule
@@ -106,10 +103,10 @@ public class CardBrowserPreviewUI {
         }
 
         ViewInteraction appCompatSpinner = onView(
-                allOf(withId(R.id.note_type_spinner),
+                Matchers.allOf(ViewMatchers.withId(R.id.note_type_spinner),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.CardEditorLayout),
+                                        ViewMatchers.withId(R.id.CardEditorLayout),
                                         0),
                                 1)));
         appCompatSpinner.perform(scrollTo(), click());

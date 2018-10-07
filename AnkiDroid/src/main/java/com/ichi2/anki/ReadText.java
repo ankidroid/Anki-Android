@@ -48,7 +48,7 @@ public class ReadText {
 
 
     // private boolean mTtsReady = false;
-
+    @SuppressWarnings("deprecation") // Movement to new API tracked in github as #5021
     public static void speak(String text, String loc, int queueMode) {
         int result = mTts.setLanguage(localeFromStringIgnoringScriptAndExtensions(loc));
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
@@ -295,10 +295,13 @@ public class ReadText {
                         }
                     }
                     @Override
+                    @Deprecated
                     public void onError(String arg0) {
+                        // do nothing
                     }
                     @Override
                     public void onStart(String arg0) {
+                        // no nothing
                     }
                 });
             }

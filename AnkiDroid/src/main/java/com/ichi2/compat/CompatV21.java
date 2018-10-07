@@ -4,9 +4,15 @@ package com.ichi2.compat;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
 import android.view.View;
 import android.view.Window;
 import android.webkit.CookieManager;
+
+import com.ichi2.anki.AnkiDroidApp;
+
+import timber.log.Timber;
 
 /** Implementation of {@link Compat} for SDK level 21 */
 @TargetApi(21)
@@ -35,5 +41,19 @@ public class CompatV21 extends CompatV19 implements Compat {
     @Override
     public void setStatusBarColor(Window window, int color) {
         window.setStatusBarColor(color);
+    }
+
+    @Override
+    public int getCameraCount() {
+        CameraManager cameraManager = (CameraManager)AnkiDroidApp.getInstance().getApplicationContext()
+                .getSystemService(Context.CAMERA_SERVICE);
+        try {
+            if (cameraManager != null) {
+                return cameraManager.getCameraIdList().length;
+            }
+        } catch (CameraAccessException e) {
+            Timber.e(e, "Unable to enumerate cameras");
+        }
+        return 0;
     }
 }

@@ -1,23 +1,17 @@
 
 package org.apache.commons.httpclient.contrib.ssl;
 
-import org.apache.http.conn.ConnectTimeoutException;
-import org.apache.http.conn.scheme.LayeredSocketFactory;
-import org.apache.http.conn.scheme.SocketFactory;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.TrustManager;
 
-public class EasySSLSocketFactory implements SocketFactory, LayeredSocketFactory {
+@SuppressWarnings("deprecation") // tracking HTTP transport change in github already
+public class EasySSLSocketFactory implements org.apache.http.conn.scheme.SocketFactory, org.apache.http.conn.scheme.LayeredSocketFactory {
     private SSLContext sslcontext = null;
 
 
@@ -46,11 +40,9 @@ public class EasySSLSocketFactory implements SocketFactory, LayeredSocketFactory
      */
     @Override
     public Socket connectSocket(Socket sock, String host, int port, InetAddress localAddress, int localPort,
-            HttpParams params)
-
-    throws IOException, UnknownHostException, ConnectTimeoutException {
-        int connTimeout = HttpConnectionParams.getConnectionTimeout(params);
-        int soTimeout = HttpConnectionParams.getSoTimeout(params);
+                                org.apache.http.params.HttpParams params) throws IOException {
+        int connTimeout = org.apache.http.params.HttpConnectionParams.getConnectionTimeout(params);
+        int soTimeout = org.apache.http.params.HttpConnectionParams.getSoTimeout(params);
         InetSocketAddress remoteAddress = new InetSocketAddress(host, port);
         SSLSocket sslsock = (SSLSocket) ((sock != null) ? sock : createSocket());
 
@@ -92,8 +84,7 @@ public class EasySSLSocketFactory implements SocketFactory, LayeredSocketFactory
      *      boolean)
      */
     @Override
-    public Socket createSocket(Socket socket, String host, int port, boolean autoClose) throws IOException,
-            UnknownHostException {
+    public Socket createSocket(Socket socket, String host, int port, boolean autoClose) throws IOException {
         return getSSLContext().getSocketFactory().createSocket(socket, host, port, autoClose);
     }
 

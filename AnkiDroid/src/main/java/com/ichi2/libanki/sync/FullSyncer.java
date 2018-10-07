@@ -31,8 +31,6 @@ import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.VersionUtils;
 
-import org.apache.http.HttpResponse;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -74,10 +72,11 @@ public class FullSyncer extends HttpSyncer {
 
 
     @Override
+    @SuppressWarnings("deprecation") // tracking HTTP transport change in github already
     public Object[] download() throws UnknownHttpResponseException {
         InputStream cont;
         try {
-            HttpResponse ret = super.req("download");
+            org.apache.http.HttpResponse ret = super.req("download");
             if (ret == null) {
                 return null;
             }
@@ -141,6 +140,7 @@ public class FullSyncer extends HttpSyncer {
 
 
     @Override
+    @SuppressWarnings("deprecation") // tracking HTTP transport change in github already
     public Object[] upload() throws UnknownHttpResponseException {
         // make sure it's ok before we try to upload
         mCon.publishProgress(R.string.sync_check_upload_file);
@@ -153,7 +153,7 @@ public class FullSyncer extends HttpSyncer {
         // apply some adjustments, then upload
         mCol.beforeUpload();
         String filePath = mCol.getPath();
-        HttpResponse ret;
+        org.apache.http.HttpResponse ret;
         mCon.publishProgress(R.string.sync_uploading_message);
         try {
             ret = super.req("upload", new FileInputStream(filePath));

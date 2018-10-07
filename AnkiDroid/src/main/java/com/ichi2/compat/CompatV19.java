@@ -18,7 +18,7 @@ import com.ichi2.themes.Themes;
 
 /** Implementation of {@link Compat} for SDK level 19 */
 @TargetApi(19)
-public class CompatV19 extends CompatV17 implements Compat {
+public class CompatV19 extends CompatV18 implements Compat {
     private static final int ANIMATION_DURATION = 200;
     private static final float TRANSPARENCY = 0.90f;
 

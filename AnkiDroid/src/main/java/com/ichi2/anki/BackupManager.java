@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.os.StatFs;
 
 
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import java.io.BufferedInputStream;
@@ -210,8 +211,6 @@ public class BackupManager {
 
     /**
      * Get free disc space in bytes from path to Collection
-     * @param path
-     * @return
      */
     public static long getFreeDiscSpace(String path) {
         return getFreeDiscSpace(new File(path));
@@ -220,10 +219,7 @@ public class BackupManager {
 
     private static long getFreeDiscSpace(File file) {
         try {
-            StatFs stat = new StatFs(file.getParentFile().getPath());
-            long blocks = stat.getAvailableBlocks();
-            long blocksize = stat.getBlockSize();
-            return blocks * blocksize;
+            return CompatHelper.getCompat().getAvailableBytes(new StatFs(file.getParentFile().getPath()));
         } catch (IllegalArgumentException e) {
             Timber.e(e, "Free space could not be retrieved");
             return MIN_FREE_SPACE * 1024 * 1024;
@@ -241,9 +237,7 @@ public class BackupManager {
     public static boolean repairCollection(Collection col) {
         String deckPath = col.getPath();
         File deckFile = new File(deckPath);
-        if (col != null) {
-            col.close();
-        }
+        col.close();
 
         // repair file
         String execString = "sqlite3 " + deckPath + " .dump | sqlite3 " + deckPath + ".tmp";
@@ -327,7 +321,7 @@ public class BackupManager {
     }
 
 
-    public static boolean deleteDeckBackups(String colFile, int keepNumber) {
+    private static boolean deleteDeckBackups(String colFile, int keepNumber) {
         return deleteDeckBackups(getBackups(new File(colFile)), keepNumber);
     }
 
@@ -337,7 +331,7 @@ public class BackupManager {
     }
 
 
-    public static boolean deleteDeckBackups(File[] backups, int keepNumber) {
+    private static boolean deleteDeckBackups(File[] backups, int keepNumber) {
         if (backups == null) {
             return false;
         }
