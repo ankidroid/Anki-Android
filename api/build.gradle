@@ -43,6 +43,11 @@ task androidJavadocs(type: Javadoc) {
     }
 }
 
+// Deprecation is an error. Use @SuppressWarnings("deprecation") and justify in the PR if you must
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:deprecation" << "-Xmaxwarns" << "1000" << "-Werror"
+}
+
 task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
     classifier = 'javadoc'
     from androidJavadocs.destinationDir
