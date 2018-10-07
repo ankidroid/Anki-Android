@@ -97,3 +97,9 @@ Add the [following CSS](https://groups.google.com/d/topic/anki-android/TjakbVGJL
 .mobile .card {margin: 0.5ex 0em;}
 .mobile #content {margin: 0.5ex 0em;}
 ```
+
+### Drawing area on the front card (good for Kanji practice!)
+
+With some JavaScript it's possibile to draw shapes on the front card and display what was drawn on the back card for reference. This is quiet convenient to practice writing Kanji!
+
+A third party AnkiDroid user made his code open source: you can get it, along with an example deck on [anki-canvas' project page](https://github.com/pigoz/anki-canvas)
