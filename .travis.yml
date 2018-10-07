@@ -18,7 +18,7 @@ env:
    #- API=15 # fails consistently but can run locally
    - API=16 AUDIO=-no-audio
    - API=17
-   - API=18
+   #- API=18 # API18 has started being flaky
    - API=19
    # API 20 doesn't have an emulator
    - API=21
