@@ -45,11 +45,11 @@ public class UsageAnalytics {
     /**
      * Initialize the analytics provider - must be called prior to sending anything.
      * Usage after that is static
-     * TODO may need to implement sampling strategy internally to limit hits, or not track Reviewer...
+     * Note: may need to implement sampling strategy internally to limit hits, or not track Reviewer...
      *
      * @param context required to look up the analytics codes for the app
      */
-    public static void initialize(Context context) {
+    synchronized public static GoogleAnalytics initialize(Context context) {
         Timber.i("initialize()");
         if (sAnalytics == null) {
             Timber.d("tid = %s", context.getString(R.string.ga_trackingId));
@@ -74,24 +74,26 @@ public class UsageAnalytics {
         installDefaultExceptionHandler();
 
         SharedPreferences userPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        UsageAnalytics.setOptIn(userPrefs.getBoolean(ANALYTICS_OPTIN_KEY, false));
+        setOptIn(userPrefs.getBoolean(ANALYTICS_OPTIN_KEY, false));
         userPrefs.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> {
             if (key.equals(ANALYTICS_OPTIN_KEY)) {
-                UsageAnalytics.setOptIn(sharedPreferences.getBoolean(key, false));
-                UsageAnalytics.reInitialize();
+                setOptIn(sharedPreferences.getBoolean(key, false));
+                reInitialize();
             }
         });
+
+        return sAnalytics;
     }
 
 
     /**
      * We want to send an analytics hit on any exception, then chain to other handlers (e.g., ACRA)
      */
-    private static void installDefaultExceptionHandler() {
+    synchronized private static void installDefaultExceptionHandler() {
         sOriginalUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
-        Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
-            sendAnalyticsException(e, true);
-            sOriginalUncaughtExceptionHandler.uncaughtException(t, e);
+        Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
+            sendAnalyticsException(throwable, true);
+            sOriginalUncaughtExceptionHandler.uncaughtException(thread, throwable);
         });
     }
 
@@ -99,7 +101,7 @@ public class UsageAnalytics {
     /**
      * Reset the default exception handler
      */
-    private static void unInstallDefaultExceptionHandler() {
+    synchronized private static void unInstallDefaultExceptionHandler() {
         Thread.setDefaultUncaughtExceptionHandler(sOriginalUncaughtExceptionHandler);
         sOriginalUncaughtExceptionHandler = null;
     }
@@ -110,7 +112,7 @@ public class UsageAnalytics {
      *
      * @param optIn true allows collection of analytics information
      */
-    private static void setOptIn(boolean optIn) {
+    synchronized private static void setOptIn(boolean optIn) {
         Timber.i("setOptIn(): from %s to %s", sOptIn, optIn);
         sOptIn = optIn;
         sAnalytics.getConfig().setEnabled(optIn);
@@ -122,7 +124,7 @@ public class UsageAnalytics {
      *
      * @param dryRun set to true if you want to log analytics hit but not dispatch
      */
-    public static void setDryRun(boolean dryRun) {
+    synchronized public static void setDryRun(boolean dryRun) {
         Timber.i("setDryRun(): %s, warning dryRun is experimental", dryRun);
     }
 
@@ -203,15 +205,21 @@ public class UsageAnalytics {
      * @param t Throwable to send for analysis
      * @param fatal whether it was fatal or not
      */
-    public static void sendAnalyticsException(@NonNull Throwable t, boolean fatal)
-    {
-        // Get at the root cause if possible
-        Throwable root = t;
-        while (root.getCause() != null) {
-            root = t.getCause();
-        }
-        sendAnalyticsException(t.getClass().getSimpleName(), fatal);
+    public static void sendAnalyticsException(@NonNull Throwable t, boolean fatal) {
+        sendAnalyticsException(getCause(t).toString(), fatal);
     }
+
+
+    public static Throwable getCause(Throwable t) {
+        Throwable cause;
+        Throwable result = t;
+
+        while (null != (cause = result.getCause())  && (!result.equals(cause)) ) {
+            result = cause;
+        }
+        return result;
+    }
+
 
     /**
      * Send an exception event out for aggregation/analysis
@@ -222,6 +230,6 @@ public class UsageAnalytics {
     @SuppressWarnings("WeakerAccess")
     public static void sendAnalyticsException(@NonNull String description, boolean fatal) {
         Timber.d("sendAnalyticsException() description/fatal: %s/%s", description, fatal);
-        sAnalytics.exception().exceptionDescription(description).exceptionFatal(fatal).send();
+        sAnalytics.exception().exceptionDescription(description).exceptionFatal(fatal).sendAsync();
     }
 }
