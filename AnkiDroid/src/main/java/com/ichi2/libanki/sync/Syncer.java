@@ -29,7 +29,6 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 
-import org.apache.http.HttpResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,6 +44,7 @@ import java.util.Map;
 
 import timber.log.Timber;
 
+@SuppressWarnings("deprecation") // tracking HTTP transport change in github already
 public class Syncer {
     // Mapping of column type names to Cursor types for API < 11
     public static final int TYPE_NULL = 0;
@@ -81,12 +81,13 @@ public class Syncer {
     }
 
 
+    @SuppressWarnings("deprecation") // tracking HTTP transport change in github already
     public Object[] sync(Connection con) throws UnknownHttpResponseException {
         mSyncMsg = "";
         // if the deck has any pending changes, flush them first and bump mod time
         mCol.save();
         // step 1: login & metadata
-        HttpResponse ret = mServer.meta();
+        org.apache.http.HttpResponse ret = mServer.meta();
         if (ret == null) {
             return null;
         }

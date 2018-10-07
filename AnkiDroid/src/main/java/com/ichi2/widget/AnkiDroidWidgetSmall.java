@@ -89,6 +89,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         }
 
         @Override
+        @Deprecated
         public void onStart(Intent intent, int startId) {
             Timber.i("SmallWidget: OnStart");
 

@@ -18,10 +18,13 @@ package com.ichi2.compat;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.StatFs;
+import android.text.Spanned;
 import android.view.View;
 import android.view.Window;
 import android.webkit.WebSettings;
 import android.widget.RemoteViews;
+import android.widget.TimePicker;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiActivity;
@@ -72,5 +75,13 @@ public interface Compat {
     boolean deleteDatabase(File db);
     Uri getExportUri(Context context, File file);
     void setupNotificationChannel(Context context, String id, String name);
+    Spanned fromHtml(String html);
+    long getAvailableBytes(StatFs stat);
+    long getTotalBytes(StatFs stat);
+    void setTime(TimePicker picker, int hour, int minute);
+    int getHour(TimePicker picker);
+    int getMinute(TimePicker picker);
+    int getCameraCount();
+    void vibrate(Context context, long durationMillis);
 }
 

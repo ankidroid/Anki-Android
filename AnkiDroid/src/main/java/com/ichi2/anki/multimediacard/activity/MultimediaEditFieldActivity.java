@@ -101,7 +101,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
     private void finishCancel() {
         Intent resultData = new Intent();
         setResult(RESULT_CANCELED, resultData);
-        finish();
+        finishWithoutAnimation();
     }
 
 

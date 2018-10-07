@@ -5,13 +5,18 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import androidx.core.content.ContextCompat;
+
+import android.os.StatFs;
+import android.os.Vibrator;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.widget.LinearLayout;
 import android.widget.RemoteViews;
+import android.widget.TimePicker;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiActivity;
@@ -48,7 +53,7 @@ public class CompatV15 implements Compat {
     @Override
     @SuppressWarnings("deprecation")
     public void prepareWebViewCookies(Context context) {
-        CookieSyncManager.createInstance(context);
+        android.webkit.CookieSyncManager.createInstance(context);
     }
 
     // Cookie data may be lost when an application exists just after it was written.
@@ -57,7 +62,7 @@ public class CompatV15 implements Compat {
     @Override
     @SuppressWarnings("deprecation")
     public void flushWebViewCookies() {
-        CookieSyncManager.getInstance().sync();
+        android.webkit.CookieSyncManager.getInstance().sync();
     }
 
     // Below API level 17, there is no simple way to enable the auto play feature of HTML media elements.
@@ -116,4 +121,48 @@ public class CompatV15 implements Compat {
 
     @Override
     public void setupNotificationChannel(Context context, String id, String name) { /* pre-API26, do nothing */ }
+
+    // Until API 24 we ignore flags
+    @Override
+    @SuppressWarnings("deprecation")
+    public Spanned fromHtml(String htmlString) {
+        return Html.fromHtml(htmlString);
+    }
+
+    // Until API 18 it's not a long it's an int
+    @Override
+    @SuppressWarnings("deprecation")
+    public long getAvailableBytes(StatFs stat) { return stat.getAvailableBlocks() * stat.getBlockSize(); }
+    @Override
+    @SuppressWarnings("deprecation")
+    public long getTotalBytes(StatFs stat) { return stat.getBlockCount() * stat.getBlockSize(); }
+
+    // Until API 23 the methods have "current" in the name
+    @Override
+    @SuppressWarnings("deprecation")
+    public void setTime(TimePicker picker, int hour, int minute) {
+        picker.setCurrentHour(hour);
+        picker.setCurrentMinute(minute);
+    }
+    @Override
+    @SuppressWarnings("deprecation")
+    public int getHour(TimePicker picker) { return picker.getCurrentHour(); }
+    @Override
+    @SuppressWarnings("deprecation")
+    public int getMinute(TimePicker picker) { return picker.getCurrentMinute(); }
+
+    // Until API 21 it's Camera v1
+    @Override
+    @SuppressWarnings("deprecation")
+    public int getCameraCount() { return android.hardware.Camera.getNumberOfCameras(); }
+
+    // Until API 26 just specify time, after that specify effect also
+    @Override
+    @SuppressWarnings("deprecation")
+    public void vibrate(Context context, long durationMillis) {
+        Vibrator vibratorManager = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibratorManager != null) {
+            vibratorManager.vibrate(durationMillis);
+        }
+    }
 }

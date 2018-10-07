@@ -33,12 +33,14 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
 import com.ichi2.anki.R;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
 
@@ -83,7 +85,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         int height = metrics.heightPixels;
         int width = metrics.widthPixels;
 
-        LinearLayout.LayoutParams p = new LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT,
+        LinearLayout.LayoutParams p = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
         setPreviewImage(mField.getImagePath(), getMaxImageSize());
         mImagePreview.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
@@ -133,13 +135,13 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         // Some hardware has no camera or reports yes but has zero (e.g., cheap devices, and Chromebook emulator)
         if ((!context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA) &&
                 !context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT)) ||
-                (android.hardware.Camera.getNumberOfCameras() < 1)) {
+                (CompatHelper.getCompat().getCameraCount() < 1)) {
             mBtnCamera.setVisibility(View.INVISIBLE);
         }
 
-        layout.addView(mImagePreview, android.view.ViewGroup.LayoutParams.FILL_PARENT, p);
-        layout.addView(mBtnGallery, android.view.ViewGroup.LayoutParams.FILL_PARENT);
-        layout.addView(mBtnCamera, android.view.ViewGroup.LayoutParams.FILL_PARENT);
+        layout.addView(mImagePreview, ViewGroup.LayoutParams.MATCH_PARENT, p);
+        layout.addView(mBtnGallery, ViewGroup.LayoutParams.MATCH_PARENT);
+        layout.addView(mBtnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
     }
 
 

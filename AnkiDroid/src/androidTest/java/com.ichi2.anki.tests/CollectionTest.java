@@ -3,7 +3,6 @@ package com.ichi2.anki.tests;
 import android.Manifest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.ichi2.anki.CollectionHelper;
 
@@ -17,7 +16,7 @@ import static org.junit.Assert.assertNotNull;
  * This test case verifies that the directory initialization works even if the app is not yet fully initialized.
  */
 @SuppressWarnings("deprecation")
-@RunWith(AndroidJUnit4.class)
+@RunWith(androidx.test.runner.AndroidJUnit4.class)
 public class CollectionTest {
 
     @Rule

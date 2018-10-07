@@ -16,7 +16,6 @@
  
 package com.ichi2.ui;
  
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
 import androidx.viewpager.widget.PagerAdapter;
@@ -34,7 +33,7 @@ import android.widget.TextView;
  * the user's scroll progress.
  * <p>
  * To use the component, simply add it to your view hierarchy. Then in your
- * {@link android.app.Activity} or {@link androidx.core.app.Fragment} call
+ * {@link android.app.Activity} or {@link androidx.fragment.app.Fragment} call
  * {@link #setViewPager(ViewPager)} providing it the ViewPager this layout is being used for.
  * <p>
  * The colors can be customized in two ways. The first and simplest is to provide an array of colors
@@ -159,7 +158,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
  
         mViewPager = viewPager;
         if (viewPager != null) {
-            viewPager.setOnPageChangeListener(new InternalViewPagerListener());
+            viewPager.addOnPageChangeListener(new InternalViewPagerListener());
             populateTabStrip();
         }
     }
@@ -168,7 +167,6 @@ public class SlidingTabLayout extends HorizontalScrollView {
      * Create a default view to be used for tabs. This is called if a custom tab view is not set via
      * {@link #setCustomTabView(int, int)}.
      */
-    @SuppressLint("NewApi")
 	protected TextView createDefaultTabView(Context context) {
         TextView textView = new TextView(context);
         textView.setGravity(Gravity.CENTER);

@@ -7,7 +7,6 @@ import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.rule.GrantPermissionRule;
-import androidx.test.runner.AndroidJUnit4;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -44,7 +43,7 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @SuppressWarnings({"PMD.ExcessiveMethodLength", "deprecation"})
-@RunWith(AndroidJUnit4.class)
+@RunWith(androidx.test.runner.AndroidJUnit4.class)
 public class ActivityTestUI {
 
     @Rule

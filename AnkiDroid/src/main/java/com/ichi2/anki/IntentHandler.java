@@ -115,12 +115,9 @@ public class IntentHandler extends Activity {
                         .title(title)
                         .content(errorMessage)
                         .positiveText(getResources().getString(R.string.dialog_ok))
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
+                        .onPositive((dialog, which) -> {
                                 finishWithFade();
-                            }
-                        })
+                            })
                         .build().show();
             }
         } else if ("com.ichi2.anki.DO_SYNC".equals(action)) {

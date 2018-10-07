@@ -38,11 +38,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-import android.os.Vibrator;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.appcompat.app.ActionBar;
-import android.text.ClipboardManager;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
@@ -96,6 +94,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
 import java.util.HashMap;
@@ -121,8 +120,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      */
     public static final int RESULT_DEFAULT = 50;
     public static final int RESULT_NO_MORE_CARDS = 52;
-    public static final int RESULT_EDIT_CARD_RESET = 53;
-    public static final int RESULT_DECK_CLOSED = 55;
 
     /**
      * Available options performed by other activities.
@@ -160,7 +157,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     // Type answer patterns
     private static final Pattern sTypeAnsPat = Pattern.compile("\\[\\[type:(.+?)\\]\\]");
-    private static final Pattern sTypeAnsTyped = Pattern.compile("typed=([^&]*)");
 
     /** to be sent to and from the card editor */
     private static Card sEditorCard;
@@ -222,7 +218,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /**
      * Variables to hold layout objects that we need to update or handle events for
      */
-    private View mMainLayout;
     private View mLookUpIcon;
     private FrameLayout mCardContainer;
     private WebView mCard;
@@ -250,7 +245,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected RelativeLayout mTopBarLayout;
     private Chronometer mCardTimer;
     protected Whiteboard mWhiteboard;
-    private ClipboardManager mClipboard;
+    @SuppressWarnings("deprecation") // Tracked separately as #5023 on github
+    private android.text.ClipboardManager mClipboard;
 
     protected Card mCurrentCard;
     private int mCurrentEase;
@@ -352,8 +348,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 String lookupHint = getResources().getString(R.string.lookup_hint);
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, lookupHint, false);
             }
-            Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            vibratorManager.vibrate(50);
+            CompatHelper.getCompat().vibrate(AnkiDroidApp.getInstance().getApplicationContext(), 50);
             longClickHandler.postDelayed(startLongClickAction, 300);
         }
     };
@@ -408,6 +403,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     break;
                 default:
                     mCurrentEase = 0;
+                    break;
             }
         }
     };
@@ -434,6 +430,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     default:
                         longClickHandler.removeCallbacks(longClickTestRunnable);
                         mTouchStarted = false;
+                        break;
                 }
             }
             try {
@@ -450,6 +447,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected DeckTask.TaskListener mDismissCardHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
+            // do nothing
         }
 
 
@@ -470,6 +468,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public void onCancelled() {
+            // do nothing
         }
     };
 
@@ -538,6 +537,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public void onCancelled() {
+            // do nothing
         }
     };
 
@@ -613,6 +613,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public void onCancelled() {
+            // do nothing
         }
     };
 
@@ -987,12 +988,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    // These three methods use a deprecated API - they should be updated to possibly use its more modern version.
+    @SuppressWarnings("deprecation") // Tracked separately as #5023 on github
     protected boolean clipboardHasText() {
         return mClipboard != null && mClipboard.hasText();
     }
 
 
+    @SuppressWarnings("deprecation") // Tracked separately as #5023 on github
     private void clipboardSetText(CharSequence text) {
         if (mClipboard != null) {
             try {
@@ -1015,6 +1017,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      *
      * @return the text in clipboard or the empty string.
      */
+    @SuppressWarnings("deprecation") // Tracked separately as #5023 on github
     private CharSequence clipboardGetText() {
         CharSequence text = mClipboard != null ? mClipboard.getText() : null;
         return text != null ? text : "";
@@ -1285,8 +1288,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     // Set the content view to the one provided and initialize accessors.
+    @SuppressWarnings("deprecation") // Tracked separately as #5023 on github for clipboard
     protected void initLayout() {
-        mMainLayout = findViewById(R.id.main_layout);
         mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
 
         mTopBarLayout = (RelativeLayout) findViewById(R.id.top_bar);
@@ -1294,7 +1297,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
         mTouchLayer.setOnTouchListener(mGestureListener);
         if (!mDisableClipboard) {
-            mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            mClipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         }
         mCardFrame.removeAllViews();
 
@@ -1414,11 +1417,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    @SuppressLint({"NewApi", "SetJavaScriptEnabled"})
-    // because of setDisplayZoomControls.
+    @SuppressLint("SetJavaScriptEnabled") // they request we review carefully because of XSS security, we have
     private WebView createWebView() {
         WebView webView = new MyWebView(this);
-        webView.setWillNotCacheDrawing(true);
         webView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
         webView.getSettings().setDisplayZoomControls(false);
         webView.getSettings().setBuiltInZoomControls(true);
@@ -1436,6 +1437,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             // Filter any links using the custom "playsound" protocol defined in Sound.java.
             // We play sounds through these links when a user taps the sound icon.
             @Override
+            @SuppressWarnings("deprecation") // tracked as #5017 in github
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.startsWith("playsound:")) {
                     // Send a message that will be handled on the UI thread.
@@ -1457,7 +1459,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 }
                 if (url.startsWith("typeentertext:")) {
                     // Store the text the javascript has send us…
-                    mTypeInput = URLDecoder.decode(url.replaceFirst("typeentertext:", ""));
+                    try {
+                        mTypeInput = URLDecoder.decode(url.replaceFirst("typeentertext:", ""), "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        Timber.e(e, "UTF-8 isn't supported as an encoding?");
+                    }
                     // … and show the answer.
                     mFlipCardLayout.performClick();
                     return true;
@@ -2467,6 +2473,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * Select Text in the webview and automatically sends the selected text to the clipboard. From
      * http://cosmez.blogspot.com/2010/04/webview-emulateshiftheld-on-android.html
      */
+    @SuppressWarnings("deprecation") // Tracked separately in Github as #5024
     private void selectAndCopyText() {
         try {
             KeyEvent shiftPressEvent = new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, 0, 0);

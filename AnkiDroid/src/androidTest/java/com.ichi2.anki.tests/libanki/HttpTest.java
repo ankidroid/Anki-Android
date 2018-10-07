@@ -13,10 +13,9 @@ import org.junit.runner.RunWith;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
-import androidx.test.runner.AndroidJUnit4;
 
 @SuppressWarnings("deprecation")
-@RunWith(AndroidJUnit4.class)
+@RunWith(androidx.test.runner.AndroidJUnit4.class)
 public class HttpTest {
 
     @Rule

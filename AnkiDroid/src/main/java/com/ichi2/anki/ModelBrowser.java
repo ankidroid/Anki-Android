@@ -19,6 +19,9 @@ package com.ichi2.anki;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -354,9 +357,7 @@ public class ModelBrowser extends AnkiActivity {
                 .title(R.string.model_browser_add)
                 .positiveText(R.string.dialog_ok)
                 .customView(addSelectionSpinner, true)
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
+                .onPositive((dialog, which) -> {
                         mModelNameInput = new EditText(ModelBrowser.this);
                         mModelNameInput.setSingleLine();
 
@@ -375,17 +376,15 @@ public class ModelBrowser extends AnkiActivity {
                                 .title(R.string.model_browser_add)
                                 .positiveText(R.string.dialog_ok)
                                 .customView(mModelNameInput, true)
-                                .callback(new MaterialDialog.ButtonCallback() {
-                                    @Override
-                                    public void onPositive(MaterialDialog dialog) {
+                                .onPositive((innerDialog, innerWhich) -> {
                                         String modelName = mModelNameInput.getText().toString();
                                         addNewNoteType(modelName, addSelectionSpinner.getSelectedItemPosition());
                                     }
-                                })
+                                )
                                 .negativeText(R.string.dialog_cancel)
                                 .show();
                     }
-                })
+                )
                 .negativeText(R.string.dialog_cancel)
                 .show();
     }
@@ -425,6 +424,7 @@ public class ModelBrowser extends AnkiActivity {
                         JSONObject newModel = Models.addBasicModel(col);
                         oldModel.put("id", newModel.get("id"));
                         model = oldModel;
+                        break;
 
                 }
                 model.put("name", modelName);
@@ -501,9 +501,7 @@ public class ModelBrowser extends AnkiActivity {
                                 .positiveText(R.string.rename)
                                 .negativeText(R.string.dialog_cancel)
                                 .customView(mModelNameInput, true)
-                                .callback(new MaterialDialog.ButtonCallback() {
-                                    @Override
-                                    public void onPositive(MaterialDialog dialog) {
+                                .onPositive((dialog, which) -> {
                                         JSONObject model = mModels.get(mModelListPosition);
                                         String deckName = mModelNameInput.getText().toString()
                                                 .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
@@ -523,8 +521,8 @@ public class ModelBrowser extends AnkiActivity {
                                         } else {
                                             showToast(getResources().getString(R.string.toast_empty_name));
                                         }
-                                    }
-                                }).show();
+                                    })
+                                .show();
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -650,7 +648,7 @@ public class ModelBrowser extends AnkiActivity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             DisplayPair item = getItem(position);
 
             if (convertView == null) {

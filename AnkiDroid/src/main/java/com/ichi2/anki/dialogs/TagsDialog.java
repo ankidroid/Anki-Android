@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
@@ -39,7 +38,7 @@ public class TagsDialog extends DialogFragment {
         void onPositive(List<String> selectedTags, int option);
     }
 
-    public static final int TYPE_NONE = -1;
+    private static final int TYPE_NONE = -1;
     public static final int TYPE_ADD_TAG = 0;
     public static final int TYPE_FILTER_BY_TAG = 1;
     public static final int TYPE_CUSTOM_STUDY_TAGS = 2;
@@ -175,7 +174,7 @@ public class TagsDialog extends DialogFragment {
         MenuItem mToolbarAddItem = mToolbar.getMenu().findItem(R.id.tags_dialog_action_add);
         mToolbarAddItem.setOnMenuItemClickListener(menuItem -> {
             String query = mToolbarSearchView.getQuery().toString();
-            if (MenuItemCompat.isActionViewExpanded(mToolbarSearchItem) && !TextUtils.isEmpty(query)) {
+            if (mToolbarSearchItem.isActionViewExpanded() && !TextUtils.isEmpty(query)) {
                 addTag(query);
                 mToolbarSearchView.setQuery("", true);
             } else {
@@ -194,7 +193,7 @@ public class TagsDialog extends DialogFragment {
         });
 
         mToolbarSearchItem = mToolbar.getMenu().findItem(R.id.tags_dialog_action_filter);
-        mToolbarSearchView = (SearchView) MenuItemCompat.getActionView(mToolbarSearchItem);
+        mToolbarSearchView = (SearchView) mToolbarSearchItem.getActionView();
 
         EditText queryET = mToolbarSearchView.findViewById(R.id.search_src_text);
         queryET.setFilters(new InputFilter[]{addTagFilter});

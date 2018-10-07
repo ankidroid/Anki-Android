@@ -22,7 +22,6 @@ import android.app.NotificationManager;
 import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.NotificationChannels;
@@ -41,7 +40,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @SuppressWarnings("deprecation")
-@RunWith(AndroidJUnit4.class)
+@RunWith(androidx.test.runner.AndroidJUnit4.class)
 public class NotificationChannelTest {
 
     @Rule

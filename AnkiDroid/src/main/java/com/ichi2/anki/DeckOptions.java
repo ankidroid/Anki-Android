@@ -270,18 +270,16 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                             .content(R.string.full_sync_confirmation)
                                             .positiveText(R.string.dialog_ok)
                                             .negativeText(R.string.dialog_cancel)
-                                            .callback(new MaterialDialog.ButtonCallback() {
-                                                @Override
-                                                public void onPositive(MaterialDialog dialog) {
+                                            .onPositive((dialog, which) -> {
                                                     mCol.modSchemaNoCheck();
                                                     try {
                                                         remConf();
-                                                    } catch (ConfirmModSchemaException e) {
+                                                    } catch (ConfirmModSchemaException cmse) {
                                                         // This should never be reached as we just forced modSchema
-                                                        throw new RuntimeException(e);
+                                                        throw new RuntimeException(cmse);
                                                     }
                                                 }
-                                            })
+                                            )
                                             .build().show();
                                 }
                             }
@@ -580,6 +578,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
 
     @Override
+    @SuppressWarnings("deprecation") // conversion to fragments tracked as #5019 in github
     protected void onCreate(Bundle icicle) {
         Themes.setThemeLegacy(this);
         super.onCreate(icicle);
@@ -690,6 +689,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     }
 
 
+    @SuppressWarnings("deprecation") // Tracked as #5019 on github
     protected void updateSummaries() {
         Resources res = getResources();
         // for all text preferences, set summary as current database value
@@ -734,6 +734,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     }
 
 
+    @SuppressWarnings("deprecation") // Tracked as #5019 on github
     protected void buildLists() {
         ListPreference deckConfPref = (ListPreference) findPreference("deckConf");
         ArrayList<JSONObject> confs = mCol.getDecks().allConf();
