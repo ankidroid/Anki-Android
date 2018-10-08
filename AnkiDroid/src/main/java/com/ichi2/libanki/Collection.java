@@ -1050,7 +1050,7 @@ public class Collection {
                 if (type.equals("q") && model.getInt("type") == Consts.MODEL_CLOZE) {
                     if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
                         String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
-                        d.put("q", String.format("Please edit this note and add some cloze deletions. (%s)", link));
+                        d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
                     }
                 }
             }
