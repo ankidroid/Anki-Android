@@ -391,6 +391,7 @@ public class Sched {
                 // if we've already seen the exact same deck name, remove the
                 // invalid duplicate and reload
                 if (lims.containsKey(deck.getString("name"))) {
+                    Timber.i("deckDueList() removing duplicate deck %s", deck.getString("name"));
                     mCol.getDecks().rem(deck.getLong("id"), false, true);
                     return deckDueList();
                 }
