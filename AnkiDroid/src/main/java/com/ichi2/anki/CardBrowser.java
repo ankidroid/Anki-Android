@@ -636,6 +636,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (search != null && search.length() != 0) {
                 Timber.d("CardBrowser :: Called with search intent: %s", search.toString());
                 mSearchView.setQuery(search, true);
+                intent.setAction(Intent.ACTION_DEFAULT);
             }
         }
 
