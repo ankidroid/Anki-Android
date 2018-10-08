@@ -37,6 +37,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.provider.Settings;
 import com.google.android.material.snackbar.Snackbar;
+
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -393,6 +394,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
             mPullToSyncWrapper.setRefreshing(false);
             sync();
         });
+        mPullToSyncWrapper.getViewTreeObserver().addOnScrollChangedListener(() ->
+                mPullToSyncWrapper.setEnabled(mRecyclerViewLayoutManager.findFirstCompletelyVisibleItemPosition() == 0));
 
         // Setup the FloatingActionButtons, should work everywhere with min API >= 15
         mActionsMenu = findViewById(R.id.add_content_menu);
