@@ -24,6 +24,7 @@ import android.view.animation.Animation;
 import android.widget.ProgressBar;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
@@ -72,6 +73,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     @Override
     protected void onResume() {
         super.onResume();
+        UsageAnalytics.sendAnalyticsScreenView(this);
         ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).cancel(SIMPLE_NOTIFICATION_ID);
         // Show any pending dialogs which were stored persistently
         mHandler.readMessage();

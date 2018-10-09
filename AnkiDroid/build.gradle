@@ -69,6 +69,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
 }
 
 
@@ -103,6 +106,9 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
 }
 
 dependencies {
+    compileOnly "com.google.auto.service:auto-service:1.0-rc4"
+    annotationProcessor "com.google.auto.service:auto-service:1.0-rc4"
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.0'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
@@ -119,6 +125,10 @@ dependencies {
     implementation'ch.acra:acra-dialog:5.2.0'
     implementation'ch.acra:acra-toast:5.2.0'
     implementation'ch.acra:acra-limiter:5.2.0'
+
+    implementation 'net.mikehardy:google-analytics-java:2.0.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'com.arcao:slf4j-timber:3.0'
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.google.code.gson:gson:2.8.5'

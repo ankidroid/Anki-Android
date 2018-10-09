@@ -63,10 +63,12 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
+import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.CustomStudyDialog;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
+import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
 import com.ichi2.anki.dialogs.DeckPickerContextMenu;
@@ -840,6 +842,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void showStartupScreensAndDialogs(SharedPreferences preferences, int skip) {
+
         if (!BackupManager.enoughDiscSpace(CollectionHelper.getCurrentAnkiDroidDirectory(this))) {
             // Not enough space to do backup
             showDialogFragment(DeckPickerNoSpaceLeftDialog.newInstance());
@@ -852,7 +855,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
             preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
             onFinishedStartup();
         } else if (skip < 2 && !preferences.getString("lastVersion", "").equals(VersionUtils.getPkgVersionName())) {
-            // AnkiDroid is being updated and a collection already exists. We check if we are upgrading
+            // AnkiDroid is being updated and a collection already exists.
+
+            // The user might appreciate us now, see if they will help us get better?
+            if (!preferences.contains(UsageAnalytics.ANALYTICS_OPTIN_KEY)) {
+                showDialogFragment(DeckPickerAnalyticsOptInDialog.newInstance());
+            }
+
+            // For upgrades, we check if we are upgrading
             // to a version that contains additions to the database integrity check routine that we would
             // like to run on all collections. A missing version number is assumed to be a fresh
             // installation of AnkiDroid and we don't run the check.

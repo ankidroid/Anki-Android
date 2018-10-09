@@ -14,8 +14,9 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.dialogs;
+package com.ichi2.anki.analytics;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -40,12 +41,11 @@ import timber.log.Timber;
  * This file will appear to have static type errors because BaseCrashReportDialog extends android.support.XXX
  * instead of androidx.XXX . Details at {@see https://github.com/ankidroid/Anki-Android/wiki/Crash-Reports}
  */
+@SuppressLint("Registered") // we are sufficiently registered in this special case
 public class AnkiDroidCrashReportDialog extends BaseCrashReportDialog implements DialogInterface.OnClickListener, DialogInterface.OnDismissListener {
     private static final String STATE_COMMENT = "comment";
-    CheckBox mAlwaysReportCheckBox;
-    EditText mUserComment;
-
-    AlertDialog mDialog;
+    private CheckBox mAlwaysReportCheckBox;
+    private EditText mUserComment;
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -68,24 +68,23 @@ public class AnkiDroidCrashReportDialog extends BaseCrashReportDialog implements
         }
         dialogBuilder.setView(buildCustomView(savedInstanceState));
 
-        mDialog = dialogBuilder.create();
-        mDialog.setCanceledOnTouchOutside(false);
-        mDialog.setOnDismissListener(this);
-        mDialog.show();
+        AlertDialog dialog = dialogBuilder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setOnDismissListener(this);
+        dialog.show();
     }
 
     /**
      * Build the custom view used by the dialog
-     * @param savedInstanceState
-     * @return
      */
     private View buildCustomView(Bundle savedInstanceState) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
         LayoutInflater inflater = getLayoutInflater();
+        @SuppressLint("InflateParams") // when you inflate into an alert dialog, you have no parent view
         View rootView = inflater.inflate(R.layout.feedback, null);
-        mAlwaysReportCheckBox = (CheckBox) rootView.findViewById(R.id.alwaysReportCheckbox);
+        mAlwaysReportCheckBox = rootView.findViewById(R.id.alwaysReportCheckbox);
         mAlwaysReportCheckBox.setChecked(preferences.getBoolean("autoreportCheckboxValue", true));
-        mUserComment = (EditText) rootView.findViewById(R.id.etFeedbackText);
+        mUserComment = rootView.findViewById(R.id.etFeedbackText);
         // Set user comment if reloading after the activity has been stopped
         if (savedInstanceState != null) {
             String savedValue = savedInstanceState.getString(STATE_COMMENT);
@@ -102,10 +101,10 @@ public class AnkiDroidCrashReportDialog extends BaseCrashReportDialog implements
             // Next time don't tick the auto-report checkbox by default
             boolean autoReport = mAlwaysReportCheckBox.isChecked();
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
-            preferences.edit().putBoolean("autoreportCheckboxValue", autoReport).commit();
+            preferences.edit().putBoolean("autoreportCheckboxValue", autoReport).apply();
             // Set the autoreport value to true if ticked
             if (autoReport) {
-                preferences.edit().putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, AnkiDroidApp.FEEDBACK_REPORT_ALWAYS).commit();
+                preferences.edit().putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, AnkiDroidApp.FEEDBACK_REPORT_ALWAYS).apply();
                 AnkiDroidApp.getInstance().setAcraReportingMode(AnkiDroidApp.FEEDBACK_REPORT_ALWAYS);
             }
             // Send the crash report

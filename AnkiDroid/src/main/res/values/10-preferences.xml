@@ -237,4 +237,9 @@
     <string name="deck_conf_cram_steps_summ">Define custom steps</string>
     <string name="deck_conf_reminders_enabled">Enable reminder notifications for this deck</string>
     <string name="deck_conf_reminders_time">Remind at</string>
-</resources>
+
+    <!-- analytics options -->
+    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
+    <string name="analytics_title">Share feature usage</string>
+    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+"</resources>
