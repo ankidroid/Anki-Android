@@ -65,7 +65,7 @@ public class UsageAnalytics {
                             .applicationId(BuildConfig.APPLICATION_ID)
                             .trackingId(context.getString(R.string.ga_trackingId))
                             .clientId(Installation.id(context))
-                            .anonymizeIp(Boolean.getBoolean(context.getString(R.string.ga_anonymizeIp)))
+                            .anonymizeIp(context.getResources().getBoolean(R.bool.ga_anonymizeIp))
                     )
                     .withHttpClient(new OkHttpClientImpl(gaConfig))
                     .build();
