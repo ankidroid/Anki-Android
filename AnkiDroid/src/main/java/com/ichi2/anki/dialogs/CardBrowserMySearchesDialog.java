@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.Bundle;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
+import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.ui.ButtonItemAdapter;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.HashMap;
 
 import timber.log.Timber;
 
-public class CardBrowserMySearchesDialog extends DialogFragment {
+public class CardBrowserMySearchesDialog extends AnalyticsDialogFragment {
 
     public static int CARD_BROWSER_MY_SEARCHES_TYPE_LIST = 0; //list searches dialog
     public static int CARD_BROWSER_MY_SEARCHES_TYPE_SAVE = 1; //save searches dialog

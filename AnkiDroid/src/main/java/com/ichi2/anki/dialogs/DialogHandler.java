@@ -14,6 +14,7 @@ import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.R;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Utils;
+import com.ichi2.anki.analytics.UsageAnalytics;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -44,6 +45,18 @@ public class DialogHandler extends Handler {
     public static final int MSG_SHOW_FORCE_FULL_SYNC_DIALOG = 7;
     public static final int MSG_DO_SYNC = 8;
 
+    public static final String[] sMessageNameList = {
+            "CollectionLoadErrorDialog",
+            "ImportReplaceDialog",
+            "ImportAddDialog",
+            "SyncErrorDialog",
+            "ExportCompleteDialog",
+            "MediaCheckCompleteDialog",
+            "DatabaseErrorDialog",
+            "ForceFullSyncDialog",
+            "DoSyncDialog"
+    };
+
 
     WeakReference<AnkiActivity> mActivity;
     private static Message sStoredMessage;
@@ -57,6 +70,7 @@ public class DialogHandler extends Handler {
     @Override
     public void handleMessage(Message msg) {
         Bundle msgData = msg.getData();
+        UsageAnalytics.sendAnalyticsScreenView(sMessageNameList[msg.what]);
         if (msg.what == MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG) {
             // Collection could not be opened
             ((DeckPicker) mActivity.get()).showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);

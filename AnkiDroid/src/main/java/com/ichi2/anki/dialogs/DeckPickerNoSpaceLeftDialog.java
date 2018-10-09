@@ -2,13 +2,13 @@ package com.ichi2.anki.dialogs;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import androidx.fragment.app.DialogFragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
+import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
-public class DeckPickerNoSpaceLeftDialog extends DialogFragment {
+public class DeckPickerNoSpaceLeftDialog extends AnalyticsDialogFragment {
     public static DeckPickerNoSpaceLeftDialog newInstance() {
         DeckPickerNoSpaceLeftDialog f = new DeckPickerNoSpaceLeftDialog();
         return f;

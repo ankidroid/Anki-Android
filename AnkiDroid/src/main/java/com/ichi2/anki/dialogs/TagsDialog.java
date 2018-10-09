@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
@@ -27,13 +26,14 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.TreeSet;
 
-public class TagsDialog extends DialogFragment {
+public class TagsDialog extends AnalyticsDialogFragment {
     public interface TagsDialogListener {
         void onPositive(List<String> selectedTags, int option);
     }
