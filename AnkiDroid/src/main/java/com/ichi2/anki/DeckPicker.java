@@ -52,6 +52,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -400,6 +401,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 sync();
             }
         });
+        mPullToSyncWrapper.getViewTreeObserver()
+                .addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+                    @Override
+                    public void onScrollChanged() {
+                        mPullToSyncWrapper.setEnabled(mRecyclerViewLayoutManager.findFirstCompletelyVisibleItemPosition() == 0);
+                        }
+                });
 
         // Setup the FloatingActionButtons
         mActionsMenu = (FloatingActionsMenu) findViewById(R.id.add_content_menu);
