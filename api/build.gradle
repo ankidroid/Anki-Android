@@ -6,7 +6,6 @@ def version = "1.1.0alpha5"
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.1'
 
     defaultConfig {
         minSdkVersion 8
@@ -23,7 +22,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 // Borrowed from here:
