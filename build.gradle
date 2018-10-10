@@ -2,10 +2,11 @@
 
 buildscript {
     repositories {
+        google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.2.0'
         classpath 'com.github.triplet.gradle:play-publisher:1.1.5'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -14,8 +15,13 @@ buildscript {
 
 allprojects {
     repositories {
+        google()
         jcenter()
     }
+}
+
+if (JavaVersion.current() != JavaVersion.VERSION_1_8) {
+    throw new GradleException("This build must be run with Java 8 to match test environments");
 }
 
 ext {
