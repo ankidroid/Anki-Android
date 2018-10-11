@@ -1071,7 +1071,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (result != null && mCards != null) {
                 Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfuly");
                 updateList();
-                if (!mSearchView.isIconified()) {
+                if (mSearchView != null && !mSearchView.isIconified()) {
                     UIUtils.showSimpleSnackbar(CardBrowser.this, getSubtitleText(), false);
                 }
             }
