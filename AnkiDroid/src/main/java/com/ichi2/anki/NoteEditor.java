@@ -473,8 +473,8 @@ public class NoteEditor extends AnkiActivity {
         mNoteDeckSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                // Timber.i("NoteEditor:: onItemSelected() fired on mNoteDeckSpinner with pos = "+Integer.toString(pos));
                 mCurrentDid = mAllDeckIds.get(pos);
+                Timber.i("NoteDeckSpinner::OnItemSelectedListener() now pos/deck %s/%s", pos, mCurrentDid);
             }
 
             @Override
@@ -662,6 +662,7 @@ public class NoteEditor extends AnkiActivity {
             }
             try {
                 // Save deck to model
+                Timber.d("saveNote() adding a note with did %s", mCurrentDid);
                 mEditorNote.model().put("did", mCurrentDid);
                 // Save tags to model
                 mEditorNote.setTagsFromStr(tagsAsString(mSelectedTags));
@@ -676,6 +677,8 @@ public class NoteEditor extends AnkiActivity {
             }
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(mEditorNote));
         } else {
+            Timber.d("saveNote() updating a note with mCurrentDid/mCurrentEditedCard.did %s/%s",
+                    mCurrentDid, mCurrentEditedCard.getDid());
             // Check whether note type has been changed
             final JSONObject newModel = getCurrentlySelectedModel();
             final JSONObject oldModel = mCurrentEditedCard.model();
@@ -704,6 +707,7 @@ public class NoteEditor extends AnkiActivity {
             boolean modified = false;
             // changed did? this has to be done first as remFromDyn() involves a direct write to the database
             if (mCurrentEditedCard.getDid() != mCurrentDid) {
+                Timber.d("saveNote() detected the deck change, correcting");
                 mReloadRequired = true;
                 // remove card from filtered deck first (if relevant)
                 getCol().getSched().remFromDyn(new long[] { mCurrentEditedCard.getId() });
@@ -1012,10 +1016,12 @@ public class NoteEditor extends AnkiActivity {
         } catch (JSONException e) {
            throw new RuntimeException(e);
         }
-        // Also pass the card ID if not adding new note
+        // Also pass the card and note id ID if not adding new note
         if (!mAddNote) {
             intent.putExtra("noteId", mCurrentEditedCard.note().getId());
             Timber.d("showCardTemplateEditor() with note %s", mCurrentEditedCard.note().getId());
+            intent.putExtra("cardId", mCurrentEditedCard.getId());
+            Timber.d("showCardTemplateEditor() with card %s", mCurrentEditedCard.getId());
         }
         startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, ActivityTransitionAnimation.LEFT);
     }
@@ -1065,12 +1071,27 @@ public class NoteEditor extends AnkiActivity {
                 }
                 break;
             case REQUEST_TEMPLATE_EDIT:
-                if (resultCode == RESULT_OK) {
-                    mReloadRequired = true;
-                }
                 // rebuild the model post-template-edit so we get the correct number of cards
                 Timber.d("onActivityResult() template edit - reloading model");
                 mEditorNote.reloadModel();
+
+                // Even if templates weren't altered, the cards can be deleted/recreated, so CardBrowser needs a reload
+                mReloadRequired = true;
+
+                // Try to set focus on the correct card
+                if (resultCode == RESULT_OK) {
+                    String focusTemplateName = data.getStringExtra("focusTemplateName");
+                    Timber.d("onActivityResult() got focusTemplateName %s", focusTemplateName);
+                    for (Card card : mEditorNote.cards()) {
+                        if (card.template().optString("name").equals(focusTemplateName)) {
+                            Timber.d("onActivityResult() found card/template name/deck %s/%s/%s",
+                                    card.getId(), focusTemplateName, card.getDid());
+                            mCurrentEditedCard = card;
+                            mCurrentDid = mCurrentEditedCard.getDid();
+                            updateDeckPosition();
+                        }
+                    }
+                }
                 updateCards(mEditorNote.model());
         }
     }
