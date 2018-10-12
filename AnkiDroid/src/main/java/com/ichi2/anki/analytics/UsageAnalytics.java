@@ -56,7 +56,7 @@ public class UsageAnalytics {
             GoogleAnalyticsConfig gaConfig = new GoogleAnalyticsConfig()
                     .setBatchingEnabled(true)
                     .setSamplePercentage(context.getResources().getInteger(R.integer.ga_sampleFrequency))
-                    .setBatchSize(1); // until this handles application termination we will lose hits
+                    .setBatchSize(1); // until this handles application termination we will lose hits if batch>1
             sAnalytics = GoogleAnalytics.builder()
                     .withTrackingId(context.getString(R.string.ga_trackingId))
                     .withConfig(gaConfig)
@@ -80,7 +80,6 @@ public class UsageAnalytics {
         userPrefs.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> {
             if (key.equals(ANALYTICS_OPTIN_KEY)) {
                 setOptIn(sharedPreferences.getBoolean(key, false));
-                reInitialize();
             }
         });
 
@@ -117,7 +116,18 @@ public class UsageAnalytics {
     synchronized private static void setOptIn(boolean optIn) {
         Timber.i("setOptIn(): from %s to %s", sOptIn, optIn);
         sOptIn = optIn;
+        sAnalytics.flush();
         sAnalytics.getConfig().setEnabled(optIn);
+        Timber.d("setOptIn() optIn / sAnalytics.config().enabled(): %s/%s", sOptIn, sAnalytics.getConfig().isEnabled());
+    }
+
+
+    /**
+     * Determine whether we are disabled or not
+     */
+    private static boolean getOptIn() {
+        Timber.d("getOptIn() status: %s", sOptIn);
+        return sOptIn;
     }
 
 
@@ -163,10 +173,11 @@ public class UsageAnalytics {
      * @param screenName screenName the name to show in analysis reports
      */
     public static void sendAnalyticsScreenView(String screenName) {
-        if (sOptIn) {
-            Timber.d("sendAnalyticsScreenView(): %s", screenName);
-            sAnalytics.screenView().screenName(screenName).sendAsync();
+        Timber.d("sendAnalyticsScreenView(): %s", screenName);
+        if (!getOptIn()) {
+            return;
         }
+        sAnalytics.screenView().screenName(screenName).sendAsync();
     }
 
 
@@ -191,17 +202,18 @@ public class UsageAnalytics {
      */
     @SuppressWarnings("WeakerAccess")
     public static void sendAnalyticsEvent(@NonNull String category, @NonNull String action, int value, String label) {
-        if (sOptIn) {
-            Timber.d("sendAnalyticsEvent() category/action/value/label: %s/%s/%s/%s", category, action, value, label);
-            EventHit event = sAnalytics.event().eventCategory(category).eventAction(action);
-            if (label != null) {
-                event.eventLabel(label);
-            }
-            if (value > Integer.MIN_VALUE) {
-                event.eventValue(value);
-            }
-            event.sendAsync();
+        Timber.d("sendAnalyticsEvent() category/action/value/label: %s/%s/%s/%s", category, action, value, label);
+        if (!getOptIn()) {
+            return;
         }
+        EventHit event = sAnalytics.event().eventCategory(category).eventAction(action);
+        if (label != null) {
+            event.eventLabel(label);
+        }
+        if (value > Integer.MIN_VALUE) {
+            event.eventValue(value);
+        }
+        event.sendAsync();
     }
 
 
@@ -235,9 +247,10 @@ public class UsageAnalytics {
      */
     @SuppressWarnings("WeakerAccess")
     public static void sendAnalyticsException(@NonNull String description, boolean fatal) {
-        if (sOptIn) {
-            Timber.d("sendAnalyticsException() description/fatal: %s/%s", description, fatal);
-            sAnalytics.exception().exceptionDescription(description).exceptionFatal(fatal).sendAsync();
+        Timber.d("sendAnalyticsException() description/fatal: %s/%s", description, fatal);
+        if (!sOptIn) {
+            return;
         }
+        sAnalytics.exception().exceptionDescription(description).exceptionFatal(fatal).sendAsync();
     }
 }
