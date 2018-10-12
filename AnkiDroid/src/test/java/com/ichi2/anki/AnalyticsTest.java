@@ -2,6 +2,7 @@ package com.ichi2.anki;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.preference.PreferenceManager;
 
 import com.brsanthu.googleanalytics.GoogleAnalytics;
@@ -32,7 +33,13 @@ public class AnalyticsTest {
     private Context mMockContext;
 
     @Mock
+    private Resources mMockResources;
+
+    @Mock
     private SharedPreferences mMockSharedPreferences;
+
+    @Mock
+    private SharedPreferences.Editor mMockSharedPreferencesEditor;
 
     // This is actually a Mockito Spy of GoogleAnalyticsImpl
     private GoogleAnalytics mAnalytics;
@@ -44,12 +51,17 @@ public class AnalyticsTest {
 
         MockitoAnnotations.initMocks(this);
 
+        Mockito.when(mMockResources.getBoolean(R.bool.ga_anonymizeIp))
+                .thenReturn(true);
+        Mockito.when(mMockResources.getInteger(R.integer.ga_sampleFrequency))
+                .thenReturn(10);
+        Mockito.when(mMockContext.getResources())
+                .thenReturn(mMockResources);
+
         Mockito.when(mMockContext.getString(R.string.ga_trackingId))
                 .thenReturn("Mock Tracking ID");
         Mockito.when(mMockContext.getString(R.string.app_name))
                 .thenReturn("Mock Application Name");
-        Mockito.when(mMockContext.getString(R.string.ga_anonymizeIp))
-                .thenReturn("true");
         Mockito.when(mMockContext.getPackageName())
                 .thenReturn("mock_context");
         Mockito.when(mMockContext.getSharedPreferences("mock_context_preferences", Context.MODE_PRIVATE))
@@ -59,6 +71,13 @@ public class AnalyticsTest {
                 .thenReturn(true);
         Mockito.when(PreferenceManager.getDefaultSharedPreferences(ArgumentMatchers.any()))
                 .thenReturn(mMockSharedPreferences);
+
+
+        Mockito.when(mMockSharedPreferencesEditor.putBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, true))
+                .thenReturn(mMockSharedPreferencesEditor);
+
+        Mockito.when(mMockSharedPreferences.edit())
+                .thenReturn(mMockSharedPreferencesEditor);
 
         Mockito.when(GoogleAnalytics.builder())
                 .thenReturn(new SpyGoogleAnalyticsBuilder());
