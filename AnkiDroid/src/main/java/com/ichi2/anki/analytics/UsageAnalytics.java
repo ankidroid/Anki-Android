@@ -52,9 +52,10 @@ public class UsageAnalytics {
     synchronized public static GoogleAnalytics initialize(Context context) {
         Timber.i("initialize()");
         if (sAnalytics == null) {
-            Timber.d("tid = %s", context.getString(R.string.ga_trackingId));
+            Timber.d("App tracking id 'tid' = %s", context.getString(R.string.ga_trackingId));
             GoogleAnalyticsConfig gaConfig = new GoogleAnalyticsConfig()
                     .setBatchingEnabled(true)
+                    .setSamplePercentage(context.getResources().getInteger(R.integer.ga_sampleFrequency))
                     .setBatchSize(1); // until this handles application termination we will lose hits
             sAnalytics = GoogleAnalytics.builder()
                     .withTrackingId(context.getString(R.string.ga_trackingId))
@@ -75,6 +76,7 @@ public class UsageAnalytics {
 
         SharedPreferences userPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         setOptIn(userPrefs.getBoolean(ANALYTICS_OPTIN_KEY, false));
+        userPrefs.edit().putBoolean(ANALYTICS_OPTIN_KEY, sOptIn).apply();
         userPrefs.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> {
             if (key.equals(ANALYTICS_OPTIN_KEY)) {
                 setOptIn(sharedPreferences.getBoolean(key, false));
@@ -161,8 +163,10 @@ public class UsageAnalytics {
      * @param screenName screenName the name to show in analysis reports
      */
     public static void sendAnalyticsScreenView(String screenName) {
-        Timber.d("sendAnalyticsScreenView(): %s", screenName);
-        sAnalytics.screenView().screenName(screenName).sendAsync();
+        if (sOptIn) {
+            Timber.d("sendAnalyticsScreenView(): %s", screenName);
+            sAnalytics.screenView().screenName(screenName).sendAsync();
+        }
     }
 
 
@@ -187,15 +191,17 @@ public class UsageAnalytics {
      */
     @SuppressWarnings("WeakerAccess")
     public static void sendAnalyticsEvent(@NonNull String category, @NonNull String action, int value, String label) {
-        Timber.d("sendAnalyticsEvent() category/action/value/label: %s/%s/%s/%s", category, action, value, label);
-        EventHit event = sAnalytics.event().eventCategory(category).eventAction(action);
-        if (label != null) {
-            event.eventLabel(label);
+        if (sOptIn) {
+            Timber.d("sendAnalyticsEvent() category/action/value/label: %s/%s/%s/%s", category, action, value, label);
+            EventHit event = sAnalytics.event().eventCategory(category).eventAction(action);
+            if (label != null) {
+                event.eventLabel(label);
+            }
+            if (value > Integer.MIN_VALUE) {
+                event.eventValue(value);
+            }
+            event.sendAsync();
         }
-        if (value > Integer.MIN_VALUE) {
-            event.eventValue(value);
-        }
-        event.sendAsync();
     }
 
 
@@ -229,7 +235,9 @@ public class UsageAnalytics {
      */
     @SuppressWarnings("WeakerAccess")
     public static void sendAnalyticsException(@NonNull String description, boolean fatal) {
-        Timber.d("sendAnalyticsException() description/fatal: %s/%s", description, fatal);
-        sAnalytics.exception().exceptionDescription(description).exceptionFatal(fatal).sendAsync();
+        if (sOptIn) {
+            Timber.d("sendAnalyticsException() description/fatal: %s/%s", description, fatal);
+            sAnalytics.exception().exceptionDescription(description).exceptionFatal(fatal).sendAsync();
+        }
     }
 }
