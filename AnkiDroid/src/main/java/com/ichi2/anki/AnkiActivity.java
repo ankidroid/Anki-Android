@@ -1,6 +1,7 @@
 
 package com.ichi2.anki;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -218,6 +219,12 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         } else {
             view.setAnimation(animation);
         }
+    }
+
+    /** Finish Activity using FADE animation **/
+    public static void finishActivityWithFade(Activity activity) {
+        activity.finish();
+        ActivityTransitionAnimation.slide(activity, ActivityTransitionAnimation.UP);
     }
 
 
