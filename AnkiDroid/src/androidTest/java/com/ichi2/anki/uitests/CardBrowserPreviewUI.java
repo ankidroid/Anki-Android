@@ -47,8 +47,8 @@ import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
 @androidx.test.filters.LargeTest
-@SuppressWarnings({"PMD.ExcessiveMethodLength", "deprecation"})
-@RunWith(androidx.test.runner.AndroidJUnit4.class)
+@SuppressWarnings({"PMD.ExcessiveMethodLength"})
+@RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
 public class CardBrowserPreviewUI {
 
     @Rule

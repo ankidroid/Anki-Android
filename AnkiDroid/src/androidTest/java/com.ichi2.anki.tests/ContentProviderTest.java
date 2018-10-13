@@ -65,8 +65,7 @@ import static org.junit.Assert.fail;
  * <p/>
  * These tests should cover all supported operations for each URI.
  */
-@SuppressWarnings("deprecation")
-@RunWith(androidx.test.runner.AndroidJUnit4.class)
+@RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
 public class ContentProviderTest {
 
     @Rule

@@ -39,8 +39,7 @@ import timber.log.Timber;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@SuppressWarnings("deprecation")
-@RunWith(androidx.test.runner.AndroidJUnit4.class)
+@RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
 public class NotificationChannelTest {
 
     @Rule
