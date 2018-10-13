@@ -33,8 +33,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-@SuppressWarnings("deprecation")
-@RunWith(androidx.test.runner.AndroidJUnit4.class)
+@RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
 public class ACRATest {
 
     @Rule public GrantPermissionRule mRuntimePermissionRule =

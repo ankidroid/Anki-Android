@@ -132,7 +132,7 @@ dependencies {
     api project(":api")
 
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.3.1'
-    testImplementation 'org.mockito:mockito-core:2.22.0'
+    testImplementation 'org.mockito:mockito-core:2.23.0'
     testImplementation 'org.powermock:powermock-core:2.0.0-beta.5'
     testImplementation 'org.powermock:powermock-module-junit4:2.0.0-beta.5'
     testImplementation 'org.powermock:powermock-api-mockito2:2.0.0-beta.5'
@@ -141,9 +141,10 @@ dependencies {
 
     // May need a resolution strategy for support libs to our versions
     androidTestImplementation 'com.azimolabs.conditionwatcher:conditionwatcher:0.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-beta01'
-    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0-beta01'
-    androidTestImplementation 'androidx.test:runner:1.1.0-beta01'
-    androidTestImplementation 'androidx.test:rules:1.1.0-beta01'
-    androidTestUtil 'androidx.test:orchestrator:1.1.0-beta01'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-beta02'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0-beta02'
+    androidTestImplementation 'androidx.test.ext:junit:1.0.0-beta02'
+    androidTestImplementation 'androidx.test:runner:1.1.0-beta02'
+    androidTestImplementation 'androidx.test:rules:1.1.0-beta02'
+    androidTestUtil 'androidx.test:orchestrator:1.1.0-beta02'
 }

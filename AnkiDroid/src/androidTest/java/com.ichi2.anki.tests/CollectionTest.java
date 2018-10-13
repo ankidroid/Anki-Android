@@ -15,8 +15,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * This test case verifies that the directory initialization works even if the app is not yet fully initialized.
  */
-@SuppressWarnings("deprecation")
-@RunWith(androidx.test.runner.AndroidJUnit4.class)
+@RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
 public class CollectionTest {
 
     @Rule
