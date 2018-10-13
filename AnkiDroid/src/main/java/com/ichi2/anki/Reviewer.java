@@ -74,7 +74,10 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private void selectDeckFromExtra() {
         Bundle extras = getIntent().getExtras();
-        long did = extras.getLong("deckId", Long.MIN_VALUE);
+        long did = Long.MIN_VALUE;
+        if (extras != null) {
+            did = extras.getLong("deckId", Long.MIN_VALUE);
+        }
 
         if(did == Long.MIN_VALUE) {
             // deckId is not set, load default

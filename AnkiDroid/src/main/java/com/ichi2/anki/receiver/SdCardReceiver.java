@@ -45,9 +45,13 @@ public class SdCardReceiver extends BroadcastReceiver {
             Intent i = new Intent();
             i.setAction(MEDIA_EJECT);
             context.sendBroadcast(i);
-            Collection col = CollectionHelper.getInstance().getCol(context);
-            if (col != null) {
-                col.close();
+            try {
+                Collection col = CollectionHelper.getInstance().getCol(context);
+                if (col != null) {
+                    col.close();
+                }
+            } catch (Exception e) {
+                Timber.w(e, "Exception while trying to close collection likely because it was already unmounted");
             }
         } else if (intent.getAction().equals(Intent.ACTION_MEDIA_MOUNTED)) {
             Timber.i("media mount detected - sending broadcast");
