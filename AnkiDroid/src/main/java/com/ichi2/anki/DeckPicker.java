@@ -150,7 +150,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mRecyclerViewLayoutManager;
     private DeckAdapter mDeckListAdapter;
-    private FloatingActionsMenu mActionsMenu;   // Note this will be null below SDK 14
+    private FloatingActionsMenu mActionsMenu;
+    private Snackbar.Callback mSnackbarShowHideCallback = new Snackbar.Callback();
 
     private SwipeRefreshLayout mPullToSyncWrapper;
 
@@ -271,6 +272,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void onCancelled() {
+            // do nothing
         }
     };
 
@@ -313,6 +315,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void onCancelled() {
+            // do nothing
         }
     };
 
@@ -341,11 +344,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void onProgressUpdate(TaskData... values) {
+            // do nothing
         }
 
 
         @Override
         public void onCancelled() {
+            // do nothing
         }
     };
 
@@ -421,18 +426,18 @@ public class DeckPicker extends NavigationDrawerActivity implements
             showStartupScreensAndDialogs(preferences, 0);
         } else {
             // Show error dialogs
-            if (!CollectionHelper.hasStorageAccessPermission(this)) {
-                // This case is handled by onRequestPermissionsResult() so don't need to do anything
-            } else if (!AnkiDroidApp.isSdCardMounted()) {
-                // SD card not mounted
-                onSdCardNotMounted();
-            } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(this)) {
-                // AnkiDroid directory inaccessible
-                Intent i = Preferences.getPreferenceSubscreenIntent(this, "com.ichi2.anki.prefs.advanced");
-                startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE);
-                Toast.makeText(this, R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
-            } else {
-                showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
+            if (CollectionHelper.hasStorageAccessPermission(this)) {
+                if (!AnkiDroidApp.isSdCardMounted()) {
+                    // SD card not mounted
+                    onSdCardNotMounted();
+                } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(this)) {
+                    // AnkiDroid directory inaccessible
+                    Intent i = Preferences.getPreferenceSubscreenIntent(this, "com.ichi2.anki.prefs.advanced");
+                    startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE);
+                    Toast.makeText(this, R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
+                } else {
+                    showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
+                }
             }
         }
     }
@@ -886,7 +891,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     // The last version of AnkiDroid that stored this as a string was 2.0.2.
                     // We manually set the version here, but anything older will force a DB
                     // check.
-                    if (s.equals("2.0.2")) {
+                    if ("2.0.2".equals(s)) {
                         previous = 40;
                     } else {
                         previous = 0;
@@ -1032,6 +1037,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             @Override
             public void onProgressUpdate(TaskData... values) {
+                // do nothing
             }
         });
     }
@@ -1168,11 +1174,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             @Override
             public void onProgressUpdate(TaskData... values) {
+                // do nothing
             }
 
 
             @Override
             public void onCancelled() {
+                // do nothing
             }
         });
     }
@@ -1212,11 +1220,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             @Override
             public void onProgressUpdate(TaskData... values) {
+                // do nothing
             }
 
 
             @Override
             public void onCancelled() {
+                // do nothing
             }
         });
     }
@@ -1249,11 +1259,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             @Override
             public void onProgressUpdate(TaskData... values) {
+                // do nothing
             }
 
 
             @Override
             public void onCancelled() {
+                // do nothing
             }
         });
     }
@@ -1449,7 +1461,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 Object[] result = (Object[]) data.result;
                 if (result[0] instanceof String) {
                     String resultType = (String) result[0];
-                    if (resultType.equals("badAuth")) {
+                    if ("badAuth".equals(resultType)) {
                         // delete old auth information
                         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
                         Editor editor = preferences.edit();
@@ -1458,10 +1470,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         editor.apply();
                         // then show not logged in dialog
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC);
-                    } else if (resultType.equals("noChanges")) {
+                    } else if ("noChanges".equals(resultType)) {
                         // show no changes message, use false flag so we don't show "sync error" as the Dialog title
                         showSyncLogMessage(R.string.sync_no_changes_message, "");
-                    } else if (resultType.equals("clockOff")) {
+                    } else if ("clockOff".equals(resultType)) {
                         long diff = (Long) result[1];
                         if (diff >= 86100) {
                             // The difference if more than a day minus 5 minutes acceptable by ankiweb error
@@ -1476,7 +1488,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             dialogMessage = res.getString(R.string.sync_log_clocks_unsynchronized, diff, "");
                         }
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if (resultType.equals("fullSync")) {
+                    } else if ("fullSync".equals(resultType)) {
                         if (getCol().isEmpty()) {
                             // don't prompt user to resolve sync conflict if local collection empty
                             sync("download");
@@ -1486,41 +1498,41 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             // If can't be resolved then automatically then show conflict resolution dialog
                             showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION);
                         }
-                    } else if (resultType.equals("dbError")  || resultType.equals("basicCheckFailed")) {
+                    } else if ("dbError".equals(resultType) || "basicCheckFailed".equals(resultType)) {
                         String repairUrl = res.getString(R.string.repair_deck);
                         dialogMessage = res.getString(R.string.sync_corrupt_database, repairUrl);
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if (resultType.equals("overwriteError")) {
+                    } else if ("overwriteError".equals(resultType)) {
                         dialogMessage = res.getString(R.string.sync_overwrite_error);
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if (resultType.equals("remoteDbError")) {
+                    } else if ("remoteDbError".equals(resultType)) {
                         dialogMessage = res.getString(R.string.sync_remote_db_error);
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if (resultType.equals("sdAccessError")) {
+                    } else if ("sdAccessError".equals(resultType)) {
                         dialogMessage = res.getString(R.string.sync_write_access_error);
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if (resultType.equals("finishError")) {
+                    } else if ("finishError".equals(resultType)) {
                         dialogMessage = res.getString(R.string.sync_log_finish_error);
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if (resultType.equals("connectionError")) {
+                    } else if ("connectionError".equals(resultType)) {
                         dialogMessage = res.getString(R.string.sync_connection_error);
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if (resultType.equals("IOException")) {
+                    } else if ("IOException".equals(resultType)) {
                         handleDbError();
-                    } else if (resultType.equals("genericError")) {
+                    } else if ("genericError".equals(resultType)) {
                         dialogMessage = res.getString(R.string.sync_generic_error);
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if (resultType.equals("OutOfMemoryError")) {
+                    } else if ("OutOfMemoryError".equals(resultType)) {
                         dialogMessage = res.getString(R.string.error_insufficient_memory);
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if (resultType.equals("sanityCheckError")) {
+                    } else if ("sanityCheckError".equals(resultType)) {
                         dialogMessage = res.getString(R.string.sync_sanity_failed);
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_SANITY_ERROR,
                                 joinSyncMessages(dialogMessage, syncMessage));
-                    } else if (resultType.equals("serverAbort")) {
+                    } else if ("serverAbort".equals(resultType)) {
                         // syncMsg has already been set above, no need to fetch it here.
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if (resultType.equals("mediaSyncServerError")) {
+                    } else if ("mediaSyncServerError".equals(resultType)) {
                         dialogMessage = res.getString(R.string.sync_media_error_check);
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_MEDIA_SYNC_ERROR,
                                 joinSyncMessages(dialogMessage, syncMessage));
@@ -1552,7 +1564,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             } else {
                 // Sync was successful!
-                if (data.data[2] != null && !data.data[2].equals("")) {
+                if (data.data[2] != null && !"".equals(data.data[2])) {
                     // There was a media error, so show it
                     String message = res.getString(R.string.sync_database_acknowledge) + "\n\n" + data.data[2];
                     showSimpleMessageDialog(message);
@@ -1918,12 +1930,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             @Override
             public void onProgressUpdate(TaskData... values) {
+                // do nothing
             }
 
             @Override
             public void onCancelled() {
+                // do nothing
             }
-
         });
     }
 
@@ -2094,11 +2107,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             @Override
             public void onProgressUpdate(TaskData... values) {
+                // do nothing
             }
 
 
             @Override
             public void onCancelled() {
+                // do nothing
             }
         }, new TaskData(did));
     }
@@ -2125,11 +2140,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void onProgressUpdate(TaskData... values) {
+            // do nothing
         }
 
 
         @Override
         public void onCancelled() {
+            // do nothing
         }
     };
 
@@ -2181,11 +2198,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         updateDeckList();
     }
 
-    /**
-     * There was pre-honeycomb override here, removed now, just instantiate regular callback
-     */
-    private Snackbar.Callback mSnackbarShowHideCallback = new Snackbar.Callback();
-
     public void handleEmptyCards() {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_FIND_EMPTY_CARDS, new DeckTask.Listener() {
             @Override
@@ -2219,12 +2231,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             @Override
             public void onProgressUpdate(DeckTask task, TaskData... values) {
-
+                // do nothing
             }
 
             @Override
             public void onCancelled() {
-
+                // do nothing
             }
         });
     }
