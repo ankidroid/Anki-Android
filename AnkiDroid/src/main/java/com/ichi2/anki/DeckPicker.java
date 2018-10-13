@@ -22,6 +22,7 @@
 package com.ichi2.anki;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -33,6 +34,7 @@ import android.content.res.Resources;
 import android.database.SQLException;
 import android.graphics.PixelFormat;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.Settings;
@@ -95,6 +97,7 @@ import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
 
@@ -134,6 +137,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private static final int REPORT_ERROR = 10;
     public static final int SHOW_STUDYOPTIONS = 11;
     private static final int ADD_NOTE = 12;
+    private static final int PICK_APKG_FILE = 13;
 
     // For automatic syncing
     // 10 minutes in milliseconds.
@@ -512,13 +516,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         menu.findItem(R.id.action_check_database).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_empty_cards).setEnabled(sdCardAvailable);
-
-        // Hide import, export, and restore backup on ChromeOS as users
-        // don't have access to the file system.
-        if (CompatHelper.isChromebook()) {
-            menu.findItem(R.id.action_import).setVisible(false);
-            menu.findItem(R.id.action_export).setVisible(false);
-        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -654,6 +651,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else if (requestCode == REQUEST_PATH_UPDATE) {
             // The collection path was inaccessible on startup so just close the activity and let user restart
             finishWithoutAnimation();
+        } else if ((requestCode == PICK_APKG_FILE) && (resultCode == RESULT_OK)) {
+            String errorMessage = ImportUtils.handleFileImport(this, intent);
+            if (errorMessage != null) {
+                ImportUtils.showImportUnsuccessfulDialog(this, errorMessage, false);
+            }
         }
     }
 
@@ -1108,10 +1110,26 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void showImportDialog(int id, String message) {
-        DialogFragment newFragment = ImportDialog.newInstance(id, message);
-        showDialogFragment(newFragment);
+        // On API19+ we only use import dialog to confirm, otherwise we use it the whole time
+        if ((CompatHelper.getSdkVersion() < 19)
+                || (id == ImportDialog.DIALOG_IMPORT_ADD_CONFIRM)
+                || (id == ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM)) {
+            Timber.d("showImportDialog() delegating to ImportDialog");
+            DialogFragment newFragment = ImportDialog.newInstance(id, message);
+            showDialogFragment(newFragment);
+        } else {
+            Timber.d("showImportDialog() delegating to file picker intent");
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("*/*");
+            intent.putExtra("android.content.extra.SHOW_ADVANCED", true);
+            intent.putExtra("android.content.extra.FANCY", true);
+            intent.putExtra("android.content.extra.SHOW_FILESIZE", true);
+            startActivityForResultWithoutAnimation(intent, PICK_APKG_FILE);
+        }
     }
 
     public void onSdCardNotMounted() {
@@ -1596,6 +1614,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // Callback to import a file -- adding it to existing collection
     @Override
     public void importAdd(String importPath) {
+        Timber.d("importAdd() for file %s", importPath);
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT, mImportAddListener,
                 new TaskData(importPath, false));
     }
