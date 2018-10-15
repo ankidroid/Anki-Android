@@ -823,8 +823,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         View mainView = findViewById(android.R.id.content);
         initNavigationDrawer(mainView);
-        // Open collection asynchronously
-        startLoadingCollection();
     }
 
     protected int getContentViewAttr(int fullscreenMode) {
