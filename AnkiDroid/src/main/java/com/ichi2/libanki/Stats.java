@@ -19,8 +19,6 @@ package com.ichi2.libanki;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -39,6 +37,8 @@ import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import io.requery.android.database.sqlite.SQLiteDatabase;
 import timber.log.Timber;
 

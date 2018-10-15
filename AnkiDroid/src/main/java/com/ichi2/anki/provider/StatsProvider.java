@@ -22,14 +22,14 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Stats;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import io.requery.android.database.sqlite.SQLiteDatabase;
 import timber.log.Timber;
 
