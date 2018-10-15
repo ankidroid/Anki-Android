@@ -63,13 +63,14 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
+        super.onCreate(savedInstanceState);
 
         if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
             Timber.d("onCreate() :: received Intent with action = %s", getIntent().getAction());
             selectDeckFromExtra();
         }
 
-        super.onCreate(savedInstanceState);
+        startLoadingCollection();
     }
 
     private void selectDeckFromExtra() {

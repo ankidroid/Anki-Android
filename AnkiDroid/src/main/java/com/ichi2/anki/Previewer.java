@@ -39,16 +39,19 @@ public class Previewer extends AbstractFlashcardViewer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
+        super.onCreate(savedInstanceState);
+
         mCardList = getIntent().getLongArrayExtra("cardList");
         mIndex = getIntent().getIntExtra("index", -1);
         if (mCardList.length == 0 || mIndex < 0 || mIndex > mCardList.length - 1) {
             Timber.e("Previewer started with empty card list or invalid index");
             finishWithoutAnimation();
+            return;
         }
-        super.onCreate(savedInstanceState);
         showBackIcon();
         // Ensure navigation drawer can't be opened. Various actions in the drawer cause crashes.
         disableDrawerSwipe();
+        startLoadingCollection();
     }
 
     @Override
