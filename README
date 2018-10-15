@@ -1,0 +1,11 @@
+AnkiDroid: Anki on Android
+
+The code for the load balancer can be found in the loadbalancer branch.
+See https://ankiweb.net/shared/info/1417170896 for more information
+
+There is also a jakestuff branch that includes the following addons:
+https://ankiweb.net/shared/info/2359926733
+https://ankiweb.net/shared/info/1224266113
+
+file an issue if you want me to update the code to the latest ankidroid stuff.
+
