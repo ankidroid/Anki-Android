@@ -24,18 +24,12 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
-import android.os.Binder;
-import android.os.Build;
-import androidx.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.FlashCardsContract.CardTemplate;
@@ -62,8 +56,6 @@ import java.util.Set;
 
 import io.requery.android.database.sqlite.SQLiteDatabase;
 import timber.log.Timber;
-
-import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
 
 /**
  * Supported URIs:
@@ -194,27 +186,23 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    /** Only enforce permissions for queries and inserts on Android M and above, or if its a 'rogue client' **/
-    private boolean shouldEnforceQueryOrInsertSecurity() {
-        return CompatHelper.isMarshmallow() || knownRogueClient();
-    }
-    /** Enforce permissions for all updates on Android M and above. Otherwise block depending on URI and client app **/
     private boolean shouldEnforceUpdateSecurity(Uri uri) {
         final List<Integer> WHITELIST = Arrays.asList(NOTES_ID_CARDS_ORD, MODELS_ID, MODELS_ID_TEMPLATES_ID, SCHEDULE, DECK_SELECTED);
-        return CompatHelper.isMarshmallow() || !WHITELIST.contains(sUriMatcher.match(uri)) || knownRogueClient();
+        return CompatHelper.isMarshmallow() || !WHITELIST.contains(sUriMatcher.match(uri)) || ProviderUtils.knownRogueClient(this, mContext);
     }
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String order) {
-        if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
-            throwSecurityException("query", uri);
+        if (!ProviderUtils.hasReadWritePermission(mContext) &&
+                ProviderUtils.shouldEnforceQueryOrInsertSecurity(this, mContext)) {
+            ProviderUtils.throwSecurityException(this, mContext, "query", uri);
         }
 
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         if (col == null) {
             throw new IllegalStateException(COL_NULL_ERROR_MSG);
         }
-        Timber.d(getLogMessage("query", uri));
+        Timber.d(ProviderUtils.getLogMessage(this, mContext, "query", uri));
 
         // Find out what data the user is requesting
         int match = sUriMatcher.match(uri);
@@ -414,14 +402,14 @@ public class CardContentProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        if (!hasReadWritePermission() && shouldEnforceUpdateSecurity(uri)) {
-            throwSecurityException("update", uri);
+        if (!ProviderUtils.hasReadWritePermission(mContext) && shouldEnforceUpdateSecurity(uri)) {
+            ProviderUtils.throwSecurityException(this, mContext, "update", uri);
         }
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         if (col == null) {
             throw new IllegalStateException(COL_NULL_ERROR_MSG);
         }
-        col.log(getLogMessage("update", uri));
+        col.log(ProviderUtils.getLogMessage(this, mContext, "update", uri));
 
         // Find out what data the user is requesting
         int match = sUriMatcher.match(uri);
@@ -685,14 +673,14 @@ public class CardContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        if (!hasReadWritePermission()) {
-            throwSecurityException("delete", uri);
+        if (!ProviderUtils.hasReadWritePermission(mContext)) {
+            ProviderUtils.throwSecurityException(this, mContext, "delete", uri);
         }
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         if (col == null) {
             throw new IllegalStateException(COL_NULL_ERROR_MSG);
         }
-        col.log(getLogMessage("delete", uri));
+        col.log(ProviderUtils.getLogMessage(this, mContext, "delete", uri));
 
         switch (sUriMatcher.match(uri)) {
             case NOTES_ID:
@@ -722,8 +710,9 @@ public class CardContentProvider extends ContentProvider {
      */
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
-        if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
-            throwSecurityException("bulkInsert", uri);
+        if (!ProviderUtils.hasReadWritePermission(mContext) &&
+                ProviderUtils.shouldEnforceQueryOrInsertSecurity(this, mContext)) {
+            ProviderUtils.throwSecurityException(this, mContext, "bulkInsert", uri);
         }
 
         // by default, #bulkInsert simply calls insert for each item in #values
@@ -758,7 +747,7 @@ public class CardContentProvider extends ContentProvider {
         if (col.getDecks().isDyn(deckId)) {
             throw new IllegalArgumentException("A filtered deck cannot be specified as the deck in bulkInsertNotes");
         }
-        col.log(String.format(Locale.US, "bulkInsertNotes: %d items.\n%s", valuesArr.length, getLogMessage("bulkInsert", null)));
+        col.log(String.format(Locale.US, "bulkInsertNotes: %d items.\n%s", valuesArr.length, ProviderUtils.getLogMessage(this, mContext, "bulkInsert", null)));
 
         // for caching model information (so we don't have to query for each note)
         long modelId = -1L;
@@ -824,14 +813,15 @@ public class CardContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
-            throwSecurityException("insert", uri);
+        if (!ProviderUtils.hasReadWritePermission(mContext) &&
+                ProviderUtils.shouldEnforceQueryOrInsertSecurity(this, mContext)) {
+            ProviderUtils.throwSecurityException(this, mContext, "insert", uri);
         }
         Collection col = CollectionHelper.getInstance().getCol(mContext);
         if (col == null) {
             throw new IllegalStateException(COL_NULL_ERROR_MSG);
         }
-        col.log(getLogMessage("insert", uri));
+        col.log(ProviderUtils.getLogMessage(this, mContext, "insert", uri));
 
         // Find out what data the user is requesting
         int match = sUriMatcher.match(uri);
@@ -1325,52 +1315,5 @@ public class CardContentProvider extends ContentProvider {
         JSONObject model = col.getModels().get(getModelIdFromUri(uri, col));
         Integer ord = Integer.parseInt(uri.getLastPathSegment());
         return model.getJSONArray("tmpls").getJSONObject(ord);
-    }
-
-    private void throwSecurityException(String methodName, Uri uri) {
-        String msg = String.format("Permission not granted for: %s", getLogMessage(methodName, uri));
-        Timber.e(msg);
-        throw new SecurityException(msg);
-    }
-
-    private String getLogMessage(String methodName, Uri uri) {
-        final String format = "%s.%s %s (%s)";
-        String path = uri == null ? null : uri.getPath();
-        return String.format(format, getClass().getSimpleName(), methodName, path, getCallingPackageSafe());
-    }
-
-    private boolean hasReadWritePermission() {
-        if (BuildConfig.DEBUG) {    // Allow self-calling of the provider only in debug builds (e.g. for unit tests)
-            return mContext.checkCallingOrSelfPermission(READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED;
-        }
-        return mContext.checkCallingPermission(READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED;
-    }
-
-
-    /** Returns true if the calling package is known to be "rogue" and should be blocked.
-     Calling package might be rogue if it has not declared #READ_WRITE_PERMISSION in its manifest, or if blacklisted **/
-    private boolean knownRogueClient() {
-        final PackageManager pm = mContext.getPackageManager();
-        try {
-            PackageInfo callingPi = pm.getPackageInfo(getCallingPackageSafe(), PackageManager.GET_PERMISSIONS);
-             if (callingPi == null || callingPi.requestedPermissions == null) {
-                 return false;
-             }
-             return !Arrays.asList(callingPi.requestedPermissions).contains(READ_WRITE_PERMISSION);
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
-    }
-
-    @Nullable
-    private String getCallingPackageSafe() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            return getCallingPackage();
-        }
-        String[] pkgs = mContext.getPackageManager().getPackagesForUid(Binder.getCallingUid());
-        if (pkgs.length == 1) {
-            return pkgs[0]; // This is usual case, unless multiple packages signed with same key & using "sharedUserId"
-        }
-        return null;
     }
 }
