@@ -300,7 +300,7 @@ public class AnkiDroidApp extends Application {
     /**
      * If you want to make sure that the next exception of any time is posted, you need to clear limiter data
      *
-     * ACRA 5.3.x has API to do this, and cleans on version upgrade by default, until then they blessed deleting file
+     * ACRA 5.3.x does this automatically on version upgrade (https://github.com/ACRA/acra/pull/696), until then they blessed deleting file
      * @param context the context leading to the directory with ACRA limiter data
      */
     public static void deleteACRALimiterData(Context context) {

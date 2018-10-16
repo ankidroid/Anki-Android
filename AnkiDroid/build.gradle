@@ -117,10 +117,10 @@ dependencies {
     implementation 'com.getbase:floatingactionbutton:1.10.1'
 
     // May need a resolution strategy for support libs to our versions
-    implementation'ch.acra:acra-http:5.2.0'
-    implementation'ch.acra:acra-dialog:5.2.0'
-    implementation'ch.acra:acra-toast:5.2.0'
-    implementation'ch.acra:acra-limiter:5.2.0'
+    implementation'ch.acra:acra-http:5.2.1'
+    implementation'ch.acra:acra-dialog:5.2.1'
+    implementation'ch.acra:acra-toast:5.2.1'
+    implementation'ch.acra:acra-limiter:5.2.1'
 
     implementation 'net.mikehardy:google-analytics-java:2.0.3'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
