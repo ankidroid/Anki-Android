@@ -78,6 +78,7 @@ import timber.log.Timber;
  * <li>it's not possible to access cards of a note without providing the note's ID</li>
  * </ul>
  */
+@SuppressWarnings("PMD.ExcessiveClassLength")
 public class CardContentProvider extends ContentProvider {
     private Context mContext;
 
@@ -191,6 +192,7 @@ public class CardContentProvider extends ContentProvider {
         return CompatHelper.isMarshmallow() || !WHITELIST.contains(sUriMatcher.match(uri)) || ProviderUtils.knownRogueClient(this, mContext);
     }
 
+    @SuppressWarnings({"PMD.ExcessiveMethodLength","PMD.NPathComplexity"})
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String order) {
         if (!ProviderUtils.hasReadWritePermission(mContext) &&
@@ -237,7 +239,7 @@ public class CardContentProvider extends ContentProvider {
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Card.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
                 for (Card currentCard : currentNote.cards()) {
-                    addCardToCursor(currentCard, rv, col, columns);
+                    addCardToCursor(currentCard, rv, columns);
                 }
                 return rv;
             }
@@ -245,7 +247,7 @@ public class CardContentProvider extends ContentProvider {
                 Card currentCard = getCardFromUri(uri, col);
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Card.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
-                addCardToCursor(currentCard, rv, col, columns);
+                addCardToCursor(currentCard, rv, columns);
                 return rv;
             }
             case MODELS: {
@@ -400,6 +402,7 @@ public class CardContentProvider extends ContentProvider {
         return deckCounts;
     }
 
+    @SuppressWarnings({"PMD.ExcessiveMethodLength","PMD.NPathComplexity"})
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         if (!ProviderUtils.hasReadWritePermission(mContext) && shouldEnforceUpdateSecurity(uri)) {
@@ -736,6 +739,7 @@ public class CardContentProvider extends ContentProvider {
     /**
      * This implementation optimizes for when the notes are grouped according to model
      */
+    @SuppressWarnings("PMD.NPathComplexity")
     private int bulkInsertNotes(ContentValues[] valuesArr, long deckId) {
         if (valuesArr == null || valuesArr.length == 0) {
             return 0;
@@ -781,7 +785,7 @@ public class CardContentProvider extends ContentProvider {
                 }
 
                 // Create empty note
-                com.ichi2.libanki.Note newNote = new com.ichi2.libanki.Note(col, model); // for some reason we cannot pass modelId in here
+                Note newNote = new Note(col, model); // for some reason we cannot pass modelId in here
                 // Set fields
                 // Check that correct number of flds specified
                 if (fldsArray.length != newNote.getFields().length) {
@@ -811,6 +815,7 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
+    @SuppressWarnings({"PMD.ExcessiveMethodLength","PMD.NPathComplexity"})
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         if (!ProviderUtils.hasReadWritePermission(mContext) &&
@@ -834,7 +839,7 @@ public class CardContentProvider extends ContentProvider {
                 String flds = values.getAsString(FlashCardsContract.Note.FLDS);
                 String tags = values.getAsString(FlashCardsContract.Note.TAGS);
                 // Create empty note
-                com.ichi2.libanki.Note newNote = new com.ichi2.libanki.Note(col, col.getModels().get(modelId));
+                Note newNote = new Note(col, col.getModels().get(modelId));
                 // Set fields
                 String[] fldsArray = Utils.splitFields(flds);
                 // Check that correct number of flds specified
@@ -1098,7 +1103,7 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private void addCardToCursor(Card currentCard, MatrixCursor rv, Collection col, String[] columns) {
+    private void addCardToCursor(Card currentCard, MatrixCursor rv, String[] columns) {
         String cardName;
         try {
             cardName = currentCard.template().getString("name");

@@ -43,6 +43,7 @@ import io.requery.android.database.sqlite.SQLiteDatabase;
 import timber.log.Timber;
 
 
+@SuppressWarnings("PMD.ExcessiveClassLength")
 public class Stats {
 
     public enum AxisType {
@@ -60,8 +61,6 @@ public class Stats {
 
     public enum ChartType {FORECAST, REVIEW_COUNT, REVIEW_TIME,
         INTERVALS, HOURLY_BREAKDOWN, WEEKLY_BREAKDOWN, ANSWER_BUTTONS, CARDS_TYPES, OTHER}
-
-    private static Stats sCurrentInstance;
 
     private Collection mCol;
     private boolean mWholeCollection;
@@ -95,7 +94,6 @@ public class Stats {
     public Stats(Collection col, boolean wholeCollection) {
         mCol = col;
         mWholeCollection = wholeCollection;
-        sCurrentInstance = this;
     }
 
     public double[][] getSeriesList() {
@@ -143,6 +141,7 @@ public class Stats {
                 "from revlog where id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
         Timber.d("todays statistics query: %s", query);
 
+        @SuppressWarnings("PMD.OneDeclarationPerLine")
         int cards, thetime, failed, lrn, rev, relrn, filt;
         try {
             cur = mCol.getDb()
@@ -169,6 +168,7 @@ public class Stats {
         "where lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
         Timber.d("todays statistics query 2: %s", query);
 
+        @SuppressWarnings("PMD.OneDeclarationPerLine")
         int mcnt, msum;
         try {
             cur = mCol.getDb()
@@ -233,7 +233,7 @@ public class Stats {
         return res;
     }
 
-    String getRevlogFilter(AxisType timespan,boolean inverseTimeSpan){
+    private String getRevlogFilter(AxisType timespan,boolean inverseTimeSpan){
         ArrayList<String> lims = new ArrayList<>();
         String dayFilter = getRevlogTimeFilter(timespan, inverseTimeSpan);
         if (!TextUtils.isEmpty(dayFilter)) {
@@ -252,6 +252,7 @@ public class Stats {
         return lim;
     }
 
+    @SuppressWarnings("PMD.NPathComplexity")
     public void calculateOverviewStatistics(AxisType timespan, OverviewStatsBuilder.OverviewStats oStats) {
         oStats.allDays = timespan.days;
         String lim = getRevlogFilter(timespan,false);
@@ -339,6 +340,7 @@ public class Stats {
      * Due and cumulative due
      * ***********************************************************************************************
      */
+    @SuppressWarnings({"PMD.ExcessiveMethodLength","PMD.NPathComplexity"})
     private boolean calculateDue(AxisType type) {
         mHasColoredCumulative = false;
         mType = type;
@@ -362,6 +364,9 @@ public class Stats {
             case TYPE_LIFE:
                 end = -1;
                 chunk = 30;
+                break;
+            default:
+                Timber.e("Unknown interval %s", type);
                 break;
         }
 
@@ -434,6 +439,7 @@ public class Stats {
                 mLastElement = 52;
                 break;
             default:
+                break;
         }
         mFirstElement = 0;
         mHasColoredCumulative = false;
@@ -471,6 +477,7 @@ public class Stats {
      * @param type Type
      * @param charType CharType.REVIEW_COUNT or Chartype.REVIEW_TIME
      */
+    @SuppressWarnings("PMD.ExcessiveMethodLength")
     private boolean calculateDone(AxisType type,  ChartType charType) {
         mHasColoredCumulative = true;
         mDynamicAxis = true;
@@ -500,6 +507,8 @@ public class Stats {
             case TYPE_LIFE:
                 num = -1;
                 chunk = 30;
+                break;
+            default:
                 break;
         }
         ArrayList<String> lims = new ArrayList<>();
@@ -629,6 +638,7 @@ public class Stats {
                 mFirstElement = -52;
                 break;
             default:
+                break;
         }
 
         mMcount = 0;
@@ -664,9 +674,11 @@ public class Stats {
      * Intervals ***********************************************************************************************
      */
 
+    @SuppressWarnings({"PMD.ExcessiveMethodLength","PMD.NPathComplexity"})
     public boolean calculateIntervals(Context context, AxisType type) {
         mDynamicAxis = true;
         mType = type;
+        @SuppressWarnings("PMD.OneDeclarationPerLine")
         double all = 0, avg = 0, max_ = 0;
         mBackwards = false;
         mTitle = R.string.stats_review_intervals;
@@ -691,6 +703,8 @@ public class Stats {
                 num = -1;
                 chunk = 30;
                 lim = "";
+                break;
+            default:
                 break;
         }
 
@@ -764,6 +778,7 @@ public class Stats {
                 mLastElement = 52;
                 break;
             default:
+                break;
         }
         mFirstElement = 0;
         mMaxElements = list.size() - 1;
@@ -790,6 +805,7 @@ public class Stats {
     /**
      * Hourly Breakdown
      */
+    @SuppressWarnings({"PMD.ExcessiveMethodLength","PMD.NPathComplexity"})
     public boolean calculateBreakdown(AxisType type) {
         mTitle = R.string.stats_breakdown;
         mBackwards = false;
@@ -925,6 +941,7 @@ public class Stats {
     /**
      * Weekly Breakdown
      */
+    @SuppressWarnings({"PMD.ExcessiveMethodLength","PMD.NPathComplexity"})
     public boolean calculateWeeklyBreakdown(AxisType type) {
         mTitle = R.string.stats_weekly_breakdown;
         mBackwards = false;
@@ -1044,6 +1061,7 @@ public class Stats {
     /**
      * Answer Buttons
      */
+    @SuppressWarnings("PMD.NPathComplexity")
     public boolean calculateAnswerButtons(AxisType type) {
         mHasColoredCumulative = false;
         mCumulative = null;
@@ -1199,6 +1217,7 @@ public class Stats {
      * Tools ***********************************************************************************************
      */
 
+    @SuppressWarnings("PMD.MethodNamingConventions")
     private String _limit() {
         if (mWholeCollection) {
             ArrayList<Long> ids = new ArrayList<>();
@@ -1216,6 +1235,7 @@ public class Stats {
     }
 
 
+    @SuppressWarnings("PMD.MethodNamingConventions")
     private String _getDeckFilter() {
         if (mWholeCollection) {
             return "";
@@ -1283,6 +1303,7 @@ public class Stats {
         return db.rawQuery(query, null);
     }
 
+    @SuppressWarnings("PMD.MethodNamingConventions")
     private int _periodDays() {
         switch (mType) {
             case TYPE_MONTH:
