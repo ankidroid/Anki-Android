@@ -35,6 +35,7 @@ import android.net.Uri;
  * </ul>
  */
 public class StatsContract {
+    public static final String READ_PERMISSION = "com.ichi2.anki.permission.READ_DATABASE";
     public static final String AUTHORITY = "com.ichi2.anki.stats";
 
     /** A content:// style uri to the authority for the stats provider */

@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
+import static com.ichi2.anki.StatsContract.READ_PERMISSION;
 
 public class ProviderUtils {
 
@@ -25,6 +26,13 @@ public class ProviderUtils {
     /** Only enforce permissions for queries and inserts on Android M and above, or if its a 'rogue client' **/
     public static boolean shouldEnforceQueryOrInsertSecurity(ContentProvider provider, Context context) {
         return CompatHelper.isMarshmallow() || knownRogueClient(provider, context);
+    }
+
+    public static boolean hasReadPermission(Context context) {
+        if (BuildConfig.DEBUG) {    // Allow self-calling of the provider only in debug builds (e.g. for unit tests)
+            return hasReadWritePermission(context) || context.checkCallingOrSelfPermission(READ_PERMISSION) == PackageManager.PERMISSION_GRANTED;
+        }
+        return hasReadWritePermission(context) || context.checkCallingPermission(READ_PERMISSION) == PackageManager.PERMISSION_GRANTED;
     }
 
     public static boolean hasReadWritePermission(Context context) {

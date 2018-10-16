@@ -65,7 +65,7 @@ public class StatsProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        if (!ProviderUtils.hasReadWritePermission(mContext) &&
+        if (!ProviderUtils.hasReadPermission(mContext) &&
                 ProviderUtils.shouldEnforceQueryOrInsertSecurity(this, mContext)) {
             ProviderUtils.throwSecurityException(this, mContext, "query", uri);
         }

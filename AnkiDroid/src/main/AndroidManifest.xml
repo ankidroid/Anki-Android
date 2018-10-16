@@ -65,6 +65,10 @@
                 android:label="@string/read_write_permission_label"
                 android:description="@string/read_write_permission_description"
                 android:protectionLevel="dangerous" />
+    <permission android:name="com.ichi2.anki.permission.READ_DATABASE"
+                android:label="@string/read_permission_label"
+                android:description="@string/read_permission_description"
+                android:protectionLevel="dangerous" />
     <!-- custom tabs library has minimum SDK of 16 -->
     <uses-sdk tools:overrideLibrary="android.support.customtabs, com.getbase.floatingactionbutton"/>
 
