@@ -19,11 +19,13 @@ package com.ichi2.anki.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 
 import com.ichi2.anki.CollectionHelper;
+import com.ichi2.anki.StatsContract;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Stats;
@@ -39,13 +41,14 @@ import timber.log.Timber;
  * <p/>
  **/
 public class StatsProvider extends ContentProvider {
+
+    private Context mContext;
+
     private static final UriMatcher uriMatcher = buildUriMatcher();
 
     private static final int CARD_TYPES_COUNT = 100;
 
     private Collection mCollection;
-
-    private static String CARD_TYPES_COUNT_TYPE = "vnd.android.cursor.item/vnd.com.ichi2.anki.cardcount";
 
     @Nullable
     @Override
@@ -53,7 +56,7 @@ public class StatsProvider extends ContentProvider {
         int match = uriMatcher.match(uri);
         switch (match) {
             case CARD_TYPES_COUNT:
-                return CARD_TYPES_COUNT_TYPE;
+                return StatsContract.CardCount.CONTENT_TYPE;
             default:
                 throw new IllegalArgumentException("Unknown URI : " + uri);
         }
@@ -62,6 +65,10 @@ public class StatsProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        if (!ProviderUtils.hasReadWritePermission(mContext) &&
+                ProviderUtils.shouldEnforceQueryOrInsertSecurity(this, mContext)) {
+            ProviderUtils.throwSecurityException(this, mContext, "query", uri);
+        }
         try {
             switch (uriMatcher.match(uri)) {
                 case CARD_TYPES_COUNT:
@@ -70,7 +77,7 @@ public class StatsProvider extends ContentProvider {
                     return null;
             }
         } catch (Throwable error) {
-            Timber.e(error, "Failed to quary StatsProvider");
+            Timber.e(error, "Failed to query StatsProvider");
         }
         return null;
     }
@@ -96,13 +103,14 @@ public class StatsProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        mCollection = CollectionHelper.getInstance().getColSafe(getContext());
+        mContext = getContext();
+        mCollection = CollectionHelper.getInstance().getColSafe(mContext);
         return true;
     }
 
     private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-        matcher.addURI("com.ichi2.anki.stats", "count", CARD_TYPES_COUNT);
+        matcher.addURI(StatsContract.AUTHORITY, StatsContract.CardCount.CONTENT_URI_PATH, CARD_TYPES_COUNT);
         return matcher;
     }
 
