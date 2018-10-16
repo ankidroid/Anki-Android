@@ -294,6 +294,19 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     });
                     screen.addPreference(triggerTestCrashPreference);
                 }
+                // Make it possible to test analytics, but only for DEBUG builds
+                if (BuildConfig.DEBUG) {
+                    Timber.i("Debug mode, allowing for dynamic analytics config");
+                    Preference analyticsDebugMode = new Preference(this);
+                    analyticsDebugMode.setKey("analytics_debug_preference");
+                    analyticsDebugMode.setTitle("Switch Analytics to dev mode");
+                    analyticsDebugMode.setSummary("Touch here to use Analytics dev tag and 100% sample rate");
+                    analyticsDebugMode.setOnPreferenceClickListener(preference -> {
+                        UsageAnalytics.setDevMode();
+                        return true;
+                    });
+                    screen.addPreference(analyticsDebugMode);
+                }
                 // Force full sync option
                 Preference fullSyncPreference = screen.findPreference("force_full_sync");
                 fullSyncPreference.setOnPreferenceClickListener(preference -> {
