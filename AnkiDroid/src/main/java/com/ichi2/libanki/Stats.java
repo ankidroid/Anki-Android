@@ -1272,10 +1272,11 @@ public class Stats {
                 "sum(case when queue=2 and ivl >= 21 then 1 else 0 end), -- mtr\n" +
                 "sum(case when queue in (1,3) or (queue=2 and ivl < 21) then 1 else 0 end), -- yng/lrn\n" +
                 "sum(case when queue=0 then 1 else 0 end), -- new\n" +
-                "sum(case when queue<0 then 1 else 0 end) -- susp\n";
+                "sum(case when queue<0 then 1 else 0 end) -- susp\n" +
+                "from cards";
 
-        if(limit == null) {
-            query += "from cards where did in " + limit;
+        if (limit != null) {
+            query += "where did in " + limit;
         }
 
         Timber.d("CardsTypes query: %s", query);
