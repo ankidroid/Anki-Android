@@ -2,7 +2,7 @@ package com.ichi2.anki.api;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.robolectric.RobolectricTestRunner;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +18,7 @@ import static junit.framework.Assert.assertEquals;
  * Slack: bresan
  */
 
-@RunWith(JUnit4.class)
+@RunWith(RobolectricTestRunner.class)
 public class ApiUtilsTest {
 
     private static String delimiter = "\u001F";
