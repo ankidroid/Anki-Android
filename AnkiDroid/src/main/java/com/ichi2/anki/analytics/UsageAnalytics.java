@@ -39,7 +39,9 @@ public class UsageAnalytics {
     public static final String ANALYTICS_OPTIN_KEY = "analyticsOptIn";
     private static GoogleAnalytics sAnalytics;
     private static Thread.UncaughtExceptionHandler sOriginalUncaughtExceptionHandler;
-    private static boolean sOptIn = true;
+    private static boolean sOptIn = false;
+    private static String sAnalyticsTrackingId;
+    private static int sAnalyticsSamplePercentage = -1;
 
 
     /**
@@ -52,19 +54,19 @@ public class UsageAnalytics {
     synchronized public static GoogleAnalytics initialize(Context context) {
         Timber.i("initialize()");
         if (sAnalytics == null) {
-            Timber.d("App tracking id 'tid' = %s", context.getString(R.string.ga_trackingId));
+            Timber.d("App tracking id 'tid' = %s", getAnalyticsTag(context));
             GoogleAnalyticsConfig gaConfig = new GoogleAnalyticsConfig()
                     .setBatchingEnabled(true)
-                    .setSamplePercentage(context.getResources().getInteger(R.integer.ga_sampleFrequency))
+                    .setSamplePercentage(getAnalyticsSamplePercentage(context))
                     .setBatchSize(1); // until this handles application termination we will lose hits if batch>1
             sAnalytics = GoogleAnalytics.builder()
-                    .withTrackingId(context.getString(R.string.ga_trackingId))
+                    .withTrackingId(getAnalyticsTag(context))
                     .withConfig(gaConfig)
                     .withDefaultRequest(new DefaultRequest()
                             .applicationName(context.getString(R.string.app_name))
                             .applicationVersion(Integer.toString(BuildConfig.VERSION_CODE))
                             .applicationId(BuildConfig.APPLICATION_ID)
-                            .trackingId(context.getString(R.string.ga_trackingId))
+                            .trackingId(getAnalyticsTag(context))
                             .clientId(Installation.id(context))
                             .anonymizeIp(context.getResources().getBoolean(R.bool.ga_anonymizeIp))
                     )
@@ -76,7 +78,6 @@ public class UsageAnalytics {
 
         SharedPreferences userPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         setOptIn(userPrefs.getBoolean(ANALYTICS_OPTIN_KEY, false));
-        userPrefs.edit().putBoolean(ANALYTICS_OPTIN_KEY, sOptIn).apply();
         userPrefs.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> {
             if (key.equals(ANALYTICS_OPTIN_KEY)) {
                 setOptIn(sharedPreferences.getBoolean(key, false));
@@ -86,6 +87,29 @@ public class UsageAnalytics {
         return sAnalytics;
     }
 
+
+    private static String getAnalyticsTag(Context context) {
+        if (sAnalyticsTrackingId == null) {
+            sAnalyticsTrackingId = context.getString(R.string.ga_trackingId);
+        }
+        return sAnalyticsTrackingId;
+    }
+
+
+    private static int getAnalyticsSamplePercentage(Context context) {
+        if (sAnalyticsSamplePercentage == -1) {
+            sAnalyticsSamplePercentage = context.getResources().getInteger(R.integer.ga_sampleFrequency);
+        }
+        return sAnalyticsSamplePercentage;
+    }
+
+
+    public static void setDevMode() {
+        Timber.d("setDevMode() re-configuring for development analytics tagging");
+        sAnalyticsTrackingId = "UA-125800786-2";
+        sAnalyticsSamplePercentage = 100;
+        reInitialize();
+    }
 
     /**
      * We want to send an analytics hit on any exception, then chain to other handlers (e.g., ACRA)
@@ -118,6 +142,7 @@ public class UsageAnalytics {
         sOptIn = optIn;
         sAnalytics.flush();
         sAnalytics.getConfig().setEnabled(optIn);
+        sAnalytics.performSamplingElection();
         Timber.d("setOptIn() optIn / sAnalytics.config().enabled(): %s/%s", sOptIn, sAnalytics.getConfig().isEnabled());
     }
 
