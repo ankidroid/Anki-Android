@@ -197,9 +197,9 @@ Fixed n files
 If m and n are both greater than 0 then the script has worked, and it's just a matter of [copying the files to your Android device](https://github.com/ankidroid/Anki-Android/wiki/FAQ#why-doesnt-my-sound-or-image-work-on-ankidroid). Please kindly understand that we cannot directly provide support on the image occlusion add-on or fixing broken svg images.
 
 ### I have too many media files and can't copy them all to my device
-Unfortunately there is a limitation on the number of files which can be stored in one folder on the FAT filesystem used by default on most Android devices.
+Unfortunately there is a limitation on the number of files which can be stored in one folder on the FAT filesystem used by default on older Android devices and many removable storage cards. You may notice this if you have many thousand media files in your collection. 
 
-The best solution, if your device supports it, is to format your SD card  as ExFAT. You may need to take the SD card out and format it on your PC.
+The best solution, if your device supports it and you have an external storage card, is to format your SD card  as ExFAT. You may need to take the SD card out and format it on your PC.
 
 If your device does not support ExFAT, one possible workaround for this problem (requires root access), is to use a 3rd party app capable of mounting a different filesystem (for example from [Paragon](https://play.google.com/store/apps/details?id=com.paragon.mounter)). NTFS and Ext4 formats should also work.
 
