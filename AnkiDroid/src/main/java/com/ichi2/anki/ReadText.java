@@ -283,27 +283,28 @@ public class ReadText {
                         Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
                         Timber.w("TTS initialized but no available languages found");
                     }
+                    mTts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                        @Override
+                        public void onDone(String arg0) {
+                            if (ReadText.sTextQueue.size() > 0) {
+                                String[] text = ReadText.sTextQueue.remove(0);
+                                ReadText.speak(text[0], text[1], TextToSpeech.QUEUE_FLUSH);
+                            }
+                        }
+                        @Override
+                        @Deprecated
+                        public void onError(String arg0) {
+                            // do nothing
+                        }
+                        @Override
+                        public void onStart(String arg0) {
+                            // no nothing
+                        }
+                    });
                 } else {
                     Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
+                    Timber.w("TTS not successfully initialized");
                 }
-                mTts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
-                    @Override
-                    public void onDone(String arg0) {
-                        if (ReadText.sTextQueue.size() > 0) {
-                            String[] text = ReadText.sTextQueue.remove(0);
-                            ReadText.speak(text[0], text[1], TextToSpeech.QUEUE_FLUSH);
-                        }
-                    }
-                    @Override
-                    @Deprecated
-                    public void onError(String arg0) {
-                        // do nothing
-                    }
-                    @Override
-                    public void onStart(String arg0) {
-                        // no nothing
-                    }
-                });
             }
         });
         mTtsParams = new HashMap<>();
