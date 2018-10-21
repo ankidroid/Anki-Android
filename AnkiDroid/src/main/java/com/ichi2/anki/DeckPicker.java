@@ -40,6 +40,8 @@ import android.os.Message;
 import android.provider.Settings;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -1538,21 +1540,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                                 joinSyncMessages(dialogMessage, syncMessage));
                     } else {
                         if (result.length > 1 && result[1] instanceof Integer) {
-                            int type = (Integer) result[1];
-                            switch (type) {
-                                case 501:
-                                    dialogMessage = res.getString(R.string.sync_error_501_upgrade_required);
-                                    break;
-                                case 503:
-                                    dialogMessage = res.getString(R.string.sync_too_busy);
-                                    break;
-                                case 409:
-                                    dialogMessage = res.getString(R.string.sync_error_409);
-                                    break;
-                                default:
-                                    dialogMessage = res.getString(R.string.sync_log_error_specific,
-                                            Integer.toString(type), result[2]);
-                                    break;
+                            int code = (Integer) result[1];
+                            dialogMessage = rewriteError(code);
+                            if (dialogMessage == null) {
+                                dialogMessage = res.getString(R.string.sync_log_error_specific,
+                                        Integer.toString(code), result[2]);
                             }
                         } else if (result[0] instanceof String) {
                             dialogMessage = res.getString(R.string.sync_log_error_specific, Integer.toString(-1), result[0]);
@@ -1601,6 +1593,43 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         }
     };
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @Nullable
+    public String rewriteError(int code) {
+        String msg;
+        Resources res = getResources();
+        switch (code) {
+            case 407:
+                msg = res.getString(R.string.sync_error_407_proxy_required);
+                break;
+            case 409:
+                msg = res.getString(R.string.sync_error_409);
+                break;
+            case 413:
+                msg = res.getString(R.string.sync_error_413_collection_size);
+                break;
+            case 500:
+                msg = res.getString(R.string.sync_error_500_unknown);
+                break;
+            case 501:
+                msg = res.getString(R.string.sync_error_501_upgrade_required);
+                break;
+            case 502:
+                msg = res.getString(R.string.sync_error_502_maintenance);
+                break;
+            case 503:
+                msg = res.getString(R.string.sync_too_busy);
+                break;
+            case 504:
+                msg = res.getString(R.string.sync_error_504_gateway_timeout);
+                break;
+            default:
+                msg = null;
+                break;
+        }
+        return msg;
+    }
 
 
     private String joinSyncMessages(String dialogMessage, String syncMessage) {

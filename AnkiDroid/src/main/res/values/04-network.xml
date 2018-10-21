@@ -76,7 +76,6 @@
     <string name="sync_remote_db_error">The downloaded database was corrupt. Please try again.</string>
     <string name="sync_overwrite_error">Your current collection couldn’t be overwritten by the downloaded file</string>
     <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
-    <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
     <string name="sync_write_access_error">The downloaded file couldn’t be saved to the SD card. Either the card is mounted read-only or there isn’t enough space.</string>
     <string name="sync_deletions_message">Syncing deletions…</string>
     <string name="sync_small_objects_message">Syncing small objects…</string>
@@ -104,5 +103,11 @@
     <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
     <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
     <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
+    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
+    <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
+    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
+    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
     <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
+    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
+    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
 </resources>
