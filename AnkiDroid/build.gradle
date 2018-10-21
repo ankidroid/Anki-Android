@@ -115,6 +115,7 @@ dependencies {
     implementation 'androidx.sqlite:sqlite:2.0.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
+    implementation 'androidx.annotation:annotation:1.0.0'
 
     // May need a resolution strategy for support libs to our versions
     implementation'ch.acra:acra-http:5.2.1'
