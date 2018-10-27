@@ -46,6 +46,7 @@ import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
+@SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
 public class Finder {
 
     private static final Pattern fPropPattern = Pattern.compile("(^.+?)(<=|>=|!=|=|<|>)(.+?$)");
@@ -125,7 +126,7 @@ public class Finder {
         if (preds == null) {
             return res;
         }
-        if (preds.equals("")) {
+        if ("".equals(preds)) {
             preds = "1";
         } else {
             preds = "(" + preds + ")";
@@ -202,7 +203,7 @@ public class Finder {
             } else if (c == '-') {
                 if (token.length() != 0) {
                     token += c;
-                } else if (tokens.size() == 0 || !tokens.get(tokens.size() - 1).equals("-")) {
+                } else if (tokens.size() == 0 || !"-".equals(tokens.get(tokens.size() - 1))) {
                     tokens.add("-");
                 }
                 // normal character
@@ -249,7 +250,7 @@ public class Finder {
                     bad = true;
                     return;
                 }
-            } else if (txt.equals("skip")) {
+            } else if ("skip".equals(txt)) {
                 return;
             }
             // do we need a conjunction?
@@ -283,14 +284,14 @@ public class Finder {
                 return new Pair<>(null, null);
             }
             // special tokens
-            if (token.equals("-")) {
+            if ("-".equals(token)) {
                 s.isnot = true;
-            } else if (token.equalsIgnoreCase("or")) {
+            } else if ("or".equalsIgnoreCase(token)) {
                 s.isor = true;
-            } else if (token.equals("(")) {
+            } else if ("(".equals(token)) {
                 s.add(token, false);
                 s.join = false;
-            } else if (token.equals(")")) {
+            } else if (")".equals(token)) {
                 s.q += ")";
                 // commands
             } else if (token.contains(":")) {
@@ -298,29 +299,29 @@ public class Finder {
                 String cmd = spl[0].toLowerCase(Locale.US);
                 String val = spl[1];
                 
-                if (cmd.equals("added")) {
+                if ("added".equals(cmd)) {
                     s.add(_findAdded(val));
-                } else if (cmd.equals("card")) {
+                } else if ("card".equals(cmd)) {
                     s.add(_findTemplate(val));
-                } else if (cmd.equals("deck")) {
+                } else if ("deck".equals(cmd)) {
                     s.add(_findDeck(val));
-                } else if (cmd.equals("mid")) {
+                } else if ("mid".equals(cmd)) {
                     s.add(_findMid(val));
-                } else if (cmd.equals("nid")) {
+                } else if ("nid".equals(cmd)) {
                     s.add(_findNids(val));
-                } else if (cmd.equals("cid")) {
+                } else if ("cid".equals(cmd)) {
                     s.add(_findCids(val));
-                } else if (cmd.equals("note")) {
+                } else if ("note".equals(cmd)) {
                     s.add(_findModel(val));
-                } else if (cmd.equals("prop")) {
+                } else if ("prop".equals(cmd)) {
                     s.add(_findProp(val));
-                } else if (cmd.equals("rated")) {
+                } else if ("rated".equals(cmd)) {
                     s.add(_findRated(val));
-                } else if (cmd.equals("tag")) {
+                } else if ("tag".equals(cmd)) {
                     s.add(_findTag(val, args));
-                } else if (cmd.equals("dupe")) {
+                } else if ("dupe".equals(cmd)) {
                     s.add(_findDupes(val));
-                } else if (cmd.equals("is")) {
+                } else if ("is".equals(cmd)) {
                     s.add(_findCardState(val));
                 } else {
                     s.add(_findField(cmd, val));
@@ -432,7 +433,7 @@ public class Finder {
      */
 
     private String _findTag(String val, List<String> args) {
-        if (val.equals("none")) {
+        if ("none".equals(val)) {
             return "n.tags = \"\"";
         }
         val = val.replace("*", "%");
@@ -449,20 +450,20 @@ public class Finder {
 
     private String _findCardState(String val) {
         int n;
-        if (val.equals("review") || val.equals("new") || val.equals("learn")) {
-            if (val.equals("review")) {
+        if ("review".equals(val) || "new".equals(val) || "learn".equals(val)) {
+            if ("review".equals(val)) {
                 n = 2;
-            } else if (val.equals("new")) {
+            } else if ("new".equals(val)) {
                 n = 0;
             } else {
                 return "queue IN (1, 3)";
             }
             return "type = " + n;
-        } else if (val.equals("suspended")) {
+        } else if ("suspended".equals(val)) {
             return "c.queue = -1";
-        } else if (val.equals("buried")) {
+        } else if ("buried".equals(val)) {
             return "c.queue = -2";
-        } else if (val.equals("due")) {
+        } else if ("due".equals(val)) {
             return "(c.queue in (2,3) and c.due <= " + mCol.getSched().getToday() +
                     ") or (c.queue = 1 and c.due <= " + mCol.getSched().getDayCutoff() + ")";
         } else {
@@ -518,7 +519,7 @@ public class Finder {
         int val;
         // is val valid?
         try {
-            if (prop.equals("ease")) {
+            if ("ease".equals(prop)) {
                 // LibAnki does this below, but we do it here to avoid keeping a separate float value.
                 val = (int)(Double.parseDouble(sval) * 1000);
             } else {
@@ -533,11 +534,11 @@ public class Finder {
         }
         // query
         String q = "";
-        if (prop.equals("due")) {
+        if ("due".equals(prop)) {
             val += mCol.getSched().getToday();
             // only valid for review/daily learning
             q = "(c.queue in (2,3)) and ";
-        } else if (prop.equals("ease")) {
+        } else if ("ease".equals(prop)) {
             prop = "factor";
             // already done: val = int(val*1000)
         }
@@ -607,16 +608,16 @@ public class Finder {
 
     public String _findDeck(String val) {
         // if searching for all decks, skip
-        if (val.equals("*")) {
+        if ("*".equals(val)) {
             return "skip";
             // deck types
-        } else if (val.equals("filtered")) {
+        } else if ("filtered".equals(val)) {
             return "c.odid";
         }
         List<Long> ids = null;
         // current deck?
         try {
-            if (val.equalsIgnoreCase("current")) {
+            if ("current".equalsIgnoreCase(val)) {
                 ids = dids(mCol.getDecks().current().getLong("id"));
             } else if (!val.contains("*")) {
                 // single deck

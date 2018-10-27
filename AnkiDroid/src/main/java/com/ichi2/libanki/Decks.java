@@ -45,6 +45,8 @@ import java.util.regex.Pattern;
 // fixmes:
 // - make sure users can't set grad interval < 1
 
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes",
+        "PMD.MethodNamingConventions","PMD.AvoidReassigningParameters","PMD.SimplifyBooleanReturns"})
 public class Decks {
 
 

@@ -40,6 +40,9 @@ import java.util.Vector;
 import timber.log.Timber;
 
 
+@SuppressWarnings({"PMD.ExcessiveClassLength","PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
+        "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength","PMD.OneDeclarationPerLine",
+        "PMD.SwitchStmtsShouldHaveDefault","PMD.EmptyIfStmt"})
 public class Stats {
 
     public enum AxisType {
@@ -57,8 +60,6 @@ public class Stats {
 
     public enum ChartType {FORECAST, REVIEW_COUNT, REVIEW_TIME,
         INTERVALS, HOURLY_BREAKDOWN, WEEKLY_BREAKDOWN, ANSWER_BUTTONS, CARDS_TYPES, OTHER}
-
-    private static Stats sCurrentInstance;
 
     private Collection mCol;
     private boolean mWholeCollection;
@@ -92,7 +93,6 @@ public class Stats {
     public Stats(Collection col, boolean wholeCollection) {
         mCol = col;
         mWholeCollection = wholeCollection;
-        sCurrentInstance = this;
     }
 
     public double[][] getSeriesList() {
@@ -230,7 +230,7 @@ public class Stats {
         return res;
     }
 
-    String getRevlogFilter(AxisType timespan,boolean inverseTimeSpan){
+    private String getRevlogFilter(AxisType timespan,boolean inverseTimeSpan){
         ArrayList<String> lims = new ArrayList<>();
         String dayFilter = getRevlogTimeFilter(timespan, inverseTimeSpan);
         if (!TextUtils.isEmpty(dayFilter)) {

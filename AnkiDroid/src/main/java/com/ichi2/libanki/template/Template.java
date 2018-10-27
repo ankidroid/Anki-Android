@@ -41,6 +41,7 @@ import java.util.regex.Pattern;
  * and sections are only ever considered to be String objects. Tests have shown that strings are the
  * only data type used, and thus code that handles anything else has been omitted.
  */
+@SuppressWarnings({"PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
 public class Template {
     public static final String clozeReg = "(?s)\\{\\{c%s::(.*?)(::(.*?))?\\}\\}";
     private static final Pattern fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$");
@@ -167,11 +168,11 @@ public class Template {
             String replacement;
             if (tag_type == null) {
                 replacement = render_unescaped(tag_name, context);
-            } else if (tag_type.equals("{")) {
+            } else if ("{".equals(tag_type)) {
                 replacement = render_tag(tag_name, context);
-            } else if (tag_type.equals("!")) {
+            } else if ("!".equals(tag_type)) {
                 replacement = render_comment();
-            } else if (tag_type.equals("=")) {
+            } else if ("=".equals(tag_type)) {
                 replacement = render_delimiter(tag_name);
             } else {
                 return "{{invalid template}}";
@@ -210,7 +211,7 @@ public class Template {
         String extra = null;
         List<String> mods;
         String tag;
-        if (parts.size() == 1 || parts.get(0).equals("")) {
+        if (parts.size() == 1 || "".equals(parts.get(0))) {
             return String.format("{unknown field %s}", tag_name);
         } else {
             mods = parts.subList(0, parts.size() - 1);
@@ -231,7 +232,7 @@ public class Template {
             // the list remains in the same order.
             @Override
             public int compare(String lhs, String rhs) {
-                if (lhs.equals("type")) {
+                if ("type".equals(lhs)) {
                     return 0;
                 } else {
                     return 1;
@@ -242,14 +243,14 @@ public class Template {
         for (String mod : mods) {
             //Timber.d("Models.get():: Processing field: modifier=%s, extra=%s, tag=%s, txt=%s", mod, extra, tag, txt);
             // built-in modifiers
-            if (mod.equals("text")) {
+            if ("text".equals(mod)) {
                 // strip html
                 if (!TextUtils.isEmpty(txt)) {
                     txt = Utils.stripHTML(txt);
                 } else {
                     txt = "";
                 }
-            } else if (mod.equals("type")) {
+            } else if ("type".equals(mod)) {
                 // type answer field; convert it to [[type:...]] for the gui code
                 // to process
                 return String.format(Locale.US, "[[%s]]", tag_name);

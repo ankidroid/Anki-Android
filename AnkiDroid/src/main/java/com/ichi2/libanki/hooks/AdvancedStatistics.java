@@ -96,6 +96,9 @@ import timber.log.Timber;
  * [ReviewOutcome]++-1>[Card]
  * [AdvancedStatistics]creates -.-> [StatsMetaInfo]
  */
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.ExcessiveClassLength","PMD.ExcessiveMethodLength",
+                    "PMD.AvoidReassigningParameters","PMD.FieldDeclarationsShouldBeAtStartOfClass","PMD.SwitchStatementsShouldHaveDefault",
+                    "PMD.NPathComplexity","PMD.OneDeclarationPerLine","PMD.SwitchStmtsShouldHaveDefault"})
 public class AdvancedStatistics extends Hook  {
 
     private static final int TIME = 0;
@@ -568,7 +571,7 @@ public class AdvancedStatistics extends Hook  {
 
     private class CardIterator {
 
-        Cursor cur;
+        private Cursor cur;
 
         private final int today;
         private Deck deck;

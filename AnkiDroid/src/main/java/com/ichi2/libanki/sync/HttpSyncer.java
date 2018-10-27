@@ -65,7 +65,8 @@ import timber.log.Timber;
  * - 502: ankiweb down
  * - 503/504: server too busy
  */
-@SuppressWarnings("deprecation") // tracking HTTP transport change in github already
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.NPathComplexity",
+                    "deprecation"}) // tracking HTTP transport change in github already
 public class HttpSyncer {
 
     private static final String BOUNDARY = "Anki-sync-boundary";
@@ -175,7 +176,7 @@ public class HttpSyncer {
             bos.close();
             // connection headers
             String url = Consts.SYNC_BASE;
-            if (method.equals("register")) {
+            if ("register".equals(method)) {
                 url = url + "account/signup" + "?username=" + registerData.getString("u") + "&password="
                         + registerData.getString("p");
             } else if (method.startsWith("upgrade")) {
@@ -318,6 +319,7 @@ public class HttpSyncer {
     }
 
     public void abort() throws UnknownHttpResponseException {
+        // do nothing
     }
 
 
@@ -342,6 +344,7 @@ public class HttpSyncer {
 
 
     public void applyChunk(JSONObject sech) throws UnknownHttpResponseException {
+        // do nothing
     }
 
     public class ProgressByteEntity extends org.apache.http.entity.AbstractHttpEntity {

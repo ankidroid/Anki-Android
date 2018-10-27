@@ -60,6 +60,8 @@ import java.util.Set;
  - rev queue: integer day
  - lrn queue: integer timestamp
  */
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.ExcessiveMethodLength","PMD.FieldDeclarationsShouldBeAtStartOfClass",
+                    "PMD.MethodNamingConventions"})
 public class Card implements Cloneable {
 
     public static final int TYPE_NEW = 0;
@@ -184,9 +186,9 @@ public class Card implements Cloneable {
             mUsn = mCol.usn();
         }
         // bug check
-        if ((mQueue == 2 && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
+        //if ((mQueue == 2 && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
             // TODO: runHook("odueInvalid");
-        }
+        //}
         assert (mDue < Long.valueOf("4294967296"));
         mCol.getDb().execute(
                 "insert or replace into cards values " +
@@ -219,9 +221,9 @@ public class Card implements Cloneable {
         mMod = Utils.intNow();
         mUsn = mCol.usn();
         // bug check
-        if ((mQueue == 2 && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
+        //if ((mQueue == 2 && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
             // TODO: runHook("odueInvalid");
-        }
+        //}
         assert (mDue < Long.valueOf("4294967296"));
 
         ContentValues values = new ContentValues();

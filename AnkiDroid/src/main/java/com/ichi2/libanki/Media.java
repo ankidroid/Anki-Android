@@ -70,6 +70,9 @@ import timber.log.Timber;
  * creating a new File() object), we must include the full path. Use the dir() method to make this step easier.<br>
  * E.g: new File(dir(), "filename.jpg")
  */
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
+        "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength","PMD.OneDeclarationPerLine",
+        "PMD.SwitchStmtsShouldHaveDefault","PMD.EmptyIfStmt","PMD.SimplifyBooleanReturns","PMD.CollapsibleIfStatements"})
 public class Media {
 
     private static final Pattern fIllegalCharReg = Pattern.compile("[><:\"/?*^\\\\|\\x00\\r\\n]");
@@ -306,7 +309,7 @@ public class Media {
             for (Pattern p : mRegexps) {
                 // NOTE: python uses the named group 'fname'. Java doesn't have named groups, so we have to determine
                 // the index based on which pattern we are using
-                int fnameIdx = p == fSoundRegexps ? 2 : p == fImgRegExpU ? 2 : 3;
+                int fnameIdx = p.equals(fSoundRegexps) ? 2 : p.equals(fImgRegExpU) ? 2 : 3;
                 m = p.matcher(s);
                 while (m.find()) {
                     String fname = m.group(fnameIdx);
@@ -378,7 +381,7 @@ public class Media {
             Matcher m = p.matcher(string);
             // NOTE: python uses the named group 'fname'. Java doesn't have named groups, so we have to determine
             // the index based on which pattern we are using
-            int fnameIdx = p == fImgRegExpU ? 2 : 3;
+            int fnameIdx = p.equals(fImgRegExpU) ? 2 : 3;
             while (m.find()) {
                 String tag = m.group(0);
                 String fname = m.group(fnameIdx);
@@ -931,7 +934,7 @@ public class Media {
      * function and have delegated its job to the caller of this class.
      */
     public static int indexOfFname(Pattern p) {
-        int fnameIdx = p == fSoundRegexps ? 2 : p == fImgRegExpU ? 2 : 3;
+        int fnameIdx = p.equals(fSoundRegexps) ? 2 : p.equals(fImgRegExpU) ? 2 : 3;
         return fnameIdx;
     }
 

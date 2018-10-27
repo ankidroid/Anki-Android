@@ -12,7 +12,7 @@ public class NoteImporter extends Importer {
 
     @Override
     public void run() {
-
+        // do nothing
     }
 
     public int getTotal() {

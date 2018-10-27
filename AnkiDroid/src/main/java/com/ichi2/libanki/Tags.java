@@ -48,6 +48,7 @@ This class differs from the python version by keeping the in-memory tag cache as
 instead of a JSONObject. It is much more convenient to work with a TreeMap in Java, but there
 may be a performance penalty in doing so (on startup and shutdown).
  */
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes"})
 public class Tags {
 
     private static final Pattern sCanonify = Pattern.compile("[\"']");

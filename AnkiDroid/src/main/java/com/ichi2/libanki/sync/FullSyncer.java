@@ -41,10 +41,11 @@ import java.util.Locale;
 
 import timber.log.Timber;
 
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.NPathComplexity"})
 public class FullSyncer extends HttpSyncer {
 
-    Collection mCol;
-    Connection mCon;
+    private Collection mCol;
+    private Connection mCon;
 
 
     public FullSyncer(Collection col, String hkey, Connection con) {

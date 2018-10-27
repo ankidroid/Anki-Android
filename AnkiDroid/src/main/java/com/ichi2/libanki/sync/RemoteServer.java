@@ -30,7 +30,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 
-@SuppressWarnings("deprecation") // tracking HTTP transport change in github already
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.MethodNamingConventions",
+        "deprecation"}) // tracking HTTP transport change in github already
 public class RemoteServer extends HttpSyncer {
 
     public RemoteServer(Connection con, String hkey) {

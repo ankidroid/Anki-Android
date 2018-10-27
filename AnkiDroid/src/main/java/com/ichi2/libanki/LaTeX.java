@@ -39,6 +39,7 @@ import java.util.regex.Pattern;
  * Unlike the original python implementation of this class, the AnkiDroid version does not support
  * the generation of LaTeX images.
  */
+@SuppressWarnings({"PMD.MethodNamingConventions","PMD.AvoidReassigningParameters"})
 public class LaTeX {
 
     /**
@@ -60,14 +61,14 @@ public class LaTeX {
         StringBuffer sb = new StringBuffer();
         Matcher matcher = sStandardPattern.matcher(html);
         while (matcher.find()) {
-            matcher.appendReplacement(sb, _imgLink(col, matcher.group(1), model));
+            matcher.appendReplacement(sb, _imgLink(matcher.group(1), model));
         }
         matcher.appendTail(sb);
 
         matcher = sExpressionPattern.matcher(sb.toString());
         sb = new StringBuffer();
         while (matcher.find()) {
-            matcher.appendReplacement(sb, _imgLink(col, "$" + matcher.group(1) + "$", model));
+            matcher.appendReplacement(sb, _imgLink("$" + matcher.group(1) + "$", model));
         }
         matcher.appendTail(sb);
 
@@ -75,7 +76,7 @@ public class LaTeX {
         sb = new StringBuffer();
         while (matcher.find()) {
             matcher.appendReplacement(sb,
-                    _imgLink(col, "\\begin{displaymath}" + matcher.group(1) + "\\end{displaymath}", model));
+                    _imgLink("\\begin{displaymath}" + matcher.group(1) + "\\end{displaymath}", model));
         }
         matcher.appendTail(sb);
 
@@ -86,8 +87,8 @@ public class LaTeX {
     /**
      * Return an img link for LATEX.
      */
-    private static String _imgLink(Collection col, String latex, JSONObject model) {
-        String txt = _latexFromHtml(col, latex);
+    private static String _imgLink(String latex, JSONObject model) {
+        String txt = _latexFromHtml(latex);
 
         String ext = "png";
         if (model.optBoolean("latexsvg", false)) {
@@ -102,7 +103,7 @@ public class LaTeX {
     /**
      * Convert entities and fix newlines.
      */
-    private static String _latexFromHtml(Collection col, String latex) {
+    private static String _latexFromHtml(String latex) {
         latex = latex.replaceAll("<br( /)?>|<div>", "\n");
         latex = Utils.stripHTML(latex);
         return latex;

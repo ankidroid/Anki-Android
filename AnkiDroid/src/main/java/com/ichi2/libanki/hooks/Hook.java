@@ -62,7 +62,7 @@ public class Hook {
     }
 
     public void runHook(Object... args) {
-        return;
+        // do nothing
     }
 
     public Object runFilter(Object arg, Object... args) {

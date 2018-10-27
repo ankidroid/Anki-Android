@@ -44,7 +44,10 @@ import java.util.Map;
 
 import timber.log.Timber;
 
-@SuppressWarnings("deprecation") // tracking HTTP transport change in github already
+@SuppressWarnings({"deprecation", // tracking HTTP transport change in github already
+                    "PMD.ExcessiveClassLength","PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
+                    "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength",
+                    "PMD.SwitchStmtsShouldHaveDefault","PMD.EmptyIfStmt","PMD.SingularField"})
 public class Syncer {
     // Mapping of column type names to Cursor types for API < 11
     public static final int TYPE_NULL = 0;
@@ -53,17 +56,17 @@ public class Syncer {
     public static final int TYPE_STRING = 3;
     public static final int TYPE_BLOB = 4;
 
-    Collection mCol;
-    HttpSyncer mServer;
-    long mRMod;
-    long mRScm;
-    int mMaxUsn;
-    long mLMod;
-    long mLScm;
-    int mMinUsn;
-    boolean mLNewer;
-    JSONObject mRChg;
-    String mSyncMsg;
+    private Collection mCol;
+    private HttpSyncer mServer;
+    private long mRMod;
+    //private long mRScm;
+    private int mMaxUsn;
+    private long mLMod;
+    //private long mLScm;
+    private int mMinUsn;
+    private boolean mLNewer;
+    private JSONObject mRChg;
+    private String mSyncMsg;
 
     private LinkedList<String> mTablesLeft;
     private Cursor mCursor;
@@ -203,7 +206,7 @@ public class Syncer {
                 // step 5: sanity check
                 JSONObject c = sanityCheck();
                 JSONObject sanity = mServer.sanityCheck2(c);
-                if (sanity == null || !sanity.optString("status", "bad").equals("ok")) {
+                if (sanity == null || !"ok".equals(sanity.optString("status", "bad"))) {
                     mCol.log("sanity check failed", c, sanity);
                     return new Object[] { "sanityCheckError", null };
                 }
@@ -450,7 +453,7 @@ public class Syncer {
 
     private Cursor cursorForTable(String table) {
         String lim = usnLim();
-        if (table.equals("revlog")) {
+        if ("revlog".equals(table)) {
             return mCol
                     .getDb()
                     .getDatabase()
@@ -458,7 +461,7 @@ public class Syncer {
                             String.format(Locale.US,
                                     "SELECT id, cid, %d, ease, ivl, lastIvl, factor, time, type FROM revlog WHERE %s",
                                     mMaxUsn, lim), null);
-        } else if (table.equals("cards")) {
+        } else if ("cards".equals(table)) {
             return mCol
                     .getDb()
                     .getDatabase()
@@ -481,10 +484,10 @@ public class Syncer {
 
 
     private List<Integer> columnTypesForQuery(String table) {
-        if (table.equals("revlog")) {
+        if ("revlog".equals(table)) {
             return Arrays.asList(TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER,
                     TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER);
-        } else if (table.equals("cards")) {
+        } else if ("cards".equals(table)) {
             return Arrays.asList(TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER,
                     TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER,
                     TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_STRING);
