@@ -216,7 +216,6 @@ public class Tags {
      *
      * @param ids The cards to tag.
      * @param tags List of tags to add/remove. They are space-separated.
-     * @param add True/False to add/remove.
      */
     public void bulkAdd(List<Long> ids, String tags) {
         bulkAdd(ids, tags, true);
@@ -226,6 +225,10 @@ public class Tags {
     /**
      * FIXME: This method must be fixed before it is used. Its behaviour is currently incorrect.
      * This method is currently unused in AnkiDroid so it will not cause any errors in its current state.
+     *
+     * @param ids The cards to tag.
+     * @param tags List of tags to add/remove. They are space-separated.
+     * @param add True/False to add/remove.
      */
     public void bulkAdd(List<Long> ids, String tags, boolean add) {
         List<String> newTags = split(tags);

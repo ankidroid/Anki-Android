@@ -60,8 +60,8 @@
     <string name="intent_add_clear_all">Clear all</string>
     <string name="intent_aedict_empty">Category “default” is empty</string>
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
-    <string name="custom_study_new_total_new">New cards in deck: %s</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %s</string>
+    <string name="custom_study_new_total_new">New cards in deck: %d</string>
+    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
     <string name="custom_study_new_extend">Increase today’s new card limit by</string>
     <string name="custom_study_rev_extend">Increase today’s review limit by</string>
     <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>

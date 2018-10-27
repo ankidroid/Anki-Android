@@ -27,7 +27,7 @@
     android:summary="@string/pref_cat_reviewing_summ" >
     <PreferenceCategory android:title="@string/pref_cat_reviewer_behaviour" >
         <ListPreference
-            android:defaultValue=""
+            android:defaultValue="0"
             android:entries="@array/new_spread_labels"
             android:entryValues="@array/new_spread_values"
             android:key="newSpread"
