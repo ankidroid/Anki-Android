@@ -32,6 +32,8 @@
     <string name="pref_cat_automatic_display">Automatic display answer</string>
     <string name="pref_cat_appearance">Appearance</string>
     <string name="pref_cat_appearance_summ">Change themes and default font</string>
+    <string name="pref_cat_editing">Editing</string>
+    <string name="pref_cat_editing_summ">Control note editor behavior.</string>
     <string name="pref_cat_themes">Themes</string>
     <string name="pref_cat_fonts">Fonts</string>
     <string name="pref_cat_gestures">Gestures</string>
@@ -163,6 +165,10 @@
     <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
 
+    <!-- Editing settings -->
+    <string name="auto_capitalization_summ">Auto-capitalize the first word in sentences when entering text into note fields.</string>
+    <string name="auto_capitalization">Enable auto-capitalization</string>
+
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Advanced statistics</string>
     <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
@@ -253,4 +259,4 @@
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
     <string name="analytics_title">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-"</resources>
+    "</resources>

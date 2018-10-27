@@ -31,6 +31,7 @@ import android.os.Bundle;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 
@@ -1296,6 +1297,13 @@ public class NoteEditor extends AnkiActivity {
                 // do nothing
             }
         });
+
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        if(preferences.getBoolean("autoCapitalization", false)) {
+            int currentInputType = editText.getInputType();
+            editText.setInputType(currentInputType | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        }
+
         editText.setEnabled(enabled);
     }
 

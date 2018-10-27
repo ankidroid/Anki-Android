@@ -61,6 +61,16 @@
             android:value="com.ichi2.anki.prefs.gestures" />
     </header>
 
+    <!-- Editing Prefrences -->
+    <header
+        android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
+        android:summary="@string/pref_cat_editing_summ"
+        android:title="@string/pref_cat_editing">
+        <extra
+            android:name="subscreen"
+            android:value="com.ichi2.anki.prefs.editing" />
+    </header>
+
     <!-- Advanced Preferences -->
     <header
         android:fragment="com.ichi2.anki.Preferences$SettingsFragment"

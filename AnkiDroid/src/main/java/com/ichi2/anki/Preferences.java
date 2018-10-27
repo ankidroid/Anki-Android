@@ -252,6 +252,16 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     return true;
                 });
                 break;
+            case "com.ichi2.anki.prefs.editing":
+                listener.addPreferencesFromResource(R.xml.preferences_editing);
+                screen = listener.getPreferenceScreen();
+                CheckBoxPreference checkBoxPreference = (CheckBoxPreference) screen.findPreference("autoCapitalization");
+                checkBoxPreference.setOnPreferenceChangeListener(((preference, newValue) -> {
+                    SharedPreferences.Editor edit = AnkiDroidApp.getSharedPrefs(getBaseContext()).edit();
+                    edit.putBoolean("autoCapitalization", ((CheckBoxPreference)preference).isChecked()).apply();
+                    return true;
+                }));
+                break;
             case "com.ichi2.anki.prefs.advanced":
                 listener.addPreferencesFromResource(R.xml.preferences_advanced);
                 screen = listener.getPreferenceScreen();
