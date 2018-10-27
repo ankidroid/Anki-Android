@@ -24,7 +24,6 @@ import android.database.Cursor;
 import android.util.Pair;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.libanki.template.Template;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +40,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
+        "PMD.NPathComplexity","PMD.MethodNamingConventions",
+        "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
 public class Models {
     private static final Pattern fClozePattern1 = Pattern.compile("\\{\\{[^}]*?cloze:(?:[^}]?:)*(.+?)\\}\\}");
     private static final Pattern fClozePattern2 = Pattern.compile("<%cloze:(.+?)%>");
@@ -97,19 +99,19 @@ public class Models {
     // BEGIN SQL table entries
     private int mId;
     private String mName = "";
-    private long mCrt = Utils.intNow();
-    private long mMod = Utils.intNow();
-    private JSONObject mConf;
-    private String mCss = "";
-    private JSONArray mFields;
-    private JSONArray mTemplates;
+    //private long mCrt = Utils.intNow();
+    //private long mMod = Utils.intNow();
+    //private JSONObject mConf;
+    //private String mCss = "";
+    //private JSONArray mFields;
+    //private JSONArray mTemplates;
     // BEGIN SQL table entries
 
     // private Decks mDeck;
     // private DB mDb;
     //
     /** Map for compiled Mustache Templates */
-    private Map<String, Template> mCmpldTemplateMap = new HashMap<>();
+    //private Map<String, Template> mCmpldTemplateMap = new HashMap<>();
 
 
     //
@@ -676,7 +678,7 @@ public class Models {
             for (int i = 0; i < tmpls.length(); ++i) {
                 JSONObject t = tmpls.getJSONObject(i);
                 for (String fmt : new String[] { "qfmt", "afmt" }) {
-                    if (!newName.equals("")) {
+                    if (!"".equals(newName)) {
                         t.put(fmt, t.getString(fmt).replaceAll(pat, repl));
                     } else {
                         t.put(fmt, t.getString(fmt).replaceAll(pat, ""));
@@ -880,7 +882,7 @@ public class Models {
         }
     }
 
-
+    @SuppressWarnings("PMD.UnusedLocalVariable") // unused upstream as well
     private void _syncTemplates(JSONObject m) {
         ArrayList<Long> rem = mCol.genCards(Utils.arrayList2array(nids(m)));
     }
@@ -1066,7 +1068,7 @@ public class Models {
         }
     }
 
-
+    @SuppressWarnings("PMD.UnusedLocalVariable") // 'String f' is unused upstream as well
     private Object[] _reqForTemplate(JSONObject m, ArrayList<String> flds, JSONObject t) {
         try {
             ArrayList<String> a = new ArrayList<>();
@@ -1141,10 +1143,10 @@ public class Models {
                 String type = sr.getString(1);
                 JSONArray req = sr.getJSONArray(2);
 
-                if (type.equals("none")) {
+                if ("none".equals(type)) {
                     // unsatisfiable template
                     continue;
-                } else if (type.equals("all")) {
+                } else if ("all".equals(type)) {
                     // AND requirement?
                     boolean ok = true;
                     for (int j = 0; j < req.length(); j++) {
@@ -1158,7 +1160,7 @@ public class Models {
                     if (!ok) {
                         continue;
                     }
-                } else if (type.equals("any")) {
+                } else if ("any".equals(type)) {
                     // OR requirement?
                     boolean ok = false;
                     for (int j = 0; j < req.length(); j++) {

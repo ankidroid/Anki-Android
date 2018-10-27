@@ -35,7 +35,7 @@ import java.util.zip.ZipFile;
 
 import timber.log.Timber;
 
-
+@SuppressWarnings({"PMD.NPathComplexity"})
 public class AnkiPackageImporter extends Anki2Importer {
 
     private ZipFile mZip;

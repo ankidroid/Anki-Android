@@ -51,6 +51,7 @@ import timber.log.Timber;
 /**
  * Class used to parse, load and play sound files on AnkiDroid.
  */
+@SuppressWarnings({"PMD.NPathComplexity","PMD.CollapsibleIfStatements"})
 public class Sound {
 
     /**
@@ -271,7 +272,7 @@ public class Sound {
      * Plays the given sound or video and sets playAllListener if available on media player to start next media.
      * If videoView is null and the media is a video, then a request is sent to start the VideoPlayer Activity
      */
-    @SuppressWarnings("deprecation") // audio API deprecation tracked on github as #5022
+    @SuppressWarnings({"PMD.EmptyIfStmt","PMD.CollapsibleIfStatements","deprecation"}) // audio API deprecation tracked on github as #5022
     public void playSound(String soundPath, OnCompletionListener playAllListener, final VideoView videoView) {
         Timber.d("Playing %s has listener? %b", soundPath, playAllListener != null);
         Uri soundUri = Uri.parse(soundPath);

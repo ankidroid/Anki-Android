@@ -44,7 +44,8 @@ import java.util.zip.ZipFile;
 
 import timber.log.Timber;
 
-@SuppressWarnings("deprecation") // tracking HTTP transport change in github already
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.MethodNamingConventions",
+        "deprecation"}) // tracking HTTP transport change in github already
 public class RemoteMediaServer extends HttpSyncer {
 
     private Collection mCol;

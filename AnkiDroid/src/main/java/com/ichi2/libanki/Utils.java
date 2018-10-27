@@ -74,6 +74,8 @@ import java.util.zip.ZipFile;
 
 import timber.log.Timber;
 
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
+        "PMD.MethodNamingConventions","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
 public class Utils {
     // Used to format doubles with English's decimal separator system
     public static final Locale ENGLISH_LOCALE = new Locale("en_US");

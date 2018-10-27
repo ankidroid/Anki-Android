@@ -16,8 +16,6 @@
 
 package com.ichi2.libanki.hooks;
 
-import com.ichi2.compat.CompatHelper;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

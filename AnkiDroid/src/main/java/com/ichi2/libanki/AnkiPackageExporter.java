@@ -42,8 +42,8 @@ import java.util.zip.ZipOutputStream;
 import timber.log.Timber;
 
 class Exporter {
-    Collection mCol;
-    Long mDid;
+    protected Collection mCol;
+    protected Long mDid;
 
 
     public Exporter(Collection col) {
@@ -59,11 +59,13 @@ class Exporter {
 }
 
 
-
+@SuppressWarnings({"PMD.AvoidReassigningParameters","PMD.DefaultPackage",
+        "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength",
+        "PMD.EmptyIfStmt","PMD.CollapsibleIfStatements"})
 class AnkiExporter extends Exporter {
-    boolean mIncludeSched;
-    boolean mIncludeMedia;
-    Collection mSrc;
+    protected boolean mIncludeSched;
+    protected boolean mIncludeMedia;
+    private Collection mSrc;
     String mMediaDir;
     int mCount;
     ArrayList<String> mMediaFiles = new ArrayList<>();
@@ -267,9 +269,10 @@ class AnkiExporter extends Exporter {
 
 
     /**
-     * overwrite to apply customizations to the deck before it's closed, such as update the deck description
+     * override to apply customizations to the deck before it's closed, such as update the deck description
      */
     protected void postExport() {
+        // do nothing
     }
 
 
@@ -404,7 +407,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
  * @author Tim
  */
 class ZipFile {
-    final int BUFFER_SIZE = 1024;
+    private final int BUFFER_SIZE = 1024;
     private ZipOutputStream mZos;
 
 

@@ -47,6 +47,9 @@ import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
+        "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength",
+        "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
 public class Anki2Importer extends Importer {
 
     private static final int GUID = 1;
@@ -66,6 +69,7 @@ public class Anki2Importer extends Importer {
      * Python: (guid, ord) -> cid
      * Java: guid -> ord -> cid
      */
+    @SuppressWarnings("PMD.SingularField")
     private Map<String, Map<Integer, Long>> mCards;
     private Map<Long, Long> mDecks;
     private Map<Long, Long> mModelMap;
@@ -249,7 +253,7 @@ public class Anki2Importer extends Importer {
             }
         }
         if (dupes > 0) {
-            int up = update.size();
+            //int up = update.size(); // unused upstream as well, leaving for upstream comparison only
             mLog.add(getRes().getString(R.string.import_update_details, update.size(), dupes));
             if (dupesIgnored.size() > 0) {
                 mLog.add(getRes().getString(R.string.import_update_ignored));
@@ -594,11 +598,6 @@ public class Anki2Importer extends Importer {
     }
 
 
-    private BufferedInputStream _mediaData(String fname) {
-        return  _mediaData(fname, null);
-    }
-
-
     private BufferedInputStream _mediaData(String fname, String dir) {
         if (dir == null) {
             dir = mSrc.getMedia().dir();
@@ -721,7 +720,7 @@ public class Anki2Importer extends Importer {
      * Return the contents of the given input stream, limited to Anki2Importer.MEDIAPICKLIMIT bytes This is only used
      * for comparison of media files with the limited resources of mobile devices
      */
-    byte[] _mediaPick(BufferedInputStream is) {
+    private byte[] _mediaPick(BufferedInputStream is) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream(MEDIAPICKLIMIT * 2);
             byte[] buf = new byte[MEDIAPICKLIMIT];
@@ -757,7 +756,6 @@ public class Anki2Importer extends Importer {
      * @param postProcess Percentage of remaining tasks complete.
      */
     protected void publishProgress(int notesDone, int cardsDone, int postProcess) {
-        String checkmark = "\u2714";
         if (mProgress != null) {
             mProgress.publishProgress(new DeckTask.TaskData(getRes().getString(R.string.import_progress,
                     notesDone, cardsDone, postProcess)));

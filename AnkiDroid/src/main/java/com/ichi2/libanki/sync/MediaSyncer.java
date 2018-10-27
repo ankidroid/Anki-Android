@@ -35,7 +35,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -65,6 +64,9 @@ import timber.log.Timber;
  * through a file manager) will not be recorded and will not be synced. In this case, the user
  * must issue a media check command through the UI to bring the database up-to-date.
  */
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
+        "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength","PMD.OneDeclarationPerLine",
+        "PMD.SwitchStmtsShouldHaveDefault","PMD.EmptyIfStmt","PMD.SimplifyBooleanReturns","PMD.CollapsibleIfStatements"})
 public class MediaSyncer {
     private Collection mCol;
     private RemoteMediaServer mServer;
@@ -219,7 +221,7 @@ public class MediaSyncer {
 
             int lcnt = mCol.getMedia().mediacount();
             String sRet = mServer.mediaSanity(lcnt);
-            if (sRet.equals("OK")) {
+            if ("OK".equals(sRet)) {
                 return "OK";
             } else {
                 mCol.getMedia().forceResync();

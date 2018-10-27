@@ -41,6 +41,7 @@ import timber.log.Timber;
 /**
  * Database layer for AnkiDroid. Can read the native Anki format through Android's SQLite driver.
  */
+@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes"})
 public class DB {
 
     private static final String[] MOD_SQLS = new String[] { "insert", "update", "delete" };
@@ -248,15 +249,15 @@ public class DB {
      * @return The name of the Cursor method to be called.
      */
     private static String getCursorMethodName(String typeName) {
-        if (typeName.equals("String")) {
+        if ("String".equals(typeName)) {
             return "getString";
-        } else if (typeName.equals("Long")) {
+        } else if ("Long".equals(typeName)) {
             return "getLong";
-        } else if (typeName.equals("Integer")) {
+        } else if ("Integer".equals(typeName)) {
             return "getInt";
-        } else if (typeName.equals("Float")) {
+        } else if ("Float".equals(typeName)) {
             return "getFloat";
-        } else if (typeName.equals("Double")) {
+        } else if ("Double".equals(typeName)) {
             return "getDouble";
         } else {
             return null;

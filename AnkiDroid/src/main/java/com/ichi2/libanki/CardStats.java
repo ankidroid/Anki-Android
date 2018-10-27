@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+@SuppressWarnings("PMD.ExcessiveMethodLength")
 public class CardStats {
 
     public static String report(Context context, Card c, Collection col) {
