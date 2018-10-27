@@ -53,6 +53,7 @@ An apk file signed with a standard "debug" key will be generated named `"AnkiDro
  * `%root/java/com/ichi2/anki/` is the directory containing the main AnkiDroid source code.
  * `%root/java/com/ichi2/anki/DeckPicker.java` is the code which runs when first booting into AnkiDroid.
  * `%root/java/com/ichi2/libanki/` contains the underlying Anki code which is common to all Anki clients. It is ported directly from the [Anki Desktop python code](https://github.com/dae/anki/tree/master/anki) into Java.
+   * Because `libanki` code comes upstream from the common Anki code, edit it only when necessary. Keeping the code consistent with the common core makes it easier to integrate future upgrades.
  * `%root/assets/flashcard.css` contains the CSS file included with each flash card
  * `%root/res/` contains the [Android resource XML files](http://developer.android.com/guide/topics/resources/providing-resources.html) for the project.
  * `%root/res/values/` contains app strings, whiteboard colors, and a basic HTML template for flashcards.
