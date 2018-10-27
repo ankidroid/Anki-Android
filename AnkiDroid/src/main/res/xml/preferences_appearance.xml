@@ -44,7 +44,7 @@
     </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_fonts" >
             <ListPreference
-                android:defaultValue=""
+                android:defaultValue="0"
                 android:key="defaultFont"
                 android:shouldDisableView="true"
                 android:summary="@string/preference_summary_literal"
@@ -57,7 +57,7 @@
                 android:summary="@string/preference_summary_literal"
                 android:title="@string/override_font" />
             <ListPreference
-                android:defaultValue=""
+                android:defaultValue="0"
                 android:key="browserEditorFont"
                 android:summary="@string/preference_summary_literal"
                 android:title="@string/pref_browser_editor_font" />

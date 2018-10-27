@@ -35,12 +35,18 @@ public class LanguageUtil {
     /**
      * Returns the {@link Locale} for the given code or the default locale, if no code is given.
      *
-     * @param localeCode The locale code of the language
      * @return The {@link Locale} for the given code
      */
     public static Locale getLocale() {
         return getLocale("");
     }
+
+    /**
+     * Returns the {@link Locale} for the given code or the default locale, if no code is given.
+     *
+     * @param localeCode The locale code of the language
+     * @return The {@link Locale} for the given code
+     */
     public static Locale getLocale(String localeCode) {
         Locale locale;
         if (localeCode == null || TextUtils.isEmpty(localeCode)) {

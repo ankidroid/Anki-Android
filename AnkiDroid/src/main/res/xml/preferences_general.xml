@@ -47,14 +47,14 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_general">
         <ListPreference
-            android:defaultValue=""
+            android:defaultValue="0"
             android:entries="@array/add_to_cur_labels"
             android:entryValues="@array/add_to_cur_values"
             android:key="useCurrent"
             android:summary=""
             android:title="@string/use_current" />
         <ListPreference
-            android:defaultValue=""
+            android:defaultValue="0"
             android:key="language"
             android:summary="@string/preference_summary_literal"
             android:title="@string/language" />

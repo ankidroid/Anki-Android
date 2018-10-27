@@ -858,7 +858,7 @@ public class Media {
             f.deleteOnExit();
             return new Pair<>(f, fnames);
         } catch (IOException e) {
-            Timber.e("Failed to create media changes zip", e);
+            Timber.e(e, "Failed to create media changes zip: ");
             throw new RuntimeException(e);
         } finally {
             if (cur != null) {
