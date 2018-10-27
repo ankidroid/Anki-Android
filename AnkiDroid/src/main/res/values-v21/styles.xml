@@ -21,4 +21,12 @@
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">?attr/fab_labelsTextColor</item>
     </style>
+
+    <style name="FooterButtonLayout">
+        <item name="android:fontFamily">@string/font_fontFamily_medium</item>
+    </style>
+
+    <style name="FooterButtonEaseText" parent="FooterButtonNextTime">
+        <item name="android:fontFamily">@string/font_fontFamily_medium</item>
+    </style>
 </resources>

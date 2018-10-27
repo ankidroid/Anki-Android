@@ -15,7 +15,7 @@
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
     <!-- Theme for crash report dialog -->
-    <style name="Theme.CrashReportDialog" parent="@android:style/Theme.Dialog" />
+    <style name="Theme.CrashReportDialog" parent="@android:style/Theme.DeviceDefault.Dialog" />
 
     <style name="Animation.Translucent" parent="@android:style/Animation.Translucent">
         <item name="android:windowEnterAnimation">@null</item>
@@ -38,7 +38,7 @@
         <item name="android:layout_height">48dp</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">@string/font_fontFamily_medium</item>
+        <item name="android:typeface">sans</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:singleLine">true</item>
@@ -55,7 +55,7 @@
     <style name="FooterButtonEaseText" parent="FooterButtonNextTime">
         <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:fontFamily">@string/font_fontFamily_medium</item>
+        <item name="android:typeface">sans</item>
     </style>
 
     <!-- Styles for each of the 4 answer buttons -->
