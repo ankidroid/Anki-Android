@@ -167,6 +167,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         }
     }
 
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -211,7 +212,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         NotificationChannels.setup(getApplicationContext());
         // Restart the activity on preference change
         if (requestCode == REQUEST_PREFERENCES_UPDATE) {
-            if (mOldColPath!=null && CollectionHelper.getCurrentAnkiDroidDirectory(this).equals(mOldColPath)) {
+            if (mOldColPath != null && CollectionHelper.getCurrentAnkiDroidDirectory(this).equals(mOldColPath)) {
                 // collection path hasn't been changed so just restart the current activity
                 if ((this instanceof Reviewer) && preferences.getBoolean("tts", false)) {
                     // Workaround to kick user back to StudyOptions after opening settings from Reviewer
@@ -270,19 +271,20 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         pendingRunnable = () -> {
             // Take action if a different item selected
             switch (item.getItemId()) {
-                case R.id.nav_decks:
+                case R.id.nav_decks: {
                     Intent deckPicker = new Intent(NavigationDrawerActivity.this, DeckPicker.class);
                     deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
                     startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.RIGHT);
                     break;
+                }
                 case R.id.nav_browser:
                     openCardBrowser();
                     break;
-                case R.id.nav_stats:
+                case R.id.nav_stats: {
                     Intent intent = new Intent(NavigationDrawerActivity.this, Statistics.class);
-                    intent.putExtra("selectedDeck", getCol().getDecks().selected());
                     startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, ActivityTransitionAnimation.LEFT);
                     break;
+                }
                 case R.id.nav_night_mode:
                     mNightModeSwitch.performClick();
                     break;
@@ -307,13 +309,18 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         return true;
     }
 
-    /**
-     * Open the card browser. Override this method to pass it custom arguments
-     */
     protected void openCardBrowser() {
-        Intent cardBrowser = new Intent(this, CardBrowser.class);
-        cardBrowser.putExtra("selectedDeck", getCol().getDecks().selected());
-        startActivityForResultWithAnimation(cardBrowser, REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
+        Intent intent = new Intent(NavigationDrawerActivity.this, CardBrowser.class);
+        Long currentCardId = getCurrentCardId();
+        if (currentCardId != null) {
+            intent.putExtra("currentCard", currentCardId);
+        }
+        startActivityForResultWithAnimation(intent, REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
+    }
+
+    // Override this to specify a specific card id
+    protected Long getCurrentCardId() {
+        return null;
     }
 
     protected void showBackIcon() {

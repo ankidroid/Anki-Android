@@ -165,7 +165,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private int mLastSelectedPosition;
     private Menu mActionBarMenu;
 
-    private final int SNACKBAR_DURATION = 8000;
+    private static final int SNACKBAR_DURATION = 8000;
+
+
+    // Values related to persistent state data
+    private static final long ALL_DECKS_ID = 0L;
+    private static String PERSISTENT_STATE_FILE = "DeckPickerState";
+    private static String LAST_DECK_ID_KEY = "lastDeckId";
 
 
     /**
@@ -322,6 +328,27 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mChangeDeckHandler,
                 new DeckTask.TaskData(new Object[]{ids, Collection.DismissType.CHANGE_DECK_MULTI, mNewDid}));
+    }
+
+    private Long getLastDeckId() {
+        SharedPreferences state = getSharedPreferences(PERSISTENT_STATE_FILE,0);
+        if (!state.contains(LAST_DECK_ID_KEY)) {
+            return null;
+        }
+        return state.getLong(LAST_DECK_ID_KEY, -1);
+    }
+
+    public static void clearLastDeckId() {
+        Context context = AnkiDroidApp.getInstance();
+        context.getSharedPreferences(PERSISTENT_STATE_FILE,0).edit().remove(LAST_DECK_ID_KEY).apply();
+    }
+
+    private void saveLastDeckId(Long id) {
+        if (id == null) {
+            clearLastDeckId();
+            return;
+        }
+        getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit().putLong(LAST_DECK_ID_KEY, id).apply();
     }
 
     @Override
@@ -508,8 +535,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        // set the currently selected deck
-        selectDropDownItem(getDeckPositionFromDeckId(getIntent().getLongExtra("defaultDeckId", -1)));
+        // If a valid value for last deck exists then use it, otherwise use libanki selected deck
+        if (getLastDeckId() != null && getLastDeckId() == ALL_DECKS_ID) {
+            selectDropDownItem(0);
+        } else  if (getLastDeckId() != null && getCol().getDecks().get(getLastDeckId(), false) != null) {
+            selectDeckById(getLastDeckId());
+        } else {
+            selectDeckById(getCol().getDecks().selected());
+        }
     }
 
     @Override
@@ -923,20 +956,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mActionBarSpinner.setSelection(position);
         if (position == 0) {
             mRestrictOnDeck = "";
+            saveLastDeckId(ALL_DECKS_ID);
         } else {
             JSONObject deck = mDropDownDecks.get(position - 1);
-            String deckName;
             try {
-                deckName = deck.getString("name");
+                mRestrictOnDeck = "deck:\"" + deck.getString("name") + "\" ";
+                saveLastDeckId(deck.getLong("id"));
             } catch (JSONException e) {
                 throw new RuntimeException();
             }
-            try {
-                getCol().getDecks().select(deck.getLong("id"));
-            } catch (JSONException e) {
-                Timber.e(e, "Could not get ID from deck");
-            }
-            mRestrictOnDeck = "deck:\"" + deckName + "\" ";
         }
         searchCards();
     }
@@ -1009,28 +1037,19 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return positions;
     }
 
-
-    /**
-     * Get the index in the deck spinner for a given deck ID
-     * @param did the id of a deck
-     * @return the corresponding index in the deck spinner, or 0 if not found
-     */
-    private int getDeckPositionFromDeckId(long did) {
+    // Iterates the drop down decks, and selects the one matching the given id
+    private boolean selectDeckById(@NonNull Long deckId) {
         for (int dropDownDeckIdx = 0; dropDownDeckIdx < mDropDownDecks.size(); dropDownDeckIdx++) {
-            JSONObject deck = mDropDownDecks.get(dropDownDeckIdx);
-            long cdid;
             try {
-                cdid = deck.getLong("id");
+                if (mDropDownDecks.get(dropDownDeckIdx).getLong("id") == deckId) {
+                    selectDropDownItem(dropDownDeckIdx + 1);
+                    return true;
+                }
             } catch (JSONException e) {
                 throw new RuntimeException();
             }
-            if (cdid == did) {
-                // NOTE: mDropDownDecks.get(0) is the first deck, whereas index 0 in mActionBarSpinner is "All Decks"
-                return dropDownDeckIdx + 1;
-            }
         }
-        // Fall back on "All Decks" if did wasn't found
-        return 0;
+        return false;
     }
 
     // convenience method for updateCardsInList(...)
@@ -1487,12 +1506,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private void closeCardBrowser(int result, Intent data) {
-        // Pass the originally selected deck back so that the calling Activity can switch back to it
-        if (getIntent().hasExtra("selectedDeck")) {
-            data.putExtra("originalDeck", getIntent().getLongExtra("selectedDeck", 0L));
-        }
-        // Pass a flag to say whether "All Decks" was selected so that the calling Activity can remember it
-        data.putExtra("allDecksSelected", mActionBarSpinner.getSelectedItemPosition() == 0);
         // Set result and finish
         setResult(result, data);
         finishWithAnimation(ActivityTransitionAnimation.RIGHT);

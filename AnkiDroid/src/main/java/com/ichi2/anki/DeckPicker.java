@@ -837,6 +837,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             loadStudyOptionsFragment(false);
         }
         automaticSync();
+        CardBrowser.clearLastDeckId();
     }
 
     private void showCollectionErrorDialog() {
@@ -1812,16 +1813,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    @Override
-    protected void openCardBrowser() {
-        Intent cardBrowser = new Intent(this, CardBrowser.class);
-        cardBrowser.putExtra("selectedDeck", getCol().getDecks().selected());
-        long lastDeckId = AnkiDroidApp.getSharedPrefs(this).getLong("browserDeckIdFromDeckPicker", -1L);
-        cardBrowser.putExtra("defaultDeckId", lastDeckId);
-        startActivityForResultWithAnimation(cardBrowser, REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
-    }
-
-
     private void handleDeckSelection(long did, boolean dontSkipStudyOptions) {
         // Clear the undo history when selecting a new deck
         if (getCol().getDecks().selected() != did) {
@@ -1829,6 +1820,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
         // Select the deck
         getCol().getDecks().select(did);
+        // Also forget the last deck used by the Browser
+        CardBrowser.clearLastDeckId();
         // Reset the schedule so that we get the counts for the currently selected deck
         getCol().getSched().reset();
         mFocusedDeck = did;
