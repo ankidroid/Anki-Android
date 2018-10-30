@@ -939,17 +939,31 @@ public class DeckPicker extends NavigationDrawerActivity implements
             int upgradePrefsVersion = AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION;
             int upgradeDbVersion = AnkiDroidApp.CHECK_DB_AT_VERSION;
 
-            if (previous < upgradeDbVersion) {
-                if ((previous < upgradePrefsVersion) && (current >= upgradePrefsVersion)) {
+            // Specifying a checkpoint in the future is not supported, please don't do it!
+            if (current < upgradePrefsVersion) {
+                UIUtils.showSimpleSnackbar(this, "Invalid value for CHECK_PREFERENCES_AT_VERSION", false);
+                onFinishedStartup();
+                return;
+            }
+            if (current < upgradeDbVersion) {
+                UIUtils.showSimpleSnackbar(this, "Invalid value for CHECK_DB_AT_VERSION", false);
+                onFinishedStartup();
+                return;
+            }
+
+            //noinspection ConstantConditions
+            if (previous < upgradeDbVersion || previous < upgradePrefsVersion) {
+                if (previous < upgradePrefsVersion) {
                     Timber.i("showStartupScreensAndDialogs() running upgradePreferences()");
                     CompatHelper.removeHiddenPreferences(this.getApplicationContext());
                     upgradePreferences(previous);
                 }
                 // Integrity check loads asynchronously and then restart deck picker when finished
-                if (current >= upgradeDbVersion) {
+                //noinspection ConstantConditions
+                if (previous < upgradeDbVersion) {
                     Timber.i("showStartupScreensAndDialogs() running integrityCheck()");
                     integrityCheck();
-                } else if ((previous < upgradePrefsVersion) && (current >= upgradePrefsVersion)) {
+                } else if (previous < upgradePrefsVersion) {
                     // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
                     // proceed
                     restartActivity();
