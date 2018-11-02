@@ -7,7 +7,8 @@ import org.robolectric.RobolectricTestRunner;
 import java.util.HashSet;
 import java.util.Set;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by rodrigobresan on 19/10/17.
@@ -26,24 +27,18 @@ public class ApiUtilsTest {
     @Test
     public void joinFieldsShouldJoinWhenListIsValid() {
         String fieldList[] = {"A", "B", "C"};
-        String output = Utils.joinFields(fieldList);
-
-        assertEquals("A" + delimiter + "B" + delimiter + "C", output);
+        assertEquals("A" + delimiter + "B" + delimiter + "C", Utils.joinFields(fieldList));
     }
 
     @Test
     public void joinFieldsShouldReturnNullWhenListIsNull() {
-        String fieldList[] = null;
-        String output = Utils.joinFields(fieldList);
-
-        assertEquals(null, output);
+        assertNull(Utils.joinFields(null));
     }
 
     @Test
     public void splitFieldsShouldSplitRightWhenStringIsValid() {
         String fieldList = "A" + delimiter + "B" + delimiter + "C";
         String output[] = Utils.splitFields(fieldList);
-
         assertEquals("A", output[0]);
         assertEquals("B", output[1]);
         assertEquals("C", output[2]);
@@ -51,10 +46,7 @@ public class ApiUtilsTest {
 
     @Test
     public void splitFieldsShouldReturnNullWhenStringIsNull() {
-        String fieldList = null;
-        String output[] = Utils.splitFields(fieldList);
-
-        assertEquals(null, output);
+        assertNull(Utils.splitFields(null));
     }
 
     @Test
@@ -63,33 +55,23 @@ public class ApiUtilsTest {
         set.add("A");
         set.add("B");
         set.add("C");
-
-        String output = Utils.joinTags(set);
-
-        assertEquals("A B C", output);
+        assertEquals("A B C", Utils.joinTags(set));
     }
 
     @Test
     public void joinTagsShouldReturnEmptyStringWhenSetIsNull() {
-        Set<String> set = null;
-        String output = Utils.joinTags(set);
-
-        assertEquals("", output);
+        assertEquals("", Utils.joinTags(null));
     }
 
     @Test
     public void joinTagsShouldReturnEmptyStringWhenSetIsEmpty() {
-        Set<String> set = new HashSet<>();
-        String output = Utils.joinTags(set);
-
-        assertEquals("", output);
+        assertEquals("", Utils.joinTags(new HashSet<String>()));
     }
 
     @Test
     public void splitTagsShouldReturnNullWhenStringIsValid() {
         String tags = "A B C";
         String[] output = Utils.splitTags(tags);
-
         assertEquals("A", output[0]);
         assertEquals("B", output[1]);
         assertEquals("C", output[2]);
@@ -97,19 +79,11 @@ public class ApiUtilsTest {
 
     @Test
     public void splitTagsShouldReturnNullWhenStringIsNull() {
-        String tags = null;
-        String[] output = Utils.splitTags(tags);
-
-        assertEquals(null, output);
+        assertNull(Utils.splitTags(null));
     }
 
     @Test
     public void shouldGenerateProperCheckSum() {
-        String input = "AnkiDroid";
-
-        Long checkSum = Utils.fieldChecksum(input);
-        assertEquals(Long.valueOf(3533307532l), Long.valueOf(checkSum));
+        assertEquals(Long.valueOf(3533307532L), Utils.fieldChecksum("AnkiDroid"));
     }
-
-
 }
