@@ -14,13 +14,12 @@ import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.dialogs.DialogHandler;
+import com.ichi2.compat.CompatHelper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -204,31 +203,17 @@ public class ImportUtils {
         if (in == null) {
             return false;
         }
-        // Create new output stream in temporary path
-        OutputStream out;
-        try {
-            out = new FileOutputStream(tempPath);
-        } catch (FileNotFoundException e) {
-            Timber.e(e, "Could not access destination file %s", tempPath);
-            return false;
-        }
 
         try {
-            // Copy the input stream to temporary file
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
-            }
-            in.close();
+            CompatHelper.getCompat().copyFile(in, tempPath);
         } catch (IOException e) {
             Timber.e(e, "Could not copy file to %s", tempPath);
             return false;
         } finally {
             try {
-                out.close();
+                in.close();
             } catch (IOException e) {
-                Timber.e(e, "Error closing tempOutDir %s", tempPath);
+                Timber.e(e, "Error closing input stream");
             }
         }
         return true;

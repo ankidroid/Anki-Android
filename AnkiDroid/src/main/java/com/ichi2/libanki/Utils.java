@@ -47,7 +47,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.nio.channels.FileChannel;
@@ -109,7 +108,7 @@ public class Utils {
     private static final String ALL_CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final String BASE91_EXTRA_CHARS = "!#$%&()*+,-./:;<=>?@[]^_`{|}~";
 
-    private static final int FILE_COPY_BUFFER_SIZE = 2048;
+    private static final int FILE_COPY_BUFFER_SIZE = 1024 * 32;
 
     /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
     public static double now() {
@@ -688,19 +687,7 @@ public class Utils {
             f.createNewFile();
 
             long startTimeMillis = System.currentTimeMillis();
-            OutputStream output = new BufferedOutputStream(new FileOutputStream(destination));
-
-            // Transfer bytes, from source to destination.
-            byte[] buf = new byte[CHUNK_SIZE];
-            long sizeBytes = 0;
-            int len;
-            if (source == null) {
-                Timber.e("writeToFile :: source is null!");
-            }
-            while ((len = source.read(buf)) >= 0) {
-                output.write(buf, 0, len);
-                sizeBytes += len;
-            }
+            long sizeBytes = CompatHelper.getCompat().copyFile(source, destination);
             long endTimeMillis = System.currentTimeMillis();
 
             Timber.d("Finished writeToFile!");
@@ -711,7 +698,6 @@ public class Utils {
                 speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis);
             }
             Timber.d("Utils.writeToFile: Size: %d Kb, Duration: %d s, Speed: %d Kb/s", sizeKb, durationSeconds, speedKbSec);
-            output.close();
         } catch (IOException e) {
             throw new IOException(f.getName() + ": " + e.getLocalizedMessage(), e);
         }

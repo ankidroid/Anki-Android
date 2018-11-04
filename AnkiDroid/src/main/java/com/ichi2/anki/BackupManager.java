@@ -23,10 +23,8 @@ import android.os.StatFs;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
@@ -154,7 +152,7 @@ public class BackupManager {
         // Abort backup if not enough free space
         if (getFreeDiscSpace(colFile) < colFile.length() + (MIN_FREE_SPACE * 1024 * 1024)) {
             Timber.e("performBackup: Not enough space on sd card to backup.");
-            prefs.edit().putBoolean("noSpaceLeft", true).commit();
+            prefs.edit().putBoolean("noSpaceLeft", true).apply();
             return false;
         }
 
@@ -176,19 +174,12 @@ public class BackupManager {
             @Override
             public void run() {
                 // Save collection file as zip archive
-                int BUFFER_SIZE = 1024;
-                byte[] buf = new byte[BUFFER_SIZE];
                 try {
-                    BufferedInputStream bis = new BufferedInputStream(new FileInputStream(colPath), BUFFER_SIZE);
                     ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(backupFile)));
                     ZipEntry ze = new ZipEntry("collection.anki2");
                     zos.putNextEntry(ze);
-                    int len;
-                    while ((len = bis.read(buf, 0, BUFFER_SIZE)) != -1) {
-                        zos.write(buf, 0, len);
-                    }
+                    CompatHelper.getCompat().copyFile(colPath, zos);
                     zos.close();
-                    bis.close();
                     // Delete old backup files if needed
                     SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
                     deleteDeckBackups(colPath, prefs.getInt("backupMax", 8));

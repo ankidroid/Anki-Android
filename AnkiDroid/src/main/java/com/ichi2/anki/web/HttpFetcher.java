@@ -21,9 +21,10 @@ package com.ichi2.anki.web;
 
 import android.content.Context;
 
+import com.ichi2.compat.CompatHelper;
+
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -139,18 +140,9 @@ public class HttpFetcher {
             urlConnection.connect();
 
             File file = File.createTempFile(prefix, extension, context.getCacheDir());
-
-            FileOutputStream fileOutput = new FileOutputStream(file);
             InputStream inputStream = urlConnection.getInputStream();
-
-            byte[] buffer = new byte[1024];
-            int bufferLength = 0;
-
-            while ((bufferLength = inputStream.read(buffer)) > 0) {
-                fileOutput.write(buffer, 0, bufferLength);
-            }
-            fileOutput.close();
-
+            CompatHelper.getCompat().copyFile(inputStream, file.getCanonicalPath());
+            inputStream.close();
             return file.getAbsolutePath();
 
         } catch (Exception e) {
