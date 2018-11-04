@@ -92,14 +92,15 @@ public class CompatV15 implements Compat {
 
     // Below API level 17, there is no simple way to enable the auto play feature of HTML media elements.
     @Override
-    public void setHTML5MediaAutoPlay(WebSettings webSettings, Boolean allow) {}
+    public void setHTML5MediaAutoPlay(WebSettings webSettings, Boolean allow) { /* do nothing */ }
 
     // Below API level 16, widget dimensions cannot be adjusted
     @Override
-    public void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls) {}
+    public void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls) { /* do nothing */ }
 
     // Immersive full screen isn't ready until API 19
-    static final int FULLSCREEN_ALL_GONE = 2;
+    @SuppressWarnings("PMD.FieldDeclarationsShouldBeAtStartOfClass")
+    protected static final int FULLSCREEN_ALL_GONE = 2;
     @Override
     public void setFullScreen(AbstractFlashcardViewer a) {
         a.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -128,7 +129,7 @@ public class CompatV15 implements Compat {
 
     // Not settable before API 21 so do nothing
     @Override
-    public void setStatusBarColor(Window window, int color) {}
+    public void setStatusBarColor(Window window, int color) { /* do nothing */ }
 
     // Immersive mode introduced in API 19
     @Override

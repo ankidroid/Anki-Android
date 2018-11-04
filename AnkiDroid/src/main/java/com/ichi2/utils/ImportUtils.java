@@ -35,6 +35,7 @@ public class ImportUtils {
      * @param intent contains the file to import
      * @return null if successful, otherwise error message
      */
+    @SuppressWarnings("PMD.NPathComplexity")
     public static String handleFileImport(Context context, Intent intent) {
         // This intent is used for opening apkg package files
         // We want to go immediately to DeckPicker, clearing any history in the process

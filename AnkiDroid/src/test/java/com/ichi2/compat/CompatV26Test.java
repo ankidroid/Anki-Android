@@ -16,13 +16,11 @@
 
 package com.ichi2.compat;
 
-import org.junit.Test;
-
-import java.io.File;
-import java.net.URL;
-
 public class CompatV26Test extends CompatDefaultTest {
 
+    // For file copy tests CompatDefaultTest calls getCompat(), overriding here
+    // let's us just re-run all the tests implemented there, but with CompatV26 this time
+    @Override
     protected Compat getCompat() {
         return new CompatV26();
     }
