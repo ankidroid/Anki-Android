@@ -30,6 +30,9 @@ import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiActivity;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import io.requery.android.database.sqlite.SQLiteDatabase;
 
@@ -83,5 +86,7 @@ public interface Compat {
     int getMinute(TimePicker picker);
     int getCameraCount();
     void vibrate(Context context, long durationMillis);
+    long copyFile(String source, OutputStream target) throws IOException;
+    long copyFile(InputStream source, String target) throws IOException;
 }
 

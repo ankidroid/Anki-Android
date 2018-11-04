@@ -1,9 +1,28 @@
+/****************************************************************************************
+ * Copyright (c) 2012 Norbert Nagold                                                    *
+ * Copyright (c) 2018 Mike Hardy <mike@mikehardy.net                                    *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
+
 package com.ichi2.compat;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.net.Uri;
+
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import android.os.StatFs;
@@ -25,8 +44,14 @@ import com.ichi2.anki.R;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import io.requery.android.database.sqlite.SQLiteDatabase;
+import timber.log.Timber;
 
 /** Implementation of {@link Compat} for SDK level 15 */
 @TargetApi(15)
@@ -164,5 +189,55 @@ public class CompatV15 implements Compat {
         if (vibratorManager != null) {
             vibratorManager.vibrate(durationMillis);
         }
+    }
+
+    // Until API 26 do the copy using streams
+    public long copyFile(@NonNull String source, @NonNull OutputStream target) throws IOException {
+        InputStream fileInputStream = null;
+        long count;
+
+        try {
+            fileInputStream = new FileInputStream(new File(source));
+            count = copyFile(fileInputStream, target);
+        } catch (IOException e) {
+            Timber.e(e, "copyFile() error copying source %s", source);
+            throw e;
+        } finally {
+            if (fileInputStream != null) {
+                fileInputStream.close();
+            }
+        }
+
+        return count;
+    }
+
+    // Until API 26 do the copy using streams
+    public long copyFile(@NonNull InputStream source, @NonNull String target) throws IOException {
+        OutputStream targetStream = new FileOutputStream(target);
+        long bytesCopied;
+
+        try {
+            bytesCopied = copyFile(source, targetStream);
+        } catch (IOException ioe) {
+            Timber.e(ioe, "Error while copying to file %s", target);
+            throw ioe;
+        } finally {
+            targetStream.close();
+        }
+        return bytesCopied;
+    }
+
+    private long copyFile(@NonNull InputStream source, @NonNull OutputStream target) throws IOException {
+        // balance memory and performance, it appears 32k is the best trade-off
+        // https://stackoverflow.com/questions/10143731/android-optimal-buffer-size
+        final byte[] buffer = new byte[1024 * 32];
+        long count = 0;
+        int n;
+        while ((n = source.read(buffer)) != -1) {
+            target.write(buffer, 0, n);
+            count += n;
+        }
+        target.flush();
+        return count;
     }
 }
