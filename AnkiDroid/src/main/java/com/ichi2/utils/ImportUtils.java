@@ -76,9 +76,9 @@ public class ImportUtils {
             } else if (filename != null) {
                 // Copy to temporary file
                 String tempOutDir = Uri.fromFile(new File(context.getCacheDir(), filename)).getEncodedPath();
-                errorMessage = ImportUtils.copyFileToCache(context, intent, tempOutDir) ? "" : "copyFileToCache() failed";
+                errorMessage = ImportUtils.copyFileToCache(context, intent, tempOutDir) ? null : "copyFileToCache() failed";
                 // Show import dialog
-                if ("".equals(errorMessage)) {
+                if (errorMessage == null) {
                     ImportUtils.sendShowImportFileDialogMsg(tempOutDir);
                 } else {
                     AnkiDroidApp.sendExceptionReport(new RuntimeException("Error importing apkg file"), "IntentHandler.java", "apkg import failed");
