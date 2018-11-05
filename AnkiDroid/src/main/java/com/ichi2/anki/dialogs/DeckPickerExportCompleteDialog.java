@@ -8,6 +8,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
+import com.ichi2.compat.CompatHelper;
 
 import java.io.File;
 
@@ -26,18 +27,31 @@ public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final String exportPath = getArguments().getString("exportPath");
-        return new MaterialDialog.Builder(getActivity())
+        MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(getActivity())
                 .title(getNotificationTitle())
                 .content(getNotificationMessage())
                 .iconAttr(R.attr.dialogSendIcon)
-                .positiveText(R.string.dialog_ok)
+                .positiveText(R.string.export_send_button)
                 .negativeText(R.string.dialog_cancel)
                 .onPositive((dialog, which) -> {
                     ((DeckPicker) getActivity()).dismissAllDialogFragments();
                     ((DeckPicker) getActivity()).emailFile(exportPath);
                 })
-                .onNegative((dialog, which) -> ((DeckPicker) getActivity()).dismissAllDialogFragments())
-                .show();
+                .onNegative((dialog, which) -> ((DeckPicker) getActivity()).dismissAllDialogFragments());
+
+        // If they have the system storage framework, allow for a save option
+        if (CompatHelper.getSdkVersion() >= 19) {
+            dialogBuilder
+                    .neutralText(R.string.dialog_cancel)
+                    .onNeutral((dialog, which) -> ((DeckPicker) getActivity()).dismissAllDialogFragments())
+                    .negativeText(R.string.export_save_button)
+                    .onNegative((dialog, which) -> {
+                        ((DeckPicker) getActivity()).dismissAllDialogFragments();
+                        ((DeckPicker) getActivity()).saveExportFile(exportPath);
+                    });
+        }
+
+        return dialogBuilder.show();
     }
     
     public String getNotificationTitle() {

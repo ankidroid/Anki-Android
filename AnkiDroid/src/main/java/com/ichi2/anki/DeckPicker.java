@@ -37,6 +37,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.os.ParcelFileDescriptor;
 import android.provider.Settings;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -107,6 +108,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -140,6 +142,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public static final int SHOW_STUDYOPTIONS = 11;
     private static final int ADD_NOTE = 12;
     private static final int PICK_APKG_FILE = 13;
+    private static final int PICK_EXPORT_FILE = 14;
 
     // For automatic syncing
     // 10 minutes in milliseconds.
@@ -171,6 +174,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // flag keeping track of when the app has been paused
     private boolean mActivityPaused = false;
 
+    private String mExportFileName;
+
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
      * Since syncing closes the database, this flag allows us to avoid doing any
@@ -184,7 +189,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * deck.
      */
     private long mFocusedDeck;
-
 
 
     // ----------------------------------------------------------------------------
@@ -362,7 +366,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // ----------------------------------------------------------------------------
 
     /** Called when the activity is first created. */
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
         Timber.d("onCreate()");
@@ -663,7 +666,45 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (errorMessage != null) {
                 ImportUtils.showImportUnsuccessfulDialog(this, errorMessage, false);
             }
+        } else if ((requestCode == PICK_EXPORT_FILE) && (resultCode == RESULT_OK)) {
+            if (exportToProvider(intent, true)) {
+                UIUtils.showSimpleSnackbar(this, getString(R.string.export_save_apkg_successful), true);
+            } else {
+                UIUtils.showSimpleSnackbar(this, getString(R.string.export_save_apkg_unsuccessful), false);
+            }
         }
+    }
+
+
+    private boolean exportToProvider(Intent intent, boolean deleteAfterExport) {
+        if ((intent == null) || (intent.getData() == null)) {
+            Timber.e("exportToProvider() provided with insufficient intent data %s", intent);
+            return false;
+        }
+        Uri uri = intent.getData();
+        Timber.d("Exporting from file to ContentProvider URI: %s/%s", mExportFileName, uri.toString());
+        FileOutputStream fileOutputStream;
+        ParcelFileDescriptor pfd;
+        try {
+            pfd = getContentResolver().openFileDescriptor(uri, "w");
+
+            if (pfd != null) {
+                fileOutputStream = new FileOutputStream(pfd.getFileDescriptor());
+                CompatHelper.getCompat().copyFile(mExportFileName, fileOutputStream);
+                fileOutputStream.close();
+                pfd.close();
+            } else {
+                Timber.w("exportToProvider() failed - ContentProvider returned null file descriptor for %s", uri);
+                return false;
+            }
+            if (deleteAfterExport && !new File(mExportFileName).delete()) {
+                Timber.w("Failed to delete temporary export file %s", mExportFileName);
+            }
+        } catch (Exception e) {
+            Timber.e(e, "Unable to export file to Uri: %s/%s", mExportFileName, uri.toString());
+            return false;
+        }
+        return true;
     }
 
 
@@ -1742,6 +1783,33 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 .getIntent();
         if (shareIntent.resolveActivity(getPackageManager()) != null) {
             startActivityWithoutAnimation(shareIntent);
+        } else {
+            // Try to save it?
+            UIUtils.showSimpleSnackbar(this, R.string.export_send_no_handlers, false);
+            saveExportFile(path);
+        }
+    }
+
+
+    @TargetApi(19)
+    public void saveExportFile(String path) {
+        // Make sure the file actually exists
+        File attachment = new File(path);
+        if (!attachment.exists()) {
+            Timber.e("saveExportFile() Specified apkg file %s does not exist", path);
+            UIUtils.showSimpleSnackbar(this, R.string.export_save_apkg_unsuccessful, false);
+            return;
+        }
+        if (CompatHelper.getSdkVersion() >= 19) {
+            mExportFileName = path;
+            Intent saveIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            saveIntent.addCategory(Intent.CATEGORY_OPENABLE);
+            saveIntent.setType("application/apkg");
+            saveIntent.putExtra(Intent.EXTRA_TITLE, attachment.getName());
+            saveIntent.putExtra("android.content.extra.SHOW_ADVANCED", true);
+            saveIntent.putExtra("android.content.extra.FANCY", true);
+            saveIntent.putExtra("android.content.extra.SHOW_FILESIZE", true);
+            startActivityForResultWithoutAnimation(saveIntent, PICK_EXPORT_FILE);
         } else {
             Timber.e("Could not find appropriate application to share apkg with");
             UIUtils.showThemedToast(this, getResources().getString(R.string.apk_share_error), false);
