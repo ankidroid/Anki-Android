@@ -310,6 +310,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 // Force full sync option
                 Preference fullSyncPreference = screen.findPreference("force_full_sync");
                 fullSyncPreference.setOnPreferenceClickListener(preference -> {
+                    if (getCol() == null) {
+                        Toast.makeText(this, R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
+                        return false;
+                    }
                     // TODO: Could be useful to show the full confirmation dialog
                     getCol().modSchemaNoCheck();
                     getCol().setMod();
