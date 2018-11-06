@@ -1726,8 +1726,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public void exportApkg(String filename, Long did, boolean includeSched, boolean includeMedia) {
-        // Export the file to sdcard/AnkiDroid/export regardless of actual col directory, so that we can use FileProvider API
-        File exportDir = new File(CollectionHelper.getDefaultAnkiDroidDirectory(), "export");
+        File exportDir = new File(getExternalCacheDir(), "export");
         exportDir.mkdirs();
         File exportPath;
         if (filename != null) {

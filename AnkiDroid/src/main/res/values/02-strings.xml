@@ -154,7 +154,7 @@
     <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
     <string name="export_in_progress">Exporting apkg file…</string>
     <string name="export_successful_title">Send apkg?</string>
-    <string name="export_send_button">Send to app</string>
+    <string name="export_send_button">Send</string>
     <string name="export_save_button">Save to file</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
     <string name="export_save_apkg_successful">Successfully saved apkg</string>
