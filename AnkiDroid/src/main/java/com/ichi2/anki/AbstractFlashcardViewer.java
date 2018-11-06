@@ -849,6 +849,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         registerExternalStorageListener();
 
+        restoreCollectionPreferences();
+
         initLayout();
 
         setTitle();
@@ -1746,6 +1748,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
+        return preferences;
+    }
+
+
+    private void restoreCollectionPreferences() {
+
         // These are preferences we pull out of the collection instead of SharedPreferences
         try {
             mShowNextReviewTime = getCol().getConf().getBoolean("estTimes");
@@ -1753,8 +1761,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         } catch (JSONException e) {
             throw new RuntimeException();
         }
-
-        return preferences;
     }
 
 
