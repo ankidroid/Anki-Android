@@ -22,7 +22,7 @@
         <item name="android:textColor">?attr/fab_labelsTextColor</item>
     </style>
 
-    <style name="FooterButtonLayout">
+    <style name="FooterButtonLayout" parent="FooterButtonLayoutBase">
         <item name="android:fontFamily">@string/font_fontFamily_medium</item>
     </style>
 
