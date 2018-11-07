@@ -55,7 +55,7 @@ If you prefer to use the "replay audio" action in the menu, and have the play bu
 ```
 
 ### Customize night-mode colors
-AnkiDroid contains a very basic color inverter that e.g. changes white to black and black to white when night mode is enabled. If you prefer to disable the inverter and setup your own colors, you should include a `.night_mode` class in your styling. For example the following will use a dark grey background instead of black when night mode is enabled. Note that contrary to the other examples on this page [there should *not* be a space between the `.card` and `.night_mode` classes](https://css-tricks.com/multiple-class-id-selectors/):
+AnkiDroid contains a very basic color inverter that e.g. changes white to black and black to white when night mode is enabled. If you prefer to disable the inverter and setup your own colors, you should include a `.night_mode` class in your styling. For example, the following will use a dark grey background instead of black when night mode is enabled. Note that contrary to the other examples on this page [there should *not* be a space between the `.card` and `.night_mode` classes](https://css-tricks.com/multiple-class-id-selectors/):
 
 ```css
 .card.night_mode {
@@ -100,6 +100,6 @@ Add the [following CSS](https://groups.google.com/d/topic/anki-android/TjakbVGJL
 
 ### Drawing area on the front card (good for Kanji practice!)
 
-With some JavaScript it's possibile to draw shapes on the front card and display what was drawn on the back card for reference. This is quiet convenient to practice writing Kanji!
+With some JavaScript it's possible to draw shapes on the front card and display what was drawn on the back card for reference. This is quite convenient to practice writing Kanji!
 
 A third party AnkiDroid user made his code open source: you can get it, along with an example deck on [anki-canvas' project page](https://github.com/pigoz/anki-canvas)
