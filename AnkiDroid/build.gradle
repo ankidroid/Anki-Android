@@ -125,7 +125,7 @@ dependencies {
 
     implementation 'net.mikehardy:google-analytics-java:2.0.4'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
-    implementation 'com.arcao:slf4j-timber:3.0'
+    implementation 'com.arcao:slf4j-timber:3.1'
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.google.code.gson:gson:2.8.5'
