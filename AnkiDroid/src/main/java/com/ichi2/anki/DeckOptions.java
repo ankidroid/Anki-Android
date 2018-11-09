@@ -452,11 +452,6 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
 
                 @Override
-                public void onProgressUpdate(DeckTask.TaskData... values) {
-                }
-
-
-                @Override
                 public void onPostExecute(DeckTask.TaskData result) {
                     cacheValues();
                     buildLists();
@@ -464,13 +459,6 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                     mProgressDialog.dismiss();
                     // Restart to reflect the new preference values
                     restartActivity();
-                }
-
-
-                @Override
-                public void onCancelled() {
-                    // TODO Auto-generated method stub
-                    
                 }
             };
 

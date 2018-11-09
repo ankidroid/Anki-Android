@@ -119,11 +119,6 @@ public class ModelBrowser extends AnkiActivity {
 
             fillModelList();
         }
-
-        @Override
-        public void onProgressUpdate(TaskData... values) {
-            //This decktask does not publish updates
-        }
     };
 
     /*
@@ -131,11 +126,6 @@ public class ModelBrowser extends AnkiActivity {
      * because deleting a model also deletes all of the associated cards/notes *
      */
     private DeckTask.TaskListener mDeleteModelHandler = new DeckTask.TaskListener() {
-
-        @Override
-        public void onCancelled() {
-            //This decktask can not be interrupted
-        }
 
         @Override
         public void onPreExecute() {
@@ -149,11 +139,6 @@ public class ModelBrowser extends AnkiActivity {
             }
             hideProgressBar();
             refreshList();
-        }
-
-        @Override
-        public void onProgressUpdate(TaskData... values) {
-            //This decktask does not publish updates
         }
     };
 

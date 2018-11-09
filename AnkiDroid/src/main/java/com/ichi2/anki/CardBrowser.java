@@ -1125,22 +1125,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
         }
-
-
-        @Override
-        public void onCancelled() {
-        }
     };
 
     private DeckTask.TaskListener mChangeDeckHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
             showProgressBar();
-        }
-
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
         }
 
 
@@ -1166,11 +1156,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             } else {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
-        }
-
-
-        @Override
-        public void onCancelled() {
         }
     };
 
@@ -1261,11 +1246,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-        }
-
-
-        @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (result.getBoolean()) {
                 Card[] cards = (Card[]) result.getObjArray();
@@ -1277,22 +1257,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
         }
-
-
-        @Override
-        public void onCancelled() {
-        }
     };
 
     private DeckTask.TaskListener mMarkCardHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
             showProgressBar();
-        }
-
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
         }
 
 
@@ -1307,11 +1277,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             } else {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
-        }
-
-
-        @Override
-        public void onCancelled() {
         }
     };
 
@@ -1346,22 +1311,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
         }
-
-
-        @Override
-        public void onCancelled() {
-        }
     };
 
     private DeckTask.TaskListener mUndoHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
             showProgressBar();
-        }
-
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
         }
 
 
@@ -1379,11 +1334,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             } else {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
-        }
-
-
-        @Override
-        public void onCancelled() {
         }
     };
 
@@ -1414,11 +1364,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             updatePreviewMenuItem();
             hideProgressBar();
-        }
-
-        @Override
-        public void onCancelled(){
-            Timber.d("doInBackgroundSearchCards onCancelled() called");
         }
     };
 
@@ -1464,11 +1409,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-        }
-
-
-        @Override
         public void onPostExecute(DeckTask.TaskData result) {
             hideProgressBar();
 
@@ -1491,12 +1431,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 mActionBarMenu.findItem(R.id.action_mark_card).setTitle(getString(R.string.card_browser_unmark_card));
                 mActionBarMenu.findItem(R.id.action_mark_card).setIcon(R.drawable.ic_star_white_24dp);
             }
-        }
-
-
-        @Override
-        public void onCancelled() {
-            // do nothing
         }
     };
 

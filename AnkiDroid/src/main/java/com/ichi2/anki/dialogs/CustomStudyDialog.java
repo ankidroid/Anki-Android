@@ -471,10 +471,6 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
             // Rebuild the filtered deck
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, new DeckTask.TaskListener() {
                 @Override
-                public void onCancelled() {
-                }
-
-                @Override
                 public void onPreExecute() {
                     activity.showProgressBar();
                 }
@@ -483,10 +479,6 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                 public void onPostExecute(DeckTask.TaskData result) {
                     activity.hideProgressBar();
                     ((CustomStudyListener) activity).onCreateCustomStudySession();
-                }
-
-                @Override
-                public void onProgressUpdate(DeckTask.TaskData... values) {
                 }
             });
 

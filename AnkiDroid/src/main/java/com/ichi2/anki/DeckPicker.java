@@ -274,12 +274,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         public void onProgressUpdate(DeckTask.TaskData... values) {
             mProgressDialog.setContent(values[0].getString());
         }
-
-
-        @Override
-        public void onCancelled() {
-            // do nothing
-        }
     };
 
     private DeckTask.TaskListener mImportReplaceListener = new DeckTask.TaskListener() {
@@ -317,12 +311,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         public void onProgressUpdate(DeckTask.TaskData... values) {
             mProgressDialog.setContent(values[0].getString());
         }
-
-
-        @Override
-        public void onCancelled() {
-            // do nothing
-        }
     };
 
     private DeckTask.TaskListener mExportListener = new DeckTask.TaskListener() {
@@ -345,18 +333,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             } else {
                 UIUtils.showThemedToast(DeckPicker.this, getResources().getString(R.string.export_unsuccessful), true);
             }
-        }
-
-
-        @Override
-        public void onProgressUpdate(TaskData... values) {
-            // do nothing
-        }
-
-
-        @Override
-        public void onCancelled() {
-            // do nothing
         }
     };
 
@@ -1092,11 +1068,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     openReviewer();
                 }
             }
-
-            @Override
-            public void onProgressUpdate(TaskData... values) {
-                // do nothing
-            }
         });
     }
 
@@ -1228,18 +1199,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     showCollectionErrorDialog();
                 }
             }
-
-
-            @Override
-            public void onProgressUpdate(TaskData... values) {
-                // do nothing
-            }
-
-
-            @Override
-            public void onCancelled() {
-                // do nothing
-            }
         });
     }
 
@@ -1274,18 +1233,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     handleDbError();
                 }
             }
-
-
-            @Override
-            public void onProgressUpdate(TaskData... values) {
-                // do nothing
-            }
-
-
-            @Override
-            public void onCancelled() {
-                // do nothing
-            }
         });
     }
 
@@ -1312,18 +1259,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 } else {
                     showSimpleMessageDialog(getResources().getString(R.string.check_media_failed));
                 }
-            }
-
-
-            @Override
-            public void onProgressUpdate(TaskData... values) {
-                // do nothing
-            }
-
-
-            @Override
-            public void onCancelled() {
-                // do nothing
             }
         });
     }
@@ -2030,16 +1965,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 // Update the mini statistics bar as well
                 AnkiStatsTaskHandler.createReviewSummaryStatistics(getCol(), mReviewSummaryTextView);
             }
-
-            @Override
-            public void onProgressUpdate(TaskData... values) {
-                // do nothing
-            }
-
-            @Override
-            public void onCancelled() {
-                // do nothing
-            }
         });
     }
 
@@ -2206,18 +2131,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 // TODO: if we had "undo delete note" like desktop client then we won't need this.
                 getCol().clearUndo();
             }
-
-
-            @Override
-            public void onProgressUpdate(TaskData... values) {
-                // do nothing
-            }
-
-
-            @Override
-            public void onCancelled() {
-                // do nothing
-            }
         }, new TaskData(did));
     }
 
@@ -2238,18 +2151,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (mFragmented) {
                 loadStudyOptionsFragment(false);
             }
-        }
-
-
-        @Override
-        public void onProgressUpdate(TaskData... values) {
-            // do nothing
-        }
-
-
-        @Override
-        public void onCancelled() {
-            // do nothing
         }
     };
 
@@ -2302,15 +2203,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public void handleEmptyCards() {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_FIND_EMPTY_CARDS, new DeckTask.Listener() {
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_FIND_EMPTY_CARDS, new DeckTask.TaskListener() {
             @Override
-            public void onPreExecute(DeckTask task) {
+            public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
                         getResources().getString(R.string.emtpy_cards_finding), false);
             }
 
             @Override
-            public void onPostExecute(DeckTask task, TaskData result) {
+            public void onPostExecute(TaskData result) {
                 final List<Long> cids = (List<Long>) result.getObjArray()[0];
                 if (cids.size() == 0) {
                     showSimpleMessageDialog(getResources().getString(R.string.empty_cards_none));
@@ -2330,16 +2231,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
-            }
-
-            @Override
-            public void onProgressUpdate(DeckTask task, TaskData... values) {
-                // do nothing
-            }
-
-            @Override
-            public void onCancelled() {
-                // do nothing
             }
         });
     }
