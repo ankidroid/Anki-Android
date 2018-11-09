@@ -181,6 +181,52 @@ public class NoteEditor extends AnkiActivity {
     // restoring the Activity.
     private Bundle mSavedFields;
 
+    private DeckTask.TaskListener mRepositionCardHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+            Timber.d("NoteEditor::RepositionCardHandler() onPreExecute");
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            Timber.d("NoteEditor::RepositionCardHandler() onPostExecute");
+            mReloadRequired = true;
+            UIUtils.showThemedToast(NoteEditor.this,
+                    getResources().getString(R.string.reposition_card_dialog_acknowledge), true);
+        }
+    };
+
+    private DeckTask.TaskListener mResetProgressCardHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+            Timber.d("NoteEditor::ResetProgressCardHandler() onPreExecute");
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            Timber.d("NoteEditor::ResetProgressCardHandler() onPostExecute");
+
+        }
+    };
+
+    private DeckTask.TaskListener mRescheduleCardHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+            Timber.d("NoteEditor::RescheduleCardHandler() onPreExecute");
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            Timber.d("NoteEditor::RescheduleCardHandler() onPostExecute");
+            mReloadRequired = true;
+            UIUtils.showThemedToast(NoteEditor.this,
+                    getResources().getString(R.string.reschedule_card_dialog_acknowledge), true);
+        }
+    };
+
     private DeckTask.TaskListener mSaveFactHandler = new DeckTask.TaskListener() {
         private boolean mCloseAfter = false;
         private Intent mIntent;
@@ -1018,20 +1064,14 @@ public class NoteEditor extends AnkiActivity {
 
     public void onRescheduleCard(int days) {
         Timber.i("Reschedule card");
-        getCol().getSched().reschedCards(new long[] { mCurrentEditedCard.getId() }, days, days);
-        getCol().reset();
-        mReloadRequired = true;
-        UIUtils.showThemedToast(NoteEditor.this,
-                getResources().getString(R.string.reschedule_card_dialog_acknowledge), true);
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS, mRescheduleCardHandler,
+                new DeckTask.TaskData(new Object[]{mCurrentEditedCard, Collection.DismissType.RESCHEDULE_CARD, days}));
     }
 
     public void onRepositionCard(int position) {
         Timber.i("Reposition card");
-        getCol().getSched().sortCards(new long[] { mCurrentEditedCard.getId() }, position, 1, false, true);
-        getCol().reset();
-        mReloadRequired = true;
-        UIUtils.showThemedToast(NoteEditor.this,
-                getResources().getString(R.string.reposition_card_dialog_acknowledge), true);
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS, mRepositionCardHandler,
+                new DeckTask.TaskData(new Object[]{mCurrentEditedCard, Collection.DismissType.REPOSITION_CARD, position}));
     }
 
     private void showTagsDialog() {

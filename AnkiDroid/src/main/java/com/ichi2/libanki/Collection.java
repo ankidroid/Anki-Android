@@ -123,7 +123,10 @@ public class Collection {
         DELETE_NOTE(R.string.undo_action_delete),
         DELETE_NOTE_MULTI(R.string.undo_action_delete_multi),
         CHANGE_DECK_MULTI(R.string.undo_action_change_deck_multi),
-        MARK_NOTE_MULTI(R.string.card_browser_toggle_mark_card);
+        MARK_NOTE_MULTI(R.string.card_browser_toggle_mark_card),
+        REPOSITION_CARD(R.string.undo_action_reposition_card),
+        RESCHEDULE_CARD(R.string.undo_action_reschedule_card),
+        RESET_CARD(R.string.undo_action_reset_card);
 
         public int undoNameId;
 
@@ -1359,11 +1362,28 @@ public class Collection {
                 return -1;  // don't fetch new card
             }
 
-            case BURY_CARD:
+            case BURY_CARD: {
                 for (Card cc : (ArrayList<Card>) data[2]) {
                     cc.flush(false);
                 }
                 return (Long) data[3];
+            }
+
+            case RESET_CARD: {
+                // FIXME no undo implementation yet
+                return -1;  // don't fetch new card
+            }
+
+            case RESCHEDULE_CARD: {
+                // FIXME no undo implementation yet
+                return -1;  // don't fetch new card
+            }
+
+            case REPOSITION_CARD: {
+                // FIXME no undo implementation yet
+                return -1;  // don't fetch new card
+            }
+
             default:
                 return 0;
         }
@@ -1401,6 +1421,21 @@ public class Collection {
                 break;
             case CHANGE_DECK_MULTI:
                 mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
+            case RESET_CARD:
+                // FIXME no idea if this is the correct undo
+                mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
+            case REPOSITION_CARD:
+                // FIXME no idea if this is the correct undo
+                mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
+            case RESCHEDULE_CARD:
+                // FIXME no idea if this is the correct undo
+                mUndo.add(new Object[]{type, o[0], o[1]});
+                break;
+            default:
+                Timber.e("markUndo() received unknown type? %s", type);
                 break;
         }
         while (mUndo.size() > UNDO_SIZE_MAX) {

@@ -610,6 +610,26 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         sHadCardQueue = true;
                         break;
                     }
+
+                    case RESCHEDULE_CARD: {
+                        // collect undo information
+                        // FIXME no idea how to do undo yet
+                        Timber.d("DeckTask::doInBackgroundDismissNote() reschedule note %s for days %s", note.getId(), data[2]);
+                        sched.reschedCards(new long[] { note.getId() }, (Integer) data[2], (Integer) data[2]);
+                        col.reset();
+                        sHadCardQueue = true; // FIXME what does this do?
+                        break;
+                    }
+
+                    case REPOSITION_CARD: {
+                        // collect undo information
+                        // FIXME no idea how to do undo yet
+                        Timber.d("DeckTask::doInBackgroundDismissNote() reposition note %s for position %s", note.getId(), data[2]);
+                        sched.sortCards(new long[] { note.getId() }, (Integer) data[2], 1, false, true);
+                        col.reset();
+                        sHadCardQueue = true; // FIXME what does this do?
+                        break;
+                    }
                 }
                 publishProgress(new TaskData(getCard(col.getSched()), 0));
                 col.getDb().getDatabase().setTransactionSuccessful();
@@ -617,8 +637,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 col.getDb().getDatabase().endTransaction();
             }
         } catch (RuntimeException e) {
-            Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSuspendCard");
+            Timber.e(e, "doInBackgroundDismissNote - RuntimeException on dismissing note, dismiss type %s", type);
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundDismissNote");
             return new TaskData(false);
         }
         return new TaskData(true);
@@ -754,6 +774,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
                         break;
                     }
+                    // FIXME the multi reset / reposition / reschedule will go here
                 }
                 col.getDb().getDatabase().setTransactionSuccessful();
             } finally {
