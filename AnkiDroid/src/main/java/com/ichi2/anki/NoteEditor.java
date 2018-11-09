@@ -207,7 +207,9 @@ public class NoteEditor extends AnkiActivity {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             Timber.d("NoteEditor::ResetProgressCardHandler() onPostExecute");
-
+            mReloadRequired = true;
+            UIUtils.showThemedToast(NoteEditor.this,
+                    getResources().getString(R.string.reset_card_dialog_acknowledge), true);
         }
     };
 
@@ -947,12 +949,8 @@ public class NoteEditor extends AnkiActivity {
                 Runnable confirm = new Runnable() {
                     @Override
                     public void run() {
-                        Timber.i("NoteEditor:: OK button pressed");
-                        getCol().getSched().forgetCards(new long[]{mCurrentEditedCard.getId()});
-                        getCol().reset();
-                        mReloadRequired = true;
-                        UIUtils.showThemedToast(NoteEditor.this,
-                                getResources().getString(R.string.reset_card_dialog_acknowledge), true);
+                        Timber.i("NoteEditor:: ResetProgress button pressed");
+                        onResetCard();
                     }
                 };
                 dialog.setConfirm(confirm);
@@ -1060,6 +1058,12 @@ public class NoteEditor extends AnkiActivity {
         } else {
             finishWithAnimation(ActivityTransitionAnimation.RIGHT);
         }
+    }
+
+    public void onResetCard() {
+        Timber.i("Reset card");
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS, mResetProgressCardHandler,
+                new DeckTask.TaskData(new Object[]{mCurrentEditedCard, Collection.DismissType.RESET_CARD}));
     }
 
     public void onRescheduleCard(int days) {

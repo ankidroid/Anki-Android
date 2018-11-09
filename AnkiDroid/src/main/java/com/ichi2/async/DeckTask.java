@@ -561,20 +561,19 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         try {
             col.getDb().getDatabase().beginTransaction();
             try {
+                sHadCardQueue = true;
                 switch (type) {
                     case BURY_CARD:
                         // collect undo information
                         col.markUndo(type, new Object[] { col.getDirty(), note.cards(), card.getId() });
                         // then bury
                         sched.buryCards(new long[] { card.getId() });
-                        sHadCardQueue = true;
                         break;
                     case BURY_NOTE:
                         // collect undo information
                         col.markUndo(type, new Object[] { col.getDirty(), note.cards(), card.getId() });
                         // then bury
                         sched.buryNote(note.getId());
-                        sHadCardQueue = true;
                         break;
                     case SUSPEND_CARD:
                         // collect undo information
@@ -585,7 +584,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         } else {
                             sched.suspendCards(new long[] { card.getId() });
                         }
-                        sHadCardQueue = true;
                         break;
                     case SUSPEND_NOTE: {
                         // collect undo information
@@ -597,7 +595,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         col.markUndo(type, new Object[] { cards, card.getId() });
                         // suspend note
                         sched.suspendCards(cids);
-                        sHadCardQueue = true;
                         break;
                     }
 
@@ -607,30 +604,34 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         col.markUndo(type, new Object[] { note, allCs, card.getId() });
                         // delete note
                         col.remNotes(new long[] { note.getId() });
-                        sHadCardQueue = true;
                         break;
                     }
 
                     case RESCHEDULE_CARD: {
                         // collect undo information
-                        // FIXME no idea how to do undo yet
+                        // FIXME no idea how to do undo yet but it wasn't in the original implementation either
                         Timber.d("DeckTask::doInBackgroundDismissNote() reschedule note %s for days %s", note.getId(), data[2]);
                         sched.reschedCards(new long[] { note.getId() }, (Integer) data[2], (Integer) data[2]);
-                        col.reset();
-                        sHadCardQueue = true; // FIXME what does this do?
                         break;
                     }
 
                     case REPOSITION_CARD: {
                         // collect undo information
-                        // FIXME no idea how to do undo yet
+                        // FIXME no idea how to do undo yet but it wasn't in the original implementation either
                         Timber.d("DeckTask::doInBackgroundDismissNote() reposition note %s for position %s", note.getId(), data[2]);
                         sched.sortCards(new long[] { note.getId() }, (Integer) data[2], 1, false, true);
-                        col.reset();
-                        sHadCardQueue = true; // FIXME what does this do?
+                        break;
+                    }
+
+                    case RESET_CARD: {
+                        // collect undo information
+                        // FIXME no idea how to do undo yet but it wasn't in the original implementation either
+                        Timber.d("DeckTask::doInBackgroundResetNote() resetting %s", note.getId());
+                        sched.forgetCards(new long[]{note.getId()});
                         break;
                     }
                 }
+                // With sHadCardQueue set, getCard() resets the scheduler prior to getting the next card
                 publishProgress(new TaskData(getCard(col.getSched()), 0));
                 col.getDb().getDatabase().setTransactionSuccessful();
             } finally {
