@@ -29,8 +29,8 @@ The tools/release.sh script can perform some of those steps effortlessly.
   * Go to https://github.com/ankidroid/Anki-Android/tags click "Edit release notes" drop APK over drop zone, press "Update release".
 Running `./tools/release.sh public` can perform some of those steps effortlessly.
 
-## Android Market
-Upload the APK to Android market. Archive the previous APK from the "Active" section, then publish.
+## Google Play
+Upload the APK to Google Play. Archive the previous APK from the "Active" section, then publish.
 
 Title and Description for each language:
   * Title: docs/marketing/localized description/android-titles.txt
