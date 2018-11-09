@@ -660,16 +660,6 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                     mListener.onRequireDeckListUpdate();
                 }
             }
-
-            @Override
-            public void onProgressUpdate(DeckTask.TaskData... values) {
-
-            }
-
-            @Override
-            public void onCancelled() {
-
-            }
         };
     }
 

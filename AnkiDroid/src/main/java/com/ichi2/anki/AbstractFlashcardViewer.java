@@ -457,12 +457,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
             mAnswerCardHandler.onPostExecute(result);
         }
-
-
-        @Override
-        public void onCancelled() {
-            // do nothing
-        }
     };
 
 
@@ -525,12 +519,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             if (mNoMoreCards) {
                 closeReviewer(RESULT_NO_MORE_CARDS, true);
             }
-        }
-
-
-        @Override
-        public void onCancelled() {
-            // do nothing
         }
     };
 
@@ -601,12 +589,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             // set the correct mark/unmark icon on action bar
             refreshActionBar();
             findViewById(R.id.root_layout).requestFocus();
-        }
-
-
-        @Override
-        public void onCancelled() {
-            // do nothing
         }
     };
 

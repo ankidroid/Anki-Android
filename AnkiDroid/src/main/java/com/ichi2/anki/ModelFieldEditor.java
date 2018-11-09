@@ -482,11 +482,6 @@ public class ModelFieldEditor extends AnkiActivity {
     private DeckTask.TaskListener mChangeFieldHandler = new DeckTask.TaskListener() {
 
         @Override
-        public void onCancelled() {
-            //This decktask can not be interrupted
-        }
-
-        @Override
         public void onPreExecute() {
             if (mProgressDialog == null) {
                 mProgressDialog = StyledProgressDialog.show(ModelFieldEditor.this, getIntent().getStringExtra("title"),
@@ -502,11 +497,6 @@ public class ModelFieldEditor extends AnkiActivity {
 
             dismissProgressBar();
             fullRefreshList();
-        }
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-            //This decktask does not publish updates
         }
     };
 

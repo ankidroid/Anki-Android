@@ -1507,7 +1507,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
          * <p>
          * The semantics of the update data depends on the task itself.
          */
-        public abstract void onProgressUpdate(TaskData... values);
+        public void onProgressUpdate(TaskData... values) {
+            // most implementations do nothing with this, provide them a default implementation
+        }
 
 
         @Override
@@ -1527,6 +1529,10 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             onProgressUpdate(values);
         }
 
+        @Override
+        public void onCancelled() {
+            // most implementations do nothing with this, provide them a default implementation
+        }
     }
 
     /**

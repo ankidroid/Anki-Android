@@ -87,10 +87,6 @@ public class CardTemplateEditor extends AnkiActivity {
         }
 
         @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-        }
-
-        @Override
         public void onPostExecute(DeckTask.TaskData result) {
             hideProgressBar();
             if (result.getBoolean()) {
@@ -566,10 +562,6 @@ public class CardTemplateEditor extends AnkiActivity {
             }
 
             @Override
-            public void onProgressUpdate(DeckTask.TaskData... values) {
-            }
-
-            @Override
             public void onPostExecute(DeckTask.TaskData result) {
                 if (result.getBoolean()) {
                     getActivity().setResult(RESULT_OK);
@@ -580,9 +572,6 @@ public class CardTemplateEditor extends AnkiActivity {
                     ((AnkiActivity) getActivity()).finishWithoutAnimation();
                 }
             }
-
-            @Override
-            public void onCancelled() {}
         };
 
         private boolean modelHasChanged() {

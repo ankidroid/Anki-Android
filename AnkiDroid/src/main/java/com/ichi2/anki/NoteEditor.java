@@ -270,11 +270,6 @@ public class NoteEditor extends AnkiActivity {
                 closeNoteEditor(DeckPicker.RESULT_DB_ERROR);
             }
         }
-
-
-        @Override
-        public void onCancelled() {
-        }
     };
 
 
@@ -895,6 +890,7 @@ public class NoteEditor extends AnkiActivity {
                 startActivityForResultWithAnimation(intent, REQUEST_ADD, ActivityTransitionAnimation.LEFT);
                 return true;
             }
+            // FIXME convert these to Async - Dialog box for input/confirm, DeckTask implementation, listener here
             case R.id.action_reset_card_progress: {
                 Timber.i("NoteEditor:: Reset progress button pressed");
                 // Show confirmation dialog before resetting card progress

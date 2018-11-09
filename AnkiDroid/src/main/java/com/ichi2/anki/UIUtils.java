@@ -128,16 +128,6 @@ public class UIUtils {
                 public void onPostExecute(TaskData result) {
                     Timber.d("saveCollectionInBackground: finished");
                 }
-
-
-                @Override
-                public void onProgressUpdate(TaskData... values) {
-                }
-
-
-                @Override
-                public void onCancelled() {
-                }
             });
         }
     }
