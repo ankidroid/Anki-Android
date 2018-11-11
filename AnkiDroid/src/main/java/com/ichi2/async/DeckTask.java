@@ -606,30 +606,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         col.remNotes(new long[] { note.getId() });
                         break;
                     }
-
-                    case RESCHEDULE_CARD: {
-                        // collect undo information
-                        // FIXME no idea how to do undo yet but it wasn't in the original implementation either
-                        Timber.d("DeckTask::doInBackgroundDismissNote() reschedule note %s for days %s", note.getId(), data[2]);
-                        sched.reschedCards(new long[] { note.getId() }, (Integer) data[2], (Integer) data[2]);
-                        break;
-                    }
-
-                    case REPOSITION_CARD: {
-                        // collect undo information
-                        // FIXME no idea how to do undo yet but it wasn't in the original implementation either
-                        Timber.d("DeckTask::doInBackgroundDismissNote() reposition note %s for position %s", note.getId(), data[2]);
-                        sched.sortCards(new long[] { note.getId() }, (Integer) data[2], 1, false, true);
-                        break;
-                    }
-
-                    case RESET_CARD: {
-                        // collect undo information
-                        // FIXME no idea how to do undo yet but it wasn't in the original implementation either
-                        Timber.d("DeckTask::doInBackgroundResetNote() resetting %s", note.getId());
-                        sched.forgetCards(new long[]{note.getId()});
-                        break;
-                    }
                 }
                 // With sHadCardQueue set, getCard() resets the scheduler prior to getting the next card
                 publishProgress(new TaskData(getCard(col.getSched()), 0));
@@ -775,7 +751,26 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
                         break;
                     }
-                    // FIXME the multi reset / reposition / reschedule will go here
+
+                    case RESCHEDULE_CARDS: {
+                        // collect undo information
+                        col.markUndo(type, new Object[] { cards });
+                        sched.reschedCards(cardIds, (Integer) data[2], (Integer) data[2]);
+                        break;
+                    }
+
+                    case REPOSITION_CARDS: {
+                        col.markUndo(type, new Object[] { cards });
+                        sched.sortCards(cardIds, (Integer) data[2], 1, false, true);
+                        break;
+                    }
+
+                    case RESET_CARDS: {
+                        // collect undo information
+                        col.markUndo(type, new Object[] { cards });
+                        sched.forgetCards(cardIds);
+                        break;
+                    }
                 }
                 col.getDb().getDatabase().setTransactionSuccessful();
             } finally {

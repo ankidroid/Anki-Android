@@ -55,6 +55,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog;
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog;
+import com.ichi2.anki.dialogs.ConfirmationDialog;
+import com.ichi2.anki.dialogs.IntegerDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
 import com.ichi2.anki.receiver.SdCardReceiver;
@@ -219,6 +221,58 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 updateList();
             }
             return true;
+        }
+    };
+
+
+    private DeckTask.TaskListener mRepositionCardHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+            Timber.d("CardBrowser::RepositionCardHandler() onPreExecute");
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            Timber.d("CardBrowser::RepositionCardHandler() onPostExecute");
+            mReloadRequired = true;
+            int cardCount = result.getObjArray().length;
+            UIUtils.showThemedToast(CardBrowser.this,
+                    getResources().getQuantityString(R.plurals.reposition_card_dialog_acknowledge, cardCount, cardCount), true);
+        }
+    };
+
+    private DeckTask.TaskListener mResetProgressCardHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+            Timber.d("CardBrowser::ResetProgressCardHandler() onPreExecute");
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            Timber.d("CardBrowser::ResetProgressCardHandler() onPostExecute");
+            mReloadRequired = true;
+            int cardCount = result.getObjArray().length;
+            UIUtils.showThemedToast(CardBrowser.this,
+                    getResources().getQuantityString(R.plurals.reset_cards_dialog_acknowledge, cardCount, cardCount), true);
+        }
+    };
+
+    private DeckTask.TaskListener mRescheduleCardHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+            Timber.d("CardBrowser::RescheduleCardHandler() onPreExecute");
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            Timber.d("CardBrowser::RescheduleCardHandler() onPostExecute");
+            mReloadRequired = true;
+            int cardCount = result.getObjArray().length;
+            UIUtils.showThemedToast(CardBrowser.this,
+                    getResources().getQuantityString(R.plurals.reschedule_cards_dialog_acknowledge, cardCount, cardCount), true);
         }
     };
 
@@ -857,6 +911,55 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 }
                 startActivityWithoutAnimation(previewer);
 
+                return true;
+            }
+
+            case R.id.action_reset_cards_progress: {
+                Timber.i("NoteEditor:: Reset progress button pressed");
+                // Show confirmation dialog before resetting card progress
+                ConfirmationDialog dialog = new ConfirmationDialog();
+                String title = getString(R.string.reset_card_dialog_title);
+                String message = getString(R.string.reset_card_dialog_message);
+                dialog.setArgs(title, message);
+                Runnable confirm = () -> {
+                    Timber.i("CardBrowser:: ResetProgress button pressed");
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mResetProgressCardHandler,
+                            new DeckTask.TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.RESET_CARDS}));
+                };
+                dialog.setConfirm(confirm);
+                showDialogFragment(dialog);
+                return true;
+            }
+            case R.id.action_reschedule_cards: {
+                Timber.i("CardBrowser:: Reschedule button pressed");
+                IntegerDialog rescheduleDialog = new IntegerDialog();
+                rescheduleDialog.setArgs(
+                        getString(R.string.reschedule_card_dialog_title),
+                        getString(R.string.reschedule_card_dialog_message),
+                        4);
+                rescheduleDialog.setCallbackRunnable(rescheduleDialog.new IntRunnable() {
+                    public void run() {
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
+                                new DeckTask.TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.RESCHEDULE_CARDS, this.getInt()}));
+                    }
+                });
+                showDialogFragment(rescheduleDialog);
+                return true;
+            }
+            case R.id.action_reposition_cards: {
+                Timber.i("CardBrowser:: Reposition button pressed");
+                IntegerDialog repositionDialog = new IntegerDialog();
+                repositionDialog.setArgs(
+                        getString(R.string.reposition_card_dialog_title),
+                        getString(R.string.reposition_card_dialog_message),
+                        5);
+                repositionDialog.setCallbackRunnable(repositionDialog.new IntRunnable() {
+                    public void run() {
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRepositionCardHandler,
+                                new DeckTask.TaskData(new Object[] {getSelectedCardIds(), Collection.DismissType.REPOSITION_CARDS, this.getInt()}));
+                    }
+                });
+                showDialogFragment(repositionDialog);
                 return true;
             }
 

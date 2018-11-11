@@ -49,8 +49,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.dialogs.NoteEditorRescheduleCard;
-import com.ichi2.anki.dialogs.NoteEditorRepositionCard;
+import com.ichi2.anki.dialogs.IntegerDialog;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
@@ -192,8 +191,9 @@ public class NoteEditor extends AnkiActivity {
         public void onPostExecute(DeckTask.TaskData result) {
             Timber.d("NoteEditor::RepositionCardHandler() onPostExecute");
             mReloadRequired = true;
+            int cardCount = result.getObjArray().length;
             UIUtils.showThemedToast(NoteEditor.this,
-                    getResources().getString(R.string.reposition_card_dialog_acknowledge), true);
+                    getResources().getQuantityString(R.plurals.reposition_card_dialog_acknowledge, cardCount, cardCount), true);
         }
     };
 
@@ -208,8 +208,9 @@ public class NoteEditor extends AnkiActivity {
         public void onPostExecute(DeckTask.TaskData result) {
             Timber.d("NoteEditor::ResetProgressCardHandler() onPostExecute");
             mReloadRequired = true;
+            int cardCount = result.getObjArray().length;
             UIUtils.showThemedToast(NoteEditor.this,
-                    getResources().getString(R.string.reset_card_dialog_acknowledge), true);
+                    getResources().getQuantityString(R.plurals.reset_cards_dialog_acknowledge, cardCount, cardCount), true);
         }
     };
 
@@ -224,8 +225,9 @@ public class NoteEditor extends AnkiActivity {
         public void onPostExecute(DeckTask.TaskData result) {
             Timber.d("NoteEditor::RescheduleCardHandler() onPostExecute");
             mReloadRequired = true;
+            int cardCount = result.getObjArray().length;
             UIUtils.showThemedToast(NoteEditor.this,
-                    getResources().getString(R.string.reschedule_card_dialog_acknowledge), true);
+                    getResources().getQuantityString(R.plurals.reschedule_cards_dialog_acknowledge, cardCount, cardCount), true);
         }
     };
 
@@ -938,7 +940,6 @@ public class NoteEditor extends AnkiActivity {
                 startActivityForResultWithAnimation(intent, REQUEST_ADD, ActivityTransitionAnimation.LEFT);
                 return true;
             }
-            // FIXME convert these to Async - Dialog box for input/confirm, DeckTask implementation, listener here
             case R.id.action_reset_card_progress: {
                 Timber.i("NoteEditor:: Reset progress button pressed");
                 // Show confirmation dialog before resetting card progress
@@ -946,26 +947,46 @@ public class NoteEditor extends AnkiActivity {
                 String title = res.getString(R.string.reset_card_dialog_title);
                 String message = res.getString(R.string.reset_card_dialog_message);
                 dialog.setArgs(title, message);
-                Runnable confirm = new Runnable() {
-                    @Override
-                    public void run() {
-                        Timber.i("NoteEditor:: ResetProgress button pressed");
-                        onResetCard();
-                    }
+                Runnable confirm = () -> {
+                    Timber.i("NoteEditor:: ResetProgress button pressed");
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mResetProgressCardHandler,
+                            new DeckTask.TaskData(new Object[]{new long[]{mCurrentEditedCard.getId()}, Collection.DismissType.RESET_CARDS}));
                 };
                 dialog.setConfirm(confirm);
                 showDialogFragment(dialog);
                 return true;
             }
-            case R.id.action_reschedule_card:
+            case R.id.action_reschedule_card: {
                 Timber.i("NoteEditor:: Reschedule button pressed");
-                showDialogFragment(NoteEditorRescheduleCard.newInstance());
+                IntegerDialog rescheduleDialog = new IntegerDialog();
+                rescheduleDialog.setArgs(
+                        res.getString(R.string.reschedule_card_dialog_title),
+                        res.getString(R.string.reschedule_card_dialog_message),
+                        4);
+                rescheduleDialog.setCallbackRunnable(rescheduleDialog.new IntRunnable() {
+                    public void run() {
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRescheduleCardHandler,
+                                new DeckTask.TaskData(new Object[]{new long[]{mCurrentEditedCard.getId()}, Collection.DismissType.RESCHEDULE_CARDS, this.getInt()}));
+                    }
+                });
+                showDialogFragment(rescheduleDialog);
                 return true;
-            case R.id.action_reposition_card:
+            }
+            case R.id.action_reposition_card: {
                 Timber.i("NoteEditor:: Reposition button pressed");
-                showDialogFragment(NoteEditorRepositionCard.newInstance());
+                IntegerDialog repositionDialog = new IntegerDialog();
+                repositionDialog.setArgs(
+                        res.getString(R.string.reposition_card_dialog_title),
+                        res.getString(R.string.reposition_card_dialog_message),
+                        5);
+                repositionDialog.setCallbackRunnable(repositionDialog.new IntRunnable() {
+                    public void run() {
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_MULTI, mRepositionCardHandler,
+                                new DeckTask.TaskData(new Object[]{new long[]{mCurrentEditedCard.getId()}, Collection.DismissType.REPOSITION_CARDS, this.getInt()}));                    }
+                });
+                showDialogFragment(repositionDialog);
                 return true;
-
+            }
             default:
                 return super.onOptionsItemSelected(item);
 
@@ -1058,24 +1079,6 @@ public class NoteEditor extends AnkiActivity {
         } else {
             finishWithAnimation(ActivityTransitionAnimation.RIGHT);
         }
-    }
-
-    public void onResetCard() {
-        Timber.i("Reset card");
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS, mResetProgressCardHandler,
-                new DeckTask.TaskData(new Object[]{mCurrentEditedCard, Collection.DismissType.RESET_CARD}));
-    }
-
-    public void onRescheduleCard(int days) {
-        Timber.i("Reschedule card");
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS, mRescheduleCardHandler,
-                new DeckTask.TaskData(new Object[]{mCurrentEditedCard, Collection.DismissType.RESCHEDULE_CARD, days}));
-    }
-
-    public void onRepositionCard(int position) {
-        Timber.i("Reposition card");
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS, mRepositionCardHandler,
-                new DeckTask.TaskData(new Object[]{mCurrentEditedCard, Collection.DismissType.REPOSITION_CARD, position}));
     }
 
     private void showTagsDialog() {
