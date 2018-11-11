@@ -13,6 +13,7 @@ Please add your app to this list if it supports the instant-add API
 * [Bildkortsappen](https://github.com/rabinv/bildkortsappen)
 * [Hanping Chinese Dictionary Pro](https://play.google.com/store/apps/details?id=com.embermitre.hanping.app.pro)
 * [Hanping Cantonese Dictionary](https://play.google.com/store/apps/details?id=com.embermitre.hanping.cantodict.app.pro)
+* [Kata](https://play.google.com/store/apps/details?id=im.dacer.kata)
 * [Takoboto Japanese Dictionary](https://play.google.com/store/apps/details?id=jp.takoboto)
 * [Word of the day](https://play.google.com/store/apps/details?id=me.siavash.android.wotd)
 
