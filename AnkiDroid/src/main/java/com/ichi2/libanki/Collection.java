@@ -124,9 +124,9 @@ public class Collection {
         DELETE_NOTE_MULTI(R.string.undo_action_delete_multi),
         CHANGE_DECK_MULTI(R.string.undo_action_change_deck_multi),
         MARK_NOTE_MULTI(R.string.card_browser_toggle_mark_card),
-        REPOSITION_CARD(R.string.undo_action_reposition_card),
-        RESCHEDULE_CARD(R.string.undo_action_reschedule_card),
-        RESET_CARD(R.string.undo_action_reset_card);
+        REPOSITION_CARDS(R.string.undo_action_reposition_card),
+        RESCHEDULE_CARDS(R.string.undo_action_reschedule_card),
+        RESET_CARDS(R.string.undo_action_reset_card);
 
         public int undoNameId;
 
@@ -1369,20 +1369,11 @@ public class Collection {
                 return (Long) data[3];
             }
 
-            case RESET_CARD: {
-                // FIXME no undo implementation yet
-                return -1;  // don't fetch new card
-            }
-
-            case RESCHEDULE_CARD: {
-                // FIXME no undo implementation yet
-                return -1;  // don't fetch new card
-            }
-
-            case REPOSITION_CARD: {
-                // FIXME no undo implementation yet
-                return -1;  // don't fetch new card
-            }
+            case RESET_CARDS:
+            case RESCHEDULE_CARDS:
+            case REPOSITION_CARDS:
+                // TODO no undo implementation yet (note: no undo implementation prior, this is not a regression)
+                return -1;
 
             default:
                 return 0;
@@ -1422,17 +1413,11 @@ public class Collection {
             case CHANGE_DECK_MULTI:
                 mUndo.add(new Object[]{type, o[0], o[1]});
                 break;
-            case RESET_CARD:
-                // FIXME no idea if this is the correct undo
-                mUndo.add(new Object[]{type, o[0], o[1]});
-                break;
-            case REPOSITION_CARD:
-                // FIXME no idea if this is the correct undo
-                mUndo.add(new Object[]{type, o[0], o[1]});
-                break;
-            case RESCHEDULE_CARD:
-                // FIXME no idea if this is the correct undo
-                mUndo.add(new Object[]{type, o[0], o[1]});
+            case RESET_CARDS:
+            case REPOSITION_CARDS:
+            case RESCHEDULE_CARDS:
+                // These all mess with scheduling, so we need the card cloned to undo it (TODO verify assertion)
+                mUndo.add(new Object[]{type, ((Card[]) o[0]).clone()});
                 break;
             default:
                 Timber.e("markUndo() received unknown type? %s", type);
