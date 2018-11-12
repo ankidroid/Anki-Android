@@ -329,7 +329,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         } else {
             menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.enable_whiteboard);
         }
-        if (getCol().getDecks().isDyn(getParentDid())) {
+        if (colIsOpen() && getCol().getDecks().isDyn(getParentDid())) {
             menu.findItem(R.id.action_open_deck_options).setVisible(false);
         }
         if(mSpeakText){

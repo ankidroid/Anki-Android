@@ -1760,6 +1760,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mShowRemainingCardCount = getCol().getConf().getBoolean("dueCounts");
         } catch (JSONException e) {
             throw new RuntimeException();
+        } catch (NullPointerException npe) {
+            // NPE on collection only happens if the Collection is broken, follow AnkiActivity example
+            Intent deckPicker = new Intent(this, DeckPicker.class);
+            deckPicker.putExtra("collectionLoadError", true); // don't currently do anything with this
+            deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.LEFT);
         }
     }
 
