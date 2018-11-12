@@ -154,7 +154,7 @@ public class Anki2Importer extends Importer {
         Map<Long, Boolean> existing = new HashMap<>();
         Cursor cur = null;
         try {
-            cur = mDst.getDb().getDatabase().rawQuery("select id, guid, mod, mid from notes", null);
+            cur = mDst.getDb().getDatabase().query("select id, guid, mod, mid from notes", null);
             while (cur.moveToNext()) {
                 long id = cur.getLong(0);
                 String guid = cur.getString(1);
@@ -183,7 +183,7 @@ public class Anki2Importer extends Importer {
         int dupes = 0;
         ArrayList<String> dupesIgnored = new ArrayList<>();
         try {
-            cur = mSrc.getDb().getDatabase().rawQuery("select * from notes", null);
+            cur = mSrc.getDb().getDatabase().query("select * from notes", null);
 
             // Counters for progress updates
             int total = cur.getCount();
@@ -440,7 +440,7 @@ public class Anki2Importer extends Importer {
         Map<Long, Boolean> existing = new HashMap<>();
         Cursor cur = null;
         try {
-            cur = mDst.getDb().getDatabase().rawQuery(
+            cur = mDst.getDb().getDatabase().query(
                     "select f.guid, c.ord, c.id from cards c, notes f " +
                     "where c.nid = f.id", null);
             while (cur.moveToNext()) {
@@ -468,7 +468,7 @@ public class Anki2Importer extends Importer {
         int usn = mDst.usn();
         long aheadBy = mSrc.getSched().getToday() - mDst.getSched().getToday();
         try {
-            cur = mSrc.getDb().getDatabase().rawQuery(
+            cur = mSrc.getDb().getDatabase().query(
                     "select f.guid, f.mid, c.* from cards c, notes f " +
                     "where c.nid = f.id", null);
 
@@ -543,7 +543,7 @@ public class Anki2Importer extends Importer {
                 // we need to import revlog, rewriting card ids and bumping usn
                 Cursor cur2 = null;
                 try {
-                    cur2 = mSrc.getDb().getDatabase().rawQuery("select * from revlog where cid = " + scid, null);
+                    cur2 = mSrc.getDb().getDatabase().query("select * from revlog where cid = " + scid, null);
                     while (cur2.moveToNext()) {
                         Object[] rev = new Object[] { cur2.getLong(0), cur2.getLong(1), cur2.getInt(2), cur2.getInt(3),
                                 cur2.getLong(4), cur2.getLong(5), cur2.getLong(6), cur2.getLong(7), cur2.getInt(8) };

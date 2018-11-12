@@ -146,7 +146,7 @@ public class Stats {
         try {
             cur = mCol.getDb()
                     .getDatabase()
-                    .rawQuery(query, null);
+                    .query(query, null);
 
             cur.moveToFirst();
             cards = cur.getInt(0);
@@ -172,7 +172,7 @@ public class Stats {
         try {
             cur = mCol.getDb()
                     .getDatabase()
-                    .rawQuery(query, null);
+                    .query(query, null);
 
             cur.moveToFirst();
             mcnt = cur.getInt(0);
@@ -219,7 +219,7 @@ public class Stats {
         Cursor cur = null;
         int res = 0;
         try {
-            cur = mCol.getDb().getDatabase().rawQuery(query, null);
+            cur = mCol.getDb().getDatabase().query(query, null);
             while (cur.moveToNext()) {
                 res = cur.getInt(0);
             }
@@ -256,7 +256,7 @@ public class Stats {
         String lim = getRevlogFilter(timespan,false);
         Cursor cur = null;
         try {
-            cur = mCol.getDb().getDatabase().rawQuery(
+            cur = mCol.getDb().getDatabase().query(
                     "SELECT COUNT(*) as num_reviews, sum(case when type = 0 then 1 else 0 end) as new_cards FROM revlog " + lim, null);
             while (cur.moveToNext()) {
                 oStats.totalReviews = cur.getInt(0);
@@ -272,7 +272,7 @@ public class Stats {
                 + " FROM revlog " + lim + " GROUP BY day ORDER BY day)";
         Timber.d("Count cntquery: %s", cntquery);
         try {
-            cur = mCol.getDb().getDatabase().rawQuery(cntquery, null);
+            cur = mCol.getDb().getDatabase().query(cntquery, null);
             while (cur.moveToNext()) {
                 oStats.daysStudied = cur.getInt(0);
                 oStats.totalTime = cur.getDouble(2);
@@ -287,7 +287,7 @@ public class Stats {
         }
 
         try {
-            cur = mCol.getDb().getDatabase().rawQuery(
+            cur = mCol.getDb().getDatabase().query(
                     "select avg(ivl), max(ivl) from cards where did in " +_limit() + " and queue = 2", null);
             cur.moveToFirst();
             oStats.averageInterval = cur.getDouble(0);
@@ -384,7 +384,7 @@ public class Stats {
             cur = mCol
                     .getDb()
                     .getDatabase()
-                    .rawQuery(query, null);
+                    .query(query, null);
             while (cur.moveToNext()) {
                 dues.add(new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2) });
             }
@@ -553,7 +553,7 @@ public class Stats {
             cur = mCol
                     .getDb()
                     .getDatabase()
-                    .rawQuery(
+                    .query(
                             query, null);
             while (cur.moveToNext()) {
                 list.add(new double[] { cur.getDouble(0), cur.getDouble(5), cur.getDouble(1), cur.getDouble(4),
@@ -699,7 +699,7 @@ public class Stats {
             cur = mCol
                     .getDb()
                     .getDatabase()
-                    .rawQuery(
+                    .query(
                             "select ivl / " + chunk + " as grp, count() from cards " +
                                     "where did in "+ _limit() +" and queue = 2 " + lim + " " +
                                     "group by grp " +
@@ -711,7 +711,7 @@ public class Stats {
             cur = mCol
                     .getDb()
                     .getDatabase()
-                    .rawQuery(
+                    .query(
                             "select count(), avg(ivl), max(ivl) from cards where did in " +_limit() +
                                     " and queue = 2", null);
             cur.moveToFirst();
@@ -825,7 +825,7 @@ public class Stats {
         try {
             cur = mCol.getDb()
                     .getDatabase()
-                    .rawQuery(query, null);
+                    .query(query, null);
             while (cur.moveToNext()) {
                 list.add(new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) });
             }
@@ -962,7 +962,7 @@ public class Stats {
         try {
             cur = mCol.getDb()
                     .getDatabase()
-                    .rawQuery(query, null);
+                    .query(query, null);
             while (cur.moveToNext()) {
                 list.add(new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) });
             }
@@ -1095,7 +1095,7 @@ public class Stats {
         try {
             cur = mCol.getDb()
                     .getDatabase()
-                    .rawQuery(query, null);
+                    .query(query, null);
             while (cur.moveToNext()) {
                 list.add(new double[]{cur.getDouble(0), cur.getDouble(1), cur.getDouble(2)});
             }
@@ -1166,7 +1166,7 @@ public class Stats {
         try {
             cur = mCol.getDb()
                     .getDatabase()
-                    .rawQuery(query, null);
+                    .query(query, null);
 
             cur.moveToFirst();
             pieData = new double[]{ cur.getDouble(0), cur.getDouble(1), cur.getDouble(2), cur.getDouble(3) };

@@ -722,7 +722,7 @@ public class Models {
 
             try {
                 cur = mCol.getDb().getDatabase()
-                        .rawQuery("select id, flds from notes where mid = " + m.getLong("id"), null);
+                        .query("select id, flds from notes where mid = " + m.getLong("id"), null);
                 while (cur.moveToNext()) {
                     r.add(new Object[] {
                             Utils.joinFields(fn.transform(Utils.splitFields(cur.getString(1)))),
@@ -929,7 +929,7 @@ public class Models {
         }
         Cursor cur = null;
         try {
-            cur = mCol.getDb().getDatabase().rawQuery(
+            cur = mCol.getDb().getDatabase().query(
                     "select id, flds from notes where id in ".concat(Utils.ids2str(nids)), null);
             while (cur.moveToNext()) {
                 long nid = cur.getLong(0);
@@ -974,7 +974,7 @@ public class Models {
             throw new RuntimeException(e);
         }
         try {
-            cur = mCol.getDb().getDatabase().rawQuery(
+            cur = mCol.getDb().getDatabase().query(
                     "select id, ord from cards where nid in ".concat(Utils.ids2str(nids)), null);
             while (cur.moveToNext()) {
                 // if the src model is a cloze, we ignore the map, as the gui doesn't currently

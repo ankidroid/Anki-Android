@@ -60,7 +60,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import io.requery.android.database.sqlite.SQLiteDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
+import io.requery.android.database.sqlite.SQLiteQueryBuilder;
 import timber.log.Timber;
 
 import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
@@ -223,7 +224,8 @@ public class CardContentProvider extends ContentProvider {
             case NOTES_V2: {
                 /* Search for notes using direct SQL query */
                 String[] proj = sanitizeNoteProjection(projection);
-                return col.getDb().getDatabase().query("notes", proj, selection, selectionArgs, null, null, order);
+                String sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, selection, null, null, order, null);
+                return col.getDb().getDatabase().query(sql, selectionArgs);
             }
             case NOTES: {
                 /* Search for notes using the libanki browser syntax */
@@ -232,7 +234,8 @@ public class CardContentProvider extends ContentProvider {
                 List<Long> noteIds = col.findNotes(query);
                 if ((noteIds != null) && (!noteIds.isEmpty())) {
                     String sel = String.format("id in (%s)", TextUtils.join(",", noteIds));
-                    return col.getDb().getDatabase().query("notes", proj, sel, null, null, null, order);
+                    String sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, sel, null, null, order, null);
+                    return col.getDb().getDatabase().query(sql);
                 } else {
                     return null;
                 }
@@ -241,7 +244,8 @@ public class CardContentProvider extends ContentProvider {
                 /* Direct access note with specific ID*/
                 String noteId = uri.getPathSegments().get(1);
                 String[] proj = sanitizeNoteProjection(projection);
-                return col.getDb().getDatabase().query("notes", proj, "id=?", new String[]{noteId}, null, null, order);
+                String sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, "id=?", null, null, order, null);
+                return col.getDb().getDatabase().query(sql, new String[]{noteId});
             }
 
             case NOTES_ID_CARDS: {
@@ -765,7 +769,7 @@ public class CardContentProvider extends ContentProvider {
         JSONObject model = null;
 
         col.getDecks().flush(); // is it okay to move this outside the for-loop? Is it needed at all?
-        SQLiteDatabase sqldb = col.getDb().getDatabase();
+        SupportSQLiteDatabase sqldb = col.getDb().getDatabase();
         try {
             int result = 0;
             sqldb.beginTransaction();
