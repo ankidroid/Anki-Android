@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 @RunWith(RobolectricTestRunner.class)
-public class DeckPickerTest {
+public class DeckPickerTest extends RobolectricTest {
 
     @Test
     public void verifyCodeMessages() {
@@ -32,7 +32,7 @@ public class DeckPickerTest {
         mCodeResponsePairs.put(503, context.getString(R.string.sync_too_busy));
         mCodeResponsePairs.put(504, context.getString(R.string.sync_error_504_gateway_timeout));
 
-        DeckPicker deckPicker = Robolectric.setupActivity(NoDatabaseDeckPicker.class);
+        DeckPicker deckPicker = Robolectric.setupActivity(DeckPicker.class);
         for (Map.Entry<Integer, String> entry : mCodeResponsePairs.entrySet()) {
             assertEquals(deckPicker.rewriteError(entry.getKey()), entry.getValue());
         }
@@ -40,7 +40,7 @@ public class DeckPickerTest {
 
     @Test
     public void verifyBadCodesNoMessage() {
-        DeckPicker deckPicker = Robolectric.setupActivity(NoDatabaseDeckPicker.class);
+        DeckPicker deckPicker = Robolectric.setupActivity(DeckPicker.class);
         assertNull(deckPicker.rewriteError(0));
         assertNull(deckPicker.rewriteError(-1));
         assertNull(deckPicker.rewriteError(1));
