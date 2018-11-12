@@ -28,6 +28,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
@@ -61,7 +62,6 @@ import java.util.Map;
 import java.util.Set;
 
 import androidx.sqlite.db.SupportSQLiteDatabase;
-import io.requery.android.database.sqlite.SQLiteQueryBuilder;
 import timber.log.Timber;
 
 import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
