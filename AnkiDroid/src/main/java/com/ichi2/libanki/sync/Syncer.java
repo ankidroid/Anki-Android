@@ -457,7 +457,7 @@ public class Syncer {
             return mCol
                     .getDb()
                     .getDatabase()
-                    .rawQuery(
+                    .query(
                             String.format(Locale.US,
                                     "SELECT id, cid, %d, ease, ivl, lastIvl, factor, time, type FROM revlog WHERE %s",
                                     mMaxUsn, lim), null);
@@ -465,7 +465,7 @@ public class Syncer {
             return mCol
                     .getDb()
                     .getDatabase()
-                    .rawQuery(
+                    .query(
                             String.format(
                                     Locale.US,
                                     "SELECT id, nid, did, ord, mod, %d, type, queue, due, ivl, factor, reps, lapses, left, odue, odid, flags, data FROM cards WHERE %s",
@@ -474,7 +474,7 @@ public class Syncer {
             return mCol
                     .getDb()
                     .getDatabase()
-                    .rawQuery(
+                    .query(
                             String.format(
                                     Locale.US,
                                     "SELECT id, guid, mid, mod, %d, tags, flds, '', '', flags, data FROM notes WHERE %s",
@@ -586,7 +586,7 @@ public class Syncer {
             cur = mCol
                     .getDb()
                     .getDatabase()
-                    .rawQuery(
+                    .query(
                             "SELECT oid, type FROM graves WHERE usn"
                                     + (mCol.getServer() ? (" >= " + mMinUsn) : (" = -1")), null);
             while (cur.moveToNext()) {
@@ -842,7 +842,7 @@ public class Syncer {
                 cur = mCol
                         .getDb()
                         .getDatabase()
-                        .rawQuery(
+                        .query(
                                 "SELECT id, mod FROM " + table + " WHERE id IN " + Utils.ids2str(ids) + " AND "
                                         + usnLim(), null);
                 while (cur.moveToNext()) {

@@ -94,7 +94,7 @@ public class Note implements Cloneable {
         Cursor cursor = null;
         try {
             cursor = mCol.getDb().getDatabase()
-                    .rawQuery("SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = " + mId, null);
+                    .query("SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = " + mId, null);
             if (!cursor.moveToFirst()) {
                 throw new RuntimeException("Notes.load(): No result from query for note " + mId);
             }
@@ -165,7 +165,7 @@ public class Note implements Cloneable {
         Cursor cur = null;
         try {
             cur = mCol.getDb().getDatabase()
-                    .rawQuery("SELECT id FROM cards WHERE nid = " + mId + " ORDER BY ord", null);
+                    .query("SELECT id FROM cards WHERE nid = " + mId + " ORDER BY ord", null);
             while (cur.moveToNext()) {
                 cards.add(mCol.getCard(cur.getLong(0)));
             }

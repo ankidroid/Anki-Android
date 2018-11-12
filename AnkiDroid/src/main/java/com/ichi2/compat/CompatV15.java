@@ -50,7 +50,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import io.requery.android.database.sqlite.SQLiteDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
 /** Implementation of {@link Compat} for SDK level 15 */
@@ -69,8 +69,8 @@ public class CompatV15 implements Compat {
 
     // disableWriteAheadLogging() method only available from API 16
     @Override
-    public void disableDatabaseWriteAheadLogging(SQLiteDatabase db) {
-        db.rawQuery("PRAGMA journal_mode = DELETE", null);
+    public void disableDatabaseWriteAheadLogging(SupportSQLiteDatabase db) {
+        db.query("PRAGMA journal_mode = DELETE", null);
     }
 
     // CookieSyncManager needs to be initialized before use.

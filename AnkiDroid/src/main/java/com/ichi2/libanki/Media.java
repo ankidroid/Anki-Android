@@ -421,7 +421,7 @@ public class Media {
         Set<String> allRefs = new HashSet<>();
         Cursor cur = null;
         try {
-            cur = mCol.getDb().getDatabase().rawQuery("select id, mid, flds from notes", null);
+            cur = mCol.getDb().getDatabase().query("select id, mid, flds from notes", null);
             while (cur.moveToNext()) {
                 long nid = cur.getLong(0);
                 long mid = cur.getLong(1);
@@ -633,7 +633,7 @@ public class Media {
         Map<String, Object[]> cache = new HashMap<>();
         Cursor cur = null;
         try {
-            cur = mDb.getDatabase().rawQuery("select fname, csum, mtime from media where csum is not null", null);
+            cur = mDb.getDatabase().query("select fname, csum, mtime from media where csum is not null", null);
             while (cur.moveToNext()) {
                 String name = cur.getString(0);
                 String csum = cur.getString(1);
@@ -728,7 +728,7 @@ public class Media {
     public Pair<String, Integer> syncInfo(String fname) {
         Cursor cur = null;
         try {
-            cur = mDb.getDatabase().rawQuery("select csum, dirty from media where fname=?", new String[] { fname });
+            cur = mDb.getDatabase().query("select csum, dirty from media where fname=?", new String[] { fname });
             if (cur.moveToNext()) {
                 String csum = cur.getString(0);
                 int dirty = cur.getInt(1);
@@ -816,7 +816,7 @@ public class Media {
             JSONArray meta = new JSONArray();
             int sz = 0;
             byte buffer[] = new byte[2048];
-            cur = mDb.getDatabase().rawQuery(
+            cur = mDb.getDatabase().query(
                     "select fname, csum from media where dirty=1 limit " + Consts.SYNC_ZIP_COUNT, null);
 
             for (int c = 0; cur.moveToNext(); c++) {

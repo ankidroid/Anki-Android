@@ -53,7 +53,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
-import io.requery.android.database.sqlite.SQLiteDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
@@ -190,7 +190,7 @@ public class Collection {
         String deckConf = "";
         try {
             // Read in deck table columns
-            cursor = mDb.getDatabase().rawQuery(
+            cursor = mDb.getDatabase().query(
                     "SELECT crt, mod, scm, dty, usn, ls, " +
                     "conf, dconf, tags FROM col", null);
             if (!cursor.moveToFirst()) {
@@ -226,7 +226,7 @@ public class Collection {
         while (true) {
             Cursor cursor = null;
             try {
-                cursor = mDb.getDatabase().rawQuery(
+                cursor = mDb.getDatabase().query(
                         "SELECT substr(" + columnName + ", ?, ?) FROM col",
                         new String[]{Integer.toString(pos), Integer.toString(chunk)});
                 if (!cursor.moveToFirst()) {
@@ -333,7 +333,7 @@ public class Collection {
     public synchronized void close(boolean save) {
         if (mDb != null) {
             try {
-                SQLiteDatabase db = mDb.getDatabase();
+                SupportSQLiteDatabase db = mDb.getDatabase();
                 if (save) {
                     db.beginTransaction();
                     try {
@@ -507,7 +507,7 @@ public class Collection {
             values.put("usn", usn());
             values.put("oid", id);
             values.put("type", type);
-            mDb.insert("graves", null, values);
+            mDb.insert("graves", values);
         }
     }
 
@@ -651,7 +651,7 @@ public class Collection {
         HashMap<Long, Long> dids = new HashMap<>();
         Cursor cur = null;
         try {
-            cur = mDb.getDatabase().rawQuery("select id, nid, ord, did, odid from cards where nid in " + snids, null);
+            cur = mDb.getDatabase().query("select id, nid, ord, did, odid from cards where nid in " + snids, null);
             while (cur.moveToNext()) {
                 long nid = cur.getLong(1);
                 long did = cur.getLong(3);
@@ -690,7 +690,7 @@ public class Collection {
         int usn = usn();
         cur = null;
         try {
-            cur = mDb.getDatabase().rawQuery("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null);
+            cur = mDb.getDatabase().query("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null);
             while (cur.moveToNext()) {
                 JSONObject model = mModels.get(cur.getLong(1));
                 ArrayList<Integer> avail = mModels.availOrds(model, cur.getString(2));
@@ -910,7 +910,7 @@ public class Collection {
         StringBuilder rep = new StringBuilder();
         Cursor cur = null;
         try {
-            cur = mDb.getDatabase().rawQuery("select group_concat(ord+1), count(), flds from cards c, notes n "
+            cur = mDb.getDatabase().query("select group_concat(ord+1), count(), flds from cards c, notes n "
                                            + "where c.nid = n.id and c.id in " + Utils.ids2str(cids) + " group by nid", null);
             while (cur.moveToNext()) {
                 String ords = cur.getString(0);
@@ -935,7 +935,7 @@ public class Collection {
         ArrayList<Object[]> result = new ArrayList<>();
         Cursor cur = null;
         try {
-            cur = mDb.getDatabase().rawQuery("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null);
+            cur = mDb.getDatabase().query("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null);
             while (cur.moveToNext()) {
                 result.add(new Object[] { cur.getLong(0), cur.getLong(1), cur.getString(2) });
             }
@@ -1076,7 +1076,7 @@ public class Collection {
         ArrayList<Object[]> data = new ArrayList<>();
         Cursor cur = null;
         try {
-            cur = mDb.getDatabase().rawQuery(
+            cur = mDb.getDatabase().query(
                     "SELECT c.id, n.id, n.mid, c.did, c.ord, "
                             + "n.tags, n.flds FROM cards c, notes n WHERE c.nid == n.id " + where, null);
             while (cur.moveToNext()) {
@@ -1502,7 +1502,7 @@ public class Collection {
                     ids = new ArrayList<>();
                     Cursor cur = null;
                     try {
-                        cur = mDb.getDatabase().rawQuery("select id, flds from notes where mid = " + m.getLong("id"), null);
+                        cur = mDb.getDatabase().query("select id, flds from notes where mid = " + m.getLong("id"), null);
                         while (cur.moveToNext()) {
                             String flds = cur.getString(1);
                             long id = cur.getLong(0);

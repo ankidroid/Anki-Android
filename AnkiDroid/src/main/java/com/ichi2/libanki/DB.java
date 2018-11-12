@@ -3,6 +3,7 @@
  * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
  * Copyright (c) 2009 Andrew <andrewdubya@gmail.com>                                    *
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ * Copyright (c) 2018 Mike Hardy <mike@mikehardy.net>                                   *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -22,6 +23,7 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -34,8 +36,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import io.requery.android.database.DatabaseErrorHandler;
-import io.requery.android.database.sqlite.SQLiteDatabase;
+import androidx.annotation.Nullable;
+import androidx.sqlite.db.SupportSQLiteDatabase;
+import androidx.sqlite.db.SupportSQLiteOpenHelper;
+import io.requery.android.database.sqlite.RequerySQLiteOpenHelperFactory;
 import timber.log.Timber;
 
 /**
@@ -46,34 +50,76 @@ public class DB {
 
     private static final String[] MOD_SQLS = new String[] { "insert", "update", "delete" };
 
+    /** may be injected to use a different sqlite implementation - null means use default */
+    private static SupportSQLiteOpenHelper.Factory sqliteOpenHelperFactory = null;
+
     /**
      * The deck, which is actually an SQLite database.
      */
-    private SQLiteDatabase mDatabase;
+    private SupportSQLiteDatabase mDatabase;
     private boolean mMod = false;
-
 
     /**
      * Open a database connection to an ".anki" SQLite file.
      */
     public DB(String ankiFilename) {
-        mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null,
-                    (SQLiteDatabase.OPEN_READWRITE | SQLiteDatabase.CREATE_IF_NECESSARY),
-                    new MyDbErrorHandler());
+
+        SupportSQLiteOpenHelper.Configuration configuration = SupportSQLiteOpenHelper.Configuration.builder(AnkiDroidApp.getInstance())
+                .name(ankiFilename)
+                .callback(getDBCallback())
+                .build();
+        SupportSQLiteOpenHelper helper = getSqliteOpenHelperFactory().create(configuration);
+        mDatabase = helper.getWritableDatabase();
 
         // TODO: remove this once everyone has stopped using old AnkiDroid clients with WAL (API >= 16)
         CompatHelper.getCompat().disableDatabaseWriteAheadLogging(mDatabase);
-        mDatabase.rawQuery("PRAGMA synchronous = 2", null);
-
-
+        mDatabase.query("PRAGMA synchronous = 2", null);
         mMod = false;
     }
 
-    public class MyDbErrorHandler implements DatabaseErrorHandler {
-        @Override
-        public void onCorruption(SQLiteDatabase db) {
-            Timber.e("The database has been corrupted...");
-            AnkiDroidApp.sendExceptionReport(new RuntimeException("Database corrupted"), "DB.MyDbErrorHandler.onCorruption", "Db has been corrupted ");
+
+    /**
+     * You may swap in your own SQLite implementation by altering the factory here. An
+     * example might be to use the framework implementation. If you set to null, we default
+     * to requery
+     * @param factory connection factory for the desired sqlite implementation, null for requery
+     */
+    public static void setSqliteOpenHelperFactory(@Nullable SupportSQLiteOpenHelper.Factory factory) {
+        sqliteOpenHelperFactory = factory;
+    }
+
+
+    private SupportSQLiteOpenHelper.Factory getSqliteOpenHelperFactory() {
+        if (sqliteOpenHelperFactory == null) {
+            return new RequerySQLiteOpenHelperFactory();
+        }
+        return sqliteOpenHelperFactory;
+    }
+
+
+    /** Get the SQLite callback object to use when creating connections - overridable for testability */
+    protected SupportSQLiteOpenHelperCallback getDBCallback() {
+        return new SupportSQLiteOpenHelperCallback(1);
+    }
+
+
+    /**
+     * The default AnkiDroid SQLite database callback.
+     * We do not handle versioning or connection config using the framework APIs, so those methods
+     * do nothing in our implementation. However, we on corruption events we want to send messages but
+     * not delete the database.
+     */
+    public class SupportSQLiteOpenHelperCallback extends SupportSQLiteOpenHelper.Callback {
+
+        protected SupportSQLiteOpenHelperCallback(int version) { super(version); }
+        public void onCreate(SupportSQLiteDatabase db) {/* do nothing */ }
+        public void onUpgrade(SupportSQLiteDatabase db, int oldVersion, int newVersion) { /* do nothing */ }
+
+
+        /** Send error message, but do not call super() which would delete the database */
+        public void onCorruption(SupportSQLiteDatabase db) {
+            Timber.e("The database has been corrupted: %s", db.getPath());
+            AnkiDroidApp.sendExceptionReport(new RuntimeException("Database corrupted"), "DB.MyDbErrorHandler.onCorruption", "Db has been corrupted: " + db.getPath());
             CollectionHelper.getInstance().closeCollection(false);
             DatabaseErrorDialog.databaseCorruptFlag = true;
         }
@@ -84,8 +130,14 @@ public class DB {
      * Closes a previously opened database connection.
      */
     public void close() {
-        mDatabase.close();
-        Timber.d("Database %s closed = %s", mDatabase.getPath(), !mDatabase.isOpen());
+        try {
+            mDatabase.close();
+            Timber.d("Database %s closed = %s", mDatabase.getPath(), !mDatabase.isOpen());
+        } catch (Exception e) {
+            // The pre-framework requery API ate this exception, but the framework API exposes it.
+            // We may want to propagate it in the future, but for now maintain the old API and log.
+            Timber.e(e, "Failed to close database %s", this.getDatabase().getPath());
+        }
     }
 
 
@@ -99,7 +151,7 @@ public class DB {
     }
 
 
-    public SQLiteDatabase getDatabase() {
+    public SupportSQLiteDatabase getDatabase() {
         return mDatabase;
     }
 
@@ -129,7 +181,7 @@ public class DB {
         Cursor cursor = null;
         int scalar;
         try {
-            cursor = mDatabase.rawQuery(query, selectionArgs);
+            cursor = mDatabase.query(query, selectionArgs);
             if (!cursor.moveToNext()) {
                 return 0;
             }
@@ -146,7 +198,7 @@ public class DB {
     public String queryString(String query) throws SQLException {
         Cursor cursor = null;
         try {
-            cursor = mDatabase.rawQuery(query, null);
+            cursor = mDatabase.query(query, null);
             if (!cursor.moveToNext()) {
                 throw new SQLException("No result for query: " + query);
             }
@@ -163,7 +215,7 @@ public class DB {
         Cursor cursor = null;
         long scalar;
         try {
-            cursor = mDatabase.rawQuery(query, null);
+            cursor = mDatabase.query(query, null);
             if (!cursor.moveToNext()) {
                 return 0;
             }
@@ -194,7 +246,7 @@ public class DB {
         Cursor cursor = null;
 
         try {
-            cursor = mDatabase.rawQuery(query, null);
+            cursor = mDatabase.query(query, null);
             String methodName = getCursorMethodName(type.getSimpleName());
             while (cursor.moveToNext()) {
                 try {
@@ -223,9 +275,9 @@ public class DB {
             if (nullExceptionCount > 0) {
                 if (nullException != null) {
                     StringBuilder sb = new StringBuilder();
-                    sb.append("DB.queryColumn (column " + column + "): ");
-                    sb.append("Exception due to null. Query: " + query);
-                    sb.append(" Null occurrences during this query: " + nullExceptionCount);
+                    sb.append("DB.queryColumn (column ").append(column).append("): ");
+                    sb.append("Exception due to null. Query: ").append(query);
+                    sb.append(" Null occurrences during this query: ").append(nullExceptionCount);
                     AnkiDroidApp.sendExceptionReport(nullException, "queryColumn_encounteredNull", sb.toString());
                     Timber.w(sb.toString());
                 } else { // nullException not properly initialized
@@ -310,14 +362,14 @@ public class DB {
     /** update must always be called via DB in order to mark the db as changed */
     public int update(String table, ContentValues values, String whereClause, String[] whereArgs) {
         mMod = true;
-        return getDatabase().update(table, values, whereClause, whereArgs);
+        return getDatabase().update(table, SQLiteDatabase.CONFLICT_NONE, values, whereClause, whereArgs);
     }
 
 
     /** insert must always be called via DB in order to mark the db as changed */
-    public long insert(String table, String nullColumnHack, ContentValues values) {
+    public long insert(String table, ContentValues values) {
         mMod = true;
-        return getDatabase().insert(table, nullColumnHack, values);
+        return getDatabase().insert(table, SQLiteDatabase.CONFLICT_NONE, values);
     }
 
 

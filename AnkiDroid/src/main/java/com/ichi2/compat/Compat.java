@@ -34,7 +34,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import io.requery.android.database.sqlite.SQLiteDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 /**
  * This interface defines a set of functions that are not available on all platforms.
@@ -63,7 +63,7 @@ public interface Compat {
     String EXTRA_PROCESS_TEXT = "android.intent.extra.PROCESS_TEXT";
 
     String detagged(String txt);
-    void disableDatabaseWriteAheadLogging(SQLiteDatabase db);
+    void disableDatabaseWriteAheadLogging(SupportSQLiteDatabase db);
     void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls);
     void setFullScreen(AbstractFlashcardViewer activity);
     void setSelectableBackground(View view);

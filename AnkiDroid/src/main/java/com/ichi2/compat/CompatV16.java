@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,14 +25,14 @@ import com.ichi2.compat.customtabs.CustomTabsHelper;
 
 import java.io.File;
 
-import io.requery.android.database.sqlite.SQLiteDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 /** Implementation of {@link Compat} for SDK level 16 */
 @TargetApi(16)
 public class CompatV16 extends CompatV15 implements Compat {
 
     @Override
-    public void disableDatabaseWriteAheadLogging(SQLiteDatabase db) {
+    public void disableDatabaseWriteAheadLogging(SupportSQLiteDatabase db) {
         db.disableWriteAheadLogging();
     }
 

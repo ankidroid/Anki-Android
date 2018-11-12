@@ -216,7 +216,7 @@ public class AnkiStatsTaskHandler {
                 try {
                     cur = collection.getDb()
                             .getDatabase()
-                            .rawQuery(query, null);
+                            .query(query, null);
 
                     cur.moveToFirst();
                     cards = cur.getInt(0);

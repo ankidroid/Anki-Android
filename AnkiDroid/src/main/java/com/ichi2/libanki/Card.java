@@ -143,7 +143,7 @@ public class Card implements Cloneable {
     public void load() {
         Cursor cursor = null;
         try {
-            cursor = mCol.getDb().getDatabase().rawQuery("SELECT * FROM cards WHERE id = " + mId, null);
+            cursor = mCol.getDb().getDatabase().query("SELECT * FROM cards WHERE id = " + mId, null);
             if (!cursor.moveToFirst()) {
                 throw new RuntimeException(" No card with id " + mId);
             }

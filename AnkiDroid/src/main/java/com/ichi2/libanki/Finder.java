@@ -98,7 +98,7 @@ public class Finder {
         String sql = _query(preds, order);
         Cursor cur = null;
         try {
-            cur = mCol.getDb().getDatabase().rawQuery(sql, args);
+            cur = mCol.getDb().getDatabase().query(sql, args);
             while (cur.moveToNext()) {
                 res.add(cur.getLong(0));
             }
@@ -134,7 +134,7 @@ public class Finder {
         String sql = "select distinct(n.id) from cards c, notes n where c.nid=n.id and " + preds;
         Cursor cur = null;
         try {
-            cur = mCol.getDb().getDatabase().rawQuery(sql, args);
+            cur = mCol.getDb().getDatabase().query(sql, args);
             while (cur.moveToNext()) {
                 res.add(cur.getLong(0));
             }
@@ -735,7 +735,7 @@ public class Finder {
              * There is no problem with special characters, because only % and _ are special
              * characters in this syntax.
              */
-            cur = mCol.getDb().getDatabase().rawQuery(
+            cur = mCol.getDb().getDatabase().query(
                     "select id, mid, flds from notes where mid in " +
                             Utils.ids2str(new LinkedList<>(mods.keySet())) +
                             " and flds like ? escape '\\'", new String[] { "%" + sqlVal + "%" });
@@ -772,7 +772,7 @@ public class Finder {
         List<Long> nids = new ArrayList<>();
         Cursor cur = null;
         try {
-            cur = mCol.getDb().getDatabase().rawQuery(
+            cur = mCol.getDb().getDatabase().query(
                     "select id, flds from notes where mid=? and csum=?",
                     new String[] { mid, csum });
             long nid = cur.getLong(0);
@@ -881,7 +881,7 @@ public class Finder {
         nids = new ArrayList<>();
         Cursor cur = null;
         try {
-            cur = col.getDb().getDatabase().rawQuery(
+            cur = col.getDb().getDatabase().query(
                     "select id, mid, flds from notes where id in " + snids, null);
             while (cur.moveToNext()) {
                 String flds = cur.getString(2);
@@ -998,7 +998,7 @@ public class Finder {
         Map<Long, Integer> fields = new HashMap<>();
         Cursor cur = null;
         try {
-            cur = col.getDb().getDatabase().rawQuery(
+            cur = col.getDb().getDatabase().query(
                     "select id, mid, flds from notes where id in " + Utils.ids2str(col.findNotes(search)), null);
             while (cur.moveToNext()) {
                 long nid = cur.getLong(0);
@@ -1062,7 +1062,7 @@ public class Finder {
         String sql = _queryForCardBrowser(preds, order);
         Cursor cur = null;
         try {
-            cur = mCol.getDb().getDatabase().rawQuery(sql, args);
+            cur = mCol.getDb().getDatabase().query(sql, args);
             DeckTask task = DeckTask.getInstance();
             while (cur.moveToNext()) {
                 // cancel if the launching task was cancelled. 
