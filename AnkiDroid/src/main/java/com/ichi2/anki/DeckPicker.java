@@ -31,8 +31,10 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.database.SQLException;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -394,7 +396,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // specify a LinearLayoutManager and set up item dividers for the RecyclerView
         mRecyclerViewLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mRecyclerViewLayoutManager);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, mRecyclerViewLayoutManager.getOrientation()));
+        TypedArray ta = this.obtainStyledAttributes(new int[] { R.attr.deckDivider });
+        Drawable divider = ta.getDrawable(0);
+        ta.recycle();
+        DividerItemDecoration dividerDecorator = new DividerItemDecoration(this, mRecyclerViewLayoutManager.getOrientation());
+        dividerDecorator.setDrawable(divider);
+        mRecyclerView.addItemDecoration(dividerDecorator);
 
         // create and set an adapter for the RecyclerView
         mDeckListAdapter = new DeckAdapter(getLayoutInflater(), this);
