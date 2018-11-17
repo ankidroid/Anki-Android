@@ -1236,6 +1236,7 @@ public class Collection {
 
     public long undo() {
     	Object[] data = mUndo.removeLast();
+        Timber.d("undo() of type %s", data[0]);
     	switch ((DismissType) data[0]) {
             case REVIEW: {
                 Card c = (Card) data[1];
@@ -1372,7 +1373,12 @@ public class Collection {
             case RESET_CARDS:
             case RESCHEDULE_CARDS:
             case REPOSITION_CARDS:
-                // TODO no undo implementation yet (note: no undo implementation prior, this is not a regression)
+                Timber.d("Undoing action of type %s on %d cards", data[0], ((Card[])data[1]).length);
+                Card[] cards = (Card[]) data[1];
+                for (int i = 0; i < cards.length; i++) {
+                    Card card = cards[i];
+                    card.flush(false);
+                }
                 return -1;
 
             default:
@@ -1382,6 +1388,7 @@ public class Collection {
 
 
     public void markUndo(DismissType type, Object[] o) {
+        Timber.d("markUndo() of type %s", type);
         switch (type) {
             case REVIEW:
                 mUndo.add(new Object[]{type, ((Card) o[0]).clone(), o[1]});
@@ -1416,8 +1423,8 @@ public class Collection {
             case RESET_CARDS:
             case REPOSITION_CARDS:
             case RESCHEDULE_CARDS:
-                // These all mess with scheduling, so we need the card cloned to undo it (TODO verify assertion)
-                mUndo.add(new Object[]{type, ((Card[]) o[0]).clone()});
+                // Card array is cloned in DeckTask, which pays attention to memory pressure
+                mUndo.add(new Object[]{type, o[0]});
                 break;
             default:
                 Timber.e("markUndo() received unknown type? %s", type);

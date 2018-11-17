@@ -1002,6 +1002,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 mReloadRequired = true;
             }
         }
+
+        invalidateOptionsMenu();    // maybe the availability of undo changed
+    }
+
+
+    // We spawn DeckTasks that may create memory pressure, this transmits it so polling isCancelled sees the pressure
+    @Override
+    public void onTrimMemory(int pressureLevel) {
+        DeckTask.cancelTask();
     }
 
     private long getReviewerCardId() {
