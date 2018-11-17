@@ -752,23 +752,27 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         break;
                     }
 
-                    case RESCHEDULE_CARDS: {
-                        // collect undo information
-                        col.markUndo(type, new Object[] { cards });
-                        sched.reschedCards(cardIds, (Integer) data[2], (Integer) data[2]);
-                        break;
-                    }
-
-                    case REPOSITION_CARDS: {
-                        col.markUndo(type, new Object[] { cards });
-                        sched.sortCards(cardIds, (Integer) data[2], 1, false, true);
-                        break;
-                    }
-
+                    case RESCHEDULE_CARDS:
+                    case REPOSITION_CARDS:
                     case RESET_CARDS: {
-                        // collect undo information
-                        col.markUndo(type, new Object[] { cards });
-                        sched.forgetCards(cardIds);
+                        // collect undo information, sensitive to memory pressure, same for all 3 cases
+                        try {
+                            Timber.d("Saving undo information of type %s on %d cards", type, cards.length);
+                            col.markUndo(type, new Object[] {deepCopyCardArray(cards)});
+                        } catch (CancellationException ce) {
+                            Timber.i(ce, "Cancelled while handling type %s, skipping undo", type);
+                        }
+                        switch (type) {
+                            case RESCHEDULE_CARDS:
+                                sched.reschedCards(cardIds, (Integer) data[2], (Integer) data[2]);
+                                break;
+                            case REPOSITION_CARDS:
+                                sched.sortCards(cardIds, (Integer) data[2], 1, false, true);
+                                break;
+                            case RESET_CARDS:
+                                sched.forgetCards(cardIds);
+                                break;
+                        }
                         break;
                     }
                 }
@@ -784,6 +788,22 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         // pass cards back so more actions can be performed by the caller
         // (querying the cards again is unnecessarily expensive)
         return new TaskData(true, cards);
+    }
+
+    private Card[] deepCopyCardArray(Card[] originals) throws CancellationException {
+        Collection col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance());
+        Card[] copies = new Card[originals.length];
+        for (int i = 0; i < originals.length; i++) {
+            if (isCancelled()) {
+                Timber.i("Cancelled during deep copy, probably memory pressure?");
+                throw new CancellationException("Cancelled during deep copy");
+            }
+
+            // TODO: the performance-naive implementation loads from database instead of working in memory
+            // the high performance version would implement .clone() on Card and test it well
+            copies[i] = new Card(col, originals[i].getId());
+        }
+        return copies;
     }
 
 
