@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
@@ -178,6 +180,11 @@ public class Reviewer extends AbstractFlashcardViewer {
                 }
                 break;
 
+            case R.id.action_reset_card_progress:
+                Timber.i("Reviewer:: Reset progress button pressed");
+                showResetCardDialog();
+                break;
+
             case R.id.action_mark_card:
                 Timber.i("Reviewer:: Mark button pressed");
                 onMark(mCurrentCard);
@@ -260,6 +267,23 @@ public class Reviewer extends AbstractFlashcardViewer {
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    private void showResetCardDialog() {
+        // Show confirmation dialog before resetting card progress
+        ConfirmationDialog dialog = new ConfirmationDialog();
+        String title = getResources().getString(R.string.reset_card_dialog_title);
+        String message = getResources().getString(R.string.reset_card_dialog_message);
+        dialog.setArgs(title, message);
+        Runnable confirm = () -> {
+            Timber.i("NoteEditor:: OK button pressed");
+            getCol().getSched().forgetCards(new long[]{mCurrentCard.getId()});
+            getCol().reset();
+            UIUtils.showThemedToast(Reviewer.this,
+                    getResources().getString(R.string.reset_card_dialog_acknowledge), true);
+        };
+        dialog.setConfirm(confirm);
+        showDialogFragment(dialog);
     }
 
 

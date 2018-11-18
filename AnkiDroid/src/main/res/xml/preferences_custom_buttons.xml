@@ -34,6 +34,12 @@ MENU_DISABLED = 3
             android:key="customButtonUndo"
             android:title="@string/undo" />
         <ListPreference
+            android:defaultValue="3"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="customButtonResetProgress"
+            android:title="@string/card_editor_reset_card" />
+        <ListPreference
             android:defaultValue="2"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
